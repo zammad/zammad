@@ -82,7 +82,7 @@ RSpec.describe 'Integration CTI', type: :request do
         user:      'user 1',
       }
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid token, please contact your admin!')
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'Integration CTI', type: :request do
       }
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_blank
 
       # inbound - II - block caller
@@ -113,7 +113,7 @@ RSpec.describe 'Integration CTI', type: :request do
       }
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['action']).to eq('reject')
       expect(json_response['reason']).to eq('busy')
 
@@ -127,7 +127,7 @@ RSpec.describe 'Integration CTI', type: :request do
         user:      'user 1',
       }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['action']).to eq('dial')
       expect(json_response['number']).to eq('4912347114711')
       expect(json_response['caller_id']).to eq('4930777000000')
@@ -142,7 +142,7 @@ RSpec.describe 'Integration CTI', type: :request do
         user:      'user 1',
       }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['action']).to eq('dial')
       expect(json_response['number']).to eq('491714000000')
       expect(json_response['caller_id']).to eq('41715880339000')
@@ -157,7 +157,7 @@ RSpec.describe 'Integration CTI', type: :request do
         user:      'user 1',
       }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['action']).to eq('dial')
       expect(json_response['number']).to eq('4147110000000')
       expect(json_response['caller_id']).to eq('41715880339000')
@@ -174,7 +174,7 @@ RSpec.describe 'Integration CTI', type: :request do
 
       }
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Feature not configured, please contact your admin!')
 
     end
@@ -632,7 +632,7 @@ RSpec.describe 'Integration CTI', type: :request do
       authenticated_as(agent)
       get '/api/v1/cti/log', as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response['list']).to be_a_kind_of(Array)
+      expect(json_response['list']).to be_a(Array)
       expect(json_response['list'].count).to eq(7)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['User']).to be_truthy

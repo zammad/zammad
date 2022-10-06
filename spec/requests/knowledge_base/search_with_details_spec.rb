@@ -16,19 +16,19 @@ RSpec.describe 'Knowledge Base search with details', type: :request, searchindex
     it 'for answers' do
       post endpoint, params: { query: published_answer.translations.first.title }
 
-      expect(json_response['details'][0]['id']).to be_a_kind_of Integer
+      expect(json_response['details'][0]['id']).to be_a Integer
     end
 
     it 'for categories' do
       post endpoint, params: { query: category.translations.first.title }
 
-      expect(json_response['details'][0]['id']).to be_a_kind_of Integer
+      expect(json_response['details'][0]['id']).to be_a Integer
     end
 
     it 'for knowledge base' do
       post endpoint, params: { query: knowledge_base.translations.first.title }
 
-      expect(json_response['details'][0]['id']).to be_a_kind_of Integer
+      expect(json_response['details'][0]['id']).to be_a Integer
     end
   end
 

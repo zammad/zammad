@@ -19,7 +19,7 @@ RSpec.describe 'KnowledgeBase loading initial data', type: :request, searchindex
 
   shared_examples 'returning valid JSON' do
     it { expect(response).to have_http_status(:ok) }
-    it { expect(json_response).to be_a_kind_of(Hash) }
+    it { expect(json_response).to be_a(Hash) }
   end
 
   describe 'for admin' do

@@ -25,7 +25,7 @@ RSpec.describe OnlineNotification, type: :request do
       it 'has an array response' do
         get path, params: {}, as: :json
 
-        expect(json_response).to be_a_kind_of(Array)
+        expect(json_response).to be_a(Array)
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe OnlineNotification, type: :request do
       it 'has hash response' do
         get path, params: {}, as: :json
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe OnlineNotification, type: :request do
       it 'has an assests attribute' do
         get path, params: {}, as: :json
 
-        expect(json_response['assets']).to be_a_kind_of(Hash)
+        expect(json_response['assets']).to be_a(Hash)
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe OnlineNotification, type: :request do
           get path, params: {}, as: :json
 
           expect(json_response['record_ids'])
-            .to be_a_kind_of(Array)
+            .to be_a(Array)
             .and include(online_notification.id)
         end
 

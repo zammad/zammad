@@ -48,7 +48,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error_human']).to eq("The required value 'group_id' is missing.")
     end
 
@@ -66,7 +66,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "not_existing"')
     end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent_change_only)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
     end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
@@ -134,7 +134,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       expect { post '/api/v1/tickets', params: params, as: :json }.to change(Ticket, :count).by(1)
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(ticket.articles).to be_empty
@@ -154,7 +154,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -176,7 +176,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -199,7 +199,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 0')
     end
 
@@ -218,7 +218,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #5')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -241,7 +241,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 99999')
     end
 
@@ -260,7 +260,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #7')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -282,7 +282,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #9')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -302,7 +302,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #10')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -326,7 +326,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -351,7 +351,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.1')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -385,7 +385,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.2')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -420,7 +420,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.3')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -454,7 +454,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #11.4')
       expect(json_response['customer_id']).to eq(User.lookup(email: 'some_new_customer@example.com').id)
@@ -482,7 +482,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
 
@@ -504,7 +504,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #13')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -546,7 +546,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #14')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -581,7 +581,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
 
@@ -603,7 +603,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
 
@@ -676,7 +676,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Attachment needs \'mime-type\' param for attachment with index \'0\'')
     end
 
@@ -696,7 +696,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #17')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -740,7 +740,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #18')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -783,7 +783,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #1')
       expect(json_response['updated_by_id']).to eq(agent.id)
@@ -808,7 +808,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       params = {
@@ -816,12 +816,12 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
     end
 
@@ -839,7 +839,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(title)
       expect(json_response['customer_id']).to eq(ticket.customer_id)
@@ -856,7 +856,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
       expect(json_response['customer_id']).to eq(agent.id)
@@ -873,7 +873,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
       article_json_response = json_response
-      expect(article_json_response).to be_a_kind_of(Hash)
+      expect(article_json_response).to be_a(Hash)
       expect(article_json_response['ticket_id']).to eq(ticket.id)
       expect(article_json_response['from']).to eq('Tickets Agent')
       expect(article_json_response['subject']).to eq('some subject')
@@ -887,7 +887,7 @@ RSpec.describe 'Ticket', type: :request do
       perform_enqueued_jobs
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
@@ -901,7 +901,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/tickets/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
@@ -918,7 +918,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Agent via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
       expect(json_response['subject']).to eq('some subject')
@@ -934,7 +934,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Agent via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
       expect(json_response['subject']).not_to eq('new subject')
@@ -959,12 +959,12 @@ RSpec.describe 'Ticket', type: :request do
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (communication articles cannot be deleted)!')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
     end
 
@@ -978,7 +978,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(admin)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq('ticket with corret ticket id')
       expect(json_response['customer_id']).to eq(ticket.customer_id)
@@ -991,7 +991,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq('ticket with corret ticket id - 2')
       expect(json_response['customer_id']).to eq(agent.id)
@@ -1006,7 +1006,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Admin')
       expect(json_response['subject']).to eq('some subject')
@@ -1023,7 +1023,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Admin')
       expect(json_response['subject']).not_to eq('new subject')
@@ -1045,7 +1045,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq(%("Tickets Admin via #{ticket_group.email_address.realname}" <#{ticket_group.email_address.email}>))
       expect(json_response['subject']).to eq('some subject')
@@ -1086,35 +1086,35 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][19]).to eq(tickets[0].id)
       expect(json_response['tickets_count']).to eq(20)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=10", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][9]).to eq(tickets[10].id)
       expect(json_response['tickets_count']).to eq(10)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=1&per_page=5", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[19].id)
       expect(json_response['tickets'][4]).to eq(tickets[15].id)
       expect(json_response['tickets_count']).to eq(5)
 
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=2&per_page=5", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(tickets[14].id)
       expect(json_response['tickets'][4]).to eq(tickets[10].id)
       expect(json_response['tickets_count']).to eq(5)
 
       get '/api/v1/tickets?limit=40&page=1&per_page=5', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       tickets = Ticket.order(:id).limit(5)
       expect(json_response[0]['id']).to eq(tickets[0].id)
       expect(json_response[4]['id']).to eq(tickets[4].id)
@@ -1122,7 +1122,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get '/api/v1/tickets?limit=40&page=2&per_page=5', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       tickets = Ticket.order(:id).limit(10)
       expect(json_response[0]['id']).to eq(tickets[5].id)
       expect(json_response[4]['id']).to eq(tickets[9].id)
@@ -1143,7 +1143,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c1')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -1167,7 +1167,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -1195,7 +1195,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(customer)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #c2')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -1213,7 +1213,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(customer)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       params = {
@@ -1221,12 +1221,12 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
     end
 
@@ -1241,7 +1241,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(customer)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(title)
       expect(json_response['customer_id']).to eq(ticket.customer_id)
@@ -1254,7 +1254,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq("#{title} - 2")
       expect(json_response['customer_id']).to eq(ticket.customer_id)
@@ -1269,7 +1269,7 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
       article_json_response = json_response
-      expect(article_json_response).to be_a_kind_of(Hash)
+      expect(article_json_response).to be_a(Hash)
       expect(article_json_response['ticket_id']).to eq(ticket.id)
       expect(article_json_response['from']).to eq('Tickets Customer1')
       expect(article_json_response['subject']).to eq('some subject')
@@ -1282,7 +1282,7 @@ RSpec.describe 'Ticket', type: :request do
       perform_enqueued_jobs
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
@@ -1296,13 +1296,13 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/tickets/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets'][0]).to eq(ticket.id)
       expect(json_response['tickets_count']).to eq(1)
 
       delete "/api/v1/ticket_articles/#{article_json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (agent permission required)!')
 
       params = {
@@ -1314,7 +1314,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Customer1')
       expect(json_response['subject']).to eq('some subject')
@@ -1326,7 +1326,7 @@ RSpec.describe 'Ticket', type: :request do
 
       delete "/api/v1/ticket_articles/#{json_response['id']}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (agent permission required)!')
 
       params = {
@@ -1341,7 +1341,7 @@ RSpec.describe 'Ticket', type: :request do
 
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['ticket_id']).to eq(ticket.id)
       expect(json_response['from']).to eq('Tickets Customer1 <tickets-customer1@example.com>')
       expect(json_response['subject']).to eq('some subject')
@@ -1357,12 +1357,12 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (ticket.agent or admin permission required)!')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized (admin permission required)!')
     end
 
@@ -1384,7 +1384,7 @@ RSpec.describe 'Ticket', type: :request do
 
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -1419,7 +1419,7 @@ RSpec.describe 'Ticket', type: :request do
 
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['state_id']).to eq(Ticket::State.lookup(name: 'new').id)
       expect(json_response['title']).to eq('a new ticket #3.6.1')
       expect(json_response['customer_id']).to eq(customer.id)
@@ -1448,7 +1448,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
       expect(json_response['group']).to be_falsey
@@ -1460,7 +1460,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get "/api/v1/tickets/#{ticket.id}?expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
       expect(json_response['customer_id']).to eq(ticket.customer_id)
@@ -1472,7 +1472,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get "/api/v1/tickets/#{ticket.id}?expand=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
       expect(json_response['group']).to be_falsey
@@ -1485,7 +1485,7 @@ RSpec.describe 'Ticket', type: :request do
       get "/api/v1/tickets/#{ticket.id}?full=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
@@ -1508,7 +1508,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get "/api/v1/tickets/#{ticket.id}?full=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(ticket.id)
       expect(json_response['title']).to eq(ticket.title)
       expect(json_response['group']).to be_falsey
@@ -1533,8 +1533,8 @@ RSpec.describe 'Ticket', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Array)
+      expect(json_response[0]).to be_a(Hash)
       expect(json_response[0]['id']).to eq(1)
       expect(json_response[1]['id']).to eq(ticket.id)
       expect(json_response[1]['title']).to eq(ticket.title)
@@ -1547,8 +1547,8 @@ RSpec.describe 'Ticket', type: :request do
 
       get '/api/v1/tickets?expand=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Array)
+      expect(json_response[0]).to be_a(Hash)
       expect(json_response[0]['id']).to eq(1)
       expect(json_response[1]['id']).to eq(ticket.id)
       expect(json_response[1]['title']).to eq(ticket.title)
@@ -1561,8 +1561,8 @@ RSpec.describe 'Ticket', type: :request do
 
       get '/api/v1/tickets?expand=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Array)
+      expect(json_response[0]).to be_a(Hash)
       expect(json_response[0]['id']).to eq(1)
       expect(json_response[1]['id']).to eq(ticket.id)
       expect(json_response[1]['title']).to eq(ticket.title)
@@ -1576,7 +1576,7 @@ RSpec.describe 'Ticket', type: :request do
       get '/api/v1/tickets?full=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['record_ids'].class).to eq(Array)
       expect(json_response['record_ids'][0]).to eq(1)
       expect(json_response['record_ids'][1]).to eq(ticket.id)
@@ -1601,8 +1601,8 @@ RSpec.describe 'Ticket', type: :request do
 
       get '/api/v1/tickets?full=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Array)
+      expect(json_response[0]).to be_a(Hash)
       expect(json_response[0]['id']).to eq(1)
       expect(json_response[1]['id']).to eq(ticket.id)
       expect(json_response[1]['title']).to eq(ticket.title)
@@ -1629,7 +1629,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['state_id']).to eq(ticket.state_id)
@@ -1645,7 +1645,7 @@ RSpec.describe 'Ticket', type: :request do
 
       post '/api/v1/tickets?expand=true', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['state_id']).to eq(ticket.state_id)
@@ -1661,7 +1661,7 @@ RSpec.describe 'Ticket', type: :request do
 
       post '/api/v1/tickets?full=true', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['assets']).to be_truthy
@@ -1702,7 +1702,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['state_id']).to eq(ticket.state_id)
@@ -1721,7 +1721,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}?expand=true", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['state_id']).to eq(ticket.state_id)
@@ -1740,7 +1740,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}?full=true", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['assets']).to be_truthy
@@ -1770,7 +1770,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       put "/api/v1/tickets/#{ticket.id}?full=true", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       ticket = Ticket.find(json_response['id'])
       expect(json_response['assets']['Ticket'][ticket.id.to_s]['title']).to eq('a update ticket #4')
@@ -1795,7 +1795,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['state_id']).to eq(ticket.state_id)
       expect(json_response['state']).to be_falsey
@@ -1890,7 +1890,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
       expect(json_response['assets']['Ticket'][ticket.id.to_s]).to be_truthy
@@ -1900,7 +1900,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
       expect(json_response['assets']['Ticket'][ticket.id.to_s]).to be_truthy
@@ -1965,7 +1965,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
       expect(json_response['assets']['Ticket'][ticket.id.to_s]).to be_truthy
@@ -1975,7 +1975,7 @@ RSpec.describe 'Ticket', type: :request do
 
       get "/api/v1/ticket_split?ticket_id=#{ticket.id}&article_id=#{article.id}&form_id=new_form_id123", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Ticket']).to be_truthy
       expect(json_response['assets']['Ticket'][ticket.id.to_s]).to be_truthy
@@ -2013,25 +2013,25 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       put "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result']).to eq('failed')
       expect(json_response['message']).to eq('The target ticket number could not be found.')
 
       put "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
       expect(json_response['error_human']).to eq('Not authorized')
 
       put "/api/v1/ticket_merge/#{ticket1.id}/#{ticket3.number}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not authorized')
       expect(json_response['error_human']).to eq('Not authorized')
 
       put "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result']).to eq('success')
       expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
@@ -2061,7 +2061,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       put "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result']).to eq('success')
       expect(json_response['target_ticket']['id']).to eq(ticket2.id)
     end
@@ -2104,37 +2104,37 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'desc' }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
 
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[asc asc] }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket1.id, ticket2.id])
 
       authenticated_as(admin)
       get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc] }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
 
@@ -2155,7 +2155,7 @@ RSpec.describe 'Ticket', type: :request do
       authenticated_as(agent)
       get "/api/v1/ticket_history/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['history'].class).to eq(Array)
       expect(json_response['assets'].class).to eq(Hash)
       expect(json_response['assets']['User'][customer.id.to_s]).not_to be_nil
@@ -2261,7 +2261,7 @@ RSpec.describe 'Ticket', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(json_response)
-        .to be_a_kind_of(Hash)
+        .to be_a(Hash)
         .and include('user' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
         .and include('organization' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
     end
@@ -2440,7 +2440,7 @@ RSpec.describe 'Ticket', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(json_response)
-        .to be_a_kind_of(Hash)
+        .to be_a(Hash)
         .and include('user' => hash_including('open_ids' => [ticket2.id, ticket1.id]))
         .and include('organization' => hash_including('open_ids' => [ticket2.id, ticket1.id]))
     end

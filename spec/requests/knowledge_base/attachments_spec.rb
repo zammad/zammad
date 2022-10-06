@@ -64,7 +64,7 @@ RSpec.describe 'KnowledgeBase attachments', type: :request, authenticated_as: :c
         end
 
         it 'returns a kind of hash' do
-          expect(json_response).to be_a_kind_of(Hash)
+          expect(json_response).to be_a(Hash)
         end
 
         it 'responds with the correct file name' do

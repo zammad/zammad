@@ -9,7 +9,7 @@ RSpec.describe 'Error handling', type: :request do
     let(:as) { :json }
 
     it { expect(response).to have_http_status(http_status) }
-    it { expect(json_response).to be_a_kind_of(Hash) }
+    it { expect(json_response).to be_a(Hash) }
 
     it do
       # There is a special case where we mask technical errors and return

@@ -53,7 +53,7 @@ RSpec.describe 'Authentication', type: :system do
     visit '/#signup'
 
     # check wrong displayed fields in registration form after logout. #2989
-    expect(page).to have_no_selector('select[name=organization_id]')
+    expect(page).to have_no_select('organization_id')
   end
 
   it 'Login and redirect to requested url', authenticated_as: false do

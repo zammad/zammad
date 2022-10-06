@@ -106,7 +106,7 @@ RSpec.describe NotificationFactory::Mailer do
       let(:user) { create(:agent, email: 'somebody@example.com') }
 
       it 'returns a Mail::Message' do
-        expect(result).to be_kind_of(Mail::Message)
+        expect(result).to be_a(Mail::Message)
       end
     end
 

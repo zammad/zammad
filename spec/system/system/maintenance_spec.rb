@@ -62,7 +62,7 @@ RSpec.describe 'System > Maintenance', type: :system do
           elem.execute_script "$(this).trigger('blur')" # required for chrome
         end
 
-        find('#global-search').click # unfocus
+        find_by_id('global-search').click # unfocus
 
         wait.until { expect(Setting.get('maintenance_login_message')).to eq "#{message}#{message_suffix}" }
       end

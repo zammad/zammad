@@ -127,7 +127,7 @@ RSpec.describe 'Message Bird SMS', type: :request, performs_jobs: true do
       authenticated_as(agent)
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['subject']).to be_nil
       expect(json_response['body']).to eq('some test')
       expect(json_response['content_type']).to eq('text/plain')

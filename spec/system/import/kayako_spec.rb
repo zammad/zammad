@@ -9,9 +9,9 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
       find('.js-kayako').click
     end
 
-    let(:subdomain_field) { find('#kayako-subdomain') }
-    let(:email_field)     { find('#kayako-email') }
-    let(:password_field)  { find('#kayako-password') }
+    let(:subdomain_field) { find_by_id('kayako-subdomain') }
+    let(:email_field)     { find_by_id('kayako-email') }
+    let(:password_field)  { find_by_id('kayako-password') }
 
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
@@ -64,9 +64,9 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
   end
 
   describe 'import progress', :use_vcr do
-    let(:subdomain_field) { find('#kayako-subdomain') }
-    let(:email_field)    { find('#kayako-email') }
-    let(:password_field) { find('#kayako-password') }
+    let(:subdomain_field) { find_by_id('kayako-subdomain') }
+    let(:email_field)    { find_by_id('kayako-email') }
+    let(:password_field) { find_by_id('kayako-password') }
     let(:job)            { ImportJob.find_by(name: 'Import::Kayako') }
 
     before do

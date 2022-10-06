@@ -30,7 +30,7 @@ RSpec.describe DataPrivacyTaskJob, type: :job do
     it 'checks if the organization is deleted' do
       create(:data_privacy_task, deletable: user)
       described_class.perform_now
-      expect(organization.reload).to be_a_kind_of(Organization)
+      expect(organization.reload).to be_a(Organization)
     end
 
     it 'checks if the state is completed' do

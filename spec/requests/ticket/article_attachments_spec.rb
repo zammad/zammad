@@ -130,7 +130,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
             get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}?view=preview&type=calendar", params: {}
 
             expect(response).to have_http_status(:ok)
-            expect(json_response).to be_a_kind_of(Hash)
+            expect(json_response).to be_a(Hash)
             expect(json_response['filename']).to eq store_file_name
             expect(json_response['events'].first).to include(expected_event)
           end
@@ -147,7 +147,7 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
         get '/api/v1/ticket_split', params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, as: :json
         expect(response).to have_http_status(:ok)
         expect(json_response['assets']).to be_truthy
-        expect(json_response['attachments']).to be_a_kind_of(Array)
+        expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments'].count).to eq(1)
         expect(json_response['attachments'][0]['filename']).to eq('rulesets-report.csv')
 
@@ -160,12 +160,12 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['error']).to eq("Need 'form_id' to add attachments to new form.")
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-1' }, as: :json
         expect(response).to have_http_status(:ok)
-        expect(json_response['attachments']).to be_a_kind_of(Array)
+        expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments']).to be_blank
 
         email_file_path  = Rails.root.join('test/data/mail/mail024.box')
@@ -174,13 +174,13 @@ RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }, as: :json
         expect(response).to have_http_status(:ok)
-        expect(json_response['attachments']).to be_a_kind_of(Array)
+        expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments'].count).to eq(1)
         expect(json_response['attachments'][0]['filename']).to eq('rulesets-report.csv')
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }, as: :json
         expect(response).to have_http_status(:ok)
-        expect(json_response['attachments']).to be_a_kind_of(Array)
+        expect(json_response['attachments']).to be_a(Array)
         expect(json_response['attachments']).to be_blank
       end
     end

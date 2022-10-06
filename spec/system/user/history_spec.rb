@@ -45,7 +45,7 @@ RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London' do
 
     visit "#user/profile/#{customer.id}"
 
-    find('#userAction').click
+    find_by_id('userAction').click
     click('[data-type="history"]')
   end
 

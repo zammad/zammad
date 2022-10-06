@@ -33,10 +33,18 @@ AllCops:
     - 'node_modules/**/*'
     - 'public/assets/**/*'
     - 'public/packs/**/*'
+
 RSpec:
   Include:
     - "**/*_spec.rb"
     - "**/*_examples.rb"
+  Language:
+    Expectations:
+        - expect_no_offenses
+        - expect_offense
+        - adds_foreign_key
+        - sent
+        - not_sent
 
 Rails:
   Enabled: true
@@ -362,6 +370,11 @@ RSpec/AnyInstance:
 
 RSpec/SubjectStub:
   Enabled: false
+
+RSpec/Capybara/SpecificFinders:
+  Description: 'Checks if there is a more specific finder offered by Capybara.'
+  Enabled: false
+  # False positives, autocorrection makes weird suggestions.
 
 Zammad/PreferNegatedIfOverUnless:
   Exclude:

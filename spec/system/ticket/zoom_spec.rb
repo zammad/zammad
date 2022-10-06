@@ -917,9 +917,9 @@ RSpec.describe 'Ticket zoom', type: :system do
         visit "ticket/zoom/#{ticket.id}"
         refresh # refresh to have assets generated for ticket
 
-        expect(page).to have_css('select[name=state_id][disabled]')
-        expect(page).to have_css('select[name=priority_id][disabled]')
-        expect(page).to have_css('select[name=owner_id][disabled]')
+        expect(page).to have_select('state_id', disabled: true)
+        expect(page).to have_select('priority_id', disabled: true)
+        expect(page).to have_select('owner_id', disabled: true)
         expect(page).to have_css('div.tabsSidebar-tab[data-tab=customer]')
       end
     end

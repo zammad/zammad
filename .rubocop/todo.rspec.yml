@@ -646,3 +646,13 @@ RSpec/MultipleMemoizedHelpers:
   Description: Checks if example groups contain too many `let` and `subject` calls.
   Enabled: false
   StyleGuide: https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/MultipleMemoizedHelpers
+
+RSpec/NoExpectationExample:
+  Description: Checks if an example contains any expectation.
+  Exclude:
+    - spec/system/**/*
+    - spec/lib/import/**/*
+    - spec/lib/ldap_spec.rb
+    - spec/db/migrate/issue_1573_multi_orga_spec.rb
+    - spec/lib/monitoring_helper/health_checker/delayed_job_spec.rb
+    - spec/requests/user/permission_spec.rb

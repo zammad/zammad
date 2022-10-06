@@ -58,7 +58,7 @@ RSpec.describe 'Text Module', type: :request do
       authenticated_as(admin)
       post '/api/v1/text_modules/import', params: { try: true, file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be_truthy
       expect(json_response['records']).to be_empty
@@ -71,7 +71,7 @@ RSpec.describe 'Text Module', type: :request do
       csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be_truthy
       expect(json_response['records'].count).to eq(2)
@@ -84,7 +84,7 @@ RSpec.describe 'Text Module', type: :request do
       csv_file = fixture_file_upload('csv_import/text_module/simple.csv', 'text/csv')
       post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)

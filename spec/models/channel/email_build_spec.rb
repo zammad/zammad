@@ -41,7 +41,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
 
     shared_examples 'adding the email html part as an attachment' do
       it 'adds the html part as an attachment' do
-        expect(html_part_attachment).to be_a_kind_of Hash
+        expect(html_part_attachment).to be_a Hash
       end
 
       it 'adds the html part as an attachment' do

@@ -55,7 +55,7 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
         .and change { taskbar.reload.read_attribute_before_type_cast(:preferences) }
 
       expect(taskbar.attributes.slice('params', 'preferences', 'state').values)
-        .to all(be_kind_of(ActiveSupport::HashWithIndifferentAccess))
+        .to all(be_a(ActiveSupport::HashWithIndifferentAccess))
     end
   end
 end

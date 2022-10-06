@@ -20,7 +20,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
       expect(response).to have_http_status(:forbidden)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Authentication required')
     end
@@ -30,7 +30,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_truthy
     end
 
@@ -39,7 +39,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
@@ -50,7 +50,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
@@ -59,7 +59,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
     end
@@ -69,7 +69,7 @@ RSpec.describe 'Packages', type: :request do
       get '/api/v1/packages', as: :json
 
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
     end

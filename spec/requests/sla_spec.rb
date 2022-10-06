@@ -14,7 +14,7 @@ RSpec.describe 'SLAs', type: :request do
       get '/api/v1/slas', as: :json
       expect(response).to have_http_status(:forbidden)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Authentication required')
     end
 
@@ -22,19 +22,19 @@ RSpec.describe 'SLAs', type: :request do
       authenticated_as(admin)
       get '/api/v1/slas', as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(0)
 
       get '/api/v1/slas?expand=true', as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
       expect(json_response.count).to eq(0)
 
       get '/api/v1/slas?full=true', as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['record_ids']).to be_truthy
       expect(json_response['record_ids']).to be_blank

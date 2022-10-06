@@ -27,7 +27,7 @@ RSpec.describe 'Settings', type: :request do
       # index
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['settings']).to be_falsey
 
       # show
@@ -43,7 +43,7 @@ RSpec.describe 'Settings', type: :request do
       authenticated_as(admin)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
       hit_api = false
       hit_product_name = false
@@ -62,13 +62,13 @@ RSpec.describe 'Settings', type: :request do
       setting = Setting.find_by(name: 'product_name')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('product_name')
 
       setting = Setting.find_by(name: 'api_token_access')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('api_token_access')
 
       # update
@@ -83,7 +83,7 @@ RSpec.describe 'Settings', type: :request do
       }
       put "/api/v1/settings/#{setting.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('product_name')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.branding')
@@ -101,7 +101,7 @@ RSpec.describe 'Settings', type: :request do
       }
       put "/api/v1/settings/#{setting.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
@@ -120,7 +120,7 @@ RSpec.describe 'Settings', type: :request do
       authenticated_as(admin_api)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
       hit_api = false
       hit_product_name = false
@@ -144,7 +144,7 @@ RSpec.describe 'Settings', type: :request do
       setting = Setting.find_by(name: 'api_token_access')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('api_token_access')
 
       # update
@@ -173,7 +173,7 @@ RSpec.describe 'Settings', type: :request do
       }
       put "/api/v1/settings/#{setting.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('api_token_access')
       expect(json_response['preferences']['permission'].length).to eq(1)
       expect(json_response['preferences']['permission'][0]).to eq('admin.api')
@@ -192,7 +192,7 @@ RSpec.describe 'Settings', type: :request do
       authenticated_as(agent)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['settings']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
 
@@ -209,7 +209,7 @@ RSpec.describe 'Settings', type: :request do
       authenticated_as(customer)
       get '/api/v1/settings', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['settings']).to be_falsey
       expect(json_response['error']).to eq('Not authorized (user)!')
 

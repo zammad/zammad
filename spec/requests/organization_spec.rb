@@ -53,13 +53,13 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(agent)
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
-      expect(json_response[0]['member_ids']).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
+      expect(json_response[0]['member_ids']).to be_a(Array)
       expect(json_response.length >= 3).to be_truthy
 
       get '/api/v1/organizations?limit=40&page=1&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       organizations = Organization.order(:id).limit(2)
       expect(json_response[0]['id']).to eq(organizations[0].id)
       expect(json_response[0]['member_ids']).to eq(organizations[0].member_ids)
@@ -69,7 +69,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get '/api/v1/organizations?limit=40&page=2&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       organizations = Organization.order(:id).limit(4)
       expect(json_response[0]['id']).to eq(organizations[2].id)
       expect(json_response[0]['member_ids']).to eq(organizations[2].member_ids)
@@ -81,15 +81,15 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['member_ids']).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['member_ids']).to be_a(Array)
       expect(json_response['members']).to be_falsey
       expect('Rest Org #1').to eq(json_response['name'])
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
-      expect(json_response['member_ids']).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['member_ids']).to be_a(Array)
       expect(json_response['members']).to be_falsey
       expect('Rest Org #2').to eq(json_response['name'])
 
@@ -97,7 +97,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       perform_enqueued_jobs
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       organization = json_response.detect { |object| object['name'] == 'Zammad Foundation' }
       expect(organization['name']).to eq('Zammad Foundation')
       expect(organization['member_ids']).to be_truthy
@@ -105,7 +105,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       organization = json_response.detect { |object| object['name'] == 'Zammad Foundation' }
       expect(organization['name']).to eq('Zammad Foundation')
       expect(organization['member_ids']).to be_truthy
@@ -113,7 +113,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&label=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       organization = json_response.detect { |object| object['label'] == 'Zammad Foundation' }
       expect(organization['label']).to eq('Zammad Foundation')
       expect(organization['value']).to eq('Zammad Foundation')
@@ -127,18 +127,18 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(customer)
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response.length).to eq(0)
 
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to be_nil
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to be_nil
 
       # search
@@ -153,18 +153,18 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(customer2)
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response.length).to eq(1)
 
       # show/:id
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect('Rest Org #1').to eq(json_response['name'])
 
       get "/api/v1/organizations/#{organization2.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to be_nil
 
       # search
@@ -179,35 +179,35 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       expect(response).to have_http_status(:ok)
       result = json_response
       result.collect! { |v| v['id'] }
-      expect(result).to be_a_kind_of(Array)
+      expect(result).to be_a(Array)
       expect(result).to eq([ organization.id, organization3.id, organization2.id ])
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: 'created_at', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
       result = json_response
       result.collect! { |v| v['id'] }
-      expect(result).to be_a_kind_of(Array)
+      expect(result).to be_a(Array)
       expect(result).to eq([ organization.id, organization2.id, organization3.id ])
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: 'note', order_by: 'asc' }, as: :json
       expect(response).to have_http_status(:ok)
       result = json_response
       result.collect! { |v| v['id'] }
-      expect(result).to be_a_kind_of(Array)
+      expect(result).to be_a(Array)
       expect(result).to eq([ organization.id, organization2.id, organization3.id ])
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: 'note', order_by: 'desc' }, as: :json
       expect(response).to have_http_status(:ok)
       result = json_response
       result.collect! { |v| v['id'] }
-      expect(result).to be_a_kind_of(Array)
+      expect(result).to be_a(Array)
       expect(result).to eq([ organization3.id, organization2.id, organization.id ])
 
       get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: %w[note created_at], order_by: %w[desc asc] }, as: :json
       expect(response).to have_http_status(:ok)
       result = json_response
       result.collect! { |v| v['id'] }
-      expect(result).to be_a_kind_of(Array)
+      expect(result).to be_a(Array)
       expect(result).to eq([ organization3.id, organization2.id, organization.id ])
     end
 
@@ -223,7 +223,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(admin)
       get "/api/v1/organizations/#{organization.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(organization.id)
       expect(json_response['name']).to eq(organization.name)
       expect(json_response['members']).to be_falsey
@@ -233,7 +233,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get "/api/v1/organizations/#{organization.id}?expand=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(organization.id)
       expect(json_response['name']).to eq(organization.name)
       expect(json_response['members']).to be_truthy
@@ -243,7 +243,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get "/api/v1/organizations/#{organization.id}?expand=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(organization.id)
       expect(json_response['name']).to eq(organization.name)
       expect(json_response['members']).to be_falsey
@@ -254,7 +254,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       get "/api/v1/organizations/#{organization.id}?full=true", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(organization.id)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['Organization']).to be_truthy
@@ -266,7 +266,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get "/api/v1/organizations/#{organization.id}?full=false", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['id']).to eq(organization.id)
       expect(json_response['name']).to eq(organization.name)
       expect(json_response['members']).to be_falsey
@@ -287,7 +287,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(admin)
       get '/api/v1/organizations', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response[0].class).to eq(Hash)
       expect(json_response.last['id']).to eq(organization.id)
       expect(json_response.last['name']).to eq(organization.name)
@@ -298,7 +298,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get '/api/v1/organizations?expand=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response[0].class).to eq(Hash)
       expect(json_response.last['id']).to eq(organization.id)
       expect(json_response.last['name']).to eq(organization.name)
@@ -309,7 +309,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get '/api/v1/organizations?expand=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response[0].class).to eq(Hash)
       expect(json_response.last['id']).to eq(organization.id)
       expect(json_response.last['name']).to eq(organization.name)
@@ -321,7 +321,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       get '/api/v1/organizations?full=true', params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['record_ids'].class).to eq(Array)
       expect(json_response['record_ids'][0]).to eq(1)
       expect(json_response['record_ids'].last).to eq(organization.id)
@@ -335,7 +335,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
 
       get '/api/v1/organizations?full=false', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(json_response[0].class).to eq(Hash)
       expect(json_response.last['id']).to eq(organization.id)
       expect(json_response.last['name']).to eq(organization.name)
@@ -354,7 +354,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(admin)
       post '/api/v1/organizations', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['name']).to eq(organization.name)
@@ -366,7 +366,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       params[:name] = 'Rest Org NEW #2'
       post '/api/v1/organizations?expand=true', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['name']).to eq(organization.name)
@@ -378,7 +378,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       params[:name] = 'Rest Org NEW #3'
       post '/api/v1/organizations?full=true', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['assets']).to be_truthy
@@ -406,7 +406,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(admin)
       put "/api/v1/organizations/#{organization.id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['name']).to eq(params[:name])
@@ -420,7 +420,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       }
       put "/api/v1/organizations/#{organization.id}?expand=true", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['name']).to eq(params[:name])
@@ -434,7 +434,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       }
       put "/api/v1/organizations/#{organization.id}?full=true", params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       organization = Organization.find(json_response['id'])
       expect(json_response['assets']).to be_truthy
@@ -456,7 +456,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       authenticated_as(agent)
       get "/api/v1/organizations/history/#{organization1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['history'].class).to eq(Array)
       expect(json_response['assets'].class).to eq(Hash)
       expect(json_response['assets']['Ticket']).to be_nil
@@ -516,7 +516,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       csv_file = fixture_file_upload('csv_import/organization/simple_col_not_existing.csv', 'text/csv')
       post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be(true)
       expect(json_response['records']).to be_empty
@@ -529,7 +529,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       csv_file = fixture_file_upload('csv_import/organization/simple.csv', 'text/csv')
       post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be(true)
       expect(json_response['records'].count).to eq(2)
@@ -542,7 +542,7 @@ RSpec.describe 'Organization', type: :request, searchindex: true, performs_jobs:
       csv_file = fixture_file_upload('csv_import/organization/simple.csv', 'text/csv')
       post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
 
       expect(json_response['try']).to be(false)
       expect(json_response['records'].count).to eq(2)

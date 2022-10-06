@@ -63,7 +63,7 @@ RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated
       let(:user_identifier) { :admin }
 
       it { expect(response).to have_http_status(:ok) }
-      it { expect(json_response).to be_a_kind_of(Hash) }
+      it { expect(json_response).to be_a(Hash) }
     end
 
     describe 'as reader' do

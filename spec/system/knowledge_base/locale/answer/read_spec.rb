@@ -30,7 +30,7 @@ RSpec.describe 'Knowledge Base Locale Answer Read', type: :system, authenticated
           find('.knowledge-base-article-tags--container a', text: published_answer_tag_name).click
         end
 
-        search_bar = find '#global-search'
+        search_bar = find_by_id 'global-search'
 
         expect(search_bar.value).to eq "tags:#{published_answer_tag_name}"
       end

@@ -9,8 +9,8 @@ RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_a
       find('.js-freshdesk').click
     end
 
-    let(:subdomain_field) { find('#freshdesk-subdomain') }
-    let(:token_field)     { find('#freshdesk-api-token') }
+    let(:subdomain_field) { find_by_id('freshdesk-subdomain') }
+    let(:token_field)     { find_by_id('freshdesk-api-token') }
 
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
@@ -60,8 +60,8 @@ RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_a
   end
 
   describe 'import progress', :use_vcr do
-    let(:subdomain_field) { find('#freshdesk-subdomain') }
-    let(:token_field) { find('#freshdesk-api-token') }
+    let(:subdomain_field) { find_by_id('freshdesk-subdomain') }
+    let(:token_field) { find_by_id('freshdesk-api-token') }
     let(:job)         { ImportJob.find_by(name: 'Import::Freshdesk') }
 
     before do

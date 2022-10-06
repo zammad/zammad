@@ -60,7 +60,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
       authenticated_as(agent)
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Not authorized (user)!')
 
@@ -71,7 +71,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
 
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
     end
@@ -88,7 +88,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
       post '/api/v1/integration/gitlab', params: params, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to eq([issue_data.deep_stringify_keys])
@@ -104,7 +104,7 @@ RSpec.describe 'GitLab', type: :request, required_envs: %w[GITLAB_ENDPOINT GITLA
       authenticated_as(agent)
       post '/api/v1/integration/gitlab_ticket_update', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
 

@@ -27,7 +27,7 @@ RSpec.describe 'Integration Check MK', type: :request do
       post '/api/v1/integration/check_mk/invalid_token', params: {}
       expect(response).to have_http_status(:unprocessable_entity)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('The provided token is invalid.')
     end
 
@@ -43,7 +43,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -65,7 +65,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -87,7 +87,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -112,7 +112,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -132,7 +132,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -150,7 +150,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).not_to be_empty
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -169,7 +169,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -187,7 +187,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -204,7 +204,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -223,7 +223,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
       end
 
@@ -238,7 +238,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -256,7 +256,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -273,7 +273,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -292,7 +292,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -309,7 +309,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
         expect(json_response['ticket_ids']).to be_nil
 
@@ -329,7 +329,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -346,7 +346,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).not_to be_empty
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -364,7 +364,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -381,7 +381,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -397,7 +397,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -415,7 +415,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
       end
 
@@ -429,7 +429,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -446,7 +446,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -462,7 +462,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('ticket already open, added note')
         expect(json_response['ticket_ids']).to include(ticket.id)
 
@@ -480,7 +480,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to be_truthy
         expect(json_response['ticket_id']).to be_truthy
         expect(json_response['ticket_number']).to be_truthy
@@ -498,7 +498,7 @@ RSpec.describe 'Integration Check MK', type: :request do
         post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
         expect(response).to have_http_status(:ok)
 
-        expect(json_response).to be_a_kind_of(Hash)
+        expect(json_response).to be_a(Hash)
         expect(json_response['result']).to eq('no open tickets found, ignore action')
         expect(json_response['ticket_ids']).to be_nil
 

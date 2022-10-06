@@ -67,19 +67,19 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/ticket', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Authentication required')
 
       post '/api/v1/search/user', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Authentication required')
 
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Authentication required')
     end
@@ -92,7 +92,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(admin)
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -107,7 +107,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -126,7 +126,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/ticket', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -143,7 +143,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/user', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result'][0]['type']).to eq('User')
       expect(json_response['result'][0]['id']).to eq(agent.id)
       expect(json_response['result'][1]).to be_falsey
@@ -158,7 +158,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(agent)
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -173,7 +173,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -192,7 +192,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/ticket', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -209,7 +209,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/user', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result'][0]['type']).to eq('User')
       expect(json_response['result'][0]['id']).to eq(agent.id)
       expect(json_response['result'][1]).to be_falsey
@@ -224,7 +224,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(customer)
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket1.id)
@@ -237,7 +237,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/ticket', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket1.id)
@@ -250,7 +250,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/user', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result'][0]).to be_falsey
     end
 
@@ -263,7 +263,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(customer2)
       post '/api/v1/search', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -278,7 +278,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/ticket', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['result'][0]['type']).to eq('Ticket')
       expect(json_response['result'][0]['id']).to eq(ticket3.id)
@@ -293,7 +293,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/user', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['result'][0]).to be_falsey
     end
 
@@ -323,7 +323,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(agent)
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && group.name:ultrasupport" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket']).to be_falsey
       expect(group).not_to eq('ultrasupport')
@@ -334,7 +334,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && group.name:ultrasupport" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
     end
@@ -343,7 +343,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(agent)
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && state.name:ultrastate" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket']).to be_falsey
       expect(ticket1.state.name).not_to eq('ultrastate')
@@ -354,7 +354,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && state.name:ultrastate" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
     end
@@ -363,7 +363,7 @@ RSpec.describe 'Search', type: :request do
       authenticated_as(agent)
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && priority.name:ultrapriority" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket']).to be_falsey
       expect(ticket1.priority.name).not_to eq('ultrapriority')
@@ -374,7 +374,7 @@ RSpec.describe 'Search', type: :request do
 
       post '/api/v1/search/Ticket', params: { query: "number:#{ticket1.number} && priority.name:ultrapriority" }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
       expect(json_response['assets']['Ticket'][ticket1.id.to_s]).to be_truthy
     end

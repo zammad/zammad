@@ -48,12 +48,12 @@ RSpec.describe PasswordPolicy do
   describe '#errors' do
     it 'returns empty Array when all backends pass' do
       instance.backends = Set.new [passing_job_class]
-      expect(instance.errors).to be_kind_of(Array).and(be_blank)
+      expect(instance.errors).to be_a(Array).and(be_blank)
     end
 
     it 'returns an Array of Arrays when one of backends fail' do
       instance.backends = Set.new [failing_job_class]
-      expect(instance.errors.first).to be_kind_of(Array)
+      expect(instance.errors.first).to be_a(Array)
     end
   end
 

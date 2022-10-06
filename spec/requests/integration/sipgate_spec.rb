@@ -463,7 +463,7 @@ RSpec.describe 'Integration Sipgate', type: :request do
       authenticated_as(agent)
       get '/api/v1/cti/log', as: :json
       expect(@response).to have_http_status(:ok)
-      expect(json_response['list']).to be_a_kind_of(Array)
+      expect(json_response['list']).to be_a(Array)
       expect(json_response['list'].count).to eq(6)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['User']).to be_truthy

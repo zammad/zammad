@@ -25,7 +25,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
 
       get '/api/v1/signshow'
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect('no valid session').to eq(json_response['error'])
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_falsey
@@ -39,7 +39,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       post '/api/v1/signin', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Need fingerprint param!')
       expect(json_response['config']).to be_falsey
       expect(controller.session[:user_device_fingerprint]).to be_falsey
@@ -65,7 +65,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = { fingerprint: 'my_finger_print', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
@@ -91,7 +91,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = {}
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
 
       check_notification do
@@ -115,7 +115,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = { fingerprint: 'my_finger_print' }
       get '/api/v1/signshow', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['session']).to be_truthy
       expect('user-device-admin').to eq(json_response['session']['login'])
       expect(json_response['config']).to be_truthy
@@ -142,7 +142,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = {}
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       expect(controller.session[:user_device_fingerprint]).to eq('my_finger_print')
 
       check_notification do
@@ -220,14 +220,14 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(2)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_truthy
 
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
 
       check_notification do
 
@@ -248,7 +248,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = { fingerprint: 'my_finger_print_II' }
       get '/api/v1/signshow', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['session']).to be_truthy
       expect('user-device-admin').to eq(json_response['session']['login'])
       expect(json_response['config']).to be_truthy
@@ -326,7 +326,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(1)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['config']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_truthy
@@ -365,7 +365,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(2)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       user_device_first = UserDevice.last
       sleep 2
 
@@ -388,7 +388,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(2)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       user_device_last = UserDevice.last
       expect(user_device_first.id).to eq(user_device_last.id)
       expect(user_device_first.updated_at.to_s).to eq(user_device_last.updated_at.to_s)
@@ -415,7 +415,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(2)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
       user_device_last = UserDevice.last
       expect(user_device_first.id).to eq(user_device_last.id)
       expect(user_device_last.updated_at > user_device_first.updated_at).to be_truthy
@@ -455,7 +455,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(1)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
 
     end
 
@@ -482,7 +482,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: agent.id).count).to eq(1)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
     end
 
     it 'does login index with agent with basic auth (09)' do
@@ -519,7 +519,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: agent.id).count).to eq(1)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
 
     end
 
@@ -547,7 +547,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: agent.id).count).to eq(0)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['config']).to be_truthy
 
@@ -571,7 +571,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       params = {}
       get '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Array)
+      expect(json_response).to be_a(Array)
 
       check_notification do
 
@@ -620,7 +620,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       post '/api/v1/signin', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('fingerprint is 198 chars but can only be 160 chars!')
       expect(json_response['config']).to be_falsey
       expect(controller.session[:user_device_fingerprint]).to be_falsey
@@ -663,7 +663,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       end
 
       expect(UserDevice.where(user_id: admin.id).count).to eq(1)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_nil
     end
 
@@ -677,7 +677,7 @@ RSpec.describe 'User Device', type: :request, sends_notification_emails: true, p
       post '/api/v1/form_config', params: params, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_falsey
       expect(json_response['endpoint']).to be_truthy
       expect(controller.session[:user_device_fingerprint]).to be_falsey

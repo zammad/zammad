@@ -38,7 +38,7 @@ RSpec.describe 'Overviews', type: :request do
       authenticated_as(agent, password: 'wrong password')
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:unauthorized)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid BasicAuth credentials')
     end
 
@@ -68,13 +68,13 @@ RSpec.describe 'Overviews', type: :request do
       authenticated_as(admin)
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview')
 
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview_1')
     end
@@ -139,7 +139,7 @@ RSpec.describe 'Overviews', type: :request do
       authenticated_as(admin)
       post '/api/v1/overviews_prio', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['success']).to be(true)
 
       overview1.reload
@@ -178,7 +178,7 @@ RSpec.describe 'Overviews', type: :request do
       authenticated_as(admin)
       post '/api/v1/overviews', params: params, as: :json
       expect(response).to have_http_status(:created)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response['name']).to eq('Overview2')
       expect(json_response['link']).to eq('my_overview')
       expect(json_response['group_by']).to eq('priority')

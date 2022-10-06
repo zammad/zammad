@@ -55,7 +55,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
       authenticated_as(agent)
       post '/api/v1/integration/github/verify', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('Not authorized (user)!')
 
@@ -66,7 +66,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
 
       post '/api/v1/integration/github/verify', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
     end
@@ -83,7 +83,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
       post '/api/v1/integration/github', params: params, as: :json
       expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
       expect(json_response['response']).to eq([issue_data.deep_stringify_keys])
@@ -99,7 +99,7 @@ RSpec.describe 'GitHub', type: :request, required_envs: %w[GITHUB_ENDPOINT GITHU
       authenticated_as(agent)
       post '/api/v1/integration/github_ticket_update', params: params, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
       expect(json_response['result']).to eq('ok')
 
