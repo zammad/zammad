@@ -1772,14 +1772,6 @@ RSpec.describe Ticket, type: :model do
           .to(false)
       end
 
-      it 'deletes all related Karma::ActivityLogs on destroy' do
-        create_list(:'karma/activity_log', 3, o: ticket)
-
-        expect { ticket.destroy }
-          .to change { Karma::ActivityLog.exists?(object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
-          .to(false)
-      end
-
       it 'deletes all related RecentViews on destroy' do
         create_list(:recent_view, 3, o: ticket)
 

@@ -1135,9 +1135,6 @@ class UserTest < ActiveSupport::TestCase
     )
     assert_equal(1, UserDevice.where(user_id: agent1_id).count)
 
-    Karma::User.sync(agent1)
-    assert_equal(1, Karma::User.where(user_id: agent1_id).count)
-
     OnlineNotification.add(
       type:          'Assigned to you',
       object:        'Ticket',
@@ -1216,7 +1213,6 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal(0, UserDevice.where(user_id: agent1_id).count)
     assert_equal(0, Avatar.list('User', agent1_id, false).count)
-    assert_equal(0, Karma::User.where(user_id: agent1_id).count)
     assert_equal(0, OnlineNotification.where(user_id: agent1_id).count)
     assert_equal(0, Authorization.where(user_id: agent1_id).count)
     assert_equal(0, Cti::CallerId.where(user_id: agent1_id).count)

@@ -536,39 +536,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :report_profiles, :users, column: :created_by_id
     add_foreign_key :report_profiles, :users, column: :updated_by_id
 
-    create_table :karma_users do |t|
-      t.references :user,                           null: false
-      t.integer :score,                             null: false
-      t.string  :level, limit: 200, null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :karma_users, [:user_id], unique: true
-    add_foreign_key :karma_users, :users
-
-    create_table :karma_activities do |t|
-      t.string  :name,                limit: 200,    null: false
-      t.string  :description,         limit: 200,    null: false
-      t.integer :score,                              null: false
-      t.integer :once_ttl,                           null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :karma_activities, [:name], unique: true
-
-    create_table :karma_activity_logs do |t|
-      t.integer :o_id,                          null: false
-      t.integer :object_lookup_id,              null: false
-      t.references :user,                       null: false
-      t.integer :activity_id,                   null: false
-      t.integer :score,                         null: false
-      t.integer :score_total,                   null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :karma_activity_logs, [:user_id]
-    add_index :karma_activity_logs, [:created_at]
-    add_index :karma_activity_logs, %i[o_id object_lookup_id]
-    add_foreign_key :karma_activity_logs, :users
-    add_foreign_key :karma_activity_logs, :karma_activities, column: :activity_id
-
     create_table :webhooks do |t|
       t.column :name,                       :string, limit: 250,  null: false
       t.column :endpoint,                   :string, limit: 300,  null: false
@@ -601,9 +568,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
   end
 
   def self.down
-    drop_table :karma_activity_logs
-    drop_table :karma_activities
-    drop_table :karma_users
     drop_table :report_profiles
     drop_table :chat_sessions
     drop_table :chat_messages

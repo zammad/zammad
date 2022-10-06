@@ -4,7 +4,6 @@ set -eux
 
 rm app/assets/javascripts/app/controllers/layout_ref.coffee
 rm -rf app/assets/javascripts/app/views/layout_ref/
-rm app/assets/javascripts/app/controllers/karma.coffee
 
 # tests
 rm -rf test spec app/frontend/tests .cypress

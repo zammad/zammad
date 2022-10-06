@@ -34,9 +34,7 @@ class User < ApplicationModel
   has_one                 :chat_agent_created_by,  class_name: 'Chat::Agent', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
   has_one                 :chat_agent_updated_by,  class_name: 'Chat::Agent', foreign_key: :updated_by_id, dependent: :destroy, inverse_of: :updated_by
   has_many                :chat_sessions,          class_name: 'Chat::Session', dependent: :destroy
-  has_many                :karma_user,             class_name: 'Karma::User', dependent: :destroy
   has_many                :mentions,               dependent: :destroy
-  has_many                :karma_activity_logs,    class_name: 'Karma::ActivityLog', dependent: :destroy
   has_many                :cti_caller_ids,         class_name: 'Cti::CallerId', dependent: :destroy
   has_many                :customer_tickets,       class_name: 'Ticket', foreign_key: :customer_id, dependent: :destroy, inverse_of: :customer
   has_many                :owner_tickets,          class_name: 'Ticket', foreign_key: :owner_id, inverse_of: :owner
@@ -63,7 +61,7 @@ class User < ApplicationModel
 
   store :preferences
 
-  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :karma_activity_logs, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks, :overviews, :mentions
+  association_attributes_ignored :online_notifications, :templates, :taskbars, :user_devices, :chat_sessions, :cti_caller_ids, :text_modules, :customer_tickets, :owner_tickets, :created_recent_views, :chat_agents, :data_privacy_tasks, :overviews, :mentions
 
   activity_stream_permission 'admin.user'
 

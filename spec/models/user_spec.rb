@@ -1121,8 +1121,6 @@ RSpec.describe User, type: :model do
                      'Chat::Agent'                        => { 'created_by_id' => 1, 'updated_by_id' => 1 },
                      'Chat::Session'                      => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
                      'Tag'                                => { 'created_by_id' => 0 },
-                     'Karma::User'                        => { 'user_id' => 0 },
-                     'Karma::ActivityLog'                 => { 'user_id' => 1 },
                      'RecentView'                         => { 'created_by_id' => 1 },
                      'KnowledgeBase::Answer::Translation' =>
                                                              { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -1162,7 +1160,6 @@ RSpec.describe User, type: :model do
       online_notification   = create(:online_notification, user: user)
       taskbar               = create(:taskbar, user: user)
       user_device           = create(:user_device, user: user)
-      karma_activity_log    = create(:karma_activity_log, user: user)
       cti_caller_id         = create(:cti_caller_id, user: user)
       authorization         = create(:twitter_authorization, user: user)
       recent_view           = create(:recent_view, created_by: user)
@@ -1211,7 +1208,6 @@ RSpec.describe User, type: :model do
       expect { online_notification.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { taskbar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { user_device.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-      expect { karma_activity_log.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { cti_caller_id.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { authorization.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { recent_view.reload }.to raise_exception(ActiveRecord::RecordNotFound)

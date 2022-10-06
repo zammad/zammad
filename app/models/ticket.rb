@@ -10,7 +10,6 @@ class Ticket < ApplicationModel
   include HasTags
   include HasSearchIndexBackend
   include HasOnlineNotifications
-  include HasKarmaActivityLog
   include HasLinks
   include HasObjectManagerAttributes
   include HasTaskbars

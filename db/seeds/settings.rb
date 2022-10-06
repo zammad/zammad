@@ -4754,65 +4754,7 @@ Setting.create_if_not_exists(
   state:       'Transaction::CtiCallerIdDetection',
   frontend:    false
 )
-Setting.create_if_not_exists(
-  title:       __('Defines transaction backend.'),
-  name:        '9200_karma',
-  area:        'Transaction::Backend::Async',
-  description: __('Defines the transaction backend which creates the karma score.'),
-  options:     {},
-  state:       'Transaction::Karma',
-  frontend:    false
-)
-Setting.create_if_not_exists(
-  title:       __('Defines karma levels.'),
-  name:        'karma_levels',
-  area:        'Core::Karma',
-  description: __('Defines the karma levels.'),
-  options:     {},
-  state:       [
-    {
-      name:  __('Beginner'),
-      start: 0,
-      end:   499,
-    },
-    {
-      name:  __('Newbie'),
-      start: 500,
-      end:   1999,
-    },
-    {
-      name:  __('Intermediate'),
-      start: 2000,
-      end:   4999,
-    },
-    {
-      name:  __('Professional'),
-      start: 5000,
-      end:   6999,
-    },
-    {
-      name:  __('Expert'),
-      start: 7000,
-      end:   8999,
-    },
-    {
-      name:  __('Master'),
-      start: 9000,
-      end:   18_999,
-    },
-    {
-      name:  __('Evangelist'),
-      start: 19_000,
-      end:   49_999,
-    },
-    {
-      name:  __('Hero'),
-      start: 50_000,
-      end:   nil,
-    },
-  ],
-  frontend:    false
-)
+
 Setting.create_if_not_exists(
   title:       __('Set agent limit'),
   name:        'system_agent_limit',
