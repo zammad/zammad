@@ -12346,6 +12346,7 @@ output {
     margin-top: 6px;
     margin-bottom: 6px;
     border: 0;
+    border-top: 1px solid var(--background-modifier-border);
   }
 
   @include dark {
