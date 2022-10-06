@@ -841,7 +841,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "ari gukorwaho"
@@ -1595,17 +1594,19 @@ msgstr "kanama"
 msgid "Authentication"
 msgstr "kwemeza"
 
+#: lib/email_helper/probe.rb
+msgid "Authentication failed due to incorrect credentials."
+msgstr ""
+
+#: lib/email_helper/probe.rb
+msgid "Authentication failed due to incorrect username."
+msgstr ""
+
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
-msgid "Authentication failed!"
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "Authentication failed, invalid credentials!"
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "Authentication failed, username incorrect!"
-msgstr ""
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authentication failed."
+msgstr "kwemeza"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -1777,10 +1778,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
 msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Beginner"
-msgstr "umutangizi"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2035,10 +2032,6 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Can't find User for Token"
-msgstr ""
-
-#: app/models/ticket/number.rb
-msgid "Can't generate new ticket number!"
 msgstr ""
 
 #: app/models/ticket.rb
@@ -2714,12 +2707,6 @@ msgstr ""
 msgid "Connection refused"
 msgstr ""
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Connection refused!"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr ""
@@ -3107,7 +3094,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3592,10 +3579,6 @@ msgid "Defines if tickets should be closed if service is recovered."
 msgstr "Isobanura niba amatike ashobora"
 
 #: db/seeds/settings.rb
-msgid "Defines karma levels."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 
@@ -3860,10 +3843,6 @@ msgid "Defines the i-doit config."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the karma levels."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
 
@@ -3975,10 +3954,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the transaction backend to send agent notifications."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the transaction backend which creates the karma score."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4312,12 +4287,10 @@ msgstr "wizeye ko ushaka gusiba ibi bintu"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "wizeye ko ushaka gusiba ibi bintu"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "indangarubuga"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "umukoro/inshingano zishingiye ku ndangarubuga"
@@ -4429,13 +4402,13 @@ msgstr "gukosora"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "hindura umukiriya"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationOrganization.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "hindura  ikigo"
 
@@ -5027,10 +5000,6 @@ msgstr ""
 msgid "Escalation at (Update Time)"
 msgstr ""
 
-#: db/seeds/settings.rb
-msgid "Evangelist"
-msgstr "Umuvugabutumwa"
-
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 #, fuzzy
 #| msgid ""
@@ -5128,7 +5097,6 @@ msgid "Execution Time"
 msgstr "igihe cyo gushyira mu bikorwa"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/settings.rb
 msgid "Expert"
 msgstr "inzobere"
 
@@ -5908,10 +5876,6 @@ msgstr "Aha ureba incamake yihuse y'imikorere yawe n'iy'abandi bakozi"
 msgid "Here you will find the latest activities of your system."
 msgstr "Aha urahabona ibikorwa biheruka bya muhuza  yawe"
 
-#: db/seeds/settings.rb
-msgid "Hero"
-msgstr "Intwari"
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr ""
@@ -5956,17 +5920,6 @@ msgstr ""
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but no OTRS migrator is installed!"
-msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "Host not reachable!"
-msgstr ""
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Hostname not found!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
@@ -6499,10 +6452,6 @@ msgstr ""
 msgid "Integrations"
 msgstr "ibihujwe n'ibindi"
 
-#: db/seeds/settings.rb
-msgid "Intermediate"
-msgstr "Hagati y'ibintu bibiri"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Internal"
@@ -6566,10 +6515,6 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "Invalid oauth_token given!"
 msgstr ""
 
 #: lib/password_policy/min_length.rb
@@ -6740,14 +6685,6 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "kanda gusa ahagenwe hanyuma uvugurure amagambo arimo. Ryoherwa!"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Level"
-msgstr "Urwego rw'ibikorwa bya muntu"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Trends"
-msgstr "imihindagurikire ya karma"
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -6908,10 +6845,6 @@ msgstr "ihuza riheruka kuri"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
 msgstr "igihe cyanyuma Cyakoreshejwe "
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Latest updates"
-msgstr "Amakuru agezweho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
@@ -7226,10 +7159,6 @@ msgstr "werurwe"
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "Shyiraho akamenyestso nk'aho  byasomwe"
-
-#: db/seeds/settings.rb
-msgid "Master"
-msgstr "Umwigisha"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
@@ -7887,10 +7816,6 @@ msgstr ""
 msgid "New user?"
 msgstr "Ukoresha ikintu mushya"
 
-#: db/seeds/settings.rb
-msgid "Newbie"
-msgstr "umutangizi"
-
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -7935,10 +7860,6 @@ msgstr "nta byinjira"
 msgid "No Facebook app configured!"
 msgstr "Nomero %s yabonejwe"
 
-#: lib/external_credential/google.rb
-msgid "No Google app configured!"
-msgstr ""
-
 #: lib/external_credential/microsoft365.rb
 #, fuzzy
 #| msgid "No %s configured."
@@ -7958,12 +7879,6 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: lib/external_credential/twitter.rb
-#, fuzzy
-#| msgid "Not configured"
-msgid "No Twitter app configured!"
-msgstr "Ntabwo byashyizweho"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr ""
@@ -7976,19 +7891,11 @@ msgstr ""
 msgid "No categories"
 msgstr "nta byiciro bihari"
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No code for session found!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
 #| msgid "Save configuration"
 msgid "No configuration set."
 msgstr "bika iboneza"
-
-#: app/models/calendar.rb
-msgid "No configured business hours found!"
-msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -8056,10 +7963,6 @@ msgstr "nta tsinda rya hafi ku bakira bakurikira"
 msgid "No record found!"
 msgstr ""
 
-#: lib/external_credential/twitter.rb
-msgid "No request_token for session found!"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
@@ -8069,12 +7972,6 @@ msgstr ""
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "nta gisubizo cyabonetse"
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "No route to host!"
-msgstr ""
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
@@ -8202,7 +8099,6 @@ msgstr "Ntabwo byashyizweho"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "andika"
@@ -8477,7 +8373,7 @@ msgstr "Incamake nshya"
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/organization/routes.ts
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -8682,7 +8578,6 @@ msgstr "umubyeyi"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Ijambo banga"
@@ -9065,10 +8960,6 @@ msgstr "izamuka rya tike"
 #: db/seeds/settings.rb
 msgid "Product Name"
 msgstr "izina ry'igicuruzwa"
-
-#: db/seeds/settings.rb
-msgid "Professional"
-msgstr "umunyamwuga"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
@@ -9858,7 +9749,7 @@ msgstr "andika izina ukoresha cyangwa umwirondoro wa interineti yawe"
 msgid "Search…"
 msgstr "shakisha"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
@@ -10210,7 +10101,6 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "ikigo gihuriweho"
@@ -11067,6 +10957,12 @@ msgstr ""
 msgid "The connection to the server was lost."
 msgstr ""
 
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+msgid "The connection was refused."
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -11134,6 +11030,15 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "Imiterere y'ingingo"
 
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The hostname could not be found."
+msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
+
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -11185,6 +11090,12 @@ msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
+
+#: app/models/ticket/number.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The new ticket number could not be generated."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -11256,6 +11167,10 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "The product version could not be fetched."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
+#: lib/external_credential/twitter.rb
+msgid "The provided 'oauth_token' is invalid."
+msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -11345,6 +11260,10 @@ msgstr ""
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'code' is missing."
+msgstr ""
+
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'consumer_key' is missing."
 msgstr ""
@@ -11413,6 +11332,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "The required parameter 'permission' is missing."
+msgstr ""
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'request_token' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb
@@ -11554,6 +11477,10 @@ msgstr ""
 "byaba byiza ufashe agakombe k'ikawa. Umubare wose wa tike wivugurura ako "
 "kanya iyo umubare uzwi ubu urenze"
 
+#: app/models/calendar.rb
+msgid "There are no business hours configured."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
 #| msgid "There can be several reasons for the chat to not show up:"
@@ -11574,6 +11501,18 @@ msgstr ""
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
+#: lib/external_credential/google.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no Google app configured."
+msgstr "nta mukozi uri ku murongo"
+
+#: lib/external_credential/twitter.rb
+#, fuzzy
+#| msgid "Not configured"
+msgid "There is no Twitter app configured."
+msgstr "Ntabwo byashyizweho"
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
 msgstr "nta mukozi uri ku murongo"
@@ -11587,6 +11526,14 @@ msgid ""
 "There is no rollback of this deletion possible. If you are sure that you "
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no route to this host."
+msgstr "nta mukozi uri ku murongo"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
@@ -11734,6 +11681,12 @@ msgstr "Ijambo ry'ibanga ritemewe, rigomba kuba byibuze inyuguti %s!"
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "This host cannot be reached."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
 msgstr "Iyi ni Zammad verisiyo %s"
@@ -11858,7 +11811,7 @@ msgstr "kuqwa kane"
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "itike"
@@ -11995,7 +11948,7 @@ msgid "Ticket has %s viewers"
 msgstr "Incamake nshya"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Ticket information"
@@ -12694,10 +12647,6 @@ msgstr "Kohereza"
 msgid "Usage"
 msgstr "imikoreshereze"
 
-#: db/seeds/karma_activities.rb
-msgid "Usage of advanced features"
-msgstr "imikoreshereze y'ibintu biteye imbere/birenze "
-
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
@@ -13251,10 +13200,6 @@ msgstr "Ikaze!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "What affects your Zammad Karma?"
-msgstr "ni iki kibangamira uburyo bwihuse bw'ibikorwa  byawe?"
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "What can you do here?"
 msgstr "Ni iki wakora hano?"
@@ -13432,10 +13377,6 @@ msgstr ""
 msgid "Yes, start real import."
 msgstr "Yego, tangira kuvana ibintu hanze bya nyabyo"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You are an |%s|."
-msgstr "uri |%s|"
-
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
@@ -13548,15 +13489,6 @@ msgstr ""
 msgid "You can request your password"
 msgstr "Ushobora gusaba ijambo banga ryawe"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"You can set goals regarding the number of tickets you want to answer or "
-"close every day or every week. Reaching these self-set goals will result in "
-"bonus Karma. Zammad also tracks how many days/weeks you have attained your "
-"goals, and achieving ongoing \"streaks\" will similarly result in positive "
-"Karma."
-msgstr ""
-
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
 "You can switch between the backend for new attachments even on a system that "
@@ -13585,34 +13517,6 @@ msgstr ""
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 12h"
-msgstr ""
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 1h"
-msgstr "Wasubije itike mu gihe cy'isaha imwe"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 24h"
-msgstr ""
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 2h"
-msgstr ""
-
-#: db/seeds/karma_activities.rb
-msgid "You have closed a ticket"
-msgstr "wafunze itike"
-
-#: db/seeds/karma_activities.rb
-msgid "You have created a ticket"
-msgstr "wakoze itike"
-
-#: db/seeds/karma_activities.rb
-msgid "You have escalated tickets"
-msgstr "ufite amatike yazamutse/wazamuye amatike"
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "Nta %s zagenwe mufite aka kanya"
@@ -13628,10 +13532,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have not created a ticket yet."
 msgstr "Ntabwo urakora itike kugeza ubu"
-
-#: db/seeds/karma_activities.rb
-msgid "You have tickets that are over 2 days overdue"
-msgstr "ufite amatike arengeye iminsi ibiri ku gihe cyagenwe"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
@@ -13662,27 +13562,6 @@ msgid ""
 "continue?"
 msgstr ""
 "Ukoresha %s mu mwandiko ariko nta mugereke wometseho. Urashaka gukomeza?"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-#, fuzzy
-#| msgid ""
-#| "You |accumulate positive Karma| when you regularly answer and close "
-#| "tickets on time and when you use advanced features such as text modules, "
-#| "ticket reminders or tagging tickets. Zammad |Karma will decrease| when "
-#| "you have re-opend tickets, escalated tickets or tickets that are two or "
-#| "more days overdue."
-msgid ""
-"You |accumulate positive Karma| when you regularly answer and close tickets "
-"on time and when you use advanced features such as text modules, ticket "
-"reminders, or tagging tickets. Zammad |Karma will decrease| when you have re-"
-"opened tickets, escalated tickets, or tickets that are two or more days "
-"overdue."
-msgstr ""
-"Ukusanya/ubona Karma nziza mu gihe usubiza buri gihe kandi ugafunfa amatike "
-"ku gihe n'igihe ukoresheje ibintu byateye imbere nk'uburyo bwo kwandika. "
-"kwibutsa amatike no kuyashyiraho utumenyetso. Zammad Karma izagabanuka mu "
-"gihe wongeye gufungura amatike, amatike yazamutse cyangwa amatike arengeje "
-"iminsi ibiri ku gihe igenwe."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #, fuzzy
@@ -13799,14 +13678,6 @@ msgstr ""
 msgid "Your connection is not private"
 msgstr ""
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your current level"
-msgstr "urwego rwawe ugezeho"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your karma is |%s|."
-msgstr "karma yawe ni |%s|"
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
@@ -13866,16 +13737,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Zammad Image Service"
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/karma.coffee
-msgid "Zammad Karma"
-msgstr "karma ya Zammad"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"Zammad Karma is a powerful tool that tracks and visualizes your productivity."
-msgstr ""
-"Karma ya Zammad ni igikoresho gikomeye kigufasha kubona neza umusaruro wawe"
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -14447,14 +14308,6 @@ msgstr "ni kimwe"
 msgid "just now"
 msgstr "Aka kanya"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last month"
-msgstr ""
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last week"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "left"
 msgstr ""
@@ -14962,6 +14815,96 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#~ msgid "Beginner"
+#~ msgstr "umutangizi"
+
+#~ msgid "Evangelist"
+#~ msgstr "Umuvugabutumwa"
+
+#~ msgid "Hero"
+#~ msgstr "Intwari"
+
+#~ msgid "Intermediate"
+#~ msgstr "Hagati y'ibintu bibiri"
+
+#~ msgid "Karma Level"
+#~ msgstr "Urwego rw'ibikorwa bya muntu"
+
+#~ msgid "Karma Trends"
+#~ msgstr "imihindagurikire ya karma"
+
+#~ msgid "Latest updates"
+#~ msgstr "Amakuru agezweho"
+
+#~ msgid "Master"
+#~ msgstr "Umwigisha"
+
+#~ msgid "Newbie"
+#~ msgstr "umutangizi"
+
+#~ msgid "Professional"
+#~ msgstr "umunyamwuga"
+
+#~ msgid "Usage of advanced features"
+#~ msgstr "imikoreshereze y'ibintu biteye imbere/birenze "
+
+#~ msgid "What affects your Zammad Karma?"
+#~ msgstr "ni iki kibangamira uburyo bwihuse bw'ibikorwa  byawe?"
+
+#~ msgid "You are an |%s|."
+#~ msgstr "uri |%s|"
+
+#~ msgid "You have answered a ticket within 1h"
+#~ msgstr "Wasubije itike mu gihe cy'isaha imwe"
+
+#~ msgid "You have closed a ticket"
+#~ msgstr "wafunze itike"
+
+#~ msgid "You have created a ticket"
+#~ msgstr "wakoze itike"
+
+#~ msgid "You have escalated tickets"
+#~ msgstr "ufite amatike yazamutse/wazamuye amatike"
+
+#~ msgid "You have tickets that are over 2 days overdue"
+#~ msgstr "ufite amatike arengeye iminsi ibiri ku gihe cyagenwe"
+
+#, fuzzy
+#~| msgid ""
+#~| "You |accumulate positive Karma| when you regularly answer and close "
+#~| "tickets on time and when you use advanced features such as text modules, "
+#~| "ticket reminders or tagging tickets. Zammad |Karma will decrease| when "
+#~| "you have re-opend tickets, escalated tickets or tickets that are two or "
+#~| "more days overdue."
+#~ msgid ""
+#~ "You |accumulate positive Karma| when you regularly answer and close "
+#~ "tickets on time and when you use advanced features such as text modules, "
+#~ "ticket reminders, or tagging tickets. Zammad |Karma will decrease| when "
+#~ "you have re-opened tickets, escalated tickets, or tickets that are two or "
+#~ "more days overdue."
+#~ msgstr ""
+#~ "Ukusanya/ubona Karma nziza mu gihe usubiza buri gihe kandi ugafunfa "
+#~ "amatike ku gihe n'igihe ukoresheje ibintu byateye imbere nk'uburyo bwo "
+#~ "kwandika. kwibutsa amatike no kuyashyiraho utumenyetso. Zammad Karma "
+#~ "izagabanuka mu gihe wongeye gufungura amatike, amatike yazamutse cyangwa "
+#~ "amatike arengeje iminsi ibiri ku gihe igenwe."
+
+#~ msgid "Your current level"
+#~ msgstr "urwego rwawe ugezeho"
+
+#~ msgid "Your karma is |%s|."
+#~ msgstr "karma yawe ni |%s|"
+
+#~ msgid "Zammad Karma"
+#~ msgstr "karma ya Zammad"
+
+#~ msgid ""
+#~ "Zammad Karma is a powerful tool that tracks and visualizes your "
+#~ "productivity."
+#~ msgstr ""
+#~ "Karma ya Zammad ni igikoresho gikomeye kigufasha kubona neza umusaruro "
+#~ "wawe"
 
 #, fuzzy
 #~| msgid "Loading..."

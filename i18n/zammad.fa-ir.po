@@ -788,7 +788,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "فعال"
@@ -1510,17 +1509,23 @@ msgstr "آگوست"
 msgid "Authentication"
 msgstr "احراز هویت"
 
-#: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
-msgid "Authentication failed!"
-msgstr "تصدیق هویت موفق نبود!"
-
 #: lib/email_helper/probe.rb
-msgid "Authentication failed, invalid credentials!"
+#, fuzzy
+#| msgid "Authentication failed, invalid credentials!"
+msgid "Authentication failed due to incorrect credentials."
 msgstr "تصدیق هویت موفق نبود٬ نام‌کاربری یا رمز عبور نامعتبر!"
 
 #: lib/email_helper/probe.rb
-msgid "Authentication failed, username incorrect!"
+#, fuzzy
+#| msgid "Authentication failed, username incorrect!"
+msgid "Authentication failed due to incorrect username."
 msgstr "تصدیق هویت موفق نبود٬ نام‌کاربری اشتباه!"
+
+#: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "Authentication failed!"
+msgid "Authentication failed."
+msgstr "تصدیق هویت موفق نبود!"
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -1687,10 +1692,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
 msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Beginner"
-msgstr "تازه کار"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -1914,10 +1915,6 @@ msgstr "امکان حذف وجود ندارد٬ آبجکت دارای ارجاع
 #: app/controllers/application_controller/authenticates.rb
 msgid "Can't find User for Token"
 msgstr "امکان یافتن کاربر برای توکن وجود ندارد"
-
-#: app/models/ticket/number.rb
-msgid "Can't generate new ticket number!"
-msgstr "امکان ایجاد شماره تیکت جدید وجود ندارد!"
 
 #: app/models/ticket.rb
 msgid "Can't merge ticket with itself!"
@@ -2558,12 +2555,6 @@ msgstr "ارتباط مجددا برقرار شد"
 msgid "Connection refused"
 msgstr "خودداری از برقراری ارتباط"
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Connection refused!"
-msgstr "خودداری از برقراری ارتباط!"
-
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "تست برقراری ارتباط موفقیت‌آمیز بود"
@@ -2951,7 +2942,7 @@ msgstr "آدرس سفارشی تنظیم نشده است"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3409,10 +3400,6 @@ msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines karma levels."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 
@@ -3650,10 +3637,6 @@ msgid "Defines the i-doit config."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the karma levels."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
 
@@ -3749,10 +3732,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the transaction backend to send agent notifications."
-msgstr ""
-
-#: db/seeds/settings.rb
-msgid "Defines the transaction backend which creates the karma score."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4073,12 +4052,10 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 "آیا واقعا میخواهید قابلیت مشاهده این یادداشت را به حالت عمومی تغییر دهید؟"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "دامنه"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "انتساب بر اساس اسم دامنه"
@@ -4191,13 +4168,13 @@ msgstr "ویرایش"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "ویرایش مشتری"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationOrganization.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "ويرايش سازمان"
 
@@ -4747,10 +4724,6 @@ msgstr "زمان دگرسپاری‌ (زمان اولین پاسخ)"
 msgid "Escalation at (Update Time)"
 msgstr "زمان دگرسپاری‌ (زمان به‌روزرسانی)"
 
-#: db/seeds/settings.rb
-msgid "Evangelist"
-msgstr ""
-
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
@@ -4834,7 +4807,6 @@ msgid "Execution Time"
 msgstr "زمان اجرا"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/settings.rb
 msgid "Expert"
 msgstr "پیشرفته"
 
@@ -5581,10 +5553,6 @@ msgstr ""
 msgid "Here you will find the latest activities of your system."
 msgstr "در این قسمت آخرین رخدادهای سیستم را مشاهده می کنید."
 
-#: db/seeds/settings.rb
-msgid "Hero"
-msgstr "قهرمان"
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "سلام! کدامیک از محصولات ما؟"
@@ -5630,17 +5598,6 @@ msgstr ""
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but no OTRS migrator is installed!"
 msgstr ""
-
-#: lib/email_helper/probe.rb
-msgid "Host not reachable!"
-msgstr "سرور میزبان دردسترس نیست!"
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Hostname not found!"
-msgstr "نام سرور میزبان یافت نشد!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
@@ -6123,10 +6080,6 @@ msgstr "عدد صحیح"
 msgid "Integrations"
 msgstr "ارتباط با سایر سیستم‌ها"
 
-#: db/seeds/settings.rb
-msgid "Intermediate"
-msgstr "متوسط"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Internal"
@@ -6190,10 +6143,6 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
-msgstr ""
-
-#: lib/external_credential/twitter.rb
-msgid "Invalid oauth_token given!"
 msgstr ""
 
 #: lib/password_policy/min_length.rb
@@ -6354,14 +6303,6 @@ msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "در محدوده مشخص شده کلیک کنید و ترجمه خود را وارد نمائید!"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Level"
-msgstr "سطح مشتری مداری"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Trends"
-msgstr "مشتری مداری"
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -6515,10 +6456,6 @@ msgstr "آخرین همسان‌سازی در"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
 msgstr "آخرین استفاده"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Latest updates"
-msgstr "آخرین به‌روزرسانی‌ها"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
@@ -6825,10 +6762,6 @@ msgstr "مارس"
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Mark all as read"
 msgstr "همه موارد خوانده شد"
-
-#: db/seeds/settings.rb
-msgid "Master"
-msgstr "Master"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
@@ -7470,10 +7403,6 @@ msgstr ""
 msgid "New user?"
 msgstr "کاربر جدید؟"
 
-#: db/seeds/settings.rb
-msgid "Newbie"
-msgstr "تازه‌کار"
-
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -7516,10 +7445,6 @@ msgstr "داده ای جهت نمایش وجود ندارد"
 msgid "No Facebook app configured!"
 msgstr "اپلیکیشن فیسبوک پیکربندی نشده!"
 
-#: lib/external_credential/google.rb
-msgid "No Google app configured!"
-msgstr ""
-
 #: lib/external_credential/microsoft365.rb
 #, fuzzy
 #| msgid "Not configured"
@@ -7539,10 +7464,6 @@ msgstr "بدون SSL"
 msgid "No Thanks!"
 msgstr "نه متشکرم!"
 
-#: lib/external_credential/twitter.rb
-msgid "No Twitter app configured!"
-msgstr "اپلیکیشن توییتر پیکربندی نشده!"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr "بدون پاسخ"
@@ -7555,19 +7476,11 @@ msgstr "دوربین یافت نشد."
 msgid "No categories"
 msgstr "بدون دسته‌بندی"
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No code for session found!"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
 #| msgid "Save configuration"
 msgid "No configuration set."
 msgstr "ذخیره تنظیمات"
-
-#: app/models/calendar.rb
-msgid "No configured business hours found!"
-msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -7635,10 +7548,6 @@ msgstr "برای هاست های زیر از پروکسی استفاده نشو�
 msgid "No record found!"
 msgstr ""
 
-#: lib/external_credential/twitter.rb
-msgid "No request_token for session found!"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
@@ -7648,12 +7557,6 @@ msgstr "نتایجی یافت نشد"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "نتایجی یافت نشد."
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "No route to host!"
-msgstr ""
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
@@ -7781,7 +7684,6 @@ msgstr "پیکربندی نشده"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "یادداشت"
@@ -8050,7 +7952,7 @@ msgstr "مرورکلی جدید"
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/organization/routes.ts
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -8249,7 +8151,6 @@ msgstr "اصلی"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "رمز عبور"
@@ -8615,10 +8516,6 @@ msgstr "پردازش دگرسپاری تیکت‌ها."
 #: db/seeds/settings.rb
 msgid "Product Name"
 msgstr "نام محصول"
-
-#: db/seeds/settings.rb
-msgid "Professional"
-msgstr "حرفه ای"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
@@ -9386,7 +9283,7 @@ msgstr "نام کاربری یا آدرس ایمیل خود را وارد نما
 msgid "Search…"
 msgstr "جستجو…"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
@@ -9713,7 +9610,6 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr "پیش‌نویس‌های اشتراکی برای این تیکت قابل انتخاب نیست."
 
 #: app/assets/javascripts/app/models/organization.coffee
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "سازمان به اشتراک گذاشته شده"
@@ -10548,6 +10444,14 @@ msgstr "نسخه جدید از سیستم در دسترس می باشد."
 msgid "The connection to the server was lost."
 msgstr ""
 
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "Connection refused"
+msgid "The connection was refused."
+msgstr "خودداری از برقراری ارتباط"
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -10610,6 +10514,15 @@ msgstr ""
 msgid "The format of the subject."
 msgstr "قالب موضوع."
 
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "The object could not be updated."
+msgid "The hostname could not be found."
+msgstr "آبجکت قابل بروزرسانی نبود."
+
 #: db/seeds/settings.rb
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
@@ -10657,6 +10570,12 @@ msgstr "آبجکت قابل بروزرسانی نبود."
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr ""
+
+#: app/models/ticket/number.rb
+#, fuzzy
+#| msgid "The tickets could not be merged."
+msgid "The new ticket number could not be generated."
+msgstr "تیکت‌ها قابل ادغام نیستند."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -10722,6 +10641,12 @@ msgstr ""
 #| msgid "The entry could not be created."
 msgid "The product version could not be fetched."
 msgstr "امکان ایجاداین ورودی وجود ندارد."
+
+#: lib/external_credential/twitter.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The provided 'oauth_token' is invalid."
+msgstr "تصویر با تغییر اندازه معتبر نیست."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -10813,6 +10738,12 @@ msgstr ""
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The required parameter 'code' is missing."
+msgstr "تصویر با تغییر اندازه معتبر نیست."
+
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'consumer_key' is missing."
 msgstr ""
@@ -10887,6 +10818,12 @@ msgstr ""
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The required parameter 'permission' is missing."
+msgstr "تصویر با تغییر اندازه معتبر نیست."
+
+#: lib/external_credential/twitter.rb
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The required parameter 'request_token' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
 #: app/controllers/users_controller.rb
@@ -11022,6 +10959,10 @@ msgid ""
 "known number is surpassed."
 msgstr ""
 
+#: app/models/calendar.rb
+msgid "There are no business hours configured."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There are several possible reasons why the chat won't show up:"
 msgstr ""
@@ -11038,6 +10979,18 @@ msgstr "یک پیش‌نویس وجود دارد. آیا تمایل دارید �
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "یک محتوا وجود دارد. آیا تمایل دارید آن را بازنویسی کنید؟"
 
+#: lib/external_credential/google.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no Google app configured."
+msgstr "هیچ کارشناسی آنلاین نیست."
+
+#: lib/external_credential/twitter.rb
+#, fuzzy
+#| msgid "No Twitter app configured!"
+msgid "There is no Twitter app configured."
+msgstr "اپلیکیشن توییتر پیکربندی نشده!"
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
 msgstr "هیچ کارشناسی آنلاین نیست."
@@ -11053,6 +11006,14 @@ msgid ""
 msgstr ""
 "پس از این حذف٬ امکان بازگشت وجود ندارد. اگر از ادامه کار اطمینان دارید لطفا "
 "کلمه \"%s\" را وارد نمایید."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "There is no route to this host."
+msgstr "هیچ کارشناسی آنلاین نیست."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
@@ -11194,6 +11155,12 @@ msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s ک
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: lib/email_helper/probe.rb
+#, fuzzy
+#| msgid "The object could not be created."
+msgid "This host cannot be reached."
+msgstr "آبجکت قابل ایجاد نبود."
+
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
 msgstr "نسخه سیستم پشتیبانی %s است"
@@ -11304,7 +11271,7 @@ msgstr "پنجشنبه"
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "تیکت"
@@ -11435,7 +11402,7 @@ msgid "Ticket has %s viewers"
 msgstr "مرور کلی تیکت"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Ticket information"
@@ -12114,10 +12081,6 @@ msgstr "در حال بارگزاری"
 msgid "Usage"
 msgstr "استفاده"
 
-#: db/seeds/karma_activities.rb
-msgid "Usage of advanced features"
-msgstr "کاربرد ویژگی‌های پیشرفته"
-
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
@@ -12626,10 +12589,6 @@ msgstr "خوش آمدید!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "What affects your Zammad Karma?"
-msgstr "چه چیزی روی روحیه مشتری مداری شما را تحت تاثیر قرار داده ؟"
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "What can you do here?"
 msgstr "راهنمای این بخش؟"
@@ -12785,10 +12744,6 @@ msgstr "بله"
 msgid "Yes, start real import."
 msgstr ""
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You are an |%s|."
-msgstr "شما یک |%s| هستید."
-
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
@@ -12884,15 +12839,6 @@ msgstr ""
 msgid "You can request your password"
 msgstr "میتوانید رمز عبور خود را درخواست نمایید"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"You can set goals regarding the number of tickets you want to answer or "
-"close every day or every week. Reaching these self-set goals will result in "
-"bonus Karma. Zammad also tracks how many days/weeks you have attained your "
-"goals, and achieving ongoing \"streaks\" will similarly result in positive "
-"Karma."
-msgstr ""
-
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
 "You can switch between the backend for new attachments even on a system that "
@@ -12921,34 +12867,6 @@ msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشت
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 12h"
-msgstr "شما یک تیکت را ظرف مدت ۱۲ ساعت پاسخ دادید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 1h"
-msgstr "شما یک تیکت را ظرف مدت یک ساعت پاسخ دادید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 24h"
-msgstr "شما یک تیکت را ظرف مدت ۲۴ ساعت پاسخ دادید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 2h"
-msgstr "شما یک تیکت را ظرف مدت ۲ ساعت پاسخ دادید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have closed a ticket"
-msgstr "شما یک تیکت را بستید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have created a ticket"
-msgstr "شما یک تیکت ایجاد کردید"
-
-#: db/seeds/karma_activities.rb
-msgid "You have escalated tickets"
-msgstr "شما تیکت دگرسپاری شده دارید"
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "شما درحال حاضر هیچ %s تنظیم شده‌ای ندارید."
@@ -12964,10 +12882,6 @@ msgstr "شما هیچ پیام خوانده نشده‌ای ندارید"
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have not created a ticket yet."
 msgstr "شما هنوز هیچ تیکتی ایجاد نکردید."
-
-#: db/seeds/karma_activities.rb
-msgid "You have tickets that are over 2 days overdue"
-msgstr "شما تیکت‌هایی دارید که بیش از ۲ روز معطل مانده‌اند"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
@@ -12991,15 +12905,6 @@ msgstr ""
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
-msgstr ""
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"You |accumulate positive Karma| when you regularly answer and close tickets "
-"on time and when you use advanced features such as text modules, ticket "
-"reminders, or tagging tickets. Zammad |Karma will decrease| when you have re-"
-"opened tickets, escalated tickets, or tickets that are two or more days "
-"overdue."
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -13109,14 +13014,6 @@ msgstr ""
 msgid "Your connection is not private"
 msgstr "ارتباط شما خصوصی نیست"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your current level"
-msgstr "سطح فعلی شما"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your karma is |%s|."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -13162,15 +13059,6 @@ msgstr "میز خدمت"
 #: db/seeds/settings.rb
 msgid "Zammad Image Service"
 msgstr ""
-
-#: app/assets/javascripts/app/controllers/karma.coffee
-msgid "Zammad Karma"
-msgstr "Zammad Karma"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"Zammad Karma is a powerful tool that tracks and visualizes your productivity."
-msgstr "روحیه مشتری مداری یک ابزار قدرتمند برای پیگیری و ترسیم کارایی شماست."
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -13731,14 +13619,6 @@ msgstr "یکسان است"
 msgid "just now"
 msgstr "همین حالا"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last month"
-msgstr "ماه گذشته"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last week"
-msgstr "هفته گذشته"
-
 #: db/seeds/settings.rb
 msgid "left"
 msgstr ""
@@ -14222,6 +14102,96 @@ msgstr "...از تمام محدوده متن"
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
+#~ msgid "Beginner"
+#~ msgstr "تازه کار"
+
+#~ msgid "Can't generate new ticket number!"
+#~ msgstr "امکان ایجاد شماره تیکت جدید وجود ندارد!"
+
+#~ msgid "Connection refused!"
+#~ msgstr "خودداری از برقراری ارتباط!"
+
+#~ msgid "Hero"
+#~ msgstr "قهرمان"
+
+#~ msgid "Host not reachable!"
+#~ msgstr "سرور میزبان دردسترس نیست!"
+
+#~ msgid "Hostname not found!"
+#~ msgstr "نام سرور میزبان یافت نشد!"
+
+#~ msgid "Intermediate"
+#~ msgstr "متوسط"
+
+#~ msgid "Karma Level"
+#~ msgstr "سطح مشتری مداری"
+
+#~ msgid "Karma Trends"
+#~ msgstr "مشتری مداری"
+
+#~ msgid "Latest updates"
+#~ msgstr "آخرین به‌روزرسانی‌ها"
+
+#~ msgid "Master"
+#~ msgstr "Master"
+
+#~ msgid "Newbie"
+#~ msgstr "تازه‌کار"
+
+#~ msgid "Professional"
+#~ msgstr "حرفه ای"
+
+#~ msgid "Usage of advanced features"
+#~ msgstr "کاربرد ویژگی‌های پیشرفته"
+
+#~ msgid "What affects your Zammad Karma?"
+#~ msgstr "چه چیزی روی روحیه مشتری مداری شما را تحت تاثیر قرار داده ؟"
+
+#~ msgid "You are an |%s|."
+#~ msgstr "شما یک |%s| هستید."
+
+#~ msgid "You have answered a ticket within 12h"
+#~ msgstr "شما یک تیکت را ظرف مدت ۱۲ ساعت پاسخ دادید"
+
+#~ msgid "You have answered a ticket within 1h"
+#~ msgstr "شما یک تیکت را ظرف مدت یک ساعت پاسخ دادید"
+
+#~ msgid "You have answered a ticket within 24h"
+#~ msgstr "شما یک تیکت را ظرف مدت ۲۴ ساعت پاسخ دادید"
+
+#~ msgid "You have answered a ticket within 2h"
+#~ msgstr "شما یک تیکت را ظرف مدت ۲ ساعت پاسخ دادید"
+
+#~ msgid "You have closed a ticket"
+#~ msgstr "شما یک تیکت را بستید"
+
+#~ msgid "You have created a ticket"
+#~ msgstr "شما یک تیکت ایجاد کردید"
+
+#~ msgid "You have escalated tickets"
+#~ msgstr "شما تیکت دگرسپاری شده دارید"
+
+#~ msgid "You have tickets that are over 2 days overdue"
+#~ msgstr "شما تیکت‌هایی دارید که بیش از ۲ روز معطل مانده‌اند"
+
+#~ msgid "Your current level"
+#~ msgstr "سطح فعلی شما"
+
+#~ msgid "Zammad Karma"
+#~ msgstr "Zammad Karma"
+
+#~ msgid ""
+#~ "Zammad Karma is a powerful tool that tracks and visualizes your "
+#~ "productivity."
+#~ msgstr ""
+#~ "روحیه مشتری مداری یک ابزار قدرتمند برای پیگیری و ترسیم کارایی شماست."
+
+#~ msgid "last month"
+#~ msgstr "ماه گذشته"
+
+#~ msgid "last week"
+#~ msgstr "هفته گذشته"
+
 #, fuzzy
 #~| msgid "Loading…"
 #~ msgid "Loading..."
@@ -14265,9 +14235,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~| msgid "m"
 #~ msgid "me"
 #~ msgstr "دقیقه"
-
-#~ msgid "The resized image is invalid."
-#~ msgstr "تصویر با تغییر اندازه معتبر نیست."
 
 #, fuzzy
 #~| msgid "Copy to clipboard: Ctrl+C, Enter"

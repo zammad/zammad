@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-05 09:08+0000\n"
+"PO-Revision-Date: 2022-10-06 13:02+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -405,7 +405,7 @@ msgstr "%s-Ordner"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s groups to %s roles assignments"
-msgstr "%s Gruppen zu %s Rolle Zuweisung"
+msgstr "%s Gruppen zu %s Rollen Zuweisungen"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
@@ -928,7 +928,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Active"
 msgstr "Aktiv"
@@ -1109,7 +1108,7 @@ msgstr "Administrations-Oberfläche"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 msgid "Admin Password Login"
-msgstr "Admin Passwort Login"
+msgstr "Administrator-Passwort-Anmeldung"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1251,7 +1250,7 @@ msgstr "Wiedereröffnen von Tickets innerhalb einer bestimmten Zeit erlauben."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
-msgstr "Hinzufügen von neuen Tags für Anwender erlauben."
+msgstr "Hinzufügen von neuen Tags durch Benutzer erlauben."
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
@@ -1596,7 +1595,7 @@ msgstr "Mindestens ein Benutzer muss administrative Berechtigungen besitzen."
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
-msgstr "Weitere Daten anhängen"
+msgstr "Weitere Datei anhängen"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach files"
@@ -1684,17 +1683,19 @@ msgstr "August"
 msgid "Authentication"
 msgstr "Authentifizierung"
 
+#: lib/email_helper/probe.rb
+msgid "Authentication failed due to incorrect credentials."
+msgstr ""
+"Die Authentifizierung ist fehlgeschlagen wegen fehlerhafter Zugangsdaten."
+
+#: lib/email_helper/probe.rb
+msgid "Authentication failed due to incorrect username."
+msgstr ""
+"Die Authentifizierung ist fehlgeschlagen wegen eines falschen Benutzernamens."
+
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
-msgid "Authentication failed!"
-msgstr "Authentifizierung fehlgeschlagen!"
-
-#: lib/email_helper/probe.rb
-msgid "Authentication failed, invalid credentials!"
-msgstr "Authentifizierung fehlgeschlagen, fehlerhafte Zugangsdaten!"
-
-#: lib/email_helper/probe.rb
-msgid "Authentication failed, username incorrect!"
-msgstr "Authentifizierung fehlgeschlagen, falscher Benutzername!"
+msgid "Authentication failed."
+msgstr "Authentifizierung fehlgeschlagen."
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -1863,10 +1864,6 @@ msgstr "Bevor Sie einen Benutzer erwähnen, wählen Sie bitte eine Gruppe aus."
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
 msgstr "Anfang der weitergeleiteten Nachricht"
-
-#: db/seeds/settings.rb
-msgid "Beginner"
-msgstr "Anfänger"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2104,10 +2101,6 @@ msgstr "Löschen nicht möglich, das Objekt hat Referenzen."
 #: app/controllers/application_controller/authenticates.rb
 msgid "Can't find User for Token"
 msgstr "Benutzer zu Token nicht gefunden"
-
-#: app/models/ticket/number.rb
-msgid "Can't generate new ticket number!"
-msgstr "Generierung von neuer Ticket-Nummer fehlgeschlagen!"
 
 #: app/models/ticket.rb
 msgid "Can't merge ticket with itself!"
@@ -2764,12 +2757,6 @@ msgstr "Verbindung wieder aufgebaut"
 msgid "Connection refused"
 msgstr "Verbindung verweigert"
 
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Connection refused!"
-msgstr "Verbindung verweigert!"
-
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
 msgstr "Verbindungstest erfolgreich"
@@ -3169,7 +3156,7 @@ msgstr "Benutzerdefinierte Adresse nicht gesetzt"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/controllers/time_accountings_controller.rb
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/roles.rb db/seeds/ticket_article_senders.rb
 #: lib/excel_sheet/ticket.rb
@@ -3209,7 +3196,7 @@ msgstr "Dunkel"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
 msgid "Dark Mode"
-msgstr "Dark Mode"
+msgstr "Dunkler Modus"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -3427,11 +3414,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication password."
-msgstr "Definiert das Passwort für den Kayako Endpunkt."
+msgstr "Definiert das Anmelde-Passwort für den Kayako-Endpunkt."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication user."
-msgstr "Definiert den zu authentifizierenden Endpunkt-Benutzer von Kayako."
+msgstr "Definiert den Anmelde-Benutzer für den Kayako-Endpunkt."
 
 #: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
@@ -3689,10 +3676,6 @@ msgstr "Definiert, ob Tickets per Webformular erstellt werden können."
 #: db/seeds/settings.rb
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "Definiert ob ein Ticket beim \"recover\" geschlossen werden soll."
-
-#: db/seeds/settings.rb
-msgid "Defines karma levels."
-msgstr "Definiert Karma-Levels."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
@@ -3988,10 +3971,6 @@ msgid "Defines the i-doit config."
 msgstr "Definiert die i-doit-Konfiguration."
 
 #: db/seeds/settings.rb
-msgid "Defines the karma levels."
-msgstr "Definiert die Karma-Level."
-
-#: db/seeds/settings.rb
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "Definiert die Loglevel für verschiedene Log-Aktionen des Sequencers."
 
@@ -4106,10 +4085,6 @@ msgid "Defines the transaction backend to send agent notifications."
 msgstr ""
 "Definiert das Transaktions-Backend zum Versand von Agenten-"
 "Benachrichtigungen."
-
-#: db/seeds/settings.rb
-msgid "Defines the transaction backend which creates the karma score."
-msgstr "Definiert das Transaktions-Backend zur Berechnung des Karmas."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4430,12 +4405,10 @@ msgstr ""
 "Wollen Sie die Sichtbarkeit dieses Artikels wirklich auf \"öffentlich\" "
 "ändern?"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
 msgstr "Domain"
 
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain based assignment"
 msgstr "Domainbasierte Zuweisung"
@@ -4551,13 +4524,13 @@ msgstr "Bearbeiten"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 msgid "Edit Customer"
 msgstr "Kunden bearbeiten"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationOrganization.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue
 msgid "Edit Organization"
 msgstr "Organisation bearbeiten"
 
@@ -5165,10 +5138,6 @@ msgstr "Eskalation am (Erstreaktionszeit)"
 msgid "Escalation at (Update Time)"
 msgstr "Eskalation am (Aktualisierungszeit)"
 
-#: db/seeds/settings.rb
-msgid "Evangelist"
-msgstr "Evangelist"
-
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
@@ -5218,7 +5187,7 @@ msgstr "Beispiel"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Example CSV file for download."
-msgstr "Beispiel CSV Datei zum Download."
+msgstr "Beispiel-CSV-Datei zum Download."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
@@ -5249,7 +5218,7 @@ msgstr "Exchange-Integration"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "Exchange integration for contacts management."
-msgstr "Exchange Integration für Kontaktverwaltung."
+msgstr "Exchange-Integration für Kontaktverwaltung."
 
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -5269,7 +5238,6 @@ msgid "Execution Time"
 msgstr "Ausführungszeit"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: db/seeds/settings.rb
 msgid "Expert"
 msgstr "Experte"
 
@@ -5856,7 +5824,7 @@ msgstr "Gruppenauswahl für Ticket-Erstellung"
 
 #: db/seeds/settings.rb
 msgid "Group selection for ticket creation"
-msgstr "Gruppenauswahl für Ticket-Erstellung"
+msgstr "Gruppenauswahl für die Ticket-Erstellung"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -6017,10 +5985,6 @@ msgstr ""
 msgid "Here you will find the latest activities of your system."
 msgstr "Hier werden die letzen Aktivitäten aufgeführt."
 
-#: db/seeds/settings.rb
-msgid "Hero"
-msgstr "Held"
-
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "Hi! Welches von unseren Produkten?"
@@ -6066,17 +6030,6 @@ msgstr "Host gefunden, scheint jedoch keine OTRS-Installation zu sein!"
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but no OTRS migrator is installed!"
 msgstr "Host gefunden, der OTRS-Migrator ist nicht installiert!"
-
-#: lib/email_helper/probe.rb
-msgid "Host not reachable!"
-msgstr "Host nicht erreichbar!"
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_kayako_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "Hostname not found!"
-msgstr "Hostname nicht gefunden!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
@@ -6296,7 +6249,7 @@ msgstr "Nachricht ignorieren"
 
 #: db/seeds/settings.rb
 msgid "Ignore escalation/SLA information for import."
-msgstr "Eskalations/SLA-Informationen beim Import ignorieren."
+msgstr "Eskalations-/SLA-Informationen beim Import ignorieren."
 
 #: db/seeds/settings.rb
 msgid "Ignore system_id"
@@ -6476,7 +6429,7 @@ msgstr "Störung"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 msgid "Include attachments of the article?"
-msgstr "Anhänge des Artikels mit beifügen?"
+msgstr "Anhänge des Artikels beifügen?"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
@@ -6607,10 +6560,6 @@ msgstr "Integer-Feld"
 msgid "Integrations"
 msgstr "Integrationen"
 
-#: db/seeds/settings.rb
-msgid "Intermediate"
-msgstr "Vordiplom"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Internal"
@@ -6677,10 +6626,6 @@ msgstr "Ungültige Linkstruktur (Objekt → LinkType)"
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
 msgstr "Ungültige Link-Struktur (Objekt)"
-
-#: lib/external_credential/twitter.rb
-msgid "Invalid oauth_token given!"
-msgstr "Ungültiges oauth_token angegeben!"
 
 #: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
@@ -6860,14 +6805,6 @@ msgid ""
 msgstr ""
 "Einfach in die Markierung klicken und den Text direkt bearbeiten. Enjoy!"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Level"
-msgstr "Karma-Level"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Karma Trends"
-msgstr "Karma-Trends"
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -6939,7 +6876,7 @@ msgstr "LDAP-Integration"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid "LDAP integration for user management."
-msgstr "LDAP integration für Benutzer Verwaltung."
+msgstr "LDAP-Integration für Benutzerverwaltung."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Labels"
@@ -7019,10 +6956,6 @@ msgstr "Letzter Abgleich um"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
 msgstr "Zuletzt verwendet"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Latest updates"
-msgstr "Aktuellste Änderungen"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
@@ -7330,13 +7263,9 @@ msgstr "März"
 msgid "Mark all as read"
 msgstr "Alle als gelesen markieren"
 
-#: db/seeds/settings.rb
-msgid "Master"
-msgstr "Meister"
-
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
-msgstr "mit allen folgenden Kriterien übereinstimmen"
+msgstr "Mit allen folgenden Kriterien übereinstimmen"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -7724,7 +7653,7 @@ msgstr "Name Identifizierer Format"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
-msgstr "Name des Übermitteln-Knopf"
+msgstr "Name für den Absende-Knopf"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Navigate through article"
@@ -7982,10 +7911,6 @@ msgstr ""
 msgid "New user?"
 msgstr "Neuer Benutzer?"
 
-#: db/seeds/settings.rb
-msgid "Newbie"
-msgstr "Neuling"
-
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -8028,10 +7953,6 @@ msgstr "Keine Einträge"
 msgid "No Facebook app configured!"
 msgstr "Keine Facebook-App konfiguriert!"
 
-#: lib/external_credential/google.rb
-msgid "No Google app configured!"
-msgstr "Keine Google-App konfiguriert!"
-
 #: lib/external_credential/microsoft365.rb
 msgid "No Microsoft 365 app configured!"
 msgstr "Keine Microsoft 365 App konfiguriert!"
@@ -8049,10 +7970,6 @@ msgstr "kein SSL"
 msgid "No Thanks!"
 msgstr "Nein danke!"
 
-#: lib/external_credential/twitter.rb
-msgid "No Twitter app configured!"
-msgstr "Keine Twitter-App konfiguriert!"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "No answers"
 msgstr "Keine Antworten"
@@ -8065,17 +7982,9 @@ msgstr "Keine Kamera gefunden."
 msgid "No categories"
 msgstr "Keine Kategorien"
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
-msgid "No code for session found!"
-msgstr "Kein Sitzungscode gefunden!"
-
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
 msgstr "Keine Konfiguration vorhanden."
-
-#: app/models/calendar.rb
-msgid "No configured business hours found!"
-msgstr "Keine konfigurierten Geschäftszeiten gefunden!"
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -8133,10 +8042,6 @@ msgstr "Kein Proxy für die folgenden Hosts."
 msgid "No record found!"
 msgstr "Kein Eintrag gefunden!"
 
-#: lib/external_credential/twitter.rb
-msgid "No request_token for session found!"
-msgstr "Kein 'request_token' für Sitzung gefunden!"
-
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
@@ -8146,12 +8051,6 @@ msgstr "Keine Ergebnisse gefunden"
 #: app/views/layouts/knowledge_base.html.erb
 msgid "No results were found."
 msgstr "Es wurden keine Ergebnisse gefunden."
-
-#: app/controllers/import_freshdesk_controller.rb
-#: app/controllers/import_otrs_controller.rb
-#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
-msgid "No route to host!"
-msgstr "Keine Route zum Host!"
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
@@ -8283,7 +8182,6 @@ msgstr "Nicht konfiguriert"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "Notiz"
@@ -8552,7 +8450,7 @@ msgstr "Reihenfolge der Übersichten"
 #: app/controllers/time_accountings_controller.rb
 #: app/frontend/apps/mobile/pages/organization/routes.ts
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
@@ -8752,7 +8650,6 @@ msgstr "Eltern"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#: app/frontend/shared/components/Form/Form.stories.ts
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
 msgid "Password"
 msgstr "Passwort"
@@ -8837,7 +8734,7 @@ msgstr "Um Tickets zu erstellen und Hilfe zu erhalten."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Perform action of the following"
-msgstr "führe folgende Aktionen aus"
+msgstr "Führe folgende Aktionen aus"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
@@ -8880,7 +8777,7 @@ msgstr "Telefon (ausgehend)"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Phone Extension to Agent Mapping"
-msgstr "Telefon-Extension zu Agent Zuordnung"
+msgstr "Zuordnung von Telefon-Extension zu Agent"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
@@ -9118,10 +9015,6 @@ msgstr "Ticket-Eskalationen verarbeiten."
 #: db/seeds/settings.rb
 msgid "Product Name"
 msgstr "Produktname"
-
-#: db/seeds/settings.rb
-msgid "Professional"
-msgstr "Profi"
 
 #: app/assets/javascripts/app/controllers/profile.coffee
 msgid "Profile"
@@ -9645,7 +9538,7 @@ msgstr "Migration rückgängig machen"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Rollback of channel migration succeeded!"
-msgstr "Zurückrollen der Kanal-Migration ist erfolgt!"
+msgstr "Rücknahme der Kanal-Migration ist erfolgt!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Rows"
@@ -9912,7 +9805,7 @@ msgstr "Suchen oder E-Mail-Adresse angeben…"
 msgid "Search…"
 msgstr "Suchen…"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationCustomer.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Secondary organizations"
@@ -10248,7 +10141,6 @@ msgstr ""
 "Der gemeinsamer Entwurf kann für dieses Ticket nicht ausgewählt werden."
 
 #: app/assets/javascripts/app/models/organization.coffee
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "Shared organization"
 msgstr "Teilende Organisation"
@@ -10323,7 +10215,7 @@ msgstr "Vorherigen Tab anzeigen"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
-msgstr "Anzeige des Chat sobald dieser bereit ist."
+msgstr "Anzeige des Chats sobald dieser bereit ist."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
@@ -11086,6 +10978,12 @@ msgstr ""
 msgid "The connection to the server was lost."
 msgstr "Die Verbindung zum Server wurde verloren."
 
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+msgid "The connection was refused."
+msgstr "Die Verbindung wurde abgelehnt."
+
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid ""
 "The data must be in the comma separated values (CSV) format and saved as "
@@ -11155,7 +11053,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "The format of the subject."
-msgstr "Das Format für die Betreff/Titel Zeil."
+msgstr "Das Format für den Betreff."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_kayako_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+msgid "The hostname could not be found."
+msgstr "Der Hostname konnte nicht gefunden werden."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -11207,6 +11112,10 @@ msgstr "Die Sprache konnte nicht aktualisiert werden."
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Das Limit von %s darstellbaren Tickets wurde erreicht (%s verbleibend)"
+
+#: app/models/ticket/number.rb
+msgid "The new ticket number could not be generated."
+msgstr "Die neue Ticketnummer konnte nicht erzeugt werden."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "The notifcation could not be deleted."
@@ -11270,6 +11179,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "The product version could not be fetched."
 msgstr "Die Produktversion konnte nicht geladen werden."
+
+#: lib/external_credential/twitter.rb
+msgid "The provided 'oauth_token' is invalid."
+msgstr "Das angegebene 'oauth_token' ist ungültig."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -11360,6 +11273,10 @@ msgstr "Der erforderliche Parameter 'client_id' fehlt."
 msgid "The required parameter 'client_secret' is missing."
 msgstr "Der erforderliche Parameter 'client_secret' fehlt."
 
+#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+msgid "The required parameter 'code' is missing."
+msgstr "Der erforderliche Parameter 'code' fehlt."
+
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'consumer_key' is missing."
 msgstr "Der erforderliche Parameter 'current_key' fehlt."
@@ -11430,6 +11347,10 @@ msgstr "Der erforderliche Parameter 'payload->screen' fehlt."
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "The required parameter 'permission' is missing."
 msgstr "Der erforderliche Parameter 'permission' fehlt."
+
+#: lib/external_credential/twitter.rb
+msgid "The required parameter 'request_token' is missing."
+msgstr "Der erforderliche Parameter 'request_token' fehlt."
 
 #: app/controllers/users_controller.rb
 msgid "The required parameter 'signup' is missing."
@@ -11569,6 +11490,10 @@ msgstr ""
 "die momentan bekannte Anzahl von Tickets überschritten wurde, wird die "
 "Gesamtzahl aktualisiert."
 
+#: app/models/calendar.rb
+msgid "There are no business hours configured."
+msgstr "Es sind keine Geschäftszeiten konfiguriert."
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There are several possible reasons why the chat won't show up:"
 msgstr "Es kann verschiedene Gründe haben warum der Chat nicht angezeigt wird:"
@@ -11585,6 +11510,14 @@ msgstr "Es ist bereits ein Entwurf vorhanden. Möchten Sie ihn überschreiben?"
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Es ist bereits Inhalt vorhanden. Möchten Sie diesen überschreiben?"
 
+#: lib/external_credential/google.rb
+msgid "There is no Google app configured."
+msgstr "Es ist keine Google-App konfiguriert."
+
+#: lib/external_credential/twitter.rb
+msgid "There is no Twitter app configured."
+msgstr "Es ist keine Twitter-App konfiguriert."
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "There is no agent online."
 msgstr "Es ist kein Agent online."
@@ -11600,6 +11533,12 @@ msgid ""
 msgstr ""
 "Dieser Löschvorgang kann nicht rückgängig gemacht werden. Wenn Sie sich "
 "sicher sind und fortfahren wollen, dann tippen Sie \"%s\" in das Feld."
+
+#: app/controllers/import_freshdesk_controller.rb
+#: app/controllers/import_otrs_controller.rb
+#: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
+msgid "There is no route to this host."
+msgstr "Es existiert keine Route zu diesem Host."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "There was no Knowledge Base created."
@@ -11736,9 +11675,13 @@ msgstr ""
 "Dieses Feld wurde nicht korrekt konfiguriert und kann nicht abgesendet "
 "werden."
 
+#: lib/email_helper/probe.rb
+msgid "This host cannot be reached."
+msgstr "Der Host kann nicht erreicht werden."
+
 #: app/assets/javascripts/app/views/version.jst.eco
 msgid "This is Zammad version %s"
-msgstr "Dies ist die Zammad Version %s"
+msgstr "Dies ist Zammad Version %s"
 
 #: db/seeds/settings.rb
 msgid "This is a default maintenance message. Click here to change."
@@ -11867,7 +11810,7 @@ msgstr "Donnerstag"
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts
 #: db/seeds/permissions.rb
 msgid "Ticket"
 msgstr "Ticket"
@@ -12003,7 +11946,7 @@ msgid "Ticket has %s viewers"
 msgstr "Ticket hat %s Zuschauer"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 msgid "Ticket information"
 msgstr "Ticket-Information"
 
@@ -12327,7 +12270,7 @@ msgstr "Heute"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Toggle dark mode"
-msgstr "Dark-Mode umschalten"
+msgstr "Dunklen Modus umschalten"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -12771,10 +12714,6 @@ msgstr "Hochladen"
 msgid "Usage"
 msgstr "Verwendung"
 
-#: db/seeds/karma_activities.rb
-msgid "Usage of advanced features"
-msgstr "Verwendung von erweiterten Funktionen"
-
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 msgid "Use custom option sort"
@@ -12836,11 +12775,11 @@ msgstr "Wird beim Verfassen eines Ticket-Artikels verwendet"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used when composing a text"
-msgstr "Verwendet wenn ein Text bearbeitet wird"
+msgstr "Verwendet beim Bearbeiten eines Textes"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Used when viewing a Ticket"
-msgstr "Verwendet wenn ein Ticket angesehen wird"
+msgstr "Verwendet beim Ansehen eines Tickets"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -12879,7 +12818,7 @@ msgstr "Benutzerfilter"
 
 #: db/seeds/settings.rb
 msgid "User Organization Selector - email"
-msgstr "Benutzerorganisationsauswahl - E-Mail"
+msgstr "Benutzer-Organisationsauswahl - E-Mail"
 
 #: db/seeds/permissions.rb
 msgid "User Preferences"
@@ -12955,7 +12894,7 @@ msgstr "Benutzer"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
-msgstr "Benutzer ohne LDAP-Gruppen"
+msgstr "Benutzer ohne zugewiesene LDAP-Gruppen"
 
 #: app/assets/javascripts/app/models/organization.coffee
 msgid ""
@@ -13322,13 +13261,9 @@ msgstr "Willkommen!"
 msgid "Welcome! Feel free to ask me a question!"
 msgstr "Willkommen! Stellen Sie mir gern eine Frage!"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "What affects your Zammad Karma?"
-msgstr "Was wirkt sich auf Ihr Zammad-Karma aus?"
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "What can you do here?"
-msgstr "Was können Sie hier machen?"
+msgstr "Was können Sie hier tun?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_in_process.coffee
 msgid ""
@@ -13498,10 +13433,6 @@ msgstr "Ja"
 msgid "Yes, start real import."
 msgstr "Ja, den echten Import starten."
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "You are an |%s|."
-msgstr "Sie sind ein |%s|."
-
 #: public/assets/chat/views/waiting.eco
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Sie sind in der Warteliste auf Position <strong>%s</strong>."
@@ -13626,20 +13557,6 @@ msgstr ""
 msgid "You can request your password"
 msgstr "Beantragen eines neuen Passworts"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"You can set goals regarding the number of tickets you want to answer or "
-"close every day or every week. Reaching these self-set goals will result in "
-"bonus Karma. Zammad also tracks how many days/weeks you have attained your "
-"goals, and achieving ongoing \"streaks\" will similarly result in positive "
-"Karma."
-msgstr ""
-"Sie können sich Ziele für die Anzahl der Tickets setzen, die Sie täglich "
-"oder wöchentlich beantworten oder abschließen möchten. Das Erreichen dieser "
-"selbst gesetzten Ziele führt zu einem Bonus-Karma. Zammad verfolgt auch, an "
-"wie vielen Tagen/Wochen Sie Ihre Ziele erreicht haben, und das Erreichen "
-"fortlaufender \"Streaks\" führt ebenfalls zu positivem Karma."
-
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 msgid ""
 "You can switch between the backend for new attachments even on a system that "
@@ -13671,34 +13588,6 @@ msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 "Sie besitzen nicht die notwendigen Berechtigungen, um diese Seite aufzurufen."
 
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 12h"
-msgstr "Sie haben ein Ticket innerhalb von 12 Stunden beantwortet"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 1h"
-msgstr "Sie haben ein Ticket innerhalb von 1h beantwortet"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 24h"
-msgstr "Sie haben ein Ticket innerhalb von 24 Stunden beantwortet"
-
-#: db/seeds/karma_activities.rb
-msgid "You have answered a ticket within 2h"
-msgstr "Sie haben ein Ticket innerhalb von 2 Stunden beantwortet"
-
-#: db/seeds/karma_activities.rb
-msgid "You have closed a ticket"
-msgstr "Sie haben ein Ticket geschlossen"
-
-#: db/seeds/karma_activities.rb
-msgid "You have created a ticket"
-msgstr "Sie haben ein Ticket erstellt"
-
-#: db/seeds/karma_activities.rb
-msgid "You have escalated tickets"
-msgstr "Sie haben eskalierte Tickets"
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "Sie haben derzeit kein konfiguriertes %s."
@@ -13714,12 +13603,6 @@ msgstr "Sie haben keine ungelesenen Nachrichten"
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have not created a ticket yet."
 msgstr "Sie haben noch kein Ticket erstellt."
-
-#: db/seeds/karma_activities.rb
-msgid "You have tickets that are over 2 days overdue"
-msgstr ""
-"Sie haben Tickets bei welchen die Wiedervorlage länger als 2 Tage erreicht "
-"ist"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
@@ -13748,20 +13631,6 @@ msgid ""
 msgstr ""
 "Sie haben %s im Text verwendet, jedoch hängt kein Anhang an. Dennoch "
 "fortfahren?"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"You |accumulate positive Karma| when you regularly answer and close tickets "
-"on time and when you use advanced features such as text modules, ticket "
-"reminders, or tagging tickets. Zammad |Karma will decrease| when you have re-"
-"opened tickets, escalated tickets, or tickets that are two or more days "
-"overdue."
-msgstr ""
-"Sie |sammeln positives Karma|, wenn Sie regelmäßig Tickets beantworten, "
-"Tickets rechtzeitig schließen und wenn Sie erweiterte Funktionen wie "
-"Textbausteine, Ticket Reminder oder Ticket-Tagging verwenden. Zammad |Karma "
-"nimmt ab|, wenn Tickets wiedereröffnet werden, Tickets eskalieren oder "
-"warten auf Wiedervorlage mehr als 2 Tage überfällig ist."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid ""
@@ -13830,7 +13699,7 @@ msgstr "Ihr Name"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
-msgstr "Neuer persönlicher Access Token"
+msgstr "Neuer persönlicher Zugangstoken"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -13883,14 +13752,6 @@ msgstr ""
 msgid "Your connection is not private"
 msgstr "Ihre Verbindung ist nicht sicher"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your current level"
-msgstr "Ihr aktuelles Level"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "Your karma is |%s|."
-msgstr "Ihr Karma ist |%s|."
-
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -13942,17 +13803,6 @@ msgstr "Zammad Helpdesk"
 #: db/seeds/settings.rb
 msgid "Zammad Image Service"
 msgstr "Zammad Image-Service"
-
-#: app/assets/javascripts/app/controllers/karma.coffee
-msgid "Zammad Karma"
-msgstr "Zammad-Karma"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid ""
-"Zammad Karma is a powerful tool that tracks and visualizes your productivity."
-msgstr ""
-"Zammad-Karma ist ein kraftvolles Werkzeug, welches Ihre Produktivität "
-"erfasst und visualisiert."
 
 #: lib/user_agent.rb
 msgid "Zammad User Agent"
@@ -14501,14 +14351,6 @@ msgstr "ist das gleiche"
 msgid "just now"
 msgstr "gerade eben"
 
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last month"
-msgstr "letzter Monat"
-
-#: app/assets/javascripts/app/views/karma/index.jst.eco
-msgid "last week"
-msgstr "letzte Woche"
-
 #: db/seeds/settings.rb
 msgid "left"
 msgstr "links"
@@ -14955,7 +14797,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr "|links| bedeutet |[Ticket#12345] Ein Betreff |"
+msgstr "|Links| bedeutet |[Ticket#12345] Ein Betreff |"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid ""
@@ -14970,7 +14812,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr "|rechts| bedeutet |Ein Betreff [Ticket#12345]|"
+msgstr "|Rechts| bedeutet |Ein Betreff [Ticket#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "…add object link URL"
@@ -14987,6 +14829,152 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Beginner"
+#~ msgstr "Anfänger"
+
+#~ msgid "Can't generate new ticket number!"
+#~ msgstr "Generierung von neuer Ticket-Nummer fehlgeschlagen!"
+
+#~ msgid "Connection refused!"
+#~ msgstr "Verbindung verweigert!"
+
+#~ msgid "Defines karma levels."
+#~ msgstr "Definiert Karma-Levels."
+
+#~ msgid "Defines the karma levels."
+#~ msgstr "Definiert die Karma-Level."
+
+#~ msgid "Defines the transaction backend which creates the karma score."
+#~ msgstr "Definiert das Transaktions-Backend zur Berechnung des Karmas."
+
+#~ msgid "Evangelist"
+#~ msgstr "Evangelist"
+
+#~ msgid "Hero"
+#~ msgstr "Held"
+
+#~ msgid "Host not reachable!"
+#~ msgstr "Host nicht erreichbar!"
+
+#~ msgid "Hostname not found!"
+#~ msgstr "Hostname nicht gefunden!"
+
+#~ msgid "Intermediate"
+#~ msgstr "Vordiplom"
+
+#~ msgid "Invalid oauth_token given!"
+#~ msgstr "Ungültiges oauth_token angegeben!"
+
+#~ msgid "Karma Level"
+#~ msgstr "Karma-Level"
+
+#~ msgid "Karma Trends"
+#~ msgstr "Karma-Trends"
+
+#~ msgid "Latest updates"
+#~ msgstr "Aktuellste Änderungen"
+
+#~ msgid "Master"
+#~ msgstr "Meister"
+
+#~ msgid "Newbie"
+#~ msgstr "Neuling"
+
+#~ msgid "No code for session found!"
+#~ msgstr "Kein Sitzungscode gefunden!"
+
+#~ msgid "No configured business hours found!"
+#~ msgstr "Keine konfigurierten Geschäftszeiten gefunden!"
+
+#~ msgid "No request_token for session found!"
+#~ msgstr "Kein 'request_token' für Sitzung gefunden!"
+
+#~ msgid "Professional"
+#~ msgstr "Profi"
+
+#~ msgid "Usage of advanced features"
+#~ msgstr "Verwendung von erweiterten Funktionen"
+
+#~ msgid "What affects your Zammad Karma?"
+#~ msgstr "Was wirkt sich auf Ihr Zammad-Karma aus?"
+
+#~ msgid "You are an |%s|."
+#~ msgstr "Sie sind ein |%s|."
+
+#~ msgid ""
+#~ "You can set goals regarding the number of tickets you want to answer or "
+#~ "close every day or every week. Reaching these self-set goals will result "
+#~ "in bonus Karma. Zammad also tracks how many days/weeks you have attained "
+#~ "your goals, and achieving ongoing \"streaks\" will similarly result in "
+#~ "positive Karma."
+#~ msgstr ""
+#~ "Sie können sich Ziele für die Anzahl der Tickets setzen, die Sie täglich "
+#~ "oder wöchentlich beantworten oder abschließen möchten. Das Erreichen "
+#~ "dieser selbst gesetzten Ziele führt zu einem Bonus-Karma. Zammad verfolgt "
+#~ "auch, an wie vielen Tagen/Wochen Sie Ihre Ziele erreicht haben, und das "
+#~ "Erreichen fortlaufender \"Streaks\" führt ebenfalls zu positivem Karma."
+
+#~ msgid "You have answered a ticket within 12h"
+#~ msgstr "Sie haben ein Ticket innerhalb von 12 Stunden beantwortet"
+
+#~ msgid "You have answered a ticket within 1h"
+#~ msgstr "Sie haben ein Ticket innerhalb von 1h beantwortet"
+
+#~ msgid "You have answered a ticket within 24h"
+#~ msgstr "Sie haben ein Ticket innerhalb von 24 Stunden beantwortet"
+
+#~ msgid "You have answered a ticket within 2h"
+#~ msgstr "Sie haben ein Ticket innerhalb von 2 Stunden beantwortet"
+
+#~ msgid "You have closed a ticket"
+#~ msgstr "Sie haben ein Ticket geschlossen"
+
+#~ msgid "You have created a ticket"
+#~ msgstr "Sie haben ein Ticket erstellt"
+
+#~ msgid "You have escalated tickets"
+#~ msgstr "Sie haben eskalierte Tickets"
+
+#~ msgid "You have tickets that are over 2 days overdue"
+#~ msgstr ""
+#~ "Sie haben Tickets bei welchen die Wiedervorlage länger als 2 Tage "
+#~ "erreicht ist"
+
+#~ msgid ""
+#~ "You |accumulate positive Karma| when you regularly answer and close "
+#~ "tickets on time and when you use advanced features such as text modules, "
+#~ "ticket reminders, or tagging tickets. Zammad |Karma will decrease| when "
+#~ "you have re-opened tickets, escalated tickets, or tickets that are two or "
+#~ "more days overdue."
+#~ msgstr ""
+#~ "Sie |sammeln positives Karma|, wenn Sie regelmäßig Tickets beantworten, "
+#~ "Tickets rechtzeitig schließen und wenn Sie erweiterte Funktionen wie "
+#~ "Textbausteine, Ticket Reminder oder Ticket-Tagging verwenden. Zammad |"
+#~ "Karma nimmt ab|, wenn Tickets wiedereröffnet werden, Tickets eskalieren "
+#~ "oder warten auf Wiedervorlage mehr als 2 Tage überfällig ist."
+
+#~ msgid "Your current level"
+#~ msgstr "Ihr aktuelles Level"
+
+#~ msgid "Your karma is |%s|."
+#~ msgstr "Ihr Karma ist |%s|."
+
+#~ msgid "Zammad Karma"
+#~ msgstr "Zammad-Karma"
+
+#~ msgid ""
+#~ "Zammad Karma is a powerful tool that tracks and visualizes your "
+#~ "productivity."
+#~ msgstr ""
+#~ "Zammad-Karma ist ein kraftvolles Werkzeug, welches Ihre Produktivität "
+#~ "erfasst und visualisiert."
+
+#~ msgid "last month"
+#~ msgstr "letzter Monat"
+
+#~ msgid "last week"
+#~ msgstr "letzte Woche"
 
 #~ msgid "Loading..."
 #~ msgstr "Laden..."
