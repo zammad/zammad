@@ -6353,6 +6353,7 @@ a.list-group-item.active > .badge,
 }
 
 .activity-message {
+  color: inherit;
   flex: 1;
   min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
 
