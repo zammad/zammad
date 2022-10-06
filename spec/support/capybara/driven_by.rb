@@ -76,7 +76,7 @@ RSpec.configure do |config|
     #    which may cause overhead and Net::OpenTimeout errors.
     WebMock.disable! if !use_vcr
     # rspec-retry
-    example.run_with_retry retry: 3, exceptions_to_retry: [Net::OpenTimeout, Net::ReadTimeout]
+    example.run_with_retry retry: 3, exceptions_to_retry: [Net::OpenTimeout, Net::ReadTimeout, Selenium::WebDriver::Error::UnknownError]
     WebMock.enable! if !use_vcr
   end
 end
