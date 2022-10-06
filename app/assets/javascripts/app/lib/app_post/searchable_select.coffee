@@ -17,7 +17,8 @@ class App.SearchableSelect extends Spine.Controller
     'shown.bs.dropdown':                              'onDropdownShown'
     'hidden.bs.dropdown':                             'onDropdownHidden'
     'keyup .js-input':                                'onKeyUp'
-    'click .js-remove':                               'removeThisToken'
+    'click .js-remove:not(.is-disabled)':             'removeThisToken'
+    'show.bs.dropdown':                               'onDropdownShow'
 
   elements:
     '.js-dropdown':               'dropdown'
@@ -51,6 +52,7 @@ class App.SearchableSelect extends Spine.Controller
 
       # create tokens and attribute values
       values = []
+      disabled = @attribute.disabled
       if relation
         for dataId in @attribute.value
           if App[relation] && App[relation].exists dataId
@@ -61,6 +63,7 @@ class App.SearchableSelect extends Spine.Controller
               name: name
               value: value
               object: relation
+              disabled: disabled
             )
 
       else
@@ -69,6 +72,7 @@ class App.SearchableSelect extends Spine.Controller
           tokens += App.view('generic/token')(
             name: value
             value: value
+            disabled: disabled
           )
 
       @attribute.value = values
@@ -158,6 +162,10 @@ class App.SearchableSelect extends Spine.Controller
         if option.children
           html += @renderAllOptions("#{parentName} — #{option.name}", option.children, level+1)
     html
+
+  onDropdownShow: (event)  =>
+    if @attribute.disabled
+      event.preventDefault()
 
   onDropdownShown: =>
     @input.on('click', @stopPropagation)
