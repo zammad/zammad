@@ -50,7 +50,11 @@ export default defineConfig(({ mode, command }) => {
   })
 
   if (isStory) {
-    svgPlugin.configResolved?.({ command: 'build' } as ResolvedConfig)
+    // paching svg plugin for stories, because it's not working with ssr
+    const svgConfigResolved = svgPlugin.configResolved as (
+      cfg: ResolvedConfig,
+    ) => void
+    svgConfigResolved({ command: 'build' } as ResolvedConfig)
     delete svgPlugin.configResolved
     const { load } = svgPlugin
     svgPlugin.load = function fakeLoad(id) {
