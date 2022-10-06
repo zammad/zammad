@@ -34,7 +34,6 @@ $mobileNavigationWidthOpen: 220px;
   --interactive-muted-active: hsl(210, 4%, 71%);
   --interactive-muted-alt: hsl(197, 19%, 78%);
   --interactive-muted-alt-selected: hsl(206, 7%, 37%);
-  --input-disabled: hsl(210, 3%, 93%);
   --background-primary: hsl(210, 17%, 98%);
   --background-primary-alt: hsl(197, 16%, 94%);
   --background-secondary: white;
@@ -109,7 +108,6 @@ $mobileNavigationWidthOpen: 220px;
   --interactive-muted-active: hsl(213, 3%, 35%);
   --interactive-muted-alt: hsl(209, 5%, 35%);
   --interactive-muted-alt-selected: hsl(205, 4%, 75%);
-  --input-disabled: hsl(230, 4%, 20%);
   --background-primary: hsl(230, 5%, 19%);
   --background-primary-alt: hsl(230, 5%, 21%);
   --background-secondary: hsl(230, 5%, 23%);
@@ -2326,7 +2324,7 @@ textarea,
   &.is-disabled, // .is-disabled should not be used - legacy support
   &[disabled],
   &[readonly] {
-    background: var(--input-disabled);
+    opacity: 0.38;
 
     &:focus,
     &.focus {
@@ -2337,7 +2335,6 @@ textarea,
   &.is-disabled, // .is-disabled should not be used
   &[disabled] {
     cursor: not-allowed;
-    opacity: 1;
   }
 }
 
@@ -2405,8 +2402,7 @@ input.time.time--12 {
 
 .richtext.form-control [contenteditable='false'] {
   cursor: not-allowed;
-  opacity: 1;
-  background: var(--input-disabled);
+  opacity: 0.38;
   border-color: var(--border);
   padding: unset;
 
@@ -10644,7 +10640,7 @@ output {
 
   &[disabled] + label {
     cursor: not-allowed;
-    background: var(--input-disabled);
+    opacity: 0.38;
     border-color: var(--border);
   }
 
