@@ -26,6 +26,7 @@ class App.Theme extends App.Controller
   toggleDarkMode: =>
     @set(
       theme: if document.documentElement.dataset.theme == 'dark' then 'light' else 'dark'
+      save: true
     )
 
   set: (data) ->
