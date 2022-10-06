@@ -1,4 +1,3 @@
-$task-state-pending-color: hsl(206, 7%, 28%);
 $high-priority-color: hsl(360, 71%, 60%);
 $low-priority-color: hsl(200, 68%, 73%);
 $minWidth: 1024px;
@@ -70,6 +69,7 @@ $mobileNavigationWidthOpen: 220px;
   --superbad-color: hsl(19, 90%, 51%);
   --ghost-color: hsl(0, 0%, 74%);
   --danger-color: hsl(0, 65%, 55%);
+  --pending-color: hsl(206, 7%, 28%);
   --elevation-stroke: 0 1px hsl(210, 7%, 94%);
   --elevation-low: 0 1px 5px hsla(205, 30%, 30%, 0.1);
   --elevation-high: 0 1px 14px hsla(208, 95%, 3%, 0.25);
@@ -144,6 +144,7 @@ $mobileNavigationWidthOpen: 220px;
   --superbad-color: hsl(19, 90%, 51%);
   --ghost-color: hsl(0, 0%, 50%);
   --danger-color: hsl(0, 82%, 59%);
+  --pending-color: hsl(205, 1%, 44%);
   --elevation-stroke: 0 1px hsla(0, 0%, 0%, 0.13);
   --elevation-low: 0 1px 5px hsla(0, 0%, 0%, 0.15);
   --elevation-high: 0 1px 14px hsla(0, 0%, 0%, 0.25);
@@ -4792,15 +4793,15 @@ footer {
 
 // pending: stays blue
 // .nav-tab.task-state-pending.is-active {
-//   background-color: $task-state-pending-color;
+//   background-color: var(--pending-color);
 // }
 
 .task-state-pending-color {
-  color: $task-state-pending-color;
+  color: var(--text-muted);
 }
 
 .icon-task-state.pending {
-  fill: $task-state-pending-color;
+  fill: var(--pending-color);
 }
 
 .state-badge {
