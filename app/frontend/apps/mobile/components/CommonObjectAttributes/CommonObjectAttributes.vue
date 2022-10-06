@@ -55,7 +55,8 @@ const isEmpty = (value: unknown) => {
   if (Array.isArray(value)) {
     return value.length === 0
   }
-  return !value
+  // null or undefined or ''
+  return value == null || value === ''
 }
 
 const session = useSessionStore()
@@ -95,11 +96,7 @@ const fields = computed<AttributeField[]>(() => {
         return false
       }
 
-      // hide all falsy non-boolean values without value
-      if (
-        !['boolean', 'active'].includes(attribute.dataType) &&
-        isEmpty(value)
-      ) {
+      if (isEmpty(value)) {
         return false
       }
 

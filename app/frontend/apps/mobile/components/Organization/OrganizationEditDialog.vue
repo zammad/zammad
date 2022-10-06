@@ -4,15 +4,12 @@
 import { defineFormSchema } from '@mobile/form/composable'
 import Form from '@shared/components/Form/Form.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox'
 import type { ConfidentTake } from '@shared/types/utils'
-import {
-  // EnumObjectManagerObjects,
-  type OrganizationInput,
-} from '@shared/graphql/types'
+import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import type { OrganizationQuery } from '@shared/graphql/types'
 import { closeDialog } from '@shared/composables/useDialog'
 import { MutationHandler } from '@shared/server/apollo/handler'
+import { type FormData } from '@shared/components/Form/types'
 import { shallowRef } from 'vue'
 import type { FormKitNode } from '@formkit/core'
 import { useOrganizationUpdateMutation } from '@mobile/entities/organization/graphql/mutations/update.api'
@@ -24,85 +21,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// TODO get from backend
 const schema = defineFormSchema([
   {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        type: 'checkbox',
-        name: 'shared',
-        props: {
-          variant: CheckboxVariant.Switch,
-        },
-        label: __('Shared organization'),
-        value: props.organization.shared,
-      },
-      {
-        type: 'checkbox',
-        name: 'domainAssignment',
-        props: {
-          variant: CheckboxVariant.Switch,
-        },
-        label: __('Domain based assignment'),
-        value: props.organization.domainAssignment,
-      },
-      // TODO disabled based on domainAssignment
-      {
-        type: 'text',
-        name: 'domain',
-        label: __('Domain'),
-      },
-    ],
+    name: 'name',
+    required: true,
+    object: EnumObjectManagerObjects.Organization,
   },
   {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        type: 'textarea',
-        name: 'note',
-        label: __('Note'),
-        value: props.organization.note,
-      },
-    ],
+    screen: 'edit',
+    object: EnumObjectManagerObjects.Organization,
   },
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    children: [
-      {
-        type: 'checkbox',
-        name: 'active',
-        props: {
-          variant: CheckboxVariant.Switch,
-        },
-        label: __('Active'),
-        value: props.organization.active,
-      },
-    ],
-  },
-  // {
-  //   isLayout: true,
-  //   component: 'FormGroup',
-  //   children: [
-  //     {
-  //       screen: 'edit',
-  //       object: EnumObjectManagerObjects.Organization,
-  //     },
-  //   ],
-  // },
-  // {
-  //   isLayout: true,
-  //   component: 'FormGroup',
-  //   children: [
-  //     {
-  //       name: 'active',
-  //       object: EnumObjectManagerObjects.Organization,
-  //     },
-  //   ],
-  // },
 ])
 
 const updateQuery = new MutationHandler(useOrganizationUpdateMutation({}))
@@ -110,15 +38,43 @@ const formElement = shallowRef<{ formNode: FormKitNode }>()
 
 const submitForm = () => formElement.value?.formNode.submit()
 
-const saveOrganization = async (input: OrganizationInput) => {
+interface OrganizationForm {
+  domain: string
+  domain_assignment: boolean
+  note: string
+  name: string
+  shared: boolean
+  active: boolean
+}
+
+const initialValue = {
+  ...props.organization,
+  ...props.organization.objectAttributeValues?.reduce(
+    (acc, { attribute, value }) => ({ ...acc, [attribute.name]: value }),
+    {},
+  ),
+}
+
+const saveOrganization = async (formData: FormData<OrganizationForm>) => {
+  const objectAttributeValues = props.organization.objectAttributeValues?.map(
+    ({ attribute }) => {
+      return {
+        name: attribute.name,
+        value: formData[attribute.name],
+      }
+    },
+  )
+
   const result = await updateQuery.send({
     id: props.organization.id,
     input: {
-      domain: input.domain,
-      domainAssignment: input.domainAssignment,
-      note: input.note,
-      shared: input.shared,
-      active: input.active,
+      name: formData.name,
+      domain: formData.domain,
+      domainAssignment: formData.domain_assignment,
+      note: formData.note,
+      shared: formData.shared,
+      active: formData.active,
+      objectAttributeValues,
     },
   })
   // close only if there are no errors
@@ -144,10 +100,10 @@ const saveOrganization = async (input: OrganizationInput) => {
       id="edit-organization"
       ref="formElement"
       class="w-full p-4"
-      :initial-values="props.organization"
       :schema="schema"
+      :initial-values="initialValue"
       use-object-attributes
-      @submit="saveOrganization($event as OrganizationInput)"
+      @submit="saveOrganization($event as FormData<OrganizationForm>)"
     />
   </CommonDialog>
 </template>

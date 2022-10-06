@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox'
 import { FieldResolverBoolean } from '../boolean'
 
 describe('FieldResolverBoolean', () => {
@@ -17,18 +18,13 @@ describe('FieldResolverBoolean', () => {
       label: 'Correct?',
       name: 'correct',
       props: {
-        options: [
-          {
-            label: 'no',
-            value: false,
-          },
-          {
-            label: 'yes',
-            value: true,
-          },
-        ],
+        translations: {
+          false: 'no',
+          true: 'yes',
+        },
+        variant: CheckboxVariant.Switch,
       },
-      type: 'select',
+      type: 'checkbox',
     })
   })
 })

@@ -8,8 +8,8 @@ import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButton
 import { QueryHandler } from '@shared/server/apollo/handler'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '@shared/stores/session'
-import { truthy } from '@shared/utils/helpers'
-import { useTicketQuery } from '../graphql/queries/ticket.api'
+import { useTicketQuery } from '../../graphql/queries/ticket.api'
+import { ticketInformationPlugins } from './plugins'
 
 const props = defineProps<{
   internalId: string
@@ -37,24 +37,24 @@ useHeader({
   title: __('Ticket information'),
 })
 
-const session = useSessionStore()
+const { hasPermission } = useSessionStore()
 
-const types = computed<ButtonPillOption[]>(() =>
-  [
-    {
-      label: __('Ticket'),
-      value: 'TicketInformationDetails',
-    },
-    session.hasPermission(['ticket.agent']) && {
-      label: __('Customer'),
-      value: 'TicketInformationCustomer',
-    },
-    ticket.value?.organization && {
-      label: __('Organization'),
-      value: 'TicketInformationOrganization',
-    },
-  ].filter(truthy),
-)
+const types = computed<ButtonPillOption[]>(() => {
+  return ticketInformationPlugins
+    .filter((plugin) => {
+      const permissions = plugin.route.meta?.requiredPermission
+      if (permissions && !hasPermission(permissions)) {
+        return false
+      }
+      return !plugin.condition || plugin.condition(ticket.value)
+    })
+    .map((plugins) => {
+      return {
+        label: plugins.label,
+        value: plugins.route.name,
+      }
+    })
+})
 </script>
 
 <template>

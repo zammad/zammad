@@ -5,7 +5,7 @@ module Gql::Mutations::Concerns::HandlesObjectAttributeValues
 
   included do
     def convert_object_attribute_values(params)
-      return if params[:object_attribute_values].blank?
+      return if !params.key?(:object_attribute_values)
 
       params[:object_attribute_values].each do |object_attribute|
         params[object_attribute[:name]] = object_attribute[:value]

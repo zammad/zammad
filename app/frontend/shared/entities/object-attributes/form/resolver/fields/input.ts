@@ -9,7 +9,7 @@ export class FieldResolverInput extends FieldResolver {
       case 'password':
         return 'password'
       case 'tel':
-        return 'telephone'
+        return 'tel'
       case 'email':
         return 'email'
       // TODO: what about the 'url' field type?

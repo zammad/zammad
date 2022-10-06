@@ -30,6 +30,7 @@ const editor = useEditor({
   editorProps: {
     attributes: {
       role: 'textbox',
+      name: props.context.node.name,
       'aria-labelledby': props.context.id,
       ...(!currentValue.value &&
         initialPlaceholder && { 'aria-placeholder': initialPlaceholder }),
@@ -82,6 +83,7 @@ watch(
       editorProps: {
         attributes: {
           role: 'textbox',
+          name: props.context.node.name,
           'aria-labelledby': id,
           ...(isEmpty && placeholder && { 'aria-placeholder': placeholder }),
         },

@@ -13,7 +13,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
 import { normalizeEdges } from '@shared/utils/helpers'
-import type { TicketById } from '../types/tickets'
+import type { TicketById } from '../../types/tickets'
 
 interface Props {
   internalId: number

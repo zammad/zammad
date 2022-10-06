@@ -2,6 +2,8 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
+import { ticketInformationRoutes } from './views/TicketInformation/plugins'
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/tickets/:internalId(\\d+)',
@@ -17,39 +19,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/tickets/:internalId(\\d+)/information',
-    component: () => import('./views/TicketInformationView.vue'),
+    component: () =>
+      import('./views/TicketInformation/TicketInformationView.vue'),
     name: 'TicketInformationView',
     props: true,
-    children: [
-      {
-        path: '',
-        name: 'TicketInformationDetails',
-        component: () => import('./views/TicketInformationDetails.vue'),
-        meta: {
-          requiresAuth: true,
-          requiredPermission: [],
-        },
-      },
-      {
-        path: 'customer',
-        name: 'TicketInformationCustomer',
-        props: (route) => ({ internalId: Number(route.params.internalId) }),
-        component: () => import('./views/TicketInformationCustomer.vue'),
-        meta: {
-          requiresAuth: true,
-          requiredPermission: [],
-        },
-      },
-      {
-        path: 'organization',
-        name: 'TicketInformationOrganization',
-        component: () => import('./views/TicketInformationOrganization.vue'),
-        meta: {
-          requiresAuth: true,
-          requiredPermission: [],
-        },
-      },
-    ],
+    children: ticketInformationRoutes,
     meta: {
       title: __('Ticket information'),
       requiresAuth: true,

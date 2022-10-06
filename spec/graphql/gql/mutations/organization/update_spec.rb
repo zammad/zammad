@@ -35,7 +35,15 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       gql.execute(query, variables: variables)
     end
 
-    context 'when updating organization name' do
+    context 'when updating organization name with empty atrributes' do
+      let(:input_payload) { { name: 'NewName', objectAttributeValues: [] } }
+
+      it 'returns updated organization name' do
+        expect(gql.result.data['organization']).to include('name' => 'NewName')
+      end
+    end
+
+    context 'when updating organization name without attributes' do
       let(:input_payload) { { name: 'NewName' } }
 
       it 'returns updated organization name' do

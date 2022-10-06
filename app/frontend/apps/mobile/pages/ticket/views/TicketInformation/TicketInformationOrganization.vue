@@ -13,7 +13,7 @@ import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
-import type { TicketById } from '../types/tickets'
+import type { TicketById } from '../../types/tickets'
 
 const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
 

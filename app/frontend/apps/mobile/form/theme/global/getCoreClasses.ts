@@ -41,9 +41,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       input: `${classes.textarea?.input} min-h-[100px]`,
     }),
     checkbox: {
-      wrapper: `${
-        classes.checkbox?.wrapper || ''
-      } w-full justify-between h-14 ltr:pl-2 rtl:pr-2`,
+      wrapper: `${classes.checkbox?.wrapper || ''} w-full justify-between`,
     },
     tags: addBlockFloatingLabel(classes.tags),
     select: addBlockFloatingLabel(classes.select),

@@ -146,4 +146,7 @@ export interface FormValues {
   [index: string]: unknown
 }
 
-export type FormData<TFormValues = FormValues> = FormKitGroupValue & TFormValues
+export type FormData<TFormValues = FormValues> = FormKitGroupValue &
+  TFormValues & {
+    formId: string
+  }

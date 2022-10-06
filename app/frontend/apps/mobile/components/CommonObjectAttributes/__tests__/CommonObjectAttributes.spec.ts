@@ -126,6 +126,9 @@ describe('common object attributes interface', () => {
     expect(
       view.queryByRole('region', { name: 'Invisible' }),
     ).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('region', { name: 'Hidden Boolean' }),
+    ).not.toBeInTheDocument()
   })
 
   test('hides attributes without permission', () => {

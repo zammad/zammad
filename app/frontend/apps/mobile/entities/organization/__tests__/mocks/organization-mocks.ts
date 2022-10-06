@@ -157,7 +157,7 @@ export const organizationObjectAttributes = () => ({
     {
       __typename: 'ObjectManagerFrontendAttribute',
       name: 'textarea',
-      display: 'textarea',
+      display: 'Textarea Field',
       dataType: 'textarea',
       dataOption: {
         default: '',

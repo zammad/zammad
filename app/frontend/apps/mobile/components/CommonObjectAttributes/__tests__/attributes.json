@@ -43,6 +43,21 @@
     "__typename": "ObjectManagerFrontendAttribute"
   },
   {
+    "name": "hiddenBoolean",
+    "display": "Hidden Boolean",
+    "dataType": "boolean",
+    "dataOption": {
+      "null": true,
+      "default": null,
+      "item_class": "formGroup--halfSize",
+      "options": {
+        "false": "no",
+        "true": "yes"
+      }
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
     "name": "note",
     "display": "Note",
     "dataType": "richtext",

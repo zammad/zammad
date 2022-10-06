@@ -13,8 +13,13 @@ const body = computed(() => {
   const { true: yes, false: no } = props.attribute.dataOption?.options || {}
   return props.value ? yes || __('yes') : no || __('no')
 })
+
+const translate = computed(() => {
+  const { translate = true } = props.attribute.dataOption || {}
+  return translate
+})
 </script>
 
 <template>
-  {{ attribute.dataOption.translate ? $t(body) : body }}
+  {{ translate ? $t(body) : body }}
 </template>
