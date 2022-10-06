@@ -12349,16 +12349,14 @@ output {
     border: 0;
   }
 
-  // add contrast to
-  [style*='background'] {
-    color: black;
-  }
+  @include dark {
+    // remove custom backgrounds and colors
+    [style*='background'] {
+      background: none !important;
+    }
 
-  [style*='color'] {
-    background: white;
-
-    @include dark {
-      background: hsl(0, 0%, 64%);
+    [style*='color'] {
+      color: inherit !important;
     }
   }
 }
