@@ -129,10 +129,10 @@ class ImportFreshdeskController < ApplicationController
 
   def url_check_human_error_message(error)
     translation_map = {
-      'No such file'                                              => __('Hostname not found!'),
-      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
-      'No route to host'                                          => __('No route to host!'),
-      'Connection refused'                                        => __('Connection refused!'),
+      'No such file'                                              => __('The hostname could not be found.'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+      'No route to host'                                          => __('There is no route to this host.'),
+      'Connection refused'                                        => __('The connection was refused.'),
     }
 
     message_human = ''

@@ -415,11 +415,11 @@ returns
     hours = business_hours_to_hash
 
     if hours.blank?
-      errors.add :base, __('No configured business hours found!')
+      errors.add :base, __('There are no business hours configured.')
       return
     end
 
-    # raise Exceptions::UnprocessableEntity, 'No configured business hours found!' if hours.blank?
+    # raise Exceptions::UnprocessableEntity, 'There are no business hours configured.' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin

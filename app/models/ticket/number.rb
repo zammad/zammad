@@ -21,7 +21,7 @@ returns
       return number if !Ticket.exists?(number: number)
     end
 
-    raise __("Can't generate new ticket number!")
+    raise __('The new ticket number could not be generated.')
   end
 
 =begin

@@ -334,7 +334,7 @@ RSpec.describe ExternalCredential::Google do
       context 'missing credentials' do
         let(:credentials) { nil }
         let(:app_required)      { true }
-        let(:exception_message) { 'No Google app configured!' }
+        let(:exception_message) { 'There is no Google app configured.' }
 
         include_examples 'failed attempt'
       end

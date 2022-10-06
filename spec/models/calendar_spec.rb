@@ -231,7 +231,7 @@ RSpec.describe Calendar, type: :model do
         expect do
           create(:calendar,
                  business_hours: {})
-        end.to raise_error(ActiveRecord::RecordInvalid, %r{No configured business hours found!})
+        end.to raise_error(ActiveRecord::RecordInvalid, %r{There are no business hours configured.})
       end
     end
   end

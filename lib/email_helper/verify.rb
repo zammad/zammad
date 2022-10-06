@@ -49,7 +49,7 @@ or
 
   {
     result: 'invalid',
-    message: 'Authentication failed!.',
+    message: 'Authentication failed.',
     subject: subject,
   }
 

@@ -19,18 +19,18 @@ RSpec.describe 'Import Zendesk', type: :system, set_up: false, authenticated_as:
     it 'invalid hostname' do
       url_field.fill_in with: 'https://reallybadexample.zendesk.com/'
 
-      expect(page).to have_css('.zendesk-url-error', text: 'Hostname not found!')
+      expect(page).to have_css('.zendesk-url-error', text: 'The hostname could not be found.')
     end
 
     it 'valid hostname' do
       url_field.fill_in with: 'https://reallybadexample.zendesk.com/'
 
       # wait for error to appear to validate it's hidden successfully
-      find('.zendesk-url-error', text: 'Hostname not found!')
+      find('.zendesk-url-error', text: 'The hostname could not be found.')
 
       url_field.fill_in with: import_zendesk_url
 
-      expect(page).to have_no_css('.zendesk-url-error', text: 'Hostname not found!')
+      expect(page).to have_no_css('.zendesk-url-error', text: 'The hostname could not be found.')
     end
 
     it 'invalid credentials' do

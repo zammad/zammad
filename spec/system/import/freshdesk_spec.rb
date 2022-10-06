@@ -15,18 +15,18 @@ RSpec.describe 'Import Freshdesk', type: :system, set_up: false, authenticated_a
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
 
-      expect(page).to have_css('.freshdesk-subdomain-error', text: 'Hostname not found!')
+      expect(page).to have_css('.freshdesk-subdomain-error', text: 'The hostname could not be found.')
     end
 
     it 'valid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
 
       # wait for error to appear to validate it's hidden successfully
-      find('.freshdesk-subdomain-error', text: 'Hostname not found!')
+      find('.freshdesk-subdomain-error', text: 'The hostname could not be found.')
 
       subdomain_field.fill_in with: ENV['IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN']
 
-      expect(page).to have_no_css('.freshdesk-subdomain-error', text: 'Hostname not found!')
+      expect(page).to have_no_css('.freshdesk-subdomain-error', text: 'The hostname could not be found.')
     end
 
     it 'invalid credentials' do

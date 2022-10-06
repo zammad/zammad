@@ -16,10 +16,10 @@ class ImportOtrsController < ApplicationController
 
     # connection test
     translation_map = {
-      'authentication failed'                                     => __('Authentication failed!'),
-      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
-      'No route to host'                                          => __('No route to host!'),
-      'Connection refused'                                        => __('Connection refused!'),
+      'authentication failed'                                     => __('Authentication failed.'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+      'No route to host'                                          => __('There is no route to this host.'),
+      'Connection refused'                                        => __('The connection was refused.'),
     }
 
     response = UserAgent.request(params[:url])

@@ -16,18 +16,18 @@ RSpec.describe 'Import Kayako', type: :system, set_up: false, authenticated_as: 
     it 'invalid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
 
-      expect(page).to have_css('.kayako-subdomain-error', text: 'Hostname not found!')
+      expect(page).to have_css('.kayako-subdomain-error', text: 'The hostname could not be found.')
     end
 
     it 'valid hostname' do
       subdomain_field.fill_in with: 'reallybadexample'
 
       # wait for error to appear to validate it's hidden successfully
-      find('.kayako-subdomain-error', text: 'Hostname not found!')
+      find('.kayako-subdomain-error', text: 'The hostname could not be found.')
 
       subdomain_field.fill_in with: ENV['IMPORT_KAYAKO_ENDPOINT_SUBDOMAIN']
 
-      expect(page).to have_no_css('.kayako-subdomain-error', text: 'Hostname not found!')
+      expect(page).to have_no_css('.kayako-subdomain-error', text: 'The hostname could not be found.')
     end
 
     it 'invalid credentials' do

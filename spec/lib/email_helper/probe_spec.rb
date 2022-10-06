@@ -62,7 +62,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
 
     context 'when network issues are present' do
       let(:host)          { 'nonexisting_host' }
-      let(:message_human) { 'Hostname not found!' }
+      let(:message_human) { 'The hostname could not be found.' }
 
       include_examples 'probe tests with invalid result'
     end
@@ -70,14 +70,14 @@ RSpec.describe EmailHelper::Probe, integration: true do
     context 'when an imap service with a blocked port is used' do
       let(:host)          { '127.0.0.1' }
       let(:port)          { 8 } # no service to be expected
-      let(:message_human) { 'Connection refused!' }
+      let(:message_human) { 'The connection was refused.' }
 
       include_examples 'probe tests with invalid result'
     end
 
     context 'when host is not reachable' do
       let(:host)          { '192.168.254.254' }
-      let(:message_human) { [ 'Host not reachable!', 'No route to host!' ] }
+      let(:message_human) { [ 'This host cannot be reached.', 'There is no route to this host.' ] }
 
       before do
         stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
@@ -88,14 +88,14 @@ RSpec.describe EmailHelper::Probe, integration: true do
 
     context 'when incorrect credentials are used' do
       let(:host)          { 'imap.gmail.com' }
-      let(:message_human) { [ 'Authentication failed, username incorrect!', 'Authentication failed, invalid credentials!' ] }
+      let(:message_human) { [ 'Authentication failed due to incorrect username.', 'Authentication failed due to incorrect credentials.' ] }
 
       include_examples 'probe tests with invalid result'
     end
 
     context 'when authentication fails' do
       let(:host)          { 'mx2.zammad.com' }
-      let(:message_human) { [ 'Authentication failed!', 'Host not reachable!' ] }
+      let(:message_human) { [ 'Authentication failed.', 'This host cannot be reached.' ] }
 
       before do
         stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
@@ -145,7 +145,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
 
     context 'when network issues are present' do
       let(:host)          { 'nonexisting_host' }
-      let(:message_human) { 'Hostname not found!' }
+      let(:message_human) { 'The hostname could not be found.' }
 
       include_examples 'probe tests with invalid result'
     end
@@ -153,14 +153,14 @@ RSpec.describe EmailHelper::Probe, integration: true do
     context 'when an imap service with a blocked port is used' do
       let(:host)          { '127.0.0.1' }
       let(:port)          { 8 } # no service to be expected
-      let(:message_human) { 'Connection refused!' }
+      let(:message_human) { 'The connection was refused.' }
 
       include_examples 'probe tests with invalid result'
     end
 
     context 'when host is not reachable' do
       let(:host)          { '192.168.254.254' }
-      let(:message_human) { [ 'Host not reachable!', 'No route to host!' ] }
+      let(:message_human) { [ 'This host cannot be reached.', 'There is no route to this host.' ] }
 
       before do
         stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 2.seconds)
@@ -172,7 +172,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
 
     context 'when incorrect credentials are used' do
       let(:host)          { 'smtp.gmail.com' }
-      let(:message_human) { 'Authentication failed!' }
+      let(:message_human) { 'Authentication failed.' }
 
       include_examples 'probe tests with invalid result'
     end
@@ -180,7 +180,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
     context 'when authentication fails' do
       let(:host)          { 'mx2.zammad.com' }
       let(:port)          { 587 }
-      let(:message_human) { 'Authentication failed!' }
+      let(:message_human) { 'Authentication failed.' }
 
       before do
         stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)

@@ -16,11 +16,11 @@ class ImportZendeskController < ApplicationController
 
     # connection test
     translation_map = {
-      'No such file'                                              => __('Hostname not found!'),
-      'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
-      '503 Service Temporarily Unavailable'                       => __('Hostname not found!'),
-      'No route to host'                                          => __('No route to host!'),
-      'Connection refused'                                        => __('Connection refused!'),
+      'No such file'                                              => __('The hostname could not be found.'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+      '503 Service Temporarily Unavailable'                       => __('The hostname could not be found.'),
+      'No route to host'                                          => __('There is no route to this host.'),
+      'Connection refused'                                        => __('The connection was refused.'),
     }
 
     response = UserAgent.request(URI.join(params[:url], '/api/v2/users/me').to_s, verify_ssl: true)
@@ -43,7 +43,7 @@ class ImportZendeskController < ApplicationController
     if response.header['x-zendesk-api-version'].blank?
       render json: {
         result:        'invalid',
-        message_human: __('Hostname not found!'),
+        message_human: __('The hostname could not be found.'),
       }
       return
     end

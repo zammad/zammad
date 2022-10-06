@@ -106,7 +106,7 @@ class ImportKayakoController < ApplicationController
       render json: {
         result:        'invalid',
         message:       response.error.to_s,
-        message_human: __('Hostname not found!'),
+        message_human: __('The hostname could not be found.'),
       }
       return false
     end

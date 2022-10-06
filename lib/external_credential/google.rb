@@ -9,7 +9,7 @@ class ExternalCredential::Google
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'google')
-    raise Exceptions::UnprocessableEntity, __('No Google app configured!') if !external_credential && app_required
+    raise Exceptions::UnprocessableEntity, __('There is no Google app configured.') if !external_credential && app_required
 
     if external_credential
       if credentials[:client_id].blank?
@@ -32,8 +32,8 @@ class ExternalCredential::Google
 
   def self.link_account(_request_token, params)
     external_credential = ExternalCredential.find_by(name: 'google')
-    raise Exceptions::UnprocessableEntity, __('No Google app configured!') if !external_credential
-    raise Exceptions::UnprocessableEntity, __('No code for session found!') if !params[:code]
+    raise Exceptions::UnprocessableEntity, __('There is no Google app configured.') if !external_credential
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if !params[:code]
 
     response = authorize_tokens(external_credential.credentials[:client_id], external_credential.credentials[:client_secret], params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|

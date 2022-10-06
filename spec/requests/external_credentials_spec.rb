@@ -338,7 +338,7 @@ RSpec.describe 'External Credentials', type: :request do
         context 'with no Twitter app' do
           include_examples 'for failure cases' do
             let(:status) { :unprocessable_entity }
-            let(:error_message) { 'No Twitter app configured!' }
+            let(:error_message) { 'There is no Twitter app configured.' }
           end
         end
 
@@ -397,7 +397,7 @@ RSpec.describe 'External Credentials', type: :request do
         context 'with no Twitter app' do
           include_examples 'for failure cases' do
             let(:status) { :unprocessable_entity }
-            let(:error_message) { 'No Twitter app configured!' }
+            let(:error_message) { 'There is no Twitter app configured.' }
           end
         end
 
@@ -406,7 +406,7 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_examples 'for failure cases' do
             let(:status)        { :unprocessable_entity }
-            let(:error_message) { 'No request_token for session found!' }
+            let(:error_message) { "The required parameter 'request_token' is missing." }
           end
         end
 
@@ -426,7 +426,7 @@ RSpec.describe 'External Credentials', type: :request do
 
           include_examples 'for failure cases' do
             let(:status)        { :unprocessable_entity }
-            let(:error_message) { 'Invalid oauth_token given!' }
+            let(:error_message) { "The provided 'oauth_token' is invalid." }
           end
         end
 

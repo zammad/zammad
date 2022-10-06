@@ -405,17 +405,17 @@ returns on fail
 
     def self.translations
       {
-        'authentication failed'                                     => __('Authentication failed!'),
-        'Username and Password not accepted'                        => __('Authentication failed!'),
-        'Incorrect username'                                        => __('Authentication failed, username incorrect!'),
-        'Lookup failed'                                             => __('Authentication failed, username incorrect!'),
-        'Invalid credentials'                                       => __('Authentication failed, invalid credentials!'),
+        'authentication failed'                                     => __('Authentication failed.'),
+        'Username and Password not accepted'                        => __('Authentication failed.'),
+        'Incorrect username'                                        => __('Authentication failed due to incorrect username.'),
+        'Lookup failed'                                             => __('Authentication failed due to incorrect username.'),
+        'Invalid credentials'                                       => __('Authentication failed due to incorrect credentials.'),
         'authentication not enabled'                                => __('Authentication not possible (not offered by the service)'),
-        'getaddrinfo: nodename nor servname provided, or not known' => __('Hostname not found!'),
-        'getaddrinfo: Name or service not known'                    => __('Hostname not found!'),
-        'No route to host'                                          => __('No route to host!'),
-        'execution expired'                                         => __('Host not reachable!'),
-        'Connection refused'                                        => __('Connection refused!'),
+        'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+        'getaddrinfo: Name or service not known'                    => __('The hostname could not be found.'),
+        'No route to host'                                          => __('There is no route to this host.'),
+        'execution expired'                                         => __('This host cannot be reached.'),
+        'Connection refused'                                        => __('The connection was refused.'),
       }
     end
 

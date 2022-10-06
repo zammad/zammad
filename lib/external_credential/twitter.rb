@@ -8,7 +8,7 @@ class ExternalCredential::Twitter
 
   def self.request_account_to_link(credentials = {}, app_required = true)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, __('No Twitter app configured!') if !external_credential && app_required
+    raise Exceptions::UnprocessableEntity, __('There is no Twitter app configured.') if !external_credential && app_required
 
     if external_credential
       if credentials[:consumer_key].blank?
@@ -49,9 +49,9 @@ class ExternalCredential::Twitter
 
   def self.link_account(request_token, params)
     external_credential = ExternalCredential.find_by(name: 'twitter')
-    raise Exceptions::UnprocessableEntity, __('No Twitter app configured!') if !external_credential
-    raise Exceptions::UnprocessableEntity, __('No request_token for session found!') if !request_token
-    raise Exceptions::UnprocessableEntity, __('Invalid oauth_token given!') if request_token.params[:oauth_token] != params[:oauth_token]
+    raise Exceptions::UnprocessableEntity, __('There is no Twitter app configured.') if !external_credential
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'request_token' is missing.") if !request_token
+    raise Exceptions::UnprocessableEntity, __("The provided 'oauth_token' is invalid.") if request_token.params[:oauth_token] != params[:oauth_token]
 
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = TwitterSync.new(

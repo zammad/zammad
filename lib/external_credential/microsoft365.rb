@@ -41,7 +41,7 @@ class ExternalCredential::Microsoft365
 
     external_credential = ExternalCredential.find_by(name: 'microsoft365')
     raise Exceptions::UnprocessableEntity, __('No Microsoft 365 app configured!') if !external_credential
-    raise Exceptions::UnprocessableEntity, __('No code for session found!') if !params[:code]
+    raise Exceptions::UnprocessableEntity, __("The required parameter 'code' is missing.") if !params[:code]
 
     response = authorize_tokens(external_credential.credentials, params[:code])
     %w[refresh_token access_token expires_in scope token_type id_token].each do |key|
