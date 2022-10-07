@@ -591,6 +591,8 @@ RSpec.describe 'Ticket Create', type: :system do
         find('[name=title]').fill_in with: 'Title'
       end
 
+      wait.until { find(:task_active)['data-key'].present? }
+
       taskbar_tab_close(find(:task_active)['data-key'])
     end
   end
