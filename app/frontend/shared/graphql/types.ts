@@ -1249,7 +1249,7 @@ export type User = ObjectAttributeValueInterface & {
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
-  createdById: Scalars['Int'];
+  createdBy?: Maybe<User>;
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   firstname?: Maybe<Scalars['String']>;
@@ -1278,7 +1278,7 @@ export type User = ObjectAttributeValueInterface & {
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
-  updatedById: Scalars['Int'];
+  updatedBy?: Maybe<User>;
   verified?: Maybe<Scalars['Boolean']>;
   vip?: Maybe<Scalars['Boolean']>;
   web?: Maybe<Scalars['String']>;

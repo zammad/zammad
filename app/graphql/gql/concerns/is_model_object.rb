@@ -10,8 +10,17 @@ module Gql::Concerns::IsModelObject
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false, description: 'Last update date/time of the record'
 
     if name.eql? 'Gql::Types::UserType'
-      field :created_by_id, Integer, null: false, description: 'User that created this record'
-      field :updated_by_id, Integer, null: false, description: 'Last user that updated this record'
+      # User model does not have relations for created_by and updated_by, so use a resolver for it.
+      field :created_by, Gql::Types::UserType, description: 'User that created this record'
+      field :updated_by, Gql::Types::UserType, description: 'Last user that updated this record'
+
+      def created_by
+        User.find_by(id: @object.created_by_id)
+      end
+
+      def updated_by
+        User.find_by(id: @object.updated_by_id)
+      end
     else
       belongs_to :created_by, Gql::Types::UserType, null: false, description: 'User that created this record'
       belongs_to :updated_by, Gql::Types::UserType, null: false, description: 'Last user that updated this record'

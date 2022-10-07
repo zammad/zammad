@@ -35,6 +35,12 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
             permissions {
               names
             }
+            createdBy {
+              firstname
+            }
+            updatedBy {
+              firstname
+            }
           }
         }
       QUERY
@@ -61,6 +67,10 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
       it 'has permission data' do
         expect(gql.result.data['permissions']['names']).to eq(agent.permissions_with_child_names)
+      end
+
+      it 'has updatedBy data' do
+        expect(gql.result.data['updatedBy']['firstname']).to eq(User.first.firstname)
       end
     end
 
