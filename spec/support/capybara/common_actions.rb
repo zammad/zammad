@@ -285,17 +285,6 @@ module CommonActions
       option = field.find(:option, template.name)
       option.select_option
       click '.sidebar-content .js-apply'
-
-      # this is a workaround for a race condition where
-      # the template selection get's re-rendered after
-      # a selection was made. The selection is lost and
-      # the apply click has no effect.
-      template.options.any? do |attribute, value|
-        selector = %([name="#{attribute}"])
-        next if !page.has_css?(selector, wait: 0)
-
-        find(selector, wait: 0, visible: false).value == value
-      end
     end
   end
 

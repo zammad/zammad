@@ -230,6 +230,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name:        'admin.template',
+  note:        __('Manage %s'),
+  preferences: {
+    translations: [__('Templates')]
+  },
+)
+Permission.create_if_not_exists(
   name:        'admin.translation',
   note:        __('Manage %s'),
   preferences: {

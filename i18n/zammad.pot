@@ -591,6 +591,7 @@ msgid "Action"
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Actions"
 msgstr ""
@@ -617,6 +618,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/report_profile.js.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -1094,7 +1096,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
@@ -1930,10 +1931,6 @@ msgstr ""
 msgid "Child"
 msgstr ""
 
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Choose attributes and then save them as a new template."
-msgstr ""
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
 msgstr ""
@@ -2450,6 +2447,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Create new records"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/template.jst.eco
+msgid "Create new template in admin interface."
 msgstr ""
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
@@ -3352,7 +3353,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
@@ -5319,6 +5319,7 @@ msgstr ""
 msgid "Inbound"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
@@ -6455,6 +6456,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/sla.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -6628,6 +6630,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: db/seeds/settings.rb
 msgid "New Tags"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/template.coffee
+msgid "New Template"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -7306,6 +7312,7 @@ msgstr ""
 msgid "Outbound"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr ""
@@ -7954,7 +7961,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 msgid "Remote"
 msgstr ""
 
@@ -7962,6 +7968,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -8345,7 +8352,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -8361,17 +8367,9 @@ msgstr ""
 msgid "Save as"
 msgstr ""
 
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Save as template"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
-msgstr ""
-
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Save new template"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -8598,6 +8596,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Sender Format Separator"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+msgid "Sender Type"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9315,7 +9317,13 @@ msgstr ""
 msgid "Telegram Account"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/template.coffee
+msgid "Template"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_template.coffee
+#: app/assets/javascripts/app/controllers/template.coffee
+#: db/seeds/permissions.rb
 msgid "Templates"
 msgstr ""
 
@@ -9394,6 +9402,7 @@ msgid "Text modules"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules are …"
 msgstr ""
@@ -10857,6 +10866,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/sla.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
@@ -11485,6 +11495,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "With form you can add a form to your web page which directly generates a ticket for you."
+msgstr ""
+
+#: app/assets/javascripts/app/models/template.coffee
+msgid "With templates it is possible to fill pre-filled tickets quickly and easily."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco

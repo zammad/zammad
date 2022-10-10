@@ -711,3 +711,68 @@ QUnit.test( "ticket_perform_action check when there's an available webhook", ass
   var noticeMessage = el.find('.controls.js-webhooks select option').eq(1).text()
   assert.equal(noticeMessage, 'Webhook test (https://target.example.com/webhook)', 'form shows available webhook when webhook is available')
 });
+
+QUnit.test( "ticket_perform_action check template attributes", assert => {
+
+  $('#forms').append('<hr><h1>ticket_perform_action check template attributes</h1><form id="form8"></form>')
+  var el = $('#form8')
+  var defaults = {
+    ticket_perform_action8: {
+      'article.body': {
+        value: 'foobar',
+      },
+    },
+  }
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:                      'ticket_perform_action8',
+          display:                   'TicketPerformAction8',
+          tag:                       'ticket_perform_action',
+          article_body_only:         true,
+          sender_type:               true,
+          no_dates:                  true,
+          no_richtext_uploads:       true,
+          simple_attribute_selector: true,
+          null:                      true,
+        },
+      ],
+    },
+    params: defaults,
+    autofocus: true,
+  })
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    'ticket_perform_action8': {
+      'article.body': {
+        value: 'foobar',
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'form param check')
+
+  var row = $('[data-attribute-name="ticket_perform_action8"] .js-filterElement').last()
+
+  var select = row.find('.js-attributeSelector .form-control').first()
+  var options = select.find('option').map((index, option) => option.value).toArray().sort()
+  var test_options = [
+    'article.body',
+    'ticket.customer_id',
+    'ticket.formSenderType',
+    'ticket.group_id',
+    'ticket.organization_id',
+    'ticket.owner_id',
+    'ticket.priority_id',
+    'ticket.state_id',
+    'ticket.tags',
+    'ticket.title',
+  ]
+  assert.deepEqual(options, test_options, 'select options check')
+
+  var articleBody = row.find('[data-name="ticket_perform_action8::article.body::value"]')
+  assert.equal(articleBody.html(), 'foobar', 'article body text check')
+});

@@ -149,4 +149,4 @@ class DestroyConfirm extends App.ControllerModal
         @close()
     )
 
-App.Config.set('Tags', { prio: 2320, name: __('Tags'), parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')
+App.Config.set('Tags', { prio: 2330, name: __('Tags'), parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')

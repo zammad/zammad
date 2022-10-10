@@ -6,19 +6,52 @@ require 'system/examples/core_workflow_examples'
 require 'system/examples/text_modules_examples'
 
 RSpec.describe 'Ticket Create', type: :system do
+  context 'when logged in as non admin' do
+    let(:agent) { create(:agent) }
+
+    it 'show manage templates text only', authenticated_as: :agent do
+      visit 'ticket/create'
+
+      expect(page).to have_no_css('div.js-createLink', visible: :all)
+      expect(page).to have_no_css('div.js-createTextOnly', visible: :hidden)
+    end
+  end
+
+  context 'when logged in as admin' do
+    let(:admin) { create(:admin) }
+
+    it 'show manage templates link', authenticated_as: :admin do
+      visit 'ticket/create'
+
+      expect(page).to have_no_css('div.js-createLink', visible: :hidden)
+      expect(page).to have_no_css('div.js-createTextOnly', visible: :all)
+    end
+  end
+
   context 'when applying ticket templates' do
-    let(:agent)             { create(:agent, groups: [permitted_group]) }
-    let(:permitted_group)   { create(:group) }
-    let(:unpermitted_group) { create(:group) }
-    let!(:template)         { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
+    let(:agent)                       { create(:agent, groups: [permitted_group]) }
+    let(:permitted_group)             { create(:group) }
+    let(:unpermitted_group)           { create(:group) }
+    let!(:template_unpermitted_group) { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
+    let!(:template_permitted_group)   { create(:template, :dummy_data, group: permitted_group, owner: agent) }
 
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
     it 'unavailable attributes do not get applied', authenticated_as: :agent do
       visit 'ticket/create'
 
-      use_template(template)
-      expect(page).to have_no_select('group_id')
+      use_template(template_unpermitted_group)
+      expect(all('[name="group_id"] option', visible: :all).map(&:value)).not_to eq unpermitted_group.id.to_s
+      expect(find('[name="owner_id"]', visible: :all).value).to eq agent.id.to_s
     end
+
+    it 'available attributes get applied', authenticated_as: :agent do
+      visit 'ticket/create'
+
+      use_template(template_permitted_group)
+      expect(find('[name="group_id"]', visible: :all).value).to eq permitted_group.id.to_s
+      expect(find('[name="owner_id"]', visible: :all).value).to eq agent.id.to_s
+    end
+
   end
 
   context 'when using text modules' do
@@ -1120,12 +1153,15 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   describe 'Ticket templates do not save the owner attribute #4175' do
-    let(:ticket)    { create(:ticket, group: Group.first) }
     let(:agent)     { create(:agent, groups: [Group.first]) }
     let!(:template) { create(:template, :dummy_data, group: Group.first, owner: agent) }
 
     before do
       visit 'ticket/create'
+
+      # Wait for the initial taskbar update to finish
+      taskbar_timestamp = Taskbar.last.updated_at
+      wait.until { Taskbar.last.updated_at != taskbar_timestamp }
     end
 
     it 'does set owners properly by templates and taskbars' do

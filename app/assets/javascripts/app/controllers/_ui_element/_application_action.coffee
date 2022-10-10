@@ -16,6 +16,26 @@ UI Element options:
 
 - Allows pre conditions like current_user.id or user session specific values (default: true)
 
+**attribute.article_body_only**
+
+- Renders only article body text attribute (default: false)
+
+**attribute.no_dates**
+
+- Does not include `date` and `datetime` attributes (default: false)
+
+**attribute.no_richtext_uploads**
+
+- Removes support for uploads in richtext attributes (default: false)
+
+**attribute.sender_type**
+
+- Includes sender type as a ticket attribute (default: false)
+
+**attribute.simple_attribute_selector**
+
+- Renders a simpler attribute without operator support (default: false)
+
 ###
 
 class App.UiElement.ApplicationAction
@@ -28,7 +48,7 @@ class App.UiElement.ApplicationAction
         model: 'Ticket'
       article:
         name: __('Article')
-        model: 'Article'
+        model: if attribute.article_body_only then 'TicketArticle' else 'Article'
 
     if attribute.notification
       groups.notification =
@@ -49,12 +69,28 @@ class App.UiElement.ApplicationAction
 
         for row in App[groupMeta.model].configure_attributes
 
+          # ignore all article attributes except body
+          if attribute.article_body_only
+            if groupMeta.model is 'TicketArticle'
+              if row.name isnt 'body'
+                continue
+
+          # ignore all date and datetime attributes
+          if attribute.no_dates
+            if row.tag is 'date' || row.tag is 'datetime'
+              continue
+
           # ignore passwords and relations
           if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
 
             # ignore readonly attributes
             if !row.readonly
               config = _.clone(row)
+
+              # disable uploads in richtext attributes
+              if attribute.no_richtext_uploads
+                if config.tag is 'richtext'
+                  config.upload = false
 
               switch config.tag
                 when 'datetime'
@@ -74,6 +110,20 @@ class App.UiElement.ApplicationAction
         translate: true
         options:
           delete: 'Delete'
+
+    # add sender type selection as a ticket attribute
+    if attribute.sender_type
+      elements['ticket.formSenderType'] =
+        name: 'formSenderType'
+        display: __('Sender Type')
+        tag: 'select'
+        null: false
+        translate: true
+        options: [
+          { value: 'phone-in', name: __('Inbound Call') },
+          { value: 'phone-out', name: __('Outbound Call') },
+          { value: 'email-out', name: __('Email') },
+        ]
 
     [defaults, groups, elements]
 
@@ -209,7 +259,7 @@ class App.UiElement.ApplicationAction
       elementRow.find('.js-setAttribute').html('').addClass('hide')
       elementRow.find('.js-setArticle').html('').addClass('hide')
       @buildNotificationArea(notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
-    else if _.isArray(articleTypeMatch) && articleType = articleTypeMatch[1]
+    else if !attribute.article_body_only && _.isArray(articleTypeMatch) && articleType = articleTypeMatch[1]
       elementRow.find('.js-setAttribute').html('').addClass('hide')
       elementRow.find('.js-setNotification').html('').addClass('hide')
       @buildArticleArea(articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
@@ -223,6 +273,10 @@ class App.UiElement.ApplicationAction
           meta: meta || {}
         ))
         elementRow.find('.js-setAttribute').html(attributeSelectorElement).removeClass('hide')
+
+    if attribute.simple_attribute_selector
+      @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    else
       @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
@@ -275,10 +329,10 @@ class App.UiElement.ApplicationAction
     attributeSelected = elements[groupAndAttribute]
 
     preCondition = false
-    if attributeSelected.relation is 'User'
+    if attributeSelected?.relation is 'User'
       preCondition = 'user'
       attribute.tag = 'user_autocompletion'
-    if attributeSelected.relation is 'Organization'
+    if attributeSelected?.relation is 'Organization'
       preCondition = 'org'
       attribute.tag = 'autocompletion_ajax'
     if !preCondition || attribute.user_action is false
@@ -328,10 +382,10 @@ class App.UiElement.ApplicationAction
     attributeConfig = elements[groupAndAttribute]
     config = clone(attributeConfig, true)
 
-    if config.relation is 'User'
+    if config?.relation is 'User'
       config.tag = 'user_autocompletion'
       config.disableCreateObject = true
-    if config.relation is 'Organization'
+    if config?.relation is 'Organization'
       config.tag = 'autocompletion_ajax'
 
     # render ui element
@@ -363,8 +417,8 @@ class App.UiElement.ApplicationAction
 
     upcoming_operator = meta.operator
 
-    if !_.include(config.operator, upcoming_operator)
-      if Array.isArray(config.operator)
+    if !_.include(config?.operator, upcoming_operator)
+      if Array.isArray(config?.operator)
         upcoming_operator = config.operator[0]
       else
         upcoming_operator = null

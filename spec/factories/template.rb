@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :template do
     name          { Faker::Name.unique.name }
-    options       { {} }
+    options       { { 'ticket.title': 'Some dummy title' } }
     updated_by_id { 1 }
     created_by_id { 1 }
 
@@ -19,13 +19,13 @@ FactoryBot.define do
     trait :dummy_data do
       options do
         {
-          'formSenderType'         => sender_type,
-          'title'                  => title,
-          'body'                   => body,
-          'customer_id'            => customer.id,
-          'customer_id_completion' => "#{customer.firstname} #{customer.lastname} <#{customer.email}>",
-          'group_id'               => group.id,
-          'owner_id'               => owner.id,
+          'ticket.formSenderType'         => sender_type,
+          'ticket.title'                  => title,
+          'article.body'                  => body,
+          'ticket.customer_id'            => customer.id,
+          'ticket.customer_id_completion' => "#{customer.firstname} #{customer.lastname} <#{customer.email}>",
+          'ticket.group_id'               => group.id,
+          'ticket.owner_id'               => owner.id,
         }
       end
     end

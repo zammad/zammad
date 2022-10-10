@@ -1,4 +1,5 @@
 <div class="flex horizontal">
+  <% if not @attribute.simple_attribute_selector: %>
   <div class="controls half-space-right flex-no-shrink">
     <div class="u-positionOrigin js-operator">
       <select></select>
@@ -11,5 +12,6 @@
       <%- @Icon('arrow-down', 'dropdown-arrow') %>
     </div>
   </div>
+  <% end %>
   <div class="controls js-value horizontal horizontal-filter-value"></div>
 </div>
