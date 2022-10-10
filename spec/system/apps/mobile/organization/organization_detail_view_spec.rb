@@ -38,6 +38,8 @@ RSpec.describe 'Mobile > Organization > Can view organization', type: :system, a
 
       click('button', text: 'Edit')
 
+      wait_for_test_flag('edit-organization.settled')
+
       within('#dialog-organization-edit') do
         find('[name="note"]').send_keys('edit field')
         click('button', text: 'Save')
@@ -62,6 +64,8 @@ RSpec.describe 'Mobile > Organization > Can view organization', type: :system, a
       open_organization
 
       click('button', text: 'Edit')
+
+      wait_for_test_flag('edit-organization.settled')
 
       within('#dialog-organization-edit') do
         fill_in('name', with: 'new name')

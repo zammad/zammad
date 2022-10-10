@@ -10,9 +10,8 @@ import type { OrganizationQuery } from '@shared/graphql/types'
 import { closeDialog } from '@shared/composables/useDialog'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { type FormData } from '@shared/components/Form/types'
-import { shallowRef } from 'vue'
-import type { FormKitNode } from '@formkit/core'
 import { useOrganizationUpdateMutation } from '@mobile/entities/organization/graphql/mutations/update.api'
+import { useForm } from '@shared/components/Form'
 
 interface Props {
   name: string
@@ -34,9 +33,8 @@ const schema = defineFormSchema([
 ])
 
 const updateQuery = new MutationHandler(useOrganizationUpdateMutation({}))
-const formElement = shallowRef<{ formNode: FormKitNode }>()
 
-const submitForm = () => formElement.value?.formNode.submit()
+const { form, formSubmit, isDisabled } = useForm()
 
 interface OrganizationForm {
   domain: string
@@ -87,18 +85,18 @@ const saveOrganization = async (formData: FormData<OrganizationForm>) => {
 <template>
   <CommonDialog :label="__('Edit')" :name="name">
     <template #before-label>
-      <button class="text-blue" tabindex="0" @click="closeDialog(name)">
+      <button class="text-blue" @click="closeDialog(name)">
         {{ i18n.t('Cancel') }}
       </button>
     </template>
     <template #after-label>
-      <button class="text-blue" tabindex="0" @click="submitForm()">
+      <button class="text-blue" :disabled="isDisabled" @click="formSubmit()">
         {{ i18n.t('Save') }}
       </button>
     </template>
     <Form
       id="edit-organization"
-      ref="formElement"
+      ref="form"
       class="w-full p-4"
       :schema="schema"
       :initial-values="initialValue"

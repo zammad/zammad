@@ -33,6 +33,8 @@ import type {
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
 import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
+import testFlags from '@shared/utils/testFlags'
+import { debounce } from 'lodash-es'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
@@ -115,6 +117,7 @@ const localClass = toRef(props, 'class')
 const emit = defineEmits<{
   (e: 'changed', newValue: unknown, fieldName: string): void
   (e: 'node', node: FormKitNode): void
+  (e: 'settled', isSettled: boolean): void
 }>()
 
 const formNode: Ref<FormKitNode | undefined> = ref()
@@ -191,8 +194,33 @@ const changedValuePlugin = (node: FormKitNode) => {
   })
 }
 
+const formSettledPlugin = (node: FormKitNode) => {
+  node.on(
+    'settled',
+
+    // To give chance to the form to settle all disturbances,
+    //   we debounce the event for some non-zero delay.
+    debounce(($event) => {
+      const isSettled = $event.payload
+      const formName = formNode.value?.context?.id || formNode.value?.name
+
+      if (isSettled) testFlags.set(`${formName}.settled`)
+      else testFlags.clear(`${formName}.settled`)
+
+      emit('settled', isSettled)
+
+      // Limit plugin only to events on the root (form) node.
+      return false
+    }, 250),
+  )
+}
+
 const localFormKitPlugins = computed(() => {
-  return [changedValuePlugin, ...(props.formKitPlugins || [])]
+  return [
+    changedValuePlugin,
+    formSettledPlugin,
+    ...(props.formKitPlugins || []),
+  ]
 })
 
 const formConfig = computed(() => {

@@ -3,7 +3,10 @@
 import Form from '@shared/components/Form/Form.vue'
 import useForm from '@shared/components/Form/composable'
 import { getNode, type FormKitNode } from '@formkit/core'
-import { renderComponent } from '@tests/support/components'
+import {
+  type ExtendedRenderResult,
+  renderComponent,
+} from '@tests/support/components'
 
 const wrapperParameters = {
   form: true,
@@ -12,7 +15,7 @@ const wrapperParameters = {
 }
 
 // Initialize a form component.
-renderComponent(Form, {
+const wrapper: ExtendedRenderResult = renderComponent(Form, {
   ...wrapperParameters,
   attrs: {
     id: 'test-form',
@@ -77,5 +80,17 @@ describe('useForm', () => {
       title: undefined,
       text: 'Some text',
     })
+  })
+
+  it('use form submit', () => {
+    const { form, formSubmit } = useForm()
+
+    form.value = {
+      formNode: getNode('test-form') as FormKitNode,
+    }
+
+    formSubmit()
+
+    expect(wrapper.emitted().submit).toBeTruthy()
   })
 })

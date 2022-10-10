@@ -33,6 +33,10 @@ const useForm = () => {
     node.value?.reset()
   }
 
+  const formSubmit = () => {
+    node.value?.submit()
+  }
+
   return {
     form,
     node,
@@ -45,6 +49,7 @@ const useForm = () => {
     isSubmitted,
     isDisabled,
     formReset,
+    formSubmit,
   }
 }
 
