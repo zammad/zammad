@@ -2441,4 +2441,4 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
     )
 
 App.Config.set('layout_ref/kb_link_answer_to_answer', KnowledgeBaseLinkAnswerToAnswerRef, 'Routes')
-App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ] }, 'NavBarRight')
+App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ], setting: ['developer_mode'] }, 'NavBarRight')
