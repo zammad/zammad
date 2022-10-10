@@ -69,6 +69,13 @@ RSpec.configure do |config|
     end
   end
 
+  retry_exceptions = [
+    Net::OpenTimeout,
+    Net::ReadTimeout,
+    Selenium::WebDriver::Error::UnknownError,
+    Selenium::WebDriver::Error::SessionNotCreatedError,
+  ].freeze
+
   config.around(:each, type: :system) do |example|
     use_vcr = example.metadata.fetch(:use_vcr, false)
 
@@ -76,7 +83,7 @@ RSpec.configure do |config|
     #    which may cause overhead and Net::OpenTimeout errors.
     WebMock.disable! if !use_vcr
     # rspec-retry
-    example.run_with_retry retry: 3, exceptions_to_retry: [Net::OpenTimeout, Net::ReadTimeout, Selenium::WebDriver::Error::UnknownError]
+    example.run_with_retry retry: 3, exceptions_to_retry: retry_exceptions
     WebMock.enable! if !use_vcr
   end
 end
