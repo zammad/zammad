@@ -10,6 +10,10 @@ module ThreadsHelper
   ensure
     # Keep going until no more changes are needed to catch threads spawned in between.
     (Thread.list - initial_threads).each(&:kill) while (Thread.list - initial_threads).count.positive?
+
+    # Sometimes connections are not checked back in after thread is killed
+    # This recovers connections from the workers
+    ActiveRecord::Base.connection_pool.reap
   end
 
   # Thread control loops usually run forever. This method can test that they were started.
