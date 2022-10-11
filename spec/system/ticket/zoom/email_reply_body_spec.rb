@@ -2,9 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Zoom > Email Reply Body', type: :system, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket Zoom > Email Reply Body', type: :system, time_zone: 'Europe/London', authenticated_as: :authenticate do
+  let(:agent)    { create(:agent, groups: [Group.first]) }
   let(:customer) { create(:customer) }
   let(:ticket)   { create(:ticket, customer: customer, group: Group.first) }
+
+  def authenticate
+    Setting.set 'ui_ticket_zoom_article_email_full_quote', full_quote_setting_enabled
+    Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting_enabled
+
+    agent
+  end
 
   # Create a ticket article with a specific timestamp and customer origin.
   #   This will allow us to later compare citation header with expected format.
@@ -14,11 +22,6 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', type: :system, time_zone: 'Euro
   end
 
   context 'when replying to a message' do
-    prepend_before do
-      Setting.set 'ui_ticket_zoom_article_email_full_quote', full_quote_setting_enabled
-      Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting_enabled
-    end
-
     before do
       visit ticket_zoom_path
     end
@@ -63,7 +66,7 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', type: :system, time_zone: 'Euro
       end
 
       # Regression test for issue #2344 - Missing translation for Full-Quote-Text "on xy wrote"
-      context 'with header in German locale', authenticated_as: :agent do
+      context 'with header in German locale' do
         let(:agent)                             { create(:agent, preferences: { locale: 'de-de' }, groups: [Group.first]) }
         let(:full_quote_header_setting_enabled) { true }
 
