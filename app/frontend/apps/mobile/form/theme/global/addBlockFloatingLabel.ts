@@ -38,5 +38,6 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       formkit-required:required
       formkit-invalid:text-red
     `),
+    arrow: 'formkit-arrow flex items-center',
   }
 }

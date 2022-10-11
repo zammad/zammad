@@ -200,7 +200,6 @@ const directionOptions = computed(() => [
           name="overview"
           type="select"
           size="small"
-          :classes="{ wrapper: 'px-0' }"
           :model-value="selectedOverviewLink"
           :options="optionsOverviews"
           no-options-label-translation

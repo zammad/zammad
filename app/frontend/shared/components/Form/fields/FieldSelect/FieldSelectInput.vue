@@ -38,12 +38,14 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
 
 <template>
   <div
-    :class="{
-      [context.classes.input]: true,
-      'rounded-none bg-transparent': !isSizeSmall,
-      'w-auto rounded-lg bg-gray-600': isSizeSmall,
-    }"
-    class="flex h-auto focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
+    :class="[
+      {
+        [context.classes.input]: !isSizeSmall,
+        'flex h-auto focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0':
+          !isSizeSmall,
+        'w-auto rounded-lg bg-gray-600': isSizeSmall,
+      },
+    ]"
     data-test-id="field-select"
   >
     <CommonSelect
@@ -133,6 +135,13 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
           tabindex="0"
           @click.stop="clearValue"
           @keypress.space.prevent.stop="clearValue"
+        />
+        <CommonIcon
+          v-if="isSizeSmall"
+          :fixed-size="{ width: 16, height: 16 }"
+          class="shrink-0"
+          name="caret-down"
+          decorative
         />
       </output>
     </CommonSelect>

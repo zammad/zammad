@@ -9,7 +9,19 @@ const hideLabelForSmallSelects = (node: FormKitNode) => {
   const { props } = node
 
   const toggleLabel = (isHidden: boolean) => {
-    props.labelClass = isHidden ? 'hidden' : undefined
+    if (isHidden) {
+      props.labelClass = 'hidden'
+      props.arrowClass = 'hidden'
+      props.outerClass = '!min-h-[initial] !p-0'
+      props.wrapperClass = '!py-0'
+      props.innerClass = '!p-0'
+    } else {
+      props.labelClass = undefined
+      props.arrowClass = undefined
+      props.outerClass = undefined
+      props.wrapperClass = undefined
+      props.innerClass = undefined
+    }
   }
 
   node.on('created', () => {

@@ -10,10 +10,7 @@ export const arrow = createSection('arrow', () => {
   return {
     $el: 'div',
     attrs: {
-      class: {
-        'formkit-arrow flex items-center': true,
-        'ltr:pr-2 rtl:pl-2': '$link',
-      },
+      class: '$classes.arrow',
     },
     children: [
       {

@@ -62,7 +62,7 @@ export default {
       v-model="filter"
       v-bind="$attrs"
       :placeholder="i18n.t(placeholder)"
-      class="h-12 w-full grow rounded-xl bg-gray-500 px-9 placeholder:text-gray focus:shadow-none focus:outline-none focus:ring-0"
+      class="h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base placeholder:text-gray focus:shadow-none focus:outline-none focus:ring-0"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,
         'focus:border-transparent': noBorder,
