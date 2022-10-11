@@ -70,7 +70,17 @@ class Gql::ZammadSchema < GraphQL::Schema
   RETHROWABLE_ERRORS = [ArgumentError, IndexError, NameError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].freeze
 
   # Post-process errors and enrich them with meta information for processing on the client side.
-  rescue_from(StandardError) do |err, _obj, _args, _ctx, _field|
+  rescue_from(StandardError) do |err, _obj, _args, _ctx, field|
+
+    if field.path.start_with?('Mutations.')
+      if err.is_a? ActiveRecord::RecordInvalid
+        user_errors = err.record.errors.map { |error| { field: error.attribute.to_s.camelize(:lower), message: error.full_message } }
+        next { errors: user_errors }
+      end
+      if err.is_a? ActiveRecord::RecordNotUnique
+        next { errors: [ message: __('Object already exists!') ] }
+      end
+    end
 
     # Re-throw built-in errors that point to programming errors rather than problems with input or data - causes GraphQL processing to be aborted.
     RETHROWABLE_ERRORS.each do |klass|

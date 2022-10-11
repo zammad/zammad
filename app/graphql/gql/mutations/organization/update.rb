@@ -7,7 +7,7 @@ module Gql::Mutations
     argument :id, GraphQL::Types::ID, description: 'The organization ID', as: :current_organization, loads: Gql::Types::OrganizationType
     argument :input, Gql::Types::Input::OrganizationInputType, description: 'The organization data'
 
-    field :organization, Gql::Types::OrganizationType, null: false, description: 'The updated organization.'
+    field :organization, Gql::Types::OrganizationType, description: 'The updated organization.'
 
     def load_id(id:)
       Gql::ZammadSchema.verified_object_from_id(id, type: ::Organization)

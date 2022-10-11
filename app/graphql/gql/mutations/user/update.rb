@@ -7,7 +7,7 @@ module Gql::Mutations
     argument :id, GraphQL::Types::ID, description: 'The user ID', as: :current_user, loads: Gql::Types::UserType
     argument :input, Gql::Types::Input::UserInputType, description: 'The user data'
 
-    field :user, Gql::Types::UserType, null: false, description: 'The created user.'
+    field :user, Gql::Types::UserType, description: 'The created user.'
 
     def load_id(id:)
       Gql::ZammadSchema.verified_object_from_id(id, type: ::User, user: context.current_user)

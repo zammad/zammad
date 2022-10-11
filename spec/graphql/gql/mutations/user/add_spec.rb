@@ -49,12 +49,11 @@ RSpec.describe Gql::Mutations::User::Add, type: :graphql do
     end
 
     context 'with not unique email', :aggregate_failures do
-      it 'raises an error' do
+      it 'returns a user error' do
         create(:user, email: 'dummy@zammad.com')
 
         gql.execute(query, variables: variables)
-        expect(gql.result.error_type).to eq(ActiveRecord::RecordInvalid)
-        expect(gql.result.error_message).to eq("Validation failed: Email address 'dummy@zammad.com' is already used for other user.")
+        expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for other user." })
       end
     end
 

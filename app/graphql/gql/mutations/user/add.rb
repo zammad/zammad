@@ -6,7 +6,7 @@ module Gql::Mutations
 
     argument :input, Gql::Types::Input::UserInputType, description: 'The user data'
 
-    field :user, Gql::Types::UserType, null: false, description: 'The created user.'
+    field :user, Gql::Types::UserType, description: 'The created user.'
 
     def self.authorize(_obj, ctx)
       ctx[:current_user].permissions?(['admin.user', 'ticket.agent'])

@@ -7066,6 +7066,7 @@ msgid "Object Manager"
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
 msgid "Object already exists!"
 msgstr ""
 

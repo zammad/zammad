@@ -35,11 +35,28 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       gql.execute(query, variables: variables)
     end
 
-    context 'when updating organization name with empty atrributes' do
+    context 'when updating organization name with empty attributes' do
       let(:input_payload) { { name: 'NewName', objectAttributeValues: [] } }
 
       it 'returns updated organization name' do
         expect(gql.result.data['organization']).to include('name' => 'NewName')
+      end
+    end
+
+    context 'when updating organization with empty name' do
+      let(:input_payload) { { name: '' } }
+
+      it 'returns a user error' do
+        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => "Name can't be blank")
+      end
+    end
+
+    context 'when updating organization with name of another organization' do
+      let(:input_payload) { { name: other_org.name } }
+      let(:other_org) { create(:organization) }
+
+      it 'returns a user error' do
+        expect(gql.result.data['errors'].first).to include('message' => 'Object already exists!')
       end
     end
 
