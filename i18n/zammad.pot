@@ -3238,6 +3238,10 @@ msgid "Defines the maximum accepted email size in MB."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines the maximum number of allowed task bar tasks before auto cleanup removes surplus tasks when creating new tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines the name of the application, shown in the web interface, tabs, and title bar of the web browser."
 msgstr ""
 
@@ -6139,6 +6143,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Maximum failed logins"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of allowed tasks before auto cleanup removes surplus tasks."
 msgstr ""
 
 #: db/seeds/settings.rb

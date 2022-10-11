@@ -260,7 +260,7 @@ QUnit.test( "taskbar basic tests", assert => {
   // check max tabs
   var times = 5;
   App.TaskManager.tasksAutoCleanupDelayTime(200)
-  App.TaskManager.tasksAutoCleanupTaskMax(3)
+  App.Config.set('ui_task_mananger_max_task_count', 3)
 
   for(var i=0; i < times; i++){
     App.TaskManager.execute({

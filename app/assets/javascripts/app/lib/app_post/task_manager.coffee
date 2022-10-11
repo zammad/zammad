@@ -94,12 +94,6 @@ class App.TaskManager
       return _instance.tasksAutoCleanupDelayTime
     _instance.tasksAutoCleanupDelayTime = key
 
-  @tasksAutoCleanupTaskMax: (key) ->
-    return if !_instance
-    if !key
-      return _instance.maxTaskCount
-    _instance.maxTaskCount = key
-
 class _taskManagerSingleton extends App.Controller
   @extend App.PopoverProvidable
   @include App.LogInclude
@@ -130,7 +124,6 @@ class _taskManagerSingleton extends App.Controller
     @activeTaskHistory         = []
     @queue                     = []
     @queueRunning              = false
-    @maxTaskCount              = 30
 
   all: ->
 
@@ -634,24 +627,25 @@ class _taskManagerSingleton extends App.Controller
     App.Delay.set(delay, @tasksAutoCleanupDelayTime, 'task-autocleanup', undefined, true)
 
   tasksAutoCleanup: =>
+    maxTaskCount = App.Config.get('ui_task_mananger_max_task_count')
 
     # auto cleanup of old tasks
     currentTaskCount = =>
       Object.keys(@allTasksByKey).length
 
-    if currentTaskCount() > @maxTaskCount
+    if currentTaskCount() > maxTaskCount
       if @offlineModus
         tasks = @all()
       else
         tasks = App.Taskbar.search(sortBy:'updated_at', order:'ASC')
       for task in tasks
-        if currentTaskCount() > @maxTaskCount
+        if currentTaskCount() > maxTaskCount
           if !task.active
             worker = App.TaskManager.worker(task.key)
             if worker
               if worker.changed && worker.changed()
                 continue
-              @log 'notice', "More then #{@maxTaskCount} tasks open, close oldest untouched task #{task.key}"
+              @log 'notice', "More than the allowed maximum #{maxTaskCount} tasks are open, closing the oldest untouched task #{task.key} now."
               @remove(task.key)
 
   tasksInitial: =>
