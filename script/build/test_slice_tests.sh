@@ -22,7 +22,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -66,7 +65,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -109,7 +107,6 @@ elif [ "$LEVEL" == '3' ]; then
   #rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   # rm test/browser/agent_ticket_create_default_type_test.rb
   # test/browser/agent_ticket_create_reset_customer_selection_test.rb
-  # test/browser/agent_ticket_email_reply_keep_body_test.rb
   # rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -152,7 +149,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -194,7 +190,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_create_cc_tokenizer_test.rb
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -238,7 +233,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
   # rm test/browser/agent_ticket_create_template_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
@@ -282,7 +276,6 @@ elif [ "$LEVEL" == '7' ]; then
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
   # rm test/browser/agent_ticket_create_template_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   # test/browser/agent_ticket_link_test.rb
   # test/browser/agent_ticket_macro_test.rb
@@ -326,7 +319,6 @@ elif [ "$LEVEL" == '8' ]; then
   rm test/browser/agent_ticket_create_default_type_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
   # rm test/browser/agent_ticket_create_template_test.rb
-  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
   rm test/browser/agent_ticket_email_signature_test.rb
   rm test/browser/agent_ticket_link_test.rb
   rm test/browser/agent_ticket_macro_test.rb
