@@ -11,8 +11,8 @@ module Gql::Concerns::IsModelObject
 
     if name.eql? 'Gql::Types::UserType'
       # User model does not have relations for created_by and updated_by, so use a resolver for it.
-      field :created_by, Gql::Types::UserType, description: 'User that created this record'
-      field :updated_by, Gql::Types::UserType, description: 'Last user that updated this record'
+      field :created_by, Gql::Types::UserType, null: false, description: 'User that created this record'
+      field :updated_by, Gql::Types::UserType, null: false, description: 'Last user that updated this record'
 
       def created_by
         User.find_by(id: @object.created_by_id)

@@ -1249,7 +1249,7 @@ export type User = ObjectAttributeValueInterface & {
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
-  createdBy?: Maybe<User>;
+  createdBy: User;
   email?: Maybe<Scalars['String']>;
   fax?: Maybe<Scalars['String']>;
   firstname?: Maybe<Scalars['String']>;
@@ -1278,7 +1278,7 @@ export type User = ObjectAttributeValueInterface & {
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
+  updatedBy: User;
   verified?: Maybe<Scalars['Boolean']>;
   vip?: Maybe<Scalars['Boolean']>;
   web?: Maybe<Scalars['String']>;
@@ -1450,7 +1450,7 @@ export type SearchQueryVariables = Exact<{
 }>;
 
 
-export type SearchQuery = { __typename?: 'Queries', search: Array<{ __typename?: 'Organization', id: string, internalId: number, active?: boolean | null, name?: string | null, updatedAt: any, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', fullname?: string | null } }> } | null, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } | { __typename?: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: any, state: { __typename?: 'TicketState', name: string }, priority?: { __typename?: 'TicketPriority', name: string, defaultCreate: boolean, uiColor?: string | null }, customer: { __typename?: 'User', fullname?: string | null }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, image?: string | null, updatedAt: any, organization?: { __typename?: 'Organization', name?: string | null } | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null }> };
+export type SearchQuery = { __typename?: 'Queries', search: Array<{ __typename?: 'Organization', id: string, internalId: number, active?: boolean | null, name?: string | null, updatedAt: any, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, fullname?: string | null } }> } | null, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } | { __typename?: 'Ticket', id: string, internalId: number, title: string, number: string, updatedAt: any, state: { __typename?: 'TicketState', name: string }, priority?: { __typename?: 'TicketPriority', name: string, defaultCreate: boolean, uiColor?: string | null }, customer: { __typename?: 'User', id: string, fullname?: string | null }, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, image?: string | null, updatedAt: any, organization?: { __typename?: 'Organization', id: string, name?: string | null } | null, updatedBy?: { __typename?: 'User', id: string, fullname?: string | null }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null }> };
 
 export type TicketArticleAttributesFragment = { __typename?: 'TicketArticle', id: string, internalId: number, subject?: string | null, messageId?: string | null, messageIdMd5?: string | null, inReplyTo?: string | null, contentType: string, references?: string | null, preferences?: any | null, body: string, internal: boolean, createdAt: any, from?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, to?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, cc?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, replyTo?: { __typename?: 'AddressesField', raw: string, parsed?: Array<{ __typename?: 'EmailAddress', name?: string | null, emailAddress?: string | null }> | null } | null, attachments: Array<{ __typename?: 'StoredFile', internalId: number, name: string, size?: number | null, type?: string | null, preferences?: any | null }>, createdBy?: { __typename?: 'User', id: string, fullname?: string | null, firstname?: string | null, lastname?: string | null }, type?: { __typename?: 'TicketArticleType', name?: string | null } | null, sender?: { __typename?: 'TicketArticleType', name?: string | null } | null };
 

@@ -18,6 +18,7 @@ query search(
         uiColor
       }
       customer {
+        id
         fullname
       }
       updatedAt
@@ -33,9 +34,14 @@ query search(
       lastname
       image
       organization {
+        id
         name
       }
       updatedAt
+      updatedBy @include(if: $isAgent) {
+        id
+        fullname
+      }
       ticketsCount {
         open
         closed
@@ -47,6 +53,7 @@ query search(
       members(first: 2) {
         edges {
           node {
+            id
             fullname
           }
         }

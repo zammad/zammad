@@ -22,6 +22,7 @@ export const SearchDocument = gql`
         uiColor
       }
       customer {
+        id
         fullname
       }
       updatedAt
@@ -37,9 +38,14 @@ export const SearchDocument = gql`
       lastname
       image
       organization {
+        id
         name
       }
       updatedAt
+      updatedBy @include(if: $isAgent) {
+        id
+        fullname
+      }
       ticketsCount {
         open
         closed
@@ -51,6 +57,7 @@ export const SearchDocument = gql`
       members(first: 2) {
         edges {
           node {
+            id
             fullname
           }
         }
