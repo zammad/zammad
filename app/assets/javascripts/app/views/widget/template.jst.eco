@@ -14,7 +14,7 @@
   <p><%- @T('No template created yet.') %></p>
   <p><%- @T('With templates you can pre-fill ticket attributes.') %></p>
   <p>
-    <a class="js-createLink u-clickable" href="#manage/templates"><%- @T('Create new template in admin interface.') %></a>
-    <span class="js-createTextOnly"><%- @T('Create new template in admin interface.') %></span>
+    <a class="js-createLink u-clickable" href="#manage/templates"><%- @T('Create a new template in the admin interface.') %></a>
+    <span class="js-createTextOnly"><%- @T('Create a new template in the admin interface.') %></span>
   </p>
 </div>

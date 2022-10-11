@@ -2421,6 +2421,10 @@ msgstr ""
 msgid "Create a Test Ticket"
 msgstr ""
 
+#: app/assets/javascripts/app/views/widget/template.jst.eco
+msgid "Create a new template in the admin interface."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Create a shared draft"
 msgstr ""
@@ -2447,10 +2451,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Create new records"
-msgstr ""
-
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Create new template in admin interface."
 msgstr ""
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
