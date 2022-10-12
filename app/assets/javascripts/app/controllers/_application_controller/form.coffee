@@ -111,6 +111,11 @@ class App.ControllerForm extends App.Controller
       if @isDisabled == true
         attribute.disabled = true
 
+      # We need to use the text attribute and a own validation, because unicode is in the
+      # default email html field not allowed.
+      if attribute.type is 'email'
+        attribute.input_type = 'text'
+
       # add item
       item = @formGenItem(attribute, @idPrefix, fieldset, attributeCount)
       item.appendTo(fieldset)

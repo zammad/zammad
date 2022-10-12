@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Sendmail
+  include Channel::EmailHelper
+
   def send(_options, attr, notification = false)
 
     # return if we run import mode
@@ -14,6 +16,7 @@ class Channel::Driver::Sendmail
       attr[:bcc] += ', ' if attr[:bcc].present?
       attr[:bcc] += system_bcc
     end
+    attr = prepare_idn_outbound(attr)
 
     mail = Channel::EmailBuild.build(attr, notification)
     delivery_method(mail)

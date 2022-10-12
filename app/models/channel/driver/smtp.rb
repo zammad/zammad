@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Smtp
+  include Channel::EmailHelper
 
   # we're using the same timeouts like in Net::SMTP gem
   #   but we would like to have the possibility to mock it for tests
@@ -64,6 +65,7 @@ class Channel::Driver::Smtp
       attr[:bcc] += ', ' if attr[:bcc].present?
       attr[:bcc] += system_bcc
     end
+    attr = prepare_idn_outbound(attr)
 
     mail = Channel::EmailBuild.build(attr, notification)
     smtp_params = {

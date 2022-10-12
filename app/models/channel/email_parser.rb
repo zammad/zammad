@@ -3,6 +3,8 @@
 # encoding: utf-8
 
 class Channel::EmailParser
+  include Channel::EmailHelper
+
   PROZESS_TIME_MAX = 180
   EMAIL_REGEX = %r{.+@.+}
   RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
@@ -174,6 +176,9 @@ returns
     ticket       = nil
     article      = nil
     session_user = nil
+
+    # https://github.com/zammad/zammad/issues/2401
+    mail = prepare_idn_inbound(mail)
 
     # use transaction
     Transaction.execute(transaction_params) do

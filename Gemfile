@@ -116,6 +116,9 @@ gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 
+# convert from punycode ACE strings to unicode UTF-8 strings and visa versa
+gem 'simpleidn'
+
 # feature - business hours
 gem 'biz'
 

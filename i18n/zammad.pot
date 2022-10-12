@@ -4120,6 +4120,10 @@ msgstr ""
 msgid "Enter Title…"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+msgid "Enter a valid email address."
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco

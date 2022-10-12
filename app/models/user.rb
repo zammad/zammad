@@ -955,7 +955,8 @@ try to find correct name
     return if Setting.get('import_mode')
     return if email.blank?
 
-    self.email = email.downcase.strip
+    # https://bugs.chromium.org/p/chromium/issues/detail?id=410937
+    self.email = EmailHelper::Idn.to_unicode(email).downcase.strip
   end
 
   def ensure_email

@@ -116,6 +116,17 @@ RSpec.describe Channel::EmailParser, type: :model do
           RAW
         end
       end
+
+      context 'with two unrecognizded email addresses with international domain name' do
+        it 'create new user email unicode characters', :aggregate_failures do
+          expect { described_class.new.process({}, <<~RAW) }.to change(User, :count).by(2)
+            From: john.doe@xn--cme-pla.corp
+            To: jane.doe@xn--cme-pla.corp
+          RAW
+          expect(User).to be_exist(login: 'john.doe@äcme.corp')
+            .and(be_exist(email: 'jane.doe@äcme.corp'))
+        end
+      end
     end
 
     describe 'auto-updating existing users' do

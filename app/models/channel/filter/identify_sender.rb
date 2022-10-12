@@ -152,6 +152,10 @@ module Channel::Filter::IdentifySender
   def self.user_create(attrs, role_ids = nil)
     populate_attributes!(attrs, role_ids: role_ids)
 
+    if attrs[:login]
+      attrs[:login] = EmailHelper::Idn.to_unicode(attrs[:login])
+    end
+
     if (user = User.find_by('email = :email OR login = :email', attrs))
       user.update!(attrs.slice(:firstname)) if user.no_name? && attrs[:firstname].present?
     elsif (user = User.create!(attrs))
@@ -193,7 +197,7 @@ module Channel::Filter::IdentifySender
   def self.sanitize_email(string)
     string += '@local' if string.exclude?('@')
 
-    string.downcase
+    string = string.downcase
           .strip
           .delete('"')
           .delete("'")
@@ -202,6 +206,8 @@ module Channel::Filter::IdentifySender
           .sub(%r{\A'(.*)'\z}, '\1') # see https://github.com/zammad/zammad/issues/2154
           .gsub(%r{\s}, '')          # see https://github.com/zammad/zammad/issues/2198
           .delete_suffix('.')
+
+    EmailHelper::Idn.to_unicode(string)
   end
 
 end

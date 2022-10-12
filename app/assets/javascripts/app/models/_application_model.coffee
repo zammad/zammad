@@ -129,7 +129,7 @@ class App.Model extends Spine.Model
 
         # check email
         if attribute.type is 'email' && data['params'][attributeName]
-          if !data['params'][attributeName].match(/\S+@\S+\.\S+/)
+          if !data['params'][attributeName].match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)
             errors[attributeName] = 'invalid'
           if data['params'][attributeName].match(/ /)
             errors[attributeName] = 'invalid'

@@ -90,6 +90,25 @@ RSpec.describe 'Manage > Users', type: :system do
         end
       end
     end
+
+    describe 'with email with umlauts' do
+      it 'is valid' do
+        visit '#manage/users'
+
+        within(:active_content) do
+          find('[data-type=new]').click
+
+          find('[name=firstname]').fill_in with: 'NewTestUserFirstName'
+          find('[name=lastname]').fill_in with: 'User'
+          find('[name=email]').fill_in with: 'üser@äcme.corp'
+          find('span.label-text', text: 'Customer').first(:xpath, './/..').click
+
+          click '.js-submit'
+
+          expect(page).to have_css('table.user-list td', text: 'üser@äcme.corp')
+        end
+      end
+    end
   end
 
   describe 'show/unlock a user', authenticated_as: :authenticate do
@@ -180,6 +199,21 @@ RSpec.describe 'Manage > Users', type: :system do
         end
       end
     end
+
+    context 'when user has email with umlauts' do
+      let(:user) { create(:admin, login: 'üser@äcme.corp', email: 'üser@äcme.corp') }
+
+      it 'does allow to update' do
+        in_modal do
+          fill_in 'firstname', with: 'Üser'
+
+          click_on 'Submit'
+
+          expect(page).to have_no_text('Invalid email')
+        end
+      end
+    end
+
   end
 
   describe 'check user edit permissions', authenticated_as: -> { user } do

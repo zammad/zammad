@@ -690,6 +690,7 @@ DEPENDENCIES
   sassc-rails
   selenium-webdriver
   shoulda-matchers
+  simpleidn
   slack-notifier
   slack-ruby-client
   sprockets (~> 3.7.2)
