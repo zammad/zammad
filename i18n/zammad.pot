@@ -3244,7 +3244,7 @@ msgid "Defines the maximum accepted email size in MB."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines the maximum number of allowed task bar tasks before auto cleanup removes surplus tasks when creating new tasks."
+msgid "Defines the maximum number of allowed open tabs before auto cleanup removes surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4927,7 +4927,7 @@ msgid "Has processed"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6172,7 +6172,7 @@ msgid "Maximum failed logins"
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgid "Maximum number of open tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7223,7 +7223,7 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
+msgid "Opened in tabs"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco

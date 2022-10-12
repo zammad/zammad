@@ -27,10 +27,10 @@ defineProps<Props>()
     </CommonSectionMenu>
     <CommonSectionMenu
       class="py-4"
-      :header-label="__('Opened in taskbar')"
+      :header-label="__('Opened in tabs')"
       :help="
         __(
-          'Has ticket open in taskbar, but is not actively looking at the ticket.',
+          'Has ticket open in tabs, but is not actively looking at the ticket.',
         )
       "
     >

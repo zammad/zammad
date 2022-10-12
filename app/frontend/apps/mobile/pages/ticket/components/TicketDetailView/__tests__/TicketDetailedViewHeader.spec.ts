@@ -74,6 +74,6 @@ describe('tickets zoom header', () => {
 
     expect(await view.findByText('Editing ticket')).toBeInTheDocument()
     expect(view.getByText('Viewing ticket')).toBeInTheDocument()
-    expect(view.getByText('Opened in taskbar')).toBeInTheDocument()
+    expect(view.getByText('Opened in tabs')).toBeInTheDocument()
   })
 })

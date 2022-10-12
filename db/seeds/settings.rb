@@ -1009,10 +1009,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Maximum number of allowed tasks before auto cleanup removes surplus tasks.'),
+  title:       __('Maximum number of open tabs.'),
   name:        'ui_task_mananger_max_task_count',
   area:        'UI::TaskManager::Task::MaxCount',
-  description: __('Defines the maximum number of allowed task bar tasks before auto cleanup removes surplus tasks when creating new tasks.'),
+  description: __('Defines the maximum number of allowed open tabs before auto cleanup removes surplus tabs when creating new tabs.'),
   options:     {},
   state:       30,
   preferences: {
