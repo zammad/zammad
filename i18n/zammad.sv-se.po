@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-21 11:42+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-10-11 03:30+0000\n"
+"Last-Translator: OskyEdz <snakehultosky@gmail.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
 "Language: sv-se\n"
@@ -47,7 +47,7 @@ msgstr "mm/dd/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " till "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -77,6 +77,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Skapad av #{current_user.longname} på #{ticket."
+"updated_at}_\n"
+"* Grupp: #{ticket.group.name}\n"
+"* Ägare: #{ticket.owner.fullname}\n"
+"* Status: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -92,6 +103,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eskalerad vid #{ticket.escalation_at}_\n"
+"Ärendet (#{ticket.title}) från \"#{ticket.customer.longname}\" har "
+"eskalerats sedan \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -107,6 +127,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Påminnelse uppnådd!_\n"
+"Åtgärd behövs: påminnelse uppnådd för (#{ticket.title}) med kund \"*#{ticket."
+"customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -126,6 +155,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ärende##{ticket.number}>: Uppdaterad av #{current_user.longname} vid "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -141,6 +183,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ärende##{ticket.number}>: Kommer att eskaleras vid #{ticket.escalation_at}_\n"
+"Ärendet (#{ticket.title}) från \"#{ticket.customer.longname}\" kommer att "
+"eskaleras vid \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -803,6 +854,7 @@ msgid "Action"
 msgstr "Åtgärd"
 
 #: app/assets/javascripts/app/models/macro.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Actions"
 msgstr "Åtgärder"
@@ -831,6 +883,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/report_profile.js.coffee
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -1375,7 +1428,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
-#: app/assets/javascripts/app/controllers/widget/template.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
@@ -2154,7 +2206,9 @@ msgid "Change order"
 msgstr "Ändra order"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Changed"
+#, fuzzy
+#| msgid "Changed"
+msgid "Changed:"
 msgstr "Ändrad"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -2323,10 +2377,6 @@ msgstr "Checksum"
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
 msgstr "Barn"
-
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Choose attributes and then save them as a new template."
-msgstr "Välj attributer och spara dom sedan som en ny mall."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -2835,7 +2885,6 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
-#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
@@ -2890,6 +2939,10 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "Skapa ett testärende"
+
+#: app/assets/javascripts/app/views/widget/template.jst.eco
+msgid "Create a new template in the admin interface."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
@@ -2954,6 +3007,12 @@ msgstr "Skapad "
 msgid "Create your first ticket"
 msgstr "Skapa ditt första ärende"
 
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#, fuzzy
+#| msgid "Create"
+msgid "Create:"
+msgstr "Skapa"
+
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -2988,12 +3047,17 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
-#: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
+msgstr "Skapad "
+
+#: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+#, fuzzy
+#| msgid "Created at"
+msgid "Created at:"
 msgstr "Skapad "
 
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -3854,6 +3918,12 @@ msgid "Defines the maximum accepted email size in MB."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 #, fuzzy
 #| msgid ""
 #| "Defines the name of the application, shown in the web interface, tabs and "
@@ -4004,7 +4074,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
@@ -4080,8 +4149,16 @@ msgstr "Radera organisation?"
 msgid "Delete records"
 msgstr "Radera poster"
 
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete:"
+msgstr "Radera"
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted Organization"
+#, fuzzy
+#| msgid "Deleted Organization"
+msgid "Deleted Organization:"
 msgstr "Borttagen organisation"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
@@ -4099,7 +4176,9 @@ msgid "Deletion failed."
 msgstr "Leverans misslyckades"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
-msgid "Delivery failed"
+#, fuzzy
+#| msgid "Delivery failed"
+msgid "Delivery failed:"
 msgstr "Leverans misslyckades"
 
 #: db/seeds/object_manager_attributes.rb
@@ -4811,9 +4890,14 @@ msgid "Encrypted"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Encryption"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Encrypt"
+msgid "Encryption:"
+msgstr "Kryptera"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -5039,10 +5123,6 @@ msgid ""
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco
-msgid "Example"
-msgstr "Exempel"
-
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Example CSV file for download."
 msgstr "Exempel CSV-fil för nedladdning."
@@ -5051,6 +5131,12 @@ msgstr "Exempel CSV-fil för nedladdning."
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 msgid "Example Payload"
 msgstr ""
+
+#: app/assets/javascripts/app/views/api.jst.eco
+#, fuzzy
+#| msgid "Example"
+msgid "Example:"
+msgstr "Exempel"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Examples"
@@ -5295,9 +5381,14 @@ msgstr "Flat Design"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Folder"
+msgstr "Katalog"
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#, fuzzy
+#| msgid "Folder"
+msgid "Folder:"
 msgstr "Katalog"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -5993,8 +6084,11 @@ msgid "How to use it"
 msgstr "Hur man gör"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+msgid "ID:"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6314,7 +6408,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -6323,10 +6416,17 @@ msgstr ""
 msgid "Inbound"
 msgstr "Inkommande"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
 msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
+#, fuzzy
+#| msgid "Inbound"
+msgid "Inbound:"
+msgstr "Inkommande"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Incident"
@@ -6862,7 +6962,9 @@ msgid "Last sync"
 msgstr "Senast synkad"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-msgid "Last sync at"
+#, fuzzy
+#| msgid "Last sync at"
+msgid "Last sync at:"
 msgstr "Senast synkning skedde"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -7229,6 +7331,11 @@ msgid "Maximum failed logins"
 msgstr "Maximalt antal misslyckade inloggningar"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
 msgstr ""
 
@@ -7570,6 +7677,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/sla.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 #: app/assets/javascripts/app/models/ticket_state.coffee
@@ -7748,6 +7856,12 @@ msgstr "Ursprung"
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
 msgstr "Ny tagg"
+
+#: app/assets/javascripts/app/controllers/template.coffee
+#, fuzzy
+#| msgid "Templates"
+msgid "New Template"
+msgstr "Mallar"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -8118,7 +8232,6 @@ msgstr "Inte konfigurerad"
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -8129,6 +8242,12 @@ msgstr "Notering"
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
 msgstr "Anteckning - Standard synlighet"
+
+#: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
+#, fuzzy
+#| msgid "Note"
+msgid "Note:"
+msgstr "Notering"
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -8143,11 +8262,16 @@ msgstr "Anteckningar är bara synliga för handläggare, aldrig för kunder."
 msgid "Nothing selected"
 msgstr "Inget är valt"
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid "Notice"
+msgstr "OBS"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-msgid "Notice"
+#, fuzzy
+#| msgid "Notice"
+msgid "Notice:"
 msgstr "OBS"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -8224,6 +8348,7 @@ msgid "Object Manager"
 msgstr "Objekthanterare"
 
 #: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
 msgid "Object already exists!"
 msgstr ""
 
@@ -8480,7 +8605,6 @@ msgstr "Ersättare"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -8489,9 +8613,16 @@ msgstr "Ersättare"
 msgid "Outbound"
 msgstr "Utgående"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
 msgstr "Utgående samtal"
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
+#, fuzzy
+#| msgid "Outbound"
+msgid "Outbound:"
+msgstr "Utgående"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 #, fuzzy
@@ -9196,7 +9327,6 @@ msgstr "Kom ihåg mig"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
-#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 msgid "Remote"
 msgstr ""
 
@@ -9204,6 +9334,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_user_attribute_row.jst.eco
@@ -9452,7 +9583,7 @@ msgid "Restrict to only the following users"
 msgstr "Begränsa till endast följande användare"
 
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
-msgid "Result"
+msgid "Result:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -9483,13 +9614,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/assets/javascripts/app/views/user.jst.eco db/seeds/permissions.rb
+#: db/seeds/permissions.rb
 msgid "Roles"
 msgstr "Roller"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 msgid "Roles are …"
 msgstr ""
+
+#: app/assets/javascripts/app/views/user.jst.eco
+#, fuzzy
+#| msgid "Roles"
+msgid "Roles:"
+msgstr "Roller"
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -9653,7 +9790,6 @@ msgstr "Lördag"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#: app/assets/javascripts/app/views/widget/template.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -9671,18 +9807,10 @@ msgstr "Utkast"
 msgid "Save as"
 msgstr ""
 
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Save as template"
-msgstr "Spara som mall"
-
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "Spara konfiguration"
-
-#: app/assets/javascripts/app/views/widget/template.jst.eco
-msgid "Save new template"
-msgstr "Spara ny mall"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -9928,6 +10056,12 @@ msgstr "Avsändareformat"
 #: db/seeds/settings.rb
 msgid "Sender Format Separator"
 msgstr "Avsändareformat-separator"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
+#, fuzzy
+#| msgid "Sender"
+msgid "Sender Type"
+msgstr "Avsändare"
 
 #: db/seeds/settings.rb
 msgid "Sender based on Reply-To header"
@@ -10243,7 +10377,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Sign"
 msgstr "Signera"
 
@@ -10277,6 +10410,12 @@ msgstr "Logga ut"
 #: app/assets/javascripts/app/controllers/signup.coffee
 msgid "Sign up"
 msgstr "Registrera"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#, fuzzy
+#| msgid "Sign"
+msgid "Sign:"
+msgstr "Signera"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10524,19 +10663,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Status"
 msgstr "Status"
 
 #: app/assets/javascripts/app/views/generic/error/generic.jst.eco
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
-msgid "Status Code"
+#, fuzzy
+#| msgid "Status Code"
+msgid "Status Code:"
 msgstr "Statuskod"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
 msgstr "Statustyp"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+#, fuzzy
+#| msgid "Status"
+msgid "Status:"
+msgstr "Status"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -10732,7 +10878,15 @@ msgstr "Telegram"
 msgid "Telegram Account"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/template.coffee
+#, fuzzy
+#| msgid "Templates"
+msgid "Template"
+msgstr "Mallar"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_template.coffee
+#: app/assets/javascripts/app/controllers/template.coffee
+#: db/seeds/permissions.rb
 msgid "Templates"
 msgstr "Mallar"
 
@@ -10825,6 +10979,7 @@ msgid "Text modules"
 msgstr "Text moduler"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
+#: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
 #| msgid "Text modules"
@@ -12449,10 +12604,15 @@ msgstr "Twitterhemlighet"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
+msgstr "Typ"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+#, fuzzy
+#| msgid "Type"
+msgid "Type:"
 msgstr "Typ"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -12589,6 +12749,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/sla.coffee
+#: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/models/ticket_priority.coffee
@@ -12790,7 +12951,9 @@ msgid "User"
 msgstr "Användare"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "User (censored)"
+#, fuzzy
+#| msgid "User (censored)"
+msgid "User (censored):"
 msgstr "Användare (censurerad)"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -12868,10 +13031,6 @@ msgstr "Användarnamn för proxy-anslutning."
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 #: app/frontend/apps/mobile/pages/search/plugins/user.ts db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
@@ -12880,6 +13039,15 @@ msgstr "Användare"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
 msgstr "Användare utan tilldelade LDAP-grupper"
+
+#: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
+#, fuzzy
+#| msgid "Users"
+msgid "Users:"
+msgstr "Användare"
 
 #: app/assets/javascripts/app/models/organization.coffee
 msgid ""
@@ -13109,7 +13277,7 @@ msgstr ""
 "allt från din e-postbox till Zammad."
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support"
+msgid "We support:"
 msgstr ""
 
 #: app/frontend/apps/mobile/router/error.ts
@@ -13361,13 +13529,22 @@ msgstr ""
 "Med formulär kan du lägga till en blankett på din webbsida som direkt "
 "genererar en biljett till dig."
 
+#: app/assets/javascripts/app/models/template.coffee
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid ""
+"With templates it is possible to fill pre-filled tickets quickly and easily."
+msgstr "Med mallar kan du för-fylla ärende-attributer."
+
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
 msgstr "Med mallar kan du för-fylla ärende-attributer."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "With your current configuration the following will happen"
+#, fuzzy
+#| msgid "With your current configuration the following will happen"
+msgid "With your current configuration the following will happen:"
 msgstr "Med din nuvarande konfiguration kommer följande att hända"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
@@ -13394,8 +13571,13 @@ msgid "Woo hoo! Your password has been changed!"
 msgstr "Woo hoo! Ditt lösenord har ändrats!"
 
 #: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Words"
+msgstr "Ord"
+
+#: app/assets/javascripts/app/views/translation/todo.jst.eco
+#, fuzzy
+#| msgid "Words"
+msgid "Words:"
 msgstr "Ord"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -13589,7 +13771,10 @@ msgid "You have to allow access to your webcam."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "You need to add the following Javascript code snippet to your web page"
+#, fuzzy
+#| msgid ""
+#| "You need to add the following Javascript code snippet to your web page"
+msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "Du måste lägga till följande Javascript-kod till din webbsida"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -14396,7 +14581,9 @@ msgstr "matchningar"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
-msgid "maybe"
+#, fuzzy
+#| msgid "maybe"
+msgid "maybe:"
 msgstr "kanske"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -14872,6 +15059,15 @@ msgstr "...av hel textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Choose attributes and then save them as a new template."
+#~ msgstr "Välj attributer och spara dom sedan som en ny mall."
+
+#~ msgid "Save as template"
+#~ msgstr "Spara som mall"
+
+#~ msgid "Save new template"
+#~ msgstr "Spara ny mall"
 
 #~ msgid "Beginner"
 #~ msgstr "Nybörjare"
