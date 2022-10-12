@@ -155,20 +155,14 @@ module BrowserTestHelper
   # display_macro_batches(Ticket.first)
   #
   def display_macro_batches(ticket)
-    10.times do
-      # get DOM element
-      element = page.find(:table_row, ticket.id).native
-      # get element moving
-      click_and_hold(element)
-      # move element to y -ticket.location.y
-      move_mouse_by(0, -element.location.y + 5)
-      # move a bit to the left to display macro batches
-      move_mouse_by(-250, 0)
-
-      break if page.find_all('.batch-overlay-macro-entry', allow_reload: true).any?
-
-      sleep 0.2
-    end
+    # get DOM element
+    element = page.find(:table_row, ticket.id).native
+    # get element moving
+    click_and_hold(element)
+    # move element to y -ticket.location.y
+    move_mouse_by(0, -element.location.y + 3)
+    # move a bit to the left to display macro batches
+    move_mouse_by(-element.location.x + 3, 0)
   end
 
   # Releases the depressed left mouse button at the current mouse location.

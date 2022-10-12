@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true do
-  let(:group_1)              { create :group }
-  let(:group_2)              { create :group }
-  let(:macro_without_group)  { create :macro }
-  let(:macro_note)           { create :macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } } }
-  let(:macro_group1)         { create :macro, groups: [group_1] }
-  let(:macro_group2)         { create :macro, groups: [group_2] }
-  let(:ticket_1)             { create :ticket, title: 'Testing Ticket 1', group: group_1 }
-  let(:ticket_2)             { create :ticket, title: 'Testing Ticket 2', group: group_2 }
-  let(:note)                 { 'Test note' }
+  let(:group_1)               { create :group }
+  let(:group_2)               { create :group }
+  let(:macro_without_group)   { create :macro }
+  let(:macro_note)            { create :macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } } }
+  let(:macro_group1)          { create :macro, groups: [group_1] }
+  let(:macro_group2)          { create :macro, groups: [group_2] }
+  let!(:ticket_1)             { create :ticket, title: 'Testing Ticket 1', group: group_1 }
+  let!(:ticket_2)             { create :ticket, title: 'Testing Ticket 2', group: group_2 }
+  let(:note)                  { 'Test note' }
 
   before do
     ticket_1 && ticket_2
@@ -153,7 +153,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   context 'with ticket search result for macros bulk action', authenticated_as: :authenticate do
     let(:group_3)      { create :group }
     let(:search_query) { 'Testing' }
-    let(:ticket_3)     { create :ticket, title: 'Testing Ticket 3', group: group_3 }
+    let!(:ticket_3)    { create :ticket, title: 'Testing Ticket 3', group: group_3 }
     let(:agent)        { create(:agent, groups: Group.all) }
 
     before do
@@ -181,8 +181,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       end
 
       it 'shows non-group and matching group macros for matching ticket' do
+        display_macro_batches ticket_1
         within(:active_content) do
-          display_macro_batches ticket_1
 
           expect(page).to have_selector(:macro_batch, macro_without_group.id)
             .and(have_selector(:macro_batch, macro_group1.id))
@@ -194,8 +194,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
     context 'with macro batch overlay' do
       shared_examples "adding 'small' class to macro element" do
         it 'adds a "small" class to the macro element' do
+          display_macro_batches ticket_1
           within(:active_content) do
-            display_macro_batches ticket_1
 
             expect(page).to have_selector('.batch-overlay-macro-entry.small')
           end
@@ -204,8 +204,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
       shared_examples "not adding 'small' class to macro element" do
         it 'does not add a "small" class to the macro element' do
+          display_macro_batches ticket_1
           within(:active_content) do
-            display_macro_batches ticket_1
 
             expect(page).to have_no_selector('.batch-overlay-macro-entry.small')
           end
@@ -214,8 +214,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
       shared_examples 'showing all macros' do
         it 'shows all macros' do
+          display_macro_batches ticket_1
           within(:active_content) do
-            display_macro_batches ticket_1
 
             expect(page).to have_selector('.batch-overlay-macro-entry', count: all)
           end
@@ -224,8 +224,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
       shared_examples 'showing some macros' do |count|
         it 'shows all macros' do
+          display_macro_batches ticket_1
           within(:active_content) do
-            display_macro_batches ticket_1
 
             expect(page).to have_selector('.batch-overlay-macro-entry', count: count)
           end
@@ -427,12 +427,12 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
   describe 'Searches display all groups and owners on bulk selections #4054', authenticated_as: :authenticate do
     let(:group_1) { create(:group) }
-    let(:group_2)     { create(:group) }
-    let(:agent_1)     { create(:agent, groups: [group_1]) }
-    let(:agent_2)     { create(:agent, groups: [group_2]) }
-    let(:agent_all)   { create(:agent, groups: [group_1, group_2]) }
-    let(:ticket_1)    { create(:ticket, group: group_1, title: '4054 group 1') }
-    let(:ticket_2)    { create(:ticket, group: group_2, title: '4054 group 2') }
+    let(:group_2)      { create(:group) }
+    let(:agent_1)      { create(:agent, groups: [group_1]) }
+    let(:agent_2)      { create(:agent, groups: [group_2]) }
+    let(:agent_all)    { create(:agent, groups: [group_1, group_2]) }
+    let!(:ticket_1)    { create(:ticket, group: group_1, title: '4054 group 1') }
+    let!(:ticket_2)    { create(:ticket, group: group_2, title: '4054 group 2') }
 
     def authenticate
       agent_1 && agent_2 && agent_all
