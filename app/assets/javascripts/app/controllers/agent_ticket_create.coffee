@@ -126,7 +126,7 @@ class App.TicketCreate extends App.Controller
 
     # force changing signature
     # skip on initialization because it will trigger core workflow
-    @$('[name="group_id"]').trigger('change')
+    @$('[name="group_id"]').trigger('change', true)
 
     # add observer to change options
     @$('[name="cc"], [name="group_id"], [name="customer_id"]').on('change', =>
@@ -181,6 +181,7 @@ class App.TicketCreate extends App.Controller
   show: =>
     @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
+    @dirtyMonitorStart()
     @controllerBind('ticket_create_rerender', (template) => @renderQueue(template))
     @controllerBind('ticket_create_shared_draft_saved',       @sharedDraftSaved)
     @controllerBind('ticket_create_import_draft_attachments', @importDraftAttachments)
@@ -192,6 +193,7 @@ class App.TicketCreate extends App.Controller
 
   hide: =>
     @autosaveStop()
+    @dirtyMonitorStop()
     @controllerUnbind('ticket_create_rerender')
     @controllerUnbind('ticket_create_shared_draft_saved')
     @controllerUnbind('ticket_create_import_draft_attachments')
@@ -211,6 +213,42 @@ class App.TicketCreate extends App.Controller
       params.to = params.customer_id_completion
 
     @updateSecurityOptionsRemote(@taskKey, params, params, @paramsSecurity())
+
+  dirtyMonitorStart: =>
+    @dirty = {}
+
+    update = (e, nonInteractive) =>
+      { target } = e
+
+      field = target.getAttribute('name') || target.getAttribute('data-name')
+
+      # Skip tracking of fields without name attribute
+      if !field
+        @log 'debug', 'ticket create dirty monitor', 'unknown field', target
+        return
+
+      # Skip tracking of non-interactive fields
+      if nonInteractive || field == 'id'
+        @log 'debug', 'ticket create dirty monitor', 'non-interactive change', field
+        return
+
+      # Get field specific value
+      switch field
+        when 'body' then value = target.textContent
+        else value = target.value
+
+      # Remember non-empty user input by marking fields as "dirty"
+      # https://github.com/zammad/zammad/issues/2434
+      if value? && value
+        @dirty[field] = true
+      else
+        delete @dirty[field] if @dirty[field]
+      @log 'debug', 'ticket create dirty monitor', field, value, @dirty
+
+    @el.on('change.dirty paste.dirty input.dirty', 'form, .js-textarea', update)
+
+  dirtyMonitorStop: =>
+    @el.off('change.dirty paste.dirty input.dirty')
 
   autosaveStop: =>
     @clearDelay('ticket-create-form-update')
@@ -319,18 +357,48 @@ class App.TicketCreate extends App.Controller
     taskData.attachments = attachments
     App.TaskManager.update(@taskKey, taskData)
 
-  render: (template = {}) ->
+  render: (template = {}) =>
 
-    # get params
+    # Get initial params
     params = @prefilledParams || {}
-    if template && !_.isEmpty(template.options)
-      params = template.options
-    else if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
+
+    # Get taskbar params
+    if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
       params = App.TaskManager.get(@taskKey).state
       params.attachments = App.TaskManager.get(@taskKey).attachments
 
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
+
+    # Get template params
+    if template && !_.isEmpty(template.options)
+      templateTags = ''
+
+      # Merge template values with existing params
+      _.extend(params, _.pick(
+        template.options
+
+        # Pick only values for "non-dirty" fields
+        #   Skip processing tags, as these will get merged later
+        # https://github.com/zammad/zammad/issues/2434
+        (value, field) =>
+          if field == 'tags'
+            templateTags = value
+            return
+
+          return if @dirty?[field]
+
+          true
+        )
+      )
+
+      # Merge with existing tags, but only if they are "dirty"
+      params.tags = _.uniq(
+        _.union(
+          params.tags.split(', ') if @dirty?.tags && params.tags,
+          templateTags.split(', ') if templateTags
+        )
+      ).join(', ')
 
     if !_.isEmpty(params)
       # only use form meta once so it will not get used on templates
