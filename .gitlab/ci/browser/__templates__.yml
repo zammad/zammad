@@ -42,42 +42,6 @@
     - !reference [.services, redis]
     - !reference [.services, memcached]
 
-.template_browser-core_autowizard:
-  stage: browser
-  dependencies:
-    - browser:build
-  extends:
-    - .job_rules_default
-    - .tags_docker_low_concurrency
-  variables:
-    RAILS_ENV: "production"
-    APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
-    AUTO_WIZARD_FILE: "contrib/auto_wizard_example.json"
-    TEST_FILE: "test/integration/auto_wizard_browser_test.rb"
-  script:
-    - RAILS_ENV=test bundle exec rake db:create
-    - cp $AUTO_WIZARD_FILE auto_wizard.json
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
-    - bundle exec rake zammad:ci:test:start
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
-    - bundle exec rails test $TEST_FILE
-
-.template_browser-core_autowizard_chrome:
-  extends:
-    - .template_browser-core_autowizard
-    - .variables_selenium_chrome
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
-
-.template_browser-core_autowizard_firefox:
-  extends:
-    - .template_browser-core_autowizard
-    - .variables_selenium_firefox
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, selenium-firefox]
-
 .template_browser-core_capybara:
   stage: browser
   dependencies:
