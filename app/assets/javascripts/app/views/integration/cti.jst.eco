@@ -2,7 +2,7 @@
 
   <h2><%- @T('Endpoint Settings') %></h2>
 
-  <p><%- @T('You need to configure the Zammad endpoints in the %s', 'PBX') %>:<p>
+  <p><%- @T('You need to configure the Zammad endpoints in the %s:', 'PBX') %><p>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">

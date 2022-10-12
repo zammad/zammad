@@ -225,7 +225,7 @@ do(window) ->
         'Connection re-established': 'Verbindung wieder aufgebaut'
         'Offline': 'Offline'
         'Online': 'Online'
-        'Scroll down to see new messages': 'Scrolle nach unten um neue Nachrichten zu sehen'
+        'Scroll down to see new messages': 'Nach unten Scrollen um neue Nachrichten zu sehen'
         'Send': 'Senden'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie innerhalb der letzten %s Minuten nicht reagiert haben, wurde Ihre Unterhaltung geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie innerhalb der letzten %s Minuten nicht reagiert haben, wurde Ihre Unterhaltung mit <strong>%s</strong> geschlossen.'

@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Påminnelse uppnådd!_
+Åtgärd behövs: påminnelse uppnådd för (#{ticket.title}) med kund "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

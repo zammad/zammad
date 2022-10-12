@@ -2,7 +2,7 @@
 
   <h2><%- @T('Endpoint Settings') %></h2>
 
-  <p><%- @T('You need to configure the Zammad endpoints in the %s web interface', 'Placetel') %>:<p>
+  <p><%- @T('You need to configure the Zammad endpoints in the %s web interface:', 'Placetel') %><p>
 
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
@@ -19,7 +19,7 @@
     </table>
   </div>
 
-  <p><%- @T('In order for Zammad to access %s, the %s API token must be stored here', 'Placetel', 'Placetel') %>:<p>
+  <p><%- @T('In order for Zammad to access %s, the %s API token must be stored here:', 'Placetel', 'Placetel') %><p>
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
       <thead>
