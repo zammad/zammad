@@ -1,4 +1,4 @@
 <div class="token" data-value="<%= @value %>"<% if !@object: %> title="<%= @name || '-' %>"<% end %>>
   <span class="token-label"><%= @name.split('::').join(' › ') || '-' %></span>
-  <span class="token-close js-remove">×</span>
+  <span class="token-close js-remove<% if @disabled: %> is-disabled<% end %>">×</span>
 </div>
