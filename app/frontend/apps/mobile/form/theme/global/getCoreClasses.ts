@@ -42,6 +42,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     }),
     checkbox: {
       wrapper: `${classes.checkbox?.wrapper || ''} w-full justify-between`,
+      label: `${classes.checkbox?.label || ''} formkit-required:required`,
     },
     tags: addBlockFloatingLabel(classes.tags),
     select: addBlockFloatingLabel(classes.select),

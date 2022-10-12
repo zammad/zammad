@@ -30,6 +30,11 @@ const schema = defineFormSchema([
     screen: 'edit',
     object: EnumObjectManagerObjects.Organization,
   },
+  {
+    name: 'active',
+    required: true,
+    object: EnumObjectManagerObjects.Organization,
+  },
 ])
 
 const updateQuery = new MutationHandler(useOrganizationUpdateMutation({}))
