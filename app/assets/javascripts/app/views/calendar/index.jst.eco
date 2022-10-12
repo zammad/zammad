@@ -22,7 +22,7 @@
     <div class="action-flow action-flow--row">
       <div class="action-row">
         <div class="action-flow action-flow--noWrap">
-          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @Ti('Last sync at') %>: <%- @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
+          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @Ti('Last sync at:') %> <%- @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
             <% if calendar.last_log: %>
               <%- @Icon('status', 'error inline') %>
             <% else: %>

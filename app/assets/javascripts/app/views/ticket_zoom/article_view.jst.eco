@@ -56,10 +56,10 @@
   <div class="alert alert--warning">
     <%- @Icon('not-signed') %> <%- @T('Security Error') %>
     <% if @article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment: %>
-      <div class="alert-row"><%- @T('Sign') %>: <%- @T(@article.preferences.security?.sign?.comment) %></div>
+      <div class="alert-row"><%- @T('Sign:') %> <%- @T(@article.preferences.security?.sign?.comment) %></div>
     <% end %>
     <% if @article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment: %>
-      <div class="alert-row"><%- @T('Encryption') %>: <%- @T(@article.preferences.security?.encryption?.comment) %></div>
+      <div class="alert-row"><%- @T('Encryption:') %> <%- @T(@article.preferences.security?.encryption?.comment) %></div>
     <% end %>
     <div class="btn btn--action btn--small js-securityRetryProcess"><%- @T('Retry security process') %></div>
   </div>

@@ -20,7 +20,7 @@
             <% if shown: %><div class="spacer"></div><% end %>
             <div class="user-card">
               <a href="<%- user.uiUrl() %>"><%- user.avatar() %></a>
-              <div class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><% if caller_id.level isnt 'known': %><%- @T('maybe') %>: <% end %><%= user.displayNameLong() %></div>
+              <div class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><% if caller_id.level isnt 'known': %><%- @T('maybe:') %> <% end %><%= user.displayNameLong() %></div>
               <span class="text-muted"><%= item.from_pretty %></span>
               <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
             </div>
@@ -29,7 +29,7 @@
             <% shown = true %>
             <div class="user-card">
               <%- @unique_avatar(caller_id.comment, caller_id.comment.split(" ").map((name) -> name[0]).join("")) %>
-              <%- @T('maybe') %>: <%= caller_id.comment %><br>
+              <%- @T('maybe:') %> <%= caller_id.comment %><br>
               <span class="text-muted"><%= item.from_pretty %></span>
               <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
             </div>

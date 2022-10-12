@@ -1,7 +1,7 @@
 <ul>
   <li><%- @T('%s user to %s user', 'LDAP', 'Zammad') %> (<%= @job.result.sum %>):
     <ul>
-      <li><%- @T('Users') %>: <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>, <%= @job.result.deactivated %> <%- @T('deactivated') %>
+      <li><%- @T('Users:') %> <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>, <%= @job.result.deactivated %> <%- @T('deactivated') %>
     </ul>
   </li>
   <% if !_.isEmpty(@job.result.roles): %>

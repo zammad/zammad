@@ -12,8 +12,8 @@
           <%- @Icon(channel.icon, 'stat-channel-icon') %>
         </div>
         <div class="stat-bars">
-          <div class="stat-bar stat-bar--inbound" style="height: <%- channel.inbound_in_percent %>%" title="<%- @Ti('Inbound') %>: <%- channel.inbound_in_percent %>% (<%- channel.inbound %>)"></div>
-          <div class="stat-bar stat-bar--outbound" style="height: <%- channel.outbound_in_percent %>%" title="<%- @Ti('Outbound') %>: <%- channel.outbound_in_percent %>% (<%- channel.outbound %>)"></div>
+          <div class="stat-bar stat-bar--inbound" style="height: <%- channel.inbound_in_percent %>%" title="<%- @Ti('Inbound:') %> <%- channel.inbound_in_percent %>% (<%- channel.inbound %>)"></div>
+          <div class="stat-bar stat-bar--outbound" style="height: <%- channel.outbound_in_percent %>%" title="<%- @Ti('Outbound:') %> <%- channel.outbound_in_percent %>% (<%- channel.outbound %>)"></div>
         </div>
         <div class="stat-detail"><%- channel.overal_percentage %>%</div>
       </div>

@@ -1773,7 +1773,7 @@ msgid "Change order"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-msgid "Changed"
+msgid "Changed:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -2386,7 +2386,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
-#: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
@@ -2477,6 +2476,10 @@ msgstr ""
 msgid "Create your first ticket"
 msgstr ""
 
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
+msgid "Create:"
+msgstr ""
+
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -2511,12 +2514,15 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/models/user.coffee
-#: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 #: app/controllers/time_accountings_controller.rb
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
+msgstr ""
+
+#: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
+msgid "Created at:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -3430,8 +3436,12 @@ msgstr ""
 msgid "Delete records"
 msgstr ""
 
+#: app/assets/javascripts/app/views/object_manager/index.jst.eco
+msgid "Delete:"
+msgstr ""
+
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted Organization"
+msgid "Deleted Organization:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
@@ -3447,7 +3457,7 @@ msgid "Deletion failed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
-msgid "Delivery failed"
+msgid "Delivery failed:"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -4063,8 +4073,11 @@ msgid "Encrypted"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Encryption"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+msgid "Encryption:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
@@ -4227,10 +4240,6 @@ msgstr ""
 msgid "Every time a customer creates a new ticket, they automatically receive a confirmation email to assure them that their issue has been submitted successfully. This behavior is built into Zammad, but it’s also highly customizable, and you can set up other automated actions just like it.\n\nMaybe you want to set a higher priority on any ticket with the word “urgent” in the title. Maybe you want to avoid sending auto-reply emails to customers from certain organizations. Maybe you want mark a ticket as “pending” whenever someone adds an internal note to a ticket.\n\nWhatever it is, you can do it with triggers: actions that watch tickets for certain changes, and then fire off whenever those changes occur."
 msgstr ""
 
-#: app/assets/javascripts/app/views/api.jst.eco
-msgid "Example"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Example CSV file for download."
 msgstr ""
@@ -4238,6 +4247,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 msgid "Example Payload"
+msgstr ""
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "Example:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -4470,9 +4483,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Folder"
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+msgid "Folder:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -5074,8 +5090,11 @@ msgid "How to use it"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+msgid "ID:"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5314,7 +5333,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -5327,6 +5345,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
+msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
+msgid "Inbound:"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -5808,7 +5830,7 @@ msgid "Last sync"
 msgstr ""
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-msgid "Last sync at"
+msgid "Last sync at:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -6970,7 +6992,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
@@ -6980,6 +7001,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Note - default visibility"
+msgstr ""
+
+#: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
+msgid "Note:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -6995,11 +7020,14 @@ msgstr ""
 msgid "Nothing selected"
 msgstr ""
 
+#: app/assets/javascripts/app/views/import/otrs.jst.eco
+msgid "Notice"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
-#: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-msgid "Notice"
+msgid "Notice:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -7312,7 +7340,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -7324,6 +7351,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Outbound Call"
+msgstr ""
+
+#: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
+msgid "Outbound:"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
@@ -8168,7 +8199,7 @@ msgid "Restrict to only the following users"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
-msgid "Result"
+msgid "Result:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -8197,13 +8228,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-#: app/assets/javascripts/app/views/user.jst.eco
 #: db/seeds/permissions.rb
 msgid "Roles"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/role.coffee
 msgid "Roles are …"
+msgstr ""
+
+#: app/assets/javascripts/app/views/user.jst.eco
+msgid "Roles:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8875,7 +8909,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Sign"
 msgstr ""
 
@@ -8906,6 +8939,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee
 msgid "Sign up"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+msgid "Sign:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
@@ -9120,18 +9157,21 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Status"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/error/generic.jst.eco
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
-msgid "Status Code"
+msgid "Status Code:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+msgid "Status:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
@@ -10742,10 +10782,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Type"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
+msgid "Type:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -11039,7 +11082,7 @@ msgid "User"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "User (censored)"
+msgid "User (censored):"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -11109,10 +11152,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
-#: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 #: app/frontend/apps/mobile/pages/search/plugins/user.ts
 #: db/seeds/groups.rb
 #: db/seeds/permissions.rb
@@ -11121,6 +11160,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
+#: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
+msgid "Users:"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee
@@ -11298,7 +11344,7 @@ msgid "We have already found %s email(s) in your mailbox. We will move them all 
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
-msgid "We support"
+msgid "We support:"
 msgstr ""
 
 #: app/frontend/apps/mobile/router/error.ts
@@ -11516,7 +11562,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
-msgid "With your current configuration the following will happen"
+msgid "With your current configuration the following will happen:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
@@ -11532,8 +11578,11 @@ msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/list.jst.eco
-#: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "Words"
+msgstr ""
+
+#: app/assets/javascripts/app/views/translation/todo.jst.eco
+msgid "Words:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
@@ -11679,7 +11728,7 @@ msgid "You have to allow access to your webcam."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-msgid "You need to add the following Javascript code snippet to your web page"
+msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -12357,7 +12406,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
-msgid "maybe"
+msgid "maybe:"
 msgstr ""
 
 #: db/seeds/ticket_state_types.rb

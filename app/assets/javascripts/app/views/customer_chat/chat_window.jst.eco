@@ -34,7 +34,7 @@
     </ul>
     <hr>
     <ul>
-      <li><%- @T('Created at') %>: <%- @Ttimestamp(@session.created_at) %></li>
+      <li><%- @T('Created at:') %> <%- @Ttimestamp(@session.created_at) %></li>
       <% if @session && @session.preferences: %>
         <% if @session.preferences.geo_ip: %>
           <li>GeoIP: <%= @session.preferences.geo_ip.country_name %> <%= @session.preferences.geo_ip.city_name %></li>

@@ -25,5 +25,5 @@
 <h2><%- @T('Paste in CSV data') %></h2>
 <textarea cols="25" rows="6" name="data"></textarea>
 
-<p><%- @T('Note') %>: <a href="<%- @import_example_url %>" target="_blank"><%- @T('Example CSV file for download.') %></a></p>
+<p><%- @T('Note:') %> <a href="<%- @import_example_url %>" target="_blank"><%- @T('Example CSV file for download.') %></a></p>
 </div>

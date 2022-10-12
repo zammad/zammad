@@ -9,11 +9,11 @@
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block action-block--flex">
-        <div class="label"><%- @T('User (censored)') %>:</div>
+        <div class="label"><%- @T('User (censored):') %></div>
         <%= task.preferences.user.firstname %> <%= task.preferences.user.lastname %> (<%= task.preferences.user.email %>)
     <% if task.preferences.user.organization && task.preferences.delete_organization: %>
         <br><br>
-        <div class="label"><%- @T('Deleted Organization') %>:</div>
+        <div class="label"><%- @T('Deleted Organization:') %></div>
         <%= task.preferences.user.organization %>
     <% end %>
         <br><br>

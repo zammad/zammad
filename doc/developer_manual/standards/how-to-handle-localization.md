@@ -20,6 +20,22 @@ Feel free to send pull requests to add more helpful examples to existing files o
 
 ## Developer Workflows
 
+### How to Write Translatable Strings Well
+
+Writing strings that can be translated well and are a pleasure to read for the end user is not always easy.
+
+#### Bad Examples
+
+- `lock` - this English word is ambiguous, it can be a noun (`a lock`), an infinitive (`to lock`) and an imperative (`lock this!`). That makes it impossible to translate it properly.
+- `No email!` - this error message is not understandable for an end user.
+
+#### Good Practices
+
+- *Talk to the end user.* Imagine you are a non-technical end user of Zammad. Would you understand the error messages? Use natural, respectful language.
+- *Write at least two words.* Whenever possible, avoid creating single-word strings. This will reduce ambiguity drastically.
+- *Include punctuation.* Strings should include punctuation like final stops (`This is a sentence.`) or colons (`My label:`) as part of the translatable string. This punctuation might look different in some languages and should therefore not be hardcoded.
+- *Use placeholders, don't concatenate strings.* Bad: `"Open" + ticket_number`, good: `"Open ticket %s"` (and pass `ticket_number` as parameter). It's almost always a good idea to produce such slightly longer strings with placeholders. That helps translators to understand them and allows them to change the position of the placeholders in translations.
+
 ### Weblate Process Overview
 
 - The codebase has a translation catalog file [i18n/zammad.pot](zammad.pot), which must be kept up-to-date.

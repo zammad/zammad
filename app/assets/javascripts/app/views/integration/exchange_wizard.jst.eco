@@ -224,7 +224,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <p><%- @T('With your current configuration the following will happen') %>:</p>
+        <p><%- @T('With your current configuration the following will happen:') %></p>
         <div class="js-summary"></div>
       </div>
     </div>

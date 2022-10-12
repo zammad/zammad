@@ -66,7 +66,7 @@
               <% shown = true %>
               <div class="user-card">
                 <%- @unique_avatar(caller_id.comment, caller_id.comment.split(" ").map((name) -> name[0]).join("")) %>
-                <%- @T('maybe') %>: <%= caller_id.comment %><br>
+                <%- @T('maybe:') %> <%= caller_id.comment %><br>
                 <a class="text-muted" href="<%- App.Utils.phoneify(item.from_pretty) %>"><%= item.from_pretty %></a>
               </div>
             <% end %>
@@ -108,7 +108,7 @@
               <% shown = true %>
               <div class="user-card">
                 <%- @unique_avatar(caller_id.comment, caller_id.comment.split(" ").map((name) -> name[0]).join("")) %>
-                <%- @T('maybe') %>: <%= caller_id.comment %><br>
+                <%- @T('maybe:') %> <%= caller_id.comment %><br>
                 <a class="text-muted" href="<%- App.Utils.phoneify(item.to_pretty) %>"><%= item.to_pretty %></a>
               </div>
             <% end %>

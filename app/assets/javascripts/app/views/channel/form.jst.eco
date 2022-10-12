@@ -148,7 +148,7 @@
   <p><%- @T("Zammad Forms requires jQuery. If you don't already use it on your website, you can add it like this:") %></p>
   <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
 
-  <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
+  <p><%- @T('You need to add the following Javascript code snippet to your web page:') %></p>
 
   <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="zammad-feedback-form"&gt;Feedback&lt;/button&gt;
 

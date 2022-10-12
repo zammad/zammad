@@ -24,11 +24,11 @@
       <% for item in @itemsToChange: %>
         <li>
           <% if item.to_create is true: %>
-            <%- @T('Create') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Create:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% else if item.to_delete is true: %>
-            <%- @T('Delete') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Delete:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% else if item.to_migrate || item.to_config is true: %>
-            <%- @T('Changed') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Changed:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% end %>
       <% end %>
       </ul>

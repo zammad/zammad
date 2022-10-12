@@ -14,7 +14,7 @@
 
 <p><%- @T('Enable REST API using tokens (not username/email address and password). All users need to create their own access tokens in the user profile.') %></p>
 
-<p><%- @T('Example') %>:</p>
+<p><%- @T('Example:') %></p>
 
 <code>
 curl -H "Authorization: Token token=YOUR_TOKEN" <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
@@ -32,7 +32,7 @@ curl -H "Authorization: Token token=YOUR_TOKEN" <%= @C('http_type') %>://<%= @C(
 
 <p><%- @T('Enable REST API access using the username/email address and password for the authentication user.') %></p>
 
-<p><%- @T('Example') %>:</p>
+<p><%- @T('Example:') %></p>
 
 <code>
 curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
