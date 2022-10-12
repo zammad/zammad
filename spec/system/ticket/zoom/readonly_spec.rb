@@ -67,8 +67,8 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
         user
       end
 
-      shared_examples 'allow agents to select another field' do
-        it 'allows agents to select another field' do
+      shared_examples 'allow agents to select another value' do
+        it 'allows agents to select another value' do
           within attribute_selector do
             expect(page).to have_content(%r{#{display}}i)
             find(".controls select[name=#{name}]", visible: :all).select value
@@ -77,8 +77,8 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
         end
       end
 
-      shared_examples 'allows agents to select a treeselect/multi-treeselect field' do
-        it 'allows agents to select another field' do
+      shared_examples 'allows agents to select a treeselect/multi-treeselect value' do
+        it 'allows agents to select another value' do
           within attribute_selector { expect(page).to have_content(%r{#{display}}i) }
 
           dropdown_toggle
@@ -92,27 +92,27 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
       context 'with a select field' do
         let(:attribute) { create(:object_manager_attribute_select, screens: attributes_for(:required_screen), data_option: data_option) }
 
-        include_examples 'allow agents to select another field'
+        include_examples 'allow agents to select another value'
       end
 
       context 'with a multiselect field' do
         let(:attribute) { create(:object_manager_attribute_multiselect, screens: attributes_for(:required_screen), data_option: multi_data_option) }
 
-        include_examples 'allow agents to select another field'
+        include_examples 'allow agents to select another value'
       end
 
       context 'with a tree select field' do
         let(:attribute)    { create(:object_manager_attribute_tree_select, screens: attributes_for(:required_screen), data_option: data_option) }
         let(:have_element) { have_field(name, with: value, visible: :all) }
 
-        include_examples 'allows agents to select a treeselect/multi-treeselect field'
+        include_examples 'allows agents to select a treeselect/multi-treeselect value'
       end
 
       context 'with a multi tree select field' do
         let(:attribute) { create(:object_manager_attribute_multi_tree_select, screens: attributes_for(:required_screen), data_option: multi_data_option) }
         let(:have_element) { have_select(name, selected: value, visible: :all) }
 
-        include_examples 'allows agents to select a treeselect/multi-treeselect field'
+        include_examples 'allows agents to select a treeselect/multi-treeselect value'
       end
     end
   end
@@ -136,8 +136,8 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
         user
       end
 
-      shared_examples 'does not allow agents to select another field' do
-        it 'does not allow agents to select another field' do
+      shared_examples 'does not allow agents to select another value' do
+        it 'does not allow agents to select another value' do
           within attribute_selector do
             expect(page).to have_content(%r{#{display}}i)
             find(".controls select[name=#{name}]", visible: :all).select value, disabled: true
@@ -146,8 +146,8 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
         end
       end
 
-      shared_examples 'does not allow agents to select another treeselect/multi-treeselect field' do
-        it 'does not allow agents to select another field' do
+      shared_examples 'does not allow agents to select another treeselect/multi-treeselect value' do
+        it 'does not allow agents to select another value' do
           within attribute_selector do
             expect(page).to have_content(%r{#{display}}i)
             find('.controls .dropdown .dropdown-toggle').click
@@ -159,25 +159,25 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
       context 'with a select field' do
         let(:attribute) { create(:object_manager_attribute_select, screens: attributes_for(:required_screen), data_option: data_option) }
 
-        include_examples 'does not allow agents to select another field'
+        include_examples 'does not allow agents to select another value'
       end
 
       context 'with a multiselect field' do
         let(:attribute) { create(:object_manager_attribute_multiselect, screens: attributes_for(:required_screen), data_option: multi_data_option) }
 
-        include_examples 'does not allow agents to select another field'
+        include_examples 'does not allow agents to select another value'
       end
 
       context 'with a tree select field' do
         let(:attribute) { create(:object_manager_attribute_tree_select, screens: attributes_for(:required_screen), data_option: data_option) }
 
-        include_examples 'does not allow agents to select another treeselect/multi-treeselect field'
+        include_examples 'does not allow agents to select another treeselect/multi-treeselect value'
       end
 
       context 'with a multi tree select field' do
         let(:attribute) { create(:object_manager_attribute_multi_tree_select, screens: attributes_for(:required_screen), data_option: multi_data_option) }
 
-        include_examples 'does not allow agents to select another treeselect/multi-treeselect field'
+        include_examples 'does not allow agents to select another treeselect/multi-treeselect value'
       end
     end
   end
