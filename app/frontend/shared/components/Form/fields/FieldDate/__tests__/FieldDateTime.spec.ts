@@ -251,7 +251,7 @@ describe('Fields - FieldDate - visuals', () => {
   it('calendar visibility changes based on interaction', async () => {
     const view = renderDateField()
 
-    const calendar = view.getByLabelText('Calendar')
+    const calendar = view.getByRole('dialog')
     const input = view.getByLabelText('Date')
 
     await waitFor(() => {
@@ -274,6 +274,26 @@ describe('Fields - FieldDate - visuals', () => {
     await view.events.click(document.body)
 
     expect(calendar).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('prevents focussing of hidden buttons', async () => {
+    const view = renderDateField()
+
+    const calendar = view.getByRole('dialog')
+    const input = view.getByLabelText('Date')
+
+    await waitFor(() => {
+      expect(calendar).toHaveAttribute('aria-hidden', 'true')
+    })
+
+    expect(view.getByText('Clear')).toHaveAttribute('tabindex', '-1')
+    expect(view.getByText('Today')).toHaveAttribute('tabindex', '-1')
+
+    await view.events.click(input)
+
+    expect(calendar).not.toHaveAttribute('aria-hidden')
+    expect(view.getByText('Clear')).not.toHaveAttribute('tabindex')
+    expect(view.getByText('Today')).not.toHaveAttribute('tabindex')
   })
 })
 

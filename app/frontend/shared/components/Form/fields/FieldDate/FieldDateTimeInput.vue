@@ -127,6 +127,7 @@ const createTodayButton = (picker: flatpickr.Instance) => {
   todayButton.addEventListener('click', () => {
     picker.setDate('today', true)
   })
+  todayButton.name = 'today'
   todayButton.textContent = i18n.t('Today')
   todayButton.className = 'flex-1 hover:bg-gray-300 border border-gray rounded'
 
@@ -138,6 +139,7 @@ const createClearButton = (picker: flatpickr.Instance) => {
   clearButton.addEventListener('click', () => {
     picker.clear(true)
   })
+  clearButton.name = 'clear'
   clearButton.className = 'flex-1 hover:bg-gray-300 border border-gray rounded'
   clearButton.textContent = i18n.t('Clear')
 
@@ -151,7 +153,7 @@ const createCalendarFooter = (picker: flatpickr.Instance) => {
   const clearButton = createClearButton(picker)
   const todayButton = createTodayButton(picker)
 
-  if (clearButton) footer.appendChild(clearButton)
+  footer.appendChild(clearButton)
   if (todayButton) footer.appendChild(todayButton)
 
   return footer
@@ -196,15 +198,15 @@ const createFlatpickr = () => {
 }
 
 // store calendar height to animate it's appearance later
-let flatpickrHieght = 0
+let flatpickrHeight = 0
 const rerenderFlatpickr = () => {
   datepicker.value = createFlatpickr()
   if (datepicker.value) {
     const footer = createCalendarFooter(datepicker.value)
     const calendarNode = datepicker.value.calendarContainer
-    calendarNode.setAttribute('aria-label', 'Calendar')
+    calendarNode.setAttribute('role', 'dialog')
     calendarNode.appendChild(footer)
-    flatpickrHieght = calendarNode.clientHeight
+    flatpickrHeight = calendarNode.clientHeight
   }
 }
 
@@ -230,13 +232,19 @@ watchEffect(() => {
   if (!datepicker.value) return
 
   const calendar = datepicker.value.calendarContainer
+  const clearButton = calendar.getElementsByTagName('button').namedItem('clear')
+  const todayButton = calendar.getElementsByTagName('button').namedItem('today')
 
   if (!showPicker.value) {
+    clearButton?.setAttribute('tabindex', '-1')
+    todayButton?.setAttribute('tabindex', '-1')
     calendar.setAttribute('aria-hidden', 'true')
     calendar.style.height = '0px'
   } else {
     calendar.removeAttribute('aria-hidden')
-    calendar.style.height = `${flatpickrHieght}px`
+    calendar.style.height = `${flatpickrHeight}px`
+    clearButton?.removeAttribute('tabindex')
+    todayButton?.removeAttribute('tabindex')
   }
 })
 
