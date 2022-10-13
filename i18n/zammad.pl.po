@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-25 12:30+0000\n"
-"Last-Translator: Marcin Miłek <marcin.milek@pwr.edu.pl>\n"
+"PO-Revision-Date: 2022-10-11 03:30+0000\n"
+"Last-Translator: Magdalena Dulęba <magdalena.duleba@pwr.edu.pl>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -809,6 +809,10 @@ msgstr "Adres serwera proxy dla zasobów http i https."
 msgid "Admin"
 msgstr "Administrator"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr "Interfejs administratora"
@@ -824,6 +828,10 @@ msgstr "Konto administratora zostało już utworzone"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "Przejdź do następnego zgłoszenia z widoku"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2070,6 +2078,7 @@ msgstr "Sklonuj"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2881,6 +2890,10 @@ msgstr ""
 "powiadomienia."
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr "Definiuje nazwę indeksu Elasticsearch."
 
@@ -3487,6 +3500,12 @@ msgstr "Definiuje logo aplikacji, wyświetlane w interfejsie internetowym."
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
 msgstr "Określa maksymalny akceptowany rozmiar wiadomości e-mail w MB."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6648,8 +6667,17 @@ msgid "Maximum failed logins"
 msgstr "Maksymalna liczba nieudanych logowań"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
 msgstr "Maksymalna liczba wyzwalaczy wykonywanych rekurencyjnie."
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7187,12 +7215,16 @@ msgstr "Nie"
 msgid "No %s configured."
 msgstr "Nie skonfigurowano %s."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -7634,7 +7666,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco
 msgid "Open Ticket# %s"
-msgstr "Otwórz zgłoszenie# %s"
+msgstr "Otwarte zgłoszenia# %s"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
@@ -8101,6 +8133,10 @@ msgstr "Prześlij niestandardowy adres przed wygenerowaniem fragmentu"
 msgid "Please supply your new password!"
 msgstr "Podaj swoje nowe hasło!"
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr "Proszę czekać…"
@@ -8481,6 +8517,12 @@ msgstr "Raportowanie"
 msgid "Request"
 msgstr "Żądanie"
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "Składanie wniosków o dotację"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr "Prośba o zmianę"
@@ -8852,9 +8894,13 @@ msgid "Secondary organizations"
 msgstr "Drugorzędna organizacja"
 
 #: app/models/user.rb
+#, fuzzy
+#| msgid ""
+#| "Secondary organizations are only allowed when the primary organization is "
+#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 "Organizacje drugorzędne są dozwolone tylko wtedy, gdy podana jest "
 "organizacja podstawowa."
@@ -9845,6 +9891,12 @@ msgstr "Adres URL do tej instalacji Zammada."
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "Nie można znaleźć aktywnego profilu raportowania."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr "Nie można ustawić hasła. Skontaktuj się z administratorem."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12233,11 +12285,6 @@ msgstr "Masz eskalowane zgłoszenia"
 msgid "You have no configured %s right now."
 msgstr "Nie masz teraz żadnych skonfigurowanych %s."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "W tej chwili nie masz skonfigurowanego konta."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr "Nie masz zgłoszeń do wyświetlenia w tym widoku."
@@ -13012,7 +13059,7 @@ msgstr "nowe"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "new & open"
-msgstr "nowy i otwórz"
+msgstr "nowy i otwarty"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
@@ -13421,6 +13468,9 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "W tej chwili nie masz skonfigurowanego konta."
 
 #~ msgid "Tag"
 #~ msgstr "Tag"

@@ -803,6 +803,10 @@ msgstr "Adres van de proxy voor http en https bronnen."
 msgid "Admin"
 msgstr "Beheer"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr "Interface Beheer"
@@ -818,6 +822,10 @@ msgstr "Administrator account bestaat reeds"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "Ga naar het volgende ticket in de lijst"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2058,6 +2066,7 @@ msgstr "Dupliceer"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2869,6 +2878,10 @@ msgstr ""
 "door hen alleen relevante oproepinvoer en -meldingen te tonen."
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr "Definieert Elasticsearch-indexnaam."
 
@@ -3455,6 +3468,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
 msgstr "Stel de maximaal geaccepteerde e-mailgrootte (MB) in."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6619,8 +6638,17 @@ msgid "Maximum failed logins"
 msgstr "Maximale onjuiste inlogpogingen"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
 msgstr "Maximum aantal recursief uitgevoerde triggers."
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7154,12 +7182,16 @@ msgstr "Nee"
 msgid "No %s configured."
 msgstr "Geen %s geconfigureerd."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -8067,6 +8099,10 @@ msgstr "Dien een aangepast adres in voordat u het fragment genereert"
 msgid "Please supply your new password!"
 msgstr "Geef je nieuw wachtwoord op!"
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr "Een ogenblik gedult…"
@@ -8446,6 +8482,12 @@ msgstr "Raporteren"
 msgid "Request"
 msgstr "Verzoek"
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "Toegang aanvragen"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr "Wijzigingsverzoek"
@@ -8817,9 +8859,13 @@ msgid "Secondary organizations"
 msgstr "Secundaire organisaties"
 
 #: app/models/user.rb
+#, fuzzy
+#| msgid ""
+#| "Secondary organizations are only allowed when the primary organization is "
+#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 "Secundaire organisaties zijn alleen toegestaan als de primaire organisatie "
 "is opgegeven."
@@ -9808,6 +9854,13 @@ msgstr "De URL naar deze installatie van Zammad."
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "Het actieve rapportage profiel kon niet worden gevonden."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr ""
+"Het wachtwoord kon niet worden opgeslagen. Neem contact op met uw beheerder."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12213,11 +12266,6 @@ msgstr "Je hebt geëscaleerde tickets"
 msgid "You have no configured %s right now."
 msgstr "U heeft %s geconfigureerd."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "Momenteel is er geen account ingesteld."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr "Je hebt geen tickets om in dit overzicht weer te geven."
@@ -13404,6 +13452,9 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "Momenteel is er geen account ingesteld."
 
 #~ msgid "Tag"
 #~ msgstr "Label"

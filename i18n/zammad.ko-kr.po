@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-18 07:02+0000\n"
-"Last-Translator: 황윤성 <hys@osbusiness.net>\n"
+"PO-Revision-Date: 2022-10-13 03:30+0000\n"
+"Last-Translator: kim jy <elcidme@gmail.com>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
-"zammad-development/ko/>\n"
+"zammad-stable/ko/>\n"
 "Language: ko-kr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -69,11 +69,11 @@ msgstr "%s API Token"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s 속성"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s 그룹"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -84,7 +84,7 @@ msgstr "%s 마이그레이션"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s 역할"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -111,34 +111,24 @@ msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "%s 생성 그룹 |%s|"
+msgstr "%s 그룹 생성 |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "%s 생성기구 |%s|"
+msgstr "%s 조직 생성 |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "%s 생성 그룹 |%s|"
+msgstr "%s 정책 생성 |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
-msgstr "%s 의 생성 Ticket |%s|"
+msgstr "%s 의 ticket 생성 |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "%s 생성 사용자 |%s|"
+msgstr "%s 유저 생성 |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -147,10 +137,8 @@ msgid "%s credentials"
 msgstr "%s 자격 증명"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s 전"
+msgstr "%s 이전"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
@@ -832,6 +820,10 @@ msgstr ""
 msgid "Admin"
 msgstr "관리자"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
@@ -846,6 +838,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -2149,6 +2145,7 @@ msgstr "복제"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2954,6 +2951,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3484,6 +3485,12 @@ msgstr "웹 인터페이스에 표시되는 응용 프로그램의 로고를 정
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6669,7 +6676,16 @@ msgid "Maximum failed logins"
 msgstr "최대 로그인 실패"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7224,12 +7240,16 @@ msgstr "아니"
 msgid "No %s configured."
 msgstr "없음 %s이 (가) 구성되지."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -8162,6 +8182,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr ""
@@ -8558,6 +8582,12 @@ msgstr "보고"
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "부여 요청"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr ""
@@ -8943,7 +8973,7 @@ msgstr "공유 조직"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9966,6 +9996,12 @@ msgstr "Zammad이 설치 URL입니다."
 #| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
 msgstr "알림이 전송 될 때."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기 바랍니다."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12365,11 +12401,6 @@ msgstr "당신은 Ticket을 에스컬레이션 한"
 msgid "You have no configured %s right now."
 msgstr "당신은 더 지금 %s 권리를 구성 없었다."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "당신은 지금 계정을 구성하지 아니했다."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr ""
@@ -13635,6 +13666,9 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "당신은 지금 계정을 구성하지 아니했다."
 
 #~ msgid "Tag"
 #~ msgstr "꼬리표"

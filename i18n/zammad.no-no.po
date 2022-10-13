@@ -856,6 +856,10 @@ msgstr ""
 msgid "Admin"
 msgstr "Administrator"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
@@ -870,6 +874,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -2188,6 +2196,7 @@ msgstr "Klone"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2999,6 +3008,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3532,6 +3545,12 @@ msgstr "Definerer logoen som vises på nettsiden."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6777,7 +6796,16 @@ msgid "Maximum failed logins"
 msgstr "Maksimum mislykkede pålogginger"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7332,12 +7360,16 @@ msgstr "Nei"
 msgid "No %s configured."
 msgstr "Ingen %s konfigurert."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -8275,6 +8307,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr ""
@@ -8672,6 +8708,12 @@ msgstr "Rapportering"
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "Forespør tillatelse"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr ""
@@ -9059,7 +9101,7 @@ msgstr "Delt organisasjon"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -10089,6 +10131,12 @@ msgstr "URL til denne installasjonen av Zammad."
 #| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
 msgstr "Når varsel skal sendes."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr "Kan ikke bekrefte e-post. Ta kontakt med administratoren din."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12530,11 +12578,6 @@ msgstr "Du har eskalerte henvendelser"
 msgid "You have no configured %s right now."
 msgstr "Du har ingen %s konfigurert enda."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "Du har ingen oppsatt konto."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr ""
@@ -13808,6 +13851,9 @@ msgstr "...av hele tekstområdet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Vente tid i dag"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "Du har ingen oppsatt konto."
 
 #~ msgid "Tag"
 #~ msgstr "Stikkord"

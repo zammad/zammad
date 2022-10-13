@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-25 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-10-13 07:53+0000\n"
+"Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
 "Language: sv-se\n"
@@ -47,7 +47,7 @@ msgstr "mm/dd/yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " till "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -311,17 +311,6 @@ msgid "%s% have been reopened"
 msgstr "%s% har återöppnats"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "** Data Privacy ** helps you to delete and verify the removal of existing "
 "data from the system.\n"
@@ -333,12 +322,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Dataintegritet **, hjälper dig att radera och verifiera borttagning av "
-"existerande data från systemet. Det kan användas för att ta bort ärenden, "
-"organisationer och användare.  Ägaruppsättningen kommer att avaktiveras om "
-"den borttagna användaren är en agent. Uppgifter om datasekretess kommer att "
-"utföras var tionde minut. Körningen kan ta lite längre tid beroende på "
-"antalet objekt som ska tas bort."
+"** Dataintegritet ** - hjälper dig att radera och verifiera borttagning av "
+"existerande data från systemet.\n"
+"\n"
+"Det kan användas för att ta bort ärenden, organisationer och användare. "
+"Ägaruppsättningen kommer att avaktiveras om den borttagna användaren är en "
+"agent.\n"
+"\n"
+"Uppgifter om datasekretess kommer att utföras var tionde minut. Körningen "
+"kan ta lite längre tid beroende på antalet objekt som ska tas bort."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -824,6 +816,10 @@ msgstr ""
 msgid "Admin"
 msgstr "Administration"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
@@ -838,6 +834,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -1416,7 +1416,7 @@ msgstr "Genomsnitt: %s%"
 
 #: db/seeds/settings.rb
 msgid "BCC address for all outgoing emails"
-msgstr ""
+msgstr "Hemlig kopia-adress för all utgående e-post"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 msgid "Back"
@@ -1427,10 +1427,8 @@ msgid "Back to my view"
 msgstr "Tillbaka till min vy"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
-msgstr "Tillbaka till min vy"
+msgstr "Tillbaka till översikt"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -1479,7 +1477,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
-msgstr ""
+msgstr "Vidarebefordrat meddelande"
 
 #: db/seeds/settings.rb
 msgid "Beginner"
@@ -2159,6 +2157,7 @@ msgstr "Klona"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2968,6 +2967,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3504,6 +3507,12 @@ msgid "Defines the maximum accepted email size in MB."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 #, fuzzy
 #| msgid ""
 #| "Defines the name of the application, shown in the web interface, tabs and "
@@ -3940,7 +3949,7 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 msgid "Done"
-msgstr ""
+msgstr "Färdig"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
@@ -6762,7 +6771,16 @@ msgid "Maximum failed logins"
 msgstr "Maximalt antal misslyckade inloggningar"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7175,7 +7193,7 @@ msgstr "Nytt"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
-msgstr ""
+msgstr "Nytt åtkomsttoken är"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -7226,10 +7244,8 @@ msgid "New Scheduler"
 msgstr "Ny Schemaläggare"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid "Source"
 msgid "New Source"
-msgstr "Ursprung"
+msgstr "Ny källa"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
@@ -7281,7 +7297,7 @@ msgstr "Nytt lösenord"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item_row.jst.eco
 msgid "New tab"
-msgstr ""
+msgstr "Ny flik"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
@@ -7317,12 +7333,16 @@ msgstr "Nej"
 msgid "No %s configured."
 msgstr "Ingen %s är konfigurerad."
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -7372,7 +7392,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
-msgstr ""
+msgstr "Ingen kamera hittades."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
@@ -7406,10 +7426,8 @@ msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
-msgstr "Inga filter."
+msgstr "Ingen fil vald."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file formats allowed."
@@ -7483,7 +7501,7 @@ msgstr "Inga mallar har skapats ännu."
 
 #: app/controllers/users_controller.rb
 msgid "No token!"
-msgstr ""
+msgstr "Token saknas!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 msgid "No translation for this locale available"
@@ -8259,6 +8277,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
 #| msgid "Please wait..."
@@ -8659,6 +8681,12 @@ msgstr "Rapportering"
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "Begär bidraget"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr ""
@@ -9047,7 +9075,7 @@ msgstr "Delad organisation"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9527,7 +9555,8 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation got closed."
-msgstr "Då du inte svarat inom de senaste %s minuterna så avslutades din chatt."
+msgstr ""
+"Då du inte svarat inom de senaste %s minuterna så avslutades din chatt."
 
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
@@ -9972,17 +10001,15 @@ msgstr "Text"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: db/seeds/permissions.rb
 msgid "Text Modules"
-msgstr ""
+msgstr "Textmoduler"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Text editing"
 msgstr "Textredigering"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Text editing"
 msgid "Text field"
-msgstr "Textredigering"
+msgstr "Textfält"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -9991,25 +10018,21 @@ msgid "Text missing"
 msgstr "Text saknas"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
-msgstr "Text moduler"
+msgstr "Textmodul"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
-msgstr "Text moduler"
+msgstr "Textmoduler"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
-msgstr "Text moduler"
+msgstr "Textmoduler är …"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
-msgstr ""
+msgstr "Text saknas"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
@@ -10020,10 +10043,8 @@ msgid "Text with enabled inline translations looks like"
 msgstr "Text med aktiverade inline-översättningar ser ut som"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
-msgstr "Text"
+msgstr "Textfält"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -10077,6 +10098,13 @@ msgstr "URL-adressen till denna installation av Zammad."
 #| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
 msgstr "När notifikationer skickas."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr ""
+"Det gick inte att verifiera e-post. Vänligen kontakta din administratör."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -10565,7 +10593,7 @@ msgstr "Testkörningen var framgångsrik."
 #: db/seeds/settings.rb
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
-msgstr " Texten i början av ämnet i ett e-postmeddelande, t.ex. FWD."
+msgstr "Texten i början av ämnet i ett e-postmeddelande, t. ex. VB."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -12518,11 +12546,6 @@ msgstr "Du har eskalerat ärenden"
 msgid "You have no configured %s right now."
 msgstr "Du har inga konfigurerade %s just nu."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "Du har inga konfigurerade konton just nu."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr ""
@@ -13799,6 +13822,9 @@ msgstr "...av hel textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "Du har inga konfigurerade konton just nu."
 
 #~ msgid "Tag"
 #~ msgstr "Tagg"

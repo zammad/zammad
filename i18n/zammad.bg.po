@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-04-14 07:10+0000\n"
-"Last-Translator: valentin2323 <sttor11@gmail.com>\n"
+"PO-Revision-Date: 2022-10-05 03:30+0000\n"
+"Last-Translator: Stefan Choraliev <s.choraliev@velox-systems.com>\n"
 "Language-Team: Bulgarian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/bg/>\n"
+"zammad-stable/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 4.14\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -56,33 +56,35 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"„База данни“ съхранява всички прикачени файлове в базата данни (не се "
+"препоръчва за съхраняване на големи количества данни). \"Файлова система\" "
+"съхранява данните във файловата система. Можете да превключвате между "
+"модулите дори на система, която вече е в производство, без загуба на данни."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
-#, fuzzy
-#| msgid "API token"
 msgid "%s API Token"
-msgstr "API токън"
+msgstr "%s API токън"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Атрибут"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Група"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s Migration"
-msgstr ""
+msgstr "%s Mиграция"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s Роля"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -97,16 +99,18 @@ msgstr "преди %s"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
+"%s изпълнена задача за поверителност на данните за изтриване на "
+"потребителски идентификатор |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created article for |%s|"
-msgstr "Създадена група"
+msgstr "%s създадена статия за |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
+"%s приключена задача за поверителност на данните за изтриване на "
+"потребителски идентификатор |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
@@ -816,6 +820,10 @@ msgstr ""
 msgid "Admin"
 msgstr "Администрация"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr ""
@@ -830,6 +838,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
@@ -2061,6 +2073,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2840,6 +2853,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3336,6 +3353,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6361,7 +6384,16 @@ msgid "Maximum failed logins"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -6900,12 +6932,16 @@ msgstr "Не"
 msgid "No %s configured."
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -7803,6 +7839,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr ""
@@ -8181,6 +8221,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Request"
+msgstr ""
+
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+msgid "Request Admin Consent"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -8562,7 +8606,7 @@ msgstr "определена организация"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9536,6 +9580,10 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "The active reporting profile could not be found."
 msgstr "%s Обект(и) са създадени."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "The admin consent request was sent to your administrator."
+msgstr ""
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11797,11 +11845,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco

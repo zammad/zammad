@@ -771,6 +771,10 @@ msgstr "آدرس سرور پراکسی برای منابع http و https."
 msgid "Admin"
 msgstr "مدیر سیستم"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr "رابط کاربری ادمین"
@@ -786,6 +790,10 @@ msgstr "حساب کاربری ادمین قبلا ایجاد شده است"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "رفتن به تیکت بعدی از پنجره مرورکلی"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2011,6 +2019,7 @@ msgstr "تکثیر"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2792,6 +2801,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3289,6 +3302,12 @@ msgstr "تعیین لوگوی شرکت که در صفحه ورود به سایت
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
 msgstr "تعیین حداکثر حجم ایمیل دریافتی به مگابایت."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6332,7 +6351,16 @@ msgid "Maximum failed logins"
 msgstr "حداکثر ورودهای ناموفق"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -6873,12 +6901,16 @@ msgstr "خیر"
 msgid "No %s configured."
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -7783,6 +7815,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr "لطفا رمز عبور جدید خودتان را وارد نمایید!"
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr "لطفا صبر کنید…"
@@ -8167,6 +8203,12 @@ msgstr "گزارش‌دهی"
 msgid "Request"
 msgstr "درخواست"
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Request for Change"
+msgid "Request Admin Consent"
+msgstr "درخواست تغییر"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr "درخواست تغییر"
@@ -8538,7 +8580,7 @@ msgstr "سازمان به اشتراک گذاشته شده"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9520,6 +9562,12 @@ msgstr "لینک این سیستم پشتیبانی."
 #| msgid "Certificate for verification could not be found."
 msgid "The active reporting profile could not be found."
 msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr "امکان تنظیم رمز عبور وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11795,11 +11843,6 @@ msgstr "شما تیکت دگرسپاری شده دارید"
 msgid "You have no configured %s right now."
 msgstr "شما درحال حاضر هیچ %s تنظیم شده‌ای ندارید."
 
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "درحال حاضر شما هیچ حساب کاربری ندارید."
-
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
 msgstr "شما هیچ تیکتی ندارید که در این پنجره نمایش داده شود."
@@ -12990,6 +13033,9 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "درحال حاضر شما هیچ حساب کاربری ندارید."
 
 #~ msgid "Tag"
 #~ msgstr "تگ"

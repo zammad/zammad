@@ -809,6 +809,10 @@ msgstr "http 和 https 资源的代理服务器地址。"
 msgid "Admin"
 msgstr "系统管理"
 
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
+msgid "Admin Consent"
+msgstr ""
+
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
 msgstr "管理界面"
@@ -824,6 +828,10 @@ msgstr "管理员帐号已经创建"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "从概览前进到下一个工单"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2060,6 +2068,7 @@ msgstr "克隆"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee
+#: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
@@ -2861,6 +2870,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Define the maximum number of ticket shown in overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
 msgstr ""
 
@@ -3383,6 +3396,12 @@ msgstr "修改系统显示在用户介面上的标志(Logo)."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the maximum number of allowed task bar tasks before auto cleanup "
+"removes surplus tasks when creating new tasks."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6572,7 +6591,16 @@ msgid "Maximum failed logins"
 msgstr "失敗登入次數上限"
 
 #: db/seeds/settings.rb
+msgid ""
+"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
@@ -7127,12 +7155,16 @@ msgstr "否"
 msgid "No %s configured."
 msgstr "未配置 ％s"
 
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
+#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
+#: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco
@@ -8058,6 +8090,10 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+msgid "Please wait until you received the notification email of the approval."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
 msgstr "请等待…"
@@ -8453,6 +8489,12 @@ msgstr "统计报告"
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/list.jst.eco
+#, fuzzy
+#| msgid "Requesting the Grant"
+msgid "Request Admin Consent"
+msgstr "要求權限"
+
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
 msgstr ""
@@ -8830,7 +8872,7 @@ msgstr "是否为共享的机构"
 #: app/models/user.rb
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
-"given."
+"not given."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -9835,6 +9877,12 @@ msgstr "Zammad 安裝的 URL"
 #| msgid "Certificate for verification could not be found."
 msgid "The active reporting profile could not be found."
 msgstr "不能找到验证的证书。"
+
+#: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "The admin consent request was sent to your administrator."
+msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11700,8 +11748,9 @@ msgstr "警告"
 msgid ""
 "We are sorry, it takes longer as expected to get an empty slot. Please try "
 "again later or send us an email. Thank you!"
-msgstr "非常抱歉, 目前需要等候更长的时间才能接入对话, "
-"请稍后重试或向我们发送电子邮件. 谢谢!"
+msgstr ""
+"非常抱歉, 目前需要等候更长的时间才能接入对话, 请稍后重试或向我们发送电子邮"
+"件. 谢谢!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
@@ -12221,11 +12270,6 @@ msgstr "您升级了工单"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "您目前沒有配置 %s"
-
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-msgid "You have no configured account right now."
-msgstr "你暂时还没有配置邮件服务器."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "You have no tickets to display in this overview."
@@ -13490,6 +13534,9 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "You have no configured account right now."
+#~ msgstr "你暂时还没有配置邮件服务器."
 
 #~ msgid "Tag"
 #~ msgstr "标签"
