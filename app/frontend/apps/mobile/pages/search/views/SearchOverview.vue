@@ -177,6 +177,7 @@ export default {
         {{ $t('Cancel') }}
       </CommonLink>
     </div>
+    <h1 class="sr-only">{{ $t('Search') }}</h1>
     <CommonButtonPills
       v-if="type"
       class="px-4 pb-4"

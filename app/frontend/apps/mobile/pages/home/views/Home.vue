@@ -58,11 +58,9 @@ const ticketOverview = computed<MenuItem[]>(() => {
         <CommonIcon name="plus" size="small" />
       </CommonLink>
     </div>
-    <div
-      class="mb-5 flex w-full items-center justify-center text-4xl font-bold"
-    >
+    <h1 class="mb-5 flex w-full items-center justify-center text-4xl font-bold">
       {{ $t('Home') }}
-    </div>
+    </h1>
     <CommonLink link="/search">
       <CommonInputSearch wrapper-class="mb-4" no-border />
     </CommonLink>

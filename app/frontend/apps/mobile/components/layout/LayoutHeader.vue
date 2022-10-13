@@ -26,14 +26,14 @@ defineProps<Props>()
     <div class="flex items-center justify-self-start text-base">
       <CommonBackButton v-if="backUrl" :fallback="backUrl" :label="backTitle" />
     </div>
-    <div
+    <h1
       :class="[
         'flex flex-1 items-center justify-center text-center text-lg font-bold',
         titleClass,
       ]"
     >
       {{ $t(title) }}
-    </div>
+    </h1>
     <div class="flex cursor-pointer items-center justify-self-end text-base">
       <button
         v-if="onAction && actionTitle"

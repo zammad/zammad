@@ -51,12 +51,9 @@ const customer = computed(() => {
           </div>
         </template>
       </div>
-      <div
-        role="heading"
-        class="break-words text-xl font-bold leading-7 line-clamp-3"
-      >
+      <h1 class="break-words text-xl font-bold leading-7 line-clamp-3">
         {{ ticket.title }}
-      </div>
+      </h1>
       <div class="mt-2 flex gap-2">
         <CommonTicketStateIndicator
           :status="ticket.state.stateType.name"
