@@ -5,11 +5,11 @@ import { errorOptions } from '@mobile/router/error'
 </script>
 
 <template>
-  <div>
+  <main>
     <h1>{{ i18n.t('Error - %s', errorOptions.statusCode) }}</h1>
     <p>{{ errorOptions.message }}</p>
     <p v-if="errorOptions.route">
       {{ errorOptions.route }}
     </p>
-  </div>
+  </main>
 </template>

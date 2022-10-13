@@ -121,9 +121,8 @@ const login = (formData: FormData<LoginFormData>) => {
 </script>
 
 <template>
-  <!-- TODO: Only a "second" dummy implementation for the login... -->
   <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
-    <div class="m-auto w-full max-w-md">
+    <main class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div class="my-5 grow">
           <div class="flex justify-center p-2">
@@ -182,13 +181,13 @@ const login = (formData: FormData<LoginFormData>) => {
           </Form>
         </div>
       </div>
-    </div>
-    <div class="mb-6 flex items-center justify-center">
+    </main>
+    <nav class="mb-6 flex items-center justify-center">
       <CommonLink link="/#login" class="!text-gray underline">
         {{ $t('Continue to desktop app') }}
       </CommonLink>
-    </div>
-    <div class="flex items-center justify-center align-middle text-gray-200">
+    </nav>
+    <footer class="flex items-center justify-center align-middle text-gray-200">
       <CommonLink
         link="https://zammad.org"
         external
@@ -206,6 +205,6 @@ const login = (formData: FormData<LoginFormData>) => {
       >
         Zammad
       </CommonLink>
-    </div>
+    </footer>
   </div>
 </template>

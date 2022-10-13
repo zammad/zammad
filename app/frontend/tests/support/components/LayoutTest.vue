@@ -29,10 +29,10 @@ useAuthenticationChanges()
 <template>
   <div>
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
-    <main data-test-id="appMain">
+    <div data-test-id="appMain">
       <RouterView :key="testKey" />
-    </main>
-    <footer data-bottom-navigation />
+    </div>
+    <div data-bottom-navigation />
     <DynamicInitializer name="dialog" />
     <CommonNotifications />
     <CommonImageViewer />
