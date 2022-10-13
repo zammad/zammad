@@ -16,6 +16,7 @@ const route: RouteRecordRaw[] = [
       title: __('Sign in'),
       requiresAuth: false,
       requiredPermission: null,
+      hasOwnLandmarks: true,
     },
   },
   {

@@ -180,7 +180,9 @@ const directionOptions = computed(() => [
         >
           <CommonBackButton fallback="/" />
         </div>
-        <h1 class="flex flex-1 items-center justify-center text-center text-lg font-bold">
+        <h1
+          class="flex flex-1 items-center justify-center text-center text-lg font-bold"
+        >
           {{ $t('Tickets') }}
         </h1>
         <div

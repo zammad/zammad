@@ -2,6 +2,9 @@
 
 import '@testing-library/jest-dom'
 import { configure } from '@testing-library/vue'
+import * as matchers from 'vitest-axe/matchers'
+import { expect } from 'vitest'
+import 'vitest-axe/extend-expect'
 
 // eslint-disable-next-line no-underscore-dangle
 global.__ = (source) => {
@@ -87,6 +90,9 @@ afterEach((context) => {
     ).not.toHaveBeenCalled()
   }
 })
+
+// Import the matchers for accessibility testing with aXe.
+expect.extend(matchers)
 
 declare module 'vitest' {
   interface TestContext {

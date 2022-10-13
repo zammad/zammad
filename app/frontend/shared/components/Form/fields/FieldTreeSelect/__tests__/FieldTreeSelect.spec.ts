@@ -913,7 +913,10 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('aria-label', 'Select…')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
+      'aria-label',
+      'Select…',
+    )
 
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',
@@ -986,7 +989,10 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('name', 'test_name')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
+      'name',
+      'test_name',
+    )
   })
 
   it('implements blur handler', async () => {

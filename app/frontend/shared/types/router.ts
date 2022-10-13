@@ -18,6 +18,7 @@ export interface RouteRecordMeta {
   hasBottomNavigation?: boolean
   customBottomNavigation?: boolean
   hasHeader?: boolean
+  hasOwnLandmarks?: boolean
   level?: number
 }
 

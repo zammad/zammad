@@ -13,6 +13,7 @@ const route: RouteRecordRaw = {
   meta: {
     requiresAuth: false,
     requiredPermission: null,
+    hasOwnLandmarks: true,
   },
 }
 

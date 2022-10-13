@@ -23,16 +23,26 @@ const showHeader = computed(() => {
   return route.meta.hasHeader
 })
 
+const hasOwnLandmarks = computed(() => {
+  return route.meta.hasOwnLandmarks
+})
+
+const mainContainer = computed(() => (hasOwnLandmarks.value ? 'div' : 'main'))
+
+const footerContainer = computed(() =>
+  hasOwnLandmarks.value ? 'div' : 'footer',
+)
+
 useAuthenticationChanges()
 </script>
 
 <template>
   <div>
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
-    <div data-test-id="appMain">
+    <component :is="mainContainer" data-test-id="appMain">
       <RouterView :key="testKey" />
-    </div>
-    <div data-bottom-navigation />
+    </component>
+    <component :is="footerContainer" data-bottom-navigation />
     <DynamicInitializer name="dialog" />
     <CommonNotifications />
     <CommonImageViewer />

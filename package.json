@@ -78,6 +78,7 @@
     "vite-plugin-ruby": "^3.1.2",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.23.4",
+    "vitest-axe": "^0.0.7",
     "vue-tsc": "^0.40.13"
   },
   "dependencies": {

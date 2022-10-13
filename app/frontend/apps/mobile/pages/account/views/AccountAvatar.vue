@@ -231,6 +231,7 @@ const allowedImageTypes = computed(() => {
         data-test-id="fileGalleryInput"
         type="file"
         class="hidden"
+        aria-hidden="true"
         :accept="allowedImageTypes"
         @change="loadAvatar(fileGalleryInput)"
       />
@@ -240,6 +241,7 @@ const allowedImageTypes = computed(() => {
         data-test-id="fileCameraInput"
         type="file"
         class="hidden"
+        aria-hidden="true"
         :accept="allowedImageTypes"
         capture="environment"
         @change="loadAvatar(fileCameraInput)"
