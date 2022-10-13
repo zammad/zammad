@@ -45,26 +45,5 @@ RSpec.describe 'Article Image View', type: :system do
       find('body').send_keys :arrow_left
       wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[1].id}") }
     end
-
-    # https://github.com/zammad/zammad/issues/4180
-    it 'does scroll down and up properly' do
-      first('.ticket-article-item .js-preview').click
-      wait.until { expect(page).to have_css('div.modal') }
-
-      initial_scroll_value = current_scroll_position
-      expect(initial_scroll_value).to be >= 0
-
-      find('div.modal').send_keys :arrow_down
-      current_scroll_value = current_scroll_position
-      expect(current_scroll_value).to be > initial_scroll_value
-
-      find('div.modal').send_keys :arrow_right
-      wait.until { expect(page).to have_css('div.imagePreview img') }
-      initial_scroll_value = current_scroll_position
-      expect(initial_scroll_value).to be < current_scroll_value
-
-      find('div.modal').send_keys :arrow_down
-      expect(current_scroll_position).to be > initial_scroll_value
-    end
   end
 end

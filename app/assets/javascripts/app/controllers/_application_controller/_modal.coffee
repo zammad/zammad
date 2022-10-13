@@ -5,6 +5,7 @@ class App.ControllerModal extends App.Controller
   large: false
   small: false
   veryLarge: false
+  dynamicSize: false
   head: '?'
   autoFocusOnFirstInput: true
   container: null
@@ -115,6 +116,8 @@ class App.ControllerModal extends App.Controller
 
     if @container
       @el.addClass('modal--local')
+    if @dynamicSize
+      @el.addClass('modal--dynamicSize')
     if @veryLarge
       @el.addClass('modal--veryLarge')
     if @large
