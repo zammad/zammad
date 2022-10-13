@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-30 03:30+0000\n"
+"PO-Revision-Date: 2022-10-13 03:30+0000\n"
 "Last-Translator: Sezgin KOC <sezgink059@outlook.com.tr>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/tr/>\n"
@@ -679,11 +679,11 @@ msgstr "API Erişim Şifresi"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "API Token"
-msgstr ""
+msgstr "API Rozeti"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
+msgstr "API Rozet Erişimi"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -998,7 +998,7 @@ msgstr "YÖNETİCİ"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Yönetici İzni"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -1050,6 +1050,7 @@ msgstr "Genel bakıştan sonraki bilete ilerleme"
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
+"Onayın ardından, lütfen Microsoft365 posta kutusuna tekrardan bağlanın."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -1134,11 +1135,11 @@ msgstr "Kullanıcıların yeni etiketler oluşturmasına izin ver."
 
 #: db/seeds/settings.rb
 msgid "Allow using one email address for multiple users."
-msgstr ""
+msgstr "Birden çok kullanıcı için tek posta adresi kullanımına izin ver."
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Allow websites (separated by ;)"
-msgstr ""
+msgstr "İnternet sitelerine izin ver(; ile ayrılmış)"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Also notify via email"
@@ -1152,7 +1153,7 @@ msgstr ""
 #: app/helpers/knowledge_base_breadcrumb_helper.rb
 #: app/helpers/knowledge_base_public_page_title_helper.rb
 msgid "Alternative Translations"
-msgstr ""
+msgstr "İngilizce(Birleşik Devletler)"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Alternative name"
@@ -1164,7 +1165,7 @@ msgstr "Alternatively, you can use the Zammad API to import data."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
-msgstr ""
+msgstr "Bir hata oluştu"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
@@ -1175,7 +1176,7 @@ msgstr "Unable to verify email. Please contact your administrator."
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
-msgstr ""
+msgstr "Bir hata oluştu: %s"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
@@ -1222,11 +1223,11 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Another ticket was merged into ticket |%s|"
-msgstr ""
+msgstr "Başka bir bilet |%s| biletiyle birleştirildi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Answer"
-msgstr ""
+msgstr "İngilizce (Birleşik Devletler)"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee
 msgid "Answers"
@@ -1258,11 +1259,11 @@ msgstr "App Secret"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
-msgstr ""
+msgstr "Uygulama Ortam ID"
 
 #: db/seeds/settings.rb
 msgid "App Version"
-msgstr ""
+msgstr "Uygulama Sürümü"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1289,11 +1290,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
-msgstr ""
+msgstr "Uygulama"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
-msgstr ""
+msgstr "Uygulama Gizli Kodu"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
@@ -1311,7 +1312,7 @@ msgstr "Uygula"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr ""
+msgstr "Paylaşılan taslağı uygula"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -1335,12 +1336,14 @@ msgstr "Archived"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Archived at"
-msgstr ""
+msgstr "De arşivlendi"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
+"Yeniden yüklemek istediğinize emin misiniz? Kaydedilmemiş değişiklik "
+"kaybolacaktır"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -1381,6 +1384,7 @@ msgid ""
 "Article could not be created. An unsupported key other than 'article.note' "
 "was provided."
 msgstr ""
+"Konu oluşturulamıyor. 'konu.not' dışında desteklenmeyen bir anahtar girildi."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
@@ -1462,11 +1466,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
-msgstr ""
+msgstr "En az 1 nesne seçilmelidir."
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
-msgstr ""
+msgstr "En az 1 kullanici yönetici yetkilerine sahip olmalıdır."
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 #, fuzzy
@@ -3843,8 +3847,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4082,7 +4086,9 @@ msgid "Deleted Organization:"
 msgstr "Organizasyon Silindi"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+#, fuzzy
+#| msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr "Silinen biletler (toplamda %s)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -4857,6 +4863,12 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Enter Title..."
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Enter a valid email address."
+msgstr "Enter your username or email address"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5770,7 +5782,7 @@ msgid "Has processed"
 msgstr "Has processed"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6311,7 +6323,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+#, fuzzy
+#| msgid ""
+#| "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr ""
 "Zammad'ın %s'ye erişmesi için %s API simgesinin burada saklanması gerekir"
 
@@ -7248,8 +7263,7 @@ msgid "Maximum failed logins"
 msgstr "Maximum failed logins"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgid "Maximum number of open tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7474,7 +7488,9 @@ msgid "Most recent activity"
 msgstr "Most recent activity"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "Move all from \"%s\" to \"%s\""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -8393,8 +8409,10 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "Sonraki Konu"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8984,7 +9002,9 @@ msgid "Previous in overview"
 msgstr "Previous in overview"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+#, fuzzy
+#| msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr "Önceden sahip olunan biletler (toplamda %s)"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -9792,6 +9812,7 @@ msgstr "Scroll down to see new messages"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "Ara"
 
@@ -9924,6 +9945,7 @@ msgstr "Selector"
 msgid "Selects the ticket number generator module."
 msgstr "Selects the ticket number generator module."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -13693,14 +13715,18 @@ msgstr ""
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "You need to add the following Javascript code snippet to your web page"
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "You need to configure the Zammad endpoints in the %s"
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
-msgstr ""
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
+msgstr "You need to configure the Zammad endpoints in the %s"
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s:"
+msgstr "You need to configure the Zammad endpoints in the %s"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -15159,9 +15185,6 @@ msgstr "Bugünkü bekleme süresi"
 
 #~ msgid "Group by Direction"
 #~ msgstr "Yöne Göre Gruplama"
-
-#~ msgid "Next in tab"
-#~ msgstr "Sonraki Konu"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Yöne Göre Sırala"

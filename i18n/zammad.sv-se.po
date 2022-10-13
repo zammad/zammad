@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-11 03:30+0000\n"
-"Last-Translator: OskyEdz <snakehultosky@gmail.com>\n"
+"PO-Revision-Date: 2022-10-13 12:55+0000\n"
+"Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
 "Language: sv-se\n"
@@ -527,17 +527,6 @@ msgid "%s% have been reopened"
 msgstr "%s% har återöppnats"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "** Data Privacy ** helps you to delete and verify the removal of existing "
 "data from the system.\n"
@@ -549,12 +538,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Dataintegritet **, hjälper dig att radera och verifiera borttagning av "
-"existerande data från systemet. Det kan användas för att ta bort ärenden, "
-"organisationer och användare.  Ägaruppsättningen kommer att avaktiveras om "
-"den borttagna användaren är en agent. Uppgifter om datasekretess kommer att "
-"utföras var tionde minut. Körningen kan ta lite längre tid beroende på "
-"antalet objekt som ska tas bort."
+"** Dataintegritet ** - hjälper dig att radera och verifiera borttagning av "
+"existerande data från systemet.\n"
+"\n"
+"Det kan användas för att ta bort ärenden, organisationer och användare. "
+"Ägaruppsättningen kommer att avaktiveras om den borttagna användaren är en "
+"agent.\n"
+"\n"
+"Uppgifter om datasekretess kommer att utföras var tionde minut. Körningen "
+"kan ta lite längre tid beroende på antalet objekt som ska tas bort."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -1768,7 +1760,7 @@ msgstr "Genomsnitt: %s%"
 
 #: db/seeds/settings.rb
 msgid "BCC address for all outgoing emails"
-msgstr ""
+msgstr "Hemlig kopia-adress för all utgående e-post"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco
 msgid "Back"
@@ -1779,10 +1771,8 @@ msgid "Back to my view"
 msgstr "Tillbaka till min vy"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
-msgstr "Tillbaka till min vy"
+msgstr "Tillbaka till översikt"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -1831,7 +1821,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
-msgstr ""
+msgstr "Vidarebefordrat meddelande"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -3919,8 +3909,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4162,7 +4152,9 @@ msgid "Deleted Organization:"
 msgstr "Borttagen organisation"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+#, fuzzy
+#| msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr "Borttagna ärenden (totalt %s)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -4391,7 +4383,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
-msgstr ""
+msgstr "Färdig"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 msgid "Download"
@@ -4942,6 +4934,12 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Ange titel..."
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Enter a valid email address."
+msgstr "Ange ditt användarnamn eller e-postadress"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5514,7 +5512,7 @@ msgstr "Formatera som ||kursiv||"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Forward"
-msgstr ""
+msgstr "Vidarebefordra"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
@@ -5854,7 +5852,7 @@ msgid "Has processed"
 msgstr "Har bearbetat"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6397,7 +6395,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+#, fuzzy
+#| msgid ""
+#| "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr " För att Zammad ska få åtkomst till %s måste %s API-token lagras här"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7331,8 +7332,7 @@ msgid "Maximum failed logins"
 msgstr "Maximalt antal misslyckade inloggningar"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgid "Maximum number of open tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7557,7 +7557,9 @@ msgid "Most recent activity"
 msgstr "Senaste aktivitet"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "Flytta allt från \"%s\" till \"%s\""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -7791,7 +7793,7 @@ msgstr "Nytt"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
-msgstr ""
+msgstr "Nytt åtkomsttoken är"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "New Application"
@@ -7848,10 +7850,8 @@ msgid "New Scheduler"
 msgstr "Ny Schemaläggare"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
-#, fuzzy
-#| msgid "Source"
 msgid "New Source"
-msgstr "Ursprung"
+msgstr "Ny källa"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco db/seeds/settings.rb
 msgid "New Tags"
@@ -7909,7 +7909,7 @@ msgstr "Nytt lösenord"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item_row.jst.eco
 msgid "New tab"
-msgstr ""
+msgstr "Ny flik"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
@@ -8022,7 +8022,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "No camera found."
-msgstr ""
+msgstr "Ingen kamera hittades."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "No categories"
@@ -8063,10 +8063,8 @@ msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
-#, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
-msgstr "Inga filter."
+msgstr "Ingen fil vald."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file formats allowed."
@@ -8131,7 +8129,7 @@ msgstr "Inga mallar har skapats ännu."
 
 #: app/controllers/users_controller.rb
 msgid "No token!"
-msgstr ""
+msgstr "Token saknas!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 msgid "No translation for this locale available"
@@ -8474,8 +8472,10 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "Nästa i fliken"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -9061,7 +9061,9 @@ msgid "Previous in overview"
 msgstr "Tidigare i översikt"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+#, fuzzy
+#| msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr "Tidigare hanterade ärenden (totalt %s stycken)"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -9868,6 +9870,7 @@ msgstr "Bläddra ner för att se nya meddelanden"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "Sök"
 
@@ -10000,6 +10003,7 @@ msgstr "Selektor"
 msgid "Selects the ticket number generator module."
 msgstr "Väljer generatormodulen för ärendenummer."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -10950,17 +10954,15 @@ msgstr "Text"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: db/seeds/permissions.rb
 msgid "Text Modules"
-msgstr ""
+msgstr "Textmoduler"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Text editing"
 msgstr "Textredigering"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Text editing"
 msgid "Text field"
-msgstr "Textredigering"
+msgstr "Textfält"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -10969,26 +10971,22 @@ msgid "Text missing"
 msgstr "Text saknas"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
-msgstr "Text moduler"
+msgstr "Textmodul"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "Text modules"
-msgstr "Text moduler"
+msgstr "Textmoduler"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/template.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
-#, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
-msgstr "Text moduler"
+msgstr "Textmoduler är …"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Text needed"
-msgstr ""
+msgstr "Text saknas"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
@@ -10999,10 +10997,8 @@ msgid "Text with enabled inline translations looks like"
 msgstr "Text med aktiverade inline-översättningar ser ut som"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
-msgstr "Text"
+msgstr "Textfält"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -11616,7 +11612,7 @@ msgstr "Testkörningen var framgångsrik."
 #: db/seeds/settings.rb
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
-msgstr " Texten i början av ämnet i ett e-postmeddelande, t.ex. FWD."
+msgstr "Texten i början av ämnet i ett e-postmeddelande, t. ex. VB."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -13777,14 +13773,18 @@ msgstr ""
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "Du måste lägga till följande Javascript-kod till din webbsida"
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "You need to configure the Zammad endpoints in the %s"
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
-msgstr ""
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
+msgstr "You need to configure the Zammad endpoints in the %s"
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s:"
+msgstr "You need to configure the Zammad endpoints in the %s"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -15244,9 +15244,6 @@ msgstr "∅ Väntetid idag"
 
 #~ msgid "Group by Direction"
 #~ msgstr "Gruppera efter riktning"
-
-#~ msgid "Next in tab"
-#~ msgstr "Nästa i fliken"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Sortera efter ordning"

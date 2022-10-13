@@ -4130,8 +4130,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4366,7 +4366,9 @@ msgid "Deleted Organization:"
 msgstr "删除的機構"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+#, fuzzy
+#| msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr "删除的工單 (總計 %s)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -5132,6 +5134,12 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "輸入標題..."
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Enter a valid email address."
+msgstr "請輸入你的使用者名稱或郵件地址"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -6080,7 +6088,7 @@ msgid "Has processed"
 msgstr "作業進行中"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6606,7 +6614,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+#, fuzzy
+#| msgid ""
+#| "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "為了讓 Zammad 存取 %s，%s API token 必須保存在這裏"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7572,8 +7583,7 @@ msgid "Maximum failed logins"
 msgstr "最多失敗的登入"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgid "Maximum number of open tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7798,7 +7808,9 @@ msgid "Most recent activity"
 msgstr "近期活動"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "從 \"%s\" 全部移動到 \"%s\""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -8769,8 +8781,10 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "下一個頁籤"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -9355,7 +9369,9 @@ msgid "Previous in overview"
 msgstr "前一個工單"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+#, fuzzy
+#| msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr "之前承辦的工單 (總計 %s)"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -10178,6 +10194,7 @@ msgstr "向下滾動以查看新訊息"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "搜尋"
 
@@ -10308,6 +10325,7 @@ msgstr "選擇器"
 msgid "Selects the ticket number generator module."
 msgstr "選擇工單號碼產生器模組。"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -14239,14 +14257,18 @@ msgstr ""
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr "您需要將以下 JavaScript 代碼加入您的網頁"
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "您需要在 %s 中配置 Zammad endpoint 端點"
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
-msgstr ""
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
+msgstr "您需要在 %s 中配置 Zammad endpoint 端點"
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s:"
+msgstr "您需要在 %s 中配置 Zammad endpoint 端點"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -15698,9 +15720,6 @@ msgstr "∅ 今日等待時間"
 
 #~ msgid "Group by Direction"
 #~ msgstr "按方向分群組"
-
-#~ msgid "Next in tab"
-#~ msgstr "下一個頁籤"
 
 #~ msgid "Order by Direction"
 #~ msgstr "依方向排序"

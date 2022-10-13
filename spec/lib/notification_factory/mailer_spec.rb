@@ -69,7 +69,7 @@ RSpec.describe NotificationFactory::Mailer do
             <<~BODY
               Hallo Smith Sepp,
 
-              Ihre E-Mail mit dem Betreff \"Gruß aus Oberalteich\" konnte nicht an einen oder mehrere Empfänger zugestellt werden.
+              Ihre E-Mail mit dem Betreff \"Gruß aus Oberalteich\" konnte leider nicht an einen oder mehrere Empfänger zugestellt werden.
 
               Die Nachricht hatte eine Größe von 0.01 MB, wir akzeptieren jedoch nur E-Mails mit einer Größe von bis zu 10 MB.
 

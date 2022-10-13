@@ -3942,8 +3942,8 @@ msgstr "Define el tamaño máximo de correo electrónico aceptado en MB."
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4196,7 +4196,9 @@ msgid "Deleted Organization:"
 msgstr "Organización eliminada"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+#, fuzzy
+#| msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr "Boletos eliminados (%s en total)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -4978,6 +4980,12 @@ msgstr "Ingrese el secreto de la clave privada"
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 msgid "Enter Title…"
 msgstr "Introduzca el título…"
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Please enter valid path or domain"
+msgid "Enter a valid email address."
+msgstr "Ingrese una ruta o dominio válido"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5882,7 +5890,7 @@ msgid "Has processed"
 msgstr "ha procesado"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6402,7 +6410,10 @@ msgstr ""
 "momento usando la función de búsqueda. "
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+#, fuzzy
+#| msgid ""
+#| "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "Para que Zammad acceda a %s, el token API %s debe almacenarse aquí"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7326,9 +7337,10 @@ msgid "Maximum failed logins"
 msgstr "Número máximo de inicios de sesión fallidos"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
-msgstr ""
+#, fuzzy
+#| msgid "Maximum number of recursively executed triggers."
+msgid "Maximum number of open tabs."
+msgstr "Número máximo de disparadores ejecutados recursivamente."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
@@ -7550,7 +7562,9 @@ msgid "Most recent activity"
 msgstr "Actividad más reciente"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "Mover todo de \"%s\" a \"%s\""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -8473,8 +8487,10 @@ msgid "Open ticket indicator"
 msgstr "Indicador de ticket abierto"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "Siguiente pestaña"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -9051,7 +9067,9 @@ msgid "Previous in overview"
 msgstr "Anterior en resumen"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+#, fuzzy
+#| msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr "Boletos de propiedad anterior (%s en total)"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -9837,6 +9855,7 @@ msgstr "Desplácese hacia abajo para ver nuevos mensajes"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "Buscar"
 
@@ -9965,6 +9984,7 @@ msgstr "Seleccionador"
 msgid "Selects the ticket number generator module."
 msgstr "Selecciona el módulo generador de números de ticket."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -13779,14 +13799,18 @@ msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr ""
 "Debe agregar el siguiente fragmento de código Javascript a su página web"
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "Debe configurar los puntos finales de Zammad en el %s"
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s web interface"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
 msgstr "Debe configurar los puntos finales de Zammad en la interfaz web de %s"
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s:"
+msgstr "Debe configurar los puntos finales de Zammad en el %s"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -15332,9 +15356,6 @@ msgstr "∅ Tiempo de espera de hoy"
 
 #~ msgid "Group by Direction"
 #~ msgstr "Agrupar por dirección"
-
-#~ msgid "Next in tab"
-#~ msgstr "Siguiente pestaña"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Ordenar por Dirección"

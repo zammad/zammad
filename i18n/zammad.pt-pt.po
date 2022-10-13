@@ -3903,8 +3903,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4143,7 +4143,9 @@ msgid "Deleted Organization:"
 msgstr "Organização deletada"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+#, fuzzy
+#| msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr "Tickets deletados (%s no total)"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -4926,6 +4928,12 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Enter Title..."
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Enter a valid email address."
+msgstr "Digite seu nome de usuário ou endereço de e-mail"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5837,7 +5845,7 @@ msgid "Has processed"
 msgstr "Has processed"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6389,7 +6397,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+#, fuzzy
+#| msgid ""
+#| "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr "Para que Zammad acesse% s, o token de API% s deve ser armazenado aqui"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7329,9 +7340,9 @@ msgid "Maximum failed logins"
 msgstr "Maximum failed logins"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
-msgstr ""
+#, fuzzy
+msgid "Maximum number of open tabs."
+msgstr "Número Máximo de \"triggers\" executados recursivamente."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -7557,7 +7568,9 @@ msgid "Most recent activity"
 msgstr "Most recent activity"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "mover todos de  \"%s\" para \"%s\" "
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -8477,8 +8490,10 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "Próximo na tela"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -9069,7 +9084,9 @@ msgid "Previous in overview"
 msgstr "Anterior na visão geral"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+#, fuzzy
+#| msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr "Tíquetes de propriedade anterior (% s no total)"
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -9875,6 +9892,7 @@ msgstr "Vá para baixo para ver novas mensagens"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "Procurar"
 
@@ -10007,6 +10025,7 @@ msgstr "Selector"
 msgid "Selects the ticket number generator module."
 msgstr "Seleciona o módulo gerador do número do chamado."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -13789,14 +13808,18 @@ msgstr ""
 "Você precisa adicionar o seguinte trecho de código Javascript à sua página "
 "da web"
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr "Você precisa configurar o ..."
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
-msgstr ""
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
+msgstr "Você precisa configurar o ..."
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+#, fuzzy
+#| msgid "You need to configure the Zammad endpoints in the %s"
+msgid "You need to configure the Zammad endpoints in the %s:"
+msgstr "Você precisa configurar o ..."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
@@ -15258,9 +15281,6 @@ msgstr "∅ Tempo de Espera Hoje"
 
 #~ msgid "Group by Direction"
 #~ msgstr "Grupo por Direção"
-
-#~ msgid "Next in tab"
-#~ msgstr "Próximo na tela"
 
 #~ msgid "Order by Direction"
 #~ msgstr "Ordem por direção"

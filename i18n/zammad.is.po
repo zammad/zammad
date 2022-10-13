@@ -3786,8 +3786,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines the maximum number of allowed task bar tasks before auto cleanup "
-"removes surplus tasks when creating new tasks."
+"Defines the maximum number of allowed open tabs before auto cleanup removes "
+"surplus tabs when creating new tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4020,7 +4020,7 @@ msgid "Deleted Organization:"
 msgstr "Eyða stofnun"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Deleted tickets (%s in total)"
+msgid "Deleted tickets (%s in total):"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -4780,6 +4780,12 @@ msgstr ""
 #| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Sláðu inn titil..."
+
+#: app/assets/javascripts/app/views/generic/input.jst.eco
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Enter a valid email address."
+msgstr "Sláðu inn notandanafn þitt eða netfang"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5676,7 +5682,7 @@ msgid "Has processed"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Has ticket open in taskbar, but is not actively looking at the ticket."
+msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -6171,7 +6177,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
-msgid "In order for Zammad to access %s, the %s API token must be stored here"
+msgid "In order for Zammad to access %s, the %s API token must be stored here:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
@@ -7102,8 +7108,7 @@ msgid "Maximum failed logins"
 msgstr "Hámarksfjöldi misheppnaðra innskráninga"
 
 #: db/seeds/settings.rb
-msgid ""
-"Maximum number of allowed tasks before auto cleanup removes surplus tasks."
+msgid "Maximum number of open tabs."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7328,7 +7333,9 @@ msgid "Most recent activity"
 msgstr "Nýlegar hreyfingar"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "Move all from \"%s\" to \"%s\""
+#, fuzzy
+#| msgid "Move all from \"%s\" to \"%s\""
+msgid "Move all from \"%s\" to \"%s\":"
 msgstr "Flytja allt frá \"%s\" til \"%s\""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -8245,8 +8252,10 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Opened in taskbar"
-msgstr ""
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Opened in tabs"
+msgstr "Næsti flipi"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -8831,7 +8840,7 @@ msgid "Previous in overview"
 msgstr "Fyrri í yfirsýn"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-msgid "Previously owned tickets (%s in total)"
+msgid "Previously owned tickets (%s in total):"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
@@ -9629,6 +9638,7 @@ msgstr "Skrunaðu niður til að sjá nýju skilaboðin"
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/search/routes.ts
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Search"
 msgstr "Leita"
 
@@ -9759,6 +9769,7 @@ msgstr ""
 msgid "Selects the ticket number generator module."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -13409,13 +13420,13 @@ msgstr ""
 msgid "You need to add the following Javascript code snippet to your web page:"
 msgstr ""
 
-#: app/assets/javascripts/app/views/integration/cti.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s"
-msgstr ""
-
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
-msgid "You need to configure the Zammad endpoints in the %s web interface"
+msgid "You need to configure the Zammad endpoints in the %s web interface:"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/cti.jst.eco
+msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
@@ -14813,9 +14824,6 @@ msgstr "∅ Biðtími í dag"
 #~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Velja"
-
-#~ msgid "Next in tab"
-#~ msgstr "Næsti flipi"
 
 #~ msgid "No filter."
 #~ msgstr "Engin sía."
