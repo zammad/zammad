@@ -29,14 +29,24 @@ const getTicketsLink = (stateIds: number[]) => {
   <CommonSectionMenu header-label="Tickets">
     <slot name="before-fields" />
     <CommonSectionMenuLink
-      :icon="{ name: 'state-open', size: 'base', class: 'text-yellow' }"
+      :icon="{
+        name: 'state-open',
+        size: 'base',
+        class: 'text-yellow',
+        decorative: true,
+      }"
       :information="counts[TicketState.Open]"
       :link="getTicketsLink([1, 2, 3, 4])"
     >
       {{ $t('open') }}
     </CommonSectionMenuLink>
     <CommonSectionMenuLink
-      :icon="{ name: 'state-closed', size: 'base', class: 'text-green' }"
+      :icon="{
+        name: 'state-closed',
+        size: 'base',
+        class: 'text-green',
+        decorative: true,
+      }"
       :information="counts[TicketState.Closed]"
       :link="getTicketsLink([5])"
     >
@@ -47,7 +57,7 @@ const getTicketsLink = (stateIds: number[]) => {
       class="flex min-h-[54px] items-center justify-center gap-2 text-blue"
       :link="createLink"
     >
-      <CommonIcon name="plus" size="tiny" />
+      <CommonIcon name="plus" size="tiny" decorative />
       {{ $t(createLabel) }}
     </CommonLink>
   </CommonSectionMenu>

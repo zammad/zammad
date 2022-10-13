@@ -203,7 +203,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           @click="emit('showContext')"
           @keydown.enter="emit('showContext')"
         >
-          <CommonIcon name="overflow-button" size="tiny" />
+          <CommonIcon name="overflow-button" size="tiny" decorative />
         </button>
       </div>
     </div>

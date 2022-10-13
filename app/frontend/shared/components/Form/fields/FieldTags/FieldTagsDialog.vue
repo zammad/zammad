@@ -114,6 +114,7 @@ onMounted(() => {
               class="p-1"
               :fixed-size="{ width: 18, height: 18 }"
               name="plus"
+              decorative
             />
           </button>
         </template>
@@ -133,6 +134,7 @@ onMounted(() => {
           :fixed-size="{ width: 24, height: 24 }"
           :name="isCurrentValue(option.value) ? 'checked-yes' : 'checked-no'"
           class="mr-3 text-white/50"
+          decorative
         />
 
         <span class="flex-1 py-3 text-left">

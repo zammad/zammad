@@ -49,7 +49,7 @@ const iconProps = computed<IconProps | null>(() => {
             [`rounded-lg ${iconBg}`]: iconBg,
           }"
         >
-          <CommonIcon v-bind="iconProps" />
+          <CommonIcon v-bind="iconProps" decorative />
         </div>
         <slot>{{ i18n.t(label) }}</slot>
       </div>
@@ -63,6 +63,7 @@ const iconProps = computed<IconProps | null>(() => {
           class="text-gray-300 ltr:ml-2 rtl:mr-2"
           :name="`arrow-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
           :fixed-size="{ width: 12, height: 12 }"
+          decorative
         />
       </div>
     </div>

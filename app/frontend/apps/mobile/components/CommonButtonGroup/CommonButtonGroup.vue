@@ -31,7 +31,7 @@ const getIconProps = (option: CommonButtonOption): IconProps => {
       :class="{ 'bg-gray-200': option.selected }"
       @click="!option.disabled && option.onAction?.()"
     >
-      <CommonIcon v-if="option.icon" v-bind="getIconProps(option)" />
+      <CommonIcon v-if="option.icon" v-bind="getIconProps(option)" decorative />
       <span>{{ $t(option.label, ...(option.labelPlaceholder || [])) }}</span>
     </Component>
   </div>

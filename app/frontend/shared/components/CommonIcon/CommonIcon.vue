@@ -8,6 +8,7 @@ export interface Props {
   size?: Sizes
   fixedSize?: { width: number; height: number }
   name: string
+  label?: string
   decorative?: boolean
   animation?: Animations
 }
@@ -66,7 +67,7 @@ const finalSize = computed(() => {
     :class="iconClass"
     :width="finalSize.width"
     :height="finalSize.height"
-    :aria-labelledby="name"
+    :aria-label="decorative ? undefined : $t(label || name)"
     :aria-hidden="decorative"
     @click="onClick"
   >
