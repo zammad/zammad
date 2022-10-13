@@ -4,7 +4,7 @@ class App.CustomerChatImageView extends App.ControllerModal
   buttonSubmit: 'Download'
   buttonClass: 'btn--success'
   head: ''
-  veryLarge: true
+  dynamicSize: true
 
   content: ->
     "<div class=\"centered imagePreview\"><img style=\"max-width: 100%; width: 1000px;\" src=\"#{@image_base64}\"></div>"

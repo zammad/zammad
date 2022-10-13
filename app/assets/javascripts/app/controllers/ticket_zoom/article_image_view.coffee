@@ -4,7 +4,7 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
   buttonSubmit: __('Download')
   buttonClass: 'btn--success'
   head: ''
-  veryLarge: true
+  dynamicSize: true
   nextElement: null
 
   events:

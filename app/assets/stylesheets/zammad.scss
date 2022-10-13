@@ -8675,7 +8675,7 @@ li.list-item-none {
   @extend .zIndex-11;
 
   @include phone {
-    max-width: calc(100vw - 20px) !important;
+    max-width: calc(100% - 20px) !important;
     margin: 10px;
   }
 
@@ -8694,6 +8694,17 @@ li.list-item-none {
 
 .modal--small .modal-dialog {
   max-width: 440px;
+}
+
+.modal--dynamicSize .modal-dialog {
+  max-width: 100%;
+  width: max-content;
+  padding: 0 35px;
+
+  @include phone {
+    padding: 0;
+    margin: 10px;
+  }
 }
 
 .modal-dialog.wizard {
@@ -8766,6 +8777,7 @@ li.list-item-none {
 
 .modal-body {
   padding: 0 23px;
+  clear: both;
 
   @include phone {
     padding: 0 15px;
@@ -10098,9 +10110,17 @@ label + .wizard-buttonList {
   }
 }
 
-.imagePreview img {
-  max-width: 100%;
-  max-height: 100%;
+.imagePreview {
+  margin-top: 45px;
+
+  @include phone {
+    margin-top: 0;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: calc(100vh - 218px);
+  }
 }
 
 .imageCropper p {
