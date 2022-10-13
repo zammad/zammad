@@ -142,6 +142,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
         >
           <div
             ref="dialogElement"
+            :aria-label="$t('Select…')"
             role="listbox"
             class="max-h-[50vh] w-full divide-y divide-solid divide-white/10 overflow-y-auto"
           >

@@ -221,6 +221,7 @@ onMounted(() => {
       :class="{
         'border-t border-white/30': currentPath.length,
       }"
+      :aria-label="$t('Select…')"
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
       role="listbox"
     >
