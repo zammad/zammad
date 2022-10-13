@@ -67,16 +67,17 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
         :aria-label="i18n.t('Select…')"
         :tabindex="context.disabled ? '-1' : '0'"
         v-bind="context.attrs"
-        role="list"
         @click="open"
         @keypress.space="open"
         @blur="context.handlers.blur"
       >
         <div
+          v-if="hasValue || isSizeSmall"
           :class="{
             grow: !isSizeSmall,
           }"
           class="flex flex-wrap gap-1"
+          role="list"
         >
           <template v-if="hasValue && hasStatusProperty">
             <CommonTicketStateIndicator
@@ -116,6 +117,7 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
           <template v-else-if="isSizeSmall">
             <div
               class="mr-1 overflow-hidden text-ellipsis whitespace-nowrap py-1 text-sm leading-[17px]"
+              role="listitem"
             >
               {{ i18n.t(context.label) }}
             </div>

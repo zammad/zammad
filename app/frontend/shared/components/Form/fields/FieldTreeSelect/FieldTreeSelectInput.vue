@@ -138,13 +138,12 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
-      role="list"
       @click="toggleDialog(true)"
       @keypress.space="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
-      <div class="flex grow flex-wrap gap-1">
-        <template v-if="hasValue && hasStatusProperty">
+      <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
+        <template v-if="hasStatusProperty">
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
             :key="selectedValue"
@@ -155,7 +154,7 @@ useSelectAutoselect(flatOptions, toRef(props, 'context'))
             pill
           />
         </template>
-        <template v-else-if="hasValue">
+        <template v-else>
           <div
             v-for="selectedValue in valueContainer"
             :key="selectedValue"

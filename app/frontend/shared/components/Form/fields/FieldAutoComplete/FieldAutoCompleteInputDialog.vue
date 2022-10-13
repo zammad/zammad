@@ -262,6 +262,7 @@ const executeAction = () => {
       />
     </div>
     <div
+      v-if="filter ? autocompleteOptions.length : options.length"
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
       role="listbox"
     >
@@ -342,24 +343,24 @@ const executeAction = () => {
           name="check"
         />
       </div>
-      <div
-        v-if="
-          debouncedFilter &&
-          autocompleteQueryResultOptions &&
-          !autocompleteOptions.length
-        "
-        class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
-        role="alert"
-      >
-        {{ i18n.t('No results found') }}
-      </div>
-      <div
-        v-else-if="!debouncedFilter && !options.length"
-        class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
-        role="alert"
-      >
-        {{ i18n.t('Start typing to search…') }}
-      </div>
+    </div>
+    <div
+      v-if="
+        debouncedFilter &&
+        autocompleteQueryResultOptions &&
+        !autocompleteOptions.length
+      "
+      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      role="alert"
+    >
+      {{ i18n.t('No results found') }}
+    </div>
+    <div
+      v-else-if="!debouncedFilter && !options.length"
+      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      role="alert"
+    >
+      {{ i18n.t('Start typing to search…') }}
     </div>
   </CommonDialog>
 </template>

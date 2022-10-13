@@ -132,14 +132,13 @@ describe('Form - Field - Organization - Query', () => {
     // Resolve `defineAsyncComponent()` calls first.
     await vi.dynamicImportSettled()
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
     expect(filterElement).toBeInTheDocument()
 
     expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
-    expect(wrapper.queryByRole('option')).not.toBeInTheDocument()
 
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'zammad')
@@ -170,7 +169,6 @@ describe('Form - Field - Organization - Query', () => {
     expect(filterElement).toHaveValue('')
 
     expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
-    expect(wrapper.queryByRole('option')).not.toBeInTheDocument()
 
     // Search for non-accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodriguez')
@@ -197,7 +195,6 @@ describe('Form - Field - Organization - Query', () => {
     await wrapper.events.clear(filterElement)
 
     expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
-    expect(wrapper.queryByRole('option')).not.toBeInTheDocument()
 
     // Search for accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodríguez')
@@ -234,7 +231,7 @@ describe('Form - Field - Organization - Query', () => {
     // Resolve `defineAsyncComponent()` calls first.
     await vi.dynamicImportSettled()
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -258,7 +255,7 @@ describe('Form - Field - Organization - Query', () => {
       testOptions[0].label,
     )
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     expect(wrapper.getByIconName('check')).toBeInTheDocument()
   })

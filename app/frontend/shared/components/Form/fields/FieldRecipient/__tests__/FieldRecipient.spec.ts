@@ -141,7 +141,7 @@ describe('Form - Field - Recipient - Features', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -163,7 +163,7 @@ describe('Form - Field - Recipient - Features', () => {
     expect(emittedInput[0][0]).toBe('foo@bar.tld')
     expect(wrapper.getByRole('listitem')).toHaveTextContent('foo@bar.tld')
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -180,7 +180,7 @@ describe('Form - Field - Recipient - Features', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 

@@ -48,16 +48,20 @@ const showDialog = () => {
       :aria-disabled="context.disabled"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
-      role="list"
       @click="showDialog()"
       @keypress.space="showDialog()"
       @blur="context.handlers.blur"
     >
-      <div class="flex grow flex-wrap gap-1">
+      <div
+        v-if="selectedTagsList.length"
+        class="flex grow flex-wrap gap-1"
+        role="list"
+      >
         <div
           v-for="tag of selectedTagsList"
           :key="tag"
           class="rounded-sm bg-gray/20 py-[2px] px-[4px] text-base uppercase leading-4 text-gray"
+          role="listitem"
         >
           {{ tag }}
         </div>

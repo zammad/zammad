@@ -79,28 +79,25 @@ useSelectAutoselect(sortedOptions, toRef(props, 'context'))
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
-      role="list"
       @click="toggleDialog(true)"
       @keypress.space="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
-      <div class="flex grow flex-wrap gap-1">
-        <template v-if="hasValue">
-          <div
-            v-for="selectedValue in valueContainer"
-            :key="selectedValue"
-            class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
-            role="listitem"
-          >
-            <CommonIcon
-              v-if="getSelectedOptionIcon(selectedValue)"
-              :name="getSelectedOptionIcon(selectedValue)"
-              :fixed-size="{ width: 12, height: 12 }"
-              class="mr-1"
-            />
-            {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
-          </div>
-        </template>
+      <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
+        <div
+          v-for="selectedValue in valueContainer"
+          :key="selectedValue"
+          class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
+          role="listitem"
+        >
+          <CommonIcon
+            v-if="getSelectedOptionIcon(selectedValue)"
+            :name="getSelectedOptionIcon(selectedValue)"
+            :fixed-size="{ width: 12, height: 12 }"
+            class="mr-1"
+          />
+          {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
+        </div>
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"

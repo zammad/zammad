@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import { getByText } from '@testing-library/vue'
+import { getByText, queryByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import { getByIconName } from '@tests/support/components/iconQueries'
 import type { FieldTagsProps } from '../types'
@@ -36,7 +36,7 @@ describe('Form - Field - Tags', () => {
 
     const node = view.getByLabelText('Tags')
 
-    expect(node, 'empty field').toHaveTextContent(/^$/)
+    expect(queryByRole(node, 'list')).not.toBeInTheDocument()
 
     await view.events.click(node)
 
@@ -82,7 +82,7 @@ describe('Form - Field - Tags', () => {
     await view.events.click(newOptions[0])
     await view.events.click(view.getByRole('button', { name: 'Done' }))
 
-    expect(node, "doesn't have any tags").toHaveTextContent(/^$/)
+    expect(queryByRole(node, 'list')).not.toBeInTheDocument()
   })
 
   it('filters options', async () => {

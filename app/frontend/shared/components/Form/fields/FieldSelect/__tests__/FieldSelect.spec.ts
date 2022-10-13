@@ -49,7 +49,7 @@ describe('Form - Field - Select - Dialog', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const selectOptions = wrapper.getAllByRole('option')
 
@@ -73,7 +73,7 @@ describe('Form - Field - Select - Dialog', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     wrapper.events.click(wrapper.getAllByRole('option')[0])
 
@@ -98,7 +98,7 @@ describe('Form - Field - Select - Dialog', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     expect(
       getByText(wrapper.getByRole('listbox'), testOptions[1].label),
@@ -134,7 +134,7 @@ describe('Form - Field - Select - Options', () => {
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('3')
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -187,7 +187,7 @@ describe('Form - Field - Select - Options', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     expect(wrapper.getAllByRole('option')[1]).toHaveClass('pointer-events-none')
 
@@ -233,7 +233,7 @@ describe('Form - Field - Select - Options', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const selectOptions = wrapper.getAllByRole('option')
     const selectedOptionStatuses = wrapper.getAllByRole('group')
@@ -270,7 +270,7 @@ describe('Form - Field - Select - Options', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     expect(wrapper.queryByIconName(iconOptions[0].icon)).toBeInTheDocument()
     expect(wrapper.queryByIconName(iconOptions[1].icon)).toBeInTheDocument()
@@ -358,7 +358,7 @@ describe('Form - Field - Select - Features', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -462,7 +462,7 @@ describe('Form - Field - Select - Features', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -526,7 +526,7 @@ describe('Form - Field - Select - Features', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -544,7 +544,7 @@ describe('Form - Field - Select - Features', () => {
       noOptionsLabelTranslation: true,
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -627,11 +627,11 @@ describe('Form - Field - Select - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('tabindex', '0')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '0')
 
     expect(wrapper.getByRole('button')).toHaveAttribute('tabindex', '0')
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     const selectOptions = wrapper.getAllByRole('option')
 
@@ -652,7 +652,7 @@ describe('Form - Field - Select - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('tabindex', '-1')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '-1')
   })
 
   it('provides labels for screen readers', async () => {
@@ -666,7 +666,10 @@ describe('Form - Field - Select - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('aria-label', 'Select…')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
+      'aria-label',
+      'Select…',
+    )
 
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',
@@ -685,7 +688,7 @@ describe('Form - Field - Select - Accessibility', () => {
       },
     })
 
-    await wrapper.events.type(wrapper.getByRole('list'), '{Space}')
+    await wrapper.events.type(wrapper.getByLabelText('Select…'), '{Space}')
 
     const selectOptions = wrapper.getAllByRole('option')
 
@@ -721,7 +724,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('id', 'test_id')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('id', 'test_id')
 
     expect(wrapper.getByLabelText('Test label')).toHaveAttribute(
       'id',
@@ -739,7 +742,10 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute('name', 'test_name')
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
+      'name',
+      'test_name',
+    )
   })
 
   it('implements blur handler', async () => {
@@ -754,7 +760,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    wrapper.getByRole('list').focus()
+    wrapper.getByLabelText('Select…').focus()
     await wrapper.events.tab()
 
     expect(blurHandler).toHaveBeenCalled()
@@ -769,7 +775,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    await wrapper.events.click(wrapper.getByRole('list'))
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     wrapper.events.click(wrapper.getAllByRole('option')[1])
 
@@ -810,7 +816,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveClass(
+    expect(wrapper.getByLabelText('Select…')).toHaveClass(
       'formkit-disabled:pointer-events-none',
     )
   })
@@ -825,7 +831,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByRole('list')).toHaveAttribute(
+    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
       'test-attribute',
       'test_value',
     )

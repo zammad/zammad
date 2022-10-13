@@ -216,6 +216,7 @@ onMounted(() => {
       </span>
     </div>
     <div
+      v-if="filter ? filteredOptions.length : currentOptions.length"
       ref="dialog"
       :class="{
         'border-t border-white/30': currentPath.length,
@@ -316,13 +317,13 @@ onMounted(() => {
           @click.stop="goToNextPage(option as FlatSelectOption)"
         />
       </div>
-      <div
-        v-if="filter && !filteredOptions.length"
-        class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
-        role="alert"
-      >
-        {{ $t('No results found') }}
-      </div>
+    </div>
+    <div
+      v-if="filter && !filteredOptions.length"
+      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      role="alert"
+    >
+      {{ $t('No results found') }}
     </div>
   </CommonDialog>
 </template>
