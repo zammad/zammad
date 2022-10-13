@@ -53,7 +53,11 @@ export default {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-10 flex overflow-y-auto" role="dialog">
+  <div
+    class="fixed inset-0 z-10 flex overflow-y-auto"
+    :aria-label="$t(label || name)"
+    role="dialog"
+  >
     <div
       :id="`dialog-${name}`"
       ref="dialogElement"
@@ -72,7 +76,7 @@ export default {
           class="grow text-center text-base font-semibold leading-[19px] text-white"
         >
           <slot name="label">
-            {{ i18n.t(label) }}
+            {{ $t(label) }}
           </slot>
         </div>
         <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
@@ -86,7 +90,7 @@ export default {
               @click="close()"
               @keypress.space="close()"
             >
-              {{ i18n.t('Done') }}
+              {{ $t('Done') }}
             </button>
           </slot>
         </div>

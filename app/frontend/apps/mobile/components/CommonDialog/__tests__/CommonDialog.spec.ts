@@ -60,5 +60,21 @@ describe('visuals for common dialog', () => {
     expect(emitted.close).toHaveLength(2)
   })
 
+  it('has an accessible name', async () => {
+    const view = renderComponent(CommonDialog, {
+      props: {
+        name: 'dialog',
+      },
+    })
+
+    expect(view.getByRole('dialog')).toHaveAccessibleName('dialog')
+
+    await view.rerender({
+      label: 'foobar',
+    })
+
+    expect(view.getByRole('dialog')).toHaveAccessibleName('foobar')
+  })
+
   // TODO closing with pulling down is tested inside e2e
 })

@@ -129,6 +129,7 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
     <div
       v-if="showDialog"
       class="fixed inset-0 z-10 flex overflow-y-auto"
+      :aria-label="$t('Select…')"
       role="dialog"
     >
       <div
