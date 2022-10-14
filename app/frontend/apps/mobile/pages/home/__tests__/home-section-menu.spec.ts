@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { waitForNextTick } from '@tests/support/utils'
 
 describe('testing home section menu', () => {
   it('not show ticket overview section menu item without permission', async () => {
@@ -25,12 +23,6 @@ describe('testing home section menu', () => {
       name: 'Ticket Overviews',
     })
 
-    await view.events.click(ticketOverviewLink)
-
-    await waitForNextTick(true)
-
-    await waitFor(() => {
-      expect(view.getByText('Tickets')).toBeInTheDocument()
-    })
+    expect(ticketOverviewLink).toHaveAttribute('href', '/tickets/view')
   })
 })
