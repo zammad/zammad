@@ -317,6 +317,8 @@ class App.Ticket extends App.Model
           result = true if objectValue.toString().trim().toLowerCase() is loopConditionValue.toString().trim().toLowerCase()
         else if condition.operator == 'is not'
           result = true if objectValue.toString().trim().toLowerCase() isnt loopConditionValue.toString().trim().toLowerCase()
+        else if condition.operator == 'today'
+          result = true if new Date(objectValue.toString()).toISOString().substring(0, 10) == new Date().toISOString().substring(0, 10)
         else if condition.operator == 'after (absolute)'
           result = true if new Date(objectValue.toString()) > new Date(loopConditionValue.toString())
         else if condition.operator == 'before (absolute)'

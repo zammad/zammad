@@ -683,6 +683,18 @@ window.onload = function() {
     assert.equal(result, true, result);
   };
 
+  var testTimeToday = function (assert, key, expectedResult, ticket) {
+    setting = {
+      "condition": {
+        [key]: {
+          "operator": "today",
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    assert.equal(result, expectedResult, result);
+  };
+
   var testTimeBeforeRelative = function (assert, key, value, range, expectedResult, ticket) {
     setting = {
       "condition": {
@@ -831,6 +843,23 @@ window.onload = function() {
     ticket.load(ticketData);
 
     testTime(assert, 'ticket.pending_time', ticket.pending_time, ticket);
+
+    // -------------------------
+    // TODAY
+    // -------------------------
+
+    ticket.pending_time = new Date().toISOString();
+    testTimeToday(assert, 'ticket.pending_time', true, ticket);
+
+    compareDate = new Date();
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 48 * 1000);
+    ticket.pending_time = compareDate.toISOString();
+    testTimeToday(assert, 'ticket.pending_time', false, ticket);
+
+    compareDate = new Date();
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 48 * 1000);
+    ticket.pending_time = compareDate.toISOString();
+    testTimeToday(assert, 'ticket.pending_time', false, ticket);
 
     // -------------------------
     // BEFORE TIME

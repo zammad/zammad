@@ -65,5 +65,21 @@ RSpec.shared_examples 'TicketSelector2Sql' do
 
       expect(bind_params).to eq([10.years.ago])
     end
+
+    context 'when today operator is used' do
+      before do
+        travel_to '2022-10-11 14:40:00'
+        Setting.set('timezone_default', 'Europe/Berlin')
+      end
+
+      it 'calculates proper time interval when today operator is used', :aggregate_failures do
+        _, bind_params = Ticket.selector2sql({ 'ticket.created_at' => { 'operator' => 'today' } })
+
+        Time.use_zone(Setting.get('timezone_default').presence) do
+          expect(bind_params[0].to_s).to eq('2022-10-10 22:00:00 UTC')
+          expect(bind_params[1].to_s).to eq('2022-10-11 21:59:59 UTC')
+        end
+      end
+    end
   end
 end

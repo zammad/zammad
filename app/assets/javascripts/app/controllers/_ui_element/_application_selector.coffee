@@ -22,9 +22,9 @@ class App.UiElement.ApplicationSelector
         name: __('Execution Time')
 
     operators_type =
-      '^datetime$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
-      '^timestamp$': [__('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
-      '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
+      '^datetime$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
+      '^timestamp$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
+      '^date$': [__('today'), 'before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
       'boolean$': [__('is'), __('is not')]
       'integer$': [__('is'), __('is not')]
       '^radio$': [__('is'), __('is not')]
@@ -488,7 +488,7 @@ class App.UiElement.ApplicationSelector
 
     # render ui element
     item = ''
-    if config && App.UiElement[config.tag]
+    if config && App.UiElement[config.tag] && meta.operator isnt 'today'
       config['name'] = name
       if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
