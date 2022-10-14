@@ -4,6 +4,7 @@
       "name": "title",
       "display": "Title",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "text",
         "maxlength": 200,
@@ -21,6 +22,7 @@
       "name": "organization_id",
       "display": "Organization",
       "dataType": "autocompletion_ajax_customer_organization",
+      "isInternal": true,
       "dataOption": {
         "relation": "Organization",
         "autocapitalize": false,
@@ -40,6 +42,7 @@
       "name": "type",
       "display": "Type",
       "dataType": "select",
+      "isInternal": true,
       "dataOption": {
         "options": {
           "Incident": "Incident",
@@ -74,6 +77,7 @@
       "name": "group_id",
       "display": "Group",
       "dataType": "select",
+      "isInternal": true,
       "dataOption": {
         "default": "",
         "relation": "Group",
@@ -100,6 +104,7 @@
       "name": "state_id",
       "display": "State",
       "dataType": "select",
+      "isInternal": true,
       "dataOption": {
         "relation": "TicketState",
         "nulloption": true,

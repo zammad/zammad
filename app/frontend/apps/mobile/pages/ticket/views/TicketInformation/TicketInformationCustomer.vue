@@ -4,8 +4,7 @@
 import { useUserDetail } from '@mobile/entities/user/composables/useUserDetail'
 import { useUserEdit } from '@mobile/entities/user/composables/useUserEdit'
 import { useUsersTicketsCount } from '@mobile/entities/user/composables/useUserTicketsCount'
-import type { ComputedRef } from 'vue'
-import { watchEffect, computed, inject } from 'vue'
+import { watchEffect, computed } from 'vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 import { useSessionStore } from '@shared/stores/session'
@@ -13,7 +12,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
 import { normalizeEdges } from '@shared/utils/helpers'
-import type { TicketById } from '../../types/tickets'
+import { useTicketInformation } from './composable/useTicketInformation'
 
 interface Props {
   internalId: number
@@ -21,7 +20,7 @@ interface Props {
 
 defineProps<Props>()
 
-const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
+const ticket = useTicketInformation()
 
 const session = useSessionStore()
 const {
@@ -52,13 +51,27 @@ const secondaryOrganizations = computed(() =>
   <CommonLoader :loading="loading">
     <div v-if="user" class="mb-3 flex items-center gap-3">
       <CommonUserAvatar size="normal" :entity="user" />
-      <h2 class="text-lg font-semibold">
-        {{ user.fullname }}
-      </h2>
+      <div>
+        <h2 class="text-lg font-semibold">
+          {{ user.fullname }}
+        </h2>
+        <h3 v-if="user.organization">
+          <CommonLink
+            :link="`/organizations/${user.organization.internalId}`"
+            class="text-blue"
+          >
+            {{ user.organization.name }}
+          </CommonLink>
+        </h3>
+      </div>
     </div>
   </CommonLoader>
   <div v-if="user">
-    <CommonObjectAttributes :attributes="objectAttributes" :object="user">
+    <CommonObjectAttributes
+      :attributes="objectAttributes"
+      :object="user"
+      :skip-attributes="['firstname', 'lastname']"
+    >
       <template v-if="session.hasPermission(['ticket.agent'])" #after-fields>
         <button class="p-4 text-blue" @click="openEditUserDialog(user!)">
           {{ $t('Edit Customer') }}

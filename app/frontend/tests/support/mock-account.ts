@@ -7,5 +7,10 @@ import { initializeStore } from './components/renderComponent'
 export const mockAccount = (mockUser: Partial<UserData>) => {
   initializeStore()
   const user = useSessionStore()
-  user.user = { id: '123', objectAttributeValues: [], ...mockUser }
+  user.user = {
+    id: '123',
+    internalId: 1,
+    objectAttributeValues: [],
+    ...mockUser,
+  }
 }

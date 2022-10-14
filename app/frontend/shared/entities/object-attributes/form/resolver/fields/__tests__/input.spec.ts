@@ -12,6 +12,7 @@ describe('FieldResovlerInput', () => {
         type: 'text',
         maxlength: 100,
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

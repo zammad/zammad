@@ -23,8 +23,6 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', type
       expect(page).to have_text(ticket.title)
       expect(page).to have_text(user.fullname)
 
-      expect(find('section', text: %r{First name})).to have_text(user.firstname)
-      expect(find('section', text: %r{Last name})).to have_text(user.lastname)
       expect(find('section', text: %r{Address})).to have_text(user.address)
 
       expect(page).to have_text('Edit Customer')
@@ -34,9 +32,6 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', type
       wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
       expect(page).to have_text('Rose Nylund')
-
-      expect(find('section', text: %r{First name})).to have_text('Rose')
-      expect(find('section', text: %r{Last name})).to have_text('Nylund')
     end
 
     it 'can load all secondary organizations' do
@@ -67,13 +62,13 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', type
       expect(page).to have_text(user.fullname)
       expect(page).to have_no_text('Edit Customer')
 
-      expect(find('section', text: %r{First name})).to have_text(user.firstname)
+      expect(find('section', text: %r{Address})).to have_text(user.address)
 
       user.update!(firstname: 'Rose')
 
       wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
 
-      expect(find('section', text: %r{First name})).to have_text('Rose')
+      expect(page).to have_text('Rose Devereaux')
     end
   end
 end

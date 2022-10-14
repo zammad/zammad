@@ -11,6 +11,7 @@ describe('FieldResolverDate', () => {
       dataOption: {
         // TODO ...
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

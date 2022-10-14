@@ -16,6 +16,7 @@ describe('FieldResolverSelect', () => {
           c: 'c',
         },
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

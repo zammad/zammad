@@ -1,8 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ComputedRef } from 'vue'
-import { computed, ref, watchEffect, inject } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
@@ -13,9 +12,9 @@ import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
-import type { TicketById } from '../../types/tickets'
+import { useTicketInformation } from './composable/useTicketInformation'
 
-const ticket = inject('ticket') as ComputedRef<Maybe<TicketById>>
+const ticket = useTicketInformation()
 
 const session = useSessionStore()
 
@@ -68,6 +67,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
     <CommonObjectAttributes
       :object="organization"
       :attributes="objectAttributes"
+      :skip-attributes="['name']"
     >
       <template v-if="session.hasPermission(['ticket.agent'])" #after-fields>
         <button

@@ -118,6 +118,7 @@ export default defineConfig(({ mode, command }) => {
       dir: 'app/frontend',
       setupFiles: ['app/frontend/tests/vitest.setup.ts'],
       environment: 'jsdom',
+      clearMocks: true,
       css: false,
       testTimeout: 30_000,
     },

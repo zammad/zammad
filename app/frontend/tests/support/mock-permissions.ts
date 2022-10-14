@@ -10,6 +10,7 @@ export const mockPermissions = (permissions: string[]) => {
   if (!session.user) {
     session.user = {
       id: '123',
+      internalId: 1,
       objectAttributeValues: [],
     }
   }

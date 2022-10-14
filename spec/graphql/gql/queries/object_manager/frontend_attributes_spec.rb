@@ -17,6 +17,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               display
               dataType
               dataOption
+              isInternal
             }
             screens {
               name
@@ -63,6 +64,12 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             edit_screen_attributes = gql.result.data['screens'].find { |screen| screen['name'] == 'edit' }['attributes']
 
             expect(edit_screen_attributes).to include(object_attribute.name)
+          end
+
+          it 'does contain shown attribute which is not internal' do
+            frontend_object_attribute = gql.result.data['attributes'].find { |attribute| attribute['name'] == object_attribute.name }
+
+            expect(frontend_object_attribute['isInternal']).to be(false)
           end
         end
 
@@ -129,7 +136,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'dataOption' => { 'type'       => 'text',
                                 'maxlength'  => 150,
                                 'null'       => false,
-                                'item_class' => 'formGroup--halfSize' }
+                                'item_class' => 'formGroup--halfSize' },
+              'isInternal' => true,
             },
 
             {
@@ -143,7 +151,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                                 'options'    => { 'true'  => 'yes',
                                                   'false' => 'no' },
                                 'translate'  => true,
-                                'permission' => ['admin.organization'] }
+                                'permission' => ['admin.organization'] },
+              'isInternal' => true,
             },
 
             {
@@ -157,7 +166,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                                 'options'    => { 'true'  => 'yes',
                                                   'false' => 'no' },
                                 'translate'  => true,
-                                'permission' => ['admin.organization'] }
+                                'permission' => ['admin.organization'] },
+              'isInternal' => true,
             },
 
             {
@@ -167,7 +177,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'dataOption' => { 'type'       => 'text',
                                 'maxlength'  => 150,
                                 'null'       => true,
-                                'item_class' => 'formGroup--halfSize' }
+                                'item_class' => 'formGroup--halfSize' },
+              'isInternal' => true,
             },
 
             {
@@ -178,7 +189,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                                 'maxlength' => 5000,
                                 'no_images' => false,
                                 'null'      => true,
-                                'note'      => 'Notes are visible to agents only, never to customers.' }
+                                'note'      => 'Notes are visible to agents only, never to customers.' },
+              'isInternal' => true,
             },
 
             {
@@ -187,7 +199,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'dataType'   => 'active',
               'dataOption' => { 'null'       => true,
                                 'default'    => true,
-                                'permission' => ['admin.organization'] }
+                                'permission' => ['admin.organization'] },
+              'isInternal' => true,
             }
           ],
           'screens'    => [
@@ -217,7 +230,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'dataOption' => { 'type'       => 'text',
                                 'maxlength'  => 150,
                                 'null'       => false,
-                                'item_class' => 'formGroup--halfSize' }
+                                'item_class' => 'formGroup--halfSize' },
+              'isInternal' => true,
             },
 
             {
@@ -227,7 +241,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'dataOption' => { 'type'       => 'text',
                                 'maxlength'  => 150,
                                 'null'       => true,
-                                'item_class' => 'formGroup--halfSize' }
+                                'item_class' => 'formGroup--halfSize' },
+              'isInternal' => true,
             },
 
             {
@@ -238,7 +253,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                                 'maxlength' => 5000,
                                 'no_images' => false,
                                 'null'      => true,
-                                'note'      => 'Notes are visible to agents only, never to customers.' }
+                                'note'      => 'Notes are visible to agents only, never to customers.' },
+              'isInternal' => true,
             },
           ],
           'screens'    => [
@@ -276,7 +292,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'maxlength' => 200,
                 'null'      => false,
                 'translate' => false
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'customer_id',
@@ -293,7 +310,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'minLengt'       => 2,
                 'translate'      => false,
                 'permission'     => ['ticket.agent']
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'organization_id',
@@ -306,7 +324,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'           => true,
                 'translate'      => false,
                 'permission'     => ['ticket.agent', 'ticket.customer']
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'group_id',
@@ -323,7 +342,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'only_shown_if_selectable' => true,
                 'permission'               => ['ticket.agent', 'ticket.customer'],
                 'maxlength'                => 255
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'owner_id',
@@ -339,7 +359,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'translate'          => false,
                 'permission'         => ['ticket.agent'],
                 'maxlength'          => 255
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'state_id',
@@ -354,7 +375,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'translate'  => true,
                 'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
                 'maxlength'  => 255
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'pending_time',
@@ -367,7 +389,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'       => true,
                 'translate'  => true,
                 'permission' => ['ticket.agent']
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'priority_id',
@@ -381,7 +404,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'default'    => 2,
                 'translate'  => true,
                 'maxlength'  => 255
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'tags',
@@ -391,7 +415,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'type'      => 'text',
                 'null'      => true,
                 'translate' => false
-              }
+              },
+              'isInternal' => true,
             }
           ],
           'screens'    => [
@@ -427,7 +452,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'maxlength' => 200,
                 'null'      => false,
                 'translate' => false
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'organization_id',
@@ -440,7 +466,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'           => true,
                 'translate'      => false,
                 'permission'     => ['ticket.agent', 'ticket.customer']
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'group_id',
@@ -457,7 +484,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'only_shown_if_selectable' => true,
                 'permission'               => ['ticket.agent', 'ticket.customer'],
                 'maxlength'                => 255
-              }
+              },
+              'isInternal' => true,
             },
             {
               'name'       => 'state_id',
@@ -472,7 +500,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'translate'  => true,
                 'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
                 'maxlength'  => 255
-              }
+              },
+              'isInternal' => true,
             },
           ],
           'screens'    => [

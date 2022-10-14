@@ -36,3 +36,6 @@ export type EventHandlers<E> = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   [K in keyof E]?: E[K] extends Function ? E[K] : (payload: E[K]) => void
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ObjectLike = Record<string, any>

@@ -4,6 +4,7 @@
       "name": "firstname",
       "display": "First name",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "text",
         "maxlength": 150,
@@ -17,6 +18,7 @@
       "name": "lastname",
       "display": "Last name",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "text",
         "maxlength": 150,
@@ -30,6 +32,7 @@
       "name": "email",
       "display": "Email",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "email",
         "maxlength": 150,
@@ -43,6 +46,7 @@
       "name": "web",
       "display": "Web",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "url",
         "maxlength": 250,
@@ -56,6 +60,7 @@
       "name": "phone",
       "display": "Phone",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "tel",
         "maxlength": 100,
@@ -69,6 +74,7 @@
       "name": "mobile",
       "display": "Mobile",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "tel",
         "maxlength": 100,
@@ -82,6 +88,7 @@
       "name": "fax",
       "display": "Fax",
       "dataType": "input",
+      "isInternal": true,
       "dataOption": {
         "type": "tel",
         "maxlength": 100,
@@ -95,6 +102,7 @@
       "name": "organization_id",
       "display": "Organization",
       "dataType": "autocompletion_ajax",
+      "isInternal": true,
       "dataOption": {
         "multiple": false,
         "nulloption": true,
@@ -109,6 +117,7 @@
       "name": "organization_ids",
       "display": "Secondary organizations",
       "dataType": "autocompletion_ajax",
+      "isInternal": true,
       "dataOption": {
         "multiple": true,
         "nulloption": true,
@@ -124,6 +133,7 @@
       "name": "department",
       "display": "Department",
       "dataType": "input",
+      "isInternal": false,
       "dataOption": {
         "type": "text",
         "maxlength": 200,
@@ -137,6 +147,7 @@
       "name": "address",
       "display": "Address",
       "dataType": "textarea",
+      "isInternal": false,
       "dataOption": {
         "type": "text",
         "maxlength": 500,
@@ -151,6 +162,7 @@
       "name": "note",
       "display": "Note",
       "dataType": "richtext",
+      "isInternal": true,
       "dataOption": {
         "type": "text",
         "maxlength": 5000,

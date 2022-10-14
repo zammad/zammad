@@ -11,6 +11,7 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
       dataOption: {
         // TODO ...
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

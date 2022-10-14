@@ -27,6 +27,7 @@ describe('FieldResolverMultiTreeselect', () => {
         ],
         translate: true,
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

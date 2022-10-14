@@ -5,6 +5,7 @@ import { ObjectAttributeValuesFragmentDoc } from './objectAttributeValues.api';
 export const UserAttributesFragmentDoc = gql`
     fragment userAttributes on User {
   id
+  internalId
   firstname
   lastname
   fullname
@@ -14,6 +15,7 @@ export const UserAttributesFragmentDoc = gql`
     ...objectAttributeValues
   }
   organization {
+    id
     name
     objectAttributeValues {
       ...objectAttributeValues

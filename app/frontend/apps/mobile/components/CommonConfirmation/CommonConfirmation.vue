@@ -41,7 +41,7 @@ const callCancelCallback = (isCancel: boolean) => {
   >
     <template #header>
       <div
-        class="flex h-14 items-center justify-center border-b border-gray-300 text-white"
+        class="flex h-14 items-center justify-center border-b border-gray-300 text-center text-white"
       >
         {{ $t(confirmationDialog?.heading) }}
       </div>

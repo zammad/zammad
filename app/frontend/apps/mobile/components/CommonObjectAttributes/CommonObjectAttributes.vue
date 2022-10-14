@@ -11,13 +11,15 @@ import type {
   ObjectManagerFrontendAttribute,
 } from '@shared/graphql/types'
 import { useSessionStore } from '@shared/stores/session'
-import type { AttributeDeclaration, ObjectLike } from './types'
+import type { ObjectLike } from '@shared/types/utils'
+import type { AttributeDeclaration } from './types'
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '../CommonSectionMenu/CommonSectionMenuItem.vue'
 
 export interface Props {
   object: ObjectLike
   attributes: ObjectManagerFrontendAttribute[]
+  skipAttributes?: string[]
 }
 
 const props = defineProps<Props>()
@@ -61,8 +63,6 @@ const isEmpty = (value: unknown) => {
 
 const session = useSessionStore()
 
-const skipAttributes = ['name']
-
 interface AttributeField {
   attribute: ObjectManagerFrontendAttribute
   component: Component
@@ -100,7 +100,7 @@ const fields = computed<AttributeField[]>(() => {
         return false
       }
 
-      return !skipAttributes.includes(attribute.name)
+      return !props.skipAttributes?.includes(attribute.name)
     })
 })
 </script>

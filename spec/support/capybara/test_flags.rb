@@ -10,6 +10,10 @@ module TestFlags
     operation = %r{^\w+ \w+}.match(gql).to_s
     wait_for_test_flag("__gql #{operation} #{number}", skip_clearing: skip_clearing)
   end
+
+  def wait_for_form_to_settle(form)
+    wait_for_test_flag("#{form}.settled")
+  end
 end
 
 RSpec.configure do |config|

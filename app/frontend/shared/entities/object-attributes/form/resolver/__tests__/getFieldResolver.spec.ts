@@ -12,6 +12,7 @@ describe('object attribute resolver available', () => {
         type: 'text',
         maxlength: 100,
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

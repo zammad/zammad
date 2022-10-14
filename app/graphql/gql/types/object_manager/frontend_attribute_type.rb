@@ -10,6 +10,7 @@ module Gql::Types::ObjectManager
     field :data_type, String, null: false
     field :data_option, GraphQL::Types::JSON
     field :screens, GraphQL::Types::JSON
+    field :is_internal, Boolean, null: false
 
     # Custom resolvers are needed as there are conflicts with a built-in 'display' method.
     def resolve_display

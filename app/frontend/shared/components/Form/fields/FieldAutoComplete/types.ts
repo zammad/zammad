@@ -31,4 +31,5 @@ export type AutoCompleteProps = FormFieldContext<{
   optionIconComponent?: ConcreteComponent
   options?: AutoCompleteOption[]
   sorting?: SelectOptionSorting
+  onActionClick?: () => void
 }>

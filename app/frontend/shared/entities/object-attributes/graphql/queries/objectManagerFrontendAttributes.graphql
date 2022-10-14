@@ -5,6 +5,7 @@ query objectManagerFrontendAttributes($object: EnumObjectManagerObjects!) {
       display
       dataType
       dataOption
+      isInternal
       screens
     }
     screens {

@@ -44,6 +44,7 @@ module Gql::Queries
           data_type:   attribute[:data_type],
           data_option: attribute[:data_option],
           screens:     element.screens,
+          is_internal: !attribute[:editable],
         }
       end
 

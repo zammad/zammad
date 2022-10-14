@@ -1,5 +1,6 @@
 fragment userAttributes on User {
   id
+  internalId
   firstname
   lastname
   fullname
@@ -9,6 +10,7 @@ fragment userAttributes on User {
     ...objectAttributeValues
   }
   organization {
+    id
     name
     objectAttributeValues {
       ...objectAttributeValues

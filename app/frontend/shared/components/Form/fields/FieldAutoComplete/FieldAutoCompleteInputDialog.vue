@@ -35,6 +35,7 @@ const { isCurrentValue } = useValue(toRef(props, 'context'))
 
 const emit = defineEmits<{
   (e: 'updateOptions', options: AutoCompleteOption[]): void
+  (e: 'action'): void
 }>()
 
 const { sortedOptions, selectOption, advanceDialogFocus } = useSelectOptions(
@@ -195,6 +196,7 @@ const OptionIconComponent =
 const router = useRouter()
 
 const executeAction = () => {
+  emit('action')
   if (!props.context.action) return
   router.push(props.context.action)
 }
@@ -208,26 +210,21 @@ const executeAction = () => {
     class="field-autocomplete-dialog"
     @close="close"
   >
-    <template #before-label>
+    <template v-if="context.action || context.onActionClick" #before-label>
       <div
-        v-if="context.action"
-        class="absolute top-0 left-0 bottom-0 flex items-center pl-4"
+        class="grow cursor-pointer text-white"
+        tabindex="0"
+        role="button"
+        @click="close"
+        @keypress.space="close"
+        @keydown="advanceDialogFocus"
       >
-        <div
-          class="grow cursor-pointer text-white"
-          tabindex="0"
-          role="button"
-          @click="close"
-          @keypress.space="close"
-          @keydown="advanceDialogFocus"
-        >
-          {{ i18n.t('Cancel') }}
-        </div>
+        {{ i18n.t('Cancel') }}
       </div>
     </template>
     <template #after-label>
       <CommonIcon
-        v-if="context.action"
+        v-if="context.action || context.onActionClick"
         :name="context.actionIcon ? context.actionIcon : 'external'"
         :fixed-size="{ width: 24, height: 24 }"
         class="cursor-pointer text-white"

@@ -12,6 +12,7 @@ describe('FieldResolverBoolean', () => {
       dataOption: {
         options: { false: 'no', true: 'yes' },
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

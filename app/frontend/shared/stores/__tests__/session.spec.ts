@@ -12,6 +12,7 @@ import { useSessionStore } from '../session'
 const userData = {
   __typename: 'User',
   id: '123456789',
+  internalId: 1,
   firstname: 'John',
   lastname: 'Doe',
   fullname: 'John Doe',
@@ -22,6 +23,7 @@ const userData = {
   objectAttributeValues: [],
   organization: {
     __typename: 'Organization',
+    id: '234241',
     name: 'Zammad Foundation',
     objectAttributeValues: [],
   },

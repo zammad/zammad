@@ -31,13 +31,12 @@ describe('visiting user page', () => {
       `/organizations/${organization.internalId}`,
     )
 
-    expect(view.queryByRole('region', { name: 'Name' })).not.toBeInTheDocument()
-    expect(view.getByRole('region', { name: 'First name' })).toHaveTextContent(
-      'John',
-    )
-    expect(view.getByRole('region', { name: 'Last name' })).toHaveTextContent(
-      'Doe',
-    )
+    expect(
+      view.queryByRole('region', { name: 'First name' }),
+    ).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('region', { name: 'Last  name' }),
+    ).not.toBeInTheDocument()
 
     const ticketOpenLink = view.getByRole('link', { name: 'open 4' })
     const ticketClosedLink = view.getByRole('link', { name: 'closed 2' })
@@ -157,8 +156,12 @@ describe('visiting user page', () => {
 
     expect(view.getByIconName('crown'), 'vip has crown').toBeInTheDocument()
 
-    expect(getRegion('First name')).toHaveTextContent('John')
-    expect(getRegion('Last name')).toHaveTextContent('Doe')
+    expect(
+      view.queryByRole('region', { name: 'First name' }),
+    ).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('region', { name: 'Last  name' }),
+    ).not.toBeInTheDocument()
     expect(getRegion('Email')).toHaveTextContent('some-email@mail.com')
     expect(getRegion('Web')).toHaveTextContent('https://some-web.com')
     expect(getRegion('Phone')).toHaveTextContent('80542243532')

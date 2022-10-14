@@ -11,6 +11,7 @@ describe('FieldResolverTextarea', () => {
       dataOption: {
         maxlength: 100,
       },
+      isInternal: true,
     })
 
     expect(fieldResolver.fieldAttributes()).toEqual({

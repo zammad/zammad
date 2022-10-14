@@ -108,7 +108,11 @@ const secondaryOrganizations = computed(() =>
       </CommonLink>
     </div>
 
-    <CommonObjectAttributes :attributes="objectAttributes" :object="user" />
+    <CommonObjectAttributes
+      :attributes="objectAttributes"
+      :object="user"
+      :skip-attributes="['firstname', 'lastname']"
+    />
 
     <CommonOrganizationsList
       :organizations="secondaryOrganizations.array"

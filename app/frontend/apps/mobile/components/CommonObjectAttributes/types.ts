@@ -2,8 +2,6 @@
 
 import type { Component } from 'vue'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ObjectLike = Record<string, any>
 export interface AttributeDeclaration {
   component: Component
   dataTypes: string[]

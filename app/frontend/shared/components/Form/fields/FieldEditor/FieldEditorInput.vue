@@ -65,7 +65,12 @@ const editor = useEditor({
   editable: props.context.disabled !== true,
   content: currentValue.value,
   onUpdate: ({ editor }) => {
-    props.context.node.input(editor.getHTML())
+    const html = editor.getHTML()
+    if (html === '<p></p>') {
+      props.context.node.input('')
+    } else {
+      props.context.node.input(html)
+    }
   },
   onFocus() {
     showActionBar.value = true

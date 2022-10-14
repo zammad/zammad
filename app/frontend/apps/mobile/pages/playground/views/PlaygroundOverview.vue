@@ -7,6 +7,7 @@ import Form from '@shared/components/Form/Form.vue'
 import { defineFormSchema } from '@mobile/form/composable'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 
 const linkSchemaRaw = [
   {
@@ -268,6 +269,8 @@ const dialog = useDialog({
   name: 'dialog',
   component: () => import('@mobile/components/CommonDialog/CommonDialog.vue'),
 })
+
+const { openCreateUserDialog } = useUserCreate()
 </script>
 
 <template>
@@ -275,6 +278,9 @@ const dialog = useDialog({
     <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
       Dialog
     </button>
+
+    <!-- TODO where to put this? -->
+    <button @click="openCreateUserDialog()">Create user</button>
 
     <CommonButtonGroup
       class="py-4"

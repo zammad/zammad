@@ -61,7 +61,7 @@ onKeyUp(['Escape', 'Spacebar', ' '], (e) => {
               v-for="item in items"
               :key="item.label"
               :link="item.link"
-              class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 last:border-0"
+              class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 text-center last:border-0"
               :class="item.class"
               @click="onItemClick(item.onAction)"
             >

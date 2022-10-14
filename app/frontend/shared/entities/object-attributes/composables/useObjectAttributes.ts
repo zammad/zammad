@@ -3,8 +3,8 @@
 import { computed, toRefs } from 'vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type {
-  EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
+  EnumObjectManagerObjects,
 } from '@shared/graphql/types'
 import type { FormSchemaField } from '@shared/components/Form/types'
 import { useObjectAttributesStore } from '../stores/objectAttributes'

@@ -19,8 +19,6 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', type: 
 
       expect(page).to have_text(user.fullname)
 
-      expect(find('section', text: %r{First name})).to have_text(user.firstname)
-      expect(find('section', text: %r{Last name})).to have_text(user.lastname)
       expect(find('section', text: %r{Address})).to have_text(user.address)
 
       user.update!(firstname: 'Rose', lastname: 'Nylund', address: 'Hamburg')
@@ -29,8 +27,6 @@ RSpec.describe 'Mobile > User > Preview detailed information about user', type: 
 
       expect(page).to have_text('Rose Nylund')
 
-      expect(find('section', text: %r{First name})).to have_text('Rose')
-      expect(find('section', text: %r{Last name})).to have_text('Nylund')
       expect(find('section', text: %r{Address})).to have_text('Hamburg')
     end
 

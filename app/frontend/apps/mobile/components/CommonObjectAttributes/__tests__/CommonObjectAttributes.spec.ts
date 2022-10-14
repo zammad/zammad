@@ -147,20 +147,6 @@ describe('common object attributes interface', () => {
     expect(view.queryAllByRole('region')).toHaveLength(0)
   })
 
-  test("don't show name", () => {
-    const object = {
-      name: 'some_object',
-    }
-    const view = renderComponent(CommonObjectAttributes, {
-      props: {
-        object,
-        attributes: [{ ...attributesByKey.login, name: 'name' }],
-      },
-    })
-
-    expect(view.queryAllByRole('region')).toHaveLength(0)
-  })
-
   test("don't show empty fields", () => {
     const object = {
       login: '',
@@ -336,5 +322,29 @@ describe('common object attributes interface', () => {
     expect(getRegion('now')).toHaveTextContent('just now')
     expect(getRegion('past')).toHaveTextContent('1 month ago')
     expect(getRegion('future')).toHaveTextContent('in 6 months')
+  })
+
+  it('doesnt render skipped attributes', () => {
+    const object = {
+      skip: 'skip',
+      show: 'show',
+    }
+
+    const attributes = [
+      { ...attributesByKey.address, name: 'skip', display: 'skip' },
+      { ...attributesByKey.address, name: 'show', display: 'show' },
+    ]
+
+    const view = renderComponent(CommonObjectAttributes, {
+      props: {
+        object,
+        attributes,
+        skipAttributes: ['skip'],
+      },
+      router: true,
+    })
+
+    expect(view.getByRole('region', { name: 'show' })).toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'skip' })).not.toBeInTheDocument()
   })
 })

@@ -13,6 +13,7 @@ export const ObjectManagerFrontendAttributesDocument = gql`
       display
       dataType
       dataOption
+      isInternal
       screens
     }
     screens {

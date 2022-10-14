@@ -7,7 +7,7 @@ import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { ObjectManagerFrontendAttributesDocument } from '../../graphql/queries/objectManagerFrontendAttributes.api'
 import { useObjectAttributes } from '../useObjectAttributes'
 
-const mockOrganizationObjectManagerAttributes = async () => {
+const mockOrganizationObjectManagerAttributes = () => {
   mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
     objectManagerFrontendAttributes: {
       attributes: [
@@ -16,6 +16,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'name',
           display: 'Name',
           dataType: 'input',
+          isInternal: true,
           dataOption: {
             type: 'text',
             maxlength: 150,
@@ -29,6 +30,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'shared',
           display: 'Shared organization',
           dataType: 'boolean',
+          isInternal: true,
           dataOption: {
             null: true,
             default: true,
@@ -48,6 +50,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'domain_assignment',
           display: 'Domain based assignment',
           dataType: 'boolean',
+          isInternal: true,
           dataOption: {
             null: true,
             default: false,
@@ -67,6 +70,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'domain',
           display: 'Domain',
           dataType: 'input',
+          isInternal: true,
           dataOption: {
             type: 'text',
             maxlength: 150,
@@ -80,6 +84,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'note',
           display: 'Note',
           dataType: 'richtext',
+          isInternal: true,
           dataOption: {
             type: 'text',
             maxlength: 5000,
@@ -94,6 +99,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'active',
           display: 'Active',
           dataType: 'active',
+          isInternal: true,
           dataOption: {
             null: true,
             default: true,
@@ -106,6 +112,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'test',
           display: 'test',
           dataType: 'input',
+          isInternal: false,
           dataOption: {
             default: '',
             type: 'text',
@@ -122,6 +129,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
           name: 'textarea',
           display: 'textarea',
           dataType: 'textarea',
+          isInternal: false,
           dataOption: {
             default: '',
             maxlength: 500,
@@ -166,7 +174,7 @@ const mockOrganizationObjectManagerAttributes = async () => {
 }
 
 const getMeta = async () => {
-  await mockOrganizationObjectManagerAttributes()
+  mockOrganizationObjectManagerAttributes()
 
   const meta = useObjectAttributes(EnumObjectManagerObjects.Organization)
   await waitForTimeout()
@@ -220,6 +228,7 @@ describe('Object Manager Frontend Attributes Store', () => {
       name: 'name',
       display: 'Name',
       dataType: 'input',
+      isInternal: true,
       dataOption: {
         type: 'text',
         maxlength: 150,

@@ -77,6 +77,7 @@ const ticketData = computed(() => getTicketData(organization.value))
     <CommonObjectAttributes
       :object="organization"
       :attributes="objectAttributes"
+      :skip-attributes="['name']"
     />
 
     <OrganizationMembersList

@@ -10,6 +10,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '@shared/stores/session'
 import { useTicketQuery } from '../../graphql/queries/ticket.api'
 import { ticketInformationPlugins } from './plugins'
+import { TICKET_INFORMATION_SYMBOL } from './composable/useTicketInformation'
 
 const props = defineProps<{
   internalId: string
@@ -29,7 +30,7 @@ const ticket = computed(() => ticketResult.value?.ticket)
 
 const loadingTicket = ticketQuery.loading()
 
-provide('ticket', ticket)
+provide(TICKET_INFORMATION_SYMBOL, ticket)
 
 useHeader({
   backTitle: computed(() => `#${props.internalId}`),

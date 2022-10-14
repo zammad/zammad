@@ -45,6 +45,9 @@ const openModal = () => {
     onUpdateOptions: (options: AutoCompleteOption[]) => {
       localOptions.value = options
     },
+    onAction() {
+      props.context.onActionClick?.()
+    },
   })
 }
 

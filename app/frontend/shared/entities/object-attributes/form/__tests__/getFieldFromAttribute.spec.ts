@@ -12,6 +12,7 @@ describe('object attribute correctly resolved as field schema', () => {
         type: 'text',
         maxlength: 100,
       },
+      isInternal: true,
     })
 
     expect(fieldSchema).toEqual({
