@@ -2090,7 +2090,7 @@ Setting.create_if_not_exists(
   description: __("The format of the subject.
 * **Right** means **Some Subject [Ticket#12345]**
 * **Left** means **[Ticket#12345] Some Subject**
-* **None** means **Some Subject** (without ticket number). In the last case you should enable *postmaster_follow_up_search_in* to recognize follow-ups based on email headers and/or body."),
+* **None** means **Some Subject** (without ticket number), in which case it recognizes follow-ups based on email headers."),
   options:     {
     form: [
       {

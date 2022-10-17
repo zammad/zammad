@@ -12845,7 +12845,7 @@ msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
-msgid "|None| means |Some Subject| (without ticket number), in which case you should enable \"postmaster___follow___up___search___in\" to recognize follow-ups based on email headers and/or body."
+msgid "|None| means |Some Subject| (without ticket number), in which case it recognizes follow-ups based on email headers."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
