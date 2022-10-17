@@ -6529,10 +6529,14 @@ a.list-group-item.active > .badge,
   float: none;
   display: block;
   border-radius: 0;
-  background: none;
 }
 
 .form-inline {
+  .formGroup-label {
+    z-index: 1;
+    pointer-events: none;
+  }
+
   .controls--datetime,
   .controls--date,
   .controls--select {
