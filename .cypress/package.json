@@ -4,6 +4,6 @@
     "@testing-library/cypress": "^8.0.3",
     "cypress": "^10.3.1",
     "cypress-image-snapshot": "^4.0.1",
-    "cypress-real-events": "^1.7.1"
+    "cypress-real-events": "^1.7.2"
   }
 }

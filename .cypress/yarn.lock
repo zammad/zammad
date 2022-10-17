@@ -447,10 +447,10 @@ cypress-image-snapshot@^4.0.1:
     pkg-dir "^3.0.0"
     term-img "^4.0.0"
 
-cypress-real-events@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.1.tgz#8f430d67c29ea4f05b9c5b0311780120cbc9b935"
-  integrity sha512-/Bg15RgJ0SYsuXc6lPqH08x19z6j2vmhWN4wXfJqm3z8BTAFiK2MvipZPzxT8Z0jJP0q7kuniWrLIvz/i/8lCQ==
+cypress-real-events@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.2.tgz#d04e6d3f15117ef485eb49f9c9b361f3a3413002"
+  integrity sha512-tOANHbFRlqVL5Lu8OozvxTsrYgHwCnWmXAULGc1kdBF+k1gxrrvT/42uez3AhGoT+HcytyxieXAVt0jNP4yrvA==
 
 cypress@^10.3.1:
   version "10.3.1"
