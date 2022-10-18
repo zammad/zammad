@@ -61,7 +61,7 @@
     "postcss-html": "^1.5.0",
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
-    "regenerator-runtime": "^0.13.9",
+    "regenerator-runtime": "^0.13.10",
     "sass": "^1.55.0",
     "stylelint": "^14.11.0",
     "stylelint-config-prettier": "^9.0.3",
