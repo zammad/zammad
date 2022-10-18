@@ -17,7 +17,7 @@ defineProps<Props>()
     :class="{ 'gap-2': label }"
     @click="$walker.back(fallback)"
   >
-    <CommonIcon name="arrow-left" size="small" />
+    <CommonIcon name="mobile-chevron-left" />
     <span v-if="label">{{ $t(label) }}</span>
   </button>
 </template>

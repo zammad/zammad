@@ -16,9 +16,9 @@ export const arrow = createSection('arrow', () => {
       {
         $cmp: 'CommonIcon',
         props: {
-          fixedSize: { width: 24, height: 24 },
+          size: 'base',
           class: 'shrink-0',
-          name: `chevron-${
+          name: `mobile-chevron-${
             locale.localeData?.dir === 'rtl' ? 'left' : 'right'
           }`,
           decorative: true,

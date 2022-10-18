@@ -23,7 +23,7 @@ describe('tickets zoom header', () => {
     })
 
     expect(
-      view.getByIconName('arrow-left'),
+      view.getByIconName('mobile-chevron-left'),
       'has back icon',
     ).toBeInTheDocument()
     expect(view.getByText('#123456'), 'has ticket id').toBeInTheDocument()

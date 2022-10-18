@@ -38,26 +38,26 @@ export default function useEditorActions(
   const actions: EditorButton[] = [
     {
       name: 'underline',
-      class: 'underline',
-      text: 'U',
+      label: i18n.t('Format as underlined'),
+      icon: 'mobile-text-style-underline',
       command: focused((c) => c.toggleUnderline()),
     },
     {
       name: 'bold',
-      class: 'font-bold',
-      text: 'B',
+      label: i18n.t('Format as bold'),
+      icon: 'mobile-text-style-bold',
       command: focused((c) => c.toggleBold()),
     },
     {
       name: 'italic',
-      class: 'italic',
-      text: 'i',
+      label: i18n.t('Format as italic'),
+      icon: 'mobile-text-style-italic',
       command: focused((c) => c.toggleItalic()),
     },
     {
       name: 'strike',
-      class: 'line-through',
-      text: 'S',
+      label: i18n.t('Format as strikethrough'),
+      icon: 'mobile-text-style-strikethrough',
       command: focused((c) => c.toggleStrike()),
     },
     {
@@ -68,7 +68,7 @@ export default function useEditorActions(
     {
       name: 'link',
       label: i18n.t('Add link'),
-      icon: 'chain',
+      icon: 'mobile-link',
       command: focused((c) => {
         if (!editor.value) return null
         // eslint-disable-next-line no-alert
@@ -98,9 +98,8 @@ export default function useEditorActions(
     },
     {
       name: 'heading',
-      class: 'text-sm',
-      text: 'H1',
       label: i18n.t('Add first level heading'),
+      icon: 'mobile-text-style-h1',
       attributes: {
         level: 1,
       },
@@ -108,9 +107,8 @@ export default function useEditorActions(
     },
     {
       name: 'heading',
-      class: 'text-sm',
-      text: 'H2',
       label: i18n.t('Add second level heading'),
+      icon: 'mobile-text-style-h2',
       attributes: {
         level: 2,
       },
@@ -118,9 +116,8 @@ export default function useEditorActions(
     },
     {
       name: 'heading',
-      class: 'text-sm',
-      text: 'H3',
       label: i18n.t('Add third level heading'),
+      icon: 'mobile-text-style-h3',
       attributes: {
         level: 3,
       },
@@ -128,8 +125,8 @@ export default function useEditorActions(
     },
     {
       name: 'orderedList',
-      text: 'O',
       label: i18n.t('Add ordered list'),
+      icon: 'mobile-ordered-list',
       command: focused((c) => {
         if (isActive('orderedList')) {
           return c.liftListItem('listItem')
@@ -139,8 +136,8 @@ export default function useEditorActions(
     },
     {
       name: 'bulletList',
-      text: '*',
       label: i18n.t('Add bullet list'),
+      icon: 'mobile-list',
       command: focused((c) => {
         if (isActive('orderedList')) {
           return c.liftListItem('listItem')
@@ -150,26 +147,26 @@ export default function useEditorActions(
     },
     {
       name: 'jibberish',
-      text: 'F',
       label: i18n.t('Remove formatting'),
+      icon: 'mobile-remove-formatting',
       command: focused((c) => c.clearNodes().unsetAllMarks()),
     },
     {
       name: 'mention-user',
-      text: '@',
       label: i18n.t('Mention user'),
+      icon: 'mobile-at-sign',
       command: focused((c) => c.openUserMention()),
     },
     {
       name: 'mention-knowledge-base',
-      text: '??',
       label: i18n.t('Insert text from Knowledge Base article'),
+      icon: 'mobile-mention-kb',
       command: focused((c) => c.openKnowledgeBaseMention()),
     },
     {
       name: 'mention-text',
-      text: '::',
       label: i18n.t('Insert text from text module'),
+      icon: 'mobile-snippet',
       command: focused((c) => c.openTextMention()),
     },
   ]

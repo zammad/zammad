@@ -8,7 +8,7 @@ import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '@shared/graphql/types'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 // import { computed } from 'vue'
 
 // fixed fields? (e.g. title)

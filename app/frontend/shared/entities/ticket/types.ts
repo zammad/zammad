@@ -6,4 +6,5 @@ export enum TicketState {
   WaitingForReminder = 'waiting-for-reminder',
   Open = 'open',
   Escalated = 'escalated',
+  New = 'new',
 }

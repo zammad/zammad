@@ -206,11 +206,7 @@ onMounted(() => {
       @keypress.space="goToPreviousPage()"
       @keydown="advanceDialogFocus"
     >
-      <CommonIcon
-        :fixed-size="{ width: 24, height: 24 }"
-        class="mr-3"
-        name="chevron-left"
-      />
+      <CommonIcon size="base" class="mr-3" name="mobile-chevron-left" />
       <span class="grow font-semibold text-white/80">
         {{ currentParent.label || currentParent.value }}
       </span>
@@ -258,8 +254,12 @@ onMounted(() => {
             '!text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          :fixed-size="{ width: 24, height: 24 }"
-          :name="isCurrentValue(option.value) ? 'checked-yes' : 'checked-no'"
+          :name="
+            isCurrentValue(option.value)
+              ? 'mobile-check-box-yes'
+              : 'mobile-check-box-no'
+          "
+          size="base"
           class="mr-3 text-white/50"
         />
         <CommonTicketStateIndicator
@@ -274,11 +274,11 @@ onMounted(() => {
         <CommonIcon
           v-else-if="option.icon"
           :name="option.icon"
-          :fixed-size="{ width: 16, height: 16 }"
           :class="{
             '!text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
+          size="small"
           class="mr-[11px] text-white/80"
         />
         <span
@@ -308,15 +308,15 @@ onMounted(() => {
           :class="{
             'opacity-30': option.disabled,
             'mr-3': (option as FlatSelectOption).hasChildren,
-        }"
-          :fixed-size="{ width: 16, height: 16 }"
-          name="check"
+          }"
+          size="tiny"
+          name="mobile-check"
         />
         <CommonIcon
           v-if="(option as FlatSelectOption).hasChildren && !filter"
           class="pointer-events-auto"
-          :fixed-size="{ width: 24, height: 24 }"
-          name="chevron-right"
+          size="base"
+          name="mobile-chevron-right"
           role="link"
           @click.stop="goToNextPage(option as FlatSelectOption)"
         />

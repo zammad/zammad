@@ -255,7 +255,11 @@ const login = (formData: FormData<LoginFormData>) => {
         open-in-new-tab
         class="ltr:mr-1 rtl:ml-1"
       >
-        <CommonIcon name="logo" :fixed-size="{ width: 24, height: 24 }" />
+        <img
+          :src="'/assets/images/icons/logo.svg'"
+          :alt="$t('Logo')"
+          class="h-6 w-6"
+        />
       </CommonLink>
       <span class="ltr:mr-1 rtl:ml-1">{{ $t('Powered by') }}</span>
       <CommonLink

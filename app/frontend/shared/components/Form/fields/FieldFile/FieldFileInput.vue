@@ -148,7 +148,7 @@ const { showImage } = useImageViewer(uploadFiles)
     :disabled="!canInteract"
     @click="canInteract && fileInput?.click()"
   >
-    <CommonIcon name="paperclip" size="tiny" decorative />
+    <CommonIcon name="mobile-attachment" size="base" decorative />
     <span class="text-base">
       {{ $t(uploadTitle) }}
     </span>

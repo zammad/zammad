@@ -21,24 +21,42 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const iconSizes = {
-  xs: 'xs',
-  small: 'tiny',
-  medium: 'small',
+  xs: 'tiny',
+  small: 'small',
+  medium: 'base',
   normal: 'medium',
-  large: 'medium',
-  xl: 'large',
+  large: 'large',
+  xl: 'xl',
 } as const
 
 const iconSize = computed(() => {
   if (!props.icon) return 'medium'
   return iconSizes[props.size]
 })
+
+// const iconSize = computed(() => {
+//   switch (props.size) {
+//     case 'xs':
+//       return { width: 16, height: 16 }
+//     case 'small':
+//       return { width: 22, height: 22 }
+//     case 'large':
+//       return { width: 68, height: 68 }
+//     case 'xl':
+//       return { width: 128, height: 128 }
+//     case 'medium':
+//     case 'normal':
+//     default:
+//       return { width: 45, height: 45 }
+//   }
+// })
 </script>
 
 <template>
   <span
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
+      backgroundRepeat: image ? 'no-repeat' : undefined,
     }"
     :class="[
       'relative inline-flex h-10 w-10 shrink-0 select-none text-white',
@@ -51,8 +69,9 @@ const iconSize = computed(() => {
   >
     <CommonIcon
       v-if="vip"
-      class="vip absolute left-1/2 -top-[15px] -ml-4 w-8"
-      name="crown"
+      size="xl"
+      class="vip absolute left-1/2 -top-[48px] -ml-5 w-10 text-yellow"
+      name="mobile-crown"
     />
     <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
     <slot v-else>
@@ -66,7 +85,7 @@ const iconSize = computed(() => {
   @apply h-6 w-6 text-xs leading-6;
 
   .vip {
-    @apply -ml-2 w-4;
+    @apply -top-[49px] -ml-2 w-4;
   }
 }
 
@@ -74,7 +93,7 @@ const iconSize = computed(() => {
   @apply h-8 w-8 text-xs leading-8;
 
   .vip {
-    @apply -ml-3 w-6;
+    @apply -top-[49px] -ml-3 w-6;
   }
 }
 
@@ -82,27 +101,23 @@ const iconSize = computed(() => {
   @apply h-14 w-14 text-2xl leading-[5rem];
 
   .vip {
-    @apply -ml-6 w-12;
+    @apply -top-[49px] -ml-6 w-12;
   }
 }
 
 .size-large {
-  @apply h-20 w-20 text-2xl leading-[5rem];
+  @apply h-20 w-20 text-4xl leading-[5rem];
 
   .vip {
-    @apply -ml-8 w-16;
+    @apply -top-[51px] -ml-8 w-16;
   }
 }
 
 .size-xl {
-  @apply h-36 w-36 text-3xl leading-[5rem];
+  @apply h-36 w-36 text-6xl leading-[5rem];
 
   .vip {
-    @apply -top-[28px] -ml-14 h-12 w-28;
+    @apply -top-[55px] -ml-12 w-24;
   }
-}
-
-.vip {
-  fill: hsl(47, 100%, 59%);
 }
 </style>

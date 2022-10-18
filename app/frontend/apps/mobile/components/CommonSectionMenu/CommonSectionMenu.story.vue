@@ -15,7 +15,7 @@ const alert = window.alert?.bind(window)
           {
             type: 'link',
             link: '/',
-            icon: { name: 'stack', size: 'base' },
+            icon: { name: 'mobile-all-tickets', size: 'base' },
             iconBg: 'bg-pink',
             label: 'Home',
           },
@@ -37,7 +37,7 @@ const alert = window.alert?.bind(window)
           {
             type: 'link',
             link: '/',
-            icon: { name: 'stack', size: 'base' },
+            icon: { name: 'mobile-all-tickets', size: 'base' },
             iconBg: 'bg-pink',
             label: 'Home',
           },

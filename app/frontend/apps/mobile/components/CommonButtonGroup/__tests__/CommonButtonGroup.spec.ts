@@ -13,7 +13,7 @@ describe('buttons group', () => {
     const options: CommonButtonOption[] = [
       { label: 'link %s', labelPlaceholder: ['text'], link: '/example' },
       { label: 'button', onAction, selected: true },
-      { label: 'with-icon', onAction, icon: 'home', disabled: true },
+      { label: 'with-icon', onAction, icon: 'mobile-home', disabled: true },
     ]
 
     const view = renderComponent(CommonButtonGroup, {
@@ -39,7 +39,7 @@ describe('buttons group', () => {
     const iconButton = view.getByRole('button', { name: 'with-icon' })
 
     expect(iconButton).toBeDisabled()
-    expect(getByIconName(iconButton, 'home')).toBeInTheDocument()
+    expect(getByIconName(iconButton, 'mobile-home')).toBeInTheDocument()
   })
 
   it("doesn't call action, if disabled", async () => {

@@ -19,7 +19,7 @@ describe('hideIcon', () => {
       props: {
         type: 'text',
         label: 'example',
-        icon: 'eye',
+        icon: 'mobile-show',
         onIconClick: vi.fn(),
       },
     })

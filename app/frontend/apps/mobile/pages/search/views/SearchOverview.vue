@@ -224,7 +224,7 @@ export default {
       />
     </div>
     <div v-if="loading" class="flex h-14 w-full items-center justify-center">
-      <CommonIcon name="loader" animation="spin" />
+      <CommonIcon name="mobile-loading" animation="spin" />
     </div>
     <div v-else-if="canSearch && type && found[type]?.length">
       <SearchResults :data="found[type]" :type="type" />
@@ -248,7 +248,7 @@ export default {
           <button class="flex items-center">
             <div>
               <CommonIcon
-                name="clock"
+                name="mobile-clock"
                 size="small"
                 class="mx-2 text-white/50"
                 decorative

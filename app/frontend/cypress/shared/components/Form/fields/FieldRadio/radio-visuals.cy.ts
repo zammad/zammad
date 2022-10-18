@@ -6,9 +6,9 @@
 import { mountFormField, checkFormMatchesSnapshot } from '@cy/utils'
 
 const radioOptions = [
-  { label: 'Incoming Phone', value: 1, icon: 'received-calls' },
-  { label: 'Outgoing Phone', value: 2, icon: 'outbound-calls' },
-  { label: 'Send Email', value: 3, icon: 'email' },
+  { label: 'Incoming Phone', value: 1, icon: 'mobile-phone-in' },
+  { label: 'Outgoing Phone', value: 2, icon: 'mobile-phone-out' },
+  { label: 'Send Email', value: 3, icon: 'mobile-mail-out' },
 ]
 
 describe('testing visuals for "FieldRadio"', () => {

@@ -97,20 +97,20 @@ describe('Form - Field - Radio (Formkit-BuildIn)', () => {
           {
             label: 'Option 1',
             value: 1,
-            icon: 'email',
+            icon: 'mobile-mail-out',
           },
           {
             label: 'Option 2',
             value: 2,
-            icon: 'clock',
+            icon: 'mobile-clock',
           },
         ],
         buttons: true,
       },
     })
 
-    expect(view.getByIconName('clock')).toBeInTheDocument()
-    expect(view.getByIconName('email')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-clock')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-mail-out')).toBeInTheDocument()
   })
 
   it('can be disabled', async () => {

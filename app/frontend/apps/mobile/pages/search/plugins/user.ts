@@ -11,6 +11,6 @@ export default <SearchPlugin>{
   order: 200,
   link: '/users/#{internalId}',
   permissions: ['ticket.agent'],
-  icon: { name: 'user', size: 'base' },
+  icon: { name: 'mobile-person', size: 'base' },
   iconBg: 'bg-pink',
 }

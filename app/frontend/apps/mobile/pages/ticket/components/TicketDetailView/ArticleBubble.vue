@@ -139,7 +139,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           'text-white/80': internal || position === 'right',
         }"
       >
-        <CommonIcon v-if="internal" size="tiny" name="lock" />
+        <CommonIcon v-if="internal" size="tiny" name="mobile-lock" />
         <span
           class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
         >
@@ -203,7 +203,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           @click="emit('showContext')"
           @keydown.enter="emit('showContext')"
         >
-          <CommonIcon name="overflow-button" size="tiny" decorative />
+          <CommonIcon name="mobile-more-vertical" size="tiny" decorative />
         </button>
       </div>
     </div>

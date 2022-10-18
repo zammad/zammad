@@ -22,23 +22,23 @@ describe('rendering item for section', () => {
 
     expect(view.getByTestId('section-menu-link').tagName).toBe('A')
     expect(view.getByText('Test Title')).toBeInTheDocument()
-    expect(view.getByIconName('arrow-right')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-chevron-right')).toBeInTheDocument()
   })
 
   it('has an icon, if provided', () => {
     const view = renderMenuItem({
       link: '/',
-      icon: 'home',
+      icon: 'mobile-home',
     })
 
-    expect(view.getByIconName('home')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-home')).toBeInTheDocument()
   })
 
   it('has an icon with a background', () => {
     const view = renderMenuItem({
       link: '/',
       iconBg: 'bg-red',
-      icon: 'home',
+      icon: 'mobile-home',
     })
 
     const icon = view.getByTestId('wrapper-icon')
@@ -50,10 +50,10 @@ describe('rendering item for section', () => {
   it('accepts icon as object', () => {
     const view = renderMenuItem({
       link: '/',
-      icon: { name: 'home', fixedSize: { width: 40, height: 40 } },
+      icon: { name: 'mobile-home', fixedSize: { width: 40, height: 40 } },
     })
 
-    const icon = view.getByIconName('home')
+    const icon = view.getByIconName('mobile-home')
 
     expect(icon).toBeInTheDocument()
 

@@ -172,7 +172,7 @@ describe('Form - Field - AutoComplete - Dialog', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('button', { name: /Done/ }))
 
@@ -282,7 +282,7 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('check')).toBeInTheDocument()
+    expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
   })
 })
 
@@ -326,12 +326,12 @@ describe('Form - Field - AutoComplete - Initial Options', () => {
       {
         value: 1,
         label: 'GitLab',
-        icon: 'gitlab-logo',
+        icon: 'mobile-gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'github-logo',
+        icon: 'mobile-github',
       },
     ]
 
@@ -420,7 +420,7 @@ describe('Form - Field - AutoComplete - Features', () => {
     const selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(
-      wrapper.queryAllByIconName('checked-no').length,
+      wrapper.queryAllByIconName('mobile-check-box-no').length,
     )
 
     wrapper.events.click(selectOptions[0])
@@ -432,8 +432,8 @@ describe('Form - Field - AutoComplete - Features', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toStrictEqual([testOptions[0].value])
-    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(2)
-    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(1)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(1)
 
@@ -450,8 +450,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -469,8 +469,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(0)
-    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(3)
+    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(0)
+    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(3)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(3)
 
@@ -487,8 +487,8 @@ describe('Form - Field - AutoComplete - Features', () => {
       ])
     })
 
-    expect(wrapper.queryAllByIconName('checked-no')).toHaveLength(1)
-    expect(wrapper.queryAllByIconName('checked-yes')).toHaveLength(2)
+    expect(wrapper.queryAllByIconName('mobile-check-box-no')).toHaveLength(1)
+    expect(wrapper.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(2)
 
@@ -635,13 +635,13 @@ describe('Form - Field - AutoComplete - Features', () => {
       props: {
         ...testProps,
         action: '/route',
-        actionIcon: 'web',
+        actionIcon: 'mobile-web',
       },
     })
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getByIconName('web')).toBeInTheDocument()
+    expect(wrapper.getByIconName('mobile-web')).toBeInTheDocument()
   })
 
   it('supports selection of unknown values', async () => {

@@ -29,7 +29,7 @@ const context = computed(() => ({
 
   // TODO: change the action to the actual new organization route
   action: '/tickets',
-  actionIcon: 'new-organization',
+  actionIcon: 'mobile-new-organization',
 
   // TODO: change the query to the actual autocomplete search of organizations
   gqlQuery: `

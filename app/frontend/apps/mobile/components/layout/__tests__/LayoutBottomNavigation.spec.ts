@@ -24,10 +24,14 @@ describe('bottom navigation in layout', () => {
 
     await flushPromises()
 
-    expect(view.getByIconName('home')).toBeInTheDocument()
-    expect(view.getByIconName('home').closest('a')).toHaveClass('text-blue')
+    expect(view.getByIconName('mobile-home')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-home').closest('a')).toHaveClass(
+      'text-blue',
+    )
 
-    expect(view.getByIconName('bell')).toBeInTheDocument()
+    expect(
+      view.getByIconName('mobile-notification-subscribed'),
+    ).toBeInTheDocument()
     expect(view.getByText('UT')).toBeInTheDocument()
   })
 

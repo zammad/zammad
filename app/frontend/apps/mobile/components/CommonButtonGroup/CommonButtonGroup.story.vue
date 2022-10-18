@@ -13,7 +13,12 @@ const alert = () => window.alert('click')
       :options="[
         { label: 'link %s', labelPlaceholder: ['text'], link: '/example' },
         { label: 'button', onAction: alert, selected: true },
-        { label: 'with-icon', onAction: alert, icon: 'home', disabled: true },
+        {
+          label: 'with-icon',
+          onAction: alert,
+          icon: 'mobile-home',
+          disabled: true,
+        },
       ]"
     />
   </Story>

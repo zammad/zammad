@@ -1,42 +1,42 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 export const getIconByContentType = (type?: Maybe<string>) => {
-  if (!type) return 'file-unknown'
+  if (!type) return 'mobile-file'
   const contentType = type.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
 
   const icons: Record<string, string> = {
     //   #image
-    'image/jpeg': 'file-image',
-    'image/jpg': 'file-image',
-    'image/png': 'file-image',
-    'image/svg': 'file-image',
-    'image/gif': 'file-image',
+    'image/jpeg': 'mobile-photos',
+    'image/jpg': 'mobile-photos',
+    'image/png': 'mobile-photos',
+    'image/svg': 'mobile-photos',
+    'image/gif': 'mobile-photos',
     //   # documents
-    'application/pdf': 'file-pdf',
-    'application/msword': 'file-word', // .doc, .dot
-    'application/vnd.ms-word': 'file-word',
-    'application/vnd.oasis.opendocument.text': 'file-word',
+    'application/pdf': 'mobile-library',
+    'application/msword': 'mobile-template', // .doc, .dot
+    'application/vnd.ms-word': 'mobile-template',
+    'application/vnd.oasis.opendocument.text': 'mobile-template',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-      'file-word', // .docx
+      'mobile-template', // .docx
     'application/vnd.openxmlformats-officedocument.wordprocessingml.template':
-      'file-word', // .dotx
-    'application/vnd.ms-excel': 'file-excel', // .xls
+      'mobile-template', // .dotx
+    'application/vnd.ms-excel': 'mobile-file', // .xls
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-      'file-excel', // .xlsx
-    'application/vnd.oasis.opendocument.spreadsheet': 'file-excel',
-    'application/vnd.ms-powerpoint': 'file-powerpoint', // .ppt
+      'mobile-file', // .xlsx
+    'application/vnd.oasis.opendocument.spreadsheet': 'mobile-file',
+    'application/vnd.ms-powerpoint': 'mobile-file', // .ppt
     'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-      'file-powerpoint', // .pptx
-    'application/vnd.oasis.opendocument.presentation': 'file-powerpoint',
-    'text/plain': 'file-text',
-    'text/html': 'file-code',
-    'application/json': 'file-code',
-    'message/rfc822': 'file-email',
-    'text/rtf': 'file-text',
-    'text/calendar': 'file-calendar',
+      'mobile-file', // .pptx
+    'application/vnd.oasis.opendocument.presentation': 'mobile-file',
+    'text/plain': 'mobile-template',
+    'text/html': 'mobile-template',
+    'application/json': 'mobile-template',
+    'message/rfc822': 'mobile-mail-out',
+    'text/rtf': 'mobile-template',
+    'text/calendar': 'mobile-calendar',
     //   # archives
-    'application/gzip': 'file-archive',
-    'application/zip': 'file-archive',
+    'application/gzip': 'mobile-attachment',
+    'application/zip': 'mobile-attachment',
   }
-  return icons[contentType] || 'file-unknown'
+  return icons[contentType] || 'mobile-file'
 }

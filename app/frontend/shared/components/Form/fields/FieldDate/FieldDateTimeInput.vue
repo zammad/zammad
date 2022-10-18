@@ -186,6 +186,10 @@ const createFlatpickr = () => {
     maxDate: props.context.maxDate,
     minDate: getMinDate(),
     weekNumbers: application.config.datepicker_show_calendar_weeks === true,
+    prevArrow:
+      '<svg xmlns="http://www.w3.org/2000/svg" class="icon fill-current" width="24" height="24"><use href="#icon-mobile-chevron-left" /></svg>',
+    nextArrow:
+      '<svg xmlns="http://www.w3.org/2000/svg" class="icon fill-current" width="24" height="24"><use href="#icon-mobile-chevron-right" /></svg>',
     formatDate(date) {
       const isoDate = date.toISOString()
       if (time.value) return i18n.dateTime(isoDate)
@@ -325,9 +329,15 @@ span.flatpickr-weekday {
   @apply border-blue bg-blue;
 }
 
+.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month:hover,
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month {
-  right: 34px;
   left: unset;
+  @apply right-8 w-auto p-2;
+}
+
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month:hover,
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month {
+  @apply w-auto p-2;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover,
@@ -338,12 +348,13 @@ span.flatpickr-weekday {
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
-.flatpickr-months .flatpickr-next-month:hover svg,
-.flatpickr-months .flatpickr-next-month svg path,
-.flatpickr-months .flatpickr-prev-month svg path {
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 2px;
+.flatpickr-months .flatpickr-next-month:hover svg {
+  @apply fill-current;
+}
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+  @apply h-5 w-5;
 }
 
 .flatpickr-months .flatpickr-current-month {

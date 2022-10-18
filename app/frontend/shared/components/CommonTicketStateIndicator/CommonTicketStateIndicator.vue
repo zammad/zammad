@@ -16,14 +16,21 @@ const props = withDefaults(defineProps<Props>(), {
   pill: false,
 })
 
-const states = new Set<string>(Object.values(TicketState))
-
 const statusIndicator = computed(() => {
-  if (!props.status || !states.has(props.status)) {
-    return ''
+  switch (props.status) {
+    case TicketState.Closed:
+      return 'mobile-check-circle-outline'
+    case TicketState.WaitingForClosure:
+      return 'mobile-check-circle-outline-dashed'
+    case TicketState.WaitingForReminder:
+      return 'mobile-check-circle-outline-dashed'
+    case TicketState.Escalated:
+      return 'mobile-warning-triangle'
+    case TicketState.New:
+    case TicketState.Open:
+    default:
+      return 'mobile-check-circle-no'
   }
-
-  return `state-${props.status}`
 })
 </script>
 
@@ -31,17 +38,16 @@ const statusIndicator = computed(() => {
   <div
     :class="{
       'status-pill': pill,
-      [`status-${status}`]: pill,
+      [`status-${status}`]: true,
     }"
-    class="flex select-none items-center"
+    class="status flex select-none items-center"
     role="group"
   >
-    <img
+    <CommonIcon
       v-if="statusIndicator"
-      :src="`/assets/images/icons/${statusIndicator}.svg`"
-      :alt="label"
-      :width="pill ? 18 : 24"
-      :height="pill ? 18 : 24"
+      :name="statusIndicator"
+      :size="pill ? 'tiny' : 'base'"
+      decorative
     />
     <div v-if="pill" class="ml-[2px] text-xs uppercase leading-[14px]">
       {{ label }}
@@ -51,25 +57,48 @@ const statusIndicator = computed(() => {
 
 <style scoped lang="scss">
 .status {
+  @apply text-gray;
+
   &-pill {
     @apply rounded bg-gray-100 py-1 pr-1.5 pl-1 text-black;
+
+    &.status-closed {
+      @apply bg-green-highlight;
+    }
+
+    &.status-merged,
+    &.status-removed,
+    &.status-waiting-for-closure,
+    &.status-waiting-for-reminder {
+      @apply bg-gray-highlight;
+    }
+
+    &.status-new,
+    &.status-open {
+      @apply bg-yellow-highlight;
+    }
+
+    &.status-escalated {
+      @apply bg-red-highlight;
+    }
   }
 
   &-closed {
-    @apply bg-green-highlight text-green;
+    @apply text-green;
   }
 
   &-waiting-for-closure,
   &-waiting-for-reminder {
-    @apply bg-gray-highlight text-gray;
+    @apply text-gray;
   }
 
+  &-new,
   &-open {
-    @apply bg-yellow-highlight text-yellow;
+    @apply text-yellow;
   }
 
   &-escalated {
-    @apply bg-red-highlight text-red;
+    @apply text-red;
   }
 }
 </style>

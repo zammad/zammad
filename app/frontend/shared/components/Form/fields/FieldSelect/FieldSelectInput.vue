@@ -55,6 +55,7 @@ setupClearMissingOptionValue()
         [context.classes.input]: !isSizeSmall,
         'flex h-auto': !isSizeSmall,
         'w-auto rounded-lg bg-gray-600': isSizeSmall,
+        'ltr:pr-9 rtl:pl-9': context.clearable && hasValue && !context.disabled,
       },
     ]"
     data-test-id="field-select"
@@ -72,7 +73,7 @@ setupClearMissingOptionValue()
         :id="context.id"
         :name="context.node.name"
         :class="{
-          'grow pr-3': !isSizeSmall,
+          grow: !isSizeSmall,
           'ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1': isSizeSmall,
         }"
         class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
@@ -122,7 +123,7 @@ setupClearMissingOptionValue()
               <CommonIcon
                 v-if="getSelectedOptionIcon(selectedValue)"
                 :name="getSelectedOptionIcon(selectedValue)"
-                :fixed-size="{ width: 12, height: 12 }"
+                size="tiny"
                 class="mr-1"
               />
               <FieldSelectInputSelected
@@ -147,9 +148,9 @@ setupClearMissingOptionValue()
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
           :aria-label="i18n.t('Clear Selection')"
-          :fixed-size="{ width: 16, height: 16 }"
-          class="mr-2 shrink-0"
-          name="close-small"
+          class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
+          name="mobile-close-small"
+          size="base"
           role="button"
           tabindex="0"
           @click.stop="clearValue"
@@ -157,9 +158,9 @@ setupClearMissingOptionValue()
         />
         <CommonIcon
           v-if="isSizeSmall"
-          :fixed-size="{ width: 16, height: 16 }"
           class="shrink-0"
-          name="caret-down"
+          size="tiny"
+          name="mobile-caret-down"
           decorative
         />
       </output>

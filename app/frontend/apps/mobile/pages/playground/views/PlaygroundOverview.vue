@@ -183,7 +183,7 @@ const linkSchemaRaw = [
       sorting: 'label',
       link: '/tickets',
       action: '/tickets',
-      actionIcon: 'new-customer',
+      actionIcon: 'mobile-new-customer',
       gqlQuery: `
 query autocompleteSearchUser($query: String!, $limit: Int) {
   autocompleteSearchUser(query: $query, limit: $limit) {
@@ -296,9 +296,9 @@ const { openCreateUserDialog } = useUserCreate()
     <CommonButtonGroup
       class="py-4"
       :options="[
-        { label: 'Merge tickets', icon: 'home' },
-        { label: 'Subscribe', icon: 'home', selected: true },
-        { label: 'Ticket info', icon: 'home' },
+        { label: 'Merge tickets', icon: 'mobile-home' },
+        { label: 'Subscribe', icon: 'mobile-home', selected: true },
+        { label: 'Ticket info', icon: 'mobile-home' },
       ]"
     />
 
@@ -309,9 +309,9 @@ const { openCreateUserDialog } = useUserCreate()
       type="radio"
       :buttons="true"
       :options="[
-        { label: 'Incoming Phone', value: 1, icon: 'received-calls' },
-        { label: 'Outgoing Phone', value: 2, icon: 'outbound-calls' },
-        { label: 'Send Email', value: 3, icon: 'email' },
+        { label: 'Incoming Phone', value: 1, icon: 'mobile-phone-in' },
+        { label: 'Outgoing Phone', value: 2, icon: 'mobile-phone-out' },
+        { label: 'Send Email', value: 3, icon: 'mobile-mail-out' },
       ]"
     />
   </div>

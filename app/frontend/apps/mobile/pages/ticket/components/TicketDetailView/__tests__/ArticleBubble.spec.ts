@@ -59,12 +59,12 @@ describe('component for displaying text article', () => {
       'shows avatar',
     ).toBeInTheDocument()
     expect(
-      view.queryByIconName('lock'),
+      view.queryByIconName('mobile-lock'),
       'doesnt have a lock icon',
     ).not.toBeInTheDocument()
     expect(view.getByText('Me'), 'instead of name shows me').toBeInTheDocument()
 
-    await view.events.click(view.getByIconName('overflow-button'))
+    await view.events.click(view.getByIconName('mobile-more-vertical'))
 
     expect(view.emitted()).toHaveProperty('showContext')
 
@@ -96,7 +96,10 @@ describe('component for displaying text article', () => {
       },
     })
 
-    expect(view.queryByIconName('lock'), 'has a lock icon').toBeInTheDocument()
+    expect(
+      view.queryByIconName('mobile-lock'),
+      'has a lock icon',
+    ).toBeInTheDocument()
     expect(
       view.getByTestId('article-username'),
       'doesnt have content name',

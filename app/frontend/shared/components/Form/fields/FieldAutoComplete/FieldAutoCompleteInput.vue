@@ -76,6 +76,7 @@ useFormBlock(contextReactive, onInputClick)
   <div
     :class="{
       [context.classes.input]: true,
+      'ltr:pr-9 rtl:pl-9': context.clearable && hasValue && !context.disabled,
     }"
     class="flex h-auto rounded-none bg-transparent"
     data-test-id="field-autocomplete"
@@ -83,7 +84,7 @@ useFormBlock(contextReactive, onInputClick)
     <output
       :id="context.id"
       :name="context.node.name"
-      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none ltr:pr-3 rtl:pl-3"
+      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
@@ -104,7 +105,7 @@ useFormBlock(contextReactive, onInputClick)
           <CommonIcon
             v-if="getSelectedOptionIcon(selectedValue)"
             :name="getSelectedOptionIcon(selectedValue)"
-            :fixed-size="{ width: 12, height: 12 }"
+            size="tiny"
             class="mr-1"
           />
           {{
@@ -116,9 +117,9 @@ useFormBlock(contextReactive, onInputClick)
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
         :aria-label="i18n.t('Clear Selection')"
-        :fixed-size="{ width: 16, height: 16 }"
-        class="mr-2 shrink-0"
-        name="close-small"
+        class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
+        name="mobile-close-small"
+        size="base"
         role="button"
         tabindex="0"
         @click.stop="clearValue"

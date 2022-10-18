@@ -110,12 +110,7 @@ onMounted(() => {
             :disabled="tagExists(filter)"
             @click="createTag()"
           >
-            <CommonIcon
-              class="p-1"
-              :fixed-size="{ width: 18, height: 18 }"
-              name="plus"
-              decorative
-            />
+            <CommonIcon class="p-1" size="tiny" name="mobile-add" decorative />
           </button>
         </template>
       </CommonInputSearch>
@@ -131,9 +126,13 @@ onMounted(() => {
           :class="{
             '!text-white': isCurrentValue(option.value),
           }"
-          :fixed-size="{ width: 24, height: 24 }"
-          :name="isCurrentValue(option.value) ? 'checked-yes' : 'checked-no'"
+          :name="
+            isCurrentValue(option.value)
+              ? 'mobile-check-box-yes'
+              : 'mobile-check-box-no'
+          "
           class="mr-3 text-white/50"
+          size="base"
           decorative
         />
 

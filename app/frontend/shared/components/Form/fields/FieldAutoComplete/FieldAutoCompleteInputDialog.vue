@@ -226,8 +226,8 @@ const executeAction = () => {
       <CommonIcon
         v-if="context.action || context.onActionClick"
         :name="context.actionIcon ? context.actionIcon : 'external'"
-        :fixed-size="{ width: 24, height: 24 }"
         class="cursor-pointer text-white"
+        size="base"
         tabindex="0"
         role="button"
         @click="executeAction"
@@ -296,9 +296,13 @@ const executeAction = () => {
             '!text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          :fixed-size="{ width: 24, height: 24 }"
-          :name="isCurrentValue(option.value) ? 'checked-yes' : 'checked-no'"
+          :name="
+            isCurrentValue(option.value)
+              ? 'mobile-check-box-yes'
+              : 'mobile-check-box-no'
+          "
           class="mr-3 text-white/50"
+          size="base"
         />
         <OptionIconComponent :option="option" />
         <div
@@ -337,8 +341,8 @@ const executeAction = () => {
           :class="{
             'opacity-30': option.disabled,
           }"
-          :fixed-size="{ width: 16, height: 16 }"
-          name="check"
+          size="tiny"
+          name="mobile-check"
         />
       </div>
     </div>

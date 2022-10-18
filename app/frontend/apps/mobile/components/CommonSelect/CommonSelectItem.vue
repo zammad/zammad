@@ -50,7 +50,7 @@ const label = computed(() => {
         'opacity-30': option.disabled,
       }"
       size="base"
-      :name="selected ? 'checked-yes' : 'checked-no'"
+      :name="selected ? 'mobile-check-box-yes' : 'mobile-check-box-no'"
       class="mr-3 text-white/50"
     />
     <CommonTicketStateIndicator
@@ -65,7 +65,7 @@ const label = computed(() => {
     <CommonIcon
       v-else-if="option.icon"
       :name="option.icon"
-      size="tiny"
+      size="small"
       :class="{
         '!text-white': selected,
         'opacity-30': option.disabled,
@@ -89,7 +89,7 @@ const label = computed(() => {
         'opacity-30': option.disabled,
       }"
       size="tiny"
-      name="check"
+      name="mobile-check"
     />
   </div>
 </template>

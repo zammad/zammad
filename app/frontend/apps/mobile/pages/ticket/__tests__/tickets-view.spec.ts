@@ -18,7 +18,7 @@ it('see default list when opening page', async () => {
 
   const view = await visitView('/tickets/view')
 
-  const plusSign = view.getByIconName('plus')
+  const plusSign = view.getByIconName('mobile-add')
 
   expect(plusSign, 'can create a new ticket from here').toBeInTheDocument()
   expect(view.getLinkFromElement(plusSign)).toHaveAttribute(
@@ -39,7 +39,7 @@ it('see default list when opening page', async () => {
   ).toHaveTextContent('Created at')
 
   expect(
-    view.getByIconName('long-arrow-down'),
+    view.getByIconName('mobile-arrow-down'),
     'descending by default',
   ).not.toHaveClass('rotate-180')
 

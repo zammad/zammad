@@ -11,6 +11,6 @@ export default <SearchPlugin>{
   link: '/organizations/#{internalId}',
   permissions: ['ticket.agent'],
   order: 300,
-  icon: { name: 'organization', size: 'small' },
+  icon: { name: 'mobile-organization', size: 'base' },
   iconBg: 'bg-orange',
 }

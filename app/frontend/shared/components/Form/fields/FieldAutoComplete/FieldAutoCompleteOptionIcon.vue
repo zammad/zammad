@@ -12,7 +12,6 @@ const props = defineProps<{
   <CommonIcon
     v-if="props.option.icon"
     :name="props.option.icon"
-    :fixed-size="{ width: 32, height: 32 }"
     :class="{
       'opacity-30': props.option.disabled,
     }"

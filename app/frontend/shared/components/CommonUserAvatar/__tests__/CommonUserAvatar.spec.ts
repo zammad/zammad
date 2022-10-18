@@ -46,8 +46,10 @@ describe('CommonUserAvatar', () => {
 
     const avatar = view.getByTestId('common-avatar')
 
-    expect(view.getByIconName('logo')).toBeInTheDocument()
-    expect(avatar).toHaveClass('bg-white')
+    expect(avatar).toHaveStyle({
+      backgroundImage:
+        'url(/app/frontend/shared/components/CommonUserAvatar/assets/logo.svg)',
+    })
   })
 
   it('renders icon by source', async () => {
@@ -60,7 +62,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getByIconName('twitter')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-twitter')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -69,7 +71,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getByIconName('facebook')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-facebook')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -78,7 +80,9 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.queryByIconName('some-unknown-source')).not.toBeInTheDocument()
+    expect(
+      view.queryByIconName('mobile-some-unknown-source'),
+    ).not.toBeInTheDocument()
   })
 
   it('renders active and outOfOffice', async () => {
@@ -127,7 +131,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(view.getByIconName('crown')).toBeInTheDocument()
+    expect(view.getByIconName('mobile-crown')).toBeInTheDocument()
 
     await view.rerender(<Props>{
       entity: {
@@ -137,6 +141,6 @@ describe('CommonUserAvatar', () => {
       personal: true,
     })
 
-    expect(view.queryByIconName('crown')).not.toBeInTheDocument()
+    expect(view.queryByIconName('mobile-crown')).not.toBeInTheDocument()
   })
 })

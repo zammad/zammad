@@ -83,7 +83,7 @@ const productAbout = productAboutQuery.result()
     <!-- TODO maybe instead of a different page we can use a Dialog? -->
     <CommonSectionMenu v-if="session.hasPermission('user_preferences.avatar')">
       <CommonSectionMenuLink
-        :icon="{ name: 'user', size: 'base' }"
+        :icon="{ name: 'mobile-person', size: 'base' }"
         icon-bg="bg-pink"
         link="/account/avatar"
       >
@@ -115,7 +115,7 @@ const productAbout = productAboutQuery.result()
 
     <CommonSectionMenu v-if="hasVersionPermission">
       <CommonSectionMenuLink
-        :icon="{ name: 'info', size: 'base' }"
+        :icon="{ name: 'mobile-info', size: 'base' }"
         :information="productAbout?.productAbout"
         icon-bg="bg-gray"
       >

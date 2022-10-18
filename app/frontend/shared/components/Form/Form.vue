@@ -717,7 +717,7 @@ if (props.schema) {
     v-if="showInitialLoadingAnimation"
     class="flex items-center justify-center"
   >
-    <CommonIcon name="loader" animation="spin" />
+    <CommonIcon name="mobile-loading" animation="spin" />
   </div>
   <FormKit
     v-if="

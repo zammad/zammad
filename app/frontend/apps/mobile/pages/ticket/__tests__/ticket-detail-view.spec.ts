@@ -118,7 +118,7 @@ test('can refresh data by pulling up', async () => {
 
   await flushPromises()
 
-  expect(view.getByIconName('arrow-down')).toHaveStyle({
+  expect(view.getByIconName('mobile-arrow-down')).toHaveStyle({
     transform: 'translateY(22px) rotate(180deg)',
   })
 
@@ -127,7 +127,7 @@ test('can refresh data by pulling up', async () => {
 
   await flushPromises()
 
-  expect(view.getByIconName('loader')).toBeInTheDocument()
+  expect(view.getByIconName('mobile-loading')).toBeInTheDocument()
 
   // TODO test api call
 })

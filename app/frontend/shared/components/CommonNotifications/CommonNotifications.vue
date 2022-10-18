@@ -15,10 +15,10 @@ const notificationTypeClassMap = {
 }
 
 const iconNameMap = {
-  warn: 'info',
-  success: 'checkmark',
-  error: 'danger',
-  info: 'info',
+  warn: 'mobile-info',
+  success: 'mobile-check',
+  error: 'mobile-warning',
+  info: 'mobile-info',
 }
 
 const { notifications, removeNotification } = useNotifications()

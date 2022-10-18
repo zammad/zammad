@@ -30,7 +30,7 @@ const context = computed(() => ({
   ...props.context,
   optionIconComponent: FieldCustomerOptionIcon,
 
-  actionIcon: 'new-customer',
+  actionIcon: 'mobile-new-customer',
 
   // TODO: change the query to the actual autocomplete search of customers
   gqlQuery: `

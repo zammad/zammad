@@ -13,7 +13,7 @@ const switchPasswordVisibility = (node: FormKitNode) => {
   const { props } = node
 
   node.addProps(['passwordVisibilityIcon'])
-  props.passwordVisibilityIcon = 'eye'
+  props.passwordVisibilityIcon = 'mobile-show'
 
   extendSchemaDefinition(node, 'suffix', {
     $el: 'span',
@@ -35,7 +35,8 @@ const switchPasswordVisibility = (node: FormKitNode) => {
 
   node.on('prop:type', ({ payload, origin }) => {
     const { props } = origin
-    props.passwordVisibilityIcon = payload === 'password' ? 'eye' : 'eye-off'
+    props.passwordVisibilityIcon =
+      payload === 'password' ? 'mobile-show' : 'mobile-hide'
   })
 }
 

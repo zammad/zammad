@@ -95,7 +95,7 @@ watchEffect(() => {
     :class="{ invisible: !arrowShown }"
   >
     <CommonIcon
-      name="arrow-down"
+      name="mobile-arrow-down"
       size="small"
       :style="{
         transform: `translateY(22px)${
@@ -106,6 +106,6 @@ watchEffect(() => {
     />
   </div>
   <div v-if="loaderShown" class="flex items-center justify-center">
-    <CommonIcon name="loader" animation="spin" />
+    <CommonIcon name="mobile-loading" animation="spin" />
   </div>
 </template>

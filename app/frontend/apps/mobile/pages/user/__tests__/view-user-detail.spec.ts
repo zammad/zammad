@@ -154,7 +154,10 @@ describe('visiting user page', () => {
 
     const getRegion = (name: string) => view.getByRole('region', { name })
 
-    expect(view.getByIconName('crown'), 'vip has crown').toBeInTheDocument()
+    expect(
+      view.getByIconName('mobile-crown'),
+      'vip has crown',
+    ).toBeInTheDocument()
 
     expect(
       view.queryByRole('region', { name: 'First name' }),

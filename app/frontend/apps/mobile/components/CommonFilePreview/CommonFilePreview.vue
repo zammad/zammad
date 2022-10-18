@@ -111,9 +111,9 @@ const ariaLabel = computed(() => {
       @click.stop.prevent="$emit('remove')"
     >
       <CommonIcon
-        :fixed-size="{ width: 24, height: 24 }"
         class="text-gray ltr:right-2 rtl:left-2"
-        name="close-small"
+        name="mobile-close-small"
+        size="base"
       />
     </button>
   </div>

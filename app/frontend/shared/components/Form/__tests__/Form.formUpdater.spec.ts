@@ -9,11 +9,7 @@ import type {
   ExtendedRenderResult,
 } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
-import {
-  waitForNextTick,
-  waitForTimeout,
-  waitUntil,
-} from '@tests/support/utils'
+import { waitUntil } from '@tests/support/utils'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -182,11 +178,11 @@ const checkSelectClearable = (
 
   if (clearable) {
     expect(
-      getByIconName(wrapper.getByLabelText(label), 'close-small'),
+      getByIconName(wrapper.getByLabelText(label), 'mobile-close-small'),
     ).toBeInTheDocument()
   } else {
     expect(
-      queryByIconName(wrapper.getByLabelText(label), 'close-small'),
+      queryByIconName(wrapper.getByLabelText(label), 'mobile-close-small'),
     ).not.toBeInTheDocument()
   }
 }

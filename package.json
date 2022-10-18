@@ -133,5 +133,8 @@
     "vue-router": "^4.1.6",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0"
+  },
+  "resolutions": {
+    "postcss": "^8.4.18"
   }
 }

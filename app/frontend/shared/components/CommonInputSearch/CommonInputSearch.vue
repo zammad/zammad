@@ -52,9 +52,9 @@ export default {
     :class="wrapperClass"
   >
     <CommonIcon
-      :fixed-size="{ width: 24, height: 24 }"
       class="absolute shrink-0 text-gray ltr:left-2 rtl:right-2"
-      name="search"
+      size="base"
+      name="mobile-search"
       decorative
     />
     <input
@@ -75,9 +75,9 @@ export default {
       <CommonIcon
         v-if="filter && filter.length"
         :aria-label="i18n.t('Clear Search')"
-        :fixed-size="{ width: 24, height: 24 }"
         class="text-gray"
-        name="close-small"
+        size="base"
+        name="mobile-close-small"
         @click.stop="clearFilter"
       />
     </div>

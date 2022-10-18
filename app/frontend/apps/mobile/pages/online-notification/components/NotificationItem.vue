@@ -26,7 +26,7 @@ defineEmits<{
   <div class="flex">
     <div class="flex items-center ltr:pr-2 rtl:pl-2">
       <CommonIcon
-        name="trash"
+        name="mobile-delete"
         class="cursor-pointer text-red"
         size="tiny"
         @click="$emit('remove', itemId)"

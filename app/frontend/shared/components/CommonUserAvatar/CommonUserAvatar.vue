@@ -7,6 +7,7 @@ import { getInitials } from '@shared/utils/formatter'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar'
 import type { AvatarUser } from './types'
+import logo from './assets/logo.svg'
 
 export interface Props {
   entity: AvatarUser
@@ -56,16 +57,17 @@ const colorClass = computed(() => {
 const sources = ['facebook', 'twitter']
 
 const icon = computed(() => {
-  const { id, source } = props.entity
-  if (id === '1') return 'logo'
-  if (source && sources.includes(source)) return source
+  const { source } = props.entity
+  if (source && sources.includes(source)) return `mobile-${source}`
   return null
 })
 
 const app = useApplicationStore()
 
 const image = computed(() => {
-  if (icon.value || !props.entity.image) return null
+  if (icon.value) return null
+  if (props.entity.id === '1') return logo
+  if (!props.entity.image) return null
 
   // Support the inline data URI as an image source.
   if (props.entity.image.startsWith('data:')) return props.entity.image

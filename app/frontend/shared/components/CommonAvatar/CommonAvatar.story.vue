@@ -18,7 +18,7 @@ const transparentImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAI
       <CommonAvatar initials="JD" class="bg-yellow" />
     </Variant>
     <Variant title="With Icon">
-      <CommonAvatar icon="facebook" class="bg-blue" />
+      <CommonAvatar icon="mobile-facebook" class="bg-blue" />
     </Variant>
     <Variant title="Large">
       <CommonAvatar initials="JD" vip class="bg-red" size="large" />

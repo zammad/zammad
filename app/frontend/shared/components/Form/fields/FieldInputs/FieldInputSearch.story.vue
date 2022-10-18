@@ -10,7 +10,7 @@ import { FormKit } from '@formkit/vue'
       <FormKit
         type="search"
         label="Search"
-        name="search"
+        name="mobile-search"
         placeholder="Search something..."
       />
     </Variant>

@@ -17,14 +17,14 @@ const emit = defineEmits<{
 const icon = computed(() => {
   if (props.action === 'add') {
     return {
-      name: 'plus-small',
-      class: 'bg-green',
+      name: 'mobile-plus',
+      class: 'text-green',
     }
   }
 
   return {
-    name: 'minus-small',
-    class: 'bg-red',
+    name: 'mobile-minus',
+    class: 'text-red',
   }
 })
 </script>
@@ -35,20 +35,20 @@ const icon = computed(() => {
     data-test-id="overviewItem"
   >
     <div
-      class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-gray-500 ltr:mr-2 rtl:ml-2"
+      class="shrink-0 cursor-pointer items-center justify-center ltr:mr-2 rtl:ml-2"
       :class="icon.class"
       @click="emit('action')"
     >
-      <CommonIcon :name="icon.name" size="tiny" />
+      <CommonIcon :name="icon.name" size="base" />
     </div>
     <div class="flex-1">
       {{ $t(overview.name) }}
     </div>
     <CommonIcon
       v-if="draggable"
-      name="draggable"
+      name="mobile-change-order"
       size="small"
-      class="handler cursor-move text-white/30 ltr:mr-4 rtl:ml-4"
+      class="handler shrink-0 cursor-move text-gray ltr:mr-4 rtl:ml-4"
     />
   </div>
 </template>

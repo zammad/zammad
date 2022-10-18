@@ -19,38 +19,24 @@ export default defineConfig(({ mode, command }) => {
   const require = createRequire(import.meta.url)
 
   const svgPlugin = createSvgIconsPlugin({
-    // Specify the icon folder to be cached
-    iconDirs: [path.resolve(__dirname, `public/assets/images/icons`)],
-    // Specify symbolId format
+    // Specify the directory containing all icon assets assorted by sets.
+    iconDirs: [
+      path.resolve(
+        __dirname,
+        'app/frontend/shared/components/CommonIcon/assets',
+      ),
+    ],
+
+    // Specify symbolId format to include directory as icon set and filename as icon name.
     symbolId: 'icon-[dir]-[name]',
+
     svgoOptions: {
-      plugins: [
-        { name: 'preset-default' },
-        {
-          name: 'removeAttributesBySelector',
-          params: {
-            selectors: [
-              {
-                selector: "[fill='#50E3C2']",
-                attributes: 'fill',
-              },
-              // TODO: we need to add a own plugin or add some identifier to the svg files, to add the same functionality
-              // like we have in the old gulp script (fill='#50E3C2'] + parent fill='none' should be removed).
-            ],
-          },
-        },
-        {
-          name: 'convertColors',
-          params: {
-            currentColor: /(#BD0FE1|#BD10E0)/,
-          },
-        },
-      ],
+      plugins: [{ name: 'preset-default' }],
     } as ViteSvgIconsPlugin['svgoOptions'],
   })
 
   if (isStory) {
-    // paching svg plugin for stories, because it's not working with ssr
+    // Patch svg plugin for stories, because it's not working with SSR.
     const svgConfigResolved = svgPlugin.configResolved as (
       cfg: ResolvedConfig,
     ) => void

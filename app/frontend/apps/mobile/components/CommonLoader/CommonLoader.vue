@@ -33,14 +33,14 @@ export default {
       'items-center justify-start': left,
     }"
   >
-    <CommonIcon name="loader" animation="spin" />
+    <CommonIcon name="mobile-loading" animation="spin" />
   </div>
   <div
     v-else-if="error"
     v-bind="$attrs"
     class="flex items-center justify-center gap-2 text-base text-red"
   >
-    <CommonIcon name="close-small" />
+    <CommonIcon name="mobile-close-small" />
     <span v-html="markup($t(error))" />
   </div>
   <slot v-else />

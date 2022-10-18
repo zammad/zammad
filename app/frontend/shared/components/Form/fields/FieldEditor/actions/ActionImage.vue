@@ -22,8 +22,7 @@ const insertImage = async (e: Event) => {
 </script>
 
 <template>
-  <!-- TODO change icon-->
-  <CommonIcon name="document" size="small" @click="inputRef?.click()" />
+  <CommonIcon name="mobile-photos" size="small" @click="inputRef?.click()" />
   <input
     ref="inputRef"
     class="hidden"

@@ -30,7 +30,7 @@ const notificationCount = computed(() => {
         class="flex flex-1 justify-center"
         exact-active-class="text-blue"
       >
-        <CommonIcon name="home" size="small" />
+        <CommonIcon name="mobile-home" />
       </CommonLink>
       <CommonLink
         link="/notifications"
@@ -45,7 +45,7 @@ const notificationCount = computed(() => {
         >
           {{ notificationCount }}
         </div>
-        <CommonIcon name="bell" size="medium" />
+        <CommonIcon name="mobile-notification-subscribed" />
       </CommonLink>
       <CommonLink
         link="/account"

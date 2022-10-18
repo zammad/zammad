@@ -14,7 +14,9 @@ export interface Props {
 const props = defineProps<Props>()
 
 const icon = computed(() => {
-  return props.entity.active ? 'organization' : 'inactive-organization'
+  return props.entity.active
+    ? 'mobile-organization'
+    : 'mobile-inactive-organization'
 })
 </script>
 

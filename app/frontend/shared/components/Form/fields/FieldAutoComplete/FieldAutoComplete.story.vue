@@ -12,19 +12,19 @@ const testOptions = [
   {
     value: 0,
     label: 'Item A',
-    icon: 'gitlab-logo',
+    icon: 'mobile-gitlab',
     heading: 'autocomplete sample 1',
   },
   {
     value: 1,
     label: 'Item B',
-    icon: 'github-logo',
+    icon: 'mobile-github',
     heading: 'autocomplete sample 2',
   },
   {
     value: 2,
     label: 'Ítem C',
-    icon: 'web',
+    icon: 'mobile-web',
     heading: 'autocomplete sample 3',
   },
 ]
@@ -303,12 +303,12 @@ const variants = [
       {
         value: 1,
         label: 'GitLab',
-        icon: 'gitlab-logo',
+        icon: 'mobile-gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'github-logo',
+        icon: 'mobile-github',
       },
     ],
     action: null,
@@ -326,7 +326,7 @@ const variants = [
   {
     options: null,
     action: '/tickets',
-    actionIcon: 'web',
+    actionIcon: 'mobile-web',
     clearable: false,
     gqlQuery,
     limit: null,

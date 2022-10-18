@@ -13,7 +13,7 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       })
       .type('Hello, World!{selectall}')
       .then(() => {
-        cy.findByLabelText('bold')
+        cy.findByLabelText('Format as bold')
           .click()
           .should('have.class', '!bg-gray-300')
           .then(() => {
@@ -35,14 +35,14 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
     mountEditor()
 
     cy.findByRole('textbox').click()
-    cy.findByTestId('action-bar').findByLabelText('italic').click()
+    cy.findByTestId('action-bar').findByLabelText('Format as italic').click()
     cy.findByRole('textbox')
       .type('Hello, World!')
       .within((editor) => {
         expect(editor.find('em')).to.have.text('Hello, World!')
       })
       .selectText('left', 2)
-      .findByLabelText('italic')
+      .findByLabelText('Format as italic')
       .click()
       .then(() => {
         cy.findByRole('textbox').within((editor) => {
@@ -80,7 +80,9 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .type('He')
       .selectText('left', 2)
       .then(() => {
-        cy.findByTestId('action-bar').findByLabelText('italic').click()
+        cy.findByTestId('action-bar')
+          .findByLabelText('Format as italic')
+          .click()
       })
 
     cy.findByRole('textbox')

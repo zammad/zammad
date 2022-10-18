@@ -238,12 +238,12 @@ const options = [
       {
         value: 1,
         label: 'GitLab',
-        icon: 'gitlab-logo',
+        icon: 'mobile-gitlab',
       },
       {
         value: 2,
         label: 'GitHub',
-        icon: 'github-logo',
+        icon: 'mobile-github',
       },
     ],
     clearable: false,
@@ -257,15 +257,15 @@ const options = [
   {
     options: [
       {
-        value: 'note',
+        value: 'mobile-template',
         label: 'Note',
       },
       {
-        value: 'phone',
+        value: 'mobile-phone-out',
         label: 'Phone',
       },
       {
-        value: 'email',
+        value: 'mobile-mail-out',
         label: 'Email',
       },
     ],

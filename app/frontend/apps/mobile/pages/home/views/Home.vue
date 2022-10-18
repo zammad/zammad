@@ -17,7 +17,7 @@ const menu: MenuItem[] = [
     type: 'link',
     link: '/tickets/view',
     label: __('Ticket Overviews'),
-    icon: { name: 'stack', size: 'base' },
+    icon: { name: 'mobile-all-tickets', size: 'base' },
     iconBg: 'bg-pink',
     permission: ['ticket.agent', 'ticket.customer'],
   },
@@ -28,7 +28,7 @@ const menu: MenuItem[] = [
           type: 'link' as const,
           link: '/playground',
           label: 'Playground',
-          icon: { name: 'cog', size: 'small' as const },
+          icon: { name: 'mobile-settings', size: 'small' as const },
           iconBg: 'bg-orange',
         },
       ]
@@ -53,9 +53,9 @@ const ticketOverview = computed<MenuItem[]>(() => {
 
 <template>
   <div class="p-4">
-    <div class="my-6 flex justify-end ltr:mr-4 rtl:ml-4">
+    <div class="mt-1.5 mb-3 flex justify-end ltr:mr-1.5 rtl:ml-1.5">
       <CommonLink link="/#ticket/create">
-        <CommonIcon name="plus" size="small" />
+        <CommonIcon name="mobile-add" size="small" />
       </CommonLink>
     </div>
     <h1 class="mb-5 flex w-full items-center justify-center text-4xl font-bold">
@@ -74,7 +74,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
     >
       <template v-if="overviews.loading" #before-items>
         <div class="flex w-full justify-center">
-          <CommonIcon name="loader" animation="spin" />
+          <CommonIcon name="mobile-loading" animation="spin" />
         </div>
       </template>
     </CommonSectionMenu>

@@ -2,4 +2,4 @@
 
 export type Animations = 'pulse' | 'spin' | 'ping' | 'bounce'
 
-export type Sizes = 'xs' | 'tiny' | 'small' | 'base' | 'medium' | 'large'
+export type Sizes = 'xs' | 'tiny' | 'small' | 'base' | 'medium' | 'large' | 'xl'

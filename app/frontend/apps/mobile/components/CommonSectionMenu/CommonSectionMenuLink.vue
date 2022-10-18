@@ -61,9 +61,11 @@ const iconProps = computed<IconProps | null>(() => {
       >
         <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
-          class="text-gray-300 ltr:ml-2 rtl:mr-2"
-          :name="`arrow-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
-          :fixed-size="{ width: 12, height: 12 }"
+          class="text-gray ltr:ml-2 rtl:mr-2"
+          :name="`mobile-chevron-${
+            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+          }`"
+          size="base"
           decorative
         />
       </div>

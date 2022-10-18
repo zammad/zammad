@@ -30,7 +30,7 @@ const getTicketsLink = (stateIds: number[]) => {
     <slot name="before-fields" />
     <CommonSectionMenuLink
       :icon="{
-        name: 'state-open',
+        name: 'mobile-check-circle-no',
         size: 'base',
         class: 'text-yellow',
         decorative: true,
@@ -42,7 +42,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </CommonSectionMenuLink>
     <CommonSectionMenuLink
       :icon="{
-        name: 'state-closed',
+        name: 'mobile-check-circle-outline',
         size: 'base',
         class: 'text-green',
         decorative: true,
@@ -57,7 +57,7 @@ const getTicketsLink = (stateIds: number[]) => {
       class="flex min-h-[54px] items-center justify-center gap-2 text-blue"
       :link="createLink"
     >
-      <CommonIcon name="plus" size="tiny" decorative />
+      <CommonIcon name="mobile-add" size="tiny" decorative />
       {{ $t(createLabel) }}
     </CommonLink>
   </CommonSectionMenu>

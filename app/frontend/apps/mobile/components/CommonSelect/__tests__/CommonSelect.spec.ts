@@ -57,10 +57,10 @@ describe('interacting with CommonSelect', () => {
     await view.events.click(view.getByText('Open Select'))
 
     expect(
-      // TODO should work just with view.getByIconName('check') with Vitest 0.19
+      // TODO should work just with view.getByIconName('mobile-check') with Vitest 0.19
       view.getByIconName((name, node) => {
         return (
-          name === '#icon-check' &&
+          name === '#icon-mobile-check' &&
           !node?.parentElement?.classList.contains('invisible')
         )
       }),
@@ -80,7 +80,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(modelValue.value).toEqual([0])
 
-    expect(view.queryAllByIconName('checked-yes')).toHaveLength(1)
+    expect(view.queryAllByIconName('mobile-check-box-yes')).toHaveLength(1)
     await view.events.click(view.getByText('Item A'))
 
     expect(modelValue.value).toEqual([])
@@ -90,7 +90,7 @@ describe('interacting with CommonSelect', () => {
 
     expect(modelValue.value).toEqual([0, 1])
 
-    expect(view.queryAllByIconName('checked-yes')).toHaveLength(2)
+    expect(view.queryAllByIconName('mobile-check-box-yes')).toHaveLength(2)
   })
 
   test("passive mode doesn't change local value, but emits select", async () => {

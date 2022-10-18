@@ -63,7 +63,7 @@ const filterAttachments = (article: TicketArticle) => {
     <!-- <button
       class="absolute -top-7 right-4 flex h-14 w-14 items-center justify-center rounded-full bg-yellow text-black"
     >
-      <CommonIcon class="rotate-180" size="medium" name="long-arrow-down" />
+      <CommonIcon name="mobile-arrow-up" />
     </button> -->
     <template v-for="row in rows" :key="row.key">
       <ArticleBubble
