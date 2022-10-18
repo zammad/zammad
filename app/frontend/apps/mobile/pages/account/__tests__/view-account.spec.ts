@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { ProductAboutDocument } from '@shared/graphql/queries/about.api'
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
 import type { LocalesQuery } from '@shared/graphql/types'
 import { EnumTextDirection } from '@shared/graphql/types'
@@ -7,7 +8,8 @@ import { useLocaleStore } from '@shared/stores/locale'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitUntil } from '@tests/support/utils'
+import { mockPermissions } from '@tests/support/mock-permissions'
+import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
 import { AccountLocaleDocument } from '../graphql/mutations/locale.api'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
@@ -39,16 +41,33 @@ describe('account page', () => {
   })
 
   it('can view my account page', async () => {
+    mockPermissions([
+      'user_preferences.avatar',
+      'user_preferences.language',
+      'admin.version',
+    ])
+
+    const languageApi = mockGraphQLApi(ProductAboutDocument).willResolve({
+      productAbout: 'v1.0.0',
+    })
+
     const view = await visitView('/account')
+
+    await waitUntilApisResolved(languageApi)
 
     const mainContent = view.getByTestId('appMain')
     expect(mainContent, 'have avatar').toHaveTextContent('JD')
     expect(mainContent, 'have my name').toHaveTextContent('John Doe')
     expect(mainContent, 'have logout button').toHaveTextContent('Sign out')
     expect(mainContent, 'has language').toHaveTextContent('Deutsch')
+
+    expect(languageApi.spies.resolve).toHaveBeenCalled()
+    expect(mainContent, 'has version').toHaveTextContent('v1.0.0')
   })
 
   it('can change language', async () => {
+    mockPermissions(['user_preferences.language'])
+
     const view = await visitView('/account')
 
     const mutationUpdate = mockGraphQLApi(AccountLocaleDocument).willResolve({
@@ -93,5 +112,22 @@ describe('account page', () => {
         locale: 'de-de',
       }),
     )
+  })
+
+  it("can't see content without permissions", async () => {
+    mockPermissions([])
+
+    const languageApi = mockGraphQLApi(ProductAboutDocument).willResolve({
+      productAbout: 'v1.0.0',
+    })
+
+    const view = await visitView('/account')
+
+    expect(languageApi.spies.resolve).not.toHaveBeenCalled()
+
+    const mainContent = view.getByTestId('appMain')
+    expect(mainContent).not.toHaveTextContent('Language')
+    expect(mainContent).not.toHaveTextContent('Version')
+    expect(mainContent).not.toHaveTextContent('Avatar')
   })
 })

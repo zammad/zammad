@@ -9,7 +9,6 @@ import { useSessionStore } from '@shared/stores/session'
 import { useLocaleStore } from '@shared/stores/locale'
 import FormGroup from '@shared/components/Form/FormGroup.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type { ProductAboutQuery } from '@shared/graphql/types'
 import { useProductAboutQuery } from '@shared/graphql/queries/about.api'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
@@ -59,18 +58,14 @@ const currentLocale = computed({
   },
 })
 
-const productAbout = ref<ProductAboutQuery['productAbout']>()
-const versionPermission = session.hasPermission('admin.version')
+const hasVersionPermission = session.hasPermission('admin.version')
 
-if (versionPermission) {
-  const productAboutQuery = new QueryHandler(useProductAboutQuery(), {
-    errorNotificationMessage: __('The product version could not be fetched.'),
-  })
+const productAboutQuery = new QueryHandler(
+  useProductAboutQuery({ enabled: hasVersionPermission }),
+  { errorNotificationMessage: __('The product version could not be fetched.') },
+)
 
-  productAboutQuery.watchOnResult((data) => {
-    productAbout.value = data?.productAbout
-  })
-}
+const productAbout = productAboutQuery.result()
 </script>
 
 <template>
@@ -86,7 +81,7 @@ if (versionPermission) {
     </div>
 
     <!-- TODO maybe instead of a different page we can use a Dialog? -->
-    <CommonSectionMenu>
+    <CommonSectionMenu v-if="session.hasPermission('user_preferences.avatar')">
       <CommonSectionMenuLink
         :icon="{ name: 'user', size: 'base' }"
         icon-bg="bg-pink"
@@ -99,7 +94,7 @@ if (versionPermission) {
     <!--
       TODO: no-options-label-translation is not working currently, therefore we need to explicitly set it to true
     -->
-    <FormGroup>
+    <FormGroup v-if="session.hasPermission('user_preferences.language')">
       <FormKit
         v-model="currentLocale"
         type="treeselect"
@@ -118,10 +113,10 @@ if (versionPermission) {
       </template>
     </FormGroup>
 
-    <CommonSectionMenu v-if="versionPermission">
+    <CommonSectionMenu v-if="hasVersionPermission">
       <CommonSectionMenuLink
         :icon="{ name: 'info', size: 'base' }"
-        :information="productAbout"
+        :information="productAbout?.productAbout"
         icon-bg="bg-gray"
       >
         {{ $t('About') }}

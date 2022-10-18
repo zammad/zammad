@@ -25,7 +25,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: __('Avatar'),
       requiresAuth: true,
-      requiredPermission: ['*'],
+      requiredPermission: ['user_preferences.avatar'],
       hasBottomNavigation: false,
       hasHeader: true,
       level: 2,
