@@ -558,7 +558,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     wrapper.events.click(selectOptions[1])
 
     await waitFor(() => {
-      expect(emittedInput[0][0]).toStrictEqual([
+      expect(emittedInput[1][0]).toStrictEqual([
         testOptions[0].value,
         testOptions[1].value,
       ])
@@ -576,7 +576,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     wrapper.events.click(selectOptions[2])
 
     await waitFor(() => {
-      expect(emittedInput[0][0]).toStrictEqual([
+      expect(emittedInput[2][0]).toStrictEqual([
         testOptions[0].value,
         testOptions[1].value,
         testOptions[2].value,
@@ -595,7 +595,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     wrapper.events.click(selectOptions[2])
 
     await waitFor(() => {
-      expect(emittedInput[0][0]).toStrictEqual([
+      expect(emittedInput[3][0]).toStrictEqual([
         testOptions[0].value,
         testOptions[1].value,
       ])

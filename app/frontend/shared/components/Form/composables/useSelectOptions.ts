@@ -2,7 +2,7 @@
 
 import { computed, ref, type Ref } from 'vue'
 import { i18n } from '@shared/i18n'
-import { keyBy } from 'lodash-es'
+import { cloneDeep, keyBy } from 'lodash-es'
 import type { TicketState } from '@shared/entities/ticket/types'
 import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
 import type { FormFieldContext } from '../types/field'
@@ -111,7 +111,7 @@ const useSelectOptions = (
     option: SelectOption | FlatSelectOption | AutoCompleteOption,
   ) => {
     if (context.value.multiple) {
-      const selectedValues = currentValue.value || []
+      const selectedValues = cloneDeep(currentValue.value) || []
       const optionIndex = selectedValues.indexOf(option.value)
       if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
       else selectedValues.push(option.value)
