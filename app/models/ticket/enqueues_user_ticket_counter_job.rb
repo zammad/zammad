@@ -20,6 +20,8 @@ module Ticket::EnqueuesUserTicketCounterJob
 
     return true if !customer_id
 
+    return true if previous_changes.blank?
+
     # send background job
     TicketUserTicketCounterJob.perform_later(
       customer_id,

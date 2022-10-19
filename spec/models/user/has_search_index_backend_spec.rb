@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true do
-  before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      user.search_index_update_backend
-      organization.search_index_update_backend
-    end
-  end
-
   describe 'Updating referenced data between user and organizations' do
     let(:organization) { create(:organization, name: 'Tomato42') }
     let(:user)         { create(:customer, organization: organization) }
+
+    before do
+      configure_elasticsearch(required: true, rebuild: true) do
+        user.search_index_update_backend
+        organization.search_index_update_backend
+      end
+    end
 
     it 'finds added users' do
       result = SearchIndexBackend.search('organization.name:Tomato42', 'User', sort_by: ['updated_at'], order_by: ['desc'])
@@ -39,6 +39,19 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true do
 
     it 'does include User for bulk action updates' do
       expect(organization).to be_search_index_indexable_bulk_updates(User)
+    end
+  end
+
+  describe 'Updating group settings causes huge numbers of delayed jobs #4306' do
+    let(:user) { create(:user) }
+
+    before do
+      user
+      Delayed::Job.destroy_all
+    end
+
+    it 'does not create any jobs if nothing has changed' do
+      expect { user.update(firstname: user.firstname) }.not_to change(Delayed::Job, :count)
     end
   end
 end

@@ -3,13 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, performs_jobs: true do
-  before do
-    configure_elasticsearch(required: true, rebuild: true) do
-      article.ticket.search_index_update_backend
-      organization.search_index_update_backend
-    end
-  end
-
   describe 'Updating referenced data between ticket and organizations' do
     let(:organization) { create(:organization, name: 'Tomato42') }
     let(:user)         { create(:customer, organization: organization) }
@@ -24,6 +17,13 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, perform
              filename: 'es-normal.txt')
 
       article
+    end
+
+    before do
+      configure_elasticsearch(required: true, rebuild: true) do
+        article.ticket.search_index_update_backend
+        organization.search_index_update_backend
+      end
     end
 
     it 'finds added tickets' do
@@ -80,6 +80,19 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, perform
 
     it 'does exclude updated_by as relevant search index attribute' do
       expect(Ticket).not_to be_search_index_attribute_relevant('updated_by_id')
+    end
+  end
+
+  describe 'Updating group settings causes huge numbers of delayed jobs #4306' do
+    let(:ticket) { create(:ticket) }
+
+    before do
+      ticket
+      Delayed::Job.destroy_all
+    end
+
+    it 'does not create any jobs if nothing has changed' do
+      expect { ticket.update(title: ticket.title) }.not_to change(Delayed::Job, :count)
     end
   end
 end
