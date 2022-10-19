@@ -321,6 +321,10 @@ class String
 
   def html2html_strict
     string = dup
+
+    # https://github.com/zammad/zammad/issues/4112
+    string.gsub!(%r{<!\[if !supportLists\]>.+?<!\[endif\]>}mi, '• ')
+
     string = HtmlSanitizer.strict(string, true).strip
     string = HtmlSanitizer.cleanup(string).strip
 
@@ -348,12 +352,6 @@ class String
     string.gsub!(%r{\A(<br(|/)>[[:space:]]*)*}i, '')
     string.gsub!(%r{[[:space:]]*(<br(|/)>[[:space:]]*)*\Z}i, '')
     string.gsub!(%r{(<p></p>){1,10}\Z}i, '')
-
-    # https://github.com/zammad/zammad/issues/4112
-    string.gsub!(%r{&lt;!\[if !supportLists\]&gt;.+?&lt;!\[endif\]&gt;}, '• ')
-
-    # https://github.com/zammad/zammad/issues/4184
-    string.gsub!(%r{&lt;!\[if !\w+\]&gt;(.+?)&lt;!\[endif\]&gt;}, '\1')
 
     string.signature_identify('html')
 

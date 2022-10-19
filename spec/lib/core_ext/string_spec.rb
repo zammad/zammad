@@ -1455,7 +1455,8 @@ RSpec.describe String do
           <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;mso-fareast-language:EN-AU">dummy2</span>
           </p>
         HTML
-          <p> <img src="cid:image001.png@01D8AC0A.08251CD0" style="width:52px;height:52px;"> dummy1 <img src="cid:image002.png@01D8AC0A.08251CD1" style="width:52px;height:52px;"> dummy2 </p>
+          <p>
+          <img src="cid:image001.png@01D8AC0A.08251CD0" style="width:52px;height:52px;"> dummy1 <img src="cid:image002.png@01D8AC0A.08251CD1" style="width:52px;height:52px;"> dummy2 </p>
         TEXT
       end
     end
