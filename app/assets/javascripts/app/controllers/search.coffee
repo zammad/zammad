@@ -71,6 +71,7 @@ class App.Search extends App.Controller
       @search(500, true)
 
   hide: ->
+    @saveOrderBy()
     if @table
       @table.hide()
 
@@ -128,6 +129,7 @@ class App.Search extends App.Controller
 
     # on other keys, show result
     @navigate "#search/#{encodeURIComponent(@searchInput.val())}"
+    @savedOrderBy = null
     @search(0)
 
   empty: =>
@@ -170,6 +172,7 @@ class App.Search extends App.Controller
       @$(".js-tab#{tab.model} .js-counter").text(count)
 
   showTab: (e) =>
+    @saveOrderBy()
     tabs = $(e.currentTarget).closest('.tabs')
     tabModel = $(e.currentTarget).data('tab-content')
     tabs.find('.js-tab').removeClass('active')
@@ -242,6 +245,8 @@ class App.Search extends App.Controller
         ticket_ids: ticket_ids
         radio:      false
         checkbox:   checkbox
+        orderBy:        @getSavedOrderBy('Ticket')?.order
+        orderDirection: @getSavedOrderBy('Ticket')?.direction
         bindRow:
           events:
             'click': openTicket
@@ -300,6 +305,8 @@ class App.Search extends App.Controller
         object = App[@model].fullLocal(id)
         @navigate object.uiUrl()
       @table = new App.ControllerTable(
+        orderBy: @getSavedOrderBy(model)?.order
+        orderDirection: @getSavedOrderBy(model)?.direction
         tableId: "find_#{model}"
         el:      @$('.js-content')
         model:   App[model]
@@ -331,6 +338,18 @@ class App.Search extends App.Controller
     allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
     _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
 
+  getSavedOrderBy: (model) =>
+    return if !@savedOrderBy
+
+    @savedOrderBy[model]
+
+  saveOrderBy: =>
+    return if !@table
+    table = @table.table || @table
+    model = table.model.name
+
+    @savedOrderBy ||= {}
+    @savedOrderBy[model] = { order: table.lastOrderBy, direction: table.lastOrderDirection }
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

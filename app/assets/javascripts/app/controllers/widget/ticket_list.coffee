@@ -1,6 +1,8 @@
 class App.TicketList extends App.Controller
   @extend App.PopoverProvidable
   @registerPopovers 'Organization', 'User'
+  orderBy: null
+  orderDirection: null
 
   constructor: ->
     super
@@ -121,6 +123,8 @@ class App.TicketList extends App.Controller
       #bindRow:
       #  events:
       #    'click': openTicket
+      orderBy:        @orderBy
+      orderDirection: @orderDirection
       callbackHeader: callbackHeader
       callbackAttributes: callbackAttributes
       bindCheckbox: @bindCheckbox

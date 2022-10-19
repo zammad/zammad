@@ -491,4 +491,78 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       end
     end
   end
+
+  # https://github.com/zammad/zammad/issues/4264
+  describe 'Keeps selected sorting' do
+    before do
+      fill_in id: 'global-search', with: 'Nico'
+
+      click_on 'Show Search Details'
+
+      find('.table-column-title', text: 'TITLE').click
+    end
+
+    it 'when switching to other taskbar keep sorting' do
+      visit "ticket/zoom/#{Ticket.first.id}"
+
+      click_on 'Nico'
+
+      wait_for_rerender
+
+      within('.table-column-head', text: 'TITLE') do
+        expect(page).to have_css('.table-sort-arrow')
+      end
+    end
+
+    it 'when switching to other search tab keep sorting' do
+      within :active_content do
+        find('.js-tab', text: 'User').click
+        find('.js-tab', text: 'Ticket').click
+      end
+
+      # no need to wait for rerender in this case
+
+      within('.table-column-head', text: 'TITLE') do
+        expect(page).to have_css('.table-sort-arrow')
+      end
+    end
+
+    it 'when changing search query clear sorting' do
+      within :active_content do
+        find('.js-search').fill_in with: 'Nicole'
+      end
+
+      wait_for_rerender
+
+      within('.table-column-head', text: 'TITLE') do
+        expect(page).to have_no_css('.table-sort-arrow')
+      end
+    end
+
+    it 'when changing search query after navigation away-and-back clear sorting' do
+      visit "ticket/zoom/#{Ticket.first.id}"
+
+      click_on 'Nico'
+
+      within :active_content do
+        find('.js-search').fill_in with: 'Nicole'
+      end
+
+      wait_for_rerender
+
+      within('.table-column-head', text: 'TITLE') do
+        expect(page).to have_no_css('.table-sort-arrow')
+      end
+    end
+
+    def wait_for_rerender
+      elem = find('.detail-search table')
+
+      wait.until do
+        elem.base.obscured?
+      rescue *page.driver.invalid_element_errors
+        true
+      end
+    end
+  end
 end
