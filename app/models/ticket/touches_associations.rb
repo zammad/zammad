@@ -17,6 +17,8 @@ module Ticket::TouchesAssociations
     # return if we run import mode
     return true if Setting.get('import_mode')
 
+    return true if saved_changes.blank?
+
     # touch old customer if changed
     customer_id_changed = saved_changes['customer_id']
     if customer_id_changed && customer_id_changed[0] != customer_id_changed[1] && customer_id_changed[0]
