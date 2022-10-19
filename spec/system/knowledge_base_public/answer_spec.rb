@@ -36,6 +36,8 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
 
   context 'when logged in as editor' do
     before do # simulate translation being created before publishing
+      visit '/'
+
       travel_to published_answer.published_at - 1.week do
         published_answer.translations.first.touch
       end

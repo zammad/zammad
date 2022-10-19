@@ -28,6 +28,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
   end
 
   before do
+    visit '/'
     click '.settings.add'
   end
 

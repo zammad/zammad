@@ -54,6 +54,8 @@ RSpec.describe 'User Profile', type: :system do
   end
 
   it 'check that ignored attributes for user popover are not visible' do
+    visit '/'
+
     fill_in id: 'global-search', with: customer.email
 
     popover_on_hover(find('.nav-tab--search.user'))

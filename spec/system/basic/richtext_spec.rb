@@ -5,9 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Richtext', type: :system do
 
   before do
-    click(:href, '#current_user')
-    click(:href, '#layout_ref')
-    click(:href, '#layout_ref/richtext')
+    visit '#layout_ref/richtext'
   end
 
   context 'Richtext' do

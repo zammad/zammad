@@ -294,6 +294,8 @@ RSpec.describe 'Chat Handling', type: :system do
 
   context 'when changing chat preferences for current agent' do
     it 'use chat phrase preference', authenticated_as: :authenticate do
+      visit '/'
+
       enable_agent_chat
 
       click '.active .js-settings'
@@ -338,6 +340,10 @@ RSpec.describe 'Chat Handling', type: :system do
   end
 
   context 'when jquery variant is used' do
+    before do
+      visit '/'
+    end
+
     context 'when normal mode is used' do
       include_examples 'chat messages'
       include_examples 'timeouts'
@@ -353,6 +359,10 @@ RSpec.describe 'Chat Handling', type: :system do
 
   context 'when no-jquery variant is used' do
     let(:chat_url_type) { 'znuny-no-jquery' }
+
+    before do
+      visit '/'
+    end
 
     context 'when normal mode is used' do
       include_examples 'chat messages'
@@ -380,6 +390,10 @@ RSpec.describe 'Chat Handling', type: :system do
           expect(page).to have_no_selector('zammad-chat-is-open', wait: 60)
         end
       end
+    end
+
+    before do
+      visit '/'
     end
 
     context 'with jquery' do

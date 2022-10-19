@@ -16,6 +16,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   before do
     ticket_1 && ticket_2
     searchindex_model_reload([::Ticket, ::Organization, ::User])
+
+    visit '/'
   end
 
   it 'shows default widgets' do

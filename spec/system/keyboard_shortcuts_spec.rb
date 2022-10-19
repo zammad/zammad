@@ -28,6 +28,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
     context 'for Search' do
       before do
+        visit '/'
         within :active_content do
           send_keys([*hot_keys, 's'])
         end
@@ -42,6 +43,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
       let(:popover_notification_selector) { '.popover--notifications.js-notificationsContainer' }
 
       before do
+        visit '/'
         send_keys([*hot_keys, 'a'])
       end
 
@@ -62,6 +64,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
     context 'for New Ticket' do
       before do
+        visit '/'
         send_keys([*hot_keys, 'n'])
       end
 
@@ -74,6 +77,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
     context 'for Logout' do
       before do
+        visit '/'
         send_keys([*hot_keys, 'e'])
       end
 
@@ -84,6 +88,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
     context 'for list of shortcuts' do
       before do
+        visit '/'
         send_keys([*hot_keys, 'h'])
       end
 
@@ -102,6 +107,8 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
 
     context 'for Close current tab' do
       before do
+        visit '/'
+
         send_keys([*hot_keys, 'n']) # opens a new ticket
 
         within :active_content, '.newTicket' do # make sure to close new ticket

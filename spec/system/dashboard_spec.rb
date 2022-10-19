@@ -40,6 +40,7 @@ RSpec.describe 'Dashboard', type: :system do
     let(:customer) { create(:customer) }
 
     before do
+      visit '/'
       ensure_websocket(check_if_pinged: false)
       sleep 3 # fast relog causes raise conditions in websocket server
     end

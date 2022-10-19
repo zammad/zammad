@@ -23,6 +23,7 @@ module CommonActions
   # return [nil]
   def login(username:, password:, remember_me: false, app: self.class.metadata[:app])
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
     if !page.current_path || page.current_path.exclude?('login')
       visit '/', skip_waiting: true
@@ -112,6 +113,8 @@ module CommonActions
   #
   def logout(app: self.class.metadata[:app])
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+
     visit('logout')
 
     case app
@@ -147,8 +150,7 @@ module CommonActions
         super(route)
       end
     elsif !route.start_with?('/')
-      route = case app
-              when :mobile
+      route = if app == :mobile || route.start_with?('#')
                 "/#{route}"
               else
                 "/##{route}"
@@ -172,6 +174,8 @@ module CommonActions
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
     else
       return if route && (!route.start_with?('/#') || route == '/#logout')
+
+      wait_for_pending_login(skip_waiting)
 
       # make sure all AJAX requests are done
       await_empty_ajax_queue
@@ -375,6 +379,18 @@ module CommonActions
         click '.js-submit'
       end
     end
+  end
+
+  private
+
+  def wait_for_pending_login(skip_waiting)
+    return if !ENV['FAKE_SELENIUM_LOGIN_PENDING']
+
+    # When visiting the first route after login, confirm currently logged in user.
+    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
+    wait.until_exists { current_login } if !skip_waiting
+
+    nil
   end
 end
 

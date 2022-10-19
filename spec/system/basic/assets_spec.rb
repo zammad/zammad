@@ -10,6 +10,10 @@ RSpec.describe 'Assets', type: :system, db_strategy: :reset do
   let(:ticket)       { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
 
   context 'groups' do
+    before do
+      visit '/'
+    end
+
     def group_note
       page.execute_script('return App.Group.first().note')
     end

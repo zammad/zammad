@@ -9,6 +9,7 @@ RSpec.shared_examples 'macros' do |path:|
   let!(:macro_group2)        { create :macro, groups: [group2] }
 
   it 'supports group-dependent macros' do
+    visit '/'
 
     # give user access to all groups including those created
     # by using FactoryBot outside of the example

@@ -36,6 +36,7 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
 
   context 'when sipgate integration is on' do
     it 'shows the phone menu in nav bar' do
+      visit '/'
 
       within '#navigation .menu' do
         expect(page).to have_link('Phone', href: '#cti')
@@ -47,6 +48,7 @@ RSpec.describe 'Caller log', type: :system, authenticated_as: :authenticate do
     let(:sipgate_on) { false }
 
     it 'does not show the phone menu in nav bar' do
+      visit '/'
 
       within '#navigation .menu' do
         expect(page).to have_no_link('Phone', href: '#cti')

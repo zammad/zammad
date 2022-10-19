@@ -7,7 +7,7 @@ RSpec.describe 'Signup', type: :system, authenticated_as: false do
     visit 'signup'
   end
 
-  it 'creates an accoutn successfully' do
+  it 'creates an account successfully' do
     fill_in 'firstname',        with: 'Test'
     fill_in 'lastname',         with: 'Test'
     fill_in 'email',            with: 'test@example.com'

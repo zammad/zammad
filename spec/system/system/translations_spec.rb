@@ -50,6 +50,8 @@ RSpec.describe 'System > Translations', type: :system do
       let(:admin) { create(:admin, preferences: { locale: 'de-de' }) }
 
       before do
+        visit '/'
+
         # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
         page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
       end
@@ -93,6 +95,8 @@ RSpec.describe 'System > Translations', type: :system do
       let(:admin) { create(:admin, preferences: { locale: 'de-de' }) }
 
       before do
+        visit '/'
+
         # Suppress the modal dialog that invites to contributions for translations that are < 90% as this breaks the tests for de-de.
         page.evaluate_script "App.LocalStorage.set('translation_support_no', true, App.Session.get('id'))"
       end

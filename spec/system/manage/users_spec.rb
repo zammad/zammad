@@ -208,9 +208,9 @@ RSpec.describe 'Manage > Users', type: :system do
           fill_in 'firstname', with: 'Üser'
 
           click_on 'Submit'
-
-          expect(page).to have_no_text('Invalid email')
         end
+
+        expect(page).to have_no_text('Invalid email')
       end
     end
 

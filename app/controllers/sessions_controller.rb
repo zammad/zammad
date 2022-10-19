@@ -59,6 +59,7 @@ class SessionsController < ApplicationController
   def destroy
     if %w[test development].include?(Rails.env) && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present?
       ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
+      ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
     reset_session

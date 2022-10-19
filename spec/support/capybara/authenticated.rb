@@ -13,6 +13,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do |example|
 
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+    ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
     # there is no way to authenticated in a not set up system
     next if !example.metadata.fetch(:set_up, true)
@@ -30,14 +31,8 @@ RSpec.configure do |config|
       ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = User.find_by(email: credentials[:username]).id.to_s
 
       if example.metadata[:app] != :mobile
-        visit '/'
-
-        wait.until_exists do
-          current_login
-        end
+        ENV['FAKE_SELENIUM_LOGIN_PENDING'] = 'true'
       end
-
-      await_empty_ajax_queue
     end
   end
 end

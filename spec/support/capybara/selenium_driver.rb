@@ -39,6 +39,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+  ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
   Capybara::Selenium::Driver.new(app, **driver_args).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.
@@ -73,6 +74,7 @@ Capybara.register_driver(:zammad_firefox) do |app|
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
+  ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
   Capybara::Selenium::Driver.new(app, **driver_args).tap do |driver|
     # Selenium 4 installs a default file_detector which finds wrong files/directories such as zammad/test.

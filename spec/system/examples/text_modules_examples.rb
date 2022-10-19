@@ -121,6 +121,7 @@ RSpec.shared_examples 'text modules' do |path:|
   end
 
   it 'supports group-dependent text modules' do
+    visit '/'
 
     # give user access to all groups including those created
     # by using FactoryBot outside of the example

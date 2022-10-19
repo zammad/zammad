@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Channels > Telgram', type: :system, integration: true, required_envs: %w[TELEGRAM_TOKEN] do
+RSpec.describe 'Manage > Channels > Telegram', type: :system, integration: true, required_envs: %w[TELEGRAM_TOKEN] do
   before { visit '/#channels/telegram' }
 
   it 'does connect and add the token' do

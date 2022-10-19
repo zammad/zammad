@@ -402,6 +402,8 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     before do
+      visit '/'
+
       template = create(:template, :dummy_data)
 
       travel 1.month
