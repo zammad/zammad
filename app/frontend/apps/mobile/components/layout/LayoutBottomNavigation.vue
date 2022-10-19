@@ -3,12 +3,19 @@
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useSessionStore } from '@shared/stores/session'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 import { useOnlineNotificationCount } from '@shared/entities/online-notification/composables/useOnlineNotificationCount'
 import { useCustomLayout } from './useCustomLayout'
 
 const { user } = storeToRefs(useSessionStore())
 const { isCustomLayout } = useCustomLayout()
 const { unseenCount } = useOnlineNotificationCount()
+
+const notificationCount = computed(() => {
+  if (!unseenCount.value) return ''
+  if (unseenCount.value > 99) return '99+'
+  return unseenCount.value.toString()
+})
 </script>
 
 <template>
@@ -25,13 +32,19 @@ const { unseenCount } = useOnlineNotificationCount()
       >
         <CommonIcon name="home" size="small" />
       </CommonLink>
-      <!-- TODO: instead of read icon, we need a number like in Figma -->
       <CommonLink
         link="/notifications"
         exact-active-class="text-blue"
-        class="flex flex-1 justify-center"
-        :class="{ 'text-red': unseenCount > 0 }"
+        class="relative flex flex-1 justify-center"
       >
+        <div
+          v-if="notificationCount"
+          role="status"
+          :aria-label="__('Unread notifications')"
+          class="absolute ml-4 h-4 min-w-[1rem] rounded-full bg-blue px-1 text-center text-xs text-black"
+        >
+          {{ notificationCount }}
+        </div>
         <CommonIcon name="bell" size="medium" />
       </CommonLink>
       <CommonLink

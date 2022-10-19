@@ -10848,6 +10848,10 @@ msgstr ""
 msgid "Unread notification"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+msgid "Unread notifications"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
 msgstr ""
