@@ -20,12 +20,12 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.12.1",
+    "@graphql-codegen/cli": "^2.13.7",
     "@graphql-codegen/introspection": "^2.2.1",
-    "@graphql-codegen/near-operation-file-preset": "^2.4.1",
-    "@graphql-codegen/typescript": "^2.7.3",
-    "@graphql-codegen/typescript-operations": "^2.5.3",
-    "@graphql-codegen/typescript-vue-apollo": "^3.3.3",
+    "@graphql-codegen/near-operation-file-preset": "^2.4.2",
+    "@graphql-codegen/typescript": "^2.7.4",
+    "@graphql-codegen/typescript-operations": "^2.5.4",
+    "@graphql-codegen/typescript-vue-apollo": "^3.3.4",
     "@histoire/plugin-vue": "^0.11.5",
     "@pinia/testing": "^0.0.14",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -82,7 +82,7 @@
     "vue-tsc": "^0.40.13"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
+    "@apollo/client": "^3.7.0",
     "@formkit/core": "^1.0.0-beta.11",
     "@formkit/dev": "^1.0.0-beta.11",
     "@formkit/i18n": "^1.0.0-beta.11",

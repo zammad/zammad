@@ -80,10 +80,11 @@ export default defineConfig(({ mode, command }) => {
   // Ruby plugin is not needed inside of the vitest context and has some side effects.
   if (!isTesting || isBuild) {
     const { default: RubyPlugin } = require('vite-plugin-ruby')
-    const ManualChunks = require('./app/frontend/build/manualChunks')
+    // const ManualChunks = require('./app/frontend/build/manualChunks')
 
     plugins.push(RubyPlugin())
-    plugins.push(ManualChunks())
+    // TODO: Disable manual chunks for now, check if it's still neded with Vite 3.0.
+    // plugins.push(ManualChunks())
   }
 
   return {
