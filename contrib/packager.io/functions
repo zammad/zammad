@@ -309,6 +309,11 @@ function update_or_install () {
   chmod 600 ${ZAMMAD_DIR}/config/database.yml
 }
 
+function assets_precompile () {
+  echo "# Precompiling assets"
+  zammad run rake assets:precompile
+}
+
 function set_env_vars () {
   zammad config:set RUBY_MALLOC_ARENA_MAX=${ZAMMAD_RUBY_MALLOC_ARENA_MAX:=2}
   zammad config:set RUBY_GC_MALLOC_LIMIT=${ZAMMAD_RUBY_GC_MALLOC_LIMIT:=1077216}
