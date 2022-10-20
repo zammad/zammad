@@ -108,6 +108,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
       props: {
         type: 'treeselect',
         options: testOptions,
+        clearable: true,
       },
     })
 
@@ -452,6 +453,7 @@ describe('Form - Field - TreeSelect - Options', () => {
       props: {
         type: 'treeselect',
         options: iconOptions,
+        clearable: true,
       },
     })
 
@@ -722,18 +724,12 @@ describe('Form - Field - TreeSelect - Features', () => {
     )
   })
 
-  it('supports option autoselect', async () => {
+  it('supports option preselect', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         type: 'treeselect',
-        options: [
-          {
-            value: 1,
-            label: 'The One',
-          },
-        ],
-        autoselect: true,
+        options: testOptions,
       },
     })
 
@@ -741,11 +737,77 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
 
-    expect(emittedInput[0][0]).toBe(1)
+    await wrapper.rerender({
+      clearable: true,
+    })
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent('The One')
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
+
+    await wrapper.rerender({
+      options: [
+        {
+          value: 9,
+          label: 'Ítem C',
+        },
+      ],
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Ítem C')
+
+    await wrapper.rerender({
+      clearable: true,
+      multiple: true,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: true,
+      multiple: false,
+      disabled: true,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
   it('supports option filtering', async () => {
@@ -1019,6 +1081,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       props: {
         type: 'treeselect',
         options: testOptions,
+        clearable: true,
       },
     })
 

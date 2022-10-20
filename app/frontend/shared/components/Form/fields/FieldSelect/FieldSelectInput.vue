@@ -7,7 +7,7 @@ import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndi
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
-import useSelectAutoselect from '../../composables/useSelectAutoselect'
+import useSelectPreselect from '../../composables/useSelectPreselect'
 import type { SelectContext } from './types'
 import FieldSelectInputSelected from './FieldSelectInputSelected.vue'
 
@@ -33,7 +33,7 @@ const {
 
 const isSizeSmall = computed(() => props.context.size === 'small')
 
-useSelectAutoselect(sortedOptions, toRef(props, 'context'))
+useSelectPreselect(sortedOptions, toRef(props, 'context'))
 </script>
 
 <template>

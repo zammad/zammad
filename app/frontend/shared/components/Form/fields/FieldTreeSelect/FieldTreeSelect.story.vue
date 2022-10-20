@@ -55,7 +55,6 @@ const testOptions = [
 const options = [
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -67,7 +66,6 @@ const options = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -80,7 +78,6 @@ const options = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: true,
     noFiltering: false,
     multiple: false,
@@ -93,7 +90,6 @@ const options = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     noFiltering: true,
     multiple: false,
@@ -105,7 +101,6 @@ const options = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -119,7 +114,6 @@ const options = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: true,
@@ -179,7 +173,6 @@ const options = [
         ],
       },
     ],
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -248,7 +241,6 @@ const options = [
         labelPlaceholder: ['10th'],
       },
     ],
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -257,23 +249,6 @@ const options = [
     sorting: null,
     label: 'Option Translation',
     name: 'treeselect_translation',
-  },
-  {
-    options: [
-      {
-        value: 1,
-        label: 'The One',
-      },
-    ],
-    autoselect: true,
-    clearable: false,
-    noFiltering: false,
-    multiple: false,
-    noOptionsLabelTranslation: false,
-    size: null,
-    sorting: null,
-    label: 'Option Autoselect',
-    name: 'select_autoselect',
   },
   {
     options: [
@@ -327,7 +302,6 @@ const options = [
         label: 'Ítem C',
       },
     ],
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -365,7 +339,6 @@ const options = [
         status: 'escalated',
       },
     ],
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,
@@ -388,7 +361,6 @@ const options = [
         icon: 'github-logo',
       },
     ],
-    autoselect: false,
     clearable: false,
     noFiltering: false,
     multiple: false,

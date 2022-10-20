@@ -70,6 +70,7 @@ describe('Form - Field - Select - Dialog', () => {
       props: {
         type: 'select',
         options: testOptions,
+        clearable: true,
       },
     })
 
@@ -267,6 +268,7 @@ describe('Form - Field - Select - Options', () => {
       props: {
         type: 'select',
         options: iconOptions,
+        clearable: true,
       },
     })
 
@@ -559,18 +561,12 @@ describe('Form - Field - Select - Features', () => {
     )
   })
 
-  it('supports option autoselect', async () => {
+  it('supports option preselect', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         type: 'select',
-        options: [
-          {
-            value: 1,
-            label: 'The One',
-          },
-        ],
-        autoselect: true,
+        options: testOptions,
       },
     })
 
@@ -578,11 +574,77 @@ describe('Form - Field - Select - Features', () => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
-    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
 
-    expect(emittedInput[0][0]).toBe(1)
+    await wrapper.rerender({
+      clearable: true,
+    })
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent('The One')
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
+
+    await wrapper.rerender({
+      options: [
+        {
+          value: 2,
+          label: 'Item C',
+        },
+      ],
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item C')
+
+    await wrapper.rerender({
+      clearable: true,
+      multiple: true,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: true,
+      multiple: false,
+      disabled: true,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      clearable: false,
+    })
+
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
   it('supports small size', async () => {
@@ -772,6 +834,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       props: {
         type: 'select',
         options: testOptions,
+        clearable: true,
       },
     })
 

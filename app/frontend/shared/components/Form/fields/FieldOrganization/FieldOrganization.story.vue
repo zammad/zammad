@@ -95,7 +95,6 @@ mockClient()
 const variants = [
   {
     options: null,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -108,7 +107,6 @@ const variants = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -121,7 +119,6 @@ const variants = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -135,7 +132,6 @@ const variants = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: true,
     debounceInterval: null,
     limit: null,
@@ -149,7 +145,6 @@ const variants = [
   },
   {
     options: null,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: 1,
@@ -162,7 +157,6 @@ const variants = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -177,7 +171,6 @@ const variants = [
   },
   {
     options: testOptions,
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -191,7 +184,6 @@ const variants = [
   },
   {
     options: [...testOptions].reverse(),
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -226,7 +218,6 @@ const variants = [
         headingPlaceholder: ['3'],
       },
     ],
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,
@@ -238,19 +229,6 @@ const variants = [
     name: 'organization_translation',
   },
   {
-    options: [testOptions[0]],
-    autoselect: true,
-    clearable: false,
-    debounceInterval: null,
-    limit: null,
-    multiple: false,
-    noOptionsLabelTranslation: false,
-    size: null,
-    sorting: null,
-    label: 'Option Autoselect',
-    name: 'organization_autoselect',
-  },
-  {
     options: [
       testOptions[0],
       testOptions[1],
@@ -259,7 +237,6 @@ const variants = [
         disabled: true,
       },
     ],
-    autoselect: false,
     clearable: false,
     debounceInterval: null,
     limit: null,

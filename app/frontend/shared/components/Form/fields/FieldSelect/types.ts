@@ -21,7 +21,6 @@ export type SelectOptionSorting = 'label' | 'value'
 export type SelectSize = 'small' | 'medium'
 
 export type SelectContext = FormFieldContext<{
-  autoselect?: boolean
   clearable?: boolean
   disabled?: boolean
   multiple?: boolean

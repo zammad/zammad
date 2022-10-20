@@ -7,7 +7,6 @@ import FieldTreeSelectInput from './FieldTreeSelectInput.vue'
 const fieldDefinition = createInput(
   FieldTreeSelectInput,
   [
-    'autoselect',
     'clearable',
     'noFiltering',
     'multiple',

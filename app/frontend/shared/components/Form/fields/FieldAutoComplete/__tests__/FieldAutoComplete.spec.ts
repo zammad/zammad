@@ -629,32 +629,6 @@ describe('Form - Field - AutoComplete - Features', () => {
     )
   })
 
-  it('supports option autoselect', async () => {
-    const wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        ...testProps,
-        options: [
-          {
-            value: 1,
-            label: 'The One',
-          },
-        ],
-        autoselect: true,
-      },
-    })
-
-    await waitFor(() => {
-      expect(wrapper.emitted().inputRaw).toBeTruthy()
-    })
-
-    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
-
-    expect(emittedInput[0][0]).toBe(1)
-
-    expect(wrapper.getByRole('listitem')).toHaveTextContent('The One')
-  })
-
   it('supports additional action', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

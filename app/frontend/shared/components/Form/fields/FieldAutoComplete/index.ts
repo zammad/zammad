@@ -8,7 +8,6 @@ export const autoCompleteProps = [
   'action',
   'actionIcon',
   'allowUnknownValues',
-  'autoselect',
   'clearable',
   'debounceInterval',
   'filterInputPlaceholder',

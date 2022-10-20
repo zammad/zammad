@@ -36,7 +36,6 @@ const hideLabelForSmallSelects = (node: FormKitNode) => {
 const fieldDefinition = createInput(
   FieldSelectInput,
   [
-    'autoselect',
     'clearable',
     'multiple',
     'noOptionsLabelTranslation',

@@ -7,7 +7,7 @@ import { useDialog } from '@shared/composables/useDialog'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
-import useSelectAutoselect from '../../composables/useSelectAutoselect'
+import useSelectPreselect from '../../composables/useSelectPreselect'
 import type {
   TreeSelectOption,
   FlatSelectOption,
@@ -119,7 +119,7 @@ const toggleDialog = async (isVisible: boolean) => {
   await dialog.close()
 }
 
-useSelectAutoselect(flatOptions, toRef(props, 'context'))
+useSelectPreselect(flatOptions, toRef(props, 'context'))
 </script>
 
 <template>

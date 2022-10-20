@@ -6,7 +6,6 @@ import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
-import useSelectAutoselect from '../../composables/useSelectAutoselect'
 import type { FormFieldContext } from '../../types/field'
 import type { AutoCompleteOption, AutoCompleteProps } from './types'
 
@@ -51,8 +50,10 @@ const openModal = () => {
   })
 }
 
-const { sortedOptions, getSelectedOptionIcon, getSelectedOptionLabel } =
-  useSelectOptions(localOptions, toRef(props, 'context'))
+const { getSelectedOptionIcon, getSelectedOptionLabel } = useSelectOptions(
+  localOptions,
+  toRef(props, 'context'),
+)
 
 const toggleDialog = async (isVisible: boolean) => {
   if (isVisible) {
@@ -62,8 +63,6 @@ const toggleDialog = async (isVisible: boolean) => {
 
   await dialog.close()
 }
-
-useSelectAutoselect(sortedOptions, toRef(props, 'context'))
 </script>
 
 <template>

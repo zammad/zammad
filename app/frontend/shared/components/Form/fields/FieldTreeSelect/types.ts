@@ -13,7 +13,6 @@ export type FlatSelectOption = SelectOption & {
 }
 
 export type TreeSelectContext = FormFieldContext<{
-  autoselect?: boolean
   clearable?: boolean
   noFiltering?: boolean
   disabled?: boolean
