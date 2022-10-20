@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-13 03:30+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2022-10-20 19:14+0000\n"
+"Last-Translator: danidemis <dani.demichi@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
 "Language: it-it\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -811,7 +811,7 @@ msgstr "Admin"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Consenso dell'amministratore"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -3512,6 +3512,9 @@ msgid ""
 "Defines the maximum number of allowed task bar tasks before auto cleanup "
 "removes surplus tasks when creating new tasks."
 msgstr ""
+"Definisce il numero massimo di attività della barra delle attività "
+"consentite prima che la pulizia automatica rimuova le attività in eccesso "
+"quando si creano nuove attività."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4697,7 +4700,7 @@ msgstr "Ricerca estesa"
 
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
-msgstr ""
+msgstr "Estrarre le informazioni degli allegati zammad dagli array"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
@@ -5230,6 +5233,8 @@ msgid ""
 "Group information could not be retrieved, please check your bind user "
 "permissions."
 msgstr ""
+"Non è stato possibile recuperare le informazioni sul gruppo, verificare le "
+"autorizzazioni dell'utente di riferimento."
 
 #: app/models/channel/driver/sms/base.rb
 msgid "Group is invalid!"
@@ -5273,11 +5278,11 @@ msgstr "I gruppi sono…"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 msgid "HMAC SHA1 Signature Token"
-msgstr ""
+msgstr "HMAC SHA1 Signature Token"
 
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
-msgstr ""
+msgstr "HTML Email CSS Font"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -5289,7 +5294,7 @@ msgstr "HTTP type"
 
 #: db/seeds/schedulers.rb
 msgid "Handle data privacy tasks."
-msgstr ""
+msgstr "Gestire le attività di privacy dei dati."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
@@ -5314,7 +5319,7 @@ msgstr "Colore intestazione"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Link Color"
-msgstr ""
+msgstr "Colore del collegamento di intestazione"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Header Menu"
@@ -5346,6 +5351,8 @@ msgid ""
 "Here you can add further links to your public FAQ page, which will be "
 "displayed either in the header or footer."
 msgstr ""
+"Qui è possibile aggiungere altri link alla pagina pubblica delle FAQ, che "
+"verranno visualizzati nell'intestazione o nel piè di pagina."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -5514,7 +5521,7 @@ msgstr "ID"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
-msgstr ""
+msgstr "URL di destinazione IDP SSO"
 
 #: db/seeds/settings.rb
 msgid "IDP certificate"
@@ -5522,7 +5529,7 @@ msgstr "Certificato IDP"
 
 #: db/seeds/settings.rb
 msgid "IDP certificate fingerprint"
-msgstr ""
+msgstr "Impronta del certificato IDP"
 
 #: lib/email_helper.rb
 msgid "IMAP"
@@ -5559,6 +5566,8 @@ msgstr "Identificatore dell'argomento chat."
 #: db/seeds/settings.rb
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
+"Timeout di inattività in secondi prima che l'agente venga messo "
+"automaticamente offline."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
@@ -5657,11 +5666,11 @@ msgstr "Ignora messaggio"
 
 #: db/seeds/settings.rb
 msgid "Ignore escalation/SLA information for import."
-msgstr ""
+msgstr "Ignorare le informazioni di escalation/SLA per l'importazione."
 
 #: db/seeds/settings.rb
 msgid "Ignore system_id"
-msgstr ""
+msgstr "Ignora system_id"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/insert_image_button.coffee
 msgid "Image"
@@ -5690,7 +5699,7 @@ msgstr "Importa %s"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Import API key could not be extracted from URL."
-msgstr ""
+msgstr "Non è stato possibile estrarre la chiave API di importazione dall'URL."
 
 #: db/seeds/settings.rb
 msgid "Import API key for requesting the Freshdesk API"
@@ -5702,11 +5711,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Import Backend"
-msgstr ""
+msgstr "Importa Backend"
 
 #: db/seeds/settings.rb
 msgid "Import Backends"
-msgstr ""
+msgstr "Importa Backends"
 
 #: db/seeds/settings.rb
 msgid "Import Endpoint"
@@ -5722,7 +5731,7 @@ msgstr "Modalità di Importazione"
 
 #: db/seeds/settings.rb
 msgid "Import Password for HTTP basic authentication"
-msgstr ""
+msgstr "Importazione della password per l'autenticazione di base HTTP"
 
 #: db/seeds/settings.rb
 msgid "Import Password for requesting the Kayako API"
@@ -5730,7 +5739,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Import User for HTTP basic authentication"
-msgstr ""
+msgstr "Importazione dell'utente per l'autenticazione di base HTTP"
 
 #: db/seeds/settings.rb
 msgid "Import User for requesting the Kayako API"
@@ -5747,6 +5756,9 @@ msgid ""
 "and original timestamps are used. You can still find them in Zammad using "
 "the search."
 msgstr ""
+"Importa come archivio: | Non viene inviata alcuna notifica, i biglietti "
+"vengono chiusi e vengono utilizzati i timestamp originali. È comunque "
+"possibile trovarli in Zammad utilizzando la ricerca."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -5754,6 +5766,8 @@ msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
 msgstr ""
+"Importazione regolare: |Le notifiche sono state inviate| e i |ticket sono "
+"aperti| - è possibile trovare i ticket nella panoramica dei ticket aperti."
 
 #: app/assets/javascripts/app/views/import/index.jst.eco
 msgid "Import from"
@@ -5794,12 +5808,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "In order for Zammad to access %s, the %s API token must be stored here"
 msgstr ""
+"Affinché Zammad possa accedere a %s, il token API %s deve essere memorizzato "
+"qui"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 msgid ""
 "In order to be able to influence the desired behaviour in this regard, you "
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
+"Per poter influenzare il comportamento desiderato a questo proposito, è "
+"possibile influenzare l'ordine delle fonti LDAP tramite il drag & drop."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -5827,7 +5845,7 @@ msgstr "Includere allegati della nota?"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
-msgstr ""
+msgstr "Inclusa la chiave privata."
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
@@ -5837,7 +5855,7 @@ msgstr "Credenziali incomplete"
 
 #: db/seeds/settings.rb
 msgid "Increment (SystemID.Counter)"
-msgstr ""
+msgstr "Incremento (SystemID.Counter)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
@@ -5932,7 +5950,7 @@ msgstr "Inserisci una linea orizzontale"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a mention for a user"
-msgstr ""
+msgstr "Inserisce un'indicazione per un utente"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts knowledge base answer"
@@ -5973,6 +5991,8 @@ msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
 "manually or wait until the next execution time."
 msgstr ""
+"Interrotto da un riavvio del processo worker in background. Riavviare "
+"manualmente o attendere la prossima esecuzione."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Intro"
@@ -5982,15 +6002,15 @@ msgstr "Introduzione"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid 'direction'!"
-msgstr ""
+msgstr "'direction' non valida!"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Invalid BasicAuth credentials"
-msgstr ""
+msgstr "Credenziali BasicAuth non valide"
 
 #: lib/github/credentials.rb
 msgid "Invalid GitHub GraphQL API token"
-msgstr ""
+msgstr "Token API GraphQL di GitHub non valido"
 
 #: lib/github/linked_issue.rb
 msgid "Invalid GitHub issue link format"
@@ -5998,7 +6018,7 @@ msgstr "Formato link issue Github non valido"
 
 #: lib/gitlab/credentials.rb
 msgid "Invalid GitLab GraphQL API token"
-msgstr ""
+msgstr "Token API GraphQL di GitLab non valido"
 
 #: lib/gitlab/linked_issue.rb
 msgid "Invalid GitLab issue link format"
@@ -6006,31 +6026,31 @@ msgstr "Formato del link a GitLab issue non valido"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Invalid auto wizard file."
-msgstr ""
+msgstr "File auto wizard non valido."
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id in receive loop!"
-msgstr ""
+msgstr "Client_id non valido nel ciclo di ricezione!"
 
 #: app/controllers/long_polling_controller.rb
 msgid "Invalid client_id received!"
-msgstr ""
+msgstr "Ricevuto un client_id non valido!"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
-msgstr ""
+msgstr "Struttura del link non valida"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object → LinkType)"
-msgstr ""
+msgstr "Struttura del link non valida (Object → LinkType)"
 
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure (Object)"
-msgstr ""
+msgstr "Struttura del link non valida (Object)"
 
 #: lib/external_credential/twitter.rb
 msgid "Invalid oauth_token given!"
-msgstr ""
+msgstr "oauth_token fornito non valido!"
 
 #: lib/password_policy/min_length.rb
 msgid "Invalid password, it must be at least %s characters long!"
@@ -6058,11 +6078,11 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb
 msgid "Invalid payload, need data:image in logo param"
-msgstr ""
+msgstr "Payload non valido, servono dati: immagine nel parametro logo"
 
 #: lib/knowledge_base/permissions_update.rb
 msgid "Invalid permissions, do not lock yourself out."
-msgstr ""
+msgstr "Autorizzazioni non valide, non chiudetevi fuori."
 
 #: app/models/concerns/checks_condition_validation.rb
 msgid "Invalid ticket selector conditions"
@@ -6072,11 +6092,11 @@ msgstr "Condizione di selezione ticket non valida"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
-msgstr ""
+msgstr "Token non valido, contattare l'amministratore!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
-msgstr ""
+msgstr "URL video non valido"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Invitation sent!"
@@ -6110,7 +6130,7 @@ msgstr "Invita i clienti a creare segnalazioni in Zammad"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
-msgstr ""
+msgstr "Ionicons"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
@@ -6214,7 +6234,7 @@ msgstr "Knowledge Base"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 msgid "Knowledge Base Answer"
-msgstr ""
+msgstr "Risposta della Knowledge Base"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
@@ -6222,7 +6242,7 @@ msgstr "Knowledge Base Editor"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
-msgstr ""
+msgstr "Lettore della Knowledge Base"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base active"
@@ -6234,7 +6254,7 @@ msgstr "Knowledge Base attiva pubblicamente"
 
 #: db/seeds/settings.rb
 msgid "Knowledge Base multilingual support"
-msgstr ""
+msgstr "Supporto multilingue per la Knowledge Base"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -6259,8 +6279,9 @@ msgid "Labels"
 msgstr "Etichette"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
+#, fuzzy
 msgid "Landing page layout"
-msgstr ""
+msgstr "Landing page layout"
 
 #: app/assets/javascripts/app/controllers/_profile/language.coffee
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
@@ -6290,7 +6311,7 @@ msgstr "Ultimo contatto del cliente il"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
-msgstr ""
+msgstr "Ultima modifica di %s %s da %s"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "Last contact"
@@ -6337,7 +6358,7 @@ msgstr "Ultimo aggiornamento"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountAvatar.vue
 msgid "Library"
@@ -6349,15 +6370,15 @@ msgstr "Limita Gruppi"
 
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
-msgstr ""
+msgstr "Limitare i ticket per IP al giorno"
 
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per hour"
-msgstr ""
+msgstr "Limitare i ticket per IP all'ora"
 
 #: db/seeds/settings.rb
 msgid "Limit tickets per day"
-msgstr ""
+msgstr "Limite ticket per giorno"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_button.coffee
@@ -6372,7 +6393,7 @@ msgstr "Link %s"
 
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 msgid "Link %s %s as %s of Ticket# %s"
-msgstr ""
+msgstr "Collegamento %s %s come %s di Ticket# %s"
 
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
 msgid "Link Accounts"
@@ -6380,7 +6401,7 @@ msgstr "Link Accounts"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee
 msgid "Link Answer"
-msgstr ""
+msgstr "Risposta al link"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 msgid "Link GitHub issues to your tickets."
@@ -6451,6 +6472,7 @@ msgstr "Caricamento…"
 #: lib/email_helper.rb
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
 msgstr ""
+"MTA locale (Sendmail/Postfix/Exim/...) - utilizzare l'impostazione del server"
 
 #: db/seeds/settings.rb
 msgid "Locale"
@@ -6458,7 +6480,7 @@ msgstr "Lingua"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
-msgstr ""
+msgstr "Locale non trovata"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
@@ -6472,7 +6494,7 @@ msgstr "Posizione di un file chat.css esterno."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr ""
+msgstr "Accedi a %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -6513,7 +6535,7 @@ msgstr "Macro"
 
 #: app/controllers/tickets_mass_controller.rb
 msgid "Macro group restrictions do not cover all tickets"
-msgstr ""
+msgstr "Le restrizioni per i macro gruppi non riguardano tutti i tickets"
 
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -6529,6 +6551,12 @@ msgid ""
 "(and nerves). This allows a combined sequence of actions on the ticket to be "
 "executed with just one click."
 msgstr ""
+"Le macro semplificano l'automazione di attività comuni in più fasi "
+"all'interno di Zammad.\n"
+"\n"
+"È possibile utilizzare le macro in Zammad per automatizzare le sequenze "
+"ricorrenti, risparmiando tempo (e pazienza). In questo modo è possibile "
+"eseguire una sequenza combinata di azioni sul ticket con un solo clic."
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco db/seeds/permissions.rb
@@ -6537,15 +6565,15 @@ msgstr "Manutenzione"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Login"
-msgstr ""
+msgstr "Login di manutenzione"
 
 #: db/seeds/settings.rb
 msgid "Maintenance Mode"
-msgstr ""
+msgstr "Modalità di manutenzione"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "Maintenance mode enabled!"
-msgstr ""
+msgstr "Modalità di manutenzione attiva!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
@@ -6623,11 +6651,11 @@ msgstr "Abbina tutti i seguenti"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
-msgstr ""
+msgstr "Materiale"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Mattermost, RocketChat"
-msgstr ""
+msgstr "Mattermost, RocketChat"
 
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
@@ -6648,7 +6676,7 @@ msgstr "Lunghezza massima dell'oggetto in una risposta."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maximal"
-msgstr ""
+msgstr "Massima"
 
 #: db/seeds/settings.rb
 msgid "Maximum Email Size"
@@ -6662,14 +6690,16 @@ msgstr "Numero massimo di login falliti"
 msgid ""
 "Maximum number of allowed tasks before auto cleanup removes surplus tasks."
 msgstr ""
+"Numero massimo di attività consentite prima che la pulizia automatica "
+"rimuova le attività in eccesso."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
-msgstr ""
+msgstr "Numero massimo di trigger eseguiti in modo ricorsivo."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Numero massimo di ticket visualizzati nelle panoramiche"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -6716,7 +6746,7 @@ msgstr "Messaggio dopo l'invio del form"
 
 #: db/seeds/settings.rb
 msgid "Message for login page."
-msgstr ""
+msgstr "Messaggio per la pagina di login."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
@@ -6724,11 +6754,11 @@ msgstr "Messaggi"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Method"
-msgstr ""
+msgstr "Metodo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Method (AJAX endpoint)"
-msgstr ""
+msgstr "Metodo (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Microsoft"
@@ -6746,7 +6776,7 @@ msgstr "Credenziali App Microsoft 365"
 
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
-msgstr ""
+msgstr "Microsoft Application Registration Portal"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -6757,7 +6787,7 @@ msgstr "Migra i dati di %s"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Migrate now!"
-msgstr ""
+msgstr "Migrate ora!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Migration Plugin for %s"
@@ -6765,7 +6795,7 @@ msgstr "Plugin di migrazione per %s"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Migrator can't read OTRS output!"
-msgstr ""
+msgstr "Migrator non riesce a leggere l'output di OTRS!"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Milestone"
@@ -6777,7 +6807,7 @@ msgstr "Minima dimensione del numero"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Minimal"
-msgstr ""
+msgstr "Minimo"
 
 #: db/seeds/settings.rb
 msgid "Minimum length"
@@ -6823,11 +6853,11 @@ msgstr "Lunedì"
 
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 msgid "Monit"
-msgstr ""
+msgstr "Monit"
 
 #: db/seeds/settings.rb
 msgid "Monit integration"
-msgstr ""
+msgstr "Integrazione Monit"
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee
 #: app/assets/javascripts/app/views/monitoring.jst.eco db/seeds/permissions.rb
@@ -6836,7 +6866,7 @@ msgstr "Monitoraggio"
 
 #: db/seeds/settings.rb
 msgid "Monitoring Token"
-msgstr ""
+msgstr "Token di monitoraggio"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Month"
@@ -6852,7 +6882,7 @@ msgstr "Stato d'animo"
 
 #: app/models/user.rb
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "Non sono ammesse più di 250 organizzazioni secondarie."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "Most recent activity"
@@ -6884,7 +6914,7 @@ msgstr "Campo selezione multipla"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple tree selection field"
-msgstr ""
+msgstr "Campo per la selezione di più alberi"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 msgid "My Assigned Tickets"
@@ -6984,8 +7014,9 @@ msgid "Name"
 msgstr "Nome"
 
 #: db/seeds/settings.rb
+#, fuzzy
 msgid "Name Identifier Format"
-msgstr ""
+msgstr "Name Identifier Format"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Name of form submit button"
@@ -7001,7 +7032,7 @@ msgstr "Navigazione"
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
-msgstr ""
+msgstr "Serve 'form_id' per aggiungere allegati a un nuovo modulo."
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -7009,27 +7040,27 @@ msgstr "È necessario almeno un campo \"article body\"."
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr ""
+msgstr "Serve il parametro fingerprint!"
 
 #: app/controllers/user_access_token_controller.rb
 msgid "Need label!"
-msgstr ""
+msgstr "Necessita di un'etichetta!"
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
-msgstr ""
+msgstr "Necessita del parametro logo"
 
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "Need name, login, email or locale for create_or_update()"
-msgstr ""
+msgstr "Servono nome, login, email o locale per create_or_update()"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Need recipient in \"TO\" or \"CC\"."
-msgstr ""
+msgstr "Il destinatario deve essere indicato in \"TO\" o \"CC\"."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
-msgstr ""
+msgstr "Serve il destinatario in \"To\"."
 
 #: lib/sessions/event/chat_base.rb
 msgid "Need session_id."

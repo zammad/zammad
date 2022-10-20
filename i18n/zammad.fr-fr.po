@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-25 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-10-20 19:14+0000\n"
+"Last-Translator: Gilbert Paquin <gilbertpaquin1995@gmail.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -26,9 +26,8 @@ msgstr ""
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
-#, fuzzy
 msgid "FORMAT_DATE"
-msgstr "dd/mm/yyyy"
+msgstr "yyyy-mm-dd"
 
 #. Default date/time format to use for the current locale.
 #. These placeholders are supported:
@@ -43,9 +42,8 @@ msgstr "dd/mm/yyyy"
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
-#, fuzzy
 msgid "FORMAT_DATETIME"
-msgstr "dd/mm/yyyy HH:MM"
+msgstr "yyyy-mm-dd HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
@@ -13340,13 +13338,15 @@ msgid "set readonly"
 msgstr "En lecture seule"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#, fuzzy
 msgid "set to internal"
-msgstr "Visibilité interne"
+msgstr "Basculer en visibilité interne"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#, fuzzy
 msgid "set to public"
-msgstr "Visibilité publique"
+msgstr "Basculer en visibilité publique"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "show"
