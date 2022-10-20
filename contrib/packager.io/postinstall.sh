@@ -30,6 +30,8 @@ stop_zammad
 
 update_or_install
 
+assets_precompile
+
 set_env_vars
 
 start_zammad
