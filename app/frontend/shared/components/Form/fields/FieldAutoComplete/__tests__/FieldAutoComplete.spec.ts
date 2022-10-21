@@ -870,7 +870,7 @@ describe('Form - Field - AutoComplete - Input Checklist', () => {
     wrapper.getByLabelText('Select…').focus()
     await wrapper.events.tab()
 
-    expect(blurHandler).toHaveBeenCalled()
+    expect(blurHandler).toHaveBeenCalledOnce()
   })
 
   it('implements input handler', async () => {

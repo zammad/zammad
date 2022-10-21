@@ -68,7 +68,10 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
         :aria-disabled="context.disabled"
         :aria-label="i18n.t('Select…')"
         :tabindex="context.disabled ? '-1' : '0'"
-        v-bind="context.attrs"
+        v-bind="{
+          ...context.attrs,
+          onBlur: undefined,
+        }"
         @click="open"
         @keypress.space="open"
         @blur="context.handlers.blur"
