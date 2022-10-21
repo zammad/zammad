@@ -83,16 +83,28 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, perform
     end
   end
 
-  describe 'Updating group settings causes huge numbers of delayed jobs #4306' do
-    let(:ticket) { create(:ticket) }
+  describe 'Updating group settings causes huge numbers of delayed jobs #4306', performs_jobs: false do
+    let(:ticket) { create(:ticket, customer: create(:customer, :with_org)) }
 
     before do
-      ticket
-      Delayed::Job.destroy_all
+      configure_elasticsearch(required: true, rebuild: true) do
+        ticket
+        Delayed::Job.destroy_all
+      end
     end
 
     it 'does not create any jobs if nothing has changed' do
       expect { ticket.update(title: ticket.title) }.not_to change(Delayed::Job, :count)
+    end
+
+    it 'does not create any jobs for the organization if the organization has not changed at the ticket' do
+      ticket.update(title: SecureRandom.uuid)
+      expect(Delayed::Job.where("handler LIKE '%SearchIndexJob%' AND handler LIKE '%Organization%'").count).to eq(0)
+    end
+
+    it 'does create jobs for the organization if the organization has changed at the ticket' do
+      ticket.update(customer: create(:customer, :with_org))
+      expect(Delayed::Job.where("handler LIKE '%SearchIndexJob%' AND handler LIKE '%Organization%'").count).to be > 0
     end
   end
 end

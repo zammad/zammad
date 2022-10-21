@@ -24,13 +24,25 @@ class App.TicketStats extends App.Controller
       @render()
     )
 
+    @controllerBind('Ticket:update', (updateData) =>
+      tickets = []
+      if @user
+        tickets = tickets.concat(@data?.user?.open_ids).concat(@data?.user?.closed_ids)
+      else if @organization
+        tickets = tickets.concat(@data?.organization?.open_ids).concat(@data?.organization?.closed_ids)
+
+      return if !_.contains(tickets, updateData.id)
+
+      @load()
+    )
+
   release: =>
     if @subscribeIdUser
       App.User.unsubscribe(@subscribeIdUser)
     if @subscribeIdOrganization
       App.Organization.unsubscribe(@subscribeIdOrganization)
 
-  load: (object, type) =>
+  load: (object = undefined, type = undefined) =>
 
     # ignore rerender on local record changes
     return if type is 'change'

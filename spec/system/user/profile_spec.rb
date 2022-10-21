@@ -81,4 +81,23 @@ RSpec.describe 'User Profile', type: :system do
       expect(page).to have_text(organizations[10].name)
     end
   end
+
+  context 'when ticket changes in user profile', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, title: SecureRandom.uuid, customer: create(:customer, :with_org), group: Group.first) }
+
+    def authenticate
+      ticket
+      true
+    end
+
+    before do
+      visit "#user/profile/#{ticket.customer.id}"
+    end
+
+    it 'does update when ticket changes' do
+      expect(page).to have_text(ticket.title)
+      ticket.update(title: SecureRandom.uuid)
+      expect(page).to have_text(ticket.title)
+    end
+  end
 end

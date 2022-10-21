@@ -46,8 +46,10 @@ RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true do
     let(:user) { create(:user) }
 
     before do
-      user
-      Delayed::Job.destroy_all
+      configure_elasticsearch(required: true, rebuild: true) do
+        user
+        Delayed::Job.destroy_all
+      end
     end
 
     it 'does not create any jobs if nothing has changed' do

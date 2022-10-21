@@ -17,23 +17,29 @@ module Ticket::TouchesAssociations
     # return if we run import mode
     return true if Setting.get('import_mode')
 
-    return true if saved_changes.blank?
+    touch_customer
+    touch_organization
+  end
 
-    # touch old customer if changed
-    customer_id_changed = saved_changes['customer_id']
-    if customer_id_changed && customer_id_changed[0] != customer_id_changed[1] && customer_id_changed[0]
-      User.find(customer_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
-    end
+  def touch_customer
+    return if saved_changes['customer_id'].blank?
+    return if saved_changes['customer_id'][0] == saved_changes['customer_id'][1]
+
+    # touch old customer
+    User.lookup(id: saved_changes['customer_id'][0])&.touch # rubocop:disable Rails/SkipsModelValidations
 
     # touch new/current customer
     customer&.touch # rubocop:disable Rails/SkipsModelValidations
+  end
 
-    # touch old organization if changed
-    organization_id_changed = saved_changes['organization_id']
-    if organization_id_changed && organization_id_changed[0] != organization_id_changed[1] && organization_id_changed[0]
-      Organization.find(organization_id_changed[0]).touch # rubocop:disable Rails/SkipsModelValidations
-    end
+  def touch_organization
+    return if saved_changes['organization_id'].blank?
+    return if saved_changes['organization_id'][0] == saved_changes['organization_id'][1]
 
+    # touch old organization
+    Organization.lookup(id: saved_changes['organization_id'][0])&.touch # rubocop:disable Rails/SkipsModelValidations
+
+    # touch new organization
     organization&.touch # rubocop:disable Rails/SkipsModelValidations
   end
 end
