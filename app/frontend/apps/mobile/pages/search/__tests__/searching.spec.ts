@@ -30,13 +30,18 @@ describe('visiting search page', () => {
     const searchInput = view.getByPlaceholderText('Search…')
 
     expect(searchInput).toHaveFocus()
-    expect(view.getByTestId('selectTypesSection')).toBeInTheDocument()
-
-    await view.events.click(view.getByText('Users'))
-
-    expect(view.container).toHaveTextContent('Enter more than two characters')
+    // don't show until query is entered
+    expect(view.queryByTestId('selectTypesSection')).not.toBeInTheDocument()
 
     await view.events.type(searchInput, 'search')
+
+    // show types when query is entered
+    expect(view.getByTestId('selectTypesSection')).toBeInTheDocument()
+
+    await view.events.click(view.getByText('Users with "search"'))
+
+    // input still has focus
+    expect(searchInput).toHaveFocus()
 
     await waitUntil(() => mockSearchApi.calls.resolve)
 

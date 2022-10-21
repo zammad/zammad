@@ -151,4 +151,28 @@ describe('testing previous searches block', () => {
 
     expect(view.getByTestId('lastSearches')).toBeInTheDocument()
   })
+
+  it('shows last searches, when openning page', async () => {
+    localStorage.clear()
+    localStorage.setItem(
+      'lastSearches',
+      JSON.stringify(['search', 'search123']),
+    )
+    const view = await visitView('/search/user')
+
+    expect(view.getByRole('button', { name: 'search' })).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'search123' })).toBeInTheDocument()
+
+    const input = view.getByPlaceholderText('Search…')
+    await view.events.debounced(() => view.events.type(input, 'search55'))
+
+    expect(
+      view.queryByRole('button', { name: 'search55' }),
+      'hides last searches and shows buttons for types',
+    ).not.toBeInTheDocument()
+
+    await view.events.clear(input)
+
+    expect(view.getByRole('button', { name: 'search55' })).toBeInTheDocument()
+  })
 })

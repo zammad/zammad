@@ -8,6 +8,7 @@ import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIco
 export interface SearchPlugin {
   model: EnumSearchableModels
   headerLabel: string
+  searchLabel: string
   order: number
   link: string
   permissions: string[]

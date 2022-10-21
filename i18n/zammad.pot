@@ -4137,10 +4137,6 @@ msgstr ""
 msgid "Enter link URL"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
-msgstr ""
-
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
@@ -7310,6 +7306,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "Organizations are for any person in the system: agents (owners, responsibles, …) and customers."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+msgid "Organizations with \"%s\""
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -10504,6 +10504,10 @@ msgstr ""
 msgid "Tickets of User"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+msgid "Tickets with \"%s\""
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -11180,6 +11184,10 @@ msgstr ""
 #: db/seeds/groups.rb
 #: db/seeds/permissions.rb
 msgid "Users"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco

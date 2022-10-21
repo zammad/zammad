@@ -7,6 +7,7 @@ import { useLocaleStore } from '@shared/stores/locale'
 
 export interface Props {
   label?: string
+  labelPlaceholder?: string[]
   link?: string
   icon?: string | (IconProps & HTMLAttributes)
   iconBg?: string
@@ -51,7 +52,7 @@ const iconProps = computed<IconProps | null>(() => {
         >
           <CommonIcon v-bind="iconProps" decorative />
         </div>
-        <slot>{{ i18n.t(label) }}</slot>
+        <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
       </div>
 
       <div

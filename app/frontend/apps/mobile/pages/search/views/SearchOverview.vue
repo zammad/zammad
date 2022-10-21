@@ -13,6 +13,7 @@ import type { LocationQueryRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
+import type { ButtonPillOption } from '@mobile/components/CommonButtonPills/types'
 import { useSessionStore } from '@shared/stores/session'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
@@ -21,6 +22,8 @@ import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api'
 interface SearchTypeItem extends MenuItem {
   value: string
 }
+
+const LAST_SEARCHES_LENGTH_MAX = 5
 
 const props = defineProps<{ type?: string }>()
 
@@ -34,7 +37,7 @@ const search = ref(String(route.query.search || ''))
 // we need a separate debounced value to not trigger query
 const filter = ref(search.value)
 
-const canSearch = computed(() => filter.value.length >= 3)
+const canSearch = computed(() => filter.value.length >= 1)
 
 const found = reactive({} as Record<string, Record<string, unknown>[]>)
 const lastSearches = useLocalStorage<string[]>('lastSearches', [])
@@ -85,19 +88,18 @@ onMounted(() => {
 })
 
 const loadByFilter = async (filterQuery: string) => {
-  if (!props.type) {
-    return
-  }
   filter.value = filterQuery
   replaceQuery({ search: filterQuery })
-  if (!canSearch.value) {
+
+  if (!canSearch.value || !props.type) {
     return
   }
+
   searchQuery.abort()
 
   lastSearches.value = lastSearches.value.filter((item) => item !== filterQuery)
   lastSearches.value.push(filterQuery)
-  if (lastSearches.value.length > 5) {
+  if (lastSearches.value.length > LAST_SEARCHES_LENGTH_MAX) {
     lastSearches.value.shift()
   }
 
@@ -105,7 +107,16 @@ const loadByFilter = async (filterQuery: string) => {
 }
 
 // load data after a few ms to not overload the api
-const { ignoreUpdates } = ignorableWatch(search, debounce(loadByFilter, 600))
+const debouncedLoad = debounce(loadByFilter, 600)
+
+const { ignoreUpdates } = ignorableWatch(search, async (search) => {
+  if (!search || !props.type) {
+    await loadByFilter(search)
+    return
+  }
+
+  await debouncedLoad(search)
+})
 
 // load data immidiately when type changes or when last search selected
 watch(
@@ -122,18 +133,35 @@ const selectLastSearch = async (lastSearch: string) => {
   await loadByFilter(lastSearch)
 }
 
-const types: SearchTypeItem[] = Object.entries(searchPlugins).map(
-  ([name, plugin]) => {
+const pluginsArray = Object.entries(searchPlugins).map(([name, plugin]) => ({
+  name,
+  ...plugin,
+}))
+
+const searchPills: ButtonPillOption[] = pluginsArray.map((plugin) => ({
+  value: plugin.name,
+  label: plugin.headerLabel,
+}))
+
+const menuSearchTypes = computed<SearchTypeItem[]>(() =>
+  pluginsArray.map((plugin) => {
     return {
-      label: plugin.headerLabel,
+      label: plugin.searchLabel,
+      labelPlaceholder: [search.value],
       type: 'link',
-      value: name,
+      value: plugin.name,
       icon: plugin.icon,
       iconBg: plugin.iconBg,
-      onClick: () => selectType(name),
+      onClick: () => selectType(plugin.name),
     }
-  },
+  }),
 )
+
+const canShowLastSearches = computed(() => {
+  if (loading.value) return false
+
+  return (props.type && !found[props.type]?.length) || !canSearch.value
+})
 </script>
 
 <script lang="ts">
@@ -181,12 +209,19 @@ export default {
     <CommonButtonPills
       v-if="type"
       class="px-4 pb-4"
-      :options="types"
+      :options="searchPills"
       :model-value="type"
       @update:model-value="selectType($event as string)"
     />
-    <div v-else class="mt-8 px-4" data-test-id="selectTypesSection">
-      <CommonSectionMenu :header-title="__('Search for…')" :items="types" />
+    <div
+      v-else-if="canSearch"
+      class="mt-8 px-4"
+      data-test-id="selectTypesSection"
+    >
+      <CommonSectionMenu
+        :header-label="__('Search for…')"
+        :items="menuSearchTypes"
+      />
     </div>
     <div v-if="loading" class="flex h-14 w-full items-center justify-center">
       <CommonIcon name="loader" animation="spin" />
@@ -194,14 +229,11 @@ export default {
     <div v-else-if="canSearch && type && found[type]?.length">
       <SearchResults :data="found[type]" :type="type" />
     </div>
-    <div v-else-if="!canSearch" class="mt-4 px-4">
-      {{ $t('Enter more than two characters to get any results…') }}
-    </div>
-    <div v-else class="mt-4 px-4">
+    <div v-else-if="canSearch && type" class="mt-4 px-4">
       {{ $t('No entries') }}
     </div>
     <div
-      v-if="type && (!found[type]?.length || !canSearch)"
+      v-if="canShowLastSearches"
       class="mt-8 px-4"
       data-test-id="lastSearches"
     >
@@ -219,6 +251,7 @@ export default {
                 name="clock"
                 size="small"
                 class="mx-2 text-white/50"
+                decorative
               />
             </div>
             <span class="text-left text-base">{{ searchItem }}</span>

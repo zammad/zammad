@@ -78,6 +78,7 @@ const hasHelp = computed(() => slots.help || props.help)
           :icon="item.icon"
           :icon-bg="item.iconBg"
           :information="item.information"
+          :label-placeholder="item.labelPlaceholder"
           @click="item.onClick?.($event)"
         />
       </template>
