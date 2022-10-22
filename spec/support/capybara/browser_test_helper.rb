@@ -155,14 +155,21 @@ module BrowserTestHelper
   # display_macro_batches(Ticket.first)
   #
   def display_macro_batches(ticket)
-    # get DOM element
+
+    # Get the ticket row DOM element
     element = page.find(:table_row, ticket.id).native
-    # get element moving
-    click_and_hold(element)
-    # move element to y -ticket.location.y
-    move_mouse_by(0, -element.location.y + 3)
-    # move a bit to the left to display macro batches
-    move_mouse_by(-element.location.x + 3, 0)
+
+    # Drag the element to the top of the screen, in order to display macro batches.
+    #  First, move the mouse to the middle left part of the element to avoid popups interfering with the action.
+    #  Then, click and hold the left mouse button.
+    #  Next, move the mouse vertically, just below the top edge of the browser.
+    #  Finally, move the mouse slightly horizontally to simulate a non-linear drag.
+    page.driver.browser.action
+      .move_to_location(element.location.x + 50, element.location.y + 10)
+      .click_and_hold
+      .move_by(0, -element.location.y + 3)
+      .move_by(3, 0)
+      .perform
   end
 
   # Releases the depressed left mouse button at the current mouse location.

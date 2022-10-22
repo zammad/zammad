@@ -163,6 +163,8 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
       click_on 'Show Search Details'
 
       find('[data-tab-content=Ticket]').click
+
+      await_empty_ajax_queue
     end
 
     describe 'group-dependent macros' do
