@@ -296,7 +296,10 @@ onMounted(() => {
               class="opacity-50"
             >
               —
-              {{ getSelectedOptionLabel(parentValue) || parentValue }}
+              {{
+                getSelectedOptionLabel(parentValue) ||
+                i18n.t('%s (unknown)', parentValue.toString())
+              }}
             </span>
           </template>
         </span>

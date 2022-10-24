@@ -30,6 +30,7 @@ const {
   getSelectedOptionIcon,
   getSelectedOptionLabel,
   getSelectedOptionStatus,
+  setupClearMissingOptionValue,
 } = useSelectOptions(toRef(props.context, 'options'), contextReactive)
 
 const isSizeSmall = computed(() => props.context.size === 'small')
@@ -44,6 +45,8 @@ const openSelectDialog = () => {
 useFormBlock(props.context, openSelectDialog)
 
 useSelectPreselect(sortedOptions, toRef(props, 'context'))
+
+setupClearMissingOptionValue()
 </script>
 
 <template>
@@ -97,7 +100,10 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
               v-for="selectedValue in valueContainer"
               :key="selectedValue"
               :status="getSelectedOptionStatus(selectedValue)"
-              :label="getSelectedOptionLabel(selectedValue)"
+              :label="
+                getSelectedOptionLabel(selectedValue) ||
+                i18n.t('%s (unknown)', selectedValue)
+              "
               :data-test-status="getSelectedOptionStatus(selectedValue)"
               role="listitem"
               pill
@@ -122,7 +128,10 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
               />
               <FieldSelectInputSelected
                 :slotted="(context.slots as any)?.output"
-                :label="getSelectedOptionLabel(selectedValue) || selectedValue"
+                :label="
+                  getSelectedOptionLabel(selectedValue) ||
+                  i18n.t('%s (unknown)', selectedValue)
+                "
                 :small="isSizeSmall"
               />
             </div>

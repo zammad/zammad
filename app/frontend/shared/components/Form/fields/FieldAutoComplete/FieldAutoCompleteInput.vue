@@ -103,7 +103,10 @@ useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
             :fixed-size="{ width: 12, height: 12 }"
             class="mr-1"
           />
-          {{ getSelectedOptionLabel(selectedValue) || selectedValue }}
+          {{
+            getSelectedOptionLabel(selectedValue) ||
+            i18n.t('%s (unknown)', selectedValue)
+          }}
         </div>
       </div>
       <CommonIcon

@@ -285,7 +285,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
 })
 
 describe('Form - Field - TreeSelect - Options', () => {
-  it('supports options mutation', async () => {
+  it('supports unknown options', async () => {
     const optionsProp = cloneDeep(testOptions)
 
     const wrapper = renderComponent(FormKit, {
@@ -297,7 +297,7 @@ describe('Form - Field - TreeSelect - Options', () => {
       },
     })
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent('10')
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('10 (unknown)')
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
@@ -325,6 +325,42 @@ describe('Form - Field - TreeSelect - Options', () => {
     await wrapper.events.click(wrapper.getByRole('button'))
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
+  })
+
+  it('supports clearing of the existing value when option goes away', async () => {
+    const optionsProp = cloneDeep(testOptions)
+
+    optionsProp.push({
+      value: 10,
+      label: 'Item D',
+    })
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        clearable: true, // otherwise it defaults to the first option
+        type: 'treeselect',
+        value: 10,
+        options: optionsProp,
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
+
+    optionsProp.pop()
+
+    await wrapper.rerender({
+      options: optionsProp,
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toBe(undefined)
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
   it('supports disabled property', async () => {

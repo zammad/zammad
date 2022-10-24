@@ -97,6 +97,7 @@ const {
   getSelectedOptionLabel,
   getSelectedOptionStatus,
   getDialogFocusTargets,
+  setupClearMissingOptionValue,
 } = useSelectOptions(flatOptions, toRef(props, 'context'))
 
 const getSelectedOptionParents = (selectedValue: string | number) =>
@@ -108,7 +109,8 @@ const getSelectedOptionFullPath = (selectedValue: string | number) =>
   getSelectedOptionParents(selectedValue)
     .map((parentValue) => `${getSelectedOptionLabel(parentValue)} \u203A `)
     .join('') +
-  (getSelectedOptionLabel(selectedValue) || selectedValue.toString())
+  (getSelectedOptionLabel(selectedValue) ||
+    i18n.t('%s (unknown)', selectedValue.toString()))
 
 const toggleDialog = async (isVisible: boolean) => {
   if (isVisible) {
@@ -122,6 +124,8 @@ const toggleDialog = async (isVisible: boolean) => {
 
 useSelectPreselect(flatOptions, toRef(props, 'context'))
 useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
+
+setupClearMissingOptionValue()
 </script>
 
 <template>

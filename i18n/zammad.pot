@@ -92,6 +92,13 @@ msgstr ""
 msgid "#{config.product_name} login from a new device\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you logged into your account <b>using a new device</b> on \"#{user_device.created_at}\":</div>\n<br>\n<div>\nYour device: #{user_device.name}<br>\nYour location (relative): #{user_device.location}<br>\nYour IP: #{user_device.ip}<br>\n</div>\n<br>\n<div>Your device has been added to your list of known devices, which you can view here:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n<br>\n<div>If this wasn't you, please remove the device, change your account password, and contact your administrator. Somebody might have gained unauthorized access to your account.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
