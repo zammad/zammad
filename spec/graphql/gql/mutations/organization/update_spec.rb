@@ -113,7 +113,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
         }
       end
 
-      it 'returns updated organization object attributes' do # rubocop:disable RSpec/ExampleLength
+      it 'returns updated organization object attributes' do
         oas = gql.result.data['organization']['objectAttributeValues']
 
         expect(oas.map { |oa| { oa['attribute']['name'] => oa['value'] } }).to eq(

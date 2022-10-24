@@ -51,7 +51,7 @@ RSpec.describe 'PublicLinks', type: :request do
       expect(json_response).to include('link' => 'https://zammad.org', 'title' => 'Zammad <3')
     end
 
-    it 'supports setting prios', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+    it 'supports setting prios', :aggregate_failures do
       authenticated_as(admin)
       post '/api/v1/public_links_prio', params: prio_params, as: :json
 

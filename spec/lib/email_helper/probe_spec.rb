@@ -18,7 +18,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
   end
 
   shared_examples 'probe tests with invalid result' do
-    it 'contains all information for an invalid result' do # rubocop:disable RSpec/ExampleLength
+    it 'contains all information for an invalid result' do
       expect(probe_result).to include(
         result:        expected_result_invalid[:result],
         message_human: be_in(expected_result_invalid[:message_human]),
@@ -246,7 +246,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
       let(:password) { real_user_data.last }
 
       shared_examples 'do real testing' do
-        it 'contains all information for a successful probe' do # rubocop:disable RSpec/ExampleLength
+        it 'contains all information for a successful probe' do
           expect(probe_result).to include(result: 'ok')
             .and include(
               setting: include(

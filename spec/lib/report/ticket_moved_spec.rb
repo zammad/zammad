@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-#
-# rubocop:disable RSpec/ExampleLength
-
 require 'rails_helper'
 require 'lib/report_examples'
 
@@ -145,4 +142,3 @@ RSpec.describe Report::TicketMoved, searchindex: true do
 
   end
 end
-# rubocop:enable RSpec/ExampleLength

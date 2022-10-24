@@ -376,6 +376,13 @@ RSpec/Capybara/SpecificFinders:
   Enabled: false
   # False positives, autocorrection makes weird suggestions.
 
+RSpec/ExampleLength:
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+  Max: 25
+
 Zammad/PreferNegatedIfOverUnless:
   Exclude:
     - 'bin/rspec'

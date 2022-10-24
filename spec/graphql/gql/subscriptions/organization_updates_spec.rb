@@ -40,7 +40,7 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
       include_examples 'subscribes and receives updates'
 
       context 'when losing permissions' do
-        it 'receives no data anymore' do # rubocop:disable RSpec/ExampleLength
+        it 'receives no data anymore' do
           agent.update!(roles: [])
           organization.save!
 

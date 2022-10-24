@@ -8,7 +8,7 @@ RSpec.shared_examples 'TagWritesToTicketHistory' do
     expect(described_class).to eq Ticket
   end
 
-  it 'creates a ticket history entry for tag_add' do # rubocop:disable RSpec/ExampleLength
+  it 'creates a ticket history entry for tag_add' do
     subject.tag_add('foo', 1)
     expect(subject.history_get.last).to include(
       'object'     => described_class.name,
@@ -20,7 +20,7 @@ RSpec.shared_examples 'TagWritesToTicketHistory' do
     )
   end
 
-  it 'creates a ticket history entry for tag_remove' do # rubocop:disable RSpec/ExampleLength
+  it 'creates a ticket history entry for tag_remove' do
     subject.tag_add('foo', 1)
     subject.tag_remove('foo', 1)
     expect(subject.history_get.last).to include(

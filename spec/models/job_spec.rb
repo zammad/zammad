@@ -574,7 +574,7 @@ RSpec.describe Job, type: :model do
         expect { notify_job.run(true) }.to change { ticket.reload.state }
       end
 
-      it 'does not send a notification to the owner of the ticket' do # rubocop:disable RSpec/ExampleLength
+      it 'does not send a notification to the owner of the ticket' do
         check_notification do
           notify_job.run(true)
           perform_enqueued_jobs
@@ -595,7 +595,7 @@ RSpec.describe Job, type: :model do
         expect { notify_job.run(true) }.to change { ticket.reload.state }
       end
 
-      it 'does send a notification to the owner of the ticket with trigger note in notification body' do # rubocop:disable RSpec/ExampleLength
+      it 'does send a notification to the owner of the ticket with trigger note in notification body' do
         check_notification do
           notify_job.run(true)
           perform_enqueued_jobs

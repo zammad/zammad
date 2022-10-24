@@ -23,7 +23,7 @@ RSpec.describe Channel::Driver::Facebook, use_vcr: true, performs_jobs: true, re
   # export FACEBOOK_PAGE_1_POST_ID=placeholder
   # export FACEBOOK_PAGE_1_POST_COMMENT_ID=placeholder
   #
-  it 'tests full run', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+  it 'tests full run', :aggregate_failures do
     allow(ApplicationHandleInfo).to receive('context=')
     ExternalCredential.create name: :facebook, credentials: { application_id: ENV['FACEBOOK_APPLICATION_ID'], application_secret: ENV['FACEBOOK_APPLICATION_SECRET'] }
 

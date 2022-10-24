@@ -104,7 +104,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer
       expect(Ticket::Article.last.attachments.size).to eq 1
     end
 
-    it 'adds attachment content' do # rubocop:disable RSpec/ExampleLength
+    it 'adds attachment content' do
       process(process_payload)
       expect(Ticket::Article.last.attachments.last).to have_attributes(
         'filename'    => 'standalone_attachment.png',

@@ -48,7 +48,7 @@ RSpec.describe MentionInit, type: :db_migration do
         }
       end
 
-      it 'adds type' do # rubocop:disable RSpec/ExampleLength
+      it 'adds type' do
         expect do
           migrate(&mocked_table_actions)
         end

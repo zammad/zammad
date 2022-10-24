@@ -51,7 +51,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       end
 
       context 'when the group is changed and permission is lost' do
-        it 'does stop receiving ticket updates' do # rubocop:disable RSpec/ExampleLength
+        it 'does stop receiving ticket updates' do
           ticket.update!(group: create(:group))
 
           expect(mock_channel.mock_broadcasted_messages.first[:result]).to include(
