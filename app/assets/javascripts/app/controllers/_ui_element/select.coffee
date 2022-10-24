@@ -61,7 +61,7 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     return if !selectedVal
     return if !params
 
-    params[attribute.name + '_is_display_warning'](selectedVal)
+    params[attribute.name + '_is_display_warning']?(selectedVal)
 
   @toggleDisplayWarn: (warn_visible, attribute, item) ->
     if !warn_visible
