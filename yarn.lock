@@ -8657,10 +8657,10 @@ vite-plugin-svg-icons@^2.0.1:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vite@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-3.1.6.tgz#4c6db3000326342c918204a42a130fb3ffed2414"
-  integrity sha512-qMXIwnehvvcK5XfJiXQUiTxoYAEMKhM+jqCY6ZSTKFBKu1hJnAKEzP3AOcnTerI0cMZYAaJ4wpW1wiXLMDt4mA==
+vite@^3.1.8:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.1.8.tgz#fa29144167d19b773baffd65b3972ea4c12359c9"
+  integrity sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==
   dependencies:
     esbuild "^0.15.9"
     postcss "^8.4.16"
@@ -8669,10 +8669,10 @@ vite@^3.1.6:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest-axe@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/vitest-axe/-/vitest-axe-0.0.7.tgz#7ad692a6be3b42abec63519e43f490c99e02afab"
-  integrity sha512-puSSlHfNBfjj/kZ1vIjYYA19/m1RIH7mf1xtxXW9D/0wUl7FEX7gS5DzaI85XnVVeplf1cO2EUVvSxI1xiC8zg==
+vitest-axe@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/vitest-axe/-/vitest-axe-0.1.0.tgz#34f714e5af31d579d7e2ca906d6b95207a1006ec"
+  integrity sha512-jvtXxeQPg8R/2ANTY8QicA5pvvdRP4F0FsVUAHANJ46YCDASie/cuhlSzu0DGcLmZvGBSBNsNuK3HqfaeknyvA==
   dependencies:
     aria-query "^5.0.0"
     axe-core "^4.4.2"
