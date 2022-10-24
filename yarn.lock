@@ -765,7 +765,7 @@
     "@graphql-codegen/visitor-plugin-common" "^2.12.1"
     tslib "~2.4.0"
 
-"@graphql-codegen/near-operation-file-preset@^2.4.2":
+"@graphql-codegen/near-operation-file-preset@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/near-operation-file-preset/-/near-operation-file-preset-2.4.3.tgz#4b4f48c3a8d427f06951fe7aa7dee94179ab026f"
   integrity sha512-3YKnJVM2br1kmI8rmXex00IMG6HJKZkkGnS65fxrBdFs2G2eKOu9nDY1CQEoLIQgDbkFAxdyNembWxVuCTE/5Q==
@@ -798,7 +798,7 @@
     "@graphql-tools/utils" "^8.8.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-operations@^2.5.4":
+"@graphql-codegen/typescript-operations@^2.5.5":
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-2.5.5.tgz#c372404da8fe0197d2a68bab37457719efde971a"
   integrity sha512-rH15UA34MRf6cITfvt2EkSEaC/8ULvgMg5kzun6895oucA8PFyAFJaQzcjk9UraeD3ddMu56OKhZGdxd0JWfKw==
@@ -809,7 +809,7 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-vue-apollo@^3.3.4":
+"@graphql-codegen/typescript-vue-apollo@^3.3.5":
   version "3.3.5"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-vue-apollo/-/typescript-vue-apollo-3.3.5.tgz#e067e8f1b974c0fe516caa843fc3f786c00994ef"
   integrity sha512-JeRmai1sruz4J2OaNK4YwyMa9oyz41PxHNQG1B+Vkg6evQw7kkisfkSZCXLrKiS/tKb/CgNgAOtFOhBPeJ1/xw==
@@ -820,7 +820,7 @@
     change-case-all "1.0.14"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript@^2.7.4", "@graphql-codegen/typescript@^2.7.5":
+"@graphql-codegen/typescript@^2.7.5":
   version "2.7.5"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.7.5.tgz#00da3b7dd51cce49d95531556988818568c5d87e"
   integrity sha512-NZMViINr0KEH+DgtOE3BDWkdrisX7cz3/+m6M73Sa2cMM1udTTCpLbNqFIHRmGl1UyfwjdZB32YoF/fxshjV/Q==
@@ -831,7 +831,7 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/visitor-plugin-common@2.13.0", "@graphql-codegen/visitor-plugin-common@^2.12.1":
+"@graphql-codegen/visitor-plugin-common@2.13.0":
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.13.0.tgz#206d91d90a3cc3b1fc0c3a04e8015c22584e461f"
   integrity sha512-8lKw4l8W6yKaqrxx025eB6+lRMWaBKedbKjC9UyLhXAnqTi3tgaRKOBo4zvl1+KzE6R41Ruov9UcGD7OjgmBrw==
