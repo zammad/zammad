@@ -26,6 +26,7 @@
     - !reference [.scripts, zammad_db_init]
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
+    - !reference [.scripts, bundle_install]
     - bundle exec rails db:migrate
     - bundle exec rspec --profile 10 spec/db
 
