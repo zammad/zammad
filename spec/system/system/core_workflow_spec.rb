@@ -23,7 +23,7 @@ RSpec.describe 'System > Core Workflows', type: :system do
              object:      'Ticket',
              changeable:  true,
              preferences: {
-               screen: ['edit'],
+               screen: %w[create_middle edit],
              })
       true
     end
@@ -32,8 +32,18 @@ RSpec.describe 'System > Core Workflows', type: :system do
       first('tr.item').first('td').click
       expect(all("select[name='object'] option").map(&:text)).not_to include('Sla')
       expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['Creation mask', 'Edit mask'])
+      expect(all("select[name='preferences::screen'] option[selected]").map(&:text)).to eq(['Creation mask', 'Edit mask'])
       find_field('object').select '-'
       expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['-'])
+    end
+
+    it 'clones multiple selection for context field correctly (#4314)' do
+      click '.content.active .table .dropdown .btn--table'
+      click '.content.active .table .dropdown .js-clone'
+
+      in_modal do
+        expect(all("select[name='preferences::screen'] option[selected]").map(&:text)).to eq(['Creation mask', 'Edit mask'])
+      end
     end
   end
 end
