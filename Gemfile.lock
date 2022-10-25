@@ -536,7 +536,7 @@ GEM
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    twilio-ruby (5.72.1)
+    twilio-ruby (5.73.0)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, <= 2.5)
       nokogiri (>= 1.6, < 2.0)
