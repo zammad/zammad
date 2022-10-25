@@ -23,6 +23,9 @@ class App.UiElement.multiselect extends App.UiElement.ApplicationUiElement
     # build options list based on relation
     @getRelationOptionList(attribute, params)
 
+    # add null selection if needed
+    @addNullOption(attribute, params)
+
     # sort attribute.options
     @sortOptions(attribute, params)
 
