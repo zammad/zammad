@@ -41,7 +41,7 @@
     "@vitejs/plugin-vue": "^3.1.2",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
-    "@vue/test-utils": "^2.1.0",
+    "@vue/test-utils": "^2.2.0",
     "autoprefixer": "^10.4.12",
     "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -128,7 +128,7 @@
     "vue": "^3.2.41",
     "vue-advanced-cropper": "^2.8.6",
     "vue-easy-lightbox": "1.9.0",
-    "vue-router": "^4.1.5",
+    "vue-router": "^4.1.6",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0"
   }

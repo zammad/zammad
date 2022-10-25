@@ -831,7 +831,7 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/visitor-plugin-common@2.13.0":
+"@graphql-codegen/visitor-plugin-common@2.13.0", "@graphql-codegen/visitor-plugin-common@^2.12.1":
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.13.0.tgz#206d91d90a3cc3b1fc0c3a04e8015c22584e461f"
   integrity sha512-8lKw4l8W6yKaqrxx025eB6+lRMWaBKedbKjC9UyLhXAnqTi3tgaRKOBo4zvl1+KzE6R41Ruov9UcGD7OjgmBrw==
@@ -2011,7 +2011,7 @@
     "@vue/compiler-dom" "3.2.41"
     "@vue/shared" "3.2.41"
 
-"@vue/devtools-api@^6.1.4", "@vue/devtools-api@^6.4.4":
+"@vue/devtools-api@^6.4.4", "@vue/devtools-api@^6.4.5":
   version "6.4.5"
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.4.5.tgz#d54e844c1adbb1e677c81c665ecef1a2b4bb8380"
   integrity sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==
@@ -2093,7 +2093,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.41.tgz#fbc95422df654ea64e8428eced96ba6ad555d2bb"
   integrity sha512-W9mfWLHmJhkfAmV+7gDjcHeAWALQtgGT3JErxULl0oz6R6+3ug91I7IErs93eCFhPCZPHBs4QJS7YWEV7A3sxw==
 
-"@vue/test-utils@^2.0.0", "@vue/test-utils@^2.1.0":
+"@vue/test-utils@^2.0.0", "@vue/test-utils@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.2.0.tgz#3d8fc020802db9b726e2d91b6e3fb5b21aa0bf0c"
   integrity sha512-EKp5/N7ieNZdoLTkD16j/irUjIEDN63QUIc41vLUMqGvSsTQN0QxbFiQqh5v49RPfS5vZH+DhjNUEkijCMOCSg==
@@ -8419,12 +8419,12 @@ vue-eslint-parser@^9.0.0, vue-eslint-parser@^9.0.1:
     lodash "^4.17.21"
     semver "^7.3.6"
 
-vue-router@^4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.1.5.tgz#256f597e3f5a281a23352a6193aa6e342c8d9f9a"
-  integrity sha512-IsvoF5D2GQ/EGTs/Th4NQms9gd2NSqV+yylxIyp/OYp8xOwxmU8Kj/74E9DTSYAyH5LX7idVUngN3JSj1X4xcQ==
+vue-router@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.1.6.tgz#b70303737e12b4814578d21d68d21618469375a1"
+  integrity sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==
   dependencies:
-    "@vue/devtools-api" "^6.1.4"
+    "@vue/devtools-api" "^6.4.5"
 
 vue-tsc@^0.40.13:
   version "0.40.13"
