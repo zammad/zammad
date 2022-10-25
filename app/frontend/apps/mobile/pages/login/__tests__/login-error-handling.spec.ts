@@ -1,10 +1,19 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import {
+  mockPublicLinks,
+  mockPublicLinksSubscription,
+} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
 import { LoginDocument } from '@shared/graphql/mutations/login.api'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 
 describe('testing login error handling', () => {
+  beforeEach(() => {
+    mockPublicLinks([])
+    mockPublicLinksSubscription()
+  })
+
   it('check required login fields', async () => {
     const view = await visitView('/login')
     await view.events.click(view.getByText('Sign in'))

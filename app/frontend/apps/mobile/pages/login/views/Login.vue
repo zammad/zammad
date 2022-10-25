@@ -13,6 +13,15 @@ import { type FormData, useForm } from '@shared/components/Form'
 import UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/composable'
 import { useApplicationStore } from '@shared/stores/application'
+import { usePublicLinksQuery } from '@shared/entities/public-links/graphql/queries/links.api'
+import type {
+  PublicLinkUpdatesSubscription,
+  PublicLinkUpdatesSubscriptionVariables,
+} from '@shared/graphql/types'
+import { EnumPublicLinksScreen } from '@shared/graphql/types'
+import { computed } from 'vue'
+import { QueryHandler } from '@shared/server/apollo/handler'
+import { PublicLinkUpdatesDocument } from '@shared/entities/public-links/graphql/subscriptions/currentLinks.api'
 
 const route = useRoute()
 
@@ -88,6 +97,42 @@ interface LoginFormData {
   password: string
   rememberMe: boolean
 }
+
+const publicLinksQuery = new QueryHandler(
+  usePublicLinksQuery({
+    screen: EnumPublicLinksScreen.Login,
+  }),
+)
+
+publicLinksQuery.subscribeToMore<
+  PublicLinkUpdatesSubscriptionVariables,
+  PublicLinkUpdatesSubscription
+>({
+  document: PublicLinkUpdatesDocument,
+  variables: {
+    screen: EnumPublicLinksScreen.Login,
+  },
+  updateQuery(existing, { subscriptionData }) {
+    const publicLinks = subscriptionData.data.publicLinkUpdates?.publicLinks
+    return {
+      publicLinks: publicLinks || existing.publicLinks || [],
+    }
+  },
+})
+
+const links = computed(() => {
+  const publicLinks = publicLinksQuery.result()
+
+  return [
+    {
+      id: '-1',
+      link: '/#login',
+      title: __('Continue to desktop app'),
+      newTab: false,
+    },
+    ...(publicLinks.value?.publicLinks || []),
+  ]
+})
 
 // TODO: workaround for disabled button state, will be changed in formkit.
 const { form, isDisabled } = useForm()
@@ -182,10 +227,18 @@ const login = (formData: FormData<LoginFormData>) => {
         </div>
       </div>
     </main>
-    <nav class="mb-6 flex items-center justify-center">
-      <CommonLink link="/#login" class="!text-gray underline">
-        {{ $t('Continue to desktop app') }}
-      </CommonLink>
+    <nav class="mb-6 flex flex-wrap items-center justify-center gap-1">
+      <template v-for="(link, idx) of links" :key="link.id">
+        <CommonLink
+          :link="link.link"
+          :title="link.description"
+          :open-in-new-tab="link.newTab"
+          class="!text-gray underline"
+        >
+          {{ $t(link.title) }}
+        </CommonLink>
+        <span v-if="idx !== links.length - 1" aria-hidden="true">|</span>
+      </template>
     </nav>
     <footer class="flex items-center justify-center align-middle text-gray-200">
       <CommonLink

@@ -14,6 +14,10 @@ import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationCo
 import { waitFor } from '@testing-library/vue'
 import { useAuthenticationStore } from '@shared/stores/authentication'
 import { mockPermissions } from '@tests/support/mock-permissions'
+import {
+  mockPublicLinks,
+  mockPublicLinksSubscription,
+} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {
@@ -21,6 +25,11 @@ vi.mock('@shared/server/apollo/client', () => {
       return Promise.resolve()
     },
   }
+})
+
+beforeEach(() => {
+  mockPublicLinks([])
+  mockPublicLinksSubscription()
 })
 
 describe('testing login maintenance mode', () => {

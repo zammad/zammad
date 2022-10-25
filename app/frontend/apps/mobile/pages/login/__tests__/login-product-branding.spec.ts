@@ -1,5 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import {
+  mockPublicLinks,
+  mockPublicLinksSubscription,
+} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
 import { visitView } from '@tests/support/components/visitView'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 
@@ -11,6 +15,8 @@ const applicationConfig = {
 describe('testing login product branding', () => {
   beforeEach(() => {
     mockApplicationConfig(applicationConfig)
+    mockPublicLinks([])
+    mockPublicLinksSubscription()
   })
 
   it('check that expected product name is present', async () => {
