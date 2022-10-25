@@ -31,16 +31,18 @@ module MonitoringHelper
           .order(last_run: :asc, period: :asc)
       end
 
-      def last_execution_on_time?(scheduler)
-        expected_next_run = if scheduler.timeplan.present?
-                              calculator = TimeplanCalculation.new(scheduler.timeplan, Setting.get('timezone_default').presence || 'UTC')
-                              intermediary = calculator.next_at(scheduler.last_run)
-                              calculator.next_at(intermediary + 10.minutes)
-                            else
-                              scheduler.last_run + scheduler.period.seconds
-                            end
+      def last_execution_deadline(scheduler)
+        return scheduler.last_run if scheduler.timeplan.blank?
 
-        expected_next_run >= LAST_EXECUTION_TOLERANCE.ago
+        calculator = TimeplanCalculation.new(scheduler.timeplan, Setting.get('timezone_default').presence || 'UTC')
+        intermediary = calculator.next_at(scheduler.last_run + 10.minutes)
+        calculator.next_at(intermediary + 10.minutes)
+      end
+
+      def last_execution_on_time?(scheduler)
+        return false if scheduler.last_run.blank?
+
+        last_execution_deadline(scheduler) + scheduler.period.seconds >= LAST_EXECUTION_TOLERANCE.ago
       end
 
       def none_running

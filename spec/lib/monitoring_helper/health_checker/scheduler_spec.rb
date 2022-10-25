@@ -85,17 +85,31 @@ RSpec.describe MonitoringHelper::HealthChecker::Scheduler do
       expect(instance.send(:last_execution_on_time?, scheduler)).to be_falsey
     end
 
-    # https://github.com/zammad/zammad/issues/4079
-    it 'returns true if timeplan scheduler was skipped once only' do
-      travel_to Time.current.noon
-      scheduler = create(:scheduler, :timeplan, last_run: 1.day.ago)
-      expect(instance.send(:last_execution_on_time?, scheduler)).to be_truthy
-    end
+    context 'with timeplan' do
+      it 'returns true if timeplan scheduler was not skipped' do
+        travel_to Time.current.beginning_of_day
+        scheduler = create(:scheduler, :timeplan, last_run: 55.minutes.ago)
+        expect(instance.send(:last_execution_on_time?, scheduler)).to be_truthy
+      end
 
-    it 'returns false if timeplan scheduler was skipped multiple times' do
-      travel_to Time.current.noon
-      scheduler = create(:scheduler, :timeplan, last_run: 2.days.ago)
-      expect(instance.send(:last_execution_on_time?, scheduler)).to be_falsey
+      # https://github.com/zammad/zammad/issues/4079
+      it 'returns true if timeplan scheduler was slightly late only' do
+        travel_to Time.current.beginning_of_day - 10.minutes
+        scheduler = create(:scheduler, :timeplan, last_run: 6.hours.ago)
+        expect(instance.send(:last_execution_on_time?, scheduler)).to be_truthy
+      end
+
+      it 'returns true if timeplan scheduler was skipped once' do
+        travel_to Time.current.noon
+        scheduler = create(:scheduler, :timeplan, last_run: 1.day.ago)
+        expect(instance.send(:last_execution_on_time?, scheduler)).to be_truthy
+      end
+
+      it 'returns false if timeplan scheduler was skipped twice' do
+        travel_to Time.current.noon
+        scheduler = create(:scheduler, :timeplan, last_run: 2.days.ago)
+        expect(instance.send(:last_execution_on_time?, scheduler)).to be_falsey
+      end
     end
   end
 

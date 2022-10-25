@@ -3,8 +3,8 @@
 class BackgroundServices
   class Service
     class ProcessScheduledJobs < Service
-      SLEEP_AFTER_JOB_START = 10.seconds
-      SLEEP_AFTER_LOOP = 60.seconds
+      SLEEP_AFTER_JOB_START = 1.second
+      SLEEP_AFTER_LOOP = 10.seconds
 
       attr_reader :jobs_started
 
@@ -27,8 +27,8 @@ class BackgroundServices
 
       def run_jobs
         scope.each do |job|
-          Manager.new(job, jobs_started).run
-          sleep SLEEP_AFTER_JOB_START
+          result = Manager.new(job, jobs_started).run
+          sleep SLEEP_AFTER_JOB_START if result
         end
       end
 
