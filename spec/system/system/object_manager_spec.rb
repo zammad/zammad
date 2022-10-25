@@ -23,7 +23,7 @@ RSpec.describe 'System > Objects', type: :system, mariadb: true do
       end
     end
 
-    include_examples 'cannot create new object attribute', 'customer_id', 'Object already exists!'
+    include_examples 'cannot create new object attribute', 'customer_id', 'This object already exists.'
     ['some_other_id', 'some_other_ids', 'some spaces'].each do |name|
       include_examples 'cannot create new object attribute', name, 'are not allowed'
     end

@@ -31,7 +31,7 @@ class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::
 
   def find_files
     files = []
-    %w[lib db app].each do |dir|
+    %w[config app db lib].each do |dir|
       files += Dir.glob("#{base_path}/#{dir}/**/*.rb")
     end
     files

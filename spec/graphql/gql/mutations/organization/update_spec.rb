@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
   context 'when updating organizations', authenticated_as: :user do
-    let(:user)               { create(:agent) }
+    let(:user)               { create(:agent, preferences: { locale: 'de-de' }) }
     let(:organization)       { create(:organization) }
     let(:variables)          { { id: gql.id(organization), input: input_payload } }
     let(:input_payload)      { {} }
@@ -31,7 +31,10 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       QUERY
     end
 
+    let(:custom_translations) { { "can't be blank" => 'darf nicht leer sein', 'This field %s' => 'Dieses Feld %{message}', 'This object already exists.' => 'Dieses Objekt existiert bereits.' } } # rubocop:disable Style/FormatStringToken
+
     before do
+      allow(Translation).to receive(:translate) { |_locale, string| custom_translations[string] || string }
       gql.execute(query, variables: variables)
     end
 
@@ -47,16 +50,16 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:input_payload) { { name: '' } }
 
       it 'returns a user error' do
-        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => "Name can't be blank")
+        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => 'Dieses Feld darf nicht leer sein')
       end
     end
 
     context 'when updating organization with name of another organization' do
       let(:input_payload) { { name: other_org.name } }
-      let(:other_org) { create(:organization) }
+      let(:other_org)     { create(:organization) }
 
       it 'returns a user error' do
-        expect(gql.result.data['errors'].first).to include('message' => 'Object already exists!')
+        expect(gql.result.data['errors'].first).to include('message' => 'Dieses Objekt existiert bereits.')
       end
     end
 

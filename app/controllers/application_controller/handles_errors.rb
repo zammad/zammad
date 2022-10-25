@@ -95,7 +95,7 @@ module ApplicationController::HandlesErrors
     elsif (first_error = e.try(:record)&.errors&.full_messages&.first)
       data[:error_human] = first_error
     elsif e.message.match?(%r{(already exists|duplicate key|duplicate entry)}i)
-      data[:error_human] = __('Object already exists!')
+      data[:error_human] = __('This object already exists.')
     elsif e.message =~ %r{null value in column "(.+?)" violates not-null constraint}i || e.message =~ %r{Field '(.+?)' doesn't have a default value}i
       data[:error_human] = "Attribute '#{$1}' required!"
     elsif e.message == 'Exceptions::Forbidden'
