@@ -62,7 +62,6 @@
     @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:translate-x-6;
   }
 
-  .floating-input:focus-within label,
   .floating-input.formkit-outer[data-populated] label {
     @apply text-xs opacity-75;
   }

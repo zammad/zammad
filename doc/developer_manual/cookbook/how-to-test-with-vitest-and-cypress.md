@@ -25,7 +25,13 @@ Check the Vitest [CLI documentation](https://vitest.dev/guide/cli.html#options) 
 First, the Cypress dependencies needs to be installed: `yarn cypress:install`.
 
 Then you can run `yarn test:ct`, which opens an UI in the selected browser. Here the different tests
-can be executed.
+can be executed. Do not run snapshot tests with Cypress GUI, since the screenshot most likely will differ from the one made in CI.
+
+#### Snapshots
+
+We have some visual tests. All such tests end with `-visual.cy.ts` in their filename. It works by creating a screenshot of an element. Usually, all correct screenshots are already stored inside a git repository. Cypress then compares two screenshots - if they differ, the test will fail.
+
+To update snapshots, use `cypress:snapshots` command. This will run all snapshots inside docker container to ensure they are running in the same environment in CI and on local machine. Before running command, make sure you have `docker` and `docker-compose` installed. If you are using Mac/Windows, you should run command in a fresh repository, because some packages are platform-specific, but they are shared between local machine and Docker, and will not work in both environments at the same time.
 
 ## Tooling
 

@@ -3,4 +3,5 @@
 export interface CommonSelectInstance {
   openDialog(): void
   closeDialog(): void
+  isOpen: boolean
 }

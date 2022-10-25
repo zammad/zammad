@@ -11,7 +11,7 @@ import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
 import Form from '@shared/components/Form/Form.vue'
 import { type FormData, useForm } from '@shared/components/Form'
 import UserError from '@shared/errors/UserError'
-import { defineFormSchema } from '@mobile/form/composable'
+import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useApplicationStore } from '@shared/stores/application'
 import { usePublicLinksQuery } from '@shared/entities/public-links/graphql/queries/links.api'
 import type {
@@ -44,22 +44,30 @@ const application = useApplicationStore()
 
 const loginSchema = defineFormSchema([
   {
-    name: 'login',
-    type: 'text',
-    label: __('Username / Email'),
-    placeholder: __('Username / Email'),
-    required: true,
-    outerClass: 'mb-2',
-    wrapperClass: 'rounded-xl bg-gray-500',
+    isLayout: true,
+    component: 'FormGroup',
+    children: [
+      {
+        name: 'login',
+        type: 'text',
+        label: __('Username / Email'),
+        placeholder: __('Username / Email'),
+        required: true,
+      },
+    ],
   },
   {
-    name: 'password',
-    label: __('Password'),
-    placeholder: __('Password'),
-    type: 'password',
-    required: true,
-    outerClass: 'mb-2',
-    wrapperClass: 'rounded-xl bg-gray-500',
+    isLayout: true,
+    component: 'FormGroup',
+    children: [
+      {
+        name: 'password',
+        label: __('Password'),
+        placeholder: __('Password'),
+        type: 'password',
+        required: true,
+      },
+    ],
   },
   {
     isLayout: true,

@@ -9,8 +9,9 @@
     "lint:css": "stylelint **/*.{css,vue,scss}",
     "lint:css:fix": "stylelint **/*.{css,vue,scss} --fix",
     "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest",
-    "test:ct": "yarn --cwd ./.cypress cypress open --component --project ../ --config-file .cypress/cypress.config.ts",
-    "test:ci:ct": "yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.ts",
+    "test:ct": "CY_OPEN=true yarn --cwd ./.cypress cypress open --component --project ../ --config-file .cypress/cypress.config.ts",
+    "test:ci:ct": "CI=true yarn --cwd ./.cypress cypress run --component --project ../ --config-file .cypress/cypress.config.ts --browser electron",
+    "cypress:snapshots": "sh .cypress/visual-regression/snapshots.sh",
     "cypress:install": "yarn --cwd ./.cypress install",
     "postinstall": "node script/fix-node-modules.mjs",
     "story": "histoire dev",
@@ -19,6 +20,7 @@
   "engines": {
     "node": ">=16"
   },
+  "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@graphql-codegen/cli": "^2.13.7",
     "@graphql-codegen/introspection": "^2.2.1",

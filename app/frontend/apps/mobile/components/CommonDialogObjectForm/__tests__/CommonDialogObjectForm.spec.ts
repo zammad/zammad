@@ -5,7 +5,7 @@ import {
   mockOrganizationObjectAttributes,
   organizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { defineFormSchema } from '@mobile/form/composable'
+import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import { MutationHandler } from '@shared/server/apollo/handler'

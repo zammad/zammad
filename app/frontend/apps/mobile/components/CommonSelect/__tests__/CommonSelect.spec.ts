@@ -156,7 +156,9 @@ describe('interacting with CommonSelect', () => {
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(view.getByRole('dialog')).toHaveAccessibleName('Select…')
+    expect(view.getByRole('dialog')).toHaveAccessibleName(
+      'Dialog window with selections',
+    )
   })
 
   // TODO e2e test on keyboard interaction (select with space, moving up/down)

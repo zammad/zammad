@@ -14,6 +14,7 @@ import {
   prefix,
   suffix,
 } from '@formkit/inputs'
+import { block } from '../sections/block'
 import { arrow } from '../sections/arrow'
 import { link } from '../sections/link'
 import defaulfFieldDefinition from './defaultFieldDefinition'
@@ -48,15 +49,19 @@ const initializeFieldDefinition = (
       label('$label'),
       inner(prefix(), options.schema(), suffix()),
     )
-    const outerSchema = [wrapperSchema]
+    const blockSchema = [wrapperSchema]
 
     if (addArrow) {
-      outerSchema.push(arrow())
+      blockSchema.push(arrow())
     }
 
-    outerSchema.push(link(), help('$help'), messages(message('$message.value')))
+    blockSchema.push(link())
 
-    localDefinition.schema = outer(...outerSchema)
+    localDefinition.schema = outer(
+      block(...blockSchema),
+      help('$help'),
+      messages(message('$message.value')),
+    )
   }
 
   const additionalProps = additionalDefinitionOptions.props || []

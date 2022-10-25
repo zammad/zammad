@@ -172,7 +172,7 @@ const createFlatpickr = () => {
     disableMobile: true,
     inline: true,
     time_24hr: i18n.timeFormat() === '24hour',
-    enableTime: time.value === true,
+    enableTime: time.value,
     allowInput: true,
     // append calendar to parent, so we can add our own elements after input
     // otherwise everything after input will actually appear after calendar

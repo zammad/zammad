@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import type { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import CommonSelectItem from './CommonSelectItem.vue'
 
 export interface Props {
@@ -46,6 +46,7 @@ const closeDialog = () => {
 }
 
 defineExpose({
+  isOpen: computed(() => showDialog.value),
   openDialog,
   closeDialog,
 })
@@ -125,43 +126,45 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
 
 <template>
   <slot :open="openDialog" :close="closeDialog" />
-  <Transition :duration="{ enter: 300, leave: 200 }">
-    <div
-      v-if="showDialog"
-      class="fixed inset-0 z-10 flex overflow-y-auto"
-      :aria-label="$t('Select…')"
-      role="dialog"
-    >
+  <Teleport to="body">
+    <Transition :duration="{ enter: 300, leave: 200 }">
       <div
-        class="select-overlay fixed inset-0 flex h-full w-full bg-gray-500 opacity-60"
-        data-test-id="dialog-overlay"
-      ></div>
-      <div class="select-dialog relative m-auto">
+        v-if="showDialog"
+        class="fixed inset-0 z-10 flex overflow-y-auto"
+        :aria-label="$t('Dialog window with selections')"
+        role="dialog"
+      >
         <div
-          class="flex min-w-[294px] max-w-[90vw] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
-        >
+          class="select-overlay fixed inset-0 flex h-full w-full bg-gray-500 opacity-60"
+          data-test-id="dialog-overlay"
+        ></div>
+        <div class="select-dialog relative m-auto">
           <div
-            ref="dialogElement"
-            :aria-label="$t('Select…')"
-            role="listbox"
-            class="max-h-[50vh] w-full divide-y divide-solid divide-white/10 overflow-y-auto"
+            class="flex min-w-[294px] max-w-[90vw] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
           >
-            <CommonSelectItem
-              v-for="(option, index) in options"
-              :key="String(option.value)"
-              :selected="isCurrentValue(option.value)"
-              :multiple="multiple"
-              :option="option"
-              :no-label-translate="noOptionsLabelTranslation"
-              @select="select($event)"
-              @keydown="advanceDialogFocus($event, index)"
-            />
-            <slot name="footer" />
+            <div
+              ref="dialogElement"
+              :aria-label="$t('Select…')"
+              role="listbox"
+              class="max-h-[50vh] w-full divide-y divide-solid divide-white/10 overflow-y-auto"
+            >
+              <CommonSelectItem
+                v-for="(option, index) in options"
+                :key="String(option.value)"
+                :selected="isCurrentValue(option.value)"
+                :multiple="multiple"
+                :option="option"
+                :no-label-translate="noOptionsLabelTranslation"
+                @select="select($event)"
+                @keydown="advanceDialogFocus($event, index)"
+              />
+              <slot name="footer" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">

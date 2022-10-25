@@ -20,7 +20,7 @@ export default defineConfig(({ mode, command }) => {
 
   const svgPlugin = createSvgIconsPlugin({
     // Specify the icon folder to be cached
-    iconDirs: [path.resolve(process.cwd(), `public/assets/images/icons`)],
+    iconDirs: [path.resolve(__dirname, `public/assets/images/icons`)],
     // Specify symbolId format
     symbolId: 'icon-[dir]-[name]',
     svgoOptions: {

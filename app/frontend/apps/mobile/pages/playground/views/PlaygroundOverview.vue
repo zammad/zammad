@@ -4,21 +4,23 @@
 /* eslint-disable zammad/zammad-detect-translatable-string */
 
 import Form from '@shared/components/Form/Form.vue'
-import { defineFormSchema } from '@mobile/form/composable'
+import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 
 const linkSchemaRaw = [
   {
-    type: 'textarea',
-    name: 'select',
-    label: 'Textarea',
-  },
-  {
     type: 'text',
     name: 'some_input',
     label: 'Input',
+    required: true,
+  },
+  {
+    type: 'textarea',
+    name: 'select',
+    label: 'Textarea',
+    required: true,
   },
   {
     type: 'text',

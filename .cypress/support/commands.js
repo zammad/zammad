@@ -2,13 +2,11 @@
 
 import '@testing-library/cypress/add-commands'
 import 'cypress-real-events/support'
+import '@frsource/cypress-plugin-visual-regression-diff'
+
 import { configure } from '@testing-library/cypress'
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
 import { mount } from 'cypress/vue'
 
-addMatchImageSnapshotCommand({
-  customSnapshotsDir: 'snapshots',
-})
 configure({ testIdAttribute: 'data-test-id' })
 
 Cypress.Commands.add('mount', mount)
@@ -74,14 +72,3 @@ Cypress.Commands.add(
       ])
   },
 )
-
-Cypress.Commands.overwrite('screenshot', (original, ...args) => {
-  const root = document.querySelector('body')
-
-  root.style.setProperty('font-family', 'Helvetica')
-  const result = original(...args)
-  result.then(() => {
-    root.style.removeProperty('font-family')
-  })
-  return result
-})

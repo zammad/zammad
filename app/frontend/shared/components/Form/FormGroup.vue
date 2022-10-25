@@ -28,9 +28,7 @@ const hasHelp = computed(() => slots.help || props.help)
 <style lang="scss">
 .form-group {
   .formkit-outer:not(:last-child) {
-    .formkit-arrow,
-    .formkit-link,
-    .formkit-wrapper {
+    > :last-child {
       @apply border-b border-white/10;
     }
   }

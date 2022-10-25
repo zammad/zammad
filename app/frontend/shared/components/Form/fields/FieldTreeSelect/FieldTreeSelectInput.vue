@@ -5,6 +5,7 @@ import { computed, nextTick, ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import { useFormBlock } from '@mobile/form/useFormBlock'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
@@ -120,6 +121,7 @@ const toggleDialog = async (isVisible: boolean) => {
 }
 
 useSelectPreselect(flatOptions, toRef(props, 'context'))
+useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
 </script>
 
 <template>
@@ -127,7 +129,7 @@ useSelectPreselect(flatOptions, toRef(props, 'context'))
     :class="{
       [context.classes.input]: true,
     }"
-    class="flex h-auto rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent formkit-populated:pt-0"
     data-test-id="field-treeselect"
   >
     <output
@@ -141,7 +143,6 @@ useSelectPreselect(flatOptions, toRef(props, 'context'))
         ...context.attrs,
         onBlur: undefined,
       }"
-      @click="toggleDialog(true)"
       @keypress.space="toggleDialog(true)"
       @blur="context.handlers.blur"
     >

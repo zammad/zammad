@@ -101,6 +101,8 @@ yarn-error.log
 .cypress/screenshots/*
 .cypress/videos/*
 .cypress/**/__diff_output__/**
+**/__image_snapshots__/**/*.diff.png
+**/__image_snapshots__/**/*.actual.png
 
 # Auto Generated
 schema.graphql

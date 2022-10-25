@@ -1,10 +1,12 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
+import type { CommonSelectInstance } from '@mobile/components/CommonSelect/types'
+import { useFormBlock } from '@mobile/form/useFormBlock'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
@@ -33,6 +35,15 @@ const {
 
 const isSizeSmall = computed(() => props.context.size === 'small')
 
+const select = ref<CommonSelectInstance>()
+
+const openSelectDialog = () => {
+  if (select.value?.isOpen) return
+  select.value?.openDialog()
+}
+
+useFormBlock(props.context, openSelectDialog)
+
 useSelectPreselect(sortedOptions, toRef(props, 'context'))
 </script>
 
@@ -41,15 +52,14 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
     :class="[
       {
         [context.classes.input]: !isSizeSmall,
-        'flex h-auto focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0':
-          !isSizeSmall,
+        'flex h-auto formkit-populated:pt-0': !isSizeSmall,
         'w-auto rounded-lg bg-gray-600': isSizeSmall,
       },
     ]"
     data-test-id="field-select"
   >
     <CommonSelect
-      #default="{ open }"
+      ref="select"
       :model-value="currentValue"
       :options="sortedOptions"
       :multiple="context.multiple"
@@ -72,8 +82,7 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
           ...context.attrs,
           onBlur: undefined,
         }"
-        @click="open"
-        @keypress.space="open"
+        @keypress.space="openSelectDialog()"
         @blur="context.handlers.blur"
       >
         <div

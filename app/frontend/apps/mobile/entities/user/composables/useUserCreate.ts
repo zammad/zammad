@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { useDialogObjectForm } from '@mobile/components/CommonDialogObjectForm/useDialogObjectForm'
-import { defineFormSchema } from '@mobile/form/composable'
+import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useUserAddMutation } from '@mobile/pages/user/graphql/mutations/add.api'
 import type { User, UserAddPayload } from '@shared/graphql/types'
 import {

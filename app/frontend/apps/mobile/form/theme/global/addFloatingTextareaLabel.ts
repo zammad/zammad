@@ -19,8 +19,8 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
   } = classes
 
   return {
-    outer: `${outer} floating-textarea px-2`,
-    wrapper: `${wrapper} formkit-invalid:bg-red/10 relative`,
+    outer: `${outer} formkit-invalid:bg-red/10 floating-textarea px-2`,
+    wrapper: `${wrapper} relative`,
     inner,
     input: clean(`
       ${input}

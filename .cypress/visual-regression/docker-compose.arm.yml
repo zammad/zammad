@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  cypress:
+    environment:
+      CYPRESS_CACHE_FOLDER: $PWD/.cache/Cypress
+    platform: linux/arm64
+    image: cypress/base:16.17.1
+    ipc: host
+    volumes:
+      - ../..:/app
+    working_dir: /app
+    ports:
+      - "8000:8000"
+      - "443:443"
+    command: bash ./.cypress/visual-regression/run.sh

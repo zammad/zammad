@@ -1,10 +1,10 @@
 import { defineConfig } from 'cypress'
-import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin'
 import { rm } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { initPlugin as initVisualRegressionPlugin } from '@frsource/cypress-plugin-visual-regression-diff/plugins'
 import pkg from '../package.json'
 
-const isCI = !!process.env.CI
+const isCYCI = !process.env.CY_OPEN
 const root = resolve(__dirname, '..')
 
 // we don't need to optimize graphql and apollo
@@ -17,6 +17,13 @@ export default defineConfig({
   downloadsFolder: '.cypress/downloads',
   screenshotsFolder: '.cypress/screenshots',
   videoCompression: false,
+  env: {
+    CY_CI: isCYCI,
+    pluginVisualRegressionDiffConfig: {
+      threshold: 0.02,
+    },
+    pluginVisualRegressionMaxDiffThreshold: 0.02,
+  },
   component: {
     supportFile: '.cypress/support/index.js',
     setupNodeEvents(on, config) {
@@ -25,7 +32,13 @@ export default defineConfig({
           return rm(results.video)
         }
       })
-      addMatchImageSnapshotPlugin(on, config)
+      initVisualRegressionPlugin(on, config)
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser?.family === 'chromium' && browser?.name !== 'electron') {
+          launchOptions.args.push('--force-device-scale-factor=2')
+        }
+        return launchOptions
+      })
     },
     devServer: {
       framework: 'vue',
@@ -39,7 +52,8 @@ export default defineConfig({
           fs: {
             strict: false,
           },
-          hmr: !isCI,
+          hmr: true,
+          ...(isCYCI && { watch: { ignored: ['**/*'] } }),
         },
         optimizeDeps: {
           entries: [
@@ -61,10 +75,7 @@ export default defineConfig({
     viewportHeight: 844,
     fileServerFolder: '..',
     indexHtmlFile: '.cypress/support/component-index.html',
-    specPattern: ['**/frontend/**/*.cy.{js,jsx,ts,tsx}'],
+    specPattern: ['app/frontend/cypress/**/*.cy.{js,jsx,ts,tsx}'],
   },
-  retries: {
-    runMode: 2,
-    openMode: 0,
-  },
+  retries: 0,
 })

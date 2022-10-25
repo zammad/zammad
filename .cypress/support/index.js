@@ -7,3 +7,11 @@ import './commands'
 
 // eslint-disable-next-line no-underscore-dangle
 window.__ = (str) => str
+
+Cypress.Screenshot.defaults({ capture: 'viewport' })
+
+if (Cypress.env('CY_CI')) {
+  Cypress.config('defaultCommandTimeout', 20000)
+}
+
+beforeEach(() => document.fonts.ready)

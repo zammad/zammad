@@ -10,6 +10,7 @@ import {
   textInput,
 } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import addLink from '@shared/form/features/addLink'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
@@ -29,7 +30,7 @@ const inputFields: FormFieldType[] = []
 Object.keys(inputFieldDefinitionList).forEach((inputType) => {
   initializeFieldDefinition(
     inputFieldDefinitionList[inputType],
-    {},
+    { features: [addLink] },
     { schema: textInput },
   )
 

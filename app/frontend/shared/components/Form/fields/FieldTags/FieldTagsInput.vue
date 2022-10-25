@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { useDialog } from '@shared/composables/useDialog'
+import { useFormBlock } from '@mobile/form/useFormBlock'
 import useValue from '../../composables/useValue'
 import type { FieldTagsContext } from './types'
 
@@ -33,12 +34,14 @@ const showDialog = () => {
     context,
   })
 }
+
+useFormBlock(props.context, () => !dialog.isOpened.value && showDialog())
 </script>
 
 <template>
   <div
     :class="context.classes.input"
-    class="flex h-auto rounded-none bg-transparent focus-within:bg-blue-highlight focus-within:pt-0 formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent formkit-populated:pt-0"
     data-test-id="field-tags"
   >
     <output
@@ -48,7 +51,6 @@ const showDialog = () => {
       :aria-disabled="context.disabled"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
-      @click="showDialog()"
       @keypress.space="showDialog()"
       @blur="context.handlers.blur"
     >

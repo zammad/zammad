@@ -1,0 +1,14 @@
+version: '3.6'
+services:
+  cypress:
+    platform: linux/amd64
+    image: cypress/base:16.17.1
+    ipc: host
+    volumes:
+      - ../..:/app
+      - ~/.cache/Cypress:/root/.cache/Cypress
+    working_dir: /app
+    ports:
+      - "8000:8000"
+      - "443:443"
+    command: bash ./.cypress/visual-regression/run.sh
