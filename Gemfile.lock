@@ -96,7 +96,7 @@ GEM
       activerecord (>= 4.2)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
-    argon2 (2.1.1)
+    argon2 (2.1.2)
       ffi (~> 1.14)
       ffi-compiler (~> 1.0)
     ast (2.4.2)
