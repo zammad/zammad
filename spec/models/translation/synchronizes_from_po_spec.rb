@@ -41,7 +41,13 @@ RSpec.describe Translation, 'synchronizes_from_po' do
       it 'also has another addon translation file' do
         expect(described_class.po_files_for_locale('de-de')).to include('i18n/testaddon.de-de.po')
       end
+    end
 
+    context 'when getting the sr-latn-rs file list' do
+      it 'uses the sr-cyrl-rs framework content instead' do
+        pending 'waiting on merge of sr-cyrl-rs translations'
+        expect(described_class.po_files_for_locale('sr-latn-rs').first).to eq('i18n/zammad.sr-cyrl-rs.po')
+      end
     end
   end
 
@@ -83,6 +89,13 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
       it 'contains the translation for "FORMAT_DATE_TIME"' do
         expect(described_class.strings_for_locale('de-de')['FORMAT_DATETIME']).to have_attributes(translation: 'dd.mm.yyyy HH:MM', translation_file: 'i18n/zammad.de-de.po')
+      end
+    end
+
+    context 'when getting the sr-latn-rs strings' do
+      it 'contains transliterated sr-cyrl-rs translation for "yes"' do
+        pending 'waiting on merge of sr-cyrl-rs translations'
+        expect(described_class.strings_for_locale('sr-latn-rs')['yes']).to have_attributes(translation: 'da', translation_file: 'i18n/zammad.sr-cyrl-rs.po')
       end
     end
   end

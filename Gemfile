@@ -162,6 +162,7 @@ gem 'viewpoint', require: false
 gem 'openssl'
 
 # Translation sync
+gem 'byk', require: false
 gem 'PoParser', require: false
 
 # Gems used only for develop/test and not required

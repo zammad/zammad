@@ -118,6 +118,7 @@ GEM
     buftok (0.2.0)
     builder (3.2.4)
     byebug (11.1.3)
+    byk (1.1.0)
     capybara (3.37.1)
       addressable
       matrix
@@ -615,6 +616,7 @@ DEPENDENCIES
   brakeman
   browser
   byebug
+  byk
   capybara
   chunky_png
   clearbit

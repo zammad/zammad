@@ -5,7 +5,8 @@ module Translation::SynchronizesFromPo
 
   # Represents an entry to import to the Translation table.
   class TranslationEntry
-    attr_reader :source, :translation, :translation_file, :skip_sync
+    attr_reader :source, :translation_file, :skip_sync
+    attr_accessor :translation
 
     def self.create(locale, file, entry) # rubocop:disable Metrics/AbcSize
       source = unescape_po(entry.msgid.to_s)
@@ -114,13 +115,20 @@ module Translation::SynchronizesFromPo
       @cached_strings_for_locale[locale] ||= strings_for_locale(locale).freeze
     end
 
-    def strings_for_locale(locale)
+    def strings_for_locale(locale) # rubocop:disable Metrics/AbcSize
       result = {}
       po_files_for_locale(locale).each do |file|
         require 'poparser' # Only load when it is actually used
         PoParser.parse_file(Rails.root.join(file)).entries.each do |entry|
 
           TranslationEntry.create(locale, file, entry).tap do |translation_entry|
+
+            # In case of Serbian Latin locale, transliterate the translation string to latin alphabet on-the-fly.
+            if locale == 'sr-latn-rs'
+              require 'byk/safe' # Only load when it is actually used
+              translation_entry.translation = Byk.to_latin(translation_entry.translation)
+            end
+
             result[translation_entry.source] = translation_entry
           end
         end
@@ -134,14 +142,19 @@ module Translation::SynchronizesFromPo
     def po_files_for_locale(locale)
       return ['i18n/zammad.pot'] if locale.eql? 'en-us'
 
-      files = Dir.glob "i18n/*.#{locale}.po", base: Rails.root
-      if files.exclude?("i18n/zammad.#{locale}.po")
-        Rails.logger.error "No translation found for locale '#{locale}'."
+      locale_name = locale
+
+      # In case of Serbian Latin locale, return Serbian Cyrillic po files instead.
+      locale_name = 'sr-cyrl-rs' if locale_name == 'sr-latn-rs'
+
+      files = Dir.glob "i18n/*.#{locale_name}.po", base: Rails.root
+      if files.exclude?("i18n/zammad.#{locale_name}.po")
+        Rails.logger.error "No translation found for locale '#{locale_name}'."
         return []
       end
 
       [
-        files.delete("i18n/zammad.#{locale}.po"),
+        files.delete("i18n/zammad.#{locale_name}.po"),
         *files.sort
       ]
     end
