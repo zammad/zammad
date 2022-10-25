@@ -13,7 +13,7 @@ class Zammad::TranslationCatalogGenerator < Rails::Generators::Base
         rails generate zammad:translation_catalog
 
         # Regenerate for an addon
-        rails generate zammad:translation_catalog --addon /path/to/addon
+        rails generate zammad:translation_catalog --addon-path /path/to/addon
   DESCRIPTION
 
   class_option :check, type: :boolean, required: false, desc: 'Only check if the catalog file is up-to-date.'
