@@ -1,0 +1,19 @@
+#{config.product_name} логовање из нове земље
+
+<div>Здраво #{user.firstname},</div>
+<br>
+<div>Изгледа сте користили ваш налог са <b>познатог уређаја али из нове земље</b> у „#{user_device.created_at}”:</div>
+<br>
+<div>
+Ваш уређај: #{user_device.name}<br>
+Ваша локација (оквирна): #{user_device.location}<br>
+Ваш IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Држава је додата на вашу листу познатих уређаја, коју можете прегледати овде:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Уколико ово нисте били ви, молимо уклоните уређај, промените вашу лозинку и контактирајте свог администратора. Постоји могућност да је неко неовлашћено приступио вашем налогу.</div>
+<br>
+<div>Ваш #{config.product_name} тим</div>

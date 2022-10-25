@@ -199,9 +199,14 @@
   name: Arabic
   active: true
   dir: rtl
-- locale: sr-latn-rs
+- locale: sr-cyrl-rs
   alias: sr
-  name: Serbian (srpski)
+  name: Serbian Cyrillic (српски)
+  active: true
+  dir: ltr
+- locale: sr-latn-rs # dummy locale, automatically transliterated from `sr-cyrl-rs`
+  alias: ''
+  name: Serbian Latin (srpski)
   active: true
   dir: ltr
 - locale: is

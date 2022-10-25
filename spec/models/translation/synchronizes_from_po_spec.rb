@@ -45,7 +45,6 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
     context 'when getting the sr-latn-rs file list' do
       it 'uses the sr-cyrl-rs framework content instead' do
-        pending 'waiting on merge of sr-cyrl-rs translations'
         expect(described_class.po_files_for_locale('sr-latn-rs').first).to eq('i18n/zammad.sr-cyrl-rs.po')
       end
     end
@@ -94,7 +93,6 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
     context 'when getting the sr-latn-rs strings' do
       it 'contains transliterated sr-cyrl-rs translation for "yes"' do
-        pending 'waiting on merge of sr-cyrl-rs translations'
         expect(described_class.strings_for_locale('sr-latn-rs')['yes']).to have_attributes(translation: 'da', translation_file: 'i18n/zammad.sr-cyrl-rs.po')
       end
     end

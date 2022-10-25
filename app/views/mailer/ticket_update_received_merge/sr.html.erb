@@ -1,0 +1,11 @@
+Тикет је спојен са тикетом (#{ticket.title})
+
+<div>Hi #{recipient.firstname},</div>
+<br>
+<div>
+Тикет је спојен са тикетом (#{ticket.title}) од стране „<b>#{current_user.longname}</b>”.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Погледај у #{config.product_name}</a>
+</div>

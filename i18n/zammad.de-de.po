@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-13 12:55+0000\n"
+"PO-Revision-Date: 2022-10-25 11:49+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1484,6 +1484,12 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
+"Sind Sie sicher? Sie haben ungespeicherte Änderungen, die verloren gehen "
+"werden."
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Article"
@@ -2125,8 +2131,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -4308,6 +4314,10 @@ msgstr "Gerät"
 msgid "Devices"
 msgstr "Geräte"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
+msgid "Dialog window with selections"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
@@ -4525,7 +4535,6 @@ msgstr "Osterferien"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -5001,10 +5010,6 @@ msgstr "Anmeldeinformationen eingeben"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
 msgstr "Verknüpfungs-URL angeben"
-
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
-msgstr "Geben Sie mehr als zwei Zeichen ein, um Ergebnisse zu erhalten…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -8514,6 +8519,10 @@ msgstr "Name der Organisation"
 msgid "Organization Support"
 msgstr "Organisations-Support"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
+msgid "Organization could not be updated."
+msgstr "Organisation konnte nicht aktualisiert werden."
+
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
 msgstr "Organisations-Tickets"
@@ -8537,6 +8546,10 @@ msgid ""
 msgstr ""
 "Organisationen sind für jede Person im System: Agenten (Besitzer, "
 "Verantwortliche, ...) und Kunden."
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+msgid "Organizations with \"%s\""
+msgstr "Organisationen mit \"%s\""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Organizer"
@@ -9747,7 +9760,7 @@ msgstr "Samstag"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Speichern"
@@ -9947,8 +9960,10 @@ msgstr "Wählt den Generator zum Erstellen der Ticketnummern aus."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Auswählen…"
 
@@ -12183,6 +12198,10 @@ msgstr "Tickets der Organisation"
 msgid "Tickets of User"
 msgstr "Tickets des Benutzers"
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+msgid "Tickets with \"%s\""
+msgstr "Tickets mit \"%s\""
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12549,6 +12568,10 @@ msgstr "Entsperren"
 msgid "Unread notification"
 msgstr "Ungelesene Benachrichtigung"
 
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+msgid "Unread notifications"
+msgstr "Ungelesene Benachrichtigungen"
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
 msgstr "Abbestellen"
@@ -12896,8 +12919,13 @@ msgstr "Benutzereinstellungen"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 msgid "User could not be created."
 msgstr "Nutzer konnte nicht erzeugt werden."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+msgid "User could not be updated."
+msgstr "Benutzer konnte nicht aktualisiert werden."
 
 #: lib/external_credential/google.rb
 msgid "User email could not be extracted from 'id_token'."
@@ -12957,6 +12985,10 @@ msgstr "Benutzername für Verbindung zum Proxy."
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Benutzer"
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
+msgstr "Benutzer mit \"%s\""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -14794,6 +14826,7 @@ msgstr "Zeitstempel - z.B. \"2018-08-30 14:30\""
 msgid "to go to the homepage."
 msgstr "um zur Homepage zu gelangen."
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -14881,14 +14914,11 @@ msgstr "|Links| bedeutet |[Ticket#12345] Ein Betreff |"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid ""
-"|None| means |Some Subject| (without ticket number), in which case you "
-"should enable \"postmaster___follow___up___search___in\" to recognize follow-"
-"ups based on email headers and/or body."
+"|None| means |Some Subject| (without ticket number), in which case it "
+"recognizes follow-ups based on email headers."
 msgstr ""
-"|keine| bedeutet |Ein Betreff| (ohne Ticketnummer). In diesen Fall sollte "
-"die Einstellung \"postmaster___follow___up___search___in\" aktiviert werden "
-"um Nachfragen anhand der E-Mail-Kopfzeilen und/oder des E-Mail-Textes zu "
-"erkennen."
+"|keine| bedeutet |Ein Betreff| (ohne Ticketnummer). In diesen Fall werden "
+"Nachfragen anhand der E-Mail-Kopfzeilen erkannt."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
@@ -14909,6 +14939,9 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Enter more than two characters to get any results…"
+#~ msgstr "Geben Sie mehr als zwei Zeichen ein, um Ergebnisse zu erhalten…"
 
 #~ msgid ""
 #~ "Maximum number of allowed tasks before auto cleanup removes surplus tasks."

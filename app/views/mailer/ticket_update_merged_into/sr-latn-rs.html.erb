@@ -1,0 +1,11 @@
+Tiket (#{ticket.title}) je spojen sa drugim tiketom
+
+<div>Zdravo #{recipient.firstname},</div>
+<br>
+<div>
+Tiket (#{ticket.title}) je spojen sa drugim tiketom od strane „<b>#{current_user.longname}</b>”.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Pogledaj u #{config.product_name}</a>
+</div>

@@ -1351,6 +1351,10 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Article"
@@ -2024,8 +2028,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -4159,6 +4163,10 @@ msgstr ""
 msgid "Devices"
 msgstr "Пристрої"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
+msgid "Dialog window with selections"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
@@ -4382,7 +4390,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -4868,10 +4875,6 @@ msgstr "Введіть ім’я користувача та пароль"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -8424,6 +8427,12 @@ msgstr "Назва організації\t"
 msgid "Organization Support"
 msgstr "Підтримка організації\t"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Organization could not be updated."
+msgstr "%s об’єкт(ів) оновлено."
+
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "My Organization Tickets"
@@ -8447,6 +8456,12 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+#, fuzzy
+#| msgid "My Organization Tickets"
+msgid "Organizations with \"%s\""
+msgstr "Заявки моєї організації"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
@@ -9671,7 +9686,7 @@ msgstr "Субота"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Зберегти"
@@ -9883,8 +9898,10 @@ msgstr "Вибирає модуль генератора номерів заяв
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Select Template"
 msgid "Select…"
@@ -12166,6 +12183,12 @@ msgstr "Заявки організації\t"
 msgid "Tickets of User"
 msgstr "Заявки користувача\t"
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#, fuzzy
+#| msgid "Tickets of User"
+msgid "Tickets with \"%s\""
+msgstr "Заявки користувача\t"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12538,6 +12561,12 @@ msgstr ""
 msgid "Unread notification"
 msgstr "Сповіщення"
 
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+#, fuzzy
+#| msgid "Notification"
+msgid "Unread notifications"
+msgstr "Сповіщення"
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
 msgstr ""
@@ -12849,9 +12878,16 @@ msgstr "Параметри користувача\t"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "User could not be created."
+msgstr "%s об’єкт(ів) створено."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "User could not be updated."
 msgstr "%s об’єкт(ів) створено."
 
 #: lib/external_credential/google.rb
@@ -12914,6 +12950,10 @@ msgstr "Ім’я користувача для з’єднання з прок�
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Користувачі"
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -14798,6 +14838,7 @@ msgstr ""
 msgid "to go to the homepage."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -14895,9 +14936,8 @@ msgstr "|Ліворуч| означає |[Заявка № 12345] Тема|"
 #| "should enable \"postmaster___follow___up___search___in\" to recognize "
 #| "followups based on email headers and/or body."
 msgid ""
-"|None| means |Some Subject| (without ticket number), in which case you "
-"should enable \"postmaster___follow___up___search___in\" to recognize follow-"
-"ups based on email headers and/or body."
+"|None| means |Some Subject| (without ticket number), in which case it "
+"recognizes follow-ups based on email headers."
 msgstr ""
 "|Немає| означає |Тема| (без номера заявки). В останньому випадку вам "
 "необхідно увімкнути «postmaster___follow___up___search___in» для контрольної "

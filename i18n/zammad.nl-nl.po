@@ -1340,6 +1340,16 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to reload? You have unsaved changes that will get "
+#| "lost"
+msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
+"Weet je zeker dat je opnieuw wilt laden? Alle niet opgeslagen aanpassingen "
+"gaan verloren"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Article"
@@ -1980,8 +1990,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -4129,6 +4139,10 @@ msgstr "Apparaat"
 msgid "Devices"
 msgstr "Apparaten"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
+msgid "Dialog window with selections"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
@@ -4342,7 +4356,6 @@ msgstr "Paasvakantie"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -4815,10 +4828,6 @@ msgstr "Invoergegevens invoeren"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
 msgstr "Voer URL in"
-
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
-msgstr "Typ meer dan twee karakters om resultaten te zien…"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -8293,6 +8302,12 @@ msgstr "Bedrijfsnaam"
 msgid "Organization Support"
 msgstr "Bedrijfsondersteuning"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
+#, fuzzy
+#| msgid "The language could not be updated."
+msgid "Organization could not be updated."
+msgstr "De taal kon niet worden bijgewerkt."
+
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
 msgstr "Tickets organisatie"
@@ -8316,6 +8331,12 @@ msgid ""
 msgstr ""
 "Organisaties zijn voor elke persoon in het systeem: Behandelaren (eigenaren, "
 "…) en klanten."
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+#, fuzzy
+#| msgid "Organization tickets"
+msgid "Organizations with \"%s\""
+msgstr "Tickets organisatie"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Organizer"
@@ -9487,7 +9508,7 @@ msgstr "zaterdag"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Opslaan"
@@ -9691,8 +9712,10 @@ msgstr "Selecteerd de ticket nummer generatie module."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Selecteer…"
 
@@ -11881,6 +11904,12 @@ msgstr "Tickets van organisatie"
 msgid "Tickets of User"
 msgstr "Tickets van gebruiker"
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#, fuzzy
+#| msgid "Tickets of User"
+msgid "Tickets with \"%s\""
+msgstr "Tickets van gebruiker"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12248,6 +12277,12 @@ msgstr "Ontgrendelen"
 msgid "Unread notification"
 msgstr "Servicemelding"
 
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+#, fuzzy
+#| msgid "Service Notification"
+msgid "Unread notifications"
+msgstr "Servicemelding"
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
@@ -12564,7 +12599,14 @@ msgstr "Gebruikersvoorkeuren"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 msgid "User could not be created."
+msgstr "Gebruiker kon niet aangemaakt worden."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+#, fuzzy
+#| msgid "User could not be created."
+msgid "User could not be updated."
 msgstr "Gebruiker kon niet aangemaakt worden."
 
 #: lib/external_credential/google.rb
@@ -12625,6 +12667,10 @@ msgstr "Gebruikersnaam voor Proxy verbinding."
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Gebruikers"
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -14444,6 +14490,7 @@ msgstr "timestamp - \"2018-08-30 14:30\""
 msgid "to go to the homepage."
 msgstr "om naar de startpagina te gaan."
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -14531,10 +14578,14 @@ msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr "|Links| betekent |[Ticket#12345] Onderwerp|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
+#, fuzzy
+#| msgid ""
+#| "|None| means |Some Subject| (without ticket number), in which case you "
+#| "should enable \"postmaster___follow___up___search___in\" to recognize "
+#| "follow-ups based on email headers and/or body."
 msgid ""
-"|None| means |Some Subject| (without ticket number), in which case you "
-"should enable \"postmaster___follow___up___search___in\" to recognize follow-"
-"ups based on email headers and/or body."
+"|None| means |Some Subject| (without ticket number), in which case it "
+"recognizes follow-ups based on email headers."
 msgstr ""
 "|Geen| betekent |Een onderwerp| (zonder ticketnummer). In dat geval moet u "
 "\"postmaster___follow___up___search___in\" inschakelen om follow-ups op "
@@ -14559,6 +14610,9 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "Enter more than two characters to get any results…"
+#~ msgstr "Typ meer dan twee karakters om resultaten te zien…"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "Kies attributen en sla ze vervolgens op als een nieuw sjabloon."

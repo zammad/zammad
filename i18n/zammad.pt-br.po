@@ -1598,6 +1598,15 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Are you sure?"
 
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to reload? You have unsaved changes that will get "
+#| "lost"
+msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
+"Tem certeza que deseja recarregar? Suas alterações não salvas serão perdidas"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Article"
@@ -2247,8 +2256,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -4425,6 +4434,10 @@ msgstr "Dispositivo"
 msgid "Devices"
 msgstr "Dispositivos"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
+msgid "Dialog window with selections"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
@@ -4641,7 +4654,6 @@ msgstr "Feriado da Páscoa"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -5122,10 +5134,6 @@ msgstr "Digite as Credenciais"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
 msgstr "Insira o URL do link"
-
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
-msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -8724,6 +8732,12 @@ msgstr "Nome da Organização"
 msgid "Organization Support"
 msgstr "Suporte da Organização"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
+#, fuzzy
+#| msgid "The object could not be updated."
+msgid "Organization could not be updated."
+msgstr "O objeto não pôde ser atualizado."
+
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "My Organization Tickets"
@@ -8747,6 +8761,12 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+#, fuzzy
+#| msgid "My Organization Tickets"
+msgid "Organizations with \"%s\""
+msgstr "Tickets da Minha Organização"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 msgid "Organizer"
@@ -9950,7 +9970,7 @@ msgstr "Sábado"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Salvar"
@@ -10150,8 +10170,10 @@ msgstr "Selecionar o módulo gerador de números para chamado."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Selecionar…"
 
@@ -12483,6 +12505,12 @@ msgstr "Chamados de uma Organização"
 msgid "Tickets of User"
 msgstr "Chamados do Usuário"
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#, fuzzy
+#| msgid "Tickets of User"
+msgid "Tickets with \"%s\""
+msgstr "Chamados do Usuário"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12853,6 +12881,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Notification"
 msgid "Unread notification"
+msgstr "Notificação"
+
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+#, fuzzy
+#| msgid "Notification"
+msgid "Unread notifications"
 msgstr "Notificação"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -13232,7 +13266,14 @@ msgstr "Preferência de Usuários"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 msgid "User could not be created."
+msgstr "Usuário não pôde ser criado."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+#, fuzzy
+#| msgid "User could not be created."
+msgid "User could not be updated."
 msgstr "Usuário não pôde ser criado."
 
 #: lib/external_credential/google.rb
@@ -13295,6 +13336,10 @@ msgstr "Usuário para conexão de proxy."
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Usuários"
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -15201,6 +15246,7 @@ msgstr ""
 msgid "to go to the homepage."
 msgstr "ir para a pagina inicial"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -15287,10 +15333,14 @@ msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr "|Esquerda| resulta |[Ticket#12345] Assunto qualquer|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
+#, fuzzy
+#| msgid ""
+#| "|None| means |Some Subject| (without ticket number), in which case you "
+#| "should enable \"postmaster___follow___up___search___in\" to recognize "
+#| "follow-ups based on email headers and/or body."
 msgid ""
-"|None| means |Some Subject| (without ticket number), in which case you "
-"should enable \"postmaster___follow___up___search___in\" to recognize follow-"
-"ups based on email headers and/or body."
+"|None| means |Some Subject| (without ticket number), in which case it "
+"recognizes follow-ups based on email headers."
 msgstr ""
 "|Vazio| resulta |Assunto qualquer| (sem numero de chamado). Neste caso você "
 "precisa habilitar \"postmaster___follow___up___search___in\" para que o "

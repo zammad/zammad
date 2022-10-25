@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-13 12:55+0000\n"
+"PO-Revision-Date: 2022-10-22 03:30+0000\n"
 "Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -341,10 +341,8 @@ msgid "%s credentials"
 msgstr "%s uppgifter"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s sedan"
+msgstr "%s dagar sedan"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -362,10 +360,8 @@ msgid "%s groups to %s roles assignments"
 msgstr "%s grupper till %s roll-tilldelningar"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "%s sedan"
+msgstr "%s timmar sedan"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -375,16 +371,12 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s är inaktiv, välj en aktiv."
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "minuter"
+msgstr "%s minuter sedan"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "%s sedan"
+msgstr "%s månader sedan"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -451,10 +443,8 @@ msgstr "%s bytte till |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "tilldela ärenden"
+msgstr "%s ärenden"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -463,10 +453,8 @@ msgstr "%s uppdaterade en artikel åt |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr "%s startade GDRP-uppgiften att radera |%s|"
+msgstr "%s updaterade GDRP-uppgiften att radera |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
@@ -480,24 +468,18 @@ msgstr "%s uppdaterade organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s uppdaterad roll |%s|"
+msgstr "%s uppdaterade roll |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "%s uppdaterade Ärende |%s|"
+msgstr "%s uppdaterade ärende |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
-#, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
-msgstr "%s uppdaterade Användare |%s|"
+msgstr "%s uppdaterade användare |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -507,16 +489,12 @@ msgid "%s user to %s user"
 msgstr "%s användare till %s användare"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "%s sedan"
+msgstr "%s veckor sedan"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "%s sedan"
+msgstr "%s år sedan"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -567,62 +545,52 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "1 attached file"
-msgstr "Bifogade filer"
+msgstr "1 bifogad fil"
 
 #: db/seeds/settings.rb
 msgid "1 day"
 msgstr "en dag"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "en dag"
+msgstr "1 dag sedan"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
 msgstr "en timme"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "en timme"
+msgstr "1 timme sedan"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 låg"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minut"
+msgstr "1 minut sedan"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "1 månad sedan"
 
 #: db/seeds/settings.rb
 msgid "1 week"
-msgstr "en vecka"
+msgstr "1 vecka"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "en vecka"
+msgstr "1 vecka sedan"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "1 år sedan"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
-msgstr "två timmar"
+msgstr "2 timmar"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -669,7 +637,7 @@ msgstr ""
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
+msgstr "En URL ser ut såhär: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -728,7 +696,7 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "API-nyckel"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
@@ -776,7 +744,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: app/models/channel/driver/sms/twilio.rb
 msgid "Account SID"
@@ -894,10 +862,8 @@ msgid "Active Agents"
 msgstr "Aktiva handläggare"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Aktivera"
+msgstr "Aktivitet"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 msgid "Activity Stream"
@@ -949,7 +915,7 @@ msgstr "Lägg till bot"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Certificate"
-msgstr ""
+msgstr "Lägg till certifikat"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -958,7 +924,7 @@ msgstr "Lägg till länk"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Private Key"
-msgstr ""
+msgstr "Lägg till privat nyckel"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
@@ -995,39 +961,31 @@ msgstr "Lägg till bifogningsalternativ till uppladdning."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add bullet list"
-msgstr ""
+msgstr "Lägg till punktlista"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
-msgstr ""
+msgstr "Lägg till rubrik"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
-msgstr "Lägg till tagg"
+msgstr "Lägg till bild"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Lägg till länk"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add ordered list"
-msgstr "Formatera som ordnad lista"
+msgstr "Lägg till ordnad lista"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
-#, fuzzy
-#| msgid "reply"
 msgid "Add reply"
-msgstr "svara"
+msgstr "Svara"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
-msgstr ""
+msgstr "Lägg till underrubrik"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1055,26 +1013,24 @@ msgstr "Adress"
 
 #: db/seeds/settings.rb
 msgid "Address of the proxy server for http and https resources."
-msgstr ""
+msgstr "Proxy-serverns adress för http- och https-källor."
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee
 #: db/seeds/roles.rb
 msgid "Admin"
-msgstr "Administration"
+msgstr "Administratör"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Godännande av administratör"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
-msgstr ""
+msgstr "Admin-gränssnitt"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin Password Login"
-msgstr "Bind Lösenord"
+msgstr "Admin-lösenord"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1107,11 +1063,11 @@ msgstr "Administratörskonto"
 
 #: app/controllers/users_controller.rb
 msgid "Administrator account already created"
-msgstr ""
+msgstr "Administratörskonto redan skapat"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
-msgstr ""
+msgstr "Gå till nästa ärende från översikt"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1424,6 +1380,10 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr "Är du säker?"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2100,8 +2060,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -4241,6 +4201,10 @@ msgstr ""
 msgid "Devices"
 msgstr "Enheter"
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
+msgid "Dialog window with selections"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know? You can help translating %s at:"
@@ -4470,7 +4434,6 @@ msgstr "Påskledighet"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
@@ -4949,10 +4912,6 @@ msgstr "Ange uppgifter"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
-msgid "Enter more than two characters to get any results…"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
@@ -8538,6 +8497,12 @@ msgstr "Bolags namn"
 msgid "Organization Support"
 msgstr "Organisationsupport"
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Organization could not be updated."
+msgstr "%s Objekt är uppdaterade."
+
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 #, fuzzy
 #| msgid "My Organization Tickets"
@@ -8561,6 +8526,12 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/search/plugins/organization.ts
+#, fuzzy
+#| msgid "My Organization Tickets"
+msgid "Organizations with \"%s\""
+msgstr "Min organisations ärenden"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
@@ -9793,7 +9764,7 @@ msgstr "Lördag"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
-#: app/frontend/apps/mobile/components/Organization/OrganizationEditDialog.vue
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Save"
 msgstr "Spara"
@@ -10005,8 +9976,10 @@ msgstr "Väljer generatormodulen för ärendenummer."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 #, fuzzy
 #| msgid "Select Template"
 msgid "Select…"
@@ -12286,6 +12259,12 @@ msgstr "Ärenden för Företag"
 msgid "Tickets of User"
 msgstr "Ärende för Användare"
 
+#: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
+#, fuzzy
+#| msgid "Tickets of User"
+msgid "Tickets with \"%s\""
+msgstr "Ärende för Användare"
+
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12657,6 +12636,12 @@ msgstr ""
 msgid "Unread notification"
 msgstr "Notifikation"
 
+#: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
+#, fuzzy
+#| msgid "Notification"
+msgid "Unread notifications"
+msgstr "Notifikation"
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
 msgstr "Sluta följ"
@@ -12966,9 +12951,16 @@ msgstr "Användarpreferenser"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
+#: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "User could not be created."
+msgstr "%s Objekt har skapats."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "User could not be updated."
 msgstr "%s Objekt har skapats."
 
 #: lib/external_credential/google.rb
@@ -13031,6 +13023,10 @@ msgstr "Användarnamn för proxy-anslutning."
 #: db/seeds/permissions.rb
 msgid "Users"
 msgstr "Användare"
+
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts
+msgid "Users with \"%s\""
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Users without assigned LDAP groups"
@@ -14930,6 +14926,7 @@ msgstr ""
 msgid "to go to the homepage."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
@@ -15026,9 +15023,8 @@ msgstr "|Vänster| betyder |[Ärende#12345] Något ämne|"
 #| "should enable \"postmaster___follow___up___search___in\" to recognize "
 #| "followups based on email headers and/or body."
 msgid ""
-"|None| means |Some Subject| (without ticket number), in which case you "
-"should enable \"postmaster___follow___up___search___in\" to recognize follow-"
-"ups based on email headers and/or body."
+"|None| means |Some Subject| (without ticket number), in which case it "
+"recognizes follow-ups based on email headers."
 msgstr ""
 "|Inga| betyder |Något ämne| (utan ärendenummer). I det sista fallet bör du "
 "aktivera \"postmaster___follow___up___search___in\" för att identifiera "

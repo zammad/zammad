@@ -1,0 +1,15 @@
+Поништите своју #{config.product_name} лозинку
+
+<div>Здраво #{user.firstname},</div>
+<br>
+<div>Примили смо захтев за поништавање лозинке вашег #{config.product_name} налога <b>#{user.login}</b>.</div>
+<br>
+<div>Уколико желите да поништите вашу лозинку, кликните на линк испод (или ископирајте URL у ваш претраживач):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Овај линк вас води на страну где можете поништити вашу лозинку.</div>
+<br>
+<div>Уколико не желите да поништите вашу лозинку, молимо игноришите ову поруку. Ваша лозинка неће бити поништена.</div>
+<br>
+<div>Ваш #{config.product_name} тим</div>
