@@ -29,18 +29,15 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
   end
 
   def token_or_permission?
-    return true if user.present? && monitoring_admin!
-    return true if valid_token_param?
+    if user.present?
+      return monitoring_admin?
+    end
 
-    not_authorized
+    valid_token_param?
   end
 
   def permission_and_permission_active?
-    user_required!
-    monitoring_admin!
-    return true if permission_active?
-
-    not_authorized
+    user.present? && monitoring_admin? && permission_active?
   end
 
   def valid_token_param?
@@ -51,8 +48,7 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
     Permission.exists?(name: 'admin.monitoring', active: true)
   end
 
-  def monitoring_admin!
-    user.permissions!('admin.monitoring')
-    true
+  def monitoring_admin?
+    user.permissions?('admin.monitoring')
   end
 end

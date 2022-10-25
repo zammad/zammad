@@ -23,11 +23,15 @@ module PunditPolicy
 
   private
 
-  def not_authorized(details = nil)
-    if details
-      details = "Not authorized (#{details})!"
-    end
-    @custom_exception = Exceptions::Forbidden.new(details)
+  def not_authorized(details_or_exception)
+    @custom_exception = case details_or_exception
+                        when Exception
+                          details_or_exception
+                        else
+                          message = "Not authorized (#{details_or_exception})!"
+                          Exceptions::Forbidden.new(message)
+                        end
+
     false
   end
 

@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class Token < ApplicationModel
-  include CanBeAuthorized
-
   before_create :generate_token
   belongs_to    :user, optional: true
   store         :preferences
@@ -104,10 +102,17 @@ cleanup old token
     )
   end
 
-  def permissions?(names)
-    return false if !effective_user.permissions?(names)
+  def permissions?(permissions)
+    permissions!(permissions)
+    true
+  rescue Exceptions::Forbidden
+    false
+  end
 
-    super(names)
+  def permissions!(auth_query)
+    return true if effective_user.permissions?(auth_query) && Auth::RequestCache.permissions?(self, auth_query)
+
+    raise Exceptions::Forbidden, __('Not authorized (token)!')
   end
 
   # allows to evaluate token permissions in context of given user instead of owner

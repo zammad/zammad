@@ -6,6 +6,8 @@ class Controllers::SettingsControllerPolicy < Controllers::ApplicationController
   def show?
     user.permissions!('admin.*')
     authorized_for_setting?(:show?)
+  rescue Exceptions::Forbidden => e
+    not_authorized(e)
   end
 
   def update?

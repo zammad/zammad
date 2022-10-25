@@ -1,30 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module CanBeAuthorized
-  extend ActiveSupport::Concern
-
-=begin
-
-true or false for permission
-
-  user = User.find(123)
-  user.permissions?('permission.key') # access to certain permission.key
-  user.permissions?(['permission.key1', 'permission.key2']) # access to permission.key1 or permission.key2
-
-  user.permissions?('permission') # access to all sub keys
-
-  user.permissions?('permission.*') # access if one sub key access exists
-
-returns
-
-  true|false
-
-=end
-
-  def permissions?(auth_query)
-    RequestCache.permissions?(self, auth_query)
-  end
-
+class Auth
   class RequestCache < ActiveSupport::CurrentAttributes
     attribute :permission_cache
 

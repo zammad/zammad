@@ -22,6 +22,6 @@ class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerP
 
     # current implementation requires this exception type
     # should be replaced by unified way
-    raise Exceptions::UnprocessableEntity, __('Not allowed to access this task.')
+    not_authorized Exceptions::UnprocessableEntity.new __('Not allowed to access this task.')
   end
 end

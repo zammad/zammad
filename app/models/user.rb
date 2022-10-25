@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class User < ApplicationModel
-  include CanBeAuthorized
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
@@ -424,6 +423,19 @@ returns
 
   def permissions_with_child_names
     permissions_with_child_elements.pluck(:name)
+  end
+
+  def permissions?(permissions)
+    permissions!(permissions)
+    true
+  rescue Exceptions::Forbidden
+    false
+  end
+
+  def permissions!(auth_query)
+    return true if Auth::RequestCache.permissions?(self, auth_query)
+
+    raise Exceptions::Forbidden, __('Not authorized (user)!')
   end
 
 =begin

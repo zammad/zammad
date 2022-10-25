@@ -22,12 +22,14 @@ class Controllers::ApplicationControllerPolicy < ApplicationPolicy
   def method_missing(missing_method, *)
     case (permission = action_permissions_map[missing_method])
     when String, Array
-      user.permissions!(permission) || true
+      user.permissions!(permission)
     when Proc
-      user.permissions!(instance_exec(&permission)) || true
+      user.permissions!(instance_exec(&permission))
     else
       super
     end
+  rescue Exceptions::Forbidden => e
+    not_authorized(e)
   end
 
   def respond_to_missing?(missing_method)

@@ -119,15 +119,15 @@ describe Controllers::MonitoringControllerPolicy do
     context 'when user does not have permission' do
       let(:user) { create(:agent) }
 
-      it 'raises error' do
-        expect { instance.send(:token_or_permission?) }.to raise_error %r{Not authorized}
+      it 'returns false' do
+        expect(instance.send(:token_or_permission?)).to be_falsey
       end
 
       context 'when token given' do
         let(:token) { Setting.get('monitoring_token') }
 
-        it 'raises error' do
-          expect { instance.send(:token_or_permission?) }.to raise_error %r{Not authorized}
+        it 'returns false' do
+          expect(instance.send(:token_or_permission?)).to be_falsey
         end
       end
     end
@@ -153,16 +153,16 @@ describe Controllers::MonitoringControllerPolicy do
     context 'when not logged in' do
       let(:user) { nil }
 
-      it 'raises error' do
-        expect { instance.send(:permission_and_permission_active?) }.to raise_error %r{Authentication required}
+      it 'returns false' do
+        expect(instance.send(:permission_and_permission_active?)).to be_falsey
       end
     end
 
     context 'when user does not have permission' do
       let(:user) { create(:agent) }
 
-      it 'raises error' do
-        expect { instance.send(:permission_and_permission_active?) }.to raise_error %r{Not authorized}
+      it 'returns false' do
+        expect(instance.send(:permission_and_permission_active?)).to be_falsey
       end
     end
 
@@ -176,7 +176,7 @@ describe Controllers::MonitoringControllerPolicy do
       it 'when permission not active returns false' do
         Permission.where(name: 'admin.monitoring').first.update!(active: false)
 
-        expect { instance.send(:permission_and_permission_active?) }.to raise_error %r{Not authorized}
+        expect(instance.send(:permission_and_permission_active?)).to be_falsey
       end
     end
   end
@@ -204,20 +204,28 @@ describe Controllers::MonitoringControllerPolicy do
     end
   end
 
-  describe '#monitoring_admin!' do
+  describe '#monitoring_admin?' do
     context 'when has monitoring permission' do
       let(:user) { create(:admin) }
 
       it 'returns true' do
-        expect(instance.send(:monitoring_admin!)).to be_truthy
+        expect(instance.send(:monitoring_admin?)).to be_truthy
       end
     end
 
     context 'when does not have monitoring permission' do
       let(:user) { create(:agent) }
 
-      it 'throws an error' do
-        expect { instance.send(:monitoring_admin!) }.to raise_error(%r{Not authorized})
+      it 'returns false' do
+        expect(instance.send(:monitoring_admin?)).to be_falsey
+      end
+    end
+
+    context 'when no authorized user' do
+      let(:user) { nil }
+
+      it 'returns false' do
+        expect(instance.send(:monitoring_admin?)).to be_falsey
       end
     end
   end

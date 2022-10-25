@@ -16,19 +16,20 @@ class UserContext < Delegator
     @user
   end
 
-  def permissions!(permissions)
-    raise Exceptions::Forbidden, __('Authentication required') if !@user
-    raise Exceptions::Forbidden, __('Not authorized (user)!') if !@user.permissions?(permissions)
-    return if !@token
-    return if @token.with_context(user: @user) { permissions?(permissions) }
-
-    raise Exceptions::Forbidden, __('Not authorized (token)!')
-  end
-
   def permissions?(permissions)
     permissions!(permissions)
     true
   rescue Exceptions::Forbidden
     false
+  end
+
+  def permissions!(permissions)
+    raise Exceptions::Forbidden, __('Authentication required') if !@user
+
+    if @token
+      return @token.with_context(user: @user) { permissions!(permissions) }
+    end
+
+    @user.permissions!(permissions)
   end
 end

@@ -6975,12 +6975,12 @@ msgid "Not authorized (token expired)!"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
-#: lib/user_context.rb
+#: app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
-#: lib/user_context.rb
+#: app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr ""
 

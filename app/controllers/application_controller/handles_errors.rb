@@ -61,6 +61,8 @@ module ApplicationController::HandlesErrors
     case exception
     when ActiveRecord::RecordNotFound
       not_found(exception)
+    when Exceptions::UnprocessableEntity
+      unprocessable_entity(exception)
     else
       forbidden(exception)
     end
@@ -85,7 +87,6 @@ module ApplicationController::HandlesErrors
   end
 
   def humanize_error(e)
-
     data = {
       error: e.message
     }
