@@ -176,6 +176,7 @@ returns
   end
 
   def auto_assign(user)
+    return if !persisted?
     return if Setting.get('ticket_auto_assignment').blank?
     return if owner_id != 1
     return if !TicketPolicy.new(user, self).full?
@@ -186,7 +187,14 @@ returns
     ticket_auto_assignment_selector = Setting.get('ticket_auto_assignment_selector')
     return if ticket_auto_assignment_selector.blank?
 
-    ticket_count, = Ticket.selectors(ticket_auto_assignment_selector[:condition], limit: 1, current_user: user, access: 'full')
+    condition = ticket_auto_assignment_selector[:condition].merge(
+      'ticket.id' => {
+        'operator' => 'is',
+        'value'    => id,
+      }
+    )
+
+    ticket_count, = Ticket.selectors(condition, limit: 1, current_user: user, access: 'full')
     return if ticket_count.to_i.zero?
 
     update!(owner: user)
