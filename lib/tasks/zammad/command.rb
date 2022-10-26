@@ -10,7 +10,7 @@ module Tasks
 
       # Infer the rake task name from the class name.
       def self.task_name
-        name.downcase.gsub('::', ':').sub('tasks:', '').to_sym
+        name.underscore.sub('tasks/', '').tr('/', ':').to_sym
       end
 
       # Override this if the task needs additional arguments.
