@@ -1,6 +1,6 @@
 # Updating Cypress Visual Snapshots
 
-This command only _updates_ snapshots. Cypress will run only tests with `*-visual.cy` in their name, and will not fail, if snapshot is not correct, but will generate a new snapshot instead. If you are using Mac, it is advised to run this command in a separate project, because we have packages that depend on a platform, but folder structure is shared between docker (Linux machine) and Mac.
+This command only _updates_ snapshots. Cypress will run only tests with `*-visual.cy` in their name, and will not fail, if snapshot is not correct, but will generate a new snapshot instead.
 
 ```sh
 # from the root directory

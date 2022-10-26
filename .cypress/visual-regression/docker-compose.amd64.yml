@@ -1,4 +1,8 @@
 version: '3.6'
+
+volumes:
+  visual-regression-dependencies-amd64:
+
 services:
   cypress:
     platform: linux/amd64
@@ -6,6 +10,7 @@ services:
     ipc: host
     volumes:
       - ../..:/app
+      - visual-regression-dependencies-amd64:/app/node_modules
       - ~/.cache/Cypress:/root/.cache/Cypress
     working_dir: /app
     ports:
