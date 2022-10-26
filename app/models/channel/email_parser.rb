@@ -625,7 +625,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
           if part.mime_type == 'text/plain' && !part.attachment?
             memo += body_text(part, strict_html: false).text2html
           elsif part.inline? && part.content_type&.start_with?('image')
-            memo += "<img src=\'cid:#{part.cid}\'>"
+            memo += "<img src='cid:#{part.cid}'>"
           end
 
           memo

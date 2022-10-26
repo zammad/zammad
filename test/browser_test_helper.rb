@@ -581,7 +581,7 @@ class TestCase < ActiveSupport::TestCase
     end
     execute(
       browser:  instance,
-      js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
+      js:       "$('#{params[:css]}').get(0).scrollIntoView(#{position})",
       mute_log: params[:mute_log]
     )
     sleep 0.3
@@ -2678,7 +2678,7 @@ wait untill text in selector disabppears
     link = if params[:link]
              params[:link]
            elsif params[:name]
-             "\#ticket/view/#{params[:name]}"
+             "#ticket/view/#{params[:name]}"
            end
 
     # switch to overview

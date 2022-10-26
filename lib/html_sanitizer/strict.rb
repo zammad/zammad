@@ -40,7 +40,7 @@ class HtmlSanitizer
       fqdn      = Setting.get('fqdn')
       http_type = Setting.get('http_type')
 
-      "#{http_type}://#{fqdn}/\#".downcase
+      "#{http_type}://#{fqdn}/#".downcase
     end
   end
 end

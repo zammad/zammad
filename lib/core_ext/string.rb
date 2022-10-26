@@ -437,7 +437,7 @@ class String
     # Objet : xxx
     # en/de/fr | sometimes ms adds a space to "xx : value"
     map['ms-en-de-fr_from'] = '^(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ)( ?):[[:space:]].+?'
-    map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######\/b######)[[:space:]].+?"
+    map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######/b######)[[:space:]].+?"
 
     # word 14
     # edv hotline wrote:

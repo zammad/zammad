@@ -72,7 +72,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
           all('.js-editInbound').last.click
           fill_in 'options::folder', with: 'nonexisting_folder'
           click '.js-submit'
-          expect(page).to have_text("Mailbox doesn\'t exist")
+          expect(page).to have_text("Mailbox doesn't exist")
         end
       end
     end
