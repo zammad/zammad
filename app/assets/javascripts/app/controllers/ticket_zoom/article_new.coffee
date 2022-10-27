@@ -6,6 +6,7 @@ class App.TicketZoomArticleNew extends App.Controller
     '.attachmentPlaceholder':             'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':        'attachmentHint'
+    '.article-visibility-text-wrapper':   'visibilityTextWrapper'
     '.article-add':                       'articleNewEdit'
     '.attachments':                       'attachmentsHolder'
     '.attachmentUpload':                  'attachmentUpload'
@@ -535,6 +536,12 @@ class App.TicketZoomArticleNew extends App.Controller
           duration: 300
           stagger: 50
           drag: true
+    @visibilityTextWrapper.velocity
+      properties:
+        height: '1.8em'
+      options:
+        duration: 300
+        easing: 'easeOutQuad'
 
     # move attachment text to the left bottom (bottom happens automatically)
     @attachmentPlaceholder.velocity
@@ -593,6 +600,12 @@ class App.TicketZoomArticleNew extends App.Controller
             stagger: 50
             drag: true
             complete: (elements) -> $(elements).addClass('is-hidden')
+      @visibilityTextWrapper.velocity
+        properties:
+          height: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
 
   onDragenter: (event) =>
     # on the first event,

@@ -39,8 +39,14 @@
     <% end %>
   </div>
   <div class="article-content bubble-gap">
+    <% if !_.isEmpty(@C('ui_ticket_add_note')): %>
+      <div class="article-visibility-text-wrapper" style="height: 0">
+        <% for type, note of @C('ui_ticket_add_note'): %>
+            <div class="article-visibility-text is-hidden" role="alert" data-type="<%= type %>"><%- @T(note) %></div>
+        <% end %>
+      </div>
+    <% end %>
     <div class="internal-border">
-
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('To') %></label>

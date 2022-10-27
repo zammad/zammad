@@ -5019,6 +5019,22 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Hint for adding note to an existing ticket.'),
+  name:        'ui_ticket_add_note',
+  area:        'UI::TicketZoomArticle',
+  description: __('Hint for adding note to an existing ticket, so the user understand what public and internal notes are.'),
+  options:     {},
+  state:       {
+    # 'internal-note' => 'You are writing an |internal note|, only people of your organization will be able to read it.',
+    # 'public-note' => 'You are writing a |public note|.',
+  },
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend:    true
+)
+
+Setting.create_if_not_exists(
   title:       __('S/MIME integration'),
   name:        'smime_integration',
   area:        'Integration::Switch',
