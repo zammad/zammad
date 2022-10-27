@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+require 'icalendar/tzinfo'
+
 class CalendarSubscriptions
 
   def initialize(user)
@@ -53,6 +55,14 @@ class CalendarSubscriptions
   def to_ical(events_data)
 
     cal = Icalendar::Calendar.new
+
+    # https://github.com/zammad/zammad/issues/3989
+    # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19
+    if events_data.first.present?
+      tz = TZInfo::Timezone.get(@time_zone)
+      timezone = tz.ical_timezone(DateTime.parse(events_data.first[:dtstart].to_s))
+      cal.add_timezone(timezone)
+    end
 
     events_data.each do |event_data|
 
