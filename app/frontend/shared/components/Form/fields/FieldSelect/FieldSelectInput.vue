@@ -52,7 +52,7 @@ useSelectPreselect(sortedOptions, toRef(props, 'context'))
     :class="[
       {
         [context.classes.input]: !isSizeSmall,
-        'flex h-auto formkit-populated:pt-0': !isSizeSmall,
+        'flex h-auto': !isSizeSmall,
         'w-auto rounded-lg bg-gray-600': isSizeSmall,
       },
     ]"

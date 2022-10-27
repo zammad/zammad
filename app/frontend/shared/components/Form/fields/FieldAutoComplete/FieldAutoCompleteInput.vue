@@ -73,7 +73,7 @@ useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
     :class="{
       [context.classes.input]: true,
     }"
-    class="flex h-auto rounded-none bg-transparent formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent"
     data-test-id="field-autocomplete"
   >
     <output

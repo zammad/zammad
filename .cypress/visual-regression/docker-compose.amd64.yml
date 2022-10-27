@@ -5,6 +5,8 @@ volumes:
 
 services:
   cypress:
+    environment:
+      CYPRESS_UPDATE_SNAPSHOTS: ${CYPRESS_UPDATE_SNAPSHOTS:-true}
     platform: linux/amd64
     image: cypress/base:16.17.1
     ipc: host

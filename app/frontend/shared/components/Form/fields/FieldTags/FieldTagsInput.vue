@@ -41,7 +41,7 @@ useFormBlock(props.context, () => !dialog.isOpened.value && showDialog())
 <template>
   <div
     :class="context.classes.input"
-    class="flex h-auto rounded-none bg-transparent formkit-populated:pt-0"
+    class="flex h-auto rounded-none bg-transparent"
     data-test-id="field-tags"
   >
     <output
