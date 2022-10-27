@@ -5337,6 +5337,14 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Highlights if the note a user is writing is public or private"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Hint for adding an article to an existing ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
@@ -13426,6 +13434,7 @@ msgstr ""
 msgid "set readonly"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
 msgstr ""

@@ -11,7 +11,7 @@ class Internal
       }
     else
       actions.push {
-        name: ('set to internal')
+        name: __('set to internal')
         type: 'internal'
         icon: 'lock'
       }

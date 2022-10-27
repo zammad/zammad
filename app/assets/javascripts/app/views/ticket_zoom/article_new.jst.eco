@@ -1,3 +1,10 @@
+<% if !_.isEmpty(@C('ui_ticket_add_article_hint')): %>
+<div class="article-visibility-text-wrapper">
+<% for key, note of @C('ui_ticket_add_article_hint'): %>
+  <div class="article-visibility-text alert alert--warning is-hidden" role="alert" aria-hidden="true" data-type="<%= key %>"><%- @T(note) %></div>
+<% end %>
+</div>
+<% end %>
 <form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
@@ -40,7 +47,6 @@
   </div>
   <div class="article-content bubble-gap">
     <div class="internal-border">
-
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('To') %></label>

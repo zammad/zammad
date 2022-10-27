@@ -6,6 +6,7 @@ class App.TicketZoomArticleNew extends App.Controller
     '.attachmentPlaceholder':             'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':        'attachmentHint'
+    '.article-visibility-text-wrapper':   'visibilityTextWrapper'
     '.article-add':                       'articleNewEdit'
     '.attachments':                       'attachmentsHolder'
     '.attachmentUpload':                  'attachmentUpload'
@@ -369,8 +370,17 @@ class App.TicketZoomArticleNew extends App.Controller
       .toggleClass('is-public', !internal)
       .toggleClass('is-internal', internal)
 
-    value = if internal then 'true' else ''
+    visibilityTextType = "#{@type}-#{if internal then 'internal' else 'public'}"
 
+    @visibilityTextWrapper
+      .find('.article-visibility-text')
+      .addClass('is-hidden')
+      .attr('aria-hidden', true)
+      .filter("[data-type='#{visibilityTextType}']")
+      .removeClass('is-hidden')
+      .removeAttr('aria-hidden')
+
+    value = if internal then 'true' else ''
     @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>
@@ -536,6 +546,14 @@ class App.TicketZoomArticleNew extends App.Controller
           stagger: 50
           drag: true
 
+    @visibilityTextWrapper.velocity
+      properties:
+        opacity: 1
+        height: '100%'
+      options:
+        duration: 300
+        easing: 'easeOutQuad'
+
     # move attachment text to the left bottom (bottom happens automatically)
     @attachmentPlaceholder.velocity
       properties:
@@ -593,6 +611,14 @@ class App.TicketZoomArticleNew extends App.Controller
             stagger: 50
             drag: true
             complete: (elements) -> $(elements).addClass('is-hidden')
+
+      @visibilityTextWrapper.velocity
+        properties:
+          opacity: 0
+          height: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
 
   onDragenter: (event) =>
     # on the first event,
