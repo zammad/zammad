@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'TicketsMass', type: :request, authenticated_as: :user do
+RSpec.describe 'TicketsMass', authenticated_as: :user, type: :request do
   let(:user)  { create(:agent, groups: [group_a, group_b]) }
   let(:owner) { create(:agent) }
 
@@ -24,8 +24,8 @@ RSpec.describe 'TicketsMass', type: :request, authenticated_as: :user do
         'ticket.priority_id': { pre_condition: 'specific', value: 3.to_s }
       }
     end
-    let(:macro) { create :macro, perform: macro_perform }
-    let(:macro_groups) { create :macro, groups: [group_a], perform: macro_perform }
+    let(:macro) { create(:macro, perform: macro_perform) }
+    let(:macro_groups) { create(:macro, groups: [group_a], perform: macro_perform) }
 
     it 'applies macro' do
       post '/api/v1/tickets/mass_macro', params: { macro_id: macro.id, ticket_ids: [ticket_a.id] }

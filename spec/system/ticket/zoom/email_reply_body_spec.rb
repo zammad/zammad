@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Zoom > Email Reply Body', type: :system, time_zone: 'Europe/London', authenticated_as: :authenticate do
+RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate, time_zone: 'Europe/London', type: :system do
   let(:agent)    { create(:agent, groups: [Group.first]) }
   let(:customer) { create(:customer) }
   let(:ticket)   { create(:ticket, customer: customer, group: Group.first) }

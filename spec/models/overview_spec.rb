@@ -93,15 +93,15 @@ RSpec.describe Overview, type: :model do
     end
 
     it 'sets first Overview priority as 0' do
-      overview = create :overview, prio: nil
+      overview = create(:overview, prio: nil)
 
       expect(overview.prio).to be 0
     end
 
     it 'sets new Overview priority as +1' do
-      create :overview, prio: 123
+      create(:overview, prio: 123)
 
-      overview_next = create :overview, prio: nil
+      overview_next = create(:overview, prio: nil)
 
       expect(overview_next.prio).to be 124
     end

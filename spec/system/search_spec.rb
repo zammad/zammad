@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true do
-  let(:group_1)               { create :group }
-  let(:group_2)               { create :group }
-  let(:macro_without_group)   { create :macro }
-  let(:macro_note)            { create :macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } } }
-  let(:macro_group1)          { create :macro, groups: [group_1] }
-  let(:macro_group2)          { create :macro, groups: [group_2] }
-  let!(:ticket_1)             { create :ticket, title: 'Testing Ticket 1', group: group_1 }
-  let!(:ticket_2)             { create :ticket, title: 'Testing Ticket 2', group: group_2 }
+RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system do
+  let(:group_1)               { create(:group) }
+  let(:group_2)               { create(:group) }
+  let(:macro_without_group)   { create(:macro) }
+  let(:macro_note)            { create(:macro, name: 'Macro note', perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } }) }
+  let(:macro_group1)          { create(:macro, groups: [group_1]) }
+  let(:macro_group2)          { create(:macro, groups: [group_2]) }
+  let!(:ticket_1)             { create(:ticket, title: 'Testing Ticket 1', group: group_1) }
+  let!(:ticket_2)             { create(:ticket, title: 'Testing Ticket 2', group: group_2) }
   let(:note)                  { 'Test note' }
 
   before do
@@ -153,9 +153,9 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
   end
 
   context 'with ticket search result for macros bulk action', authenticated_as: :authenticate do
-    let(:group_3)      { create :group }
+    let(:group_3)      { create(:group) }
     let(:search_query) { 'Testing' }
-    let!(:ticket_3)    { create :ticket, title: 'Testing Ticket 3', group: group_3 }
+    let!(:ticket_3)    { create(:ticket, title: 'Testing Ticket 3', group: group_3) }
     let(:agent)        { create(:agent, groups: Group.all) }
 
     before do
@@ -238,7 +238,7 @@ RSpec.describe 'Search', type: :system, authenticated: true, searchindex: true d
 
       def authenticate
         ticket_1 && ticket_2
-        Macro.destroy_all && (create_list :macro, all)
+        Macro.destroy_all && create_list(:macro, all)
         agent
       end
 

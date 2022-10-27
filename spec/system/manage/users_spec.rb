@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage > Users', type: :system do
-  describe 'switching to an alternative user', authentication_type: :form, authenticated_as: :authenticate do
+  describe 'switching to an alternative user', authenticated_as: :authenticate, authentication_type: :form do
     let(:original_user)        { create(:admin) }
     let(:alternative_one_user) { create(:admin) }
     let(:alternative_two_user) { create(:admin) }

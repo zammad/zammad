@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Login', type: :system, app: :mobile, authenticated_as: false do
+RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :system do
   it 'Login with remember me and logout again' do
     visit '/login', skip_waiting: true
 

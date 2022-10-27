@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
+RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
   context 'when user resets password once' do
     it 'creates a token' do

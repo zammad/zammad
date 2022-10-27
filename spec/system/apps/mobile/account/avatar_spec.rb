@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Account > Avatar', type: :system, app: :mobile do
+RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
   let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
 
   context 'when on Account > Avatar page', authenticated_as: :agent do

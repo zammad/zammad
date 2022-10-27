@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Unit::Import::Freshdesk::Tickets, sequencer: :unit, db_strategy: 'reset' do
+RSpec.describe ::Sequencer::Unit::Import::Freshdesk::Tickets, db_strategy: 'reset', sequencer: :unit do
   context 'when importing ticket list from freshdesk' do
-    let(:group) { create :group }
-    let(:owner) { create :agent, group_ids: [group.id] }
+    let(:group) { create(:group) }
+    let(:owner) { create(:agent, group_ids: [group.id]) }
 
     let(:id_map) do
       {

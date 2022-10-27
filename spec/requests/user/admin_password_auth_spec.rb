@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User endpoint', type: :request, authenticated_as: false do
+RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
   describe 'admin_auth' do
     context 'with enabled password login' do
       before { Setting.set('user_show_password_login', true) }

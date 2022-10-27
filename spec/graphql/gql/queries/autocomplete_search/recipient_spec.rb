@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, type: :graphql, authenticated_as: :agent do
+RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :agent, type: :graphql do
 
   context 'when searching for recipients' do
     let(:agent)     { create(:agent) }

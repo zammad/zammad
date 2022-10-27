@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Basic > Logout Frontend Store Reset', type: :system, app: :mobile do
+RSpec.describe 'Mobile > Basic > Logout Frontend Store Reset', app: :mobile, type: :system do
   context 'when use the logout and afterwards the login with a different user' do
     let(:agent)    { create(:agent) }
     let(:customer) { create(:customer) }

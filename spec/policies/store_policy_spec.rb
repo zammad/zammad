@@ -33,14 +33,14 @@ describe StorePolicy do
 
   context 'with a user' do
     context 'with full access' do
-      let(:user)       { create :admin }
+      let(:user)       { create(:admin) }
       let(:visibility) { :published }
 
       it { is_expected.to permit_actions :show, :destroy }
     end
 
     context 'with limited access' do
-      let(:user) { create :agent }
+      let(:user) { create(:agent) }
       let(:visibility) { :internal }
 
       it { is_expected.to permit_actions :show }
@@ -48,15 +48,15 @@ describe StorePolicy do
     end
 
     context 'without access' do
-      let(:user) { create :agent }
+      let(:user) { create(:agent) }
       let(:visibility) { :draft }
 
       it { is_expected.to forbid_actions :show, :destroy }
     end
 
     context 'with object that does not have a policy' do
-      let(:record) { create :store_image, object: 'NonExistingObject' }
-      let(:user)   { create :admin }
+      let(:record) { create(:store_image, object: 'NonExistingObject') }
+      let(:user)   { create(:admin) }
 
       it { is_expected.to forbid_actions :show, :destroy }
     end

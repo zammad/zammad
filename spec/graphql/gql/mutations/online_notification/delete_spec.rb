@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::OnlineNotification::Delete, type: :graphql, authenticated_as: :user do
+RSpec.describe Gql::Mutations::OnlineNotification::Delete, authenticated_as: :user, type: :graphql do
   let(:user)                      { create(:agent) }
   let(:notification)              { create(:online_notification, user: user) }
   let(:another_user_notification) { create(:online_notification, user: create(:user)) }

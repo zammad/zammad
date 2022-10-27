@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Ticket::SharedDraftStart, type: :model do
-  subject(:shared_draft_start) { create :ticket_shared_draft_start }
+  subject(:shared_draft_start) { create(:ticket_shared_draft_start) }
 
   it { is_expected.to belong_to :group }
   it { is_expected.to validate_presence_of :name }

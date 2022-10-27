@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Macro', type: :request, authenticated_as: :user do
+RSpec.describe 'Macro', authenticated_as: :user, type: :request do
   let(:successful_params) do
     {
       name:            'asd',

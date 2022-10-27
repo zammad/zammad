@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Ticket::SharedDraftZoom, type: :model do
-  subject(:shared_draft_zoom) { create :ticket_shared_draft_zoom }
+  subject(:shared_draft_zoom) { create(:ticket_shared_draft_zoom) }
 
   it { is_expected.to belong_to :ticket }
   it { expect(shared_draft_zoom.new_article).to be_a(Hash) }

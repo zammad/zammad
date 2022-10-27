@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Channel::EmailParser process with auto-submitted filter', type: :model, aggregate_failures: true do
+RSpec.describe 'Channel::EmailParser process with auto-submitted filter', aggregate_failures: true, type: :model do
 
   before do
     PostmasterFilter.destroy_all

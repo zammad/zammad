@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Knowledge Base search with details', type: :request, searchindex: true do
+RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :request do
   include_context 'basic Knowledge Base'
 
   before do

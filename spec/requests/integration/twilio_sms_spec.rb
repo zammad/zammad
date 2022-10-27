@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Twilio SMS', type: :request, performs_jobs: true do
+RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
 
   describe 'request handling' do
 

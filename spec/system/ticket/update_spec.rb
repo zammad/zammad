@@ -224,8 +224,8 @@ RSpec.describe 'Ticket Update', type: :system do
 
   context 'when merging tickets' do
     let!(:user)          { create(:user) }
-    let!(:origin_ticket) { create :ticket, group: group }
-    let!(:target_ticket) { create :ticket, group: group }
+    let!(:origin_ticket) { create(:ticket, group: group) }
+    let!(:target_ticket) { create(:ticket, group: group) }
 
     before do
       origin_ticket.merge_to(ticket_id: target_ticket.id, user_id: user.id)

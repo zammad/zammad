@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, type: :graphql, authenticated_as: :user do
+RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, authenticated_as: :user, type: :graphql do
   let(:user)                      { create(:agent) }
   let(:notification_a)            { create(:online_notification, user: user) }
   let(:notification_b)            { create(:online_notification, user: user) }

@@ -2,20 +2,20 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
+RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
   def authenticate
     true
   end
 
   context 'macros' do
-    let(:group1)              { create :group }
-    let(:group2)              { create :group }
-    let(:macro_without_group) { create :macro }
-    let(:macro_note)          { create :macro, perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } } }
-    let(:macro_group1)        { create :macro, groups: [group1] }
-    let(:macro_group2)        { create :macro, groups: [group2] }
-    let(:ticket1)             { create :ticket, group: group1 }
-    let(:ticket2)             { create :ticket, group: group2 }
+    let(:group1)              { create(:group) }
+    let(:group2)              { create(:group) }
+    let(:macro_without_group) { create(:macro) }
+    let(:macro_note)          { create(:macro, perform: { 'article.note'=>{ 'body' => 'macro body', 'internal' => 'true', 'subject' => 'macro note' } }) }
+    let(:macro_group1)        { create(:macro, groups: [group1]) }
+    let(:macro_group2)        { create(:macro, groups: [group2]) }
+    let(:ticket1)             { create(:ticket, group: group1) }
+    let(:ticket2)             { create(:ticket, group: group2) }
 
     describe 'group-dependent macros' do
       let(:agent) { create(:agent, groups: Group.all) }
@@ -84,7 +84,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
         }
       end
 
-      let(:macro_priority) { create :macro, perform: macro_perform }
+      let(:macro_priority) { create(:macro, perform: macro_perform) }
 
       def authenticate
         core_workflow && macro_priority && ticket1
@@ -150,7 +150,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
       end
 
       def authenticate
-        Macro.destroy_all && (create_list :macro, all)
+        Macro.destroy_all && create_list(:macro, all)
         true
       end
 
@@ -190,8 +190,8 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
 
   context 'when performing a Bulk action' do
     context 'when creating a Note', authenticated_as: :user do
-      let(:group)    { create :group }
-      let(:user)     { create :admin, groups: [group] }
+      let(:group)    { create(:group) }
+      let(:user)     { create(:admin, groups: [group]) }
       let(:ticket1)  { create(:ticket, state_name: 'open', owner: user, group: group) }
       let(:ticket2)  { create(:ticket, state_name: 'open', owner: user, group: group) }
       let(:note)     { Faker::Lorem.sentence }
@@ -259,7 +259,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
 
     context 'when saving is blocked by one of selected tickets', authenticated_as: :pre_authentication do
       let(:core_workflow) { create(:core_workflow, :active_and_screen, :perform_action) }
-      let(:ticket1)       { create :ticket, group: Group.first }
+      let(:ticket1)       { create(:ticket, group: Group.first) }
 
       def pre_authentication
         core_workflow && ticket1
@@ -285,7 +285,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
   end
 
   context 'Setting "ui_table_group_by_show_count"', authenticated_as: :authenticate, db_strategy: :reset do
-    let(:custom_attribute) { create :object_manager_attribute_select, name: 'grouptest' }
+    let(:custom_attribute) { create(:object_manager_attribute_select, name: 'grouptest') }
     let(:tickets) do
       [
         create(:ticket, group: Group.find_by(name: 'Users')),
@@ -346,7 +346,7 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
     end
 
     context 'when sorted by custom object date' do
-      let(:custom_attribute) { create :object_manager_attribute_date, name: 'cdate' }
+      let(:custom_attribute) { create(:object_manager_attribute_date, name: 'cdate') }
 
       let(:tickets) do
         [
@@ -368,13 +368,13 @@ RSpec.describe 'Ticket views', type: :system, authenticated_as: :authenticate do
 
     context 'when sorted by custom object select', authenticated_as: :authenticate, db_strategy: :reset do
       let(:custom_attribute) do
-        create :object_manager_attribute_select,
+        create(:object_manager_attribute_select,
                name:                'cselect',
                data_option_options: {
                  'a' => 'Zzz a',
                  'b' => 'Yyy b',
                  'c' => 'Xxx c',
-               }
+               })
       end
 
       let(:tickets) do

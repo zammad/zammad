@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Settings > System > Network', type: :request, required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD] do
+RSpec.describe 'Manage > Settings > System > Network', required_envs: %w[CI_PROXY_URL CI_PROXY_USER CI_PROXY_PASSWORD], type: :request do
 
   let(:group) { create(:group) }
   let!(:admin) do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { current_user.id }, type: :system, time_zone: 'Europe/London' do
+RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { current_user.id }, time_zone: 'Europe/London', type: :system do
   let(:group)          { Group.find_by(name: 'Users') }
   let(:ticket)         { create(:ticket, group: group) }
   let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }

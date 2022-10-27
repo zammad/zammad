@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing customers from Freshdesk' do
 
@@ -77,10 +77,10 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, sequencer: :se
     end
 
     before do
-      create :object_manager_attribute_select, object_name: 'User', name:  'cf_custom_dropdown'
-      create :object_manager_attribute_integer, object_name: 'User', name: 'cf_custom_integer'
-      create :object_manager_attribute_boolean, object_name: 'User', name: 'cf_test_checkbox'
-      create :object_manager_attribute_text, object_name: 'User', name: 'cf_custom_decimal'
+      create(:object_manager_attribute_select, object_name: 'User', name:  'cf_custom_dropdown')
+      create(:object_manager_attribute_integer, object_name: 'User', name: 'cf_custom_integer')
+      create(:object_manager_attribute_boolean, object_name: 'User', name: 'cf_test_checkbox')
+      create(:object_manager_attribute_text, object_name: 'User', name: 'cf_custom_decimal')
       ObjectManager::Attribute.migration_execute
     end
 

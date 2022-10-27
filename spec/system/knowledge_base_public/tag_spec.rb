@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base tag', type: :system, authenticated_as: false do
+RSpec.describe 'Public Knowledge Base tag', authenticated_as: false, type: :system do
   include_context 'basic Knowledge Base'
 
   context 'when answer with the tag exists' do

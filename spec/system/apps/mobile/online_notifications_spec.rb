@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Online Notifications', type: :system, app: :mobile, authenticated_as: :user do
+RSpec.describe 'Mobile > Online Notifications', app: :mobile, authenticated_as: :user, type: :system do
   context 'when looking at notifications' do
     let(:notification) { create(:online_notification, user: user, created_by: user, type_name: 'update') }
     let(:user)         { create(:admin, :groupable, group: Ticket.first.group) }

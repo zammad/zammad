@@ -491,17 +491,17 @@ RSpec.shared_examples 'Object custom field values', db_strategy: :reset do |obje
   end
 
   before do
-    create :object_manager_attribute_text, object_name: object_name, name: 'custom_textfield'
-    create :object_manager_attribute_select, object_name: object_name, name: 'custom_singleselection'
-    create :object_manager_attribute_multiselect, object_name: object_name, name: 'custom_multiselection'
-    create :object_manager_attribute_boolean, object_name: object_name, name: 'custom_boolean'
-    create :object_manager_attribute_select, object_name: object_name, name: 'custom_radio'
-    create :object_manager_attribute_text, object_name: object_name, name: 'custom_text_regex'
-    create :object_manager_attribute_textarea, object_name: object_name, name: 'custom_textarea'
-    create :object_manager_attribute_tree_select, object_name: object_name, name: 'custom_tree_select'
-    create :object_manager_attribute_text, object_name: object_name, name: 'custom_text_decimal'
-    create :object_manager_attribute_integer, object_name: object_name, name: 'custom_integer'
-    create :object_manager_attribute_date, object_name: object_name, name: 'custom_date'
+    create(:object_manager_attribute_text, object_name: object_name, name: 'custom_textfield')
+    create(:object_manager_attribute_select, object_name: object_name, name: 'custom_singleselection')
+    create(:object_manager_attribute_multiselect, object_name: object_name, name: 'custom_multiselection')
+    create(:object_manager_attribute_boolean, object_name: object_name, name: 'custom_boolean')
+    create(:object_manager_attribute_select, object_name: object_name, name: 'custom_radio')
+    create(:object_manager_attribute_text, object_name: object_name, name: 'custom_text_regex')
+    create(:object_manager_attribute_textarea, object_name: object_name, name: 'custom_textarea')
+    create(:object_manager_attribute_tree_select, object_name: object_name, name: 'custom_tree_select')
+    create(:object_manager_attribute_text, object_name: object_name, name: 'custom_text_decimal')
+    create(:object_manager_attribute_integer, object_name: object_name, name: 'custom_integer')
+    create(:object_manager_attribute_date, object_name: object_name, name: 'custom_date')
     ObjectManager::Attribute.migration_execute
   end
 

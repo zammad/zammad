@@ -54,7 +54,7 @@ RSpec.describe 'Search', type: :request do
     create(:ticket_article, ticket_id: ticket3.id)
   end
 
-  describe 'request handling', searchindex: true, performs_jobs: true do
+  describe 'request handling', performs_jobs: true, searchindex: true do
     before do
       searchindex_model_reload([::Ticket, ::User, ::Organization])
     end

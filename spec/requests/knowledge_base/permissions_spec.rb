@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase permissions', type: :request, authenticated_as: :current_user do
+RSpec.describe 'KnowledgeBase permissions', authenticated_as: :current_user, type: :request do
   include_context 'basic Knowledge Base'
 
   let(:current_user) { create(:admin) }

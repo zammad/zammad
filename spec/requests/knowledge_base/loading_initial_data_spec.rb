@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase loading initial data', type: :request, searchindex: true, authenticated_as: :current_user do
+RSpec.describe 'KnowledgeBase loading initial data', authenticated_as: :current_user, searchindex: true, type: :request do
   include_context 'basic Knowledge Base' do
     before do
       draft_answer

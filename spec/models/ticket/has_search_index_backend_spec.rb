@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'HasSearchIndexBackend', type: :model, searchindex: true, performs_jobs: true do
+RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, type: :model do
   describe 'Updating referenced data between ticket and organizations' do
     let(:organization) { create(:organization, name: 'Tomato42') }
     let(:user)         { create(:customer, organization: organization) }

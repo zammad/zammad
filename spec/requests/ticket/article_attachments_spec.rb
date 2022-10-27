@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Article Attachments', type: :request, authenticated_as: -> { agent } do
+RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, type: :request do
 
   let(:group) { create(:group) }
 

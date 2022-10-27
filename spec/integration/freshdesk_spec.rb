@@ -7,7 +7,7 @@ require 'rails_helper'
 # Individual import steps are tested in spec/lib/sequencer.
 #
 
-RSpec.describe 'Freshdesk import', integration: true, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT IMPORT_FRESHDESK_ENDPOINT_KEY IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Freshdesk import', db_strategy: :reset, integration: true, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT IMPORT_FRESHDESK_ENDPOINT_KEY IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN], use_vcr: true do # rubocop:disable RSpec/DescribeClass
 
   before do
     Setting.set('import_freshdesk_endpoint', ENV['IMPORT_FRESHDESK_ENDPOINT'])

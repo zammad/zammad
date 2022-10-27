@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mention', type: :request, authenticated_as: -> { user } do
+RSpec.describe 'Mention', authenticated_as: -> { user }, type: :request do
   let(:group)   { create(:group) }
   let(:ticket1) { create(:ticket, group: group) }
   let(:ticket2) { create(:ticket, group: group) }

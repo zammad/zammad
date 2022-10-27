@@ -30,7 +30,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Kayako::TimeEntry, sequencer: :seq
       }
     end
 
-    let(:ticket) { create :ticket }
+    let(:ticket) { create(:ticket) }
     let(:id_map) do
       {
         'Ticket' => {

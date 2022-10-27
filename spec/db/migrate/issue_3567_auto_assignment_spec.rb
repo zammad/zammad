@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue3567AutoAssignment, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue3567AutoAssignment, db_strategy: :reset, type: :db_migration do
   context 'when setting contains article keys' do
     before do
       Setting.set('ticket_auto_assignment_selector', { 'condition'=>{ 'article.subject'=>{ 'operator' => 'contains', 'value' => 'test' } } })

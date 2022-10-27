@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :authenticate do
+RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, type: :system do
   let(:group)               { create(:group, shared_drafts: group_shared_drafts) }
   let(:group_access)        { :full }
   let(:group_shared_drafts) { true }
@@ -199,7 +199,7 @@ RSpec.describe 'Ticket Shared Draft Start', type: :system, authenticated_as: :au
   end
 
   context 'delete' do
-    it 'works' do
+    it 'works as expected' do
       click :draft_sidebar_button
 
       within :draft_sidebar do

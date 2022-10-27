@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > App Home Page', type: :system, app: :mobile do
+RSpec.describe 'Mobile > App Home Page', app: :mobile, type: :system do
   context 'when on the home page', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 

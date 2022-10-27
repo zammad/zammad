@@ -93,7 +93,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     end
 
     it 'rejects duplicate attribute name of conflicting types' do
-      attribute = attributes_for :object_manager_attribute_text
+      attribute = attributes_for(:object_manager_attribute_text)
       described_class.add attribute
       attribute[:data_type] = 'boolean'
       expect do
@@ -102,7 +102,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     end
 
     it 'accepts duplicate attribute name on the same types (editing an existing attribute)' do
-      attribute = attributes_for :object_manager_attribute_text
+      attribute = attributes_for(:object_manager_attribute_text)
       described_class.add attribute
       expect do
         described_class.add attribute
@@ -110,7 +110,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     end
 
     it 'accepts duplicate attribute name on compatible types (editing the type of an existing attribute)' do
-      attribute = attributes_for :object_manager_attribute_text
+      attribute = attributes_for(:object_manager_attribute_text)
       described_class.add attribute
       attribute[:data_type] = 'select'
       attribute[:data_option_new] = { default: '', options: { 'a' => 'a' } }

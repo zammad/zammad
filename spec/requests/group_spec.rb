@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Group', type: :request, authenticated_as: -> { user } do
+RSpec.describe 'Group', authenticated_as: -> { user }, type: :request do
   describe 'Zammad returns stack error when one tries to remove groups via API #3841' do
     let(:group)  { create(:group) }
     let(:ticket) { create(:ticket, group: group) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :authenticate do
+RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type: :system do
   let(:group)               { create(:group, shared_drafts: group_shared_drafts) }
   let(:group_access)        { :full }
   let(:group_shared_drafts) { true }
@@ -125,7 +125,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', type: :system, authenticated_as: :aut
   end
 
   context 'delete' do
-    it 'works' do
+    it 'works as expected' do
       visit "ticket/zoom/#{ticket_with_draft.id}"
 
       within :active_content do

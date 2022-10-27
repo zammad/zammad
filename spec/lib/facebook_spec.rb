@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_ADMIN_ACCESS_TOKEN FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_MESSAGE FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME] do
+RSpec.describe Facebook, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_ADMIN_ACCESS_TOKEN FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_MESSAGE FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME], use_vcr: true do
 
   before do
     travel_to '2021-02-13 13:37 +0100'
@@ -23,13 +23,13 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
   let(:page) { admin_client.pages.first }
 
   describe '#connect' do
-    it 'works' do
+    it 'works as expected' do
       expect(page_client.client.get_object('me')['name']).to eq ENV['FACEBOOK_PAGE_1_NAME']
     end
   end
 
   describe '#pages' do
-    it 'works' do
+    it 'works as expected' do
       expect(admin_client.pages.pluck(:name)).to eq [ENV['FACEBOOK_PAGE_1_NAME'], ENV['FACEBOOK_PAGE_2_NAME']]
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
     let(:posts) { page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}') }
     let(:user)  { page_client.to_user(posts.first) }
 
-    it 'works' do
+    it 'works as expected' do
       expect(user).to have_attributes(
         firstname: ENV['FACEBOOK_CUSTOMER_FIRSTNAME'],
         lastname:  ENV['FACEBOOK_CUSTOMER_LASTNAME']
@@ -58,7 +58,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
   end
 
   describe '#to_ticket' do
-    it 'works' do
+    it 'works as expected' do
       ticket = page_client.to_ticket(post, Group.first.id, Channel.first, page)
 
       expect(ticket.title).to eq ENV['FACEBOOK_PAGE_1_POST_MESSAGE']
@@ -66,7 +66,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
   end
 
   describe '#to_article' do
-    it 'works' do
+    it 'works as expected' do
       ticket   = page_client.to_ticket(post, Group.first.id, Channel.first, page)
       articles = page_client.to_article(post, ticket, page)
 
@@ -98,7 +98,7 @@ RSpec.describe Facebook, use_vcr: true, current_user_id: 1, required_envs: %w[FA
       )
     end
 
-    it 'works' do
+    it 'works as expected' do
       expect(response['id']).to be_present
     end
   end

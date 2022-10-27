@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Knowledge Base Locale Answer Read', type: :system, authenticated_as: true do
+RSpec.describe 'Knowledge Base Locale Answer Read', authenticated_as: true, type: :system do
   include_context 'basic Knowledge Base'
 
   let(:empty_category) { create(:knowledge_base_category, knowledge_base: knowledge_base) }

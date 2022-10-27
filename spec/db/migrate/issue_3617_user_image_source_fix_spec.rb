@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue3617UserImageSourceFix, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue3617UserImageSourceFix, db_strategy: :reset, type: :db_migration do
   describe 'when invalid user' do
     let!(:user) do
       user = create(:user)

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Monitoring', type: :request, authenticated_as: :admin do
+RSpec.describe 'Monitoring', authenticated_as: :admin, type: :request do
   let(:access_token) { SecureRandom.urlsafe_base64(64) }
   let(:admin)        { create(:admin, groups: Group.all) }
   let(:agent)        { create(:agent, groups: Group.all) }

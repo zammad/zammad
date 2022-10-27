@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Disable login form', type: :system, authenticated_as: false do
+RSpec.describe 'Disable login form', authenticated_as: false, type: :system do
   context 'with enable password login form' do
     before { Setting.set 'user_show_password_login', true }
 

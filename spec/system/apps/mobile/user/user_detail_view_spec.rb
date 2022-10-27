@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > User > Preview detailed information about user', type: :system, app: :mobile do
+RSpec.describe 'Mobile > User > Preview detailed information about user', app: :mobile, type: :system do
   let(:organization)        { create(:organization) }
   let(:user)                { create(:customer, firstname: 'Blanche', lastname: 'Devereaux', organization: organization, address: 'Berlin') }
   let(:group)               { create(:group) }

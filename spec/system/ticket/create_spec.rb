@@ -356,15 +356,15 @@ RSpec.describe 'Ticket Create', type: :system do
 
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
-      create :object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
-        'type'      => 'text',
-        'maxlength' => 3,
-        'null'      => true,
-        'translate' => false,
-        'default'   => '',
-        'options'   => {},
-        'relation'  => '',
-      }
+      create(:object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
+               'type'      => 'text',
+               'maxlength' => 3,
+               'null'      => true,
+               'translate' => false,
+               'default'   => '',
+               'options'   => {},
+               'relation'  => '',
+             })
       ObjectManager::Attribute.migration_execute
       true
     end
@@ -703,14 +703,14 @@ RSpec.describe 'Ticket Create', type: :system do
   describe 'It should be possible to show attributes which are configured shown false #3726', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
-        'create_middle' => {
-          'ticket.agent' => {
-            'shown'    => false,
-            'required' => false,
-          }
-        }
-      }
+      create(:object_manager_attribute_text, name: field_name, display: field_name, screens: {
+               'create_middle' => {
+                 'ticket.agent' => {
+                   'shown'    => false,
+                   'required' => false,
+                 }
+               }
+             })
       ObjectManager::Attribute.migration_execute
     end
 
@@ -1030,7 +1030,7 @@ RSpec.describe 'Ticket Create', type: :system do
   describe 'Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow #4024', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create :object_manager_attribute_tree_select, name: field_name, display: field_name, screens: attributes_for(:required_screen)
+      create(:object_manager_attribute_tree_select, name: field_name, display: field_name, screens: attributes_for(:required_screen))
       ObjectManager::Attribute.migration_execute
     end
     let(:workflow) do

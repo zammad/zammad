@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Public Knowledge Base canonical link', type: :system, current_user_id: 1, authenticated_as: false do
+RSpec.describe 'Public Knowledge Base canonical link', authenticated_as: false, current_user_id: 1, type: :system do
   include_context 'basic Knowledge Base'
 
   let(:path)          { '/path' }

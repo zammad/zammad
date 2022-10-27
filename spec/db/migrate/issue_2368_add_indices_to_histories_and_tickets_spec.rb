@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue2368AddIndicesToHistoriesAndTickets, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue2368AddIndicesToHistoriesAndTickets, db_strategy: :reset, type: :db_migration do
 
   before { without_index(table, column: columns) }
 

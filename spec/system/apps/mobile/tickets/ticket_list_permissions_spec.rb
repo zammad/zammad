@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Tickets > Hide certain columns', type: :system, app: :mobile do
+RSpec.describe 'Mobile > Tickets > Hide certain columns', app: :mobile, type: :system do
   let(:organization)        { create(:organization) }
   let(:user)                { create(:customer, organization: organization) }
   let(:group)               { create(:group) }

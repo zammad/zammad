@@ -150,7 +150,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
 
-    context 'to inbound phone call', current_user_id: -> { agent.id }, authenticated_as: -> { agent } do
+    context 'to inbound phone call', authenticated_as: -> { agent }, current_user_id: -> { agent.id } do
       let(:agent)    { create(:agent, groups: [Group.first]) }
       let(:customer) { create(:customer) }
       let(:ticket)   { create(:ticket, customer: customer, group: agent.groups.first) }
@@ -192,7 +192,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
 
-    context 'to outbound phone call', current_user_id: -> { agent.id }, authenticated_as: -> { agent } do
+    context 'to outbound phone call', authenticated_as: -> { agent }, current_user_id: -> { agent.id } do
       let(:agent)    { create(:agent, groups: [Group.first]) }
       let(:customer) { create(:customer) }
       let(:ticket)   { create(:ticket, customer: customer, group: agent.groups.first) }
@@ -235,10 +235,10 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'delete article', authenticated_as: :authenticate do
     let(:group)       { Group.first }
-    let(:admin)       { create :admin, groups: [group] }
-    let(:agent)       { create :agent, groups: [group] }
-    let(:other_agent) { create :agent, groups: [group] }
-    let(:customer)    { create :customer }
+    let(:admin)       { create(:admin, groups: [group]) }
+    let(:agent)       { create(:agent, groups: [group]) }
+    let(:other_agent) { create(:agent, groups: [group]) }
+    let(:customer)    { create(:customer) }
     let(:article)     { send(item) }
 
     def authenticate
@@ -278,7 +278,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     def create_ticket_article(sender_name:, internal:, type_name:, updated_by:)
       UserInfo.current_user_id = updated_by.id
 
-      ticket = create :ticket, group: group, customer: customer
+      ticket = create(:ticket, group: group, customer: customer)
 
       create(:ticket_article,
              sender_name: sender_name, internal: internal, type_name: type_name, ticket: ticket,
@@ -1455,7 +1455,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'Macros', authenticated_as: :authenticate do
     let(:macro_body) { 'macro <b>body</b>' }
-    let(:macro)   { create :macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } } }
+    let(:macro)   { create(:macro, perform: { 'article.note' => { 'body' => macro_body, 'internal' => 'true', 'subject' => 'macro note' } }) }
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     def authenticate
@@ -1478,15 +1478,15 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def authenticate
       ticket
-      create :object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
-        'type'      => 'text',
-        'maxlength' => 3,
-        'null'      => true,
-        'translate' => false,
-        'default'   => '',
-        'options'   => {},
-        'relation'  => '',
-      }
+      create(:object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
+               'type'      => 'text',
+               'maxlength' => 3,
+               'null'      => true,
+               'translate' => false,
+               'default'   => '',
+               'options'   => {},
+               'relation'  => '',
+             })
       ObjectManager::Attribute.migration_execute
       true
     end
@@ -1642,7 +1642,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
-  context 'Sidebar - Open & Closed Tickets', searchindex: true, performs_jobs: true do
+  context 'Sidebar - Open & Closed Tickets', performs_jobs: true, searchindex: true do
     let(:customer)      { create(:customer, :with_org) }
     let(:ticket_open)   { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, title: SecureRandom.uuid) }
     let(:ticket_closed) { create(:ticket, group: Group.find_by(name: 'Users'), customer: customer, state: Ticket::State.find_by(name: 'closed'), title: SecureRandom.uuid) }
@@ -1883,14 +1883,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let!(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
-        'edit' => {
-          'ticket.agent' => {
-            'shown'    => false,
-            'required' => false,
-          }
-        }
-      }
+      create(:object_manager_attribute_text, name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => false,
+                   'required' => false,
+                 }
+               }
+             })
       ObjectManager::Attribute.migration_execute
     end
 
@@ -2052,14 +2052,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let!(:ticket)    { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create :object_manager_attribute_text, name: field_name, display: field_name, screens: {
-        'edit' => {
-          'ticket.agent' => {
-            'shown'    => false,
-            'required' => false,
-          }
-        }
-      }
+      create(:object_manager_attribute_text, name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => false,
+                   'required' => false,
+                 }
+               }
+             })
       ObjectManager::Attribute.migration_execute
     end
     let(:workflow) do
@@ -2092,7 +2092,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def authenticate
       workflow
-      create :object_manager_attribute_boolean, name: field_name, display: field_name, screens: attributes_for(:required_screen)
+      create(:object_manager_attribute_boolean, name: field_name, display: field_name, screens: attributes_for(:required_screen))
       ObjectManager::Attribute.migration_execute
       ticket
       true
@@ -2276,14 +2276,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
 
     def authenticate
-      create :object_manager_attribute_boolean, default: nil, screens: {
-        edit: {
-          'ticket.agent' => {
-            shown:    false,
-            required: false,
-          }
-        }
-      }
+      create(:object_manager_attribute_boolean, default: nil, screens: {
+               edit: {
+                 'ticket.agent' => {
+                   shown:    false,
+                   required: false,
+                 }
+               }
+             })
       ObjectManager::Attribute.migration_execute
       ticket
       true
@@ -2334,14 +2334,14 @@ RSpec.describe 'Ticket zoom', type: :system do
     let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
 
     def authenticate
-      create :object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
-        'edit' => {
-          'ticket.agent' => {
-            'shown'    => true,
-            'required' => false,
-          }
-        }
-      }
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => true,
+                   'required' => false,
+                 }
+               }
+             })
       ObjectManager::Attribute.migration_execute
       ticket
       true

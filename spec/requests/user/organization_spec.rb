@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User Organization', type: :request, searchindex: true, performs_jobs: true do
+RSpec.describe 'User Organization', performs_jobs: true, searchindex: true, type: :request do
 
   let!(:admin) do
     create(:admin, groups: Group.all)

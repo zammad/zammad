@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue3618GoogleCalendarUrlHttps, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue3618GoogleCalendarUrlHttps, db_strategy: :reset, type: :db_migration do
   let(:url)      { 'http://www.google.com/calendar/ical/en.lithuanian%%23holiday%%40group.v.calendar.google.com/public/basic.ics' }
-  let(:calendar) { create :calendar, ical_url: url }
+  let(:calendar) { create(:calendar, ical_url: url) }
 
   it 'migrates Google Calendar URLs' do
     expect { migrate }

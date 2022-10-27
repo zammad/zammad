@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Tickets', type: :system, app: :mobile, authenticated_as: :agent do
+RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type: :system do
   let(:organization)     { create(:organization) }
   let(:user)             { create(:user, organization: organization) }
   let(:group)            { create(:group) }

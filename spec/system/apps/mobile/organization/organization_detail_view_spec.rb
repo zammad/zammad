@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Organization > Can view organization', type: :system, app: :mobile do
+RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, type: :system do
   let(:organization)        { create(:organization, domain: 'domain.com', note: '') }
   let(:user)                { create(:customer, organization: organization) }
   let(:group)               { create(:group) }

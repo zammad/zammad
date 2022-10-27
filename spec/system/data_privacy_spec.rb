@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Data Privacy', type: :system, authenticated_as: :authenticate do
+RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
   let(:customer) { create(:customer, firstname: 'Frank1') }
   let(:ticket)   { create(:ticket, customer: customer, group: Group.find_by(name: 'Users')) }
 

@@ -4,14 +4,14 @@ require 'rails_helper'
 
 require 'lib/sequencer/sequence/import/kayako/examples/object_custom_field_values_examples'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::Case, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Kayako::Case, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing cases from Kayako' do
 
-    let(:group)        { create :group }
-    let(:owner)        { create :agent, group_ids: [group.id] }
-    let(:organization) { create :organization }
-    let(:customer)     { create :customer, organization: organization }
+    let(:group)        { create(:group) }
+    let(:owner)        { create(:agent, group_ids: [group.id]) }
+    let(:organization) { create(:organization) }
+    let(:customer)     { create(:customer, organization: organization) }
 
     let(:resource) do
       {

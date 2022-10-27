@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Report', type: :request, searchindex: true do
+RSpec.describe 'Report', searchindex: true, type: :request do
 
   let!(:admin) do
     create(:admin)

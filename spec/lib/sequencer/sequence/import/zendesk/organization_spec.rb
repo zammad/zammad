@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing organizations from Zendesk' do
 
@@ -64,9 +64,9 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, sequencer: 
     end
 
     before do
-      create :object_manager_attribute_select, object_name: 'Organization', name: 'custom_dropdown'
-      create :object_manager_attribute_text, object_name: 'Organization', name: 'api_key'
-      create :object_manager_attribute_text, object_name: 'Organization', name: 'test_example'
+      create(:object_manager_attribute_select, object_name: 'Organization', name: 'custom_dropdown')
+      create(:object_manager_attribute_text, object_name: 'Organization', name: 'api_key')
+      create(:object_manager_attribute_text, object_name: 'Organization', name: 'test_example')
       ObjectManager::Attribute.migration_execute
     end
 

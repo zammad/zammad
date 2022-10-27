@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Admin Knowledge Base Public Menu', type: :request, authenticated_as: :current_user do
+RSpec.describe 'Admin Knowledge Base Public Menu', authenticated_as: :current_user, type: :request do
   let(:url)    { "/api/v1/knowledge_bases/manage/#{knowledge_base.id}/update_menu_items" }
   let(:params) do
     {

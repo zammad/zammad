@@ -12,7 +12,7 @@ DEFAULT_VALUES = {
   select:   'key_1'
 }.freeze
 
-RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: 'Europe/London' do
+RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London', type: :model do
   describe 'setting default', db_strategy: :reset_all do
     before :all do # rubocop:disable RSpec/BeforeAfterAll
       DEFAULT_VALUES.each do |key, value|
@@ -31,23 +31,23 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: '
 
     context 'with text type' do # on text
       it 'default value is set' do
-        ticket = create :ticket
+        ticket = create(:ticket)
         expect(ticket.rspec_text).to eq 'rspec'
       end
 
       it 'empty string as default value gets saved' do
-        ticket = create :ticket
+        ticket = create(:ticket)
         expect(ticket.rspec_empty).to eq ''
       end
 
       it 'given value overrides default value' do
-        ticket = create :ticket, rspec_text: 'another'
+        ticket = create(:ticket, rspec_text: 'another')
         expect(ticket.rspec_text).to eq 'another'
       end
 
       # actual create works slightly differently than FactoryGirl!
       it 'given value overrides default value when using native #create' do
-        ticket_attrs            = attributes_for :ticket, rspec_text: 'another', group: Group.first
+        ticket_attrs            = attributes_for(:ticket, rspec_text: 'another', group: Group.first)
         ticket_attrs[:group]    = Group.first
         ticket_attrs[:customer] = User.first
 
@@ -57,19 +57,19 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: '
       end
 
       it 'given nil overrides default value' do
-        ticket = create :ticket, rspec_text: nil
+        ticket = create(:ticket, rspec_text: nil)
         expect(ticket.rspec_text).to be_nil
       end
 
       it 'updating attribute to nil does not instantiate default' do
-        ticket = create :ticket
+        ticket = create(:ticket)
         ticket.update! rspec_text: nil
         expect(ticket.rspec_text).to be_nil
       end
     end
 
     context 'when using other types' do
-      subject(:example) { create :ticket }
+      subject(:example) { create(:ticket) }
 
       it 'boolean is set' do
         expect(example.rspec_boolean).to be true
@@ -113,7 +113,7 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: '
     context 'when overriding default to empty value' do
       subject(:example) do
         params = DEFAULT_VALUES.keys.each_with_object({}) { |elem, memo| memo["rspec_#{elem}"] = nil }
-        create :ticket, params
+        create(:ticket, params)
       end
 
       DEFAULT_VALUES.each_key do |elem|
@@ -124,7 +124,7 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, type: :model, time_zone: '
     end
 
     context 'when default is not set' do
-      subject(:example) { create :ticket }
+      subject(:example) { create(:ticket) }
 
       DEFAULT_VALUES.each_key do |elem|
         it "#{elem} is empty" do

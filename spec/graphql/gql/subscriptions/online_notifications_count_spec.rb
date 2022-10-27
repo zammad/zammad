@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, type: :graphql, authenticated_as: :agent do
+RSpec.describe Gql::Subscriptions::OnlineNotificationsCount, authenticated_as: :agent, type: :graphql do
   let(:agent)        { create(:agent) }
   let(:notification) { create(:online_notification, user_id: agent.id) }
   let(:variables)    { { userId: gql.id(user) } }

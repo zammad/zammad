@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Knowledge Base Locale Answer Reader', type: :system, time_zone: 'Europe/London' do
+RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London', type: :system do
   include_context 'basic Knowledge Base'
 
   context 'when logged in as editor' do
@@ -113,7 +113,7 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', type: :system, time_zone: 
     end
 
     context 'user', current_user_id: -> { user.id } do
-      let(:user) { create :admin }
+      let(:user) { create(:admin) }
 
       it 'shown for internal' do
         open_answer internal_answer
@@ -160,8 +160,8 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', type: :system, time_zone: 
   end
 
   context 'when logged in as reader', authenticated: -> { visitor }, current_user_id: -> { editor.id } do
-    let(:editor) { create :admin, firstname: 'Editor' }
-    let(:visitor) { create :agent }
+    let(:editor) { create(:admin, firstname: 'Editor') }
+    let(:visitor) { create(:agent) }
 
     it 'state not shown' do
       open_answer published_answer

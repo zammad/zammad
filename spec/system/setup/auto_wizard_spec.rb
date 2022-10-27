@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Auto wizard', type: :system, set_up: false do
+RSpec.describe 'Auto wizard', set_up: false, type: :system do
   shared_examples 'showing that auto wizard is enabled' do
     it 'shows the auto wizard enable message' do
       visit '/'

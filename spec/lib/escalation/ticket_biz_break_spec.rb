@@ -276,7 +276,7 @@ RSpec.describe Escalation::TicketBizBreak, time_zone: 'Europe/Berlin' do
 
     shared_context 'when ticket has state changes' do
       let(:initial_state_name) { 'pending reminder' }
-      let(:ticket)             { create :ticket, state: Ticket::State.lookup(name: initial_state_name) }
+      let(:ticket)             { create(:ticket, state: Ticket::State.lookup(name: initial_state_name)) }
 
       before do
         freeze_time

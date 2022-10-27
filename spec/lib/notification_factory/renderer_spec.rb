@@ -8,7 +8,7 @@ RSpec.describe NotificationFactory::Renderer do
     before { @user = User.where(firstname: 'Nicole').first }
 
     it 'correctly renders a blank template' do
-      renderer = build :notification_factory_renderer
+      renderer = build(:notification_factory_renderer)
       expect(renderer.render).to eq ''
     end
 
@@ -17,45 +17,45 @@ RSpec.describe NotificationFactory::Renderer do
       let(:template) { '<%% <%= "<%" %> %%>' }
 
       it 'ignores pre-existing ERB tags in an untrusted template' do
-        renderer = build :notification_factory_renderer, template: template
+        renderer = build(:notification_factory_renderer, template: template)
         expect(renderer.render).to eq '<% <%= "<%" %> %%>'
       end
 
       it 'executes pre-existing ERB tags in a trusted template' do
-        renderer = build :notification_factory_renderer, template: template, trusted: true
+        renderer = build(:notification_factory_renderer, template: template, trusted: true)
         expect(renderer.render).to eq '<% <% %%>'
       end
     end
 
     it 'correctly renders chained object references' do
       user = User.where(firstname: 'Nicole').first
-      ticket = create :ticket, customer: user
-      renderer = build :notification_factory_renderer,
+      ticket = create(:ticket, customer: user)
+      renderer = build(:notification_factory_renderer,
                        objects:  { ticket: ticket },
-                       template: '#{ticket.customer.firstname.downcase}'
+                       template: '#{ticket.customer.firstname.downcase}')
       expect(renderer.render).to eq 'nicole'
     end
 
     it 'correctly renders multiple value calls' do
-      ticket = create :ticket, customer: @user
-      renderer = build :notification_factory_renderer,
+      ticket = create(:ticket, customer: @user)
+      renderer = build(:notification_factory_renderer,
                        objects:  { ticket: ticket },
-                       template: '#{ticket.created_at.value.value.value.value.to_s.first}'
+                       template: '#{ticket.created_at.value.value.value.value.to_s.first}')
       expect(renderer.render).to eq '2'
     end
 
     it 'raises a StandardError when rendering a template with a broken syntax' do
-      renderer = build :notification_factory_renderer, template: 'test <% if %>', objects: {}, trusted: true
+      renderer = build(:notification_factory_renderer, template: 'test <% if %>', objects: {}, trusted: true)
       expect { renderer.render }.to raise_error(StandardError)
     end
 
     it 'raises a StandardError when rendering a template calling a non existant method' do
-      renderer = build :notification_factory_renderer, template: 'test <% Ticket.non_existant_method %>', objects: {}, trusted: true
+      renderer = build(:notification_factory_renderer, template: 'test <% Ticket.non_existant_method %>', objects: {}, trusted: true)
       expect { renderer.render }.to raise_error(StandardError)
     end
 
     it 'raises a StandardError when rendering a template referencing a non existant object' do
-      renderer = build :notification_factory_renderer, template: 'test <% NonExistantObject.first %>', objects: {}, trusted: true
+      renderer = build(:notification_factory_renderer, template: 'test <% NonExistantObject.first %>', objects: {}, trusted: true)
       expect { renderer.render }.to raise_error(StandardError)
     end
 
@@ -66,9 +66,9 @@ RSpec.describe NotificationFactory::Renderer do
       end
 
       let(:renderer) do
-        build :notification_factory_renderer,
+        build(:notification_factory_renderer,
               objects:  { ticket: ticket },
-              template: template
+              template: template)
       end
 
       shared_examples 'correctly rendering the attributes' do
@@ -79,9 +79,9 @@ RSpec.describe NotificationFactory::Renderer do
 
       context 'with a simple select attribute' do
         let(:create_object_manager_attribute) do
-          create :object_manager_attribute_select, name: 'select'
+          create(:object_manager_attribute_select, name: 'select')
         end
-        let(:ticket) { create :ticket, customer: @user, select: 'key_1' }
+        let(:ticket) { create(:ticket, customer: @user, select: 'key_1') }
         let(:template)        { '#{ticket.select} _SEPERATOR_ #{ticket.select.value}' }
         let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 
@@ -90,9 +90,9 @@ RSpec.describe NotificationFactory::Renderer do
 
       context 'with select attribute on chained user object' do
         let(:create_object_manager_attribute) do
-          create :object_manager_attribute_select,
+          create(:object_manager_attribute_select,
                  object_lookup_id: ObjectLookup.by_name('User'),
-                 name:             'select'
+                 name:             'select')
         end
 
         let(:user) do
@@ -102,7 +102,7 @@ RSpec.describe NotificationFactory::Renderer do
           user
         end
 
-        let(:ticket) { create :ticket, customer: user }
+        let(:ticket) { create(:ticket, customer: user) }
         let(:template)        { '#{ticket.customer.select} _SEPERATOR_ #{ticket.customer.select.value}' }
         let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
@@ -111,14 +111,14 @@ RSpec.describe NotificationFactory::Renderer do
 
       context 'with select attribute on chained group object' do
         let(:create_object_manager_attribute) do
-          create :object_manager_attribute_select,
+          create(:object_manager_attribute_select,
                  object_lookup_id: ObjectLookup.by_name('Group'),
-                 name:             'select'
+                 name:             'select')
         end
         let(:template) { '#{ticket.group.select} _SEPERATOR_ #{ticket.group.select.value}' }
         let(:expected_render) { 'key_3 _SEPERATOR_ value_3' }
 
-        let(:ticket) { create :ticket, customer: @user }
+        let(:ticket) { create(:ticket, customer: @user) }
 
         before do
           group = ticket.group
@@ -131,9 +131,9 @@ RSpec.describe NotificationFactory::Renderer do
 
       context 'with select attribute on chained organization object' do
         let(:create_object_manager_attribute) do
-          create :object_manager_attribute_select,
+          create(:object_manager_attribute_select,
                  object_lookup_id: ObjectLookup.by_name('Organization'),
-                 name:             'select'
+                 name:             'select')
         end
 
         let(:user) do
@@ -142,7 +142,7 @@ RSpec.describe NotificationFactory::Renderer do
           @user
         end
 
-        let(:ticket)          { create :ticket, customer: user }
+        let(:ticket)          { create(:ticket, customer: user) }
         let(:template)        { '#{ticket.customer.organization.select} _SEPERATOR_ #{ticket.customer.organization.select.value}' }
         let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
@@ -152,9 +152,9 @@ RSpec.describe NotificationFactory::Renderer do
       context 'with multiselect', mariadb: true do
         context 'with a simple multiselect attribute' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect, name: 'multiselect'
+            create(:object_manager_attribute_multiselect, name: 'multiselect')
           end
-          let(:ticket) { create :ticket, customer: @user, multiselect: ['key_1'] }
+          let(:ticket) { create(:ticket, customer: @user, multiselect: ['key_1']) }
           let(:template)        { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
           let(:expected_render) { 'key_1 _SEPERATOR_ value_1' }
 
@@ -163,9 +163,9 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with single multiselect attribute on chained user object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('User'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
 
           let(:user) do
@@ -175,7 +175,7 @@ RSpec.describe NotificationFactory::Renderer do
             user
           end
 
-          let(:ticket) { create :ticket, customer: user }
+          let(:ticket) { create(:ticket, customer: user) }
           let(:template)        { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
           let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
@@ -184,14 +184,14 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with single multiselect attribute on chained group object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('Group'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
           let(:template) { '#{ticket.group.multiselect} _SEPERATOR_ #{ticket.group.multiselect.value}' }
           let(:expected_render) { 'key_3 _SEPERATOR_ value_3' }
 
-          let(:ticket) { create :ticket, customer: @user }
+          let(:ticket) { create(:ticket, customer: @user) }
 
           before do
             group = ticket.group
@@ -204,9 +204,9 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with single multiselect attribute on chained organization object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('Organization'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
 
           let(:user) do
@@ -215,7 +215,7 @@ RSpec.describe NotificationFactory::Renderer do
             @user
           end
 
-          let(:ticket)          { create :ticket, customer: user }
+          let(:ticket)          { create(:ticket, customer: user) }
           let(:template)        { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
           let(:expected_render) { 'key_2 _SEPERATOR_ value_2' }
 
@@ -224,9 +224,9 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with a multiple multiselect attribute' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect, name: 'multiselect'
+            create(:object_manager_attribute_multiselect, name: 'multiselect')
           end
-          let(:ticket) { create :ticket, customer: @user, multiselect: %w[key_1 key_2] }
+          let(:ticket) { create(:ticket, customer: @user, multiselect: %w[key_1 key_2]) }
           let(:template)        { '#{ticket.multiselect} _SEPERATOR_ #{ticket.multiselect.value}' }
           let(:expected_render) { 'key_1, key_2 _SEPERATOR_ value_1, value_2' }
 
@@ -235,9 +235,9 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with multiple multiselect attribute on chained user object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('User'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
 
           let(:user) do
@@ -247,7 +247,7 @@ RSpec.describe NotificationFactory::Renderer do
             user
           end
 
-          let(:ticket) { create :ticket, customer: user }
+          let(:ticket) { create(:ticket, customer: user) }
           let(:template)        { '#{ticket.customer.multiselect} _SEPERATOR_ #{ticket.customer.multiselect.value}' }
           let(:expected_render) { 'key_2, key_3 _SEPERATOR_ value_2, value_3' }
 
@@ -256,14 +256,14 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with multiple multiselect attribute on chained group object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('Group'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
           let(:template) { '#{ticket.group.multiselect} _SEPERATOR_ #{ticket.group.multiselect.value}' }
           let(:expected_render) { 'key_3, key_1 _SEPERATOR_ value_3, value_1' }
 
-          let(:ticket) { create :ticket, customer: @user }
+          let(:ticket) { create(:ticket, customer: @user) }
 
           before do
             group = ticket.group
@@ -276,9 +276,9 @@ RSpec.describe NotificationFactory::Renderer do
 
         context 'with multiple multiselect attribute on chained organization object' do
           let(:create_object_manager_attribute) do
-            create :object_manager_attribute_multiselect,
+            create(:object_manager_attribute_multiselect,
                    object_lookup_id: ObjectLookup.by_name('Organization'),
-                   name:             'multiselect'
+                   name:             'multiselect')
           end
 
           let(:user) do
@@ -287,7 +287,7 @@ RSpec.describe NotificationFactory::Renderer do
             @user
           end
 
-          let(:ticket)          { create :ticket, customer: user }
+          let(:ticket)          { create(:ticket, customer: user) }
           let(:template)        { '#{ticket.customer.organization.multiselect} _SEPERATOR_ #{ticket.customer.organization.multiselect.value}' }
           let(:expected_render) { 'key_2, key_1 _SEPERATOR_ value_2, value_1' }
 
@@ -297,9 +297,9 @@ RSpec.describe NotificationFactory::Renderer do
 
       context 'with a tree select attribute' do
         let(:create_object_manager_attribute) do
-          create :object_manager_attribute_tree_select, name: 'tree_select'
+          create(:object_manager_attribute_tree_select, name: 'tree_select')
         end
-        let(:ticket) { create :ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop' }
+        let(:ticket) { create(:ticket, customer: @user, tree_select: 'Incident::Hardware::Laptop') }
         let(:template)        { '#{ticket.tree_select} _SEPERATOR_ #{ticket.tree_select.value}' }
         let(:expected_render) { 'Incident::Hardware::Laptop _SEPERATOR_ Incident::Hardware::Laptop' }
 

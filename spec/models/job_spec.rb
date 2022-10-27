@@ -559,7 +559,7 @@ RSpec.describe Job, type: :model do
     end
   end
 
-  describe 'Scheduler ignores "disable notifications == no" #3684', sends_notification_emails: true, performs_jobs: true do
+  describe 'Scheduler ignores "disable notifications == no" #3684', performs_jobs: true, sends_notification_emails: true do
     let!(:group) { create(:group) }
     let!(:agent)  { create(:agent, groups: [group]) }
     let!(:ticket) { create(:ticket, group: group, owner: agent) }

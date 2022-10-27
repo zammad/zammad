@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Getting Started > Admin', type: :system, authenticated_as: false, set_up: false do
+RSpec.describe 'Getting Started > Admin', authenticated_as: false, set_up: false, type: :system do
   it 'shows password strength error' do
     visit 'getting_started/admin'
 

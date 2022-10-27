@@ -99,7 +99,7 @@ RSpec.describe 'Integration Check MK', type: :request do
       end
 
       it 'does create ticket with extra field', db_strategy: :reset do
-        create :object_manager_attribute_text, name: 'text1'
+        create(:object_manager_attribute_text, name: 'text1')
         ObjectManager::Attribute.migration_execute
 
         params = {

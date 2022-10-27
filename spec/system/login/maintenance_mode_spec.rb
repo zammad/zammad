@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Login Maintenance Mode', type: :system, authenticated_as: false do
+RSpec.describe 'Login Maintenance Mode', authenticated_as: false, type: :system do
   context 'with maintenance_mode' do
     def try_login(username, password)
       within('#login') do

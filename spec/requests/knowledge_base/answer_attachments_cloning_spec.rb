@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase answer attachments cloning', type: :request, authenticated_as: :current_user do
+RSpec.describe 'KnowledgeBase answer attachments cloning', authenticated_as: :current_user, type: :request do
   include_context 'basic Knowledge Base' do
     before do
       published_answer

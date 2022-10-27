@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ldap import', use_vcr: false, integration: true, required_envs: %w[IMPORT_LDAP_ENDPOINT IMPORT_LDAP_USER IMPORT_LDAP_PASSWORD] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Ldap import', integration: true, required_envs: %w[IMPORT_LDAP_ENDPOINT IMPORT_LDAP_USER IMPORT_LDAP_PASSWORD], use_vcr: false do # rubocop:disable RSpec/DescribeClass
   let(:ldap_source) { create(:ldap_source, :with_config) }
 
   let(:expected_result) do

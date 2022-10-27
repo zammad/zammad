@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing tickets from Zendesk' do
 
@@ -140,9 +140,9 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, sequencer: :seque
     end
 
     before do
-      create :object_manager_attribute_select, object_name: 'Ticket', name: 'custom_dropdown'
-      create :object_manager_attribute_boolean, object_name: 'Ticket', name: 'custom_checkbox'
-      create :object_manager_attribute_multiselect, object_name: 'Ticket', name: 'custom_multiselect'
+      create(:object_manager_attribute_select, object_name: 'Ticket', name: 'custom_dropdown')
+      create(:object_manager_attribute_boolean, object_name: 'Ticket', name: 'custom_checkbox')
+      create(:object_manager_attribute_multiselect, object_name: 'Ticket', name: 'custom_multiselect')
       ObjectManager::Attribute.migration_execute
 
       # We only want to test here the Ticket API, so disable other modules in the sequence

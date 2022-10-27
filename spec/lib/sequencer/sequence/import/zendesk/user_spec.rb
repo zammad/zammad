@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing users from Zendesk' do
 
@@ -120,9 +120,9 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, sequencer: :sequenc
     end
 
     before do
-      create :object_manager_attribute_select, object_name: 'User', name: 'custom_dropdown'
-      create :object_manager_attribute_text, object_name: 'User', name: 'lieblingstier'
-      create :object_manager_attribute_text, object_name: 'User', name: 'test_example'
+      create(:object_manager_attribute_select, object_name: 'User', name: 'custom_dropdown')
+      create(:object_manager_attribute_text, object_name: 'User', name: 'lieblingstier')
+      create(:object_manager_attribute_text, object_name: 'User', name: 'test_example')
       ObjectManager::Attribute.migration_execute
     end
 

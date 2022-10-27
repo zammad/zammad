@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, sequencer: :sequence, db_strategy: :reset, required_envs: %w[IMPORT_ZENDESK_ENDPOINT] do
+RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strategy: :reset, required_envs: %w[IMPORT_ZENDESK_ENDPOINT], sequencer: :sequence do
 
   let(:hostname) { URI.parse(ENV['IMPORT_ZENDESK_ENDPOINT']).hostname }
 

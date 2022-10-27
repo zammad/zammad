@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'system/examples/pagination_examples'
 
-RSpec.describe 'Manage > Trigger', type: :system, mariadb: true do
+RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
 
   def open_new_trigger_dialog
     visit '/#manage/trigger'
@@ -84,7 +84,7 @@ RSpec.describe 'Manage > Trigger', type: :system, mariadb: true do
     context 'Tags' do
 
       it 'shows tag selection list in foreground' do
-        tag_item = create :tag_item
+        tag_item = create(:tag_item)
 
         open_new_trigger_dialog
 

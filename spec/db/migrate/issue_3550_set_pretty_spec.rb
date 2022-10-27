@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue3550SetPretty, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue3550SetPretty, db_strategy: :reset, type: :db_migration do
   context 'when cti gets migrated to stored pretty values' do
     let!(:cti) { create(:'cti/log') }
 

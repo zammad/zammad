@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Login', type: :system, authenticated_as: false do
+RSpec.describe 'Login', authenticated_as: false, type: :system do
   before do
     visit '/'
   end

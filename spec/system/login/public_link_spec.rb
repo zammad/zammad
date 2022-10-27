@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Login > Public Links', type: :system, authenticated_as: false do
+RSpec.describe 'Login > Public Links', authenticated_as: false, type: :system do
   context 'with showing public links' do
     let(:links) do
       first_link  = create(:public_link, title: 'Zammad Community', link: 'https://zammad.org')

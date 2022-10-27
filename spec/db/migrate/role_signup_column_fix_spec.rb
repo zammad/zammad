@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RoleSignupColumnFix, type: :db_migration, db_strategy: :reset do
+RSpec.describe RoleSignupColumnFix, db_strategy: :reset, type: :db_migration do
   context 'when a role contains signup permissions' do
     let!(:role) do
       role = create(:role)

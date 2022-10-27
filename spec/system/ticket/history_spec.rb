@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket history', type: :system, time_zone: 'Europe/London', authenticated_as: :admin_de do
+RSpec.describe 'Ticket history', authenticated_as: :admin_de, time_zone: 'Europe/London', type: :system do
   let(:group)    { create(:group) }
   let(:ticket)   { create(:ticket, group: group) }
   let(:admin_de) { create(:admin, :groupable, preferences: { locale: 'de-de' }, group: group) }

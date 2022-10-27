@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'lib/sequencer/sequence/import/kayako/examples/object_custom_field_values_examples'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::User, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Kayako::User, db_strategy: :reset, sequencer: :sequence do
   context 'when importing users from Kayako' do
     let(:groups) do
       create_list(:group, 2)

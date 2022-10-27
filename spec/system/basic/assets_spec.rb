@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Assets', type: :system, db_strategy: :reset do
+RSpec.describe 'Assets', db_strategy: :reset, type: :system do
   let(:organization) { create(:organization, note: 'hello') }
   let(:customer)     { create(:customer, organization: organization, note: 'hello', last_login: Time.zone.now, login_failed: 1) }
   let(:agent)        { create(:agent, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }

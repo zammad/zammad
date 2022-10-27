@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'models/contexts/factory_context'
 
-RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id: 1 do
+RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :model do
   subject { create(:knowledge_base_answer_translation) }
 
   include_context 'factory'

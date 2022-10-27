@@ -250,7 +250,7 @@ RSpec.describe 'Overview', type: :system do
 
   context 'when multiselect is choosen as column', authenticated_as: :authenticate, db_strategy: :reset, mariadb: true do
     def authenticate
-      create :object_manager_attribute_multiselect, data_option: data_option, name: attribute_name
+      create(:object_manager_attribute_multiselect, data_option: data_option, name: attribute_name)
       ObjectManager::Attribute.migration_execute
       user
     end

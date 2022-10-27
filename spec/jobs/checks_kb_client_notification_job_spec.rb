@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ChecksKbClientNotificationJob, type: :job, performs_jobs: true do
+RSpec.describe ChecksKbClientNotificationJob, performs_jobs: true, type: :job do
   include_context 'basic Knowledge Base'
 
   describe 'pushes to users who have access' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
+RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
   let(:group) { create(:group) }
 
   let!(:ticket) do
@@ -60,7 +60,7 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
       expect(page).to have_content('+ Add Link')
     end
 
-    context 'with select, treeselect, multiselect and multi-treeselect fields', db_strategy: :reset, authenticated_as: :authenticated do
+    context 'with select, treeselect, multiselect and multi-treeselect fields', authenticated_as: :authenticated, db_strategy: :reset do
       def authenticated
         attribute
         ObjectManager::Attribute.migration_execute
@@ -129,7 +129,7 @@ RSpec.describe 'Ticket Access Zoom', type: :system, authenticated_as: :user do
       expect(page).to have_no_content('+ Add Link')
     end
 
-    context 'with select, treeselect, multiselect and multi-treeselect fields', db_strategy: :reset, authenticated_as: :authenticated do
+    context 'with select, treeselect, multiselect and multi-treeselect fields', authenticated_as: :authenticated, db_strategy: :reset do
       def authenticated
         attribute
         ObjectManager::Attribute.migration_execute

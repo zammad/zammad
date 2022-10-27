@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User', type: :request, performs_jobs: true do
+RSpec.describe 'User', performs_jobs: true, type: :request do
 
   describe 'request handling' do
     let!(:admin) do
@@ -1144,7 +1144,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
 
     context 'ultra long password', authenticated_as: :user do
-      let(:user)        { create :agent, :with_valid_password }
+      let(:user)        { create(:agent, :with_valid_password) }
       let(:long_string) { "asd1ASDasd!#{Faker::Lorem.characters(number: 1_000)}" }
 
       it 'does not reach verifying when old password is too long' do
@@ -1475,7 +1475,7 @@ RSpec.describe 'User', type: :request, performs_jobs: true do
     end
   end
 
-  describe 'GET /api/v1/users/search, checks ES Usage', searchindex: true, authenticated_as: :agent do
+  describe 'GET /api/v1/users/search, checks ES Usage', authenticated_as: :agent, searchindex: true do
     let!(:agent) { create(:agent) }
 
     def make_request(params)

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'QUnit', type: :system, authenticated_as: false, set_up: true, time_zone: 'Europe/London' do
+RSpec.describe 'QUnit', authenticated_as: false, set_up: true, time_zone: 'Europe/London', type: :system do
   matcher :pass_qunit_test do
     match do
       actual.has_css?('.total', wait: 120)

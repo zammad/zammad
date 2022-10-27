@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Search', type: :system, app: :mobile, authenticated_as: :user do
+RSpec.describe 'Mobile > Search', app: :mobile, authenticated_as: :user, type: :system do
   context 'when searching as customer', authenticated_as: :customer do
     let(:organization) { create(:organization) }
     let(:customer)     { create(:customer, organization: organization) }

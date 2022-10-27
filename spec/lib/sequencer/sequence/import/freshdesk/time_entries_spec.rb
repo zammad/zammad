@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntries, sequencer: :sequence, db_strategy: 'reset' do
+RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntries, db_strategy: 'reset', sequencer: :sequence do
   let(:time_entry_available) { true }
-  let(:ticket)               { create :ticket }
+  let(:ticket)               { create(:ticket) }
 
   let(:process_payload) do
     {

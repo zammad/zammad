@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > App Account Page', type: :system, app: :mobile do
+RSpec.describe 'Mobile > App Account Page', app: :mobile, type: :system do
   context 'when on account page' do
     let(:admin) { create(:admin) }
     let(:agent) { create(:agent) }

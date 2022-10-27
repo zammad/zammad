@@ -932,7 +932,7 @@ RSpec.describe Trigger, type: :model do
     end
 
     before do
-      create :object_manager_attribute_multiselect, name: attribute_name
+      create(:object_manager_attribute_multiselect, name: attribute_name)
       ObjectManager::Attribute.migration_execute
 
       described_class.destroy_all # Default DB state includes three sample triggers

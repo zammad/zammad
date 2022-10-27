@@ -15,14 +15,14 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
     before do
       freeze_time
 
-      create :object_manager_attribute_date, name: '4206_date'
-      create :object_manager_attribute_datetime, name: '4206_datetime'
-      create :postmaster_filter, perform: {
-        'x-zammad-ticket-pending_time'  => { 'operator' => 'relative', 'value' => '12', 'range' => 'minute' },
-        'x-zammad-ticket-state_id'      => { 'value' => Ticket::State.find_by(name: 'pending reminder').id },
-        'x-zammad-ticket-4206_datetime' => { 'operator' => 'static', 'value' => '2022-08-18T06:00:00.000Z' },
-        'x-zammad-ticket-4206_date'     => { 'value' => '2022-08-19' }
-      }
+      create(:object_manager_attribute_date, name: '4206_date')
+      create(:object_manager_attribute_datetime, name: '4206_datetime')
+      create(:postmaster_filter, perform: {
+               'x-zammad-ticket-pending_time'  => { 'operator' => 'relative', 'value' => '12', 'range' => 'minute' },
+               'x-zammad-ticket-state_id'      => { 'value' => Ticket::State.find_by(name: 'pending reminder').id },
+               'x-zammad-ticket-4206_datetime' => { 'operator' => 'static', 'value' => '2022-08-18T06:00:00.000Z' },
+               'x-zammad-ticket-4206_date'     => { 'value' => '2022-08-19' }
+             })
       ObjectManager::Attribute.migration_execute
       filter(mail_hash)
     end

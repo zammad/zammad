@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::FormUpdater, type: :graphql, authenticated_as: :agent do
+RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graphql do
   let(:agent) { create(:agent) }
 
   context 'when fetching form updater data' do

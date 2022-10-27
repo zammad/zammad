@@ -6,7 +6,7 @@ RSpec.describe 'Manage > Channels > Facebook', type: :system do
   context 'when configuring app' do
     before { visit '/#channels/facebook' }
 
-    it 'works', :use_vcr do
+    it 'works as expected', :use_vcr do
       within :active_content do
         click '.btn--success'
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Profile > Password', type: :system, authenticated_as: :user do
+RSpec.describe 'Profile > Password', authenticated_as: :user, type: :system do
   before do
     visit 'profile/password'
   end
@@ -40,7 +40,7 @@ RSpec.describe 'Profile > Password', type: :system, authenticated_as: :user do
   end
 
   it 'allows to change password' do
-    new_password = generate :password_valid
+    new_password = generate(:password_valid)
 
     fill_in 'password_old',         with: user.password_plain
     fill_in 'password_new',         with: new_password

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue2867FooterHeaderPublicLink, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue2867FooterHeaderPublicLink, db_strategy: :reset, type: :db_migration do
 
   before { without_column(table, column: column) }
 

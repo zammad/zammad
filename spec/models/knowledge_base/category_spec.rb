@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/contexts/factory_context'
 
-RSpec.describe KnowledgeBase::Category, type: :model, current_user_id: 1 do
+RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
   subject(:kb_category) { create(:knowledge_base_category) }
 
   include_context 'factory'

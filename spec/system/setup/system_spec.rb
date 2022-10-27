@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System setup process', type: :system, set_up: false, authenticated_as: false, required_envs: %w[MAILBOX_INIT] do
+RSpec.describe 'System setup process', authenticated_as: false, required_envs: %w[MAILBOX_INIT], set_up: false, type: :system do
 
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)

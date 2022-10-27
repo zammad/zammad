@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'inserting Knowledge Base answer', type: :system, searchindex: true do
+RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :system do
   include_context 'basic Knowledge Base'
 
   let(:field)              { find(:richtext) }

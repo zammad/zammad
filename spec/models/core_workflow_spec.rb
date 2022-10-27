@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CoreWorkflow, type: :model, mariadb: true do
+RSpec.describe CoreWorkflow, mariadb: true, type: :model do
   let(:group)   { create(:group) }
   let!(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: 5.days.from_now, group: group) }
   let!(:base_payload) do
@@ -311,7 +311,7 @@ RSpec.describe CoreWorkflow, type: :model, mariadb: true do
     let(:field_name) { SecureRandom.uuid }
 
     before do
-      create :object_manager_attribute_multiselect, name: field_name, display: field_name
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name)
       ObjectManager::Attribute.migration_execute
     end
 
@@ -1821,7 +1821,7 @@ RSpec.describe CoreWorkflow, type: :model, mariadb: true do
     end
 
     before do
-      create :object_manager_attribute_select, name: field_name1, display: field_name1, screens: screens
+      create(:object_manager_attribute_select, name: field_name1, display: field_name1, screens: screens)
       ObjectManager::Attribute.migration_execute
     end
 

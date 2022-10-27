@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Form', type: :system, authenticated_as: true do
+RSpec.describe 'Form', authenticated_as: true, type: :system do
 
   shared_examples 'validating form fields' do
     it 'validate name input' do

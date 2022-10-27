@@ -22,7 +22,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TimeEntry, sequencer: :
       }
     end
 
-    let(:ticket) { create :ticket }
+    let(:ticket) { create(:ticket) }
     let(:id_map) do
       {
         'Ticket' => {

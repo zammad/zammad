@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Unauthenticated redirect', type: :system, authenticated_as: false do
+RSpec.describe 'Unauthenticated redirect', authenticated_as: false, type: :system do
 
   it 'Sessions' do
     visit 'system/sessions'

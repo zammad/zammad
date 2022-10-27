@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Password Reset verify', type: :system, authenticated_as: false do
+RSpec.describe 'Password Reset verify', authenticated_as: false, type: :system do
   context 'with a valid token' do
     let(:user)  { create(:agent) }
     let(:token) { User.password_reset_new_token(user.email)[:token].name }
@@ -30,7 +30,7 @@ RSpec.describe 'Password Reset verify', type: :system, authenticated_as: false d
     end
 
     it 'successfully resets password and logs in' do
-      new_password = generate :password_valid
+      new_password = generate(:password_valid)
 
       fill_in 'password', with: new_password
       fill_in 'password_confirm', with: new_password

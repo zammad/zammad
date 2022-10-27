@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Report', type: :system, searchindex: true do
+RSpec.describe 'Report', searchindex: true, type: :system do
   context 'with ticket search result' do
     let(:label) { find('.content ul.checkbox-list') }
 

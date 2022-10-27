@@ -19,10 +19,10 @@ RSpec.describe ExcelSheet do
     let(:ticket) { create(:ticket, '4186_select': 'key_1', '4186_tree_select': 'Incident::Hardware', '4186_multiselect': %w[key_1 key_2], '4186_multi_tree_select': ['Incident', 'Incident::Hardware']) }
 
     before do
-      create :object_manager_attribute_select, name: '4186_select'
-      create :object_manager_attribute_tree_select, name: '4186_tree_select'
-      create :object_manager_attribute_multiselect, name: '4186_multiselect'
-      create :object_manager_attribute_multi_tree_select, name: '4186_multi_tree_select'
+      create(:object_manager_attribute_select, name: '4186_select')
+      create(:object_manager_attribute_tree_select, name: '4186_tree_select')
+      create(:object_manager_attribute_multiselect, name: '4186_multiselect')
+      create(:object_manager_attribute_multi_tree_select, name: '4186_multi_tree_select')
       ObjectManager::Attribute.migration_execute
 
       ticket

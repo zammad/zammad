@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User Device', type: :request, sends_notification_emails: true, performs_jobs: true do
+RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: true, type: :request do
 
   let!(:admin) do
     create(:admin, login: 'user-device-admin', password: 'adminpw', groups: Group.all)

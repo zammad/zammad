@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Elasticsearch', searchindex: true, performs_jobs: true, aggregate_failures: true do
+RSpec.describe 'Elasticsearch', aggregate_failures: true, performs_jobs: true, searchindex: true do
   let(:group) { create(:group) }
   let(:agent) { create(:agent, groups: [group]) }
 

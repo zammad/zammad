@@ -25,7 +25,7 @@ RSpec.describe SearchIndexBackend do
     context 'query finds results' do
 
       let(:record_type) { 'Ticket'.freeze }
-      let(:record) { create :ticket }
+      let(:record) { create(:ticket) }
 
       before do
         record.search_index_update_backend
@@ -40,7 +40,7 @@ RSpec.describe SearchIndexBackend do
 
     context 'when search for user firstname + double lastname' do
       let(:record_type) { 'User'.freeze }
-      let(:record) { create :user, login: 'a', email: 'a@a.de', firstname: 'AnFirst', lastname: 'ASplit Lastname' }
+      let(:record) { create(:user, login: 'a', email: 'a@a.de', firstname: 'AnFirst', lastname: 'ASplit Lastname') }
 
       before do
         record.search_index_update_backend
@@ -73,7 +73,7 @@ RSpec.describe SearchIndexBackend do
 
     context 'search with date that requires time zone conversion', time_zone: 'Europe/Vilnius' do
       let(:record_type) { 'Ticket'.freeze }
-      let(:record)      { create :ticket }
+      let(:record)      { create(:ticket) }
 
       before do
         travel_to(Time.zone.parse('2019-01-02 00:33'))
@@ -102,7 +102,7 @@ RSpec.describe SearchIndexBackend do
 
     context 'does find integer values for ticket data', db_strategy: :reset do
       let(:record_type) { 'Ticket'.freeze }
-      let(:record) { create :ticket, inttest: '1021052349' }
+      let(:record) { create(:ticket, inttest: '1021052349') }
 
       before do
         create(:object_manager_attribute_integer, name: 'inttest', data_option: {
@@ -206,7 +206,7 @@ RSpec.describe SearchIndexBackend do
     context 'record gets deleted' do
 
       let(:record_type) { 'Ticket'.freeze }
-      let(:deleted_record) { create :ticket }
+      let(:deleted_record) { create(:ticket) }
 
       before do
         described_class.add(record_type, deleted_record)
@@ -223,7 +223,7 @@ RSpec.describe SearchIndexBackend do
 
       context 'other records present' do
 
-        let(:other_record) { create :ticket }
+        let(:other_record) { create(:ticket) }
 
         before do
           described_class.add(record_type, other_record)
@@ -243,32 +243,32 @@ RSpec.describe SearchIndexBackend do
 
   describe '.selectors', searchindex: true do
 
-    let(:group1)        { create :group }
-    let(:organization1) { create :organization, note: 'hihi' }
-    let(:agent1)        { create :agent, organization: organization1, groups: [group1] }
-    let(:customer1)     { create :customer, organization: organization1, firstname: 'special-first-name' }
+    let(:group1)        { create(:group) }
+    let(:organization1) { create(:organization, note: 'hihi') }
+    let(:agent1)        { create(:agent, organization: organization1, groups: [group1]) }
+    let(:customer1)     { create(:customer, organization: organization1, firstname: 'special-first-name') }
     let(:ticket1) do
-      ticket = create :ticket, title: 'some-title1', state_id: 1, created_by: agent1
+      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1)
       ticket.tag_add('t1', 1)
       ticket
     end
     let(:ticket2) do
-      ticket = create :ticket, title: 'some_title2', state_id: 4
+      ticket = create(:ticket, title: 'some_title2', state_id: 4)
       ticket.tag_add('t2', 1)
       ticket
     end
     let(:ticket3) do
-      ticket = create :ticket, title: 'some::title3', state_id: 1
+      ticket = create(:ticket, title: 'some::title3', state_id: 1)
       ticket.tag_add('t1', 1)
       ticket.tag_add('t2', 1)
       ticket
     end
-    let(:ticket4) { create :ticket, title: 'phrase some-title4', state_id: 1 }
-    let(:ticket5)  { create :ticket, title: 'phrase some_title5', state_id: 1 }
-    let(:ticket6)  { create :ticket, title: 'phrase some::title6', state_id: 1 }
-    let(:ticket7)  { create :ticket, title: 'some title7', state_id: 1 }
-    let(:ticket8)  { create :ticket, title: 'sometitle', group: group1, state_id: 1, owner: agent1, customer: customer1, organization: organization1 }
-    let(:article8) { create :ticket_article, ticket: ticket8, subject: 'lorem ipsum' }
+    let(:ticket4) { create(:ticket, title: 'phrase some-title4', state_id: 1) }
+    let(:ticket5)  { create(:ticket, title: 'phrase some_title5', state_id: 1) }
+    let(:ticket6)  { create(:ticket, title: 'phrase some::title6', state_id: 1) }
+    let(:ticket7)  { create(:ticket, title: 'some title7', state_id: 1) }
+    let(:ticket8)  { create(:ticket, title: 'sometitle', group: group1, state_id: 1, owner: agent1, customer: customer1, organization: organization1) }
+    let(:article8) { create(:ticket_article, ticket: ticket8, subject: 'lorem ipsum') }
 
     before do
       Ticket.destroy_all # needed to remove not created tickets

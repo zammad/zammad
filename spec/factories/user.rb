@@ -53,7 +53,7 @@ FactoryBot.define do
     end
 
     trait :with_valid_password do
-      password { generate :password_valid }
+      password { generate(:password_valid) }
     end
 
     trait :without_email do

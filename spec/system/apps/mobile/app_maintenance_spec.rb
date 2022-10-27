@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > App Update Check', type: :system, app: :mobile do
-  context 'when app is not configured yet', set_up: false, authenticated_as: false do
+RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
+  context 'when app is not configured yet', authenticated_as: false, set_up: false do
     before do
       visit '/mobile/login', skip_waiting: true
     end

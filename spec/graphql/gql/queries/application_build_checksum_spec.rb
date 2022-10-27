@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::ApplicationBuildChecksum, type: :graphql, authenticated_as: false do
+RSpec.describe Gql::Queries::ApplicationBuildChecksum, authenticated_as: false, type: :graphql do
 
   context 'when checking the application build checksum' do
     let(:vite_path) { Rails.public_path.join('vite') }

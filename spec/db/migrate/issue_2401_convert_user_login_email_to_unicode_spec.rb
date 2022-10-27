@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue2401ConvertUserLoginEmailToUnicode, type: :db_migration, db_strategy: :reset do
+RSpec.describe Issue2401ConvertUserLoginEmailToUnicode, db_strategy: :reset, type: :db_migration do
   describe 'when user login/email has punycode formatted domain' do
     def create_user
       now = DateTime.now.strftime('%Y-%m-%d %H:%M:%S.000')

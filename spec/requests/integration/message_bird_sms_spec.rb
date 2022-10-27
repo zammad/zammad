@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Message Bird SMS', type: :request, performs_jobs: true do
+RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
 
   describe 'request handling' do
 

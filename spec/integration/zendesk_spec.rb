@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Zendesk import', integration: true, use_vcr: true, db_strategy: :reset, required_envs: %w[IMPORT_ZENDESK_ENDPOINT IMPORT_ZENDESK_ENDPOINT_KEY IMPORT_ZENDESK_ENDPOINT_USERNAME] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Zendesk import', db_strategy: :reset, integration: true, required_envs: %w[IMPORT_ZENDESK_ENDPOINT IMPORT_ZENDESK_ENDPOINT_KEY IMPORT_ZENDESK_ENDPOINT_USERNAME], use_vcr: true do # rubocop:disable RSpec/DescribeClass
   let(:job) { ImportJob.last }
 
   before do

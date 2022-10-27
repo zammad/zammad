@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'KnowledgeBase translation update', type: :request, authenticated_as: :current_user do
+RSpec.describe 'KnowledgeBase translation update', authenticated_as: :current_user, type: :request do
   include_context 'basic Knowledge Base'
 
   let(:new_title)    { 'new title for update test' }

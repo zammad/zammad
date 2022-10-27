@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :sequence, db_strategy: :reset do
+RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing tickets from Freshdesk' do
 
-    let(:group) { create :group }
+    let(:group) { create(:group) }
     let(:resource) do
       {
         'cc_emails' => [],
@@ -77,7 +77,7 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
         time_entry_available: true,
       }
     end
-    let(:owner) { create :agent, group_ids: [group.id] }
+    let(:owner) { create(:agent, group_ids: [group.id]) }
 
     let(:ticket_get_response_payload) do
       attachment_payload = {
@@ -136,10 +136,10 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, sequencer: :seq
     end
 
     before do
-      create :object_manager_attribute_select, name:  'cf_custom_dropdown'
-      create :object_manager_attribute_integer, name: 'cf_custom_integer'
-      create :object_manager_attribute_boolean, name: 'cf_test_checkbox'
-      create :object_manager_attribute_text, name: 'cf_custom_decimal'
+      create(:object_manager_attribute_select, name:  'cf_custom_dropdown')
+      create(:object_manager_attribute_integer, name: 'cf_custom_integer')
+      create(:object_manager_attribute_boolean, name: 'cf_test_checkbox')
+      create(:object_manager_attribute_text, name: 'cf_custom_decimal')
       ObjectManager::Attribute.migration_execute
 
       # Mock the attachment and inline image download requests.

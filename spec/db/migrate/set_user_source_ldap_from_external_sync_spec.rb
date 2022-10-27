@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SetUserSourceLdapFromExternalSync, type: :db_migration, db_strategy: :reset do
+RSpec.describe SetUserSourceLdapFromExternalSync, db_strategy: :reset, type: :db_migration do
   let(:users)      { create_list(:user, 2) }
   let(:other_user) { create(:user) }
 

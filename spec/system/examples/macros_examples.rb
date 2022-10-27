@@ -2,11 +2,11 @@
 
 RSpec.shared_examples 'macros' do |path:|
 
-  let!(:group1)              { create :group }
-  let!(:group2)              { create :group }
-  let!(:macro_without_group) { create :macro }
-  let!(:macro_group1)        { create :macro, groups: [group1] }
-  let!(:macro_group2)        { create :macro, groups: [group2] }
+  let!(:group1)              { create(:group) }
+  let!(:group2)              { create(:group) }
+  let!(:macro_without_group) { create(:macro) }
+  let!(:macro_group1)        { create(:macro, groups: [group1]) }
+  let!(:macro_group2)        { create(:macro, groups: [group2]) }
 
   it 'supports group-dependent macros' do
     visit '/'

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Channel::EmailParser process with simple filter and followup message', type: :model, aggregate_failures: true do
+RSpec.describe 'Channel::EmailParser process with simple filter and followup message', aggregate_failures: true, type: :model do
   before do
     PostmasterFilter.destroy_all
     PostmasterFilter.create!(filter)

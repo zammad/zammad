@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/contexts/factory_context'
 
-RSpec.describe KnowledgeBase::Answer::Translation, type: :model, current_user_id: 1, searchindex: 1 do
+RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, searchindex: 1, type: :model do
   include_context 'basic Knowledge Base'
 
   let(:user)     { create(:admin) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Signup', type: :system, authenticated_as: false do
+RSpec.describe 'Signup', authenticated_as: false, type: :system do
   before do
     visit 'signup'
   end

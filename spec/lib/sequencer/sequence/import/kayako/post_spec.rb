@@ -6,9 +6,9 @@ RSpec.describe ::Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence
 
   context 'when importing posts from Kayako' do
 
-    let(:user)     { create :user }
-    let(:customer) { create :customer }
-    let(:ticket)   { create :ticket }
+    let(:user)     { create(:user) }
+    let(:customer) { create(:customer) }
+    let(:ticket)   { create(:ticket) }
 
     let(:resource) do
       {

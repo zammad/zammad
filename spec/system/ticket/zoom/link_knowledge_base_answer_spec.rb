@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system, authenticated_as: :authenticate do
+RSpec.describe 'Ticket zoom > Link knowledge base answer', authenticated_as: :authenticate, type: :system do
   describe 'Link knowledge base answer' do
     include_context 'basic Knowledge Base'
 
-    let(:ticket)      { create :ticket, group: Group.find_by(name: 'Users') }
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:translation) { published_answer.translations.first }
 
     def authenticate
