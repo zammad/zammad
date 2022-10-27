@@ -10,6 +10,10 @@ module Tasks
       # This is enforced by Tasks:Zammad::Command which prevents command chaining.
       class Migrate < Tasks::Zammad::Command
 
+        def self.description
+          'Execute all pending Zammad addon package migrations'
+        end
+
         def self.task_handler
           puts 'Executing all pending package migrations...'
           ::Package.migration_execute

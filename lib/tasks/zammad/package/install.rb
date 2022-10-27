@@ -11,6 +11,10 @@ module Tasks
           "#{super} /path/to/package.zpm"
         end
 
+        def self.description
+          'Install a Zammad addon package'
+        end
+
         ARGUMENT_COUNT = 1
 
         def self.task_handler

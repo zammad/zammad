@@ -11,6 +11,10 @@ module Tasks
           "#{super} MyPackage"
         end
 
+        def self.description
+          'Uninstall a Zammad addon package'
+        end
+
         ARGUMENT_COUNT = 1
 
         def self.task_handler
