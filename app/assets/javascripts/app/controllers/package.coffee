@@ -2,7 +2,7 @@ class Package extends App.ControllerSubContent
   requiredPermission: 'admin.package'
   header: __('Packages')
   events:
-    'click .package-action':  'action'
+    'click .package-action[data-type="uninstall"]':  'action'
 
   constructor: ->
     super
@@ -43,19 +43,21 @@ class Package extends App.ControllerSubContent
   action: (e) ->
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    type = $(e.target).data('type')
-    if type is 'uninstall'
-      httpType = 'DELETE'
 
-    if httpType
-      @ajax(
-        id:    'packages'
-        type:  httpType
-        url:   "#{@apiPath}/packages",
-        data:  JSON.stringify(id: id)
-        processData: false
-        success: =>
-          @load()
+    new App.ControllerConfirmDelete(
+      fieldDisplay: App.i18n.translatePlain('There is no rollback of this deletion. If you are sure that you wish to proceed, please type "%s" into the input. All related data to this package will be lost.', App.i18n.translatePlain('Delete')),
+      callback: (modal) =>
+
+        @ajax(
+          id:    'packages'
+          type:  'DELETE'
+          url:   "#{@apiPath}/packages",
+          data:  JSON.stringify(id: id)
+          processData: false
+          success: =>
+            modal.close()
+            @load()
         )
+    )
 
 App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: ['admin.package'] }, 'NavBarAdmin')

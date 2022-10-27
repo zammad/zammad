@@ -1086,6 +1086,7 @@ msgstr ""
 msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -3349,10 +3350,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -10079,6 +10082,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "There is no rollback of this deletion possible. If you are sure that you wish to proceed, please type \"%s\" into the input."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/package.coffee
+msgid "There is no rollback of this deletion. If you are sure that you wish to proceed, please type \"%s\" into the input. All related data to this package will be lost."
 msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb
