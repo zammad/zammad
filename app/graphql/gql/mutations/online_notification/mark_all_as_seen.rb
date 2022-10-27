@@ -14,12 +14,16 @@ module Gql::Mutations
     end
 
     def resolve(online_notifications:)
-      # TODO: we should only trigger one subscription for the complete mutation.
-      # At the moment for every notification update a count subscription is triggered.
-      online_notifications.each do |elem|
-        elem.seen = true
-        elem.save!
+      return {} if online_notifications.none?
+
+      # Only trigger subscription once after all are updated.
+      ::OnlineNotification.without_callback(:save, :after, :trigger_subscriptions) do
+        online_notifications.each do |elem|
+          elem.seen = true
+          elem.save!
+        end
       end
+      online_notifications.last.trigger_subscriptions
 
       { online_notifications: online_notifications }
     end

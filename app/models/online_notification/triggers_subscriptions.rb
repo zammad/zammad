@@ -9,8 +9,6 @@ module OnlineNotification::TriggersSubscriptions
     after_destroy :trigger_subscriptions
   end
 
-  private
-
   def trigger_subscriptions
     Gql::Subscriptions::OnlineNotificationsCount
       .trigger(user,

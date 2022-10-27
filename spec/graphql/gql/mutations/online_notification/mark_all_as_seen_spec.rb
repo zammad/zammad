@@ -8,6 +8,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, type: :graphql
   let(:notification_b)            { create(:online_notification, user: user) }
   let(:notification_c)            { create(:online_notification, user: user) }
   let(:another_user_notification) { create(:online_notification, user: create(:user)) }
+  let(:notifications_to_mark)     { [notification_a, notification_b] }
 
   let(:query) do
     <<~QUERY
@@ -25,18 +26,22 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, type: :graphql
 
   before do
     user.groups << Ticket.first.group
+    notifications_to_mark   # Pre-create them to ignore trigger events from that.
+    allow(Gql::Subscriptions::OnlineNotificationsCount).to receive(:trigger)
     gql.execute(query, variables: variables)
   end
 
   context 'when marking multiple notifications' do
-    let(:notifications_to_mark) { [notification_a, notification_b] }
-
     it 'marks selected notifications as seen' do
       expect([notification_a.reload, notification_b.reload])
         .to contain_exactly(
           have_attributes(id: notification_a.id, seen: true),
           have_attributes(id: notification_b.id, seen: true)
         )
+    end
+
+    it 'only calls trigger_subscriptions once' do
+      expect(Gql::Subscriptions::OnlineNotificationsCount).to have_received(:trigger).once
     end
 
     it 'does not touch other notifications' do
@@ -49,6 +54,18 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, type: :graphql
           include('id' => notification_a.to_gid_param),
           include('id' => notification_b.to_gid_param)
         )
+    end
+  end
+
+  context 'when no notifications are selected' do
+    let(:notifications_to_mark) { [] }
+
+    it 'does not call trigger_subscriptions' do
+      expect(Gql::Subscriptions::OnlineNotificationsCount).not_to have_received(:trigger)
+    end
+
+    it 'returns empty rexponse' do
+      expect(gql.result.data['onlineNotifications']).to be_nil
     end
   end
 
@@ -65,7 +82,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, type: :graphql
   end
 
   context 'when marking non-existant user notifications' do
-    let(:variables) { { ids: ['asd'] } }
+    let(:variables) { { onlineNotificationIds: ['asd'] } }
 
     it 'report as error' do
       expect(gql.result.error).to be_present
