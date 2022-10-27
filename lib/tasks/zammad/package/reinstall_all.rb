@@ -6,6 +6,11 @@ module Tasks
   module Zammad
     module Package
       class ReinstallAll < Tasks::Zammad::Command
+
+        def self.description
+          'Reinstall all installed Zammad addon packages'
+        end
+
         def self.task_handler
           puts 'Reinstalling all packages...'
           ::Package.find_each do |package|

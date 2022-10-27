@@ -12,6 +12,10 @@ module Tasks
             "#{super} age_in_years"
           end
 
+          def self.description
+            'Check for bundled gems that seem to be outdated/orphaned'
+          end
+
           ARGUMENT_COUNT = 1
 
           def self.task_handler

@@ -21,10 +21,15 @@ module Tasks
         "Usage: bundle exec rails #{task_name}"
       end
 
+      # Needs to be implemented by child classes.
+      def self.description
+        raise "The required method 'description' is not implemented by #{name}"
+      end
+
       def self.register_rake_task
         Rake::Task.define_task task_name => :environment do
           run_task
-        end
+        end.add_description(description)
       end
 
       def self.run_task
