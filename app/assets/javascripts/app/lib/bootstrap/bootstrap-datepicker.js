@@ -21,14 +21,16 @@
  * ========================================================= */
 
  /*
-	Zammad Edits:
-		- fix todayBtn toggle of display none and block: toggleClass instead
-		- allow custom template as options parameter
-		- fix that place method doesn't think that the container is the window, but rather the real window is the window
-		- added rerender method to show correct today if task is longer open the 24 hours
-		- scroll into view
-		- fix vertical auto position
-		- disableScroll flag to
+  Zammad Edits:
+    - fix todayBtn toggle of display none and block: toggleClass instead
+    - allow custom template as options parameter
+    - fix that place method doesn't think that the container is the window, but rather the real window is the window
+    - added rerender method to show correct today if task is longer open the 24 hours
+    - scroll into view
+    - fix vertical auto position
+    - disableScroll flag to
+    - adjust all cells with colspan when the week number is visible
+    - shorten weekdays from three to two characters: Mon -> Mo
  */
 
 (function(factory){
@@ -143,7 +145,7 @@
 		this.viewMode = this.o.startView;
 
 		if (this.o.calendarWeeks)
-			this.picker.find('tfoot .today, tfoot .clear')
+			this.picker.find('[colspan]')
 						.attr('colspan', function(i, val){
 							return parseInt(val) + 1;
 						});
@@ -856,14 +858,10 @@
 			var dowCnt = this.o.weekStart,
 				html = '<tr>';
 			if (this.o.calendarWeeks){
-				this.picker.find('.datepicker-days .datepicker-switch')
-					.attr('colspan', function(i, val){
-						return parseInt(val) + 1;
-					});
 				html += '<th class="cw">&#160;</th>';
 			}
 			while (dowCnt < this.o.weekStart + 7){
-				html += '<th class="dow">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
+				html += '<th class="dow">'+dates[this.o.language].daysMin[(dowCnt++)%7].substr(0, 2)+'</th>';
 			}
 			html += '</tr>';
 			this.picker.find('.datepicker-days thead').append(html);
