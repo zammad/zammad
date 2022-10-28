@@ -3,6 +3,10 @@
 class Zammad::TranslationCatalog::Extractor::RailsErrorMessages < Zammad::TranslationCatalog::Extractor::Base
 
   def extract_translatable_strings
+
+    # Only execute for Zammad, not for addons.
+    return if @options['addon_path']
+
     I18n.backend.load_translations
     find_error_messages(I18n.backend.translations[:en]).each do |error_message|
       extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: error_message, references: [])
