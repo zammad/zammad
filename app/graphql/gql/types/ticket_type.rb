@@ -16,7 +16,8 @@ module Gql::Types
       TicketPolicy::ReadScope.new(ctx.current_user, items).resolve
     end
 
-    implements Gql::Types::ObjectAttributeValueInterface
+    implements Gql::Types::ObjectAttributeValuesInterface
+    implements Gql::Types::TagsInterface
 
     belongs_to :group, Gql::Types::GroupType, null: false
     belongs_to :priority, Gql::Types::Ticket::PriorityType, null: false

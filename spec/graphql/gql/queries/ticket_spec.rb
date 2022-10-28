@@ -33,12 +33,18 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
             organization {
               name
             }
+            tags
           }
         }
       QUERY
     end
     let(:variables) { { ticketId: gql.id(ticket) } }
-    let(:ticket)    { create(:ticket) }
+    let(:ticket)    do
+      create(:ticket).tap do |t|
+        t.tag_add('tag1', 1)
+        t.tag_add('tag2', 1)
+      end
+    end
 
     before do
       gql.execute(query, variables: variables)
@@ -59,6 +65,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
                 'firstname' => ticket.owner.firstname,
                 'email'     => ticket.owner.email,
               ),
+              'tags'       => %w[tag1 tag2]
             }
           end
           it 'finds the ticket' do

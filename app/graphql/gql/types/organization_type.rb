@@ -9,7 +9,7 @@ module Gql::Types
 
     description 'Organizations that users can belong to'
 
-    implements Gql::Types::ObjectAttributeValueInterface
+    implements Gql::Types::ObjectAttributeValuesInterface
 
     scoped_fields do
       field :name, String

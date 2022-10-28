@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
-  module ObjectAttributeValueInterface
+  module ObjectAttributeValuesInterface
     include Gql::Types::BaseInterface
 
     description 'Custom object fields (only editable & active)'
@@ -13,13 +13,9 @@ module Gql::Types
     def object_attribute_values
       return [] if !@object || !context.current_user?
 
-      result = []
-
-      find_object_attributes.each do |oa|
+      find_object_attributes.reduce([]) do |result, oa|
         result << { attribute: attribute_hash(oa.attribute), value: @object[oa.attribute[:name].to_sym] }
       end
-
-      result
     end
 
     def find_object_attributes

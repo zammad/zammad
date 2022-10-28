@@ -40,7 +40,7 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   # Given a string UUID, find the object.
   def self.object_from_id(id, _query_ctx = nil, type: ActiveRecord::Base)
-    GlobalID.find(id, only: [type])
+    GlobalID.find(id, only: type)
   end
 
   # Find the object, but also ensure its type and that it was actually found.
