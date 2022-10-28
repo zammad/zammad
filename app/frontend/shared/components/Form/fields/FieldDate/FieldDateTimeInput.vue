@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { i18n } from '@shared/i18n'
+import { useApplicationStore } from '@shared/stores/application'
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/dark.css'
 import {
@@ -31,6 +32,8 @@ export interface Props {
 const props = defineProps<Props>()
 
 const { currentValue } = useValue(toRef(props, 'context'))
+
+const application = useApplicationStore()
 
 const locale: flatpickr.CustomLocale = {
   // calendar on desktop always starts at 1
@@ -86,6 +89,7 @@ const locale: flatpickr.CustomLocale = {
     ],
   },
   rangeSeparator: i18n.t(' to '),
+  weekAbbreviation: i18n.t('CW'),
 }
 
 const pickerNode = shallowRef<HTMLElement>()
@@ -181,6 +185,7 @@ const createFlatpickr = () => {
     defaultDate: currentValue.value,
     maxDate: props.context.maxDate,
     minDate: getMinDate(),
+    weekNumbers: application.config.datepicker_show_calendar_weeks === true,
     formatDate(date) {
       const isoDate = date.toISOString()
       if (time.value) return i18n.dateTime(isoDate)
@@ -225,6 +230,11 @@ watch(
 watch(currentValue, (date: string) => {
   datepicker.value?.setDate(date, false)
 })
+
+watch(
+  () => application.config.datepicker_show_calendar_weeks,
+  rerenderFlatpickr,
+)
 
 // toggle calendar visibility when showPicker changes
 const showPicker = ref(false)

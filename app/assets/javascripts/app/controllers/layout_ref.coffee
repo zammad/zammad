@@ -1536,6 +1536,7 @@ class InputsRef extends App.ControllerAppContent
       format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker3').parent()
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
 
     # date time picker
@@ -1545,6 +1546,7 @@ class InputsRef extends App.ControllerAppContent
       format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker4').parent()
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
     @$('.js-timepicker4').timepicker()
 

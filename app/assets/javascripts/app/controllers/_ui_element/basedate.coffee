@@ -41,6 +41,7 @@ class App.UiElement.basedate
       language: 'custom'
       orientation: attribute.orientation
       disableScroll: attribute.disableScroll
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
 
     @setNewTimeInitial(item, attribute)

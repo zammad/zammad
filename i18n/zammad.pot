@@ -1595,6 +1595,10 @@ msgstr ""
 msgid "CTI integration"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -3000,6 +3004,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if application is used as online service."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if calendar weeks are shown in the picker of date/datetime fields to easily select the correct date."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -8877,6 +8885,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 msgid "Show all…"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
