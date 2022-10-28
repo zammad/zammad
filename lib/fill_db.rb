@@ -16,20 +16,29 @@ fill your database with demo records
     tickets: 100,
     knowledge_base_answers: 100,
     knowledge_base_categories: 20,
+    nice: 0,
   )
 
 or if you only want to create 100 tickets
 
-  FillDb.load(tickets: 100)
-  FillDb.load(agents: 20)
-  FillDb.load(overviews: 20)
-  FillDb.load(tickets: 10000)
-  FillDb.load(knowledge_base_answers: 100)
-  FillDb.load(knowledge_base_categories: 20)
+  FillDb.load(tickets: 100, nice: 0)
+  FillDb.load(tickets: 100, nice: 1, log: true)
+  FillDb.load(agents: 20, nice: 0)
+  FillDb.load(overviews: 20, nice: 0)
+  FillDb.load(tickets: 10000, nice: 0)
+  FillDb.load(knowledge_base_answers: 100, nice: 0)
+  FillDb.load(knowledge_base_categories: 20, nice: 0)
 
 =end
 
   def self.load(params)
+    params[:log] = params[:log] || false
+    return load_data(params) if params[:log]
+
+    Rails.logger.silence { load_data(params) }
+  end
+
+  def self.load_data(params)
     nice                      = params[:nice] || 0.5
     agents                    = params[:agents] || 0
     customers                 = params[:customers] || 0
