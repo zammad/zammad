@@ -21,8 +21,6 @@ module Gql::Mutations
     def add(input)
       user_data = input.to_h
 
-      convert_object_attribute_values(user_data)
-
       execute_service(::User::AddInternalService, user_data: user_data)
     end
   end

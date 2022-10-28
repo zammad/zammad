@@ -26,7 +26,6 @@ module Gql::Mutations
     def update(current_user, input)
       user_data = input.to_h
 
-      convert_object_attribute_values(user_data)
       set_core_workflow_information(user_data, ::User, 'update')
       execute_service(::User::CheckAttributesService, user_data: user_data)
 

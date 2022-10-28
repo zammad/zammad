@@ -7,8 +7,6 @@ module Gql::Mutations
     include Gql::Concerns::HasNestedGraphqlName
     include Gql::Concerns::HandlesServices
 
-    include Gql::Mutations::Concerns::HandlesObjectAttributeValues
-
     # FIXME: Remove when all mutations are using services which are taking care of this flag.
     include Gql::Mutations::Concerns::HandlesCoreWorkflow
 

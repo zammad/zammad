@@ -27,7 +27,6 @@ module Gql::Mutations
     def update(current_organization, input)
       params = input.to_h
 
-      convert_object_attribute_values(params)
       set_core_workflow_information(params, ::Organization, 'update')
 
       current_organization.with_lock do
