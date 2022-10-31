@@ -451,10 +451,10 @@ class App.ControllerForm extends App.Controller
       field_by_data = @constructor.findFieldByData(key, el)
 
       if !@constructor.fieldIsReadonly(field_by_name)
-        field_by_name.closest('.form-group').find('input, select').attr('readonly', true)
+        field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
         field_by_name.closest('.form-group').addClass('is-readonly')
       if !@constructor.fieldIsReadonly(field_by_data)
-        field_by_data.closest('.form-group').find('input, select').attr('readonly', true)
+        field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
         field_by_data.closest('.form-group').addClass('is-readonly')
 
   changeable: (name, el = @form) ->
@@ -465,10 +465,10 @@ class App.ControllerForm extends App.Controller
       field_by_data = @constructor.findFieldByData(key, el)
 
       if @constructor.fieldIsReadonly(field_by_name)
-        field_by_name.closest('.form-group').find('input, select').attr('readonly', false)
+        field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
         field_by_name.closest('.form-group').removeClass('is-readonly')
       if @constructor.fieldIsReadonly(field_by_data)
-        field_by_data.closest('.form-group').find('input, select').attr('readonly', false)
+        field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
         field_by_data.closest('.form-group').removeClass('is-readonly')
 
   validate: (params) ->
@@ -719,7 +719,7 @@ class App.ControllerForm extends App.Controller
       App.Log.debug 'ControllerForm', 'disable form...', lookupForm
 
       # set forms to read only during communication with backend
-      lookupForm.find('button, input, select, textarea').prop('readonly', true)
+      lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', true)
 
       # disable radio and checkbox buttons
       lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', true)
@@ -744,7 +744,7 @@ class App.ControllerForm extends App.Controller
       App.Log.debug 'ControllerForm', 'enable form...', lookupForm
 
       # enable fields again
-      lookupForm.find('button, input, select, textarea').prop('readonly', false)
+      lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', false)
 
       # enable radio and checkbox buttons
       lookupForm.find('input[type=checkbox], input[type=radio]').prop('disabled', false)
