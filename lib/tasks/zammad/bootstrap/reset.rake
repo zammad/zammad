@@ -9,7 +9,6 @@ namespace :zammad do
       db:drop
       zammad:db:init
       zammad:setup:auto_wizard
-      zammad:flush
     ]
   end
 end

@@ -14,8 +14,6 @@ namespace :zammad do
         # otherwise it will fallback to default (develop)
         Rails.env = ENV['RAILS_ENV']
 
-        Rake::Task['zammad:flush:cache'].invoke
-
         Rake::Task['zammad:db:init'].invoke
 
         Rake::Task['zammad:ci:settings'].invoke(args[:elasticsearch])
