@@ -2,13 +2,14 @@
 
 import createInput from '@shared/form/core/createInput'
 import addLink from '@shared/form/features/addLink'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
 import { autoCompleteProps } from '../FieldAutoComplete'
 
 const fieldDefinition = createInput(
   FieldCustomerWrapper,
   autoCompleteProps,
-  { features: [addLink] },
+  { features: [addLink, formUpdaterTrigger()] },
   { addArrow: true },
 )
 

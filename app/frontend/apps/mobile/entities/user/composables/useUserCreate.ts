@@ -25,6 +25,7 @@ export const useUserCreate = () => {
     {
       name: 'active',
       required: true,
+      screen: 'create',
       object: EnumObjectManagerObjects.User,
     },
   ])
@@ -43,7 +44,7 @@ export const useUserCreate = () => {
       mutation,
       schema,
       onSuccess,
-      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserAdd,
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserCreate,
       errorNotificationMessage: __('User could not be created.'),
     })
   }

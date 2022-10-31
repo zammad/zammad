@@ -6,4 +6,8 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
   def relation_type
     ::Group
   end
+
+  def order
+    { name: :asc }
+  end
 end

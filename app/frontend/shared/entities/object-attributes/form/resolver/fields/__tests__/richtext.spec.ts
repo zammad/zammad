@@ -17,6 +17,7 @@ describe('FieldResolverRichtext', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Body',
       name: 'body',
+      required: false,
       props: {},
       type: 'editor',
     })

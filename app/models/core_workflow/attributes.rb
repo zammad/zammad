@@ -257,6 +257,14 @@ class CoreWorkflow::Attributes
     result
   end
 
+  def all_options_default
+    object_elements.each_with_object({}) do |attribute, result|
+      next if !attribute_options_array?(attribute) && !attribute_options_hash?(attribute)
+
+      result[ attribute[:name] ] = attribute[:options]
+    end
+  end
+
   def saved_attribute_value(attribute)
 
     # special case for owner_id

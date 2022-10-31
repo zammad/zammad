@@ -14,6 +14,7 @@ export class FieldResolverTreeselect extends FieldResolver {
   public fieldTypeAttributes() {
     const props: FormFieldAdditionalProps = {
       noOptionsLabelTranslation: !this.attributeConfig.translate,
+      clearable: this.attributeConfig.nulloption || false,
     }
 
     if (this.attributeConfig.options) {

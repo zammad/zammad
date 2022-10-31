@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'core workflow' do
-  let(:field_name) { SecureRandom.uuid }
+  let(:field_name) { SecureRandom.hex(10) }
   let(:screens) do
     {
       create_middle: {

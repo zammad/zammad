@@ -17,6 +17,7 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Organization',
       name: 'organization',
+      required: false,
       props: {},
       type: 'organization',
     })

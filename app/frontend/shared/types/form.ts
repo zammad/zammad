@@ -38,6 +38,7 @@ export enum FormSchemaExtendType {
   Append = 'append',
   Prepend = 'prepend',
   Replace = 'replace',
+  Merge = 'merge',
 }
 
 export interface FormDefaultProps {
@@ -45,3 +46,5 @@ export interface FormDefaultProps {
   link: RouteLocationRaw
   labelPlaceholder: string[]
 }
+
+export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur'

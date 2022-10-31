@@ -22,8 +22,8 @@ module Gql::Queries
       @form_updater = arguments[:form_updater_id].new(
         context:         context,
         relation_fields: arguments[:relation_fields],
-        meta:            arguments[:meta],
-        data:            arguments[:data],
+        meta:            arguments[:meta].to_h,
+        data:            arguments[:data].dup,
         id:              arguments[:id]
       )
 
@@ -47,7 +47,7 @@ module Gql::Queries
       super
     end
 
-    def resolve(meta:, data:, form_updater_id:, relation_fields:, id: nil)
+    def resolve(...)
       form_updater.resolve
     end
   end

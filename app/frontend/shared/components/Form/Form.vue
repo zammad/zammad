@@ -1,15 +1,17 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { isEqual, cloneDeep } from 'lodash-es'
 import type { ConcreteComponent, Ref } from 'vue'
 import {
   computed,
   ref,
+  nextTick,
+  shallowRef,
   reactive,
   toRef,
   watch,
   markRaw,
-  nextTick,
   useSlots,
 } from 'vue'
 import { FormKit, FormKitSchema } from '@formkit/vue'
@@ -21,20 +23,27 @@ import type {
   FormKitClasses,
   FormKitSchemaDOMNode,
   FormKitSchemaComponent,
+  FormKitMessageProps,
 } from '@formkit/core'
-import { useTimeoutFn } from '@vueuse/shared'
+import { createMessage } from '@formkit/core'
+import type { SetRequired } from 'type-fest'
+import type { Stoppable } from '@vueuse/shared'
+import { useTimeoutFn, watchOnce } from '@vueuse/shared'
+import getUuid from '@shared/utils/getUuid'
 import log from '@shared/utils/log'
 import UserError from '@shared/errors/UserError'
 import type {
   EnumObjectManagerObjects,
   EnumFormUpdaterId,
   FormUpdaterRelationField,
+  FormUpdaterQuery,
+  FormUpdaterQueryVariables,
 } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
 import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
 import testFlags from '@shared/utils/testFlags'
-import { debounce } from 'lodash-es'
+import type { FormUpdaterTrigger } from '@shared/types/form'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
@@ -42,6 +51,7 @@ import {
   type FormSchemaLayout,
   type FormSchemaNode,
   type FormValues,
+  type FormFieldValue,
   type ReactiveFormSchemData,
   FormValidationVisibility,
 } from './types'
@@ -55,9 +65,11 @@ import FormGroup from './FormGroup.vue'
 // - Add usage of "clearErrors(true)"?
 
 export interface Props {
+  id?: string
   schema?: FormSchemaNode[]
   formUpdaterId?: EnumFormUpdaterId
-  changeFields?: Record<string, FormSchemaField>
+  // TODO: Add possibility to have an "initial" changeFields as a combination with the the formUpdater...
+  changeFields?: Record<string, Partial<FormSchemaField>>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
     string,
@@ -94,7 +106,6 @@ const props = withDefaults(defineProps<Props>(), {
     return {}
   },
   validationVisibility: FormValidationVisibility.Submit,
-  disabled: false,
   useObjectAttributes: false,
 })
 
@@ -117,12 +128,53 @@ const localClass = toRef(props, 'class')
 const emit = defineEmits<{
   (e: 'changed', newValue: unknown, fieldName: string): void
   (e: 'node', node: FormKitNode): void
-  (e: 'settled', isSettled: boolean): void
+  (e: 'settled'): void
 }>()
 
+const showInitialLoadingAnimation = ref(false)
+let loadingAnimationTimeout: Stoppable
+
+const stopLoadingAnimationTimeOut = () => {
+  if (loadingAnimationTimeout) {
+    loadingAnimationTimeout.stop()
+  }
+}
+
+const startInitialLoadingAnimation = () => {
+  stopLoadingAnimationTimeOut()
+
+  loadingAnimationTimeout = useTimeoutFn(() => {
+    showInitialLoadingAnimation.value = true
+  }, 300)
+}
+
+const stopInitialLoadingAnimation = () => {
+  stopLoadingAnimationTimeOut()
+
+  loadingAnimationTimeout = useTimeoutFn(() => {
+    showInitialLoadingAnimation.value = false
+  }, 300)
+}
+
+const formKitInitialNodesSettled = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
+
+const updaterChangedFields = new Set<string>()
+
 const setFormNode = (node: FormKitNode) => {
   formNode.value = node
+
+  node.settled.then(() => {
+    stopInitialLoadingAnimation()
+    formKitInitialNodesSettled.value = true
+
+    // Reset directly after the initial request.
+    updaterChangedFields.clear()
+
+    const formName = node.context?.id || node.name
+    testFlags.set(`${formName}.settled`)
+    emit('settled')
+  })
 
   emit('node', node)
 }
@@ -143,7 +195,16 @@ const values = computed<FormValues>(() => {
 
 const relationFields: FormUpdaterRelationField[] = []
 
-const updateSchemaProcessing = ref(false)
+const formUpdaterProcessing = computed(
+  () => formNode.value?.context?.state.formUpdaterProcessing || false,
+)
+
+let delayedSubmit = false
+const onSubmitRaw = () => {
+  if (formUpdaterProcessing.value) {
+    delayedSubmit = true
+  }
+}
 
 const onSubmit = (values: FormData): Promise<void> | void => {
   // Needs to be checked, because the 'onSubmit' function is not required.
@@ -171,56 +232,27 @@ const onSubmit = (values: FormData): Promise<void> | void => {
   return submitResult
 }
 
-const coreWorkflowActive = ref(false)
-const formUpdaterChanges = ref<Record<string, FormSchemaField>>({})
+let formUpdaterQueryHandler: QueryHandler<
+  FormUpdaterQuery,
+  FormUpdaterQueryVariables
+>
 
-const changedValuePlugin = (node: FormKitNode) => {
-  node.on('created', () => {
-    node.on('input', ({ payload: value, origin: node }) => {
-      // TODO: We need to ignore the initial events
-      // TODO: trigger update form check (e.g. core workflow)
-      // Or maybe also some "update"-flag on field level?
-      if (coreWorkflowActive.value) {
-        updateSchemaProcessing.value = true
-        setTimeout(() => {
-          // TODO: ... do some needed stuff
-          formUpdaterChanges.value = {}
-          updateSchemaProcessing.value = false
-        }, 2000)
-      }
-
-      emit('changed', value, node.name)
-    })
+const delayedSubmitPlugin = (node: FormKitNode) => {
+  node.on('message-removed', async ({ payload }) => {
+    if (payload.key === 'formUpdaterProcessing' && delayedSubmit) {
+      // We need to wait on the "next tick", so that the validation for updated fields is ready.
+      setTimeout(() => {
+        delayedSubmit = false
+        node.submit()
+      }, 0)
+    }
   })
-}
 
-const formSettledPlugin = (node: FormKitNode) => {
-  node.on(
-    'settled',
-
-    // To give chance to the form to settle all disturbances,
-    //   we debounce the event for some non-zero delay.
-    debounce(($event) => {
-      const isSettled = $event.payload
-      const formName = formNode.value?.context?.id || formNode.value?.name
-
-      if (isSettled) testFlags.set(`${formName}.settled`)
-      else testFlags.clear(`${formName}.settled`)
-
-      emit('settled', isSettled)
-
-      // Limit plugin only to events on the root (form) node.
-      return false
-    }, 250),
-  )
+  return false
 }
 
 const localFormKitPlugins = computed(() => {
-  return [
-    changedValuePlugin,
-    formSettledPlugin,
-    ...(props.formKitPlugins || []),
-  ]
+  return [delayedSubmitPlugin, ...(props.formKitPlugins || [])]
 })
 
 const formConfig = computed(() => {
@@ -245,9 +277,23 @@ const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
 })
 
-const updateSchemaDataField = (field: FormSchemaField) => {
-  const { show, updateFields, props: specificProps, ...fieldProps } = field
+const updateSchemaDataField = (
+  field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
+) => {
+  const {
+    show,
+    updateFields,
+    relation,
+    props: specificProps,
+    ...fieldProps
+  } = field
   const showField = show ?? true
+
+  // Special handling for the disabled prop, so that the form can handle also
+  // the disable state from outside.
+  if ('disabled' in fieldProps && !fieldProps.disabled) {
+    fieldProps.disabled = undefined
+  }
 
   if (schemaData.fields[field.name]) {
     schemaData.fields[field.name] = {
@@ -260,12 +306,176 @@ const updateSchemaDataField = (field: FormSchemaField) => {
       ),
     }
   } else {
+    if (relation) {
+      relationFields.push({
+        name: field.name,
+        relation: relation.type,
+        filterIds: relation.filterIds,
+      })
+    }
+
+    const combinedFieldProps = Object.assign(fieldProps, specificProps)
+
+    combinedFieldProps.value =
+      props.initialValues?.[field.name] ?? combinedFieldProps.value
+
     schemaData.fields[field.name] = {
       show: showField,
       updateFields: updateFields || false,
-      props: Object.assign(fieldProps, specificProps),
+      props: combinedFieldProps,
     }
   }
+}
+
+const updateChangedFields = (
+  changedFields: Record<string, Partial<FormSchemaField>>,
+) => {
+  Object.keys(changedFields).forEach(async (fieldName) => {
+    if (!schemaData.fields[fieldName]) return
+
+    const { value, ...changedFieldProps } = changedFields[fieldName]
+
+    const field: SetRequired<Partial<FormSchemaField>, 'name'> = {
+      ...changedFieldProps,
+      name: fieldName,
+    }
+
+    if (
+      value !== undefined &&
+      (!formKitInitialNodesSettled.value ||
+        (!schemaData.fields[fieldName].show && changedFieldProps.show))
+    ) {
+      field.value = value
+    }
+
+    // When a field will be visible with the update call, we need to wait before on a settled form, before we
+    // continue (so that we have all values present inside the form).
+    // This situtation can happen, when the form is used very fast.
+    if (
+      formKitInitialNodesSettled.value &&
+      !schemaData.fields[fieldName].show &&
+      changedFieldProps.show &&
+      !formNode.value?.isSettled
+    ) {
+      await formNode.value?.settled
+    }
+
+    updaterChangedFields.add(fieldName)
+    updateSchemaDataField(field)
+
+    if (!formKitInitialNodesSettled.value) return
+
+    if (
+      !('value' in field) &&
+      value !== undefined &&
+      value !== values.value[fieldName]
+    ) {
+      updaterChangedFields.add(fieldName)
+      formNode.value?.at(fieldName)?.input(value, false)
+    }
+  })
+
+  nextTick(() => {
+    updaterChangedFields.clear()
+    formNode.value?.store.remove('formUpdaterProcessing')
+  })
+}
+
+const formUpdaterVariables = shallowRef<FormUpdaterQueryVariables>()
+let nextFormUpdaterVariables: Maybe<FormUpdaterQueryVariables>
+const executeFormUpdaterRefetch = () => {
+  if (!nextFormUpdaterVariables) return
+
+  formUpdaterVariables.value = nextFormUpdaterVariables
+
+  // Reset the next variables so that it's not triggered a second time.
+  nextFormUpdaterVariables = null
+}
+
+const handlesFormUpdater = (
+  trigger: FormUpdaterTrigger,
+  fieldName: string,
+  newValue: FormFieldValue,
+  oldValue: FormFieldValue,
+) => {
+  if (!props.formUpdaterId || !formUpdaterQueryHandler) return
+
+  // We mark this as raw, because we want no deep reactivity on the form updater query variables.
+  nextFormUpdaterVariables = markRaw({
+    formUpdaterId: props.formUpdaterId,
+    data: {
+      ...values.value,
+      [fieldName]: newValue,
+    },
+    meta: {
+      // We need a unique requestId, so that the query will always be executed on changes, also when the variables
+      // are the same until the last request, because it could be that core workflow is setting a value back.
+      requestId: getUuid(),
+      formId,
+      changedField: {
+        name: fieldName,
+        newValue,
+        oldValue,
+      },
+    },
+    relationFields,
+  })
+
+  formNode.value?.store.set(
+    createMessage({
+      blocking: true,
+      key: 'formUpdaterProcessing',
+      value: true,
+      visible: false,
+    }),
+  )
+
+  if (trigger !== 'blur') executeFormUpdaterRefetch()
+}
+
+const previousValues = new WeakMap<FormKitNode, FormFieldValue>()
+const changedInputValueHandling = (inputNode: FormKitNode) => {
+  inputNode.on('commit', ({ payload: newValue, origin: node }) => {
+    const oldValue = previousValues.get(node)
+
+    if (isEqual(newValue, oldValue)) return
+
+    if (!formKitInitialNodesSettled.value) {
+      previousValues.set(node, cloneDeep(newValue))
+      return
+    }
+
+    if (!updaterChangedFields.has(node.name)) {
+      handlesFormUpdater(
+        inputNode.props.formUpdaterTrigger,
+        node.name,
+        newValue,
+        oldValue,
+      )
+    }
+
+    emit('changed', newValue, node.name)
+
+    previousValues.set(node, cloneDeep(newValue))
+    updaterChangedFields.delete(node.name)
+  })
+
+  inputNode.on('blur', async () => {
+    if (inputNode.props.formUpdaterTrigger !== 'blur') return
+
+    if (!formNode.value?.isSettled) await formNode.value?.settled
+
+    if (nextFormUpdaterVariables) executeFormUpdaterRefetch()
+  })
+
+  inputNode.hook.message((payload: FormKitMessageProps, next) => {
+    if (payload.key === 'submitted' && formUpdaterProcessing.value) {
+      payload.value = false
+    }
+    return next(payload)
+  })
+
+  return false
 }
 
 const buildStaticSchema = () => {
@@ -275,16 +485,6 @@ const buildStaticSchema = () => {
   const buildFormKitField = (
     field: FormSchemaField,
   ): FormKitSchemaComponent => {
-    if (field.relation) {
-      relationFields.push({
-        name: field.name,
-        relation: field.relation,
-        // TODO: Filter?
-      })
-
-      delete field.relation
-    }
-
     return {
       $cmp: 'FormKit',
       if: `$fields.${field.name}.show`,
@@ -294,7 +494,8 @@ const buildStaticSchema = () => {
         key: field.name,
         id: field.id,
         formId,
-        value: props.initialValues?.[field.name] ?? field.value,
+        plugins: [changedInputValueHandling],
+        triggerFormUpdater: !!props.formUpdaterId,
       },
     }
   }
@@ -302,6 +503,7 @@ const buildStaticSchema = () => {
   const getLayoutType = (
     layoutNode: FormSchemaLayout,
   ): FormKitSchemaDOMNode | FormKitSchemaComponent => {
+    // TODO: this both nodes could maybe be improved, to support also conditions?
     if ('component' in layoutNode) {
       return {
         $cmp: layoutNode.component,
@@ -338,17 +540,23 @@ const buildStaticSchema = () => {
 
     if ('object' in node && getFormFieldSchema && getFormFieldsFromScreen) {
       if ('name' in node && node.name && !node.type) {
-        const resolvedField = getFormFieldSchema(node.name, node.object)
+        const resolvedField = getFormFieldSchema(
+          node.name,
+          node.object,
+          node.screen,
+        )
 
         if (!resolvedField) return null
+
+        // Remove no longer needed screen value.
+        delete node.screen
 
         node = {
           ...resolvedField,
           ...node,
         }
-      } else if ('screen' in node) {
+      } else if ('screen' in node && !('name' in node)) {
         const resolvedFields = getFormFieldsFromScreen(node.screen, node.object)
-
         const formKitFields: ResolveFormKitSchemaNode[] = []
         resolvedFields.forEach((screenField) => {
           updateSchemaDataField(screenField)
@@ -399,74 +607,38 @@ const buildStaticSchema = () => {
   staticSchema.value = resolveSchema()
 }
 
-const localChangeFields = computed(() => {
-  if (props.formUpdaterId) return formUpdaterChanges.value
-
-  return props.changeFields
+watchOnce(formKitInitialNodesSettled, () => {
+  watch(() => props.changeFields, updateChangedFields, {
+    deep: true,
+  })
 })
-
-watch(
-  localChangeFields,
-  (newChangeFields) => {
-    Object.keys(newChangeFields).forEach((fieldName) => {
-      const field = {
-        ...newChangeFields[fieldName],
-        name: fieldName,
-      }
-
-      updateSchemaDataField(field)
-
-      nextTick(() => {
-        if (field.value !== values.value[fieldName]) {
-          formNode.value?.at(fieldName)?.input(field.value)
-        }
-      })
-    })
-  },
-  { deep: true },
-)
-
-const localDisabled = computed(() => {
-  if (props.disabled) return props.disabled
-
-  return updateSchemaProcessing.value
-})
-
-const showInitialLoadingAnimation = ref(false)
-const {
-  start: startLoadingAnimationTimeout,
-  stop: stopLoadingAnimationTimeout,
-} = useTimeoutFn(
-  () => {
-    showInitialLoadingAnimation.value = !showInitialLoadingAnimation.value
-  },
-  300,
-  { immediate: false },
-)
-
-const toggleInitialLoadingAnimation = () => {
-  stopLoadingAnimationTimeout()
-  startLoadingAnimationTimeout()
-}
 
 const initializeFormSchema = () => {
   buildStaticSchema()
 
   if (props.formUpdaterId) {
-    toggleInitialLoadingAnimation()
-    new QueryHandler(
-      useFormUpdaterQuery({
-        formUpdaterId: props.formUpdaterId,
-        data: {},
-        meta: { formId },
-        relationFields,
-      }),
-    ).watchOnResult((queryResult) => {
+    formUpdaterVariables.value = markRaw({
+      formUpdaterId: props.formUpdaterId,
+      data: props.initialValues || {},
+      meta: { formId },
+      relationFields,
+    })
+
+    formUpdaterQueryHandler = new QueryHandler(
+      useFormUpdaterQuery(
+        formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
+        {
+          fetchPolicy: 'no-cache',
+        },
+      ),
+    )
+
+    formUpdaterQueryHandler.watchOnResult((queryResult) => {
       if (queryResult?.formUpdater) {
-        formUpdaterChanges.value = queryResult.formUpdater
-        formSchemaInitialized.value = true
-        toggleInitialLoadingAnimation()
+        updateChangedFields(queryResult.formUpdater)
       }
+
+      if (!formSchemaInitialized.value) formSchemaInitialized.value = true
     })
   } else {
     formSchemaInitialized.value = true
@@ -479,6 +651,7 @@ const initializeFormSchema = () => {
 
 if (props.schema) {
   if (props.useObjectAttributes) {
+    startInitialLoadingAnimation()
     // TODO: rebuild schema, when object attributes
     // was changed from outside(not such important,
     // because we have currently the reload solution like in the desktop view).
@@ -533,18 +706,26 @@ if (props.schema) {
       initializeFormSchema()
     }
   } else {
+    startInitialLoadingAnimation()
     initializeFormSchema()
   }
 }
 </script>
 
 <template>
+  <div
+    v-if="showInitialLoadingAnimation"
+    class="flex items-center justify-center"
+  >
+    <CommonIcon name="loader" animation="spin" />
+  </div>
   <FormKit
     v-if="
       hasSchema &&
       ((formSchemaInitialized && Object.keys(schemaData.fields).length > 0) ||
         $slots.default)
     "
+    :id="id"
     type="form"
     :config="formConfig"
     :form-class="localClass"
@@ -552,9 +733,10 @@ if (props.schema) {
     :incomplete-message="false"
     :plugins="localFormKitPlugins"
     :sections-schema="formKitSectionsSchema"
-    :disabled="localDisabled"
+    :disabled="disabled"
     @node="setFormNode"
     @submit="onSubmit"
+    @submit-raw="onSubmitRaw"
   >
     <slot name="before-fields" />
     <slot
@@ -563,18 +745,14 @@ if (props.schema) {
       :data="schemaData"
       :library="additionalComponentLibrary"
     >
-      <FormKitSchema
-        :schema="staticSchema"
-        :data="schemaData"
-        :library="additionalComponentLibrary"
-      />
+      <div v-show="formKitInitialNodesSettled && !showInitialLoadingAnimation">
+        <FormKitSchema
+          :schema="staticSchema"
+          :data="schemaData"
+          :library="additionalComponentLibrary"
+        />
+      </div>
     </slot>
     <slot name="after-fields" />
   </FormKit>
-  <div
-    v-else-if="showInitialLoadingAnimation"
-    class="flex items-center justify-center"
-  >
-    <CommonIcon name="loader" animation="spin" />
-  </div>
 </template>

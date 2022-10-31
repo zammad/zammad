@@ -2,11 +2,12 @@
 
 import Form from '@shared/components/Form/Form.vue'
 import useForm from '@shared/components/Form/composable'
-import { getNode, type FormKitNode } from '@formkit/core'
+import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import {
   type ExtendedRenderResult,
   renderComponent,
 } from '@tests/support/components'
+import { waitForNextTick } from '@tests/support/utils'
 
 const wrapperParameters = {
   form: true,
@@ -67,6 +68,29 @@ describe('useForm', () => {
     expect(isComplete.value).toBe(false)
     expect(isSubmitted.value).toBe(false)
     expect(isDisabled.value).toBe(false)
+  })
+
+  it('disabled when form updater is processing', async () => {
+    const { form, isDisabled } = useForm()
+
+    const formNode = getNode('test-form') as FormKitNode
+
+    form.value = {
+      formNode,
+    }
+
+    formNode.store.set(
+      createMessage({
+        blocking: true,
+        key: 'formUpdaterProcessing',
+        value: true,
+        visible: false,
+      }),
+    )
+
+    await waitForNextTick()
+
+    expect(isDisabled.value).toBe(true)
   })
 
   it('use values', () => {

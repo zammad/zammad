@@ -19,7 +19,7 @@ const addIcon = (node: FormKitNode) => {
   const initalizeIconClickHandler = () => {
     if (!node.props.icon) return
 
-    if (node && node.context && node.props.onIconClick) {
+    if (node.context && node.props.onIconClick) {
       node.context.onIconClick = node.props.onIconClick
 
       const iconClick = () => {

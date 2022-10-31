@@ -11,6 +11,11 @@ import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 
 const linkSchemaRaw = [
   {
+    type: 'textarea',
+    name: 'textarea',
+    label: 'Textarea',
+  },
+  {
     type: 'text',
     name: 'some_input',
     label: 'Input',
@@ -73,6 +78,7 @@ const linkSchemaRaw = [
     label: 'TreeSelect',
     value: [0, 3, 5, 6, 1, 2, 8, 7],
     props: {
+      clearable: true,
       multiple: true,
       options: [
         {

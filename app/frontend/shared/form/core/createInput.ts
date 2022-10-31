@@ -30,8 +30,7 @@ const isComponent = (obj: unknown): obj is Component => {
  * @param schemaOrComponent - The actual input schema or component.
  * @param props - The additional props for the field.
  * @param customDefinition - Additional formkit type definition options.
- * @param addDefaultProps - Add the default props to the field definition.
- * @param addDefaultFeatures - Add the default features to the field definition.
+ * @param options - Add some field custom options.
  * @public
  */
 const createInput = (

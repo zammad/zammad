@@ -2,12 +2,13 @@
 
 import createInput from '@shared/form/core/createInput'
 import addLink from '@shared/form/features/addLink'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import FieldTagsInput from './FieldTagsInput.vue'
 
 const fieldDefinition = createInput(
   FieldTagsInput,
   ['noOptionsLabelTranslation', 'options', 'sorting', 'canCreate'],
-  { features: [addLink] },
+  { features: [addLink, formUpdaterTrigger()] },
   { addArrow: true },
 )
 

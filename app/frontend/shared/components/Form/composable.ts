@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import { computed, type Ref, ref } from 'vue'
+import { computed, type ShallowRef, shallowRef } from 'vue'
 
 interface FormRef {
   formNode: FormKitNode
@@ -9,7 +9,7 @@ interface FormRef {
 
 // TODO: only a start, needs to be extended during the way...
 const useForm = () => {
-  const form: Ref<FormRef | undefined> = ref()
+  const form: ShallowRef<FormRef | undefined> = shallowRef()
 
   const node = computed(() => form.value?.formNode)
 
@@ -27,7 +27,9 @@ const useForm = () => {
 
   const isSubmitted = computed(() => !!state.value?.submitted)
 
-  const isDisabled = computed(() => !!context.value?.disabled)
+  const isDisabled = computed(() => {
+    return !!context.value?.disabled || !!state.value?.formUpdaterProcessing
+  })
 
   const formReset = () => {
     node.value?.reset()

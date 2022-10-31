@@ -33,8 +33,10 @@ describe('FieldResolverMultiTreeselect', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Category',
       name: 'category',
+      required: false,
       props: {
         noOptionsLabelTranslation: false,
+        clearable: false,
         multiple: true,
         options: [
           {

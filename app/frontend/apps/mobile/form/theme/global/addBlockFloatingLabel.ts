@@ -9,7 +9,13 @@ import { clean } from './utils'
  * overlap.
  */
 export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
-  const { input = '', label = '', outer = '', wrapper = '' } = classes
+  const {
+    input = '',
+    label = '',
+    outer = '',
+    wrapper = '',
+    arrow = '',
+  } = classes
 
   return {
     outer: `${outer} floating-input flex flex-col formkit-invalid:bg-red/10 focus-within:bg-blue-highlight px-2 `,
@@ -40,6 +46,6 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       formkit-required:required
       formkit-invalid:text-red
     `),
-    arrow: 'formkit-arrow flex items-center',
+    arrow: `${arrow} formkit-arrow flex items-center`,
   }
 }

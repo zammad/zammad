@@ -23,6 +23,25 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
   }
 }
 
+export const addSelectLabel = (classes: Classes = {}): Classes => {
+  const {
+    label = '',
+    arrow = '',
+    outer = '',
+    wrapper = '',
+    inner = '',
+  } = classes
+
+  return addBlockFloatingLabel({
+    ...classes,
+    label: `${label} formkit-label-hidden:hidden`,
+    arrow: `${arrow} formkit-label-hidden:hidden`,
+    outer: `${outer} formkit-label-hidden:!min-h-[initial] formkit-label-hidden:!p-0`,
+    wrapper: `${wrapper} formkit-label-hidden:!py-0`,
+    inner: `${inner} formkit-label-hidden:!p-0`,
+  })
+}
+
 const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
   return {
     global: {},
@@ -45,8 +64,12 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       wrapper: `${classes.checkbox?.wrapper || ''} w-full justify-between`,
       label: `${classes.checkbox?.label || ''} formkit-required:required`,
     },
+    toggle: {
+      wrapper: `${classes.toggle?.wrapper || ''} w-full justify-between`,
+      label: `${classes.toggle?.label || ''} formkit-required:required`,
+    },
     tags: addBlockFloatingLabel(classes.tags),
-    select: addBlockFloatingLabel(classes.select),
+    select: addSelectLabel(classes.select),
     treeselect: addBlockFloatingLabel(classes.treeselect),
     autocomplete: addBlockFloatingLabel(classes.autocomplete),
     customer: addBlockFloatingLabel(classes.customer),

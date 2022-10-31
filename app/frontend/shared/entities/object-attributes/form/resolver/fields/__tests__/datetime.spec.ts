@@ -17,6 +17,7 @@ describe('FieldResolverDateTime', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'DateTime',
       name: 'datetime',
+      required: false,
       props: {},
       type: 'datetime',
     })

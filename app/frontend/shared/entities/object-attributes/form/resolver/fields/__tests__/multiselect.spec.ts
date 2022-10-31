@@ -10,6 +10,7 @@ describe('FieldResolverMultiselect', () => {
       display: 'Category',
       dataOption: {
         translate: true,
+        nulloption: true,
         options: {
           a: 'a',
           b: 'b',
@@ -22,8 +23,10 @@ describe('FieldResolverMultiselect', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Category',
       name: 'category',
+      required: false,
       props: {
         noOptionsLabelTranslation: false,
+        clearable: true,
         options: [
           {
             label: 'a',

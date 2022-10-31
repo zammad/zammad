@@ -6,4 +6,8 @@ class FormUpdater::Relation::TicketPriority < FormUpdater::Relation
   def relation_type
     Ticket::Priority
   end
+
+  def order
+    { name: :asc }
+  end
 end

@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FormFieldAdditionalProps } from '@shared/components/Form/types'
 import type { FieldResolverModule } from '@shared/entities/object-attributes/types/resolver'
 import FieldResolver from '../FieldResolver'
 
@@ -20,10 +21,28 @@ export class FieldResolverInput extends FieldResolver {
   }
 
   public fieldTypeAttributes() {
+    const props: FormFieldAdditionalProps = {
+      maxlength: this.attributeConfig.maxlength,
+    }
+
+    const valiadtion = this.validation()
+    if (valiadtion) {
+      props.validation = valiadtion
+    }
+
     return {
-      props: {
-        maxlength: this.attributeConfig.maxlength,
-      },
+      props,
+    }
+  }
+
+  private validation() {
+    switch (this.attributeConfig.type) {
+      case 'email':
+        return 'email'
+      case 'url':
+        return 'url'
+      default:
+        return null
     }
   }
 }

@@ -23,7 +23,6 @@ const contextReactive = toRef(props, 'context')
 
 const { hasValue, valueContainer, currentValue, clearValue } =
   useValue(contextReactive)
-
 const {
   hasStatusProperty,
   sortedOptions,

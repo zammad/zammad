@@ -75,6 +75,9 @@ const editor = useEditor({
   onFocus() {
     showActionBar.value = true
   },
+  onBlur() {
+    props.context.handlers.blur()
+  },
 })
 
 watch(
@@ -100,10 +103,12 @@ watch(
 watch(
   () => props.context.disabled,
   (disabled) => {
-    editor.value?.setEditable(!disabled)
-    if (disabled && showActionBar.value) {
-      showActionBar.value = false
-    }
+    // TODO: https://github.com/ueberdosis/tiptap/issues/3289
+    // At the moment the "setEditable" change triggers a "onUpdate", which triggers a unwanted input event with the current value.
+    // editor.value?.setEditable(!disabled)
+    // if (disabled && showActionBar.value) {
+    //   showActionBar.value = false
+    // }
   },
 )
 

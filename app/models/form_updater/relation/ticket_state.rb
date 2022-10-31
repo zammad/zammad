@@ -6,4 +6,8 @@ class FormUpdater::Relation::TicketState < FormUpdater::Relation
   def relation_type
     ::Ticket::State
   end
+
+  def order
+    { name: :asc }
+  end
 end

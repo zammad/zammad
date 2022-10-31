@@ -57,6 +57,13 @@ const initialValue = {
   ...objectAtrributes,
 }
 
+// Delete not needed object attribute values, because we have them in the flat structure.
+delete initialValue.objectAttributeValues
+
+// TODO: debug
+delete initialValue.secondaryOrganizations
+delete initialValue.organization
+
 const { attributes: objectAttributes } = useObjectAttributes(props.type)
 const { waitForConfirmation } = useConfirmation()
 

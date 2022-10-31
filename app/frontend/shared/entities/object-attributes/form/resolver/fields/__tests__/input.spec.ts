@@ -18,6 +18,7 @@ describe('FieldResovlerInput', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Title',
       name: 'title',
+      required: false,
       props: {
         maxlength: 100,
       },

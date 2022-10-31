@@ -17,20 +17,26 @@ RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graph
     let(:relation_fields) do
       [
         {
-          name:     'group_id',
-          relation: 'group',
+          name:     'state_id',
+          relation: 'TicketState',
         }
       ]
     end
     let(:expected) do
       {
-        'group_id' => {
-          options: [
-            {
-              label: 'Users',
-              value: 1
-            }
-          ]
+        'state_id' => {
+          options:   Ticket::State.by_category(:viewable_agent_new).order(name: :asc).map { |state| { value: state.id, label: state.name } },
+          clearable: true,
+          disabled:  false,
+          hidden:    false,
+          required:  true,
+          show:      true,
+        },
+        'title'    => {
+          disabled: false,
+          hidden:   false,
+          required: false, # TODO: currently wrong
+          show:     true,
         }
       }
     end
@@ -40,7 +46,7 @@ RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graph
     end
 
     it 'returns form updater data' do
-      expect(gql.result.data).to eq(expected)
+      expect(gql.result.data).to include(expected)
     end
   end
 end

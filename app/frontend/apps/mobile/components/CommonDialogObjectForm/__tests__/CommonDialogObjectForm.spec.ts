@@ -1,5 +1,8 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { keyBy } from 'lodash-es'
+import { useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 import { closeDialog } from '@shared/composables/useDialog'
 import {
   mockOrganizationObjectAttributes,
@@ -9,13 +12,10 @@ import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import { MutationHandler } from '@shared/server/apollo/handler'
-import { useMutation } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
 import { waitUntilApisResolved } from '@tests/support/utils'
-import { keyBy } from 'lodash-es'
 import CommonDialogForm from '../CommonDialogObjectForm.vue'
 
-vi.mock('@/shared/composables/useDialog')
+vi.mock('@shared/composables/useDialog')
 
 const renderForm = () => {
   const attributesResult = organizationObjectAttributes()
@@ -25,7 +25,7 @@ const renderForm = () => {
     id: 'faked-id',
     name: 'Some Organization',
     shared: true,
-    domainAssignment: false,
+    domain_assignment: false,
     domain: '',
     note: '',
     active: false,
@@ -34,6 +34,7 @@ const renderForm = () => {
       { attribute: attributes.test, value: 'some test' },
     ],
   }
+
   const sendMock = vi.fn().mockResolvedValue(organization)
   MutationHandler.prototype.send = sendMock
   const view = renderComponent(CommonDialogForm, {
@@ -87,16 +88,23 @@ test('can update default object', async () => {
   const test = view.getByLabelText('Test Field')
 
   expect(name).toHaveValue(organization.name)
-  expect(shared).toBeChecked()
-  expect(domainAssignment).not.toBeChecked()
+  expect(shared).toHaveValue('yes')
+  expect(domainAssignment).toHaveValue('no')
   expect(domain).toHaveValue(organization.domain)
   expect(active).not.toBeChecked()
   expect(textarea).toHaveValue(attributeValues.textarea.value)
   expect(test).toHaveValue(attributeValues.test.value)
 
   await view.events.type(name, ' 2')
+
   await view.events.click(shared)
+  let selectOptions = view.getAllByRole('option')
+  await view.events.click(selectOptions[1])
+
   await view.events.click(domainAssignment)
+  selectOptions = view.getAllByRole('option')
+  await view.events.click(selectOptions[0])
+
   await view.events.type(domain, 'some-domain@domain.me')
   await view.events.click(active)
 

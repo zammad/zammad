@@ -1,11 +1,12 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Relation
-  attr_reader :context, :data, :filter_ids
+  attr_reader :context, :current_user, :data, :filter_ids
 
-  def initialize(context:, data: {}, filter_ids: [])
+  def initialize(context:, current_user:, data: {}, filter_ids: [])
     @context = context
-    @data    = data
+    @current_user = current_user
+    @data = data
     @filter_ids = filter_ids
   end
 
@@ -21,10 +22,9 @@ class FormUpdater::Relation
 
   private
 
-  # # If the context responds to :schema, use it to map the filter_ids to GraphQL::ID strings.
-  # def id_from_object(object)
-  #   context.try(:schema)&.id_from_object(object) || object.id
-  # end
+  def order
+    { id: :asc }
+  end
 
   def display_name(item)
     item.name
@@ -37,10 +37,12 @@ class FormUpdater::Relation
   def items
     @items ||= begin
       if filter_ids
-        relation_type.where(id: filter_ids).order(id: :asc)
+        relation_type.where(id: filter_ids).order(order)
+      else
+        # TODO: correct fallback for later in the admin interface.
+        # relation_type.where(active: true).order(id: :asc)
+        []
       end
-
-      relation_type.where(active: true).order(id: :asc)
     end
   end
 end

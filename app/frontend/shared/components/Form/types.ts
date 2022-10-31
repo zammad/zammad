@@ -13,11 +13,18 @@ import type {
   FormKitValidationRules,
 } from '@formkit/validation'
 import type { EnumObjectManagerObjects } from '@shared/graphql/types'
-import type { Except, SetRequired } from 'type-fest'
+import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
 
 export interface FormFieldAdditionalProps {
   [index: string]: unknown
 }
+
+type SimpleFormFieldValue = Primitive | Primitive[]
+
+export type FormFieldValue =
+  | SimpleFormFieldValue
+  | SimpleFormFieldValue[]
+  | Record<string, SimpleFormFieldValue>
 
 // https://formkit.com/essentials/validation#showing-errors
 export enum FormValidationVisibility {
@@ -31,11 +38,15 @@ export type AllowedClasses = string | Record<string, boolean> | FormKitClasses
 
 export interface FormSchemaField {
   show?: boolean
-  relation?: string
+  relation?: {
+    type: string
+    filterIds?: number[]
+  }
   updateFields?: boolean
+  triggerFormUpdater?: boolean
   type: string
   name: string
-  value?: unknown
+  value?: FormFieldValue
   label?: string
   placeholder?: string
   help?: string
@@ -43,6 +54,7 @@ export interface FormSchemaField {
   required?: boolean
   delay?: number
   errors?: string[]
+  hidden?: boolean
   id?: string
   sectionsSchema?: Record<
     string,
@@ -104,6 +116,7 @@ export type FormSchemaFieldObjectAttribute = SetRequired<
   Partial<FormSchemaField>,
   'name'
 > & {
+  screen?: string
   object: EnumObjectManagerObjects
 }
 
@@ -137,13 +150,16 @@ export interface ReactiveFormSchemData {
     {
       show: boolean
       updateFields: boolean
-      props: Except<FormSchemaField, 'show' | 'props'>
+      props: Except<
+        SetOptional<FormSchemaField, 'type'>,
+        'show' | 'props' | 'updateFields'
+      >
     }
   >
 }
 
 export interface FormValues {
-  [index: string]: unknown
+  [index: string]: FormFieldValue
 }
 
 export type FormData<TFormValues = FormValues> = FormKitGroupValue &

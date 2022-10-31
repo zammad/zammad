@@ -1,61 +1,59 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import Form from '@shared/components/Form/Form.vue'
+import type { Props } from '@shared/components/Form/Form.vue'
 import UserError from '@shared/errors/UserError'
 import type { FormValues } from '@shared/components/Form'
 import type { FormKitNode } from '@formkit/core'
 import { within } from '@testing-library/vue'
-import type { ExtendedRenderResult } from '@tests/support/components'
+import type { ExtendedMountingOptions } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
 import { waitForNextTick, waitUntil } from '@tests/support/utils'
-import { nextTick, onMounted, ref } from 'vue'
-import {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-} from '@shared/graphql/types'
+import { onMounted, ref } from 'vue'
+import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import managerAttributes from '@shared/entities/ticket/__tests__/mocks/managerAttributes.json'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api'
+import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
 }
 
+const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
+  const wrapper = renderComponent(Form, {
+    ...wrapperParameters,
+    ...options,
+    props: {
+      schema: [
+        {
+          type: 'text',
+          name: 'title',
+          label: 'Title',
+        },
+        {
+          type: 'textarea',
+          name: 'text',
+          label: 'Textarea',
+          value: 'Some text',
+        },
+      ],
+      ...(options.props || {}),
+    },
+  })
+
+  await waitForNextTick()
+
+  return wrapper
+}
+
 describe('Form.vue', () => {
-  let wrapper: ExtendedRenderResult
+  it('set a schema with fields', async () => {
+    const wrapper = await renderForm()
 
-  beforeAll(() => {
-    wrapper = renderComponent(Form, {
-      ...wrapperParameters,
-      props: {
-        schema: [
-          {
-            type: 'text',
-            name: 'title',
-            label: 'Text',
-          },
-          {
-            type: 'textarea',
-            name: 'text',
-            label: 'Textarea',
-            value: 'Some text',
-          },
-        ],
-      },
-      unmount: false,
-    })
-  })
-
-  afterAll(() => {
-    wrapper.unmount()
-  })
-
-  it('set a schema with fields', () => {
     expect(wrapper.html()).toContain('form')
 
-    const text = wrapper.getByLabelText('Text')
+    const text = wrapper.getByLabelText('Title')
     expect(text).toBeInTheDocument()
     // wrapped in a div with data-type
     expect(text.closest('div[data-type="text"]')).toBeInTheDocument()
@@ -66,14 +64,18 @@ describe('Form.vue', () => {
     expect(textarea.closest('div[data-type="textarea"]')).toBeInTheDocument()
   })
 
-  it('check for current initial field values', () => {
+  it('check for current initial field values', async () => {
+    const wrapper = await renderForm()
+
     const textarea = wrapper.getByLabelText('Textarea')
 
     expect(textarea).toHaveDisplayValue('Some text')
   })
 
   it('check for changed field values', async () => {
-    const text = wrapper.getByLabelText('Text')
+    const wrapper = await renderForm()
+
+    const text = wrapper.getByLabelText('Title')
 
     await wrapper.events.type(text, 'Example title')
 
@@ -83,11 +85,15 @@ describe('Form.vue', () => {
   it('implements submit event/handler', async () => {
     const submitCallbackSpy = vi.fn()
 
-    await wrapper.rerender({
-      onSubmit: (data: FormValues) => submitCallbackSpy(data),
+    const wrapper = await renderForm({
+      props: {
+        onSubmit: (data: FormValues) => submitCallbackSpy(data),
+      },
     })
 
-    await wrapper.events.type(wrapper.getByLabelText('Text'), '{Enter}')
+    const text = wrapper.getByLabelText('Title')
+    await wrapper.events.type(text, 'Example title')
+    await wrapper.events.type(text, '{Enter}')
 
     expect(wrapper.emitted().submit).toBeTruthy()
 
@@ -99,21 +105,23 @@ describe('Form.vue', () => {
   })
 
   it('handles promise error messages in submit event/handler', async () => {
-    await wrapper.rerender({
-      onSubmit: (): Promise<void> => {
-        return new Promise((resolve, reject) => {
-          const userErrors = new UserError([
-            {
-              field: 'title',
-              message: 'Title should be different.',
-            },
-          ])
-          reject(userErrors)
-        })
+    const wrapper = await renderForm({
+      props: {
+        onSubmit: (): Promise<void> => {
+          return new Promise((resolve, reject) => {
+            const userErrors = new UserError([
+              {
+                field: 'title',
+                message: 'Title should be different.',
+              },
+            ])
+            reject(userErrors)
+          })
+        },
       },
     })
 
-    await wrapper.events.type(wrapper.getByLabelText('Text'), '{Enter}')
+    await wrapper.events.type(wrapper.getByLabelText('Title'), '{Enter}')
 
     await waitForNextTick(true)
 
@@ -126,7 +134,9 @@ describe('Form.vue', () => {
   })
 
   it('implements changed event', async () => {
-    const text = wrapper.getByLabelText('Text')
+    const wrapper = await renderForm()
+
+    const text = wrapper.getByLabelText('Title')
 
     await wrapper.events.clear(text)
     await wrapper.events.type(text, 'Other title')
@@ -140,6 +150,9 @@ describe('Form.vue', () => {
   })
 
   it('can change field information - hide title field', async () => {
+    const wrapper = await renderForm()
+
+    // Currently changeFields-Prop is not working on initial form rendering.
     await wrapper.rerender({
       changeFields: {
         title: {
@@ -148,12 +161,13 @@ describe('Form.vue', () => {
       },
     })
 
-    await nextTick()
-
-    expect(wrapper.queryByLabelText('Text')).not.toBeInTheDocument()
+    expect(wrapper.queryByLabelText('Title')).not.toBeInTheDocument()
   })
 
   it('can change field information - show title again and change values', async () => {
+    const wrapper = await renderForm()
+
+    // Currently changeFields-Prop is not working on initial form rendering.
     await wrapper.rerender({
       changeFields: {
         title: {
@@ -166,9 +180,7 @@ describe('Form.vue', () => {
       },
     })
 
-    await waitForNextTick(true)
-
-    const input = wrapper.getByLabelText('Text')
+    const input = wrapper.getByLabelText('Title')
     expect(input).toHaveDisplayValue('Changed title')
 
     const textarea = wrapper.getByLabelText('Textarea')
@@ -177,9 +189,8 @@ describe('Form.vue', () => {
 })
 
 describe('Form.vue - Edge Cases', () => {
-  it('can use initial values', () => {
-    const wrapper = renderComponent(Form, {
-      ...wrapperParameters,
+  it('can use initial values', async () => {
+    const wrapper = await renderForm({
       props: {
         schema: [
           {
@@ -188,24 +199,36 @@ describe('Form.vue - Edge Cases', () => {
             label: 'Title',
           },
           {
-            type: 'textarea',
-            name: 'text',
-            label: 'Text',
+            type: 'select',
+            name: 'shared',
+            label: 'Shared',
+            props: {
+              options: [
+                {
+                  label: 'yes',
+                  value: true,
+                },
+                {
+                  label: 'no',
+                  value: false,
+                },
+              ],
+            },
           },
         ],
         initialValues: {
           title: 'Initial title',
+          shared: false,
         },
       },
     })
 
-    const input = wrapper.getByLabelText('Title')
-    expect(input).toHaveDisplayValue('Initial title')
+    expect(wrapper.getByLabelText('Title')).toHaveDisplayValue('Initial title')
+    expect(wrapper.getByLabelText('Shared')).toHaveValue('no')
   })
 
-  it('can use form layout in schema', () => {
-    const wrapper = renderComponent(Form, {
-      ...wrapperParameters,
+  it('can use form layout in schema', async () => {
+    const wrapper = await renderForm({
       props: {
         schema: [
           {
@@ -223,7 +246,7 @@ describe('Form.vue - Edge Cases', () => {
               {
                 type: 'textarea',
                 name: 'text',
-                label: 'Text',
+                label: 'Textarea',
               },
             ],
           },
@@ -232,19 +255,15 @@ describe('Form.vue - Edge Cases', () => {
     })
 
     const fieldset = wrapper.getByRole('group')
-
     // children are inside a form
     expect(fieldset.closest('form')).toBeInTheDocument()
-
     const group = within(fieldset)
-
     expect(group.getByLabelText('Title')).toBeInTheDocument()
-    expect(group.getByLabelText('Text')).toBeInTheDocument()
+    expect(group.getByLabelText('Textarea')).toBeInTheDocument()
   })
 
-  it('can use DOM elements and other components inside of the schema', () => {
-    const wrapper = renderComponent(Form, {
-      ...wrapperParameters,
+  it('can use DOM elements and other components inside of the schema', async () => {
+    const wrapper = await renderForm({
       router: true,
       props: {
         schema: [
@@ -299,9 +318,8 @@ describe('Form.vue - Edge Cases', () => {
     expect(wrapper.getByLabelText('Additional')).toBeInTheDocument()
   })
 
-  it('can use list/group fields in form schema', () => {
-    const wrapper = renderComponent(Form, {
-      ...wrapperParameters,
+  it('can use list/group fields in form schema', async () => {
+    const wrapper = await renderForm({
       props: {
         schema: [
           {
@@ -326,7 +344,6 @@ describe('Form.vue - Edge Cases', () => {
 
     const group = wrapper.getByRole('form')
     const view = within(group)
-
     expect(view.getByLabelText('Street')).toBeInTheDocument()
     expect(view.getByLabelText('City')).toBeInTheDocument()
   })
@@ -340,9 +357,7 @@ describe('Form.vue - Edge Cases', () => {
     })
 
     expect(wrapper.getByRole('form')).toBeInTheDocument()
-
     const input = wrapper.getByLabelText('Example')
-
     expect(input).toBeInTheDocument()
   })
 
@@ -366,20 +381,16 @@ describe('Form.vue - Edge Cases', () => {
               {
                 type: 'textarea',
                 name: 'text',
-                label: 'Text',
+                label: 'Title',
                 value: 'Some text',
               },
             ]
-
             const form = ref<{ formNode: FormKitNode }>()
-
             onMounted(() => {
               expect(form.value).toBeDefined()
               expect(form.value?.formNode.props.type).toBe('form')
-
               resolve()
             })
-
             return { schema, form }
           },
         } as any,
@@ -391,10 +402,10 @@ describe('Form.vue - Edge Cases', () => {
   })
 })
 
-describe('Form.vue - with form updater and object attributes', () => {
+describe('Form.vue - with object attributes', () => {
   it('render form schema with object attributes', async () => {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
-      objectManagerFrontendAttributes: managerAttributes,
+      objectManagerFrontendAttributes: frontendObjectAttributes,
     })
 
     const wrapper = renderComponent(Form, {
@@ -419,51 +430,6 @@ describe('Form.vue - with form updater and object attributes', () => {
     expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
     expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
-  })
-
-  it('render form schema and updates relation fields', async () => {
-    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
-      objectManagerFrontendAttributes: managerAttributes,
-    })
-
-    mockGraphQLApi(FormUpdaterDocument).willResolve({
-      formUpdater: {
-        group_id: {
-          options: [
-            {
-              label: 'Users',
-              id: 1,
-            },
-          ],
-        },
-      },
-    })
-
-    const wrapper = renderComponent(Form, {
-      ...wrapperParameters,
-      props: {
-        useObjectAttributes: true,
-        schema: [
-          {
-            object: EnumObjectManagerObjects.Ticket,
-            name: 'title',
-          },
-          {
-            object: EnumObjectManagerObjects.Ticket,
-            screen: 'create_middle',
-          },
-        ],
-        formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
-      },
-    })
-
-    await waitUntil(() => wrapper.queryByLabelText('Group'))
-
-    await wrapper.events.click(wrapper.getByLabelText('Group'))
-    const selectOptions = wrapper.getAllByRole('option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveTextContent('Users')
   })
 })
 

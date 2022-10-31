@@ -2,6 +2,7 @@
 
 import type { FormKitNode } from '@formkit/core'
 import createInput from '@shared/form/core/createInput'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 import FieldEditorWrapper from './FieldEditorWrapper.vue'
 
@@ -19,7 +20,7 @@ const addAriaLabel = (node: FormKitNode) => {
 }
 
 const fieldDefinition = createInput(FieldEditorWrapper, [], {
-  features: [addAriaLabel],
+  features: [addAriaLabel, formUpdaterTrigger('delayed')],
 })
 
 export default {

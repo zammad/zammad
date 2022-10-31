@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormSchemaField } from '@shared/components/Form/types'
+import type {
+  FormFieldValue,
+  FormSchemaField,
+} from '@shared/components/Form/types'
 import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
 import type { JsonValue } from 'type-fest'
 
@@ -35,11 +38,12 @@ export default abstract class FieldResolver {
       type: this.getFieldType(),
       label: this.label,
       name: this.name,
+      required: 'null' in this.attributeConfig && !this.attributeConfig.null, // will normally be overriden with the screen config
       ...this.fieldTypeAttributes(),
     }
 
-    if (this.attributeConfig.default !== undefined) {
-      resolvedAttributes.value = this.attributeConfig.default
+    if (this.attributeConfig.default) {
+      resolvedAttributes.value = this.attributeConfig.default as FormFieldValue
     }
 
     return resolvedAttributes

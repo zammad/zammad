@@ -102,13 +102,13 @@ export default class QueryHandler<
 
   public load(): void {
     if (
-      typeof (this.operationResult as never as { load: () => void }).load !==
+      typeof (this.operationResult as unknown as { load: () => void }).load !==
       'function'
     ) {
       return undefined
     }
 
-    return (this.operationResult as never as { load: () => void }).load()
+    return (this.operationResult as unknown as { load: () => void }).load()
   }
 
   public start(): void {
@@ -162,6 +162,24 @@ export default class QueryHandler<
     return this.onLoaded(triggerPossibleRefetch)
       .then((data: Maybe<TResult>) => data)
       .catch((error) => error)
+  }
+
+  public watchOnceOnResult(callback: WatchResultCallback<TResult>) {
+    const watchStopHandle = watch(
+      this.result(),
+      (result) => {
+        if (!result) {
+          return
+        }
+        callback(result)
+        watchStopHandle()
+      },
+      {
+        // Needed for when the component is mounted after the first mount, in this case
+        // result will already contain the data and the watch will otherwise not be triggered.
+        immediate: true,
+      },
+    )
   }
 
   public watchOnResult(

@@ -9,6 +9,7 @@ import {
   EnumObjectManagerObjects,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
+import { edgesToArray } from '@shared/utils/helpers'
 
 export const useUserEdit = () => {
   const dialog = useDialogObjectForm('user-edit', EnumObjectManagerObjects.User)
@@ -22,13 +23,27 @@ export const useUserEdit = () => {
     {
       name: 'active',
       required: true,
+      screen: 'edit',
       object: EnumObjectManagerObjects.User,
     },
   ])
 
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
+    const transformedUserObject = {
+      ...user,
+      // TODO: Currently we have no autocomplete prefill functionality (maybe with formUpdater?)
+      // TODO: Also we have not always the full set on secondary organization in the frontend (currently also a bug in the desktop view).
+      organization_id: user.organization?.internalId,
+      organization_ids: edgesToArray(user.secondaryOrganizations).map(
+        (item) => item.internalId,
+      ),
+    }
+
+    delete transformedUserObject.organization
+    delete transformedUserObject.secondaryOrganizations
+
     dialog.openDialog({
-      object: user,
+      object: transformedUserObject,
       mutation,
       schema,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,

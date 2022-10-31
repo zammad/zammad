@@ -6,14 +6,20 @@ class FormUpdater::Updater
   # Context from GraphQL or possibly other environments.
   # It must respond to :current_user and :current_user? for session information (see Gql::Context::CurrentUserAware).
   # It may respond to :schema with an object providing :id_for_object to perform ID mappings like in Gql::ZammadSchema.
-  attr_reader :context, :relation_fields, :meta, :data, :id, :object
+  attr_reader :context, :current_user, :relation_fields, :meta, :data, :id, :object, :result
 
   def initialize(context:, relation_fields:, meta:, data:, id: nil)
-    @context         = context
-    @relation_fields = relation_fields
+    @result  = {}
+    @context = context
     @meta            = meta
     @data            = data
     @id              = id
+    @current_user = context[:current_user]
+
+    # Build lookup for relation fields for better usage.
+    @relation_fields = relation_fields.each_with_object({}) do |relation_field, lookup|
+      lookup[relation_field[:name]] = relation_field.to_h
+    end
   end
 
   def object_type
@@ -31,38 +37,31 @@ class FormUpdater::Updater
   def authorized?
     # The authorized function needs to be implemented for any updaters which have a `id`.
     if id
-      @object = Gql::ZammadSchema.authorized_object_from_id id, type: object_type, user: context.current_user
+      @object = Gql::ZammadSchema.authorized_object_from_id id, type: object_type, user: current_user
     end
 
     true
   end
 
   def resolve
-    result = {}
-
-    before_resolve(result)
-
+    # TODO: or better move this inside the concern with a super call?
     if self.class.included_modules.include?(FormUpdater::Concerns::ChecksCoreWorkflow)
-      # TODO: ...
+      validate_workflows
     end
 
-    resolve_relation_fields(result)
+    resolve_relation_fields
 
     result
   end
 
   private
 
-  # Override this method to implement additional things before default resolve.
-  def before_resolve(...)
-    true
-  end
-
-  def resolve_relation_fields(result)
-    relation_fields.each do |relation_field|
+  def resolve_relation_fields
+    relation_fields.each do |name, relation_field|
       relation_resolver = get_relation_resolver(relation_field)
 
-      result[relation_field[:name]] ||= {}
+      result_initialize_field(name)
+
       result[relation_field[:name]][:options] = relation_resolver.options
     end
   end
@@ -76,11 +75,16 @@ class FormUpdater::Updater
     end
 
     relation_class.new(
-      context:    context,
-      data:       data,
-      filter_ids: relation_field[:filter_ids],
+      context:      context,
+      current_user: current_user,
+      data:         data,
+      filter_ids:   relation_field[:filter_ids],
     )
   rescue
     raise "Cannot resolve relation type #{relation_field[:relation]} (#{relation_field[:name]})."
+  end
+
+  def result_initialize_field(name)
+    result[name] ||= {}
   end
 end

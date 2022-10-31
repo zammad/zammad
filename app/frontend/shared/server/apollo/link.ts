@@ -44,10 +44,25 @@ const operationIsLoginLogout = (
   )
 }
 
+// TODO: Maybe we can also add a generic solution with the query context to exclude operation for batching or
+// run operations over websocket.
+const operationIsFormUpdater = (
+  definition: OperationDefinitionNode | FragmentDefinitionNode,
+) => {
+  return !!(
+    definition.kind === 'OperationDefinition' &&
+    definition.operation === 'query' &&
+    definition.name?.value &&
+    definition.name?.value === 'formUpdater'
+  )
+}
+
 const requiresBatchLink = (op: Operation) => {
   if (!enableBatchLink) return false
   const definition = getMainDefinition(op.query)
-  return !operationIsLoginLogout(definition)
+  return (
+    !operationIsLoginLogout(definition) && !operationIsFormUpdater(definition)
+  )
 }
 
 const httpLink = ApolloLink.split(requiresBatchLink, batchLink, noBatchLink)
@@ -56,9 +71,11 @@ const requiresHttpLink = (op: Operation) => {
   const definition = getMainDefinition(op.query)
   if (!enableQueriesOverWebsocket) {
     // Only subscriptions over websocket.
-    return !(
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+    return (
+      !(
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      ) && !operationIsFormUpdater(definition)
     )
   }
   // Everything over websocket except login/logout as that changes cookies.

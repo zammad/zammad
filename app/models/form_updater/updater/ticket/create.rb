@@ -3,6 +3,8 @@
 class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
   include FormUpdater::Concerns::ChecksCoreWorkflow
 
+  core_workflow_screen 'create_middle'
+
   def object_type
     ::Ticket
   end

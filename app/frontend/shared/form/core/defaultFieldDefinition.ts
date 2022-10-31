@@ -2,14 +2,16 @@
 
 import type { FormKitTypeDefinition } from '@formkit/core'
 import type { FormDefaultProps } from '@shared/types/form'
+import hideField from '../features/hideField'
 import translateWrapperProps from '../features/translateWrapperProps'
+import addBlurEvent from '../features/addBlurEvent'
 
 const defaultProps: (keyof FormDefaultProps)[] = ['formId', 'labelPlaceholder']
 
 const defaulfFieldDefinition: Required<
   Pick<FormKitTypeDefinition, 'props' | 'features'>
 > = {
-  features: [translateWrapperProps],
+  features: [translateWrapperProps, hideField, addBlurEvent],
   props: defaultProps,
 }
 

@@ -566,6 +566,8 @@ describe('Form - Field - Select - Features', () => {
       ...wrapperParameters,
       props: {
         type: 'select',
+        name: 'select',
+        id: 'select',
         options: testOptions,
       },
     })
@@ -599,6 +601,15 @@ describe('Form - Field - Select - Features', () => {
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
 
     await wrapper.rerender({
+      clearable: true,
+    })
+
+    // Reset the value before the next test case
+    const node = getNode('select')
+    node?.input(null)
+
+    await wrapper.rerender({
+      clearable: false,
       options: [
         {
           value: 2,
@@ -663,7 +674,9 @@ describe('Form - Field - Select - Features', () => {
       'bg-gray-600 rounded-lg w-auto',
     )
 
-    expect(wrapper.getByText('Test label')).toHaveClass('hidden')
+    expect(
+      wrapper.getByLabelText('Test label').closest('.formkit-outer'),
+    ).toHaveAttribute('data-label-hidden')
 
     await wrapper.rerender({
       size: undefined,
@@ -673,7 +686,9 @@ describe('Form - Field - Select - Features', () => {
       'bg-gray-600 rounded-lg w-auto',
     )
 
-    expect(wrapper.getByText('Test label')).not.toHaveClass('hidden')
+    expect(
+      wrapper.getByLabelText('Test label').closest('.formkit-outer'),
+    ).not.toHaveAttribute('data-label-hidden')
   })
 })
 

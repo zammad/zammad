@@ -8,13 +8,14 @@ import type {
   FormKitSchemaNode,
 } from '@formkit/core'
 import { FormSchemaExtendType } from '@shared/types/form'
+import { extend } from '@formkit/utils'
 
 // Can later be switched to in built-in feature from FormKit (when it's available).
 const extendSchemaDefinition = (
   node: FormKitNode,
   sectionKey: string,
   schemaExtension: FormKitSchemaCondition | Partial<FormKitSchemaNode>,
-  extendType: FormSchemaExtendType = FormSchemaExtendType.Replace,
+  extendType: FormSchemaExtendType = FormSchemaExtendType.Merge,
   cloneDefinition = true,
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
@@ -33,11 +34,20 @@ const extendSchemaDefinition = (
       | FormKitSchemaCondition
       | Partial<FormKitSchemaNode>
 
-    if (extendType === FormSchemaExtendType.Replace) {
+    const currentExtension = extensions[sectionKey]
+
+    if (extendType === FormSchemaExtendType.Merge) {
+      // When current extenstions is a string, replace it.
+      if (typeof currentExtension === 'string') {
+        sectionSchemaExtension = schemaExtension
+      } else {
+        sectionSchemaExtension = extend(currentExtension, schemaExtension) as
+          | FormKitSchemaCondition
+          | Partial<FormKitSchemaNode>
+      }
+    } else if (extendType === FormSchemaExtendType.Replace) {
       sectionSchemaExtension = schemaExtension
     } else {
-      const currentExtension = extensions[sectionKey]
-
       let currentChildren: Maybe<
         (FormKitSchemaCondition | Partial<FormKitSchemaNode>)[]
       > = null

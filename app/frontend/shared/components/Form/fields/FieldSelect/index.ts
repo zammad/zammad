@@ -3,34 +3,26 @@
 import type { FormKitNode } from '@formkit/core'
 import createInput from '@shared/form/core/createInput'
 import addLink from '@shared/form/features/addLink'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
+import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
+import { FormSchemaExtendType } from '@shared/types/form'
 import FieldSelectInput from './FieldSelectInput.vue'
 
 const hideLabelForSmallSelects = (node: FormKitNode) => {
-  const { props } = node
-
-  const toggleLabel = (isHidden: boolean) => {
-    if (isHidden) {
-      props.labelClass = 'hidden'
-      props.arrowClass = 'hidden'
-      props.outerClass = '!min-h-[initial] !p-0'
-      props.wrapperClass = '!py-0'
-      props.innerClass = '!p-0'
-    } else {
-      props.labelClass = undefined
-      props.arrowClass = undefined
-      props.outerClass = undefined
-      props.wrapperClass = undefined
-      props.innerClass = undefined
-    }
-  }
-
-  node.on('created', () => {
-    toggleLabel(props.size === 'small')
-
-    node.on('prop:size', ({ payload }) => {
-      toggleLabel(payload === 'small')
-    })
-  })
+  extendSchemaDefinition(
+    node,
+    'outer',
+    {
+      attrs: {
+        'data-label-hidden': {
+          if: '$size == "small"',
+          then: 'true',
+          else: undefined,
+        },
+      },
+    },
+    FormSchemaExtendType.Merge,
+  )
 }
 
 const fieldDefinition = createInput(
@@ -44,7 +36,7 @@ const fieldDefinition = createInput(
     'sorting',
   ],
   {
-    features: [hideLabelForSmallSelects, addLink],
+    features: [hideLabelForSmallSelects, addLink, formUpdaterTrigger()],
   },
   {
     addArrow: true,

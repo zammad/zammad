@@ -15,13 +15,13 @@ const useSelectPreselect = (
     }>
   >,
 ) => {
-  const { currentValue } = useValue(context)
+  const { hasValue } = useValue(context)
 
   // Pre-select the first option of a single select when and only when the field is not clearable nor disabled.
   //   This mimics the behavior of the native select field.
   const preselectOption = () => {
     if (
-      !currentValue.value &&
+      !hasValue.value &&
       !context.value.disabled &&
       !context.value.multiple &&
       !context.value.clearable &&
@@ -37,7 +37,7 @@ const useSelectPreselect = (
 
     watch(
       () =>
-        !currentValue.value &&
+        !hasValue.value &&
         !context.value.disabled &&
         !context.value.multiple &&
         !context.value.clearable &&

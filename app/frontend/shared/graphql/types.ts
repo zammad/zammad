@@ -151,7 +151,7 @@ export enum EnumAppMaintenanceType {
 export enum EnumFormUpdaterId {
   FormUpdaterUpdaterOrganizationEdit = 'FormUpdater__Updater__Organization__Edit',
   FormUpdaterUpdaterTicketCreate = 'FormUpdater__Updater__Ticket__Create',
-  FormUpdaterUpdaterUserAdd = 'FormUpdater__Updater__User__Add',
+  FormUpdaterUpdaterUserCreate = 'FormUpdater__Updater__User__Create',
   FormUpdaterUpdaterUserEdit = 'FormUpdater__Updater__User__Edit'
 }
 
@@ -210,8 +210,10 @@ export type FormUpdaterMetaInput = {
   changedField?: InputMaybe<FormUpdaterChangedFieldInput>;
   /** Generated frontend form ID */
   formId: Scalars['FormId'];
-  /** Initial form schema request */
+  /** Initial form updater request */
   initial?: InputMaybe<Scalars['Boolean']>;
+  /** Generated frontend request ID */
+  requestId?: InputMaybe<Scalars['String']>;
 };
 
 /** Represents the relation field information. */

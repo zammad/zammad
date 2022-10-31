@@ -82,6 +82,11 @@ module.exports = {
         '[data-is-checked] &',
         '[data-is-checked]&',
       ])
+      addVariant('formkit-label-hidden', [
+        '&[data-label-hidden]',
+        '[data-label-hidden] &',
+        '[data-label-hidden]&',
+      ])
       addVariant('formkit-variant-primary', [
         '[data-variant="primary"] &',
         '[data-variant="primary"]&',

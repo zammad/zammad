@@ -33,53 +33,6 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
       expect(page).to have_text('Some New Name')
     end
 
-    it 'can edit organization' do
-      open_organization
-
-      click('button', text: 'Edit')
-
-      wait_for_form_to_settle('organization-edit')
-
-      within('#dialog-organization-edit') do
-        find('[name="note"]').send_keys('edit field')
-        click('button', text: 'Save')
-      end
-
-      wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')
-
-      organization.reload
-
-      expect(organization.note).to eq('<p>edit field</p>')
-    end
-
-    it 'can edit organization with object atrributes', db_strategy: :reset do
-      screens = { edit: { 'ticket.agent': { shown: true, required: false } } }
-      attribute = create_attribute(
-        :object_manager_attribute_text,
-        object_name: 'Organization',
-        display:     'Custom Text',
-        screens:     screens
-      )
-
-      open_organization
-
-      click('button', text: 'Edit')
-
-      wait_for_form_to_settle('organization-edit')
-
-      within('#dialog-organization-edit') do
-        fill_in('name', with: 'new name')
-        fill_in(attribute.name, with: 'some text')
-        click('button', text: 'Save')
-      end
-
-      wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')
-
-      organization.reload
-      expect(organization.name).to eq('new name')
-      expect(organization[attribute.name]).to eq('some text')
-    end
-
     it 'shows object attributes', db_strategy: :reset do
       screens = { view: { 'ticket.agent': { shown: true, required: false } } }
       attribute = create_attribute(

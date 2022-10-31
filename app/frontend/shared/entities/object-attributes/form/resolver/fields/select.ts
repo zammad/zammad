@@ -18,13 +18,20 @@ export class FieldResolverSelect extends FieldResolver {
     const attributes: Partial<FormSchemaField> = {}
     const props: FormFieldAdditionalProps = {
       noOptionsLabelTranslation: !this.attributeConfig.translate,
+      clearable: this.attributeConfig.nulloption || false,
       options: [],
     }
 
     if (this.attributeConfig.options) {
       props.options = this.mappedOptions()
     } else if (this.attributeConfig.relation) {
-      attributes.relation = this.attributeConfig.relation as string
+      attributes.relation = {
+        type: this.attributeConfig.relation as string,
+      }
+
+      if (this.attributeConfig.filter) {
+        attributes.relation.filterIds = this.attributeConfig.filter as number[]
+      }
     }
 
     if (this.attributeType === 'multiselect') props.multiple = true

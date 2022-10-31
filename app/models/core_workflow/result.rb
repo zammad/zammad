@@ -3,9 +3,9 @@
 class CoreWorkflow::Result
   include ::Mixin::HasBackends
 
-  attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun
+  attr_accessor :payload, :user, :assets, :assets_in_result, :result, :rerun, :form_updater
 
-  def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {})
+  def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
     raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 
@@ -14,6 +14,7 @@ class CoreWorkflow::Result
     @assets           = assets
     @assets_in_result = assets_in_result
     @result           = result
+    @form_updater     = form_updater
     @rerun            = false
   end
 
@@ -31,6 +32,10 @@ class CoreWorkflow::Result
     @result[:restrict_values] = {}
     %i[request_id visibility mandatory readonly select fill_in eval matched_workflows rerun_count].each do |group|
       @result[group] = attributes.send(:"#{group}_default")
+    end
+
+    if form_updater
+      @result[:all_options] = attributes.all_options_default
     end
 
     # restrict init defaults to make sure param values to removed if not allowed
@@ -52,6 +57,7 @@ class CoreWorkflow::Result
     return if @payload['screen'] == 'overview_bulk'
 
     auto_hide = {}
+
     attributes.auto_select_default.each do |field, state|
       result = run_backend_value('auto_select', field, state)
       next if result.compact.blank?

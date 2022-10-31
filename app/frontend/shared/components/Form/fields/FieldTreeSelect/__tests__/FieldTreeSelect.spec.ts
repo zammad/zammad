@@ -5,6 +5,7 @@ import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
+import { getNode } from '@formkit/core'
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
@@ -728,6 +729,8 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        name: 'treeselect',
+        id: 'treeselect',
         type: 'treeselect',
         options: testOptions,
       },
@@ -761,7 +764,12 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
 
+    // Reset the value before the next test case
+    const node = getNode('treeselect')
+    node?.input(null)
+
     await wrapper.rerender({
+      clearable: false,
       options: [
         {
           value: 9,

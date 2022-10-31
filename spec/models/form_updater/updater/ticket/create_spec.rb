@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'models/form_updater/concerns/checks_core_workflow_examples'
+
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
     described_class.new(
@@ -13,7 +15,8 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
     )
   end
 
-  let(:user)    { create(:agent) }
+  let(:group)   { create(:group) }
+  let(:user)    { create(:agent, groups: [group]) }
   let(:context) { { current_user: user } }
   let(:meta)    { { initial: true, form_id: 12_345 } }
   let(:data)    { {} }
@@ -38,10 +41,10 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   let(:expected_result) do
     {
       'group_id'    => {
-        options: Group.where(active: true).order(id: :asc).order(id: :asc).map { |group| { value: group.id, label: group.name } },
+        options: [ { value: group.id, label: group.name } ],
       },
       'state_id'    => {
-        options: Ticket::State.where(active: true).order(id: :asc).map { |state| { value: state.id, label: state.name } },
+        options: Ticket::State.by_category(:viewable_agent_new).order(name: :asc).map { |state| { value: state.id, label: state.name } },
       },
       'priority_id' => {
         options: Ticket::Priority.where(active: true).order(id: :asc).map { |priority| { value: priority.id, label: priority.name } },
@@ -51,13 +54,13 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
 
   context 'when resolving' do
     it 'returns all resolved relation fields with correct value + label' do
-      expect(resolved_result.resolve).to eq(expected_result)
+      expect(resolved_result.resolve).to include(
+        'group_id'    => include(expected_result['group_id']),
+        'state_id'    => include(expected_result['state_id']),
+        'priority_id' => include(expected_result['priority_id']),
+      )
     end
   end
 
-  # TODO: Add more tests
-  # context 'when using CoreWorkflow' do
-  #   it '' do
-  #   end
-  # end
+  include_examples 'ChecksCoreWorkflow', object_name: 'Ticket'
 end

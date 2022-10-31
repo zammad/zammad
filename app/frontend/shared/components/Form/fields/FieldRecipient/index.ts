@@ -3,6 +3,7 @@
 import type { FormKitNode } from '@formkit/core'
 import createInput from '@shared/form/core/createInput'
 import addLink from '@shared/form/features/addLink'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 import { autoCompleteProps } from '../FieldAutoComplete'
 
@@ -36,7 +37,7 @@ const fieldDefinition = createInput(
   FieldAutoCompleteInput,
   autoCompleteProps,
   {
-    features: [addLink, setAutoCompleteBehavior],
+    features: [addLink, setAutoCompleteBehavior, formUpdaterTrigger()],
   },
   { addArrow: true },
 )

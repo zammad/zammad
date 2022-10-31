@@ -18,6 +18,7 @@ describe('FieldResovlerInput', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Count',
       name: 'count',
+      required: false,
       props: {
         min: 1,
         max: 100,

@@ -8,7 +8,13 @@ import { clean } from './utils'
  * we might need to display several rows of information on the screen, so we can use "absolute".
  */
 export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
-  const { input = '', label = '', outer = '', wrapper = '' } = classes
+  const {
+    input = '',
+    label = '',
+    outer = '',
+    wrapper = '',
+    arrow = '',
+  } = classes
 
   return {
     outer: `${outer} absolute-floating-input formkit-invalid:bg-red/10 flex-col flex px-2`,
@@ -39,6 +45,6 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
         formkit-required:required
         formkit-invalid:text-red
       `),
-    arrow: 'formkit-arrow flex items-center',
+    arrow: `${arrow} formkit-arrow flex items-center`,
   }
 }

@@ -21,6 +21,7 @@ export const useOrganizationEdit = () => {
     {
       name: 'name',
       required: true,
+      screen: 'edit',
       object: EnumObjectManagerObjects.Organization,
     },
     {
@@ -30,6 +31,7 @@ export const useOrganizationEdit = () => {
     {
       name: 'active',
       required: true,
+      screen: 'edit',
       object: EnumObjectManagerObjects.Organization,
     },
   ])

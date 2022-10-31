@@ -7,6 +7,8 @@ import {
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import { cloneDeep } from 'lodash-es'
 import translateWrapperProps from '@shared/form/features/translateWrapperProps'
+import addBlurEvent from '@shared/form/features/addBlurEvent'
+import hideField from '@shared/form/features/hideField'
 
 describe('initializeFieldDefinition', () => {
   it('check for added default props without already existing props', () => {
@@ -31,7 +33,11 @@ describe('initializeFieldDefinition', () => {
     const definition = cloneDeep(inputTextDefinition)
     initializeFieldDefinition(definition)
 
-    expect(definition.features).toEqual([translateWrapperProps])
+    expect(definition.features).toEqual([
+      translateWrapperProps,
+      hideField,
+      addBlurEvent,
+    ])
   })
 
   it('check for added default features with existing features', () => {
@@ -40,6 +46,8 @@ describe('initializeFieldDefinition', () => {
 
     expect(definition.features).toEqual([
       translateWrapperProps,
+      hideField,
+      addBlurEvent,
       ...(selectDefinition.features || []),
     ])
   })
@@ -72,6 +80,11 @@ describe('initializeFieldDefinition', () => {
     })
 
     expect(definition.props).toEqual(['formId', 'labelPlaceholder', 'example'])
-    expect(definition.features).toEqual([translateWrapperProps, featureExample])
+    expect(definition.features).toEqual([
+      translateWrapperProps,
+      hideField,
+      addBlurEvent,
+      featureExample,
+    ])
   })
 })

@@ -16,8 +16,8 @@ class CoreWorkflow < ApplicationModel
 
   validates :name, presence: true
 
-  def self.perform(payload:, user:, assets: {}, assets_in_result: true, result: {})
-    CoreWorkflow::Result.new(payload: payload, user: user, assets: assets, assets_in_result: assets_in_result, result: result).run
+  def self.perform(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
+    CoreWorkflow::Result.new(payload: payload, user: user, assets: assets, assets_in_result: assets_in_result, result: result, form_updater: form_updater).run
   rescue => e
     return {} if e.is_a?(ArgumentError)
     raise e if !Rails.env.production?

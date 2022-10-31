@@ -4,6 +4,7 @@ import type { FormKitNode } from '@formkit/core'
 import { radio as radioDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 
 // TODO: Add story, when storybook replacement (histoire) was merged.
@@ -69,7 +70,12 @@ const handleButtonMode = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(radioDefinition, {
-  features: [addOptionCheckedDataAttribute, handleButtonMode, addIconLabel],
+  features: [
+    addOptionCheckedDataAttribute,
+    handleButtonMode,
+    addIconLabel,
+    formUpdaterTrigger(),
+  ],
 })
 
 export default {

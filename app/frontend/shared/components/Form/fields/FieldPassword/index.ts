@@ -5,6 +5,7 @@ import type { FormKitNode } from '@formkit/core'
 import { password as passwordDefinition } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 
 const localPasswordDefinition = cloneDeep(passwordDefinition)
 
@@ -39,7 +40,7 @@ const switchPasswordVisibility = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(localPasswordDefinition, {
-  features: [switchPasswordVisibility],
+  features: [switchPasswordVisibility, formUpdaterTrigger('blur')],
 })
 
 export default {

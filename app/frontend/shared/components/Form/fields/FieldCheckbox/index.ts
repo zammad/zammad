@@ -4,6 +4,7 @@ import type { FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 import { CheckboxVariant } from './types'
 
@@ -29,7 +30,7 @@ const addOptionCheckedDataAttribute = (node: FormKitNode) => {
           else: undefined,
         },
         else: {
-          if: '$_value',
+          if: '$value',
           then: 'true',
           else: undefined,
         },
@@ -71,7 +72,11 @@ const handleVariant = (node: FormKitNode) => {
 }
 
 initializeFieldDefinition(checkboxDefinition, {
-  features: [addOptionCheckedDataAttribute, handleVariant],
+  features: [
+    addOptionCheckedDataAttribute,
+    handleVariant,
+    formUpdaterTrigger(),
+  ],
 })
 
 export default {

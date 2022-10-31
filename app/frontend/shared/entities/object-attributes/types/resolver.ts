@@ -3,6 +3,12 @@
 import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
 import type FieldResolver from '../form/resolver/FieldResolver'
 
+export interface ScreenConfig {
+  required?: boolean
+  null?: boolean
+  [index: string]: unknown
+}
+
 export type FieldResolverClass = new (
   attribute: ObjectManagerFrontendAttribute,
 ) => FieldResolver

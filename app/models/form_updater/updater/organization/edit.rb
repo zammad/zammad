@@ -3,6 +3,8 @@
 class FormUpdater::Updater::Organization::Edit < FormUpdater::Updater
   include FormUpdater::Concerns::ChecksCoreWorkflow
 
+  core_workflow_screen 'edit'
+
   def object_type
     ::Organization
   end

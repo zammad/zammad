@@ -17,6 +17,7 @@ describe('FieldResolverTextarea', () => {
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Text',
       name: 'text',
+      required: false,
       props: {
         maxlength: 100,
       },
