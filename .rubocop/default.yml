@@ -152,6 +152,10 @@ Metrics/MethodLength:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
   Enabled: false
 
+Metrics/ParameterLists:
+  Description: 'Checks for methods with too many parameters.'
+  CountKeywordArgs: false
+
 Style/BlockComments:
   Description: 'Do not use block comments.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-block-comments'

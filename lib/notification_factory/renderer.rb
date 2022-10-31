@@ -28,7 +28,7 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false) # rubocop:disable Metrics/ParameterLists
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')

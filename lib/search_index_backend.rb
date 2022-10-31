@@ -813,9 +813,7 @@ generate url for index or document access (only for internal use)
 
 =end
 
-  # rubocop:disable Metrics/ParameterLists
   def self.build_url(type: nil, action: nil, object_id: nil, with_pipeline: true, with_document_type: true, url_params: {})
-    # rubocop:enable  Metrics/ParameterLists
     return if !SearchIndexBackend.enabled?
 
     # set index
