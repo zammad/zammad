@@ -270,7 +270,7 @@
 
   // create base template
   Plugin.prototype.renderBase = function() {
-    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu text-modules-box"></ul></div>')
+    this.$element.after('<div class="shortcut dropdown dropdown--actions"><ul class="dropdown-menu text-modules-box"></ul></div>')
     this.$widget = this.$element.next()
     this.$widget.on('mousedown', 'li', $.proxy(this.onEntryClick, this))
     this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))

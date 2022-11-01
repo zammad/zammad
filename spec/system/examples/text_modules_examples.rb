@@ -166,15 +166,15 @@ RSpec.shared_examples 'text modules' do |path:|
       wait.until_exists { find('.text-modules-box') }
 
       expected_order = [
-        text_module_without_group2.name + text_module_without_group2.keywords,
-        text_module_without_group1.name + text_module_without_group1.keywords,
+        "#{text_module_without_group2.name}\n#{text_module_without_group2.keywords}",
+        "#{text_module_without_group1.name}\n#{text_module_without_group1.keywords}",
       ]
       if path == 'ticket/create'
         expected_order = [
-          text_module_group2.name + text_module_group2.keywords,
-          text_module_group1.name + text_module_group1.keywords,
-          text_module_without_group2.name + text_module_without_group2.keywords,
-          text_module_without_group1.name + text_module_without_group1.keywords,
+          "#{text_module_group2.name}\n#{text_module_group2.keywords}",
+          "#{text_module_group1.name}\n#{text_module_group1.keywords}",
+          "#{text_module_without_group2.name}\n#{text_module_without_group2.keywords}",
+          "#{text_module_without_group1.name}\n#{text_module_without_group1.keywords}",
         ]
       end
 

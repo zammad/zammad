@@ -19,6 +19,7 @@ $mobileNavigationWidthOpen: 220px;
   --header-secondary: hsl(198, 10%, 69%);
   --text-normal: hsl(60, 1%, 34%);
   --text-muted: hsl(213, 3%, 64%);
+  --text-muted-highlight: hsl(205, 90%, 90%);
   --text-muted-alt: hsl(197, 16%, 65%);
   --text-link: hsl(204, 72%, 50%);
   --text-inverted: white;
@@ -8948,12 +8949,11 @@ li.list-item-none {
   &:focus {
     outline: none;
   }
-}
 
-.dropdown li.with-category,
-.dropdown.dropdown--actions li.with-category {
-  small {
-    color: inherit !important;
+  &.is-active {
+    small {
+      color: var(--text-muted-highlight);
+    }
   }
 }
 
