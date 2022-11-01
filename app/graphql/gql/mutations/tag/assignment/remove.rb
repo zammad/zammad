@@ -10,7 +10,7 @@ module Gql::Mutations
     field :success, Boolean, description: 'Was the mutation successful?'
 
     def resolve(tag:, object_id:)
-      object = Gql::ZammadSchema.authorized_object_from_id(object_id, user: context.current_user, type: [::Ticket, ::User, ::KnowledgeBase::Answer])
+      object = Gql::ZammadSchema.authorized_object_from_id(object_id, user: context.current_user, query: :update?, type: [::Ticket, ::User, ::KnowledgeBase::Answer])
       { success: object.tag_remove(tag, context.current_user.id) }
     end
   end

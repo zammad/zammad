@@ -10,10 +10,6 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteEntryType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user
-    end
-
     def resolve(query:, limit: 50)
       return [] if query.strip.empty?
 

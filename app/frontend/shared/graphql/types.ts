@@ -777,6 +777,8 @@ export type Queries = {
   applicationConfig: Array<KeyComplexValue>;
   /** Search for recipients */
   autocompleteSearchRecipient: Array<AutocompleteEntry>;
+  /** Search for tags */
+  autocompleteSearchTag: Array<AutocompleteEntry>;
   /** Search for users */
   autocompleteSearchUser: Array<AutocompleteEntry>;
   /** Information about the authenticated user */
@@ -816,6 +818,13 @@ export type Queries = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchRecipientArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  query: Scalars['String'];
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchTagArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   query: Scalars['String'];
 };

@@ -33,7 +33,7 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
       gql.execute(query, variables: variables)
     end
 
-    context 'with permission' do
+    context 'with ticket write permission' do
       it 'removes the tag' do
         expect(gql.result.data['success']).to be(true)
         expect(object.reload.tag_list).to eq([])
@@ -45,6 +45,14 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
         it 'returns success nevertheless' do
           expect(gql.result.data['success']).to be(true)
         end
+      end
+    end
+
+    context 'with ticket read permission' do
+      let(:agent) { create(:agent, groups: [object.group], group_names_access_map: { object.group.name => 'read' }) }
+
+      it 'raises an error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
       end
     end
 
