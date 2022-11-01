@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-06 03:30+0000\n"
-"Last-Translator: Danniel Macedo <djsmacedo@gmail.com>\n"
+"PO-Revision-Date: 2022-10-26 03:30+0000\n"
+"Last-Translator: Mateus Toledo <mtoledo@mtsolucoes.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/pt_BR/>\n"
 "Language: pt-br\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1583,6 +1583,7 @@ msgid ""
 msgstr ""
 "Tem certeza que deseja recarregar? Suas alterações não salvas serão perdidas"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -2161,6 +2162,10 @@ msgstr "Última atividade do cliente CTI"
 msgid "CTI integration"
 msgstr "Integração com CTI"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2285,6 +2290,12 @@ msgstr "Cancelar upload"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
 msgstr "Impossível deletar a categoria"
+
+msgid "Cannot delete record because a dependent %{record} exists"
+msgstr ""
+
+msgid "Cannot delete record because dependent %{record} exist"
+msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -3002,6 +3013,7 @@ msgstr "País"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Criar"
 
@@ -3733,6 +3745,12 @@ msgid "Defines if application is used as online service."
 msgstr "Define se o aplicativo é usado como serviço online."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if calendar weeks are shown in the picker of date/datetime fields to "
+"easily select the correct date."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Define se a integração CTI genérica está habilitada ou não."
 
@@ -4239,10 +4257,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr "Define o back-end da transação."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -5375,7 +5395,7 @@ msgstr "Usuários com exceção"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
-msgstr ""
+msgstr "Exchange"
 
 #: db/seeds/settings.rb
 msgid "Exchange config"
@@ -5729,7 +5749,7 @@ msgstr "frequencia"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 msgid "Freshdesk"
-msgstr ""
+msgstr "Freshdesk"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
@@ -5772,15 +5792,15 @@ msgstr "Nome de domínio qualificado (fqdn)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "GET"
-msgstr ""
+msgstr "GET"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "GID"
-msgstr ""
+msgstr "GID"
 
 #: app/models/channel/driver/sms/massenversand.rb
 msgid "Gateway"
-msgstr ""
+msgstr "Gateway"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee
@@ -5832,7 +5852,7 @@ msgstr "Obter um Token de Acesso"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
@@ -5855,7 +5875,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
@@ -5878,7 +5898,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 msgid "Gmail"
-msgstr ""
+msgstr "Gmail"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -5906,7 +5926,7 @@ msgstr "Mensagem de adeus"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -5914,7 +5934,7 @@ msgstr "Credenciais do aplicativo para o Google"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
-msgstr ""
+msgstr "Google Maps"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
@@ -6059,7 +6079,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Hash"
-msgstr ""
+msgstr "Hash"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6076,7 +6096,7 @@ msgstr "Cor do cabeçalho"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Header Link Color"
-msgstr ""
+msgstr "Cor do link do cabeçalho"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Header Menu"
@@ -6096,11 +6116,11 @@ msgstr "Olá! Preciso de ajuda com seu produto."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco
 msgid "Hello, my name is %s, what can I do for you?"
-msgstr ""
+msgstr "Olá, meu nome é %s, o que posso fazer por você?"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
-msgstr ""
+msgstr "Ajude a melhorar o Zammad!"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco
 msgid ""
@@ -6186,7 +6206,7 @@ msgstr "fluxo de feriados icalendar"
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
-msgstr ""
+msgstr "Página Inicial"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -6198,15 +6218,15 @@ msgstr "Servidor"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Host Notification"
-msgstr ""
+msgstr "Servidor de Notificação"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but it seems to be no OTRS installation!"
-msgstr ""
+msgstr "Servidor encontrado, mas parece não haver instalação do OTRS!"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but no OTRS migrator is installed!"
-msgstr ""
+msgstr "Servidor encontrado, mas nenhum migrador OTRS está instalado!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
@@ -8400,11 +8420,11 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr ""
 
@@ -8543,11 +8563,6 @@ msgstr "Objeto"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
 msgstr "(gerenciar objeto)"
-
-#: app/controllers/application_controller/handles_errors.rb
-#: app/graphql/gql/zammad_schema.rb
-msgid "Object already exists!"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
@@ -10458,6 +10473,10 @@ msgstr "Mostrar Detalhes da Pesquisa"
 msgid "Show all…"
 msgstr "Mostrar todos…"
 
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
 msgstr ""
@@ -11828,6 +11847,19 @@ msgstr ""
 "Não hávera reversão dessa exclusão. Se você tiver certeza absoluta de fazer "
 "isso, digite \"%s\" na entrada."
 
+#: app/assets/javascripts/app/controllers/package.coffee
+#, fuzzy
+#| msgid ""
+#| "There is no rollback of this deletion possible. If you are sure that you "
+#| "wish to proceed, please type \"%s\" into the input."
+msgid ""
+"There is no rollback of this deletion. If you are sure that you wish to "
+"proceed, please type \"%s\" into the input. All related data to this package "
+"will be lost."
+msgstr ""
+"Não hávera reversão dessa exclusão. Se você tiver certeza absoluta de fazer "
+"isso, digite \"%s\" na entrada."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
@@ -11867,6 +11899,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
 msgstr ""
+
+#: config/initializers/activemodel_error.rb
+#, fuzzy
+#| msgid "A user is required!"
+msgid "This field %s"
+msgstr "Um usuário é requerido!"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -12014,6 +12052,13 @@ msgstr ""
 msgid "This might take some time during which the system can't be used."
 msgstr ""
 "Isto pode levar um tempo, enquanto isso o sistema não pode ser utilizado."
+
+#: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This object already exists."
+msgstr "Este bot já existe."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -13378,6 +13423,9 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+msgid "Validation failed: %{errors}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -14439,6 +14487,12 @@ msgstr "Últimas Atualizações"
 msgid "busy"
 msgstr "ocupado"
 
+msgid "can't be blank"
+msgstr ""
+
+msgid "can't be empty"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #, fuzzy
 msgid "changed to"
@@ -14573,6 +14627,9 @@ msgstr "desconectar"
 msgid "does not exist"
 msgstr "não existe"
 
+msgid "doesn't match %{attribute}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14695,6 +14752,9 @@ msgstr "De (relativo)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
+msgstr ""
+
+msgid "has already been taken"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -14838,18 +14898,38 @@ msgstr "é"
 msgid "is in working time"
 msgstr "está no horário de trabalho"
 
+#, fuzzy
+#| msgid "Group is invalid!"
+msgid "is invalid"
+msgstr "O grupo é inválido!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "não é"
 
+#, fuzzy
+#| msgid "Min. size of number"
+msgid "is not a number"
+msgstr "Min. tamanho de número"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
+msgstr "não está no horário de trabalho"
+
+#, fuzzy
+#| msgid "is not in working time"
+msgid "is not included in the list"
 msgstr "não está no horário de trabalho"
 
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s required!"
+msgid "is reserved"
+msgstr "%s requerido!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
@@ -14858,6 +14938,24 @@ msgstr "está definido"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "é igual"
+
+msgid "is the wrong length (should be %{count} characters)"
+msgstr ""
+
+msgid "is the wrong length (should be 1 character)"
+msgstr ""
+
+msgid "is too long (maximum is %{count} characters)"
+msgstr ""
+
+msgid "is too long (maximum is 1 character)"
+msgstr ""
+
+msgid "is too short (minimum is %{count} characters)"
+msgstr ""
+
+msgid "is too short (minimum is 1 character)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -14919,6 +15017,44 @@ msgstr "minuto"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "minutos"
+
+msgid "must be accepted"
+msgstr ""
+
+msgid "must be an integer"
+msgstr ""
+
+msgid "must be blank"
+msgstr ""
+
+msgid "must be equal to %{count}"
+msgstr ""
+
+msgid "must be even"
+msgstr ""
+
+msgid "must be greater than %{count}"
+msgstr ""
+
+msgid "must be greater than or equal to %{count}"
+msgstr ""
+
+msgid "must be less than %{count}"
+msgstr ""
+
+msgid "must be less than or equal to %{count}"
+msgstr ""
+
+msgid "must be odd"
+msgstr ""
+
+msgid "must be other than %{count}"
+msgstr ""
+
+#, fuzzy
+#| msgid "not exist"
+msgid "must exist"
+msgstr "não existe"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco

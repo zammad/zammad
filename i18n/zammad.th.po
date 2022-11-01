@@ -1297,6 +1297,7 @@ msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1849,6 +1850,10 @@ msgstr "CTI customer last activity"
 msgid "CTI integration"
 msgstr "CTI integration"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -1971,6 +1976,12 @@ msgstr "ยกเลิกการอัปโหลด"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
 msgstr "ไม่สามารถลบหมวดหมู่"
+
+msgid "Cannot delete record because a dependent %{record} exists"
+msgstr ""
+
+msgid "Cannot delete record because dependent %{record} exist"
+msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -2670,6 +2681,7 @@ msgstr "ประเทศ"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "สร้าง"
 
@@ -3361,6 +3373,12 @@ msgid "Defines if application is used as online service."
 msgstr "กำหนดว่าแอปพลิเคชันถูกใช้เป็นบริการออนไลน์หรือไม่"
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if calendar weeks are shown in the picker of date/datetime fields to "
+"easily select the correct date."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "กำหนดว่าเปิดใช้งานการรวม CTI ทั่วไปหรือไม่"
 
@@ -3797,10 +3815,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr "กำหนดแบ็กเอนด์ transaction"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -7700,11 +7720,11 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr "ไม่ได้รับอนุญาต (ผู้ใช้)!"
 
@@ -7843,11 +7863,6 @@ msgstr "วัตถุ"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
 msgstr "จัดการวัตถุ"
-
-#: app/controllers/application_controller/handles_errors.rb
-#: app/graphql/gql/zammad_schema.rb
-msgid "Object already exists!"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
@@ -9694,6 +9709,10 @@ msgstr ""
 msgid "Show all…"
 msgstr "แสดงทั้งหมด…"
 
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
 msgstr "แสดงแชทอัตโนมัติ"
@@ -11015,6 +11034,13 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/package.coffee
+msgid ""
+"There is no rollback of this deletion. If you are sure that you wish to "
+"proceed, please type \"%s\" into the input. All related data to this package "
+"will be lost."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
@@ -11048,6 +11074,12 @@ msgstr "คลาสนี้จะถูกเพิ่มลงในปุ่
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
 msgstr "รายการนี้อยู่แล้ว!"
+
+#: config/initializers/activemodel_error.rb
+#, fuzzy
+#| msgid "This field is required."
+msgid "This field %s"
+msgstr "ต้องการ User!."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -11188,6 +11220,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "This might take some time during which the system can't be used."
 msgstr "การดำเนินการนี้อาจใช้เวลาสักครู่ก่อนที่ระบบจะไม่สามารถใช้งานได้"
+
+#: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This object already exists."
+msgstr "รายการนี้อยู่แล้ว!."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -12306,6 +12345,9 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+msgid "Validation failed: %{errors}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -13277,6 +13319,12 @@ msgstr "ระหว่างการปรับปรุงเจ้าหน
 msgid "busy"
 msgstr "ไม่ว่าง"
 
+msgid "can't be blank"
+msgstr ""
+
+msgid "can't be empty"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "เปลี่ยนไปเป็น"
@@ -13404,6 +13452,9 @@ msgstr "ตัดการเชื่อมต่อ"
 msgid "does not exist"
 msgstr "ไม่มีอยู่"
 
+msgid "doesn't match %{attribute}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -13524,6 +13575,9 @@ msgstr "จาก (relative)"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
 msgstr "ซ"
+
+msgid "has already been taken"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -13648,17 +13702,37 @@ msgstr "เท่ากับ"
 msgid "is in working time"
 msgstr "อยู่ในเวลาทำงาน"
 
+#, fuzzy
+#| msgid "Group is invalid!"
+msgid "is invalid"
+msgstr "กลุ่มไม่ถูกต้อง!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "ไม่เท่ากับ"
 
+#, fuzzy
+#| msgid "Min. size of number"
+msgid "is not a number"
+msgstr "ต่ำสุด. ขนาดของตัวเลข"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
 msgstr "ไม่ได้อยู่ในเวลาทำงาน"
 
+#, fuzzy
+#| msgid "is not in working time"
+msgid "is not included in the list"
+msgstr "ไม่ได้อยู่ในเวลาทำงาน"
+
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
+msgstr "%s จำเป็น"
+
+#, fuzzy
+#| msgid "is required"
+msgid "is reserved"
 msgstr "%s จำเป็น"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -13668,6 +13742,24 @@ msgstr "ถูกตั้งค่า"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "เหมือนกัน"
+
+msgid "is the wrong length (should be %{count} characters)"
+msgstr ""
+
+msgid "is the wrong length (should be 1 character)"
+msgstr ""
+
+msgid "is too long (maximum is %{count} characters)"
+msgstr ""
+
+msgid "is too long (maximum is 1 character)"
+msgstr ""
+
+msgid "is too short (minimum is %{count} characters)"
+msgstr ""
+
+msgid "is too short (minimum is 1 character)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -13727,6 +13819,44 @@ msgstr "นาที"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "นาที"
+
+msgid "must be accepted"
+msgstr ""
+
+msgid "must be an integer"
+msgstr ""
+
+msgid "must be blank"
+msgstr ""
+
+msgid "must be equal to %{count}"
+msgstr ""
+
+msgid "must be even"
+msgstr ""
+
+msgid "must be greater than %{count}"
+msgstr ""
+
+msgid "must be greater than or equal to %{count}"
+msgstr ""
+
+msgid "must be less than %{count}"
+msgstr ""
+
+msgid "must be less than or equal to %{count}"
+msgstr ""
+
+msgid "must be odd"
+msgstr ""
+
+msgid "must be other than %{count}"
+msgstr ""
+
+#, fuzzy
+#| msgid "does not exist"
+msgid "must exist"
+msgstr "ไม่มีอยู่"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco

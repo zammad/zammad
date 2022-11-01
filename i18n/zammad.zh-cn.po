@@ -1572,6 +1572,7 @@ msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr "请确认是否需要重新加载？没有保存的改动会丢失"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -2132,6 +2133,10 @@ msgstr "CTI 客户最近一次活动"
 msgid "CTI integration"
 msgstr "CTI 集成"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2256,6 +2261,12 @@ msgstr "取消上传"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
 msgstr "不能删除分类"
+
+msgid "Cannot delete record because a dependent %{record} exists"
+msgstr ""
+
+msgid "Cannot delete record because dependent %{record} exist"
+msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -2993,6 +3004,7 @@ msgstr "国家"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "创建"
 
@@ -3687,6 +3699,12 @@ msgid "Defines if application is used as online service."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if calendar weeks are shown in the picker of date/datetime fields to "
+"easily select the correct date."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr ""
 
@@ -4132,10 +4150,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -8361,11 +8381,11 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr ""
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr ""
 
@@ -8504,11 +8524,6 @@ msgstr "对象"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
 msgstr "对象管理"
-
-#: app/controllers/application_controller/handles_errors.rb
-#: app/graphql/gql/zammad_schema.rb
-msgid "Object already exists!"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
@@ -10476,6 +10491,10 @@ msgstr "顯示詳細搜尋信息"
 msgid "Show all…"
 msgstr "显示全部…"
 
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
 msgstr ""
@@ -11886,6 +11905,17 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr "无法回滚此删除操作。 如果绝对确定要执行此操作，则在输入中输入\"%s\"。"
 
+#: app/assets/javascripts/app/controllers/package.coffee
+#, fuzzy
+#| msgid ""
+#| "There is no rollback of this deletion possible. If you are absolutely "
+#| "sure to do this, then type in \"%s\" into the input."
+msgid ""
+"There is no rollback of this deletion. If you are sure that you wish to "
+"proceed, please type \"%s\" into the input. All related data to this package "
+"will be lost."
+msgstr "无法回滚此删除操作。 如果绝对确定要执行此操作，则在输入中输入\"%s\"。"
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
@@ -11929,6 +11959,12 @@ msgstr "此類在初始化時添加到按鈕上，並且在建立文字對話連
 #| msgid "Account already exists!"
 msgid "This entry already exists!"
 msgstr "帐号已经存在！"
+
+#: config/initializers/activemodel_error.rb
+#, fuzzy
+#| msgid "A user is required!"
+msgid "This field %s"
+msgstr "需要一个用户！"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -12077,6 +12113,13 @@ msgstr ""
 #| msgid "This might take some time where the system can't be used."
 msgid "This might take some time during which the system can't be used."
 msgstr "無法使用該系統可能需要一些時間"
+
+#: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
+#, fuzzy
+#| msgid "Account already exists!"
+msgid "This object already exists."
+msgstr "帐号已经存在！"
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -13420,6 +13463,9 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+msgid "Validation failed: %{errors}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -14452,6 +14498,12 @@ msgstr "客服更新之间"
 msgid "busy"
 msgstr "忙碌"
 
+msgid "can't be blank"
+msgstr ""
+
+msgid "can't be empty"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "已修改"
@@ -14585,6 +14637,9 @@ msgstr "断开"
 msgid "does not exist"
 msgstr "不存在"
 
+msgid "doesn't match %{attribute}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14706,6 +14761,9 @@ msgstr "来自（相对）"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
+msgstr ""
+
+msgid "has already been taken"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -14849,18 +14907,36 @@ msgstr "是"
 msgid "is in working time"
 msgstr "在工作时间"
 
+msgid "is invalid"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "非"
 
+#, fuzzy
+#| msgid "Min. size of number"
+msgid "is not a number"
+msgstr "最小號碼大小"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
+msgstr "没有在工作时间"
+
+#, fuzzy
+#| msgid "is not in working time"
+msgid "is not included in the list"
 msgstr "没有在工作时间"
 
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s required!"
+msgid "is reserved"
+msgstr "需要 ％s！"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
@@ -14869,6 +14945,24 @@ msgstr "已设置"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "和原文相同"
+
+msgid "is the wrong length (should be %{count} characters)"
+msgstr ""
+
+msgid "is the wrong length (should be 1 character)"
+msgstr ""
+
+msgid "is too long (maximum is %{count} characters)"
+msgstr ""
+
+msgid "is too long (maximum is 1 character)"
+msgstr ""
+
+msgid "is too short (minimum is %{count} characters)"
+msgstr ""
+
+msgid "is too short (minimum is 1 character)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -14930,6 +15024,44 @@ msgstr "分钟"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "分钟"
+
+msgid "must be accepted"
+msgstr ""
+
+msgid "must be an integer"
+msgstr ""
+
+msgid "must be blank"
+msgstr ""
+
+msgid "must be equal to %{count}"
+msgstr ""
+
+msgid "must be even"
+msgstr ""
+
+msgid "must be greater than %{count}"
+msgstr ""
+
+msgid "must be greater than or equal to %{count}"
+msgstr ""
+
+msgid "must be less than %{count}"
+msgstr ""
+
+msgid "must be less than or equal to %{count}"
+msgstr ""
+
+msgid "must be odd"
+msgstr ""
+
+msgid "must be other than %{count}"
+msgstr ""
+
+#, fuzzy
+#| msgid "not exist"
+msgid "must exist"
+msgstr "不存在"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco

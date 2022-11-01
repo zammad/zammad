@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-25 11:49+0000\n"
+"PO-Revision-Date: 2022-11-01 03:30+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -1469,6 +1469,7 @@ msgstr ""
 "Sind Sie sicher, dass Sie neu laden möchten? Sie haben ungespeicherte "
 "Änderungen, die verloren gehen werden"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -2036,6 +2037,10 @@ msgstr "CTI letzte Kundenaktivität"
 msgid "CTI integration"
 msgstr "CTI-Integration"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr "KW"
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2160,6 +2165,12 @@ msgstr "Hochladen abbrechen"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
 msgstr "Konnte Kategorie nicht löschen"
+
+msgid "Cannot delete record because a dependent %{record} exists"
+msgstr "Datensatz kann nicht gelöscht werden, da ein %{record} davon abhängt"
+
+msgid "Cannot delete record because dependent %{record} exist"
+msgstr "Datensatz kann nicht gelöscht werden, da %{record} davon abhängen"
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -2881,6 +2892,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Erstellen"
 
@@ -3613,6 +3625,14 @@ msgid "Defines if application is used as online service."
 msgstr "Definiert, ob die Applikation als Online-Service genutzt wird."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if calendar weeks are shown in the picker of date/datetime fields to "
+"easily select the correct date."
+msgstr ""
+"Definiert, ob zur einfacheren Auswahl des korrekten Datums im Datums-"
+"Auswahlfeld die Kalenderwochen angezeigt werden sollen."
+
+#: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Definiert, ob die generische CTI-Integration aktiv ist."
 
@@ -4127,10 +4147,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr "Definiert ein Transaktions-Backend."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -4316,7 +4338,7 @@ msgstr "Geräte"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
 msgid "Dialog window with selections"
-msgstr ""
+msgstr "Auswahl-Dialogfenster"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
@@ -5439,7 +5461,7 @@ msgstr "Vorname"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "First response"
-msgstr "Erste Reaktion"
+msgstr "Erstreaktion"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Fixed Email Accounts"
@@ -6799,7 +6821,7 @@ msgstr "Januar"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Job is waiting to get started…"
-msgstr "Job wartet auf Ausführung…"
+msgstr "Aufgabe wartet auf Ausführung…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "John Smith"
@@ -8192,11 +8214,11 @@ msgstr "Nicht autorisiert (Funktion nicht möglich)"
 msgid "Not authorized (token expired)!"
 msgstr "Nicht autorisiert (Token abgelaufen)!"
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr "Nicht autorisiert (Token)!"
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr "Nicht autorisiert (Benutzer)!"
 
@@ -8329,11 +8351,6 @@ msgstr "Objekt"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
 msgstr "Objekt-Manager"
-
-#: app/controllers/application_controller/handles_errors.rb
-#: app/graphql/gql/zammad_schema.rb
-msgid "Object already exists!"
-msgstr "Objekt existiert bereits!"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
@@ -9544,7 +9561,7 @@ msgstr "Antwort"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
-msgstr "Fehlgeschlagene Jobs neustarten"
+msgstr "Fehlgeschlagene Aufgaben neustarten"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Restore Defaults"
@@ -10251,6 +10268,10 @@ msgstr "Suchdetails anzeigen"
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 msgid "Show all…"
 msgstr "Alle anzeigen…"
+
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
+msgstr "Kalenderwochen im Datums-Auswahlfeld anzeigen"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
@@ -11616,6 +11637,16 @@ msgstr ""
 "Dieser Löschvorgang kann nicht zurückgenommen werden. Wenn Sie sich sicher "
 "sind und fortfahren wollen, dann tippen Sie \"%s\" in das Feld."
 
+#: app/assets/javascripts/app/controllers/package.coffee
+msgid ""
+"There is no rollback of this deletion. If you are sure that you wish to "
+"proceed, please type \"%s\" into the input. All related data to this package "
+"will be lost."
+msgstr ""
+"Dieser Löschvorgang kann nicht zurückgenommen werden. Wenn Sie sich sicher "
+"sind und fortfahren wollen, dann tippen Sie \"%s\" in das Feld. Alle zu "
+"diesem Paket gehörigen Daten werden entfernt."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
@@ -11649,6 +11680,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
 msgstr "Dieser Eintrag existiert bereits!"
+
+#: config/initializers/activemodel_error.rb
+msgid "This field %s"
+msgstr "Dieses Feld %s"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -11794,6 +11829,11 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 "Dies kann einige Zeit in Anspruch nehmen. In dieser Zeit kann das System "
 "nicht benutzt werden."
+
+#: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
+msgid "This object already exists."
+msgstr "Dieses Objekt ist bereits vorhanden."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -12593,7 +12633,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "Aktualisierung"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -13026,6 +13066,9 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+msgid "Validation failed: %{errors}"
+msgstr "Prüfung fehlgeschlagen: %{errors}"
+
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -13393,7 +13436,7 @@ msgstr "Wann Benachrichtigungen versendet werden."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "When should the job run?"
-msgstr "Wann soll der Job laufen?"
+msgstr "Wann soll die Aufgabe ausgeführt werden?"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -14069,6 +14112,12 @@ msgstr "zwischen Updates von Agenten"
 msgid "busy"
 msgstr "besetzt"
 
+msgid "can't be blank"
+msgstr "darf nicht leer sein"
+
+msgid "can't be empty"
+msgstr "darf nicht leer bleiben"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "geändert zu"
@@ -14196,6 +14245,9 @@ msgstr "trennen"
 msgid "does not exist"
 msgstr "existiert nicht"
 
+msgid "doesn't match %{attribute}"
+msgstr "entspricht nicht %{attribute}"
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14314,6 +14366,9 @@ msgstr "von vor (relativ)"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
 msgstr "h"
+
+msgid "has already been taken"
+msgstr "wird bereits verwendet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -14438,18 +14493,30 @@ msgstr "ist"
 msgid "is in working time"
 msgstr "ist innerhalb der Arbeitszeit"
 
+msgid "is invalid"
+msgstr "ist ungültig"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "ist nicht"
 
+msgid "is not a number"
+msgstr "ist keine Zahl"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
 msgstr "ist außerhalb der Arbeitszeit"
 
+msgid "is not included in the list"
+msgstr "ist nicht in der Liste enthalten"
+
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
 msgstr "ist erforderlich"
+
+msgid "is reserved"
+msgstr "ist reserviert"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
@@ -14458,6 +14525,24 @@ msgstr "ist gesetzt"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "ist das gleiche"
+
+msgid "is the wrong length (should be %{count} characters)"
+msgstr "hat die falsche Länge (sollte %{count} Zeichen haben)"
+
+msgid "is the wrong length (should be 1 character)"
+msgstr "hat die falsche Länge (sollte 1 Zeichen haben)"
+
+msgid "is too long (maximum is %{count} characters)"
+msgstr "ist zu lang (maximal %{count} Zeichen)"
+
+msgid "is too long (maximum is 1 character)"
+msgstr "ist zu lang (maximal 1 Zeichen)"
+
+msgid "is too short (minimum is %{count} characters)"
+msgstr "ist zu kurz (minimal %{count} Zeichen)"
+
+msgid "is too short (minimum is 1 character)"
+msgstr "ist zu kurz (minimal 1 Zeichen)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -14513,6 +14598,42 @@ msgstr "Minute"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "Minuten"
+
+msgid "must be accepted"
+msgstr "muss bestätigt werden"
+
+msgid "must be an integer"
+msgstr "muss eine Zahl sein"
+
+msgid "must be blank"
+msgstr "muss leer bleiben"
+
+msgid "must be equal to %{count}"
+msgstr "muss den Wert %{count} haben"
+
+msgid "must be even"
+msgstr "muss eine gerade Zahl enthalten"
+
+msgid "must be greater than %{count}"
+msgstr "muss größer als %{count} sein"
+
+msgid "must be greater than or equal to %{count}"
+msgstr "muss %{count} oder größer sein"
+
+msgid "must be less than %{count}"
+msgstr "muss kleiner als %{count} sein"
+
+msgid "must be less than or equal to %{count}"
+msgstr "muss %{count} oder kleiner sein"
+
+msgid "must be odd"
+msgstr "muss eine ungerade Zahl enthalten"
+
+msgid "must be other than %{count}"
+msgstr "muss von %{count} verschieden sein"
+
+msgid "must exist"
+msgstr "muss vorhanden sein"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -14940,6 +15061,9 @@ msgstr "…des gesamten Textfelds"
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
 
+#~ msgid "Object already exists!"
+#~ msgstr "Objekt existiert bereits!"
+
 #~ msgid "Enter more than two characters to get any results…"
 #~ msgstr "Geben Sie mehr als zwei Zeichen ein, um Ergebnisse zu erhalten…"
 
@@ -15238,9 +15362,6 @@ msgstr "∅ Wartezeit heute"
 #~ msgid "Couldn't save changes"
 #~ msgstr "Änderungen konnten nicht gespeichert werden"
 
-#~ msgid "Group can't be blank"
-#~ msgstr "Gruppe darf nicht leer sein"
-
 #~ msgid "Select..."
 #~ msgstr "Auswählen..."
 
@@ -15468,9 +15589,6 @@ msgstr "∅ Wartezeit heute"
 
 #~ msgid "Enter User"
 #~ msgstr "Benutzer eingeben"
-
-#~ msgid "already linked"
-#~ msgstr "bereits verknüpft"
 
 #~ msgid "as"
 #~ msgstr "als"

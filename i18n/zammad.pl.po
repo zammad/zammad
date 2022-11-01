@@ -1377,6 +1377,7 @@ msgstr ""
 "Czy na pewno chcesz załadować ponownie? Masz niezapisane zmiany, które "
 "zostaną utracone"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -1952,6 +1953,10 @@ msgstr "Ostatnia aktywność klienta CTI"
 msgid "CTI integration"
 msgstr "CTI integracja"
 
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+msgid "CW"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/calendar.coffee
@@ -2077,6 +2082,12 @@ msgstr "Anuluj wysyłanie"
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
 msgstr "Nie można usunąć kategorii"
+
+msgid "Cannot delete record because a dependent %{record} exists"
+msgstr ""
+
+msgid "Cannot delete record because dependent %{record} exist"
+msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -2793,6 +2804,7 @@ msgstr "Kraj"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Utwórz"
 
@@ -3532,6 +3544,12 @@ msgid "Defines if application is used as online service."
 msgstr "Określa, czy aplikacja jest używana jako usługa online."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines if calendar weeks are shown in the picker of date/datetime fields to "
+"easily select the correct date."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Określa, czy ogólna integracja CTI jest włączona, czy nie."
 
@@ -4044,10 +4062,12 @@ msgstr ""
 msgid "Defines transaction backend."
 msgstr "Definiuje backend transakcji."
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
+#: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -8195,11 +8215,11 @@ msgstr "Brak autoryzacji (funkcja niemożliwa)"
 msgid "Not authorized (token expired)!"
 msgstr "Brak autoryzacji (token wygasł)!"
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr "Brak autoryzacji (token)!"
 
-#: app/controllers/application_controller/authenticates.rb lib/user_context.rb
+#: app/controllers/application_controller/authenticates.rb app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr "Brak autoryzacji (użytkownik)!"
 
@@ -8338,11 +8358,6 @@ msgstr "Obiekt"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Object Manager"
 msgstr "Menadżer Objektów"
-
-#: app/controllers/application_controller/handles_errors.rb
-#: app/graphql/gql/zammad_schema.rb
-msgid "Object already exists!"
-msgstr "Obiekt już istnieje!"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: db/seeds/permissions.rb
@@ -10276,6 +10291,10 @@ msgstr "Pokaż wyniki wyszukiwania"
 msgid "Show all…"
 msgstr "Pokaż wszystkie…"
 
+#: db/seeds/settings.rb
+msgid "Show calendar weeks in the picker of date/datetime fields"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
 msgstr "Pokaż czat automatycznie"
@@ -11672,6 +11691,19 @@ msgstr ""
 "Nie ma możliwości wycofania tego usunięcia. Jeśli jesteś pewien, że chcesz "
 "kontynuować, wpisz „%s” w polu wejściowym."
 
+#: app/assets/javascripts/app/controllers/package.coffee
+#, fuzzy
+#| msgid ""
+#| "There is no rollback of this deletion possible. If you are sure that you "
+#| "wish to proceed, please type \"%s\" into the input."
+msgid ""
+"There is no rollback of this deletion. If you are sure that you wish to "
+"proceed, please type \"%s\" into the input. All related data to this package "
+"will be lost."
+msgstr ""
+"Nie ma możliwości wycofania tego usunięcia. Jeśli jesteś pewien, że chcesz "
+"kontynuować, wpisz „%s” w polu wejściowym."
+
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
@@ -11707,6 +11739,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee
 msgid "This entry already exists!"
 msgstr "Ten wpis już istnieje!"
+
+#: config/initializers/activemodel_error.rb
+#, fuzzy
+#| msgid "This field is required."
+msgid "This field %s"
+msgstr "To pole jest wymagane."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "This field can only contain alphabetical characters."
@@ -11851,6 +11889,13 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 "Może to zająć trochę czasu, podczas którego system nie będzie mógł być "
 "używany."
+
+#: app/controllers/application_controller/handles_errors.rb
+#: app/graphql/gql/zammad_schema.rb
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This object already exists."
+msgstr "Ten bot już istnieje."
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 msgid "This page is invisible to the public."
@@ -13184,6 +13229,9 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+msgid "Validation failed: %{errors}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -14207,6 +14255,12 @@ msgstr "pomiędzy aktualizacjami agenta"
 msgid "busy"
 msgstr "zajęty"
 
+msgid "can't be blank"
+msgstr ""
+
+msgid "can't be empty"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
 msgstr "zmienić na"
@@ -14334,6 +14388,9 @@ msgstr "rozłącz"
 msgid "does not exist"
 msgstr "nie istnieje"
 
+msgid "doesn't match %{attribute}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14454,6 +14511,9 @@ msgstr "od (względny)"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "h"
 msgstr "h"
+
+msgid "has already been taken"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -14578,17 +14638,37 @@ msgstr "jest"
 msgid "is in working time"
 msgstr "jest w godzinach pracy"
 
+#, fuzzy
+#| msgid "Group is invalid!"
+msgid "is invalid"
+msgstr "Grupa jest nieprawidłowa!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "nie jest"
 
+#, fuzzy
+#| msgid "Min. size of number"
+msgid "is not a number"
+msgstr "Minimalny rozmiar dla liczby"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
 msgstr "nie jest w godzinach pracy"
 
+#, fuzzy
+#| msgid "is not in working time"
+msgid "is not included in the list"
+msgstr "nie jest w godzinach pracy"
+
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
+msgstr "jest wymagane"
+
+#, fuzzy
+#| msgid "is required"
+msgid "is reserved"
 msgstr "jest wymagane"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -14598,6 +14678,24 @@ msgstr "jest ustawiony"
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "jest taki sam"
+
+msgid "is the wrong length (should be %{count} characters)"
+msgstr ""
+
+msgid "is the wrong length (should be 1 character)"
+msgstr ""
+
+msgid "is too long (maximum is %{count} characters)"
+msgstr ""
+
+msgid "is too long (maximum is 1 character)"
+msgstr ""
+
+msgid "is too short (minimum is %{count} characters)"
+msgstr ""
+
+msgid "is too short (minimum is 1 character)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -14655,6 +14753,44 @@ msgstr "minuta"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "minutes"
 msgstr "minut"
+
+msgid "must be accepted"
+msgstr ""
+
+msgid "must be an integer"
+msgstr ""
+
+msgid "must be blank"
+msgstr ""
+
+msgid "must be equal to %{count}"
+msgstr ""
+
+msgid "must be even"
+msgstr ""
+
+msgid "must be greater than %{count}"
+msgstr ""
+
+msgid "must be greater than or equal to %{count}"
+msgstr ""
+
+msgid "must be less than %{count}"
+msgstr ""
+
+msgid "must be less than or equal to %{count}"
+msgstr ""
+
+msgid "must be odd"
+msgstr ""
+
+msgid "must be other than %{count}"
+msgstr ""
+
+#, fuzzy
+#| msgid "does not exist"
+msgid "must exist"
+msgstr "nie istnieje"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15088,6 +15224,9 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania "
+
+#~ msgid "Object already exists!"
+#~ msgstr "Obiekt już istnieje!"
 
 #~ msgid "Enter more than two characters to get any results…"
 #~ msgstr "Wpisz więcej niż dwa znaki, aby uzyskać jakiekolwiek wyniki…"
