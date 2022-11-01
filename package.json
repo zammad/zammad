@@ -57,7 +57,7 @@
     "eslint-plugin-vue": "^9.6.0",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
     "histoire": "^0.11.6",
-    "jsdom": "^20.0.1",
+    "jsdom": "^20.0.2",
     "mock-apollo-client": "^1.2.1",
     "postcss": "^8.4.18",
     "postcss-html": "^1.5.0",
@@ -79,7 +79,7 @@
     "vite": "^3.1.8",
     "vite-plugin-ruby": "^3.1.2",
     "vite-plugin-svg-icons": "^2.0.1",
-    "vitest": "^0.23.4",
+    "vitest": "^0.24.4",
     "vitest-axe": "^0.1.0",
     "vue-tsc": "^0.40.13"
   },
