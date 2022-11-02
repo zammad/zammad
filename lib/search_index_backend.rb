@@ -379,7 +379,7 @@ remove whole data from index
     result = (sort_by || [])
       .map(&:to_s)
       .each_with_object([])
-      .each_with_index do |(elem, memo), index|
+      .with_index do |(elem, memo), index|
         next if elem.blank?
         next if order_by&.at(index).blank?
 
