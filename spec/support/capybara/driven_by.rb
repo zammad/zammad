@@ -72,8 +72,9 @@ RSpec.configure do |config|
   retry_exceptions = [
     Net::OpenTimeout,
     Net::ReadTimeout,
-    Selenium::WebDriver::Error::UnknownError,
+    Selenium::WebDriver::Error::InvalidArgumentError,
     Selenium::WebDriver::Error::SessionNotCreatedError,
+    Selenium::WebDriver::Error::UnknownError,
   ].freeze
 
   config.around(:each, type: :system) do |example|
