@@ -20,6 +20,7 @@ rspec:integration:
     - .job_rules_default
     - .job_rules_integration_manual_start
     - .variables_proxy
+  allow_failure: true
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]
