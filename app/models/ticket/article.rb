@@ -18,6 +18,7 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::EnqueueCommunicateTwitterJob
   include Ticket::Article::HasTicketContactAttributesImpact
   include Ticket::Article::ResetsTicketState
+  include Ticket::Article::TriggersSubscriptions
 
   # AddsMetadataGeneral depends on AddsMetadataOriginById, so load that first
   include Ticket::Article::AddsMetadataOriginById

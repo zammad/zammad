@@ -16,6 +16,10 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
             internalId
             title
           }
+          ticketArticle {
+            id
+            subject
+          }
         }
       }
     QUERY
@@ -30,7 +34,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       let(:agent) { create(:agent, groups: [ticket.group]) }
 
       it 'subscribes' do
-        expect(gql.result.data).to eq({ 'ticket' => nil })
+        expect(gql.result.data).to eq({ 'ticket' => nil, 'ticketArticle' => nil })
       end
 
       it 'receives ticket updates' do
@@ -39,14 +43,19 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
         expect(mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketUpdates']['ticket']['title']).to eq(ticket.title)
       end
 
-      context 'when a new article is created' do
+      context 'when a new article is created', :aggregate_failures do
         it 'receives ticket updates' do
-          create(:ticket_article,
-                 ticket:  ticket,
-                 subject: 'subcription test',
-                 from:    'no-reply@zammad.com')
+          article = create(:ticket_article,
+                           ticket:  ticket,
+                           subject: 'subcription test',
+                           from:    'no-reply@zammad.com')
 
-          expect(mock_channel.mock_broadcasted_messages).not_to be_empty
+          article.internal = !article.internal
+          article.save!
+
+          expect(mock_channel.mock_broadcasted_messages.count).to be(2)
+          expect(mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketUpdates']['ticket']['title']).to eq(ticket.title)
+          expect(mock_channel.mock_broadcasted_messages.last[:result]['data']['ticketUpdates']['ticketArticle']['subject']).to eq(article.subject)
         end
       end
 

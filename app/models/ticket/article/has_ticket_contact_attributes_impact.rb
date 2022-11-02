@@ -11,8 +11,8 @@ module Ticket::Article::HasTicketContactAttributesImpact
   private
 
   def update_ticket_article_attributes
-
     changed = false
+
     if article_count_update
       changed = true
     end
@@ -29,7 +29,6 @@ module Ticket::Article::HasTicketContactAttributesImpact
       changed = true
     end
 
-    # save ticket
     if !changed
       ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
