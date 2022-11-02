@@ -11,7 +11,7 @@ class TwitterReply
       }
     if article.type.name is 'twitter direct-message'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'twitterDirectMessageReply'
         icon: 'reply'
         href: '#'
