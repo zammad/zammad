@@ -34,6 +34,13 @@ class CoreWorkflow extends App.ControllerSubContent
       ]
     )
 
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate( @page || 1 )
+
   setAttributes: ->
     for field in App.CoreWorkflow.configure_attributes
       if field.name is 'object'
