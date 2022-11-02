@@ -60,7 +60,6 @@ class SidebarArticleAttachments extends App.Controller
     e.preventDefault()
     e.stopPropagation()
     parentElement = $(e.target).closest('.attachment.file-calendar')
-    console.log({ parentElement })
     new App.TicketZoomArticleCalendarView(calendar: parentElement.get(0).outerHTML)
 
 App.Config.set('900-ArticleAttachments', SidebarArticleAttachments, 'TicketZoomSidebar')

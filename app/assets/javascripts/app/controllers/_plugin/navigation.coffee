@@ -506,7 +506,6 @@ class Navigation extends App.Controller
     App.RecentView.fetchFull(load, clear: true)
 
   toggleNotifications: (e) ->
-    console.log('toggleNotifications', @notificationWidget)
     e.stopPropagation()
     @notificationWidget.toggle()
 
