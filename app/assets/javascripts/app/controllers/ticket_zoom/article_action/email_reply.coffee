@@ -49,7 +49,7 @@ class EmailReply extends App.Controller
       # check if reply all is needed
       if foreignRecipients.length > 1
         actions.push {
-          name: 'reply all'
+          name: __('reply all')
           type: 'emailReplyAll'
           icon: 'reply-all'
           href: '#'
@@ -57,7 +57,7 @@ class EmailReply extends App.Controller
 
       # always show forward
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
@@ -65,26 +65,26 @@ class EmailReply extends App.Controller
 
     if article.sender.name is 'Customer' && article.type.name is 'phone'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
       }
     if article.sender.name is 'Agent' && article.type.name is 'phone'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
