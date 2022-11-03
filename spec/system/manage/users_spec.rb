@@ -303,4 +303,20 @@ RSpec.describe 'Manage > Users', type: :system do
       expect(page).to have_text('firstname-simple-import1')
     end
   end
+
+  describe 'Missing secondary organizations in user profile after refreshing with many secondary organizations. #4331' do
+    let(:organizations) { create_list(:organization, 20) }
+    let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
+
+    before do
+      customer
+      visit '#manage/users'
+      click "tr[data-id='#{customer.id}']"
+    end
+
+    it 'does show all secondary organizations on edit' do
+      tokens = page.all('div[data-attribute-name="organization_ids"] .token')
+      expect(tokens.count).to eq(19)
+    end
+  end
 end
