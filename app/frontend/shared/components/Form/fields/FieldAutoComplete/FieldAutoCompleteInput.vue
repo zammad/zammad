@@ -19,10 +19,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, clearValue } = useValue(
-  toRef(props, 'context'),
-)
+const { hasValue, valueContainer, clearValue } = useValue(contextReactive)
 
 const localOptions = ref(props.context.options || [])
 
@@ -65,7 +64,12 @@ const toggleDialog = async (isVisible: boolean) => {
   await dialog.close()
 }
 
-useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
+const onInputClick = () => {
+  if (dialog.isOpened.value) return
+  toggleDialog(true)
+}
+
+useFormBlock(contextReactive, onInputClick)
 </script>
 
 <template>

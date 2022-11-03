@@ -54,12 +54,7 @@ describe('grouping form fields', () => {
               name: 'select',
               label: 'Select',
               props: {
-                options: [
-                  {
-                    value: 0,
-                    label: 'Item A',
-                  },
-                ],
+                options: [],
               },
             },
           ],
@@ -87,6 +82,77 @@ describe('grouping form fields', () => {
     cy.wrap(document.fonts.ready).then(() => {
       cy.get('.form').matchImage({
         title: 'grouped fields',
+      })
+    })
+  })
+
+  it('renders disabled border correctly', () => {
+    const props = {
+      schema: [
+        {
+          isLayout: true,
+          component: 'FormGroup',
+          children: [
+            {
+              type: 'text',
+              required: true,
+              name: 'text',
+              label: 'Text',
+            },
+            {
+              type: 'tel',
+              props: { link: '/' },
+              name: 'tel',
+              label: 'Tel',
+              disabled: true,
+            },
+            {
+              type: 'textarea',
+              name: 'textarea',
+              label: 'Textarea',
+            },
+            {
+              type: 'date',
+              name: 'some_input_2',
+              label: 'Date 2',
+            },
+            {
+              type: 'tags',
+              name: 'tags',
+              label: 'Tags',
+              value: ['test'],
+              disabled: true,
+              props: {
+                link: '/',
+                options: [
+                  { label: 'test', value: 'test' },
+                  { label: 'support', value: 'support' },
+                ],
+              },
+            },
+            {
+              type: 'select',
+              name: 'select',
+              label: 'Select',
+              disabled: true,
+              props: {
+                options: [],
+              },
+            },
+          ],
+        },
+      ],
+    }
+    mountComponent(Form, {
+      props,
+      attrs: {
+        class: 'form',
+      },
+    })
+
+    cy.wrap(document.fonts.ready).then(() => {
+      cy.get('.form').matchImage({
+        title: 'grouped disabled fields',
       })
     })
   })

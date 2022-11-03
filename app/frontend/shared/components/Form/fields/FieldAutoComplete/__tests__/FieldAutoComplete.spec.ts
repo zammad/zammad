@@ -762,6 +762,35 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
     expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '-1')
   })
 
+  it("clicking disabled field doesn't select dialog", async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+        disabled: true,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('clicking select without options still opens select dialog', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: [],
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
+  })
+
   it('provides labels for screen readers', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

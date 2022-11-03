@@ -800,6 +800,20 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
             },
             {},
           ),
+          state_id: {
+            show: true,
+            options: [
+              {
+                label: 'new',
+                value: 1,
+              },
+              {
+                label: 'open',
+                value: 2,
+              },
+            ],
+            value: 1,
+          },
         },
       },
       {
@@ -822,7 +836,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       checkFieldDisabled(wrapper, fieldLabel, true)
     })
 
-    await selectValue(wrapper, 'Type', 'Incident')
+    await selectValue(wrapper, 'State', 'open')
 
     await waitUntil(() => mockFormUpdaterApi.calls.resolve === 2)
 

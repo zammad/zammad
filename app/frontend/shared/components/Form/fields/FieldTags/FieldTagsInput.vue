@@ -35,7 +35,12 @@ const showDialog = () => {
   })
 }
 
-useFormBlock(props.context, () => !dialog.isOpened.value && showDialog())
+const onInputClick = () => {
+  if (dialog.isOpened.value) return
+  showDialog()
+}
+
+useFormBlock(context, onInputClick)
 </script>
 
 <template>

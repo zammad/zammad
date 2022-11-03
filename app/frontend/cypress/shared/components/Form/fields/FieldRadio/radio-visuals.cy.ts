@@ -14,7 +14,6 @@ const radioOptions = [
 describe('testing visuals for "FieldRadio"', () => {
   it('renders as buttons', () => {
     mountFormField('radio', {
-      label: 'Radio',
       buttons: true,
       options: radioOptions,
     })
@@ -28,7 +27,6 @@ describe('testing visuals for "FieldRadio"', () => {
 
   it('renders as disabled buttons', () => {
     mountFormField('radio', {
-      label: 'Radio',
       buttons: true,
       disabled: true,
       options: radioOptions,

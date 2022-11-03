@@ -141,4 +141,20 @@ describe('Form - Field - Tags', () => {
 
     expect(view.getByRole('button', { name: 'pay' })).toBeInTheDocument()
   })
+
+  it("clicking disabled field doesn't select dialog", async () => {
+    const wrapper = renderFieldTags({ disabled: true })
+
+    await wrapper.events.click(wrapper.getByLabelText('Tags'))
+
+    expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('clicking select without options opens select dialog', async () => {
+    const wrapper = renderFieldTags({ options: [] })
+
+    await wrapper.events.click(wrapper.getByLabelText('Tags'))
+
+    expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
+  })
 })

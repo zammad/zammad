@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormFieldContext } from '@shared/components/Form/types/field'
+import type { Ref } from 'vue'
 import { onUnmounted } from 'vue'
 
 // TODO maybe there is a better way to do this with FormKit?
 export const useFormBlock = (
-  context: FormFieldContext,
+  context: Ref<FormFieldContext>,
   cb: (e: MouseEvent) => void,
 ) => {
-  const receipt = context.node.on('block-click', ({ payload }) => {
+  const receipt = context.value.node.on('block-click', ({ payload }) => {
+    if (context.value.disabled) return
+
     const target = payload.target as HTMLElement | null
 
     // ignore link
@@ -20,6 +23,6 @@ export const useFormBlock = (
   })
 
   onUnmounted(() => {
-    context.node.off(receipt)
+    context.value.node.off(receipt)
   })
 }

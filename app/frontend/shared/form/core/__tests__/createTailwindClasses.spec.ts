@@ -44,7 +44,7 @@ describe('createTailwindClasses', () => {
           default: (classes: FormThemeClasses) => {
             return {
               global: {
-                outer: `${classes.global.outer} custom-class`,
+                wrapper: `${classes.global.wrapper} custom-class`,
               },
               customField: customFieldClasses,
             }
@@ -53,7 +53,7 @@ describe('createTailwindClasses', () => {
       },
     }) as unknown as FormThemeClasses
 
-    expect(classes.global.outer).toContain(
+    expect(classes.global.wrapper).toContain(
       'formkit-disabled:opacity-30 custom-class',
     )
     expect(classes.customField).toEqual(customFieldClasses)

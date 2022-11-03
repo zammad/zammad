@@ -21,10 +21,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, clearValue } = useValue(
-  toRef(props, 'context'),
-)
+const { hasValue, valueContainer, clearValue } = useValue(contextReactive)
 
 const currentPath = ref<FlatSelectOption[]>([])
 
@@ -122,9 +121,13 @@ const toggleDialog = async (isVisible: boolean) => {
   await dialog.close()
 }
 
-useSelectPreselect(flatOptions, toRef(props, 'context'))
-useFormBlock(props.context, () => !dialog.isOpened.value && toggleDialog(true))
+const onInputClick = () => {
+  if (dialog.isOpened.value || !props.context.options?.length) return
+  toggleDialog(true)
+}
 
+useSelectPreselect(flatOptions, contextReactive)
+useFormBlock(contextReactive, onInputClick)
 setupClearMissingOptionValue()
 </script>
 

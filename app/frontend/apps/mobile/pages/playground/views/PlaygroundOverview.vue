@@ -19,6 +19,7 @@ const linkSchemaRaw = [
     type: 'text',
     name: 'some_input',
     label: 'Input',
+    disabled: true,
     required: true,
   },
   {
@@ -149,7 +150,9 @@ const linkSchemaRaw = [
     type: 'select',
     name: 'select_1',
     label: 'Select 1',
+    disabled: true,
     props: {
+      link: '/',
       options: [
         {
           value: 0,

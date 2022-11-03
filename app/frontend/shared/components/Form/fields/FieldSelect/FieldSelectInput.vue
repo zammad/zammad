@@ -38,14 +38,13 @@ const isSizeSmall = computed(() => props.context.size === 'small')
 const select = ref<CommonSelectInstance>()
 
 const openSelectDialog = () => {
-  if (select.value?.isOpen) return
+  if (select.value?.isOpen || !props.context.options?.length) return
   select.value?.openDialog()
 }
 
-useFormBlock(props.context, openSelectDialog)
+useFormBlock(contextReactive, openSelectDialog)
 
-useSelectPreselect(sortedOptions, toRef(props, 'context'))
-
+useSelectPreselect(sortedOptions, contextReactive)
 setupClearMissingOptionValue()
 </script>
 
