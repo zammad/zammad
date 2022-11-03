@@ -23,21 +23,17 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
       end
 
       it 'processes a job' do
-        Timeout.timeout(30) do
-          expect do
-            ensure_block_keeps_running do
-              described_class.new.run
-            end
-          end.to change(Delayed::Job, :count).by(-1)
-        end
+        expect do
+          ensure_block_keeps_running do
+            described_class.new.run
+          end
+        end.to change(Delayed::Job, :count).by(-1)
       end
 
       it 'runs loop multiple times', :aggregate_failures do
         allow(instance).to receive(:process_results)
 
-        Timeout.timeout(30) do
-          ensure_block_keeps_running { instance.run }
-        end
+        ensure_block_keeps_running { instance.run }
 
         expect(instance).to have_received(:process_results).with([1, 0], any_args).once
         expect(instance).to have_received(:process_results).with([0, 0], any_args).at_least(1)
