@@ -100,4 +100,17 @@ RSpec.describe 'User Profile', type: :system do
       expect(page).to have_text(ticket.title)
     end
   end
+
+  describe 'Missing secondary organizations in user profile after refreshing with many secondary organizations. #4331' do
+    before do
+      visit "#user/profile/#{customer.id}"
+      page.find('.profile .js-action').click
+      page.find('.profile li[data-type=edit]').click
+    end
+
+    it 'does show all secondary organizations on edit' do
+      tokens = page.all('div[data-attribute-name="organization_ids"] .token')
+      expect(tokens.count).to eq(19)
+    end
+  end
 end

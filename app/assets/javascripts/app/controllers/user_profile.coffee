@@ -93,15 +93,17 @@ class ActionRow extends App.ControllerObserverActionRow
     )
 
   editUser: (user) =>
-    new App.ControllerGenericEdit(
-      id: user.id
-      genericObject: 'User'
-      screen: 'edit'
-      pageData:
-        title: __('Users')
-        object: __('User')
-        objects: __('Users')
-      container: @el.closest('.content')
+    user.secondaryOrganizations(0, 1000, =>
+      new App.ControllerGenericEdit(
+        id: user.id
+        genericObject: 'User'
+        screen: 'edit'
+        pageData:
+          title: __('Users')
+          object: __('User')
+          objects: __('Users')
+        container: @el.closest('.content')
+      )
     )
 
   newTicket: (user) =>
