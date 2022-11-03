@@ -272,45 +272,43 @@ returns
       end
 
       # set attributes
-      ticket.with_lock do
-        article = Ticket::Article.new(
-          ticket_id:    ticket.id,
-          type_id:      Ticket::Article::Type.find_by(name: 'email').id,
-          sender_id:    Ticket::Article::Sender.find_by(name: 'Customer').id,
-          content_type: mail[:content_type],
-          body:         mail[:body],
-          from:         mail[:from],
-          reply_to:     mail[:'reply-to'],
-          to:           mail[:to],
-          cc:           mail[:cc],
-          subject:      mail[:subject],
-          message_id:   mail[:message_id],
-          internal:     false,
-        )
+      article = Ticket::Article.new(
+        ticket_id:    ticket.id,
+        type_id:      Ticket::Article::Type.find_by(name: 'email').id,
+        sender_id:    Ticket::Article::Sender.find_by(name: 'Customer').id,
+        content_type: mail[:content_type],
+        body:         mail[:body],
+        from:         mail[:from],
+        reply_to:     mail[:'reply-to'],
+        to:           mail[:to],
+        cc:           mail[:cc],
+        subject:      mail[:subject],
+        message_id:   mail[:message_id],
+        internal:     false,
+      )
 
-        # x-headers lookup
-        set_attributes_by_x_headers(article, 'article', mail)
+      # x-headers lookup
+      set_attributes_by_x_headers(article, 'article', mail)
 
-        # create article
-        article.save!
+      # create article
+      article.save!
 
-        # store mail plain
-        article.save_as_raw(msg)
+      # store mail plain
+      article.save_as_raw(msg)
 
-        # store attachments
-        mail[:attachments]&.each do |attachment|
-          filename = attachment[:filename].force_encoding('utf-8')
-          if !filename.force_encoding('UTF-8').valid_encoding?
-            filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
-          end
-          Store.create!(
-            object:      'Ticket::Article',
-            o_id:        article.id,
-            data:        attachment[:data],
-            filename:    filename,
-            preferences: attachment[:preferences]
-          )
+      # store attachments
+      mail[:attachments]&.each do |attachment|
+        filename = attachment[:filename].force_encoding('utf-8')
+        if !filename.force_encoding('UTF-8').valid_encoding?
+          filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
         end
+        Store.create!(
+          object:      'Ticket::Article',
+          o_id:        article.id,
+          data:        attachment[:data],
+          filename:    filename,
+          preferences: attachment[:preferences]
+        )
       end
     end
 

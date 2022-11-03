@@ -1624,4 +1624,20 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
   end
+
+  describe 'Updating group settings causes huge numbers of delayed jobs #4306', searchindex: true do
+    let(:new_email) { <<~RAW.chomp }
+      From: Max Smith <customer@example.com>
+      To: myzammad@example.com
+      Subject: test sender name update 2
+
+      Some Text
+    RAW
+
+    it 'does create search index jobs for new email tickets' do
+      ticket, = described_class.new.process({}, new_email)
+      job = Delayed::Job.all.detect { |row| YAML.load(row.handler).job_data['arguments'] == ['Ticket', ticket.id] } # rubocop:disable Security/YAMLLoad
+      expect(job).to be_present
+    end
+  end
 end
