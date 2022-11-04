@@ -198,7 +198,6 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     # do query
     organization_all = Organization.search(query_params)
-    Rails.logger.error "organization_all #{query_params.inspect} #{organization_all.count}"
 
     if response_expand?
       list = []

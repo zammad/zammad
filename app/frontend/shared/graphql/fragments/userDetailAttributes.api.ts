@@ -17,6 +17,7 @@ export const UserDetailAttributesFragmentDoc = gql`
   mobile
   fax
   note
+  active
   objectAttributeValues {
     ...objectAttributeValues
   }
@@ -24,6 +25,7 @@ export const UserDetailAttributesFragmentDoc = gql`
     id
     internalId
     name
+    active
     ticketsCount {
       open
       closed

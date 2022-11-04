@@ -9,12 +9,13 @@ class FormUpdater::Updater
   attr_reader :context, :current_user, :relation_fields, :meta, :data, :id, :object, :result
 
   def initialize(context:, relation_fields:, meta:, data:, id: nil)
-    @result  = {}
-    @context = context
+    @context         = context
     @meta            = meta
     @data            = data
     @id              = id
-    @current_user = context[:current_user]
+    @current_user    = context[:current_user]
+
+    @result = {}
 
     # Build lookup for relation fields for better usage.
     @relation_fields = relation_fields.each_with_object({}) do |relation_field, lookup|

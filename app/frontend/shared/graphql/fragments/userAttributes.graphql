@@ -12,6 +12,7 @@ fragment userAttributes on User {
   organization {
     id
     name
+    active
     objectAttributeValues {
       ...objectAttributeValues
     }

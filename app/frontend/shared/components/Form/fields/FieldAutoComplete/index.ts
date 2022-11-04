@@ -16,8 +16,10 @@ export const autoCompleteProps = [
   'limit',
   'multiple',
   'noOptionsLabelTranslation',
+  'belongsToObjectField',
   'optionIcon',
   'options',
+  'initialOptionBuilder',
   'sorting',
 ]
 

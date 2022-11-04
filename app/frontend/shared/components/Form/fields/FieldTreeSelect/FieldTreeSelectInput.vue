@@ -9,12 +9,12 @@ import { useFormBlock } from '@mobile/form/useFormBlock'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
+import type { SelectValue } from '../FieldSelect'
 import type {
   TreeSelectOption,
   FlatSelectOption,
   TreeSelectContext,
 } from './types'
-import type { SelectValue } from '../FieldSelect/types'
 
 interface Props {
   context: TreeSelectContext

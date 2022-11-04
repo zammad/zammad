@@ -52,17 +52,10 @@ const objectAtrributes: Record<string, string> =
     {},
   ) || {}
 
-const initialValue = {
+const initialFlatObject = {
   ...props.object,
   ...objectAtrributes,
 }
-
-// Delete not needed object attribute values, because we have them in the flat structure.
-delete initialValue.objectAttributeValues
-
-// TODO: debug
-delete initialValue.secondaryOrganizations
-delete initialValue.organization
 
 const { attributes: objectAttributes } = useObjectAttributes(props.type)
 const { waitForConfirmation } = useConfirmation()
@@ -143,7 +136,7 @@ const saveObject = async (formData: FormData) => {
       ref="form"
       class="w-full p-4"
       :schema="schema"
-      :initial-values="initialValue"
+      :initial-entity-object="initialFlatObject"
       use-object-attributes
       :form-updater-id="formUpdaterId"
       @submit="saveObject($event)"

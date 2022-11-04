@@ -23,6 +23,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
     firstname: 'John',
     lastname: 'Doe',
     fullname: 'John Doe',
+    active: true,
     ticketsCount: {
       open: 4,
       closed: 2,
@@ -33,6 +34,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
       internalId: organization.internalId,
       name: organization.name,
       ticketsCount: organization.ticketsCount,
+      active: true,
     },
     secondaryOrganizations: {
       __typename: 'OrganizationConnection',

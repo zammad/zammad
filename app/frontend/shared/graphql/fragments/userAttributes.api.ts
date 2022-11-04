@@ -17,6 +17,7 @@ export const UserAttributesFragmentDoc = gql`
   organization {
     id
     name
+    active
     objectAttributeValues {
       ...objectAttributeValues
     }

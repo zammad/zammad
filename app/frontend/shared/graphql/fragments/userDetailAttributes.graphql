@@ -12,6 +12,7 @@ fragment userDetailAttributes on User {
   mobile
   fax
   note
+  active
   objectAttributeValues {
     ...objectAttributeValues
   }
@@ -19,6 +20,7 @@ fragment userDetailAttributes on User {
     id
     internalId
     name
+    active
     ticketsCount {
       open
       closed

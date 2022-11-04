@@ -110,6 +110,7 @@ add a new attribute entry for an object
       multiple: false,
       null: true,
       translate: false,
+      belongs_to: 'group',
     },
     active: true,
     screens: {

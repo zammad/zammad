@@ -309,7 +309,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'placeholder'    => 'Enter Person or Organization/Company',
                 'minLengt'       => 2,
                 'translate'      => false,
-                'permission'     => ['ticket.agent']
+                'permission'     => ['ticket.agent'],
+                'belongs_to'     => 'customer',
               },
               'isInternal' => true,
             },
@@ -323,7 +324,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'multiple'       => false,
                 'null'           => true,
                 'translate'      => false,
-                'permission'     => ['ticket.agent', 'ticket.customer']
+                'permission'     => ['ticket.agent', 'ticket.customer'],
+                'belongs_to'     => 'organization',
               },
               'isInternal' => true,
             },
@@ -341,7 +343,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'translate'                => false,
                 'only_shown_if_selectable' => true,
                 'permission'               => ['ticket.agent', 'ticket.customer'],
-                'maxlength'                => 255
+                'maxlength'                => 255,
+                'belongs_to'               => 'group',
               },
               'isInternal' => true,
             },
@@ -358,7 +361,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'               => true,
                 'translate'          => false,
                 'permission'         => ['ticket.agent'],
-                'maxlength'          => 255
+                'maxlength'          => 255,
+                'belongs_to'         => 'owner',
               },
               'isInternal' => true,
             },
@@ -374,7 +378,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'default'    => 2,
                 'translate'  => true,
                 'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
-                'maxlength'  => 255
+                'maxlength'  => 255,
+                'belongs_to' => 'state',
               },
               'isInternal' => true,
             },
@@ -388,7 +393,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'diff'       => nil,
                 'null'       => true,
                 'translate'  => true,
-                'permission' => ['ticket.agent']
+                'permission' => ['ticket.agent'],
               },
               'isInternal' => true,
             },
@@ -403,7 +408,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'null'       => false,
                 'default'    => 2,
                 'translate'  => true,
-                'maxlength'  => 255
+                'maxlength'  => 255,
+                'belongs_to' => 'priority',
               },
               'isInternal' => true,
             },
@@ -465,7 +471,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'multiple'       => false,
                 'null'           => true,
                 'translate'      => false,
-                'permission'     => ['ticket.agent', 'ticket.customer']
+                'permission'     => ['ticket.agent', 'ticket.customer'],
+                'belongs_to'     => 'organization',
               },
               'isInternal' => true,
             },
@@ -483,7 +490,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'translate'                => false,
                 'only_shown_if_selectable' => true,
                 'permission'               => ['ticket.agent', 'ticket.customer'],
-                'maxlength'                => 255
+                'maxlength'                => 255,
+                'belongs_to'               => 'group',
               },
               'isInternal' => true,
             },
@@ -499,7 +507,8 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'default'    => 2,
                 'translate'  => true,
                 'filter'     => Ticket::State.by_category(:viewable).pluck(:id),
-                'maxlength'  => 255
+                'maxlength'  => 255,
+                'belongs_to' => 'state',
               },
               'isInternal' => true,
             },

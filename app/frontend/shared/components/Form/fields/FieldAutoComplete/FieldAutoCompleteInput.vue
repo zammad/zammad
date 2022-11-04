@@ -4,6 +4,7 @@
 import { markRaw, ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
+import type { ObjectLike } from '@shared/types/utils'
 import { useFormBlock } from '@mobile/form/useFormBlock'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
@@ -21,7 +22,8 @@ interface Props {
 const props = defineProps<Props>()
 const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, clearValue } = useValue(contextReactive)
+const { hasValue, valueContainer, currentValue, clearValue } =
+  useValue(contextReactive)
 
 const localOptions = ref(props.context.options || [])
 
@@ -54,6 +56,22 @@ const { getSelectedOptionIcon, getSelectedOptionLabel } = useSelectOptions(
   localOptions,
   toRef(props, 'context'),
 )
+
+// Initial options prefill for non-multiple fields (multiple fields needs to be handled in the form updater).
+if (
+  !props.context.multiple &&
+  hasValue.value &&
+  props.context.initialOptionBuilder &&
+  !getSelectedOptionLabel(currentValue.value)
+) {
+  const initialOption = props.context.initialOptionBuilder(
+    props.context.node.at('$root')?.context?.initialEntityObject as ObjectLike,
+    currentValue.value,
+    props.context,
+  )
+
+  if (initialOption) localOptions.value.push(initialOption)
+}
 
 const toggleDialog = async (isVisible: boolean) => {
   if (isVisible) {

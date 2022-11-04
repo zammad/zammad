@@ -44,6 +44,7 @@ import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attrib
 import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
 import testFlags from '@shared/utils/testFlags'
 import type { FormUpdaterTrigger } from '@shared/types/form'
+import type { ObjectLike } from '@shared/types/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
@@ -79,6 +80,7 @@ export interface Props {
 
   // Can be used to define initial values on frontend side and fetched schema from the server.
   initialValues?: Partial<FormValues>
+  initialEntityObject?: ObjectLike
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
@@ -163,6 +165,11 @@ const updaterChangedFields = new Set<string>()
 
 const setFormNode = (node: FormKitNode) => {
   formNode.value = node
+
+  // Save the initial entity object in the form node context, so that fields can use it.
+  if (node.context && props.initialEntityObject) {
+    node.context.initialEntityObject = props.initialEntityObject
+  }
 
   node.settled.then(() => {
     stopInitialLoadingAnimation()
@@ -277,6 +284,30 @@ const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
 })
 
+const lookupSchemaFieldNames = computed(() => {
+  if (staticSchema.value.length === 0) return []
+
+  return Object.keys(schemaData.fields) || []
+})
+
+const localInitialValues = computed<Maybe<FormValues>>(() => {
+  if (props.initialValues) return props.initialValues
+
+  if (props.initialEntityObject) {
+    const { initialEntityObject } = props
+
+    return lookupSchemaFieldNames.value.reduce(
+      (initialValues: FormValues, fieldName) => {
+        initialValues[fieldName] = initialEntityObject[fieldName]
+        return initialValues
+      },
+      {},
+    )
+  }
+
+  return null
+})
+
 const updateSchemaDataField = (
   field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
 ) => {
@@ -317,7 +348,9 @@ const updateSchemaDataField = (
     const combinedFieldProps = Object.assign(fieldProps, specificProps)
 
     combinedFieldProps.value =
-      props.initialValues?.[field.name] ?? combinedFieldProps.value
+      localInitialValues.value?.[field.name] ??
+      props.initialEntityObject?.[field.name] ??
+      combinedFieldProps.value
 
     schemaData.fields[field.name] = {
       show: showField,
@@ -402,6 +435,7 @@ const handlesFormUpdater = (
 
   // We mark this as raw, because we want no deep reactivity on the form updater query variables.
   nextFormUpdaterVariables = markRaw({
+    id: props.initialEntityObject?.id,
     formUpdaterId: props.formUpdaterId,
     data: {
       ...values.value,
@@ -618,9 +652,13 @@ const initializeFormSchema = () => {
 
   if (props.formUpdaterId) {
     formUpdaterVariables.value = markRaw({
+      id: props.initialEntityObject?.id,
       formUpdaterId: props.formUpdaterId,
-      data: props.initialValues || {},
-      meta: { formId },
+      data: localInitialValues.value || {},
+      meta: {
+        initial: true,
+        formId,
+      },
       relationFields,
     })
 

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FieldResolverModule } from '@shared/entities/object-attributes/types/resolver'
+import { camelize } from '@shared/utils/formatter'
 import FieldResolver from '../FieldResolver'
 
 export class FieldResolverAutocompletion extends FieldResolver {
@@ -25,6 +26,9 @@ export class FieldResolverAutocompletion extends FieldResolver {
   public fieldTypeAttributes() {
     return {
       props: {
+        belongsToObjectField: camelize(
+          this.attributeConfig.belongs_to as string,
+        ),
         multiple: this.attributeConfig.multiple,
       },
     }

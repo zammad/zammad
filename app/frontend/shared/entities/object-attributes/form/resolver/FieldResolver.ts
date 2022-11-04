@@ -8,9 +8,9 @@ import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
 import type { JsonValue } from 'type-fest'
 
 export default abstract class FieldResolver {
-  private name: string
+  protected name: string
 
-  private label: string
+  protected label: string
 
   protected attributeType: string
 

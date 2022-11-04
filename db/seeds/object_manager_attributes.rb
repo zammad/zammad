@@ -931,6 +931,7 @@ ObjectManager::Attribute.add(
     relation:      'Organization',
     item_class:    'formGroup--halfSize',
     display_limit: 3,
+    belongs_to:    'secondary_organizations',
   },
   editable:    false,
   active:      true,

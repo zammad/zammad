@@ -4,13 +4,14 @@ import { escapeRegExp } from 'lodash-es'
 import gql from 'graphql-tag'
 import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
+import { getNode } from '@formkit/core'
 import { renderComponent } from '@tests/support/components'
 import { queryByIconName } from '@tests/support/components/iconQueries'
 import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
 import type { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar/types'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitUntil } from '@tests/support/utils'
+import { waitForNextTick, waitUntil } from '@tests/support/utils'
 
 vi.mock('@vueuse/core', async () => {
   const mod = await vi.importActual<typeof import('@vueuse/core')>(
@@ -104,6 +105,34 @@ const testProps = {
 beforeAll(async () => {
   // So we don't need to wait until it loads inside test.
   await import('../../FieldAutoComplete/FieldAutoCompleteInputDialog.vue')
+})
+
+describe('Form - Field - Organization - Features', () => {
+  it('supports value prefill with existing entity object in root node', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        id: 'organization',
+        name: 'organization_id',
+        value: 123,
+        belongsToObjectField: 'organization',
+      },
+    })
+
+    const node = getNode('organization')
+    node!.context!.initialEntityObject = {
+      organization: {
+        name: 'Zammad Organization',
+      },
+    }
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(
+      `Zammad Organization`,
+    )
+  })
 })
 
 // We include only some query-related test cases, since the actual autocomplete component has its own unit test.

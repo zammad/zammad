@@ -26,6 +26,7 @@ const userData = {
     id: '234241',
     name: 'Zammad Foundation',
     objectAttributeValues: [],
+    active: true,
   },
   permissions: {
     __typename: 'Permission',

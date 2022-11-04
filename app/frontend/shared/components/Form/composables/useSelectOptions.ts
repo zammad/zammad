@@ -4,12 +4,15 @@ import { computed, ref, type Ref, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { cloneDeep, keyBy } from 'lodash-es'
 import type { TicketState } from '@shared/entities/ticket/types'
-import type { SelectOptionSorting, SelectOption } from '../fields/FieldSelect'
+import type {
+  SelectOptionSorting,
+  SelectOption,
+  SelectValue,
+} from '../fields/FieldSelect'
 import type { FormFieldContext } from '../types/field'
 import type { FlatSelectOption } from '../fields/FieldTreeSelect'
 import type { AutoCompleteOption } from '../fields/FieldAutoComplete'
 import useValue from './useValue'
-import type { SelectValue } from '../fields/FieldSelect/types'
 
 const useSelectOptions = (
   options: Ref<SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]>,

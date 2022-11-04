@@ -29,21 +29,14 @@ export const useUserEdit = () => {
   ])
 
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
-    const transformedUserObject = {
-      ...user,
-      // TODO: Currently we have no autocomplete prefill functionality (maybe with formUpdater?)
-      // TODO: Also we have not always the full set on secondary organization in the frontend (currently also a bug in the desktop view).
-      organization_id: user.organization?.internalId,
-      organization_ids: edgesToArray(user.secondaryOrganizations).map(
-        (item) => item.internalId,
-      ),
-    }
-
-    delete transformedUserObject.organization
-    delete transformedUserObject.secondaryOrganizations
-
     dialog.openDialog({
-      object: transformedUserObject,
+      object: {
+        ...user,
+        organization_id: user.organization?.internalId,
+        organization_ids: edgesToArray(user.secondaryOrganizations).map(
+          (item) => item.internalId,
+        ),
+      },
       mutation,
       schema,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,

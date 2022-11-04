@@ -2,13 +2,18 @@
 
 import { cloneDeep, escapeRegExp } from 'lodash-es'
 import { getByText, waitFor } from '@testing-library/vue'
+import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+import { provideApolloClient } from '@vue/apollo-composable'
+import { createMockClient } from 'mock-apollo-client'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
-import { createMockClient } from 'mock-apollo-client'
-import { provideApolloClient } from '@vue/apollo-composable'
 import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
+import { waitForNextTick } from '@tests/support/utils'
+import type { ObjectLike } from '@shared/types/utils'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
+import type { FormFieldContext } from '@shared/components/Form/types/field'
+import type { SelectValue } from '../../FieldSelect'
 
 const testOptions = [
   {
@@ -65,6 +70,7 @@ const mockQueryResult = (
   }
 }
 
+// TODO: can maybe be replaced with existing helper function?
 const mockClient = () => {
   const mockApolloClient = createMockClient()
 
@@ -351,13 +357,12 @@ describe('Form - Field - AutoComplete - Initial Options', () => {
 })
 
 describe('Form - Field - AutoComplete - Features', () => {
-  // FIXME: Updating value prop does not seem to mutate it.
-  //   It could be a bug in FormKit, though. Retry with next release.
-  it.todo('supports value mutation', async () => {
+  it('supports value mutation', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
+        id: 'autocomplete',
         options: testOptions,
         value: testOptions[1].value,
       },
@@ -367,9 +372,10 @@ describe('Form - Field - AutoComplete - Features', () => {
       testOptions[1].label,
     )
 
-    await wrapper.rerender({
-      value: testOptions[2].value,
-    })
+    const node = getNode('autocomplete')
+    node?.input(testOptions[2].value)
+
+    await waitForNextTick(true)
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
       testOptions[2].label,
@@ -719,6 +725,24 @@ describe('Form - Field - AutoComplete - Features', () => {
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('#foo')
+  })
+
+  it('supports value prefill with initial option builder', () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        value: 1234,
+        initialOptionBuilder: (object: ObjectLike, value: SelectValue) => {
+          return {
+            value,
+            label: `Item ${value}`,
+          }
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(`Item 1234`)
   })
 })
 

@@ -48,4 +48,4 @@ export default {
   definition: fieldDefinition,
 }
 
-export type { SelectOption, SelectOptionSorting } from './types'
+export type { SelectOption, SelectOptionSorting, SelectValue } from './types'

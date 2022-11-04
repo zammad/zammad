@@ -9,6 +9,8 @@ import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
 import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
+import { getNode } from '@formkit/core'
+import { waitForNextTick } from '@tests/support/utils'
 
 const AutocompleteSearchCustomerDocument = gql`
   query autocompleteSearchCustomer($query: String!, $limit: Int) {
@@ -106,6 +108,32 @@ const testProps = {
 beforeAll(async () => {
   // So we don't need to wait until it loads inside test.
   await import('../../FieldAutoComplete/FieldAutoCompleteInputDialog.vue')
+})
+
+describe('Form - Field - Customer - Features', () => {
+  it('supports value prefill with existing entity object in root node', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        id: 'customer',
+        name: 'customer_id',
+        value: 123,
+        belongsToObjectField: 'customer',
+      },
+    })
+
+    const node = getNode('customer')
+    node!.context!.initialEntityObject = {
+      customer: {
+        fullname: 'John Doe',
+      },
+    }
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(`John Doe`)
+  })
 })
 
 // We include only some query-related test cases, as the actual autocomplete component has its own unit test.

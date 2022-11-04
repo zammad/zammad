@@ -42,7 +42,7 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
     },
   })
 
-  await waitForNextTick()
+  await waitUntil(() => wrapper.emitted().settled)
 
   return wrapper
 }
@@ -225,6 +225,57 @@ describe('Form.vue - Edge Cases', () => {
 
     expect(wrapper.getByLabelText('Title')).toHaveDisplayValue('Initial title')
     expect(wrapper.getByLabelText('Shared')).toHaveValue('no')
+  })
+
+  it('can use initial entity object (and prefill auto complete)', async () => {
+    const wrapper = await renderForm({
+      props: {
+        schema: [
+          {
+            type: 'text',
+            name: 'title',
+            label: 'Title',
+          },
+          {
+            type: 'select',
+            name: 'shared',
+            label: 'Shared',
+            props: {
+              options: [
+                {
+                  label: 'yes',
+                  value: true,
+                },
+                {
+                  label: 'no',
+                  value: false,
+                },
+              ],
+            },
+          },
+          {
+            type: 'organization',
+            name: 'organization_id',
+            label: 'Organization',
+            props: {
+              belongsToObjectField: 'organization',
+            },
+          },
+        ],
+        initialEntityObject: {
+          title: 'Initial title',
+          shared: false,
+          organization_id: '123',
+          organization: {
+            name: 'Example',
+          },
+        },
+      },
+    })
+
+    expect(wrapper.getByLabelText('Title')).toHaveValue('Initial title')
+    expect(wrapper.getByLabelText('Shared')).toHaveValue('no')
+    expect(wrapper.getByLabelText('Organization')).toHaveTextContent('Example')
   })
 
   it('can use form layout in schema', async () => {

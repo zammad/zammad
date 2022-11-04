@@ -8,4 +8,30 @@ class FormUpdater::Updater::User::Edit < FormUpdater::Updater
   def object_type
     ::User
   end
+
+  def resolve
+    if meta[:initial] && object && object.organization_ids.present?
+      result['organization_ids'] = organization_ids
+    end
+
+    super
+  end
+
+  private
+
+  def organization_ids
+    {
+      value:   object.organization_ids,
+      options: ::Organization.where(id: object.organization_ids).each_with_object([]) do |organization, options|
+                 options << {
+                   # TODO: needs to be aligned during the autocomplete query implementation
+                   value:        organization.id,
+                   label:        organization.name,
+                   organization: {
+                     active: organization.active,
+                   }
+                 }
+               end,
+    }
+  end
 end
