@@ -24,8 +24,7 @@ class SearchController < ApplicationController
 
     assets = {}
     result = []
-    execute_service(
-      SearchService,
+    Service::Search.new(current_user: current_user).execute(
       term:    query,
       objects: objects.map(&:constantize),
       options: { limit: limit, ids: params[:ids] },

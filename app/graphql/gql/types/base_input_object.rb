@@ -2,7 +2,6 @@
 
 module Gql::Types
   class BaseInputObject < GraphQL::Schema::InputObject
-    include Gql::Concerns::HandlesServices
     include Gql::Concerns::HasNestedGraphqlName
 
     argument_class Gql::Types::BaseArgument

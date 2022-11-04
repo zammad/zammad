@@ -15,5 +15,4 @@ class ApplicationController < ActionController::Base
   include ApplicationController::LogsHttpAccess
   include ApplicationController::Authorizes
   include ApplicationController::Klass
-  include ApplicationController::HandlesServices
 end

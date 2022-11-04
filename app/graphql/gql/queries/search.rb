@@ -12,8 +12,7 @@ module Gql::Queries
     type [Gql::Types::SearchResultType, { null: false }], null: false
 
     def resolve(search:, only_in: nil, limit: 10)
-      execute_service(
-        SearchService,
+      Service::Search.new(current_user: context.current_user).execute(
         term:    search,
         objects: only_in ? [only_in] : Gql::Types::SearchResultType.searchable_models,
         options: { limit: limit }

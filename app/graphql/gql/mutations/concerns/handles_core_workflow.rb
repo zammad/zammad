@@ -4,13 +4,10 @@ module Gql::Mutations::Concerns::HandlesCoreWorkflow
   extend ActiveSupport::Concern
 
   included do
-    def set_core_workflow_information(params, klass, screen = 'create')
-      return if params[:screen].present?
-      return if klass.included_modules.exclude?(ChecksCoreWorkflow)
+    def set_core_workflow_information(data, klass, screen = 'create')
+      return if data[:screen].present? || klass.included_modules.exclude?(ChecksCoreWorkflow)
 
-      params[:screen] = screen
-
-      true
+      data[:screen] = screen
     end
   end
 end

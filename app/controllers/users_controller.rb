@@ -828,19 +828,20 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 =end
 
   def avatar_new
-    file_full = execute_service(Avatar::ImageValidateService, image_data: params[:avatar_full])
+    service = Service::Avatar::ImageValidate.new
+    file_full = service.execute(image_data: params[:avatar_full])
     if file_full[:error].present?
       render json: { error: file_full[:message] }, status: :unprocessable_entity
       return
     end
 
-    file_resize = execute_service(Avatar::ImageValidateService, image_data: params[:avatar_resize])
+    file_resize = service.execute(image_data: params[:avatar_resize])
     if file_resize[:error].present?
       render json: { error: file_resize[:message] }, status: :unprocessable_entity
       return
     end
 
-    render json: { avatar: execute_service(Avatar::AddService, full_image: file_full, resize_image: file_resize) }, status: :ok
+    render json: { avatar: Service::Avatar::Add.new(current_user: current_user).execute(full_image: file_full, resize_image: file_resize) }, status: :ok
   end
 
   def avatar_set_default

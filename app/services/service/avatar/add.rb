@@ -1,14 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class Avatar::AddService < BaseService
-  def execute(args)
-    add(full_image: args[:full_image], resize_image: args[:resize_image])
-  end
-
-  private
-
-  def add(full_image:, resize_image:)
-    avatar = Avatar.add(
+class Service::Avatar::Add < Service::BaseWithCurrentUser
+  def execute(full_image:, resize_image:)
+    Avatar.add(
       object:    'User',
       o_id:      current_user.id,
       full:      {
@@ -21,10 +15,8 @@ class Avatar::AddService < BaseService
       },
       source:    "upload #{Time.zone.now}",
       deletable: true,
-    )
-
-    current_user.update!(image: avatar.store_hash)
-
-    avatar
+    ).tap do |avatar|
+      current_user.update!(image: avatar.store_hash)
+    end
   end
 end

@@ -4,7 +4,6 @@ module Gql::Queries
   class BaseQuery < GraphQL::Schema::Resolver
     include Gql::Concerns::HandlesAuthorization
     include Gql::Concerns::HasNestedGraphqlName
-    include Gql::Concerns::HandlesServices
 
     description 'Base class for all queries'
 

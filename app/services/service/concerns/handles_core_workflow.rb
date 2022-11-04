@@ -1,16 +1,13 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module HandlesCoreWorkflow
+module Service::Concerns::HandlesCoreWorkflow
   extend ActiveSupport::Concern
 
   included do
     def set_core_workflow_information(data, klass, screen = 'create')
-      return if data[:screen].present?
-      return if klass.included_modules.exclude?(ChecksCoreWorkflow)
+      return if data[:screen].present? || klass.included_modules.exclude?(ChecksCoreWorkflow)
 
       data[:screen] = screen
-
-      true
     end
   end
 end

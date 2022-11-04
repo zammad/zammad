@@ -1,0 +1,10 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+class Service::BaseWithCurrentUser < Service::Base
+  attr_reader :current_user
+
+  def initialize(current_user:)
+    super()
+    @current_user = current_user
+  end
+end

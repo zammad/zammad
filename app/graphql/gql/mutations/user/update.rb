@@ -27,7 +27,7 @@ module Gql::Mutations
       user_data = input.to_h
 
       set_core_workflow_information(user_data, ::User, 'update')
-      execute_service(::User::CheckAttributesService, user_data: user_data)
+      Service::User::FilterPermissionAssignments.new(current_user: current_user).execute(user_data: user_data)
 
       current_user.with_lock do
         current_user.update!(user_data)

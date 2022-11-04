@@ -11,6 +11,6 @@ module ChecksUserAttributesByCurrentUserPermission
     # admins can do whatever they want
     return true if current_user.permissions?('admin.user')
 
-    execute_service(User::CheckAttributesService, user_data: params)
+    Service::User::FilterPermissionAssignments.new(current_user: current_user).execute(user_data: params)
   end
 end

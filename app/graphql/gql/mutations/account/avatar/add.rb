@@ -17,7 +17,7 @@ module Gql::Mutations
       end
 
       {
-        avatar: execute_service(Avatar::AddService, full_image: file_full, resize_image: file_resize)
+        avatar: Service::Avatar::Add.new(current_user: context.current_user).execute(full_image: file_full, resize_image: file_resize)
       }
     end
   end

@@ -6569,10 +6569,6 @@ msgstr ""
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
 
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
-msgstr ""
-
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
 msgstr ""
@@ -9531,7 +9527,7 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr ""
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
@@ -9694,7 +9690,7 @@ msgstr ""
 msgid "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#."
 msgstr ""
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
 msgstr ""
 

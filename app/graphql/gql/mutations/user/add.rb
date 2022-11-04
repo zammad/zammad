@@ -13,15 +13,7 @@ module Gql::Mutations
     end
 
     def resolve(input:)
-      { user: add(input) }
-    end
-
-    private
-
-    def add(input)
-      user_data = input.to_h
-
-      execute_service(::User::AddInternalService, user_data: user_data)
+      { user: Service::User::AddInternal.new(current_user: context.current_user).execute(user_data: input.to_h) }
     end
   end
 end

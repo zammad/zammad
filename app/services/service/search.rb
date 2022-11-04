@@ -1,13 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-class SearchService < BaseService
-  def execute(args)
-    search(term: args[:term], objects: args[:objects], options: args[:options])
-  end
-
-  private
-
-  def search(term:, objects:, options: { limit: 10 })
+class Service::Search < Service::BaseWithCurrentUser
+  def execute(term:, objects:, options: { limit: 10 })
     options[:limit] = 10 if options[:limit].blank?
 
     perform_search(term: term, objects: objects, options: options)
