@@ -1,15 +1,29 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module ThreadsHelper
-
   # Ensure that any new threads which might be spawned by the block will be cleaned up
   #   to not interfere with any subsequent tests.
   def ensure_threads_exited()
     initial_threads = Thread.list
     yield
   ensure
+    superfluous_threads = -> { Thread.list - initial_threads }
+
     # Keep going until no more changes are needed to catch threads spawned in between.
-    (Thread.list - initial_threads).each(&:kill) while (Thread.list - initial_threads).count.positive?
+    3.times do
+      superfluous_threads.call.each(&:kill)
+      break if superfluous_threads.call.count.zero?
+
+      sleep 1 # Wait a bit for stuff to settle before trying again.
+    end
+
+    if superfluous_threads.call.count.positive?
+      superfluous_threads.each do |thread|
+        warn "Error: found a superfluous thread after clean-up: #{thread}"
+        warn "Backtrace: #{thread.backtrace.join("\n")}"
+      end
+      raise 'Superfluous threads found after clean-up.'
+    end
 
     # Sometimes connections are not checked back in after thread is killed
     # This recovers connections from the workers
