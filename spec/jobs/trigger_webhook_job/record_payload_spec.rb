@@ -4,8 +4,6 @@ require 'rails_helper'
 
 RSpec.describe TriggerWebhookJob::RecordPayload do
 
-  # rubocop:disable RSpec/FactoryBot/ConsistentParenthesesStyle
-
   describe '.generate' do
 
     subject(:generate) { described_class.generate(record) }
@@ -45,5 +43,4 @@ RSpec.describe TriggerWebhookJob::RecordPayload do
     end
   end
 
-  # rubocop:enable RSpec/FactoryBot/ConsistentParenthesesStyle
 end
