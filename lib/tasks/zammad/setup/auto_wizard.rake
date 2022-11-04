@@ -10,7 +10,10 @@ namespace :zammad do
       Rails.cache.clear # In case we're coming from `zammad:bootstrap:reset`.
 
       source = args.fetch(:source, Rails.root.join('contrib/auto_wizard_test.json'))
-      FileUtils.ln(source, Rails.root.join('auto_wizard.json'), force: true)
+      dest = Rails.root.join('auto_wizard.json')
+      if File.expand_path(source) != File.expand_path(dest)
+        FileUtils.ln(source, dest, force: true)
+      end
 
       AutoWizard.setup
 
