@@ -44,12 +44,13 @@ class FormUpdater::Updater
   end
 
   def resolve
-    # TODO: or better move this inside the concern with a super call?
     if self.class.included_modules.include?(FormUpdater::Concerns::ChecksCoreWorkflow)
       validate_workflows
     end
 
-    resolve_relation_fields
+    if relation_fields.present?
+      resolve_relation_fields
+    end
 
     result
   end

@@ -39,8 +39,7 @@ class FormUpdater::Relation
       if filter_ids
         relation_type.where(id: filter_ids).order(order)
       else
-        # TODO: correct fallback for later in the admin interface.
-        # relation_type.where(active: true).order(id: :asc)
+        # Currently the default is an empty array, later we need some good solution for the admin area.
         []
       end
     end
