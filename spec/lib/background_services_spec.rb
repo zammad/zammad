@@ -148,7 +148,7 @@ RSpec.describe BackgroundServices do
 
       it 'runs Service#run' do
         instance.send(:start_as_thread, SampleService)
-        sleep 0.1
+        sleep 0.1 until log.any?
         expect(log).to be_present
       end
     end
