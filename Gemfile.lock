@@ -170,7 +170,7 @@ GEM
       railties (>= 5)
     dotenv (2.8.1)
     dry-cli (0.7.0)
-    dry-inflector (0.3.0)
+    dry-inflector (1.0.0)
     eco (1.0.0)
       coffee-script
       eco-source
