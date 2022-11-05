@@ -13213,6 +13213,10 @@ msgstr "Preencher em vazio"
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "from"
@@ -13614,6 +13618,12 @@ msgstr "removido"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "reply"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "reply"
 
 #: db/seeds/settings.rb

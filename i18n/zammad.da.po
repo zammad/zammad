@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-25 12:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-11-02 15:10+0000\n"
+"Last-Translator: Thomas Albech <github@albech.com>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
 "Language: da\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "dd.mm.yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " til "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -71,7 +71,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Gruppe"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -82,7 +82,7 @@ msgstr "Migrering"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Role"
-msgstr ""
+msgstr "%s Rolle"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -109,22 +109,16 @@ msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
-msgstr "oprettet Gruppe"
+msgstr "%s oprettet gruppe |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
-msgstr "oprettet Organisation"
+msgstr "%s oprettet organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
-msgstr "oprettet Gruppe"
+msgstr "%s oprettet rolle |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
@@ -133,31 +127,27 @@ msgid "%s created ticket |%s|"
 msgstr "oprettet Ticket"
 
 #: app/assets/javascripts/app/models/user.coffee
-#, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
-msgstr "oprettet bruger"
+msgstr "%s oprettet bruger |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "%s credentials"
-msgstr "legitimationsoplysninger"
+msgstr "%s legitimationsoplysninger"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s siden"
+msgstr "%s dage siden"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s ended switch to |%s|!"
-msgstr "afsluttet skift til"
+msgstr "%s afsluttet skift til |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s foldere"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -165,71 +155,51 @@ msgid "%s groups to %s roles assignments"
 msgstr "%s grupper til %s rolle tildelinger"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "%s siden"
+msgstr "%s timer siden"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s er inaktiv. Vælg venligst en aktiv."
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "minutter"
+msgstr "%s minutter siden"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "%s siden"
+msgstr "%s måneder siden"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
-msgstr "%s Objekt(er) blev oprettet."
+msgstr "%s objekt(er) blev oprettet."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
-msgstr "%s Objekt(er) blev opdateret."
+msgstr "%s objekt(er) blev opdateret."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
-msgstr "%s Objekt(er) blev slettet."
+msgstr "%s objekt(er) blev slettet."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
-msgstr "%s Objekt(er) er oprettet."
+msgstr "%s objekt(er) er oprettet."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
-msgstr "%s Objekt(er) blev slettet."
+msgstr "%s objekt(er) blev slettet."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
-msgstr "%s Objekt(er) er opdateret/opdaterede."
+msgstr "%s objekt(er) er opdateret."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "%s af dine tickets er under behandling."
+msgstr "%s af mine tickets er under behandling."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -264,44 +234,32 @@ msgstr "%s skiftede til |%s|! "
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "asignar tickets"
+msgstr "%s tickets"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
-msgstr "oprettet artikel for"
+msgstr "%s opdateret artikel for |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
-msgstr "%s opdaterede gruppe |%s| "
+msgstr "%s opdaterede gruppe |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
-#, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
-msgstr "%s opdaterede Organisation |%s| "
+msgstr "%s opdaterede organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s opdaterede gruppe |%s| "
+msgstr "%s opdaterede gruppe |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
-#, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
-msgstr "%s opdateret Sag [%s]"
+msgstr "%s opdateret sag [%s]"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
@@ -317,24 +275,20 @@ msgid "%s user to %s user"
 msgstr "%s bruger til %s bruger"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "%s siden"
+msgstr "%s uger siden"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "%s siden"
+msgstr "%s år siden"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
-msgstr "Er i behandling"
+msgstr "%s% bliver i øjeblikket behandlet"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco
 msgid "%s% have been reopened"
-msgstr "%s% Er blevet genåbnet"
+msgstr "%s% er blevet genåbnet"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -372,48 +326,40 @@ msgid "1 day"
 msgstr "1 dag"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 dag"
+msgstr "1 dag siden"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
 msgstr "1 time"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 time"
+msgstr "1 time siden"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 lav"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minut"
+msgstr "1 minut siden"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "1 måned siden"
 
 #: db/seeds/settings.rb
 msgid "1 week"
 msgstr "1 uge"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 uge"
+msgstr "1 uge siden"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "1 år siden"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -460,7 +406,7 @@ msgstr ""
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
-msgstr ""
+msgstr "En URL ligner for eksempel dette: https://zammad.example.com"
 
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
@@ -480,20 +426,18 @@ msgstr ""
 "En ny version af Zammad er tilgængelig, genindlæs venligst din browser."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
-"En ny version af Zammad er tilgængelig, genindlæs venligst din browser."
+"En nyere version af appen er tilgængelig, genindlæs venligst din browser."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "A powerful service to get more information about your customers."
-msgstr ""
+msgstr "Et stærkt værktøj til at få flere informationer om dine kunder."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A queue is required!"
-msgstr ""
+msgstr "En kø er påkrævet!"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid ""
@@ -509,7 +453,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
-msgstr ""
+msgstr "En bruger er påkrævet!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -518,19 +462,19 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "API Nøgle"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
-msgstr ""
+msgstr "API Kodeord Adgang"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "API Token"
-msgstr ""
+msgstr "API Nøgle"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr ""
+msgstr "API Nøgle Adgang"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -542,7 +486,7 @@ msgstr "API nøgle"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 msgid "About"
-msgstr ""
+msgstr "Om"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -550,7 +494,7 @@ msgstr "Adgang til %s"
 
 #: db/seeds/permissions.rb
 msgid "Access to Agent Tickets based on Group Access"
-msgstr "Acceso a los tickets del agente basado en grupo de acceso"
+msgstr "Adgang til Agent Tickets baseret på Gruppe Adgang"
 
 #: db/seeds/permissions.rb
 msgid "Access to Customer Tickets based on current_user and organization"
@@ -728,7 +672,7 @@ msgstr "Tilføj Robot"
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Add Certificate"
-msgstr ""
+msgstr "Tilføj Certifikat"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Add Link"
@@ -777,10 +721,8 @@ msgid "Add first level heading"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
-msgstr "Tilføj tag"
+msgstr "Tilføj billede"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
@@ -12670,6 +12612,10 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "fra"
@@ -13069,6 +13015,12 @@ msgstr "fjernet"
 msgid "reply"
 msgstr "besvar"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
+msgstr "besvar"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -13234,7 +13186,7 @@ msgstr "i dag"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
-msgstr ""
+msgstr "prøv igen"
 
 #: db/seeds/ticket_article_types.rb
 msgid "twitter direct-message"

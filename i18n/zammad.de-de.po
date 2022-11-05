@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-20 19:14+0000\n"
+"PO-Revision-Date: 2022-11-03 12:10+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -1119,8 +1119,8 @@ msgid ""
 "Article could not be created. An unsupported key other than 'article.note' "
 "was provided."
 msgstr ""
-"Artikel konnte nicht erstellt werden. Es wurde ein anderer Typ als "
-"'article.note' angegeben."
+"Artikel konnte nicht erstellt werden. Es wurde ein anderer Typ als 'article."
+"note' angegeben."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 msgid "Article could not be deleted."
@@ -2503,8 +2503,8 @@ msgstr ""
 "\n"
 "Folgende Objekte sind verfügbar:\n"
 "* ticket (z.B. ticket.state, ticket.group)\n"
-"* ticket.customer (z.B. ticket.customer.firstname, ticket.customer.lastname)"
-"\n"
+"* ticket.customer (z.B. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
 "* ticket.owner (z.B. ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organization (z.B. ticket.organization.name)\n"
 "* user (z.B. user.firstname, user.email)\n"
@@ -2884,8 +2884,8 @@ msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
-"Definiert den Postmaster-Filter zur Prüfung ob Nachfragen erstellt werden ("
-"basierend auf den Admin-Einstellungen)."
+"Definiert den Postmaster-Filter zur Prüfung ob Nachfragen erstellt werden "
+"(basierend auf den Admin-Einstellungen)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
@@ -3228,8 +3228,8 @@ msgid ""
 "notification email, then ignore it to prevent email loops."
 msgstr ""
 "Definiert einen Postmaster-Filter zur Prüfung, ob die E-Mail eine "
-"selbsterstellte Benachrichtigung ist. In diesem Fall wird sie ignoriert, um E"
-"-Mail-Schleifen zu verhindern."
+"selbsterstellte Benachrichtigung ist. In diesem Fall wird sie ignoriert, um "
+"E-Mail-Schleifen zu verhindern."
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter to handle secure mailing."
@@ -4879,7 +4879,7 @@ msgstr "Vorname"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "First response"
-msgstr "Erste Reaktion"
+msgstr "Erstreaktion"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Fixed Email Accounts"
@@ -5533,8 +5533,8 @@ msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
-"Wie viele Ihrer Tickets kommen von E-Mail, Telefon, Twitter oder Facebook? ("
-"Zeigt Prozentsätze für eingehende und ausgehende Tickets an.)"
+"Wie viele Ihrer Tickets kommen von E-Mail, Telefon, Twitter oder Facebook? "
+"(Zeigt Prozentsätze für eingehende und ausgehende Tickets an.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee
 msgid ""
@@ -5683,7 +5683,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "If you want to translate it via the translation table, just go ahead below."
-msgstr "Im unteren Bereich können Sie die Übersetzungen in einer Liste pflegen."
+msgstr ""
+"Im unteren Bereich können Sie die Übersetzungen in einer Liste pflegen."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid ""
@@ -6189,7 +6190,7 @@ msgstr "Januar"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "Job is waiting to get started…"
-msgstr "Job wartet auf Ausführung…"
+msgstr "Aufgabe wartet auf Ausführung…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "John Smith"
@@ -6542,8 +6543,8 @@ msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
 msgstr ""
-"Anmeldung fehlgeschlagen. Haben Sie Ihre Anmeldedaten überprüft und den E"
-"-Mail-Verifizierungsschritt abgeschlossen?"
+"Anmeldung fehlgeschlagen. Haben Sie Ihre Anmeldedaten überprüft und den E-"
+"Mail-Verifizierungsschritt abgeschlossen?"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: db/seeds/settings.rb
@@ -7111,8 +7112,8 @@ msgid ""
 "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
 "header could be found."
 msgstr ""
-"Es konnte weder eine SSO-Umgebungsvariable 'REMOTE_USER' noch eine 'X"
-"-Forwarded-User'-Kopfzeile gefunden werden."
+"Es konnte weder eine SSO-Umgebungsvariable 'REMOTE_USER' noch eine 'X-"
+"Forwarded-User'-Kopfzeile gefunden werden."
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
 msgid "Network"
@@ -8141,8 +8142,8 @@ msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
 msgstr ""
-"Bitte aktivieren Sie die Funktion execution_time, um sie zu verwenden ("
-"derzeit nur für Trigger und Scheduler zulässig)"
+"Bitte aktivieren Sie die Funktion execution_time, um sie zu verwenden "
+"(derzeit nur für Trigger und Scheduler zulässig)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Please enter a text."
@@ -8637,7 +8638,7 @@ msgstr "Antwort"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
-msgstr "Fehlgeschlagene Jobs neustarten"
+msgstr "Fehlgeschlagene Aufgaben neustarten"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Restore Defaults"
@@ -8673,7 +8674,8 @@ msgstr "Rolle"
 
 #: app/assets/javascripts/app/controllers/_ui_element/user_permission.coffee
 msgid "Role %s is conflicting with role %s, do you want to continue?"
-msgstr "Die Rolle %s steht in Konflikt mit der Rolle %s, wollen Sie fortfahren?"
+msgstr ""
+"Die Rolle %s steht in Konflikt mit der Rolle %s, wollen Sie fortfahren?"
 
 #: app/assets/javascripts/app/controllers/role.coffee
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -9987,8 +9989,8 @@ msgid ""
 msgstr ""
 "Das Zertifikat der Domain |%s| konnte nicht verifiziert werden. Dies kann es "
 "Hackern ermöglichen Zugangsdaten zu stehlen. Wenn sicher ist, dass ein "
-"selbstsigniertes Zertifikat verwendet werden soll, kann es mit \"Fortfahren\""
-" weitergehen. Andernfalls bitte \"Abbrechen\"."
+"selbstsigniertes Zertifikat verwendet werden soll, kann es mit \"Fortfahren"
+"\" weitergehen. Andernfalls bitte \"Abbrechen\"."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -10302,7 +10304,8 @@ msgstr "Der erforderliche Parameter 'consumer_secret' fehlt."
 msgid ""
 "The required parameter 'crc_token' is missing from the Twitter verify "
 "payload!"
-msgstr "Das erforderliche Feld 'crc_token' fehlt im Twitter \"verify payload\"!"
+msgstr ""
+"Das erforderliche Feld 'crc_token' fehlt im Twitter \"verify payload\"!"
 
 #: app/models/ticket.rb
 msgid "The required parameter 'current_user_id' is missing."
@@ -11082,9 +11085,9 @@ msgid ""
 "To set up this service you need to create a new |\"Incoming webhook\"| in "
 "your %s integration panel and enter the webhook URL below."
 msgstr ""
-"Um diesen Service konfigurieren zu können muss ein neuer |\"Incoming "
-"webhook\"| in der %s Integrations-Oberfläche angelegt werden und hier "
-"unterhalb von Webhook-URL eingetragen werden."
+"Um diesen Service konfigurieren zu können muss ein neuer |\"Incoming webhook"
+"\"| in der %s Integrations-Oberfläche angelegt werden und hier unterhalb von "
+"Webhook-URL eingetragen werden."
 
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
@@ -11321,7 +11324,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "Aktualisierung"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Update Database"
@@ -12044,7 +12047,7 @@ msgstr "Wann Benachrichtigungen versendet werden."
 
 #: app/assets/javascripts/app/models/job.coffee
 msgid "When should the job run?"
-msgstr "Wann soll der Job laufen?"
+msgstr "Wann soll die Aufgabe ausgeführt werden?"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid ""
@@ -12143,8 +12146,8 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "Mit |Datum| werden die Ticketnummern mit dem aktuellen Datum, der SystemID "
-"und dem Zähler erstellt. Das Format ist \"Jahr.Monat.Tag.SystemID.Zähler\" ("
-"z. B. 201206231010138, 201206231010139)."
+"und dem Zähler erstellt. Das Format ist \"Jahr.Monat.Tag.SystemID.Zähler"
+"\" (z. B. 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -12930,6 +12933,10 @@ msgstr "befüllen mit (wenn leer)"
 msgid "for an agent to respond"
 msgstr "für einen Agenten zu reagieren"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr "weiterleiten"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "von"
@@ -13302,6 +13309,10 @@ msgstr "entfernt"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "antworten"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "reply all"
+msgstr "allen antworten"
 
 #: db/seeds/settings.rb
 msgid "right"

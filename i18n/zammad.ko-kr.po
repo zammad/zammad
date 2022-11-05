@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-13 03:30+0000\n"
+"PO-Revision-Date: 2022-11-03 12:10+0000\n"
 "Last-Translator: kim jy <elcidme@gmail.com>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ko/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "yyyy. m. d. HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " 에게 "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -101,14 +101,12 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
-msgstr "%s |에 대한 %s 생성 제 |"
+msgstr "%s 을 위해 만든 기사 |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr ""
+msgstr "%s 사용자 ID를 삭제하는 데이터 개인 정보 보호 태스크 생성 |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "%s created group |%s|"
@@ -147,7 +145,7 @@ msgstr "%에의 종료 스위치 |%s|!"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 msgid "%s folders"
-msgstr ""
+msgstr "%s 폴더"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
@@ -155,71 +153,51 @@ msgid "%s groups to %s roles assignments"
 msgstr "%s 역할 할당에 %s 그룹"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "%s 전"
+msgstr "%s 시간 전"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s 가 비활성 상태입니다. 활성 항목을 선택하십시오."
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "의사록"
+msgstr "%s 분전"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "%s 전"
+msgstr "%s 달전"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
 msgstr "%s 객체 (들)가 생성되었다."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
 msgstr "%s 객체 (들) 업데이트되었습니다."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
 msgstr "%s 객체 (들) 삭제되었습니다."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
-msgstr "%s 객체 (들)이 생성된다."
+msgstr "%s 개체가 생성됩니다."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
-msgstr "%s 객체 (들) 삭제되었습니다."
+msgstr "%s 객체 삭제되었습니다."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
-msgstr "%s 객체 (들) 업데이트됩니다."
+msgstr "%s 객체가 업데이트됩니다."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
-#, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
-msgstr "Ticket의 %s 현재 처리됩니다."
+msgstr "티켓의 %s 는 현재 진행 중입니다."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
@@ -233,7 +211,8 @@ msgstr "%s 사람들"
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
-msgstr ""
+msgstr "%s은(는) OAuth 사용을 권장합니다. %s은(는) 향후 기본 인증 지원을 중단할 "
+"것이라고 발표했습니다."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -246,7 +225,7 @@ msgstr "%s은 (는) 새로운 세션을 시작"
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s 서브도메인"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "%s switched to |%s|!"
@@ -254,10 +233,8 @@ msgstr "%s | %s는로 전환 |!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
-msgstr "Ticket을 할당"
+msgstr "%s Tickets"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
@@ -12979,6 +12956,10 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "...에서"
@@ -13380,6 +13361,12 @@ msgstr "삭제 완료"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "댓글"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "댓글"
 
 #: db/seeds/settings.rb

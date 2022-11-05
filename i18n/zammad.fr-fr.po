@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-20 19:14+0000\n"
-"Last-Translator: Gilbert Paquin <gilbertpaquin1995@gmail.com>\n"
+"PO-Revision-Date: 2022-11-03 12:10+0000\n"
+"Last-Translator: Raoul Schmitt <raoul.schmitt@tizoo.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -812,7 +812,7 @@ msgstr "Administrateur"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Consentement de l'administrateur"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -832,7 +832,7 @@ msgstr "Passer au ticket suivant de l'aperçu"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr ""
+msgstr "Après autorisation, merci de reconnecter votre messagerie Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2814,7 +2814,7 @@ msgstr "Décembre"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
-msgstr "Déchiffrement échoué !"
+msgstr "Echec du décryptage !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption was successful."
@@ -2845,7 +2845,7 @@ msgstr "Rôle par défaut à l'inscription"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
-msgstr "Définit le calendrier par défaut des souscriptions ticket"
+msgstr "Calendrier par défaut des souscriptions des tickets"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -2891,17 +2891,17 @@ msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
-"Défnit le filtre postmaster à vérifier quand un suivi est créé (basé sur les "
-"paramètres admin)."
+"Définit le filtre postmaster à vérifier quand un suivi est créé (basé sur "
+"les paramètres admin)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr ""
-"Défnit le filtre postmaster pour l'import des boites courriel d'archive."
+"Définit le filtre postmaster pour l'import des boites courriel d'archive."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr "Défnit le filtre postmaster."
+msgstr "Définit le filtre postmaster."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -2915,7 +2915,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Définit le nombre maximum de tickets affichés dans les aperçus."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -3527,6 +3527,9 @@ msgid ""
 "Defines the maximum number of allowed task bar tasks before auto cleanup "
 "removes surplus tasks when creating new tasks."
 msgstr ""
+"Définit le nombre maximum de tâches autorisées dans la barre de tâches avant "
+"que le nettoyage automatique ne supprime les tâches en trop lors de la "
+"création de nouvelles tâches."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6726,6 +6729,8 @@ msgstr "Nombre maximum d'échecs de connexion"
 msgid ""
 "Maximum number of allowed tasks before auto cleanup removes surplus tasks."
 msgstr ""
+"Nombre maximum de tâches autorisées avant que le nettoyage automatique ne "
+"supprime les tâches excédentaires."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
@@ -6733,7 +6738,7 @@ msgstr "Nombre maximum de déclencheurs exécutés récursivement."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Nombre maximum de tickets affichés dans les aperçus"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7332,7 +7337,7 @@ msgstr "Aucune catégorie"
 
 #: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
 msgid "No code for session found!"
-msgstr ""
+msgstr "Aucun code de session trouvé !"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "No configuration set."
@@ -12905,6 +12910,10 @@ msgstr "remplir de vide"
 msgid "for an agent to respond"
 msgstr "avant qu'un agent ne réponde"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "de"
@@ -13293,6 +13302,12 @@ msgstr "supprimé"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "Répondre"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "Répondre"
 
 #: db/seeds/settings.rb

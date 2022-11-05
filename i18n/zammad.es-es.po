@@ -8005,7 +8005,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Please click on the button below to create your first one."
-msgstr "Por favor, haga click en el botón de abajo para crear su primer ticket."
+msgstr ""
+"Por favor, haga click en el botón de abajo para crear su primer ticket."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #, fuzzy
@@ -12758,6 +12759,10 @@ msgstr "Rellenar vacío"
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "de"
@@ -13144,6 +13149,12 @@ msgstr "eliminado"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "responder"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "responder"
 
 #: db/seeds/settings.rb

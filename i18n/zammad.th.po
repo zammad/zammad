@@ -12343,6 +12343,10 @@ msgstr "เติมในช่องว่าง"
 msgid "for an agent to respond"
 msgstr "เพื่อให้ เจ้าหน้าที่ตอบกลับ"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "จาก"
@@ -12714,6 +12718,12 @@ msgstr "ลบแล้ว"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "ตอบกลับ"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "ตอบกลับ"
 
 #: db/seeds/settings.rb

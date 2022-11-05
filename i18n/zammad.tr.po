@@ -823,7 +823,8 @@ msgstr "Genel bakıştan sonraki bilete ilerleme"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr "Onayın ardından, lütfen Microsoft365 posta kutusuna tekrardan bağlanın."
+msgstr ""
+"Onayın ardından, lütfen Microsoft365 posta kutusuna tekrardan bağlanın."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -13119,6 +13120,10 @@ msgstr "boşluğu doldur"
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "from"
@@ -13520,6 +13525,12 @@ msgstr "kaldırıldı"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "Yanıtla"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "Yanıtla"
 
 #: db/seeds/settings.rb

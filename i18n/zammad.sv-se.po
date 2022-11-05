@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-22 03:30+0000\n"
+"PO-Revision-Date: 2022-11-05 01:39+0000\n"
 "Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -1435,7 +1435,7 @@ msgstr "Normala Inställningar"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Before you mention a user, please select a group."
-msgstr ""
+msgstr "Innan du nämner en användare, välj grupp"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Begin forwarded message"
@@ -5447,7 +5447,7 @@ msgstr "iCalendar-flöde med helgdagar"
 #: app/frontend/apps/mobile/modules/home/routes.ts
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 msgid "Home"
-msgstr ""
+msgstr "Hem"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -5471,14 +5471,14 @@ msgstr ""
 
 #: lib/email_helper/probe.rb
 msgid "Host not reachable!"
-msgstr ""
+msgstr "Kan ej nå värd!"
 
 #: app/controllers/import_freshdesk_controller.rb
 #: app/controllers/import_kayako_controller.rb
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "Hostname not found!"
-msgstr ""
+msgstr "Värdnamnet hittades inte!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
@@ -5493,10 +5493,8 @@ msgid "Hours"
 msgstr "Timmar"
 
 #: app/views/layouts/knowledge_base.html.erb
-#, fuzzy
-#| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
-msgstr "Hur kan vi hjälpa dig? Sök efter ett svar eller ett ämne ..."
+msgstr "Vad vill du ha hjälp med? Sök efter ett svar eller ett ämne…"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 #, fuzzy
@@ -13091,6 +13089,10 @@ msgstr "tomt"
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "från"
@@ -13492,6 +13494,12 @@ msgstr "borttagen"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/telegram.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
+msgstr "svara"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
 msgstr "svara"
 
 #: db/seeds/settings.rb

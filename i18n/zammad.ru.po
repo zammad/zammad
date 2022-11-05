@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-29 03:30+0000\n"
-"Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
+"PO-Revision-Date: 2022-11-03 12:10+0000\n"
+"Last-Translator: xXxLeVIaFaNxXx <sakovalev@polyplast-nm.ru>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -813,7 +813,7 @@ msgstr "Администратор"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Согласие администратора"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -834,6 +834,8 @@ msgstr "Перейти к следующей заявке из представ�
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
+"После утверждения, пожалуйста, повторно подключите свой почтовый ящик "
+"Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2905,7 +2907,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Укажите максимальное количество заявок, отображаемых в представлениях."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -3520,6 +3522,8 @@ msgid ""
 "Defines the maximum number of allowed task bar tasks before auto cleanup "
 "removes surplus tasks when creating new tasks."
 msgstr ""
+"Определяет максимальное количество разрешенных задач на панели задач, прежде "
+"чем автоматическая очистка удалит лишние задачи при создании новых задач."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6720,6 +6724,8 @@ msgstr "Максимальное количество неудачных поп�
 msgid ""
 "Maximum number of allowed tasks before auto cleanup removes surplus tasks."
 msgstr ""
+"Максимальное количество разрешенных задач прежде чем автоматическая очистка "
+"удалит избыточные задачи."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of recursively executed triggers."
@@ -6727,7 +6733,7 @@ msgstr "Максимальное количество рекурсивно вы�
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Максимальное количество заявок, отображаемых в представлении"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -8187,6 +8193,8 @@ msgstr "Пожалуйста, введите свой новый пароль!"
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
+"Пожалуйста, подождите, пока вы не получите уведомление об утверждении по "
+"электронной почте."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
@@ -8567,10 +8575,8 @@ msgid "Request"
 msgstr "Запрос"
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-#, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
-msgstr "Запрос подтверждения выдачи прав"
+msgstr "Запрос согласия администратора"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
@@ -8947,16 +8953,12 @@ msgid "Secondary organizations"
 msgstr "Вторичные организации"
 
 #: app/models/user.rb
-#, fuzzy
-#| msgid ""
-#| "Secondary organizations are only allowed when the primary organization is "
-#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "not given."
 msgstr ""
-"Вторичные организации разрешены только в том случае, если указана первичная "
-"организация."
+"Вторичные организации разрешены только в том случае, если не указана "
+"первичная организация."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
@@ -9950,11 +9952,8 @@ msgid "The active reporting profile could not be found."
 msgstr "Не удалось найти активный профиль отчетности."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
-msgstr ""
-"Не удалось установить пароль. Пожалуйста, свяжитесь с вашим администратором."
+msgstr "Запрос на согласование был отправлен вашему администратору."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12934,6 +12933,10 @@ msgstr "заполнить пустой"
 msgid "for an agent to respond"
 msgstr "чтобы агент ответил"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr "вперед"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "от"
@@ -13306,6 +13309,10 @@ msgstr "удаленная"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "reply"
 msgstr "Ответить"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "reply all"
+msgstr "Ответить всем"
 
 #: db/seeds/settings.rb
 msgid "right"
