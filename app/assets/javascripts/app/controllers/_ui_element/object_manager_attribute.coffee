@@ -93,6 +93,9 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item
 
   @dataScreens: (attribute, localParams, params) ->
+    # TODO: find a better place for these translation markers, since they are used only in keys below!
+    #   __('shown')
+    #   __('required')
     object = params.object
     objects =
       Ticket:
@@ -232,7 +235,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     )
     configureAttributes = [
       # coffeelint: disable=no_interpolation_in_single_quotes
-      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: 'https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object' },
+      { name: 'data_option::linktemplate', display: __('Link Template'), tag: 'input', type: 'text', null: true, default: '', placeholder: __('https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object') },
       # coffeelint: enable=no_interpolation_in_single_quotes
     ]
     inputLinkTemplate = new App.ControllerForm(

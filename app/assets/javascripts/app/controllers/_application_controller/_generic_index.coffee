@@ -114,7 +114,7 @@ class App.ControllerGenericIndex extends App.Controller
 
       # show description in content if no no content exists
       if _.isEmpty(objects) && App[ @genericObject ].description
-        description = marked(App[ @genericObject ].description)
+        description = marked(App.i18n.translateContent(App[ @genericObject ].description))
         @$('.table-overview').html(description)
         return
 

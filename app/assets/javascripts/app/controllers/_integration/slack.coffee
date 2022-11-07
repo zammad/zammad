@@ -19,14 +19,14 @@ class Slack extends App.ControllerIntegrationBase
       params = params.items[0] || {}
 
     options =
-      create: '1. Ticket Create'
-      update: '2. Ticket Update'
-      reminder_reached: '3. Ticket Reminder Reached'
-      escalation: '4. Ticket Escalation'
-      escalation_warning: '5. Ticket Escalation Warning'
+      create: __('1. Ticket Create')
+      update: __('2. Ticket Update')
+      reminder_reached: __('3. Ticket Reminder Reached')
+      escalation: __('4. Ticket Escalation')
+      escalation_warning: __('5. Ticket Escalation Warning')
 
     configureAttributes = [
-      { name: 'types',     display: __('Trigger'),  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: __('When notification is being sent.') },
+      { name: 'types',     display: __('Trigger'),  tag: 'checkbox', options: options, translate: true, 'null': false, class: 'vertical', note: __('When notification is being sent.') },
       { name: 'group_ids', display: __('Group'),    tag: 'select', relation: 'Group', multiple: true, 'null': false, class: 'form-control--small', note: __('Only for these groups.') },
       { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, class: 'form-control--small', placeholder: 'https://hooks.slack.com/services/...' },
       { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, class: 'form-control--small', placeholder: 'username' },

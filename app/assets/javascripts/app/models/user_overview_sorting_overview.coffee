@@ -1,7 +1,7 @@
 class App.UserOverviewSortingOverview extends App.Model
   @configure 'UserOverviewSortingOverview', 'name'
   @configure_attributes = [
-    { name: 'name', display: __('Name'), tag: 'input', type: 'text', null: false },
+    { name: 'name', display: __('Name'), tag: 'input', type: 'text', translate: true, null: false },
   ]
   @configure_overview = [
     'name',

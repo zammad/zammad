@@ -92,6 +92,10 @@ msgstr ""
 msgid "#{config.product_name} login from a new device\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you logged into your account <b>using a new device</b> on \"#{user_device.created_at}\":</div>\n<br>\n<div>\nYour device: #{user_device.name}<br>\nYour location (relative): #{user_device.location}<br>\nYour IP: #{user_device.ip}<br>\n</div>\n<br>\n<div>Your device has been added to your list of known devices, which you can view here:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n<br>\n<div>If this wasn't you, please remove the device, change your account password, and contact your administrator. Somebody might have gained unauthorized access to your account.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+msgid "%s (confirm)"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -396,6 +400,10 @@ msgstr ""
 msgid "1 year ago"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "1. Ticket Create"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr ""
@@ -412,6 +420,10 @@ msgstr ""
 msgid "2 weeks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "2. Ticket Update"
+msgstr ""
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr ""
@@ -420,8 +432,20 @@ msgstr ""
 msgid "3 weeks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "3. Ticket Reminder Reached"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "4. Ticket Escalation"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "5. Ticket Escalation Warning"
 msgstr ""
 
 #: public/assets/chat/chat-no-jquery.coffee
@@ -1894,6 +1918,10 @@ msgstr ""
 msgid "Chat ID"
 msgstr ""
 
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+msgid "Chat Session"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
 msgstr ""
@@ -2050,10 +2078,12 @@ msgid "Click here"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr ""
@@ -3518,6 +3548,10 @@ msgstr ""
 msgid "Designer"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4362,12 +4396,20 @@ msgstr ""
 msgid "Facebook"
 msgstr ""
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+msgid "Facebook APP ID"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
+msgstr ""
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+msgid "Facebook App Secret"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -4672,6 +4714,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -4829,6 +4872,14 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
+msgstr ""
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+msgid "Google Client ID"
+msgstr ""
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+msgid "Google Client Secret"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5889,6 +5940,10 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
 msgstr ""
@@ -6362,6 +6417,7 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr ""
@@ -7118,6 +7174,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
+msgstr ""
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
@@ -9432,6 +9492,10 @@ msgstr ""
 msgid "Templates"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+msgid "Tenant UUID/Name"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr ""
@@ -10562,6 +10626,7 @@ msgstr ""
 msgid "Tickets with \"%s\""
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -10827,12 +10892,32 @@ msgstr ""
 msgid "Twitter - tweet initials"
 msgstr ""
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Access Token"
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Access Token Secret"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Consumer Key"
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Consumer Secret"
+msgstr ""
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -12354,6 +12439,10 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "https://example.com/?q=#{object.attribute_name} - use ticket, user or organization as object"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 msgid "i-doit"
@@ -12762,6 +12851,10 @@ msgstr ""
 msgid "reply all"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "required"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -12823,6 +12916,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "shown"
 msgstr ""
 
 #: db/seeds/settings.rb

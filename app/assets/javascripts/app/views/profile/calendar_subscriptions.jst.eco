@@ -43,7 +43,7 @@
       <% for stateType, options of @preferences: %>
         <% if _.isObject(options): %>
           <tr>
-            <td style="text-transform: capitalize">
+            <td>
               <%= @translationTable[stateType] %>
             <td>
               <label class="inline-label checkbox-replacement">

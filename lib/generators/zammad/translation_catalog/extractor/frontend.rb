@@ -39,7 +39,7 @@ class Zammad::TranslationCatalog::Extractor::Frontend < Zammad::TranslationCatal
     files = []
 
     ['app/assets/**', 'public/assets/{chat,chat/views,form}'].each do |dir|
-      files += Dir.glob("#{base_path}/#{dir}/*.{js,eco,coffee}").reject { |f| f.include?('layout_ref') }
+      files += Dir.glob("#{base_path}/#{dir}/*.{js,eco,coffee}").reject { |f| f.include?('layout_ref') && !f.end_with?('layout_ref.coffee') }
     end
 
     files += Dir.glob("#{base_path}/app/frontend/{apps,shared}/**/*.{ts,vue}").reject { |f| f.include? '/__tests__/' }

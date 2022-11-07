@@ -55,9 +55,8 @@ curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn')
 <br>
 
 <div>
-OAuth URLs are:
-
   <table class="settings-list" style="width: 100%;">
+    <caption><%- @T('OAuth URLs are:') %></caption>
     <thead>
       <tr>
         <th width="40%"><%- @T('Action') %>

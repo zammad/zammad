@@ -1,6 +1,6 @@
 <div class="main flex">
 
-  <h1>Layout Reference</h1>
+  <h1><%- @T('Layout Reference') %></h1>
 
   <ul>
     <li><a href="#layout_ref/kb_link_answer_to_answer"><%- @Icon('knowledge-base-answer') %> Knowledge Base: Link from Answer to Answer</a></li>

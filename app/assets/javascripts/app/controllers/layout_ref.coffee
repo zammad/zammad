@@ -1364,7 +1364,7 @@ class SlaRef extends App.ControllerAppContent
       head: 'Service Level Agreement (SLA)'
       headPrefox: 'New'
       contentInline: App.view('layout_ref/sla_modal')()
-      buttonSubmit: __('Create SLA')
+      buttonSubmit: 'Create SLA'
       shown: true
       buttonCancel: true
       container: @el
@@ -1403,7 +1403,7 @@ class SchedulersRef extends App.ControllerAppContent
     new App.ControllerModal
       head: 'Scheduler'
       headPrefix: 'New'
-      buttonSubmit: __('Create')
+      buttonSubmit: 'Create'
       buttonCancel: true
       contentInline: App.view('layout_ref/scheduler_modal')()
       shown: true
@@ -1473,7 +1473,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'project-name'
         id:          'project-name-123'
-        placeholder: __('Enter Project Name')
+        placeholder: 'Enter Project Name'
         options:     [{value:0,name:'Apple',selected:true},
         {value:1,name:'Microsoft',selected:true},
         {value:2,name:'Google'},
@@ -1500,7 +1500,7 @@ class InputsRef extends App.ControllerAppContent
       attribute:
         name:        'user'
         id:          'user-123'
-        placeholder: __('Enter User')
+        placeholder: 'Enter User'
         limt:        10
         relation:    'User'
 
@@ -1510,7 +1510,7 @@ class InputsRef extends App.ControllerAppContent
     userOrganizationAutocomplete = new App.UserOrganizationAutocompletion
       attribute:
         name: 'customer_id'
-        display: __('Customer')
+        display: 'Customer'
         tag: 'user_autocompletion'
         type: 'text'
         limit: 200
@@ -1739,7 +1739,7 @@ class MergeCustomerRef extends App.ControllerAppContent
       head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
       headPrefix: 'Merge'
       contentInline: App.view('layout_ref/merge_customer')()
-      buttonSubmit: __('Merge')
+      buttonSubmit: 'Merge'
       buttonCancel: true
       container: @el
 
@@ -2407,14 +2407,14 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::title'
             model: 'translation'
-            display: __('Title')
+            display: 'Title'
             tag: 'input'
             grid_width: '1/2'
           }
           {
             name: 'category_id'
             model: 'answer'
-            display: __('Category')
+            display: 'Category'
             tag: 'select'
             null: true
             options: [
@@ -2432,7 +2432,7 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
           {
             name: 'translation::content::body'
             model: 'translation'
-            display: __('Content')
+            display: 'Content'
             tag: 'richtext'
             buttons: [
               'link'
@@ -2443,4 +2443,4 @@ class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
     )
 
 App.Config.set('layout_ref/kb_link_answer_to_answer', KnowledgeBaseLinkAnswerToAnswerRef, 'Routes')
-App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ], setting: ['developer_mode'] }, 'NavBarRight')
+App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: __('Layout Reference'), translate: true, target: '#layout_ref', permission: [ 'admin' ], setting: ['developer_mode'] }, 'NavBarRight')

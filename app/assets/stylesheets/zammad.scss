@@ -10770,6 +10770,10 @@ output {
   table-layout: auto;
   margin-bottom: 20px;
 
+  & > caption {
+    color: var(--text-normal);
+  }
+
   &.is-invalid {
     border-radius: 3px;
     box-shadow: 0 0 0 2px var(--background-primary), 0 0 0 4px hsl(0, 90%, 70%);
@@ -11332,9 +11336,9 @@ output {
     border: 1px solid var(--border-alt);
     align-self: flex-start;
     padding: 5px 10px;
-    margin: -4px -25px -5px auto;
+    margin: -4px 0 -5px auto;
 
-    @include rtl(margin, -4px auto -5px -25px);
+    @include rtl(margin, -4px auto -5px 0);
 
     color: var(--text-muted-alt);
     cursor: default;

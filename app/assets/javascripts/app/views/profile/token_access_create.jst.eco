@@ -21,7 +21,7 @@
       <%- @Icon('checkbox', 'icon-unchecked') %>
       <%- @Icon('checkbox-checked', 'icon-checked') %>
       <span class="label-text"><%= permission.name %></span>
-      <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span>
+      <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
     </label>
     <% else: %>
       <div class="checkbox-child js-subPermissionList">
@@ -30,7 +30,7 @@
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
           <span class="label-text"><%= permission.name.replace(/^.+?\./, '') %></span>
-          <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span>
+          <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
         </label>
       </div>
     <% end %>

@@ -18,6 +18,8 @@ class App.ChatSession extends App.Model
     'created_at',
   ]
 
+  @display_name = __('Chat Session')
+
   uiUrl: ->
     "#customer_chat/session/#{@id}"
 

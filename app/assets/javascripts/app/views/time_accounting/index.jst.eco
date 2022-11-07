@@ -31,7 +31,7 @@
 
       <div class="btn-group btn-group--full" role="group" aria-label="">
         <% for item in @timeRangeMonth: %>
-          <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+          <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= @T(item.display) %></div>
         <% end %>
       </div>
     </div>

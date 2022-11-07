@@ -130,7 +130,7 @@ class App.ControllerForm extends App.Controller
 
         # rename display and name to _confirm
         if !attribute.single
-          attribute.display = attribute.display + ' (confirm)'
+          attribute.display = App.i18n.translateContent('%s (confirm)', App.i18n.translateContent(attribute.display))
           attribute.name = attribute.name + '_confirm'
           item = @formGenItem(attribute, @idPrefix, fieldset, attributeCount)
           item.appendTo(fieldset)

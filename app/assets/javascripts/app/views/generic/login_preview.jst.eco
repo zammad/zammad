@@ -6,7 +6,13 @@
 
     <% if !@logoChange || @C('maintenance_login'): %>
     <form>
-      <div contenteditable="true" id="maintenance-message" data-name="message" class="hero-unit alert alert--success js-textarea js-Login" <% if !@C('maintenance_login'): %>style="opacity: 0.5;"<% end %>><%- @C('maintenance_login_message') %></div>
+      <div contenteditable="true" id="maintenance-message" data-name="message" class="hero-unit alert alert--success js-textarea js-Login" <% if !@C('maintenance_login'): %>style="opacity: 0.5;"<% end %>>
+      <% if @C('maintenance_login_message') is 'This is a default maintenance message. Click here to change.': %>
+        <%- @T(@C('maintenance_login_message')) %>
+      <% else: %>
+        <%- @C('maintenance_login_message') %>
+      <% end %>
+      </div>
     </form>
     <% end %>
   <% end %>

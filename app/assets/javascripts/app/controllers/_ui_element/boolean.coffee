@@ -11,6 +11,11 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
       ]
       attribute.translate = true
 
+    # Turn on option translation if the list contains expected labels.
+    else if _.isObject(attribute.options) and _.every(_.values(attribute.options), (value) -> /^(yes|no)$/i.test(value)) or
+            _.isArray(attribute.options) and _.every(attribute.options, (option) -> /^(yes|no)$/i.test(option.value))
+      attribute.translate = true
+
     # build options list based on config
     @getConfigOptionList(attribute, params)
 

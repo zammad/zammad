@@ -35,7 +35,7 @@ class Sla extends App.ControllerSubContent
       if !_.isEmpty(slas)
         showDescription = true
       else
-        description = marked(App.Sla.description)
+        description = marked(App.i18n.translateContent(App.Sla.description))
 
     @html App.view('sla/index')(
       slas:            slas
