@@ -7,10 +7,8 @@
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
     TZ: "Europe/Berlin"       # Required for the zammad-ci-otrsimport-app containers
   services:
-    - name: $CI_REGISTRY/docker/zammad-postgresql:stable
-      alias: postgresql
-    - name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
-      alias: selenium-chrome
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
