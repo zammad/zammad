@@ -4,7 +4,9 @@ module HasSearchIndexBackend
   extend ActiveSupport::Concern
 
   included do
-    after_commit  :search_index_update, if: :persisted?
+    after_create  :search_index_update
+    after_update  :search_index_update
+    after_touch   :search_index_update_touch
     after_destroy :search_index_destroy
   end
 
@@ -23,10 +25,29 @@ update search index, if configured - will be executed automatically
     # start background job to transfer data to search index
     return true if !SearchIndexBackend.enabled?
 
-    return true if previous_changes.blank?
+    return true if saved_changes.blank?
 
     SearchIndexJob.perform_later(self.class.to_s, id)
     SearchIndexAssociationsJob.perform_later(self.class.to_s, id)
+    true
+  end
+
+=begin
+
+update search index, if configured - will be executed automatically
+
+  model = Model.find(123)
+  model.search_index_update_touch
+
+=end
+
+  def search_index_update_touch
+    return true if ignore_search_indexing?(:update)
+
+    # start background job to transfer data to search index
+    return true if !SearchIndexBackend.enabled?
+
+    SearchIndexJob.perform_later(self.class.to_s, id)
     true
   end
 
