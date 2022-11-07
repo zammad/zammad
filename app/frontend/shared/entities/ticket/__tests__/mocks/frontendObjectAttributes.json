@@ -19,6 +19,31 @@
       }
     },
     {
+      "name": "customer_id",
+      "display": "Customer",
+      "dataType": "user_autocompletion",
+      "dataOption": {
+        "relation": "User",
+        "autocapitalize": false,
+        "multiple": false,
+        "guess": true,
+        "null": false,
+        "limit": 200,
+        "placeholder": "Enter Person or Organization/Company",
+        "minLengt": 2,
+        "translate": false,
+        "permission": ["ticket.agent"],
+        "belongs_to": "customer"
+      },
+      "screens": {
+        "create_top": {
+          "null": false
+        },
+        "edit": {}
+      },
+      "isInternal": true
+    },
+    {
       "name": "organization_id",
       "display": "Organization",
       "dataType": "autocompletion_ajax_customer_organization",

@@ -55,6 +55,7 @@ describe('FieldResolverTreeselect', () => {
         ],
       },
       type: 'treeselect',
+      internal: true,
     })
   })
 })

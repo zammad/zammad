@@ -23,6 +23,7 @@ describe('FieldResovlerInput', () => {
         maxlength: 100,
       },
       type: 'text',
+      internal: true,
     })
   })
 })

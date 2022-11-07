@@ -27,7 +27,7 @@ export class FieldResolverAutocompletion extends FieldResolver {
     return {
       props: {
         belongsToObjectField: camelize(
-          this.attributeConfig.belongs_to as string,
+          (this.attributeConfig.belongs_to as string) || '',
         ),
         multiple: this.attributeConfig.multiple,
       },

@@ -20,6 +20,7 @@ describe('FieldResolverTag', () => {
       required: false,
       props: {},
       type: 'tag',
+      internal: true,
     })
   })
 })

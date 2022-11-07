@@ -31,6 +31,7 @@ describe('FieldResolverBoolean', () => {
         ],
       },
       type: 'select',
+      internal: true,
     })
   })
 })

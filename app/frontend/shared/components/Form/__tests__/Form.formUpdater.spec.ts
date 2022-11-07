@@ -1152,4 +1152,41 @@ describe('Form.vue - Form Updater - special situtations', () => {
       })
     })
   })
+
+  test('usage together with changeFields prop (fixed required field from frontend side)', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm(
+      [
+        {
+          formUpdater: {
+            example: {
+              required: false,
+            },
+          },
+        },
+        {
+          formUpdater: {
+            example: {
+              required: false,
+            },
+          },
+        },
+      ],
+      {
+        props: {
+          changeFields: {
+            example: {
+              required: true,
+            },
+          },
+        },
+      },
+    )
+
+    checkFieldRequired(wrapper, 'Example', true)
+
+    await selectValue(wrapper, 'Type', 'Incident')
+    await waitUntil(() => mockFormUpdaterApi.calls.resolve === 2)
+
+    checkFieldRequired(wrapper, 'Example', true)
+  })
 })

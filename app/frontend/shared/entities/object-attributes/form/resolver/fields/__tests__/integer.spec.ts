@@ -24,6 +24,7 @@ describe('FieldResovlerInput', () => {
         max: 100,
       },
       type: 'number',
+      internal: true,
     })
   })
 })

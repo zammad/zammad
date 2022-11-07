@@ -20,6 +20,7 @@ describe('FieldResolverDate', () => {
       required: false,
       props: {},
       type: 'date',
+      internal: true,
     })
   })
 })

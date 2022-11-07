@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { reactive } from 'vue'
 import { useDialogObjectForm } from '@mobile/components/CommonDialogObjectForm/useDialogObjectForm'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import type { OrganizationQuery } from '@shared/graphql/types'
+import type { FormSchemaField } from '@shared/components/Form/types'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -39,10 +41,26 @@ export const useOrganizationEdit = () => {
   const openEditOrganizationDialog = async (
     organization: ConfidentTake<OrganizationQuery, 'organization'>,
   ) => {
+    const formChangeFields = reactive<Record<string, Partial<FormSchemaField>>>(
+      {
+        domain: {
+          required: !!organization.domainAssignment,
+        },
+      },
+    )
+
     dialog.openDialog({
       object: organization,
       schema,
       mutation,
+      formChangeFields,
+      onChangedField: (fieldName, newValue) => {
+        if (fieldName === 'domain_assignment') {
+          // TODO: Can be changed when we have the new toggle field (currently the value can also be a string).
+          formChangeFields.domain.required =
+            (typeof newValue === 'boolean' && newValue) || newValue === 'true'
+        }
+      },
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterOrganizationEdit,
       errorNotificationMessage: __('Organization could not be updated.'),
     })

@@ -9,7 +9,6 @@ import {
   EnumObjectManagerObjects,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
-import { edgesToArray } from '@shared/utils/helpers'
 
 export const useUserEdit = () => {
   const dialog = useDialogObjectForm('user-edit', EnumObjectManagerObjects.User)
@@ -30,13 +29,7 @@ export const useUserEdit = () => {
 
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
     dialog.openDialog({
-      object: {
-        ...user,
-        organization_id: user.organization?.internalId,
-        organization_ids: edgesToArray(user.secondaryOrganizations).map(
-          (item) => item.internalId,
-        ),
-      },
+      object: user,
       mutation,
       schema,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,

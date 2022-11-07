@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { isEqual, cloneDeep } from 'lodash-es'
+import { isEqual, cloneDeep, merge } from 'lodash-es'
 import type { ConcreteComponent, Ref } from 'vue'
 import {
   computed,
@@ -31,6 +31,7 @@ import type { Stoppable } from '@vueuse/shared'
 import { useTimeoutFn, watchOnce } from '@vueuse/shared'
 import getUuid from '@shared/utils/getUuid'
 import log from '@shared/utils/log'
+import { camelize } from '@shared/utils/formatter'
 import UserError from '@shared/errors/UserError'
 import type {
   EnumObjectManagerObjects,
@@ -43,6 +44,7 @@ import { QueryHandler } from '@shared/server/apollo/handler'
 import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
 import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
 import testFlags from '@shared/utils/testFlags'
+import { edgesToArray } from '@shared/utils/helpers'
 import type { FormUpdaterTrigger } from '@shared/types/form'
 import type { ObjectLike } from '@shared/types/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
@@ -69,7 +71,6 @@ export interface Props {
   id?: string
   schema?: FormSchemaNode[]
   formUpdaterId?: EnumFormUpdaterId
-  // TODO: Add possibility to have an "initial" changeFields as a combination with the the formUpdater...
   changeFields?: Record<string, Partial<FormSchemaField>>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
@@ -128,7 +129,12 @@ if (!hasSchema.value) {
 const localClass = toRef(props, 'class')
 
 const emit = defineEmits<{
-  (e: 'changed', newValue: unknown, fieldName: string): void
+  (
+    e: 'changed',
+    fieldName: string,
+    newValue: FormFieldValue,
+    oldValue: FormFieldValue,
+  ): void
   (e: 'node', node: FormKitNode): void
   (e: 'settled'): void
 }>()
@@ -201,6 +207,7 @@ const values = computed<FormValues>(() => {
 })
 
 const relationFields: FormUpdaterRelationField[] = []
+const relationFieldBelongsToObjectField: Record<string, string> = {}
 
 const formUpdaterProcessing = computed(
   () => formNode.value?.context?.state.formUpdaterProcessing || false,
@@ -284,29 +291,60 @@ const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
 })
 
-const lookupSchemaFieldNames = computed(() => {
-  if (staticSchema.value.length === 0) return []
+const internalFieldCamelizeName: Record<string, string> = {}
 
-  return Object.keys(schemaData.fields) || []
-})
+const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
+  if (!props.initialEntityObject) return undefined
 
-const localInitialValues = computed<Maybe<FormValues>>(() => {
-  if (props.initialValues) return props.initialValues
+  let value: FormFieldValue
+  if (relationFieldBelongsToObjectField[fieldName]) {
+    const belongsToObject =
+      props.initialEntityObject[relationFieldBelongsToObjectField[fieldName]]
 
-  if (props.initialEntityObject) {
-    const { initialEntityObject } = props
-
-    return lookupSchemaFieldNames.value.reduce(
-      (initialValues: FormValues, fieldName) => {
-        initialValues[fieldName] = initialEntityObject[fieldName]
-        return initialValues
-      },
-      {},
-    )
+    if ('edges' in belongsToObject) {
+      value = edgesToArray(
+        belongsToObject as { edges?: { node: { internalId: number } }[] },
+      ).map((item) => item.internalId)
+    } else {
+      value = belongsToObject?.internalId
+    }
   }
 
-  return null
-})
+  if (!value) {
+    value =
+      props.initialEntityObject[
+        internalFieldCamelizeName[fieldName] || fieldName
+      ]
+  }
+
+  return value
+}
+
+const localInitialValues: FormValues = props.initialValues || {}
+
+const initializeFieldRelation = (
+  fieldName: string,
+  relation: FormSchemaField['relation'],
+  belongsToObjectField?: string,
+) => {
+  if (relation) {
+    relationFields.push({
+      name: fieldName,
+      relation: relation.type,
+      filterIds: relation.filterIds,
+    })
+  }
+
+  if (belongsToObjectField) {
+    relationFieldBelongsToObjectField[fieldName] = belongsToObjectField
+  }
+}
+
+const setInternalField = (fieldName: string, internal: boolean) => {
+  if (!internal) return
+
+  internalFieldCamelizeName[fieldName] = camelize(fieldName)
+}
 
 const updateSchemaDataField = (
   field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
@@ -337,20 +375,26 @@ const updateSchemaDataField = (
       ),
     }
   } else {
-    if (relation) {
-      relationFields.push({
-        name: field.name,
-        relation: relation.type,
-        filterIds: relation.filterIds,
-      })
-    }
+    initializeFieldRelation(
+      field.name,
+      relation,
+      specificProps?.belongsToObjectField,
+    )
+
+    setInternalField(field.name, Boolean(fieldProps.internal))
 
     const combinedFieldProps = Object.assign(fieldProps, specificProps)
 
+    // Select the correct initial value (at this time localInitialValues has not already the information
+    // from the initial entity object, so we need to check it manually).
     combinedFieldProps.value =
-      localInitialValues.value?.[field.name] ??
-      props.initialEntityObject?.[field.name] ??
+      localInitialValues[field.name] ??
+      getInitialEntityObjectValue(field.name) ??
       combinedFieldProps.value
+
+    // Save current initial value for later usage, when not already exists.
+    if (!(field.name in localInitialValues))
+      localInitialValues[field.name] = combinedFieldProps.value
 
     schemaData.fields[field.name] = {
       show: showField,
@@ -488,7 +532,7 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       )
     }
 
-    emit('changed', newValue, node.name)
+    emit('changed', node.name, newValue, oldValue)
 
     previousValues.set(node, cloneDeep(newValue))
     updaterChangedFields.delete(node.name)
@@ -654,7 +698,7 @@ const initializeFormSchema = () => {
     formUpdaterVariables.value = markRaw({
       id: props.initialEntityObject?.id,
       formUpdaterId: props.formUpdaterId,
-      data: localInitialValues.value || {},
+      data: localInitialValues,
       meta: {
         initial: true,
         formId,
@@ -673,12 +717,18 @@ const initializeFormSchema = () => {
 
     formUpdaterQueryHandler.watchOnResult((queryResult) => {
       if (queryResult?.formUpdater) {
-        updateChangedFields(queryResult.formUpdater)
+        updateChangedFields(
+          props.changeFields
+            ? merge(queryResult.formUpdater, props.changeFields)
+            : queryResult.formUpdater,
+        )
       }
 
       if (!formSchemaInitialized.value) formSchemaInitialized.value = true
     })
   } else {
+    if (props.changeFields) updateChangedFields(props.changeFields)
+
     formSchemaInitialized.value = true
   }
 }

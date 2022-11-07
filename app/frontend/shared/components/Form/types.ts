@@ -16,6 +16,7 @@ import type { EnumObjectManagerObjects } from '@shared/graphql/types'
 import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
 
 export interface FormFieldAdditionalProps {
+  belongsToObjectField?: string
   [index: string]: unknown
 }
 
@@ -46,8 +47,10 @@ export interface FormSchemaField {
   triggerFormUpdater?: boolean
   type: string
   name: string
+  internal?: boolean
   value?: FormFieldValue
   label?: string
+  labelPlaceholder?: string
   placeholder?: string
   help?: string
   disabled?: boolean

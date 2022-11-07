@@ -20,6 +20,7 @@ describe('FieldResolverRichtext', () => {
       required: false,
       props: {},
       type: 'editor',
+      internal: true,
     })
   })
 })

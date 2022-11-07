@@ -23,6 +23,7 @@ const expectedFieldSchemaBase = {
     maxlength: 100,
   },
   type: 'text',
+  internal: true,
 }
 
 describe('object attribute correctly resolved as field schema', () => {

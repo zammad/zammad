@@ -14,6 +14,10 @@ import type {
   EnumObjectManagerObjects,
   ObjectAttributeValue,
 } from '@shared/graphql/types'
+import type {
+  FormFieldValue,
+  FormSchemaField,
+} from '@shared/components/Form/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { ObjectLike } from '@shared/types/utils'
 import Form from '@shared/components/Form/Form.vue'
@@ -26,6 +30,7 @@ export interface Props {
   object?: ObjectLike
   type: EnumObjectManagerObjects
   formUpdaterId?: EnumFormUpdaterId
+  formChangeFields?: Record<string, Partial<FormSchemaField>>
   errorNotificationMessage?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mutation: UseMutationReturn<any, any>
@@ -36,6 +41,12 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'success', data: unknown): void
   (e: 'error'): void
+  (
+    e: 'changedField',
+    fieldName: string,
+    newValue: FormFieldValue,
+    oldValue: FormFieldValue,
+  ): void
 }>()
 
 const updateQuery = new MutationHandler(props.mutation, {
@@ -70,6 +81,14 @@ const cancelDialog = async () => {
   }
 
   closeDialog(props.name)
+}
+
+const changedFormField = (
+  fieldName: string,
+  newValue: FormFieldValue,
+  oldValue: FormFieldValue,
+) => {
+  emit('changedField', fieldName, newValue, oldValue)
 }
 
 const saveObject = async (formData: FormData) => {
@@ -116,7 +135,7 @@ const saveObject = async (formData: FormData) => {
         class="text-blue"
         :disabled="isDisabled"
         :class="{ 'opacity-50': isDisabled }"
-        @click="cancelDialog()"
+        @click="cancelDialog"
       >
         {{ $t('Cancel') }}
       </button>
@@ -126,7 +145,7 @@ const saveObject = async (formData: FormData) => {
         class="text-blue"
         :disabled="isDisabled"
         :class="{ 'opacity-50': isDisabled }"
-        @click="formSubmit()"
+        @click="formSubmit"
       >
         {{ $t('Save') }}
       </button>
@@ -137,9 +156,11 @@ const saveObject = async (formData: FormData) => {
       class="w-full p-4"
       :schema="schema"
       :initial-entity-object="initialFlatObject"
+      :change-fields="formChangeFields"
       use-object-attributes
       :form-updater-id="formUpdaterId"
-      @submit="saveObject($event)"
+      @changed="changedFormField"
+      @submit="saveObject"
     />
   </CommonDialog>
 </template>

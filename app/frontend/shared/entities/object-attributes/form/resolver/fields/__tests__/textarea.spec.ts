@@ -22,6 +22,7 @@ describe('FieldResolverTextarea', () => {
         maxlength: 100,
       },
       type: 'textarea',
+      internal: true,
     })
   })
 })

@@ -44,6 +44,7 @@ describe('FieldResolverMultiselect', () => {
         multiple: true,
       },
       type: 'select',
+      internal: true,
     })
   })
 })

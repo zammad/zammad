@@ -24,6 +24,7 @@ describe('object attribute resolver available', () => {
       },
       type: 'text',
       required: false,
+      internal: true,
     })
   })
 })

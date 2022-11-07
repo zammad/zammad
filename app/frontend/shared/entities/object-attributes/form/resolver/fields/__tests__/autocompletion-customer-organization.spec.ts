@@ -10,6 +10,7 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
       display: 'Organization',
       dataOption: {
         // TODO ...
+        belongs_to: 'organization',
       },
       isInternal: true,
     })
@@ -18,8 +19,11 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
       label: 'Organization',
       name: 'organization',
       required: false,
-      props: {},
+      props: {
+        belongsToObjectField: 'organization',
+      },
       type: 'organization',
+      internal: true,
     })
   })
 })

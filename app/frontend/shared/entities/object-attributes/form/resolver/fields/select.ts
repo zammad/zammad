@@ -5,6 +5,7 @@ import type {
   FormFieldAdditionalProps,
   FormSchemaField,
 } from '@shared/components/Form/types'
+import { camelize } from '@shared/utils/formatter'
 import type {
   FieldResolverModule,
   ObjectAttributeSelectOptions,
@@ -32,6 +33,10 @@ export class FieldResolverSelect extends FieldResolver {
       if (this.attributeConfig.filter) {
         attributes.relation.filterIds = this.attributeConfig.filter as number[]
       }
+
+      props.belongsToObjectField = camelize(
+        (this.attributeConfig.belongs_to as string) || '',
+      )
     }
 
     if (this.attributeType === 'multiselect') props.multiple = true

@@ -6,7 +6,11 @@ import hideField from '../features/hideField'
 import translateWrapperProps from '../features/translateWrapperProps'
 import addBlurEvent from '../features/addBlurEvent'
 
-const defaultProps: (keyof FormDefaultProps)[] = ['formId', 'labelPlaceholder']
+const defaultProps: (keyof FormDefaultProps)[] = [
+  'formId',
+  'labelPlaceholder',
+  'internal',
+]
 
 const defaulfFieldDefinition: Required<
   Pick<FormKitTypeDefinition, 'props' | 'features'>

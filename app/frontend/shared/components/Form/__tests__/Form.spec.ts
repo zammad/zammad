@@ -144,24 +144,34 @@ describe('Form.vue', () => {
     const emittedChange = wrapper.emitted().changed as Array<Array<string>>
 
     expect(emittedChange[emittedChange.length - 1]).toStrictEqual([
-      'Other title',
       'title',
+      'Other title',
+      'Other titl',
     ])
   })
 
-  it('can change field information - hide title field', async () => {
-    const wrapper = await renderForm()
-
-    // Currently changeFields-Prop is not working on initial form rendering.
-    await wrapper.rerender({
-      changeFields: {
-        title: {
-          show: false,
+  it('can change field information - hide title field and show again', async () => {
+    const wrapper = await renderForm({
+      props: {
+        changeFields: {
+          title: {
+            show: false,
+          },
         },
       },
     })
 
     expect(wrapper.queryByLabelText('Title')).not.toBeInTheDocument()
+
+    await wrapper.rerender({
+      changeFields: {
+        title: {
+          show: true,
+        },
+      },
+    })
+
+    expect(wrapper.queryByLabelText('Title')).toBeInTheDocument()
   })
 
   it('can change field information - show title again and change values', async () => {
@@ -254,6 +264,23 @@ describe('Form.vue - Edge Cases', () => {
             },
           },
           {
+            type: 'select',
+            name: 'domain_assignment',
+            label: 'Domain Assignment',
+            props: {
+              options: [
+                {
+                  label: 'yes',
+                  value: true,
+                },
+                {
+                  label: 'no',
+                  value: false,
+                },
+              ],
+            },
+          },
+          {
             type: 'organization',
             name: 'organization_id',
             label: 'Organization',
@@ -265,9 +292,10 @@ describe('Form.vue - Edge Cases', () => {
         initialEntityObject: {
           title: 'Initial title',
           shared: false,
-          organization_id: '123',
+          domainAssignment: true,
           organization: {
             name: 'Example',
+            internalId: '123',
           },
         },
       },
@@ -275,6 +303,7 @@ describe('Form.vue - Edge Cases', () => {
 
     expect(wrapper.getByLabelText('Title')).toHaveValue('Initial title')
     expect(wrapper.getByLabelText('Shared')).toHaveValue('no')
+    expect(wrapper.getByLabelText('Domain Assignment')).toHaveValue('yes')
     expect(wrapper.getByLabelText('Organization')).toHaveTextContent('Example')
   })
 
@@ -467,18 +496,32 @@ describe('Form.vue - with object attributes', () => {
           {
             object: EnumObjectManagerObjects.Ticket,
             name: 'title',
+            screen: 'create_top',
+          },
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            name: 'customer_id',
+            screen: 'create_top',
           },
           {
             object: EnumObjectManagerObjects.Ticket,
             screen: 'create_middle',
           },
         ],
+        initialEntityObject: {
+          customer: {
+            internalId: '123',
+            fullname: 'John Doe',
+          },
+        },
       },
     })
 
     await waitUntil(() => wrapper.queryByLabelText('Title'))
 
     expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Customer')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Customer')).toHaveTextContent('John Doe')
     expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
   })

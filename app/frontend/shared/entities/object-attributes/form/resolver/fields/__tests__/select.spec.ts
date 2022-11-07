@@ -42,6 +42,7 @@ describe('FieldResolverSelect', () => {
         ],
       },
       type: 'select',
+      internal: true,
     })
   })
 })

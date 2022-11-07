@@ -12,7 +12,6 @@ import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocomp
 import { waitForNextTick } from '@tests/support/utils'
 import type { ObjectLike } from '@shared/types/utils'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
 import type { SelectValue } from '../../FieldSelect'
 
 const testOptions = [

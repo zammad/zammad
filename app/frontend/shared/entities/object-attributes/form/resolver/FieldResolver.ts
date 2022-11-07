@@ -12,6 +12,8 @@ export default abstract class FieldResolver {
 
   protected label: string
 
+  protected internal: boolean
+
   protected attributeType: string
 
   protected attributeConfig: Record<string, JsonValue>
@@ -21,6 +23,7 @@ export default abstract class FieldResolver {
   constructor(objectAttribute: ObjectManagerFrontendAttribute) {
     this.name = objectAttribute.name
     this.label = objectAttribute.display
+    this.internal = objectAttribute.isInternal
     this.attributeType = objectAttribute.dataType
     this.attributeConfig = objectAttribute.dataOption
   }
@@ -39,6 +42,7 @@ export default abstract class FieldResolver {
       label: this.label,
       name: this.name,
       required: 'null' in this.attributeConfig && !this.attributeConfig.null, // will normally be overriden with the screen config
+      internal: this.internal,
       ...this.fieldTypeAttributes(),
     }
 

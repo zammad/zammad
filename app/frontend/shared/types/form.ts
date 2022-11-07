@@ -42,9 +42,10 @@ export enum FormSchemaExtendType {
 }
 
 export interface FormDefaultProps {
-  formId: string
-  link: RouteLocationRaw
-  labelPlaceholder: string[]
+  formId?: string
+  link?: RouteLocationRaw
+  labelPlaceholder?: string[]
+  internal?: boolean
 }
 
 export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur'

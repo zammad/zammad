@@ -25,7 +25,7 @@ const renderForm = () => {
     id: 'faked-id',
     name: 'Some Organization',
     shared: true,
-    domain_assignment: false,
+    domainAssignment: false,
     domain: '',
     note: '',
     active: false,
