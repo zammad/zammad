@@ -1,0 +1,5 @@
+# Skip some content to avoid blowing up images with unneeded data.
+.yarn/cache
+node_modules
+log/*.log
+tmp/
