@@ -17,9 +17,11 @@ RUN contrib/docker/setup.sh builder
 # https://github.com/docker-library/ruby/issues/113
 FROM ruby:3.0.4-slim
 ARG DEBIAN_FRONTEND=noninteractive
-ARG ZAMMAD_DIR=/opt/zammad
-ARG ZAMMAD_TMP_DIR=/tmp/zammad
 ARG ZAMMAD_USER=zammad
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT=true
+ENV ZAMMAD_DIR=/opt/zammad
+ENV ZAMMAD_TMP_DIR=/tmp/zammad
 COPY --from=builder ${ZAMMAD_TMP_DIR} ${ZAMMAD_TMP_DIR}
 COPY --from=builder /usr/local/bundle /usr/local/bundle
 COPY --from=builder ${ZAMMAD_TMP_DIR}/contrib/docker/docker-entrypoint.sh /
