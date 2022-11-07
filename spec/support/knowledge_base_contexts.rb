@@ -21,6 +21,10 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
     create(:knowledge_base_category, knowledge_base: knowledge_base)
   end
 
+  let :other_category do
+    create(:knowledge_base_category, knowledge_base: knowledge_base)
+  end
+
   let :draft_answer do
     create(:knowledge_base_answer, category: category)
   end
@@ -29,8 +33,16 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
     create(:knowledge_base_answer, :published, :with_attachment, category: category)
   end
 
+  let :published_answer_in_other_category do
+    create(:knowledge_base_answer, :published, category: other_category)
+  end
+
   let :published_answer_with_video do
     create(:knowledge_base_answer, :published, :with_video, category: category)
+  end
+
+  let :published_answer_with_image do
+    create(:knowledge_base_answer, :published, :with_image, category: category)
   end
 
   let :published_answer_with_tag do

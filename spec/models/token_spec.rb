@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Token, type: :model do
-  subject(:token) { create(:password_reset_token) }
+  subject(:token) { create(:password_reset_token, user: user) }
+
+  let(:user) { create(:user) }
 
   describe '.check' do
     context 'with name and action matching existing token' do
@@ -82,7 +84,7 @@ RSpec.describe Token, type: :model do
     describe 'permission matching' do
       subject(:token) { create(:api_token, user: agent, preferences: preferences) }
 
-      let(:agent) { create(:agent) }
+      let(:agent)       { create(:agent) }
       let(:preferences) { { permission: %w[admin ticket.agent] } } # agent has no access to admin.*
 
       context 'with a permission shared by both token.user and token.preferences' do
@@ -255,6 +257,48 @@ RSpec.describe Token, type: :model do
           end
         end
       end
+    end
+  end
+
+  describe '#fetch' do
+    it 'returns nil when not present' do
+      expect(described_class.fetch('token', user)).to be_nil
+    end
+
+    it 'returns token when present' do
+      token
+
+      expect(described_class.fetch(token.action, token.user.id)).to eq(token)
+    end
+  end
+
+  describe '#ensure_token!' do
+    it 'returns token when not present' do
+      expect(described_class.ensure_token!('token', user.id)).to be_present
+    end
+
+    it 'returns token when present' do
+      token
+
+      expect(described_class.ensure_token!(token.action, token.user.id)).to eq(token.name)
+    end
+  end
+
+  describe '.renew_token!' do
+    it 'changes token' do
+      expect { token.renew_token! }.to change { token.reload.name }
+    end
+  end
+
+  describe '#renew_token!' do
+    it 'creates token when not present' do
+      expect(described_class.renew_token!('token', user.id)).to be_present
+    end
+
+    it 'returns token when present' do
+      token
+
+      expect { described_class.renew_token!(token.action, token.user.id) }.to change { token.reload.name }
     end
   end
 

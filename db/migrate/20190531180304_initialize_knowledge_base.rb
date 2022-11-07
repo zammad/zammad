@@ -16,6 +16,7 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
       t.string :category_layout, null: false
 
       t.boolean :active, null: false, default: true
+      t.boolean :show_feed_icon, default: false, null: false
 
       t.string :custom_address
 

@@ -11,6 +11,7 @@
 <meta charset="utf-8">
 <title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<%= render partial: 'knowledge_base/public/feeds_header' if @knowledge_base.show_feed_icon %>
 <%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
 <%= canonical_link_tag @knowledge_base, @category, @object %>
@@ -59,7 +60,22 @@
           <% end %>
         </nav>
 
-        <div class="language-picker">
+        <% if @knowledge_base.show_feed_icon %>
+          <div class="dropdown-picker feed-picker">
+            <a href="#" data-toggle="dropdown" aria-expanded="false">
+              <%= icon('rss') %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-<%= dropdown_menu_direction %> dropdown-menu-up" role="menu">
+              <% feeds_available(@knowledge_base, @category, @object).each do |feed| %>
+                <li>
+                  <%= link_to feed[:title], feed[:url] %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="dropdown-picker language-picker">
           <a class="btn btn--action" href="#" data-toggle="dropdown" aria-expanded="false">
             <%= system_locale_via_uri.name %>
             <%= icon 'arrow-down' %>

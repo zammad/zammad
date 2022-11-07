@@ -639,6 +639,11 @@
         "url": "",
         "license": "MIT"
     },
+    "rss.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "saml-button.svg": {
         "author": "Zammad",
         "url": "",

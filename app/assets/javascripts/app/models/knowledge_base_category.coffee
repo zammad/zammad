@@ -101,6 +101,20 @@ class App.KnowledgeBaseCategory extends App.Model
     return null if @isNew()
     App.Utils.joinUrlComponents [@knowledge_base().publicBaseUrl(kb_locale), @id]
 
+  privateFeedUrl: (kb_locale, token) ->
+    components = [
+      App.Utils.baseUrl(),
+      App.Config.get('api_path'),
+      'knowledge_bases',
+      @knowledge_base_id,
+      'categories',
+      @id
+      kb_locale.systemLocale().locale,
+      'feed'
+    ]
+
+    App.Utils.joinUrlComponents(components) + '?token=' + token
+
   @translatableClass: -> App.KnowledgeBaseCategoryTranslation
   @translatableForeignKey: -> 'category_id'
   @extend App.KnowledgeBaseTranslatable

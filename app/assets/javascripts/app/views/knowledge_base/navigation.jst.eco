@@ -23,6 +23,13 @@
      >
     <%- @Icon('external') %>
   </a>
+  <% if @feed.available: %>
+  <div
+     class="btn btn--action btn--only-icon js-feed"
+     >
+    <%- @Icon('rss') %>
+  </div>
+  <% end %>
   <% if @edit.available: %>
     <a href="<%= @edit.url %>"
       class="btn btn--action js-edit <% if @edit.enabled: %>btn--active<% end %>"

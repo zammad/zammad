@@ -3,6 +3,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
 
   events:
     'click .js-search': 'clickedToggleSearch'
+    'click .js-feed':   'clickedFeed'
 
   elements:
     '.js-edit': 'editButton'
@@ -88,6 +89,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
       kbLocales:   @kbLocaleOptions(object, kb_locale, action)
       search:      @searchOptions(object, kb_locale, action)
       edit:        @editOptions(object, kb_locale, action)
+      feed:        @feedOptions(object, kb_locale, action)
       externalUrl: @externalUrl(object, kb_locale, action)
       iconset:     @parentController.getKnowledgeBase().iconset
     )
@@ -120,6 +122,10 @@ class App.KnowledgeBaseNavigation extends App.Controller
       available: @parentController.isEditor()
     }
 
+  feedOptions: (object, kb_locale, action) ->
+    {
+      available: @parentController.getKnowledgeBase().show_feed_icon
+    }
 
   externalUrl: (object, kb_locale, action) ->
     if action and action != 'edit'
@@ -145,6 +151,13 @@ class App.KnowledgeBaseNavigation extends App.Controller
       return
 
     @toggleSearchSource = location.hash
+
+  clickedFeed: ->
+    new App.KnowledgeBaseFeedDialog(
+      kb:        @parentController.getKnowledgeBase(),
+      kb_locale: @parentController.kb_locale()
+      object:    @savedParams
+    )
 
   breadcrumbTo: (object) ->
     if !object

@@ -1,0 +1,17 @@
+# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+
+class KnowledgeBase::FeedTokensController < ApplicationController
+  prepend_before_action :authentication_check
+
+  def show
+    token = Token.ensure_token! 'KnowledgeBaseFeed'
+
+    render json: { token: token }
+  end
+
+  def update
+    new_token = Token.renew_token! 'KnowledgeBaseFeed'
+
+    render json: { token: new_token }
+  end
+end

@@ -1150,12 +1150,26 @@ b {
 
   .menu {
     justify-content: center;
+    flex-grow: 1;
   }
 }
 
-.language-picker {
+.dropdown-picker {
   display: flex;
   position: relative;
+}
+
+.feed-picker {
+  > a {
+    position: relative;
+    top: 2px;
+    margin-right: 1em;
+  }
+
+  svg {
+    height: 25px;
+    fill: currentColor;
+  }
 }
 
 .not-published-note {

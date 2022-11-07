@@ -108,10 +108,13 @@ class App.Controller extends Spine.Controller
     document.title = documentTitle
     App.Event.trigger('window-title-set', documentTitle)
 
-  copyToClipboardWithTooltip: (text, selector, container) ->
+  copyToClipboardWithTooltip: (text, selector, container, noPrefix) ->
     clipboard.writeText(text)
 
-    tooltipCopied = @el.find(selector + ' > .ticketNumberCopy-icon').tooltip(
+    if !noPrefix
+      selector += ' > .ticketNumberCopy-icon'
+
+    tooltipCopied = @el.find(selector).tooltip(
       trigger:   'manual'
       placement: 'bottom'
       container: container

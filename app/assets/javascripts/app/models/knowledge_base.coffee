@@ -1,5 +1,5 @@
 class App.KnowledgeBase extends App.Model
-  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address'
+  @configure 'KnowledgeBase', 'iconset', 'color_highlight', 'color_header', 'color_header_link', 'translation_ids', 'locale_ids', 'homepage_layout', 'category_layout', 'custom_address', 'show_feed_icon'
   @extend Spine.Model.Ajax
   @extend App.KnowledgeBaseActions
   @extend App.KnowledgeBaseAccess
@@ -23,6 +23,18 @@ class App.KnowledgeBase extends App.Model
       components.push kb_locale.systemLocale().locale
 
     App.Utils.joinUrlComponents components
+
+  privateFeedUrl: (kb_locale, token) ->
+    components = [
+      App.Utils.baseUrl(),
+      App.Config.get('api_path'),
+      'knowledge_bases',
+      @id,
+      kb_locale.systemLocale().locale,
+      'feed'
+    ]
+
+    App.Utils.joinUrlComponents(components) + '?token=' + token
 
   uiUrl: (kb_locale, suffix = undefined) ->
     App.Utils.joinUrlComponents @uiUrlComponent(), kb_locale.urlSuffix(), suffix
@@ -192,6 +204,17 @@ class App.KnowledgeBase extends App.Model
       null: false
       screen:
         admin_style_color_header_link:
+          display:    false
+          horizontal: true
+          shown:      true
+    }, {
+      name: 'show_feed_icon'
+      display: __('Show Feed Icon')
+      tag: 'boolean'
+      style: 'block'
+      null: false
+      screen:
+        admin_style_feed:
           display:    false
           horizontal: true
           shown:      true

@@ -55,31 +55,36 @@ returns
 =end
 
   def self.check(data)
-
     # fetch token
     token = Token.find_by(action: data[:action], name: data[:name])
+
     return if !token
 
-    # check if token is still valid
-    if !token.persistent &&
-       token.created_at < 1.day.ago
+    return token.user if token.check?(data)
+  end
 
-      # delete token
-      token.delete
-      token.save
-      return
+  # Check token instance validity
+  # Invalid non-persistant instance is removed
+  #
+  # @param data [Hash] check options
+  # @option data [Boolean] :inactive_user skip checking if referenced user is active
+  # @option data [String, Array<String>] :permission check if token has given permissions
+  #
+  # @return [Boolean]
+
+  def check?(data = {})
+    if !persistent && created_at < 1.day.ago
+      destroy
+      return false
     end
 
-    user = token.user
-
     # persistent token not valid if user is inactive
-    return if !data[:inactive_user] && token.persistent && user.active == false
+    return false if !data[:inactive_user] && persistent && user.active == false
 
     # add permission check
-    return if data[:permission] && !token.permissions?(data[:permission])
+    return false if data[:permission] && !permissions?(data[:permission])
 
-    # return token user
-    user
+    true
   end
 
 =begin
@@ -124,6 +129,57 @@ cleanup old token
     instance_eval(&block) if block
   ensure
     @effective_user = nil
+  end
+
+  # fetch token for a user with a given action
+  # checks token validity
+  #
+  # @param [String] action name
+  # @param [Integer, User] user
+  #
+  # @return [Token, nil]
+  def self.fetch(action_name, user_id = UserInfo.current_user_id)
+    token = where(action: action_name, user_id: user_id).first
+
+    return token if token&.check?
+  end
+
+  # creates or returns existing token
+  #
+  # @param [String] action name
+  # @param [Integer, User] user
+  #
+  # @return [String]
+  def self.ensure_token!(action_name, user_id = UserInfo.current_user_id)
+    instance = fetch(action_name, user_id)
+
+    return instance.name if instance.present?
+
+    create!(action: action_name, user_id: user_id).name
+  end
+
+  # regenerates an existing token
+  #
+  # @param [String] action name
+  # @param [Integer, User] user
+  #
+  # @return [String]
+  def self.renew_token!(action_name, user_id = UserInfo.current_user_id)
+    instance = fetch(action_name, user_id)
+
+    return create(action: action_name, user_id: user_id).name if !instance
+
+    instance.renew_token!
+  end
+
+  # regenerates an existing token
+  #
+  # @return [String]
+  def renew_token!
+    generate_token
+    save!
+
+    name
   end
 
   private

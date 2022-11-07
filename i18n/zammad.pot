@@ -1834,6 +1834,7 @@ msgstr ""
 msgid "Changes"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
 msgstr ""
@@ -5594,6 +5595,10 @@ msgstr ""
 msgid "Internal"
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "Internal Knowledge Base feed:"
+msgstr ""
+
 #: app/models/import_job.rb
 msgid "Interrupted by a restart of the background worker process. Please restart manually or wait until the next execution time."
 msgstr ""
@@ -5829,6 +5834,10 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Editor"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+msgid "Knowledge Base Feed"
 msgstr ""
 
 #: db/seeds/permissions.rb
@@ -8165,6 +8174,10 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+msgid "Renew Access Token"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr ""
@@ -8965,6 +8978,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 msgid "Show Draft"
+msgstr ""
+
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
 msgstr ""
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
@@ -10210,6 +10227,10 @@ msgstr ""
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee

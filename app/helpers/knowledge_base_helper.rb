@@ -77,4 +77,22 @@ module KnowledgeBaseHelper
       .unshift(help_root_path)
       .join('/')
   end
+
+  def feeds_available(knowledge_base, parent_category, current_object)
+    feeds = [{
+      title: knowledge_base.translations.first.title,
+      url:   custom_path_if_needed(help_root_feed_url, knowledge_base)
+    }]
+
+    effective_category = [current_object, parent_category].find { |elem| elem.is_a? KnowledgeBase::Category }
+
+    if effective_category
+      feeds << {
+        title: effective_category.translations.first.title,
+        url:   custom_path_if_needed(help_category_feed_url(system_locale_via_uri.locale, effective_category), knowledge_base)
+      }
+    end
+
+    feeds
+  end
 end

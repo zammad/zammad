@@ -83,5 +83,19 @@ RSpec.describe KnowledgeBase::InternalAssets do
           .and not_include_assets_of(category, draft_answer, internal_answer, published_answer)
       end
     end
+
+    context 'when filtering by categories' do
+      subject(:assets) { described_class.new(user, categories_filter: other_category).collect_assets }
+
+      before { published_answer_in_other_category }
+
+      let(:user) { create(:agent) }
+
+      it 'returns assets for all KB objects' do
+        expect(assets)
+          .to include_assets_of(knowledge_base, other_category, published_answer_in_other_category)
+          .and not_include_assets_of(draft_answer, category, internal_answer, published_answer)
+      end
+    end
   end
 end

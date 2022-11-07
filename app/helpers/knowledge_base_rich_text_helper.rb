@@ -48,4 +48,28 @@ module KnowledgeBaseRichTextHelper
       "<div class='videoWrapper'><iframe allowfullscreen id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
     end
   end
+
+  def simplify_rich_text(input)
+    scrubber_link = Loofah::Scrubber.new do |node|
+      next if node.name != 'a'
+      next if !node.key? 'data-target-type'
+
+      node.replace node.text
+    end
+
+    scrubber_images = Loofah::Scrubber.new do |node|
+      next if node.name != 'img'
+
+      node.remove
+    end
+
+    Loofah
+      .fragment(input)
+      .scrub!(scrubber_link)
+      .scrub!(scrubber_images)
+      .to_s
+      .gsub(%r{\((\s*)widget:(\s*)video\W([\s\S])+?\)}, '')
+      .strip
+      .html_safe # rubocop:disable Rails/OutputSafety
+  end
 end

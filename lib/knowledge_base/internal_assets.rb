@@ -10,9 +10,10 @@ class KnowledgeBase
 
     attr_reader :assets
 
-    def initialize(user, answer_translation_content_ids: [])
+    def initialize(user, categories_filter: [], answer_translation_content_ids: [])
       @user = user
       @assets = {}
+      @categories_filter = categories_filter
       @answer_translation_content_ids = answer_translation_content_ids
     end
 
@@ -53,20 +54,32 @@ class KnowledgeBase
     def accessible_categories_calculate
       struct = CategoriesCache.new editor: [], reader: [], public_reader: []
 
-      KnowledgeBase::Category.all.find_in_batches do |group|
+      accessible_categories_calculate_scope.each do |group|
         group.each do |cat|
-          case KnowledgeBase::EffectivePermission.new(@user, cat).access_effective
-          when 'editor'
-            struct.editor << cat
-          when 'reader'
-            struct.reader << cat if cat.internal_content?
-          when 'public_reader'
-            struct.public_reader << cat if cat.public_content?
-          end
+          accessible_categories_calculate_group(struct, cat)
         end
       end
 
       struct
+    end
+
+    def accessible_categories_calculate_scope
+      return KnowledgeBase::Category.all.find_in_batches if @categories_filter.blank?
+
+      Array(@categories_filter)
+        .map(&:self_with_children)
+        .each
+    end
+
+    def accessible_categories_calculate_group(struct, category)
+      case KnowledgeBase::EffectivePermission.new(@user, category).access_effective
+      when 'editor'
+        struct.editor << category
+      when 'reader'
+        struct.reader << category if category.internal_content?
+      when 'public_reader'
+        struct.public_reader << category if category.public_content?
+      end
     end
 
     def add_to_assets(objects, type: nil)
