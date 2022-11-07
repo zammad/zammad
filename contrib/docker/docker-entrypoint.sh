@@ -54,8 +54,6 @@ if [ "$1" = 'zammad-init' ]; then
     sleep 5
   done
 
-  cd "${ZAMMAD_DIR}"
-
   # configure database
   # https://stackoverflow.com/questions/407523/escape-a-string-for-a-sed-replace-pattern
   ESCAPED_POSTGRESQL_PASS=$(echo "$POSTGRESQL_PASS" | sed -e 's/[\/&]/\\&/g')
@@ -145,8 +143,6 @@ if [ "$1" = 'zammad-railsserver' ]; then
 
   check_zammad_ready
 
-  cd "${ZAMMAD_DIR}"
-
   echo "starting railsserver... with WEB_CONCURRENCY=${ZAMMAD_WEB_CONCURRENCY}"
 
   #shellcheck disable=SC2101
@@ -158,8 +154,6 @@ fi
 if [ "$1" = 'zammad-scheduler' ]; then
   check_zammad_ready
 
-  cd "${ZAMMAD_DIR}"
-
   echo "starting background services..."
 
   exec bundle exec script/background-worker.rb start
@@ -169,8 +163,6 @@ fi
 # zammad-websocket
 if [ "$1" = 'zammad-websocket' ]; then
   check_zammad_ready
-
-  cd "${ZAMMAD_DIR}"
 
   echo "starting websocket server..."
 
