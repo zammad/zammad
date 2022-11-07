@@ -3085,6 +3085,10 @@ msgid "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
@@ -3846,6 +3850,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch Excludes"
 msgstr ""
 
 #: db/seeds/settings.rb

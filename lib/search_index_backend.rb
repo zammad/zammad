@@ -1095,6 +1095,14 @@ helper method for making HTTP calls and raising error if response was not succes
       }
     end
 
+    if !Setting.get('es_excludes')
+      result.each_key do |key|
+        next if !result[key][:_source]
+
+        result[key][:_source].delete(:excludes)
+      end
+    end
+
     result[name]
   end
 

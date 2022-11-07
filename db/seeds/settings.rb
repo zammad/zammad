@@ -3165,6 +3165,15 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true },
   frontend:    false
 )
+Setting.create_if_not_exists(
+  title:       __('Elasticsearch Excludes'),
+  name:        'es_excludes',
+  area:        'SearchIndex::Elasticsearch',
+  description: __('Defines if the search index is using excluded attributes.'),
+  state:       true,
+  preferences: { online_service_disable: true },
+  frontend:    false
+)
 
 Setting.create_if_not_exists(
   title:       __('Import Mode'),
