@@ -3,6 +3,8 @@
   "scripts": {
     "generate-graphql-api": "RAILS_ENV=development bundle exec rails generate zammad:graphql_introspection > tmp/graphql_introspection.json && npx graphql-codegen -c .graphql_code_generator.yml && rm tmp/graphql_introspection.json",
     "dev": "RAILS_ENV=development forego start -f Procfile.dev",
+    "dev:https": "VITE_RUBY_HTTPS=true RAILS_ENV=development forego start -f Procfile.dev-https",
+    "https:generate": "sh contrib/ssl/generate-ssl.sh",
     "i18n": "rails generate zammad:translation_catalog",
     "lint": "vue-tsc --noEmit && eslint --cache --cache-location ./tmp/eslintcache.js -c .eslintrc.js --ext .js,.ts,.vue app/frontend/ .eslint-plugin-zammad/",
     "lint:fix": "yarn lint -- --fix",
@@ -77,6 +79,7 @@
     "type-fest": "^2.19.0",
     "typescript": "^4.8.4",
     "vite": "^3.1.8",
+    "vite-plugin-pwa": "^0.13.1",
     "vite-plugin-ruby": "^3.1.2",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.24.4",
@@ -132,7 +135,10 @@
     "vue-easy-lightbox": "1.9.0",
     "vue-router": "^4.1.6",
     "vue3-draggable-resizable": "^1.6.5",
-    "vuedraggable": "^4.1.0"
+    "vuedraggable": "^4.1.0",
+    "workbox-core": "^6.5.4",
+    "workbox-precaching": "^6.5.4",
+    "workbox-window": "^6.5.4"
   },
   "resolutions": {
     "postcss": "^8.4.18"

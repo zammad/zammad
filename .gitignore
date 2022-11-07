@@ -37,6 +37,9 @@
 /db/*.sqlite3
 /db/schema.rb
 
+# dev ssl
+/config/ssl/*
+
 # legacy translation cache files
 /config/locales-*.yml
 /config/translations/*.yml
@@ -88,6 +91,9 @@
 # Vite Ruby
 /public/vite
 /public/vite-dev
+
+# Vite PWA
+/app/frontend/dev-dist
 
 # Node
 **/node_modules

@@ -59,7 +59,7 @@ Rails.application.config.content_security_policy do |policy|
     end
 
     policy.script_src :self, :unsafe_eval, :unsafe_inline
-    policy.connect_src :self, :https, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_cable_uri, websocket_uri
+    policy.connect_src :self, :https, :wss, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_cable_uri, websocket_uri
   end
 end
 

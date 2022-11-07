@@ -1,7 +1,13 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "vite/client", "vite-plugin-svg-icons/client"]
+    "lib": ["DOM", "WebWorker"],
+    "types": [
+      "vitest/globals",
+      "vite/client",
+      "vite-plugin-svg-icons/client",
+      "vite-plugin-pwa/client"
+    ]
   },
   "include": ["app/frontend/**/*", "./vite.config.*", "./histoire.config.*"],
   "exclude": [

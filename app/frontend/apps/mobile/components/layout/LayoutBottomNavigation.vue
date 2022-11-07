@@ -20,11 +20,14 @@ const notificationCount = computed(() => {
 
 <template>
   <footer
-    class="fixed bottom-0 z-10 flex h-14 w-full items-center bg-gray-light text-center backdrop-blur-lg"
+    class="bottom-navigation fixed bottom-0 z-10 w-full bg-gray-light backdrop-blur-lg"
     :class="{ 'px-4': isCustomLayout }"
     data-bottom-navigation
   >
-    <template v-if="!isCustomLayout">
+    <div
+      v-if="!isCustomLayout"
+      class="flex h-14 w-full items-center text-center"
+    >
       <CommonLink
         link="/"
         class="flex flex-1 justify-center"
@@ -60,7 +63,7 @@ const notificationCount = computed(() => {
           personal
         />
       </CommonLink>
-    </template>
+    </div>
   </footer>
 </template>
 
@@ -69,5 +72,9 @@ const notificationCount = computed(() => {
   .user-avatar {
     @apply outline outline-2 outline-blue;
   }
+}
+
+.bottom-navigation {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

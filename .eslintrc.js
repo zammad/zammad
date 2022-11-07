@@ -191,6 +191,7 @@ module.exports = {
     },
   ],
   settings: {
+    'import/core-modules': ['virtual:pwa-register'],
     'import/resolver': {
       alias: {
         map: [

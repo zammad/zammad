@@ -72,12 +72,12 @@ OptionParser.new do |opts|
     @options[:i] = i
   end
   opts.on('-k', '--private-key [OPT]', '/path/to/server.key for secure connections') do |k|
-    options[:tls_options] ||= {}
-    options[:tls_options][:private_key_file] = k
+    @options[:tls_options] ||= {}
+    @options[:tls_options][:private_key_file] = k
   end
   opts.on('-c', '--certificate [OPT]', '/path/to/server.crt for secure connections') do |c|
-    options[:tls_options] ||= {}
-    options[:tls_options][:cert_chain_file] = c
+    @options[:tls_options] ||= {}
+    @options[:tls_options][:cert_chain_file] = c
   end
 end.parse!
 

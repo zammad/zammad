@@ -1,15 +1,20 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { createRequire } from 'module'
+import type { ServerOptions } from 'https'
 import { defineConfig, type ResolvedConfig } from 'vite'
 import VuePlugin from '@vitejs/plugin-vue'
 import {
   createSvgIconsPlugin,
   type ViteSvgIconsPlugin,
 } from 'vite-plugin-svg-icons'
+import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
+import fs from 'fs'
 
 import tsconfig from './tsconfig.base.json'
+
+const SSL_PATH = path.resolve(__dirname, 'config', 'ssl')
 
 export default defineConfig(({ mode, command }) => {
   const isStory = Boolean(process.env.HISTOIRE)
@@ -69,8 +74,33 @@ export default defineConfig(({ mode, command }) => {
     // const ManualChunks = require('./app/frontend/build/manualChunks')
 
     plugins.push(RubyPlugin())
+    plugins.push(
+      ...VitePWA({
+        // should be generated on ruby side
+        manifest: false,
+        registerType: 'prompt',
+        srcDir: 'apps/mobile/sw',
+        filename: 'sw.ts',
+        includeManifestIcons: false,
+        injectRegister: null,
+        strategies: 'injectManifest',
+      }),
+    )
     // TODO: Disable manual chunks for now, check if it's still neded with Vite 3.0.
     // plugins.push(ManualChunks())
+  }
+
+  let https: ServerOptions | false = false
+
+  // vite-ruby controlls this variable, it's either "true" or "false"
+  if (process.env.VITE_RUBY_HTTPS === 'true') {
+    const SSL_CERT = fs.readFileSync(path.resolve(SSL_PATH, 'localhost.crt'))
+    const SSL_KEY = fs.readFileSync(path.resolve(SSL_PATH, 'localhost.key'))
+
+    https = {
+      cert: SSL_CERT,
+      key: SSL_KEY,
+    }
   }
 
   return {
@@ -90,6 +120,7 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     server: {
+      https,
       watch: {
         ignored: isTesting
           ? []
