@@ -141,6 +141,7 @@
     "workbox-window": "^6.5.4"
   },
   "resolutions": {
+    "loader-utils": "^3.2.0",
     "postcss": "^8.4.18"
   }
 }
