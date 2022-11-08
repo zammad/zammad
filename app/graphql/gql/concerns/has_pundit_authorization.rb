@@ -8,7 +8,13 @@ module Gql::Concerns::HasPunditAuthorization
   included do
     # Add default object authorization via Pundit.
     def self.authorize(object, ctx)
-      Pundit.authorize ctx.current_user, object, pundit_method(ctx)
+      Pundit.authorize ctx.current_user, pundit_object(object), pundit_method(ctx)
+    end
+
+    # Override this method in object types
+    #   to use e.g. a specific attribute (like a parent object) to check for access.
+    def self.pundit_object(object)
+      object
     end
 
     # Authorize depending on direct access to the field or nested access via

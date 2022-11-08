@@ -1,0 +1,21 @@
+mutation knowledgeBaseAnswerSuggestionContentTransform(
+  $translationId: ID!
+  $formId: FormId!
+) {
+  knowledgeBaseAnswerSuggestionContentTransform(
+    translationId: $translationId
+    formId: $formId
+  ) {
+    body
+    attachments {
+      internalId
+      name
+      size
+      type
+      preferences
+    }
+    errors {
+      ...errors
+    }
+  }
+}

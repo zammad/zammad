@@ -1,0 +1,10 @@
+query knowledgeBaseAnswerSuggestions($query: String!) {
+  knowledgeBaseAnswerSuggestions(query: $query) {
+    id
+    title
+    categoryTreeTranslation {
+      id
+      title
+    }
+  }
+}
