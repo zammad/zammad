@@ -211,7 +211,7 @@ returns
 
                      tickets_all.joins(tables)
                                 .where(query_condition, *bind_condition)
-                   end.pluck(:id)
+                   end.group(:id).pluck(:id)
 
       if full
         ticket_ids.map { |id| Ticket.lookup(id: id) }
