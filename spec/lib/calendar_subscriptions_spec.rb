@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe CalendarSubscriptions, :aggregate_failures do
+  # Set second fraction to zero for easier comparsion.
+  def dt_now
+    now = DateTime.now
+    DateTime.new(now.year, now.month, now.day, now.hour, now.minute, now.second, 0)
+  end
+
   let(:groups) { create_list(:group, 2) }
   let(:agents) do
     [
@@ -11,8 +17,6 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
     ]
   end
   let(:tickets) do
-    travel_to DateTime.now - 3.months
-
     tickets = [
       create(:ticket,
              group: groups.first,
@@ -21,7 +25,7 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
              group:        groups.first,
              owner:        agents.first,
              state:        Ticket::State.lookup(name: 'pending reminder'),
-             pending_time: DateTime.now + 2.days),
+             pending_time: dt_now + 2.days),
       create(:ticket,
              group: groups.first,
              owner: agents.first),
@@ -33,7 +37,7 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
              group:        groups.second,
              owner:        agents.second,
              state:        Ticket::State.lookup(name: 'pending reminder'),
-             pending_time: DateTime.now + 2.days),
+             pending_time: dt_now + 2.days),
       create(:ticket,
              group: groups.second,
              owner: agents.second),
@@ -45,7 +49,7 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
              group:        groups.first,
              owner:        User.find(1),
              state:        Ticket::State.lookup(name: 'pending reminder'),
-             pending_time: DateTime.now + 2.days),
+             pending_time: dt_now + 2.days),
 
       create(:ticket,
              group: groups.first,
@@ -59,7 +63,7 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
              group:        groups.second,
              owner:        User.find(1),
              state:        Ticket::State.lookup(name: 'pending reminder'),
-             pending_time: DateTime.now + 2.days),
+             pending_time: dt_now + 2.days),
 
       create(:ticket,
              group: groups.second,
@@ -67,19 +71,14 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
     ]
     # set escalation_at manually, clear cache to have correct content later
     [2, 5, 8, 11].each do |index|
-      tickets[index].update_columns(escalation_at: DateTime.now + 2.weeks)
+      tickets[index].update_columns(escalation_at: dt_now + 2.weeks)
     end
     Rails.cache.clear
 
-    travel_back
     tickets
   end
-  let(:ical) { described_class.new(agent).all }
-  let(:calendars) do
-    Icalendar::Calendar.parse(ical).each do |calendar|
-      calendar.events.sort_by!(&:description)
-    end
-  end
+  let(:ical)      { described_class.new(agent).all }
+  let(:calendars) { Icalendar::Calendar.parse(ical) }
 
   # https://github.com/zammad/zammad/issues/3989
   # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19
@@ -101,44 +100,85 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
     end
   end
 
+  def event_to_ticket(event)
+    Ticket.find_by(number: event.description.to_s[2..])
+  end
+
   shared_examples 'verify events' do |params|
     it 'has ticket related events' do
-      params[:expectations].each do |expected|
-        event = calendars.first.events[expected[:event_id]]
-        ticket = tickets[expected[:ticket_id]]
+      calendars.first.events.each do |event|
+        ticket = event_to_ticket(event)
 
-        expect(event.dtstart.strftime('%Y-%m-%d')).to match(Time.zone.today.to_s)
         expect(event.description.to_s).to match("T##{ticket.number}")
-        expect(event.summary).to match(ticket.title)
-        expect(event.has_alarm?).to be expected[:alarm] || false
+        expect(event.summary.to_s).to match(ticket.title)
+
+        if !event.summary.to_s.match?(%r{^new})
+          expect(event.has_alarm?).to be params[:alarm]
+        end
+      end
+    end
+  end
+
+  def verify_timestamp(dtstart, dtend, tstart)
+    expect(dtstart).to match(tstart)
+    expect(dtend).to match(tstart)
+  end
+
+  def verify_offset(dtstart, dtend, tstart)
+    time_zone = Setting.get('timezone_default').presence || 'UTC'
+    tz = TZInfo::Timezone.get(time_zone)
+
+    expect(dtstart.utc_offset).to match(tz.utc_to_local(tstart).utc_offset)
+    expect(dtend.utc_offset).to match(tz.utc_to_local(tstart).utc_offset)
+  end
+
+  # https://github.com/zammad/zammad/issues/4307
+  shared_examples 'verify timestamps' do
+    it 'event timestamps match related ticket timestamps' do
+
+      calendars.first.events.each do |event|
+        ticket = event_to_ticket(event)
+
+        dtstart = event.dtstart
+        dtend = event.dtend
+
+        case event.summary.to_s
+        when %r{new}
+          tstart = ticket.updated_at
+
+          expect(dtstart.strftime('%Y-%m-%d')).to match(ticket.updated_at.strftime('%Y-%m-%d'))
+          expect(dtend.strftime('%Y-%m-%d')).to match(ticket.updated_at.strftime('%Y-%m-%d'))
+          verify_offset(dtstart, dtend, tstart)
+
+          next
+        when %r{pending reminder}
+          tstart = ticket.pending_time
+        when %r{ticket escalation}
+          tstart = ticket.escalation_at
+        end
+
+        verify_timestamp(dtstart, dtend, tstart)
+        verify_offset(dtstart, dtend, tstart)
       end
     end
   end
 
   describe 'with subscriber agent in first group' do
+    let(:agent) { agents.first }
+
     context 'with default subscriptions' do
       before do
         tickets
         calendars
       end
 
-      let(:agent) { agents.first }
-
       include_examples 'verify ical'
-
       include_examples 'verify calendar', {
         count:  1,
         events: 4,
       }
-
-      include_examples 'verify events', {
-        expectations: [
-          { event_id: 0, ticket_id: 0 },
-          { event_id: 1, ticket_id: 1 },
-          { event_id: 2, ticket_id: 2 },
-          { event_id: 3, ticket_id: 2 }
-        ]
-      }
+      include_examples 'verify events', { alarm: false }
+      include_examples 'verify timestamps'
     end
 
     context 'with specific subscriptions' do
@@ -166,31 +206,19 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
         calendars
       end
 
-      let(:agent) { agents.first }
-
       include_examples 'verify ical'
-
       include_examples 'verify calendar', {
         count:  1,
         events: 8,
       }
-
-      include_examples 'verify events', {
-        expectations: [
-          { event_id: 0, ticket_id: 0 },
-          { event_id: 1, ticket_id: 1, alarm: true },
-          { event_id: 2, ticket_id: 2 },
-          { event_id: 3, ticket_id: 2, alarm: true },
-          { event_id: 4, ticket_id: 6 },
-          { event_id: 5, ticket_id: 7, alarm: true },
-          { event_id: 6, ticket_id: 8 },
-          { event_id: 7, ticket_id: 8, alarm: true }
-        ]
-      }
+      include_examples 'verify events', { alarm: true }
+      include_examples 'verify timestamps'
     end
   end
 
   describe 'with subscriber agent in second group' do
+    let(:agent) { agents.second }
+
     context 'with default subscriptions' do
       before do
         Setting.set('timezone_default', 'Europe/Berlin')
@@ -198,23 +226,12 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
         calendars
       end
 
-      let(:agent) { agents.second }
-
-      include_examples 'verify ical'
-
-      include_examples 'verify calendar', {
+      include_examples 'verify ical', {
         count:  1,
         events: 4,
       }
-
-      include_examples 'verify events', {
-        expectations: [
-          { event_id: 0, ticket_id: 3 },
-          { event_id: 1, ticket_id: 4 },
-          { event_id: 2, ticket_id: 5 },
-          { event_id: 3, ticket_id: 5 }
-        ]
-      }
+      include_examples 'verify events', { alarm: false }
+      include_examples 'verify timestamps'
     end
 
     context 'with specific subscriptions' do
@@ -244,27 +261,13 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
         calendars
       end
 
-      let(:agent) { agents.second }
-
       include_examples 'verify ical'
-
       include_examples 'verify calendar', {
         count:  1,
         events: 8,
       }
-
-      include_examples 'verify events', {
-        expectations: [
-          { event_id: 0, ticket_id: 3 },
-          { event_id: 1, ticket_id: 4 },
-          { event_id: 2, ticket_id: 5 },
-          { event_id: 3, ticket_id: 5 },
-          { event_id: 4, ticket_id: 9 },
-          { event_id: 5, ticket_id: 10 },
-          { event_id: 6, ticket_id: 11 },
-          { event_id: 7, ticket_id: 11 },
-        ]
-      }
+      include_examples 'verify events', { alarm: false }
+      include_examples 'verify timestamps'
     end
   end
 end

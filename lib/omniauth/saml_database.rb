@@ -10,7 +10,7 @@ class SamlDatabase < OmniAuth::Strategies::SAML
 
     # Use meta URL as entity id/issues as it is best practice.
     # See: https://community.zammad.org/t/saml-oidc-third-party-authentication/2533/13
-    entity_id                      = "#{http_type}://#{fqdn}/auth/saml/metadata"
+    entity_id                      = 'zammad-saml-sp'
     assertion_consumer_service_url = "#{http_type}://#{fqdn}/auth/saml/callback"
 
     config  = Setting.get('auth_saml_credentials') || {}

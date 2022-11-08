@@ -90,6 +90,7 @@ class CalendarSubscriptions::Tickets
       event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
+      event_data[:type]        = 'new_open'
 
       events_data.push event_data
     end
@@ -154,6 +155,7 @@ class CalendarSubscriptions::Tickets
           trigger: '-PT1M',
         }
       end
+      event_data[:type] = 'pending'
 
       events_data.push event_data
     end
@@ -208,6 +210,7 @@ class CalendarSubscriptions::Tickets
           trigger: '-PT1M',
         }
       end
+      event_data[:type] = 'escalated'
 
       events_data.push event_data
     end

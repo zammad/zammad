@@ -56,10 +56,11 @@ class CalendarSubscriptions
 
     cal = Icalendar::Calendar.new
 
+    tz = TZInfo::Timezone.get(@time_zone)
+
     # https://github.com/zammad/zammad/issues/3989
     # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19
     if events_data.first.present?
-      tz = TZInfo::Timezone.get(@time_zone)
       timezone = tz.ical_timezone(DateTime.parse(events_data.first[:dtstart].to_s))
       cal.add_timezone(timezone)
     end
@@ -67,8 +68,18 @@ class CalendarSubscriptions
     events_data.each do |event_data|
 
       cal.event do |e|
-        e.dtstart = Icalendar::Values::DateTime.new(event_data[:dtstart], 'tzid' => @time_zone)
-        e.dtend   = Icalendar::Values::DateTime.new(event_data[:dtend], 'tzid' => @time_zone)
+        dtstart = DateTime.parse(event_data[:dtstart].to_s)
+        dtend   = DateTime.parse(event_data[:dtend].to_s)
+
+        # by design all new/open ticket events are scheduled at midnight:
+        # skip adding TZ offset
+        if !event_data[:type].match('new_open')
+          dtstart = tz.utc_to_local(dtstart)
+          dtend = tz.utc_to_local(dtend)
+        end
+
+        e.dtstart = Icalendar::Values::DateTime.new(dtstart, 'tzid' => @time_zone)
+        e.dtend   = Icalendar::Values::DateTime.new(dtend, 'tzid' => @time_zone)
         if event_data[:alarm]
           e.alarm do |a|
             a.action  = 'DISPLAY'
