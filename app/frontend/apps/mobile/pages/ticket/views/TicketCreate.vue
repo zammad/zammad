@@ -9,26 +9,20 @@ import {
   EnumObjectManagerObjects,
 } from '@shared/graphql/types'
 import { ref } from 'vue'
-// import { computed } from 'vue'
-
-// fixed fields? (e.g. title)
-// skip fields for mobile? (e.g. user_permission for user create/edit)
-// get only one screen for placement
-
-// title fixed
-// create_top
-// some article fields
-
-// create_middle
-
-// create_bottom
 
 const additionalFormSchema = [
   {
-    name: 'title',
-    required: true,
-    object: EnumObjectManagerObjects.Ticket,
-    screen: 'create_top',
+    type: 'group',
+    name: 'step1',
+    isGroupOrList: true,
+    children: [
+      {
+        name: 'title',
+        required: true,
+        object: EnumObjectManagerObjects.Ticket,
+        screen: 'create_top',
+      },
+    ],
   },
   { screen: 'create_top', object: EnumObjectManagerObjects.Ticket },
   {
@@ -51,7 +45,11 @@ const submit = (data: unknown) => {
   console.log('VALUES', data)
 }
 
-const changeHiddenFields = ref<Record<string, Partial<FormSchemaField>>>({})
+const changeHiddenFields = ref<Record<string, Partial<FormSchemaField>>>({
+  title: {
+    required: true,
+  },
+})
 
 const changeHidden = () => {
   changeHiddenFields.value.type = {
@@ -71,6 +69,7 @@ const changeHidden = () => {
       class="text-left"
       :schema="additionalFormSchema"
       :change-fields="changeHiddenFields"
+      :multi-step-form-groups="['step1']"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
       use-object-attributes
       @submit="submit"

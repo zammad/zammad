@@ -1,17 +1,18 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { onMounted, ref } from 'vue'
+import type { FormKitNode } from '@formkit/core'
+import { getNode } from '@formkit/core'
+import { within } from '@testing-library/vue'
+import type { ExtendedMountingOptions } from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
+import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import { waitForNextTick, waitUntil } from '@tests/support/utils'
 import Form from '@shared/components/Form/Form.vue'
 import type { Props } from '@shared/components/Form/Form.vue'
 import UserError from '@shared/errors/UserError'
 import type { FormValues } from '@shared/components/Form'
-import type { FormKitNode } from '@formkit/core'
-import { within } from '@testing-library/vue'
-import type { ExtendedMountingOptions } from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { waitForNextTick, waitUntil } from '@tests/support/utils'
-import { onMounted, ref } from 'vue'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 
@@ -405,6 +406,7 @@ describe('Form.vue - Edge Cases', () => {
           {
             type: 'group',
             name: 'adress',
+            isGroupOrList: true,
             children: [
               {
                 type: 'text',
@@ -524,6 +526,80 @@ describe('Form.vue - with object attributes', () => {
     expect(wrapper.getByLabelText('Customer')).toHaveTextContent('John Doe')
     expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
+  })
+})
+
+describe('Form.vue - Multi step form groups', () => {
+  it('check for flat value structure for multi step form group submit', async () => {
+    const submitCallbackSpy = vi.fn()
+
+    const wrapper = await renderForm({
+      props: {
+        id: 'multi-step-form',
+        multiStepFormGroups: ['step1', 'step2'],
+        schema: [
+          {
+            type: 'group',
+            name: 'step1',
+            isGroupOrList: true,
+            children: [
+              {
+                type: 'text',
+                name: 'street',
+                label: 'Street',
+              },
+              {
+                type: 'text',
+                name: 'city',
+                label: 'City',
+              },
+            ],
+          },
+          {
+            type: 'text',
+            name: 'other',
+            label: 'Other',
+            value: 'Some text',
+          },
+          {
+            type: 'group',
+            name: 'step2',
+            isGroupOrList: true,
+            children: [
+              {
+                type: 'text',
+                name: 'title',
+                label: 'Title',
+              },
+              {
+                type: 'text',
+                name: 'fullname',
+                label: 'Fullname',
+                value: 'John Doe',
+              },
+            ],
+          },
+        ],
+        onSubmit: (data: FormValues) => submitCallbackSpy(data),
+      },
+    })
+
+    await wrapper.events.type(wrapper.getByLabelText('Street'), 'Street 12')
+
+    getNode('multi-step-form')?.submit()
+
+    await waitForNextTick(true)
+
+    expect(wrapper.emitted().submit).toBeTruthy()
+
+    expect(submitCallbackSpy).toHaveBeenCalledWith({
+      formId: expect.any(String),
+      street: 'Street 12',
+      city: undefined,
+      other: 'Some text',
+      title: undefined,
+      fullname: 'John Doe',
+    })
   })
 })
 

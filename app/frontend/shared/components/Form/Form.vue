@@ -72,6 +72,9 @@ export interface Props {
   schema?: FormSchemaNode[]
   formUpdaterId?: EnumFormUpdaterId
   changeFields?: Record<string, Partial<FormSchemaField>>
+  // Maybe in the future this is no longer needed, when FormKit supports group
+  // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
+  multiStepFormGroups?: string[]
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
     string,
@@ -198,12 +201,29 @@ defineExpose({
   formNode,
 })
 
+// Build the flat value, when multi step form groups are used.
+const getFlatValues = (values: FormValues, multiStepFormGroups: string[]) => {
+  const flatValues = {
+    ...values,
+  }
+
+  multiStepFormGroups.forEach((stepFormGroup) => {
+    Object.assign(flatValues, flatValues[stepFormGroup])
+    delete flatValues[stepFormGroup]
+  })
+
+  return flatValues
+}
+
 // Use the node context value, instead of the v-model, because of performance reason.
 const values = computed<FormValues>(() => {
   if (!formNodeContext.value) {
     return {}
   }
-  return formNodeContext.value.value
+
+  if (!props.multiStepFormGroups) return formNodeContext.value.value
+
+  return getFlatValues(formNodeContext.value.value, props.multiStepFormGroups)
 })
 
 const relationFields: FormUpdaterRelationField[] = []
@@ -225,7 +245,9 @@ const onSubmit = (values: FormData): Promise<void> | void => {
   if (!props.onSubmit) return undefined
 
   const emitValues = {
-    ...values,
+    ...(props.multiStepFormGroups
+      ? getFlatValues(values, props.multiStepFormGroups)
+      : values),
     formId,
   }
 
