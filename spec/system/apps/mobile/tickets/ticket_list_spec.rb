@@ -49,17 +49,10 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
     context 'when changing sort by and order by' do
       it 'opens the dialog and reorders the list' do
-        wait.until do
-          expect(page).to have_css('[data-test-id="column"]')
-        end
-
         find('[data-test-id="column"]').click
 
-        wait.until do
-          expect(page).to have_css('[role="dialog"]')
-          expect(page.find('[role="dialog"]')).to have_text('Number')
-          expect(page.find('[role="dialog"]')).to have_text('descending')
-        end
+        expect(page.find('[role="dialog"]')).to have_text('Number')
+        expect(page.find('[role="dialog"]')).to have_text('descending')
 
         find('span', text: 'Number').click
         find('label', text: 'descending').click
@@ -80,10 +73,6 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
       end
 
       it 'could change the overview' do
-        wait.until do
-          expect(page).to have_link('Open Tickets', href: '/mobile/tickets/view/all_open')
-        end
-
         find_link('Open Tickets', href: '/mobile/tickets/view/all_open').click
 
         wait.until do
@@ -92,10 +81,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
         find('output[name="overview"]').click
 
-        wait.until do
-          expect(page).to have_css('[role="dialog"]')
-          expect(page.find('[role="dialog"]')).to have_text('Escalated Tickets')
-        end
+        expect(page.find('[role="dialog"]')).to have_text('Escalated Tickets')
 
         find('span', text: 'Escalated Tickets').click
 

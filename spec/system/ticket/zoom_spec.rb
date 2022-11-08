@@ -320,7 +320,7 @@ RSpec.describe 'Ticket zoom', type: :system do
           it expects_visible ? 'delete button is visible' : 'delete button is not visible' do
             visit "ticket/zoom/#{article.ticket.id}"
 
-            wait.until_exists { find("#article-#{article.id}") }
+            find("#article-#{article.id}")
 
             within :active_ticket_article, article do
               expect(page).to send(matcher, '.js-ArticleAction[data-type=delete]', wait: 0)
@@ -838,7 +838,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def forward
       within :active_content do
-        wait.until_exists { find('.textBubble-content .richtext-content') }
+        find('.textBubble-content .richtext-content')
         click '.js-ArticleAction[data-type=emailForward]'
         fill_in 'To', with: 'customer@example.com'
         find('.js-submit').click

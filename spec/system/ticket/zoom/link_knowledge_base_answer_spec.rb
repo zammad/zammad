@@ -25,7 +25,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', authenticated_as: :au
 
       it 'allows to look up an answer' do
         within :active_content do
-          wait.until_exists { find('.link_kb_answers') }
+          find('.link_kb_answers')
 
           within '.link_kb_answers' do
             find('.js-add').click

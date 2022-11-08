@@ -55,10 +55,7 @@ module CommonActions
         click_button
       end
 
-      wait.until_exists do
-        current_login
-      end
-
+      current_login
       await_empty_ajax_queue
     end
   end
@@ -277,19 +274,15 @@ module CommonActions
       wrapper = all('div.ticket-article-item').last
 
       wrapper.find('.article-content .textBubble').click
-      wait.until do
-        wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
-      end
+      wrapper.find('.article-content-meta .article-meta.top').in_fixed_position
     end
   end
 
   def use_template(template)
-    wait.until do
-      field  = find('#form-template select[name="id"]')
-      option = field.find(:option, template.name)
-      option.select_option
-      click '.sidebar-content .js-apply'
-    end
+    field  = find('#form-template select[name="id"]')
+    option = field.find(:option, template.name)
+    option.select_option
+    click '.sidebar-content .js-apply'
   end
 
   # Checks if modal is ready.
@@ -388,7 +381,7 @@ module CommonActions
 
     # When visiting the first route after login, confirm currently logged in user.
     ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
-    wait.until_exists { current_login } if !skip_waiting
+    current_login if !skip_waiting
 
     nil
   end

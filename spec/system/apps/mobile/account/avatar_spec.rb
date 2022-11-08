@@ -112,25 +112,17 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
       end
 
       it 'displays the avatar' do
-        wait.until do
-          expect(page).to have_css('[data-test-id="common-avatar"]')
-
-          avatar_element_style = find('[data-test-id="common-avatar"]').style('background-image')
-          expect(avatar_element_style['background-image']).to eq("url(\"#{background_image}\")")
-        end
+        avatar_element_style = find('[data-test-id="common-avatar"]').style('background-image')
+        expect(avatar_element_style['background-image']).to eq("url(\"#{background_image}\")")
       end
 
       it 'displays the avatar in the footer' do
         visit '/account'
 
-        wait.until do
-          expect(page).to have_css('footer [data-test-id="common-avatar"]')
+        avatar_element_style = find('footer [data-test-id="common-avatar"]').style('background-image')
+        background_image_api_url = "/api/v1/users/image/#{avatar.store_hash}"
 
-          background_image_api_url = "/api/v1/users/image/#{avatar.store_hash}"
-
-          avatar_element_style = find('footer [data-test-id="common-avatar"]').style('background-image')
-          expect(avatar_element_style['background-image']).to match(%r{#{background_image_api_url}})
-        end
+        expect(avatar_element_style['background-image']).to match(%r{#{background_image_api_url}})
       end
 
       it 'can delete an existing avatar' do
@@ -147,10 +139,8 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
 
         find_button('Delete avatar').click
 
-        wait.until do
-          expect(find('[data-test-id="common-avatar"]')).to have_text('JD')
-          expect(page).to have_button('Delete', disabled: true)
-        end
+        expect(find('[data-test-id="common-avatar"]')).to have_text('JD')
+        expect(page).to have_button('Delete', disabled: true)
       end
     end
   end

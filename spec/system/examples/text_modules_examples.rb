@@ -163,7 +163,7 @@ RSpec.shared_examples 'text modules' do |path:|
       find(:richtext).send_keys('::')
       find(:richtext).send_keys('dummy')
 
-      wait.until_exists { find('.text-modules-box') }
+      find('.text-modules-box')
 
       expected_order = [
         "#{text_module_without_group2.name}\n#{text_module_without_group2.keywords}",

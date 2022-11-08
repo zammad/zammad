@@ -414,9 +414,7 @@ RSpec.describe 'Manage > Overviews', type: :system do
           # delete the role and wait for the help message to appear
           find("div[data-attribute-name='role_ids'] div.js-selected div[data-value='#{role_id}']").click
 
-          wait.until do
-            find("div[data-attribute-name='role_ids'] div.u-placeholder").has_content?('Nothing selected')
-          end
+          find("div[data-attribute-name='role_ids'] div.u-placeholder").has_content?('Nothing selected')
 
           click_on 'Submit'
         end
