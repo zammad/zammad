@@ -8,7 +8,7 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import useSelectOptions from '../../composables/useSelectOptions'
-import type { TreeSelectContext, TreeSelectOption } from './types'
+import type { TreeSelectContext } from './types'
 import { FlatSelectOption } from './types'
 import type { SelectOption } from '../FieldSelect'
 import useValue from '../../composables/useValue'
@@ -17,6 +17,8 @@ const props = defineProps<{
   context: TreeSelectContext
   name: string
   currentPath: FlatSelectOption[]
+  flatOptions: FlatSelectOption[]
+  sortedOptions: FlatSelectOption[]
 }>()
 
 const { isCurrentValue } = useValue(toRef(props, 'context'))
@@ -50,23 +52,6 @@ const popFromPath = () => {
   emit('pop')
 }
 
-const flattenOptions = (
-  options: TreeSelectOption[],
-  parents: (string | number | boolean)[] = [],
-): FlatSelectOption[] =>
-  options &&
-  options.reduce((flatOptions: FlatSelectOption[], { children, ...option }) => {
-    flatOptions.push({
-      ...option,
-      parents,
-      hasChildren: Boolean(children),
-    })
-    if (children)
-      flatOptions.push(...flattenOptions(children, [...parents, option.value]))
-    return flatOptions
-  }, [])
-
-const flatOptions = computed(() => flattenOptions(props.context.options))
 const contextReactive = toRef(props, 'context')
 
 watch(() => contextReactive.value.noFiltering, clearFilter)
@@ -107,13 +92,12 @@ const nextPageCallback = (
 
 const {
   dialog,
-  sortedOptions,
   getSelectedOptionLabel,
   selectOption,
   getDialogFocusTargets,
   advanceDialogFocus,
 } = useSelectOptions(
-  flatOptions,
+  toRef(props, 'flatOptions'),
   contextReactive,
   previousPageCallback,
   nextPageCallback,
@@ -124,11 +108,11 @@ const deaccent = (s: string) =>
 
 const filteredOptions = computed(() => {
   // In case we are not currently filtering for a parent, search across all options.
-  let options = sortedOptions.value
+  let options = props.sortedOptions
 
   // Otherwise, search across options which are children of the current parent.
   if (currentParent.value)
-    options = sortedOptions.value.filter((option) =>
+    options = props.sortedOptions.filter((option) =>
       (option as FlatSelectOption).parents.includes(currentParent.value?.value),
     )
 
@@ -153,12 +137,12 @@ const select = (option: FlatSelectOption) => {
 const currentOptions = computed(() => {
   // In case we are not currently filtering for a parent, return only top-level options.
   if (!currentParent.value)
-    return sortedOptions.value.filter(
-      (option) => !(option as FlatSelectOption).parents.length,
+    return props.sortedOptions.filter(
+      (option) => !(option as FlatSelectOption).parents?.length,
     )
 
   // Otherwise, return all options which are children of the current parent.
-  return sortedOptions.value.filter(
+  return props.sortedOptions.filter(
     (option) =>
       (option as FlatSelectOption).parents.length &&
       (option as FlatSelectOption).parents[

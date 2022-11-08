@@ -9,10 +9,12 @@ const fieldDefinition = createInput(
   FieldTreeSelectInput,
   [
     'clearable',
-    'noFiltering',
+    'historicalOptions',
     'multiple',
+    'noFiltering',
     'noOptionsLabelTranslation',
     'options',
+    'rejectNonExistentValues',
     'sorting',
   ],
   { features: [addLink, formUpdaterTrigger()] },

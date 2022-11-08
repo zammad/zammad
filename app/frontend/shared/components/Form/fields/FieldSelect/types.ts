@@ -23,9 +23,11 @@ export type SelectSize = 'small' | 'medium'
 export type SelectContext = FormFieldContext<{
   clearable?: boolean
   disabled?: boolean
+  historicalOptions: Record<string, string>
   multiple?: boolean
   noOptionsLabelTranslation?: boolean
   options: SelectOption[]
+  rejectNonExistentValues?: boolean
   size?: SelectSize
   sorting?: SelectOptionSorting
 }>

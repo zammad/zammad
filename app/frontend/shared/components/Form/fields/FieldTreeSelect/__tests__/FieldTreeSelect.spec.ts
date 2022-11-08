@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, keyBy } from 'lodash-es'
 import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
@@ -361,6 +361,86 @@ describe('Form - Field - TreeSelect - Options', () => {
 
     expect(emittedInput[0][0]).toBe(undefined)
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+  })
+
+  it('supports historical options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'treeselect',
+        value: 10,
+        options: testOptions,
+        historicalOptions: {
+          ...keyBy(testOptions, 'value'),
+          10: 'Item D',
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    let selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(4)
+
+    selectOptions.forEach((selectOption, index) => {
+      if (index === 3) expect(selectOption).toHaveTextContent('Item D')
+      else expect(selectOption).toHaveTextContent(testOptions[index].label)
+    })
+
+    await wrapper.events.click(selectOptions[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toBe(testOptions[0].value)
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(
+      testOptions[0].label,
+    )
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(4)
+
+    selectOptions.forEach((selectOption, index) => {
+      if (index === 3) expect(selectOption).toHaveTextContent('Item D')
+      else expect(selectOption).toHaveTextContent(testOptions[index].label)
+    })
+  })
+
+  it('supports rejection of non-existent values', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'treeselect',
+        value: 10,
+        options: testOptions,
+        clearable: true, // otherwise it defaults to the first option
+        rejectNonExistentValues: true,
+      },
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toBe(undefined)
+    expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(3)
   })
 
   it('supports disabled property', async () => {

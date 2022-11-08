@@ -42,21 +42,6 @@ const dialog = useDialog({
   },
 })
 
-const openModal = () => {
-  return dialog.open({
-    context: toRef(props, 'context'),
-    name: nameDialog,
-    currentPath,
-    onPush(option: FlatSelectOption) {
-      currentPath.value.push(option)
-    },
-    onPop() {
-      currentPath.value.pop()
-    },
-  })
-}
-
-// TODO: could maybe be moved to a other place, because it's currently duplicated
 const flattenOptions = (
   options: TreeSelectOption[],
   parents: SelectValue[] = [],
@@ -91,13 +76,30 @@ const focusFirstTarget = (targetElements?: HTMLElement[]) => {
 
 const {
   hasStatusProperty,
+  sortedOptions,
   optionValueLookup,
   getSelectedOptionIcon,
   getSelectedOptionLabel,
   getSelectedOptionStatus,
   getDialogFocusTargets,
-  setupClearMissingOptionValue,
+  setupMissingOptionHandling,
 } = useSelectOptions(flatOptions, toRef(props, 'context'))
+
+const openModal = () => {
+  return dialog.open({
+    context: toRef(props, 'context'),
+    name: nameDialog,
+    currentPath,
+    flatOptions,
+    sortedOptions,
+    onPush(option: FlatSelectOption) {
+      currentPath.value.push(option)
+    },
+    onPop() {
+      currentPath.value.pop()
+    },
+  })
+}
 
 const getSelectedOptionParents = (selectedValue: string | number) =>
   (optionValueLookup.value[selectedValue] &&
@@ -128,7 +130,7 @@ const onInputClick = () => {
 
 useSelectPreselect(flatOptions, contextReactive)
 useFormBlock(contextReactive, onInputClick)
-setupClearMissingOptionValue()
+setupMissingOptionHandling()
 </script>
 
 <template>

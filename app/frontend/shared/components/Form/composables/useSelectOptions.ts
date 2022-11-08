@@ -18,8 +18,10 @@ const useSelectOptions = (
   options: Ref<SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]>,
   context: Ref<
     FormFieldContext<{
+      historicalOptions?: Record<string, string>
       multiple?: boolean
       noOptionsLabelTranslation?: boolean
+      rejectNonExistentValues?: boolean
       sorting?: SelectOptionSorting
     }>
   >,
@@ -34,22 +36,30 @@ const useSelectOptions = (
 ) => {
   const dialog = ref<HTMLElement>()
 
-  const { currentValue, hasValue, clearValue } = useValue(context)
+  const { currentValue, hasValue, valueContainer, clearValue } =
+    useValue(context)
 
-  const hasStatusProperty = computed(
-    () =>
-      options.value &&
-      options.value.some(
-        (option) => (option as SelectOption | FlatSelectOption).status,
-      ),
+  const appendedOptions: Ref<
+    SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]
+  > = ref([])
+
+  const availableOptions = computed(() => [
+    ...(options.value || []),
+    ...appendedOptions.value,
+  ])
+
+  const hasStatusProperty = computed(() =>
+    availableOptions.value?.some(
+      (option) => (option as SelectOption | FlatSelectOption).status,
+    ),
   )
 
   const translatedOptions = computed(() => {
-    if (!options.value) return []
+    if (!availableOptions.value) return []
 
     const { noOptionsLabelTranslation } = context.value
 
-    return options.value.map(
+    return availableOptions.value.map(
       (option: SelectOption | FlatSelectOption | AutoCompleteOption) => {
         const label = noOptionsLabelTranslation
           ? option.label
@@ -188,9 +198,57 @@ const useSelectOptions = (
     if (targetElement) targetElement.focus()
   }
 
-  // Setup a watcher to clear the value if the related option goes missing.
-  //   This will only kick-in on subsequent mutations of the options prop.
-  const setupClearMissingOptionValue = () => {
+  // Setup a mechanism to handle missing options, including:
+  //   - appending historical options for current values
+  //   - clearing value in case options are missing
+  const setupMissingOptionHandling = () => {
+    const historicalOptions = context.value.historicalOptions || {}
+
+    // Append historical options to the list of available options, if:
+    //   - non-existent values are not supposed to be rejected
+    //   - we have a current value
+    //   - we have a list of historical options
+    if (
+      !context.value.rejectNonExistentValues &&
+      hasValue.value &&
+      historicalOptions
+    ) {
+      appendedOptions.value = valueContainer.value.reduce(
+        (
+          accumulator:
+            | SelectOption[]
+            | FlatSelectOption[]
+            | AutoCompleteOption[],
+          value: SelectValue,
+        ) => [
+          ...accumulator,
+
+          // Make sure the options are not duplicated!
+          ...(!options.value.some((option) => option.value === value) &&
+          historicalOptions[value.toString()]
+            ? [
+                {
+                  value,
+                  label: historicalOptions[value.toString()],
+                },
+              ]
+            : []),
+        ],
+        [],
+      )
+    }
+
+    // Reject non-existent values during the initialization phase.
+    //   Note that this behavior is controlled by a dedicated flag.
+    if (
+      context.value.rejectNonExistentValues &&
+      hasValue.value &&
+      typeof optionValueLookup.value[currentValue.value] === 'undefined'
+    )
+      clearValue()
+
+    // Set up a watcher that clears a missing option value on subsequent mutations of the options prop.
+    //   In this case, the dedicated flag is ignored.
     watch(
       () => options.value,
       () => {
@@ -217,7 +275,7 @@ const useSelectOptions = (
     selectOption,
     getDialogFocusTargets,
     advanceDialogFocus,
-    setupClearMissingOptionValue,
+    setupMissingOptionHandling,
   }
 }
 

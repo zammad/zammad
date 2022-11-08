@@ -30,7 +30,7 @@ const {
   getSelectedOptionIcon,
   getSelectedOptionLabel,
   getSelectedOptionStatus,
-  setupClearMissingOptionValue,
+  setupMissingOptionHandling,
 } = useSelectOptions(toRef(props.context, 'options'), contextReactive)
 
 const isSizeSmall = computed(() => props.context.size === 'small')
@@ -45,7 +45,7 @@ const openSelectDialog = () => {
 useFormBlock(contextReactive, openSelectDialog)
 
 useSelectPreselect(sortedOptions, contextReactive)
-setupClearMissingOptionValue()
+setupMissingOptionHandling()
 </script>
 
 <template>

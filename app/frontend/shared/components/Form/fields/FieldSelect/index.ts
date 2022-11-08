@@ -29,9 +29,11 @@ const fieldDefinition = createInput(
   FieldSelectInput,
   [
     'clearable',
+    'historicalOptions',
     'multiple',
     'noOptionsLabelTranslation',
     'options',
+    'rejectNonExistentValues',
     'size',
     'sorting',
   ],
