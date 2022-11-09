@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { usePrivateIcon } from './composable'
 import type { Animations, Sizes } from './types'
 
 export interface Props {
@@ -11,23 +11,6 @@ export interface Props {
   label?: string
   decorative?: boolean
   animation?: Animations
-}
-
-const animationClassMap: Record<Animations, string> = {
-  pulse: 'animate-pulse',
-  spin: 'animate-spin',
-  ping: 'animate-ping',
-  bounce: 'animate-bounce',
-}
-
-const sizeMap: Record<Sizes, number> = {
-  xs: 12,
-  tiny: 16,
-  small: 20,
-  base: 24,
-  medium: 32,
-  large: 48,
-  xl: 96,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,22 +26,7 @@ const onClick = (event: MouseEvent) => {
   emit('click', event)
 }
 
-const iconClass = computed(() => {
-  let className = `icon-${props.name}`
-  if (props.animation) {
-    className += ` ${animationClassMap[props.animation]}`
-  }
-  return className
-})
-
-const finalSize = computed(() => {
-  if (props.fixedSize) return props.fixedSize
-
-  return {
-    width: sizeMap[props.size],
-    height: sizeMap[props.size],
-  }
-})
+const { iconClass, finalSize } = usePrivateIcon(props)
 </script>
 
 <template>

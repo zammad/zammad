@@ -2,10 +2,10 @@
 
 import type { RegisterSWOptions } from './types'
 
-const auto = true
+// should service worker be updated automatically without a prompt
+const auto = false
+// should servicer worker be destroyed - should be used only if something went wrong
 const autoDestroy = false
-
-export type { RegisterSWOptions }
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const registerSW = (options: RegisterSWOptions) => {
@@ -22,16 +22,20 @@ export const registerSW = (options: RegisterSWOptions) => {
 
   // service worker is disabled during normal development
   if (import.meta.env.DEV) {
-    // you can enable service worker, it will point to /public/vite-dev/sw.js
-    // don't forget to unregister service worker, when you are done
-    if (import.meta.env.VITE_SW_ENABLE) {
-      navigator.serviceWorker.register(path, {
-        scope,
-        type: 'classic',
-      })
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const sw = window.sw!
+    // to trigger "Need refresh" run in console: `sw.triggerUpdate()`
+    sw.ontriggerupdate = () => {
+      onNeedRefresh?.()
     }
-    return () => {
-      // noop
+    // you can disable service worker in development mode by running in console: pwa.enable()
+    // you can enable service worker, it will point to /public/vite-dev/sw.js
+    // don't forget to unregister service worker, when you are done in console: pwa.disable()
+    if (!sw.isEnabled()) {
+      return () => {
+        console.log('Updating service worker...')
+        window.location.reload()
+      }
     }
   }
 
@@ -50,6 +54,8 @@ export const registerSW = (options: RegisterSWOptions) => {
         wb?.addEventListener('controlling', (event) => {
           if (event.isUpdate) window.location.reload()
         })
+
+        setTimeout(() => window.location.reload(), 1000)
       }
 
       await sendSkipWaitingMessage?.()

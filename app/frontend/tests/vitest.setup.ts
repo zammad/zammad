@@ -5,11 +5,14 @@ import { configure } from '@testing-library/vue'
 import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
+import { ServiceWorkerHelper } from '@shared/utils/testSw'
 
 // eslint-disable-next-line no-underscore-dangle
 global.__ = (source) => {
   return source
 }
+
+window.sw = new ServiceWorkerHelper()
 
 configure({
   testIdAttribute: 'data-test-id',
@@ -18,6 +21,13 @@ configure({
 require.extensions['.css'] = () => ({})
 
 vi.stubGlobal('scrollTo', vi.fn())
+vi.stubGlobal('matchMedia', (media: string) => ({
+  matches: false,
+  media,
+  onchange: null,
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+}))
 
 vi.mock('@shared/components/CommonNotifications/composable', async () => {
   const { default: originalUseNotifications } = await vi.importActual<any>(

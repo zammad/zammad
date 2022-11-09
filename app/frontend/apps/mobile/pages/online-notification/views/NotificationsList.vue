@@ -97,7 +97,7 @@ const haveUnread = computed(() => unseenCount.value > 0)
 </script>
 
 <template>
-  <CommonLoader :loading="!notifications.length && loading">
+  <CommonLoader center :loading="!notifications.length && loading">
     <div class="ltr:pr-4 ltr:pl-3 rtl:pl-4 rtl:pr-3">
       <NotificationItem
         v-for="notification of notifications"
