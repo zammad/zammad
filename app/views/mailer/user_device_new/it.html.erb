@@ -1,21 +1,19 @@
-#{config.product_name}-login rilevato da un nuovo dispositivo
+#{config.product_name} accesso da un nuovo dispositivo
 
 <div>Buongiorno #{user.firstname},</div>
 <br>
-<div>sembra che abbia eseguito l'accesso a <b>un nuovo dispositivo</b> per "#{user_device.created_at}" a:</div>
+<div>sembra che abbia eseguito l'accesso da <b>un nuovo dispositivo</b> il "#{user_device.created_at}":</div>
 <br>
 <div>
-Il suo dispositivo: #{user_device.name}<br>
-La sua posizione (relativa): #{user_device.location}<br>
-Il suo indirizzo IP: #{user_device.ip}<br>
+Il tuo dispositivo: #{user_device.name}<br>
+La tua posizione (relativa): #{user_device.location}<br>
+Il tuo indirizzo IP: #{user_device.ip}<br>
 </div>
 <br>
-<div>Il dispositivo è stato aggiunto all'elenco dei dispositivi conosciuti, questo elenco può essere visualizzato qui:</div>
+<div>Il dispositivo è stato aggiunto all'elenco di quelli conosciuti, che può essere visualizzato qui:</div>
 <br>
-<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>In caso contrario, rimuovere il dispositivo dall'elenco, modificare la password dell'account e contattare l'amministratore. Qualcuno potrebbe avere accesso non autorizzato al suo account.</div>
-<br>
-<div>Sempre cordiali saluti</div>
+<div>Se non sei stato tu, rimuovi il dispositivo, modifica la password dell'account e contatta l'amministratore. Qualcuno potrebbe avere accesso non autorizzato al tuo account.</div>
 <br>
 <div>Il team #{config.product_name} </div>

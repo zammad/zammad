@@ -557,6 +557,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'מצטערים, הזמן לקבלת נציג ארוך מהרגיל. נסה שוב מאוחר יותר או שלח לנו דוא"ל. תודה!',
         'You are on waiting list position <strong>%s</strong>.': 'מיקומך בתור <strong>%s</strong>.'
       },
+      'hr': {
+        '<strong>Chat</strong> with us!': '<strong>Čavrljajte</strong> sa nama!',
+        'All colleagues are busy.': 'Svi kolege su zauzeti.',
+        'Chat closed by %s': '%s zatvara chat',
+        'Compose your message…': 'Sastavite poruku…',
+        'Connecting': 'Povezivanje',
+        'Connection lost': 'Veza prekinuta',
+        'Connection re-established': 'Veza je ponovno uspostavljena',
+        'Offline': 'Odsutan',
+        'Online': 'Dostupan(a)',
+        'Scroll down to see new messages': 'Pomaknite se prema dolje da biste vidjeli nove poruke',
+        'Send': 'Šalji',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Budući da niste odgovorili u posljednjih %s minuta, vaš je razgovor zatvoren.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Budući da niste odgovorili u posljednjih %s minuta, vaš je razgovor s <strong>%</strong>s zatvoren.',
+        'Start new conversation': 'Započni novi razgovor',
+        'Today': 'Danas',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': '',
+        'You are on waiting list position <strong>%s</strong>.': ''
+      },
       'hu': {
         '<strong>Chat</strong> with us!': '<strong>Chatelj</strong> velünk!',
         'All colleagues are busy.': 'Jelenleg minden kollégánk elfoglalt.',
@@ -645,11 +664,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Online': 'Online',
         'Scroll down to see new messages': 'Skroluj w dół, aby zobaczyć wiadomości',
         'Send': 'Wyślij',
-        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa została zamknięta.',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa z <strong>%s</strong> została zamknięta.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Twoja rozmowa została zamknięta, ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Twoja rozmowa z <strong>%s</strong> została zamknięta, ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut.',
         'Start new conversation': 'Rozpocznij nową rozmowę',
         'Today': 'Dzisiaj',
-        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przepraszamy, otrzymanie pustego slotu trwa dłużej, niż oczekiwano. Spróbuj ponownie później lub wyślij nam e-mail. Dziękuję!',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przepraszamy, otrzymanie pustego slotu trwa dłużej, niż oczekiwano. Spróbuj ponownie później lub wyślij nam e-mail. Dziękujemy!',
         'You are on waiting list position <strong>%s</strong>.': 'Jesteś na pozycji listy oczekujących <strong>%s</strong>.'
       },
       'pt-br': {

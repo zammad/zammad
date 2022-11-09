@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-18 03:30+0000\n"
-"Last-Translator: Florent <florent.fayolle69@gmail.com>\n"
+"PO-Revision-Date: 2022-11-08 07:14+0000\n"
+"Last-Translator: Raoul Schmitt <raoul.schmitt@tizoo.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -400,6 +400,19 @@ msgstr ""
 "<br>\n"
 "<div>Votre équipe #{config.product_name}</div>\n"
 
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#, fuzzy
+#| msgid "Confirm"
+msgid "%s (confirm)"
+msgstr "Confirmer"
+
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
@@ -758,6 +771,12 @@ msgstr "il y a 1 semaine"
 msgid "1 year ago"
 msgstr "il y a 1 an"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "1. Ticket Create"
+msgstr "Le ticket %s a été créé !"
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr "2 heures"
@@ -774,6 +793,12 @@ msgstr "2 normal"
 msgid "2 weeks"
 msgstr "2 semaines"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "2. Ticket Update"
+msgstr "Mettre a jour le ticket"
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr "3 haut"
@@ -782,9 +807,27 @@ msgstr "3 haut"
 msgid "3 weeks"
 msgstr "3 semaines"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket reminder reached"
+msgid "3. Ticket Reminder Reached"
+msgstr "Rappel de ticket atteint"
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 semaines"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "4. Ticket Escalation"
+msgstr "Escalade du ticket"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "5. Ticket Escalation Warning"
+msgstr "Escalade du ticket"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -1202,7 +1245,7 @@ msgstr "Administrateur"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Consentement de l'administrateur"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -1254,6 +1297,7 @@ msgstr "Passer au ticket suivant de l'aperçu"
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
+"Après autorisation, merci de reconnecter votre messagerie Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2374,6 +2418,7 @@ msgstr "Modifié"
 msgid "Changes"
 msgstr "Modifications"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
 msgstr "Les modifications n'ont pas pu être chargés."
@@ -2458,6 +2503,12 @@ msgstr "Chat"
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Chat ID"
 msgstr "Chat ID"
+
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+#, fuzzy
+#| msgid "Session"
+msgid "Chat Session"
+msgstr "Session"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -2620,10 +2671,12 @@ msgid "Click here"
 msgstr "Cliquez ici"
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "ID Client"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "Phrase secrète côté client"
@@ -3444,7 +3497,7 @@ msgstr "Décembre"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
-msgstr "Déchiffrement échoué !"
+msgstr "Echec du décryptage !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption was successful."
@@ -3475,7 +3528,7 @@ msgstr "Rôle par défaut à l'inscription"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
-msgstr "Définit le calendrier par défaut des souscriptions ticket"
+msgstr "Calendrier par défaut des souscriptions des tickets"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -3521,17 +3574,17 @@ msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
-"Défnit le filtre postmaster à vérifier quand un suivi est créé (basé sur les "
-"paramètres admin)."
+"Définit le filtre postmaster à vérifier quand un suivi est créé (basé sur "
+"les paramètres admin)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr ""
-"Défnit le filtre postmaster pour l'import des boites courriel d'archive."
+"Définit le filtre postmaster pour l'import des boites courriel d'archive."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr "Défnit le filtre postmaster."
+msgstr "Définit le filtre postmaster."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -3545,7 +3598,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Définit le nombre maximum de tickets affichés dans les aperçus."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -3835,6 +3888,10 @@ msgid ""
 "not."
 msgstr ""
 "Définit si l'intégration i-doit (http://www.i-doit.org) est active ou non."
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4449,6 +4506,10 @@ msgstr ""
 msgid "Designer"
 msgstr "Concepteur"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4759,6 +4820,12 @@ msgstr "URL de l'endpoint ELasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
+msgstr "Utilisateur de l'endpoint Elasticsearch"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch Endpoint User"
+msgid "Elasticsearch Excludes"
 msgstr "Utilisateur de l'endpoint Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -5502,12 +5569,24 @@ msgstr ""
 msgid "Facebook"
 msgstr "Facebook"
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook"
+msgid "Facebook APP ID"
+msgstr "Facebook"
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr "Compte Facebook"
 
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
+msgstr "Identifiants de l'application Facebook"
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook App Credentials"
+msgid "Facebook App Secret"
 msgstr "Identifiants de l'application Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -5753,6 +5832,12 @@ msgstr "Formater en //barré//"
 msgid "Format as _underlined_"
 msgstr "Formater en _souligné_"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as |bold|"
+msgid "Format as bold"
+msgstr "Formater en |gras|"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
 msgstr "Formater en titre h1"
@@ -5765,9 +5850,27 @@ msgstr "Formater en titre h2"
 msgid "Format as h3 heading"
 msgstr "Formater en titre h3"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as ||italic||"
+msgid "Format as italic"
+msgstr "Formater en ||italic||"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
 msgstr "Formater en liste numérotée"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as //strikethrough//"
+msgid "Format as strikethrough"
+msgstr "Formater en //barré//"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as _underlined_"
+msgid "Format as underlined"
+msgstr "Formater en _souligné_"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
@@ -5809,6 +5912,7 @@ msgstr "Vendredi"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5975,6 +6079,18 @@ msgstr "Google"
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
 msgstr "Autorisations Google Apps"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client ID"
+msgid "Google Client ID"
+msgstr "ID Client"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google Client Secret"
+msgstr "Phrase secrète côté client"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6819,6 +6935,12 @@ msgstr "Integrations"
 msgid "Internal"
 msgstr "Interne"
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+#, fuzzy
+#| msgid "Create Knowledge Base"
+msgid "Internal Knowledge Base feed:"
+msgstr "Créer la Base de Connaissances"
+
 #: app/models/import_job.rb
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
@@ -7120,6 +7242,12 @@ msgstr "Réponse dans la base de connaissances"
 msgid "Knowledge Base Editor"
 msgstr "Éditeur de la base de connaissances"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "Knowledge Base Reader"
+msgid "Knowledge Base Feed"
+msgstr "Lecteur de la base de connaissances"
+
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
 msgstr "Lecteur de la base de connaissances"
@@ -7238,6 +7366,10 @@ msgstr "Dernier(es) utilisé(es)"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
 msgstr "Layout"
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -7416,7 +7548,7 @@ msgstr ""
 "validé votre adresse e-mail ?"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
 msgid "Logo"
 msgstr "Logo"
 
@@ -7606,7 +7738,7 @@ msgstr "Nombre maximum de déclencheurs exécutés récursivement."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Nombre maximum de tickets affichés dans les aperçus"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7746,6 +7878,7 @@ msgstr "Minute(s)"
 msgid "Minutes"
 msgstr "Minutes"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Mobile"
@@ -7977,10 +8110,6 @@ msgstr "Navigation"
 msgid "Need 'form_id' to add attachments to new form."
 msgstr ""
 "'form_id' requis pour ajouter des pièces jointes au nouveau formulaire."
-
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
-msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -8335,7 +8464,7 @@ msgstr "Pas de configuration définie."
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
-msgstr ""
+msgstr "Pas de contenu à afficher"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
@@ -8345,7 +8474,7 @@ msgstr "brouillon"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
-msgstr ""
+msgstr "Pas d'e-mail !"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
@@ -8358,7 +8487,7 @@ msgstr "Pas de saisies"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
-msgstr ""
+msgstr "Aucune entrée trouvée dans le-s dossier-s sélectionné-s."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file chosen."
@@ -8366,7 +8495,7 @@ msgstr "Aucun fichier choisi."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file formats allowed."
-msgstr ""
+msgstr "Aucun format de fichiers autorisé."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "No filter was configured."
@@ -8374,7 +8503,7 @@ msgstr "Aucun filtre n'a été configuré."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No folders were found for the given user credentials."
-msgstr ""
+msgstr "Aucun dossier trouvé pour ces identifiants utilisateur."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
@@ -8390,7 +8519,7 @@ msgstr "Aucun proxy pour les hôtes suivants."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
-msgstr ""
+msgstr "Aucun enregistrement trouvé !"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
@@ -8404,7 +8533,7 @@ msgstr "Aucun résultat trouvé."
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
-msgstr ""
+msgstr "Aucune session valable."
 
 #: lib/stats.rb
 msgid "No settings with area 'Dashboard::Stats' defined"
@@ -8415,7 +8544,7 @@ msgstr ""
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb app/controllers/users_controller.rb
 msgid "No source data submitted!"
-msgstr ""
+msgstr "Aucune source de données fournie !"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "No template created yet."
@@ -8617,6 +8746,10 @@ msgstr "Novembre"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Nombre"
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
+msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -9689,6 +9822,12 @@ msgstr "Supprimer le formatage"
 msgid "Removes the shadows for a flat look."
 msgstr "Enlève les ombrages pour une apparence à plat."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "New Access Token is"
+msgid "Renew Access Token"
+msgstr "Le nouveau jeton (token) d'accès est"
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr "Réouvert"
@@ -10641,6 +10780,10 @@ msgstr "afficher plus"
 msgid "Show Draft"
 msgstr "Brouillon"
 
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Afficher les détails de la recherche"
@@ -11225,6 +11368,12 @@ msgstr "Modèles"
 msgid "Templates"
 msgstr "Modèles"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#, fuzzy
+#| msgid "App Tenant ID"
+msgid "Tenant UUID/Name"
+msgstr "App Tenant ID"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr ""
@@ -11380,7 +11529,7 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr "%s objet(s) créé(s)."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
@@ -11609,7 +11758,7 @@ msgstr ""
 "L'identifiant d'un ticket, par exemple Ticket#, Call#, MyTicket#. La valeur "
 "par défaut est Ticket#."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
 msgstr ""
 
@@ -12135,6 +12284,10 @@ msgstr "Applications tiers"
 #| msgid "Bot already exists!"
 msgid "This bot already exists."
 msgstr "Ce robot existe déjà !"
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -12796,6 +12949,7 @@ msgstr "Tickets de l'utilisateur"
 msgid "Tickets with \"%s\""
 msgstr "Tickets de l'utilisateur"
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -13082,6 +13236,18 @@ msgstr ""
 msgid "Twitter - tweet initials"
 msgstr "Twitter - Initiales tweet"
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Account"
+msgid "Twitter Access Token"
+msgstr "Compte Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Access Token Secret"
+msgstr "Clé secrète Twitter"
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr "Compte Twitter"
@@ -13089,6 +13255,22 @@ msgstr "Compte Twitter"
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
 msgstr "Information d'identification de l’application Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Key"
+msgid "Twitter Consumer Key"
+msgstr "Clé Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Consumer Secret"
+msgstr "Clé secrète Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -15005,6 +15187,10 @@ msgstr "remplir de vide"
 msgid "for an agent to respond"
 msgstr "avant qu'un agent ne réponde"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "de"
@@ -15043,6 +15229,12 @@ msgstr "heure"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
 msgstr "heures"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid ""
+"https://example.com/?q=#{object.attribute_name} - use ticket, user or "
+"organization as object"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -15491,6 +15683,18 @@ msgstr "supprimé"
 msgid "reply"
 msgstr "Répondre"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
+msgstr "Répondre"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "is required"
+msgid "required"
+msgstr "est requis"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -15555,6 +15759,12 @@ msgstr "montrer"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
 msgstr "afficher plus"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "show"
+msgid "shown"
+msgstr "montrer"
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -16158,9 +16368,6 @@ msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
 #~ "Définit le dernier contact client en se basant soit sur le dernier "
 #~ "contact du client, soit sur le dernier contact auquel un agent n’a pas "
 #~ "encore répondu."
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmer"
 
 #~ msgid "Sure?"
 #~ msgstr "Êtes-vous sûr ?"

@@ -195,6 +195,19 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#, fuzzy
+#| msgid "Confirm"
+msgid "%s (confirm)"
+msgstr "kwemeza"
+
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #, fuzzy
@@ -579,6 +592,12 @@ msgstr ""
 msgid "1 year ago"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "1. Ticket Create"
+msgstr "Amatike %s yakozwe"
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr ""
@@ -597,6 +616,12 @@ msgstr "2 isanzwe"
 msgid "2 weeks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "2. Ticket Update"
+msgstr "kuvugurura tike"
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr "3 hejuru"
@@ -605,9 +630,27 @@ msgstr "3 hejuru"
 msgid "3 weeks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket reminder reached"
+msgid "3. Ticket Reminder Reached"
+msgstr "igihe cyo kwibutswa itike cyageze"
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "4. Ticket Escalation"
+msgstr "izamuka rya tike"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "5. Ticket Escalation Warning"
+msgstr "izamuka rya tike"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -2185,6 +2228,7 @@ msgstr "ya/byahinduwe/tse"
 msgid "Changes"
 msgstr "impinduka"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -2275,6 +2319,12 @@ msgstr "kuganira"
 #| msgid "Chat"
 msgid "Chat ID"
 msgstr "kuganira"
+
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+#, fuzzy
+#| msgid "Session"
+msgid "Chat Session"
+msgstr "icyiciro"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -2457,10 +2507,12 @@ msgid "Click here"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr ""
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "Ibanga ry'umukiriya"
@@ -3606,6 +3658,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
@@ -4181,6 +4237,10 @@ msgstr ""
 msgid "Designer"
 msgstr "uwashushanyije/uwahimbye ikintu"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4500,6 +4560,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Last sync"
+msgid "Elasticsearch Excludes"
+msgstr "guhuza biheruka"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -5194,6 +5260,12 @@ msgstr ""
 msgid "Facebook"
 msgstr "Facebook"
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook"
+msgid "Facebook APP ID"
+msgstr "Facebook"
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr ""
@@ -5201,6 +5273,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
 msgstr ""
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "Facebook App Secret"
+msgstr "ibanga rya application"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5458,6 +5536,12 @@ msgstr "tunganya nka// strikethrough//"
 msgid "Format as _underlined_"
 msgstr "tunganya  nka _Biceyeho akarongo_"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as |bold|"
+msgid "Format as bold"
+msgstr "tunganya nka [bitsitse/bold]"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
 msgstr "garagaza imitere nkúmutwe wa  h1"
@@ -5470,9 +5554,27 @@ msgstr "garagaza imitere nkúmutwe wa  h2"
 msgid "Format as h3 heading"
 msgstr "garagaza imitere nkúmutwe wa  h3 "
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as ||italic||"
+msgid "Format as italic"
+msgstr "tunganya nka [biberamye/italic]"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
 msgstr "tunganya  nk'urutonde rwasabwe"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as //strikethrough//"
+msgid "Format as strikethrough"
+msgstr "tunganya nka// strikethrough//"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as _underlined_"
+msgid "Format as underlined"
+msgstr "tunganya  nka _Biceyeho akarongo_"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
@@ -5514,6 +5616,7 @@ msgstr "kuwa gatanu"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5678,6 +5781,16 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
 msgstr "Ibyangombwa by'ibanga bya Google"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+msgid "Google Client ID"
+msgstr ""
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google Client Secret"
+msgstr "Ibanga ry'umukiriya"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6535,6 +6648,12 @@ msgstr "ibihujwe n'ibindi"
 msgid "Internal"
 msgstr "By'imbere"
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+#, fuzzy
+#| msgid "Delete Knowledge Base"
+msgid "Internal Knowledge Base feed:"
+msgstr "Siba ububiko bw ibanze"
+
 #: app/models/import_job.rb
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
@@ -6802,6 +6921,12 @@ msgstr ""
 msgid "Knowledge Base Editor"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Knowledge Base Feed"
+msgstr "Ububiko bw'ubumenyi"
+
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
 msgstr ""
@@ -6928,6 +7053,10 @@ msgstr "igihe cyanyuma Cyakoreshejwe "
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
@@ -7110,7 +7239,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
 msgid "Logo"
 msgstr "ikirango"
 
@@ -7441,6 +7570,7 @@ msgstr "umunota/iminota"
 msgid "Minutes"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "ngendanwa"
@@ -7681,10 +7811,6 @@ msgstr ""
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
-msgstr ""
-
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
 msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
@@ -8276,6 +8402,10 @@ msgstr "ugushyingo"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "nomero"
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
+msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -9343,6 +9473,12 @@ msgstr "ikuraho imiterere"
 msgid "Removes the shadows for a flat look."
 msgstr "ivanaho ibicucucu ku migaragarire irambuye"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Renew Access Token"
+msgstr "Uburyo/ibimenyetso byawe byihariye byo kwinjira"
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr "kongera gufungurwa"
@@ -10265,6 +10401,10 @@ msgstr "bona ibirenze"
 msgid "Show Draft"
 msgstr "Inyandikomushinga"
 
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "garagaza/ erekana ibisobanuro birambuye by'ishakisha"
@@ -10851,6 +10991,10 @@ msgstr "inyandikorugero"
 msgid "Templates"
 msgstr "inyandikorugero"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+msgid "Tenant UUID/Name"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr ""
@@ -10984,7 +11128,7 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr ""
 
@@ -11198,7 +11342,7 @@ msgstr ""
 "ibiranga itike,  urugero: itike#, guhamagara#, itike yanjye#. Imburabuzi ni "
 "itike#"
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
 msgstr ""
 
@@ -11705,6 +11849,10 @@ msgstr "ubusabe bw'agace ka gatatu"
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
@@ -12258,6 +12406,7 @@ msgstr "amatike y'ukoresha"
 msgid "Tickets with \"%s\""
 msgstr "amatike y'ukoresha"
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12545,6 +12694,18 @@ msgstr ""
 msgid "Twitter - tweet initials"
 msgstr "Twita- ibibanza bya twita"
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Personal Access Tokens"
+msgid "Twitter Access Token"
+msgstr "Uburyo/ibimenyetso byawe byihariye byo kwinjira"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Access Token Secret"
+msgstr "Ibanga rya Twitter"
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr ""
@@ -12552,6 +12713,22 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
 msgstr "ibyangombwa by'ibanga bya twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Key"
+msgid "Twitter Consumer Key"
+msgstr "Urufunguzo rwa Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Consumer Secret"
+msgstr "Ibanga rya Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -14370,6 +14547,10 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "kuva"
@@ -14408,6 +14589,12 @@ msgstr "isaha"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
 msgstr "amasaha"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid ""
+"https://example.com/?q=#{object.attribute_name} - use ticket, user or "
+"organization as object"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -14845,6 +15032,18 @@ msgstr "cyavanyweho"
 msgid "reply"
 msgstr "subiza"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
+msgstr "subiza"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "%s required!"
+msgid "required"
+msgstr "%s irasabwa!"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -14908,6 +15107,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "shown"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -15401,9 +15604,6 @@ msgstr "igihe cyo gutegereza uyu munsi"
 #~ msgstr ""
 #~ "Isobanura umukiriya waganijwe bwa nyuma uhereye ku mukiriya wavugishijwe "
 #~ "nyuma cyangwa umukiriya wanyuma umukozi atashubije."
-
-#~ msgid "Confirm"
-#~ msgstr "kwemeza"
 
 #~ msgid "Sure?"
 #~ msgstr "Nibyo?"

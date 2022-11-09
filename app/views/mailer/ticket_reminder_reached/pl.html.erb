@@ -1,0 +1,18 @@
+Przypomnienie o zgłoszeniu (#{ticket.title})
+
+<div>Cześć #{recipient.firstname},</div>
+<br>
+<div>Zgłoszenie (#{ticket.title}) od "<b>#{ticket.customer.longname}</b>" wymaga Twojej uwagi.</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informacja:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app"> Zobacz w #{config.product_name}</a>
+</div>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-01 03:33+0000\n"
-"Last-Translator: Zhilin Ruslan <x-th-unicorn@hotmail.com>\n"
+"PO-Revision-Date: 2022-11-03 08:48+0000\n"
+"Last-Translator: xXxLeVIaFaNxXx <sakovalev@polyplast-nm.ru>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -302,6 +302,19 @@ msgstr ""
 "к вашей учетной записи.</div>\n"
 "<br>\n"
 "<div>Команда #{config.product_name}</div>\n"
+
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#, fuzzy
+#| msgid "Confirm"
+msgid "%s (confirm)"
+msgstr "Подтвердить"
+
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -657,6 +670,12 @@ msgstr "1 неделю назад"
 msgid "1 year ago"
 msgstr "1 год назад"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "1. Ticket Create"
+msgstr "Заявка %s создана!"
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr "2 часа"
@@ -673,6 +692,12 @@ msgstr "2 (Обычный)"
 msgid "2 weeks"
 msgstr "2 недели"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "2. Ticket Update"
+msgstr "Заявка обновлена"
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr "3 (Высокий)"
@@ -681,9 +706,27 @@ msgstr "3 (Высокий)"
 msgid "3 weeks"
 msgstr "3 недели"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket reminder reached"
+msgid "3. Ticket Reminder Reached"
+msgstr "Напоминание о заявке исполнено"
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 недели"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "4. Ticket Escalation"
+msgstr "Эскалация заявки"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "5. Ticket Escalation Warning"
+msgstr "Эскалация заявки"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -1106,7 +1149,7 @@ msgstr "Администратор"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Согласие администратора"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -1158,6 +1201,8 @@ msgstr "Перейти к следующей заявке из представ�
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
+"После утверждения, пожалуйста, повторно подключите свой почтовый ящик "
+"Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2265,6 +2310,7 @@ msgstr "Изменено"
 msgid "Changes"
 msgstr "Изменения"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
 msgstr "Не удалось загрузить изменения."
@@ -2347,6 +2393,12 @@ msgstr "Чат"
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Chat ID"
 msgstr "Идентификатор чата"
+
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+#, fuzzy
+#| msgid "Session"
+msgid "Chat Session"
+msgstr "Сеанс"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -2507,10 +2559,12 @@ msgid "Click here"
 msgstr "Щелкните здесь"
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "Идентификатор клиента"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "Пароль клиента"
@@ -3415,7 +3469,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Укажите максимальное количество заявок, отображаемых в представлениях."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -3703,6 +3757,10 @@ msgid ""
 "not."
 msgstr ""
 "Определяет, включена интеграция с i-doit (https://www.i-doit.org/) или нет."
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4319,6 +4377,10 @@ msgstr "Описание (отображается как заголовок д�
 msgid "Designer"
 msgstr "Конструктор формы"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4620,6 +4682,12 @@ msgstr "URL конечной точки (Endpoint URL) Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
+msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Elasticsearch Endpoint User"
+msgid "Elasticsearch Excludes"
 msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -5363,12 +5431,24 @@ msgstr "Извлечение информации о вложениях zammad �
 msgid "Facebook"
 msgstr "Facebook"
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook"
+msgid "Facebook APP ID"
+msgstr "Facebook"
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr "Учетная запись Facebook"
 
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
+msgstr "Учетные данные приложения Facebook"
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook App Credentials"
+msgid "Facebook App Secret"
 msgstr "Учетные данные приложения Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -5613,6 +5693,12 @@ msgstr "Форматировать как //зачеркнутый//"
 msgid "Format as _underlined_"
 msgstr "Форматировать как _подчеркнутый_"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as |bold|"
+msgid "Format as bold"
+msgstr "Форматировать как |жирный|"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
 msgstr "Форматировать как заголовок h1"
@@ -5625,9 +5711,27 @@ msgstr "Форматировать как заголовок h2"
 msgid "Format as h3 heading"
 msgstr "Форматировать как заголовок h3"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as ||italic||"
+msgid "Format as italic"
+msgstr "Форматировать как ||курсив||"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
 msgstr "Форматировать как упорядоченный список"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as //strikethrough//"
+msgid "Format as strikethrough"
+msgstr "Форматировать как //зачеркнутый//"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format as _underlined_"
+msgid "Format as underlined"
+msgstr "Форматировать как _подчеркнутый_"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
@@ -5669,6 +5773,7 @@ msgstr "Пятница"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5829,6 +5934,18 @@ msgstr "Google"
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
 msgstr "Учетные данные приложения Google"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client ID"
+msgid "Google Client ID"
+msgstr "Идентификатор клиента"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google Client Secret"
+msgstr "Пароль клиента"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6682,6 +6799,12 @@ msgstr "Интеграции"
 msgid "Internal"
 msgstr "Внутренний"
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+#, fuzzy
+#| msgid "Create Knowledge Base"
+msgid "Internal Knowledge Base feed:"
+msgstr "Создать Базу Знаний"
+
 #: app/models/import_job.rb
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
@@ -6982,6 +7105,12 @@ msgstr "Ответ в базе знаний"
 msgid "Knowledge Base Editor"
 msgstr "Редактор базы знаний"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "Knowledge Base Reader"
+msgid "Knowledge Base Feed"
+msgstr "Читатель базы знаний"
+
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
 msgstr "Читатель базы знаний"
@@ -7102,6 +7231,10 @@ msgstr "Последний раз был использован"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
 msgstr "Макет"
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -7279,7 +7412,7 @@ msgstr ""
 "этап подтверждения электронной почты?"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
 msgid "Logo"
 msgstr "Логотип"
 
@@ -7465,7 +7598,7 @@ msgstr "Максимальное количество рекурсивно вы�
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Максимальное количество заявок, отображаемых в представлении"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -7601,6 +7734,7 @@ msgstr "Минут(а/ы)"
 msgid "Minutes"
 msgstr "Минуты"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Мобильный"
@@ -7828,10 +7962,6 @@ msgstr "Навигация"
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Необходим 'form_id' для добавления вложений в новую форму."
-
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
-msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -8466,6 +8596,10 @@ msgstr "Ноябрь"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Число"
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
+msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -9123,6 +9257,8 @@ msgstr "Пожалуйста, введите свой новый пароль!"
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
+"Пожалуйста, подождите, пока вы не получите уведомление об утверждении по "
+"электронной почте."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
@@ -9495,6 +9631,12 @@ msgstr "Удалить форматирование"
 msgid "Removes the shadows for a flat look."
 msgstr "Удаление теней для плоского вида."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "New Access Token is"
+msgid "Renew Access Token"
+msgstr "Новый ключ доступа"
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr "Открыто повторно"
@@ -9551,10 +9693,8 @@ msgid "Request"
 msgstr "Запрос"
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-#, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
-msgstr "Запрос подтверждения выдачи прав"
+msgstr "Запрос согласия администратора"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
@@ -10436,6 +10576,10 @@ msgstr "показать больше"
 msgid "Show Draft"
 msgstr "Показать черновик"
 
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Отобразить Детали Поиска"
@@ -11015,6 +11159,12 @@ msgstr "Шаблоны"
 msgid "Templates"
 msgstr "Шаблоны"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#, fuzzy
+#| msgid "App Tenant ID"
+msgid "Tenant UUID/Name"
+msgstr "Идентификатор клиента (Tenant ID)"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr "Проверка"
@@ -11160,7 +11310,7 @@ msgstr "Не удалось найти API-ключ."
 msgid "The Knowledge Base could not be created."
 msgstr "Не удалось создать базу знаний."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Недопустимый мультимедиа тип (MIME type) изображения."
 
@@ -11189,11 +11339,8 @@ msgid "The active reporting profile could not be found."
 msgstr "Не удалось найти активный профиль отчетности."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
-msgstr ""
-"Не удалось установить пароль. Пожалуйста, свяжитесь с вашим администратором."
+msgstr "Запрос на согласование был отправлен вашему администратору."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11375,7 +11522,7 @@ msgstr ""
 "Идентификатор заявки, например, Заявка№, Звонок№, МояЗаявка№. По умолчанию - "
 "Заявка №."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
 msgstr "Изображение является недопустимым."
 
@@ -11914,6 +12061,10 @@ msgstr "Third-party Applications"
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Эта бот уже существует."
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -12559,6 +12710,7 @@ msgstr "Заявки пользователя"
 msgid "Tickets with \"%s\""
 msgstr "Заявки пользователя"
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12842,6 +12994,18 @@ msgstr "Twitter (из)"
 msgid "Twitter - tweet initials"
 msgstr "Twitter - твиты с инициалами"
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Account"
+msgid "Twitter Access Token"
+msgstr "Учетная запись Twitter"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Access Token Secret"
+msgstr "Twitter Secret"
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr "Учетная запись Twitter"
@@ -12849,6 +13013,22 @@ msgstr "Учетная запись Twitter"
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
 msgstr "Полномочия Twitter App"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Key"
+msgid "Twitter Consumer Key"
+msgstr "Twitter Key"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Consumer Secret"
+msgstr "Twitter Secret"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -14724,6 +14904,10 @@ msgstr "заполнить пустой"
 msgid "for an agent to respond"
 msgstr "чтобы агент ответил"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr "вперед"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "от"
@@ -14762,6 +14946,12 @@ msgstr "час"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
 msgstr "часов"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid ""
+"https://example.com/?q=#{object.attribute_name} - use ticket, user or "
+"organization as object"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -15178,6 +15368,16 @@ msgstr "удаленная"
 msgid "reply"
 msgstr "Ответить"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "reply all"
+msgstr "Ответить всем"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "is required"
+msgid "required"
+msgstr "требуется"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "справа"
@@ -15240,6 +15440,12 @@ msgstr "показывать"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
 msgstr "показать больше"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "show"
+msgid "shown"
+msgstr "показывать"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
@@ -15893,9 +16099,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ " 148/5000 Устанавливает последний контакт с клиентом на основе последнего "
 #~ "контакта с клиентом или последнего контакта с клиентом, которому агент "
 #~ "еще не ответил."
-
-#~ msgid "Confirm"
-#~ msgstr "Подтвердить"
 
 #~ msgid "Sure?"
 #~ msgstr "Уверены?"

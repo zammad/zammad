@@ -1,0 +1,18 @@
+Eskalirani ticket (#{ticket.title})
+
+<div>Bok #{recipient.firstname},</div>
+<br>
+<div>Ticket (#{ticket.title}) od „<b>#{ticket.customer.longname}</b>” je eskalirao od „#{ticket.escalation_at}”!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informacije:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Pogledaj u #{config.product_name}</a>
+</div>

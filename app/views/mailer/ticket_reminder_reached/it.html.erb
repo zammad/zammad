@@ -1,12 +1,12 @@
-Promemoria attivato (#{ticket.title})
+Promemoria raggiunto (#{ticket.title})
 
 <div>Buongiorno #{recipient.firstname},</div>
 <br>
-<div>Un ticket ha bisogno di attenzione, promemoria attivato per (#{ticket.title}) con il cliente "<b>#{ticket.customer.longname}</b>".</div>
+<div>Un ticket ha bisogno di attenzione: promemoria raggiunto per (#{ticket.title}) del cliente "<b>#{ticket.customer.longname}</b>".</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+Informazioni:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Promemoria attivato (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Visualizza su #{config.product_name}</a>
 </div>

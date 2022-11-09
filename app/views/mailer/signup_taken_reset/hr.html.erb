@@ -1,0 +1,15 @@
+Ponovno postavite svoju #{config.product_name} lozinku
+
+<div>Bok#{user.firstname},</div>
+<br>
+<div>Vi ili netko drugi je pokušao registrirati se sa ovom e-mail adresom. Međutim, ova e-mail adresa se već koristi.</div>
+<br>
+<div>Ukoliko želite resetirati Vašu lozinku, kliknite na link ispod (ili iskopirajte URL u vaš preglednik):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Ovaj link vas vodi na stranicu gdje možete resetirati Vašu lozinku.</div>
+<br>
+<div>Ukoliko to ne želite, molimo, ignorirajte ovu poruku. Vaša lozinka neće biti resetirana.</div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

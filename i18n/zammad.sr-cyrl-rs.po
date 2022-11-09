@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-01 03:30+0000\n"
+"PO-Revision-Date: 2022-11-09 03:30+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -302,6 +302,17 @@ msgstr ""
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+msgid "%s (confirm)"
+msgstr "%s (потврди)"
+
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr "%s (непознато)"
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
@@ -412,7 +423,7 @@ msgstr "%s групе су додељене за %s улоге"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
-msgstr "пре %s сат(а)"
+msgstr "пре %s сат/а/и"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -653,6 +664,10 @@ msgstr "пре недељу дана"
 msgid "1 year ago"
 msgstr "пре годину дана"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "1. Ticket Create"
+msgstr "1. Отварање тикета"
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr "2 сата"
@@ -669,6 +684,10 @@ msgstr "2 нормалан"
 msgid "2 weeks"
 msgstr "2 недеље"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "2. Ticket Update"
+msgstr "2. Освежавање тикета"
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr "3 висок"
@@ -677,9 +696,21 @@ msgstr "3 висок"
 msgid "3 weeks"
 msgstr "3 недеље"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "3. Ticket Reminder Reached"
+msgstr "3. Достигнуто време чекања тикета"
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 недеље"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "4. Ticket Escalation"
+msgstr "4. Ескалација тикета"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+msgid "5. Ticket Escalation Warning"
+msgstr "5. Упозорење на ескалацију тикета"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -787,7 +818,7 @@ msgstr "API кључ"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "About"
-msgstr "О томе"
+msgstr "Више о Zammad-у"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -2224,6 +2255,7 @@ msgstr "Измењено:"
 msgid "Changes"
 msgstr "Измене"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
 msgstr "Није било могуће учитати измене."
@@ -2306,6 +2338,10 @@ msgstr "Ћаскање"
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Chat ID"
 msgstr "ID ћаскања"
+
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+msgid "Chat Session"
+msgstr "Ћаскање"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -2466,10 +2502,12 @@ msgid "Click here"
 msgstr "Кликни овде"
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "Клијент ID"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "Клијентска шифра"
@@ -3635,6 +3673,10 @@ msgstr ""
 "не."
 
 #: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr "Одређује да ли индекс претраге користи искључене атрибуте."
+
+#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Одређује да ли је могуће отварати тикете путем веб форме."
 
@@ -4225,6 +4267,10 @@ msgstr "Опис (приказује се као наслов за читаче 
 msgid "Designer"
 msgstr "Дизајнер"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr "Рачунар"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4525,6 +4571,10 @@ msgstr "URL Elasticsearch путање"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Корисник Elasticsearch путање"
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch Excludes"
+msgstr "Elasticsearch искључује"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -5224,6 +5274,10 @@ msgstr "Издвоји информације о Zammad прилозима из 
 msgid "Facebook"
 msgstr "Facebook"
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+msgid "Facebook APP ID"
+msgstr "ID Facebook апликације"
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr "Facebook налог"
@@ -5231,6 +5285,10 @@ msgstr "Facebook налог"
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
 msgstr "Креденцијали Facebook апликације"
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+msgid "Facebook App Secret"
+msgstr "Шифра Facebook апликације"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5467,6 +5525,10 @@ msgstr "Форматирај као //прецртано//"
 msgid "Format as _underlined_"
 msgstr "Форматирај као _подвучено_"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as bold"
+msgstr "Форматирај као подебљано"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
 msgstr "Форматирај као h1 заглавље"
@@ -5479,9 +5541,21 @@ msgstr "Форматирај као h2 заглавље"
 msgid "Format as h3 heading"
 msgstr "Форматирај као h3 заглавље"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as italic"
+msgstr "Форматирај као курзив"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
 msgstr "Форматирај као листу са бројевима"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as strikethrough"
+msgstr "Форматирај као прецртано"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as underlined"
+msgstr "Форматирај као подвучено"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
@@ -5523,6 +5597,7 @@ msgstr "петак"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5681,6 +5756,14 @@ msgstr "Google"
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
 msgstr "Креденцијали Google апликације"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+msgid "Google Client ID"
+msgstr "Google клијент ID"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+msgid "Google Client Secret"
+msgstr "Google клијентска шифра"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6504,6 +6587,10 @@ msgstr "Интеграције"
 msgid "Internal"
 msgstr "Интерно"
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "Internal Knowledge Base feed:"
+msgstr "Извор интерних чланака базе знања:"
+
 #: app/models/import_job.rb
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
@@ -6779,6 +6866,10 @@ msgstr "Чланак базе знања"
 msgid "Knowledge Base Editor"
 msgstr "Уредник базе знања"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+msgid "Knowledge Base Feed"
+msgstr "Извор чланака базе знања"
+
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
 msgstr "Читалац базе знања"
@@ -6895,6 +6986,10 @@ msgstr "Последњи пут коришћено"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
 msgstr "Изглед"
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
+msgstr "Референца изгледа"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -7066,7 +7161,7 @@ msgstr ""
 "имејл адресу?"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
 msgid "Logo"
 msgstr "Лого"
 
@@ -7385,6 +7480,7 @@ msgstr "Минут(и)"
 msgid "Minutes"
 msgstr "Минутима"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Мобилни"
@@ -7606,10 +7702,6 @@ msgstr "Навигација"
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
 msgstr "Неопходан ’form_id’ за додавање прилога у нову форму."
-
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
-msgstr "Неопходан исправан корисник за додавање новог објекта услуге!"
 
 #: app/controllers/concerns/creates_ticket_articles.rb
 msgid "Need at least an 'article body' field."
@@ -8203,6 +8295,10 @@ msgstr "новембар"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Број"
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
+msgstr "OAuth URL путање су:"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -9203,6 +9299,10 @@ msgstr "Уклања форматирање"
 msgid "Removes the shadows for a flat look."
 msgstr "Уклања сенке за пљоснатији изглед."
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+msgid "Renew Access Token"
+msgstr "Обнови приступни кључ"
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr "Поново отворени"
@@ -10111,6 +10211,10 @@ msgstr "Прикажи још %s"
 msgid "Show Draft"
 msgstr "Прикажи нацрт"
 
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
+msgstr "Прикажи иконицу извора"
+
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "Прикажи детаље претраге"
@@ -10675,6 +10779,10 @@ msgstr "Шаблон"
 msgid "Templates"
 msgstr "Шаблони"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+msgid "Tenant UUID/Name"
+msgstr "UUID/назив станара апликације"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr "Проба"
@@ -10807,7 +10915,7 @@ msgstr "Није било могуће пронаћи API кључ."
 msgid "The Knowledge Base could not be created."
 msgstr "Није било могуће додати чланак базе знања."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The MIME type of the image is invalid."
 msgstr "Неисправан MIME тип слике."
 
@@ -11011,7 +11119,7 @@ msgstr ""
 "Идентификатор броја тикета, нпр. Ticket#, Call#, MyTicket#. Подразумевано је "
 "Ticket#."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
 msgstr "Слика је неисправна."
 
@@ -11487,6 +11595,10 @@ msgstr "Апликације трећег лица"
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
 msgstr "Овај бот већ постоји."
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
+msgstr "Извор ове категорије укључујући подкатегорије:"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -12053,6 +12165,7 @@ msgstr "Тикети корисника"
 msgid "Tickets with \"%s\""
 msgstr "Тикети са „%s”"
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12332,6 +12445,14 @@ msgstr "Twitter (одлазно)"
 msgid "Twitter - tweet initials"
 msgstr "Twitter - иницијали твита"
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Access Token"
+msgstr "Twitter приступни кључ"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Access Token Secret"
+msgstr "Twitter шифра приступног кључа"
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr "Twitter налог"
@@ -12339,6 +12460,18 @@ msgstr "Twitter налог"
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
 msgstr "Креденцијали Twitter апликације"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Consumer Key"
+msgstr "Twitter клијентски кључ"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Consumer Secret"
+msgstr "Twitter клијентска шифра"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
+msgstr "Назив развојног Twitter окружења"
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -14134,6 +14267,10 @@ msgstr "остави празно"
 msgid "for an agent to respond"
 msgstr "док оператер не одговори"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr "проследи"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "од"
@@ -14171,7 +14308,15 @@ msgstr "сат"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
-msgstr "сат(а)"
+msgstr "сат/а/и"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid ""
+"https://example.com/?q=#{object.attribute_name} - use ticket, user or "
+"organization as object"
+msgstr ""
+"https://example.com/?q=#{object.attribute_name} - користи ticket, user или "
+"organization уместо object"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -14200,7 +14345,7 @@ msgstr "за %s дан(а)"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "in %s hours"
-msgstr "за %s сат(а)"
+msgstr "за %s сат/а/и"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "in %s minutes"
@@ -14572,6 +14717,14 @@ msgstr "учлоњено"
 msgid "reply"
 msgstr "одговори"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "reply all"
+msgstr "одговори свима"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "required"
+msgstr "обавезно"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr "десно"
@@ -14634,6 +14787,10 @@ msgstr "прикажи"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
 msgstr "прикажи више"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid "shown"
+msgstr "приказано"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
@@ -14840,6 +14997,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Need a valid user to create a new service object!"
+#~ msgstr "Неопходан исправан корисник за додавање новог објекта услуге!"
 
 #~ msgid "Object already exists!"
 #~ msgstr "Објекат већ постоји!"

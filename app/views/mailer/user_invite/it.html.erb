@@ -1,10 +1,10 @@
-Invitato a #{config.product_name} tramite #{config.fqdn}
+Invito a #{config.product_name} su #{config.fqdn}
 
 <div>Buongiorno #{user.firstname},</div>
 <br>
-<div>Io (#{current_user.firstname} #{current_user.lastname}) vorrei invitarvi a #{config.product_name} - la nostra piattaforma Usersupport/Ticket.</div>
+<div>io, #{current_user.firstname} #{current_user.lastname}, vorrei invitarti a collegarti a #{config.product_name} - la nostra piattaforma di supporto utenti.</div>
 <br>
-<div>Per accedere <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">impostare qui</a> la password.</div>
+<div>Clicca <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">qui</a> e imposta la tua password.</div>
 <br>
 <div>Grazie,</div>
 <br>

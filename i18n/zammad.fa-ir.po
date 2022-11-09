@@ -198,6 +198,19 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/form.coffee
+#, fuzzy
+#| msgid "Confirm"
+msgid "%s (confirm)"
+msgstr "Bestätigen"
+
+#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
+#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "%s (unknown)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "%s API Token"
@@ -532,6 +545,12 @@ msgstr "هفته 1"
 msgid "1 year ago"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket %s created!"
+msgid "1. Ticket Create"
+msgstr "تیکت %s ایجاد شد!"
+
 #: db/seeds/settings.rb
 msgid "2 hours"
 msgstr "ساعات 2"
@@ -548,6 +567,12 @@ msgstr "عادی ۲"
 msgid "2 weeks"
 msgstr "۲ هفته"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket update"
+msgid "2. Ticket Update"
+msgstr "بروز شدن تیکت"
+
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
 msgstr "بالا ۳"
@@ -556,9 +581,27 @@ msgstr "بالا ۳"
 msgid "3 weeks"
 msgstr "۳ هفته"
 
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket reminder reached"
+msgid "3. Ticket Reminder Reached"
+msgstr "فرارسیدن زمان یادآوری تیکت"
+
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "۴ هفته"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "4. Ticket Escalation"
+msgstr "دگرسپاری تیکتها"
+
+#: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "5. Ticket Escalation Warning"
+msgstr "دگرسپاری تیکتها"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -2069,6 +2112,7 @@ msgstr "تغییر یافت"
 msgid "Changes"
 msgstr "تغییرات"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
 msgstr "امکان بارگذاری تغییرات وجود ندارد."
@@ -2151,6 +2195,12 @@ msgstr "چت"
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 msgid "Chat ID"
 msgstr "شناسه چت"
+
+#: app/assets/javascripts/app/models/chat_sessions.coffee
+#, fuzzy
+#| msgid "Session"
+msgid "Chat Session"
+msgstr "نشست"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -2317,10 +2367,12 @@ msgid "Click here"
 msgstr "اینجا کلیک نمایید"
 
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "شناسه مشتری"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
 msgstr "رمز مشتری"
@@ -3431,6 +3483,10 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "آیا مشتری اجازه ایجاد تیکت از درگاه وب را دارد."
 
@@ -3963,6 +4019,10 @@ msgstr ""
 msgid "Designer"
 msgstr "طراحی"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid "Desktop"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -4272,6 +4332,12 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Last sync"
+msgid "Elasticsearch Excludes"
+msgstr "آخرین همسان‌سازی"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -4910,6 +4976,12 @@ msgstr ""
 msgid "Facebook"
 msgstr "فیسبوک"
 
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "Facebook"
+msgid "Facebook APP ID"
+msgstr "فیسبوک"
+
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
 msgstr "حساب کاربری فیسبوک"
@@ -4917,6 +4989,12 @@ msgstr "حساب کاربری فیسبوک"
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
 msgstr ""
+
+#: app/assets/javascripts/app/views/facebook/app_config.jst.eco
+#, fuzzy
+#| msgid "App Secret"
+msgid "Facebook App Secret"
+msgstr "رمز اپلیکیشن"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5156,6 +5234,12 @@ msgstr ""
 msgid "Format as _underlined_"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+#, fuzzy
+#| msgid "Format"
+msgid "Format as bold"
+msgstr "قالب"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
 msgstr ""
@@ -5168,8 +5252,20 @@ msgstr ""
 msgid "Format as h3 heading"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as italic"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as strikethrough"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
+msgid "Format as underlined"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -5212,6 +5308,7 @@ msgstr "جمعه"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
@@ -5372,6 +5469,18 @@ msgstr "گوگل"
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
 msgstr ""
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client ID"
+msgid "Google Client ID"
+msgstr "شناسه مشتری"
+
+#: app/assets/javascripts/app/views/google/app_config.jst.eco
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google Client Secret"
+msgstr "رمز مشتری"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6171,6 +6280,12 @@ msgstr "ارتباط با سایر سیستم‌ها"
 msgid "Internal"
 msgstr "داخلی"
 
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+#, fuzzy
+#| msgid "Create Knowledge Base"
+msgid "Internal Knowledge Base feed:"
+msgstr "ایجاد پایگاه دانش"
+
 #: app/models/import_job.rb
 msgid ""
 "Interrupted by a restart of the background worker process. Please restart "
@@ -6428,6 +6543,12 @@ msgstr "پاسخ موجود در پایگاه دانش"
 msgid "Knowledge Base Editor"
 msgstr "ویرایشگر پایگاه دانش"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Knowledge Base Feed"
+msgstr "پایگاه دانش"
+
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
 msgstr ""
@@ -6548,6 +6669,10 @@ msgstr "آخرین استفاده"
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Layout"
 msgstr "چیدمان"
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee
+msgid "Layout Reference"
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -6725,7 +6850,7 @@ msgstr ""
 "نام‌کاربری و رمزعبور خود اطمینان دارید؟"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
-#: db/seeds/settings.rb
+#: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
 msgid "Logo"
 msgstr "لوگو"
 
@@ -7048,6 +7173,7 @@ msgstr "دقیقه"
 msgid "Minutes"
 msgstr "دقیقه"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "تلفن همراه"
@@ -7278,10 +7404,6 @@ msgstr ""
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb
 msgid "Need 'form_id' to add attachments to new form."
-msgstr ""
-
-#: app/services/base_service.rb
-msgid "Need a valid user to create a new service object!"
 msgstr ""
 
 #: app/controllers/concerns/creates_ticket_articles.rb
@@ -7869,6 +7991,10 @@ msgstr "نوامبر"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "عدد"
+
+#: app/assets/javascripts/app/views/api.jst.eco
+msgid "OAuth URLs are:"
+msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -8901,6 +9027,12 @@ msgstr "حذف فرمت"
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
+#, fuzzy
+#| msgid "New Access Token is"
+msgid "Renew Access Token"
+msgstr "توکن دسترسی جدید عبارتست از"
+
 #: app/models/report.rb
 msgid "Reopened"
 msgstr "بازگشایی شده"
@@ -9782,6 +9914,10 @@ msgstr "نمایش موارد بیشتر"
 msgid "Show Draft"
 msgstr "نمایش پیش‌نویس"
 
+#: app/assets/javascripts/app/models/knowledge_base.coffee
+msgid "Show Feed Icon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
 msgstr "نمایش جزئیات جستجو"
@@ -10360,6 +10496,12 @@ msgstr "قالب‌ها"
 msgid "Templates"
 msgstr "قالب‌ها"
 
+#: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#, fuzzy
+#| msgid "Agent Name"
+msgid "Tenant UUID/Name"
+msgstr "نام کارشناس"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
 msgstr "آزمایش"
@@ -10489,7 +10631,7 @@ msgstr ""
 msgid "The Knowledge Base could not be created."
 msgstr "آبجکت قابل ایجاد نبود."
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The MIME type of the image is invalid."
@@ -10692,7 +10834,7 @@ msgid ""
 "Ticket#."
 msgstr ""
 
-#: app/services/avatar/image_validate_service.rb
+#: app/services/service/avatar/image_validate.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The image is invalid."
@@ -11203,6 +11345,10 @@ msgstr "اپلیکیشن‌های ثالث"
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
+msgid "This category including sub-categories feed:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
@@ -11728,6 +11874,7 @@ msgstr "تیکتهای کاربر"
 msgid "Tickets with \"%s\""
 msgstr "تیکتهای کاربر"
 
+#: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 msgid "Till"
@@ -12000,6 +12147,18 @@ msgstr ""
 msgid "Twitter - tweet initials"
 msgstr ""
 
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "New Access Token is"
+msgid "Twitter Access Token"
+msgstr "توکن دسترسی جدید عبارتست از"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Access Token Secret"
+msgstr "رمز تویتر"
+
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
 msgstr ""
@@ -12007,6 +12166,22 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Twitter App Credentials"
 msgstr "Twitter App Credentials"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Key"
+msgid "Twitter Consumer Key"
+msgstr "کلید توییتر"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Consumer Secret"
+msgstr "رمز تویتر"
+
+#: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+msgid "Twitter Dev environment label"
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -13699,6 +13874,10 @@ msgstr ""
 msgid "for an agent to respond"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "forward"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
 msgstr "از"
@@ -13737,6 +13916,12 @@ msgstr "ساعت"
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "hours"
 msgstr "ساعت"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+msgid ""
+"https://example.com/?q=#{object.attribute_name} - use ticket, user or "
+"organization as object"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -14171,6 +14356,18 @@ msgstr "حذف شده"
 msgid "reply"
 msgstr "پاسخ"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "reply"
+msgid "reply all"
+msgstr "پاسخ"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "is required"
+msgid "required"
+msgstr "الزامی است"
+
 #: db/seeds/settings.rb
 msgid "right"
 msgstr ""
@@ -14233,6 +14430,12 @@ msgstr "نمایش"
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "show more"
 msgstr "نمایش موارد بیشتر"
+
+#: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
+#, fuzzy
+#| msgid "show"
+msgid "shown"
+msgstr "نمایش"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
@@ -14709,9 +14912,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #~ msgid "Pending reached"
 #~ msgstr "Schließung erreicht"
-
-#~ msgid "Confirm"
-#~ msgstr "Bestätigen"
 
 #~ msgid "Sure?"
 #~ msgstr "مطمئن هستید؟"

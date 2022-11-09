@@ -1,18 +1,18 @@
 Nowe zgłoszenie (#{ticket.title})
 
-<div>Witaj #{recipient.firstname},</div>
+<div>Cześć #{recipient.firstname},</div>
 <br>
 <div>Otrzymałeś nowe zgłoszenie (#{ticket.title}) od "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+Grupa: #{ticket.group.name}<br>
+Właściciel: #{ticket.owner.fullname}<br>
+Status: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informacja:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -20,5 +20,5 @@ Nowe zgłoszenie (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobacz w Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobacz w #{config.product_name}</a>
 </div>

@@ -1,12 +1,12 @@
 Zgłoszenie (#{ticket.title}) zostanie eskalowane
 
-<div>Witaj #{recipient.firstname},</div>
+<div>Cześć #{recipient.firstname},</div>
 <br>
 <div>Zgłoszenie (#{ticket.title}) od "<b>#{ticket.customer.longname}</b>" zostanie eskalowane "#{ticket.escalation_at}"!</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informacja:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Zgłoszenie (#{ticket.title}) zostanie eskalowane
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobacz w Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobacz w #{config.product_name}</a>
 </div>

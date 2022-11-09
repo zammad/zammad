@@ -2,7 +2,7 @@ Il ticket si è intensificato (#{ticket.title})
 
 <div>Buongiorno #{recipient.firstname},</div>
 <br>
-<div>Un ticket (#{ticket.title}) da "<b>#{ticket.customer.longname}</b>" si è intensificato a "#{ticket.escalation_at}"!</div>.
+<div>Un ticket (#{ticket.title}) da "<b>#{ticket.customer.longname}</b>" è andato in escalation il "#{ticket.escalation_at}"!</div>.
 <br>
 <% if @objects[:article] %>
   <div>
