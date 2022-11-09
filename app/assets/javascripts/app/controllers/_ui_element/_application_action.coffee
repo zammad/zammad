@@ -36,6 +36,10 @@ UI Element options:
 
 - Renders a simpler attribute without operator support (default: false)
 
+**attribute.skip_unknown_attributes**
+
+- Skips rendering of unknown attributes (default: false)
+
 ###
 
 class App.UiElement.ApplicationAction
@@ -187,6 +191,8 @@ class App.UiElement.ApplicationAction
     else
 
       for groupAndAttribute, meta of params[attribute.name]
+        # Skip unknown attributes.
+        continue if attribute.skip_unknown_attributes and !_.includes(_.keys(elements), groupAndAttribute)
 
         # build and append
         element = @placeholder(item, attribute, params, groups, elements)
@@ -415,7 +421,7 @@ class App.UiElement.ApplicationAction
       __('relative'),
     ]
 
-    upcoming_operator = meta.operator
+    upcoming_operator = meta?.operator
 
     if !_.include(config?.operator, upcoming_operator)
       if Array.isArray(config?.operator)

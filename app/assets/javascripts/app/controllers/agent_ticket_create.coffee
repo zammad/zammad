@@ -385,7 +385,15 @@ class App.TicketCreate extends App.Controller
               fieldArray = templateField.split('.')
               field = fieldArray[1] || fieldArray[0]
 
-              value = templateValue?['value'] || templateValue
+              if _.isObject(templateValue) and templateValue['value'] != undefined
+                value = templateValue['value']
+
+                # Move the completion value into its own parameter.
+                if templateValue['value_completion']
+                  params["#{field}_completion"] = templateValue['value_completion']
+
+              else
+                value = templateValue
 
               [field, value]
           )

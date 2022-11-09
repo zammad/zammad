@@ -721,6 +721,9 @@ QUnit.test( "ticket_perform_action check template attributes", assert => {
       'article.body': {
         value: 'foobar',
       },
+      'ticket.foo': {
+        value: 'bar',
+      },
     },
   }
 
@@ -737,6 +740,7 @@ QUnit.test( "ticket_perform_action check template attributes", assert => {
           no_dates:                  true,
           no_richtext_uploads:       true,
           simple_attribute_selector: true,
+          skip_unknown_attributes:   true,
           null:                      true,
         },
       ],
