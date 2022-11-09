@@ -778,39 +778,6 @@ describe('Form - Field - Select - Features', () => {
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
-
-  it('supports small size', async () => {
-    const wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        type: 'select',
-        label: 'Test label',
-        options: testOptions,
-        size: 'small',
-        value: 0,
-      },
-    })
-
-    expect(wrapper.getByTestId('field-select')).toHaveClass(
-      'bg-gray-600 rounded-lg w-auto',
-    )
-
-    expect(
-      wrapper.getByLabelText('Test label').closest('.formkit-outer'),
-    ).toHaveAttribute('data-label-hidden')
-
-    await wrapper.rerender({
-      size: undefined,
-    })
-
-    expect(wrapper.getByTestId('field-select')).not.toHaveClass(
-      'bg-gray-600 rounded-lg w-auto',
-    )
-
-    expect(
-      wrapper.getByLabelText('Test label').closest('.formkit-outer'),
-    ).not.toHaveAttribute('data-label-hidden')
-  })
 })
 
 describe('Form - Field - Select - Accessibility', () => {

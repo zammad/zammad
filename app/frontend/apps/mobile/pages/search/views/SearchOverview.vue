@@ -12,8 +12,8 @@ import { QueryHandler } from '@shared/server/apollo/handler'
 import type { LocationQueryRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
-import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
-import type { ButtonPillOption } from '@mobile/components/CommonButtonPills/types'
+import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useSessionStore } from '@shared/stores/session'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
@@ -138,7 +138,7 @@ const pluginsArray = Object.entries(searchPlugins).map(([name, plugin]) => ({
   ...plugin,
 }))
 
-const searchPills: ButtonPillOption[] = pluginsArray.map((plugin) => ({
+const searchPills: CommonButtonOption[] = pluginsArray.map((plugin) => ({
   value: plugin.name,
   label: plugin.headerLabel,
 }))
@@ -206,9 +206,9 @@ export default {
       </CommonLink>
     </div>
     <h1 class="sr-only">{{ $t('Search') }}</h1>
-    <CommonButtonPills
+    <CommonButtonGroup
       v-if="type"
-      class="px-4 pb-4"
+      class="border-b border-white/10 px-4 pb-4"
       :options="searchPills"
       :model-value="type"
       @update:model-value="selectType($event as string)"

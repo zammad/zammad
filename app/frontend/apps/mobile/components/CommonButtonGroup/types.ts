@@ -4,10 +4,10 @@ import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIco
 
 export interface CommonButtonOption {
   link?: string
+  value?: string | number
   onAction?(): void | Promise<void>
   label: string
   labelPlaceholder?: string[]
   disabled?: boolean
-  selected?: boolean
   icon?: string | IconProps
 }

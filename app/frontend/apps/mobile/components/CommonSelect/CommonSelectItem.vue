@@ -50,6 +50,8 @@ const label = computed(() => {
         'opacity-30': option.disabled,
       }"
       size="base"
+      :aria-hidden="!selected"
+      :aria-label="$t('Selected')"
       :name="selected ? 'mobile-check-box-yes' : 'mobile-check-box-no'"
       class="mr-3 text-white/50"
     />
@@ -88,6 +90,8 @@ const label = computed(() => {
         invisible: !selected,
         'opacity-30': option.disabled,
       }"
+      :aria-label="$t('Selected')"
+      :aria-hidden="!selected"
       size="tiny"
       name="mobile-check"
     />

@@ -79,7 +79,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
           expect(page).to have_text("Open Tickets\n(21)")
         end
 
-        find('output[name="overview"]').click
+        find('button', text: "Open Tickets\n(21)").click
 
         expect(page.find('[role="dialog"]')).to have_text('Escalated Tickets')
 

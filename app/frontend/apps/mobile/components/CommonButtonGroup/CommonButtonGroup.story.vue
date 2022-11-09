@@ -12,7 +12,7 @@ const alert = () => window.alert('click')
     <CommonButtonGroup
       :options="[
         { label: 'link %s', labelPlaceholder: ['text'], link: '/example' },
-        { label: 'button', onAction: alert, selected: true },
+        { label: 'button', onAction: alert },
         {
           label: 'with-icon',
           onAction: alert,

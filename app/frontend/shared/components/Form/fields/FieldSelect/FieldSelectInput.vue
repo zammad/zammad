@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
+import { ref, toRef } from 'vue'
 import { i18n } from '@shared/i18n'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
@@ -33,8 +33,6 @@ const {
   setupMissingOptionHandling,
 } = useSelectOptions(toRef(props.context, 'options'), contextReactive)
 
-const isSizeSmall = computed(() => props.context.size === 'small')
-
 const select = ref<CommonSelectInstance>()
 
 const openSelectDialog = () => {
@@ -51,10 +49,9 @@ setupMissingOptionHandling()
 <template>
   <div
     :class="[
+      context.classes.input,
+      'flex h-auto',
       {
-        [context.classes.input]: !isSizeSmall,
-        'flex h-auto': !isSizeSmall,
-        'w-auto rounded-lg bg-gray-600': isSizeSmall,
         'ltr:pr-9 rtl:pl-9': context.clearable && hasValue && !context.disabled,
       },
     ]"
@@ -72,11 +69,7 @@ setupMissingOptionHandling()
       <output
         :id="context.id"
         :name="context.node.name"
-        :class="{
-          grow: !isSizeSmall,
-          'ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1': isSizeSmall,
-        }"
-        class="flex cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
+        class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
         :aria-disabled="context.disabled"
         :aria-label="i18n.t('Select…')"
         :tabindex="context.disabled ? '-1' : '0'"
@@ -87,14 +80,7 @@ setupMissingOptionHandling()
         @keypress.space="openSelectDialog()"
         @blur="context.handlers.blur"
       >
-        <div
-          v-if="hasValue || isSizeSmall"
-          :class="{
-            grow: !isSizeSmall,
-          }"
-          class="flex flex-wrap gap-1"
-          role="list"
-        >
+        <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
           <template v-if="hasValue && hasStatusProperty">
             <CommonTicketStateIndicator
               v-for="selectedValue in valueContainer"
@@ -113,11 +99,7 @@ setupMissingOptionHandling()
             <div
               v-for="selectedValue in valueContainer"
               :key="selectedValue"
-              :class="{
-                'text-base leading-[19px]': !isSizeSmall,
-                'mr-1 py-1': isSizeSmall,
-              }"
-              class="flex items-center after:content-[','] last:after:content-none"
+              class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
               role="listitem"
             >
               <CommonIcon
@@ -132,16 +114,7 @@ setupMissingOptionHandling()
                   getSelectedOptionLabel(selectedValue) ||
                   i18n.t('%s (unknown)', selectedValue)
                 "
-                :small="isSizeSmall"
               />
-            </div>
-          </template>
-          <template v-else-if="isSizeSmall">
-            <div
-              class="mr-1 overflow-hidden text-ellipsis whitespace-nowrap py-1 text-sm leading-[17px]"
-              role="listitem"
-            >
-              {{ i18n.t(context.label) }}
             </div>
           </template>
         </div>
@@ -155,13 +128,6 @@ setupMissingOptionHandling()
           tabindex="0"
           @click.stop="clearValue"
           @keypress.space.prevent.stop="clearValue"
-        />
-        <CommonIcon
-          v-if="isSizeSmall"
-          class="shrink-0"
-          size="tiny"
-          name="mobile-caret-down"
-          decorative
         />
       </output>
     </CommonSelect>

@@ -18,8 +18,6 @@ export interface SelectOption {
 
 export type SelectOptionSorting = 'label' | 'value'
 
-export type SelectSize = 'small' | 'medium'
-
 export type SelectContext = FormFieldContext<{
   clearable?: boolean
   disabled?: boolean
@@ -28,6 +26,5 @@ export type SelectContext = FormFieldContext<{
   noOptionsLabelTranslation?: boolean
   options: SelectOption[]
   rejectNonExistentValues?: boolean
-  size?: SelectSize
   sorting?: SelectOptionSorting
 }>

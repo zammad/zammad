@@ -295,9 +295,11 @@ const { openCreateUserDialog } = useUserCreate()
 
     <CommonButtonGroup
       class="py-4"
+      mode="full"
+      model-value="subscribe"
       :options="[
         { label: 'Merge tickets', icon: 'mobile-home' },
-        { label: 'Subscribe', icon: 'mobile-home', selected: true },
+        { label: 'Subscribe', icon: 'mobile-home', value: 'subscribe' },
         { label: 'Ticket info', icon: 'mobile-home' },
       ]"
     />

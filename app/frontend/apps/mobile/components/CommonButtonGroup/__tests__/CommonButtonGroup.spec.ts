@@ -11,13 +11,24 @@ describe('buttons group', () => {
     const onAction = vi.fn()
 
     const options: CommonButtonOption[] = [
-      { label: 'link %s', labelPlaceholder: ['text'], link: '/example' },
-      { label: 'button', onAction, selected: true },
-      { label: 'with-icon', onAction, icon: 'mobile-home', disabled: true },
+      {
+        label: 'link %s',
+        labelPlaceholder: ['text'],
+        link: '/example',
+        value: 'link',
+      },
+      { label: 'button', onAction, value: 'button' },
+      {
+        label: 'with-icon',
+        onAction,
+        icon: 'mobile-home',
+        disabled: true,
+        value: 'icon',
+      },
     ]
 
     const view = renderComponent(CommonButtonGroup, {
-      props: { options },
+      props: { options, modelValue: 'button' },
       router: true,
       store: true,
     })

@@ -11,6 +11,7 @@ import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOv
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
+import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import { useRouteQuery } from '@vueuse/router'
 import { storeToRefs } from 'pinia'
 import type { Sizes } from '@shared/components/CommonIcon/types'
@@ -196,26 +197,19 @@ const directionOptions = computed(() => [
         class="mb-3 flex items-center justify-between gap-2"
         data-test-id="overview"
       >
-        <FormKit
-          name="overview"
-          type="select"
-          size="small"
+        <CommonSelectPill
           :model-value="selectedOverviewLink"
           :options="optionsOverviews"
           no-options-label-translation
           @update:model-value="selectOverview($event as string)"
         >
-          <template #output>
-            <span
-              class="max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-              {{ $t(selectedOverview?.name) }}
-            </span>
-            <span class="ltr:pl-1 rtl:pr-1">
-              ({{ selectedOverview?.ticketCount }})
-            </span>
-          </template>
-        </FormKit>
+          <span
+            class="max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            {{ $t(selectedOverview?.name) }}
+          </span>
+          <span class="px-1"> ({{ selectedOverview?.ticketCount }}) </span>
+        </CommonSelectPill>
         <CommonSelect v-model="orderBy" :options="orderColumnsOptions" no-close>
           <template #default="{ open }">
             <div

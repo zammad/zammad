@@ -8,8 +8,8 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import type { ButtonPillOption } from '@mobile/components/CommonButtonPills/types'
-import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
+import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useUsersTicketsCount } from '@mobile/entities/user/composables/useUserTicketsCount'
 import { useUserDetail } from '@mobile/entities/user/composables/useUserDetail'
@@ -52,7 +52,7 @@ enum TicketLinksState {
 
 const ticketView = ref(TicketLinksState.User)
 
-const ticketButtons = computed<ButtonPillOption[]>(() => {
+const ticketButtons = computed<CommonButtonOption[]>(() => {
   if (!user.value?.organization) return []
   return [
     {
@@ -130,11 +130,10 @@ const secondaryOrganizations = computed(() =>
       :tickets-link-query="ticketsData.query"
     >
       <template #before-fields>
-        <CommonButtonPills
+        <CommonButtonGroup
           v-if="ticketButtons.length"
           v-model="ticketView"
-          class="py-3"
-          no-border
+          class="py-2"
           :options="ticketButtons"
         />
       </template>

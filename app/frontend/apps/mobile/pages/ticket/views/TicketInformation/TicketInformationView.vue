@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ButtonPillOption } from '@mobile/components/CommonButtonPills/types'
 import { useHeader } from '@mobile/composables/useHeader'
 import { computed, provide } from 'vue'
-import CommonButtonPills from '@mobile/components/CommonButtonPills/CommonButtonPills.vue'
+import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '@shared/stores/session'
@@ -40,7 +40,7 @@ useHeader({
 
 const { hasPermission } = useSessionStore()
 
-const types = computed<ButtonPillOption[]>(() => {
+const types = computed<CommonButtonOption[]>(() => {
   return ticketInformationPlugins
     .filter((plugin) => {
       const permissions = plugin.route.meta?.requiredPermission
@@ -65,9 +65,8 @@ const types = computed<ButtonPillOption[]>(() => {
       <CommonLoader :loading="loadingTicket">{{ ticket?.title }}</CommonLoader>
     </h1>
   </div>
-  <CommonButtonPills
+  <CommonButtonGroup
     class="px-4 pb-4"
-    no-border
     :options="types"
     :model-value="($route.name as string)"
     @update:model-value="$router.replace({ name: $event as string })"

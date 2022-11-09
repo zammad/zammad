@@ -68,7 +68,7 @@ const showViewers = () => {
             +{{ users.length - 1 }}
           </div>
         </div>
-        <CommonIcon name="mobile-more-vertical" size="small" />
+        <CommonIcon name="mobile-more-vertical" size="base" />
       </button>
     </CommonLoader>
   </header>

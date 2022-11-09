@@ -8696,6 +8696,10 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+msgid "Selected"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""

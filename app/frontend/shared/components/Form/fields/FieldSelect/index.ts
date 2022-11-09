@@ -34,7 +34,6 @@ const fieldDefinition = createInput(
     'noOptionsLabelTranslation',
     'options',
     'rejectNonExistentValues',
-    'size',
     'sorting',
   ],
   {

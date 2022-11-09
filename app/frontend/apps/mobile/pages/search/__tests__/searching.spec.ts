@@ -51,7 +51,6 @@ describe('visiting search page', () => {
       search: 'search',
     })
 
-    expect(view.getByTestId('buttonPills')).toBeInTheDocument()
     expect(view.container).toHaveTextContent('No entries')
 
     await view.events.click(view.getByText('Organizations'))

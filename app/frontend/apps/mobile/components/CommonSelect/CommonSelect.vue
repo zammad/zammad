@@ -9,7 +9,7 @@ import CommonSelectItem from './CommonSelectItem.vue'
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to
   // transform these into runtime types
-  modelValue?: string | number | boolean | (string | number | boolean)[]
+  modelValue?: string | number | boolean | (string | number | boolean)[] | null
   options: SelectOption[]
   /**
    * Do not modify local value
