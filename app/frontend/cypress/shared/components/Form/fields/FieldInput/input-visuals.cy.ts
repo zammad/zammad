@@ -18,31 +18,31 @@ describe('testing visuals for "FieldInput"', () => {
   inputs.forEach(({ type, input }) => {
     it(`renders usual ${type}`, () => {
       mountFormField(type, { label: type })
-      checkFormMatchesSnapshot('basic', type)
+      checkFormMatchesSnapshot({ type })
       cy.get('input')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('basic - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.get('input')
         .type(input)
         .then(() => {
-          checkFormMatchesSnapshot('basic - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
     it(`renders required ${type}`, () => {
       mountFormField(type, { label: type, required: true })
-      checkFormMatchesSnapshot('required', type)
+      checkFormMatchesSnapshot({ type })
       cy.get('input')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('required - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.get('input')
         .type(input)
         .then(() => {
-          checkFormMatchesSnapshot('required - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
@@ -52,27 +52,27 @@ describe('testing visuals for "FieldInput"', () => {
         required: true,
         validationVisibility: FormValidationVisibility.Live,
       })
-      checkFormMatchesSnapshot('required - invalid', type)
+      checkFormMatchesSnapshot({ type })
     })
 
     it(`renders linked ${type}`, () => {
       mountFormField(type, { label: type, link: '/' })
-      checkFormMatchesSnapshot('linked', type)
+      checkFormMatchesSnapshot({ type })
       cy.get('input')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('linked - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.get('input')
         .type(input)
         .then(() => {
-          checkFormMatchesSnapshot('linked - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
     it(`renders disabled ${type}`, () => {
       mountFormField(type, { label: type, disabled: true })
-      checkFormMatchesSnapshot('disabled', type)
+      checkFormMatchesSnapshot({ type })
     })
   })
 })

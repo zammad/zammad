@@ -52,15 +52,15 @@ const values = [0, 1]
 describe('testing visuals for "FieldSelect"', () => {
   it('renders basic select', () => {
     mountFormField('select', { label: 'select' })
-    checkFormMatchesSnapshot('basic')
+    checkFormMatchesSnapshot()
   })
   it('renders basic disabled select', () => {
     mountFormField('select', { label: 'select', disabled: true })
-    checkFormMatchesSnapshot('basic - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders basic required select', () => {
     mountFormField('select', { label: 'select', required: true })
-    checkFormMatchesSnapshot('basic - required')
+    checkFormMatchesSnapshot()
   })
   it('renders basic invalid select', () => {
     mountFormField('select', {
@@ -68,14 +68,14 @@ describe('testing visuals for "FieldSelect"', () => {
       required: true,
       validationVisibility: FormValidationVisibility.Live,
     })
-    checkFormMatchesSnapshot('basic - invalid')
+    checkFormMatchesSnapshot()
   })
   it(`renders focused select`, () => {
     mountFormField('select', { label: 'select' })
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused')
+        checkFormMatchesSnapshot()
       })
   })
   it(`renders focused linked select`, () => {
@@ -83,18 +83,18 @@ describe('testing visuals for "FieldSelect"', () => {
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused - linked')
+        checkFormMatchesSnapshot()
       })
   })
 
   it('renders linked select', () => {
     mountFormField('select', { label: 'select', link: '/' })
-    checkFormMatchesSnapshot('linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders selected select', () => {
     mountFormField('select', { label: 'select', options, value })
-    checkFormMatchesSnapshot('selected')
+    checkFormMatchesSnapshot()
   })
   it('renders selected disabled select', () => {
     mountFormField('select', {
@@ -103,7 +103,7 @@ describe('testing visuals for "FieldSelect"', () => {
       value,
       disabled: true,
     })
-    checkFormMatchesSnapshot('selected - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders selected required select', () => {
     mountFormField('select', {
@@ -112,11 +112,11 @@ describe('testing visuals for "FieldSelect"', () => {
       value,
       required: true,
     })
-    checkFormMatchesSnapshot('selected - required')
+    checkFormMatchesSnapshot()
   })
   it('renders selected select linked', () => {
     mountFormField('select', { label: 'select', options, value, link: '/' })
-    checkFormMatchesSnapshot('selected - linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders multiple selected select', () => {
@@ -126,7 +126,7 @@ describe('testing visuals for "FieldSelect"', () => {
       value: values,
       multiple: true,
     })
-    checkFormMatchesSnapshot('multiple selected')
+    checkFormMatchesSnapshot()
   })
   it('renders multiple selected disabled select', () => {
     mountFormField('select', {
@@ -136,7 +136,7 @@ describe('testing visuals for "FieldSelect"', () => {
       multiple: true,
       disabled: true,
     })
-    checkFormMatchesSnapshot('multiple selected - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders multiple selected required select', () => {
     mountFormField('select', {
@@ -146,7 +146,7 @@ describe('testing visuals for "FieldSelect"', () => {
       multiple: true,
       required: true,
     })
-    checkFormMatchesSnapshot('multiple selected - required')
+    checkFormMatchesSnapshot()
   })
 
   it('renders long multiple selected', () => {
@@ -156,7 +156,7 @@ describe('testing visuals for "FieldSelect"', () => {
       value: [0, 1, 2, 3, 4, 6, 7, 8],
       multiple: true,
     })
-    checkFormMatchesSnapshot('long multiple selected')
+    checkFormMatchesSnapshot()
   })
 
   it('renders long selected', () => {
@@ -165,6 +165,6 @@ describe('testing visuals for "FieldSelect"', () => {
       options,
       value: 5,
     })
-    checkFormMatchesSnapshot('long selected')
+    checkFormMatchesSnapshot()
   })
 })

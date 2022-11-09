@@ -10,21 +10,21 @@ describe('testing visuals for "FieldSearch"', () => {
 
   it(`renders usual search`, () => {
     mountFormField('search', { label: 'search' })
-    checkFormMatchesSnapshot('basic')
+    checkFormMatchesSnapshot()
     cy.get('input')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('basic - focused')
+        checkFormMatchesSnapshot({ subTitle: 'focused' })
       })
     cy.get('input')
       .type(input)
       .then(() => {
-        checkFormMatchesSnapshot('basic - filled')
+        checkFormMatchesSnapshot({ subTitle: 'filled' })
       })
   })
 
   it(`renders disabled search`, () => {
     mountFormField('search', { label: 'search', disabled: true })
-    checkFormMatchesSnapshot('disabled')
+    checkFormMatchesSnapshot()
   })
 })

@@ -64,14 +64,14 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       label: 'treeselect',
       disabled: true,
     })
-    checkFormMatchesSnapshot('basic - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders basic required select', () => {
     mountFormField('treeselect', {
       label: 'treeselect',
       required: true,
     })
-    checkFormMatchesSnapshot('basic - required')
+    checkFormMatchesSnapshot()
   })
   it('renders basic invalid treeselect', () => {
     mountFormField('treeselect', {
@@ -79,7 +79,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       required: true,
       validationVisibility: FormValidationVisibility.Live,
     })
-    checkFormMatchesSnapshot('basic - invalid')
+    checkFormMatchesSnapshot()
   })
 
   it(`renders focused treeselect`, () => {
@@ -87,7 +87,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused')
+        checkFormMatchesSnapshot()
       })
   })
   it(`renders focused linked treeselect`, () => {
@@ -95,18 +95,18 @@ describe('testing visuals for "FieldTreeSelect"', () => {
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused - linked')
+        checkFormMatchesSnapshot()
       })
   })
 
   it('renders linked select', () => {
     mountFormField('treeselect', { label: 'treeselect', link: '/' })
-    checkFormMatchesSnapshot('linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders selected select', () => {
     mountFormField('treeselect', { label: 'treeselect', options, value })
-    checkFormMatchesSnapshot('selected')
+    checkFormMatchesSnapshot()
   })
   it('renders selected disabled select', () => {
     mountFormField('treeselect', {
@@ -115,7 +115,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       value,
       disabled: true,
     })
-    checkFormMatchesSnapshot('selected - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders selected required select', () => {
     mountFormField('treeselect', {
@@ -124,7 +124,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       value,
       required: true,
     })
-    checkFormMatchesSnapshot('selected - required')
+    checkFormMatchesSnapshot()
   })
   it('renders selected select linked', () => {
     mountFormField('treeselect', {
@@ -133,7 +133,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       value,
       link: '/',
     })
-    checkFormMatchesSnapshot('selected - linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders multiple selected select', () => {
@@ -143,7 +143,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       value: [0, 1],
       multiple: true,
     })
-    checkFormMatchesSnapshot('multiple selected')
+    checkFormMatchesSnapshot()
   })
   it('renders multiple selected disabled select', () => {
     mountFormField('treeselect', {
@@ -153,7 +153,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       multiple: true,
       disabled: true,
     })
-    checkFormMatchesSnapshot('multiple selected - disabled')
+    checkFormMatchesSnapshot()
   })
   it('renders multiple selected required select', () => {
     mountFormField('treeselect', {
@@ -163,7 +163,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       multiple: true,
       required: true,
     })
-    checkFormMatchesSnapshot('multiple selected - required')
+    checkFormMatchesSnapshot()
   })
 
   it('renders long multiple selected', () => {
@@ -173,7 +173,7 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       value: [0, 1, 2, 3, 4, 6, 7, 8],
       multiple: true,
     })
-    checkFormMatchesSnapshot('long multiple selected')
+    checkFormMatchesSnapshot()
   })
 
   it('renders long selected', () => {
@@ -182,6 +182,6 @@ describe('testing visuals for "FieldTreeSelect"', () => {
       options,
       value: 5,
     })
-    checkFormMatchesSnapshot('long selected')
+    checkFormMatchesSnapshot()
   })
 })

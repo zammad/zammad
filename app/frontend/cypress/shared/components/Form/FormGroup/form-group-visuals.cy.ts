@@ -3,7 +3,7 @@
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { mountComponent } from '@cy/utils'
+import { checkFormMatchesSnapshot, mountComponent } from '@cy/utils'
 import Form from '@shared/components/Form/Form.vue'
 
 describe('grouping form fields', () => {
@@ -79,11 +79,7 @@ describe('grouping form fields', () => {
       },
     })
 
-    cy.wrap(document.fonts.ready).then(() => {
-      cy.get('.form').matchImage({
-        title: 'grouped fields',
-      })
-    })
+    checkFormMatchesSnapshot({ wrapperSelector: '.form' })
   })
 
   it('renders disabled border correctly', () => {
@@ -150,10 +146,6 @@ describe('grouping form fields', () => {
       },
     })
 
-    cy.wrap(document.fonts.ready).then(() => {
-      cy.get('.form').matchImage({
-        title: 'grouped disabled fields',
-      })
-    })
+    checkFormMatchesSnapshot({ wrapperSelector: '.form' })
   })
 })

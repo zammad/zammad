@@ -14,32 +14,32 @@ const longText =
 describe('testing visuals for "FieldTextarea"', () => {
   it('renders basic textarea', () => {
     mountFormField('textarea', { label: 'textarea' })
-    checkFormMatchesSnapshot('basic')
+    checkFormMatchesSnapshot()
     cy.get('textarea')
       .click()
       .then(() => {
-        checkFormMatchesSnapshot('basic - focused')
+        checkFormMatchesSnapshot()
       })
 
     cy.get('textarea')
       .type('Some Text')
       .then(() => {
-        checkFormMatchesSnapshot('basic - filled')
+        checkFormMatchesSnapshot()
       })
   })
 
   it(`renders required textarea`, () => {
     mountFormField('textarea', { label: 'textarea', required: true })
-    checkFormMatchesSnapshot('required')
+    checkFormMatchesSnapshot()
     cy.get('textarea')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('required - focused')
+        checkFormMatchesSnapshot()
       })
     cy.get('textarea')
       .type('Some Text')
       .then(() => {
-        checkFormMatchesSnapshot('required - filled')
+        checkFormMatchesSnapshot()
       })
   })
 
@@ -49,21 +49,21 @@ describe('testing visuals for "FieldTextarea"', () => {
       required: true,
       validationVisibility: FormValidationVisibility.Live,
     })
-    checkFormMatchesSnapshot('required - invalid')
+    checkFormMatchesSnapshot()
   })
 
   it(`renders disabled textarea`, () => {
     mountFormField('textarea', { label: 'textarea', disabled: true })
-    checkFormMatchesSnapshot('disabled')
+    checkFormMatchesSnapshot()
   })
 
   it('scrolled textarea has correct label', () => {
     mountFormField('textarea', { label: 'textarea', value: longText })
-    checkFormMatchesSnapshot('scrolled')
+    checkFormMatchesSnapshot()
     cy.get('textarea')
       .scrollTo('bottom')
       .then(() => {
-        checkFormMatchesSnapshot('scrolled - bottom')
+        checkFormMatchesSnapshot()
       })
   })
 })

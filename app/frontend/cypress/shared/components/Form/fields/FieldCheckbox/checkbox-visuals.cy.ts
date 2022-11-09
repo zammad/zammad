@@ -13,11 +13,11 @@ describe('testing visuals for "FieldCheckbox"', () => {
       mountFormField('checkbox', { label: 'Checkbox' })
       cy.get('.formkit-outer').then(($el) => {
         $el.css('min-height', '24px')
-        checkFormMatchesSnapshot('default - unchecked')
+        checkFormMatchesSnapshot({ subTitle: 'unchecked' })
         cy.findByLabelText('Checkbox')
           .check()
           .then(() => {
-            checkFormMatchesSnapshot('default - checked')
+            checkFormMatchesSnapshot({ subTitle: 'checked' })
           })
       })
     })
@@ -26,7 +26,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
       mountFormField('checkbox', { label: 'Checkbox', required: true })
       cy.get('.formkit-outer').then(($el) => {
         $el.css('min-height', '24px')
-        checkFormMatchesSnapshot('default - required')
+        checkFormMatchesSnapshot()
       })
     })
 
@@ -38,7 +38,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
       })
       cy.get('.formkit-outer').then(($el) => {
         $el.css('min-height', '24px')
-        checkFormMatchesSnapshot('default - invalid')
+        checkFormMatchesSnapshot()
       })
     })
 
@@ -46,7 +46,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
       mountFormField('checkbox', { label: 'Checkbox', disabled: true })
       cy.get('.formkit-outer').then(($el) => {
         $el.css('min-height', '24px')
-        checkFormMatchesSnapshot('default - disabled')
+        checkFormMatchesSnapshot()
       })
     })
   })
@@ -57,11 +57,11 @@ describe('testing visuals for "FieldCheckbox"', () => {
         label: 'Checkbox',
         variant: CheckboxVariant.Switch,
       })
-      checkFormMatchesSnapshot('switch - unchecked')
+      checkFormMatchesSnapshot({ subTitle: 'unchecked' })
       cy.findByLabelText('Checkbox')
         .check({ force: true })
         .then(() => {
-          checkFormMatchesSnapshot('switch - checked')
+          checkFormMatchesSnapshot({ subTitle: 'checked' })
         })
     })
 
@@ -71,7 +71,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
         variant: CheckboxVariant.Switch,
         required: true,
       })
-      checkFormMatchesSnapshot('switch - required')
+      checkFormMatchesSnapshot()
     })
 
     it('renders switch invalid checkbox', () => {
@@ -81,7 +81,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
         required: true,
         validationVisibility: FormValidationVisibility.Live,
       })
-      checkFormMatchesSnapshot('switch - invalid')
+      checkFormMatchesSnapshot()
     })
 
     it('renders switch disabled checkbox', () => {
@@ -90,7 +90,7 @@ describe('testing visuals for "FieldCheckbox"', () => {
         disabled: true,
         variant: CheckboxVariant.Switch,
       })
-      checkFormMatchesSnapshot('switch - disabled')
+      checkFormMatchesSnapshot()
     })
   })
 })

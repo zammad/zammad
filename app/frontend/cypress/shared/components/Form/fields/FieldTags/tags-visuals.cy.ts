@@ -12,17 +12,17 @@ const longText =
 describe('testing visuals for "FieldTags"', () => {
   it('renders basic tags', () => {
     mountFormField('tags', { label: 'tags' })
-    checkFormMatchesSnapshot('basic')
+    checkFormMatchesSnapshot()
   })
 
   it('renders linked tags', () => {
     mountFormField('tags', { label: 'tags', link: '/' })
-    checkFormMatchesSnapshot('linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders required tags', () => {
     mountFormField('tags', { label: 'tags', required: true })
-    checkFormMatchesSnapshot('required')
+    checkFormMatchesSnapshot()
   })
 
   it('renders invalid tags', () => {
@@ -31,7 +31,7 @@ describe('testing visuals for "FieldTags"', () => {
       required: true,
       validationVisibility: FormValidationVisibility.Live,
     })
-    checkFormMatchesSnapshot('invalid')
+    checkFormMatchesSnapshot()
   })
 
   it(`renders focused tags`, () => {
@@ -39,7 +39,7 @@ describe('testing visuals for "FieldTags"', () => {
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused')
+        checkFormMatchesSnapshot()
       })
   })
 
@@ -48,13 +48,13 @@ describe('testing visuals for "FieldTags"', () => {
     cy.get('output')
       .focus()
       .then(() => {
-        checkFormMatchesSnapshot('focused - linked')
+        checkFormMatchesSnapshot()
       })
   })
 
   it('renders selected tags', () => {
     mountFormField('tags', { label: 'tags', value: ['some', 'thing'] })
-    checkFormMatchesSnapshot('selected')
+    checkFormMatchesSnapshot()
   })
 
   it('renders selected with link tags', () => {
@@ -63,7 +63,7 @@ describe('testing visuals for "FieldTags"', () => {
       value: ['some', 'thing'],
       link: '/',
     })
-    checkFormMatchesSnapshot('selected - linked')
+    checkFormMatchesSnapshot()
   })
 
   it('renders a lot of selected tags', () => {
@@ -71,6 +71,6 @@ describe('testing visuals for "FieldTags"', () => {
       label: 'tags',
       value: Array.from(new Set(longText.split(' '))),
     })
-    checkFormMatchesSnapshot('selected - a lot')
+    checkFormMatchesSnapshot()
   })
 })

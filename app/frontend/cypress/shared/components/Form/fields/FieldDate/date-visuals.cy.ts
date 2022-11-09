@@ -15,16 +15,16 @@ describe('testing visuals for "FieldDate"', () => {
   inputs.forEach(({ type, input }) => {
     it(`renders basic ${type}`, () => {
       mountFormField(type, { label: 'Date', maxDate: '2021-02-01' })
-      checkFormMatchesSnapshot('basic', type)
+      checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('basic - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.findByLabelText('Date')
         .type(`${input}{enter}`)
         .then(() => {
-          checkFormMatchesSnapshot('basic - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
@@ -34,16 +34,16 @@ describe('testing visuals for "FieldDate"', () => {
         required: true,
         maxDate: '2021-02-01',
       })
-      checkFormMatchesSnapshot('required', type)
+      checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('required - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.findByLabelText('Date')
         .type(`${input}{enter}`)
         .then(() => {
-          checkFormMatchesSnapshot('required - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
@@ -54,21 +54,21 @@ describe('testing visuals for "FieldDate"', () => {
         maxDate: '2021-02-01',
         validationVisibility: FormValidationVisibility.Live,
       })
-      checkFormMatchesSnapshot('required - invalid', type)
+      checkFormMatchesSnapshot({ type })
     })
 
     it('renders linked', () => {
       mountFormField(type, { label: 'Date', link: '/', maxDate: '2021-02-01' })
-      checkFormMatchesSnapshot('linked', type)
+      checkFormMatchesSnapshot({ type })
       cy.findByLabelText('Date')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('linked - focused', type)
+          checkFormMatchesSnapshot({ subTitle: 'focused', type })
         })
       cy.findByLabelText('Date')
         .type(`${input}{enter}`)
         .then(() => {
-          checkFormMatchesSnapshot('linked - filled', type)
+          checkFormMatchesSnapshot({ subTitle: 'filled', type })
         })
     })
 
@@ -78,7 +78,7 @@ describe('testing visuals for "FieldDate"', () => {
         disabled: true,
         maxDate: '2021-02-01',
       })
-      checkFormMatchesSnapshot('disabled', type)
+      checkFormMatchesSnapshot({ type })
     })
   })
 })

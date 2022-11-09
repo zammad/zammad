@@ -57,15 +57,15 @@ describe('testing visuals for "FieldAutocomplete"', () => {
   inputs.forEach(({ type }) => {
     it(`renders basic ${type}`, () => {
       mountFormField(type, { label: type, options })
-      checkFormMatchesSnapshot('basic', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders basic disabled ${type}`, () => {
       mountFormField(type, { label: type, options, disabled: true })
-      checkFormMatchesSnapshot('basic - disabled', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders basic required ${type}`, () => {
       mountFormField(type, { label: type, options, required: true })
-      checkFormMatchesSnapshot('basic - required', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders basic invalid ${type}`, () => {
       mountFormField(type, {
@@ -74,20 +74,20 @@ describe('testing visuals for "FieldAutocomplete"', () => {
         required: true,
         validationVisibility: FormValidationVisibility.Live,
       })
-      checkFormMatchesSnapshot('basic - invalid', type)
+      checkFormMatchesSnapshot({ type })
     })
 
     it(`renders selected ${type}`, () => {
       mountFormField(type, { label: type, options, value: 0 })
-      checkFormMatchesSnapshot('selected', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders selected disabled ${type}`, () => {
       mountFormField(type, { label: type, options, value: 0, disabled: true })
-      checkFormMatchesSnapshot('selected - disabled', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders selected required ${type}`, () => {
       mountFormField(type, { label: type, options, value: 0, required: true })
-      checkFormMatchesSnapshot('selected - required', type)
+      checkFormMatchesSnapshot({ type })
     })
 
     it(`renders focused ${type}`, () => {
@@ -95,7 +95,7 @@ describe('testing visuals for "FieldAutocomplete"', () => {
       cy.get('output')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('focused', type)
+          checkFormMatchesSnapshot({ type })
         })
     })
 
@@ -104,7 +104,7 @@ describe('testing visuals for "FieldAutocomplete"', () => {
       cy.get('output')
         .focus()
         .then(() => {
-          checkFormMatchesSnapshot('focused - linked', type)
+          checkFormMatchesSnapshot({ type })
         })
     })
 
@@ -115,7 +115,7 @@ describe('testing visuals for "FieldAutocomplete"', () => {
         multiple: true,
         value: [0, 1],
       })
-      checkFormMatchesSnapshot('multiple', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders multiple disabled ${type}`, () => {
       mountFormField(type, {
@@ -125,7 +125,7 @@ describe('testing visuals for "FieldAutocomplete"', () => {
         value: [0, 1],
         disabled: true,
       })
-      checkFormMatchesSnapshot('multiple - disabled', type)
+      checkFormMatchesSnapshot({ type })
     })
     it(`renders multiple required ${type}`, () => {
       mountFormField(type, {
@@ -135,12 +135,12 @@ describe('testing visuals for "FieldAutocomplete"', () => {
         value: [0, 1],
         required: true,
       })
-      checkFormMatchesSnapshot('multiple - required', type)
+      checkFormMatchesSnapshot({ type })
     })
 
     it(`renders long ${type}`, () => {
       mountFormField(type, { label: type, value: 5, options })
-      checkFormMatchesSnapshot('long', type)
+      checkFormMatchesSnapshot({ type })
     })
   })
 })

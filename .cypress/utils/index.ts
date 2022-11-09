@@ -50,11 +50,20 @@ export const mountFormField = (
   })
 }
 
-export const checkFormMatchesSnapshot = (title: string, type = '') => {
+interface CheckFormMatchOptions {
+  subTitle?: string
+  type?: string
+  wrapperSelector?: string
+}
+
+export const checkFormMatchesSnapshot = (options?: CheckFormMatchOptions) => {
+  const title = options?.subTitle ? `${Cypress.currentTest.title} - ${options.subTitle}` : Cypress.currentTest.title
+  const wrapperSelector = options?.wrapperSelector || '.formkit-outer'
+
   return cy.wrap(document.fonts.ready).then(() => {
-    cy.get('.formkit-outer').matchImage({
-      title: type ? `${type} - ${title}` : title,
-      imagesDir: type ? `__image_snapshots__/${type}` : undefined,
+    cy.get(wrapperSelector).matchImage({
+      title,
+      imagesDir: options?.type ? `__image_snapshots__/${options.type}` : undefined,
     })
   })
 }

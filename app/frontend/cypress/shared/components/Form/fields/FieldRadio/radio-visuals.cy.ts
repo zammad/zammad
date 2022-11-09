@@ -17,11 +17,11 @@ describe('testing visuals for "FieldRadio"', () => {
       buttons: true,
       options: radioOptions,
     })
-    checkFormMatchesSnapshot('basic')
+    checkFormMatchesSnapshot()
     cy.findByText('Incoming Phone')
       .click()
       .then(() => {
-        checkFormMatchesSnapshot('basic - checked')
+        checkFormMatchesSnapshot({ subTitle: 'checked' })
       })
   })
 
@@ -31,6 +31,6 @@ describe('testing visuals for "FieldRadio"', () => {
       disabled: true,
       options: radioOptions,
     })
-    checkFormMatchesSnapshot('disabled')
+    checkFormMatchesSnapshot()
   })
 })
