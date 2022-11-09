@@ -210,7 +210,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
     new_options
   end
 
-  def template_create_render(params) # rubocop:disable Metrics/AbcSize
+  def template_prepare_params(params)
     clean_params = Template.association_name_to_id_convert(params)
     clean_params = Template.param_cleanup(clean_params, true)
 
@@ -222,6 +222,12 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
       clean_params[:options] = migrate_options(clean_params[:options])
       ActiveSupport::Deprecation.warn 'Usage of the old format for template options with unprefixed keys and simple values is deprecated.'
     end
+
+    clean_params
+  end
+
+  def template_create_render(params)
+    clean_params = template_prepare_params(params)
 
     template = Template.new(clean_params)
     template.associations_from_param(params)
@@ -240,20 +246,10 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
     model_create_render_item(template)
   end
 
-  def template_update_render(params) # rubocop:disable Metrics/AbcSize
+  def template_update_render(params)
     template = Template.find(params[:id])
 
-    clean_params = Template.association_name_to_id_convert(params)
-    clean_params = Template.param_cleanup(clean_params, true)
-
-    if Template.included_modules.include?(ChecksCoreWorkflow)
-      clean_params[:screen] = 'update'
-    end
-
-    if old_options?(clean_params[:options])
-      clean_params[:options] = migrate_options(clean_params[:options])
-      ActiveSupport::Deprecation.warn 'Usage of the old format for template options with unprefixed keys and simple values is deprecated.'
-    end
+    clean_params = template_prepare_params(params)
 
     template.with_lock do
       template.associations_from_param(params)
