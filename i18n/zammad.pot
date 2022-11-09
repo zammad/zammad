@@ -2969,7 +2969,7 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines groups for which a customer can create tickets via web interface. \"-\" means all groups are available."
+msgid "Defines groups for which a customer can create tickets via web interface. No selection means all groups are available."
 msgstr ""
 
 #: db/seeds/settings.rb
