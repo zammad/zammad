@@ -17,7 +17,7 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
   } = classes
 
   return {
-    outer: `${outer} absolute-floating-input formkit-invalid:bg-red/10 flex-col flex px-2`,
+    outer: `${outer} absolute-floating-input formkit-invalid:bg-red-dark flex-col flex px-2`,
     wrapper: `${wrapper} relative flex-1`,
     inner: 'flex ltr:pr-2 rtl:pl-2',
     block: 'flex',
@@ -43,7 +43,7 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
         formkit-populated:-translate-y-3 formkit-populated:translate-x-6
         formkit-populated:scale-75 formkit-populated:opacity-75
         formkit-required:required
-        formkit-invalid:text-red
+        formkit-invalid:text-red-bright
       `),
     arrow: `${arrow} formkit-arrow flex items-center`,
   }

@@ -60,7 +60,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       input: `${classes.textarea?.input} min-h-[100px]`,
     }),
     checkbox: {
-      outer: 'formkit-invalid:bg-red/10',
+      outer: 'formkit-invalid:bg-red-dark',
       wrapper: `${classes.checkbox?.wrapper || ''} w-full justify-between`,
       label: `${classes.checkbox?.label || ''} formkit-required:required`,
     },

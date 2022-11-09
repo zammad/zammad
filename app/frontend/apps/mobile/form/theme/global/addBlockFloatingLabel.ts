@@ -18,7 +18,7 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
   } = classes
 
   return {
-    outer: `${outer} floating-input flex flex-col formkit-invalid:bg-red/10 focus-within:bg-blue-highlight px-2`,
+    outer: `${outer} floating-input flex flex-col formkit-invalid:bg-red-dark focus-within:bg-blue-highlight px-2`,
     wrapper: `${wrapper} relative py-1 flex-1 flex self-start justify-center flex-col`,
     inner: 'flex ltr:pr-2 rtl:pl-2 pb-1 relative',
     block: 'flex min-h-[3.5rem] cursor-pointer formkit-disabled:cursor-default',
@@ -45,7 +45,7 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       formkit-populated:-translate-y-[0.4rem]
       formkit-populated:scale-80 formkit-populated:opacity-75
       formkit-required:required
-      formkit-invalid:text-red
+      formkit-invalid:text-red-bright
     `),
     arrow: `${arrow} formkit-arrow flex items-center formkit-disabled:opacity-30`,
   }

@@ -143,7 +143,7 @@ const confirmRemoveAvatar = async () => {
   showConfirmation({
     heading: __('Do you really want to delete your current avatar?'),
     buttonTitle: __('Delete avatar'),
-    buttonTextColorClass: 'text-red',
+    buttonTextColorClass: 'text-red-bright',
     confirmCallback: removeAvatar,
   })
 }
@@ -201,19 +201,19 @@ const allowedImageTypes = computed(() => {
 
         <div class="mt-4 flex w-full justify-center gap-2">
           <button
-            class="w-full cursor-pointer rounded-xl bg-green py-2 px-3 text-base"
+            class="w-full cursor-pointer rounded-xl bg-green py-2 px-3 text-base text-black"
             @click="fileGalleryInput?.click()"
           >
             {{ $t('Library') }}
           </button>
           <button
-            class="w-full cursor-pointer rounded-xl bg-blue py-2 px-3 text-base"
+            class="w-full cursor-pointer rounded-xl bg-blue py-2 px-3 text-base text-black"
             @click="fileCameraInput?.click()"
           >
             {{ $t('Camera') }}
           </button>
           <button
-            class="w-full rounded-xl bg-red py-2 px-3 text-base disabled:opacity-50"
+            class="w-full rounded-xl bg-red-bright py-2 px-3 text-base text-black disabled:opacity-50"
             :class="{
               ['cursor-pointer']: !avatarDeleteDisabled,
               ['cursor-not-allowed']: avatarDeleteDisabled,

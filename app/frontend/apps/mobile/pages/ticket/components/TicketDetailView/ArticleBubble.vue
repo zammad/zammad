@@ -44,7 +44,7 @@ const bubbleClasses = computed(() => {
 
   return {
     'rounded-bl-sm bg-white text-black': position === 'left',
-    'rounded-br-sm bg-blue text-white': position === 'right',
+    'rounded-br-sm bg-blue text-black': position === 'right',
   }
 })
 
@@ -132,12 +132,8 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
       :class="bubbleClasses"
     >
       <div
-        class="flex text-xs font-bold"
+        class="flex text-xs font-bold text-black/90"
         data-test-id="article-username"
-        :class="{
-          'text-black/80': !internal && position === 'left',
-          'text-white/80': internal || position === 'right',
-        }"
       >
         <CommonIcon v-if="internal" size="tiny" name="mobile-lock" />
         <span
@@ -219,7 +215,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   &.Right .Content,
   &.Internal .Content {
     :deep(a) {
-      @apply text-white underline;
+      @apply text-black underline;
     }
   }
 }

@@ -33,23 +33,6 @@ const iconSize = computed(() => {
   if (!props.icon) return 'medium'
   return iconSizes[props.size]
 })
-
-// const iconSize = computed(() => {
-//   switch (props.size) {
-//     case 'xs':
-//       return { width: 16, height: 16 }
-//     case 'small':
-//       return { width: 22, height: 22 }
-//     case 'large':
-//       return { width: 68, height: 68 }
-//     case 'xl':
-//       return { width: 128, height: 128 }
-//     case 'medium':
-//     case 'normal':
-//     default:
-//       return { width: 45, height: 45 }
-//   }
-// })
 </script>
 
 <template>
@@ -59,7 +42,7 @@ const iconSize = computed(() => {
       backgroundRepeat: image ? 'no-repeat' : undefined,
     }"
     :class="[
-      'relative inline-flex h-10 w-10 shrink-0 select-none text-white',
+      'relative inline-flex h-10 w-10 shrink-0 select-none text-black',
       'items-center justify-center rounded-full bg-cover bg-center',
       `size-${size}`,
     ]"

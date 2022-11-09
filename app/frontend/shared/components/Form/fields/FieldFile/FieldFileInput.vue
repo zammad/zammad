@@ -73,7 +73,7 @@ const { waitForConfirmation } = useConfirmation()
 const removeFile = async (fileId: Scalars['ID']) => {
   const confirmed = await waitForConfirmation(__('Are you sure?'), {
     buttonTitle: 'Delete',
-    buttonTextColorClass: 'text-red',
+    buttonTextColorClass: 'text-red-bright',
   })
 
   if (!confirmed) return

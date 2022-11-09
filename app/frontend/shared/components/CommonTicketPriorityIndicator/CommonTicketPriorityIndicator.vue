@@ -40,7 +40,7 @@ const definition = computed(() => {
 }
 
 .u-high-priority-color {
-  @apply bg-red/10 text-red;
+  @apply bg-red-dark text-red-bright;
 }
 
 .u-low-priority-color {

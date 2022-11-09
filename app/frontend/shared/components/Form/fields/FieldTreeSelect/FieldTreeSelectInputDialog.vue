@@ -277,7 +277,7 @@ onMounted(() => {
             <span
               v-for="parentValue in (option as FlatSelectOption).parents"
               :key="String(parentValue)"
-              class="opacity-50"
+              class="text-gray"
             >
               —
               {{

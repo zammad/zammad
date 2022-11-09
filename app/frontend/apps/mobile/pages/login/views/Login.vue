@@ -248,7 +248,7 @@ const login = (formData: FormData<LoginFormData>) => {
         <span v-if="idx !== links.length - 1" aria-hidden="true">|</span>
       </template>
     </nav>
-    <footer class="flex items-center justify-center align-middle text-gray-200">
+    <footer class="flex items-center justify-center align-middle text-gray">
       <CommonLink
         link="https://zammad.org"
         external
@@ -266,7 +266,7 @@ const login = (formData: FormData<LoginFormData>) => {
         link="https://zammad.org"
         external
         open-in-new-tab
-        class="font-semibold !text-gray-200"
+        class="font-semibold !text-gray"
       >
         Zammad
       </CommonLink>

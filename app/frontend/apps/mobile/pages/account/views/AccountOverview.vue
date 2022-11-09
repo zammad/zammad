@@ -126,7 +126,7 @@ const productAbout = productAboutQuery.result()
     <div class="mb-4">
       <FormKit
         wrapper-class="mt-4 text-base flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 text-red formkit-variant-primary:bg-gray-500 rounded-xl select-none"
+        input-class="py-2 px-4 w-full h-14 text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
         type="submit"
         name="signout"
         @click="logout"

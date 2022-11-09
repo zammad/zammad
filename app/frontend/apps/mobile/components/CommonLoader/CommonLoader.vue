@@ -38,7 +38,7 @@ export default {
   <div
     v-else-if="error"
     v-bind="$attrs"
-    class="flex items-center justify-center gap-2 text-base text-red"
+    class="flex items-center justify-center gap-2 text-base text-red-bright"
   >
     <CommonIcon name="mobile-close-small" />
     <span v-html="markup($t(error))" />

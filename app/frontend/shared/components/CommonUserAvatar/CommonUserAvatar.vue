@@ -25,7 +25,7 @@ const initials = computed(() => {
 
 const colors = [
   'bg-gray',
-  'bg-red',
+  'bg-red-bright',
   'bg-yellow',
   'bg-blue',
   'bg-green',
