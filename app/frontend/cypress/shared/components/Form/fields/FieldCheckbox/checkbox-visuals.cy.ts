@@ -4,7 +4,6 @@
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
 import { mountFormField, checkFormMatchesSnapshot } from '@cy/utils'
-import { CheckboxVariant } from '@shared/components/Form/fields/FieldCheckbox/types'
 import { FormValidationVisibility } from '@shared/components/Form/types'
 
 describe('testing visuals for "FieldCheckbox"', () => {
@@ -48,49 +47,6 @@ describe('testing visuals for "FieldCheckbox"', () => {
         $el.css('min-height', '24px')
         checkFormMatchesSnapshot()
       })
-    })
-  })
-
-  describe('switch checkbox', () => {
-    it('renders switch basic checkbox', () => {
-      mountFormField('checkbox', {
-        label: 'Checkbox',
-        variant: CheckboxVariant.Switch,
-      })
-      checkFormMatchesSnapshot({ subTitle: 'unchecked' })
-      cy.findByLabelText('Checkbox')
-        .check({ force: true })
-        .then(() => {
-          checkFormMatchesSnapshot({ subTitle: 'checked' })
-        })
-    })
-
-    it('renders switch required checkbox', () => {
-      mountFormField('checkbox', {
-        label: 'Checkbox',
-        variant: CheckboxVariant.Switch,
-        required: true,
-      })
-      checkFormMatchesSnapshot()
-    })
-
-    it('renders switch invalid checkbox', () => {
-      mountFormField('checkbox', {
-        label: 'Checkbox',
-        variant: CheckboxVariant.Switch,
-        required: true,
-        validationVisibility: FormValidationVisibility.Live,
-      })
-      checkFormMatchesSnapshot()
-    })
-
-    it('renders switch disabled checkbox', () => {
-      mountFormField('checkbox', {
-        label: 'Checkbox',
-        disabled: true,
-        variant: CheckboxVariant.Switch,
-      })
-      checkFormMatchesSnapshot()
     })
   })
 })

@@ -61,12 +61,22 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     }),
     checkbox: {
       outer: 'formkit-invalid:bg-red-dark',
-      wrapper: `${classes.checkbox?.wrapper || ''} w-full justify-between`,
+      wrapper: `${
+        classes.checkbox?.wrapper || ''
+      } ltr:pl-2 rtl:pr-2 w-full justify-between`,
       label: `${classes.checkbox?.label || ''} formkit-required:required`,
+      input: ` ${
+        classes.checkbox?.input || ''
+      } h-4 w-4 border-[1.5px] border-white rounded-sm bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue`,
     },
     toggle: {
-      wrapper: `${classes.toggle?.wrapper || ''} w-full justify-between`,
-      label: `${classes.toggle?.label || ''} formkit-required:required`,
+      ...classes.toggle,
+      outer: `${classes.toggle?.outer || ''} px-2 formkit-invalid:bg-red-dark`,
+      wrapper: `${classes.toggle?.wrapper || ''} inline-flex w-full h-14 px-2`,
+      label: `${
+        classes.toggle?.label || ''
+      } flex items-center w-full h-full text-base cursor-pointer formkit-required:required`,
+      inner: `${classes.toggle?.inner || ''} flex items-center h-full`,
     },
     tags: addBlockFloatingLabel(classes.tags),
     select: addSelectLabel(classes.select),

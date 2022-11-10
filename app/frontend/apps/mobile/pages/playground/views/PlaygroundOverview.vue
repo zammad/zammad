@@ -16,6 +16,20 @@ const linkSchemaRaw = [
     label: 'Textarea',
   },
   {
+    type: 'toggle',
+    name: 'toggle',
+    label: 'Toggle',
+    required: true,
+    // disabled: true,
+    props: {
+      value: false,
+      variants: {
+        true: 'Yes',
+        false: 'No',
+      },
+    },
+  },
+  {
     type: 'text',
     name: 'some_input',
     label: 'Input',

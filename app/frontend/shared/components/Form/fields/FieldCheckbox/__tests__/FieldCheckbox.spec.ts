@@ -6,7 +6,6 @@ import { getAllByRole } from '@testing-library/vue'
 import type { ExtendedMountingOptions } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
 import { waitForTimeout } from '@tests/support/utils'
-import { CheckboxVariant } from '../types'
 
 const wrapperParameters = {
   form: true,
@@ -21,7 +20,6 @@ const renderCheckbox = (options: ExtendedMountingOptions<unknown> = {}) =>
       type: 'checkbox',
       id: 'checkbox',
       label: 'Checkbox',
-      variant: CheckboxVariant.Default,
     },
     ...options,
   })
@@ -104,23 +102,6 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
     expect(emittedInput[1][0]).toBe('no')
   })
 
-  it('can use variant', async () => {
-    const view = renderCheckbox({
-      ...wrapperParameters,
-      props: {
-        label: 'Checkbox',
-        name: 'checkbox',
-        type: 'checkbox',
-        id: 'checkbox',
-        onValue: 'yes',
-        offValue: 'no',
-        variant: CheckboxVariant.Switch,
-      },
-    })
-
-    expect(view.getByLabelText('Checkbox')).toHaveClass('sr-only')
-  })
-
   it('can be disabled', async () => {
     const view = renderCheckbox({
       props: {
@@ -128,7 +109,6 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
         name: 'checkbox',
         type: 'checkbox',
         id: 'checkbox',
-        variant: CheckboxVariant.Switch,
       },
     })
 

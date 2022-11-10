@@ -137,6 +137,18 @@ const checkInputValue = (
   expect(wrapper.getByLabelText(label)).toHaveValue(value)
 }
 
+const checkSelected = (
+  wrapper: ExtendedRenderResult,
+  label: string,
+  selected: boolean,
+) => {
+  if (selected) {
+    expect(wrapper.getByLabelText(label)).toBeChecked()
+  } else {
+    expect(wrapper.getByLabelText(label)).not.toBeChecked()
+  }
+}
+
 // Currently only the first level of a treeselect.
 const checkSelectOptions = async (
   wrapper: ExtendedRenderResult,
@@ -338,8 +350,6 @@ describe('Form.vue - Form Updater - Initialization', () => {
       'Key 3',
       'Key 4',
     ])
-
-    await checkSelectOptions(wrapper, 'Shared', ['No', 'Yes'])
 
     // checkSelectClearable(wrapper, 'Treeselect', true)
     // TODO not working for treeselect at the moment....
@@ -905,7 +915,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     checkInputValue(wrapper, 'Example', 'example')
     checkInputValue(wrapper, 'Textarea', 'some more text')
     checkInputValue(wrapper, 'Number', 100)
-    checkDisplayValue(wrapper, 'Shared', 'ja')
+    checkSelected(wrapper, 'Shared', true)
   })
 
   test('set field options after new form updater result comes in', async () => {
@@ -1144,7 +1154,7 @@ describe('Form.vue - Form Updater - special situtations', () => {
         multiselect: [],
         multitreeselect: undefined,
         number: undefined,
-        shared: true,
+        shared: false,
         start_date: undefined,
         state_id: 1,
         treeselect: undefined,

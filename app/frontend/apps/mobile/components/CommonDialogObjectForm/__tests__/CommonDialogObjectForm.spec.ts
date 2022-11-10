@@ -88,8 +88,8 @@ test('can update default object', async () => {
   const test = view.getByLabelText('Test Field')
 
   expect(name).toHaveValue(organization.name)
-  expect(shared).toHaveValue('yes')
-  expect(domainAssignment).toHaveValue('no')
+  expect(shared).toBeChecked()
+  expect(domainAssignment).not.toBeChecked()
   expect(domain).toHaveValue(organization.domain)
   expect(active).not.toBeChecked()
   expect(textarea).toHaveValue(attributeValues.textarea.value)
@@ -98,12 +98,7 @@ test('can update default object', async () => {
   await view.events.type(name, ' 2')
 
   await view.events.click(shared)
-  let selectOptions = view.getAllByRole('option')
-  await view.events.click(selectOptions[1])
-
   await view.events.click(domainAssignment)
-  selectOptions = view.getAllByRole('option')
-  await view.events.click(selectOptions[0])
 
   await view.events.type(domain, 'some-domain@domain.me')
   await view.events.click(active)

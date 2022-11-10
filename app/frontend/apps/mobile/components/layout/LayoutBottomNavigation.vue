@@ -70,7 +70,7 @@ const notificationCount = computed(() => {
 <style scoped lang="scss">
 .user-active {
   .user-avatar {
-    @apply outline outline-2 outline-blue;
+    @apply ring-2 ring-blue;
   }
 }
 

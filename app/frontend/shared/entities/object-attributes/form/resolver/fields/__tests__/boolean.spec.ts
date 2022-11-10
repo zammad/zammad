@@ -19,18 +19,13 @@ describe('FieldResolverBoolean', () => {
       name: 'correct',
       required: false,
       props: {
-        options: [
-          {
-            label: 'yes',
-            value: true,
-          },
-          {
-            label: 'no',
-            value: false,
-          },
-        ],
+        variants: {
+          false: 'no',
+          true: 'yes',
+        },
       },
-      type: 'select',
+      value: false,
+      type: 'toggle',
       internal: true,
     })
   })
