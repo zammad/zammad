@@ -159,7 +159,7 @@ class App.Ticket extends App.Model
             when 'month'
               pendtil.setMonth(pendtil.getMonth() + diff)
             when 'year'
-              pendtil.setYear(pendtil.getYear() + diff)
+              pendtil.setFullYear(pendtil.getFullYear() + diff)
 
           params.ticket[attributes[1]] = pendtil.toISOString()
 

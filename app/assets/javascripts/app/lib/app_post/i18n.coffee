@@ -347,7 +347,7 @@ class _i18nSingleton extends Spine.Module
     d      = timeObject.getDate()
     m      = timeObject.getMonth() + 1
     yfull  = timeObject.getFullYear()
-    yshort = timeObject.getYear()-100
+    yshort = timeObject.getYear() % 100
     S      = timeObject.getSeconds()
     M      = timeObject.getMinutes()
     H      = timeObject.getHours()
