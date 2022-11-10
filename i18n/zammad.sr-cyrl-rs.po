@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-09 03:30+0000\n"
+"PO-Revision-Date: 2022-11-10 13:58+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -2247,7 +2247,6 @@ msgstr "Измењено:"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3513,11 +3512,11 @@ msgstr "Одређује Elasticsearch путању."
 
 #: db/seeds/settings.rb
 msgid ""
-"Defines groups for which a customer can create tickets via web interface. \"-"
-"\" means all groups are available."
+"Defines groups for which a customer can create tickets via web interface. No "
+"selection means all groups are available."
 msgstr ""
 "Одређује групе за које клијент може да отвара тикете путем веб интерфејса. "
-"„-” значи све групе су доступне."
+"Без избора значи да су све групе су доступне."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5795,8 +5794,6 @@ msgstr "Поздрав"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6480,7 +6477,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6490,7 +6486,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
@@ -6498,8 +6493,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
-#: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
@@ -6507,7 +6500,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
@@ -6515,7 +6507,6 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6564,6 +6555,10 @@ msgstr "Убацује чланак базе знања"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts text module"
 msgstr "Убацује текстуални исечак"
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid "Install App"
+msgstr "Инсталирај апликацију"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -8633,8 +8628,6 @@ msgstr "Преиначи нацрт"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -9921,6 +9914,10 @@ msgstr "Изабери локал…"
 msgid "Select the customer of the ticket or create one."
 msgstr "Изабери клијента тикета или додај новог."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+msgid "Selected"
+msgstr "Изабрано"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "Одабрани услови"
@@ -10534,8 +10531,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -12282,6 +12277,14 @@ msgstr ""
 "Да бисте укључили %s за слање HTTP захтева ка %s, морате додати посебно "
 "„правило обавештења” у %s."
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid ""
+"To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
+"to Home Screen\" button."
+msgstr ""
+"За инсталацију %s апликације, кликни на %s „Подели” а затим на дугме %s "
+"„Додај на почетни екран”."
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
@@ -13063,7 +13066,6 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13077,21 +13079,18 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13835,6 +13834,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -14579,6 +14579,7 @@ msgstr "ново и отворено"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "не"
 
@@ -14955,6 +14956,7 @@ msgstr "у следећих (релативно)"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "да"
 

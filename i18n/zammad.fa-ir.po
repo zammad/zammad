@@ -2104,7 +2104,6 @@ msgstr "تغییر یافت"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3344,10 +3343,12 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
-"Defines groups for which a customer can create tickets via web interface. \"-"
-"\" means all groups are available."
-msgstr ""
+"Defines groups for which a customer can create tickets via web interface. No "
+"selection means all groups are available."
+msgstr "آیا مشتری اجازه ساخت تیکت از درگاه وب را دارد."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5512,8 +5513,6 @@ msgstr "پیام خوشآمد"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6170,7 +6169,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6180,7 +6178,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
@@ -6188,8 +6185,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
-#: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
@@ -6197,7 +6192,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
@@ -6205,7 +6199,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6255,6 +6248,12 @@ msgstr "افزودن پاسخ از پایگاه دانش"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts text module"
 msgstr "افزودن ماژول‌ متن"
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Installed"
+msgid "Install App"
+msgstr "نصب شده"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -8340,8 +8339,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -9624,6 +9621,12 @@ msgstr "انتخاب محل…"
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+#, fuzzy
+#| msgid "Selector"
+msgid "Selected"
+msgstr "انتخاب گر"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "انتخاب شرط"
@@ -10249,8 +10252,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -11987,6 +11988,12 @@ msgid ""
 "designated \"notification rule\" in %s."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid ""
+"To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
+"to Home Screen\" button."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
@@ -12740,7 +12747,6 @@ msgstr "مشاهده از دید کاربر"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -12754,21 +12760,18 @@ msgstr "مشاهده از دید کاربر"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13440,6 +13443,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Zammad"
 msgstr "سیستم پشتیبانی"
 
@@ -14212,6 +14216,7 @@ msgstr "جدید و باز کن"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "خیر"
 
@@ -14600,6 +14605,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "بله"
 

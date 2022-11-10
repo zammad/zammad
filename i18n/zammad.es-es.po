@@ -2311,7 +2311,6 @@ msgstr "Modificado"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3035,14 +3034,14 @@ msgstr ""
 "\n"
 "Los objetos disponibles son:\n"
 "* ticket (e.g. ticket.state, ticket.group)\n"
-"* ticket.customer (e.g. ticket.customer.firstname, ticket.customer.lastname)"
-"\n"
+"* ticket.customer (e.g. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
 "* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organization (e.g. ticket.organization.name)\n"
 "* user (e.g. user.firstname, user.email)\n"
 "\n"
-"Para seleccionar una lista de marcadores de posición, simplemente ingrese \""
-"::\"."
+"Para seleccionar una lista de marcadores de posición, simplemente ingrese "
+"\"::\"."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3611,9 +3610,13 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines groups for which a customer can create tickets via web interface. "
+#| "\"-\" means all groups are available."
 msgid ""
-"Defines groups for which a customer can create tickets via web interface. \"-"
-"\" means all groups are available."
+"Defines groups for which a customer can create tickets via web interface. No "
+"selection means all groups are available."
 msgstr ""
 "Define los grupos por los cuales un cliente puede generar tickets vía web. "
 "\"-\" significa que todos los grupos están disponibles."
@@ -5967,8 +5970,6 @@ msgstr "Saludos"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6696,7 +6697,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6706,7 +6706,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
@@ -6714,8 +6713,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
-#: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
@@ -6723,7 +6720,6 @@ msgstr ""
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
@@ -6731,7 +6727,6 @@ msgstr ""
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6790,6 +6785,12 @@ msgstr "Borrar Base de Conocimiento"
 #| msgid "New text module"
 msgid "Inserts text module"
 msgstr "Nuevo módulo de texto"
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Installed"
+msgid "Install App"
+msgstr "Instalado"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -9002,8 +9003,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -10335,6 +10334,12 @@ msgstr "Seleccionar Template"
 msgid "Select the customer of the ticket or create one."
 msgstr "Selecciona el cliente del Ticket o crea uno."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+#, fuzzy
+#| msgid "Selector"
+msgid "Selected"
+msgstr "Selector"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "Condiciones seleccionadas"
@@ -10989,8 +10994,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -12943,6 +12946,12 @@ msgstr ""
 "Para habilitar %s para enviar órdenes http a %s, necesita crear una \"regla "
 "de notificación\" propia en %s."
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid ""
+"To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
+"to Home Screen\" button."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
@@ -13783,7 +13792,6 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13797,21 +13805,18 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -14591,6 +14596,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Zammad"
 msgstr ""
 
@@ -15374,6 +15380,7 @@ msgstr "nuevo & abrir"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "no"
 
@@ -15770,6 +15777,7 @@ msgstr "dentro del próximo (relativo)"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "sí"
 

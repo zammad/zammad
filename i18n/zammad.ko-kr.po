@@ -2184,7 +2184,6 @@ msgstr "변경"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3463,9 +3462,13 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines groups for which a customer can create tickets via web interface. "
+#| "\"-\" means all groups are available."
 msgid ""
-"Defines groups for which a customer can create tickets via web interface. \"-"
-"\" means all groups are available."
+"Defines groups for which a customer can create tickets via web interface. No "
+"selection means all groups are available."
 msgstr ""
 "고객이 웹 인터페이스를 통해 Ticket을 만들 수있는 그룹을 정의합니다. \"-\"모"
 "든 그룹을 사용할 수 있습니다 의미합니다."
@@ -5750,8 +5753,6 @@ msgstr "환영"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6434,7 +6435,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6444,7 +6444,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
@@ -6452,8 +6451,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
-#: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
@@ -6461,7 +6458,6 @@ msgstr ""
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
@@ -6469,7 +6465,6 @@ msgstr ""
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6525,6 +6520,12 @@ msgstr "지식 삭제"
 #| msgid "New text module"
 msgid "Inserts text module"
 msgstr "새로운 텍스트 모듈"
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Installed"
+msgid "Install App"
+msgstr "설치"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -8655,8 +8656,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -9977,6 +9976,12 @@ msgstr "템플릿 선택"
 msgid "Select the customer of the ticket or create one."
 msgstr "Ticket의 고객을 선택하거나 만듭니다."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+#, fuzzy
+#| msgid "Selector"
+msgid "Selected"
+msgstr "선택자"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""
@@ -10635,8 +10640,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -12412,6 +12415,12 @@ msgstr ""
 "%s HTTP 요청을 보내는 %s을 사용하려면 %s에서 자신의 \"알림 규칙\"을 작성해야"
 "합니다."
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid ""
+"To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
+"to Home Screen\" button."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
@@ -13182,7 +13191,6 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13196,21 +13204,18 @@ msgstr "사용자의 관점에서보기"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13956,6 +13961,7 @@ msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Zammad"
 msgstr ""
 
@@ -14747,6 +14753,7 @@ msgstr "신 공개"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "아니"
 
@@ -15137,6 +15144,7 @@ msgstr "다음 (상대적으로) 내"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "예"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-20 12:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-11-10 03:33+0000\n"
+"Last-Translator: Jeroen Baten <jbaten@i2rs.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -77,6 +77,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Aangemaakt door #{current_user.longname} op "
+"#{ticket.updated_at}_\n"
+"* Groep: #{ticket.group.name}\n"
+"* Eigenaar: #{ticket.owner.fullname}\n"
+"* Status: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -2147,7 +2158,6 @@ msgstr "Gewijzigd"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3421,9 +3431,13 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr "Stel het Elasticsearch enpoint in."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid ""
+#| "Defines groups for which a customer can create tickets via web interface. "
+#| "\"-\" means all groups are available."
 msgid ""
-"Defines groups for which a customer can create tickets via web interface. \"-"
-"\" means all groups are available."
+"Defines groups for which a customer can create tickets via web interface. No "
+"selection means all groups are available."
 msgstr ""
 "Definieert groepen waarvoor een klant via webinterface tickets kan aanmaken. "
 "\"-\" betekent dat alle groepen beschikbaar zijn."
@@ -5722,8 +5736,6 @@ msgstr "Begroeting"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6429,7 +6441,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -6439,7 +6450,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pl.html.erb
 #: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
@@ -6447,8 +6457,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
-#: app/views/mailer/ticket_escalation_warning/pl.html.erb
 #: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
@@ -6456,7 +6464,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
@@ -6464,7 +6471,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6513,6 +6519,12 @@ msgstr "Voegt kennisbankantwoord in"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts text module"
 msgstr "Tekstmodule invoegen"
+
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#, fuzzy
+#| msgid "Installed"
+msgid "Install App"
+msgstr "Geinstalleerd"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -8582,8 +8594,6 @@ msgstr "Concept overschrijven"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -9851,6 +9861,12 @@ msgstr "Selecteer locale…"
 msgid "Select the customer of the ticket or create one."
 msgstr "Selecteer de klant van het ticket of creëer er één."
 
+#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
+#, fuzzy
+#| msgid "Selector"
+msgid "Selected"
+msgstr "Keuzeschakelaar"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "Geselecteerde voorwaarden"
@@ -10471,8 +10487,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pl.html.erb
 #: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
@@ -12228,6 +12242,12 @@ msgstr ""
 "Als u %s wilt inschakelen voor het verzenden van http-verzoeken naar %s, "
 "moet u een eigen \"notificiatie regel\" maken in %s."
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+msgid ""
+"To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
+"to Home Screen\" button."
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
 "To make translations easier you can enable and disable the inline "
@@ -13002,7 +13022,6 @@ msgstr "Bekijk als de gebruiker"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13016,21 +13035,18 @@ msgstr "Bekijk als de gebruiker"
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/it.html.erb
 #: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/it.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/it.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13783,6 +13799,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -14529,6 +14546,7 @@ msgstr "nieuw & open"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "nee"
 
@@ -14912,6 +14930,7 @@ msgstr "binnen de komende"
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "ja"
 
