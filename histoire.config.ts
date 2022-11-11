@@ -10,6 +10,10 @@ export default defineConfig({
   vite: {
     server: {
       port: 3074,
+      ...(process.env.HISTOIRE_BUILD && {
+        hmr: false,
+        watch: { ignored: ['**/*'] },
+      }),
     },
     logLevel: process.env.HISTOIRE_BUILD ? 'error' : 'info',
   },
