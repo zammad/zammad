@@ -69,10 +69,6 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
       expect(result).not_to include({ name: 'updated_by_id', ref_name: 'updated_by' })
     end
 
-    it 'does exclude Ticket for bulk action updates' do
-      expect(organization).not_to be_search_index_indexable_bulk_updates(Ticket)
-    end
-
     it 'does include organization_id as relevant search index attribute' do
       expect(Ticket).to be_search_index_attribute_relevant('organization_id')
     end

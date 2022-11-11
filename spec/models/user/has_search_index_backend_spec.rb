@@ -35,10 +35,6 @@ RSpec.describe 'HasSearchIndexBackend', searchindex: true, type: :model do
         expect(result).to eq([{ id: user.id.to_s, type: 'User' }])
       end
     end
-
-    it 'does include User for bulk action updates' do
-      expect(organization).to be_search_index_indexable_bulk_updates(User)
-    end
   end
 
   describe 'Updating group settings causes huge numbers of delayed jobs #4306' do

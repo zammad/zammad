@@ -1082,25 +1082,10 @@ helper method for making HTTP calls and raising error if response was not succes
 
     case object.name
     when 'Ticket'
-      result[name][:_source] = {
-        excludes: ['article.attachment']
-      }
       result[name][:properties][:article] = {
         type:              'nested',
         include_in_parent: true,
       }
-    when 'KnowledgeBase::Answer::Translation'
-      result[name][:_source] = {
-        excludes: ['attachment']
-      }
-    end
-
-    if !Setting.get('es_excludes')
-      result.each_key do |key|
-        next if !result[key][:_source]
-
-        result[key][:_source].delete(:excludes)
-      end
     end
 
     result[name]

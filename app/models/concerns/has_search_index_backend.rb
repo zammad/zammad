@@ -62,16 +62,6 @@ update search index, if configured - will be executed automatically
     result
   end
 
-  def search_index_indexable_bulk_updates?(index_class)
-    SearchIndexBackend.get_mapping_properties_object(index_class).dig(:_source, :excludes).blank?
-  end
-
-  def search_index_update_full(index_class:, attribute:)
-    index_class.select('id').where(attribute[:name] => id).order(id: :desc).limit(10_000).pluck(:id).each do |row_id|
-      SearchIndexJob.perform_later(index_class.to_s, row_id)
-    end
-  end
-
   def search_index_update_delta(index_class:, value:, attribute:)
     data = {
       attribute[:ref_name] => value,
@@ -106,11 +96,7 @@ returns
 
     search_index_indexable.each do |index_class|
       search_index_indexable_attributes(index_class).each do |attribute|
-        if search_index_indexable_bulk_updates?(index_class)
-          search_index_update_delta(index_class: index_class, value: new_search_index_value, attribute: attribute)
-        else
-          search_index_update_full(index_class: index_class, attribute: attribute)
-        end
+        search_index_update_delta(index_class: index_class, value: new_search_index_value, attribute: attribute)
       end
     end
 
