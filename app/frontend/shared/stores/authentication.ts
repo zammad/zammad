@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useLocalStorage } from '@vueuse/core'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { useLoginMutation } from '@shared/graphql/mutations/login.api'
 import { useLogoutMutation } from '@shared/graphql/mutations/logout.api'
@@ -15,7 +15,7 @@ import { resetAndDisposeStores } from '.'
 export const useAuthenticationStore = defineStore(
   'authentication',
   () => {
-    const authenticated = ref(false)
+    const authenticated = useLocalStorage<boolean>('authenticated', false)
     const { fingerprint } = useFingerprint()
 
     const clearAuthentication = async (): Promise<void> => {
@@ -97,9 +97,6 @@ export const useAuthenticationStore = defineStore(
     }
   },
   {
-    shareState: {
-      enabled: true,
-    },
     requiresAuth: false,
   },
 )

@@ -3,7 +3,6 @@
 import type { App } from 'vue'
 import { createPinia, type Pinia } from 'pinia'
 import type { UsedStore } from '@shared/types/store'
-import PiniaSharedState from './plugins/sharedState'
 
 declare module 'pinia' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -15,7 +14,6 @@ declare module 'pinia' {
 const usedStores = new Set<UsedStore>()
 
 const pinia: Pinia = createPinia()
-pinia.use(PiniaSharedState({ enabled: false }))
 
 // Remember all stores, for example to cleanup the private stores after logout.
 pinia.use((context) => {
