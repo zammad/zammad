@@ -8,6 +8,8 @@ import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
+import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
+import { ref } from 'vue'
 
 const linkSchemaRaw = [
   {
@@ -296,6 +298,42 @@ const dialog = useDialog({
 })
 
 const { openCreateUserDialog } = useUserCreate()
+
+const currentStep = ref('step2')
+const steps = {
+  step1: {
+    label: '1',
+    order: 1,
+    errorCount: 0,
+    valid: true,
+    disabled: false,
+    completed: true,
+  },
+  step2: {
+    label: '2',
+    order: 2,
+    errorCount: 0,
+    valid: true,
+    disabled: true,
+    completed: false,
+  },
+  step3: {
+    label: '3',
+    order: 3,
+    errorCount: 0,
+    valid: true,
+    completed: true,
+    disabled: true,
+  },
+  step4: {
+    label: '4',
+    order: 4,
+    errorCount: 3,
+    valid: false,
+    completed: false,
+    disabled: true,
+  },
+}
 </script>
 
 <template>
@@ -303,6 +341,8 @@ const { openCreateUserDialog } = useUserCreate()
     <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
       Dialog
     </button>
+
+    <CommonStepper v-model="currentStep" class="mx-20" :steps="steps" />
 
     <!-- TODO where to put this? -->
     <button @click="openCreateUserDialog()">Create user</button>

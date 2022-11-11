@@ -5690,6 +5690,10 @@ msgstr ""
 msgid "Invalid token, please contact your admin!"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
 msgstr ""
@@ -9314,6 +9318,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Stay on tab"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
