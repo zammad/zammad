@@ -114,31 +114,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created organization |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created ticket |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created user |%s|"
 msgstr "Създадена група"
 
@@ -150,7 +145,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
 msgstr "преди %s"
 
@@ -170,7 +164,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
 msgstr "преди %s"
 
@@ -183,49 +176,41 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "минути"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
 msgstr "преди %s"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
 msgstr "%s Обект(и) бяха създадени."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
 msgstr "%s Обект(и) бяха обновени."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
 msgstr "%s Обект(и) бяха премахнати."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
 msgstr "%s Обект(и) са създадени."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
 msgstr "%s Обект(и) бяха премахнати."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
 msgstr "%s Обект(и) са обновени."
 
@@ -267,13 +252,11 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
 msgstr "зачисли билет"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s updated article for |%s|"
 msgstr "Създадена група"
 
@@ -283,31 +266,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s updated group |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "specific organization"
 msgid "%s updated organization |%s|"
 msgstr "определена организация"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s updated role |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "Създадена група"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s updated user |%s|"
 msgstr "Създадена група"
 
@@ -320,13 +298,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "преди %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
 msgstr "преди %s"
 
@@ -383,7 +359,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "Your Logo"
 msgid "1 hour ago"
 msgstr "Вашето лого"
 
@@ -393,7 +368,6 @@ msgstr "1 нисък"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "минута"
 
@@ -419,7 +393,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 главни и 2 малки букви"
 
@@ -665,7 +638,6 @@ msgstr "Активни Агенти"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Активна"
 
@@ -769,13 +741,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "Добавяне на таг"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Добави Линк"
 
@@ -893,7 +863,6 @@ msgstr "Всички Тикети."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
 msgstr "Всички Агенти"
 
@@ -970,7 +939,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 #, fuzzy
-#| msgid "An open source monitoring tool."
 msgid "An open-source monitoring tool."
 msgstr "fff"
 
@@ -1025,7 +993,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
 msgstr "Акаунта не е потвърден"
 
@@ -1126,7 +1093,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Article could not be deleted."
 msgstr "%s Обект(и) са създадени."
 
@@ -1170,7 +1136,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "assign tickets"
 msgid "Assignment timeout"
 msgstr "зачисли билет"
 
@@ -1205,7 +1170,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "reached"
 msgid "Attached"
 msgstr "достигнати"
 
@@ -1216,7 +1180,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "select attachment..."
 msgid "Attachment"
 msgstr "избери прикачен файл..."
 
@@ -1334,7 +1297,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Auto close"
 msgid "Auto-close state"
 msgstr "Автоматично затваряне"
 
@@ -1400,7 +1362,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "New Overview"
 msgid "Back to overview"
 msgstr "Нов отчет"
 
@@ -1627,7 +1588,6 @@ msgstr "Календари"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
 msgstr "Настройки"
 
@@ -1807,14 +1767,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be loaded."
 msgstr "%s Обект(и) са създадени."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be saved."
 msgstr "%s Обект(и) са създадени."
 
@@ -2022,13 +1980,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "изчисти"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Търсене"
 
@@ -2307,13 +2263,11 @@ msgstr "Съдържание"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content could not be loaded."
 msgstr "%s Обект(и) са създадени."
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content preview could not be generated."
 msgstr "%s Обект(и) са създадени."
 
@@ -2482,7 +2436,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "Create and set up %s"
 msgstr "Създадена група"
 
@@ -2577,7 +2530,6 @@ msgstr "Създаден от"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Additional Channels"
 msgid "Creation Channels"
 msgstr "Допълнителни канали"
 
@@ -4176,13 +4128,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "затворен"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "затвори"
 
@@ -4224,7 +4174,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Endpoint Settings"
 msgstr "Настройки"
 
@@ -4326,7 +4275,6 @@ msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "Escalated Tickets"
 msgstr "Създадена група"
 
@@ -4402,7 +4350,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "Excepted users"
 msgstr "Създадена група"
 
@@ -4610,7 +4557,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Име"
 
@@ -5013,14 +4959,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group"
 msgid "Grouping by"
 msgstr "Група"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending reminder"
 msgid "Grouping order"
 msgstr "чакащо напомняне"
 
@@ -5036,7 +4980,6 @@ msgstr "Групи"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
 msgstr "Групи"
 
@@ -5624,7 +5567,6 @@ msgstr ""
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s Обект(и) са създадени."
 
@@ -5634,13 +5576,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "База знания"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Insert text from text module"
 msgstr "База знания"
 
@@ -5946,13 +5886,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active"
 msgstr "База знания"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
 msgstr "База знания"
 
@@ -6031,7 +5969,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Фамилия"
 
@@ -6041,7 +5978,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last searches"
 msgstr "Фамилия"
 
@@ -6173,7 +6109,6 @@ msgstr "Зареждането не бе успешно."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #, fuzzy
-#| msgid "Uploading"
 msgid "Loading…"
 msgstr "Качване"
 
@@ -6613,7 +6548,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "assign tickets"
 msgid "My Assigned Tickets"
 msgstr "зачисли билет"
 
@@ -6842,7 +6776,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "New Role"
 msgid "New Source"
 msgstr "Нова роля"
 
@@ -6904,7 +6837,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "New User"
 msgid "New user?"
 msgstr "Нов потребител"
 
@@ -7460,7 +7392,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "Организация"
 
@@ -7480,7 +7411,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
 msgstr "Настройки"
 
@@ -7536,7 +7466,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Overviews are …"
 msgstr "Групи"
 
@@ -7641,7 +7570,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "2 главни и 2 малки букви"
 
@@ -7940,7 +7868,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "assign tickets"
 msgid "Process pending tickets."
 msgstr "зачисли билет"
 
@@ -7991,7 +7918,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Address"
 msgid "Proxy address"
 msgstr "Адрес"
 
@@ -8014,7 +7940,6 @@ msgstr ""
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Published %s"
 msgstr "публикуван"
 
@@ -8437,7 +8362,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #, fuzzy
-#| msgid "SLA"
 msgid "SSL"
 msgstr "SLA"
 
@@ -8524,7 +8448,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #, fuzzy
-#| msgid "failed"
 msgid "Saving failed."
 msgstr "провалено"
 
@@ -8547,7 +8470,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Schedulers are …"
 msgstr "Групи"
 
@@ -8593,13 +8515,11 @@ msgstr "Търси потребители"
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Search…"
 msgstr "Търсене"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "specific organization"
 msgid "Secondary organizations"
 msgstr "определена организация"
 
@@ -8686,7 +8606,6 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select"
 msgid "Select…"
 msgstr "Избор"
 
@@ -8749,7 +8668,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #, fuzzy
-#| msgid "pending"
 msgid "Sending…"
 msgstr "изчакване"
 
@@ -8891,7 +8809,6 @@ msgstr "Настройки"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Настройки"
 
@@ -9175,13 +9092,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search for users…"
 msgstr "Търси потребители"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Търси потребители"
 
@@ -9524,7 +9439,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Текст"
 
@@ -9543,7 +9457,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Knowledge Base could not be created."
 msgstr "%s Обект(и) са създадени."
 
@@ -9557,7 +9470,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Telegram bot could not be saved."
 msgstr "%s Обект(и) са създадени."
 
@@ -9577,7 +9489,6 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The active reporting profile could not be found."
 msgstr "%s Обект(и) са създадени."
 
@@ -9682,7 +9593,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The file could not be uploaded."
 msgstr "%s Обект(и) са създадени."
 
@@ -9742,7 +9652,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The issue could not be saved."
 msgstr "%s Обект(и) са създадени."
 
@@ -9754,13 +9663,11 @@ msgstr "%s Обект(и) са създадени."
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The object could not be created."
 msgstr "%s Обект(и) са създадени."
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be found."
 msgstr "%s Обект(и) са обновени."
 
@@ -9773,7 +9680,6 @@ msgstr "%s Обект(и) са обновени."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/models/setting.coffee
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be updated."
 msgstr "%s Обект(и) са обновени."
 
@@ -9841,13 +9747,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The raw logo could not be read."
 msgstr "%s Обект(и) са създадени."
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The report could not be generated"
 msgstr "%s Обект(и) са създадени."
 
@@ -10020,13 +9924,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
 msgstr "%s Обект(и) са създадени."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
 msgstr "%s Обект(и) са създадени."
 
@@ -10047,14 +9949,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The tickets could not be merged."
 msgstr "%s Обект(и) са създадени."
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The uploaded image could not be processed."
 msgstr "%s Обект(и) са създадени."
 
@@ -10116,7 +10016,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "There was no Knowledge Base created."
 msgstr "%s Обект(и) са създадени."
 
@@ -10208,7 +10107,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must contain between %s and %s characters."
 msgstr "2 главни и 2 малки букви"
 
@@ -10242,7 +10140,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must not contain more than %s characters."
 msgstr "2 главни и 2 малки букви"
 
@@ -10369,7 +10266,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
 msgstr "Билетът %s е слят!"
 
@@ -10416,13 +10312,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Нов отчет"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "New Overview"
 msgid "Ticket Overviews"
 msgstr "Нов отчет"
 
@@ -10468,7 +10362,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Билетът %s е слят!"
 
@@ -10842,7 +10735,6 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "assign tickets"
 msgid "Unassigned & Open Tickets"
 msgstr "зачисли билет"
 
@@ -11126,7 +11018,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "User could not be created."
 msgstr "%s Обект(и) са създадени."
 
@@ -11599,7 +11490,6 @@ msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Will be published on"
 msgstr "публикуван"
 
@@ -12099,7 +11989,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "ascending"
 msgstr "изчакване"
 
@@ -12113,13 +12002,11 @@ msgstr "на"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "reached"
 msgid "attached"
 msgstr "достигнати"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "select attachment..."
 msgid "attachment"
 msgstr "избери прикачен файл..."
 
@@ -12257,7 +12144,6 @@ msgstr "изтрий"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "descending"
 msgstr "изчакване"
 
@@ -12267,7 +12153,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "не съществува"
 
@@ -12318,13 +12203,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "затворен"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "затвори"
 
@@ -12445,13 +12328,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "Business Hours"
 msgid "in %s hours"
 msgstr "Работно време"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "минути"
 
@@ -12473,13 +12354,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "hour"
 msgid "in 1 hour"
 msgstr "час"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "минута"
 
@@ -12592,7 +12471,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Име"
 
@@ -12676,7 +12554,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "не"
 
@@ -12720,7 +12597,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "published"
 msgid "public"
 msgstr "публикуван"
 
@@ -12742,7 +12618,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "активен"
 
@@ -12773,7 +12648,6 @@ msgstr "отговор"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "отговор"
 
@@ -12801,7 +12675,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
 msgstr "избери прикачен файл..."
 
@@ -13042,8 +12915,16 @@ msgstr ""
 msgid "∅ Waiting time today"
 msgstr "∅ Време за изчакване днес"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
 #, fuzzy
-#~| msgid "Account not verified"
+msgid "Elasticsearch Excludes"
+msgstr "Фамилия"
+
+#, fuzzy
 #~ msgid "Accounted time"
 #~ msgstr "Акаунта не е потвърден"
 
@@ -13060,7 +12941,6 @@ msgstr "∅ Време за изчакване днес"
 #~ msgstr "Копие до"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Обект(и) са премахнати."
 

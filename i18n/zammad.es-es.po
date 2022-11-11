@@ -810,7 +810,7 @@ msgstr "Administrar"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr ""
+msgstr "Consentimiento del administrador"
 
 #: db/seeds/permissions.rb
 msgid "Admin Interface"
@@ -830,7 +830,7 @@ msgstr "Avanzar al siguiente tickets desde la vista general"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr ""
+msgstr "Luego de la aprobación, vuelva a conectar su correo de Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -2485,6 +2485,29 @@ msgid ""
 "\n"
 "To select placeholders from a list, just enter \"::\"."
 msgstr ""
+"Crea Módulos de Texto para **Create Text Modules to **pasar menos tiempo "
+"escribiendo respuestas**. Los Módulos de Texto pueden incluir variables "
+"inteligentes como el nombre o la dirección de correo del usuario. \n"
+"\n"
+"Ejemplos de \"Snippets\" son:\n"
+"\n"
+"* Hola  Sra. #{ticket.customer.lastname}:\n"
+"* Hola Sr. #{ticket.customer.lastname}:\n"
+"* Hola #{ticket.customer.firstname}:\n"
+"* Mi nombre es #{user.firstname}:\n"
+"\n"
+"Por supuesto también puedes utilizar \"Snippets\" multi-línea.\n"
+"\n"
+"Los objetos disponibles son:\n"
+"* ticket (e.g. ticket.state, ticket.group)\n"
+"* ticket.customer (e.g. ticket.customer.firstname, ticket.customer."
+"lastname)\n"
+"* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n"
+"* ticket.organization (e.g. ticket.organization.name)\n"
+"* user (e.g. user.firstname, user.email)\n"
+"\n"
+"Para seleccionar una lista de marcadores de posición, simplemente ingrese "
+"\"::\"."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -2499,7 +2522,6 @@ msgid "Create a translation"
 msgstr "Crear un traducción"
 
 #: db/seeds/permissions.rb
-#, fuzzy
 msgid "Create and set up %s"
 msgstr "Crear y configurar %s"
 
@@ -2882,7 +2904,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Define el número máximo de tickets mostrados en las vistas generales."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
@@ -8461,7 +8483,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
 msgstr "Solicitud de subvención"
 
@@ -13153,7 +13174,6 @@ msgstr "responder"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "responder"
 
@@ -13432,6 +13452,15 @@ msgstr "...De toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Última sincronización"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "No tienes cuentas configuradas en este momento"

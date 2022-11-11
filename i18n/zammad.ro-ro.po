@@ -57,7 +57,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #, fuzzy
-#| msgid "API token"
 msgid "%s API Token"
 msgstr "Token-ul API"
 
@@ -97,7 +96,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
 msgstr "%s Articol creat pentru |%s|"
 
@@ -107,31 +105,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
 msgstr "%s Grup creat  |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
 msgstr "%s Organizație creat? |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
 msgstr "%s Grup creat  |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s Tichetul a fost creat |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
 msgstr "%s User creat |%s|"
 
@@ -143,7 +136,6 @@ msgstr "%s date de logare"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
 msgstr "%s în urm?"
 
@@ -163,7 +155,6 @@ msgstr "Grupurile %s  la atribuțiile de rol %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
 msgstr "%s în urm?"
 
@@ -176,55 +167,46 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "minute"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
 msgstr "%s în urm?"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
 msgstr "%s Obiecte au fost create."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
 msgstr "%s Obiecte au fost actualizate."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
 msgstr "%s Obiecte au fost șterse."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
 msgstr "%s Obiecte sunt create."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
 msgstr "%s Obiecte au fost șterse."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
 msgstr "%s Obiecte sunt actualizate."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
 msgstr "%s din tichetele tale sunt în procesare"
 
@@ -262,13 +244,11 @@ msgstr "%s mutate la |%s|!"
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
 msgstr "atribuie tichete"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
 msgstr "%s Articol creat pentru |%s|"
 
@@ -278,31 +258,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
 msgstr "%s Grup modificat |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
 msgstr "%s Organizație modificată |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s Grup modificat |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s Tichetul a fost actualizat |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
 msgstr "%s Utilizator modificat |%s|"
 
@@ -315,13 +290,11 @@ msgstr "De la utilizatorul %s la utilizatorul %s."
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "%s în urm?"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
 msgstr "%s în urm?"
 
@@ -378,7 +351,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "Your Logo"
 msgid "1 hour ago"
 msgstr "Logo-ul tău"
 
@@ -388,7 +360,6 @@ msgstr "1 mică"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "minut"
 
@@ -414,7 +385,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr " 2 litere mici și 2 litere mari"
 
@@ -474,7 +444,6 @@ msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
@@ -668,7 +637,6 @@ msgstr "Agenți activi"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Activ"
 
@@ -772,19 +740,16 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "Adaugă tag-uri"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Adaugă Link"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add ordered list"
 msgstr "Formatează ca și listă ordonată"
 
@@ -902,7 +867,6 @@ msgstr "Toate Tichetele"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
 msgstr "Toți agenții"
 
@@ -966,7 +930,6 @@ msgstr ""
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "An error occured during the operation. Please contact your administrator."
 msgstr ""
@@ -982,21 +945,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 #, fuzzy
-#| msgid "An open source monitoring tool."
 msgid "An open-source monitoring tool."
 msgstr "O unealtă de monitorizare opensource."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Analyzing entries with given configuration..."
 msgid "Analyzing entries with given configuration…"
 msgstr "Analizăm intrările cu configurația dată...."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Analyzing structure..."
 msgid "Analyzing structure…"
 msgstr "Analizăm structura"
 
@@ -1018,7 +978,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #, fuzzy
-#| msgid "Any Recipient"
 msgid "Any recipient"
 msgstr "Orice Destinatar"
 
@@ -1043,7 +1002,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
 msgstr "Contul nu este verificat"
 
@@ -1073,7 +1031,6 @@ msgstr "Aplică"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
 msgstr "Aplică"
 
@@ -1146,7 +1103,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Article could not be deleted."
 msgstr "%s Obiecte sunt create."
 
@@ -1173,7 +1129,6 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Assign Users based on users domain."
 msgid "Assign users based on user domain."
 msgstr "Alocați utilizatorii pe baza numelui de domeniu al utilizatorilor."
 
@@ -1192,7 +1147,6 @@ msgstr "Timp de expirare a atribuirii"
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Assignment timeout"
 msgstr "Timp de expirare a atribuirii"
 
@@ -1229,7 +1183,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
 msgstr "Atașamente "
 
@@ -1240,7 +1193,6 @@ msgstr "Fișiere atașate"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
 msgstr "Atașamente "
 
@@ -1269,9 +1221,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Attention: These will be your login password after the import is "
-#| "completed."
 msgid ""
 "Attention: These will be your login and password after the import is "
 "completed."
@@ -1365,7 +1314,6 @@ msgstr "Creează Automat"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Auto close state"
 msgid "Auto-close state"
 msgstr "Starea de închidere automată"
 
@@ -1435,7 +1383,6 @@ msgstr "înapoi la ..... "
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
 msgstr "înapoi la ..... "
 
@@ -1510,7 +1457,6 @@ msgstr "Blochează notificările"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Blocked caller ids based on sender caller id."
 msgid "Block caller IDs based on sender caller ID."
 msgstr "Caller ID-uri blocate bazat pe caller id-ul de intrare "
 
@@ -1561,7 +1507,6 @@ msgstr "Acțiunea în masă executată!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Bulk action failed"
 msgstr "Acțiunea în masă executată!"
 
@@ -1586,10 +1531,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "By default the follow-up check is done via the subject of an email. With "
-#| "this setting you can add more fields for which the follow-up check will "
-#| "be executed."
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -1629,9 +1570,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid ""
-#| "CSS font-size with a unit like 12px, 1.5em. If left to undefined it "
-#| "inherits the font-size of the website."
 msgid ""
 "CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits "
 "the font-size of the website."
@@ -1654,7 +1592,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Config"
 msgid "CTI config"
 msgstr "Configurare"
 
@@ -1664,7 +1601,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
 msgstr "Integrările"
 
@@ -1687,7 +1623,6 @@ msgstr "Calendare"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
 msgstr "Setări"
 
@@ -1703,7 +1638,6 @@ msgstr "Callback URL"
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 #, fuzzy
-#| msgid "Also caller id of outbound calls can be changed."
 msgid "Caller ID of outbound calls can be changed as well."
 msgstr "De asemenea și Caller ID-ul pentru apelurile date poate fi schimbat"
 
@@ -1711,13 +1645,11 @@ msgstr "De asemenea și Caller ID-ul pentru apelurile date poate fi schimbat"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Caller id to block"
 msgid "Caller ID to block"
 msgstr "Caller ID de blocat"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Caller log"
 msgid "Caller Log Filter"
 msgstr "Registrul apelantului"
 
@@ -1817,7 +1749,6 @@ msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "Certificate for verification could not be found."
 msgstr "Când se trimite notificarea."
 
@@ -1848,7 +1779,6 @@ msgstr "Schimbă obiectele"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "Schimba-ți-vă parola"
 
@@ -1877,14 +1807,12 @@ msgstr "Schimbări"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be loaded."
 msgstr "%s Obiecte sunt create."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be saved."
 msgstr "%s Obiecte sunt create."
 
@@ -1917,7 +1845,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Channel"
 msgid "Channel - Form"
 msgstr "Canal de discuție"
 
@@ -1962,7 +1889,6 @@ msgstr "Chat"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #, fuzzy
-#| msgid "Chat"
 msgid "Chat ID"
 msgstr "Chat"
 
@@ -1993,7 +1919,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Channels"
 msgid "Check channels."
 msgstr "Canale de discuție"
 
@@ -2055,7 +1980,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Choose your language."
 msgstr "Schimba-ți-vă limba"
 
@@ -2085,7 +2009,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up cache."
 msgstr "Continuă sesiunea"
 
@@ -2095,7 +2018,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up dead sessions."
 msgstr "Continuă sesiunea"
 
@@ -2105,20 +2027,17 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "Șterge"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Caută"
 
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Selector"
 msgid "Clear Selection"
 msgstr "Selector"
 
@@ -2247,7 +2166,6 @@ msgstr ""
 
 #: public/assets/chat/views/chat.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Compose your message…"
 msgstr "Schimba-ți-vă limba"
 
@@ -2256,7 +2174,6 @@ msgstr "Schimba-ți-vă limba"
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
-#| msgid "Conditions for effected objects"
 msgid "Conditions for affected objects"
 msgstr "Condițiile pentru obiectele efectuate"
 
@@ -2297,7 +2214,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #, fuzzy
-#| msgid "Basic Settings"
 msgid "Configure Basic Settings"
 msgstr "Setări de Baza"
 
@@ -2311,7 +2227,6 @@ msgstr "Dialog de confirmare/submit"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
-#| msgid "Configuration"
 msgid "Confirmation"
 msgstr "Configurație"
 
@@ -2368,7 +2283,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Connecting ..."
 msgid "Connecting …"
 msgstr "Connecting ..."
 
@@ -2402,13 +2316,11 @@ msgstr "Conținut"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content could not be loaded."
 msgstr "%s Obiecte sunt create."
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content preview could not be generated."
 msgstr "%s Obiecte sunt create."
 
@@ -2442,7 +2354,6 @@ msgstr "Continuă sesiunea"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "Continue session"
 msgid "Continue to desktop app"
 msgstr "Continuă sesiunea"
 
@@ -2572,7 +2483,6 @@ msgstr "Creează un tichet de test"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
 msgstr "Creat la"
 
@@ -2582,7 +2492,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Create Text Modules"
 msgid "Create and set up %s"
 msgstr "Creează module text"
 
@@ -2677,7 +2586,6 @@ msgstr "Creat de"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Additional Channels"
 msgid "Creation Channels"
 msgstr "Căi adiționale"
 
@@ -2780,7 +2688,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
 msgstr "Clienții din aceeași organizație pot vedea tichetele între ei."
 
@@ -2815,7 +2722,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "Database Update required"
 msgid "Database Update Required"
 msgstr "Actualizarea bazei de date necesară"
 
@@ -2830,7 +2736,6 @@ msgstr "Dată și oră"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
 msgstr "Dată și oră"
 
@@ -2840,7 +2745,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
 msgstr "Dată și oră"
 
@@ -2875,7 +2779,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "Update successful!"
 msgid "Decryption was successful."
 msgstr "S-a actualizat cu succes!"
 
@@ -2910,7 +2813,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Default caller id for outbound calls."
 msgid "Default caller ID for outbound calls."
 msgstr "Caller ID-ul implicit pentru apelurile date"
 
@@ -3061,7 +2963,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Number of failed logins after account will be deactivated."
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "Numărul de logări greșite după care un cont va fi dezactivat"
 
@@ -3096,7 +2997,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "Definește dacă un client poate crea tichete prin interfața web."
@@ -3381,7 +3281,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Define the http protocol of your instance."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Definește protocolul http pentru instanța ta."
 
@@ -3399,15 +3298,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the agent limit."
 msgstr "Definește formatul datei"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Defines the backend for geo IP lookups. Shows also location of an IP "
-#| "address if an IP address is shown."
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
@@ -3447,19 +3342,16 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the system default language."
 msgid "Defines the default system language."
 msgstr "Definește limba implicită a sistemului."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the default system timezone."
 msgstr "Definește statusul tichetelor închise automat."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Default visibility for new note."
 msgid "Defines the default visibility for new notes."
 msgstr "Vizibilitatea implicită a notelor noi."
 
@@ -3486,7 +3378,6 @@ msgstr "Definește grupul tichetelor create."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the group of created tickets."
 msgid "Defines the group of tickets created via web form."
 msgstr "Definește grupul tichetelor create."
 
@@ -3518,9 +3409,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Defines the name of the application, shown in the web interface, tabs and "
-#| "title bar of the web browser."
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
@@ -3577,7 +3465,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the state of auto-closed tickets."
 msgstr "Definește statusul tichetelor închise automat."
 
@@ -3601,7 +3488,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the token for Placetel."
 msgstr "Definește formatul datei"
 
@@ -3752,7 +3638,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #, fuzzy
-#| msgid "Delivery failed"
 msgid "Deletion failed."
 msgstr "Trimitere eșuată"
 
@@ -3800,13 +3685,11 @@ msgstr "Grupul destinatar"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID"
 msgstr "Caller-ID destinație"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID or queue"
 msgstr "Caller-ID destinație"
 
@@ -3900,33 +3783,28 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "No proxy for the following hosts."
 msgid "Do not use the proxy for the following hosts."
 msgstr "Nu folosi proxy pentru următoarele host-uri."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete \"%s\"?"
 msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this draft?"
 msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this object?"
 msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
@@ -4164,7 +4042,6 @@ msgstr "Email trimis"
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
 "Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
@@ -4215,9 +4092,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Enable REST API using tokens (not username/email address and password). "
-#| "Each user needs to create own access tokens in user profile."
 msgid ""
 "Enable REST API using tokens (not username/email address and password). All "
 "users need to create their own access tokens in the user profile."
@@ -4361,8 +4235,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgid "Enables user authentication via GitHub."
 msgstr ""
 "Activează autentificarea utilizatorului folosind %s. înregistrează întâi "
@@ -4382,8 +4254,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgid "Enables user authentication via Microsoft 365."
 msgstr ""
 "Activează autentificarea utilizatorului folosind %s. înregistrează întâi "
@@ -4404,13 +4274,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "Închis"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "Închide"
 
@@ -4452,7 +4320,6 @@ msgstr "Punct final"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Personal Settings"
 msgid "Endpoint Settings"
 msgstr "Setări personale"
 
@@ -4476,7 +4343,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 #, fuzzy
-#| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Introdu titlul..."
 
@@ -4509,7 +4375,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
-#| msgid "Time zone"
 msgid "Enter time zone"
 msgstr "Fus orar"
 
@@ -4562,7 +4427,6 @@ msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Escalation Times"
 msgid "Escalated Tickets"
 msgstr "Timpi de înaintare către alt departament"
 
@@ -4638,7 +4502,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "Exception users"
 msgid "Excepted users"
 msgstr "Utilizatori exceptați."
 
@@ -4671,7 +4534,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Execute changes on objects"
 msgid "Execute planned jobs."
 msgstr "Aplică modificările pe obiect"
 
@@ -4738,7 +4600,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
@@ -4756,7 +4617,6 @@ msgstr "Funcție dezactivată!"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Feature is disabled, please contact your administrator!"
 msgstr ""
 "Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
@@ -4810,7 +4670,6 @@ msgstr "Filtru"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
-#| msgid "Find what you search. E. g. \"search phrase\""
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Caută ce vrei să găsești. Ex.  \"frază căutată\""
 
@@ -4856,7 +4715,6 @@ msgstr "Primii pași"
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Prenume"
 
@@ -4906,7 +4764,6 @@ msgstr "Mărimea fontului"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 #, fuzzy
-#| msgid "Footer Note"
 msgid "Footer Menu"
 msgstr "Nota de subsol"
 
@@ -4916,15 +4773,11 @@ msgstr "Nota de subsol"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 #, fuzzy
-#| msgid "E. g. recent changed tickets, users or organizations."
 msgid "For example, recently changed tickets, users, or organizations."
 msgstr "Ex. tichete modificate recent, utilizatori sau organizații"
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
 #, fuzzy
-#| msgid ""
-#| "For security reasons, the API token is shown only once. You'll need to "
-#| "copy it somewhere safe before continuing."
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
@@ -5027,7 +4880,6 @@ msgstr "Frontend"
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Full Name"
 msgid "Full"
 msgstr "Nume complet"
 
@@ -5074,7 +4926,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #, fuzzy
-#| msgid "VoIP service provider with realtime push."
 msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr "Provider de VOIP cu afișare în timp real"
 
@@ -5105,7 +4956,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "GitHub App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -5270,21 +5120,18 @@ msgstr "Selectarea grupului pentru crearea de tichete"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Group selection for Ticket creation"
 msgid "Group selection for ticket creation"
 msgstr "Selectarea grupului pentru crearea de tichete"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "Grupează în funcție de "
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
 msgstr "Schimbă ordinea"
 
@@ -5300,7 +5147,6 @@ msgstr "Grupuri"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
 msgstr "Grupuri"
 
@@ -5359,7 +5205,6 @@ msgstr "Verificarea stării sistemului"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #, fuzzy
-#| msgid "Health information can be retrieved as JSON using"
 msgid "Health information can be retrieved as JSON using:"
 msgstr ""
 "IInformațiile despre starea sistemului pot fi preluate ca JSON utilizând"
@@ -5384,9 +5229,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can create new tickets. Also if you have the permissions you can "
-#| "create new customers and organizations."
 msgid ""
 "Here you can create new tickets. Also, if you have the permission, you can "
 "create new customers and organizations."
@@ -5400,10 +5242,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can search for tickets, customers and organizations. Use the "
-#| "wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can "
-#| "use ||double quotes|| for searching phrases §\"some phrase\"§."
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
@@ -5415,9 +5253,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can sign out, change the frontend language and see your last "
-#| "viewed items."
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
@@ -5431,9 +5266,6 @@ msgstr "Aici definiți ce autorizație are acces la atribut."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned and escalated "
-#| "tickets."
 msgid ""
 "Here you find your ticket overviews for open, assigned, and escalated "
 "tickets."
@@ -5597,13 +5429,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
-#| msgid "Icon"
 msgid "Icon URL"
 msgstr "Icon"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid "Identifier of the chat-topic."
 msgid "Identifier of the chat topic."
 msgstr "Identificatorul de subiectului de chat."
 
@@ -5632,9 +5462,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 #, fuzzy
-#| msgid ""
-#| "If the host and service is recovered again, the ticket will be closed "
-#| "automatically."
 msgid ""
 "If the host and service have recovered, the ticket can be closed "
 "automatically."
@@ -5643,9 +5470,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "If the sender is an agent, set the first user in the recipient list as a "
-#| "customer."
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -5683,9 +5507,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid ""
-#| "If you want to open the chat by the press of a button set the option "
-#| "§show§ to §false§ and add the class §open-zammad-chat§ to the button."
 msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
@@ -5948,7 +5769,6 @@ msgstr ""
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s Obiecte sunt create."
 
@@ -5962,7 +5782,6 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "New text module"
 msgid "Insert text from text module"
 msgstr "Noul modul text"
 
@@ -5990,7 +5809,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "New text module"
 msgid "Inserts text module"
 msgstr "Noul modul text"
 
@@ -6181,7 +5999,6 @@ msgstr "Ianuarie"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #, fuzzy
-#| msgid "Job is waiting to get started..."
 msgid "Job is waiting to get started…"
 msgstr "Task-ul așteaptă să înceapă ..."
 
@@ -6356,7 +6173,6 @@ msgstr "Ultimul răspuns (client)"
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Nume"
 
@@ -6366,7 +6182,6 @@ msgstr "Zi/Zile"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Last sync"
 msgid "Last searches"
 msgstr "Ultima sincronizare"
 
@@ -6448,7 +6263,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Templates"
 msgid "Link Template"
 msgstr "Templates"
 
@@ -6494,7 +6308,6 @@ msgstr "Încărcare"
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading failed."
 msgstr "Se încarcă"
 
@@ -6502,7 +6315,6 @@ msgstr "Se încarcă"
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading…"
 msgstr "Se încarcă"
 
@@ -6629,7 +6441,6 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
-#| msgid "Manage your notifications settings"
 msgid "Manage your notification settings"
 msgstr "Administrează setările tale pentru notificări"
 
@@ -6690,7 +6501,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #, fuzzy
-#| msgid "Max. clients in waitlist"
 msgid "Max. clients on waitlist"
 msgstr "Numărul maxim de clienți în lista de așteptare"
 
@@ -6700,7 +6510,6 @@ msgstr "Numărul maxim de chat-uri"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Minimum length"
 msgid "Max. length"
 msgstr "Lungimea minimă"
 
@@ -6748,7 +6557,6 @@ msgstr "Membrii"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "current user"
 msgid "Mention user"
 msgstr "utilizatorul actual"
 
@@ -6796,7 +6604,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #, fuzzy
-#| msgid "Macros"
 msgid "Microsoft"
 msgstr "Macros"
 
@@ -6808,7 +6615,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "Microsoft 365 App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -6948,7 +6754,6 @@ msgstr "S-au mutat în"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Multiple selection field"
 msgstr "Acțiunea în masă executată!"
 
@@ -6958,7 +6763,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
 msgstr "Tichetele mele atribuite"
 
@@ -6968,13 +6772,11 @@ msgstr "Tichetele organizației mele"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
 msgstr "Tichetele mele cu perioada de așteptare la final"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My replacement Tickets"
 msgid "My Replacement Tickets"
 msgstr "Tichetele mele de înlocuire"
 
@@ -6984,7 +6786,6 @@ msgstr "Statisticile Mele"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
 msgstr "Tichetele mele atribuite"
 
@@ -7000,7 +6801,6 @@ msgstr "Timpul meu de răspuns este de: % minute"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
 msgstr "Tichetele tale în procesare"
 
@@ -7195,7 +6995,6 @@ msgstr "Scheduler nou"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "New Source"
 msgstr "Sursă"
 
@@ -7257,7 +7056,6 @@ msgstr "Noul modul text"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "New User"
 msgid "New user?"
 msgstr "Utilizator nou"
 
@@ -7305,7 +7103,6 @@ msgstr "Nicio intrare"
 
 #: lib/external_credential/facebook.rb
 #, fuzzy
-#| msgid "No %s configured."
 msgid "No Facebook app configured!"
 msgstr "Nu a fost configura %s."
 
@@ -7315,7 +7112,6 @@ msgstr ""
 
 #: lib/external_credential/microsoft365.rb
 #, fuzzy
-#| msgid "No %s configured."
 msgid "No Microsoft 365 app configured!"
 msgstr "Nu a fost configura %s."
 
@@ -7334,7 +7130,6 @@ msgstr ""
 
 #: lib/external_credential/twitter.rb
 #, fuzzy
-#| msgid "Not configured"
 msgid "No Twitter app configured!"
 msgstr "Neconfigurat"
 
@@ -7356,7 +7151,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Save configuration"
 msgid "No configuration set."
 msgstr "Salvează configurația"
 
@@ -7379,7 +7173,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
 msgstr "Niciun filtru"
 
@@ -7389,7 +7182,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #, fuzzy
-#| msgid "Not configured"
 msgid "No filter was configured."
 msgstr "Neconfigurat"
 
@@ -7403,7 +7195,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Previous tab"
 msgid "No previous searches"
 msgstr "Tab anterior"
 
@@ -7705,7 +7496,6 @@ msgstr "Disponibil doar pentru Utilizatorii care înlocuiesc alți utilizatori."
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid "Only available for Users with shared Organizations"
 msgstr "Este disponibil doar pentru Utilizatorii cu Organizație partajată"
 
@@ -7772,7 +7562,6 @@ msgstr "Citite"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
-#| msgid "migrate from another system"
 msgid "Or migrate from another system."
 msgstr "migrează de la alt sistem"
 
@@ -7831,7 +7620,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "Organizație"
 
@@ -7851,7 +7639,6 @@ msgstr "Aspect inițială "
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
 msgstr "Setări"
 
@@ -7886,7 +7673,6 @@ msgstr "Apel telefonic dat"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 #, fuzzy
-#| msgid "Browser"
 msgid "Outdated Browser"
 msgstr "Browser"
 
@@ -7909,7 +7695,6 @@ msgstr "Overviews"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #, fuzzy
-#| msgid "Overview"
 msgid "Overviews are …"
 msgstr "Prezentare generală"
 
@@ -8006,7 +7791,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Password for proxy connection."
 msgid "Password for proxy connection"
 msgstr "Parola pentru conexiunea cu proxy"
 
@@ -8016,7 +7800,6 @@ msgstr "Parola pentru conexiunea cu proxy"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "Parola este necesar să conțină 2 caractere mici și 2 caractere mari"
 
@@ -8058,13 +7841,11 @@ msgstr "Inserați datele CSV"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
 msgstr "Tichetele mele cu perioada de așteptare la final"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Pending reminder reached for Ticket |%s|"
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Timpul de amânare al tichetului  |%s|  a fost ajuns"
 
@@ -8160,15 +7941,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 #, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
 msgstr "Te rog apasă buton de mai jos pentru a crea primul tichet."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Your account has not been verified. Please click the link in the "
-#| "verification email."
 msgid "Please click on the link in the verification email."
 msgstr ""
 "Contul dvs. Nu a fost verificat. Vă rugam să dați clic pe link-ul din e-"
@@ -8202,7 +7979,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "Please execute database changes only in a maintenance time-slot."
 msgid "Please execute database changes only in a maintenance window."
 msgstr ""
 "Vă rugăm să realizați modificările la baza de date în intervalul de timp al "
@@ -8236,7 +8012,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Please wait..."
 msgid "Please wait…"
 msgstr "Te rog așteaptă..."
 
@@ -8333,13 +8108,11 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "assign tickets"
 msgid "Process pending tickets."
 msgstr "atribuie tichete"
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "Process ticket escalations."
 msgstr "%s din tichetele tale au fost înaintate către alt departament"
 
@@ -8386,7 +8159,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Proxy address."
 msgid "Proxy address"
 msgstr "Adresa proxy-ului"
 
@@ -8405,13 +8177,11 @@ msgstr "Publica"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
 msgstr "Articol"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Published %s"
 msgstr "publicat"
 
@@ -8453,7 +8223,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 #, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
 msgstr "Timp real"
 
@@ -8473,14 +8242,12 @@ msgstr "Tichetele recente ale clienților"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #, fuzzy
-#| msgid "Recent logs"
 msgid "Recent Logs"
 msgstr "Jurnale recente"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 #, fuzzy
-#| msgid "Recent viewed Tickets"
 msgid "Recently Viewed Tickets"
 msgstr "Tichete vizualizate recent"
 
@@ -8569,13 +8336,11 @@ msgstr "Șterge"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Remove"
 msgid "Remove all"
 msgstr "Șterge"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "Înlătură formatarea"
 
@@ -8636,7 +8401,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
 msgstr "Cerem permisiunea"
 
@@ -8690,7 +8454,6 @@ msgstr "Anulează modificările"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
-#| msgid "Reset changes"
 msgid "Resetting changes…"
 msgstr "Anulează modificările"
 
@@ -8773,7 +8536,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #, fuzzy
-#| msgid "Running..."
 msgid "Running…"
 msgstr "Rulează... "
 
@@ -8854,7 +8616,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #, fuzzy
-#| msgid "SLA"
 msgid "SSL"
 msgstr "SLA"
 
@@ -8941,7 +8702,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Saving failed."
 msgstr "Acțiunea în masă executată!"
 
@@ -8964,7 +8724,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
 #, fuzzy
-#| msgid "Scheduler"
 msgid "Schedulers are …"
 msgstr "Scheduler"
 
@@ -9010,13 +8769,11 @@ msgstr "Caută utilizatori"
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Search…"
 msgstr "Caută"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "specific organization"
 msgid "Secondary organizations"
 msgstr "organizație specifică"
 
@@ -9084,7 +8841,6 @@ msgstr "Alege un articol"
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
 #, fuzzy
-#| msgid "Select Template"
 msgid "Select locale…"
 msgstr "Alege template"
 
@@ -9107,7 +8863,6 @@ msgstr "Selectează modulul de generare a numărului de tichete"
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select Template"
 msgid "Select…"
 msgstr "Alege template"
 
@@ -9166,13 +8921,11 @@ msgstr "Expeditorul bazat pe headerul ”Reply-To”"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Reply to last article"
 msgid "Sender of last article"
 msgstr "Răspunde la ultimul articol"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #, fuzzy
-#| msgid "pending"
 msgid "Sending…"
 msgstr "în așteptare"
 
@@ -9204,7 +8957,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Server operation failed."
 msgstr "Retrimite mail-ul de verificare"
 
@@ -9259,7 +9011,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Set caller id of outbound calls based on destination caller id."
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "Setează Caller ID-ul de iezire în funcție de Caller ID-ul destinație"
 
@@ -9275,7 +9026,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Set outbound caller id"
 msgid "Set outbound caller ID"
 msgstr "Setează Caller ID-ul implicit"
 
@@ -9287,7 +9037,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
-#| msgid "Setup new System"
 msgid "Set up a new system"
 msgstr "Setează noul sistem"
 
@@ -9299,10 +9048,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Set/overwrite sender/from of email based on reply-to header. Useful to "
-#| "set correct customer if email is received from a third party system on "
-#| "behalf of a customer."
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -9332,7 +9077,6 @@ msgstr "Setări"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Setări"
 
@@ -9349,7 +9093,6 @@ msgstr "Distribuit"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Shared"
 msgid "Shared Drafts"
 msgstr "Distribuit"
 
@@ -9364,7 +9107,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
-#| msgid "Shared"
 msgid "Sharing draft…"
 msgstr "Distribuit"
 
@@ -9394,7 +9136,6 @@ msgstr "Arată detaliile căutării"
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 #, fuzzy
-#| msgid "Show all..."
 msgid "Show all…"
 msgstr "Arată Tot"
 
@@ -9412,7 +9153,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Previous tab"
 msgid "Show previous tab"
 msgstr "Tab anterior"
 
@@ -9478,7 +9218,6 @@ msgstr "Semnătură"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Signature verification failed!"
 msgstr "Retrimite mail-ul de verificare"
 
@@ -9509,13 +9248,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Nothing selected"
 msgid "Single selection field"
 msgstr "Nimic Selectat"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Single tree selection field"
 msgstr "Retrimite mail-ul de verificare"
 
@@ -9581,14 +9318,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Reporting"
 msgid "Sorting by"
 msgstr "Raportare"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Sorting order"
 msgstr "Schimbă ordinea"
 
@@ -9604,7 +9339,6 @@ msgstr "Sursă"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "Sources"
 msgstr "Sursă"
 
@@ -9636,13 +9370,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search for users…"
 msgstr "Caută utilizatori"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Caută utilizatori"
 
@@ -9950,7 +9682,6 @@ msgstr "Editare text"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text editing"
 msgid "Text field"
 msgstr "Editare text"
 
@@ -9962,7 +9693,6 @@ msgstr "Lipsă text"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
 msgstr "Modulele text"
 
@@ -9973,7 +9703,6 @@ msgstr "Modulele text"
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
 msgstr "Modulele text"
 
@@ -9991,7 +9720,6 @@ msgstr "Textul cu traducerile live activate arată ca"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Text"
 
@@ -10012,7 +9740,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Knowledge Base could not be created."
 msgstr "%s Obiecte sunt create."
 
@@ -10026,7 +9753,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Telegram bot could not be saved."
 msgstr "%s Obiecte sunt create."
 
@@ -10046,13 +9772,11 @@ msgstr "URL-ul către această instalare a Zammad."
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
 msgstr "Când se trimite notificarea."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
 "Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
@@ -10107,9 +9831,6 @@ msgstr "Chat-ul este oprit"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid ""
-#| "The chat will show up once the connection to the server got established "
-#| "and if there is someone online to chat with."
 msgid ""
 "The chat will show up once the connection to the server got established and "
 "if there is an operator online to chat with."
@@ -10123,7 +9844,6 @@ msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
@@ -10172,7 +9892,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The file could not be uploaded."
 msgstr "%s Obiecte sunt create."
 
@@ -10186,7 +9905,6 @@ msgstr "Au fost făcute următoarele modificări:"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "The following changes are made:"
 msgid "The following changes will be made:"
 msgstr "Au fost făcute următoarele modificări:"
 
@@ -10218,7 +9936,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
 #, fuzzy
-#| msgid "The import was successful."
 msgid "The import failed."
 msgstr "Importul a fost realizat cu succes."
 
@@ -10240,7 +9957,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The issue could not be saved."
 msgstr "%s Obiecte sunt create."
 
@@ -10252,13 +9968,11 @@ msgstr "%s Obiecte sunt create."
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The object could not be created."
 msgstr "%s Obiecte sunt create."
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be found."
 msgstr "%s Obiecte sunt actualizate."
 
@@ -10271,7 +9985,6 @@ msgstr "%s Obiecte sunt actualizate."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/models/setting.coffee
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be updated."
 msgstr "%s Obiecte sunt actualizate."
 
@@ -10294,7 +10007,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr ""
 "Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
@@ -10342,13 +10054,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The raw logo could not be read."
 msgstr "%s Obiecte sunt create."
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The report could not be generated"
 msgstr "%s Obiecte sunt create."
 
@@ -10517,19 +10227,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "The test run was successful."
 msgid "The signature was successfully verified."
 msgstr "Testul a avut succes."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
 msgstr "%s Obiecte sunt create."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
 msgstr "%s Obiecte sunt create."
 
@@ -10552,14 +10259,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The tickets could not be merged."
 msgstr "%s Obiecte sunt create."
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The uploaded image could not be processed."
 msgstr "%s Obiecte sunt create."
 
@@ -10596,13 +10301,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid "There can be several reasons for the chat to not show up:"
 msgid "There are several possible reasons why the chat won't show up:"
 msgstr "Sunt câteva motive pentru care chat-ul să nu apară:"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid "There are too many people in queue for the chat."
 msgid "There are too many people in the chat queue."
 msgstr "Sunt prea mulți oameni în așteptare pentru chat"
 
@@ -10630,7 +10333,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "There was no Knowledge Base created."
 msgstr "%s Obiecte sunt create."
 
@@ -10648,9 +10350,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid ""
-#| "This class gets added to the button on initialization and gets removed "
-#| "once the chat connection got established."
 msgid ""
 "This class gets added to the button on initialization and will be removed "
 "once the chat connection is established."
@@ -10724,13 +10423,11 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain at least one character."
 msgstr "Parola este necesar să conțină minim un număr!"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "Parola este necesar să conțină 2 caractere mici și 2 caractere mari"
 
@@ -10764,7 +10461,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must not contain more than %s characters."
 msgstr "Parola este necesar să conțină 2 caractere mici și 2 caractere mari"
 
@@ -10796,7 +10492,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "This might take some time where the system can't be used."
 msgid "This might take some time during which the system can't be used."
 msgstr "Acest lucru poate dura ceva timp în care sistemul nu poate fi folosit."
 
@@ -10823,9 +10518,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #, fuzzy
-#| msgid ""
-#| "This service receives http requests or emails from %s and creates tickets "
-#| "with host and service."
 msgid ""
 "This service receives HTTP requests or emails from %s and creates tickets "
 "with host and service."
@@ -10904,7 +10596,6 @@ msgstr "Tichetul numărul % a fost creat!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s created!"
 msgid "Ticket %s merged."
 msgstr "Tichetul numărul % a fost creat!"
 
@@ -10951,13 +10642,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "Overview"
 msgid "Ticket Overview"
 msgstr "Prezentare generală"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "Overviews"
 
@@ -10987,13 +10676,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 #, fuzzy
-#| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
 msgstr "Tichete atribuite mie: %s din %s "
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket notifications"
 msgstr "Blochează notificările"
 
@@ -11007,7 +10694,6 @@ msgstr "Actualizare tichet"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket |%s| is escalated!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Tichetul |%s| este escaladat!"
 
@@ -11167,9 +10853,6 @@ msgstr "Pentru configurarea sistemului."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 #, fuzzy
-#| msgid ""
-#| "To enable %s for sending http requests to %s, you need create a own "
-#| "\"notification rule\" in %s."
 msgid ""
 "To enable %s for sending HTTP requests to %s, you need to create a "
 "designated \"notification rule\" in %s."
@@ -11193,9 +10876,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
-#| msgid ""
-#| "To set up this service you need to create a new |\"Incoming webhook\"| in "
-#| "your %s integration panel, and enter the web hook URL below."
 msgid ""
 "To set up this service you need to create a new |\"Incoming webhook\"| in "
 "your %s integration panel and enter the webhook URL below."
@@ -11295,7 +10975,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 #, fuzzy
-#| msgid "Trigger"
 msgid "Triggers are …"
 msgstr "Mecanism de declanșare"
 
@@ -11400,7 +11079,6 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
 msgstr "Neatribuite și Deschise"
 
@@ -11690,7 +11368,6 @@ msgstr "Preferințele Utilizatorului"
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "User could not be created."
 msgstr "%s Obiecte sunt create."
 
@@ -11723,7 +11400,6 @@ msgstr "Utilizator"
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 #, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
 msgstr "Utilizator / email"
 
@@ -11734,7 +11410,6 @@ msgstr "Utilizator / email"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Username for proxy connection."
 msgid "Username for proxy connection"
 msgstr "Numele de utilizator pentru conexiunea cu proxy"
 
@@ -11809,7 +11484,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "Verification email could not be sent."
 msgstr "Când se trimite notificarea."
 
@@ -11823,7 +11497,6 @@ msgstr "Verifică posibilitatea de trimitere și primire"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #, fuzzy
-#| msgid "Verifying..."
 msgid "Verifying…"
 msgstr "Verific..."
 
@@ -11915,7 +11588,6 @@ msgstr "Vizibil de către toți"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "Visible to everyone"
 msgid "Visible to readers & editors"
 msgstr "Vizibil de către toți"
 
@@ -11949,9 +11621,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes which can't get imported into Zammad, "
-#| "since we currently don't support these kind of workflows."
 msgid ""
 "We detected OTRS BPM processes that can't get imported into Zammad since we "
 "currently don't support this kind of workflows."
@@ -11961,12 +11630,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
-#| msgid ""
-#| "We found a lot of dynamic fields which are not common in Zammad, as we "
-#| "follow a different approach to ticket attributes. Zammad uses also tags "
-#| "in addition to custom fields to classify tickets. This difference can "
-#| "create a new philosophy of your ticket attributes / tags compared to your "
-#| "current use of dynamic fields in OTRS."
 msgid ""
 "We found a lot of dynamic fields which are not common in Zammad, as we take "
 "a different approach to ticket attributes. Zammad also uses tags in addition "
@@ -11986,9 +11649,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
 msgid ""
 "We have already found %s email(s) in your mailbox. We will move them all "
 "from your mailbox into Zammad."
@@ -12098,7 +11758,6 @@ msgstr "Săptămână"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 #, fuzzy
-#| msgid "Week"
 msgid "Week(s)"
 msgstr "Săptămână"
 
@@ -12205,7 +11864,6 @@ msgstr "Va fi publicat"
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 #, fuzzy
-#| msgid "Will be published"
 msgid "Will be published on"
 msgstr "Va fi publicat"
 
@@ -12254,10 +11912,6 @@ msgstr "Folosind configurația actuală următorul lucru se va întâmpla"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #, fuzzy
-#| msgid ""
-#| "With |Date| the ticket numbers will be generated by the current date, the "
-#| "SystemID and the counter. The format looks like \"Year.Month.Day.SystemID."
-#| "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgid ""
 "With |Date| the ticket numbers will be generated by the current date, the "
 "SystemID, and the counter. The format will be \"Year.Month.Day.SystemID."
@@ -12343,9 +11997,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #, fuzzy
-#| msgid ""
-#| "You can connect %s with Zammad. You need to connect your Zammad with %s "
-#| "first."
 msgid ""
 "You can connect %s with Zammad. But first, you will have to connect your "
 "Zammad with %s."
@@ -12517,8 +12168,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #, fuzzy
-#| msgid ""
-#| "You use %s in text but no attachment is attached. Do you want to continue?"
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
@@ -12527,12 +12176,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/karma/index.jst.eco
 #, fuzzy
-#| msgid ""
-#| "You |accumulate positive Karma| when you regularly answer and close "
-#| "tickets on time and when you use advanced features such as text modules, "
-#| "ticket reminders or tagging tickets. Zammad |Karma will decrease| when "
-#| "you have re-opend tickets, escalated tickets or tickets that are two or "
-#| "more days overdue."
 msgid ""
 "You |accumulate positive Karma| when you regularly answer and close tickets "
 "on time and when you use advanced features such as text modules, ticket "
@@ -12548,9 +12191,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #, fuzzy
-#| msgid ""
-#| "You're already registered with your email address if you've been in touch "
-#| "with our support team."
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
@@ -12599,9 +12239,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #, fuzzy
-#| msgid ""
-#| "Your account has not been verified. Please click the link in the "
-#| "verification email."
 msgid ""
 "Your account has not been verified. Please click on the link in the "
 "verification email."
@@ -12636,7 +12273,6 @@ msgstr "Karma ta este |%s|."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
 "administrator."
@@ -12653,9 +12289,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Chat requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
@@ -12665,9 +12298,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
@@ -12712,9 +12342,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid ""
-#| "Zammad is currently in maintenance mode. Only administrators can login. "
-#| "Please wait until the maintenance window is over."
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -12782,7 +12409,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "ascending"
 msgstr "în așteptare"
 
@@ -12796,13 +12422,11 @@ msgstr "la"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "reached"
 msgid "attached"
 msgstr "ajuns"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
 msgstr "Atașamente "
 
@@ -12941,7 +12565,6 @@ msgstr "Șterge"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "descending"
 msgstr "în așteptare"
 
@@ -12951,7 +12574,6 @@ msgstr "deconectează"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "nu există"
 
@@ -13002,13 +12624,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "Închis"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "Închide"
 
@@ -13125,19 +12745,16 @@ msgstr "în %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s days"
 msgstr "în %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in hours"
 msgid "in %s hours"
 msgstr "în ore"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "minute"
 
@@ -13147,13 +12764,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s weeks"
 msgstr "în %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s years"
 msgstr "în %s"
 
@@ -13163,13 +12778,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in hours"
 msgid "in 1 hour"
 msgstr "în ore"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "minut"
 
@@ -13272,7 +12885,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #, fuzzy
-#| msgid "matches"
 msgid "matches found"
 msgstr "potriviri"
 
@@ -13284,7 +12896,6 @@ msgstr "poate"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Nume"
 
@@ -13364,13 +12975,11 @@ msgstr "Notă"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "notification sent to '%s'"
 msgstr "Când se trimite notificarea."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "nu"
 
@@ -13414,7 +13023,6 @@ msgstr "telefon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Public"
 msgid "public"
 msgstr "Public"
 
@@ -13436,7 +13044,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "active"
 
@@ -13467,7 +13074,6 @@ msgstr "răspuns"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "răspuns"
 
@@ -13495,7 +13101,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
 msgstr "alege atașamentul..."
 
@@ -13701,9 +13306,6 @@ msgstr "da"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #, fuzzy
-#| msgid ""
-#| "|Increment| increments the ticket number, the SystemID and the counter "
-#| "are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
@@ -13717,10 +13319,6 @@ msgstr "|Stânga| înseamnă |[Tichet#12345] Un Subiect Oarecare|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #, fuzzy
-#| msgid ""
-#| "|None| means |Some Subject| (without ticket number). In the last case you "
-#| "should enable \"postmaster___follow___up___search___in\" to recognize "
-#| "followups based on email headers and/or body."
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case you "
 "should enable \"postmaster___follow___up___search___in\" to recognize follow-"
@@ -13737,25 +13335,31 @@ msgstr "|Dreapta| înseamnă |[Tichet#12345] Un Subiect Oarecare|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...add object link URL"
 msgid "…add object link URL"
 msgstr "...adăugați link-ul către URL-ul obiectului"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...add object title"
 msgid "…add object title"
 msgstr "...adaugă titlul obiectului"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...of whole textarea"
 msgid "…of whole text area"
 msgstr "...întregi zone text"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Ultima sincronizare"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "Nu ai nici un cont configurat acum"
@@ -13764,7 +13368,6 @@ msgstr ""
 #~ msgstr "Tag"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Timpul contabilizat"
 
@@ -13783,7 +13386,6 @@ msgstr ""
 #~ "îmbunătăți gradul de utilizare."
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Alege"
 
@@ -13816,12 +13418,10 @@ msgstr ""
 #~ msgstr "Timpul primul răspuns"
 
 #, fuzzy
-#~| msgid "Sure to delete this object?"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
 #, fuzzy
-#~| msgid "Reset changes"
 #~ msgid "Unable to save changes"
 #~ msgstr "Anulează modificările"
 
@@ -13868,10 +13468,6 @@ msgstr ""
 #~ msgstr "Timpul de amânare a fost ajuns"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -13900,12 +13496,10 @@ msgstr ""
 #~ msgstr "Sau"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Obiecte sunt șterse."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Atenție: Cînd se creează un tichet se trimite un email."
 

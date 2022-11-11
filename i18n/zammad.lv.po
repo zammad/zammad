@@ -158,7 +158,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "minūtes"
 
@@ -228,7 +227,6 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "Tickets"
 msgid "%s tickets"
 msgstr "Pieteikumu"
 
@@ -328,7 +326,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "Your Logo"
 msgid "1 hour ago"
 msgstr "Jūsu Logo"
 
@@ -338,7 +335,6 @@ msgstr "1 mazs"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "minūte"
 
@@ -364,7 +360,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 mazie un 2 lielie simboli"
 
@@ -610,7 +605,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Aktīvs"
 
@@ -834,7 +828,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Agent"
 msgid "All agents"
 msgstr "Aģents"
 
@@ -1327,7 +1320,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Overviews"
 msgid "Back to overview"
 msgstr "Pārskati"
 
@@ -1554,7 +1546,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
 msgstr "Iestatījumi"
 
@@ -1734,7 +1725,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Changes could not be loaded."
 msgstr "Biļete %s apvienojās!"
 
@@ -1951,7 +1941,6 @@ msgstr ""
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Meklēt"
 
@@ -2143,7 +2132,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
-#| msgid "Location"
 msgid "Confirmation"
 msgstr "Vieta"
 
@@ -2200,7 +2188,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Connect"
 msgid "Connecting …"
 msgstr "Savienot"
 
@@ -4095,13 +4082,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "aizvērta"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "aizvērt"
 
@@ -4143,7 +4128,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Endpoint Settings"
 msgstr "Iestatījumi"
 
@@ -4525,7 +4509,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Vārds"
 
@@ -4928,7 +4911,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group"
 msgid "Grouping by"
 msgstr "Grupa"
 
@@ -4949,7 +4931,6 @@ msgstr "Grupas"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
 msgstr "Grupas"
 
@@ -5934,7 +5915,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Uzvārds"
 
@@ -5944,7 +5924,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last searches"
 msgstr "Uzvārds"
 
@@ -6892,7 +6871,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Location"
 msgid "No configuration set."
 msgstr "Vieta"
 
@@ -7375,7 +7353,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
 msgstr "Iestatījumi"
 
@@ -7431,7 +7408,6 @@ msgstr "Pārskati"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #, fuzzy
-#| msgid "Overviews"
 msgid "Overviews are …"
 msgstr "Pārskati"
 
@@ -7536,7 +7512,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "2 mazie un 2 lielie simboli"
 
@@ -8432,7 +8407,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Schedulers are …"
 msgstr "Grupas"
 
@@ -8478,7 +8452,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Search…"
 msgstr "Meklēt"
 
@@ -8569,7 +8542,6 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select"
 msgid "Select…"
 msgstr "Paņemt"
 
@@ -8772,7 +8744,6 @@ msgstr "Iestatījumi"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Iestatījumi"
 
@@ -9401,7 +9372,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Teksts"
 
@@ -9420,7 +9390,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The Knowledge Base could not be created."
 msgstr "Biļete %s apvienojās!"
 
@@ -9452,7 +9421,6 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The active reporting profile could not be found."
 msgstr "Biļete %s apvienojās!"
 
@@ -9557,7 +9525,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The file could not be uploaded."
 msgstr "Biļete %s apvienojās!"
 
@@ -9631,7 +9598,6 @@ msgstr ""
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The object could not be found."
 msgstr "Biļete %s apvienojās!"
 
@@ -9710,13 +9676,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The raw logo could not be read."
 msgstr "Biļete %s apvienojās!"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The report could not be generated"
 msgstr "Biļete %s apvienojās!"
 
@@ -9889,13 +9853,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The source ticket could not be found."
 msgstr "Biļete %s apvienojās!"
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The target ticket number could not be found."
 msgstr "Biļete %s apvienojās!"
 
@@ -9916,7 +9878,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "The tickets could not be merged."
 msgstr "Biļete %s apvienojās!"
 
@@ -9983,7 +9944,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "There was no Knowledge Base created."
 msgstr "Biļete %s apvienojās!"
 
@@ -10075,7 +10035,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must contain between %s and %s characters."
 msgstr "2 mazie un 2 lielie simboli"
 
@@ -10109,7 +10068,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must not contain more than %s characters."
 msgstr "2 mazie un 2 lielie simboli"
 
@@ -10236,7 +10194,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
 msgstr "Biļete %s apvienojās!"
 
@@ -10283,13 +10240,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overview"
 msgstr "Pārskati"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "Pārskati"
 
@@ -10335,7 +10290,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Biļete %s apvienojās!"
 
@@ -12168,13 +12122,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "aizvērta"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "aizvērt"
 
@@ -12294,13 +12246,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "hours"
 msgid "in %s hours"
 msgstr "stundas"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "minūtes"
 
@@ -12322,13 +12272,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "hour"
 msgid "in 1 hour"
 msgstr "stunda"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "minūte"
 
@@ -12441,7 +12389,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Vārds"
 
@@ -12525,7 +12472,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "nē"
 
@@ -12882,6 +12828,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Uzvārds"
 
 #~ msgid "to"
 #~ msgstr "līdz"

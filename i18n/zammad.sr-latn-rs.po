@@ -53,22 +53,25 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Database\" čuva sve fajlove u bazi (nije preporučljivo kada se čuva veća "
+"količina podataka). \"Filesystem\" čuva fajlove u na disku. Moguća je "
+"promena sa jednog na drugi način, čak i kada ste već u produkciji bez straha "
+"od gubitka podataka."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
 msgstr "%s Api Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Attribute"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "%s Group"
-msgstr ""
+msgstr "%s Group"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -97,7 +100,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
 msgstr "%s kreiranih članaka za |%s|"
 
@@ -107,31 +109,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created group |%s|"
 msgstr "%s kreiranih Grupa |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s created Organization |%s|"
 msgid "%s created organization |%s|"
 msgstr "%s kreiranih Organizacija |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s created Group |%s|"
 msgid "%s created role |%s|"
 msgstr "%s kreiranih Grupa |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s created Ticket |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s kreiranih Tiketa |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
 msgstr "%s kreiranih Korisnika |%s|"
 
@@ -143,7 +140,6 @@ msgstr "%s kredencijali"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
 msgstr "pre %s"
 
@@ -163,7 +159,6 @@ msgstr "%s grupe ka %s roles assignments"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
 msgstr "pre %s"
 
@@ -176,55 +171,46 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "minuta"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
 msgstr "pre %s"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been created."
 msgid "%s object(s) have been created."
 msgstr "%s Objekata je kreirano."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) have been updated."
 msgid "%s object(s) have been updated."
 msgstr "%s Objekata je ažurirano."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) were deleted."
 msgstr "%s Objekata je izbrisano."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "%s object(s) will be created."
 msgstr "%s Objekata je kreirano."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) were deleted."
 msgid "%s object(s) will be deleted."
 msgstr "%s Objekata je izbrisano."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "%s object(s) will be updated."
 msgstr "%s Objekata je ažurirano."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "%s% are currently in process"
 msgid "%s of my tickets are currently in process."
 msgstr "%s% are currently in process"
 
@@ -262,13 +248,11 @@ msgstr "%s switched to |%s|!"
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
 msgstr "dodeli tikete"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
 msgstr "%s kreiranih članaka za |%s|"
 
@@ -278,31 +262,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
 msgstr "%s ažuriranih Grupa |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
 msgstr "%s ažuriranih Organizacija |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s updated Role |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s ažuriranih Tiketa |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
 msgstr "%s ažuriranih Korisnika |%s|"
 
@@ -315,13 +294,11 @@ msgstr "%s korisnik ka %s korisnik"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "pre %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
 msgstr "pre %s"
 
@@ -378,7 +355,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "Your Logo"
 msgid "1 hour ago"
 msgstr "Vaš Logo"
 
@@ -388,7 +364,6 @@ msgstr "1 nisko"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "minut"
 
@@ -414,7 +389,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 mala i 2 velika slova"
 
@@ -473,7 +447,6 @@ msgstr "Nova verzija Zammad je dostupna, molimo reloadujte stranicu."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr "Nova verzija Zammad je dostupna, molimo reloadujte stranicu."
@@ -664,7 +637,6 @@ msgstr "Aktivnih Agenata"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Aktivno"
 
@@ -768,19 +740,16 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "Dodaj Tag"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Dodaj Link"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add ordered list"
 msgstr "Formatiraj kao ordered list"
 
@@ -894,7 +863,6 @@ msgstr "Svi Tiketi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
 msgstr "Svi Agenti"
 
@@ -959,7 +927,6 @@ msgstr ""
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "An error occured during the operation. Please contact your administrator."
 msgstr "Verifikacija emaila nije moguća. Molimo kontaktirajte administratora."
@@ -974,21 +941,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 #, fuzzy
-#| msgid "An open source monitoring tool."
 msgid "An open-source monitoring tool."
 msgstr "An open source monitoring tool."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Analyzing entries with given configuration..."
 msgid "Analyzing entries with given configuration…"
 msgstr "Analiza unosa sa datom konfiguracijom..."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Analyzing structure..."
 msgid "Analyzing structure…"
 msgstr "Analiza strukture…"
 
@@ -1010,7 +974,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #, fuzzy
-#| msgid "Recipient"
 msgid "Any recipient"
 msgstr "Primalac"
 
@@ -1035,7 +998,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
 msgstr "Nalog nije verifikovan"
 
@@ -1065,7 +1027,6 @@ msgstr "Primeni"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
 msgstr "Primeni"
 
@@ -1138,7 +1099,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Article could not be deleted."
 msgstr "%s Objekata je kreirano."
 
@@ -1165,7 +1125,6 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Assign Users based on users domain."
 msgid "Assign users based on user domain."
 msgstr "Dodeli korisnka bazirano na domenu."
 
@@ -1184,7 +1143,6 @@ msgstr "Assignment Timeout"
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Assignment timeout"
 msgstr "Assignment Timeout"
 
@@ -1221,7 +1179,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
 msgstr "Atačmenti"
 
@@ -1232,7 +1189,6 @@ msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
 msgstr "Atačmenti"
 
@@ -1261,9 +1217,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Attention: These will be your login password after the import is "
-#| "completed."
 msgid ""
 "Attention: These will be your login and password after the import is "
 "completed."
@@ -1357,7 +1310,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Auto close state"
 msgid "Auto-close state"
 msgstr "Auto close state"
 
@@ -1427,7 +1379,6 @@ msgstr "Nazan na moj pregled"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
 msgstr "Nazan na moj pregled"
 
@@ -1502,7 +1453,6 @@ msgstr "Blokiraj Notifikacije"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Blocked caller ids based on sender caller id."
 msgid "Block caller IDs based on sender caller ID."
 msgstr "Blocked caller ids based on sender caller id."
 
@@ -1553,7 +1503,6 @@ msgstr "Bulk action executed!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Bulk action failed"
 msgstr "Bulk action executed!"
 
@@ -1610,9 +1559,6 @@ msgstr "CMDB to document complex relations of your network components."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid ""
-#| "CSS font-size with a unit like 12px, 1.5em. If left to undefined it "
-#| "inherits the font-size of the website."
 msgid ""
 "CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits "
 "the font-size of the website."
@@ -1635,7 +1581,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Config"
 msgid "CTI config"
 msgstr "Konfiguiši"
 
@@ -1645,7 +1590,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
 msgstr "Integracije"
 
@@ -1668,7 +1612,6 @@ msgstr "Kalendari"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
 msgstr "Podešavanje"
 
@@ -1684,7 +1627,6 @@ msgstr "Callback URL"
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
 #, fuzzy
-#| msgid "Also caller id of outbound calls can be changed."
 msgid "Caller ID of outbound calls can be changed as well."
 msgstr "Also caller id of outbound calls can be changed."
 
@@ -1692,13 +1634,11 @@ msgstr "Also caller id of outbound calls can be changed."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Caller id to block"
 msgid "Caller ID to block"
 msgstr "Caller id to block"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Caller log"
 msgid "Caller Log Filter"
 msgstr "Caller log"
 
@@ -1798,7 +1738,6 @@ msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "Certificate for verification could not be found."
 msgstr "When notification is being sent."
 
@@ -1829,7 +1768,6 @@ msgstr "Promeni Objekte"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "Promeni lozinku"
 
@@ -1858,14 +1796,12 @@ msgstr "Promene"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be loaded."
 msgstr "%s Objekata je kreirano."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Changes could not be saved."
 msgstr "%s Objekata je kreirano."
 
@@ -1897,7 +1833,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Channel"
 msgid "Channel - Form"
 msgstr "Kanal"
 
@@ -1942,7 +1877,6 @@ msgstr "Chat"
 
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #, fuzzy
-#| msgid "Chat"
 msgid "Chat ID"
 msgstr "Chat"
 
@@ -1969,13 +1903,11 @@ msgstr "Chatting Customers"
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Connect Channels"
 msgid "Check 'Channel' streams."
 msgstr "Poveži Kanale"
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Connect Channels"
 msgid "Check channels."
 msgstr "Poveži Kanale"
 
@@ -2020,32 +1952,27 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
 #, fuzzy
-#| msgid "Choose the group in which page postings will get added to."
 msgid "Choose the Group to which page posts will get added."
 msgstr "Izaberi grupu u koju će post biti dodat."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #, fuzzy
-#| msgid "Choose the group in which direct messages will get added to."
 msgid "Choose the group to which direct messages will get added."
 msgstr "Izaberi grupu u koju će DM biti dodat."
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #, fuzzy
-#| msgid "Choose the group in which mentions will get added to."
 msgid "Choose the group to which mentions will get added."
 msgstr "Choose the group in which mentions will get added to."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 #, fuzzy
-#| msgid "Choose the group in which messages will get added to."
 msgid "Choose the group to which messages will get added."
 msgstr "Izaberi grupu u koju će poruka biti dodata."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Choose your language."
 msgstr "Promeni jezik."
 
@@ -2075,7 +2002,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up cache."
 msgstr "Nastavi sesiju"
 
@@ -2085,7 +2011,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up dead sessions."
 msgstr "Nastavi sesiju"
 
@@ -2095,20 +2020,17 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "briši"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Pretraga"
 
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Selector"
 msgid "Clear Selection"
 msgstr "Selector"
 
@@ -2237,7 +2159,6 @@ msgstr ""
 
 #: public/assets/chat/views/chat.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Compose your message…"
 msgstr "Promeni jezik."
 
@@ -2246,7 +2167,6 @@ msgstr "Promeni jezik."
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
-#| msgid "Conditions for effected objects"
 msgid "Conditions for affected objects"
 msgstr "Conditions for effected objects"
 
@@ -2287,7 +2207,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #, fuzzy
-#| msgid "Configure Base"
 msgid "Configure Basic Settings"
 msgstr "Configure Base"
 
@@ -2301,7 +2220,6 @@ msgstr "Confirm/submit dialog"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
-#| msgid "Configuration"
 msgid "Confirmation"
 msgstr "Konfiguracija"
 
@@ -2358,7 +2276,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #, fuzzy
-#| msgid "Connecting ..."
 msgid "Connecting …"
 msgstr "Povezivanje…"
 
@@ -2392,13 +2309,11 @@ msgstr "Sadržaj"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content could not be loaded."
 msgstr "%s Objekata je kreirano."
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Content preview could not be generated."
 msgstr "%s Objekata je kreirano."
 
@@ -2432,7 +2347,6 @@ msgstr "Nastavi sesiju"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "Continue session"
 msgid "Continue to desktop app"
 msgstr "Nastavi sesiju"
 
@@ -2561,7 +2475,6 @@ msgstr "Kreiraj Testni Tiket"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
 msgstr "Kreirano od strane"
 
@@ -2571,7 +2484,6 @@ msgstr "Kreiraj prevod"
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Create and setup %s"
 msgid "Create and set up %s"
 msgstr "Create and setup %s"
 
@@ -2667,7 +2579,6 @@ msgstr "Kreirano od strane"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Connect Channels"
 msgid "Creation Channels"
 msgstr "Poveži Kanale"
 
@@ -2768,7 +2679,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
 msgstr "Customers in the organization can view each other items."
 
@@ -2803,7 +2713,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "Database Update required"
 msgid "Database Update Required"
 msgstr "Neophodno Ažuriranje Baze"
 
@@ -2818,7 +2727,6 @@ msgstr "Datum i Vreme"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
 msgstr "Datum i Vreme"
 
@@ -2828,7 +2736,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
 msgstr "Datum i Vreme"
 
@@ -2863,7 +2770,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "Registration successful!"
 msgid "Decryption was successful."
 msgstr "Uspešna registracija!"
 
@@ -2898,7 +2804,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Default caller id for outbound calls."
 msgid "Default caller ID for outbound calls."
 msgstr "Default caller id for outbound calls."
 
@@ -3049,7 +2954,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Number of failed logins after account will be deactivated."
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "Broj neuspešnih prijava nakon čega će nalog biti deaktiviran."
 
@@ -3082,7 +2986,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "Definiše da li klijent može kreirati tiket putem web interfejsa."
@@ -3367,7 +3270,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Define the http protocol of your instance."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Define the http protocol of your instance."
 
@@ -3385,15 +3287,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the agent limit."
 msgstr "Defines pretty date format."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Defines the backend for geo IP lookups. Shows also location of an IP "
-#| "address if an IP address is shown."
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
@@ -3431,19 +3329,16 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the system default language."
 msgid "Defines the default system language."
 msgstr "Definisanje podrazumevanog jezika sistema."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the default system timezone."
 msgstr "Definiše status automatski zatvorenog tiketa."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Default visibility for new note."
 msgid "Defines the default visibility for new notes."
 msgstr "Podrazumevana vidljivost novit beleški."
 
@@ -3469,7 +3364,6 @@ msgstr "Definiše grupu kreiranog tiketa"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the group of created tickets."
 msgid "Defines the group of tickets created via web form."
 msgstr "Definiše grupu kreiranog tiketa"
 
@@ -3501,9 +3395,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Defines the name of the application, shown in the web interface, tabs and "
-#| "title bar of the web browser."
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
@@ -3558,7 +3449,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the state of auto-closed tickets."
 msgstr "Definiše status automatski zatvorenog tiketa."
 
@@ -3579,7 +3469,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the token for Placetel."
 msgstr "Defines pretty date format."
 
@@ -3730,7 +3619,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #, fuzzy
-#| msgid "Delivery failed"
 msgid "Deletion failed."
 msgstr "Delivery failed"
 
@@ -3778,13 +3666,11 @@ msgstr "Destination Group"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID"
 msgstr "Destination caller id"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID or queue"
 msgstr "Destination caller id"
 
@@ -3878,33 +3764,28 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "No proxy for the following hosts."
 msgid "Do not use the proxy for the following hosts."
 msgstr "No proxy for the following hosts."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete \"%s\"?"
 msgstr "Jeste li sigurni da želite obrisati objekat?"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this draft?"
 msgstr "Jeste li sigurni da želite obrisati objekat?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this object?"
 msgstr "Jeste li sigurni da želite obrisati objekat?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Jeste li sigurni da želite obrisati objekat?"
 
@@ -4141,7 +4022,6 @@ msgstr "Odlazeći Email"
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Email could not be verified. Please contact your administrator."
 msgstr "Verifikacija emaila nije moguća. Molimo kontaktirajte administratora."
 
@@ -4191,9 +4071,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Enable REST API access using the username/email address and password for "
-#| "the authentication user."
 msgid ""
 "Enable REST API using tokens (not username/email address and password). All "
 "users need to create their own access tokens in the user profile."
@@ -4325,8 +4202,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgid "Enables user authentication via GitHub."
 msgstr ""
 "Omogućava autentifikaciju korisnika preko %s. Registrujte svoju aplikaciju "
@@ -4346,8 +4221,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgid "Enables user authentication via Microsoft 365."
 msgstr ""
 "Omogućava autentifikaciju korisnika preko %s. Registrujte svoju aplikaciju "
@@ -4367,13 +4240,11 @@ msgstr "Korisnik može kreirati svoj nalog kroz web interfejs"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "zatvoreno"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "zatvori"
 
@@ -4415,7 +4286,6 @@ msgstr "Endpoint"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Personal Settings"
 msgid "Endpoint Settings"
 msgstr "Lične Postavke"
 
@@ -4439,7 +4309,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 #, fuzzy
-#| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Unesi Naslov…"
 
@@ -4470,7 +4339,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
-#| msgid "Enter timezone..."
 msgid "Enter time zone"
 msgstr "Unesi vremensku zoju…"
 
@@ -4521,7 +4389,6 @@ msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Escalation Times"
 msgid "Escalated Tickets"
 msgstr "Vreme Eskalacije"
 
@@ -4556,11 +4423,6 @@ msgstr "Evangelist"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 #, fuzzy
-#| msgid ""
-#| "Every category in your knowledge base should be given a unique icon for "
-#| "maximum visual clarity. Each set below provides a wide range of icons to "
-#| "choose from, but beware-you can't mix and match different icons from "
-#| "different sets. Choose carefully!"
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
 "maximum visual clarity. Each set below provides a wide range of icons to "
@@ -4606,7 +4468,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "Exception users"
 msgid "Excepted users"
 msgstr "Exception users"
 
@@ -4639,7 +4500,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Execute changes on objects"
 msgid "Execute planned jobs."
 msgstr "Execute changes on objects"
 
@@ -4706,7 +4566,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile.coffee
 #, fuzzy
-#| msgid "Failed to sent Email \"%s\". Please contact an administrator."
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr "Neuspešno slanje Emaila \"%s\". Molimo kontaktirajte administratora."
 
@@ -4723,7 +4582,6 @@ msgstr "Feature disabled!"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Feature is disabled, please contact your administrator!"
 msgstr "Verifikacija emaila nije moguća. Molimo kontaktirajte administratora."
 
@@ -4776,7 +4634,6 @@ msgstr "Filteri"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
-#| msgid "Find what you search. E. g. \"search phrase\""
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Find what you search. E. g. \"search phrase\""
 
@@ -4822,7 +4679,6 @@ msgstr "Prvi Korak"
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Ime"
 
@@ -4872,7 +4728,6 @@ msgstr "Veličina fonta"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 #, fuzzy
-#| msgid "Footer Note"
 msgid "Footer Menu"
 msgstr "Footer Note"
 
@@ -4882,15 +4737,11 @@ msgstr "Footer Note"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco
 #, fuzzy
-#| msgid "E. g. recent changed tickets, users or organizations."
 msgid "For example, recently changed tickets, users, or organizations."
 msgstr "E. g. skorašnje promene tiketa, korisnika ili organizacija."
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
 #, fuzzy
-#| msgid ""
-#| "For security reasons, the API token is shown only once. You'll need to "
-#| "copy it somewhere safe before continuing."
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
@@ -4993,7 +4844,6 @@ msgstr "Frontend"
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Full Name"
 msgid "Full"
 msgstr "Puno Ime"
 
@@ -5040,7 +4890,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 #, fuzzy
-#| msgid "VoIP service provider with realtime push."
 msgid "Generic API to integrate VoIP service provider with real-time push."
 msgstr "VoIP service provider with realtime push."
 
@@ -5071,7 +4920,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "GitHub App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -5236,21 +5084,18 @@ msgstr "Group selection for Ticket creation"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Group selection for Ticket creation"
 msgid "Group selection for ticket creation"
 msgstr "Group selection for Ticket creation"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "Grupisano po"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
 msgstr "Promeni raspored"
 
@@ -5266,7 +5111,6 @@ msgstr "Grupe"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
 msgstr "Grupe"
 
@@ -5317,7 +5161,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 #, fuzzy
-#| msgid "Header Color"
 msgid "Header Menu"
 msgstr "Boja zaglavlja"
 
@@ -5327,7 +5170,6 @@ msgstr "Health Check"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #, fuzzy
-#| msgid "Health information can be retrieved as JSON using"
 msgid "Health information can be retrieved as JSON using:"
 msgstr "Health information can be retrieved as JSON using"
 
@@ -5351,9 +5193,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can create new tickets. Also if you have the permissions you can "
-#| "create new customers and organizations."
 msgid ""
 "Here you can create new tickets. Also, if you have the permission, you can "
 "create new customers and organizations."
@@ -5374,9 +5213,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can sign out, change the frontend language and see your last "
-#| "viewed items."
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
@@ -5390,9 +5226,6 @@ msgstr "Here you define which authorization has access to the attribute."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned and escalated "
-#| "tickets."
 msgid ""
 "Here you find your ticket overviews for open, assigned, and escalated "
 "tickets."
@@ -5481,15 +5314,11 @@ msgstr "Sati"
 
 #: app/views/layouts/knowledge_base.html.erb
 #, fuzzy
-#| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Kako vam možemo pomoći? Potražite odgovor ili temu…"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee
 #, fuzzy
-#| msgid ""
-#| "How long has each customer had to wait, on average, to get a response "
-#| "from you today?"
 msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
@@ -5563,13 +5392,11 @@ msgstr "Icon Set"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
-#| msgid "Icon"
 msgid "Icon URL"
 msgstr "Ikona"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid "Identifier of the chat-topic."
 msgid "Identifier of the chat topic."
 msgstr "Identifier of the chat-topic."
 
@@ -5595,9 +5422,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 #, fuzzy
-#| msgid ""
-#| "If the host and service is recovered again, the ticket will be closed "
-#| "automatically."
 msgid ""
 "If the host and service have recovered, the ticket can be closed "
 "automatically."
@@ -5607,9 +5431,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid ""
-#| "If the sender is an agent, set the first user in the recipient list as a "
-#| "customer."
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -5908,7 +5729,6 @@ msgstr ""
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s Objekata je kreirano."
 
@@ -5918,13 +5738,11 @@ msgstr "Uporedno prevođenje"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Izbriši Bazu Znanja"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "New text module"
 msgid "Insert text from text module"
 msgstr "New text module"
 
@@ -5945,13 +5763,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "Inserts knowledge base answer"
 msgstr "Izbriši Bazu Znanja"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "New text module"
 msgid "Inserts text module"
 msgstr "New text module"
 
@@ -6051,7 +5867,6 @@ msgstr "Nedozvoljena lozinka. Mora sadržati najmanje  %s karaktera!"
 
 #: lib/password_policy/max_length.rb
 #, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "Invalid password, it must be shorter than %s characters!"
 msgstr "Nedozvoljena lozinka. Mora sadržati najmanje  %s karaktera!"
 
@@ -6144,7 +5959,6 @@ msgstr "Januar"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #, fuzzy
-#| msgid "Job is waiting to get started..."
 msgid "Job is waiting to get started…"
 msgstr "Job is waiting to get started..."
 
@@ -6182,8 +5996,6 @@ msgstr "Jun"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Just click into the marker and update the words just in place. Enjoy!"
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Samo kliknite na market i ažurirajte reči."
@@ -6241,13 +6053,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active"
 msgstr "Baza Znanja"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
 msgstr "Baza Znanja"
 
@@ -6326,7 +6136,6 @@ msgstr "Poslednji kontakt (klijent)"
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Prezime"
 
@@ -6336,7 +6145,6 @@ msgstr "Last run"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Last sync"
 msgid "Last searches"
 msgstr "Last sync"
 
@@ -6418,7 +6226,6 @@ msgstr "Linkuj povezani odgovor"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Templates"
 msgid "Link Template"
 msgstr "Templejt"
 
@@ -6464,7 +6271,6 @@ msgstr "Load"
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading failed."
 msgstr "Učitavanje…"
 
@@ -6472,7 +6278,6 @@ msgstr "Učitavanje…"
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading…"
 msgstr "Učitavanje…"
 
@@ -6599,7 +6404,6 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
-#| msgid "Manage your notifications settings"
 msgid "Manage your notification settings"
 msgstr "Vaše postavke za notifikaciju"
 
@@ -6660,7 +6464,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #, fuzzy
-#| msgid "Max. clients in waitlist"
 msgid "Max. clients on waitlist"
 msgstr "Max. klijenata na čekanju"
 
@@ -6670,7 +6473,6 @@ msgstr "Max. istovremenih četova"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Minimum length"
 msgid "Max. length"
 msgstr "Minimalna dužina"
 
@@ -6718,7 +6520,6 @@ msgstr "Članovi"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "current user"
 msgid "Mention user"
 msgstr "trenutni korisnik"
 
@@ -6766,7 +6567,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #, fuzzy
-#| msgid "Macros"
 msgid "Microsoft"
 msgstr "Makroi"
 
@@ -6778,7 +6578,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "Microsoft 365 App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -6918,7 +6717,6 @@ msgstr "Moved out"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Multiple selection field"
 msgstr "Bulk action executed!"
 
@@ -6928,7 +6726,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
 msgstr "Moji dodeljeni tiketi"
 
@@ -6938,13 +6735,11 @@ msgstr "Tiketi Moje Organizacije"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
 msgstr "My pending reached Tickets"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My replacement Tickets"
 msgid "My Replacement Tickets"
 msgstr "My replacement Tickets"
 
@@ -6954,7 +6749,6 @@ msgstr "Moja Statistika"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
 msgstr "Moji dodeljeni tiketi"
 
@@ -6970,7 +6764,6 @@ msgstr "My handling time: %s minuta"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
 msgstr "Your tickets in process"
 
@@ -7165,7 +6958,6 @@ msgstr "New Scheduler"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "New Source"
 msgstr "Izvor"
 
@@ -7227,7 +7019,6 @@ msgstr "New text module"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "New User"
 msgid "New user?"
 msgstr "Novi Korisnik"
 
@@ -7275,7 +7066,6 @@ msgstr "No Entries"
 
 #: lib/external_credential/facebook.rb
 #, fuzzy
-#| msgid "No %s configured."
 msgid "No Facebook app configured!"
 msgstr "No %s configured."
 
@@ -7285,7 +7075,6 @@ msgstr ""
 
 #: lib/external_credential/microsoft365.rb
 #, fuzzy
-#| msgid "No %s configured."
 msgid "No Microsoft 365 app configured!"
 msgstr "No %s configured."
 
@@ -7304,7 +7093,6 @@ msgstr ""
 
 #: lib/external_credential/twitter.rb
 #, fuzzy
-#| msgid "Not configured"
 msgid "No Twitter app configured!"
 msgstr "Nije konfigurisano"
 
@@ -7326,7 +7114,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Save configuration"
 msgid "No configuration set."
 msgstr "Sačuvaj konfiguraciju"
 
@@ -7349,7 +7136,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
 msgstr "Bez filtera. "
 
@@ -7359,7 +7145,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #, fuzzy
-#| msgid "Not configured"
 msgid "No filter was configured."
 msgstr "Nije konfigurisano"
 
@@ -7373,7 +7158,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Previous tab"
 msgid "No previous searches"
 msgstr "Previous tab"
 
@@ -7649,7 +7433,6 @@ msgstr "On %s, %s wrote:"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #, fuzzy
-#| msgid "Once completed..."
 msgid "Once completed…"
 msgstr "Once completed..."
 
@@ -7677,7 +7460,6 @@ msgstr "Only available for Users which are replacements for other users."
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid "Only available for Users with shared Organizations"
 msgstr "Dostupno samo Korisnicima u okviru shared Organizacije"
 
@@ -7744,7 +7526,6 @@ msgstr "Opcije"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
-#| msgid "migrate from another system"
 msgid "Or migrate from another system."
 msgstr "migracija sa drugog sistema"
 
@@ -7803,7 +7584,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "Organizacija"
 
@@ -7823,7 +7603,6 @@ msgstr "Original Formatting"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
 msgstr "Podešavanje"
 
@@ -7858,7 +7637,6 @@ msgstr "Odlazeći Poziv"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 #, fuzzy
-#| msgid "Browser"
 msgid "Outdated Browser"
 msgstr "Pretraživač"
 
@@ -7881,7 +7659,6 @@ msgstr "Pregled"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #, fuzzy
-#| msgid "Overview"
 msgid "Overviews are …"
 msgstr "Pregled"
 
@@ -7978,7 +7755,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Password for proxy connection."
 msgid "Password for proxy connection"
 msgstr "Password for proxy connection."
 
@@ -7988,7 +7764,6 @@ msgstr "Password for proxy connection."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "Lozinka mora sadržati 2 mala i dva velika slova."
 
@@ -8030,13 +7805,11 @@ msgstr "Paste in CSV data"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
 msgstr "My pending reached Tickets"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Pending reminder reached for Ticket |%s|"
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Pending reminder reached for Ticket |%s|"
 
@@ -8132,13 +7905,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 #, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
 msgstr "Kliknite na dugme ispod kako bi kreirali svoju prvu."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #, fuzzy
-#| msgid "Please click the link in the verification email."
 msgid "Please click on the link in the verification email."
 msgstr "Molimo kliknite na link u verifikacionom emailu."
 
@@ -8162,7 +7933,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 #, fuzzy
-#| msgid "Please enter your time which you want to account."
 msgid "Please enter the time you want to record."
 msgstr "Please enter your time which you want to account."
 
@@ -8172,7 +7942,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "Please execute database changes only in a maintenance time-slot."
 msgid "Please execute database changes only in a maintenance window."
 msgstr "Please execute database changes only in a maintenance time-slot."
 
@@ -8299,13 +8068,11 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "assign tickets"
 msgid "Process pending tickets."
 msgstr "dodeli tikete"
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Ticket escalation"
 msgid "Process ticket escalations."
 msgstr "Eskalacija Tiketa"
 
@@ -8352,7 +8119,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Proxy address."
 msgid "Proxy address"
 msgstr "Proxy address."
 
@@ -8371,13 +8137,11 @@ msgstr "Publish"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
 msgstr "Članak"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Published %s"
 msgstr "published"
 
@@ -8419,7 +8183,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 #, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
 msgstr "Realtime"
 
@@ -8439,14 +8202,12 @@ msgstr "Recent Customer Tickets"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #, fuzzy
-#| msgid "Recent logs"
 msgid "Recent Logs"
 msgstr "Recent logs"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 #, fuzzy
-#| msgid "Recent viewed Tickets"
 msgid "Recently Viewed Tickets"
 msgstr "Recent viewed Tickets"
 
@@ -8535,13 +8296,11 @@ msgstr "Briši"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Remove"
 msgid "Remove all"
 msgstr "Briši"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "Ukloni formatiranje"
 
@@ -8602,7 +8361,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
 msgstr "Requesting the Grant"
 
@@ -8656,7 +8414,6 @@ msgstr "Reset changes"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #, fuzzy
-#| msgid "Reset changes"
 msgid "Resetting changes…"
 msgstr "Reset changes"
 
@@ -8739,7 +8496,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #, fuzzy
-#| msgid "Running..."
 msgid "Running…"
 msgstr "Running..."
 
@@ -8820,7 +8576,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #, fuzzy
-#| msgid "SLA"
 msgid "SSL"
 msgstr "SLA"
 
@@ -8879,7 +8634,6 @@ msgstr "Sačuvaj"
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
-#| msgid "Draft"
 msgid "Save Draft"
 msgstr "Draft"
 
@@ -8909,7 +8663,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Saving failed."
 msgstr "Bulk action executed!"
 
@@ -8932,7 +8685,6 @@ msgstr "Schedulers"
 
 #: app/assets/javascripts/app/controllers/job.coffee
 #, fuzzy
-#| msgid "Scheduler"
 msgid "Schedulers are …"
 msgstr "Scheduler"
 
@@ -8978,13 +8730,11 @@ msgstr "Pretraži korisnike"
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Search…"
 msgstr "Pretraga"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Shared organization"
 msgid "Secondary organizations"
 msgstr "Shared organizacija"
 
@@ -9052,7 +8802,6 @@ msgstr "Izaberi stavku"
 
 #: app/assets/javascripts/app/lib/app_post/multi_locales_row.coffee
 #, fuzzy
-#| msgid "Select Template"
 msgid "Select locale…"
 msgstr "Izaberi Templejt"
 
@@ -9075,7 +8824,6 @@ msgstr "Selects the ticket number generator module."
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select Template"
 msgid "Select…"
 msgstr "Izaberi Templejt"
 
@@ -9134,13 +8882,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Reply to last article"
 msgid "Sender of last article"
 msgstr "Odgovori na poslednji članak"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #, fuzzy
-#| msgid "pending"
 msgid "Sending…"
 msgstr "na ?ekanju"
 
@@ -9172,7 +8918,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Server operation failed."
 msgstr "Ponovo slanje verifikacionog emaila"
 
@@ -9227,7 +8972,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Set caller id of outbound calls based on destination caller id."
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "Set caller id of outbound calls based on destination caller id."
 
@@ -9243,7 +8987,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Set outbound caller id"
 msgid "Set outbound caller ID"
 msgstr "Set outbound caller id"
 
@@ -9255,7 +8998,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
-#| msgid "Setup new System"
 msgid "Set up a new system"
 msgstr "Postavi novi Sistem"
 
@@ -9290,7 +9032,6 @@ msgstr "Podešavanje"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Podešavanje"
 
@@ -9307,7 +9048,6 @@ msgstr "Shared"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Shared"
 msgid "Shared Drafts"
 msgstr "Shared"
 
@@ -9322,7 +9062,6 @@ msgstr "Shared organizacija"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
-#| msgid "Shared"
 msgid "Sharing draft…"
 msgstr "Shared"
 
@@ -9343,7 +9082,6 @@ msgstr "Prikaži"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
-#| msgid "Draft"
 msgid "Show Draft"
 msgstr "Draft"
 
@@ -9354,7 +9092,6 @@ msgstr "Prikaži Detalje Pretrage"
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco
 #, fuzzy
-#| msgid "Show all..."
 msgid "Show all…"
 msgstr "Prikaži sve..."
 
@@ -9372,7 +9109,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Previous tab"
 msgid "Show previous tab"
 msgstr "Previous tab"
 
@@ -9438,7 +9174,6 @@ msgstr "Potpis"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Signature verification failed!"
 msgstr "Ponovo slanje verifikacionog emaila"
 
@@ -9469,13 +9204,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Nothing selected"
 msgid "Single selection field"
 msgstr "Ništa nije izabrano"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Single tree selection field"
 msgstr "Ponovo slanje verifikacionog emaila"
 
@@ -9541,14 +9274,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Reporting"
 msgid "Sorting by"
 msgstr "Reporting"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Sorting order"
 msgstr "Promeni raspored"
 
@@ -9564,7 +9295,6 @@ msgstr "Izvor"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "Sources"
 msgstr "Izvor"
 
@@ -9596,13 +9326,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search for users…"
 msgstr "Pretraži korisnike"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
-#| msgid "Search for users"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Pretraži korisnike"
 
@@ -9910,7 +9638,6 @@ msgstr "Uređivanje Teksta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text editing"
 msgid "Text field"
 msgstr "Uređivanje Teksta"
 
@@ -9922,7 +9649,6 @@ msgstr "Nedostaje Tekst"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
 msgstr "Tekst moduli"
 
@@ -9933,7 +9659,6 @@ msgstr "Tekst moduli"
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
 msgstr "Tekst moduli"
 
@@ -9951,7 +9676,6 @@ msgstr "Tekst sa omogućenim uporednim prevođenjem če isgledati kao"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Tekst"
 
@@ -9970,7 +9694,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Knowledge Base could not be created."
 msgstr "%s Objekata je kreirano."
 
@@ -9984,7 +9707,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The Telegram bot could not be saved."
 msgstr "%s Objekata je kreirano."
 
@@ -10004,13 +9726,11 @@ msgstr "URL ove instalacije Zammad-a."
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
 msgstr "When notification is being sent."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "Verifikacija emaila nije moguća. Molimo kontaktirajte administratora."
 
@@ -10064,9 +9784,6 @@ msgstr "Chat je isključen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid ""
-#| "The chat will show up once the connection to the server got established "
-#| "and if there is someone online to chat with."
 msgid ""
 "The chat will show up once the connection to the server got established and "
 "if there is an operator online to chat with."
@@ -10080,7 +9797,6 @@ msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "Nova verzija Zammad je dostupna, molimo reloadujte stranicu."
@@ -10131,7 +9847,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The file could not be uploaded."
 msgstr "%s Objekata je kreirano."
 
@@ -10145,7 +9860,6 @@ msgstr "Sledeće izmene su napravljene:"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "The following changes have been made:"
 msgid "The following changes will be made:"
 msgstr "Sledeće izmene su napravljene:"
 
@@ -10177,7 +9891,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/import.coffee
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee
 #, fuzzy
-#| msgid "The import was successful."
 msgid "The import failed."
 msgstr "Import je bio uspešan."
 
@@ -10199,7 +9912,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The issue could not be saved."
 msgstr "%s Objekata je kreirano."
 
@@ -10211,13 +9923,11 @@ msgstr "%s Objekata je kreirano."
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The object could not be created."
 msgstr "%s Objekata je kreirano."
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be found."
 msgstr "%s Objekata je ažurirano."
 
@@ -10230,7 +9940,6 @@ msgstr "%s Objekata je ažurirano."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/models/setting.coffee
 #, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "The object could not be updated."
 msgstr "%s Objekata je ažurirano."
 
@@ -10253,7 +9962,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "The password could not be set. Please contact your administrator."
 msgstr "Verifikacija emaila nije moguća. Molimo kontaktirajte administratora."
 
@@ -10300,13 +10008,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The raw logo could not be read."
 msgstr "%s Objekata je kreirano."
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The report could not be generated"
 msgstr "%s Objekata je kreirano."
 
@@ -10475,19 +10181,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "The test run was successful."
 msgid "The signature was successfully verified."
 msgstr "The test run was successful."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
 msgstr "%s Objekata je kreirano."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
 msgstr "%s Objekata je kreirano."
 
@@ -10510,14 +10213,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The tickets could not be merged."
 msgstr "%s Objekata je kreirano."
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "The uploaded image could not be processed."
 msgstr "%s Objekata je kreirano."
 
@@ -10549,13 +10250,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid "There can be several reasons for the chat to not show up:"
 msgid "There are several possible reasons why the chat won't show up:"
 msgstr "Postoji više razloga zbog kojih se chat može ne prikazivati:"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid "There are too many people in queue for the chat."
 msgid "There are too many people in the chat queue."
 msgstr "Chatu prisustvuje prevelike broj ljudi."
 
@@ -10583,7 +10282,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "There was no Knowledge Base created."
 msgstr "%s Objekata je kreirano."
 
@@ -10601,9 +10299,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 #, fuzzy
-#| msgid ""
-#| "This class gets added to the button on initialization and gets removed "
-#| "once the chat connection got established."
 msgid ""
 "This class gets added to the button on initialization and will be removed "
 "once the chat connection is established."
@@ -10673,19 +10368,16 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain at least %s characters."
 msgstr "Nedozvoljena lozinka. Mora sadržati najmanje  %s karaktera!"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain at least one character."
 msgstr "Lozinka mora sadržati najmanje jednu cifru."
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
 msgstr "Lozinka mora sadržati 2 mala i dva velika slova."
 
@@ -10719,7 +10411,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must not contain more than %s characters."
 msgstr "Nedozvoljena lozinka. Mora sadržati najmanje  %s karaktera!"
 
@@ -10751,7 +10442,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #, fuzzy
-#| msgid "This might take some time where the system can't be used."
 msgid "This might take some time during which the system can't be used."
 msgstr "This might take some time where the system can't be used."
 
@@ -10777,9 +10467,6 @@ msgstr "Ovaj servis omogućava Zammadu da se poveže na vaš Exchange server."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #, fuzzy
-#| msgid ""
-#| "This service receives http requests or emails from %s and creates tickets "
-#| "with host and service."
 msgid ""
 "This service receives HTTP requests or emails from %s and creates tickets "
 "with host and service."
@@ -10854,7 +10541,6 @@ msgstr "Tiket %s kreiran!"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
 msgstr "Tiket %s spojen!"
 
@@ -10901,13 +10587,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "New Overview"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "Pregled"
 
@@ -10937,13 +10621,11 @@ msgstr "Eskalacija Tiketa"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 #, fuzzy
-#| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
 msgstr "Tiket dodeljen meni: %s od %s"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket notifications"
 msgstr "Blokiraj Notifikacije"
 
@@ -10957,7 +10639,6 @@ msgstr "Ažuriranje Tiketa"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket |%s| is escalated!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Tiketa |%s| je eskalirano!"
 
@@ -11117,9 +10798,6 @@ msgstr "Da konfigurišete svoj sistem."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 #, fuzzy
-#| msgid ""
-#| "To enable %s for sending http requests to %s, you need create a own "
-#| "\"notification rule\" in %s."
 msgid ""
 "To enable %s for sending HTTP requests to %s, you need to create a "
 "designated \"notification rule\" in %s."
@@ -11236,7 +10914,6 @@ msgstr "Trigeri"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 #, fuzzy
-#| msgid "Triggers"
 msgid "Triggers are …"
 msgstr "Trigeri"
 
@@ -11341,7 +11018,6 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
 msgstr "Nedodeljeni I Otvoreni"
 
@@ -11628,7 +11304,6 @@ msgstr "Korisničke Postavke"
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "User could not be created."
 msgstr "%s Objekata je kreirano."
 
@@ -11661,7 +11336,6 @@ msgstr "Korisničko ime"
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 #, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
 msgstr "Korisničko ime / email"
 
@@ -11672,7 +11346,6 @@ msgstr "Korisničko ime / email"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Username for proxy connection."
 msgid "Username for proxy connection"
 msgstr "Username for proxy connection."
 
@@ -11747,7 +11420,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #, fuzzy
-#| msgid "When notification is being sent."
 msgid "Verification email could not be sent."
 msgstr "When notification is being sent."
 
@@ -11761,7 +11433,6 @@ msgstr "Verify sending and receiving"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #, fuzzy
-#| msgid "Verifying..."
 msgid "Verifying…"
 msgstr "Verifikujem…"
 
@@ -11853,7 +11524,6 @@ msgstr "Vidljivo svima"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "Visible to agents & editors"
 msgid "Visible to readers & editors"
 msgstr "Vidljivo agentima i editoru"
 
@@ -11887,9 +11557,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes which can't get imported into Zammad, "
-#| "since we currently don't support these kind of workflows."
 msgid ""
 "We detected OTRS BPM processes that can't get imported into Zammad since we "
 "currently don't support this kind of workflows."
@@ -11911,9 +11578,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
 msgid ""
 "We have already found %s email(s) in your mailbox. We will move them all "
 "from your mailbox into Zammad."
@@ -12022,7 +11686,6 @@ msgstr "Nedelja"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 #, fuzzy
-#| msgid "Week"
 msgid "Week(s)"
 msgstr "Nedelja"
 
@@ -12127,7 +11790,6 @@ msgstr "Biće publikovano"
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 #, fuzzy
-#| msgid "Will be published"
 msgid "Will be published on"
 msgstr "Biće publikovano"
 
@@ -12171,10 +11833,6 @@ msgstr "Sa vašom trenutnom konfiguracijom, možete očekivati da se sledeće de
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #, fuzzy
-#| msgid ""
-#| "With |Date| the ticket numbers will be generated by the current date, the "
-#| "SystemID and the counter. The format looks like \"Year.Month.Day.SystemID."
-#| "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgid ""
 "With |Date| the ticket numbers will be generated by the current date, the "
 "SystemID, and the counter. The format will be \"Year.Month.Day.SystemID."
@@ -12260,9 +11918,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #, fuzzy
-#| msgid ""
-#| "You can connect %s with Zammad. You need to connect your Zammad with %s "
-#| "first."
 msgid ""
 "You can connect %s with Zammad. But first, you will have to connect your "
 "Zammad with %s."
@@ -12303,9 +11958,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 #, fuzzy
-#| msgid ""
-#| "The tutorial on how to manage a %s is hosted on our online documentation "
-#| "%l."
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
 msgstr ""
@@ -12437,8 +12089,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 #, fuzzy
-#| msgid ""
-#| "You use %s in text but no attachment is attached. Do you want to continue?"
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
@@ -12456,9 +12106,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #, fuzzy
-#| msgid ""
-#| "You're already registered with your email address if you've been in touch "
-#| "with our support team."
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
@@ -12507,9 +12154,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #, fuzzy
-#| msgid ""
-#| "Your account has not been verified. Please click the link in the "
-#| "verification email."
 msgid ""
 "Your account has not been verified. Please click on the link in the "
 "verification email."
@@ -12543,7 +12187,6 @@ msgstr "Vaša karma je |%s|."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
 "administrator."
@@ -12559,9 +12202,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Chat requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
@@ -12571,9 +12211,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
@@ -12619,9 +12256,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid ""
-#| "Zammad is currently in maintenance mode. Only administrators can login. "
-#| "Please wait until the maintenance window is over."
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
@@ -12689,7 +12323,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "ascending"
 msgstr "na ?ekanju"
 
@@ -12703,13 +12336,11 @@ msgstr "u"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "reached"
 msgid "attached"
 msgstr "reached"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
 msgstr "Atačmenti"
 
@@ -12848,7 +12479,6 @@ msgstr "delete"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "descending"
 msgstr "na ?ekanju"
 
@@ -12858,7 +12488,6 @@ msgstr "isključi"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "ne postoji"
 
@@ -12909,13 +12538,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "zatvoreno"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "zatvori"
 
@@ -13032,19 +12659,16 @@ msgstr "za %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s days"
 msgstr "za %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in hours"
 msgid "in %s hours"
 msgstr "sati"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "minuta"
 
@@ -13054,13 +12678,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s weeks"
 msgstr "za %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s years"
 msgstr "za %s"
 
@@ -13070,13 +12692,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in hours"
 msgid "in 1 hour"
 msgstr "sati"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "minut"
 
@@ -13179,7 +12799,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #, fuzzy
-#| msgid "matches"
 msgid "matches found"
 msgstr "matches"
 
@@ -13191,7 +12810,6 @@ msgstr "možda"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Ime"
 
@@ -13271,13 +12889,11 @@ msgstr "note"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Notification Sender"
 msgid "notification sent to '%s'"
 msgstr "Notification Sender"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "ne"
 
@@ -13321,7 +12937,6 @@ msgstr "phone"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Public"
 msgid "public"
 msgstr "Public"
 
@@ -13343,7 +12958,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "aktivno"
 
@@ -13374,7 +12988,6 @@ msgstr "reply"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "reply"
 
@@ -13402,7 +13015,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
 msgstr "select attachment..."
 
@@ -13608,9 +13220,6 @@ msgstr "da"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
 #, fuzzy
-#| msgid ""
-#| "|Increment| increments the ticket number, the SystemID and the counter "
-#| "are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
@@ -13624,10 +13233,6 @@ msgstr "|Levo| znači |[Ticket#12345] Some Subject|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 #, fuzzy
-#| msgid ""
-#| "|None| means |Some Subject| (without ticket number). In the last case you "
-#| "should enable \"postmaster___follow___up___search___in\" to recognize "
-#| "followups based on email headers and/or body."
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case you "
 "should enable \"postmaster___follow___up___search___in\" to recognize follow-"
@@ -13643,25 +13248,31 @@ msgstr "|Desno| znači |Some Subject [Ticket#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...add object link URL"
 msgid "…add object link URL"
 msgstr "...add object link URL"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...add object title"
 msgid "…add object title"
 msgstr "…dodaj naslov objekta"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "...of whole textarea"
 msgid "…of whole text area"
 msgstr "...of whole textarea"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Vreme čekanja danas"
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Last sync"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "Trenutno nemate konfigurisanih naloga."
@@ -13670,7 +13281,6 @@ msgstr "∅ Vreme čekanja danas"
 #~ msgstr "Tag"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Accounted Time"
 
@@ -13688,7 +13298,6 @@ msgstr "∅ Vreme čekanja danas"
 #~ "usability."
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Izaberi"
 
@@ -13715,17 +13324,14 @@ msgstr "∅ Vreme čekanja danas"
 #~ msgstr "Vreme za prvi odgovor"
 
 #, fuzzy
-#~| msgid "Sure to delete this object?"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Jeste li sigurni da želite obrisati objekat?"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Unable to save changes."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Unable to save changes."
 
@@ -13779,7 +13385,6 @@ msgstr "∅ Vreme čekanja danas"
 #~ msgstr "Maksimalna veličina email u MB."
 
 #, fuzzy
-#~| msgid "Unable to save Bot."
 #~ msgid "Unable to load data…"
 #~ msgstr "Unable to save Bot."
 
@@ -13799,12 +13404,10 @@ msgstr "∅ Vreme čekanja danas"
 #~ msgstr "Ili"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Objekata je izbrisano."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Upozorenje: Email će biti poslat kada tiket bude kreiran."
 

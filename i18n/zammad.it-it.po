@@ -346,9 +346,9 @@ msgstr ""
 "reazione da parte di un agente), e il ** tempo di risoluzione ** (tempo tra "
 "la creazione e la chiusura del ticket).\n"
 "\n"
-"Ogni ticket scalato (ad esempio quelli che non hanno rispettato un obiettivo)"
-" sono visualizzati in una vista diversa delle tue panoramiche. Puoi anche "
-"configurare delle ** notifiche via email **."
+"Ogni ticket scalato (ad esempio quelli che non hanno rispettato un "
+"obiettivo) sono visualizzati in una vista diversa delle tue panoramiche. "
+"Puoi anche configurare delle ** notifiche via email **."
 
 #: db/seeds/settings.rb
 msgid "1 day"
@@ -13508,6 +13508,15 @@ msgstr "…dell'intera area di testo"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Utente endpoint Elasticsearch"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "Non hai ancora un account configurato."

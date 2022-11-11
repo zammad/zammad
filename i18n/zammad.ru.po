@@ -13583,6 +13583,15 @@ msgstr "…всей текстовой области"
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "У вас сейчас нет настроенной учетной записи."
 
@@ -13590,7 +13599,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Тег"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Учетное время"
 
@@ -13738,17 +13746,14 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Время первого ответа"
 
 #, fuzzy
-#~| msgid "Are you sure to delete"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Вы уверены, что хотите удалить"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Невозможно сохранить изменения."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Невозможно сохранить изменения."
 
@@ -13792,10 +13797,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Отложенные просроченные"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -13818,7 +13819,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr "Максимальный размер письма в мегабайтах"
 
 #, fuzzy
-#~| msgid "Unable to load data..."
 #~ msgid "Unable to load data…"
 #~ msgstr "Не удалось загрузить данные ..."
 
@@ -13845,12 +13845,10 @@ msgstr "∅ Сегодня время ожидания"
 #~ "Пожалуйста, сначала выберите группу, прежде чем упоминать пользователя!"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Объекта(тов) удалено."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Внимание: При создании билета будет отправлено электронное письмо."
 

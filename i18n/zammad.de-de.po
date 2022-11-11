@@ -13583,6 +13583,14 @@ msgstr "…des gesamten Textfelds"
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Elasticsearch Excludes"
+msgstr "Elasticsearch-Ausschlüsse"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "Es ist noch kein Account konfiguriert."
 
@@ -13940,10 +13948,6 @@ msgstr "∅ Wartezeit heute"
 #~ msgstr "Warten erreicht"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "

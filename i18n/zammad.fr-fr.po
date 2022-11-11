@@ -832,7 +832,8 @@ msgstr "Passer au ticket suivant de l'aperçu"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr "Après autorisation, merci de reconnecter votre messagerie Microsoft365."
+msgstr ""
+"Après autorisation, merci de reconnecter votre messagerie Microsoft365."
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -7345,20 +7346,20 @@ msgstr "Pas de configuration définie."
 
 #: app/models/calendar.rb
 msgid "No configured business hours found!"
-msgstr ""
+msgstr "Heures d'ouverture non configurée !"
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
 msgid "No content to show"
-msgstr ""
+msgstr "Pas de contenu à afficher"
 
 #: app/controllers/users_controller.rb
 msgid "No email!"
-msgstr ""
+msgstr "Pas d'e-mail !"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No entries were found in the selected folder(s)."
-msgstr ""
+msgstr "Aucune entrée trouvée dans le-s dossier-s sélectionné-s."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file chosen."
@@ -7366,7 +7367,7 @@ msgstr "Aucun fichier choisi."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "No file formats allowed."
-msgstr ""
+msgstr "Aucun format de fichiers autorisé."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "No filter was configured."
@@ -7374,7 +7375,7 @@ msgstr "Aucun filtre n'a été configuré."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No folders were found for the given user credentials."
-msgstr ""
+msgstr "Aucun dossier trouvé pour ces identifiants utilisateur."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
@@ -7390,11 +7391,11 @@ msgstr "Aucun proxy pour les hôtes suivants."
 
 #: app/controllers/users_controller.rb
 msgid "No record found!"
-msgstr ""
+msgstr "Aucun enregistrement trouvé !"
 
 #: lib/external_credential/twitter.rb
 msgid "No request_token for session found!"
-msgstr ""
+msgstr "Aucun request_token trouvé pour la session !"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
@@ -7409,11 +7410,11 @@ msgstr "Aucun résultat trouvé."
 #: app/controllers/import_otrs_controller.rb
 #: app/controllers/import_zendesk_controller.rb lib/email_helper/probe.rb
 msgid "No route to host!"
-msgstr ""
+msgstr "Pas de route pour l'hôte !"
 
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
-msgstr ""
+msgstr "Aucune session valable."
 
 #: lib/stats.rb
 msgid "No settings with area 'Dashboard::Stats' defined"
@@ -7424,7 +7425,7 @@ msgstr ""
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb app/controllers/users_controller.rb
 msgid "No source data submitted!"
-msgstr ""
+msgstr "Aucune source de données fournie !"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "No template created yet."
@@ -8598,7 +8599,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
 msgstr "Demander le droit"
 
@@ -13306,7 +13306,6 @@ msgstr "Répondre"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "Répondre"
 
@@ -13586,6 +13585,15 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
+
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Utilisateur de l'endpoint Elasticsearch"
 
 #~ msgid "You have no configured account right now."
 #~ msgstr "Vous n'avez actuellement pas de compte configuré."

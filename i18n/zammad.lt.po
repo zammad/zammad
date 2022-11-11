@@ -95,7 +95,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created article for |%s|"
 msgstr "%s sukūrė |%s| įrašą"
 
@@ -105,31 +104,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created group |%s|"
 msgstr "%s sukūrė vartotoją |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s created organization |%s|"
 msgstr "%s sukūrė |%s| įrašą"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created role |%s|"
 msgstr "%s sukūrė vartotoją |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s atnaujino Bilietą |%s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "%s created user |%s|"
 msgstr "%s sukūrė vartotoją |%s|"
 
@@ -141,7 +135,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
 msgstr "prieš %s"
 
@@ -161,7 +154,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
 msgstr "prieš %s"
 
@@ -174,25 +166,21 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "minutės"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
 msgstr "prieš %s"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been created."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been updated."
 msgstr "%s% iš naujo atidarytas"
 
@@ -202,25 +190,21 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be created."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be deleted."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be updated."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "%s of your tickets are currently in process."
 msgid "%s of my tickets are currently in process."
 msgstr "Jūsų Bilietų progresas %s ."
 
@@ -258,13 +242,11 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "Tickets"
 msgid "%s tickets"
 msgstr "Triktys"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
 msgstr "%s sukūrė |%s| įrašą"
 
@@ -274,31 +256,26 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
 msgstr "%s atnaujino Grupę |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated organization |%s|"
 msgstr "%s atnaujino Grupę |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee
 #, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated role |%s|"
 msgstr "%s atnaujino Grupę |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "%s updated Ticket |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s atnaujino Bilietą |%s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #, fuzzy
-#| msgid "%s updated User |%s|"
 msgid "%s updated user |%s|"
 msgstr "%s atnaujino vartotoją |%s|"
 
@@ -311,13 +288,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "prieš %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
 msgstr "prieš %s"
 
@@ -382,7 +357,6 @@ msgstr "1 žemas"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "minutė"
 
@@ -408,7 +382,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 mažosios ir 2 didžiosios raidės"
 
@@ -654,7 +627,6 @@ msgstr "Aktyvūs Agentai"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Aktyvus"
 
@@ -758,13 +730,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "Pridėti tagą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Susieti"
 
@@ -882,7 +852,6 @@ msgstr "Visi Bilietai"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
 msgstr "Visi agentai"
 
@@ -990,7 +959,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 #, fuzzy
-#| msgid "Recipient"
 msgid "Any recipient"
 msgstr "Gavėjas"
 
@@ -1015,7 +983,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #, fuzzy
-#| msgid "Account not verified"
 msgid "App could not be verified."
 msgstr "Paskyra nepatvirtinta"
 
@@ -1045,7 +1012,6 @@ msgstr "Pritaikyti"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
 #, fuzzy
-#| msgid "Apply"
 msgid "Apply Draft"
 msgstr "Pritaikyti"
 
@@ -1118,7 +1084,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Article could not be deleted."
 msgstr "%s% iš naujo atidarytas"
 
@@ -1162,7 +1127,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Auto Assignment"
 msgid "Assignment timeout"
 msgstr "Automatinis priskyrimas"
 
@@ -1197,7 +1161,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
 msgstr "Priedai"
 
@@ -1208,7 +1171,6 @@ msgstr "Prikabinti priedai"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
 msgstr "Priedai"
 
@@ -1326,7 +1288,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Auto close"
 msgid "Auto-close state"
 msgstr "Automatinis uždarymas"
 
@@ -1392,7 +1353,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "New Overview"
 msgid "Back to overview"
 msgstr "Nauja apžvalga"
 
@@ -1598,7 +1558,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
 msgstr "Integravimas"
 
@@ -1621,7 +1580,6 @@ msgstr "Kalendoriai"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
 msgstr "Nustatymai"
 
@@ -1774,7 +1732,6 @@ msgstr "Pakeisti Objektus"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 #, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "Pasikeisti savo slaptažodį"
 
@@ -1803,14 +1760,12 @@ msgstr "Pakeitimai"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be loaded."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 #: app/assets/javascripts/app/views/knowledge_base/base_form.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Changes could not be saved."
 msgstr "%s% iš naujo atidarytas"
 
@@ -1842,7 +1797,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Channel"
 msgid "Channel - Form"
 msgstr "Kanalas"
 
@@ -1916,7 +1870,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Channels"
 msgid "Check channels."
 msgstr "Kanalai"
 
@@ -1978,7 +1931,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Choose your language."
 msgstr "Pasikeisti savo kalbą."
 
@@ -2024,13 +1976,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "išvalyti"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Ieškoti"
 
@@ -2164,7 +2114,6 @@ msgstr ""
 
 #: public/assets/chat/views/chat.eco
 #, fuzzy
-#| msgid "Change your language."
 msgid "Compose your message…"
 msgstr "Pasikeisti savo kalbą."
 
@@ -2212,7 +2161,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Configure Basic Settings"
 msgstr "Tvarkyti %s nustatymus"
 
@@ -2226,7 +2174,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #, fuzzy
-#| msgid "Configuration"
 msgid "Confirmation"
 msgstr "Konfiguracija"
 
@@ -2315,13 +2262,11 @@ msgstr "Turinys"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content could not be loaded."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Content preview could not be generated."
 msgstr "%s% iš naujo atidarytas"
 
@@ -2482,7 +2427,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
 #, fuzzy
-#| msgid "Created at"
 msgid "Create a shared draft"
 msgstr "Sukurta"
 
@@ -2492,7 +2436,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 #, fuzzy
-#| msgid "Create new Customer"
 msgid "Create and set up %s"
 msgstr "Sukurti naują abonentą"
 
@@ -2587,7 +2530,6 @@ msgstr "Sukūrė"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Additional Channels"
 msgid "Creation Channels"
 msgstr "Papildomi kanalai"
 
@@ -2734,7 +2676,6 @@ msgstr "Data ir Laikas"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
 msgstr "Data ir Laikas"
 
@@ -2744,7 +2685,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
 msgstr "Data ir Laikas"
 
@@ -3641,13 +3581,11 @@ msgstr "Paskirties grupė"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Destination Group"
 msgid "Destination caller ID"
 msgstr "Paskirties grupė"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Destination Group"
 msgid "Destination caller ID or queue"
 msgstr "Paskirties grupė"
 
@@ -4162,7 +4100,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Authentication via %s"
 msgid "Enables user authentication via GitHub."
 msgstr "Autentifikacija per %s"
 
@@ -4180,7 +4117,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Authentication via %s"
 msgid "Enables user authentication via Microsoft 365."
 msgstr "Autentifikacija per %s"
 
@@ -4198,13 +4134,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "uždarytas"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "uždaryti"
 
@@ -4246,7 +4180,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Endpoint Settings"
 msgstr "Nustatymai"
 
@@ -4299,7 +4232,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee
 #, fuzzy
-#| msgid "Enter Note or"
 msgid "Enter time zone"
 msgstr "Įrašykite žinutę arba"
 
@@ -4350,7 +4282,6 @@ msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Escalated"
 msgid "Escalated Tickets"
 msgstr "Užaštrinta"
 
@@ -4426,7 +4357,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "%s created User |%s|"
 msgid "Excepted users"
 msgstr "%s sukūrė vartotoją |%s|"
 
@@ -4634,7 +4564,6 @@ msgstr "Pirmi žingsniai"
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Vardas"
 
@@ -4795,7 +4724,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Full Name"
 msgid "Full"
 msgstr "Pilnas Vardas"
 
@@ -5039,14 +4967,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "Sugrupuoti pagal"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
 msgstr "Pakeisti tvarką"
 
@@ -5062,7 +4988,6 @@ msgstr "Grupės"
 
 #: app/assets/javascripts/app/controllers/group.coffee
 #, fuzzy
-#| msgid "Groups"
 msgid "Groups are …"
 msgstr "Grupės"
 
@@ -5328,7 +5253,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
-#| msgid "Icon"
 msgid "Icon URL"
 msgstr "Ikona"
 
@@ -5652,7 +5576,6 @@ msgstr ""
 
 #: app/models/store.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Inline content could not be generated."
 msgstr "%s% iš naujo atidarytas"
 
@@ -5662,13 +5585,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Žinių bazė"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Text modules"
 msgid "Insert text from text module"
 msgstr "Teksto moduliai"
 
@@ -5693,7 +5614,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Inserts text module"
 msgstr "Teksto moduliai"
 
@@ -5976,13 +5896,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active"
 msgstr "Žinių bazė"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
 msgstr "Žinių bazė"
 
@@ -6061,7 +5979,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Pavardė"
 
@@ -6071,7 +5988,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last searches"
 msgstr "Pavardė"
 
@@ -6153,7 +6069,6 @@ msgstr "Nuorada į susijusius atsakymus"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Templates"
 msgid "Link Template"
 msgstr "Templeitai"
 
@@ -6199,7 +6114,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading failed."
 msgstr "Kraunasi..."
 
@@ -6207,7 +6121,6 @@ msgstr "Kraunasi..."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #, fuzzy
-#| msgid "Loading..."
 msgid "Loading…"
 msgstr "Kraunasi..."
 
@@ -6332,7 +6245,6 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb
 #, fuzzy
-#| msgid "Manage your notifications settings"
 msgid "Manage your notification settings"
 msgstr "Tvarkyti savo pranešimų nustatymus"
 
@@ -6401,7 +6313,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Minimum length"
 msgid "Max. length"
 msgstr "Minimalus ilgis"
 
@@ -6651,7 +6562,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Assigned Tickets"
 msgstr "Mano priskirti Bilietai"
 
@@ -6661,13 +6571,11 @@ msgstr "Mano organizacijos Bilietai"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "My Pending Reached Tickets"
 msgstr "Mano laukiantys pasiekti Bilietai"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Replacement"
 msgid "My Replacement Tickets"
 msgstr "Pavaduotojas"
 
@@ -6677,7 +6585,6 @@ msgstr "Mano statistika"
 
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
 msgstr "Mano priskirti Bilietai"
 
@@ -6693,7 +6600,6 @@ msgstr "Mano apdorojimo laikas: %s min "
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
-#| msgid "Your tickets in process"
 msgid "My tickets in process"
 msgstr "Jūsų Bilietų apdorojime"
 
@@ -6888,7 +6794,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "New Source"
 msgstr "Šaltinis"
 
@@ -6950,7 +6855,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "New User"
 msgid "New user?"
 msgstr "Naujas vartotojas"
 
@@ -7043,7 +6947,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Configuration"
 msgid "No configuration set."
 msgstr "Konfiguracija"
 
@@ -7508,7 +7411,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "Organizacija"
 
@@ -7528,7 +7430,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
 msgstr "Nustatymai"
 
@@ -7584,7 +7485,6 @@ msgstr "Apžvalgos"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 #, fuzzy
-#| msgid "Overview"
 msgid "Overviews are …"
 msgstr "Apžvalga"
 
@@ -7689,7 +7589,6 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "2 mažosios ir 2 didžiosios raidės"
 
@@ -7731,13 +7630,11 @@ msgstr ""
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
 msgstr "Mano laukiantys pasiekti Bilietai"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Mano laukiantys pasiekti Bilietai"
 
@@ -7833,13 +7730,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 #, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
 msgstr "Norint sukurtį naują užklausą, paspauskite žemiau esantį mygtuką"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Please click on the link in the verification email."
 msgstr "Persiųsti patvirtinimo laišką"
 
@@ -7996,13 +7891,11 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Process pending tickets."
 msgstr "Mano laukiantys pasiekti Bilietai"
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Ticket escalation"
 msgid "Process ticket escalations."
 msgstr "Bilieto užaštrinimas"
 
@@ -8049,7 +7942,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Address"
 msgid "Proxy address"
 msgstr "Adresas"
 
@@ -8068,13 +7960,11 @@ msgstr "Publikuoti"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee
 #, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
 msgstr "Straipsnis"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Published %s"
 msgstr "publikuotas"
 
@@ -8114,7 +8004,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 #, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
 msgstr "Realiu laiku"
 
@@ -8139,7 +8028,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco
 #, fuzzy
-#| msgid "Recently viewed"
 msgid "Recently Viewed Tickets"
 msgstr "Neseniai peržiūrėta"
 
@@ -8226,7 +8114,6 @@ msgstr "Pašalinti"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Remove"
 msgid "Remove all"
 msgstr "Pašalinti"
 
@@ -8503,7 +8390,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #, fuzzy
-#| msgid "SMS"
 msgid "SSL"
 msgstr "SMS"
 
@@ -8562,7 +8448,6 @@ msgstr "Išsaugoti"
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #, fuzzy
-#| msgid "Draft"
 msgid "Save Draft"
 msgstr "Ruošinys"
 
@@ -8613,7 +8498,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/job.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Schedulers are …"
 msgstr "Teksto moduliai"
 
@@ -8659,13 +8543,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Search…"
 msgstr "Ieškoti"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Organizations"
 msgid "Secondary organizations"
 msgstr "Organizacijos"
 
@@ -8752,7 +8634,6 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select"
 msgid "Select…"
 msgstr "Pasirinkti"
 
@@ -8815,7 +8696,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco
 #, fuzzy
-#| msgid "Sending..."
 msgid "Sending…"
 msgstr "Siunčiama..."
 
@@ -8847,7 +8727,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Server operation failed."
 msgstr "Persiųsti patvirtinimo laišką"
 
@@ -8916,7 +8795,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Outbound Call"
 msgid "Set outbound caller ID"
 msgstr "Išeinantis skambutis"
 
@@ -8961,7 +8839,6 @@ msgstr "Nustatymai"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Nustatymai"
 
@@ -9010,7 +8887,6 @@ msgstr "Rodyti"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
-#| msgid "Draft"
 msgid "Show Draft"
 msgstr "Ruošinys"
 
@@ -9101,7 +8977,6 @@ msgstr "Parašas"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Signature verification failed!"
 msgstr "Persiųsti patvirtinimo laišką"
 
@@ -9132,13 +9007,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Single selection field"
 msgstr "Persiųsti patvirtinimo laišką"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Single tree selection field"
 msgstr "Persiųsti patvirtinimo laišką"
 
@@ -9209,7 +9082,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Sorting order"
 msgstr "Pakeisti tvarką"
 
@@ -9225,7 +9097,6 @@ msgstr "Šaltinis"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "Sources"
 msgstr "Šaltinis"
 
@@ -9577,7 +9448,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
 msgstr "Teksto moduliai"
 
@@ -9588,7 +9458,6 @@ msgstr "Teksto moduliai"
 #: app/assets/javascripts/app/controllers/macro.coffee
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text modules are …"
 msgstr "Teksto moduliai"
 
@@ -9606,7 +9475,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Tekstas"
 
@@ -9627,7 +9495,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The Knowledge Base could not be created."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9641,7 +9508,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The Telegram bot could not be saved."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9661,7 +9527,6 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The active reporting profile could not be found."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9766,7 +9631,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The file could not be uploaded."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9826,7 +9690,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The issue could not be saved."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9838,13 +9701,11 @@ msgstr "%s% iš naujo atidarytas"
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be created."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be found."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9857,7 +9718,6 @@ msgstr "%s% iš naujo atidarytas"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
 #: app/assets/javascripts/app/models/setting.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be updated."
 msgstr "%s% iš naujo atidarytas"
 
@@ -9925,13 +9785,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The raw logo could not be read."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The report could not be generated"
 msgstr "%s% iš naujo atidarytas"
 
@@ -10104,13 +9962,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The source ticket could not be found."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The target ticket number could not be found."
 msgstr "%s% iš naujo atidarytas"
 
@@ -10131,14 +9987,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The tickets could not be merged."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/controllers/getting_started_controller.rb
 #: app/controllers/settings_controller.rb
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The uploaded image could not be processed."
 msgstr "%s% iš naujo atidarytas"
 
@@ -10200,7 +10054,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "There was no Knowledge Base created."
 msgstr "%s% iš naujo atidarytas"
 
@@ -10292,7 +10145,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must contain between %s and %s characters."
 msgstr "2 mažosios ir 2 didžiosios raidės"
 
@@ -10326,7 +10178,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "This field must not contain more than %s characters."
 msgstr "2 mažosios ir 2 didžiosios raidės"
 
@@ -10453,7 +10304,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #, fuzzy
-#| msgid "Ticket %s merged!"
 msgid "Ticket %s merged."
 msgstr "Bilietas %s sujungtas!"
 
@@ -10500,13 +10350,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Nauja apžvalga"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "Apžvalgos"
 
@@ -10536,13 +10384,11 @@ msgstr "Bilieto užaštrinimas"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 #, fuzzy
-#| msgid "Tickets assigned to me: %s of %s"
 msgid "Ticket failed to save: %s"
 msgstr "Man priskita Bilietų: %s of %s"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #, fuzzy
-#| msgid "Notifications"
 msgid "Ticket notifications"
 msgstr "Pranešimai"
 
@@ -10556,7 +10402,6 @@ msgstr "Bilieto atnaujinimas"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket escalation"
 msgid "Ticket |%s| has escalated!"
 msgstr "Bilieto užaštrinimas"
 
@@ -10930,7 +10775,6 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb
 #: app/frontend/apps/mobile/modules/home/views/Home.vue db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
 msgstr "Nepriskirta ir Atidaryta"
 
@@ -11214,7 +11058,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be created."
 msgstr "%s% iš naujo atidarytas"
 
@@ -11247,7 +11090,6 @@ msgstr "Naudotojo vardas"
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 #, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
 msgstr "Naudotojo vardas / el. paštas"
 
@@ -11343,7 +11185,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #, fuzzy
-#| msgid "Verifying..."
 msgid "Verifying…"
 msgstr "Tikrinama..."
 
@@ -11590,7 +11431,6 @@ msgstr "Savaitė"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 #, fuzzy
-#| msgid "Week"
 msgid "Week(s)"
 msgstr "Savaitė"
 
@@ -11693,7 +11533,6 @@ msgstr ""
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Will be published on"
 msgstr "publikuotas"
 
@@ -12193,7 +12032,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Sending..."
 msgid "ascending"
 msgstr "Siunčiama..."
 
@@ -12207,13 +12045,11 @@ msgstr "iki"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attached Files"
 msgid "attached"
 msgstr "Prikabinti priedai"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
 msgstr "Priedai"
 
@@ -12351,7 +12187,6 @@ msgstr "ištrinti"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Sending..."
 msgid "descending"
 msgstr "Siunčiama..."
 
@@ -12410,13 +12245,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "uždarytas"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "uždaryti"
 
@@ -12536,13 +12369,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "hours"
 msgid "in %s hours"
 msgstr "valandos"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "minutės"
 
@@ -12564,13 +12395,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "hour"
 msgid "in 1 hour"
 msgstr "valanda"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "minutė"
 
@@ -12683,7 +12512,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Vardas"
 
@@ -12763,13 +12591,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Notifications"
 msgid "notification sent to '%s'"
 msgstr "Pranešimai"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "ne"
 
@@ -12813,7 +12639,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Public"
 msgid "public"
 msgstr "Viešas"
 
@@ -12835,7 +12660,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "aktyvus"
 
@@ -12866,7 +12690,6 @@ msgstr "atsakyti"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "atsakyti"
 
@@ -12894,7 +12717,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
 msgstr "pasirinkti priedą"
 
@@ -13135,11 +12957,19 @@ msgstr ""
 msgid "∅ Waiting time today"
 msgstr "∅ Laukino laikas šiandien"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Pavardė"
+
 #~ msgid "Tag"
 #~ msgstr "Tagas"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Apskaičiuotas laikas"
 

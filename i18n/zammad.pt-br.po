@@ -7306,7 +7306,8 @@ msgstr "Nenhum filtro foi configurado."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "No folders were found for the given user credentials."
-msgstr "Nenhuma pasta foi encontrada para as credenciais de usuário fornecidas."
+msgstr ""
+"Nenhuma pasta foi encontrada para as credenciais de usuário fornecidas."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "No linked issues"
@@ -12048,8 +12049,8 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "Com |Data| os números dos tickets serão gerados pela data atual, pelo "
-"SystemID e pelo contador. O formato será \"Year.Month.Day.SystemID.Counter\" "
-"(por exemplo, 201206231010138, 201206231010139)."
+"SystemID e pelo contador. O formato será \"Year.Month.Day.SystemID.Counter"
+"\" (por exemplo, 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -12144,8 +12145,8 @@ msgid ""
 "of agents."
 msgstr ""
 "Você pode criar **visões gerais** para seus agentes e clientes. Eles têm "
-"muitas finalidades, como servir como uma lista de tarefas para seus agentes."
-"\n"
+"muitas finalidades, como servir como uma lista de tarefas para seus "
+"agentes.\n"
 "\n"
 "Você também pode criar visões gerais e limitá-las a agentes específicos ou a "
 "grupos de agentes."
@@ -13475,6 +13476,15 @@ msgstr "...da area de texto"
 msgid "∅ Waiting time today"
 msgstr "∅ tempo de espera hoje"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr "Define se o índice de pesquisa está usando atributos excluídos."
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Usuário do Elasticsearch Endpoint"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "Você não tem nenhuma conta configurada agora."
 
@@ -13482,7 +13492,6 @@ msgstr "∅ tempo de espera hoje"
 #~ msgstr "Tag"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Tempo contado"
 
@@ -13500,7 +13509,6 @@ msgstr "∅ tempo de espera hoje"
 #~ "usabilidade."
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Selecionar"
 
@@ -13547,17 +13555,14 @@ msgstr "∅ tempo de espera hoje"
 #~ msgstr "Área"
 
 #, fuzzy
-#~| msgid "Do you really want to delete this object?"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Tem certeza que deseja apagar este objeto?"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr " Não é possível salvar as alterações."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr " Não é possível salvar as alterações."
 
@@ -13619,10 +13624,6 @@ msgstr "∅ tempo de espera hoje"
 #~ msgstr "Pendente alcançado"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -13642,7 +13643,6 @@ msgstr "∅ tempo de espera hoje"
 #~ msgstr "Tamanho máximo dos e-mails em MB."
 
 #, fuzzy
-#~| msgid "Unable to load data..."
 #~ msgid "Unable to load data…"
 #~ msgstr "Não foi possível carregar informações ..."
 
@@ -13668,12 +13668,10 @@ msgstr "∅ tempo de espera hoje"
 #~ msgstr "Selecione um grupo primeiro, antes de mencionar um usuário!"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s Objeto(s) serão deletados."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Atenção: Quando um ticket é criado, um e-mail é enviado."
 

@@ -229,7 +229,6 @@ msgstr "%s سوئیج کرد به |%s|!"
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
 #, fuzzy
-#| msgid "assign tickets"
 msgid "%s tickets"
 msgstr "تخصیص تیکت ها"
 
@@ -321,7 +320,6 @@ msgstr "۱ روز"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
 msgstr "روز 1"
 
@@ -331,7 +329,6 @@ msgstr "۱ ساعت"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
 msgstr "ساعت 1"
 
@@ -353,7 +350,6 @@ msgstr "۱ هفته"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
 msgstr "هفته 1"
 
@@ -425,7 +421,6 @@ msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr "نسخه جدید از سیستم در دسترس می باشد."
@@ -616,7 +611,6 @@ msgstr "کارشناسان فعال"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "فعال"
 
@@ -720,13 +714,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "افزودن تگ"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "افزودن لینک"
 
@@ -904,7 +896,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 #, fuzzy
-#| msgid "An error occurred: %s"
 msgid "An error has occurred"
 msgstr "یک خطا رخ داد: %s"
 
@@ -1139,7 +1130,6 @@ msgstr "حداقل یک حرف الزامی است"
 
 #: app/models/postmaster_filter.rb
 #, fuzzy
-#| msgid "At least one letter is required"
 msgid "At least one match rule is required, but none was provided."
 msgstr "حداقل یک حرف الزامی است"
 
@@ -1153,7 +1143,6 @@ msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشت
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
 msgstr "ضمایم"
 
@@ -1164,7 +1153,6 @@ msgstr "فایل‌های ضمیمه"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
 msgstr "ضمایم"
 
@@ -1346,7 +1334,6 @@ msgstr "بازگشت به View من"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
 msgstr "بازگشت به View من"
 
@@ -1948,7 +1935,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up cache."
 msgstr "ادامه نشست "
 
@@ -1966,20 +1952,17 @@ msgstr "پاکسازی نشست‌های منقضی‌شده."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #, fuzzy
-#| msgid "clear"
 msgid "Clear"
 msgstr "پاک کردن"
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "جستجو"
 
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Selector"
 msgid "Clear Selection"
 msgstr "انتخاب گر"
 
@@ -2154,7 +2137,6 @@ msgstr "تنظیم اپلیکیشن"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #, fuzzy
-#| msgid "Basic Settings"
 msgid "Configure Basic Settings"
 msgstr "تنظیمات پایه"
 
@@ -2291,7 +2273,6 @@ msgstr "ادامه نشست"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "Continue session"
 msgid "Continue to desktop app"
 msgstr "ادامه نشست "
 
@@ -2521,7 +2502,6 @@ msgstr "ایجاد شده توسط"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Create Channels"
 msgid "Creation Channels"
 msgstr "کانال ایجاد تیکت"
 
@@ -3671,7 +3651,6 @@ msgstr "عدم امضای ایمیل"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "No proxy for the following hosts."
 msgid "Do not use the proxy for the following hosts."
 msgstr "برای هاست های زیر از پروکسی استفاده نشود."
 
@@ -4116,7 +4095,6 @@ msgstr "فعالسازی احراز هویت از طریق لینکدین."
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Authentication via %s"
 msgid "Enables user authentication via Microsoft 365."
 msgstr "احراز هویت از طریق %s "
 
@@ -4134,13 +4112,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "بسته شده"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "بستن"
 
@@ -4356,7 +4332,6 @@ msgstr "مثال‌ها"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "Exception users"
 msgid "Excepted users"
 msgstr "کاربران استثناء"
 
@@ -4723,7 +4698,6 @@ msgstr "سمت کاربر"
 
 #: app/assets/javascripts/app/models/group.coffee
 #, fuzzy
-#| msgid "Full Name"
 msgid "Full"
 msgstr "نام کامل"
 
@@ -4967,14 +4941,12 @@ msgstr "گروه‌های در دسترس برای تیکت‌های ساخته 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "گروه‌بندی با"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
 msgstr "تغییر مرتب سازی"
 
@@ -5081,10 +5053,6 @@ msgstr "اینجا میتوانید یک نمونه ایجاد کنید."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 #, fuzzy
-#| msgid ""
-#| "Here you can search for tickets, customers and organizations. Use the "
-#| "wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can "
-#| "use ||double quotes|| for searching phrases §\"some phrase\"§."
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
@@ -5603,13 +5571,11 @@ msgstr "ترجمه درخط"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Insert text from Knowledge Base article"
 msgstr "افزودن پاسخ از پایگاه دانش"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert text from text module"
 msgstr "افزودن ماژول‌ متن"
 
@@ -5646,7 +5612,6 @@ msgstr "نصب شده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Integer"
 msgid "Integer field"
 msgstr "عدد صحیح"
 
@@ -6006,7 +5971,6 @@ msgstr "آخرین اجرا"
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Last sync"
 msgid "Last searches"
 msgstr "آخرین همسان‌سازی"
 
@@ -6330,7 +6294,6 @@ msgstr "حداکثر چت‌های همزمان"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Minimum length"
 msgid "Max. length"
 msgstr "Mindestlänge"
 
@@ -6378,7 +6341,6 @@ msgstr "اعضا"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "current user"
 msgid "Mention user"
 msgstr "کاربر فعلی"
 
@@ -6436,7 +6398,6 @@ msgstr "مایکروسافت ۳۶۵"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "Microsoft 365 App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -6576,7 +6537,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Delivery failed"
 msgid "Multiple selection field"
 msgstr "تحویل ناموفق بود"
 
@@ -6813,7 +6773,6 @@ msgstr "تقویم جدید"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "New Source"
 msgstr "منبع"
 
@@ -6929,7 +6888,6 @@ msgstr ""
 
 #: lib/external_credential/microsoft365.rb
 #, fuzzy
-#| msgid "Not configured"
 msgid "No Microsoft 365 app configured!"
 msgstr "پیکربندی نشده"
 
@@ -6968,7 +6926,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Save configuration"
 msgid "No configuration set."
 msgstr "ذخیره تنظیمات"
 
@@ -6991,7 +6948,6 @@ msgstr "در پوشه(ها)ی انتخاب شده فایلی وجود ندارد
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
 msgstr "Keine Filter."
 
@@ -7001,7 +6957,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #, fuzzy
-#| msgid "No Twitter app configured!"
 msgid "No filter was configured."
 msgstr "اپلیکیشن توییتر پیکربندی نشده!"
 
@@ -7015,7 +6970,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Previous tab"
 msgid "No previous searches"
 msgstr "برگه قبلی"
 
@@ -7439,7 +7393,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "سازمان"
 
@@ -7608,7 +7561,6 @@ msgstr "رمزعبور با موفقیت تغییر کرد!"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Password for proxy connection."
 msgid "Password for proxy connection"
 msgstr "رمز عبور برای اتصال پراکسی."
 
@@ -7965,7 +7917,6 @@ msgstr "کاربر پراکسی"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Proxy address."
 msgid "Proxy address"
 msgstr "آدرس پروکسی."
 
@@ -7988,7 +7939,6 @@ msgstr "انتشار یادداشت"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 #, fuzzy
-#| msgid "published"
 msgid "Published %s"
 msgstr "منتشر شده"
 
@@ -8138,13 +8088,11 @@ msgstr "حذف کردن"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Remove"
 msgid "Remove all"
 msgstr "حذف کردن"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Removes the formatting"
 msgid "Remove formatting"
 msgstr "حذف فرمت"
 
@@ -8205,7 +8153,6 @@ msgstr "درخواست"
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Request for Change"
 msgid "Request Admin Consent"
 msgstr "درخواست تغییر"
 
@@ -8573,7 +8520,6 @@ msgstr "جستجو…"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Shared organization"
 msgid "Secondary organizations"
 msgstr "سازمان به اشتراک گذاشته شده"
 
@@ -8662,7 +8608,6 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select locale…"
 msgid "Select…"
 msgstr "انتخاب محل…"
 
@@ -8865,7 +8810,6 @@ msgstr "تنظیمات"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "تنظیمات"
 
@@ -8939,7 +8883,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Previous tab"
 msgid "Show previous tab"
 msgstr "برگه قبلی"
 
@@ -9034,13 +8977,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Delivery failed"
 msgid "Single selection field"
 msgstr "تحویل ناموفق بود"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Resend verification email"
 msgid "Single tree selection field"
 msgstr "ارسال دوباره تائیدیه به ایمیل"
 
@@ -9106,14 +9047,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Reporting"
 msgid "Sorting by"
 msgstr "گزارش‌دهی"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Sorting order"
 msgstr "تغییر مرتب سازی"
 
@@ -9129,7 +9068,6 @@ msgstr "منبع"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "Sources"
 msgstr "منبع"
 
@@ -9471,7 +9409,6 @@ msgstr "ویرایش متن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text editing"
 msgid "Text field"
 msgstr "ویرایش متن"
 
@@ -9508,7 +9445,6 @@ msgstr "متن با ترجمه بین خطی فعال به مانند این ا�
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "متن"
 
@@ -9527,7 +9463,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The Knowledge Base could not be created."
 msgstr "آبجکت قابل ایجاد نبود."
 
@@ -9559,13 +9494,11 @@ msgstr "لینک این سیستم پشتیبانی."
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "The active reporting profile could not be found."
 msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "امکان تنظیم رمز عبور وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
 
@@ -9624,7 +9557,6 @@ msgstr ""
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 #, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr "نسخه جدید از سیستم در دسترس می باشد."
@@ -9669,7 +9601,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The file could not be uploaded."
 msgstr "مشکل قابل ذخیره نبود."
 
@@ -9743,7 +9674,6 @@ msgstr "آبجکت قابل ایجاد نبود."
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "The object could not be updated."
 msgid "The object could not be found."
 msgstr "آبجکت قابل بروزرسانی نبود."
 
@@ -9812,7 +9742,6 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The provided match operator is missing or invalid."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9824,7 +9753,6 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The raw logo could not be read."
 msgstr "آبجکت قابل ایجاد نبود."
 
@@ -9850,7 +9778,6 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required match value is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9894,7 +9821,6 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'for_user_id' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9912,7 +9838,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'link_type' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9946,7 +9871,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'permission' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9956,7 +9880,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -9968,7 +9891,6 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 #, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required value 'group_id' is missing."
 msgstr "تصویر با تغییر اندازه معتبر نیست."
 
@@ -10013,13 +9935,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The source ticket could not be found."
 msgstr "تیکت‌ها قابل ادغام نیستند."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The target ticket number could not be found."
 msgstr "تیکت‌ها قابل ادغام نیستند."
 
@@ -10108,7 +10028,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "No Knowledge Base created"
 msgid "There was no Knowledge Base created."
 msgstr "هیچ پایگاه دانشی ایجاد نشد"
 
@@ -10192,19 +10111,16 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain at least %s characters."
 msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain at least one character."
 msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain between %s and %s characters."
 msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
 
@@ -10238,7 +10154,6 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must not contain more than %s characters."
 msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
 
@@ -10414,7 +10329,6 @@ msgstr "مرور کلی تیکت"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "مرورکلی"
 
@@ -10448,7 +10362,6 @@ msgstr "ذخیره تیکت موفقیت‌آمیز نبود : %s"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket notifications"
 msgstr "متوقف کردن اطلاع رسانی ها"
 
@@ -11159,7 +11072,6 @@ msgstr "نام‌کاربری / ایمیل"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Username for proxy connection."
 msgid "Username for proxy connection"
 msgstr "نام کاربری برای اتصال پروکسی."
 
@@ -11803,7 +11715,6 @@ msgstr "شما درحال حاضر هیچ تیکتی ندارید."
 
 #: app/controllers/import_freshdesk_controller.rb
 #, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "You do not have administrator permission."
 msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
 
@@ -12099,7 +12010,6 @@ msgstr "آرشیو شده"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "ascending"
 msgstr "در انتظار"
 
@@ -12113,13 +12023,11 @@ msgstr "در"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "reached"
 msgid "attached"
 msgstr "فرارسیده"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
 msgstr "ضمایم"
 
@@ -12256,7 +12164,6 @@ msgstr "حذف"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "descending"
 msgstr "در انتظار"
 
@@ -12266,7 +12173,6 @@ msgstr "قطع ارتباط"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "وجود ندارد"
 
@@ -12301,7 +12207,6 @@ msgstr "اصلاح"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "edit"
 msgid "edited %s"
 msgstr "اصلاح"
 
@@ -12319,13 +12224,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "بسته شده"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "بستن"
 
@@ -12441,7 +12344,6 @@ msgstr "در %s"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s days"
 msgstr "در %s "
 
@@ -12459,19 +12361,16 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
 msgstr "هفته های 2"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "in %s"
 msgid "in %s years"
 msgstr "در %s "
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
 msgstr "روز 1"
 
@@ -12489,7 +12388,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
 msgstr "هفته 1"
 
@@ -12584,7 +12482,6 @@ msgstr "با یک ماژول تطابق داشته باشد"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
 #, fuzzy
-#| msgid "matches"
 msgid "matches found"
 msgstr "تطابق دارد"
 
@@ -12596,7 +12493,6 @@ msgstr "شاید"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "m"
 msgid "me"
 msgstr "دقیقه"
 
@@ -12676,7 +12572,6 @@ msgstr "یادداشت"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Notification Sender"
 msgid "notification sent to '%s'"
 msgstr "ارسال کننده پیغام"
 
@@ -12724,7 +12619,6 @@ msgstr "تلفن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Public"
 msgid "public"
 msgstr "عمومی"
 
@@ -12746,7 +12640,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "فعال"
 
@@ -12777,7 +12670,6 @@ msgstr "پاسخ"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "پاسخ"
 
@@ -13044,6 +12936,15 @@ msgstr "...از تمام محدوده متن"
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "آخرین همسان‌سازی"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "درحال حاضر شما هیچ حساب کاربری ندارید."
 
@@ -13051,7 +12952,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr "تگ"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "زمان صرف‌شده"
 
@@ -13104,7 +13004,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr "گروه نباید خالی باشد"
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "انتخاب"
 
@@ -13136,17 +13035,14 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr "توسط"
 
 #, fuzzy
-#~| msgid "Tab has changed, do you really want to close it?"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "آیا مایل به خروج هستید؟ در صورت خروج تغییرات ذخیره نخواهند شد. "
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "امکان ذخیره سازی تغییرات وجود ندارد."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "امکان ذخیره سازی تغییرات وجود ندارد."
 
@@ -13187,7 +13083,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr "یا"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s موضوع(ها) حذف شده‌اند.\t"
 

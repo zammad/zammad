@@ -8593,9 +8593,6 @@ msgstr "องค์กรที่ 2"
 
 #: app/models/user.rb
 #, fuzzy
-#| msgid ""
-#| "Secondary organizations are only allowed when the primary organization is "
-#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "not given."
@@ -9559,7 +9556,6 @@ msgstr "ไม่พบโปรไฟล์การรายงานที่
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
 
@@ -12722,7 +12718,6 @@ msgstr "ตอบกลับ"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "ตอบกลับ"
 
@@ -12994,11 +12989,19 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "ผู้ใช้ปลายทาง Elasticsearch"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "ไม่มีบัญชีที่กำหนดค่า ในขณะนี้"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "เวลาบัญชี"
 

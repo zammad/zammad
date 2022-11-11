@@ -8484,7 +8484,6 @@ msgstr "Verzoek"
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
-#| msgid "Requesting the Grant"
 msgid "Request Admin Consent"
 msgstr "Toegang aanvragen"
 
@@ -8860,9 +8859,6 @@ msgstr "Secundaire organisaties"
 
 #: app/models/user.rb
 #, fuzzy
-#| msgid ""
-#| "Secondary organizations are only allowed when the primary organization is "
-#| "given."
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "not given."
@@ -9857,7 +9853,6 @@ msgstr "Het actieve rapportage profiel kon niet worden gevonden."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
 "Het wachtwoord kon niet worden opgeslagen. Neem contact op met uw beheerder."
@@ -13190,7 +13185,6 @@ msgstr "beantwoorden"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "beantwoorden"
 
@@ -13463,6 +13457,15 @@ msgstr "…van geheel tekstvak"
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Elasticsearch Endpoint User"
+
 #~ msgid "You have no configured account right now."
 #~ msgstr "Momenteel is er geen account ingesteld."
 
@@ -13470,7 +13473,6 @@ msgstr "∅ Wachttijd vandaag"
 #~ msgstr "Label"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Verantwoorde tijd"
 
@@ -13645,17 +13647,14 @@ msgstr "∅ Wachttijd vandaag"
 #~ msgstr "Eerste reactie"
 
 #, fuzzy
-#~| msgid "Sure to delete this object?"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Zin om dit object te verwijderen?"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Niet mogelijk de instellingen op te slaan."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Niet mogelijk de instellingen op te slaan."
 
@@ -13701,10 +13700,6 @@ msgstr "∅ Wachttijd vandaag"
 #~ msgstr "Wachtrijtijd overschreden"
 
 #, fuzzy
-#~| msgid ""
-#~| "Sets the last customer contact based on the last contact of a customer "
-#~| "or on the last contact of a customer to whom an agent has not yet "
-#~| "responded."
 #~ msgid ""
 #~ "Sets the last customer contact based on either the last contact of the "
 #~ "customer in general or on the last contact of the customer that has not "
@@ -13724,7 +13719,6 @@ msgstr "∅ Wachttijd vandaag"
 #~ msgstr "Maximale grootte in MB aan e-mails."
 
 #, fuzzy
-#~| msgid "Unable to save Bot."
 #~ msgid "Unable to load data…"
 #~ msgstr "Niet mogelijk de bot op te slaan"
 
@@ -13744,12 +13738,10 @@ msgstr "∅ Wachttijd vandaag"
 #~ msgstr "of"
 
 #, fuzzy
-#~| msgid "%s Object(s) are deleted."
 #~ msgid "%s object(s) are deleted."
 #~ msgstr "%s object(en) zijn verwijderd."
 
 #, fuzzy
-#~| msgid "Attention: When creating a ticket an e-mail is sent."
 #~ msgid "Attention: When creating a ticket an email is sent."
 #~ msgstr "Let op: Bij het aanmaken van een ticket word er een mail verstuurd."
 

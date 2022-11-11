@@ -132,7 +132,6 @@ msgstr "%s kasutajaandmed"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
 msgstr "%s tagasi"
 
@@ -152,7 +151,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
 msgstr "%s tagasi"
 
@@ -165,13 +163,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
 msgstr "minutit"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
 msgstr "%s tagasi"
 
@@ -277,13 +273,11 @@ msgstr "%s kasutaja %s kasutajale"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "%s tagasi"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
 msgstr "%s tagasi"
 
@@ -332,7 +326,6 @@ msgstr "1 päev"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
 msgstr "1 päev"
 
@@ -342,7 +335,6 @@ msgstr "1 tund"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
 msgstr "1 tund"
 
@@ -352,7 +344,6 @@ msgstr "1 madal"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
 msgstr "minut"
 
@@ -366,7 +357,6 @@ msgstr "1 nädal"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
 msgstr "1 nädal"
 
@@ -627,7 +617,6 @@ msgstr "Aktiivsed Töötajad"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #, fuzzy
-#| msgid "Active"
 msgid "Activity"
 msgstr "Aktiivne"
 
@@ -731,13 +720,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
 msgstr "Lisa Silt"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Lisa Link"
 
@@ -1157,7 +1144,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attached"
 msgstr "Manused"
 
@@ -1168,7 +1154,6 @@ msgstr "Lisatud Failid"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "Attachment"
 msgstr "Manused"
 
@@ -1350,7 +1335,6 @@ msgstr "Tagasi minu vaatesse"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Back to my view"
 msgid "Back to overview"
 msgstr "Tagasi minu vaatesse"
 
@@ -1950,7 +1934,6 @@ msgstr ""
 
 #: db/seeds/schedulers.rb
 #, fuzzy
-#| msgid "Continue session"
 msgid "Clean up cache."
 msgstr "Continue session"
 
@@ -1973,7 +1956,6 @@ msgstr ""
 
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
 msgstr "Otsi"
 
@@ -2153,7 +2135,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 #, fuzzy
-#| msgid "Configuration"
 msgid "Configure Basic Settings"
 msgstr "Seadistus"
 
@@ -2290,7 +2271,6 @@ msgstr "Continue session"
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "Continue session"
 msgid "Continue to desktop app"
 msgstr "Continue session"
 
@@ -2520,7 +2500,6 @@ msgstr "Loonud"
 
 #: app/models/report.rb
 #, fuzzy
-#| msgid "Channels"
 msgid "Creation Channels"
 msgstr "Kanalid"
 
@@ -3570,13 +3549,11 @@ msgstr "Sihtgrupp"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Destination Group"
 msgid "Destination caller ID"
 msgstr "Sihtgrupp"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #, fuzzy
-#| msgid "Destination Group"
 msgid "Destination caller ID or queue"
 msgstr "Sihtgrupp"
 
@@ -4123,13 +4100,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "Enclosed"
 msgstr "suletud"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "Enclosure"
 msgstr "sulge"
 
@@ -4171,7 +4146,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Personal Settings"
 msgid "Endpoint Settings"
 msgstr "Isiklikud Seaded"
 
@@ -4195,7 +4169,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
 #, fuzzy
-#| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Sisesta Pealkiri…"
 
@@ -4349,7 +4322,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee
 #, fuzzy
-#| msgid "%s created user |%s|"
 msgid "Excepted users"
 msgstr "%s lõi kasutaja |%s|"
 
@@ -4557,7 +4529,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "Eesnimi"
 
@@ -4960,14 +4931,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Group"
 msgid "Grouping by"
 msgstr "Grupp"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
 msgstr "Muuda järjestust"
 
@@ -5577,13 +5546,11 @@ msgstr "Jooksev tõlge"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Teadmistepagas"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert text from text module"
 msgstr "Sisestab teksti mooduli"
 
@@ -5889,13 +5856,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active"
 msgstr "Teadmistepagas"
 
 #: db/seeds/settings.rb
 #, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base active publicly"
 msgstr "Teadmistepagas"
 
@@ -5974,7 +5939,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "Perekonnanimi"
 
@@ -5984,7 +5948,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Lastname"
 msgid "Last searches"
 msgstr "Perekonnanimi"
 
@@ -6066,7 +6029,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Templates"
 msgid "Link Template"
 msgstr "Mallid"
 
@@ -6548,7 +6510,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Multiselect"
 msgid "Multiple selection field"
 msgstr "Mitmikvalik"
 
@@ -6570,7 +6531,6 @@ msgstr "Minu üle ooteaja Piletid"
 
 #: db/seeds/overviews.rb
 #, fuzzy
-#| msgid "Open Tickets"
 msgid "My Replacement Tickets"
 msgstr "Minu Asendus Piletid"
 
@@ -6787,7 +6747,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "New Source"
 msgstr "Allikas"
 
@@ -6849,7 +6808,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #, fuzzy
-#| msgid "New User"
 msgid "New user?"
 msgstr "Uus Kasutaja"
 
@@ -6942,7 +6900,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Configuration"
 msgid "No configuration set."
 msgstr "Seadistus"
 
@@ -6985,7 +6942,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/modules/search/views/SearchOverview.vue
 #, fuzzy
-#| msgid "Previous tab"
 msgid "No previous searches"
 msgstr "Eelmine sakk"
 
@@ -7409,7 +7365,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
 msgstr "Organisatsioon"
 
@@ -7932,7 +7887,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 #, fuzzy
-#| msgid "Address"
 msgid "Proxy address"
 msgstr "Aadress"
 
@@ -7993,7 +7947,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 #, fuzzy
-#| msgid "Realtime"
 msgid "Real-time"
 msgstr "Reaalajas"
 
@@ -8103,13 +8056,11 @@ msgstr "Eemalda"
 
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
-#| msgid "Remove"
 msgid "Remove all"
 msgstr "Eemalda"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 #, fuzzy
-#| msgid "remove option"
 msgid "Remove formatting"
 msgstr "eemalda valik"
 
@@ -8536,7 +8487,6 @@ msgstr "Otsi…"
 
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Organizations"
 msgid "Secondary organizations"
 msgstr "Asutused"
 
@@ -8623,7 +8573,6 @@ msgstr ""
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #, fuzzy
-#| msgid "Select locale…"
 msgid "Select…"
 msgstr "Vali tõlge…"
 
@@ -8783,7 +8732,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #, fuzzy
-#| msgid "Outbound Call"
 msgid "Set outbound caller ID"
 msgstr "Väljaminev kõne"
 
@@ -8795,7 +8743,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 #, fuzzy
-#| msgid "Setup new System"
 msgid "Set up a new system"
 msgstr "Seadista uus Süsteem"
 
@@ -8830,7 +8777,6 @@ msgstr "Seaded"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #, fuzzy
-#| msgid "Settings"
 msgid "Settings %s"
 msgstr "Seaded"
 
@@ -8847,7 +8793,6 @@ msgstr "Jagatud"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 #, fuzzy
-#| msgid "Shared"
 msgid "Shared Drafts"
 msgstr "Jagatud"
 
@@ -8881,7 +8826,6 @@ msgstr "Näita"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_overwrite_modal.coffee
 #, fuzzy
-#| msgid "Draft"
 msgid "Show Draft"
 msgstr "Mustand"
 
@@ -8908,7 +8852,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #, fuzzy
-#| msgid "Previous tab"
 msgid "Show previous tab"
 msgstr "Eelmine sakk"
 
@@ -9003,7 +8946,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Deletion failed."
 msgid "Single selection field"
 msgstr "Kustutamine ebaõnnestus."
 
@@ -9073,14 +9015,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Reporting"
 msgid "Sorting by"
 msgstr "Raporteerimine"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "Change order"
 msgid "Sorting order"
 msgstr "Muuda järjestust"
 
@@ -9096,7 +9036,6 @@ msgstr "Allikas"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #, fuzzy
-#| msgid "Source"
 msgid "Sources"
 msgstr "Allikas"
 
@@ -9448,7 +9387,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/text_module.coffee
 #, fuzzy
-#| msgid "Text modules"
 msgid "Text module"
 msgstr "Tekstimoodulid"
 
@@ -9475,7 +9413,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
-#| msgid "Text"
 msgid "Textarea field"
 msgstr "Tekst"
 
@@ -9494,7 +9431,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The Knowledge Base could not be created."
 msgstr "Objekti ei õnnestunud luua."
 
@@ -9526,7 +9462,6 @@ msgstr ""
 
 #: app/controllers/reports_controller.rb
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The active reporting profile could not be found."
 msgstr "Objekti ei õnnestunud luua."
 
@@ -9631,7 +9566,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee
 #, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The file could not be uploaded."
 msgstr "Probleemi ei õnnestunud lahendada."
 
@@ -9705,7 +9639,6 @@ msgstr "Objekti ei õnnestunud luua."
 
 #: app/controllers/links_controller.rb
 #, fuzzy
-#| msgid "The object could not be updated."
 msgid "The object could not be found."
 msgstr "Objekti ei ole võimalik uuendada."
 
@@ -9784,13 +9717,11 @@ msgstr ""
 
 #: lib/static_assets.rb
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The raw logo could not be read."
 msgstr "Objekti ei õnnestunud luua."
 
 #: app/assets/javascripts/app/controllers/report.coffee
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "The report could not be generated"
 msgstr "Objekti ei õnnestunud luua."
 
@@ -9963,13 +9894,11 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The source ticket could not be found."
 msgstr "Pileteid ei ole võimalik liita."
 
 #: app/controllers/tickets_controller.rb
 #, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The target ticket number could not be found."
 msgstr "Pileteid ei ole võimalik liita."
 
@@ -10055,7 +9984,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 #, fuzzy
-#| msgid "The object could not be created."
 msgid "There was no Knowledge Base created."
 msgstr "Objekti ei õnnestunud luua."
 
@@ -10349,13 +10277,11 @@ msgstr ""
 #: app/frontend/apps/mobile/modules/home/views/Home.vue
 #: app/frontend/apps/mobile/modules/ticket/views/TicketOverview.vue
 #, fuzzy
-#| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Uus Ülevaade"
 
 #: app/frontend/apps/mobile/modules/ticket/routes.ts
 #, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overviews"
 msgstr "Ülevaated"
 
@@ -10389,7 +10315,6 @@ msgstr "Pileti salvestamine ebaõnnestus: %s"
 
 #: app/frontend/apps/mobile/modules/account/views/AccountOverview.vue
 #, fuzzy
-#| msgid "Notifications"
 msgid "Ticket notifications"
 msgstr "Teavitused"
 
@@ -10403,7 +10328,6 @@ msgstr "Pileti uuendamine"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #, fuzzy
-#| msgid "Ticket |%s| is escalated!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Pilet |%s| eskaleeritud!"
 
@@ -11092,7 +11016,6 @@ msgstr "Kasutajanimi"
 #: app/frontend/apps/mobile/modules/login/views/Login.vue
 #: app/models/form_schema/form/mobile/login.rb
 #, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
 msgstr "Kasutajanimi / email"
 
@@ -11433,7 +11356,6 @@ msgstr "Nädal"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 #, fuzzy
-#| msgid "Week"
 msgid "Week(s)"
 msgstr "Nädal"
 
@@ -12034,7 +11956,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "ascending"
 msgstr "ootel"
 
@@ -12049,13 +11970,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attached Files"
 msgid "attached"
 msgstr "Lisatud Failid"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
 msgstr "Manused"
 
@@ -12193,7 +12112,6 @@ msgstr "kustuta"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
-#| msgid "pending"
 msgid "descending"
 msgstr "ootel"
 
@@ -12252,13 +12170,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "closed"
 msgid "enclosed"
 msgstr "suletud"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
-#| msgid "close"
 msgid "enclosure"
 msgstr "sulge"
 
@@ -12378,13 +12294,11 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "2 hours"
 msgid "in %s hours"
 msgstr "2 tundi"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
 msgstr "minutit"
 
@@ -12394,7 +12308,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
 msgstr "2 nädalat"
 
@@ -12404,19 +12317,16 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
 msgstr "1 päev"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 hour"
 msgid "in 1 hour"
 msgstr "1 tund"
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
 msgstr "minut"
 
@@ -12426,7 +12336,6 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
 #, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
 msgstr "1 nädal"
 
@@ -12531,7 +12440,6 @@ msgstr "võibolla"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts
 #, fuzzy
-#| msgid "Name"
 msgid "me"
 msgstr "Nimi"
 
@@ -12611,13 +12519,11 @@ msgstr "märkus"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Notifications"
 msgid "notification sent to '%s'"
 msgstr "Teavitused"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
-#| msgid "no"
 msgid "now"
 msgstr "ei"
 
@@ -12661,7 +12567,6 @@ msgstr "telefon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "Public"
 msgid "public"
 msgstr "Avalik"
 
@@ -12683,7 +12588,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
-#| msgid "active"
 msgid "relative"
 msgstr "aktiivne"
 
@@ -12714,7 +12618,6 @@ msgstr "vasta"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 #, fuzzy
-#| msgid "reply"
 msgid "reply all"
 msgstr "vasta"
 
@@ -12836,7 +12739,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Ticket |%s| was merged into another ticket"
 msgid "this ticket was merged into ticket %s"
 msgstr "Pilet %s| ühendati teise piletiga"
 
@@ -12848,7 +12750,6 @@ msgstr "pilet"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #, fuzzy
-#| msgid "Ticket |%s| was merged into another ticket"
 msgid "ticket %s was merged into this ticket"
 msgstr "Pilet %s| ühendati teise piletiga"
 
@@ -12985,11 +12886,19 @@ msgstr ""
 msgid "∅ Waiting time today"
 msgstr "∅ Tänane ooteaeg"
 
+#: db/seeds/settings.rb
+msgid "Defines if the search index is using excluded attributes."
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Elasticsearch Excludes"
+msgstr "Perekonnanimi"
+
 #~ msgid "Tag"
 #~ msgstr "Silt"
 
 #, fuzzy
-#~| msgid "Account"
 #~ msgid "Accounted time"
 #~ msgstr "Konto"
 
@@ -13003,7 +12912,6 @@ msgstr "∅ Tänane ooteaeg"
 #~ msgstr "Ei leia valitud pileti numbrit!"
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Vali"
 
