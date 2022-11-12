@@ -1101,7 +1101,7 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 
-options = [ { value: '0', name: 'disabled' }, { value: 1.hour.seconds, name: __('1 hour') }, { value: 2.hours.seconds, name: __('2 hours') }, { value: 1.day.seconds, name: __('1 day') }, { value: 7.days.seconds, name: __('1 week') }, { value: 14.days.seconds, name: __('2 weeks') }, { value: 21.days.seconds, name: __('3 weeks') }, { value: 28.days.seconds, name: __('4 weeks') } ]
+options = [ { value: '0', name: 'disabled' }, { value: 1.hour.seconds.to_s, name: __('1 hour') }, { value: 2.hours.seconds.to_s, name: __('2 hours') }, { value: 1.day.seconds.to_s, name: __('1 day') }, { value: 7.days.seconds.to_s, name: __('1 week') }, { value: 14.days.seconds.to_s, name: __('2 weeks') }, { value: 21.days.seconds.to_s, name: __('3 weeks') }, { value: 28.days.seconds.to_s, name: __('4 weeks') } ]
 Setting.create_if_not_exists(
   title:       __('Session Timeout'),
   name:        'session_timeout',
@@ -1147,10 +1147,10 @@ Setting.create_if_not_exists(
     prio: 30,
   },
   state:       {
-    'default'         => 4.weeks.seconds,
-    'admin'           => 4.weeks.seconds,
-    'ticket.agent'    => 4.weeks.seconds,
-    'ticket.customer' => 4.weeks.seconds,
+    'default'         => 4.weeks.seconds.to_s,
+    'admin'           => 4.weeks.seconds.to_s,
+    'ticket.agent'    => 4.weeks.seconds.to_s,
+    'ticket.customer' => 4.weeks.seconds.to_s,
   },
   frontend:    true
 )
