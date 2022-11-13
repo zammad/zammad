@@ -72,10 +72,10 @@
   resolved "https://registry.yarnpkg.com/@frsource/base64/-/base64-1.0.3.tgz#032f97a943fbb2189078c8f46e69ad60cfc8659e"
   integrity sha512-VT9pRtyzGk+y0j3fOhM8BwpR2yQLGa9UwO4N5240DwxAbEbTRIulj+nYiuE0pYk+32ohte+3gQ+BpVcF7ezNRA==
 
-"@frsource/cypress-plugin-visual-regression-diff@^2.3.8":
-  version "2.3.8"
-  resolved "https://registry.yarnpkg.com/@frsource/cypress-plugin-visual-regression-diff/-/cypress-plugin-visual-regression-diff-2.3.8.tgz#7230ffd0f0808b283aa50a18b41febd4114bcc9d"
-  integrity sha512-litYwWAun3fitrvtoU1o5b/oyOH3W4meCC9EHa4Sfjv4yhMhTY+5H10yO5Tnuu9+UiqkGD+E17MHKw/5Vqj3iw==
+"@frsource/cypress-plugin-visual-regression-diff@^2.3.12":
+  version "2.3.12"
+  resolved "https://registry.yarnpkg.com/@frsource/cypress-plugin-visual-regression-diff/-/cypress-plugin-visual-regression-diff-2.3.12.tgz#ff50db215dfd7573f3fc72abeb70744e1d1360a9"
+  integrity sha512-ow3rluFreymBLL0AK5lBhXCBXUp5Fwek/yh3egKjxWcwpYSaphmtisYvJZ7J3kylkZU/u1FUk7/22GfbHEctQw==
   dependencies:
     "@frsource/base64" "1.0.3"
     move-file "2.1.0"
