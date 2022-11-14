@@ -442,10 +442,10 @@ cross-spawn@^7.0.0:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-cypress-real-events@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.2.tgz#d04e6d3f15117ef485eb49f9c9b361f3a3413002"
-  integrity sha512-tOANHbFRlqVL5Lu8OozvxTsrYgHwCnWmXAULGc1kdBF+k1gxrrvT/42uez3AhGoT+HcytyxieXAVt0jNP4yrvA==
+cypress-real-events@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.4.tgz#87780ee0f6669ee30ce52016c4bfc94d094a6e3d"
+  integrity sha512-bAlIf3w6uJa72hcbLFpQIl/hBoNGYnSVzFMgohefWcooyZz2WbFZdFAEDOl5qOPATtAU01o92sWvc2QW9eT8aA==
 
 cypress@^10.3.1:
   version "10.3.1"
