@@ -121,7 +121,7 @@
     "graphql-tag": "^2.12.6",
     "linkify-html": "^3.0.5",
     "lodash-es": "^4.17.21",
-    "loglevel": "^1.8.0",
+    "loglevel": "^1.8.1",
     "mitt": "^3.0.0",
     "pinia": "^2.0.23",
     "prosemirror-model": "^1.18.1",
