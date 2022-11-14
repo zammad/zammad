@@ -8,9 +8,9 @@ class MacroPolicy < ApplicationPolicy
         scope.all
       elsif user.permissions?('ticket.agent')
         scope
-          .left_joins(:groups)
-          .group('macros.id')
-          .having(agent_having_groups)
+          .joins('LEFT OUTER JOIN groups_macros ON groups_macros.macro_id = macros.id')
+          .distinct
+          .where(agent_having_groups)
       else
         scope.none
       end
@@ -19,18 +19,16 @@ class MacroPolicy < ApplicationPolicy
     private
 
     def agent_having_groups
-      base_query = 'SELECT Count(*) FROM groups_macros WHERE groups_macros.macro_id = macros.id'
-
-      having = "((#{base_query}) = 0)"
+      no_assigned_groups = 'groups_macros.group_id IS NULL'
 
       groups = user.groups.access(:change, :create)
 
       if groups.any?
         groups_matcher = groups.map(&:id).join(',')
-        having += " OR ((#{base_query} AND groups_macros.group_id IN (#{groups_matcher})) > 0)"
+        return "#{no_assigned_groups} OR groups_macros.group_id IN (#{groups_matcher})"
       end
 
-      having
+      no_assigned_groups
     end
   end
 end
