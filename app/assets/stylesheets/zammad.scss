@@ -12358,7 +12358,7 @@ output {
     span,
     p,
     a {
-      word-break: break-all;
+      overflow-wrap: anywhere;
     }
   }
 
