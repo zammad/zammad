@@ -3678,10 +3678,6 @@ msgid ""
 msgstr "Određuje koristi li se integracija i-doit (https://www.i-doit.org/)."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr "Određuje koristi li indeks pretraživanja izuzete atribute."
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Određuje mogu li se ticketi izraditi putem web obrasca."
 
@@ -4580,10 +4576,6 @@ msgstr "Elasticsearch Endpoint URL"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpoint korisnik"
-
-#: db/seeds/settings.rb
-msgid "Elasticsearch Excludes"
-msgstr "Elasticsearch izuzeća"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6696,6 +6688,12 @@ msgstr "Neispravni izbori uvjeta ticketa"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Neispravan token, molimo kontaktirajte administratora!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
+#| msgid "Invalid link structure"
+msgid "Invalid values in step %s"
+msgstr "Neispravna struktura poveznice"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10588,6 +10586,10 @@ msgstr "Status:"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Ostani unutar kartice"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -15455,6 +15457,12 @@ msgstr "…celog tekstualnog polja"
 #, fuzzy
 msgid "∅ Waiting time today"
 msgstr "∅ Vreme čekanja danas"
+
+#~ msgid "Defines if the search index is using excluded attributes."
+#~ msgstr "Određuje koristi li indeks pretraživanja izuzete atribute."
+
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Elasticsearch izuzeća"
 
 #, fuzzy
 #~ msgid "Need a valid user to create a new service object!"

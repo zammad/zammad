@@ -304,10 +304,8 @@ msgstr ""
 "<div>Il team #{config.product_name} </div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "Conferma"
+msgstr "%s (conferma)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -672,10 +670,8 @@ msgid "1 year ago"
 msgstr "1 anno fa"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket Create"
 msgid "1. Ticket Create"
-msgstr "Creazione ticket"
+msgstr "1. Creazione ticket"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -694,10 +690,8 @@ msgid "2 weeks"
 msgstr "2 settimane"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket update"
 msgid "2. Ticket Update"
-msgstr "Ticket aggiornato"
+msgstr "2. Modifica ticket"
 
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
@@ -708,26 +702,20 @@ msgid "3 weeks"
 msgstr "3 settimane"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket reminder reached"
 msgid "3. Ticket Reminder Reached"
-msgstr "Ricevuto il sollecito del Ticket"
+msgstr "3. Raggiunto promemoria ticket"
 
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 settimane"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "4. Ticket Escalation"
-msgstr "Ticket escalation"
+msgstr "4. Escalation del ticket"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "5. Ticket Escalation Warning"
-msgstr "Ticket escalation"
+msgstr "5. Avviso di escalation del ticket"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
@@ -2368,10 +2356,8 @@ msgid "Chat ID"
 msgstr "Identificativo Chat"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee
-#, fuzzy
-#| msgid "Session"
 msgid "Chat Session"
-msgstr "Sessione"
+msgstr "Sessione di chat"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Chat Title"
@@ -3563,16 +3549,13 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr "Definisce l'endpoint di Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines groups for which a customer can create tickets via web interface. "
-#| "\"-\" means all groups are available."
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
 msgstr ""
 "Definisce i gruppi per i quali un cliente può creare ticket tramite "
-"l'interfaccia web. \"-\" significa che tutti i gruppi sono disponibili."
+"l'interfaccia web. Se non c'è nessuna selezione significa che tutti i gruppi "
+"sono disponibili."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3733,10 +3716,6 @@ msgid ""
 msgstr ""
 "Definisce se l'integrazione con i-doit (https://www.i-doit.org/) è abilitata "
 "o meno."
-
-#: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4341,7 +4320,7 @@ msgstr "Designer"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Desktop"
-msgstr ""
+msgstr "Scrivania"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -4642,12 +4621,6 @@ msgstr "URL endpoint Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
-msgstr "Utente endpoint Elasticsearch"
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch Endpoint User"
-msgid "Elasticsearch Excludes"
 msgstr "Utente endpoint Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -5356,10 +5329,8 @@ msgid "Facebook"
 msgstr "Facebook"
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
-#, fuzzy
-#| msgid "Facebook"
 msgid "Facebook APP ID"
-msgstr "Facebook"
+msgstr "ID applicazione Facebook"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
@@ -5370,10 +5341,8 @@ msgid "Facebook App Credentials"
 msgstr "Credenziali App Facebook"
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
-#, fuzzy
-#| msgid "Facebook App Credentials"
 msgid "Facebook App Secret"
-msgstr "Credenziali App Facebook"
+msgstr "Password (secret) applicazione Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5612,10 +5581,8 @@ msgid "Format as _underlined_"
 msgstr "Formatta come _sottolineato_"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as |bold|"
 msgid "Format as bold"
-msgstr "Formatta come |grassetto|"
+msgstr "Formatta come grassetto"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as h1 heading"
@@ -5630,26 +5597,20 @@ msgid "Format as h3 heading"
 msgstr "Formatta come intestazione h3"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as ||italic||"
 msgid "Format as italic"
-msgstr "Formatta come |corsivo|"
+msgstr "Formatta come corsivo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as ordered list"
 msgstr "Formatta come lista ordinata"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
-msgstr "Formato come //barrato//"
+msgstr "Formato come barrato"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
-#, fuzzy
-#| msgid "Format as _underlined_"
 msgid "Format as underlined"
-msgstr "Formatta come _sottolineato_"
+msgstr "Formatta come sottolineato"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Format as unordered list"
@@ -5856,16 +5817,12 @@ msgid "Google App Credentials"
 msgstr "Credenziali Google App"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
-#, fuzzy
-#| msgid "Client ID"
 msgid "Google Client ID"
-msgstr "Client ID"
+msgstr "Client ID Google"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
-#, fuzzy
-#| msgid "Client Secret"
 msgid "Google Client Secret"
-msgstr "Password client (secret)"
+msgstr "Password client Google"
 
 #: db/seeds/settings.rb
 msgid "Google Maps"
@@ -6666,10 +6623,8 @@ msgid "Inserts text module"
 msgstr "Inserisci modulo di testo"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-#, fuzzy
-#| msgid "Installed"
 msgid "Install App"
-msgstr "Installato"
+msgstr "Installa applicazione"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid "Install Package"
@@ -6694,10 +6649,8 @@ msgid "Internal"
 msgstr "Interno"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
-#, fuzzy
-#| msgid "Create Knowledge Base"
 msgid "Internal Knowledge Base feed:"
-msgstr "Crea Knowledge Base"
+msgstr "Flusso Knowledge Base interna:"
 
 #: app/models/import_job.rb
 msgid ""
@@ -6802,6 +6755,12 @@ msgstr "Condizione di selezione ticket non valida"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Token non valido, contattare l'amministratore!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
+#| msgid "Invalid link structure"
+msgid "Invalid values in step %s"
+msgstr "Struttura del link non valida"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -6983,10 +6942,8 @@ msgid "Knowledge Base Editor"
 msgstr "Knowledge Base Editor"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
-#, fuzzy
-#| msgid "Knowledge Base Reader"
 msgid "Knowledge Base Feed"
-msgstr "Lettore della Knowledge Base"
+msgstr "Flusso Knowledge Base"
 
 #: db/seeds/permissions.rb
 msgid "Knowledge Base Reader"
@@ -7107,7 +7064,7 @@ msgstr "Layout"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
 msgid "Layout Reference"
-msgstr ""
+msgstr "Riferimento aspetto"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -8416,7 +8373,7 @@ msgstr "Numero"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
-msgstr ""
+msgstr "URL di OAuth:"
 
 #: app/controllers/application_controller/authenticates.rb
 msgid "OAuth2 token is expired!"
@@ -9424,10 +9381,8 @@ msgid "Removes the shadows for a flat look."
 msgstr "Rimuove le ombre per un aspetto piatto."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
-#, fuzzy
-#| msgid "New Access Token is"
 msgid "Renew Access Token"
-msgstr "Il nuovo token di accesso è"
+msgstr "Rinnova token di accesso"
 
 #: app/models/report.rb
 msgid "Reopened"
@@ -10054,10 +10009,8 @@ msgid "Select the customer of the ticket or create one."
 msgstr "Seleziona il cliente del ticket o creane uno."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
-#, fuzzy
-#| msgid "Selector"
 msgid "Selected"
-msgstr "Selettore"
+msgstr "Selezionato"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10355,7 +10308,7 @@ msgstr "Mostra bozza"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Show Feed Icon"
-msgstr ""
+msgstr "Mostra icona feed"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco
 msgid "Show Search Details"
@@ -10719,6 +10672,10 @@ msgstr "Stato:"
 msgid "Stay on tab"
 msgstr "Rimani sulla pagina"
 
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
 msgstr "Fermarsi alla corrispondenza"
@@ -10922,10 +10879,8 @@ msgid "Templates"
 msgstr "Modelli"
 
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
-#, fuzzy
-#| msgid "App Tenant ID"
 msgid "Tenant UUID/Name"
-msgstr "ID App Tenant"
+msgstr "UUID/Nome cliente"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 msgid "Test"
@@ -11767,7 +11722,7 @@ msgstr "Questo bot esiste già."
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
 msgid "This category including sub-categories feed:"
-msgstr ""
+msgstr "Questa categoria include flussi di sotto categorie:"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee
 msgid "This category is empty"
@@ -12465,6 +12420,8 @@ msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
 "to Home Screen\" button."
 msgstr ""
+"Per installare %s come appplicazione, premi il pulsante %s \"Condividi\" e "
+"successivamente il pulsante %s \"Aggiungi alla schermata principale\"."
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid ""
@@ -12631,16 +12588,12 @@ msgid "Twitter - tweet initials"
 msgstr "Twitter - tweet iniziali"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Account"
 msgid "Twitter Access Token"
-msgstr "Account Twitter"
+msgstr "Token di accesso Twitter"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Access Token Secret"
-msgstr "Twitter Secret"
+msgstr "Password token di accesso Twitter"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
@@ -12651,20 +12604,16 @@ msgid "Twitter App Credentials"
 msgstr "Credenziali App Twitter"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Key"
 msgid "Twitter Consumer Key"
-msgstr "Twitter Key"
+msgstr "Twitter Consumer Key"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Consumer Secret"
-msgstr "Twitter Secret"
+msgstr "Password Twitter Consumer"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Dev environment label"
-msgstr ""
+msgstr "Etichetta ambiente di sviluppo Twitter"
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -14515,6 +14464,8 @@ msgid ""
 "https://example.com/?q=#{object.attribute_name} - use ticket, user or "
 "organization as object"
 msgstr ""
+"https://example.com/?q=#{object.attribute_name} - utilizza ticket, utente o "
+"organizzazione come oggetto"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -14921,10 +14872,8 @@ msgid "reply all"
 msgstr "rispondi a tutti"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "is required"
 msgid "required"
-msgstr "è richiesto"
+msgstr "richiesto"
 
 #: db/seeds/settings.rb
 msgid "right"
@@ -14990,10 +14939,8 @@ msgid "show more"
 msgstr "mostra altro"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "show"
 msgid "shown"
-msgstr "mostra"
+msgstr "mostrato"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
@@ -15203,6 +15150,12 @@ msgstr "…dell'intera area di testo"
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
 
+#~ msgid "Defines if the search index is using excluded attributes."
+#~ msgstr "Determina se l'indice di ricerca sta usando attributi esclusi."
+
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Esclusioni Elasticsearch"
+
 #~ msgid "Need a valid user to create a new service object!"
 #~ msgstr "È necessario un utente valido per creare un oggetto di servizio!"
 
@@ -15334,7 +15287,6 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Caricamento..."
 
 #, fuzzy
-#~| msgid "Notification"
 #~ msgid "Read notification"
 #~ msgstr "Notifica"
 
@@ -15342,12 +15294,10 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Non hai ancora un account configurato."
 
 #, fuzzy
-#~| msgid "Overviews"
 #~ msgid "Overview Sortings"
 #~ msgstr "Panoramiche"
 
 #, fuzzy
-#~| msgid "Order"
 #~ msgid " Order"
 #~ msgstr "Ordine"
 
@@ -15355,12 +15305,10 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Ordine"
 
 #, fuzzy
-#~| msgid "Sorting by"
 #~ msgid "Sorting"
 #~ msgstr "Ordinamento per"
 
 #, fuzzy
-#~| msgid "Edit Organization"
 #~ msgid "Edit organization"
 #~ msgstr "Modifica Società"
 
@@ -15368,7 +15316,6 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Attiva la funzionalità \"Password Dimenticata\" per gli utenti."
 
 #, fuzzy
-#~| msgid "Name"
 #~ msgid "me"
 #~ msgstr "Nome"
 
@@ -15382,12 +15329,10 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Tag"
 
 #, fuzzy
-#~| msgid "Could not find source ticket!"
 #~ msgid "Could not load the ticket"
 #~ msgstr "Impossibile trovare il ticket sorgente!"
 
 #, fuzzy
-#~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "Tempo contabilizzato"
 
@@ -15436,7 +15381,6 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Impossibile salvare le modifiche"
 
 #, fuzzy
-#~| msgid "Select"
 #~ msgid "Select..."
 #~ msgstr "Seleziona"
 
@@ -15484,17 +15428,14 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr "Area"
 
 #, fuzzy
-#~| msgid "Are you sure you want to delete"
 #~ msgid "Are you sure to delete this draft?"
 #~ msgstr "Sicuro di voler eliminare"
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
 #~ msgstr "Impossibile salvare le modifiche."
 
 #, fuzzy
-#~| msgid "Unable to save changes."
 #~ msgid "Unable to save changes"
 #~ msgstr "Impossibile salvare le modifiche."
 
@@ -15676,3 +15617,10 @@ msgstr "∅ Tempi di attesa - Oggi"
 #~ msgstr ""
 #~ "Tradotto il %s% di questa lingua, aiuta a migliorare ulteriormente Zammad "
 #~ "completando la traduzione. "
+
+#~ msgid ""
+#~ "Defines groups for which a customer can create tickets via web interface. "
+#~ "\"-\" means all groups are available."
+#~ msgstr ""
+#~ "Definisce i gruppi per i quali un cliente può creare ticket tramite "
+#~ "l'interfaccia web. \"-\" significa che tutti i gruppi sono disponibili."

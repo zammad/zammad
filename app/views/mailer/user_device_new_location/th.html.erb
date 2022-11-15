@@ -1,0 +1,19 @@
+#{config.product_name} พบการเข้าสู่ระบบจากประเทศใหม่
+
+<div>สวัสดี #{user.firstname},</div>
+<br>
+<div>ดูเหมือนคุณจะเข้าใช้งานบัญชีของคุณด้วย <b>อุปกรณ์ที่เรารู้จัก แต่จากที่อยู่ประเทศใหม่</b> เวลา "#{user_device.created_at}":</div>
+<br>
+<div>
+อุปกรณ์ของคุณ: #{user_device.name}<br>
+ตำแหน่งของคุณ: #{user_device.location}<br>
+ไอพีแอดเดรส: #{user_device.ip}<br>
+</div>
+<br>
+<div>เราได้เพิ่มประเทศนี้ไปยังรายการอุปกรณ์ที่รู้จัก, ซึ่งคุณสามารถตรวจสอบได้ที่:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>หากนั่นไม่ใช่คุณ, กรุณาลบรายการจดจำอุปกรณ์นี้ ทำการเปลี่ยนรหัสผ่าของคุณ และติดต่อผู้ดูแลระบบของคุณ เพราะอาจมีบุคคลอื่นได้เข้าถึงบัญชีของคุณแล้ว.</div>
+<br>
+<div>ทีมซัพพอร์ต #{config.product_name</div>

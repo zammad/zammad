@@ -3484,10 +3484,6 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "آیا مشتری اجازه ایجاد تیکت از درگاه وب را دارد."
 
@@ -4333,12 +4329,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Last sync"
-msgid "Elasticsearch Excludes"
-msgstr "آخرین همسان‌سازی"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6384,6 +6374,10 @@ msgstr ""
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "توکن نامعتبر. لطفا با ادمین سیستم تماس بگیرید!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10296,6 +10290,10 @@ msgstr "وضعیت"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "ماندن در همین برگه"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -14644,6 +14642,11 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#, fuzzy
+#~| msgid "Last sync"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "آخرین همسان‌سازی"
 
 #~ msgid "Object already exists!"
 #~ msgstr "آبجکت قبلا وجود دارد!"

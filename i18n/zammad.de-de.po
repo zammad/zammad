@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 13:58+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2022-11-15 03:30+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -3731,10 +3731,6 @@ msgstr ""
 "Definiert, ob die i-doit (https://www.i-doit.org/) Integration aktiv ist."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr "Definiert, ob der Suchindex ausgeschlossene Attribute verwendet."
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Definiert, ob Tickets per Webformular erstellt werden können."
 
@@ -4651,10 +4647,6 @@ msgstr "Elasticsearch Endpunkt-URL"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpunkt-Benutzer"
-
-#: db/seeds/settings.rb
-msgid "Elasticsearch Excludes"
-msgstr "Elasticsearch-Ausschlüsse"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6807,6 +6799,10 @@ msgstr "Ungültige Bedingungen für die Ticket-Auswahl"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Ungültiges Token - bitte kontaktieren Sie Ihren Administrator!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
+msgstr "Fehlerhafte Werte im Schritt %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10721,6 +10717,10 @@ msgstr "Status:"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Tab beibehalten"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr "Schritt %s wurde fertiggestellt"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -15217,6 +15217,12 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Defines if the search index is using excluded attributes."
+#~ msgstr "Definiert, ob der Suchindex ausgeschlossene Attribute verwendet."
+
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Elasticsearch-Ausschlüsse"
 
 #~ msgid "Need a valid user to create a new service object!"
 #~ msgstr ""

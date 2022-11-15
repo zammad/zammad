@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-30 03:30+0000\n"
-"Last-Translator: LAO <sumonchai@gmail.com>\n"
+"PO-Revision-Date: 2022-11-12 03:32+0000\n"
+"Last-Translator: Arif Waram <ninearif@hotmail.com>\n"
 "Language-Team: Thai <https://translations.zammad.org/projects/zammad/zammad-"
 "development/th/>\n"
 "Language: th\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -76,6 +76,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: สร้างโดย #{current_user.longname} ที่ #{ticket."
+"updated_at}_\n"
+"* กลุ่ม: #{ticket.group.name}\n"
+"* เจ้าของ: #{ticket.owner.fullname}\n"
+"* สถานะ: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -91,6 +102,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: ส่งต่อเมื่อ #{ticket.escalation_at}_\n"
+"Ticket (#{ticket.title}) จาก \"#{ticket.customer.longname}\" ถูกส่งต่อเมื่อ "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -106,6 +126,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: แจ้งเตือน!_\n"
+"กรุณาดู Ticket: แจ้งเตือนเพื่อเปิดดู (#{ticket.title}) ของ \"*#{ticket.customer."
+"longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -125,6 +154,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: อัพเดทโดย #{current_user.longname} เมื่อ #{ticket."
+"updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -140,6 +182,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: จะถูกส่งต่อเวลา #{ticket.escalation_at}_\n"
+"Ticket (#{ticket.title}) จาก \"#{ticket.customer.longname}\" จะถูกส่งต่อเวลา "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -170,6 +221,28 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} พบการเข้าสู่ระบบจากประเทศใหม่\n"
+"\n"
+"<div>สวัสดี #{user.firstname},</div>\n"
+"<br>\n"
+"<div>ดูเหมือนคุณจะเข้าใช้งานบัญชีของคุณด้วย <b>อุปกรณ์ที่เรารู้จัก แต่จากที่อยู่ประเทศใหม่</b> "
+"เวลา \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"อุปกรณ์ของคุณ: #{user_device.name}<br>\n"
+"ตำแหน่งของคุณ: #{user_device.location}<br>\n"
+"ไอพีแอดเดรส: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>เราได้เพิ่มประเทศนี้ไปยังรายการอุปกรณ์ที่รู้จัก, ซึ่งคุณสามารถตรวจสอบได้ที่:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>หากนั่นไม่ใช่คุณ, กรุณาลบรายการจดจำอุปกรณ์นี้ ทำการเปลี่ยนรหัสผ่าของคุณ "
+"และติดต่อผู้ดูแลระบบของคุณ เพราะอาจมีบุคคลอื่นได้เข้าถึงบัญชีของคุณแล้ว.</div>\n"
+"<br>\n"
+"<div>ทีมซัพพอร์ต #{config.product_name</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -212,7 +285,7 @@ msgstr "ไม่มี %s ที่กำหนดค่าไว้"
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (ไม่ระบุ)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -320,7 +393,7 @@ msgstr "%s กลุ่มถึง %s การมอบหมายบทบ�
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
-msgstr "%s ชัวโมง ago"
+msgstr "%s ชัวโมงที่แล้ว"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -331,7 +404,7 @@ msgstr "%s ไม่ทำงาน, โปรดเลือกรายกา�
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
-msgstr "%s นาที ago"
+msgstr "%s นาทีก่อน"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s months ago"
@@ -347,7 +420,7 @@ msgstr "%s ออบเจ็กต์ได้รับการปรับป
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) were deleted."
-msgstr "%s object(s) ถูกลบ."
+msgstr "%s ออบเจ็กต์ถูกลบแล้ว."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
@@ -378,7 +451,7 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
-"%s แนะนำให้ใช้ OAuth %s ประกาศว่าจะหยุดให้บริการ Basic Authentication ในอนาคต"
+"%s แนะนำให้ใช้ OAuth %s ได้ประกาศว่าจะหยุดให้บริการ Basic Authentication ในอนาคต"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -387,7 +460,7 @@ msgstr "%s จำเป็น!"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s started a new session"
-msgstr "%s เริ่มการเข้าสู่ระบบต่อ"
+msgstr "%s เริ่มเซสชั่นใหม่"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -3483,10 +3556,6 @@ msgid ""
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "กำหนดว่าสามารถสร้างตั๋วผ่านแบบฟอร์มบนเว็บได้หรือไม่"
 
@@ -4332,12 +4401,6 @@ msgstr "Elasticsearch Endpoint URL"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
-msgstr "ผู้ใช้ปลายทาง Elasticsearch"
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch Endpoint User"
-msgid "Elasticsearch Excludes"
 msgstr "ผู้ใช้ปลายทาง Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -6395,6 +6458,10 @@ msgstr ""
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
@@ -10198,6 +10265,10 @@ msgstr "สถานะ"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "อยู่บนแท็บ"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -14504,6 +14575,11 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Elasticsearch Endpoint User"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "ผู้ใช้ปลายทาง Elasticsearch"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "เลือกแอตทริบิวต์แล้วบันทึกเป็นเทมเพลตใหม่."

@@ -448,7 +448,7 @@ do($ = window.jQuery, window) ->
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Przepraszamy, otrzymanie pustego slotu trwa dłużej, niż oczekiwano. Spróbuj ponownie później lub wyślij nam e-mail. Dziękujemy!'
         'You are on waiting list position <strong>%s</strong>.': 'Jesteś na pozycji listy oczekujących <strong>%s</strong>.'
       'pt-br':
-        '<strong>Chat</strong> with us!': '<strong>Chat</strong> fale conosco!'
+        '<strong>Chat</strong> with us!': '<strong>Converse</strong> conosco!'
         'All colleagues are busy.': 'Nossos atendentes estão ocupados.'
         'Chat closed by %s': 'Chat encerrado por %s'
         'Compose your message…': 'Escreva sua mensagem…'
