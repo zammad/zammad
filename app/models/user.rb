@@ -260,8 +260,17 @@ returns
     User.where(id: out_of_office_agent_of_recursive(user_id: id))
   end
 
+  scope :out_of_office, lambda { |user, interval_start = Time.zone.today, interval_end = Time.zone.today|
+    where(active: true, out_of_office: true, out_of_office_replacement_id: user)
+      .where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', interval_start, interval_end)
+  }
+
+  def someones_out_of_office_replacement?
+    self.class.out_of_office(self).exists?
+  end
+
   def out_of_office_agent_of_recursive(user_id:, result: [])
-    User.where(active: true, out_of_office: true, out_of_office_replacement_id: user_id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today).each do |user|
+    self.class.out_of_office(user_id).each do |user|
 
       # stop if users are occuring multiple times to prevent endless loops
       break if result.include?(user.id)
