@@ -95,8 +95,6 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
       end
 
       it 'save button not visible' do
-        click '.js-openDropdownMacro'
-
         expect(page).to have_no_selector :draft_save_button
       end
     end

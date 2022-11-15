@@ -41,6 +41,7 @@ class Delete
     timeframe_miliseconds - (now - created_at)
 
   @deletableForAgent: (actions, ticket, article, ui) ->
+    return false if !ticket.editable()
     return false if ticket.currentView() is 'customer'
     return false if article.created_by_id != App.User.current()?.id
     return false if article.type.communication && !article.internal

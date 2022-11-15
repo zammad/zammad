@@ -59,7 +59,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   render: (options = {}) =>
     # remember current reset state
     resetButtonShown = false
-    if @resetButton.get(0) && !@resetButton.hasClass('hide')
+    if @resetButton.get(0) && !@resetButton.hasClass('hide') && @ticket.editable()
       resetButtonShown = true
 
     group                  = App.Group.find options?.newGroupId || @ticket.group_id
@@ -67,7 +67,7 @@ class App.TicketZoomAttributeBar extends App.Controller
     accessibleGroups       = App.User.current().allGroupIds('change')
     sharedDraftButtonShown = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
     sharedDraftsEnabled    = group?.shared_drafts && _.contains(accessibleGroups, String(group.id))
-    sharedButtonVisible    = sharedDraftsEnabled && draft?
+    sharedButtonVisible    = sharedDraftsEnabled && draft? && @ticket.editable()
 
     @sharedDraftsEnabled = sharedDraftsEnabled
 
@@ -86,6 +86,7 @@ class App.TicketZoomAttributeBar extends App.Controller
         @possibleMacros.push macro
 
     localeEl = $(App.view('ticket_zoom/attribute_bar')(
+      ticket:                 @ticket
       macros:                 @possibleMacros
       macroDisabled:          macroDisabled
       sharedButtonVisible:    sharedButtonVisible

@@ -502,30 +502,31 @@ class App.TicketZoom extends App.Controller
 
       @form_id = @taskGet('article').form_id || App.ControllerForm.formId()
 
-      @articleNew = new App.TicketZoomArticleNew(
-        ticket:                       @ticket
-        ticket_id:                    @ticket_id
-        el:                           elLocal.find('.article-new')
-        formMeta:                     @formMeta
-        form_id:                      @form_id
-        defaults:                     @taskGet('article')
-        taskKey:                      @taskKey
-        ui:                           @
-        richTextUploadStartCallback:  @submitDisable
-        richTextUploadRenderCallback: (attachments) =>
-          @submitEnable()
-          @taskUpdateAttachments('article', attachments)
-          @delay(@markForm, 250, 'ticket-zoom-form-update')
-        richTextUploadDeleteCallback: (attachments) =>
-          @taskUpdateAttachments('article', attachments)
-          @delay(@markForm, 250, 'ticket-zoom-form-update')
-      )
+      if @ticket.editable()
+        @articleNew = new App.TicketZoomArticleNew(
+          ticket:                       @ticket
+          ticket_id:                    @ticket_id
+          el:                           elLocal.find('.article-new')
+          formMeta:                     @formMeta
+          form_id:                      @form_id
+          defaults:                     @taskGet('article')
+          taskKey:                      @taskKey
+          ui:                           @
+          richTextUploadStartCallback:  @submitDisable
+          richTextUploadRenderCallback: (attachments) =>
+            @submitEnable()
+            @taskUpdateAttachments('article', attachments)
+            @delay(@markForm, 250, 'ticket-zoom-form-update')
+          richTextUploadDeleteCallback: (attachments) =>
+            @taskUpdateAttachments('article', attachments)
+            @delay(@markForm, 250, 'ticket-zoom-form-update')
+        )
 
-      @highligher = new App.TicketZoomHighlighter(
-        el:        elLocal.find('.js-highlighterContainer')
-        ticket:    @ticket
-        ticket_id: @ticket_id
-      )
+        @highlighter = new App.TicketZoomHighlighter(
+          el:        elLocal.find('.js-highlighterContainer')
+          ticket:    @ticket
+          ticket_id: @ticket_id
+        )
 
       new App.TicketZoomSetting(
         el:        elLocal.find('.js-settingContainer')
@@ -536,7 +537,7 @@ class App.TicketZoom extends App.Controller
         ticket:             @ticket
         el:                 elLocal.find('.ticket-article')
         ui:                 @
-        highligher:         @highligher
+        highlighter:        @highlighter
         ticket_article_ids: @ticket_article_ids
         form_id:            @form_id
       )
@@ -627,6 +628,7 @@ class App.TicketZoom extends App.Controller
     if !@autosaveLast
       @autosaveLast = @taskGet()
     return if !@ticket
+    return if !@ticket.editable()
     currentParams = @formCurrent()
 
     # check changed between last autosave
@@ -712,7 +714,7 @@ class App.TicketZoom extends App.Controller
   formCurrent: =>
     currentParams =
       ticket:  @formParam(@el.find('.edit'))
-      article: @articleNew.params()
+      article: @articleNew?.params() || {}
 
     # add attachments if exist
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
@@ -768,7 +770,7 @@ class App.TicketZoom extends App.Controller
 
     params         = {}
     params.ticket  = @forRemoveMeta(@ticketParams())
-    params.article = @forRemoveMeta(@articleNew.params())
+    params.article = @forRemoveMeta(@articleNew?.params())
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
@@ -960,7 +962,7 @@ class App.TicketZoom extends App.Controller
     e.preventDefault()
 
     params =
-      new_article:       @articleNew.params()
+      new_article:       @articleNew?.params() || {}
       ticket_attributes: @ticketParams()
 
     params.new_article.body = App.Utils.signatureRemoveByHtml(params.new_article.body)
@@ -1190,8 +1192,9 @@ class App.TicketZoom extends App.Controller
   taskReset: =>
     @form_id = App.ControllerForm.formId()
 
-    @articleNew.form_id = @form_id
-    @articleNew.render()
+    if @articleNew
+      @articleNew.form_id = @form_id
+      @articleNew.render()
 
     @articleView.updateFormId(@form_id)
 

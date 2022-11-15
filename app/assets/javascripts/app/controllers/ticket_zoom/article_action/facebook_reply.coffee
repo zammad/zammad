@@ -1,5 +1,6 @@
 class FacebookReply
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     return actions if ticket.currentView() is 'customer'
 
     if article.type.name is 'facebook feed post' || article.type.name is 'facebook feed comment'

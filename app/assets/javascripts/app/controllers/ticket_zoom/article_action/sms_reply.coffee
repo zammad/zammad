@@ -1,5 +1,6 @@
 class SmsReply
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     return actions if ticket.currentView() is 'customer'
 
     if article.sender.name is 'Customer' && article.type.name is 'sms'

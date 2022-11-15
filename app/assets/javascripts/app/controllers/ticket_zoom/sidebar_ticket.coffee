@@ -102,23 +102,23 @@ class SidebarTicket extends App.Controller
       sidebarCallback: @editTicket
     }
     if @ticket.currentView() is 'agent'
-      @item.sidebarActions = [
-        {
-          title:    __('History')
-          name:     'ticket-history'
-          callback: @showTicketHistory
-        },
-        {
+      @item.sidebarActions = []
+      @item.sidebarActions.push(
+        title:    __('History')
+        name:     'ticket-history'
+        callback: @showTicketHistory
+      )
+      if @ticket.editable()
+        @item.sidebarActions.push(
           title:    __('Merge')
           name:     'ticket-merge'
           callback: @showTicketMerge
-        },
-        {
+        )
+        @item.sidebarActions.push(
           title:    __('Change Customer')
           name:     'customer-change'
           callback: @changeCustomer
-        },
-      ]
+        )
     @item
 
   reload: (args) =>

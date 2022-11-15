@@ -1,5 +1,6 @@
 class EmailReply extends App.Controller
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     return actions if ticket.currentView() is 'customer'
     group = ticket.group
     return actions if !group.email_address_id

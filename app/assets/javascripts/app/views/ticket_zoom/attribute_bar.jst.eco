@@ -23,7 +23,7 @@
 <div class="flex"></div>
 
 <div class="attributeBar-reset buttonDropdown btn js-reset <% if !@resetButtonShown: %>hide<% end %>"><span><%- @T('Discard your unsaved changes.') %></span></div>
-<div class="buttonDropdown dropdown dropdown--actions dropup">
+<div class="buttonDropdown dropdown dropdown--actions dropup<% if !@ticket.editable(): %> hide<% end %>">
   <div class="btn btn--text btn--icon--last" data-toggle="dropdown">
     <span class="js-secondaryActionButtonLabel"></span> <%- @Icon('arrow-up') %>
   </div>
@@ -52,7 +52,7 @@
       </span>
   </ul>
 </div>
-<form class="buttonDropdown">
+<form class="buttonDropdown<% if !@ticket.editable(): %> hide<% end %>">
 <% if @macroDisabled && @sharedDraftsDisabled: %>
   <button class="btn btn--primary js-submit"><span><%- @T('Update') %></span></button>
 <% else: %>

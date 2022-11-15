@@ -1,5 +1,6 @@
 class Split
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     return actions if ticket.currentView() is 'customer'
 
     actions.push {

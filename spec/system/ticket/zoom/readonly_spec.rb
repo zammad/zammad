@@ -9,6 +9,7 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
     create(:ticket, group: group).tap do |ticket|
       ticket.tag_add('Tag', 1)
       create(:link, from: create(:ticket, group: group), to: ticket)
+      create(:ticket_article, ticket: ticket)
     end
   end
 
@@ -127,6 +128,25 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       expect(page).to have_no_content('+ Add Tag')
       expect(page).to have_no_selector('.links .icon-diagonal-cross')
       expect(page).to have_no_content('+ Add Link')
+    end
+
+    it 'shows no ticket actions' do
+      expect(page).to have_no_selector('.js-submit')
+      expect(page).to have_no_selector('.js-secondaryActionButtonLabel')
+      expect(page).to have_no_selector('.js-ArticleAction[data-type=internal]')
+      expect(page).to have_no_selector('.js-highlight')
+    end
+
+    it 'shows no ticket sidebar ticket actions' do
+      click '.sidebar .js-headline'
+      expect(page).to have_no_text('Change Customer')
+      expect(page).to have_no_text('Merge')
+    end
+
+    it 'shows no ticket sidebar customer ticket actions' do
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '.sidebar .js-headline'
+      expect(page).to have_no_text('Change Customer')
     end
 
     context 'with select, treeselect, multiselect and multi-treeselect fields', authenticated_as: :authenticated, db_strategy: :reset do

@@ -19,7 +19,7 @@ class App.TicketZoomArticleView extends App.Controller
           object_id:  ticket_article_id
           el:         el
           ui:         @ui
-          highligher: @highligher
+          highlighter: @highlighter
           form_id:    @form_id
         )
         if !@ticketArticleInsertByIndex(index, el)
@@ -110,9 +110,10 @@ class ArticleViewItem extends App.ControllerObserver
   setHighlighter: =>
     return if @el.is(':hidden')
     # use delay do no ui blocking
-    #@highligher.loadHighlights(@object_id)
+    #@highlighter.loadHighlights(@object_id)
     d = =>
-      @highligher.loadHighlights(@object_id)
+      if @highlighter
+        @highlighter.loadHighlights(@object_id)
     @delay(d, 200)
 
   render: (article) =>

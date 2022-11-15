@@ -6,14 +6,16 @@ class SidebarCustomer extends App.Controller
       badgeCallback: @badgeRender
       sidebarHead: __('Customer')
       sidebarCallback: @showCustomer
-      sidebarActions: [
-        {
-          title:    __('Change Customer')
-          name:     'customer-change'
-          callback: @changeCustomer
-        },
-      ]
+      sidebarActions: []
     }
+
+    if @ticket.editable()
+      @item.sidebarActions.push(
+        title:    __('Change Customer')
+        name:     'customer-change'
+        callback: @changeCustomer
+      )
+
     return @item if @ticket && @ticket.customer_id == 1
 
     # prevent exceptions if customer model is no available
