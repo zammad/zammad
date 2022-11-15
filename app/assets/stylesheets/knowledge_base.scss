@@ -941,6 +941,7 @@ b {
 
 .article-content {
   display: block;
+  overflow-wrap: anywhere;
 
   p,
   ol,
@@ -964,7 +965,7 @@ b {
 
   table {
     table-layout: auto;
-    word-break: break-all;
+    word-break: keep-all;
     border-style: hidden;
     border-collapse: collapse;
     font-variant-numeric: lining-nums tabular-nums;
