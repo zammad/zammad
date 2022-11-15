@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: แจ้งเตือน!_
+กรุณาดู Ticket: แจ้งเตือนเพื่อเปิดดู (#{ticket.title}) ของ "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,0 +1,11 @@
+Ett annat ärende slogs ihop med ärende (#{ticket.title})
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>
+Ett annat ärende slogs ihop med ärende (#{ticket.title}) av "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Visa i #{config.product_name}</a>
+</div>

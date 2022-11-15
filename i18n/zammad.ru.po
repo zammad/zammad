@@ -3762,10 +3762,6 @@ msgstr ""
 "Определяет, включена интеграция с i-doit (https://www.i-doit.org/) или нет."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Определяет, можно ли создавать заявки с помощью веб-формы."
 
@@ -4685,12 +4681,6 @@ msgstr "URL конечной точки (Endpoint URL) Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
-msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch Endpoint User"
-msgid "Elasticsearch Excludes"
 msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -6910,6 +6900,12 @@ msgstr "Не корректные условия отбора заявок"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Недействительный ключ, пожалуйста, свяжитесь с вашим администратором!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
+#| msgid "Invalid link structure"
+msgid "Invalid values in step %s"
+msgstr "Неверная структура ссылки"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10956,6 +10952,10 @@ msgstr "Статус"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Оставайтесь на вкладке"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -15667,6 +15667,11 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
+
+#, fuzzy
+#~| msgid "Elasticsearch Endpoint User"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Пользователь конечной точки (Endpoint User) Elasticsearch"
 
 #~ msgid "Object already exists!"
 #~ msgstr "Объект уже существует!"

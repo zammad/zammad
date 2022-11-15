@@ -3930,10 +3930,6 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
@@ -4825,12 +4821,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Last sync"
-msgid "Elasticsearch Excludes"
-msgstr "上次同步"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -7046,6 +7036,10 @@ msgstr "無效的工單選擇條件"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
@@ -11186,6 +11180,10 @@ msgstr "狀態"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "留在頁籤"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -15925,6 +15923,11 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Last sync"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "上次同步"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "選擇屬性然後儲存為新模板。"

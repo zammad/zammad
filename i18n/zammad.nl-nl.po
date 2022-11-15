@@ -3592,10 +3592,6 @@ msgid ""
 msgstr "Zet de i-doit-integratie (https://www.i-doit.org) aan of uit."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Stel in of tickets gemaakt mogen worden via een webformulier."
 
@@ -4498,12 +4494,6 @@ msgstr "Elasticsearch Endpoint URL"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
-msgstr "Elasticsearch Endpoint User"
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch Endpoint User"
-msgid "Elasticsearch Excludes"
 msgstr "Elasticsearch Endpoint User"
 
 #: db/seeds/settings.rb
@@ -6657,6 +6647,12 @@ msgstr "Ongeldige ticket selecteervoorwaarden"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Ongeldige token, neem contact op met uw beheerder!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
+#| msgid "Invalid link structure"
+msgid "Invalid values in step %s"
+msgstr "Ongeldige link structuur"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10531,6 +10527,10 @@ msgstr "Status"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Blijf op de tab"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -14980,6 +14980,11 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Elasticsearch Endpoint User"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Elasticsearch Endpoint User"
 
 #~ msgid "Need a valid user to create a new service object!"
 #~ msgstr "Geldige gebruiker nodig om een nieuw service object aan te maken!"

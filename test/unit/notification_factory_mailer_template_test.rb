@@ -253,11 +253,11 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         changes:      changes,
       },
     )
-    assert_match('Chamado atualizado', result[:subject])
+    assert_match('atualizado', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('foi atualizado por', result[:body])
     assert_match('<b>test123</b>', result[:body])
-    assert_match('Manage your notification settings', result[:body])
+    assert_match(Translation.translate('pt-br', 'Manage your notification settings'), result[:body])
     assert_no_match('Dein', result[:body])
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])

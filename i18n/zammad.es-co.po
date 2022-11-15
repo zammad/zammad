@@ -3703,10 +3703,6 @@ msgstr ""
 "no."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Define si los tickets se pueden crear a través de un formulario web."
 
@@ -4648,12 +4644,6 @@ msgstr "URL de punto final de Elasticsearch"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
-msgstr "Usuario de punto final de Elasticsearch"
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Elasticsearch Endpoint User"
-msgid "Elasticsearch Excludes"
 msgstr "Usuario de punto final de Elasticsearch"
 
 #: db/seeds/settings.rb
@@ -6851,6 +6841,12 @@ msgstr "Condiciones del selector de entradas no válidas"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Token no válido, póngase en contacto con su administrador!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+#, fuzzy
+#| msgid "Invalid link structure"
+msgid "Invalid values in step %s"
+msgstr "Estructura de enlace no válida"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10848,6 +10844,10 @@ msgstr "Estado"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Permanecer en la pestaña"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -15462,6 +15462,11 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Elasticsearch Endpoint User"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Usuario de punto final de Elasticsearch"
 
 #~ msgid "Object already exists!"
 #~ msgstr "¡El objeto ya existe!"

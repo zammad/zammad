@@ -3599,10 +3599,6 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
@@ -4452,12 +4448,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Lastname"
-msgid "Elasticsearch Excludes"
-msgstr "Priezvisko"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6518,6 +6508,10 @@ msgstr ""
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
@@ -10457,6 +10451,10 @@ msgstr "Status"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 #: db/seeds/settings.rb
 msgid "Stay on tab"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -14773,6 +14771,11 @@ msgstr "...celej textovej plochy"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ čakacia doba dnes"
+
+#, fuzzy
+#~| msgid "Lastname"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Priezvisko"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "Vyberte atribúty a potom ich uložte ako novú šablónu."

@@ -3576,10 +3576,6 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr ""
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr ""
 
@@ -4431,12 +4427,6 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr ""
-
-#: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Last sync"
-msgid "Elasticsearch Excludes"
-msgstr "Utolsó szinkronizálás"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6486,6 +6476,10 @@ msgstr ""
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
@@ -10458,6 +10452,10 @@ msgstr "Állapot"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Maradok az oldalon"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -14793,6 +14791,11 @@ msgstr "...a teljes szövegmezőből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#, fuzzy
+#~| msgid "Last sync"
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Utolsó szinkronizálás"
 
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "Válaszd ki a paramétereket aztán mentsd el őket új sablonként!"

@@ -1,18 +1,18 @@
-Novo Chamado (#{ticket.title})
+Novo ticket (#{ticket.title})
 
 <div>Oi #{recipient.firstname},</div>
 <br>
-<div>Um novo chamado (#{ticket.title}) foi criado por "<b>#{current_user.longname}</b>".</div>
+<div>Um novo ticket (#{ticket.title}) foi criado por "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+Grupo: #{ticket.group.name}<br>
+Proprietário: #{ticket.owner.fullname}<br>
+State: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Detalhes:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>

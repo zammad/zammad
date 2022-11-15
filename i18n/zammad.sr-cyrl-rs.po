@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 13:58+0000\n"
+"PO-Revision-Date: 2022-11-14 08:21+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/sr_Cyrl/>\n"
+"zammad/zammad-stable/sr_Cyrl/>\n"
 "Language: sr-cyrl-rs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3672,10 +3672,6 @@ msgstr ""
 "не."
 
 #: db/seeds/settings.rb
-msgid "Defines if the search index is using excluded attributes."
-msgstr "Одређује да ли индекс претраге користи искључене атрибуте."
-
-#: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
 msgstr "Одређује да ли је могуће отварати тикете путем веб форме."
 
@@ -4570,10 +4566,6 @@ msgstr "URL Elasticsearch путање"
 #: db/seeds/settings.rb
 msgid "Elasticsearch Endpoint User"
 msgstr "Корисник Elasticsearch путање"
-
-#: db/seeds/settings.rb
-msgid "Elasticsearch Excludes"
-msgstr "Elasticsearch искључује"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Pipeline Name"
@@ -6687,6 +6679,10 @@ msgstr "Неисправни избори услова тикета"
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Invalid token, please contact your admin!"
 msgstr "Неисправан кључ, молимо контактирајте администратора!"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Invalid values in step %s"
+msgstr "Неисправне вредности у кораку %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -10571,6 +10567,10 @@ msgstr "Статус:"
 #: db/seeds/settings.rb
 msgid "Stay on tab"
 msgstr "Остани у прозору"
+
+#: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
+msgid "Step %s is completed"
+msgstr "Комплетиран корак %s"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Stop after match"
@@ -14999,6 +14999,12 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Defines if the search index is using excluded attributes."
+#~ msgstr "Одређује да ли индекс претраге користи искључене атрибуте."
+
+#~ msgid "Elasticsearch Excludes"
+#~ msgstr "Elasticsearch искључује"
 
 #~ msgid "Need a valid user to create a new service object!"
 #~ msgstr "Неопходан исправан корисник за додавање новог објекта услуге!"

@@ -160,6 +160,15 @@ $(function() {
         'Your Message...': 'Twoja wiadomość...',
         'Your Name': 'Imię i nazwisko',
       },
+      'pt-br': {
+        'Attachments': 'Anexos',
+        'Email': 'E-mail',
+        'Message': 'Mensagem',
+        'Name': 'Nome',
+        'Your Email': 'Seu Email',
+        'Your Message...': 'Sua mensagem...',
+        'Your Name': 'Seu nome',
+      },
       'ru': {
         'Attachments': 'Вложения',
         'Email': 'Электронная почта',

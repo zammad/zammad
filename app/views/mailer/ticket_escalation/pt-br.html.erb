@@ -1,12 +1,12 @@
-Chamado escalado (#{ticket.title})
+Ticket escalado (#{ticket.title})
 
-<div>Oi #{recipient.firstname},</div>
+<div>Olá, #{recipient.firstname},</div>
 <br>
-<div>Um chamado (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" foi escalado desde "#{ticket.escalation_at}"!</div>
+<div>O ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" foi escalado desde "#{ticket.escalation_at}"!</div>
 <br>
-<% if @objects[:article] %>
+<% if @objects[:artigo] %>
   <div>
-  #{t('Information')}:
+  Detalhes:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Chamado escalado (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja mais informações no Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja isso em #{config.product_name}</ a>
 </div>
