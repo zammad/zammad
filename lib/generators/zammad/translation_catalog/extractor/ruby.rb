@@ -13,7 +13,7 @@ class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::
     literal_string_regex = %r{('|")(.+?)(?<!\\)\1}
 
     # Translation.translate
-    locale_regex = %r{['"a-z_0-9.&@:\[\]\-]+}
+    locale_regex = %r{['"a-z_0-9.&@:\[\]-]+}
     translate_regex = %r{Translation\.translate\(?\s*#{locale_regex},\s*#{literal_string_regex}}
 
     # __()

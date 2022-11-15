@@ -9,8 +9,7 @@ Rails.application.config.html_sanitizer_tags_remove_content = %w[
 ]
 
 # content of this tags will will be inserted html quoted
-Rails.application.config.html_sanitizer_tags_quote_content = %w[
-]
+Rails.application.config.html_sanitizer_tags_quote_content = %w[]
 
 # only this tags are allowed
 Rails.application.config.html_sanitizer_tags_allowlist = %w[
