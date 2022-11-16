@@ -150,7 +150,6 @@ const loadPreviousArticles = async () => {
     />
     <CommonLoader
       :loading="isLoadingTicket"
-      center
       data-test-id="loader-title"
       class="flex border-b-[0.5px] border-white/10 bg-gray-600/90 py-5 px-4"
     >
@@ -159,7 +158,6 @@ const loadPreviousArticles = async () => {
     <CommonLoader
       data-test-id="loader-list"
       :loading="isLoadingTicket"
-      center
       class="mt-2"
     >
       <TicketArticlesList

@@ -7,6 +7,7 @@ export interface CommonButtonOption {
   value?: string | number
   onAction?(): void | Promise<void>
   label: string
+  controls?: string
   labelPlaceholder?: string[]
   disabled?: boolean
   icon?: string | IconProps

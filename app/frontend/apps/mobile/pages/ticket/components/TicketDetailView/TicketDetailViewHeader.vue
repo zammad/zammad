@@ -33,7 +33,7 @@ const showViewers = () => {
     class="grid h-[64px] grid-cols-[70px_auto_70px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
     <CommonBackButton class="justify-self-start" fallback="/" />
-    <CommonLoader data-test-id="loader-header" :loading="loadingTicket" center>
+    <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
       <div
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
         data-test-id="header-content"
@@ -44,7 +44,7 @@ const showViewers = () => {
         </div>
       </div>
     </CommonLoader>
-    <CommonLoader :loading="loadingUsers" right>
+    <CommonLoader :loading="loadingUsers" position="right">
       <button
         v-if="users.length"
         class="flex cursor-pointer items-center justify-self-end"

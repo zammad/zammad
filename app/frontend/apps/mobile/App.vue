@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
     v-if="application.loaded"
     class="h-full min-w-full bg-black font-sans text-sm text-white antialiased"
   >
-    <router-view />
+    <RouterView />
   </div>
   <DynamicInitializer
     name="dialog"

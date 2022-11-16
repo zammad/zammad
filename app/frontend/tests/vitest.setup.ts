@@ -18,7 +18,13 @@ configure({
   testIdAttribute: 'data-test-id',
 })
 
+Element.prototype.scrollIntoView = vi.fn()
+
 require.extensions['.css'] = () => ({})
+
+vi.stubGlobal('requestAnimationFrame', (cb: () => void) => {
+  setTimeout(cb, 0)
+})
 
 vi.stubGlobal('scrollTo', vi.fn())
 vi.stubGlobal('matchMedia', (media: string) => ({

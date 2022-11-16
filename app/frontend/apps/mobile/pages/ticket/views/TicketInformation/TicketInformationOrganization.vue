@@ -48,11 +48,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
 </script>
 
 <template>
-  <CommonLoader
-    center
-    :loading="!organization && organizationLoading"
-    :error="error"
-  >
+  <CommonLoader :loading="!organization && organizationLoading" :error="error">
     <div v-if="organization" class="mb-3 flex items-center gap-3">
       <CommonOrganizationAvatar
         size="normal"

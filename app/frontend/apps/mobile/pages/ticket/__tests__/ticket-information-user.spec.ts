@@ -36,10 +36,6 @@ describe('visiting ticket user page', () => {
     const { view } = await visitTicketUser(user)
 
     expect(
-      view.getByRole('img', { name: 'Avatar (John Doe)' }),
-    ).toBeInTheDocument()
-
-    expect(
       view.queryByRole('region', { name: 'First name' }),
     ).not.toBeInTheDocument()
     expect(

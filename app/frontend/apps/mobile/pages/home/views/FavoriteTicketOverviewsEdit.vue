@@ -11,6 +11,7 @@ import {
 import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
+import { useWalker } from '@shared/router/walker'
 import TicketOverviewEditItem from '../components/TicketOverviewEditItem.vue'
 
 const overviewStore = useTicketOverviewsStore()
@@ -45,6 +46,8 @@ const includedOverviews = computed({
 
 const { notify } = useNotifications()
 
+const walker = useWalker()
+
 useHeader({
   title: __('Ticket Overview'),
   backTitle: __('Home'),
@@ -64,6 +67,7 @@ useHeader({
       message: __('Ticket Overview settings are saved'),
       type: NotificationTypes.Success,
     })
+    walker.back('/')
   },
 })
 

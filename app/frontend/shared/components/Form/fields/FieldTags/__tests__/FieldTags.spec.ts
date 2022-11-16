@@ -42,7 +42,7 @@ describe('Form - Field - Tags', () => {
 
     expect(view.getByPlaceholderText('Tag name…')).toBeInTheDocument()
 
-    const options = view.getAllByRole('button', { name: /^(?!Done)/ })
+    const options = view.getAllByRole('option')
 
     expect(options).toHaveLength(3)
     expect(options[0]).toHaveTextContent('paid')
@@ -72,7 +72,7 @@ describe('Form - Field - Tags', () => {
     const node = view.getByLabelText('Tags')
     await view.events.click(node)
 
-    const options = view.getAllByRole('button', { name: /^(?!Done)/ })
+    const options = view.getAllByRole('option')
 
     await view.events.click(options[0])
 
@@ -82,7 +82,7 @@ describe('Form - Field - Tags', () => {
 
     await view.events.click(node)
 
-    const newOptions = view.getAllByRole('button', { name: /^(?!Done)/ })
+    const newOptions = view.getAllByRole('option')
 
     await view.events.click(newOptions[0])
     await view.events.click(view.getByRole('button', { name: 'Done' }))
@@ -100,7 +100,7 @@ describe('Form - Field - Tags', () => {
 
     await view.events.type(filterInput, 'paid')
 
-    const options = view.getAllByRole('button', { name: /^(?!Done)/ })
+    const options = view.getAllByRole('option')
 
     expect(options).toHaveLength(1)
     expect(options[0]).toHaveTextContent('paid')
@@ -144,7 +144,7 @@ describe('Form - Field - Tags', () => {
     expect(createButton).toBeEnabled()
     await view.events.click(createButton)
 
-    expect(view.getByRole('button', { name: 'pay' })).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'pay' })).toBeInTheDocument()
   })
 
   it("clicking disabled field doesn't select dialog", async () => {
@@ -161,5 +161,46 @@ describe('Form - Field - Tags', () => {
     await wrapper.events.click(wrapper.getByLabelText('Tags'))
 
     expect(wrapper.queryByRole('dialog')).toBeInTheDocument()
+  })
+
+  it('restores focus on close', async () => {
+    const wrapper = renderFieldTags({ options: [] })
+
+    const tagsButton = wrapper.getByLabelText('Tags')
+
+    await wrapper.events.click(tagsButton)
+
+    expect(tagsButton).not.toHaveFocus()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Done' }))
+
+    expect(tagsButton).toHaveFocus()
+  })
+
+  it('can traverse options with keyboard', async () => {
+    const wrapper = renderFieldTags()
+
+    const tagsButton = wrapper.getByLabelText('Tags')
+
+    await wrapper.events.click(tagsButton)
+    await wrapper.events.keyboard('{Tab}')
+
+    const options = wrapper.getAllByRole('option')
+    expect(options[0]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(options[1]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(options[2]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(options[0]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowUp}')
+    expect(options[2]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowUp}')
+    expect(options[1]).toHaveFocus()
   })
 })

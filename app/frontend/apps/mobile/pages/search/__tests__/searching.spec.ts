@@ -40,8 +40,8 @@ describe('visiting search page', () => {
 
     await view.events.click(view.getByText('Users with "search"'))
 
-    // input still has focus
-    expect(searchInput).toHaveFocus()
+    // focus shifted to tab with the same type
+    expect(view.getByRole('tab', { name: 'Users' })).toHaveFocus()
 
     await waitUntil(() => mockSearchApi.calls.resolve)
 
@@ -61,7 +61,7 @@ describe('visiting search page', () => {
       search: 'search',
     })
 
-    expect(view.getByPlaceholderText('Search…')).toHaveFocus()
+    expect(view.getByRole('tab', { name: 'Organizations' })).toHaveFocus()
   })
 
   it('renders correctly if queries are passed down', async () => {

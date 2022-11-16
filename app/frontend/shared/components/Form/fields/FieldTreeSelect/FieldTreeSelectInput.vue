@@ -23,7 +23,11 @@ interface Props {
 const props = defineProps<Props>()
 const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, clearValue } = useValue(contextReactive)
+const {
+  hasValue,
+  valueContainer,
+  clearValue: clearInternalValue,
+} = useValue(contextReactive)
 
 const currentPath = ref<FlatSelectOption[]>([])
 
@@ -33,6 +37,13 @@ const clearPath = () => {
 
 const nameDialog = `field-tree-select-${props.context.id}`
 
+const outputElement = ref<HTMLOutputElement>()
+const focusOutputElement = () => {
+  if (!props.context.disabled) {
+    outputElement.value?.focus()
+  }
+}
+
 const dialog = useDialog({
   name: nameDialog,
   prefetch: true,
@@ -41,6 +52,11 @@ const dialog = useDialog({
     clearPath()
   },
 })
+
+const clearValue = () => {
+  clearInternalValue()
+  focusOutputElement()
+}
 
 const flattenOptions = (
   options: TreeSelectOption[],
@@ -144,6 +160,7 @@ setupMissingOptionHandling()
   >
     <output
       :id="context.id"
+      ref="outputElement"
       :name="context.node.name"
       class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
@@ -153,7 +170,7 @@ setupMissingOptionHandling()
         ...context.attrs,
         onBlur: undefined,
       }"
-      @keypress.space="toggleDialog(true)"
+      @keypress.space.prevent="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
       <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">

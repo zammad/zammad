@@ -6,6 +6,8 @@ import { ref } from 'vue'
 import CommonSectionPopup from '../CommonSectionPopup.vue'
 import type { PopupItem } from '../types'
 
+const html = String.raw
+
 describe('popup behaviour', () => {
   it('renders list', async () => {
     const onAction = vi.fn()
@@ -69,5 +71,110 @@ describe('popup behaviour', () => {
     await view.events.click(document.body)
 
     expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+  })
+
+  it('autofocuses fist element and traps focus inside', async () => {
+    const externalForm = document.createElement('form')
+    externalForm.innerHTML = html`
+      <input data-test-id="form_input" type="text" />
+      <select data-test-id="form_select" type="text" />
+    `
+
+    document.body.appendChild(externalForm)
+
+    const items: PopupItem[] = [
+      {
+        label: 'Link',
+        link: '/',
+      },
+      {
+        label: 'Action',
+        onAction: vi.fn(),
+      },
+    ]
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        items,
+      },
+      router: true,
+      vModel: {
+        state: true,
+      },
+    })
+
+    await flushPromises()
+
+    // auto focused on first item
+    expect(view.getByRole('link', { name: 'Link' })).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(view.getByRole('button', { name: 'Action' })).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(view.getByRole('button', { name: 'Cancel' })).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(view.getByRole('link', { name: 'Link' })).toHaveFocus()
+  })
+
+  it('refocuses on the last element that opened popup', async () => {
+    const button = document.createElement('button')
+    button.setAttribute('data-test-id', 'button')
+    document.body.appendChild(button)
+
+    button.focus()
+
+    expect(button).toHaveFocus()
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        items: [],
+      },
+      router: true,
+      vModel: {
+        state: true,
+      },
+    })
+
+    await flushPromises()
+
+    expect(button).not.toHaveFocus()
+
+    await view.events.keyboard('{Escape}')
+
+    expect(button).toHaveFocus()
+  })
+
+  it("doesn't refocuses on the last element that opened popup, when specified", async () => {
+    const button = document.createElement('button')
+    button.setAttribute('data-test-id', 'button')
+    document.body.appendChild(button)
+
+    button.focus()
+
+    expect(button).toHaveFocus()
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        items: [],
+        noRefocus: true,
+      },
+      router: true,
+      vModel: {
+        state: true,
+      },
+    })
+
+    await flushPromises()
+
+    expect(button).not.toHaveFocus()
+
+    await view.events.keyboard('{Escape}')
+
+    expect(button).not.toHaveFocus()
   })
 })

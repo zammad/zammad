@@ -68,7 +68,7 @@ describe('visiting user page', () => {
     expect(ticketClosedLink).toBeInTheDocument()
 
     await view.events.click(
-      view.getByRole('button', { name: 'Organization tickets' }),
+      view.getByRole('tab', { name: 'Organization tickets' }),
     )
 
     const organization = user.organization!
@@ -94,7 +94,7 @@ describe('visiting user page', () => {
       }),
     ).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Their tickets' }))
+    await view.events.click(view.getByRole('tab', { name: 'Their tickets' }))
 
     expect(view.getByRole('link', { name: 'open 4' })).toBeInTheDocument()
     expect(view.getByRole('link', { name: 'closed 2' })).toBeInTheDocument()

@@ -56,7 +56,7 @@ useFormBlock(context, onInputClick)
       :aria-disabled="context.disabled"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"
-      @keypress.space="showDialog()"
+      @keypress.space.prevent="showDialog()"
       @blur="context.handlers.blur"
     >
       <div

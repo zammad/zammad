@@ -28,6 +28,8 @@ describe('testing a list of tickets', () => {
         orderDirection: EnumOrderDirection.Ascending,
         hiddenColumns: [],
       },
+      form: true,
+      formField: true,
       router: true,
       store: true,
     })

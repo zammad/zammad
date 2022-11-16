@@ -62,16 +62,25 @@ const types = computed<CommonButtonOption[]>(() => {
   <div class="p-4">
     <!-- TODO fixed size? "..." for long titles -->
     <h1 class="text-xl font-bold">
-      <CommonLoader :loading="loadingTicket">{{ ticket?.title }}</CommonLoader>
+      <CommonLoader position="left" :loading="loadingTicket">
+        {{ ticket?.title }}
+      </CommonLoader>
     </h1>
   </div>
   <CommonButtonGroup
     class="px-4 pb-4"
+    as="tabs"
+    controls="route-ticket-information-tabpanel"
     :options="types"
     :model-value="($route.name as string)"
     @update:model-value="$router.replace({ name: $event as string })"
   />
-  <div class="px-4">
+  <div
+    id="route-ticket-information-tabpanel"
+    role="tabpanel"
+    aria-live="polite"
+    class="px-4"
+  >
     <RouterView />
   </div>
 </template>

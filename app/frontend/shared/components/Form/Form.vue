@@ -47,6 +47,7 @@ import testFlags from '@shared/utils/testFlags'
 import { edgesToArray } from '@shared/utils/helpers'
 import type { FormUpdaterTrigger } from '@shared/types/form'
 import type { ObjectLike } from '@shared/types/utils'
+import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
@@ -88,11 +89,15 @@ export interface Props {
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
+  autofocus?: boolean
 
   // Some special properties for working with object attribute fields inside of a form schema.
   useObjectAttributes?: boolean
   objectAttributeSkippedFields?: string[]
 
+  // WARNING
+  // Don't forget that to submit a form with "Enter" key, you need to add a button with type="submit" inside of the form.
+  // Or to have a button outside of form with "form" attribite with the same value as the form id.
   // Implement the submit in this way, because we need to react on async usage of the submit function.
   onSubmit?: (values: FormData) => Promise<void> | void
 }
@@ -169,6 +174,7 @@ const stopInitialLoadingAnimation = () => {
 
 const formKitInitialNodesSettled = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
+const formElement = ref<HTMLElement>()
 
 const updaterChangedFields = new Set<string>()
 
@@ -190,6 +196,15 @@ const setFormNode = (node: FormKitNode) => {
     const formName = node.context?.id || node.name
     testFlags.set(`${formName}.settled`)
     emit('settled')
+
+    if (props.autofocus) {
+      nextTick(() => {
+        const firstInput = getFirstFocusableElement(formElement.value)
+
+        firstInput?.focus()
+        firstInput?.scrollIntoView({ block: 'nearest' })
+      })
+    }
   })
 
   emit('node', node)
@@ -322,6 +337,8 @@ const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
   if (relationFieldBelongsToObjectField[fieldName]) {
     const belongsToObject =
       props.initialEntityObject[relationFieldBelongsToObjectField[fieldName]]
+
+    if (!belongsToObject) return undefined
 
     if ('edges' in belongsToObject) {
       value = edgesToArray(
@@ -855,7 +872,10 @@ if (props.schema) {
       :data="schemaData"
       :library="additionalComponentLibrary"
     >
-      <div v-show="formKitInitialNodesSettled && !showInitialLoadingAnimation">
+      <div
+        v-show="formKitInitialNodesSettled && !showInitialLoadingAnimation"
+        ref="formElement"
+      >
         <FormKitSchema
           :schema="staticSchema"
           :data="schemaData"

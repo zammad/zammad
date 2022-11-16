@@ -144,6 +144,7 @@ const { showImage } = useImageViewer(uploadFiles)
   </div>
   <button
     class="flex w-full items-center justify-center gap-1 p-4 text-blue"
+    type="button"
     :class="{ 'text-blue/60': !canInteract }"
     :disabled="!canInteract"
     @click="canInteract && fileInput?.click()"

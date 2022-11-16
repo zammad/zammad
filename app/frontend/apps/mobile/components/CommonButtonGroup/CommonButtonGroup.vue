@@ -2,16 +2,20 @@
 
 <script setup lang="ts">
 import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
+import { computed } from 'vue'
 import type { CommonButtonOption } from './types'
 
 export interface Props {
   modelValue?: string | number
   mode?: 'full' | 'compressed'
+  controls?: string
+  as?: 'tabs' | 'buttons'
   options: CommonButtonOption[]
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   mode: 'compressed',
+  as: 'buttons',
 })
 
 const emit = defineEmits<{
@@ -31,25 +35,32 @@ const onButtonClick = (option: CommonButtonOption) => {
   option.onAction?.()
   emit('update:modelValue', option.value)
 }
+
+const isTabs = computed(() => props.as === 'tabs')
 </script>
 
 <template>
   <div
     class="flex max-w-[100vw] overflow-x-auto"
     :class="{ 'w-full': mode === 'full' }"
+    :role="isTabs ? 'tablist' : undefined"
   >
     <Component
       :is="option.link ? 'CommonLink' : 'button'"
       v-for="option of options"
       :key="option.label"
+      :role="isTabs ? 'tab' : undefined"
       :disabled="option.disabled"
       :link="option.link"
       class="flex flex-col items-center justify-center gap-1 rounded-xl bg-gray-500 py-1 px-3 text-base text-white ltr:mr-2 rtl:ml-2"
+      :data-value="option.value"
       :class="{
         'bg-gray-600/50 text-white/30': option.disabled,
         'bg-gray-200': option.value != null && modelValue === option.value,
         'flex-1': mode === 'full',
       }"
+      :aria-controls="isTabs ? controls || option.controls : undefined"
+      :aria-selected="isTabs ? modelValue === option.value : undefined"
       @click="onButtonClick(option)"
     >
       <CommonIcon v-if="option.icon" v-bind="getIconProps(option)" decorative />

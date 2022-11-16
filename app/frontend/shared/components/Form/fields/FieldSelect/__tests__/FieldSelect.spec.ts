@@ -807,6 +807,30 @@ describe('Form - Field - Select - Accessibility', () => {
     })
   })
 
+  it('restores focus on close', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'select',
+        options: testOptions,
+        clearable: true,
+        value: testOptions[1].value,
+      },
+    })
+
+    const selectButton = wrapper.getByLabelText('Select…')
+
+    await wrapper.events.click(selectButton)
+
+    expect(selectButton).not.toHaveFocus()
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.type(selectOptions[0], '{Space}')
+
+    expect(selectButton).toHaveFocus()
+  })
+
   it('prevents focusing of disabled field', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

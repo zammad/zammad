@@ -21,5 +21,10 @@ const icon = computed(() => {
 </script>
 
 <template>
-  <CommonAvatar class="bg-gray" :size="size" :icon="icon" />
+  <CommonAvatar
+    class="bg-gray"
+    :size="size"
+    :icon="icon"
+    :aria-label="entity.name"
+  />
 </template>

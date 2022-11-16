@@ -68,6 +68,7 @@ setupMissingOptionHandling()
     >
       <output
         :id="context.id"
+        ref="outputElement"
         :name="context.node.name"
         class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
         :aria-disabled="context.disabled"
@@ -77,7 +78,7 @@ setupMissingOptionHandling()
           ...context.attrs,
           onBlur: undefined,
         }"
-        @keypress.space="openSelectDialog()"
+        @keypress.space.prevent="openSelectDialog()"
         @blur="context.handlers.blur"
       >
         <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">

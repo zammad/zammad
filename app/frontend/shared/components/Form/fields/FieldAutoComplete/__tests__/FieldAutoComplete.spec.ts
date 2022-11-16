@@ -867,6 +867,30 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
       expect(emittedInput[1][0]).toBe(undefined)
     })
   })
+
+  it('restores focus on close', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+        clearable: true,
+        value: testOptions[1].value,
+      },
+    })
+
+    const selectButton = wrapper.getByLabelText('Select…')
+
+    await wrapper.events.click(selectButton)
+
+    expect(selectButton).not.toHaveFocus()
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.type(selectOptions[0], '{Space}')
+
+    expect(selectButton).toHaveFocus()
+  })
 })
 
 // Cover all use cases from the FormKit custom input checklist.

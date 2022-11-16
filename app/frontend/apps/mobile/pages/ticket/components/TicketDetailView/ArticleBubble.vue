@@ -195,9 +195,11 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
       <div class="flex h-3 justify-end">
         <button
           class="z-10"
+          type="button"
+          data-name="article-context"
           :title="$t('Article actions')"
           @click="emit('showContext')"
-          @keydown.enter="emit('showContext')"
+          @keydown.enter.prevent="emit('showContext')"
         >
           <CommonIcon name="mobile-more" size="tiny" decorative />
         </button>

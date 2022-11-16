@@ -4,5 +4,6 @@ export interface PopupItem {
   label: string
   link?: string
   class?: string
+  attributes?: Record<string, unknown>
   onAction?(): void
 }

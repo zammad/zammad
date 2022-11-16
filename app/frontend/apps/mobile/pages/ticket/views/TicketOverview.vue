@@ -8,14 +8,13 @@ import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButt
 import { EnumOrderDirection } from '@shared/graphql/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
-import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import { useRouteQuery } from '@vueuse/router'
 import { storeToRefs } from 'pinia'
-import type { Sizes } from '@shared/components/CommonIcon/types'
 import TicketList from '../components/TicketList/TicketList.vue'
+import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
 const application = useApplicationStore()
 
@@ -115,6 +114,10 @@ const orderBy = computed({
   },
 })
 
+const columnLabel = computed(() => {
+  return orderColumnLabels.value[orderBy.value || ''] || ''
+})
+
 const userOrderDirection = useRouteQuery<EnumOrderDirection | undefined>(
   'direction',
   undefined,
@@ -141,33 +144,6 @@ const orderDirection = computed({
         : undefined
   },
 })
-
-const directionOptions = computed(() => [
-  {
-    value: EnumOrderDirection.Descending,
-    label: __('descending'),
-    icon: 'mobile-arrow-down',
-    iconProps: {
-      class: {
-        'text-blue': orderDirection.value === EnumOrderDirection.Descending,
-      },
-      size: 'tiny' as Sizes,
-    },
-  },
-  {
-    value: EnumOrderDirection.Ascending,
-    label: __('ascending'),
-    icon: 'mobile-arrow-up',
-    iconProps: {
-      class: [
-        {
-          'text-blue': orderDirection.value === EnumOrderDirection.Ascending,
-        },
-      ],
-      size: 'tiny' as Sizes,
-    },
-  },
-])
 </script>
 
 <template>
@@ -210,63 +186,17 @@ const directionOptions = computed(() => [
           </span>
           <span class="px-1"> ({{ selectedOverview?.ticketCount }}) </span>
         </CommonSelectPill>
-        <CommonSelect v-model="orderBy" :options="orderColumnsOptions" no-close>
-          <template #default="{ open }">
-            <div
-              class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
-              data-test-id="column"
-              @click="open"
-              @keydown.space="open"
-            >
-              <div>
-                <CommonIcon
-                  :name="
-                    orderDirection === EnumOrderDirection.Ascending
-                      ? 'mobile-arrow-up'
-                      : 'mobile-arrow-down'
-                  "
-                  size="tiny"
-                />
-              </div>
-              <span class="overflow-hidden text-ellipsis whitespace-nowrap">
-                {{ orderBy && $t(orderColumnLabels[orderBy]) }}
-              </span>
-            </div>
-          </template>
-
-          <template #footer>
-            <div class="flex gap-2 p-3 text-white">
-              <label
-                v-for="option of directionOptions"
-                :key="option.value"
-                class="flex flex-1 cursor-pointer items-center justify-center rounded-md p-2"
-                :class="{
-                  'bg-gray-200 font-bold': option.value === orderDirection,
-                }"
-              >
-                <input
-                  v-model="orderDirection"
-                  type="radio"
-                  class="hidden"
-                  :value="option.value"
-                />
-                <CommonIcon
-                  v-if="option.icon"
-                  :name="option.icon"
-                  class="ltr:mr-1 rtl:ml-1"
-                  v-bind="option.iconProps"
-                />
-                {{ option.label }}
-              </label>
-            </div>
-          </template>
-        </CommonSelect>
+        <TicketOrderBySelector
+          v-model:order-by="orderBy"
+          v-model:direction="orderDirection"
+          :options="orderColumnsOptions"
+          :label="columnLabel"
+        />
       </div>
     </header>
     <CommonLoader
       v-if="loadingOverviews || overviews.length"
       :loading="loadingOverviews"
-      center
     >
       <TicketList
         v-if="selectedOverview && orderBy && orderDirection"

@@ -7,6 +7,7 @@ import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndi
 import { closeDialog } from '@shared/composables/useDialog'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
+import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import useSelectOptions from '../../composables/useSelectOptions'
 import type { TreeSelectContext } from './types'
 import { FlatSelectOption } from './types'
@@ -57,37 +58,9 @@ const contextReactive = toRef(props, 'context')
 watch(() => contextReactive.value.noFiltering, clearFilter)
 
 const focusFirstTarget = (targetElements?: HTMLElement[]) => {
-  if (!props.context.noFiltering) {
-    filterInput.value?.focus()
-    return
-  }
-
   if (!targetElements || !targetElements.length) return
 
   targetElements[0].focus()
-}
-
-const previousPageCallback = (
-  option?: SelectOption | FlatSelectOption,
-  getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
-) => {
-  popFromPath()
-  clearFilter()
-  nextTick(() =>
-    focusFirstTarget(getDialogFocusTargets && getDialogFocusTargets(true)),
-  )
-}
-
-const nextPageCallback = (
-  option?: SelectOption | FlatSelectOption,
-  getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
-) => {
-  if (option && (option as FlatSelectOption).hasChildren) {
-    pushToPath(option as FlatSelectOption)
-    nextTick(() =>
-      focusFirstTarget(getDialogFocusTargets && getDialogFocusTargets(true)),
-    )
-  }
 }
 
 const {
@@ -95,13 +68,37 @@ const {
   getSelectedOptionLabel,
   selectOption,
   getDialogFocusTargets,
-  advanceDialogFocus,
-} = useSelectOptions(
-  toRef(props, 'flatOptions'),
-  contextReactive,
-  previousPageCallback,
-  nextPageCallback,
-)
+  getSelectedOption,
+} = useSelectOptions(toRef(props, 'flatOptions'), contextReactive)
+
+const previousPageCallback = () => {
+  popFromPath()
+  clearFilter()
+  nextTick(() => focusFirstTarget(getDialogFocusTargets(true)))
+}
+
+const nextPageCallback = (option?: SelectOption | FlatSelectOption) => {
+  if (option && (option as FlatSelectOption).hasChildren) {
+    pushToPath(option as FlatSelectOption)
+    nextTick(() => focusFirstTarget(getDialogFocusTargets(true)))
+  }
+}
+
+useTraverseOptions(() => dialog.value?.parentElement, {
+  filterOption: (el) => el.tagName !== 'INPUT',
+  direction: 'vertical',
+  onArrowRight() {
+    const focusedOption = document.activeElement as HTMLElement
+    const { value } = focusedOption?.dataset || {}
+    const option = value ? getSelectedOption(value) : undefined
+    nextPageCallback(option)
+    return false
+  },
+  onArrowLeft() {
+    previousPageCallback()
+    return false
+  },
+})
 
 const deaccent = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -152,11 +149,11 @@ const currentOptions = computed(() => {
 })
 
 const goToPreviousPage = () => {
-  previousPageCallback(undefined, getDialogFocusTargets)
+  previousPageCallback()
 }
 
 const goToNextPage = (option: FlatSelectOption) => {
-  nextPageCallback(option, getDialogFocusTargets)
+  nextPageCallback(option)
 }
 
 onMounted(() => {
@@ -165,12 +162,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <CommonDialog
-    :name="name"
-    :label="context.label"
-    :listeners="{ done: { onKeydown: advanceDialogFocus } }"
-    @close="close"
-  >
+  <CommonDialog :name="name" :label="context.label" @close="close">
     <div class="w-full p-4">
       <CommonInputSearch
         v-if="!context.noFiltering"
@@ -187,8 +179,7 @@ onMounted(() => {
       tabindex="0"
       role="button"
       @click="goToPreviousPage()"
-      @keypress.space="goToPreviousPage()"
-      @keydown="advanceDialogFocus"
+      @keypress.space.prevent="goToPreviousPage()"
     >
       <CommonIcon size="base" class="mr-3" name="mobile-chevron-left" />
       <span class="grow font-semibold text-white/80">
@@ -204,6 +195,7 @@ onMounted(() => {
       :aria-label="$t('Select…')"
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
       role="listbox"
+      :aria-multiselectable="context.multiple"
     >
       <div
         v-for="(option, index) in filter ? filteredOptions : currentOptions"
@@ -216,9 +208,9 @@ onMounted(() => {
         :aria-selected="isCurrentValue(option.value)"
         class="relative flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
         role="option"
+        :data-value="option.value"
         @click="select(option as FlatSelectOption)"
-        @keypress.space="select(option as FlatSelectOption)"
-        @keydown="advanceDialogFocus($event, option)"
+        @keypress.space.prevent="select(option as FlatSelectOption)"
       >
         <div
           v-if="index !== 0"

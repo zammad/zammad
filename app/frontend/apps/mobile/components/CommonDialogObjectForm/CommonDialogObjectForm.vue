@@ -52,7 +52,7 @@ const emit = defineEmits<{
 const updateQuery = new MutationHandler(props.mutation, {
   errorNotificationMessage: props.errorNotificationMessage,
 })
-const { form, isDirty, isDisabled, formSubmit } = useForm()
+const { form, isDirty, isDisabled } = useForm()
 
 const objectAtrributes: Record<string, string> =
   props.object?.objectAttributeValues?.reduce(
@@ -129,7 +129,7 @@ const saveObject = async (formData: FormData) => {
 </script>
 
 <template>
-  <CommonDialog :name="name">
+  <CommonDialog class="w-full" no-autofocus :name="name">
     <template #before-label>
       <button
         class="text-blue"
@@ -142,10 +142,10 @@ const saveObject = async (formData: FormData) => {
     </template>
     <template #after-label>
       <button
+        :form="name"
         class="text-blue"
         :disabled="isDisabled"
         :class="{ 'opacity-50': isDisabled }"
-        @click="formSubmit"
       >
         {{ $t('Save') }}
       </button>
@@ -154,6 +154,7 @@ const saveObject = async (formData: FormData) => {
       :id="name"
       ref="form"
       class="w-full p-4"
+      autofocus
       :schema="schema"
       :initial-entity-object="initialFlatObject"
       :change-fields="formChangeFields"

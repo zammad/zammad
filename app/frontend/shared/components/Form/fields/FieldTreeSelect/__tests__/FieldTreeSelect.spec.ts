@@ -1088,6 +1088,27 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     expect(wrapper.getByLabelText('Select…')).toHaveAttribute('tabindex', '-1')
   })
 
+  it('restores focus on close', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'treeselect',
+        options: testOptions,
+        disabled: false,
+      },
+    })
+
+    const selectButton = wrapper.getByLabelText('Select…')
+
+    await wrapper.events.click(selectButton)
+
+    expect(selectButton).not.toHaveFocus()
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Done' }))
+
+    expect(selectButton).toHaveFocus()
+  })
+
   it("clicking disabled field doesn't select dialog", async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

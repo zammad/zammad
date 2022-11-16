@@ -290,6 +290,10 @@ msgstr ""
 msgid "%s tickets"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
+msgid "%s tickets found"
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
@@ -4199,6 +4203,10 @@ msgstr ""
 msgid "Enter link URL"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+msgid "Enter search and select a type to search for"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
@@ -4857,6 +4865,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Go Back"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go back"
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
@@ -6048,6 +6060,10 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Load more"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+msgid "Loading content"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
@@ -8609,6 +8625,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
 msgstr ""
@@ -8683,10 +8700,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
-msgstr ""
-
-#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
-msgid "Selected"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -10621,6 +10634,10 @@ msgstr ""
 msgid "Tickets are only assigned automatically if they do not already have an owner."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
+msgid "Tickets are ordered by \"%s\" column (%s)."
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
 msgstr ""
@@ -11364,6 +11381,7 @@ msgstr ""
 msgid "Using **organizations** you can **group** customers. This has two main benefits:\n\n1. As an **agent** you don't just have an overview of the open tickets for one person but an **overview over their whole organization**.\n2. As a **customer** you can also check the **tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
 msgstr ""
 
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "VIP"
 msgstr ""
@@ -12127,7 +12145,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
 msgstr ""
 
@@ -12292,7 +12310,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
 msgstr ""
 
@@ -12620,6 +12638,7 @@ msgid "left"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "load %s more"
 msgstr ""
 

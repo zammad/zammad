@@ -40,8 +40,9 @@ const label = computed(() => {
     :aria-selected="selected"
     class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-none"
     role="option"
+    :data-value="option.value"
     @click="select(option)"
-    @keypress.space="select(option)"
+    @keypress.space.prevent="select(option)"
   >
     <CommonIcon
       v-if="multiple"
@@ -50,8 +51,7 @@ const label = computed(() => {
         'opacity-30': option.disabled,
       }"
       size="base"
-      :aria-hidden="!selected"
-      :aria-label="$t('Selected')"
+      decorative
       :name="selected ? 'mobile-check-box-yes' : 'mobile-check-box-no'"
       class="mr-3 text-white/50"
     />
@@ -90,8 +90,7 @@ const label = computed(() => {
         invisible: !selected,
         'opacity-30': option.disabled,
       }"
-      :aria-label="$t('Selected')"
-      :aria-hidden="!selected"
+      decorative
       size="tiny"
       name="mobile-check"
     />

@@ -110,7 +110,7 @@ useFormBlock(contextReactive, onInputClick)
         ...context.attrs,
         onBlur: undefined,
       }"
-      @keypress.space="toggleDialog(true)"
+      @keypress.space.prevent="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
       <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">

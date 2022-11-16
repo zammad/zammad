@@ -10,7 +10,10 @@ import flatpickr from 'flatpickr'
 import { i18n } from '@shared/i18n'
 import { renderComponent } from '@tests/support/components'
 
-const renderDateField = (props: Record<string, unknown> = {}) => {
+const renderDateField = (
+  props: Record<string, unknown> = {},
+  options: any = {},
+) => {
   return renderComponent(FormKit, {
     props: {
       type: 'date',
@@ -19,6 +22,7 @@ const renderDateField = (props: Record<string, unknown> = {}) => {
       id: 'date',
       ...props,
     },
+    ...options,
     form: true,
   })
 }
@@ -200,9 +204,17 @@ describe('Fields - FieldDate - type "date"', () => {
   })
 
   it('clears an input on clear button', async () => {
-    const view = renderDateField({
-      value: '2020-02-10',
-    })
+    const form = document.createElement('form')
+    document.body.appendChild(form)
+    const onSubmit = vi.fn((e: Event) => e.preventDefault())
+    form.addEventListener('submit', onSubmit)
+
+    const view = renderDateField(
+      {
+        value: '2020-02-10',
+      },
+      { baseElement: form },
+    )
 
     const input = view.getByLabelText('Date')
 
@@ -211,10 +223,16 @@ describe('Fields - FieldDate - type "date"', () => {
     await view.events.click(view.getByText('Clear'))
 
     expect(input).toHaveDisplayValue('')
+    expect(onSubmit).not.toHaveBeenCalled()
   })
 
   it('selects today date on "today" button, if available', async () => {
-    const view = renderDateField()
+    const form = document.createElement('form')
+    document.body.appendChild(form)
+    const onSubmit = vi.fn((e: Event) => e.preventDefault())
+    form.addEventListener('submit', onSubmit)
+
+    const view = renderDateField({}, { baseElement: form })
 
     const input = view.getByLabelText('Date')
 
@@ -225,6 +243,7 @@ describe('Fields - FieldDate - type "date"', () => {
     await view.events.click(view.getByText('Today'))
 
     expect(input).toHaveDisplayValue(today)
+    expect(onSubmit).not.toHaveBeenCalled()
   })
 
   it('doesn\'t have "today" button, if it is disabled', async () => {

@@ -94,10 +94,5 @@ const ticketData = computed(() => getTicketData(organization.value))
       :tickets-link-query="ticketData.query"
     />
   </div>
-  <CommonLoader
-    v-else-if="loading"
-    class="w-full p-4"
-    center
-    :loading="loading"
-  />
+  <CommonLoader v-else-if="loading" class="w-full p-4" :loading="loading" />
 </template>

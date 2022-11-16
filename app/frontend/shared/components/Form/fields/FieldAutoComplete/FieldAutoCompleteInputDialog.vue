@@ -11,6 +11,7 @@ import gql from 'graphql-tag'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
+import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { closeDialog } from '@shared/composables/useDialog'
 import type { FormKitNode } from '@formkit/core'
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
@@ -38,7 +39,7 @@ const emit = defineEmits<{
   (e: 'action'): void
 }>()
 
-const { sortedOptions, selectOption, advanceDialogFocus } = useSelectOptions(
+const { sortedOptions, selectOption } = useSelectOptions(
   toRef(props, 'options'),
   toRef(props, 'context'),
 )
@@ -200,13 +201,16 @@ const executeAction = () => {
   if (!props.context.action) return
   router.push(props.context.action)
 }
+
+const autocompleteList = ref<HTMLElement>()
+
+useTraverseOptions(autocompleteList)
 </script>
 
 <template>
   <CommonDialog
     :name="name"
     :label="context.label"
-    :listeners="{ done: { onKeydown: advanceDialogFocus } }"
     class="field-autocomplete-dialog"
     @close="close"
   >
@@ -217,7 +221,6 @@ const executeAction = () => {
         role="button"
         @click="close"
         @keypress.space="close"
-        @keydown="advanceDialogFocus"
       >
         {{ i18n.t('Cancel') }}
       </div>
@@ -232,7 +235,6 @@ const executeAction = () => {
         role="button"
         @click="executeAction"
         @keypress.space="executeAction"
-        @keydown="advanceDialogFocus"
       />
       <div
         v-else
@@ -241,7 +243,6 @@ const executeAction = () => {
         role="button"
         @click="close()"
         @keypress.space="close()"
-        @keydown="advanceDialogFocus"
       >
         {{ i18n.t('Done') }}
       </div>
@@ -260,6 +261,7 @@ const executeAction = () => {
     </div>
     <div
       v-if="filter ? autocompleteOptions.length : options.length"
+      ref="autocompleteList"
       :aria-label="$t('Select…')"
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
       role="listbox"
@@ -278,7 +280,6 @@ const executeAction = () => {
         role="option"
         @click="select(option as AutoCompleteOption)"
         @keypress.space="select(option as AutoCompleteOption)"
-        @keydown="advanceDialogFocus($event, option)"
       >
         <div
           v-if="index !== 0"

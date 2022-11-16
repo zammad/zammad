@@ -58,10 +58,12 @@ const ticketButtons = computed<CommonButtonOption[]>(() => {
     {
       label: __('Their tickets'),
       value: TicketLinksState.User,
+      controls: `tab-${TicketLinksState.User}`,
     },
     {
       label: __('Organization tickets'),
       value: TicketLinksState.Organization,
+      controls: `tab-${TicketLinksState.Organization}`,
     },
   ]
 })
@@ -124,20 +126,24 @@ const secondaryOrganizations = computed(() =>
 
     <CommonTicketStateList
       v-if="ticketsData"
+      :id="`tab-${ticketView}`"
       :create-link="ticketsData.createLink"
       :create-label="ticketsData.createLabel"
       :counts="ticketsData.count"
       :tickets-link-query="ticketsData.query"
+      role="tabpanel"
+      aria-live="polite"
     >
       <template #before-fields>
         <CommonButtonGroup
           v-if="ticketButtons.length"
           v-model="ticketView"
+          as="tabs"
           class="py-2"
           :options="ticketButtons"
         />
       </template>
     </CommonTicketStateList>
   </div>
-  <CommonLoader v-else center :loading="loading" />
+  <CommonLoader v-else :loading="loading" />
 </template>

@@ -37,6 +37,10 @@ const renderSelect = (props: Props, modelValue?: Ref) => {
   })
 }
 
+beforeEach(() => {
+  i18n.setTranslationMap(new Map([]))
+})
+
 describe('interacting with CommonSelect', () => {
   test('can select and deselect value', async () => {
     const modelValue = ref()
@@ -69,6 +73,15 @@ describe('interacting with CommonSelect', () => {
 
     expect(view.emitted().select).toEqual([[options[0]], [options[0]]])
     expect(modelValue.value).toBe(undefined)
+  })
+
+  test("doesn't close select with noClose props", async () => {
+    const view = renderSelect({ options, noClose: true })
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByRole('option', { name: 'Item A' }))
+
+    expect(view.getByRole('dialog')).toBeInTheDocument()
   })
 
   test('can select and deselect multiple values', async () => {
@@ -160,6 +173,121 @@ describe('interacting with CommonSelect', () => {
       'Dialog window with selections',
     )
   })
+})
 
-  // TODO e2e test on keyboard interaction (select with space, moving up/down)
+describe('traversing and focusing select', () => {
+  it('focuses on the first element, when no option is selected', async () => {
+    const view = renderSelect({ options })
+
+    await view.events.click(view.getByText('Open Select'))
+    expect(view.getByRole('option', { name: 'Item A' })).toHaveFocus()
+  })
+
+  it('focuses selected element, when option is selected', async () => {
+    const modelValue = ref(1)
+    const view = renderSelect({ options }, modelValue)
+
+    await view.events.click(view.getByText('Open Select'))
+    expect(view.getByRole('option', { name: 'Item B' })).toHaveFocus()
+  })
+
+  it('emits close when closing, so children can refocus select', async () => {
+    const view = renderSelect({ options })
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByRole('option', { name: 'Item A' }))
+
+    expect(view.emitted().close).toBeDefined()
+  })
+
+  it('can travers with keyboard and select with a space', async () => {
+    const modelValue = ref()
+    const view = renderSelect({ options }, modelValue)
+
+    await view.events.click(view.getByText('Open Select'))
+
+    const optionsElements = view.getAllByRole('option')
+    expect(optionsElements).toHaveLength(3)
+
+    const [itemI, itemII, itemIII] = optionsElements
+
+    expect(itemI).toHaveFocus()
+
+    await view.events.keyboard('{ArrowDown}')
+
+    expect(itemII).toHaveFocus()
+
+    await view.events.keyboard('{ArrowDown}')
+
+    expect(itemIII).toHaveFocus()
+
+    await view.events.keyboard('{ArrowDown}')
+
+    expect(itemI).toHaveFocus()
+
+    await view.events.keyboard('{ArrowUp}')
+
+    expect(itemIII).toHaveFocus()
+
+    await view.events.keyboard('{ArrowUp}')
+
+    expect(itemII).toHaveFocus()
+
+    await view.events.keyboard(' ')
+
+    expect(modelValue.value).toBe(1)
+  })
+
+  it('locks tab inside select', async () => {
+    const modelValue = ref()
+    const view = renderSelect({ options }, modelValue)
+
+    await view.events.click(view.getByText('Open Select'))
+
+    const optionsElements = view.getAllByRole('option')
+    const [itemI, itemII, itemIII] = optionsElements
+
+    expect(itemI).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(itemII).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(itemIII).toHaveFocus()
+
+    await view.events.keyboard('{Tab}')
+
+    expect(itemI).toHaveFocus()
+  })
+
+  it('refocuses on the last element that opened select', async () => {
+    const view = renderSelect({ options })
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.keyboard('{Escape}')
+
+    expect(view.getByText('Open Select')).toHaveFocus()
+  })
+
+  it("doesn't refocuses on the last element that opened select, when specified", async () => {
+    const view = renderSelect({ options, noRefocus: true })
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.keyboard('{Escape}')
+
+    expect(view.getByText('Open Select')).not.toHaveFocus()
+  })
+
+  it('focuses by filtered words', async () => {
+    const view = renderSelect({ options })
+    await view.events.click(view.getByText('Open Select'))
+
+    expect(view.getByRole('option', { name: 'Item A' })).toHaveFocus()
+
+    await view.events.debounced(() => view.events.keyboard('Item C'))
+
+    expect(view.getByRole('option', { name: 'Item C' })).toHaveFocus()
+  })
 })

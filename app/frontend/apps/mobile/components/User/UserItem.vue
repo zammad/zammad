@@ -18,7 +18,7 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
 <template>
   <div class="flex ltr:pr-3 rtl:pl-3">
     <div class="mt-4 flex w-14 justify-center">
-      <CommonUserAvatar :entity="entity" />
+      <CommonUserAvatar aria-hidden="true" :entity="entity" />
     </div>
     <div
       class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"

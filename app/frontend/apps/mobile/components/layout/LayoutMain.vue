@@ -26,7 +26,7 @@ const showHeader = computed(() => {
 <template>
   <div class="flex h-full flex-col overflow-hidden">
     <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
-    <main class="overflow-y-scroll" :class="{ 'pb-14': showBottomNavigation }">
+    <main :class="{ 'pb-14': showBottomNavigation }">
       <!-- let's see how it feels without transition -->
       <RouterView />
       <!-- TODO check when we will have more time -->

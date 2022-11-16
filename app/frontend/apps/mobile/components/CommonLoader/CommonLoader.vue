@@ -8,12 +8,12 @@ import { markup } from '@shared/utils/markup'
 interface Props {
   loading?: boolean
   error?: string
-  center?: boolean
-  right?: boolean
-  left?: boolean
+  position?: 'center' | 'right' | 'left'
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  position: 'center',
+})
 </script>
 
 <script lang="ts">
@@ -28,12 +28,17 @@ export default {
     v-bind="$attrs"
     class="flex"
     :class="{
-      'items-center justify-center': center,
-      'items-center justify-end': right,
-      'items-center justify-start': left,
+      'items-center justify-center': position === 'center',
+      'items-center justify-end': position === 'right',
+      'items-center justify-start': position === 'left',
     }"
+    role="status"
   >
-    <CommonIcon name="mobile-loading" animation="spin" />
+    <CommonIcon
+      :label="__('Loading content')"
+      name="mobile-loading"
+      animation="spin"
+    />
   </div>
   <div
     v-else-if="error"

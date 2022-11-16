@@ -183,10 +183,19 @@ const linkSchemaRaw = [
     label: 'Select 2',
     props: {
       link: '/',
+      multiple: true,
       options: [
         {
           value: 0,
           label: 'Item A',
+        },
+        {
+          value: 1,
+          label: 'Item B',
+        },
+        {
+          value: 2,
+          label: 'Item C',
         },
       ],
     },

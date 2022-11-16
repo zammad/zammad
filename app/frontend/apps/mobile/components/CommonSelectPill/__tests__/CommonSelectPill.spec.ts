@@ -47,4 +47,28 @@ describe('testing small button to trigger select', () => {
 
     expect(view.getByTestId('slot')).toBeInTheDocument()
   })
+
+  it('returns focus when closing dialog', async () => {
+    const view = renderComponent(CommonSelectPill, {
+      props: {
+        placeholder: 'Label',
+        options,
+      },
+      vModel: {
+        modelValue: null,
+      },
+      dialog: true,
+    })
+
+    const openButton = view.getByRole('button', { name: 'Label' })
+    expect(openButton).toBeInTheDocument()
+
+    await view.events.click(openButton)
+
+    expect(view.getByRole('option', { name: 'Option 1' })).toBeInTheDocument()
+
+    await view.events.keyboard('{Escape}')
+
+    expect(openButton).toHaveFocus()
+  })
 })

@@ -1,22 +1,28 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTrapTab } from '@shared/composables/useTrapTab'
 import type { EventHandlers } from '@shared/types/utils'
-import { usePointerSwipe } from '@vueuse/core'
-import type { Events } from 'vue'
-import { ref } from 'vue'
-import { useDialogState } from './composable'
+import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
+import { onKeyUp, usePointerSwipe } from '@vueuse/core'
+import { nextTick, onMounted, ref, type Events } from 'vue'
+import type { Ref } from 'vue'
+import { closeDialog } from '@shared/composables/useDialog'
+import stopEvent from '@shared/utils/events'
 
 const props = defineProps<{
   name: string
   label?: string
   content?: string
+  // don't focus the first element inside a Dialog after being mounted
+  // if nothing is focusable, will focus "Done" button
+  noAutofocus?: boolean
   listeners?: {
     done?: EventHandlers<Events>
   }
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
@@ -24,8 +30,22 @@ const PX_SWIPE_CLOSE = -150
 
 const top = ref('0')
 const dialogElement = ref<HTMLElement>()
+const contentElement = ref<HTMLElement>()
 
-const { close } = useDialogState(props)
+const close = async () => {
+  emit('close')
+  await closeDialog(props.name)
+}
+
+onKeyUp(
+  'Escape',
+  (e) => {
+    stopEvent(e)
+    close()
+  },
+  { target: dialogElement as Ref<EventTarget> },
+)
+
 const { distanceY, isSwiping } = usePointerSwipe(dialogElement, {
   onSwipe() {
     if (distanceY.value < 0) {
@@ -43,6 +63,24 @@ const { distanceY, isSwiping } = usePointerSwipe(dialogElement, {
     }
   },
   pointerTypes: ['touch', 'pen'],
+})
+
+useTrapTab(dialogElement)
+
+onMounted(() => {
+  if (props.noAutofocus) return
+
+  // will try to find focusable element inside dialog
+  // if it won't find it, will try to find inside the header
+  // most likely will find "Done" button
+  const firstFocusable =
+    getFirstFocusableElement(contentElement.value) ||
+    getFirstFocusableElement(dialogElement.value)
+
+  nextTick(() => {
+    firstFocusable?.focus()
+    firstFocusable?.scrollIntoView({ block: 'nearest' })
+  })
 })
 </script>
 
@@ -88,7 +126,7 @@ export default {
               v-bind="listeners?.done"
               @pointerdown.stop
               @click="close()"
-              @keypress.space="close()"
+              @keypress.space.prevent="close()"
             >
               {{ $t('Done') }}
             </button>
@@ -96,8 +134,9 @@ export default {
         </div>
       </div>
       <div
-        class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
+        ref="contentElement"
         v-bind="$attrs"
+        class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
       >
         <slot>{{ content }}</slot>
       </div>

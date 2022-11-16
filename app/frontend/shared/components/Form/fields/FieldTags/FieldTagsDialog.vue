@@ -5,6 +5,7 @@ import { computed, onMounted, ref, toRef } from 'vue'
 import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
+import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { i18n } from '@shared/i18n'
 import type { FieldTagsContext } from './types'
 import useValue from '../../composables/useValue'
@@ -37,7 +38,7 @@ const translatedOptions = computed(() => {
     return a1.localeCompare(b1)
   })
 
-  if (!options || !noOptionsLabelTranslation) return allOptions
+  if (!noOptionsLabelTranslation) return allOptions
 
   return allOptions.map((option) => {
     option.label = i18n.t(option.label, ...(option.labelPlaceholder || []))
@@ -84,10 +85,13 @@ const createTag = () => {
 }
 
 const filterInput = ref<CommonInputSearchExpose>()
+const tagsListbox = ref<HTMLElement>()
 
 onMounted(() => {
   filterInput.value?.focus()
 })
+
+useTraverseOptions(tagsListbox, { direction: 'vertical' })
 </script>
 
 <template>
@@ -97,7 +101,7 @@ onMounted(() => {
         ref="filterInput"
         v-model="filter"
         placeholder="Tag name…"
-        @keydown.enter="createTag()"
+        @keydown.enter.prevent="createTag()"
       >
         <template v-if="context.canCreate" #controls>
           <button
@@ -115,12 +119,20 @@ onMounted(() => {
         </template>
       </CommonInputSearch>
     </div>
-    <div class="flex w-full flex-col px-4">
+    <div
+      ref="tagsListbox"
+      class="flex w-full flex-col"
+      role="listbox"
+      aria-multiselectable="true"
+    >
       <button
         v-for="option of filteredTags"
         :key="option.value"
-        class="flex w-full items-center"
+        class="flex w-full items-center px-4 focus:bg-blue-highlight focus:outline-none"
+        role="option"
+        :aria-selected="isCurrentValue(option.value)"
         @click="toggleTag(option.value)"
+        @keydown.space.prevent="toggleTag(option.value)"
       >
         <CommonIcon
           :class="{

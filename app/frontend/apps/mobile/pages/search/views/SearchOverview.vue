@@ -80,7 +80,14 @@ const focusSearch = () => searchInput.value?.focus()
 
 const selectType = async (selectedType: string) => {
   await router.replace({ params: { type: selectedType } })
-  focusSearch()
+
+  // focus on tab that was selected
+  // it's useful when user selected type from the main screen (without tab controls)
+  // and after that we focus on tab controls, so user can easily change current type
+  const tabOption = document.querySelector(
+    `[data-value="${selectedType}"]`,
+  ) as HTMLElement | null
+  tabOption?.focus()
 }
 
 onMounted(() => {
@@ -197,6 +204,7 @@ export default {
         ref="searchInput"
         v-model="search"
         wrapper-class="flex-1"
+        :aria-label="$t('Enter search and select a type to search for')"
       />
       <CommonLink
         link="/"
@@ -209,6 +217,7 @@ export default {
     <CommonButtonGroup
       v-if="type"
       class="border-b border-white/10 px-4 pb-4"
+      as="tabs"
       :options="searchPills"
       :model-value="type"
       @update:model-value="selectType($event as string)"
@@ -226,7 +235,13 @@ export default {
     <div v-if="loading" class="flex h-14 w-full items-center justify-center">
       <CommonIcon name="mobile-loading" animation="spin" />
     </div>
-    <div v-else-if="canSearch && type && found[type]?.length">
+    <div
+      v-else-if="canSearch && type && found[type]?.length"
+      id="search-results"
+      aria-live="polite"
+      role="tabpanel"
+      :aria-busy="loading"
+    >
       <SearchResults :data="found[type]" :type="type" />
     </div>
     <div v-else-if="canSearch && type" class="mt-4 px-4">

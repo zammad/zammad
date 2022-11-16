@@ -5,7 +5,6 @@ import {
   pushComponent,
 } from '@shared/components/DynamicInitializer/manage'
 import { noop } from 'lodash-es'
-import type { AsyncComponentLoader, Component } from 'vue'
 import {
   computed,
   defineAsyncComponent,
@@ -14,17 +13,25 @@ import {
   getCurrentInstance,
   onMounted,
 } from 'vue'
+import type { AsyncComponentLoader, Component } from 'vue'
 
 interface DialogOptions {
   name: string
   component: () => Promise<Component>
   prefetch?: boolean
+  /**
+   * If true, dialog will focus the element that opened it.
+   * If dialog is opened without a user interaction, you should set it to false.
+   * @default true
+   */
+  refocus?: boolean
   beforeOpen?: () => Awaited<unknown>
   afterClose?: () => Awaited<unknown>
 }
 
 const dialogsOptions = new Map<string, DialogOptions>()
 const dialogsOpened = ref(new Set<string>())
+const lastFocusedElements: Record<string, HTMLElement> = {}
 
 export const getDialogMeta = () => {
   return {
@@ -61,6 +68,10 @@ export const openDialog = async (
     options.component as AsyncComponentLoader,
   )
 
+  if (options.refocus) {
+    lastFocusedElements[name] = document.activeElement as HTMLElement
+  }
+
   await pushComponent('dialog', name, component, props)
 
   return new Promise<void>((resolve) => {
@@ -78,9 +89,17 @@ export const closeDialog = async (name: string) => {
   if (options.afterClose) {
     await options.afterClose()
   }
+
+  const lastFocusedElement = lastFocusedElements[name]
+  if (lastFocusedElement && options.refocus && 'focus' in lastFocusedElement) {
+    lastFocusedElement.focus({ preventScroll: true })
+    delete lastFocusedElements[name]
+  }
 }
 
 export const useDialog = (options: DialogOptions) => {
+  options.refocus ??= true
+
   dialogsOptions.set(options.name, options as DialogOptions)
 
   const isOpened = computed(() => dialogsOpened.value.has(options.name))

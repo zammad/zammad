@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 import { useApplicationStore } from '@shared/stores/application'
 import { getInitials } from '@shared/utils/formatter'
+import { i18n } from '@shared/i18n'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarSize } from '../CommonAvatar'
 import type { AvatarUser } from './types'
@@ -93,6 +94,14 @@ const className = computed(() => {
 
   return classes
 })
+
+const label = computed(() => {
+  let label = i18n.t('Avatar')
+  const name = fullName.value || props.entity.email
+  if (name) label += ` (${name})`
+  if (isVip.value) label += ` (${i18n.t('VIP')})`
+  return label
+})
 </script>
 
 <template>
@@ -103,6 +112,6 @@ const className = computed(() => {
     :class="className"
     :image="image"
     :vip="isVip"
-    :aria-label="`${$t('Avatar')} (${fullName || entity.email || initials})`"
+    :aria-label="label"
   />
 </template>

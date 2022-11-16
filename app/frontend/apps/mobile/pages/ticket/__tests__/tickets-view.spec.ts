@@ -146,54 +146,111 @@ it('takes filter from query', async () => {
   })
 })
 
-it('pagination loads additional list', async () => {
-  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
-    hasNextPage: true,
-    endCursor: 'cursor',
+describe('paginating ticket list', () => {
+  const emulateScroll = async (scroll: number) => {
+    document.documentElement.scrollTop = scroll
+    document.dispatchEvent(
+      new Event('scroll', { bubbles: true, cancelable: true }),
+    )
+
+    await waitForNextTick()
+  }
+
+  it("doesn't load more, when there is nothing to load", async () => {
+    const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
+      hasNextPage: false,
+      endCursor: 'cursor',
+    })
+
+    mockApplicationConfig({
+      ui_ticket_overview_ticket_limit: 2000,
+    })
+
+    const view = await visitView(`/tickets/view`)
+
+    await waitFor(() => view.getByText('Ticket 1'))
+
+    expect(
+      view.queryByRole('button', { name: 'load 10 more' }),
+    ).not.toBeInTheDocument()
+
+    await emulateScroll(1000)
+
+    expect(ticketOverviewsApi.spies.resolve).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        cursor: 'cursor',
+      }),
+    )
   })
 
-  mockApplicationConfig({
-    ui_ticket_overview_ticket_limit: 2000,
+  it('load more button loads more tickets', async () => {
+    const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
+      hasNextPage: true,
+      endCursor: 'cursor',
+    })
+
+    mockApplicationConfig({
+      ui_ticket_overview_ticket_limit: 2000,
+    })
+
+    const view = await visitView(`/tickets/view`)
+
+    await waitFor(() => view.getByText('Ticket 1'))
+
+    const loadMoreButton = view.getByRole('button', { name: 'load 10 more' })
+
+    expect(loadMoreButton).toBeInTheDocument()
+    await view.events.click(loadMoreButton)
+
+    expect(ticketOverviewsApi.spies.resolve).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cursor: 'cursor',
+      }),
+    )
+
+    // page now has 2 links to tickets
+    // the last link before pressing "load more" has the focus
+    expect(view.getAllByRole('link', { name: /Ticket 1/ })[0]).toHaveFocus()
   })
 
-  const view = await visitView(`/tickets/view`)
+  it('pagination loads additional list', async () => {
+    const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
+      hasNextPage: true,
+      endCursor: 'cursor',
+    })
 
-  await waitFor(() => view.getByText('Ticket 1'))
+    mockApplicationConfig({
+      ui_ticket_overview_ticket_limit: 2000,
+    })
 
-  document.documentElement.scrollTop = 1000
-  document.dispatchEvent(
-    new Event('scroll', { bubbles: true, cancelable: true }),
-  )
+    const view = await visitView(`/tickets/view`)
 
-  await waitForNextTick()
+    await waitFor(() => view.getByText('Ticket 1'))
 
-  expect(ticketOverviewsApi.spies.resolve).toHaveBeenCalledWith(
-    expect.objectContaining({
-      cursor: 'cursor',
-    }),
-  )
-})
+    await emulateScroll(1000)
 
-it("pagination doesn't load if it is already loading more", async () => {
-  const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
-    hasNextPage: true,
-    endCursor: 'cursor',
+    expect(ticketOverviewsApi.spies.resolve).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cursor: 'cursor',
+      }),
+    )
   })
 
-  const view = await visitView(`/tickets/view`)
+  it("pagination doesn't load if it is already loading more", async () => {
+    const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
+      hasNextPage: true,
+      endCursor: 'cursor',
+    })
 
-  await waitFor(() => view.getByTestId('overview'))
+    const view = await visitView(`/tickets/view`)
 
-  document.documentElement.scrollTop = 1000
-  document.dispatchEvent(
-    new Event('scroll', { bubbles: true, cancelable: true }),
-  )
+    await waitFor(() => view.getByTestId('overview'))
+    await emulateScroll(1000)
 
-  await waitForNextTick()
-
-  expect(ticketOverviewsApi.spies.resolve).not.toHaveBeenCalledWith(
-    expect.objectContaining({
-      cursor: 'cursor',
-    }),
-  )
+    expect(ticketOverviewsApi.spies.resolve).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        cursor: 'cursor',
+      }),
+    )
+  })
 })

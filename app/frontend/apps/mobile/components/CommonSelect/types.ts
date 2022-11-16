@@ -3,5 +3,6 @@
 export interface CommonSelectInstance {
   openDialog(): void
   closeDialog(): void
+  getFocusableOptions(): HTMLElement[]
   isOpen: boolean
 }

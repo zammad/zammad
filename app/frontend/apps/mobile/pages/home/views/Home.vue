@@ -61,8 +61,13 @@ const ticketOverview = computed<MenuItem[]>(() => {
     <h1 class="mb-5 flex w-full items-center justify-center text-4xl font-bold">
       {{ $t('Home') }}
     </h1>
-    <CommonLink link="/search">
-      <CommonInputSearch wrapper-class="mb-4" no-border />
+    <CommonLink :aria-label="$t('Search…')" link="/search">
+      <CommonInputSearch
+        aria-hidden="true"
+        tabindex="-1"
+        wrapper-class="mb-4"
+        no-border
+      />
     </CommonLink>
     <CommonSectionMenu :items="menu" />
     <CommonSectionMenu

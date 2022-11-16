@@ -55,7 +55,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
         expect(page.find('[role="dialog"]')).to have_text('descending')
 
         find('span', text: 'Number').click
-        find('label', text: 'descending').click
+        find('button', text: 'descending').click
 
         send_keys(:escape)
 

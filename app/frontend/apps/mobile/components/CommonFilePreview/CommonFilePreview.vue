@@ -74,6 +74,7 @@ const ariaLabel = computed(() => {
     <Component
       :is="componentType"
       class="flex w-full select-none items-center gap-2 overflow-hidden text-left"
+      :type="componentType === 'button' && 'button'"
       :class="{ 'cursor-pointer': componentType !== 'div' }"
       :aria-label="ariaLabel"
       :link="downloadUrl"
@@ -93,7 +94,7 @@ const ariaLabel = computed(() => {
           :alt="$t('Image of %s', file.name)"
           @error="imageFailed = true"
         />
-        <CommonIcon v-else size="base" :name="icon" />
+        <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
       <div class="flex flex-1 flex-col overflow-hidden leading-4">
         <span class="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -107,13 +108,16 @@ const ariaLabel = computed(() => {
 
     <button
       v-if="!noRemove"
+      type="button"
       :aria-label="i18n.t('Remove %s', file.name)"
       @click.stop.prevent="$emit('remove')"
+      @keypress.space.prevent="$emit('remove')"
     >
       <CommonIcon
         class="text-gray ltr:right-2 rtl:left-2"
         name="mobile-close-small"
         size="base"
+        decorative
       />
     </button>
   </div>

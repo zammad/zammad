@@ -2,8 +2,13 @@
 
 <script setup lang="ts">
 import type { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
+import { useFocusWhenTyping } from '@shared/composables/useFocusWhenTyping'
+import { useTrapTab } from '@shared/composables/useTrapTab'
+import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
+import stopEvent from '@shared/utils/events'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import type { Ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import CommonSelectItem from './CommonSelectItem.vue'
 
 export interface Props {
@@ -17,6 +22,7 @@ export interface Props {
   passive?: boolean
   multiple?: boolean
   noClose?: boolean
+  noRefocus?: boolean
   noOptionsLabelTranslation?: boolean
 }
 
@@ -25,6 +31,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   (e: 'update:modelValue', option: string | number | (string | number)[]): void
   (e: 'select', option: SelectOption): void
+  (e: 'close'): void
 }>()
 
 const dialogElement = ref<HTMLElement>()
@@ -35,24 +42,62 @@ if (localValue.value == null && props.multiple) {
   localValue.value = []
 }
 
+const getFocusableOptions = () => {
+  return Array.from<HTMLElement>(
+    dialogElement.value?.querySelectorAll('[tabindex="0"]') || [],
+  )
+}
+
 const showDialog = ref(false)
+let lastFocusableOutsideElement: HTMLElement | null = null
 
 const openDialog = () => {
   showDialog.value = true
+  lastFocusableOutsideElement = document.activeElement as HTMLElement
+  requestAnimationFrame(() => {
+    // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
+    // focus selected or first available option
+    const focusableElements = getFocusableOptions()
+    const selected = focusableElements.find(
+      (el) => el.getAttribute('aria-selected') === 'true',
+    )
+    const focusElement = selected || focusableElements[0]
+    focusElement?.focus()
+  })
 }
 
 const closeDialog = () => {
   showDialog.value = false
+  emit('close')
+  if (!props.noRefocus) {
+    nextTick(() => lastFocusableOutsideElement?.focus())
+  }
 }
 
 defineExpose({
   isOpen: computed(() => showDialog.value),
   openDialog,
   closeDialog,
+  getFocusableOptions,
 })
 
+useTrapTab(dialogElement)
+
+// https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
+useTraverseOptions(dialogElement, { direction: 'vertical' })
+
+// - Type-ahead is recommended for all listboxes, especially those with more than seven options
+useFocusWhenTyping(dialogElement)
+
 onClickOutside(dialogElement, closeDialog)
-onKeyDown('Escape', closeDialog)
+onKeyDown(
+  'Escape',
+  (event) => {
+    stopEvent(event)
+    closeDialog()
+  },
+  { target: dialogElement as Ref<EventTarget> },
+)
 
 const isCurrentValue = (value: string | number | boolean) => {
   if (props.multiple && Array.isArray(localValue.value)) {
@@ -94,34 +139,6 @@ const select = (option: SelectOption) => {
     closeDialog()
   }
 }
-
-const getElementUp = (currentIndex: number, elements: HTMLElement[]) => {
-  if (currentIndex === 0) {
-    return elements[elements.length - 1]
-  }
-  return elements[currentIndex - 1]
-}
-
-const getElementDown = (currentIndex: number, elements: HTMLElement[]) => {
-  if (currentIndex === elements.length - 1) {
-    return elements[0]
-  }
-  return elements[currentIndex + 1]
-}
-
-const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
-  if (!['ArrowUp', 'ArrowDown'].includes(event.key)) return
-
-  const focusableElements: HTMLElement[] = Array.from(
-    dialogElement.value?.querySelectorAll('[tabindex="0"]') || [],
-  )
-  const nextElement =
-    event.key === 'ArrowUp'
-      ? getElementUp(currentIndex, focusableElements)
-      : getElementDown(currentIndex, focusableElements)
-
-  nextElement?.focus()
-}
 </script>
 
 <template>
@@ -146,17 +163,17 @@ const advanceDialogFocus = (event: KeyboardEvent, currentIndex: number) => {
               ref="dialogElement"
               :aria-label="$t('Select…')"
               role="listbox"
+              :aria-multiselectable="multiple"
               class="max-h-[50vh] w-full divide-y divide-solid divide-white/10 overflow-y-auto"
             >
               <CommonSelectItem
-                v-for="(option, index) in options"
+                v-for="option in options"
                 :key="String(option.value)"
                 :selected="isCurrentValue(option.value)"
                 :multiple="multiple"
                 :option="option"
                 :no-label-translate="noOptionsLabelTranslation"
                 @select="select($event)"
-                @keydown="advanceDialogFocus($event, index)"
               />
               <slot name="footer" />
             </div>

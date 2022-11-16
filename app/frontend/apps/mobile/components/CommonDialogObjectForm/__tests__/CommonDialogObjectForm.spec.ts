@@ -87,6 +87,8 @@ test('can update default object', async () => {
   const textarea = view.getByLabelText('Textarea Field')
   const test = view.getByLabelText('Test Field')
 
+  expect(name).toHaveFocus()
+
   expect(name).toHaveValue(organization.name)
   expect(shared).toBeChecked()
   expect(domainAssignment).not.toBeChecked()

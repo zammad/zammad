@@ -25,23 +25,15 @@ const useSelectOptions = (
       sorting?: SelectOptionSorting
     }>
   >,
-  arrowLeftCallback?: (
-    option?: SelectOption | FlatSelectOption | AutoCompleteOption,
-    getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
-  ) => void,
-  arrowRightCallback?: (
-    option?: SelectOption | FlatSelectOption | AutoCompleteOption,
-    getDialogFocusTargets?: (optionsOnly?: boolean) => HTMLElement[],
-  ) => void,
 ) => {
   const dialog = ref<HTMLElement>()
 
   const { currentValue, hasValue, valueContainer, clearValue } =
     useValue(context)
 
-  const appendedOptions: Ref<
+  const appendedOptions = ref<
     SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]
-  > = ref([])
+  >([])
 
   const availableOptions = computed(() => [
     ...(options.value || []),
@@ -59,24 +51,22 @@ const useSelectOptions = (
 
     const { noOptionsLabelTranslation } = context.value
 
-    return availableOptions.value.map(
-      (option: SelectOption | FlatSelectOption | AutoCompleteOption) => {
-        const label = noOptionsLabelTranslation
-          ? option.label
-          : i18n.t(option.label, ...(option.labelPlaceholder || []))
+    return availableOptions.value.map((option) => {
+      const label = noOptionsLabelTranslation
+        ? option.label
+        : i18n.t(option.label, ...(option.labelPlaceholder || []))
 
-        const variant = option as AutoCompleteOption
-        const heading = noOptionsLabelTranslation
-          ? variant.heading
-          : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
+      const variant = option as AutoCompleteOption
+      const heading = noOptionsLabelTranslation
+        ? variant.heading
+        : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
 
-        return {
-          ...option,
-          label,
-          heading,
-        } as SelectOption | FlatSelectOption | AutoCompleteOption
-      },
-    )
+      return {
+        ...option,
+        label,
+        heading,
+      } as SelectOption | AutoCompleteOption
+    })
   })
 
   const optionValueLookup = computed(() =>
@@ -100,21 +90,23 @@ const useSelectOptions = (
     })
   })
 
-  const getSelectedOptionIcon = (selectedValue: SelectValue) => {
+  const getSelectedOption = (selectedValue: SelectValue) => {
     const key = selectedValue.toString()
-    const option = optionValueLookup.value[key]
+    return optionValueLookup.value[key]
+  }
+
+  const getSelectedOptionIcon = (selectedValue: SelectValue) => {
+    const option = getSelectedOption(selectedValue)
     return option?.icon as string
   }
 
   const getSelectedOptionLabel = (selectedValue: SelectValue) => {
-    const key = selectedValue.toString()
-    const option = optionValueLookup.value[key]
+    const option = getSelectedOption(selectedValue)
     return option?.label
   }
 
   const getSelectedOptionStatus = (selectedValue: SelectValue) => {
-    const key = selectedValue.toString()
-    const option = optionValueLookup.value[key] as
+    const option = getSelectedOption(selectedValue) as
       | SelectOption
       | FlatSelectOption
     return option?.status as TicketState
@@ -123,21 +115,21 @@ const useSelectOptions = (
   const selectOption = (
     option: SelectOption | FlatSelectOption | AutoCompleteOption,
   ) => {
-    if (context.value.multiple) {
-      const selectedValues = cloneDeep(currentValue.value) || []
-      const optionIndex = selectedValues.indexOf(option.value)
-      if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
-      else selectedValues.push(option.value)
-      selectedValues.sort(
-        (a: string | number, b: string | number) =>
-          sortedOptions.value.findIndex((option) => option.value === a) -
-          sortedOptions.value.findIndex((option) => option.value === b),
-      )
-      context.value.node.input(selectedValues)
+    if (!context.value.multiple) {
+      context.value.node.input(option.value)
       return
     }
 
-    context.value.node.input(option.value)
+    const selectedValues = cloneDeep(currentValue.value) || []
+    const optionIndex = selectedValues.indexOf(option.value)
+    if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
+    else selectedValues.push(option.value)
+    selectedValues.sort(
+      (a: string | number, b: string | number) =>
+        sortedOptions.value.findIndex((option) => option.value === a) -
+        sortedOptions.value.findIndex((option) => option.value === b),
+    )
+    context.value.node.input(selectedValues)
   }
 
   const getDialogFocusTargets = (optionsOnly?: boolean): HTMLElement[] => {
@@ -158,51 +150,11 @@ const useSelectOptions = (
     return targetElements
   }
 
-  const advanceDialogFocus = (
-    event: KeyboardEvent,
-    option?: SelectOption | FlatSelectOption,
-  ) => {
-    const originElement = event.target as HTMLElement
-
-    const targetElements = getDialogFocusTargets()
-    if (!targetElements.length) return
-
-    const originElementIndex =
-      targetElements.indexOf(
-        (document.activeElement as HTMLElement) || originElement,
-      ) || 0
-
-    let targetElement
-
-    switch (event.key) {
-      case 'ArrowLeft':
-        if (typeof arrowLeftCallback === 'function')
-          arrowLeftCallback(option, getDialogFocusTargets)
-        break
-      case 'ArrowUp':
-        targetElement =
-          targetElements[originElementIndex - 1] ||
-          targetElements[targetElements.length - 1]
-        break
-      case 'ArrowRight':
-        if (typeof arrowRightCallback === 'function')
-          arrowRightCallback(option, getDialogFocusTargets)
-        break
-      case 'ArrowDown':
-        targetElement =
-          targetElements[originElementIndex + 1] || targetElements[0]
-        break
-      default:
-    }
-
-    if (targetElement) targetElement.focus()
-  }
-
   // Setup a mechanism to handle missing options, including:
   //   - appending historical options for current values
   //   - clearing value in case options are missing
   const setupMissingOptionHandling = () => {
-    const historicalOptions = context.value.historicalOptions || {}
+    const { historicalOptions } = context.value
 
     // Append historical options to the list of available options, if:
     //   - non-existent values are not supposed to be rejected
@@ -214,26 +166,17 @@ const useSelectOptions = (
       historicalOptions
     ) {
       appendedOptions.value = valueContainer.value.reduce(
-        (
-          accumulator:
-            | SelectOption[]
-            | FlatSelectOption[]
-            | AutoCompleteOption[],
-          value: SelectValue,
-        ) => [
-          ...accumulator,
-
+        (accumulator: SelectOption[], value: SelectValue) => {
+          const label = historicalOptions[value.toString()]
           // Make sure the options are not duplicated!
-          ...(!options.value.some((option) => option.value === value) &&
-          historicalOptions[value.toString()]
-            ? [
-                {
-                  value,
-                  label: historicalOptions[value.toString()],
-                },
-              ]
-            : []),
-        ],
+          if (
+            label &&
+            !options.value.some((option) => option.value === value)
+          ) {
+            accumulator.push({ value, label })
+          }
+          return accumulator
+        },
         [],
       )
     }
@@ -269,12 +212,12 @@ const useSelectOptions = (
     translatedOptions,
     optionValueLookup,
     sortedOptions,
+    getSelectedOption,
     getSelectedOptionIcon,
     getSelectedOptionLabel,
     getSelectedOptionStatus,
     selectOption,
     getDialogFocusTargets,
-    advanceDialogFocus,
     setupMissingOptionHandling,
   }
 }

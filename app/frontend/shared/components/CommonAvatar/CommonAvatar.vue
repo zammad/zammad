@@ -12,7 +12,7 @@ export interface Props {
   icon?: Maybe<string>
   size?: AvatarSize
   vip?: Maybe<boolean>
-  ariaLabel?: string
+  ariaLabel?: Maybe<string>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,6 +55,7 @@ const iconSize = computed(() => {
       size="xl"
       class="vip absolute left-1/2 -top-[48px] -ml-5 w-10 text-yellow"
       name="mobile-crown"
+      decorative
     />
     <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
     <slot v-else>

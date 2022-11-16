@@ -231,6 +231,10 @@ const renderForm = async (
           object: EnumObjectManagerObjects.Ticket,
           screen: 'create_middle',
         },
+        {
+          type: 'submit',
+          name: 'submit',
+        },
       ],
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
       ...(options.props || {}),

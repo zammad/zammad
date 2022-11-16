@@ -46,8 +46,8 @@ const defaultLabel = computed(() => {
     <button
       type="button"
       class="inline-flex w-auto cursor-pointer rounded-lg bg-gray-600 py-1 ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1"
-      @click="open"
-      @keydown.space="open"
+      @click="open()"
+      @keypress.space.prevent="open()"
     >
       <slot>
         {{ defaultLabel }}

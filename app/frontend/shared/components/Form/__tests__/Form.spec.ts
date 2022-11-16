@@ -3,7 +3,7 @@
 import { onMounted, ref } from 'vue'
 import type { FormKitNode } from '@formkit/core'
 import { getNode } from '@formkit/core'
-import { within } from '@testing-library/vue'
+import { waitFor, within } from '@testing-library/vue'
 import type { ExtendedMountingOptions } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
@@ -482,6 +482,19 @@ describe('Form.vue - Edge Cases', () => {
       )
     })
   })
+
+  it('focuses the first focusable input, if autofocus is enabled', async () => {
+    const view = await renderForm({
+      props: {
+        autofocus: true,
+      },
+    })
+
+    await waitFor(() => {
+      const input = view.getByLabelText('Title')
+      expect(input).toHaveFocus()
+    })
+  })
 })
 
 describe('Form.vue - with object attributes', () => {
@@ -526,6 +539,47 @@ describe('Form.vue - with object attributes', () => {
     expect(wrapper.getByLabelText('Customer')).toHaveTextContent('John Doe')
     expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
+  })
+
+  it('focuses the first focusable input, if autofocus is enabled', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+      objectManagerFrontendAttributes: frontendObjectAttributes,
+    })
+
+    const view = renderComponent(Form, {
+      ...wrapperParameters,
+      props: {
+        autofocus: true,
+        useObjectAttributes: true,
+        schema: [
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            name: 'title',
+            screen: 'create_top',
+          },
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            name: 'customer_id',
+            screen: 'create_top',
+          },
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            screen: 'create_middle',
+          },
+        ],
+        initialEntityObject: {
+          customer: {
+            internalId: '123',
+            fullname: 'John Doe',
+          },
+        },
+      },
+    })
+
+    await waitUntil(() => view.queryByLabelText('Title'))
+
+    const input = view.getByLabelText('Title')
+    expect(input).toHaveFocus()
   })
 })
 

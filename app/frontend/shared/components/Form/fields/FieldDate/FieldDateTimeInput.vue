@@ -17,6 +17,7 @@ import {
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router'
+import { useRawHTMLIcon } from '@shared/components/CommonIcon'
 import type { FormFieldContext } from '../../types/field'
 import useValue from '../../composables/useValue'
 
@@ -131,6 +132,7 @@ const createTodayButton = (picker: flatpickr.Instance) => {
   todayButton.addEventListener('click', () => {
     picker.setDate('today', true)
   })
+  todayButton.type = 'button'
   todayButton.name = 'today'
   todayButton.textContent = i18n.t('Today')
   todayButton.className = 'flex-1 hover:bg-gray-300 border border-gray rounded'
@@ -143,6 +145,7 @@ const createClearButton = (picker: flatpickr.Instance) => {
   clearButton.addEventListener('click', () => {
     picker.clear(true)
   })
+  clearButton.type = 'button'
   clearButton.name = 'clear'
   clearButton.className = 'flex-1 hover:bg-gray-300 border border-gray rounded'
   clearButton.textContent = i18n.t('Clear')
@@ -162,6 +165,9 @@ const createCalendarFooter = (picker: flatpickr.Instance) => {
 
   return footer
 }
+
+const iconPrevArrow = useRawHTMLIcon({ name: 'mobile-chevron-left' })
+const iconNextArrow = useRawHTMLIcon({ name: 'mobile-chevron-right' })
 
 const createFlatpickr = () => {
   if (!pickerNode.value || props.context.disabled) return undefined
@@ -186,10 +192,8 @@ const createFlatpickr = () => {
     maxDate: props.context.maxDate,
     minDate: getMinDate(),
     weekNumbers: application.config.datepicker_show_calendar_weeks === true,
-    prevArrow:
-      '<svg xmlns="http://www.w3.org/2000/svg" class="icon fill-current" width="24" height="24"><use href="#icon-mobile-chevron-left" /></svg>',
-    nextArrow:
-      '<svg xmlns="http://www.w3.org/2000/svg" class="icon fill-current" width="24" height="24"><use href="#icon-mobile-chevron-right" /></svg>',
+    prevArrow: iconPrevArrow,
+    nextArrow: iconNextArrow,
     formatDate(date) {
       const isoDate = date.toISOString()
       if (time.value) return i18n.dateTime(isoDate)
@@ -209,14 +213,17 @@ const createFlatpickr = () => {
 // store calendar height to animate it's appearance later
 let flatpickrHeight = 0
 const rerenderFlatpickr = () => {
-  datepicker.value = createFlatpickr()
-  if (datepicker.value) {
-    const footer = createCalendarFooter(datepicker.value)
-    const calendarNode = datepicker.value.calendarContainer
+  const flatpickr = createFlatpickr()
+  if (flatpickr) {
+    const footer = createCalendarFooter(flatpickr)
+    const calendarNode = flatpickr.calendarContainer
     calendarNode.setAttribute('role', 'dialog')
     calendarNode.appendChild(footer)
-    flatpickrHeight = calendarNode.clientHeight
+    requestAnimationFrame(() => {
+      flatpickrHeight = calendarNode.clientHeight || calendarNode.scrollHeight
+    })
   }
+  datepicker.value = flatpickr
 }
 
 onMounted(rerenderFlatpickr)
@@ -255,8 +262,8 @@ watchEffect(() => {
     calendar.setAttribute('aria-hidden', 'true')
     calendar.style.height = '0px'
   } else {
-    calendar.removeAttribute('aria-hidden')
     calendar.style.height = `${flatpickrHeight}px`
+    calendar.removeAttribute('aria-hidden')
     clearButton?.removeAttribute('tabindex')
     todayButton?.removeAttribute('tabindex')
   }
@@ -290,6 +297,7 @@ onBeforeUnmount(() => {
     <input
       :id="props.context.id"
       ref="pickerNode"
+      :name="props.context.node.name"
       :class="props.context.classes.input"
       :disabled="(props.context.disabled as boolean)"
       @blur="context.handlers.blur"

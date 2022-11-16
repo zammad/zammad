@@ -50,7 +50,7 @@ const secondaryOrganizations = computed(() =>
 <template>
   <CommonLoader :loading="loading">
     <div v-if="user" class="mb-3 flex items-center gap-3">
-      <CommonUserAvatar size="normal" :entity="user" />
+      <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
       <div>
         <h2 class="text-lg font-semibold">
           {{ user.fullname }}
@@ -73,7 +73,11 @@ const secondaryOrganizations = computed(() =>
       :skip-attributes="['firstname', 'lastname']"
     >
       <template v-if="session.hasPermission(['ticket.agent'])" #after-fields>
-        <button class="p-4 text-blue" @click="openEditUserDialog(user!)">
+        <button
+          type="button"
+          class="p-4 text-blue"
+          @click="openEditUserDialog(user!)"
+        >
           {{ $t('Edit Customer') }}
         </button>
       </template>

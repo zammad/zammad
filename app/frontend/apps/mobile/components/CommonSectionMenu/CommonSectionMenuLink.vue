@@ -32,7 +32,7 @@ const iconProps = computed<IconProps | null>(() => {
 
 <template>
   <component
-    :is="link ? 'CommonLink' : 'div'"
+    :is="link ? 'CommonLink' : 'button'"
     :link="link"
     class="cursor-pointer border-b border-gray-300 last:border-0"
     data-test-id="section-menu-link"

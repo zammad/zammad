@@ -29,7 +29,11 @@ const emit = defineEmits<{
       :link="`/users/${user.internalId}`"
       class="flex min-h-[66px] items-center"
     >
-      <CommonUserAvatar :entity="user" class="ltr:mr-3 rtl:ml-3" />
+      <CommonUserAvatar
+        aria-hidden="true"
+        :entity="user"
+        class="ltr:mr-3 rtl:ml-3"
+      />
       <span class="overflow-hidden text-ellipsis whitespace-nowrap">
         {{ user.fullname }}
       </span>

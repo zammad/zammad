@@ -12,8 +12,13 @@ describe('rendering common back button', () => {
       router: true,
       props: {
         fallback: '/back-url',
-        label: 'Back',
       },
+    })
+
+    expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+
+    await view.rerender({
+      label: 'Back',
     })
 
     expect(view.container).toHaveTextContent('Back')
@@ -23,5 +28,7 @@ describe('rendering common back button', () => {
     await flushPromises()
 
     expect(view.container).toHaveTextContent('Zurück')
+
+    expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
   })
 })
