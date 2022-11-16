@@ -13,7 +13,7 @@ class App.DataPrivacyTask extends App.Model
   @configure_overview = []
 
   @description = __('''
-** Data Privacy ** helps you to delete and verify the removal of existing data from the system.
+**Data Privacy** helps you to delete and verify the removal of existing data from the system.
 
 It can be used to delete tickets, organizations, and users. The owner assignment will be unset in case the deleted user is an agent.
 

@@ -22,9 +22,9 @@ class App.Sla extends App.Model
   ]
 
   @description = __('''
-** Service Level Agreements **, abbreviated ** SLAs **, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.
+**Service Level Agreements**, abbreviated **SLAs**, help you to meet specific response times for your customers' requests. This way you can define goals such as answering every inquiry within eight hours. If you are at risk of missing this target, Zammad will alert you.
 
-You can define targets for three different metrics: ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction), and ** solution time ** (time between creating and closing a ticket).
+You can define targets for three different metrics: **response time** (time between the creation of a ticket and the first reaction of an agent), **update time** (time between a customer's request and an agent's reaction), and **solution time** (time between creating and closing a ticket).
 
-Any escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure ** email notifications **.
+Any escalated tickets (i.e. tickets that have missed the defined target) are displayed in a separate view in your overviews. You can also configure **email notifications**.
 ''')
