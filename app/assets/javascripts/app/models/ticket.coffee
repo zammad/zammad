@@ -146,22 +146,7 @@ class App.Ticket extends App.Model
 
         # apply pending date changes
         else if attributes[1] is 'pending_time' && content.operator is 'relative'
-          pendtil = new Date
-          diff    = parseInt(content.value, 10)
-
-          switch content.range
-            when 'day'
-              pendtil.setDate(pendtil.getDate() + diff)
-            when 'minute'
-              pendtil.setMinutes(pendtil.getMinutes() + diff)
-            when 'hour'
-              pendtil.setHours(pendtil.getHours() + diff)
-            when 'month'
-              pendtil.setMonth(pendtil.getMonth() + diff)
-            when 'year'
-              pendtil.setFullYear(pendtil.getFullYear() + diff)
-
-          params.ticket[attributes[1]] = pendtil.toISOString()
+          params.ticket[attributes[1]] = App.ViewHelpers.relative_time(content.value, content.range)
 
         # apply user changes
         else if attributes[1] is 'owner_id' || attributes[1] is 'customer_id'

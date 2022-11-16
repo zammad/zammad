@@ -23,3 +23,18 @@ QUnit.test("time_duration", assert => {
 
   assert.equal(func(360101), '100:01:41')
 })
+
+QUnit.test('relative_time', assert => {
+  let func = App.ViewHelpers.relative_time
+
+  clock = sinon.useFakeTimers({ now: new Date('2022-11-15T10:00:00.000Z') })
+
+  assert.equal(func(1, 'minute'), '2022-11-15T10:01:00.000Z')
+  assert.equal(func(5, 'hour'), '2022-11-15T15:00:00.000Z')
+  assert.equal(func(3, 'day'), '2022-11-18T10:00:00.000Z')
+  assert.equal(func(4, 'week'), '2022-12-13T10:00:00.000Z')
+  assert.equal(func(8, 'month'), '2023-07-15T09:00:00.000Z')
+  assert.equal(func(2, 'year'), '2024-11-15T10:00:00.000Z')
+
+  clock.restore()
+})

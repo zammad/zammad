@@ -35,21 +35,101 @@ RSpec.describe 'Ticket Create', type: :system do
     let!(:template_unpermitted_group) { create(:template, :dummy_data, group: unpermitted_group, owner: agent) }
     let!(:template_permitted_group)   { create(:template, :dummy_data, group: permitted_group, owner: agent) }
 
+    before { visit 'ticket/create' }
+
     # Regression test for issue #2424 - Unavailable ticket template attributes get applied
     it 'unavailable attributes do not get applied', authenticated_as: :agent do
-      visit 'ticket/create'
-
       use_template(template_unpermitted_group)
       expect(all('[name="group_id"] option', visible: :all).map(&:value)).not_to eq unpermitted_group.id.to_s
       expect(find('[name="owner_id"]', visible: :all).value).to eq agent.id.to_s
     end
 
     it 'available attributes get applied', authenticated_as: :agent do
-      visit 'ticket/create'
-
       use_template(template_permitted_group)
       expect(find('[name="group_id"]', visible: :all).value).to eq permitted_group.id.to_s
       expect(find('[name="owner_id"]', visible: :all).value).to eq agent.id.to_s
+    end
+
+    context 'with tag values' do
+      let(:template) do
+        create(:template,
+               options: {
+                 'ticket.tags': {
+                   value:    template_value,
+                   operator: operator,
+                 }
+               })
+      end
+
+      shared_examples 'merging with existing tags in a dirty form' do
+        it 'merges with existing tags in a dirty form' do
+          find('input[name="tags"]', visible: :all)
+          set_input_field_value('tags', 'baz, qux, foo', visible: :all)
+          wait.until { find_all('.token').length == 3 }
+          use_template(template)
+          check_input_field_value('tags', "baz, qux, #{template_value}", visible: :all)
+        end
+      end
+
+      shared_examples 'replacing tags in a clean form' do
+        it 'replaces tags in a clean form' do
+          use_template(template)
+          check_input_field_value('tags', template_value, visible: :all)
+        end
+      end
+
+      shared_examples 'leaving tags empty in a clean form' do
+        it 'does nothing in a clean form' do
+          use_template(template)
+          check_input_field_value('tags', '', visible: :all)
+        end
+      end
+
+      context 'with add operator' do
+        let(:operator) { 'add' }
+        let(:template_value) { 'foo, bar' }
+
+        it_behaves_like 'replacing tags in a clean form'
+        it_behaves_like 'merging with existing tags in a dirty form'
+      end
+
+      context 'with remove operator' do
+        let(:operator) { 'remove' }
+        let(:template_value) { 'foo, bar' }
+
+        it_behaves_like 'leaving tags empty in a clean form'
+
+        it 'removes existing tags in a dirty form' do
+          find('input[name="tags"]', visible: :all)
+          set_input_field_value('tags', 'foo, bar, baz, qux', visible: :all)
+          wait.until { find_all('.token').length == 4 }
+          use_template(template)
+          check_input_field_value('tags', 'baz, qux', visible: :all)
+        end
+      end
+
+      context 'without operator (legacy)' do
+        let(:operator) { nil }
+        let(:template_value) { 'foo, bar' }
+
+        it_behaves_like 'replacing tags in a clean form'
+        it_behaves_like 'merging with existing tags in a dirty form'
+      end
+
+      context 'with empty value' do
+        let(:operator) { nil }
+        let(:template_value) { nil }
+
+        it_behaves_like 'leaving tags empty in a clean form'
+
+        it 'leaves existing tags untouched in a dirty form' do
+          find('input[name="tags"]', visible: :all)
+          set_input_field_value('tags', 'baz, qux', visible: :all)
+          wait.until { find_all('.token').length == 2 }
+          use_template(template)
+          check_input_field_value('tags', 'baz, qux', visible: :all)
+        end
+      end
     end
 
   end
@@ -394,11 +474,7 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     after :all do # rubocop:disable RSpec/BeforeAfterAll
-      ObjectManager::Attribute.where(name: %i[object_manager_attribute_date object_manager_attribute_datetime]).destroy_all
-    end
-
-    around do |example|
-      Time.use_zone('Europe/London') { example.run }
+      ObjectManager::Attribute.where(name: %i[date_test datetime_test]).destroy_all
     end
 
     before do
@@ -1176,7 +1252,6 @@ RSpec.describe 'Ticket Create', type: :system do
   end
 
   describe 'Ticket templates resets article body #2434' do
-    let(:ticket)     { create(:ticket) }
     let!(:template1) { create(:template, :dummy_data, title: 'template 1', body: 'body 1') }
     let!(:template2) { create(:template, :dummy_data, title: 'template 2', body: 'body 2') }
 
@@ -1185,34 +1260,166 @@ RSpec.describe 'Ticket Create', type: :system do
     end
 
     it 'preserves text input from the user' do
-      find('[data-name="body"]').set('foobar')
-
-      # Trigger the input event to mark the body field as "dirty"
-      execute_script('$("[data-name=\"body\"]").trigger("input")')
+      set_editor_field_value('body', 'foobar')
 
       use_template(template1)
-      expect(find('[name="title"]').value).to have_text('template 1')
-      expect(find('[data-name="body"]').text).to have_text('foobar')
+      check_input_field_value('title', 'template 1')
+      check_editor_field_value('body', 'foobar')
     end
 
     it 'allows easy switching between templates' do
       use_template(template1)
-      expect(find('[name="title"]').value).to have_text('template 1')
-      expect(find('[data-name="body"]').text).to have_text('body 1')
+      check_input_field_value('title', 'template 1')
+      check_editor_field_value('body', 'body 1')
 
       use_template(template2)
-      expect(find('[name="title"]').value).to eq('template 2')
-      expect(find('[data-name="body"]').text).to have_text('body 2')
+      check_input_field_value('title', 'template 2')
+      check_editor_field_value('body', 'body 2')
 
-      find('[data-name="body"]').set('foobar')
-
-      # Trigger the input event to mark the body field as "dirty"
-      execute_script('$("[data-name=\"body\"]").trigger("input")')
+      set_editor_field_value('body', 'foobar')
 
       # This time body value should be left as-is
       use_template(template1)
-      expect(find('[name="title"]').value).to have_text('template 1')
-      expect(find('[data-name="body"]').text).to have_text('foobar')
+      check_input_field_value('title', 'template 1')
+      check_editor_field_value('body', 'foobar')
+    end
+  end
+
+  describe 'Ticket templates are missing pending till option #4318', time_zone: 'Europe/London' do
+
+    shared_examples 'check datetime field' do
+
+      shared_examples 'calculated datetime value' do
+
+        it 'applies correct datetime value' do
+          use_template(template)
+
+          check_date_field_value(field, date.strftime('%m/%d/%Y'))
+          check_time_field_value(field, date.strftime('%H:%M'))
+        end
+
+      end
+
+      context 'with static operator' do
+        let(:operator)       { 'static' }
+        let(:date)           { 3.days.from_now }
+        let(:template_value) { date.to_datetime.to_s }
+
+        it_behaves_like 'calculated datetime value'
+      end
+
+      context 'with relative operator' do
+        let(:operator)       { 'relative' }
+        let(:date)           { value.send(range).from_now }
+        let(:template_value) { value.to_s }
+
+        %w[minute hour day week month year].each do |range|
+          context "with #{range} range" do
+            let(:range) { range }
+            let(:value) do
+              case range
+              when 'minute' then [*(1..120)].sample
+              when 'hour' then [*(1..48)].sample
+              when 'day' then [*(1..31)].sample
+              when 'week' then [*(1..53)].sample
+              when 'month' then [*(1..12)].sample
+              when 'year' then [*(1..20)].sample
+              end
+            end
+
+            it_behaves_like 'calculated datetime value'
+          end
+        end
+      end
+    end
+
+    shared_examples 'check date field' do
+      let(:date)           { 5.days.from_now }
+      let(:template_value) { date.to_datetime.to_s }
+
+      it 'applies correct date value' do
+        use_template(template)
+
+        check_date_field_value(field, date.strftime('%m/%d/%Y'))
+      end
+    end
+
+    describe 'pending till support' do
+      let(:field) { 'pending_time' }
+      let(:template) do
+        create(:template,
+               options: {
+                 'ticket.state_id': {
+                   value: Ticket::State.find_by(name: 'pending reminder').id.to_s,
+                 },
+                 "ticket.#{field}": {
+                   value:    template_value,
+                   operator: operator,
+                   range:    (range if defined? range),
+                 }
+               })
+      end
+
+      before do
+        freeze_time
+        template
+        visit '/'
+        browser_travel_to Time.current
+        visit 'ticket/create'
+      end
+
+      include_examples 'check datetime field'
+    end
+
+    describe 'custom attribute support' do
+      let(:template) do
+        create(:template,
+               options: {
+                 "ticket.#{field}": {
+                   value:    template_value,
+                   operator: (operator if defined? operator),
+                   range:    (range if defined? range),
+                 }
+               })
+      end
+
+      before :all do # rubocop:disable RSpec/BeforeAfterAll
+        screens = {
+          create_middle: {
+            'ticket.agent' => {
+              shown: true,
+            },
+          },
+        }
+
+        create(:object_manager_attribute_date, name: 'test_date', display: 'test_date', screens: screens)
+        create(:object_manager_attribute_datetime, name: 'test_datetime', display: 'test_datetime', screens: screens)
+        ObjectManager::Attribute.migration_execute # rubocop:disable Zammad/ExistsDbStrategy
+      end
+
+      after :all do # rubocop:disable RSpec/BeforeAfterAll
+        ObjectManager::Attribute.where(name: %w[test_date test_datetime]).destroy_all
+      end
+
+      before do
+        freeze_time
+        template
+        visit '/'
+        browser_travel_to Time.current
+        visit 'ticket/create'
+      end
+
+      context 'with date attribute' do
+        let(:field) { 'test_date' }
+
+        include_examples 'check date field'
+      end
+
+      context 'with datetime attribute' do
+        let(:field) { 'test_datetime' }
+
+        include_examples 'check datetime field'
+      end
     end
   end
 end
