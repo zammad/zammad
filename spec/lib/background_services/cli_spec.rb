@@ -27,14 +27,5 @@ RSpec.describe BackgroundServices::Cli, ensure_threads_exited: true do
       end
     end
 
-    context 'when trying to run multiple instances' do
-      it 'fails second instance' do
-        thread = Thread.new { ensure_block_keeps_running { described_class.start ['start'] } }
-        sleep 0.1
-        expect { ensure_block_keeps_running { described_class.start ['start'] } }.to raise_error('Cannot start BackgroundServices, another process seems to be running.')
-        thread.join
-      end
-    end
-
   end
 end
