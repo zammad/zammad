@@ -372,7 +372,7 @@ class App.TicketCreate extends App.Controller
 
     # Get template params
     if template && !_.isEmpty(template.options)
-      templateTags = ''
+      templateTags = null
 
       # Merge template values with existing params
       _.extend(params, _.pick(
@@ -392,6 +392,14 @@ class App.TicketCreate extends App.Controller
                 if templateValue['value_completion']
                   params["#{field}_completion"] = templateValue['value_completion']
 
+                # Calculate the target time value from now, in case of relative datetime fields (#4318).
+                if templateValue['operator'] is 'relative' and templateValue['range']
+                  value = App.ViewHelpers.relative_time(templateValue['value'], templateValue['range'])
+
+                # Remember complete tags configuration for further processing.
+                if field is 'tags'
+                  value = templateValue
+
               else
                 value = templateValue
 
@@ -399,11 +407,11 @@ class App.TicketCreate extends App.Controller
           )
         ),
 
-        # Pick only values for "non-dirty" fields
-        #   Skip processing tags, as these will get merged later
+        # Pick only values for "non-dirty" fields.
+        #   Skip tags, as these will get processed later.
         # https://github.com/zammad/zammad/issues/2434
         (value, field) =>
-          if field == 'tags'
+          if field is 'tags'
             templateTags = value
             return
 
@@ -413,13 +421,25 @@ class App.TicketCreate extends App.Controller
         )
       )
 
-      # Merge with existing tags, but only if they are "dirty"
-      params.tags = _.uniq(
-        _.union(
-          params.tags.split(', ') if @dirty?.tags && params.tags,
-          templateTags.split(', ') if templateTags
-        )
-      ).join(', ')
+      # Process template tags, but only if they are "dirty".
+      if @dirty?.tags and params.tags
+        switch templateTags?['operator']
+
+          # Remove tags included in the template from the existing tags.
+          when 'remove'
+            params.tags = _.difference(params.tags.split(', '), templateTags?['value']?.split(', ')).join(', ')
+
+          # Add tags included in the template by merging them with existing tags.
+          #   Do this also if the operator is missing from the template configuration (default behavior).
+          else
+            params.tags = _.uniq(_.union(params.tags.split(', '), templateTags?['value']?.split(', '))).join(', ')
+
+      # Otherwise, simply replace the tags with the value from the template.
+      #   Do not do this if they are supposed to be removed only.
+      #   This allows switching between different templates without accumulating their tags.
+      #   Note that template might not contain tags, in which case the field will be reset.
+      else if templateTags?['operator'] != 'remove'
+        params.tags = templateTags?['value']
 
     if !_.isEmpty(params)
       # only use form meta once so it will not get used on templates

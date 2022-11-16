@@ -68,6 +68,29 @@ App.ViewHelpers =
 
     "#{hrs}:#{mins}"
 
+  # Calculate relative time from now and return it as an ISO timestamp:
+  #   value - time difference as an integer
+  #   range - unit used for time difference (minute/hour/day/week/month/year)
+  relative_time: (value, range) ->
+    time = new Date
+    diff = parseInt(value, 10)
+
+    switch range
+      when 'minute'
+        time.setMinutes(time.getMinutes() + diff)
+      when 'hour'
+        time.setHours(time.getHours() + diff)
+      when 'day'
+        time.setDate(time.getDate() + diff)
+      when 'week'
+        time.setDate(time.getDate() + diff * 7)
+      when 'month'
+        time.setMonth(time.getMonth() + diff)
+      when 'year'
+        time.setFullYear(time.getFullYear() + diff)
+
+    time.toISOString()
+
   # define mask helper
   # mask an value like 'a***********yz'
   M: (item, start = 1, end = 2) ->
