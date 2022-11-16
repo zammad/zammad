@@ -11,11 +11,8 @@ class BackgroundServices
 
     desc 'start', 'Execute background services.'
     def start
-      lock
       config = BackgroundServices::ServiceConfig.configuration_from_env(ENV)
       BackgroundServices.new(config).run
-    ensure
-      release_lock
     end
 
     def self.help(shell, subcommand = nil)
@@ -36,19 +33,6 @@ class BackgroundServices
 
       shell.say
       shell.say 'For more information, please see https://docs.zammad.org/en/latest/appendix/configure-env-vars.html.'
-    end
-
-    private
-
-    def lock
-      @lock_file = File.open(__FILE__, 'r')
-      return if @lock_file.flock(File::LOCK_EX | File::LOCK_NB)
-
-      raise 'Cannot start BackgroundServices, another process seems to be running.'
-    end
-
-    def release_lock
-      @lock_file.close
     end
 
     # rubocop:enable Zammad/DetectTranslatableString
