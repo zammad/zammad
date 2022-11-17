@@ -25,8 +25,8 @@ module Gql::Types
     end
 
     def prepare
-      self.class.transformers.reduce(super) do |result, t|
-        send(t, result)
+      self.class.transformers.reduce(super) do |result, transformer|
+        send(transformer, result)
       end
     end
   end

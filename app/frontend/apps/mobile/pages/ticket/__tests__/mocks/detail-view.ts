@@ -102,7 +102,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             internal: false,
             body: '<p>Body <b>of a test ticket</b></p>',
             sender: {
-              __typename: 'TicketArticleType',
+              __typename: 'TicketArticleSender',
               name: 'Customer',
             },
             type: {
@@ -153,7 +153,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             internal: false,
             body: '<p>energy equals power times time</p>',
             sender: {
-              __typename: 'TicketArticleType',
+              __typename: 'TicketArticleSender',
               name: 'Agent',
             },
             type: {
@@ -187,7 +187,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             internal: true,
             body: '<p>only agents can see this haha</p>',
             sender: {
-              __typename: 'TicketArticleType',
+              __typename: 'TicketArticleSender',
               name: 'Agent',
             },
             type: {

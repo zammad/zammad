@@ -9,10 +9,6 @@ module Gql::Mutations
 
     field :user, Gql::Types::UserType, description: 'The created user.'
 
-    def load_id(id:)
-      Gql::ZammadSchema.verified_object_from_id(id, type: ::User, user: context.current_user)
-    end
-
     def authorized?(current_user:, input:)
       Pundit.authorize(context.current_user, current_user, :update?)
     end

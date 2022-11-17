@@ -6,7 +6,9 @@ module Gql::Types
 
     description 'Assigned tags'
 
-    field :tags, [String, { null: false }], null: false
+    internal_fields do
+      field :tags, [String, { null: false }]
+    end
 
     def tags
       @object.tag_list

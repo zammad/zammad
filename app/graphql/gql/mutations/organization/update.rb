@@ -9,10 +9,6 @@ module Gql::Mutations
 
     field :organization, Gql::Types::OrganizationType, description: 'The updated organization.'
 
-    def load_id(id:)
-      Gql::ZammadSchema.verified_object_from_id(id, type: ::Organization)
-    end
-
     # TODO/FIXME: Remove this again when we have a proper solution to deal with Pundit stuff in GraphQL mutations.
     def self.authorize(_obj, ctx)
       ctx[:current_user].permissions?(['admin.organization', 'ticket.agent'])

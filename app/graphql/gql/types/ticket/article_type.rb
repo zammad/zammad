@@ -9,7 +9,7 @@ module Gql::Types::Ticket
     description 'Ticket articles'
 
     belongs_to :type, Gql::Types::Ticket::Article::TypeType
-    belongs_to :sender, Gql::Types::Ticket::Article::TypeType
+    belongs_to :sender, Gql::Types::Ticket::Article::SenderType
 
     field :subject, String
     field :from, Gql::Types::AddressesFieldType

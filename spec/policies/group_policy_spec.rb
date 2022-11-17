@@ -36,8 +36,30 @@ describe GroupPolicy do
       it { is_expected.to permit_actions(:show) }
     end
 
-    context 'when has no ticket in a group' do
-      it { is_expected.to forbid_actions(:show) }
+    context 'when group is in customer_ticket_create_group_ids' do
+      before do
+        Setting.set('customer_ticket_create_group_ids', [record.id])
+      end
+
+      it { is_expected.to permit_actions(:show) }
+    end
+
+    context 'when customer_ticket_create_group_ids is empty and thus all groups are permitted' do
+      before do
+        Setting.set('customer_ticket_create_group_ids', [])
+      end
+
+      it { is_expected.to permit_actions(:show) }
+    end
+
+    context 'when group is not in customer_ticket_create_group_ids' do
+      before do
+        Setting.set('customer_ticket_create_group_ids', [record.id + 1])
+      end
+
+      context 'when has no ticket in a group' do
+        it { is_expected.to forbid_actions(:show) }
+      end
     end
   end
 end

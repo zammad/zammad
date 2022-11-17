@@ -5,117 +5,11 @@ class Zammad::GraphqlIntrospectionGenerator < Rails::Generators::Base
   desc 'Create JSON from the GraphQL introspection information and output it to STDOUT'
 
   def generate
-    result = Gql::ZammadSchema.execute(introspection_query, variables: {}, context: { is_graphql_introspection_generator: true })
+    result = Gql::ZammadSchema.execute(GraphQL::Introspection::INTROSPECTION_QUERY, variables: {}, context: { is_graphql_introspection_generator: true })
     raise "GraphQL schema could not be successfully generated: #{result['errors'].first['message']}" if result['errors']
 
     # rubocop:disable Rails/Output
     puts JSON.pretty_generate(result)
     # rubocop:enable Rails/Output
-  end
-
-  private
-
-  def introspection_query
-    <<~INTROSPECTION_QUERY
-      query IntrospectionQuery {
-        __schema {
-          queryType {
-            name
-          }
-          mutationType {
-            name
-          }
-          subscriptionType {
-            name
-          }
-          types {
-            ...FullType
-          }
-          directives {
-            name
-            description
-            locations
-            args {
-              ...InputValue
-            }
-          }
-        }
-      }
-
-      fragment FullType on __Type {
-        kind
-        name
-        description
-        fields(includeDeprecated: true) {
-          name
-          description
-          args {
-            ...InputValue
-          }
-          type {
-            ...TypeRef
-          }
-          isDeprecated
-          deprecationReason
-        }
-        inputFields {
-          ...InputValue
-        }
-        interfaces {
-          ...TypeRef
-        }
-        enumValues(includeDeprecated: true) {
-          name
-          description
-          isDeprecated
-          deprecationReason
-        }
-        possibleTypes {
-          ...TypeRef
-        }
-      }
-
-      fragment InputValue on __InputValue {
-        name
-        description
-        type {
-          ...TypeRef
-        }
-        defaultValue
-      }
-
-      fragment TypeRef on __Type {
-        kind
-        name
-        ofType {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-                ofType {
-                  kind
-                  name
-                  ofType {
-                    kind
-                    name
-                    ofType {
-                      kind
-                      name
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    INTROSPECTION_QUERY
   end
 end

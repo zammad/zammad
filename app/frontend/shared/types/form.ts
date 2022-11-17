@@ -42,7 +42,7 @@ export enum FormSchemaExtendType {
 }
 
 export interface FormDefaultProps {
-  formId?: string
+  formId: string
   link?: RouteLocationRaw
   labelPlaceholder?: string[]
   internal?: boolean
