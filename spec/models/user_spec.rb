@@ -173,6 +173,23 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#someones_out_of_office_replacement?' do
+      it 'returns true when is replacing someone' do
+        create(:agent).update!(
+          out_of_office:                true,
+          out_of_office_start_at:       1.day.ago,
+          out_of_office_end_at:         1.day.from_now,
+          out_of_office_replacement_id: user.id,
+        )
+
+        expect(user).to be_someones_out_of_office_replacement
+      end
+
+      it 'returns false when is not replacing anyone' do
+        expect(user).not_to be_someones_out_of_office_replacement
+      end
+    end
+
     describe '#out_of_office_agent' do
       it { is_expected.to respond_to(:out_of_office_agent) }
 
