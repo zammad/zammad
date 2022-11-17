@@ -5128,6 +5128,7 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .user-menu > li:hover .list-button::before,
+.user-menu > li.open .list-button::before,
 .user-menu > li.is-active .list-button::before,
 .user-menu > li.is-hovered .list-button::before {
   content: '';
