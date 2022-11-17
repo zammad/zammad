@@ -3,26 +3,6 @@
     {
       "warning_type": "Redirect",
       "warning_code": 18,
-      "fingerprint": "069e68c2898ea30f966463fa4616887fb203d48d8c2184693d56569d41f2d3b7",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/external_credentials_controller.rb",
-      "line": 38,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(ExternalCredential.request_account_to_link(params[:provider].downcase)[:authorize_url])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExternalCredentialsController",
-        "method": "link_account"
-      },
-      "user_input": "ExternalCredential.request_account_to_link(params[:provider].downcase)[:authorize_url]",
-      "confidence": "High",
-      "note": "https://brakemanscanner.org/docs/warning_types/redirect/"
-    },
-    {
-      "warning_type": "Redirect",
-      "warning_code": 18,
       "fingerprint": "0af1d7942bf73ecd1eb5141ea3a80c32297d9e9f24e411eb2b346af686eef938",
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
@@ -136,54 +116,6 @@
         470
       ],
       "note": "ObjectLookup.by_id works as designed"
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "230f45f9fba03dd6308704600d0c2cd639ab138a3a485c0dc54f750356d22ebc",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 67,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/#{Setting.get(\"ticket_hook\")}:#{number}(\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "2eaeb513e1e099ce8bf973d91a9bfce398910cdcede6fce7469d6bd576fe938f",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 63,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/\\[#{Setting.get(\"ticket_hook\")}#{Setting.get(\"ticket_hook_divider\")}#{number}\\](\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
     },
     {
       "warning_type": "SQL Injection",
@@ -301,30 +233,6 @@
         470
       ],
       "note": "Only for testing purposes"
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "5840449fd32ff0c102ebe4b61132fbb129aae57636bbe407cbb809da7eb5a4ee",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 61,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/\\[#{Setting.get(\"ticket_hook\")}: #{number}\\](\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
     },
     {
       "warning_type": "Remote Code Execution",
@@ -490,30 +398,6 @@
       "note": "Admin configured RegExp"
     },
     {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "9bb8bfef12e845cf5264fc09d776c90c4458dee93f69d70689e1caa9a0dd4c8a",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 68,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/#{Setting.get(\"ticket_hook\")}#{Setting.get(\"ticket_hook_divider\")}#{number}(\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "9ec74dbe0ca90264aab31f05df4f0565f53e28477c93ced418e0249913c519fc",
@@ -535,30 +419,6 @@
         89
       ],
       "note": "SqlHelper does properly escape table and column names."
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "a08cb6cbb584ab6bf0a1c068a0e99336b97bb68d98aa0294cc4e1184f15aaf9a",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 66,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/#{Setting.get(\"ticket_hook\")}: #{number}(\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
     },
     {
       "warning_type": "Redirect",
@@ -590,7 +450,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 898,
+      "line": 899,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -628,30 +488,6 @@
         77
       ],
       "note": "Mysql arguments are internal / from config."
-    },
-    {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "befcb5177e42e1d0c9184b046185ec84c7ecef8fc9b53822d8344f6a6a35860c",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/models/ticket/subject.rb",
-      "line": 62,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/\\[#{Setting.get(\"ticket_hook\")}:#{number}\\](\\s+?|)/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Ticket::Subject",
-        "method": "subject_clean"
-      },
-      "user_input": "Setting.get(\"ticket_hook\")",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "Admin configured RegExp"
     },
     {
       "warning_type": "Dynamic Render Path",
@@ -706,7 +542,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 155,
+      "line": 157,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -729,7 +565,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 319,
+      "line": 322,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -744,26 +580,6 @@
         470
       ],
       "note": "Setting.where(area: 'Postmaster::PreFilter').order(:name) returns defined postmaster backend class names"
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "dfe8a5a18f3d403c3cb32a50bf9b10da7254fa6b958c45fa5d6b8d97ae017961",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `safe_constantize` called with model attribute",
-      "file": "app/controllers/attachments_controller.rb",
-      "line": 86,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Store.find(params[:id]).store_object.name.safe_constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "AttachmentsController",
-        "method": "authorize!"
-      },
-      "user_input": "Store.find(params[:id]).store_object",
-      "confidence": "Medium",
-      "note": "Works as designed."
     },
     {
       "warning_type": "Denial of Service",
@@ -796,7 +612,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/graphql/gql/concerns/is_model_object.rb",
-      "line": 58,
+      "line": 89,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object.send(through_key)).constantize",
       "render_path": null,
@@ -907,7 +723,7 @@
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "app/models/ticket.rb",
-      "line": 1549,
+      "line": 1569,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/#{Setting.get(\"send_no_auto_response_reg_exp\")}/i",
       "render_path": null,
@@ -925,6 +741,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2022-09-22 13:19:49 +0100",
+  "updated": "2022-11-17 09:46:11 +0100",
   "brakeman_version": "5.3.1"
 }
