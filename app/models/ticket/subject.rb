@@ -53,19 +53,15 @@ returns
   def subject_clean(subject)
     return '' if subject.blank?
 
-    ticket_hook         = Setting.get('ticket_hook')
-    ticket_hook_divider = Setting.get('ticket_hook_divider')
+    ticket_hook         = Regexp.escape Setting.get('ticket_hook')
+    ticket_hook_divider = Regexp.escape Setting.get('ticket_hook_divider')
     ticket_subject_size = Setting.get('ticket_subject_size')
 
-    # remove all possible ticket hook formats with []
-    subject = subject.gsub(%r{\[#{ticket_hook}: #{number}\](\s+?|)}, '')
-    subject = subject.gsub(%r{\[#{ticket_hook}:#{number}\](\s+?|)}, '')
-    subject = subject.gsub(%r{\[#{ticket_hook}#{ticket_hook_divider}#{number}\](\s+?|)}, '')
-
-    # remove all possible ticket hook formats without []
-    subject = subject.gsub(%r{#{ticket_hook}: #{number}(\s+?|)}, '')
-    subject = subject.gsub(%r{#{ticket_hook}:#{number}(\s+?|)}, '')
-    subject = subject.gsub(%r{#{ticket_hook}#{ticket_hook_divider}#{number}(\s+?|)}, '')
+    # remove all possible ticket hook formats with [], () or without any wrapping
+    [ ['\[', '\]'], ['\(', '\)'], [''] ].each do |wrapping|
+      subject = subject
+        .gsub(%r{#{wrapping.first}#{ticket_hook}((: ?)|#{ticket_hook_divider})#{number}#{wrapping.last}(\s+?|)}, '')
+    end
 
     # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
     subject = subject.gsub(%r{^(..(\[\d+\])?:\s)+}, '')

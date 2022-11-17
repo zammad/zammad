@@ -46,6 +46,23 @@ RSpec.describe Ticket::Subject do
       expect(ticket.subject_clean("something [Ticket##{ticket.number}]")).to eq('something')
     end
 
+    it 'cleanup subject with regular ticket# in ()' do
+      expect(ticket.subject_clean("something (Ticket##{ticket.number})")).to eq('something')
+    end
+
+    it 'cleanup subject with ticket# with a colon' do
+      expect(ticket.subject_clean("something (Ticket#:#{ticket.number})")).to eq('something')
+    end
+
+    it 'cleanup subject with ticket# with a colon and space' do
+      expect(ticket.subject_clean("something (Ticket#: #{ticket.number})")).to eq('something')
+    end
+
+    it 'cleanup subject with ticket# with a custom divider' do
+      Setting.set('ticket_hook_divider', '---')
+      expect(ticket.subject_clean("something (Ticket#---#{ticket.number})")).to eq('something')
+    end
+
     it 'cleanup subject with regular ticket# multiple time' do
       expect(ticket.subject_clean("[Ticket##{ticket.number}] [Ticket##{ticket.number}] something [Ticket##{ticket.number}]")).to eq('something')
     end
