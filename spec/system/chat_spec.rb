@@ -196,7 +196,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
 
         check_content('.zammad-chat-modal-text', %r{(waiting|Warte)})
-        check_content('.zammad-chat-modal-text', %r{(takes longer|dauert länger)})
+        check_content('.zammad-chat-modal-text', %r{(taking longer|dauert länger)})
 
         refresh
 

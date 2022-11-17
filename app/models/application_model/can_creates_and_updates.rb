@@ -39,7 +39,7 @@ returns
     def create_or_update(data)
       attr = (data.keys & %i[id name login email locale]).first
 
-      raise ArgumentError, __('Need name, login, email or locale for create_or_update()') if attr.nil?
+      raise ArgumentError, __('One of the required parameters must be provided, but none was found.') if attr.nil?
 
       record = case_sensitive_find_by(**data.slice(attr))
       record.nil? ? create(data) : record.tap { |r| r.update(data) }

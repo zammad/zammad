@@ -24,7 +24,7 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
         find('.js-textarea').set('welcome to the community')
         find('.js-submitDropdown button.js-submit').click
 
-        expect(page).to have_text 'Need recipient in "TO" or "CC".'
+        expect(page).to have_text 'Please provide a recipient in "TO" or "CC".'
       end
     end
 

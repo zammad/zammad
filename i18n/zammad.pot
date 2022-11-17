@@ -1988,10 +1988,6 @@ msgstr ""
 msgid "Choose if retweets should also be converted to tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-msgid "Choose the Group to which page posts will get added."
-msgstr ""
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
 msgstr ""
@@ -2003,6 +1999,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Choose the group to which messages will get added."
+msgstr ""
+
+#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
+msgid "Choose the group to which page posts will get added."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
@@ -2201,7 +2201,7 @@ msgid "Conditions for affected objects"
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Conditions for shown Tickets"
+msgid "Conditions for shown tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
@@ -5422,12 +5422,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
-msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function."
-msgstr ""
-
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function. "
+msgid "In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an \"archive\", which means that no notifications are sent and the tickets have the status \"closed\". However, you can find them in Zammad anytime using the search function."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -6676,14 +6673,6 @@ msgstr ""
 msgid "Need logo param"
 msgstr ""
 
-#: app/models/application_model/can_creates_and_updates.rb
-msgid "Need name, login, email or locale for create_or_update()"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-msgid "Need recipient in \"TO\" or \"CC\"."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
 msgstr ""
@@ -7257,6 +7246,10 @@ msgstr ""
 msgid "Once completed…"
 msgstr ""
 
+#: app/models/application_model/can_creates_and_updates.rb
+msgid "One of the required parameters must be provided, but none was found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
 msgid "Online"
@@ -7275,11 +7268,11 @@ msgid "Only %s% of this language is already translated. Please help to improve Z
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users which are replacements for other users."
+msgid "Only available for users which are absence replacements for other users."
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users with shared Organizations"
+msgid "Only available for users with shared organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -7792,6 +7785,10 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please include a valid url."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -9114,11 +9111,11 @@ msgid "Simple Line Icons"
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
-msgid "Since you didn't respond in the last %s minutes your conversation got closed."
+msgid "Since you didn't respond in the last %s minutes your conversation was closed."
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
-msgid "Since you didn't respond in the last %s minutes your conversation with <strong>%s</strong> got closed."
+msgid "Since you didn't respond in the last %s minutes your conversation with <strong>%s</strong> was closed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -11533,7 +11530,7 @@ msgid "Warning"
 msgstr ""
 
 #: public/assets/chat/views/waiting_list_timeout.eco
-msgid "We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!"
+msgid "We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -11892,7 +11889,7 @@ msgid "You can request your password"
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
-msgid "You can switch between the backend for new attachments even on a system that is already in production without any loss of data."
+msgid "You can switch between the backends for new attachments even on a system that is already in production without any loss of data."
 msgstr ""
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
@@ -11985,7 +11982,7 @@ msgid "Your Logo"
 msgstr ""
 
 #: public/assets/form/form.js
-msgid "Your Message..."
+msgid "Your Message…"
 msgstr ""
 
 #: public/assets/form/form.js

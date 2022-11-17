@@ -42,7 +42,7 @@ $(function() {
         name: 'body',
         tag: 'textarea',
         required: true,
-        placeholder: 'Your Message...',
+        placeholder: 'Your Message…',
         defaultValue: '',
         rows: 7,
       },
@@ -99,7 +99,7 @@ $(function() {
         tag: 'textarea',
         id: 'zammad-form-body',
         required: true,
-        placeholder: 'Your Message...',
+        placeholder: 'Your Message…',
         defaultValue: '',
         rows: 7,
       },
@@ -112,7 +112,7 @@ $(function() {
         'Message': 'Nachricht',
         'Name': 'Name',
         'Your Email': 'Ihre E-Mail',
-        'Your Message...': 'Ihre Nachricht...',
+        'Your Message…': '',
         'Your Name': 'Ihr Name',
       },
       'es': {
@@ -121,7 +121,7 @@ $(function() {
         'Message': 'Mensaje',
         'Name': 'Nombre',
         'Your Email': 'Tu correo electrónico',
-        'Your Message...': 'tu Mensaje...',
+        'Your Message…': '',
         'Your Name': 'tu Nombre',
       },
       'fr': {
@@ -130,7 +130,7 @@ $(function() {
         'Message': 'Message',
         'Name': 'Nom',
         'Your Email': 'Votre Email',
-        'Your Message...': 'Votre message...',
+        'Your Message…': '',
         'Your Name': 'Votre nom',
       },
       'it': {
@@ -139,7 +139,7 @@ $(function() {
         'Message': 'Messaggio',
         'Name': 'Nome',
         'Your Email': 'Il tuo indirizzo e-mail',
-        'Your Message...': 'Il tuo messaggio...',
+        'Your Message…': '',
         'Your Name': 'Il tuo nome',
       },
       'nl': {
@@ -148,7 +148,7 @@ $(function() {
         'Message': 'Bericht',
         'Name': 'Naam',
         'Your Email': 'Uw Email adres',
-        'Your Message...': 'Uw bericht...',
+        'Your Message…': '',
         'Your Name': 'Uw naam',
       },
       'pl': {
@@ -157,7 +157,7 @@ $(function() {
         'Message': 'Wiadomość',
         'Name': 'Nazwa',
         'Your Email': 'Adres e-mail',
-        'Your Message...': 'Twoja wiadomość...',
+        'Your Message…': '',
         'Your Name': 'Imię i nazwisko',
       },
       'pt-br': {
@@ -166,7 +166,7 @@ $(function() {
         'Message': 'Mensagem',
         'Name': 'Nome',
         'Your Email': 'Seu Email',
-        'Your Message...': 'Sua mensagem...',
+        'Your Message…': '',
         'Your Name': 'Seu nome',
       },
       'ru': {
@@ -175,7 +175,7 @@ $(function() {
         'Message': 'Сообщение',
         'Name': 'Имя',
         'Your Email': 'Ваша почта',
-        'Your Message...': 'Ваше Сообщение...',
+        'Your Message…': '',
         'Your Name': 'Ваше имя',
       },
       'sr': {
@@ -184,7 +184,7 @@ $(function() {
         'Message': 'Порука',
         'Name': 'Име',
         'Your Email': 'Ваш имејл',
-        'Your Message...': 'Ваша порука…',
+        'Your Message…': '',
         'Your Name': 'Ваше име',
       },
       'sr-latn-rs': {
@@ -193,7 +193,7 @@ $(function() {
         'Message': 'Poruka',
         'Name': 'Ime',
         'Your Email': 'Vaš imejl',
-        'Your Message...': 'Vaša poruka…',
+        'Your Message…': '',
         'Your Name': 'Vaše ime',
       },
       'zh-cn': {
@@ -202,7 +202,7 @@ $(function() {
         'Message': '消息',
         'Name': '名称',
         'Your Email': '您的邮件地址',
-        'Your Message...': '您的留言...',
+        'Your Message…': '',
         'Your Name': '您的尊姓大名',
       },
       'zh-tw': {
@@ -211,7 +211,7 @@ $(function() {
         'Message': '訊息',
         'Name': '名稱',
         'Your Email': '請留下您的電子郵件地址',
-        'Your Message...': '請寫下您的留言...',
+        'Your Message…': '',
         'Your Name': '您的尊姓大名',
       },
     // ZAMMAD_TRANSLATIONS_END

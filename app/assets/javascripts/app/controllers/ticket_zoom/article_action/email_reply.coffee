@@ -376,7 +376,7 @@ class EmailReply extends App.Controller
         buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: __('Need recipient in "TO" or "CC".')
+        message: __('Please provide a recipient in "TO" or "CC".')
         shown: true
         small: true
         container: ui.el.closest('.content')

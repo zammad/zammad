@@ -69,7 +69,7 @@ class Zammad::TranslationCatalog::Writer::FormJs < Zammad::TranslationCatalog::W
       string_map[missing_source] = ''
     end
 
-    return if string_map.values.any?(&:blank?)
+    return if string_map.values.count(&:blank?) > 1
 
     string_map
   end
