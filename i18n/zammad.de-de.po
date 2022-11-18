@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-15 07:15+0000\n"
+"PO-Revision-Date: 2022-11-17 18:13+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -6801,7 +6801,7 @@ msgstr "Ungültiges Token - bitte kontaktieren Sie Ihren Administrator!"
 
 #: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
 msgid "Invalid values in step %s"
-msgstr "Fehlerhafte Werte im Schritt %s"
+msgstr "Fehlerhafte Werte in Schritt %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
