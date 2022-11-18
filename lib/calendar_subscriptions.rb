@@ -7,7 +7,7 @@ class CalendarSubscriptions
   def initialize(user)
     @user        = user
     @preferences = {}
-    @time_zone   = Setting.get('timezone_default').presence || 'UTC'
+    @time_zone   = Setting.get('timezone_default_sanitized')
 
     default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
     default_preferences.each do |calendar_subscription|
@@ -56,7 +56,7 @@ class CalendarSubscriptions
 
     cal = Icalendar::Calendar.new
 
-    tz = TZInfo::Timezone.get(@time_zone)
+    tz = ActiveSupport::TimeZone.find_tzinfo(@time_zone)
 
     # https://github.com/zammad/zammad/issues/3989
     # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19

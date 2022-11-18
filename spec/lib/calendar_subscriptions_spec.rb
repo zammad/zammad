@@ -88,7 +88,7 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
       expect(vtimezone).to be_present
 
       tzid = $1 if vtimezone =~ %r{TZID:(.+)}
-      expect(tzid).to match(Setting.get('timezone_default').presence || 'UTC')
+      expect(tzid).to match(Setting.get('timezone_default_sanitized'))
     end
   end
 
@@ -125,8 +125,8 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
   end
 
   def verify_offset(dtstart, dtend, tstart)
-    time_zone = Setting.get('timezone_default').presence || 'UTC'
-    tz = TZInfo::Timezone.get(time_zone)
+    time_zone = Setting.get('timezone_default_sanitized')
+    tz = ActiveSupport::TimeZone.find_tzinfo(time_zone)
 
     expect(dtstart.utc_offset).to match(tz.utc_to_local(tstart).utc_offset)
     expect(dtend.utc_offset).to match(tz.utc_to_local(tstart).utc_offset)

@@ -53,6 +53,9 @@ gem 'graphql-batch', require: 'graphql/batch'
 # core - image processing
 gem 'rszr'
 
+# core - use same timezone data on any host
+gem 'tzinfo-data'
+
 # performance - Memcached
 gem 'dalli', require: false
 

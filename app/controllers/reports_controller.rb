@@ -174,8 +174,8 @@ class ReportsController < ApplicationController
       stop_at = Time.zone.parse("#{params[:year]}-12-31T23:59:59Z")
       range = 'month'
     end
-    params[:timezone] ||= Setting.get('timezone_default')
-    if params[:timezone].present? && params[:timeRange] != 'realtime'
+    params[:timezone] ||= Setting.get('timezone_default_sanitized')
+    if params[:timeRange] != 'realtime'
       offset = stop_at.in_time_zone(params[:timezone]).utc_offset
       start_at -= offset
       stop_at -= offset

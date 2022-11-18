@@ -104,12 +104,15 @@ reload config settings
     # read all or only changed since last read
     latest = Setting.order(updated_at: :desc).limit(1).pluck(:updated_at)
     settings = if @@last_changed_at && @@current.present?
-                 Setting.where('updated_at > ?', @@last_changed_at).order(:id).pluck(:name, :state_current)
+                 Setting.where('updated_at >= ?', @@last_changed_at).order(:id).pluck(:name, :state_current)
                else
                  Setting.order(:id).pluck(:name, :state_current)
                end
-    if latest
-      @@last_changed_at = latest[0] # rubocop:disable Style/ClassVars
+
+    Setting::Processed.process_settings! settings
+
+    if latest && latest[0]
+      @@last_changed_at = [Time.current, latest[0]].min # rubocop:disable Style/ClassVars
     end
 
     if settings.present?

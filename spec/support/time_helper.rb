@@ -1,27 +1,12 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module TimeHelperCache
-  def travel(...)
-    super.tap do
-      Rails.cache.clear
-    end
-  end
-
-  def travel_to(...)
-    super.tap do
-      Rails.cache.clear
-    end
-  end
-
-  def freeze_time(...)
-    super.tap do
-      Rails.cache.clear
-    end
-  end
-
-  def travel_back(...)
-    super.tap do
-      Rails.cache.clear
+  %w[travel travel_to freeze_time travel_back].each do |method_name|
+    define_method method_name do |*args, **kwargs, &blk|
+      super(*args, **kwargs, &blk).tap do
+        Rails.cache.clear
+        Setting.class_variable_set :@@last_changed_at, 1.second.ago # rubocop:disable Style/ClassVars
+      end
     end
   end
 
