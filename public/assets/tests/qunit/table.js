@@ -828,6 +828,28 @@ QUnit.test('table test 6/7', assert => {
   assert.ok(_.isEqual(list_items(el_head_sortable, 1), ['b item', 'c item', 'd item', 'a item']), 'sorting on name column is disabled')
 });
 
+QUnit.test('table test 8 - double escaping for translatables', assert => {
+  $('#qunit').append('<hr><h1>table with translated and escapable data</h1><div id="table-data8"></div>')
+  var el = $('#table-data8')
+
+  data = [
+    { name: 'some name 1', data: 'some data 1' },
+    { name: 'some "name" 2', data: 'some data 2' },
+    { name: 'some name 3', data: 'some data 3' },
+  ]
+  new App.ControllerTable({
+    el:       el,
+    overview: ['name', 'data', 'active'],
+    attribute_list: [
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+      { name: 'data', display: 'Data', type: 'text' },
+    ],
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr:nth-child(2) > td:first-child').text().trim(), 'some "name" 2', 'check translated name with quotes')
+});
+
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)

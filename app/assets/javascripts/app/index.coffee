@@ -136,7 +136,7 @@ class App extends Spine.Controller
           resultLocal = "<a href=\"#{App.Utils.phoneify(resultLocal)}\">#{App.Utils.htmlEscape(resultLocal)}</a>"
         else if attributeConfig.type is 'url' && !linktemplate
           resultLocal = App.Utils.linkify(resultLocal)
-        else
+        else if !isHtmlEscape # escape only if it wasn't escaped previously
           resultLocal = App.Utils.htmlEscape(resultLocal)
         isHtmlEscape = true
 
