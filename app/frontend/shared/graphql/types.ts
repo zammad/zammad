@@ -274,6 +274,26 @@ export type Group = {
   updatedBy: User;
 };
 
+/** The connection type for Group. */
+export type GroupConnection = {
+  __typename?: 'GroupConnection';
+  /** A list of edges. */
+  edges: Array<GroupEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** Indicates the total number of available records. */
+  totalCount: Scalars['Int'];
+};
+
+/** An edge in a connection. */
+export type GroupEdge = {
+  __typename?: 'GroupEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Group;
+};
+
 /** Key/value type with complex (JSON) values. */
 export type KeyComplexValue = {
   __typename?: 'KeyComplexValue';
@@ -977,6 +997,8 @@ export type Queries = {
   search: Array<SearchResult>;
   /** The sessionId of the currently authenticated user. */
   sessionId: Scalars['String'];
+  /** Search for text modules and return them with variable interpolation */
+  textModuleSuggestions: Array<TextModule>;
   /** Fetch a ticket by ID */
   ticket: Ticket;
   /** Fetch a ticket by ID */
@@ -1074,6 +1096,13 @@ export type QueriesSearchArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   onlyIn?: InputMaybe<EnumSearchableModels>;
   search: Scalars['String'];
+};
+
+
+/** All available queries */
+export type QueriesTextModuleSuggestionsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  query: Scalars['String'];
 };
 
 
@@ -1240,6 +1269,51 @@ export type TagAssignmentRemovePayload = {
 /** Assigned tags */
 export type TagsInterface = {
   tags?: Maybe<Array<Scalars['String']>>;
+};
+
+/** Context data for template rendering, e.g. customer data. */
+export type TemplateRenderContextInput = {
+  /** Ticket customer (if no ticket exists yet) */
+  customerId?: InputMaybe<Scalars['ID']>;
+  /** Ticket */
+  ticketId?: InputMaybe<Scalars['ID']>;
+};
+
+/** Text modules */
+export type TextModule = {
+  __typename?: 'TextModule';
+  active: Scalars['Boolean'];
+  content?: Maybe<Scalars['String']>;
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime'];
+  /** User that created this record */
+  createdBy: User;
+  groups?: Maybe<GroupConnection>;
+  id: Scalars['ID'];
+  keywords?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  /** Internal note */
+  note?: Maybe<Scalars['String']>;
+  renderedContent?: Maybe<Scalars['String']>;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime'];
+  /** Last user that updated this record */
+  updatedBy: User;
+};
+
+
+/** Text modules */
+export type TextModuleGroupsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** Text modules */
+export type TextModuleRenderedContentArgs = {
+  templateRenderContext?: InputMaybe<TemplateRenderContextInput>;
 };
 
 /** Tickets */
