@@ -133,6 +133,15 @@ $(function() {
         'Your Message…': '',
         'Your Name': 'Votre nom',
       },
+      'hr': {
+        'Attachments': 'Privitci',
+        'Email': 'E-pošta',
+        'Message': 'Poruka',
+        'Name': 'Ime',
+        'Your Email': 'Vaš e-mail',
+        'Your Message…': '',
+        'Your Name': 'Vaše ime',
+      },
       'it': {
         'Attachments': 'Allegati',
         'Email': 'Email',
@@ -162,7 +171,7 @@ $(function() {
       },
       'pt-br': {
         'Attachments': 'Anexos',
-        'Email': 'E-mail',
+        'Email': 'Email',
         'Message': 'Mensagem',
         'Name': 'Nome',
         'Your Email': 'Seu Email',

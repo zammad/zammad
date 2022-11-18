@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-15 03:30+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2022-11-17 03:30+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -506,6 +506,12 @@ msgstr "%s startet eine Sitzung als |%s|!"
 msgid "%s tickets"
 msgstr "%s Tickets"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
+#, fuzzy
+#| msgid "%s tickets"
+msgid "%s tickets found"
+msgstr "%s Tickets"
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
@@ -567,8 +573,8 @@ msgstr "%s% wurden wiedereröffnet"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
-"** Data Privacy ** helps you to delete and verify the removal of existing "
-"data from the system.\n"
+"**Data Privacy** helps you to delete and verify the removal of existing data "
+"from the system.\n"
 "\n"
 "It can be used to delete tickets, organizations, and users. The owner "
 "assignment will be unset in case the deleted user is an agent.\n"
@@ -577,7 +583,7 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Datenschutz** hilft bei der Löschung von Daten und der Sicherstellung von "
+"**Datenschutz** hilft bei der Löschung von Daten und der Sicherstellung von "
 "Datenschutzrichtlinien in Ihrem System.\n"
 "\n"
 "Hier können Tickets, Organisationen und Benutzer entfernt werden. Die "
@@ -589,36 +595,35 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
-"** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
+"**Service Level Agreements**, abbreviated **SLAs**, help you to meet "
 "specific response times for your customers' requests. This way you can "
 "define goals such as answering every inquiry within eight hours. If you are "
 "at risk of missing this target, Zammad will alert you.\n"
 "\n"
-"You can define targets for three different metrics: ** response time ** "
-"(time between the creation of a ticket and the first reaction of an agent), "
-"** update time ** (time between a customer's request and an agent's "
-"reaction), and ** solution time ** (time between creating and closing a "
-"ticket).\n"
+"You can define targets for three different metrics: **response time** (time "
+"between the creation of a ticket and the first reaction of an agent), "
+"**update time** (time between a customer's request and an agent's reaction), "
+"and **solution time** (time between creating and closing a ticket).\n"
 "\n"
 "Any escalated tickets (i.e. tickets that have missed the defined target) are "
-"displayed in a separate view in your overviews. You can also configure ** "
-"email notifications **."
+"displayed in a separate view in your overviews. You can also configure "
+"**email notifications**."
 msgstr ""
-"**Service Level Agreements **, kurz ** SLAs **, helfen Ihnen dabei, "
-"bestimmte Reaktionszeiten für die Anfragen Ihrer Kunden einzuhalten. So "
-"können Sie Ziele, wie das Beantworten jeder Anfrage innerhalb von acht "
-"Stunden, definieren. Wenn Sie Gefahr laufen die Ziele zu verpassen, wird "
-"Zammad Sie alarmieren.\n"
+"**Service Level Agreements**, kurz **SLAs**, helfen Ihnen dabei, bestimmte "
+"Reaktionszeiten für die Anfragen Ihrer Kunden einzuhalten. So können Sie "
+"Ziele, wie das Beantworten jeder Anfrage innerhalb von acht Stunden, "
+"definieren. Wenn Sie Gefahr laufen die Ziele zu verpassen, wird Zammad Sie "
+"alarmieren.\n"
 "\n"
-"Die folgenden drei Metriken können Sie als Ziele konfigurieren: ** "
-"Reaktionszeit ** (Zeit zwischen der Ticketerstellung und der ersten Reaktion "
-"eines Agenten), ** Aktualisierungszeit ** (Zeit zwischen der Kundenanfrage "
-"und der Agentenreaktion) und ** Lösungszeit ** (Zeit zwischen der Erstellung "
-"und Schließung eines Tickets).\n"
+"Die folgenden drei Metriken können Sie als Ziele konfigurieren: "
+"**Reaktionszeit** (Zeit zwischen der Ticketerstellung und der ersten "
+"Reaktion eines Agenten), **Aktualisierungszeit** (Zeit zwischen der "
+"Kundenanfrage und der Agentenreaktion) und **Lösungszeit** (Zeit zwischen "
+"der Erstellung und Schließung eines Tickets).\n"
 "\n"
 "Alle eskalierten Tickets (d.h. Tickets deren definierte Ziele nicht "
 "eingehalten wurden) werden in separaten Ansichten in Ihren Übersichten "
-"angezeigt. Sie können außerdem ** E-Mail-Benachrichtigungen ** konfigurieren."
+"angezeigt. Sie können außerdem **E-Mail-Benachrichtigungen** konfigurieren."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
@@ -2272,7 +2277,6 @@ msgstr "Geändert:"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -2434,11 +2438,6 @@ msgstr "Kinder"
 msgid "Choose if retweets should also be converted to tickets."
 msgstr "Wählen Sie, ob Retweets auch in Tickets umgewandelt werden sollen."
 
-#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-msgid "Choose the Group to which page posts will get added."
-msgstr ""
-"Wählen Sie die Gruppe, in der die Seitenbeiträge zugeordnet werden sollen."
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose the group to which direct messages will get added."
 msgstr ""
@@ -2455,6 +2454,13 @@ msgstr ""
 msgid "Choose the group to which messages will get added."
 msgstr ""
 "Wählen Sie die Gruppe, in der die Nachrichten zugeordnet werden sollen."
+
+#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
+#, fuzzy
+#| msgid "Choose the Group to which page posts will get added."
+msgid "Choose the group to which page posts will get added."
+msgstr ""
+"Wählen Sie die Gruppe, in der die Seitenbeiträge zugeordnet werden sollen."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Choose your language."
@@ -2652,7 +2658,9 @@ msgid "Conditions for affected objects"
 msgstr "Bedingungen für zu verarbeitende Objekte"
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Conditions for shown Tickets"
+#, fuzzy
+#| msgid "Conditions for shown Tickets"
+msgid "Conditions for shown tickets"
 msgstr "Bedingung für angezeigte Tickets"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
@@ -5074,6 +5082,10 @@ msgstr "Anmeldeinformationen eingeben"
 msgid "Enter link URL"
 msgstr "Verknüpfungs-URL angeben"
 
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+msgid "Enter search and select a type to search for"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
@@ -5835,6 +5847,10 @@ msgstr "Gmail"
 msgid "Go Back"
 msgstr "Zurück"
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go back"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
@@ -5887,7 +5903,6 @@ msgstr "Begrüßung"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6491,6 +6506,8 @@ msgstr "Importiert"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid ""
 "In addition, we have found emails in your mailbox that are older than %s "
 "weeks. You can import such emails as an \"archive\", which means that no "
@@ -6502,20 +6519,6 @@ msgstr ""
 "werden keine Benachrichtigungen verschickt und die Tickets haben den Status "
 "\"geschlossen\". Sie können sie jedoch jederzeit über die Suchfunktion in "
 "Zammad finden."
-
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid ""
-"In addition, we have found emails in your mailbox that are older than %s "
-"weeks. You can import such emails as an \"archive\", which means that no "
-"notifications are sent and the tickets have the status \"closed\". However, "
-"you can find them in Zammad anytime using the search function. "
-msgstr ""
-"Darüber hinaus haben wir in Ihrer Mailbox E-Mails gefunden, die älter als %s "
-"Wochen sind. Sie können solche E-Mails als \"Archiv\" importieren, d.h. es "
-"werden keine Benachrichtigungen verschickt und die Tickets haben den Status "
-"\"geschlossen\". Sie können sie jedoch jederzeit über die Suchfunktion in "
-"Zammad finden. "
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -6586,7 +6589,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6595,7 +6597,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
@@ -6609,14 +6610,12 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -6802,7 +6801,7 @@ msgstr "Ungültiges Token - bitte kontaktieren Sie Ihren Administrator!"
 
 #: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue
 msgid "Invalid values in step %s"
-msgstr "Fehlerhafte Werte im Schritt %s"
+msgstr "Fehlerhafte Werte in Schritt %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee
 msgid "Invalid video URL"
@@ -7205,6 +7204,12 @@ msgstr "Laden"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Load more"
 msgstr "Weitere laden"
+
+#: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#, fuzzy
+#| msgid "contains one not"
+msgid "Loading content"
+msgstr "enthält eins nicht"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
@@ -7830,14 +7835,6 @@ msgstr "Label wird benötigt!"
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
 msgstr "Benötige logo-Parameter"
-
-#: app/models/application_model/can_creates_and_updates.rb
-msgid "Need name, login, email or locale for create_or_update()"
-msgstr "Benötigt name, login, email oder locale für create_or_update()"
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-msgid "Need recipient in \"TO\" or \"CC\"."
-msgstr "Empfänger in \"TO\" oder \"CC\" erforderlich."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
 msgid "Need recipient in \"To\"."
@@ -8470,6 +8467,10 @@ msgstr "Am %s, schrieb %s:"
 msgid "Once completed…"
 msgstr "Nach Abschluss…"
 
+#: app/models/application_model/can_creates_and_updates.rb
+msgid "One of the required parameters must be provided, but none was found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
 msgid "Online"
@@ -8492,11 +8493,16 @@ msgstr ""
 "verbessern und die Übersetzung zu vervollständigen."
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users which are replacements for other users."
+#, fuzzy
+#| msgid "Only available for Users which are replacements for other users."
+msgid ""
+"Only available for users which are absence replacements for other users."
 msgstr "Nur für Benutzer verfügbar, die Vertreter für andere Benutzer sind."
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users with shared Organizations"
+#, fuzzy
+#| msgid "Only available for Users with shared Organizations"
+msgid "Only available for users with shared organizations"
 msgstr "Nur verfügbar für Benutzer mit teilenden Organisationen"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -8748,7 +8754,6 @@ msgstr "Entwurf überschreiben"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9030,6 +9035,12 @@ msgstr "Bitte füllen Sie alle Felder aus"
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please include a valid url."
 msgstr "Bitte fügen Sie eine gültige URL ein."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#, fuzzy
+#| msgid "Need recipient in \"TO\" or \"CC\"."
+msgid "Please provide a recipient in \"TO\" or \"CC\"."
+msgstr "Empfänger in \"TO\" oder \"CC\" erforderlich."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
@@ -9964,6 +9975,7 @@ msgstr "Suchen oder E-Mail-Adresse angeben…"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 msgid "Search…"
 msgstr "Suchen…"
@@ -10049,10 +10061,6 @@ msgid "Select the customer of the ticket or create one."
 msgstr ""
 "Wählen Sie den Kunden für das Ticket aus oder erstellen Sie einen neuen "
 "Kunden."
-
-#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
-msgid "Selected"
-msgstr "ausgewählt"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10492,16 +10500,24 @@ msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
 #: public/assets/chat/views/customer_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "Since you didn't respond in the last %s minutes your conversation got "
+#| "closed."
 msgid ""
-"Since you didn't respond in the last %s minutes your conversation got closed."
+"Since you didn't respond in the last %s minutes your conversation was closed."
 msgstr ""
 "Da Sie innerhalb der letzten %s Minuten nicht reagiert haben, wurde Ihre "
 "Unterhaltung geschlossen."
 
 #: public/assets/chat/views/customer_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "Since you didn't respond in the last %s minutes your conversation with "
+#| "<strong>%s</strong> got closed."
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
-"<strong>%s</strong> got closed."
+"<strong>%s</strong> was closed."
 msgstr ""
 "Da Sie innerhalb der letzten %s Minuten nicht reagiert haben, wurde Ihre "
 "Unterhaltung mit <strong>%s</strong> geschlossen."
@@ -10677,7 +10693,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -12325,6 +12340,10 @@ msgstr ""
 "Es werden nur Ticket automatisch zugewiesen, wenn diese noch keinen Besitzer "
 "haben."
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
+msgid "Tickets are ordered by \"%s\" column (%s)."
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
 msgstr "Mir zugewiesene Tickets: %s von %s"
@@ -13196,6 +13215,7 @@ msgstr ""
 "haben**, einsehen und deren Tickets ändern (wenn Ihre Organisation auf "
 "\"teilend\" eingestellt ist, was pro Organisation festgelegt werden kann)."
 
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "VIP"
 msgstr "VIP"
@@ -13347,8 +13367,12 @@ msgid "Warning"
 msgstr "Warnung"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "We are sorry, it takes longer as expected to get an empty slot. Please "
+#| "try again later or send us an email. Thank you!"
 msgid ""
-"We are sorry, it takes longer as expected to get an empty slot. Please try "
+"We are sorry, it is taking longer than expected to get a slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
 "Entschuldigung, es dauert länger als erwartet einen freien Platz zu "
@@ -13845,9 +13869,13 @@ msgid "You can request your password"
 msgstr "Beantragen eines neuen Passworts"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backend for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backend for new attachments even on a system that "
-"is already in production without any loss of data."
+"You can switch between the backends for new attachments even on a system "
+"that is already in production without any loss of data."
 msgstr ""
 "Sie können zwischen den Backends für neue Anhänge jederzeit wechseln, auch "
 "wenn es schon ein produktives System ist. Es gehen keine Daten verloren."
@@ -13975,7 +14003,9 @@ msgid "Your Logo"
 msgstr "Ihr Logo"
 
 #: public/assets/form/form.js
-msgid "Your Message..."
+#, fuzzy
+#| msgid "Your Message..."
+msgid "Your Message…"
 msgstr "Ihre Nachricht..."
 
 #: public/assets/form/form.js
@@ -14201,7 +14231,7 @@ msgstr "archiviert"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "ascending"
 msgstr "aufsteigend"
 
@@ -14364,7 +14394,7 @@ msgstr "löschen"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "descending"
 msgstr "absteigend"
 
@@ -14696,6 +14726,7 @@ msgid "left"
 msgstr "links"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "load %s more"
 msgstr "%s weitere laden"
 
@@ -15217,6 +15248,24 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid ""
+#~ "In addition, we have found emails in your mailbox that are older than %s "
+#~ "weeks. You can import such emails as an \"archive\", which means that no "
+#~ "notifications are sent and the tickets have the status \"closed\". "
+#~ "However, you can find them in Zammad anytime using the search function. "
+#~ msgstr ""
+#~ "Darüber hinaus haben wir in Ihrer Mailbox E-Mails gefunden, die älter als "
+#~ "%s Wochen sind. Sie können solche E-Mails als \"Archiv\" importieren, d."
+#~ "h. es werden keine Benachrichtigungen verschickt und die Tickets haben "
+#~ "den Status \"geschlossen\". Sie können sie jedoch jederzeit über die "
+#~ "Suchfunktion in Zammad finden. "
+
+#~ msgid "Need name, login, email or locale for create_or_update()"
+#~ msgstr "Benötigt name, login, email oder locale für create_or_update()"
+
+#~ msgid "Selected"
+#~ msgstr "ausgewählt"
 
 #~ msgid "Defines if the search index is using excluded attributes."
 #~ msgstr "Definiert, ob der Suchindex ausgeschlossene Attribute verwendet."

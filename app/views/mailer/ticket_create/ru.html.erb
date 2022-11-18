@@ -1,18 +1,18 @@
-Новый тикет (#{ticket.title})
+Новая заявка (#{ticket.title})
 
-<div>Здравствуйте #{recipient.firstname},</div>
+<div>Здравствуйте, #{recipient.firstname}.</div>
 <br>
-<div>Новый тикет (#{ticket.title}) был создан "<b>#{current_user.longname}</b>".</div>
+<div>Новая заявка (#{ticket.title}) была создана "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+Группа: #{ticket.group.name}<br>
+Владелец: #{ticket.owner.fullname}<br>
+Состояние: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Информация:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -20,5 +20,5 @@
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Посмотреть это в #{config.product_name}</a>
 </div>

@@ -638,6 +638,12 @@ msgstr "%s 切換為 |%s|！"
 msgid "%s tickets"
 msgstr "指派工單"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "%s tickets found"
+msgstr "指派工單"
+
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 #, fuzzy
@@ -727,8 +733,8 @@ msgstr "%s% 已被重新開啟"
 #| "take some additional time depending of the number of objects that should "
 #| "get deleted."
 msgid ""
-"** Data Privacy ** helps you to delete and verify the removal of existing "
-"data from the system.\n"
+"**Data Privacy** helps you to delete and verify the removal of existing data "
+"from the system.\n"
 "\n"
 "It can be used to delete tickets, organizations, and users. The owner "
 "assignment will be unset in case the deleted user is an agent.\n"
@@ -743,21 +749,36 @@ msgstr ""
 "的時間。"
 
 #: app/assets/javascripts/app/models/sla.coffee
+#, fuzzy
+#| msgid ""
+#| "** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
+#| "specific response times for your customers' requests. This way you can "
+#| "define goals such as answering every inquiry within eight hours. If you "
+#| "are at risk of missing this target, Zammad will alert you.\n"
+#| "\n"
+#| "You can define targets for three different metrics: ** response time ** "
+#| "(time between the creation of a ticket and the first reaction of an "
+#| "agent), ** update time ** (time between a customer's request and an "
+#| "agent's reaction), and ** solution time ** (time between creating and "
+#| "closing a ticket).\n"
+#| "\n"
+#| "Any escalated tickets (i.e. tickets that have missed the defined target) "
+#| "are displayed in a separate view in your overviews. You can also "
+#| "configure ** email notifications **."
 msgid ""
-"** Service Level Agreements **, abbreviated ** SLAs **, help you to meet "
+"**Service Level Agreements**, abbreviated **SLAs**, help you to meet "
 "specific response times for your customers' requests. This way you can "
 "define goals such as answering every inquiry within eight hours. If you are "
 "at risk of missing this target, Zammad will alert you.\n"
 "\n"
-"You can define targets for three different metrics: ** response time ** "
-"(time between the creation of a ticket and the first reaction of an agent), "
-"** update time ** (time between a customer's request and an agent's "
-"reaction), and ** solution time ** (time between creating and closing a "
-"ticket).\n"
+"You can define targets for three different metrics: **response time** (time "
+"between the creation of a ticket and the first reaction of an agent), "
+"**update time** (time between a customer's request and an agent's reaction), "
+"and **solution time** (time between creating and closing a ticket).\n"
 "\n"
 "Any escalated tickets (i.e. tickets that have missed the defined target) are "
-"displayed in a separate view in your overviews. You can also configure ** "
-"email notifications **."
+"displayed in a separate view in your overviews. You can also configure "
+"**email notifications**."
 msgstr ""
 "** 服務等級協議 (Service Level Agreements) **，其縮寫為 ** SLAs **，協助您針"
 "對客戶的提問滿足特定的回應時間。據此，您可以設定目標，例如每個詢問需在 8 小時"
@@ -2484,7 +2505,6 @@ msgstr "已更動"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -2657,12 +2677,6 @@ msgstr "子"
 msgid "Choose if retweets should also be converted to tickets."
 msgstr "選擇是否將 retweets 也轉為工單。"
 
-#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
-#, fuzzy
-#| msgid "Choose the group in which page postings will get added to."
-msgid "Choose the Group to which page posts will get added."
-msgstr "選擇要新增頁面貼文的群組。"
-
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #, fuzzy
 #| msgid "Choose the group in which direct messages will get added to."
@@ -2681,6 +2695,12 @@ msgstr "選擇要新增發言的群組。"
 #| msgid "Choose the group in which messages will get added to."
 msgid "Choose the group to which messages will get added."
 msgstr "選擇要新增訊息的群組。"
+
+#: app/assets/javascripts/app/views/facebook/account_edit.jst.eco
+#, fuzzy
+#| msgid "Choose the group in which page postings will get added to."
+msgid "Choose the group to which page posts will get added."
+msgstr "選擇要新增頁面貼文的群組。"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 #, fuzzy
@@ -2894,7 +2914,9 @@ msgid "Conditions for affected objects"
 msgstr "關聯事件的條件"
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Conditions for shown Tickets"
+#, fuzzy
+#| msgid "Conditions for shown Tickets"
+msgid "Conditions for shown tickets"
 msgstr "顯示滿足以下條件的工單"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
@@ -5237,6 +5259,10 @@ msgstr "輸入憑證"
 msgid "Enter link URL"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+msgid "Enter search and select a type to search for"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 msgid "Enter the Subdomain of your %s system"
@@ -6045,6 +6071,10 @@ msgstr ""
 msgid "Go Back"
 msgstr "返回"
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go back"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
@@ -6099,7 +6129,6 @@ msgstr "問候語"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6721,6 +6750,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
+#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid ""
 "In addition, we have found emails in your mailbox that are older than %s "
 "weeks. You can import such emails as an \"archive\", which means that no "
@@ -6730,15 +6761,6 @@ msgstr ""
 "此外，我們在您的郵箱中發現了 %s 週之前的電子郵件。您可以將此類電子郵件導入為 "
 "\"封存\"，這意味著不發送任何通知，並且工單的狀態為 \"已關閉\"。但是，您可以隨"
 "時使用搜尋功能在 Zammad 中找到它們。"
-
-#: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
-#: app/assets/javascripts/app/views/getting_started/email.jst.eco
-msgid ""
-"In addition, we have found emails in your mailbox that are older than %s "
-"weeks. You can import such emails as an \"archive\", which means that no "
-"notifications are sent and the tickets have the status \"closed\". However, "
-"you can find them in Zammad anytime using the search function. "
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #, fuzzy
@@ -6812,7 +6834,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6821,7 +6842,6 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
 #: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
@@ -6835,14 +6855,12 @@ msgstr ""
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -7481,6 +7499,12 @@ msgstr "加載"
 #| msgid "See more"
 msgid "Load more"
 msgstr "看到更多"
+
+#: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#, fuzzy
+#| msgid "contains one not"
+msgid "Loading content"
+msgstr "一個都不含"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
@@ -8142,14 +8166,6 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
-msgstr ""
-
-#: app/models/application_model/can_creates_and_updates.rb
-msgid "Need name, login, email or locale for create_or_update()"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-msgid "Need recipient in \"TO\" or \"CC\"."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee
@@ -8837,6 +8853,10 @@ msgstr "在 %s，%s 編輯:"
 msgid "Once completed…"
 msgstr "一旦完成..."
 
+#: app/models/application_model/can_creates_and_updates.rb
+msgid "One of the required parameters must be provided, but none was found."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
 msgid "Online"
@@ -8857,13 +8877,16 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee
-msgid "Only available for Users which are replacements for other users."
+#, fuzzy
+#| msgid "Only available for Users which are replacements for other users."
+msgid ""
+"Only available for users which are absence replacements for other users."
 msgstr "只適用於代理其他使用者的使用者。"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #, fuzzy
 #| msgid "Only available for Users with shared Organization"
-msgid "Only available for Users with shared Organizations"
+msgid "Only available for users with shared organizations"
 msgstr "僅適用於屬於共享機構的使用者"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -9130,7 +9153,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9423,6 +9445,10 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please include a valid url."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -10386,6 +10412,7 @@ msgstr "請輸入你的使用者名稱或郵件地址"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue
 #, fuzzy
 #| msgid "Search"
@@ -10471,12 +10498,6 @@ msgstr "選擇模板"
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "Select the customer of the ticket or create one."
 msgstr "選擇工單的客戶或是新建一個客戶。"
-
-#: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
-#, fuzzy
-#| msgid "Selector"
-msgid "Selected"
-msgstr "選擇器"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10946,14 +10967,22 @@ msgid "Simple Line Icons"
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "Since you didn't respond in the last %s minutes your conversation got "
+#| "closed."
 msgid ""
-"Since you didn't respond in the last %s minutes your conversation got closed."
+"Since you didn't respond in the last %s minutes your conversation was closed."
 msgstr "由於你超過 %s 分鐘沒有任何回應, 該對話已被關閉."
 
 #: public/assets/chat/views/customer_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "Since you didn't respond in the last %s minutes your conversation with "
+#| "<strong>%s</strong> got closed."
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation with "
-"<strong>%s</strong> got closed."
+"<strong>%s</strong> was closed."
 msgstr "由於你超過 %s 分鐘沒有回應, 你與 <strong>%s</strong> 的對話已被關閉."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
@@ -11136,7 +11165,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
 #: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -12924,6 +12952,10 @@ msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
 msgstr "工單僅在沒有承辦人的情況下會自動指派。"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
+msgid "Tickets are ordered by \"%s\" column (%s)."
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
 msgstr "指派給我的工單有 %s 筆，共 %s 筆"
@@ -13831,6 +13863,7 @@ msgid ""
 "\", which can be defined per organization)."
 msgstr ""
 
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "VIP"
 msgstr "VIP"
@@ -13990,8 +14023,12 @@ msgid "Warning"
 msgstr "警告"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
+#, fuzzy
+#| msgid ""
+#| "We are sorry, it takes longer as expected to get an empty slot. Please "
+#| "try again later or send us an email. Thank you!"
 msgid ""
-"We are sorry, it takes longer as expected to get an empty slot. Please try "
+"We are sorry, it is taking longer than expected to get a slot. Please try "
 "again later or send us an email. Thank you!"
 msgstr ""
 "非常抱歉, 當前需要等候更長的時間方可排入對話程序, 請稍後重試或向我們寄送電子"
@@ -14469,9 +14506,13 @@ msgid "You can request your password"
 msgstr "你可以嘗試透過電子郵件重設密碼"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can switch between the backend for new attachments even on a system "
+#| "that is already in production without any loss of data."
 msgid ""
-"You can switch between the backend for new attachments even on a system that "
-"is already in production without any loss of data."
+"You can switch between the backends for new attachments even on a system "
+"that is already in production without any loss of data."
 msgstr ""
 "即使在已經正式運作的系統上，您也可以在新附件的後台之間切換，而不會丟失任何資"
 "料。"
@@ -14605,7 +14646,9 @@ msgid "Your Logo"
 msgstr "您的 Logo"
 
 #: public/assets/form/form.js
-msgid "Your Message..."
+#, fuzzy
+#| msgid "Your Message..."
+msgid "Your Message…"
 msgstr "請寫下您的留言..."
 
 #: public/assets/form/form.js
@@ -14820,7 +14863,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 #, fuzzy
 #| msgid "pending"
 msgid "ascending"
@@ -14993,7 +15036,7 @@ msgstr "删除"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 #, fuzzy
 #| msgid "pending"
 msgid "descending"
@@ -15356,6 +15399,7 @@ msgid "left"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
 #| msgid "See more"
 msgid "load %s more"
@@ -15923,6 +15967,11 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Selector"
+#~ msgid "Selected"
+#~ msgstr "選擇器"
 
 #, fuzzy
 #~| msgid "Last sync"
