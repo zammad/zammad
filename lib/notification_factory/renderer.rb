@@ -31,7 +31,7 @@ examples how to use
   def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false)
     @objects  = objects
     @locale   = locale || Locale.default
-    @timezone = timezone || Setting.get('timezone_default')
+    @timezone = timezone || Setting.get('timezone_default_sanitized')
     @template = NotificationFactory::Template.new(template, escape, trusted)
     @escape = escape
   end

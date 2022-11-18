@@ -887,7 +887,7 @@ condition example
           query += SqlHelper.new(object: Ticket).array_contains_one(attributes[1], selector['value'], negated: true)
         end
       elsif selector['operator'] == 'today'
-        Time.use_zone(Setting.get('timezone_default').presence) do
+        Time.use_zone(Setting.get('timezone_default_sanitized')) do
           day_start = Time.zone.now.beginning_of_day.utc
           day_end   = Time.zone.now.end_of_day.utc
 

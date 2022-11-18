@@ -9,7 +9,7 @@ class ExcelSheet
     @title           = title
     @header          = header
     @records         = records
-    @timezone        = timezone.presence || Setting.get('timezone_default')
+    @timezone        = timezone.presence || Setting.get('timezone_default_sanitized')
     @locale          = locale || Locale.default
     @tempfile        = Tempfile.new('excel-export.xls')
     @workbook        = WriteExcel.new(@tempfile)
