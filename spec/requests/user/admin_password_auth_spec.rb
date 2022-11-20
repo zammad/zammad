@@ -30,6 +30,20 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
           post api_v1_users_admin_password_auth_path, params: { username: 'john.doe' }
           expect(response).to have_http_status(:ok)
         end
+
+        it 'sends a valid login link' do
+          user = create(:admin)
+
+          message = nil
+
+          allow(NotificationFactory::Mailer).to receive(:send) do |params|
+            message = params[:body]
+          end
+
+          post api_v1_users_admin_password_auth_path, params: { username: user.email }
+
+          expect(message).to include "http://zammad.example.com/#login/admin/#{Token.last.name}"
+        end
       end
     end
 
