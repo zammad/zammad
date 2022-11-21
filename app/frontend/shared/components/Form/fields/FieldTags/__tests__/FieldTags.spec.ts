@@ -129,7 +129,7 @@ describe('Form - Field - Tags', () => {
     // TODO api not called
   })
 
-  it('can add new tag', async () => {
+  it('can select new tag, when creating existing one', async () => {
     const view = renderFieldTags({ canCreate: true })
 
     const node = view.getByLabelText('Tags')
@@ -137,14 +137,13 @@ describe('Form - Field - Tags', () => {
 
     const filterInput = view.getByPlaceholderText('Tag name…')
 
-    await view.events.type(filterInput, 'pay')
+    await view.events.type(filterInput, 'paid{Tab}')
 
-    const createButton = view.getByTitle('Create tag')
+    const option = view.getByRole('option', { name: 'paid' })
+    expect(option).toBeChecked()
+    expect(option).toHaveAttribute('aria-selected', 'true')
 
-    expect(createButton).toBeEnabled()
-    await view.events.click(createButton)
-
-    expect(view.getByRole('option', { name: 'pay' })).toBeInTheDocument()
+    expect(filterInput, 'resets input').toHaveDisplayValue('')
   })
 
   it("clicking disabled field doesn't select dialog", async () => {
@@ -202,5 +201,57 @@ describe('Form - Field - Tags', () => {
 
     await wrapper.events.keyboard('{ArrowUp}')
     expect(options[1]).toHaveFocus()
+  })
+})
+
+describe('creating new tag', () => {
+  it('can add new tag on click', async () => {
+    const view = renderFieldTags({ canCreate: true })
+
+    const node = view.getByLabelText('Tags')
+    await view.events.click(node)
+
+    const filterInput = view.getByPlaceholderText('Tag name…')
+
+    await view.events.type(filterInput, 'pay')
+
+    const createButton = view.getByTitle('Create tag')
+
+    expect(createButton).toBeEnabled()
+    await view.events.click(createButton)
+
+    expect(view.getByRole('option', { name: 'pay' })).toBeInTheDocument()
+    expect(filterInput).toHaveFocus()
+  })
+
+  it.each(['{Enter}', '{Tab}', ','])(
+    'can add new tag with "%s" key',
+    async (key) => {
+      const view = renderFieldTags({ canCreate: true })
+
+      const node = view.getByLabelText('Tags')
+      await view.events.click(node)
+
+      const filterInput = view.getByPlaceholderText('Tag name…')
+
+      await view.events.type(filterInput, `pay${key}`)
+
+      expect(view.getByRole('option', { name: 'pay' })).toBeInTheDocument()
+      expect(filterInput).toHaveDisplayValue('')
+    },
+  )
+
+  it('cannot input comma', async () => {
+    const view = renderFieldTags({ canCreate: true })
+
+    const node = view.getByLabelText('Tags')
+    await view.events.click(node)
+
+    const filterInput = view.getByPlaceholderText('Tag name…')
+
+    await view.events.type(filterInput, `,{Enter}`)
+
+    expect(view.queryByRole('option', { name: ',' })).not.toBeInTheDocument()
+    expect(filterInput).toHaveDisplayValue('')
   })
 })

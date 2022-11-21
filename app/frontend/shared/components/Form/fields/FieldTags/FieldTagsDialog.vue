@@ -1,12 +1,13 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, onMounted, ref, toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { i18n } from '@shared/i18n'
+import stopEvent from '@shared/utils/events'
 import type { FieldTagsContext } from './types'
 import useValue from '../../composables/useValue'
 
@@ -24,6 +25,9 @@ const isCurrentValue = (tag: string) => currentValue.value.includes(tag)
 
 const filter = ref('')
 const newTags = ref<{ value: string; label: string }[]>([])
+
+const filterInput = ref<CommonInputSearchExpose>()
+const tagsListbox = ref<HTMLElement>()
 
 const translatedOptions = computed(() => {
   const {
@@ -75,23 +79,33 @@ const toggleTag = (tag: string) => {
 
 const createTag = () => {
   const tag = filter.value
-  if (tagExists(tag)) return
+  if (!tag) return
+  if (tagExists(tag)) {
+    toggleTag(tag)
+    filter.value = ''
+    return
+  }
 
   toggleTag(tag)
   newTags.value.push({
     value: tag,
     label: tag,
   })
+  filter.value = ''
+  filterInput.value?.focus() // keep focus inside input, if clicked
 }
 
-const filterInput = ref<CommonInputSearchExpose>()
-const tagsListbox = ref<HTMLElement>()
-
-onMounted(() => {
-  filterInput.value?.focus()
-})
-
 useTraverseOptions(tagsListbox, { direction: 'vertical' })
+
+const processSearchKeydown = (event: KeyboardEvent) => {
+  const { key } = event
+  if (key === ',') stopEvent(event) // never allow comma in input
+  if (!filter.value) return
+  if (['Enter', 'Tab', ','].includes(key)) {
+    stopEvent(event)
+    createTag()
+  }
+}
 </script>
 
 <template>
@@ -101,7 +115,7 @@ useTraverseOptions(tagsListbox, { direction: 'vertical' })
         ref="filterInput"
         v-model="filter"
         placeholder="Tag name…"
-        @keydown.enter.prevent="createTag()"
+        @keydown="processSearchKeydown"
       >
         <template v-if="context.canCreate" #controls>
           <button
@@ -131,6 +145,7 @@ useTraverseOptions(tagsListbox, { direction: 'vertical' })
         class="flex w-full items-center px-4 focus:bg-blue-highlight focus:outline-none"
         role="option"
         :aria-selected="isCurrentValue(option.value)"
+        :aria-checked="isCurrentValue(option.value)"
         @click="toggleTag(option.value)"
         @keydown.space.prevent="toggleTag(option.value)"
       >
