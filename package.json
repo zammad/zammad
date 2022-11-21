@@ -141,6 +141,6 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.18"
+    "postcss": "^8.4.19"
   }
 }
