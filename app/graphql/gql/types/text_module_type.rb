@@ -16,12 +16,12 @@ module Gql::Types
     field :content, String
 
     field :rendered_content, String do
-      argument :template_render_context, Gql::Types::Input::TemplateRenderContextInputType, required: false, description: 'Context data for the text module rendering, e.g. customer data.'
+      argument :template_render_context, Gql::Types::Input::TemplateRenderContextInputType, description: 'Context data for the text module rendering, e.g. customer data.'
     end
 
     field :groups, Gql::Types::GroupType.connection_type
 
-    def rendered_content(template_render_context: {})
+    def rendered_content(template_render_context:)
       NotificationFactory::Renderer.new(
         objects:  template_render_context.to_context_hash,
         template: @object.content,

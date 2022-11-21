@@ -668,8 +668,16 @@ export type ObjectAttributeValue = {
   __typename?: 'ObjectAttributeValue';
   /** The object attribute record */
   attribute: ObjectManagerFrontendAttribute;
+  /** Rendered version of the value that considers templates which are defined */
+  renderedValue?: Maybe<Scalars['JSON']>;
   /** The value of the current object's object attribute */
   value?: Maybe<Scalars['JSON']>;
+};
+
+
+/** Data of one object attribute value of another object */
+export type ObjectAttributeValueRenderedValueArgs = {
+  templateRenderContext: TemplateRenderContextInput;
 };
 
 /** Data of one object attribute value of another object */
@@ -1313,7 +1321,7 @@ export type TextModuleGroupsArgs = {
 
 /** Text modules */
 export type TextModuleRenderedContentArgs = {
-  templateRenderContext?: InputMaybe<TemplateRenderContextInput>;
+  templateRenderContext: TemplateRenderContextInput;
 };
 
 /** Tickets */

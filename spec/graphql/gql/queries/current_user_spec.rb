@@ -21,6 +21,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
                 name
               }
               value
+              renderedValue(templateRenderContext: {})
             }
             organization {
               name
@@ -57,7 +58,27 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
       it 'has objectAttributeValue data for User' do
         oas = gql.result.data['objectAttributeValues']
-        expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }['value']).to eq('TestDepartment')
+        expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }).to include('value' => 'TestDepartment', 'renderedValue' => 'TestDepartment')
+      end
+
+      context 'with custom object attribute with linktemplate', db_strategy: :reset do
+        let(:object_attribute) do
+          screens = { create: { 'admin.organization': { shown: true, required: false } } }
+          create(:object_manager_attribute_text, name: 'UserLink', object_name: 'User', screens: screens).tap do |oa|
+            oa.data_option['linktemplate'] = 'http://test?#{user.fullname}' # rubocop:disable Lint/InterpolationCheck
+            oa.save!
+            ObjectManager::Attribute.migration_execute
+          end
+        end
+        let(:organization) do
+          object_attribute
+          create(:organization)
+        end
+
+        it 'has rendered objectAttributeValue data for User' do
+          oas = gql.result.data['objectAttributeValues']
+          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedValue' => "http://test?#{agent.fullname}")
+        end
       end
 
       it 'has data for primary and secondary organizations', :aggregate_failures do
