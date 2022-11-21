@@ -35,7 +35,7 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   # Return a string UUID for `object`
   def self.id_from_object(object, _type_definition = nil, _query_ctx = nil)
-    object.to_gid_param
+    object.to_global_id.to_s
   end
 
   # Given a string UUID, find the object.

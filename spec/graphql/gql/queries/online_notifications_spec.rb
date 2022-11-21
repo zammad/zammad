@@ -33,7 +33,7 @@ RSpec.describe Gql::Queries::OnlineNotifications, type: :graphql do
     it 'contains a notification', authenticated_as: :user do
       returned_ids = gql.result.nodes.map { |elem| elem['id'] }
 
-      expect(returned_ids).to contain_exactly(notification.to_gid_param)
+      expect(returned_ids).to contain_exactly(gql.id(notification))
     end
   end
 end

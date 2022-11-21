@@ -51,8 +51,8 @@ RSpec.describe Gql::Mutations::OnlineNotification::MarkAllAsSeen, authenticated_
     it 'returns touched notifications' do
       expect(gql.result.data['onlineNotifications'])
         .to contain_exactly(
-          include('id' => notification_a.to_gid_param),
-          include('id' => notification_b.to_gid_param)
+          include('id' => gql.id(notification_a)),
+          include('id' => gql.id(notification_b))
         )
     end
   end
