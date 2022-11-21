@@ -340,4 +340,82 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('', organization1.note)
   end
 
+  class ClearbitAttributeTest < ActiveSupport::TestCase
+    include BackgroundJobsHelper
+
+    self.use_transactional_tests = false
+
+    teardown do
+      User.find_by(email: 'testing6@znuny.com').destroy
+
+      ObjectManager::Attribute.remove(
+        object: 'User',
+        name:   'attribute1',
+      )
+
+      ObjectManager::Attribute.migration_execute
+    end
+
+    test 'long value with custom attribute' do
+      if !ENV['CLEARBIT_CI_API_KEY']
+        raise "ERROR: Need CLEARBIT_CI_API_KEY - hint CLEARBIT_CI_API_KEY='abc...'"
+      end
+
+      attribute1 = ObjectManager::Attribute.add(
+        object:        'User',
+        name:          'attribute1',
+        display:       'Attribute 1',
+        data_type:     'input',
+        data_option:   {
+          maxlength: 2,
+          type:      'text',
+          null:      true,
+        },
+        active:        true,
+        screens:       {},
+        position:      20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+      assert(attribute1)
+
+      assert(ObjectManager::Attribute.migration_execute)
+
+      # set system mode to done / to activate
+      Setting.set('system_init_done', true)
+
+      Setting.set('clearbit_integration', true)
+      Setting.set('clearbit_config', {
+                    api_key:                 ENV['CLEARBIT_CI_API_KEY'],
+                    organization_autocreate: true,
+                    organization_shared:     true,
+                    user_sync:               {
+                      'person.name.familyName' => 'user.attribute1',
+                    },
+                    organization_sync:       {
+                      'company.legalName'   => 'organization.name',
+                      'company.name'        => 'organization.attribute1',
+                      'company.description' => 'organization.note',
+                    },
+                  })
+
+      customer1 = User.create!(
+        firstname:     '',
+        lastname:      '',
+        email:         'testing6@znuny.com',
+        note:          '',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      assert(customer1)
+
+      perform_enqueued_jobs commit_transaction: true
+
+      assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
+
+      customer1.reload
+
+      assert_equal(customer1.reload.attribute1, 'Sm')
+    end
+  end
 end
