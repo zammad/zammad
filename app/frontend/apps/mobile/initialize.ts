@@ -10,6 +10,7 @@ import initializeStore from '@shared/stores'
 import initializeGlobalComponents from '@shared/initializer/globalComponents'
 import initializeForm from '@mobile/form'
 import initializeGlobalProperties from '@shared/initializer/globalProperties'
+import { initializeObjectAttributes } from './object-attributes/initializeObjectAttributes'
 
 export default function initializeApp(app: App) {
   // TODO remove when Vue 3.3 released
@@ -19,6 +20,7 @@ export default function initializeApp(app: App) {
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeForm(app)
+  initializeObjectAttributes()
 
   return app
 }

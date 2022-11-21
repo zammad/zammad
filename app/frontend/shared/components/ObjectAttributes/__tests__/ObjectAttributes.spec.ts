@@ -9,7 +9,7 @@ import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { flushPromises } from '@vue/test-utils'
 import { keyBy } from 'lodash-es'
-import CommonObjectAttributes from '../CommonObjectAttributes.vue'
+import ObjectAttributes from '../ObjectAttributes.vue'
 import attributes from './attributes.json'
 
 const attributesByKey = keyBy(attributes, 'name')
@@ -81,7 +81,7 @@ describe('common object attributes interface', () => {
       ]),
     )
 
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes,
@@ -137,7 +137,7 @@ describe('common object attributes interface', () => {
     const object = {
       active: true,
     }
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes: [attributesByKey.active],
@@ -161,7 +161,7 @@ describe('common object attributes interface', () => {
         },
       ],
     }
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes: [attributesByKey.login],
@@ -180,7 +180,7 @@ describe('common object attributes interface', () => {
       name: 'login',
       display: 'Login',
     }
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes: [
@@ -202,7 +202,7 @@ describe('common object attributes interface', () => {
       phone: '+49 123456789',
     }
 
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes: [
@@ -263,7 +263,7 @@ describe('common object attributes interface', () => {
       ]),
     )
 
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes,
@@ -299,7 +299,7 @@ describe('common object attributes interface', () => {
       { ...attributesByKey.date_time_field, name: 'future', display: 'future' },
     ]
 
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes,
@@ -335,7 +335,7 @@ describe('common object attributes interface', () => {
       { ...attributesByKey.address, name: 'show', display: 'show' },
     ]
 
-    const view = renderComponent(CommonObjectAttributes, {
+    const view = renderComponent(ObjectAttributes, {
       props: {
         object,
         attributes,

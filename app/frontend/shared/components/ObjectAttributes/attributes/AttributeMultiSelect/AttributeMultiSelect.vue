@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { translateOption } from '../utils'
+import { translateOption } from '../../utils'
 import type { ObjectAttributeMultiSelect } from './attributeMultiSelectTypes'
 
 const props = defineProps<{

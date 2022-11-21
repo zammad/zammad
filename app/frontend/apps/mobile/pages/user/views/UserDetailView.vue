@@ -6,7 +6,7 @@ import { useUserEdit } from '@mobile/entities/user/composables/useUserEdit'
 import { computed, ref } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
+import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
@@ -110,7 +110,7 @@ const secondaryOrganizations = computed(() =>
       </CommonLink>
     </div>
 
-    <CommonObjectAttributes
+    <ObjectAttributes
       :attributes="objectAttributes"
       :object="user"
       :skip-attributes="['firstname', 'lastname']"

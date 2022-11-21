@@ -9,7 +9,12 @@
       "vite-plugin-pwa/client"
     ]
   },
-  "include": ["app/frontend/**/*", "./vite.config.*", "./histoire.config.*"],
+  "include": [
+    "app/frontend/**/*",
+    "./vite.config.*",
+    "./vitest.setup.ts",
+    "./histoire.config.*"
+  ],
   "exclude": [
     "app/frontend/cypress/**/*",
     "**/*.cy.ts",

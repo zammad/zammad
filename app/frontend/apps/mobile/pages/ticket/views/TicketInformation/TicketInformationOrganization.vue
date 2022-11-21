@@ -5,7 +5,7 @@ import { computed, ref, watchEffect } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
+import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { useSessionStore } from '@shared/stores/session'
@@ -60,7 +60,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
     </div>
   </CommonLoader>
   <div v-if="organization">
-    <CommonObjectAttributes
+    <ObjectAttributes
       :object="organization"
       :attributes="objectAttributes"
       :skip-attributes="['name']"
@@ -73,7 +73,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
           {{ $t('Edit Organization') }}
         </button>
       </template>
-    </CommonObjectAttributes>
+    </ObjectAttributes>
 
     <OrganizationMembersList
       :organization="organization"

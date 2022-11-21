@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { keyBy } from 'lodash-es'
 import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
-import CommonObjectAttributes from './CommonObjectAttributes.vue'
+import ObjectAttributes from './ObjectAttributes.vue'
 import attributesJson from './__tests__/attributes.json'
 
 const attributes = attributesJson as ObjectManagerFrontendAttribute[]
@@ -69,6 +69,6 @@ const object = {
 
 <template>
   <Story>
-    <CommonObjectAttributes :attributes="attributes" :object="object" />
+    <ObjectAttributes :attributes="attributes" :object="object" />
   </Story>
 </template>

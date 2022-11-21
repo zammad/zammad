@@ -6,7 +6,7 @@ import { useUserEdit } from '@mobile/entities/user/composables/useUserEdit'
 import { useUsersTicketsCount } from '@mobile/entities/user/composables/useUserTicketsCount'
 import { watchEffect, computed } from 'vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
+import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useSessionStore } from '@shared/stores/session'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
@@ -67,7 +67,7 @@ const secondaryOrganizations = computed(() =>
     </div>
   </CommonLoader>
   <div v-if="user">
-    <CommonObjectAttributes
+    <ObjectAttributes
       :attributes="objectAttributes"
       :object="user"
       :skip-attributes="['firstname', 'lastname']"
@@ -81,7 +81,7 @@ const secondaryOrganizations = computed(() =>
           {{ $t('Edit Customer') }}
         </button>
       </template>
-    </CommonObjectAttributes>
+    </ObjectAttributes>
     <CommonOrganizationsList
       :organizations="secondaryOrganizations.array"
       :total-count="secondaryOrganizations.totalCount"

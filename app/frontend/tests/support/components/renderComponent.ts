@@ -24,6 +24,7 @@ import { imageViewerOptions } from '@shared/composables/useImageViewer'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
 import { useApplicationStore } from '@shared/stores/application'
+import { initializeObjectAttributes } from '@mobile/object-attributes/initializeObjectAttributes'
 import { i18n } from '@shared/i18n'
 import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
@@ -330,6 +331,7 @@ const renderComponent = <Props>(
   }
 
   initializeApplicationConfig()
+  initializeObjectAttributes()
 
   if (wrapperOptions?.form && wrapperOptions?.formField) {
     defaultWrapperOptions.props ||= {}

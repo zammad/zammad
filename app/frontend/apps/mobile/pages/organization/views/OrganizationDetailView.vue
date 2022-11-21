@@ -13,7 +13,7 @@ import { ErrorStatusCodes } from '@shared/types/error'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
-import CommonObjectAttributes from '@mobile/components/CommonObjectAttributes/CommonObjectAttributes.vue'
+import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
 
@@ -74,7 +74,7 @@ const ticketData = computed(() => getTicketData(organization.value))
       </div>
     </div>
 
-    <CommonObjectAttributes
+    <ObjectAttributes
       :object="organization"
       :attributes="objectAttributes"
       :skip-attributes="['name']"
