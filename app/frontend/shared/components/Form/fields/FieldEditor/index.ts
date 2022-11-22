@@ -19,9 +19,13 @@ const addAriaLabel = (node: FormKitNode) => {
   })
 }
 
-const fieldDefinition = createInput(FieldEditorWrapper, [], {
-  features: [addAriaLabel, formUpdaterTrigger('delayed')],
-})
+const fieldDefinition = createInput(
+  FieldEditorWrapper,
+  ['groupId', 'ticketId', 'customerId', 'meta'],
+  {
+    features: [addAriaLabel, formUpdaterTrigger('delayed')],
+  },
+)
 
 export default {
   fieldType: 'editor',

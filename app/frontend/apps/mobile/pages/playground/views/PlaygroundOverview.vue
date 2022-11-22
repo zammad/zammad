@@ -13,8 +13,15 @@ import { ref } from 'vue'
 
 const linkSchemaRaw = [
   {
+    type: 'editor',
+    name: 'editor',
+    label: 'Editor',
+    required: true,
+  },
+  {
     type: 'textarea',
     name: 'textarea',
+    id: 'textarea',
     label: 'Textarea',
   },
   {

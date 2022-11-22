@@ -3,11 +3,17 @@
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
+// we don't use useTraverOptions here because we don't FOCUS elements, just traverse
 export default function useNavigateOptions(
   items: Ref<unknown[]>,
   onSelect: (item: unknown) => void,
 ) {
   const selectedIndex = ref(0)
+
+  const focus = (index: number) => {
+    const element = document.querySelector(`#mention-${index}`)
+    element?.scrollIntoView({ block: 'nearest' })
+  }
 
   const goNext = () => {
     if (selectedIndex.value === items.value.length - 1) {
@@ -15,6 +21,7 @@ export default function useNavigateOptions(
     } else {
       selectedIndex.value += 1
     }
+    focus(selectedIndex.value)
   }
 
   const goPrevious = () => {
@@ -23,6 +30,7 @@ export default function useNavigateOptions(
     } else {
       selectedIndex.value -= 1
     }
+    focus(selectedIndex.value)
   }
 
   const selectItem = (index?: number) => {
@@ -41,7 +49,7 @@ export default function useNavigateOptions(
       goPrevious()
       return true
     }
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Tab') {
       selectItem()
       return true
     }

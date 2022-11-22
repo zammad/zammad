@@ -609,7 +609,7 @@ const buildStaticSchema = () => {
       props: {
         type: field.type,
         key: field.name,
-        id: field.id,
+        id: field.id || `form_field_${field.name}`,
         formId,
         plugins: [changedInputValueHandling],
         triggerFormUpdater: !!props.formUpdaterId,

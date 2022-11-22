@@ -1942,7 +1942,17 @@ export type MentionSuggestionsQueryVariables = Exact<{
 }>;
 
 
-export type MentionSuggestionsQuery = { __typename?: 'Queries', mentionSuggestions?: Array<{ __typename?: 'User', id: string, fullname?: string | null, email?: string | null }> | null };
+export type MentionSuggestionsQuery = { __typename?: 'Queries', mentionSuggestions?: Array<{ __typename?: 'User', id: string, internalId: number, fullname?: string | null, email?: string | null }> | null };
+
+export type TextModuleSuggestionsQueryVariables = Exact<{
+  query: Scalars['String'];
+  limit?: InputMaybe<Scalars['Int']>;
+  ticketId?: InputMaybe<Scalars['ID']>;
+  customerId?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type TextModuleSuggestionsQuery = { __typename?: 'Queries', textModuleSuggestions: Array<{ __typename?: 'TextModule', id: string, name: string, keywords?: string | null, renderedContent?: string | null }> };
 
 export type FormUploadCacheAddMutationVariables = Exact<{
   formId: Scalars['FormId'];

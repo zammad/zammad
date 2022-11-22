@@ -6,14 +6,19 @@ import ListItem from '@tiptap/extension-list-item'
 import Link from '@tiptap/extension-link'
 import StarterKit from '@tiptap/starter-kit'
 
-import type { Extension } from '@tiptap/core'
+import type { Extensions } from '@tiptap/core'
 
+import type { Ref } from 'vue'
+import type { FormFieldContext } from '@shared/components/Form/types/field'
 import UserMention, { UserLink } from '../suggestions/UserMention'
 import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion'
 import TextModuleSuggestion from '../suggestions/TextModuleSuggestion'
 import Image from './Image'
+import type { FieldEditorProps } from '../types'
 
-export default <Extension[]>[
+export default (
+  context: Ref<FormFieldContext<FieldEditorProps>>,
+): Extensions => [
   StarterKit.configure({
     orderedList: false,
     listItem: false,
@@ -27,7 +32,7 @@ export default <Extension[]>[
     autolink: false,
   }),
   UserLink,
-  UserMention,
-  KnowledgeBaseSuggestion,
-  TextModuleSuggestion,
+  UserMention(context),
+  KnowledgeBaseSuggestion(context),
+  TextModuleSuggestion(context),
 ]

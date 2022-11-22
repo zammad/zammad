@@ -9,6 +9,7 @@ export const MentionSuggestionsDocument = gql`
     query mentionSuggestions($query: String!, $group: ID!) {
   mentionSuggestions(query: $query, group: $group) {
     id
+    internalId
     fullname
     email
   }

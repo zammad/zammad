@@ -33,6 +33,13 @@ const additionalFormSchema = [
         name: 'body',
         label: 'TESTING',
         screen: 'create_top',
+        props: {
+          meta: {
+            mentionUser: {
+              groupNodeId: 'form_field_group_id',
+            },
+          },
+        },
         object: EnumObjectManagerObjects.TicketArticle,
       },
     ],

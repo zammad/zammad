@@ -1,13 +1,50 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { mountComponent, mockApolloClient } from '@cy/utils'
+import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
+import { MentionSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api'
+import { convertToGraphQLId } from '@shared/graphql/utils'
+
 import { mountEditor } from './utils'
 
 describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
-  // TODO change when api calls will be added
-  it('inserts a text', () => {
+  it('shows notification when no group is provided', () => {
+    mountComponent(CommonNotifications as any)
     mountEditor()
 
-    cy.findByRole('textbox').type('@@')
+    cy.findByRole('textbox').type('@@t')
+
+    cy.get('#Notifications').should(
+      'have.text',
+      'Before you mention a user, please select a group.',
+    )
+  })
+
+  it('inserts found text', () => {
+    const client = mockApolloClient()
+    const mock = cy.spy(async () => ({
+      data: {
+        mentionSuggestions: [
+          {
+            id: btoa('Bob Wance'),
+            internalId: 3,
+            fullname: 'Bob Wance',
+            email: 'bob@mail.com',
+          },
+          {
+            id: btoa('John Doe'),
+            internalId: 4,
+            fullname: 'John Doe',
+            email: 'john@mail.com',
+          },
+        ],
+      },
+    }))
+    client.setRequestHandler(MentionSuggestionsDocument, mock)
+
+    mountEditor({ groupId: '1' })
+
+    cy.findByRole('textbox').type('@@Jo')
 
     cy.findByTestId('mention-user')
       .should('exist')
@@ -28,7 +65,10 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
           `${window.location.origin}/#user/profile/3`,
         )
       })
-  })
 
-  it.skip('filters knowledge base by query')
+    cy.wrap(mock).should('have.been.calledWith', {
+      query: 'Jo',
+      group: convertToGraphQLId('Group', '1'),
+    })
+  })
 })

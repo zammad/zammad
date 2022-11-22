@@ -18,7 +18,9 @@ configure({
   testIdAttribute: 'data-test-id',
 })
 
-Element.prototype.scrollIntoView = vi.fn()
+Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
+Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
+Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
 
 require.extensions['.css'] = () => ({})
 

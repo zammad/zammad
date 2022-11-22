@@ -1,5 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type {
+  KnowledgeBaseAnswerSuggestionsQuery,
+  MentionSuggestionsQuery,
+  TextModuleSuggestionsQuery,
+} from '@shared/graphql/types'
+import type { ConfidentTake } from '@shared/types/utils'
 import type { ImageFileData } from '@shared/utils/files'
 
 declare module '@tiptap/core' {
@@ -15,39 +21,49 @@ declare module '@tiptap/core' {
   }
 }
 
-export interface CommandUserProps {
-  id: string
-  href: string
-  title: string
-}
+export type MentionUserItem = ConfidentTake<
+  MentionSuggestionsQuery,
+  'mentionSuggestions'
+>[number]
 
-export interface CommandKnowledgeBaseProps {
-  content: string
-}
+export type MentionKnowledgeBaseItem = ConfidentTake<
+  KnowledgeBaseAnswerSuggestionsQuery,
+  'knowledgeBaseAnswerSuggestions'
+>[number]
 
-export interface CommandTextProps {
-  content: string
-}
-
-export interface MentionUserItem {
-  firstname?: string
-  lastname?: string
-  email?: string
-  id: string
-}
-
-export interface MentionKnowledgeBaseItem {
-  id: string
-  title: string
-  content: string
-  category: string
-}
-
-export interface MentionTextItem {
-  title: string
-  keyword: string
-  content: string
-  id: string
-}
+export type MentionTextItem = ConfidentTake<
+  TextModuleSuggestionsQuery,
+  'textModuleSuggestions'
+>[number]
 
 export type MentionType = 'user' | 'knowledge-base' | 'text'
+
+export interface FieldEditorProps {
+  groupId?: string
+  ticketId?: string
+  customerId?: string
+  meta?: {
+    image?: {
+      disabled?: boolean
+    }
+    mentionText?: {
+      disabled?: boolean
+      // where to get id for the current ticket
+      ticketNodeId?: string
+      // where to get id for the current customer
+      customerNodeId?: string
+    }
+    mentionKnowledgeBase?: {
+      disabled?: boolean
+      // where to put attachments from knowledge base, if any are available
+      attachmentsNodeId?: string
+    }
+    mentionUser?: {
+      disabled?: boolean
+      // where to get groupId for user mention query
+      groupNodeId?: string
+    }
+  }
+}
+
+export type EditorCustomPlugins = keyof ConfidentTake<FieldEditorProps, 'meta'>

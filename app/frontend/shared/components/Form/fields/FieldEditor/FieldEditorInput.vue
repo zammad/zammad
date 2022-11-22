@@ -7,33 +7,39 @@ import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
 import { ref, toRef, watch } from 'vue'
 import useValue from '../../composables/useValue'
-import extensions from './extensions/list'
-
-import useEditorActions from './useEditorActions'
+import getExtensions from './extensions/list'
+import type { EditorCustomPlugins, FieldEditorProps } from './types'
+import FieldEditorActionBar from './FieldEditorActionBar.vue'
 
 interface Props {
-  context: FormFieldContext
+  context: FormFieldContext<FieldEditorProps>
 }
 
 const props = defineProps<Props>()
 
-const { currentValue } = useValue(toRef(props, 'context'))
+const reactiveContext = toRef(props, 'context')
+const { currentValue } = useValue(reactiveContext)
 
 // TODO: add maybe something to extract the props from the context, instead of using context.XYZ (or props.context.XYZ)
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const initialPlaceholder = props.context.attrs.placeholder
+const disabledPlugins = Object.entries(props.context.meta || {})
+  .filter(([, value]) => value.disabled)
+  .map(([key]) => key as EditorCustomPlugins)
+
+const editorExtensions = getExtensions(reactiveContext).filter(
+  (extension) =>
+    !disabledPlugins.includes(extension.name as EditorCustomPlugins),
+)
 
 const showActionBar = ref(false)
 const editor = useEditor({
-  extensions,
+  extensions: editorExtensions,
   editorProps: {
     attributes: {
       role: 'textbox',
       name: props.context.node.name,
-      'aria-labelledby': props.context.id,
-      ...(!currentValue.value &&
-        initialPlaceholder && { 'aria-placeholder': initialPlaceholder }),
+      id: props.context.id,
+      class: 'min-h-[80px]',
     },
     // add inlined files
     handlePaste(view, event) {
@@ -64,7 +70,7 @@ const editor = useEditor({
   },
   editable: props.context.disabled !== true,
   content: currentValue.value,
-  onUpdate: ({ editor }) => {
+  onUpdate({ editor }) {
     const html = editor.getHTML()
     if (html === '<p></p>') {
       props.context.node.input('')
@@ -81,19 +87,15 @@ const editor = useEditor({
 })
 
 watch(
-  [
-    () => props.context.id,
-    () => props.context.attrs.placeholder,
-    () => editor.value?.isEmpty,
-  ],
-  ([id, placeholder, isEmpty]) => {
+  () => props.context.id,
+  (id) => {
     editor.value?.setOptions({
       editorProps: {
         attributes: {
           role: 'textbox',
           name: props.context.node.name,
-          'aria-labelledby': id,
-          ...(isEmpty && placeholder && { 'aria-placeholder': placeholder }),
+          id,
+          class: 'min-h-[80px]',
         },
       },
     })
@@ -119,53 +121,30 @@ props.context.node.on('input', ({ payload: value }) => {
   }
 })
 
-const { actions, isActive } = useEditorActions(editor)
+const focusEditor = () => {
+  const view = editor.value?.view
+  view?.focus()
+}
 
-const actionBar = ref<HTMLElement>()
-
+// focus editor when clicked on its label
 useEventListener('click', (e) => {
-  if (!actionBar.value || !editor.value) return
-
-  const target = e.target as HTMLElement
-
-  if (!actionBar.value.contains(target) && !editor.value.isFocused) {
-    showActionBar.value = false
-  }
+  const label = document.querySelector(`label[for="${props.context.id}"]`)
+  if (label === e.target) focusEditor()
 })
 </script>
 
 <template>
   <EditorContent
+    ref="editorVueInstance"
     data-test-id="field-editor"
-    class="editor-content px-4 py-2"
+    class="px-2 py-2"
     :editor="editor"
   />
-  <div
-    v-show="showActionBar"
-    ref="actionBar"
-    data-test-id="action-bar"
-    class="absolute bottom-0 flex max-w-full gap-1 overflow-y-auto bg-black p-2"
-  >
-    <button
-      v-for="action in actions"
-      :key="action.name"
-      :class="[
-        'min-w-[30px] rounded p-2 lg:hover:bg-gray-300',
-        action.class,
-        { '!bg-gray-300': isActive(action.name, action.attributes) },
-      ]"
-      :aria-label="action.label || action.name"
-      @click="action.command"
-    >
-      <component
-        :is="action.component"
-        v-if="action.component"
-        :editor="editor"
-      />
-      <template v-else-if="action.text">
-        {{ action.text }}
-      </template>
-      <CommonIcon v-else-if="action.icon" :name="action.icon" size="small" />
-    </button>
-  </div>
+  <FieldEditorActionBar
+    :editor="editor"
+    :visible="showActionBar"
+    :disabled-plugins="disabledPlugins"
+    @hide="showActionBar = false"
+    @blur="focusEditor"
+  />
 </template>

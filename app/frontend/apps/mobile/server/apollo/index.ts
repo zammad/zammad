@@ -7,10 +7,8 @@ import type {
   CacheInitializerModules,
 } from '@shared/types/server/apollo/client'
 
-const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
-  './cache/initializer/*.ts',
-  { eager: true },
-)
+export const cacheInitializerModules: CacheInitializerModules =
+  import.meta.glob('./cache/initializer/*.ts', { eager: true })
 
 const initializeApolloClient: InitializeAppApolloClient = (app: App) => {
   mainInitializeApolloClient(app, cacheInitializerModules)

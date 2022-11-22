@@ -30,6 +30,7 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
       border-none
       focus:outline-none
       placeholder:text-transparent
+      min-h-[100px]
     `),
     label: clean(`
       ${label}
@@ -40,6 +41,7 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
       h-2
       translate-y-4
       text-base
+      cursor-text
       transition-all duration-100 ease-in-out origin-left
       formkit-populated:translate-y-0
       formkit-populated:text-xs formkit-populated:opacity-75

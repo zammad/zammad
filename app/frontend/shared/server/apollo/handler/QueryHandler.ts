@@ -1,20 +1,22 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+/* eslint-disable no-use-before-define */
 
 import type { Ref, WatchStopHandle } from 'vue'
-import { watch } from 'vue'
+import { nextTick, watch } from 'vue'
 import type {
   FetchMoreOptions,
   FetchMoreQueryOptions,
   OperationVariables,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
+import type { ObservableQuery } from '@apollo/client/core/ObservableQuery'
 import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
   WatchResultCallback,
 } from '@shared/types/server/apollo/handler'
 import type { ReactiveFunction } from '@shared/types/utils'
-import type { UseQueryReturn } from '@vue/apollo-composable'
+import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
 import BaseHandler from './BaseHandler'
 
 // eslint-disable-next-line no-use-before-define
@@ -29,6 +31,18 @@ export default class QueryHandler<
   UseQueryReturn<TResult, TVariables>
 > {
   private firstResultLoaded = false
+
+  public async trigger(variables?: TVariables) {
+    this.load(variables)
+    // load triggers "forceDisable", which triggers a watcher,
+    // so we need to wait for the quey to be created before we can refetch
+    await nextTick()
+    const query = this.operationResult.query.value as ObservableQuery<TResult>
+    // this will take result from cache, respecting variables
+    // if it's not in cache, it will fetch result from server
+    const result = await query.result()
+    return result.data
+  }
 
   public options(): OperationQueryOptionsReturn<TResult, TVariables> {
     return this.operationResult.options
@@ -100,15 +114,23 @@ export default class QueryHandler<
     })
   }
 
-  public load(): void {
-    if (
-      typeof (this.operationResult as unknown as { load: () => void }).load !==
-      'function'
-    ) {
-      return undefined
+  public load(
+    variables?: TVariables,
+    options?: UseQueryOptions<TResult, TVariables>,
+  ): void {
+    const operation = this.operationResult as unknown as {
+      load?: (
+        document?: unknown,
+        variables?: TVariables,
+        options?: UseQueryOptions<TResult, TVariables>,
+      ) => void
     }
 
-    return (this.operationResult as unknown as { load: () => void }).load()
+    if (typeof operation.load !== 'function') {
+      return
+    }
+
+    operation.load(undefined, variables, options)
   }
 
   public start(): void {

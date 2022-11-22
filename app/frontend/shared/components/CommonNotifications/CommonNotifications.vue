@@ -37,7 +37,7 @@ const clickHandler = (notification: Notification) => {
 <template>
   <div id="Notifications" class="flex w-full justify-center">
     <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0">
-      <transition-group
+      <TransitionGroup
         tag="div"
         enter-class="opacity-0"
         leave-active-class="transition-opacity duration-1000 opacity-0"
@@ -68,7 +68,7 @@ const clickHandler = (notification: Notification) => {
             </div>
           </div>
         </div>
-      </transition-group>
+      </TransitionGroup>
     </div>
   </div>
 </template>

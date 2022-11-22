@@ -25,10 +25,10 @@ const testAction = (action: string, expected: (text: string) => string) => {
 }
 
 describe('testing actions', () => {
-  testAction('underline', (text) => `<u>${text}</u>`)
-  testAction('bold', (text) => `<strong>${text}</strong>`)
-  testAction('italic', (text) => `<em>${text}</em>`)
-  testAction('strike', (text) => `<s>${text}</s>`)
+  testAction('Format as underlined', (text) => `<u>${text}</u>`)
+  testAction('Format as bold', (text) => `<strong>${text}</strong>`)
+  testAction('Format as italic', (text) => `<em>${text}</em>`)
+  testAction('Format as strikethrough', (text) => `<s>${text}</s>`)
   testAction('Add first level heading', (text) => `<h1>${text}</h1>`)
   testAction('Add second level heading', (text) => `<h2>${text}</h2>`)
   testAction('Add third level heading', (text) => `<h3>${text}</h3>`)
@@ -39,7 +39,7 @@ describe('testing actions', () => {
     it('removes formatting', () => {
       mountEditor()
       cy.findByRole('textbox').click()
-      cy.findByTestId('action-bar').findByLabelText('bold').click()
+      cy.findByTestId('action-bar').findByLabelText('Format as bold').click()
       cy.findByRole('textbox')
         .type('Text')
         .should('have.html', '<p><strong>Text</strong></p>')
@@ -62,7 +62,7 @@ describe('testing actions', () => {
     })
   })
 
-  it.only('makes text into a link', () => {
+  it('makes text into a link', () => {
     cy.window().then((win) => {
       cy.stub(win, 'prompt').returns('https://example.com')
       mountEditor()
@@ -83,16 +83,18 @@ describe('testing actions', () => {
     cy.findByRole('textbox').click()
     cy.findByTestId('action-bar')
       .findByLabelText('Add image')
-      .find('input[type="file"]')
-      .selectFile(
-        {
-          contents: imageBuffer,
-          fileName: 'file.png',
-          mimeType: 'image/png',
-          lastModified: Date.now(),
-        },
-        { force: true },
-      )
+      .click() // click inserts input into DOM
+      .then(() => {
+        cy.findByTestId('editor-image-input').selectFile(
+          {
+            contents: imageBuffer,
+            fileName: 'file.png',
+            mimeType: 'image/png',
+            lastModified: Date.now(),
+          },
+          { force: true },
+        )
+      })
 
     cy.findByRole('textbox')
       .find('img')

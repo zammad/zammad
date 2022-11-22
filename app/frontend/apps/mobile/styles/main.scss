@@ -6,11 +6,6 @@
     outline: none;
   }
 
-  &::before {
-    content: attr(aria-placeholder);
-    @apply absolute cursor-text text-white/50;
-  }
-
   ol {
     list-style: decimal;
   }
@@ -28,6 +23,18 @@
     p {
       display: inline-block;
     }
+  }
+
+  h1 {
+    @apply mb-2 mt-1 text-2xl font-bold;
+  }
+
+  h2 {
+    @apply my-1 text-xl font-bold;
+  }
+
+  h3 {
+    @apply my-1 text-lg font-bold;
   }
 
   a {

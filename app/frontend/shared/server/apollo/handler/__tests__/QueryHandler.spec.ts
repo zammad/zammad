@@ -35,24 +35,29 @@ const querySampleErrorResult = {
 
 const querySampleNetworkErrorResult = new Error('GraphQL Network Error')
 
+const handlerCallSpy = vi.fn()
+
 const mockClient = (error = false, errorType = 'GraphQL') => {
+  handlerCallSpy.mockImplementation(() => {
+    if (error) {
+      return errorType === 'GraphQL'
+        ? Promise.resolve(querySampleErrorResult)
+        : Promise.reject(querySampleNetworkErrorResult)
+    }
+
+    return Promise.resolve({
+      data: querySampleResult,
+    })
+  })
+
   createMockClient([
     {
       operationDocument: SampleTypedQueryDocument,
-      handler: () => {
-        if (error) {
-          return errorType === 'GraphQL'
-            ? Promise.resolve(querySampleErrorResult)
-            : Promise.reject(querySampleNetworkErrorResult)
-        }
-
-        return Promise.resolve({
-          data: querySampleResult,
-        })
-      },
+      handler: handlerCallSpy,
     },
   ])
 
+  handlerCallSpy.mockClear()
   queryFunctionCallSpy.mockClear()
 }
 
@@ -172,6 +177,22 @@ describe('QueryHandler', () => {
         expect(result).toEqual(querySampleResult)
       })
       await queryHandlerObject.onLoaded()
+    })
+
+    it('receive value immediately in non-reactive way', async () => {
+      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+      await expect(queryHandlerObject.trigger()).resolves.toEqual(
+        querySampleResult,
+      )
+
+      expect(handlerCallSpy).toHaveBeenCalledOnce()
+
+      await expect(queryHandlerObject.trigger()).resolves.toEqual(
+        querySampleResult,
+      )
+
+      expect(handlerCallSpy).toHaveBeenCalledOnce()
     })
   })
 

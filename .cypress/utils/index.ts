@@ -18,6 +18,12 @@ import type { mount } from 'cypress/vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import type { App } from 'vue'
 
+import { cacheInitializerModules } from '@mobile/server/apollo'
+import createCache from '@shared/server/apollo/cache'
+
+import { createMockClient } from 'mock-apollo-client'
+import { provideApolloClient } from '@vue/apollo-composable'
+
 const router = createRouter({
   history: createMemoryHistory('/'),
   routes: [{ path: '/', component: { template: '<div />' } }],
@@ -35,6 +41,15 @@ export const mountComponent: typeof mount = (
   plugins.push((app: App) => router.install(app))
 
   return cy.mount(component, merge({ global: { plugins } }, options))
+}
+
+export const mockApolloClient = () => {
+  const client = createMockClient({
+    cache: createCache(cacheInitializerModules),
+    queryDeduplication: true,
+  })
+  provideApolloClient(client)
+  return client
 }
 
 export const mountFormField = (
@@ -57,13 +72,17 @@ interface CheckFormMatchOptions {
 }
 
 export const checkFormMatchesSnapshot = (options?: CheckFormMatchOptions) => {
-  const title = options?.subTitle ? `${Cypress.currentTest.title} - ${options.subTitle}` : Cypress.currentTest.title
+  const title = options?.subTitle
+    ? `${Cypress.currentTest.title} - ${options.subTitle}`
+    : Cypress.currentTest.title
   const wrapperSelector = options?.wrapperSelector || '.formkit-outer'
 
   return cy.wrap(document.fonts.ready).then(() => {
     cy.get(wrapperSelector).matchImage({
       title,
-      imagesDir: options?.type ? `__image_snapshots__/${options.type}` : undefined,
+      imagesDir: options?.type
+        ? `__image_snapshots__/${options.type}`
+        : undefined,
     })
   })
 }

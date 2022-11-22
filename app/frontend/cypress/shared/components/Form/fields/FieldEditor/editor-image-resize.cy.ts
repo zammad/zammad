@@ -8,16 +8,18 @@ describe('resizing image within editor', () => {
     cy.findByRole('textbox').click()
     cy.findByTestId('action-bar')
       .findByLabelText('Add image')
-      .find('input[type="file"]')
-      .selectFile(
-        {
-          contents: '.cypress/fixtures/example.png',
-          fileName: 'example.png',
-          mimeType: 'image/png',
-          lastModified: Date.now(),
-        },
-        { force: true },
-      )
+      .click() // click inserts input into DOM
+      .then(() => {
+        cy.findByTestId('editor-image-input').selectFile(
+          {
+            contents: '.cypress/fixtures/example.png',
+            fileName: 'file.png',
+            mimeType: 'image/png',
+            lastModified: Date.now(),
+          },
+          { force: true },
+        )
+      })
     cy.findByRole('textbox').get('img:first').trigger('click')
 
     cy.get('.vdr-handle:last')

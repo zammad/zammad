@@ -1,27 +1,31 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '@shared/i18n'
+import { convertFileList } from '@shared/utils/files'
 import type { ChainedCommands } from '@tiptap/core'
 import type { Editor } from '@tiptap/vue-3'
-import type { Component, ShallowRef } from 'vue'
-import ActionImage from './actions/ActionImage.vue'
+import { onUnmounted } from 'vue'
+import type { ShallowRef } from 'vue'
+
+import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion'
+import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion'
+import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention'
 
 export interface EditorButton {
   name: string
   class?: string
-  icon?: string
-  text?: string
+  icon: string
   label?: string
   attributes?: Record<string, unknown>
-  component?: Component
   command?: () => void
 }
 
 export default function useEditorActions(
   editor: ShallowRef<Editor | undefined>,
+  disabledPlugins: string[],
 ) {
   const focused = (
-    fn: (commands: ChainedCommands) => ChainedCommands | undefined | null,
+    fn: (commands: ChainedCommands) => ChainedCommands | null | void,
   ) => {
     return () => {
       if (!editor.value) return
@@ -34,7 +38,29 @@ export default function useEditorActions(
     return editor.value?.isActive(type, attributes) ?? false
   }
 
-  // TODO decide on icons/what is needed/order
+  // this is primarily used by cypress tests, where it requires actual input in dom
+  let fileInput: HTMLInputElement | null = null
+
+  const getInputForImage = () => {
+    if (fileInput) return fileInput
+
+    fileInput = document.createElement('input')
+    fileInput.type = 'file'
+    fileInput.multiple = true
+    fileInput.accept = 'image/*'
+    fileInput.style.display = 'hidden'
+    if (import.meta.env.DEV || VITE_TEST_MODE) {
+      fileInput.dataset.testId = 'editor-image-input'
+    }
+    document.body.appendChild(fileInput)
+
+    return fileInput
+  }
+
+  onUnmounted(() => {
+    fileInput?.remove()
+  })
+
   const actions: EditorButton[] = [
     {
       name: 'underline',
@@ -63,7 +89,17 @@ export default function useEditorActions(
     {
       name: 'image',
       label: i18n.t('Add image'),
-      component: ActionImage,
+      icon: 'mobile-photos',
+      command: focused((c) => {
+        const input = getInputForImage()
+        input.onchange = async () => {
+          if (!input.files?.length) return
+          const files = await convertFileList(input.files)
+          c.setImages(files).run()
+          input.value = ''
+        }
+        input.click()
+      }),
     },
     {
       name: 'link',
@@ -152,24 +188,24 @@ export default function useEditorActions(
       command: focused((c) => c.clearNodes().unsetAllMarks()),
     },
     {
-      name: 'mention-user',
+      name: UserMentionName,
       label: i18n.t('Mention user'),
       icon: 'mobile-at-sign',
       command: focused((c) => c.openUserMention()),
     },
     {
-      name: 'mention-knowledge-base',
+      name: KnowledgeBaseMentionName,
       label: i18n.t('Insert text from Knowledge Base article'),
       icon: 'mobile-mention-kb',
       command: focused((c) => c.openKnowledgeBaseMention()),
     },
     {
-      name: 'mention-text',
+      name: TextModuleMentionName,
       label: i18n.t('Insert text from text module'),
       icon: 'mobile-snippet',
       command: focused((c) => c.openTextMention()),
     },
-  ]
+  ].filter((action) => !disabledPlugins.includes(action.name))
 
   return {
     focused,

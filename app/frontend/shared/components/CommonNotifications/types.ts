@@ -12,11 +12,20 @@ export enum NotificationTypes {
 export interface Notification {
   id: string
   message: string
+  /**
+   * Should notification be shown only once.
+   * Multiple invocations with same ID will remove the previous notification.
+   */
+  unique?: boolean
   messagePlaceholder?: string[]
   type: NotificationTypes
   durationMS?: number
   persistent?: boolean
   callback?: () => void
+  /**
+   * @private
+   */
+  timeout: number
 }
 
-export type NewNotification = SetOptional<Notification, 'id'>
+export type NewNotification = SetOptional<Notification, 'id' | 'timeout'>

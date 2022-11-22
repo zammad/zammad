@@ -5,21 +5,18 @@ import { toRef } from 'vue'
 import type { SuggestionKeyDownProps } from '@tiptap/suggestion'
 import useNavigateOptions from './useNavigateOptions'
 import type {
-  CommandKnowledgeBaseProps,
-  CommandTextProps,
-  CommandUserProps,
   MentionKnowledgeBaseItem,
   MentionTextItem,
   MentionType,
   MentionUserItem,
 } from './types'
 
+type PossibleItem = MentionUserItem | MentionKnowledgeBaseItem | MentionTextItem
+
 interface Props {
-  items: (MentionUserItem | MentionKnowledgeBaseItem | MentionTextItem)[]
+  items: PossibleItem[]
   type: MentionType
-  command: (
-    props: CommandUserProps | CommandKnowledgeBaseProps | CommandTextProps,
-  ) => void
+  command: (item: PossibleItem) => void
 }
 
 const props = defineProps<Props>()
@@ -40,21 +37,7 @@ const isTextItem = (item: unknown): item is MentionTextItem => {
 
 const { selectItem, selectedIndex, onKeyDown } = useNavigateOptions(
   toRef(props, 'items'),
-  (item) => {
-    if (isUserItem(item)) {
-      const { id, lastname, firstname } = item
-      const href = `${window.location.origin}/#user/profile/${item.id}`
-      props.command({
-        id,
-        title: [firstname, lastname].filter(Boolean).join(' '),
-        href,
-      })
-    }
-
-    if (isKnowledgeBaseItem(item) || isTextItem(item)) {
-      props.command(item)
-    }
-  },
+  (item) => props.command(item as MentionUserItem),
 )
 
 defineExpose({
@@ -65,19 +48,26 @@ defineExpose({
 </script>
 
 <template>
-  <div
+  <ul
+    v-if="items.length"
     class="max-h-64 overflow-auto rounded bg-gray-300 text-white"
     :data-test-id="`mention-${type}`"
+    role="listbox"
   >
-    <div
+    <li
       v-for="(item, index) in items"
+      :id="`mention-${index}`"
       :key="item.id"
       class="cursor-pointer py-2 px-6 hover:bg-gray-400"
       :class="{ 'bg-gray-400': selectedIndex === index }"
+      role="option"
       @click="selectItem(index)"
+      @keydown.space.prevent="selectItem(index)"
     >
       <template v-if="isKnowledgeBaseItem(item)">
-        <div class="text-sm">{{ item.category }}</div>
+        <div class="text-sm">
+          {{ item.categoryTreeTranslation.map((c) => c.title).join(' ') }}
+        </div>
         <div>{{ item.title }}</div>
       </template>
       <div
@@ -85,17 +75,22 @@ defineExpose({
         class="flex flex-row items-center gap-2"
       >
         <div>
-          {{ item.title }}
+          {{ item.name }}
         </div>
-        <div class="rounded border border-solid border-gray-150 px-1 text-sm">
-          {{ item.keyword }}
+        <div
+          v-if="item.keywords"
+          class="rounded border border-solid border-gray-150 px-1 text-sm"
+        >
+          {{ item.keywords }}
         </div>
       </div>
       <template v-else-if="isUserItem(item)">
-        {{ item.firstname }} {{ item.lastname }}
+        {{ item.fullname }}
         {{ item.email ? `<${item.email}>` : '' }}
       </template>
-    </div>
-    <div v-if="!items.length" class="py-1 px-6">Nothing found...</div>
+    </li>
+  </ul>
+  <div v-else class="rounded bg-gray-300 py-1 px-6 text-white">
+    {{ $t('No results found') }}
   </div>
 </template>

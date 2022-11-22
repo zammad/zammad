@@ -2,60 +2,101 @@
 
 import Mention from '@tiptap/extension-mention'
 import Link from '@tiptap/extension-link'
-
+import type { Ref } from 'vue'
+import type { FormFieldContext } from '@shared/components/Form/types/field'
+import { QueryHandler } from '@shared/server/apollo/handler'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
+import { getNode } from '@formkit/core'
+import { ensureGraphqlId } from '@shared/graphql/utils'
 import buildMentionSuggestion from './suggestions'
-import type { CommandUserProps, MentionUserItem } from '../types'
+import type { FieldEditorProps, MentionUserItem } from '../types'
+import { useMentionSuggestionsLazyQuery } from '../graphql/queries/mention/mentionSuggestions.api'
 
-const LINK_NAME = 'mention-user-link'
+export const PLUGIN_NAME = 'mentionUser'
+export const PLUGIN_LINK_NAME = 'mentionUserLink'
 const ACTIVATOR = '@@'
 
-const findUsers = async (query: string): Promise<MentionUserItem[]> => {
-  return [
-    { firstname: 'Bob', lastname: 'Wance', email: 'some@email.com', id: '3' },
-    { firstname: 'Robin', lastname: 'Hood', id: '2' },
-    { firstname: 'Robert', lastname: 'California', id: '1' },
-    { firstname: query, id: '4' },
-  ]
-}
+export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
+  const queryMentionsHandler = new QueryHandler(
+    useMentionSuggestionsLazyQuery({
+      query: '',
+      group: '',
+    }),
+  )
 
-export default Mention.extend({
-  name: 'mention-user',
-  addCommands() {
-    return {
+  const getUserMentions = async (query: string, group: string) => {
+    const result = await queryMentionsHandler.trigger({
+      query,
+      group: ensureGraphqlId('Group', group),
+    })
+    return result?.mentionSuggestions || []
+  }
+
+  return Mention.extend({
+    name: PLUGIN_NAME,
+    addCommands: () => ({
       openUserMention:
         () =>
-        ({ chain }) => {
-          return chain().insertContent(` ${ACTIVATOR}`).run()
-        },
-    }
-  },
-}).configure({
-  suggestion: buildMentionSuggestion({
-    activator: ACTIVATOR,
-    type: 'user',
-    insert(props: CommandUserProps) {
-      return [
-        {
-          type: 'text',
-          text: props.title,
-          marks: [
-            {
-              type: LINK_NAME,
-              attrs: {
-                href: props.href,
-                'data-mention-user-id': props.id,
+        ({ chain }) =>
+          chain().insertContent(` ${ACTIVATOR}`).run(),
+    }),
+  }).configure({
+    suggestion: buildMentionSuggestion({
+      activator: ACTIVATOR,
+      type: 'user',
+      insert(props: MentionUserItem) {
+        const href = `${window.location.origin}/#user/profile/${props.internalId}`
+        const text = props.fullname || props.email || ''
+        return [
+          {
+            type: 'text',
+            text,
+            marks: [
+              {
+                type: PLUGIN_LINK_NAME,
+                attrs: {
+                  href,
+                  'data-mention-user-id': props.internalId,
+                },
               },
-            },
-          ],
-        },
-      ]
-    },
-    items: ({ query }) => findUsers(query),
-  }),
-})
+            ],
+          },
+        ]
+      },
+      async items({ query }) {
+        if (!query) {
+          return []
+        }
+        let { groupId: group } = context.value
+        if (!group) {
+          const { meta } = context.value
+          const groupNodeId = meta?.[PLUGIN_NAME]?.groupNodeId
+          if (groupNodeId) {
+            const groupNode = getNode(groupNodeId)
+            group = groupNode?.value as string
+          }
+        }
+        if (!group) {
+          const notifications = useNotifications()
+          notifications.notify({
+            id: 'mention-user-required-group',
+            unique: true,
+            message: __('Before you mention a user, please select a group.'),
+            type: NotificationTypes.Warn,
+          })
+          return []
+        }
+        return getUserMentions(query, group)
+      },
+    }),
+  })
+}
 
 export const UserLink = Link.extend({
-  name: LINK_NAME,
+  name: PLUGIN_LINK_NAME,
   addAttributes() {
     return {
       href: {

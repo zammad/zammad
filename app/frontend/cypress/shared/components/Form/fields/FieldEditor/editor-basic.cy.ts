@@ -61,18 +61,6 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .and('have.html', '<p><strong>Hello, World!</strong></p>')
   })
 
-  it('has placeholder, when needed', () => {
-    mountEditor({
-      placeholder: 'Placeholder...',
-    })
-
-    cy.findByRole('textbox')
-      .should('have.attr', 'aria-placeholder', 'Placeholder...')
-      .click()
-      .type('Hello, World!')
-      .should('not.have.attr', 'aria-placeholder')
-  })
-
   it('pasting images inlines them', () => {
     mountEditor()
 

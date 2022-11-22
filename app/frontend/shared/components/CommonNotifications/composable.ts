@@ -25,12 +25,24 @@ const useNotifications = () => {
       id = getUuid()
     }
 
-    const newNotification: Notification = { id, ...notification }
+    const newNotification: Notification = { id, timeout: 0, ...notification }
+
+    if (notification.unique) {
+      notifications.value = notifications.value.filter(
+        (notification: Notification) => {
+          const isSame = notification.id === id
+          if (isSame) {
+            window.clearTimeout(notification.timeout)
+          }
+          return !isSame
+        },
+      )
+    }
 
     notifications.value.push(newNotification)
 
     if (!newNotification.persistent) {
-      setTimeout(() => {
+      newNotification.timeout = window.setTimeout(() => {
         removeNotification(newNotification.id)
       }, newNotification.durationMS || defaultNotificationDurationMS)
     }

@@ -54,11 +54,8 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     password: addAbsoluteFloatingLabel(classes.password),
     date: addDateLabel(classes.date),
     datetime: addDateLabel(classes.datetime),
-    textarea: addFloatingTextareaLabel({
-      ...classes.textarea,
-      label: `${classes.textarea?.label} cursor-text`,
-      input: `${classes.textarea?.input} min-h-[100px]`,
-    }),
+    editor: addFloatingTextareaLabel(classes.editor),
+    textarea: addFloatingTextareaLabel(classes.textarea),
     checkbox: {
       outer: 'formkit-invalid:bg-red-dark',
       wrapper: `${
