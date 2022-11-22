@@ -3,7 +3,7 @@
 require 'delayed_job'
 
 module Delayed
-  class Job < ::ActiveRecord::Base
+  class Job < ::ActiveRecord::Base # rubocop:disable Rails/ApplicationRecord
 
     after_destroy :remove_active_job_lock
 

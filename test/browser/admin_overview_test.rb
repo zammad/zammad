@@ -124,7 +124,7 @@ class AdminOverviewTest < TestCase
     ticket_titles.map do |title|
       [title,
        get_location(css: "td[title='#{title}']").y]
-    end.sort_by { |x| x[1] }.map { |x| x[0] }
+    end.sort_by { |x| x[1] }.pluck(0)
   end
 
   # verify fix for issue #2235 - Overview setting isn't applied on submit

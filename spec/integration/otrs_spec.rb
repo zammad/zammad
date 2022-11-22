@@ -32,9 +32,7 @@ RSpec.describe 'OTRS import', integration: true, integration_standalone: true, r
     let(:object_attribute_names) do
       local_objects.select do |local_object|
         local_object[:object] == 'Ticket'
-      end.collect do |local_object|
-        local_object['name']
-      end
+      end.pluck('name')
     end
     let(:expected_object_attribute_names) { %w[vertriebsweg te_test number sugar_crm_remote_no sugar_crm_company_selected_no sugar_crm_company_selection combine title itsm_criticality customer_id itsm_impact itsm_review_required itsm_decision_result organization_id itsm_repair_start_time itsm_recovery_start_time itsm_decision_date itsm_due_date topic_no open_exchange_ticket_number hostname ticket_free_key11 type ticket_free_text11 open_exchange_tn topic zarafa_tn group_id scom_hostname checkbox_example scom_uuid scom_state scom_service location owner_id department customer_location textfeld state_id pending_time priority_id tags] }
 

@@ -135,7 +135,7 @@ module ZammadSpecSupportGraphql
         assert('GraphQL result contains node entries') do
           !content.nil?
         end
-        content.map { |edge| edge['node'] }
+        content.pluck('node')
       end
 
       #

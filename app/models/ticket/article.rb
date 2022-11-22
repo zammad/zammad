@@ -332,9 +332,7 @@ returns
 
   def check_mentions
     begin
-      mention_user_ids = Nokogiri::HTML(body).css('a[data-mention-user-id]').map do |link|
-        link['data-mention-user-id']
-      end
+      mention_user_ids = Nokogiri::HTML(body).css('a[data-mention-user-id]').pluck('data-mention-user-id')
     rescue => e
       Rails.logger.error "Can't parse body '#{body}' as HTML for extracting Mentions."
       Rails.logger.error e

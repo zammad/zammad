@@ -97,7 +97,7 @@ Model.tag_references('Tag') # [1, 4, ...]
     def tag_references(tag)
       Tag
         .tag_references(tag: tag, object: name)
-        .map { |elem| elem[1] }
+        .pluck(1)
     end
 
 =begin

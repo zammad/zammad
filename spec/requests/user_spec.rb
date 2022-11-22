@@ -1607,7 +1607,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       shared_examples 'result check' do
 
         it 'returns only agents matching search parameter ids' do
-          expect(json_response.map { |row| row['id'] }).to eq(search_ids)
+          expect(json_response.pluck('id')).to eq(search_ids)
         end
       end
 

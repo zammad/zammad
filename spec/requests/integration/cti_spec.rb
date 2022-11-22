@@ -698,7 +698,7 @@ RSpec.describe 'Integration CTI', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(json_response.dig('assets', 'User')).not_to be_nil
-      expect(json_response['list'].map { |x| x['call_id'] }).to match_array(%w[1234567890-1 1234567890-2])
+      expect(json_response['list'].pluck('call_id')).to match_array(%w[1234567890-1 1234567890-2])
     end
 
     it 'does log call with notify group without a log entry' do

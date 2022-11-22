@@ -125,7 +125,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
       end
 
       it 'returns array of macros' do
-        expect(json_response.map { |elem| elem['id'] }).to eq [Macro.first.id]
+        expect(json_response.pluck('id')).to eq [Macro.first.id]
       end
     end
 
@@ -133,7 +133,7 @@ RSpec.describe 'Macro', authenticated_as: :user, type: :request do
       let(:user) { create(:admin_only) }
 
       it 'returns array of macros' do
-        expect(json_response.map { |elem| elem['id'] }).to eq [Macro.first.id]
+        expect(json_response.pluck('id')).to eq [Macro.first.id]
       end
     end
   end

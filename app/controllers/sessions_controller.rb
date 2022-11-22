@@ -5,6 +5,24 @@ class SessionsController < ApplicationController
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth]
   skip_before_action :user_device_log, only: %i[create_sso]
 
+  def show
+    user = authentication_check_only
+    raise Exceptions::NotAuthorized, 'no valid session' if user.blank?
+
+    # return current session
+    render json: SessionHelper.json_hash(user).merge(config: config_frontend)
+  rescue Exceptions::NotAuthorized => e
+    render json: {
+      error:       e.message,
+      config:      config_frontend,
+      models:      SessionHelper.models,
+      collections: {
+        Locale.to_app_model     => Locale.where(active: true),
+        PublicLink.to_app_model => PublicLink.all,
+      }
+    }
+  end
+
   # "Create" a login, aka "log the user in"
   def create
     user = authenticate_with_password
@@ -35,24 +53,6 @@ class SessionsController < ApplicationController
     initiate_session_for(user)
 
     redirect_to '/#'
-  end
-
-  def show
-    user = authentication_check_only
-    raise Exceptions::NotAuthorized, 'no valid session' if user.blank?
-
-    # return current session
-    render json: SessionHelper.json_hash(user).merge(config: config_frontend)
-  rescue Exceptions::NotAuthorized => e
-    render json: {
-      error:       e.message,
-      config:      config_frontend,
-      models:      SessionHelper.models,
-      collections: {
-        Locale.to_app_model     => Locale.where(active: true),
-        PublicLink.to_app_model => PublicLink.all,
-      }
-    }
   end
 
   # "Delete" a login, aka "log the user out"

@@ -7,7 +7,7 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::Checkbox 
     relevant_options = attribute['options'].select { |option| multiple_values.include?(option['id']) }
     value_locales = relevant_options.filter_map { |option| option['values'].detect { |locale_item| locale_item['locale'] == default_language } }
 
-    value_locales.map { |value_locale| value_locale['translation'] }
+    value_locales.pluck('translation')
   end
 
   private
