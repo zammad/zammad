@@ -1,7 +1,6 @@
 # Change Log
 
 ## [5.2.3](https://github.com/zammad/zammad/tree/5.2.3) (2022-09-30)
-
 [Full Changelog](https://github.com/zammad/zammad/compare/5.2.2...5.2.3)
 
 **Implemented enhancements:**
@@ -30,7 +29,6 @@
 - Changing time range in "Wait until" picker at trigger action resets time value to "1" [4207](https://github.com/zammad/zammad/issues/4207) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
 ## [5.2.2](https://github.com/zammad/zammad/tree/5.2.2) (2022-09-13)
-
 [Full Changelog](https://github.com/zammad/zammad/compare/5.2.1...5.2.2)
 
 **Implemented enhancements:**
@@ -65,11 +63,11 @@
 - Zendesk migration runs randomly in ssl handshake failure triggered from Zendesk site without a retry [4169](https://github.com/zammad/zammad/issues/4169) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Zendesk migration has currently no retry for attachment fetch [4170](https://github.com/zammad/zammad/issues/4170) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Triggers must not allow adding perform settings which are empty / nil [4131](https://github.com/zammad/zammad/issues/4131) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[mail processing](https://github.com/zammad/zammad/labels/mail%20processing)]
-- LDAP tries to sync all the time [4167](https://github.com/zammad/zammad/issues/4167) [[bug](https://github.com/zammad/zammad/labels/bug)] [[LDAP](https://github.com/zammad/zammad/labels/LDAP)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+-  LDAP tries to sync all the time [4167](https://github.com/zammad/zammad/issues/4167) [[bug](https://github.com/zammad/zammad/labels/bug)] [[LDAP](https://github.com/zammad/zammad/labels/LDAP)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - KB answer image in editor has extra padding [4165](https://github.com/zammad/zammad/issues/4165) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Signatures are taken over from colleagues via "shared draft" function [4042](https://github.com/zammad/zammad/issues/4042) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - MultiSelects do not allow storing values in tickets with MariaDB [4148](https://github.com/zammad/zammad/issues/4148) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object%20manager%20attribute)]
-- Triggers are not executed if article contains a mention and variable `article.body_as_html` is used [3991](https://github.com/zammad/zammad/issues/3991) [[bug](https://github.com/zammad/zammad/labels/bug)] [[trigger](https://github.com/zammad/zammad/labels/trigger)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Triggers are not executed if article contains a mention and variable ``article.body_as_html`` is used [3991](https://github.com/zammad/zammad/issues/3991) [[bug](https://github.com/zammad/zammad/labels/bug)] [[trigger](https://github.com/zammad/zammad/labels/trigger)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Attachment from KB answer is still sent if manually removed before update [4149](https://github.com/zammad/zammad/issues/4149) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - User avatars are missing if authentication is done via Google [3829](https://github.com/zammad/zammad/issues/3829) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Displayed ticket counter for overviews with subscribe condition differs from number of shown tickets [3853](https://github.com/zammad/zammad/issues/3853) [[bug](https://github.com/zammad/zammad/labels/bug)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
@@ -77,7 +75,6 @@
 - iCal implementation of Thunderbird can not be handled [3962](https://github.com/zammad/zammad/issues/3962) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 
 ## [5.2.1](https://github.com/zammad/zammad/tree/5.2.1) (2022-07-05)
-
 [Full Changelog](https://github.com/zammad/zammad/compare/5.2.0...5.2.1)
 
 **Fixed bugs:**
@@ -94,7 +91,6 @@
 - The use of shared drafts for response ends with the saving of an internal note [4031](https://github.com/zammad/zammad/issues/4031) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
 ## [5.2.0](https://github.com/zammad/zammad/tree/5.2.0) (2022-06-21)
-
 [Full Changelog](https://github.com/zammad/zammad/compare/5.1.0...5.2.0)
 
 **Implemented enhancements:**
@@ -131,7 +127,7 @@
 - Single tree select no longer allows displaying child values [4118](https://github.com/zammad/zammad/issues/4118) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
 - users customer name is displayed as id [4040](https://github.com/zammad/zammad/issues/4040) [[bug](https://github.com/zammad/zammad/labels/bug)] [[overviews](https://github.com/zammad/zammad/labels/overviews)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Follow-up detection does not work for the body of plain text mails [3894](https://github.com/zammad/zammad/issues/3894) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail%20processing)]
-- DataPrivacy Tasks fail if Zammad has to solve references on users with invalid email addresses [3935](https://github.com/zammad/zammad/issues/3935) [[bug](https://github.com/zammad/zammad/labels/bug)] [[data privacy](https://github.com/zammad/zammad/labels/data%20privacy)]
+- DataPrivacy Tasks fail if Zammad has to  solve references on users with invalid email addresses [3935](https://github.com/zammad/zammad/issues/3935) [[bug](https://github.com/zammad/zammad/labels/bug)] [[data privacy](https://github.com/zammad/zammad/labels/data%20privacy)]
 - Parents will always be selected when going through the tree in multiple treeselect field [4080](https://github.com/zammad/zammad/issues/4080) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[frontend / JS app](https://github.com/zammad/zammad/labels/frontend%20%2F%20JS%20app)] [[object manager attribute](https://github.com/zammad/zammad/labels/object%20manager%20attribute)] [[form](https://github.com/zammad/zammad/labels/form)]
 - Title column is missing if ticket number is disabled in overview options [3943](https://github.com/zammad/zammad/issues/3943) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - script/background-services.rb crashes on startup [4113](https://github.com/zammad/zammad/issues/4113) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)]
@@ -144,7 +140,7 @@
 - Trigger autocomplete when clicking the "Tags" field also without a search term [4095](https://github.com/zammad/zammad/issues/4095) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[regression](https://github.com/zammad/zammad/labels/regression)]
 - Shared draft attribute in object manage not disabled for onclick [4089](https://github.com/zammad/zammad/issues/4089) [[bug](https://github.com/zammad/zammad/labels/bug)] [[object manager attribute](https://github.com/zammad/zammad/labels/object%20manager%20attribute)]
 - Assign user to multiple organizations [1573](https://github.com/zammad/zammad/issues/1573) [[feature backlog](https://github.com/zammad/zammad/labels/feature%20backlog)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
-- Preview of \*.ics files in ticket zoom attachments [4091](https://github.com/zammad/zammad/issues/4091) [[feature backlog](https://github.com/zammad/zammad/labels/feature%20backlog)] [[ticket](https://github.com/zammad/zammad/labels/ticket)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[productivity](https://github.com/zammad/zammad/labels/productivity)]
+- Preview of *.ics files in ticket zoom attachments [4091](https://github.com/zammad/zammad/issues/4091) [[feature backlog](https://github.com/zammad/zammad/labels/feature%20backlog)] [[ticket](https://github.com/zammad/zammad/labels/ticket)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[productivity](https://github.com/zammad/zammad/labels/productivity)]
 - Tab behaviour does not show properly when doing a ticket update at the same time [4094](https://github.com/zammad/zammad/issues/4094) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Custom sort on select returns "undefined method `merge' " for older objects [4086](https://github.com/zammad/zammad/issues/4086) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[object manager attribute](https://github.com/zammad/zammad/labels/object%20manager%20attribute)]
 - Tree Select Trigger changes the conditions on its own [4090](https://github.com/zammad/zammad/issues/4090) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
@@ -160,14 +156,14 @@
 - Core Workflow: Does show wrong field list if you only have admin permissions and not ticket.agent permissions [4035](https://github.com/zammad/zammad/issues/4035) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Migrations (Zendesk, Kayako) currently do not support custom dropdown multi-select fields [4055](https://github.com/zammad/zammad/issues/4055) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Ticket in the ticket creation screen tags are shown after 2 characters, in the ticket zoom after 1 character [3748](https://github.com/zammad/zammad/issues/3748) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Clicking the button in a mail opens the link as a photo [4044](https://github.com/zammad/zammad/issues/4044) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Clicking the button  in a mail opens the link as a photo [4044](https://github.com/zammad/zammad/issues/4044) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Tree select widget closes unexpectedly [4041](https://github.com/zammad/zammad/issues/4041) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - pre-code tags cause Zammad to swallow content [4039](https://github.com/zammad/zammad/issues/4039) [[bug](https://github.com/zammad/zammad/labels/bug)] [[mail processing](https://github.com/zammad/zammad/labels/mail%20processing)]
 - Error on second migration of an microsoft365 channel undefined method `options' for nil:NilClass [4060](https://github.com/zammad/zammad/issues/4060) [[bug](https://github.com/zammad/zammad/labels/bug)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Freshdesk migration which doesn't support time entries runs in unwanted behaviour [4052](https://github.com/zammad/zammad/issues/4052) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
 - Freshdesk-Migration does not like no Companies / Organisations within the source [4051](https://github.com/zammad/zammad/issues/4051) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
 - Cannot encrypt if multiple S/MIME certificates exist and one is expired [4029](https://github.com/zammad/zammad/issues/4029) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Can't delete smime certificate - ERROR: duplicate key value violates unique constraint [4049](https://github.com/zammad/zammad/issues/4049) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Can't delete smime certificate - ERROR:  duplicate key value violates unique constraint [4049](https://github.com/zammad/zammad/issues/4049) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Core Workflow - Unable to select "has changed" logic when creating new workflow. It is also replaced with "is" in previously created workflows. [4046](https://github.com/zammad/zammad/issues/4046) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - undefined method `to_hash` on editing select fields in the admin interface after migration to 5.1 [4027](https://github.com/zammad/zammad/issues/4027) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Knowledge Base on-the-fly updating does not work [4026](https://github.com/zammad/zammad/issues/4026) [[bug](https://github.com/zammad/zammad/labels/bug)]
@@ -176,12 +172,12 @@
 - Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow [4024](https://github.com/zammad/zammad/issues/4024) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Admin macros are not usable with admin permissions only [4032](https://github.com/zammad/zammad/issues/4032) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Admin SLA index view does not show update time if "for agent respond" is selected [4033](https://github.com/zammad/zammad/issues/4033) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
-- Core Workflow: Stop after match is not saved [4034](https://github.com/zammad/zammad/issues/4034) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[core workflows](https://github.com/zammad/zammad/labels/core%20workflows)]
+- Core Workflow: Stop after match is not saved  [4034](https://github.com/zammad/zammad/issues/4034) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[core workflows](https://github.com/zammad/zammad/labels/core%20workflows)]
 - KB Public menus scroll bar positioning incorrect [4008](https://github.com/zammad/zammad/issues/4008) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge%20base)]
 - Freshdesk import error when a inline image source attribute contains no clean url [4028](https://github.com/zammad/zammad/issues/4028) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
 - Mention history does not show properly who got added [3984](https://github.com/zammad/zammad/issues/3984) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[history](https://github.com/zammad/zammad/labels/history)]
 - Translation introduction text shows wrong keyboard shortcut [2885](https://github.com/zammad/zammad/issues/2885) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[translation](https://github.com/zammad/zammad/labels/translation)]
-- Translation introduction text shows wrong keyboard shortcut [3990](https://github.com/zammad/zammad/pull/3990) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Translation introduction text shows wrong keyboard shortcut  [3990](https://github.com/zammad/zammad/pull/3990) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Obsolete notice field in admin calendar view [4023](https://github.com/zammad/zammad/issues/4023) [[bug](https://github.com/zammad/zammad/labels/bug)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)]
 - Error “customer_id required” on Macro execution [4022](https://github.com/zammad/zammad/issues/4022) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[macros](https://github.com/zammad/zammad/labels/macros)]
 - Translations are not available in API after syncing [4016](https://github.com/zammad/zammad/issues/4016) [[bug](https://github.com/zammad/zammad/labels/bug)]
