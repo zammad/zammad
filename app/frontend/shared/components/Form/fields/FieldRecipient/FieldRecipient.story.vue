@@ -3,24 +3,10 @@
 <script setup lang="ts">
 import { FormKit } from '@formkit/vue'
 import { escapeRegExp } from 'lodash-es'
-import gql from 'graphql-tag'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
+import { AutocompleteSearchRecipientDocument } from '@shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api'
 import type { AutoCompleteOption } from '../FieldAutoComplete'
-
-const AutocompleteSearchRecipientDocument = gql`
-  query autocompleteSearchRecipient($query: String!, $limit: Int) {
-    autocompleteSearchRecipient(query: $query, limit: $limit) {
-      value
-      label
-      labelPlaceholder
-      heading
-      headingPlaceholder
-      disabled
-      icon
-    }
-  }
-`
 
 type AutocompleteSearchRecipientQuery = {
   __typename?: 'Queries'

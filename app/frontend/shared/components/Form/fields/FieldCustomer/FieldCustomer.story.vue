@@ -10,8 +10,8 @@ import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/
 import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
 
 const AutocompleteSearchCustomerDocument = gql`
-  query autocompleteSearchCustomer($query: String!, $limit: Int) {
-    autocompleteSearchCustomer(query: $query, limit: $limit) {
+  query autocompleteSearchCustomer($input: AutocompleteSearchInput!) {
+    autocompleteSearchCustomer(input: $input) {
       value
       label
       labelPlaceholder

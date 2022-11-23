@@ -7,18 +7,22 @@ import gql from 'graphql-tag'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
-import type { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar/types'
+import type { Organization } from '@shared/graphql/types'
 
 const AutocompleteSearchOrganizationDocument = gql`
-  query autocompleteSearchOrganization($query: String!, $limit: Int) {
-    autocompleteSearchOrganization(query: $query, limit: $limit) {
+  query autocompleteSearchOrganization($input: AutocompleteSearchInput!) {
+    autocompleteSearchOrganization(input: $input) {
       value
       label
       labelPlaceholder
       heading
       headingPlaceholder
       disabled
-      organization
+      organization {
+        id
+        name
+        active
+      }
     }
   }
 `
@@ -33,7 +37,7 @@ type AutocompleteSearchOrganizationQuery = {
     heading?: string | null
     headingPlaceholder?: Array<string> | null
     disabled?: boolean | null
-    organization?: AvatarOrganization
+    organization?: Organization
   }>
 }
 
@@ -67,7 +71,7 @@ const mockQueryResult = (
     label: string
     labelPlaceholder?: Array<string> | null
     disabled?: boolean | null
-    organization?: AvatarOrganization
+    organization?: Organization
   }[]
 
   return {

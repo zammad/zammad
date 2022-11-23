@@ -9,8 +9,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
     let(:recipient) { create(:customer) }
     let(:query)     do
       <<~QUERY
-        query autocompleteSearchRecipient($query: String!, $limit: Int)  {
-          autocompleteSearchRecipient(query: $query, limit: $limit) {
+        query autocompleteSearchRecipient($input: AutocompleteSearchInput!)  {
+          autocompleteSearchRecipient(input: $input) {
             value
             label
             labelPlaceholder
@@ -22,7 +22,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
         }
       QUERY
     end
-    let(:variables) { { query: query_string, limit: nil } }
+    let(:variables) { { input: { query: query_string, limit: nil } } }
 
     before do
       gql.execute(query, variables: variables)
@@ -32,9 +32,9 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
       let(:recipient_payload) do
         {
           'value'              => recipient.email,
-          'label'              => recipient.fullname,
+          'label'              => "#{recipient.fullname} <#{recipient.email}>",
           'labelPlaceholder'   => nil,
-          'heading'            => recipient.email,
+          'heading'            => nil,
           'headingPlaceholder' => nil,
           'icon'               => nil,
           'disabled'           => nil,

@@ -2,6 +2,8 @@
 
 import type { ConcreteComponent } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import type { JsonValue } from 'type-fest'
+import type { DocumentNode } from 'graphql'
 import type { ObjectLike } from '@shared/types/utils'
 import type { FormFieldContext } from '../../types/field'
 import type { SelectOptionSorting, SelectValue } from '../FieldSelect'
@@ -17,7 +19,7 @@ export type AutoCompleteOption = {
 }
 
 export type AutoCompleteProps = FormFieldContext<{
-  gqlQuery: string
+  gqlQuery: DocumentNode
   action?: RouteLocationRaw
   actionIcon?: string
   allowUnknownValues?: boolean
@@ -32,6 +34,7 @@ export type AutoCompleteProps = FormFieldContext<{
   optionIconComponent?: ConcreteComponent
   options?: AutoCompleteOption[]
   belongsToObjectField?: string
+  additionalQueryParams?: Record<string, JsonValue>
   initialOptionBuilder?: (
     initialEntityObject: ObjectLike,
     value: SelectValue,

@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { markRaw, defineAsyncComponent } from 'vue'
 import type { ObjectLike } from '@shared/types/utils'
+import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
 import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 import FieldCustomerOptionIcon from './FieldCustomerOptionIcon.vue'
 import type { AutoCompleteProps } from '../FieldAutoComplete/types'
@@ -51,32 +52,8 @@ Object.assign(props.context, {
 
   actionIcon: 'mobile-new-customer',
 
-  // TODO: change the query to the actual autocomplete search of customers
-  //   gqlQuery: `
-  // query autocompleteSearchCustomer($query: String!, $limit: Int) {
-  //   autocompleteSearchCustomer(query: $query, limit: $limit) {
-  //     value
-  //     label
-  //     labelPlaceholder
-  //     heading
-  //     headingPlaceholder
-  //     disabled
-  //     user
-  //   }
-  // }
-  // `,
-  gqlQuery: `
-query autocompleteSearch($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
-    value
-    label
-    labelPlaceholder
-    heading
-    headingPlaceholder
-    disabled
-  }
-}
-`,
+  gqlQuery: AutocompleteSearchUserDocument,
+
   onActionClick: openCreateUserDialog,
 })
 </script>

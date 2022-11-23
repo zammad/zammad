@@ -101,8 +101,11 @@ const AutocompleteSearchDocument = gql`
 //   place to update the result on any changes.
 const autocompleteQueryHandler = new QueryHandler(
   useLazyQuery(AutocompleteSearchDocument, () => ({
-    query: debouncedFilter.value,
-    limit: props.context.limit,
+    input: {
+      query: debouncedFilter.value,
+      limit: props.context.limit,
+      ...props.context.additionalQueryParams,
+    },
   })),
 )
 

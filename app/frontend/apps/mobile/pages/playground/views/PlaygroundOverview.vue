@@ -217,8 +217,8 @@ const linkSchemaRaw = [
       action: '/tickets',
       actionIcon: 'mobile-new-customer',
       gqlQuery: `
-query autocompleteSearchUser($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
+query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+  autocompleteSearchUser(input: $input) {
     value
     label
     labelPlaceholder
@@ -237,8 +237,8 @@ query autocompleteSearchUser($query: String!, $limit: Int) {
     label: 'Recipient',
     props: {
       gqlQuery: `
-query autocompleteSearchUser($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
+query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+  autocompleteSearchUser(input: $input) {
     value
     label
     labelPlaceholder
@@ -257,8 +257,8 @@ query autocompleteSearchUser($query: String!, $limit: Int) {
     label: 'Organization',
     props: {
       gqlQuery: `
-query autocompleteSearchUser($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
+query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+  autocompleteSearchUser(input: $input) {
     value
     label
     labelPlaceholder
@@ -277,8 +277,8 @@ query autocompleteSearchUser($query: String!, $limit: Int) {
     label: 'Customer',
     props: {
       gqlQuery: `
-query autocompleteSearchUser($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
+query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+  autocompleteSearchUser(input: $input) {
     value
     label
     labelPlaceholder

@@ -3,43 +3,26 @@
 import { escapeRegExp } from 'lodash-es'
 import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
-import gql from 'graphql-tag'
 import { renderComponent } from '@tests/support/components'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
+import { AutocompleteSearchRecipientDocument } from '@shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api'
 import type { AutoCompleteOption } from '../../FieldAutoComplete/types'
 
 const testOptions: AutoCompleteOption[] = [
   {
     value: 'baz@bar.tld',
     label: 'Baz',
-    heading: 'baz@bar.tld',
   },
   {
     value: 'qux@bar.tld',
     label: 'Qux',
-    heading: 'qux@bar.tld',
   },
   {
     value: 'corge@bar.tld',
     label: 'Corge',
-    heading: 'corge@bar.tld',
   },
 ]
-
-const AutocompleteSearchRecipientDocument = gql`
-  query autocompleteSearchRecipient($query: String!, $limit: Int) {
-    autocompleteSearchRecipient(query: $query, limit: $limit) {
-      value
-      label
-      labelPlaceholder
-      heading
-      headingPlaceholder
-      disabled
-      icon
-    }
-  }
-`
 
 type AutocompleteSearchRecipientQuery = {
   __typename?: 'Queries'

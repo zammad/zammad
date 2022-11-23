@@ -5,12 +5,15 @@ module Gql::Queries
 
     description 'Search for tags'
 
-    argument :query, String, description: 'Query from the autocomplete field'
-    argument :limit, Integer, required: false, description: 'Limit for the amount of entries'
+    argument :input, Gql::Types::Input::AutocompleteSearchInputType, required: true, description: 'The input object for the autocomplete search'
 
     type [Gql::Types::AutocompleteEntryType], null: false
 
-    def resolve(query:, limit: 10)
+    def resolve(input:)
+      input = input.to_h
+      query = input[:query]
+      limit = input[:limit] || 10
+
       search_tags(query: query, limit: limit).map { |t| coerce_to_result(t) }
     end
 

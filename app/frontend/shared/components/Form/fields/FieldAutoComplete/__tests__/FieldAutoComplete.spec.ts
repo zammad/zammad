@@ -8,7 +8,7 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import { createMockClient } from 'mock-apollo-client'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
-import { AutocompleteSearchUserDocument } from '@shared/graphql/queries/autocompleteSearch/user.api'
+import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
 import { waitForNextTick } from '@tests/support/utils'
 import type { ObjectLike } from '@shared/types/utils'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
@@ -19,30 +19,42 @@ const testOptions = [
     value: 0,
     label: 'Item A',
     heading: 'autocomplete sample 1',
+    user: {
+      id: 1,
+      fullname: 'sample 1',
+    },
   },
   {
     value: 1,
     label: 'Item B',
     heading: 'autocomplete sample 2',
+    user: {
+      id: 2,
+      fullname: 'sample 2',
+    },
   },
   {
     value: 2,
     label: 'Ítem C',
     heading: 'autocomplete sample 3',
+    user: {
+      id: 3,
+      fullname: 'sample 3',
+    },
   },
 ]
 
-const mockQueryResult = (
-  query: string,
-  limit: number,
-): AutocompleteSearchUserQuery => {
+const mockQueryResult = (input: {
+  query: string
+  limit: number
+}): AutocompleteSearchUserQuery => {
   const options = testOptions.map((option) => ({
     ...option,
     labelPlaceholder: null,
     headingPlaceholder: null,
     disabled: null,
     icon: null,
-    __typename: 'AutocompleteEntry',
+    __typename: 'AutocompleteUserEntry',
   }))
 
   const deaccent = (s: string) =>
@@ -50,22 +62,15 @@ const mockQueryResult = (
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(escapeRegExp(deaccent(query)), 'i')
+  const filterRegex = new RegExp(escapeRegExp(deaccent(input.query)), 'i')
 
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter((option) =>
     filterRegex.test(deaccent(option.label)),
-  ) as unknown as {
-    __typename?: 'AutocompleteEntry'
-    value: string
-    label: string
-    labelPlaceholder?: Array<string> | null
-    disabled?: boolean | null
-    icon?: string | null
-  }[]
+  ) as unknown as AutocompleteSearchUserQuery['autocompleteSearchUser']
 
   return {
-    autocompleteSearchUser: filteredOptions.slice(0, limit ?? 25),
+    autocompleteSearchUser: filteredOptions.slice(0, input.limit ?? 25),
   }
 }
 
@@ -77,7 +82,7 @@ const mockClient = () => {
     AutocompleteSearchUserDocument,
     (variables) => {
       return Promise.resolve({
-        data: mockQueryResult(variables.query, variables.limit),
+        data: mockQueryResult(variables.input),
       })
     },
   )
@@ -95,19 +100,7 @@ const wrapperParameters = {
 
 const testProps = {
   type: 'autocomplete',
-  gqlQuery: `
-query autocompleteSearchUser($query: String!, $limit: Int) {
-  autocompleteSearchUser(query: $query, limit: $limit) {
-    value
-    label
-    labelPlaceholder
-    heading
-    headingPlaceholder
-    disabled
-    icon
-  }
-}
-`,
+  gqlQuery: AutocompleteSearchUserDocument,
 }
 
 beforeAll(async () => {

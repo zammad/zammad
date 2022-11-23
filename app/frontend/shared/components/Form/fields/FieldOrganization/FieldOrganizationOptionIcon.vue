@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <CommonOrganizationAvatar
     v-if="props.option.organization"
-    :entity="props.option.organization!"
+    :entity="props.option.organization"
     :class="{
       'opacity-30': props.option.disabled,
     }"

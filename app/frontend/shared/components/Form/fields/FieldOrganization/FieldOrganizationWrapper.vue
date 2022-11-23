@@ -5,6 +5,7 @@ import type { ObjectLike } from '@shared/types/utils'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import type { Organization } from '@shared/graphql/types'
 import { getAutoCompleteOption } from '@shared/entities/organization/utils/getAutoCompleteOption'
+import { AutocompleteSearchOrganizationDocument } from '@shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api'
 import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
 import type { AutoCompleteProps } from '../FieldAutoComplete/types'
 import type { AutoCompleteOrganizationOption } from './types'
@@ -50,20 +51,7 @@ Object.assign(props.context, {
   action: '/tickets',
   actionIcon: 'mobile-new-organization',
 
-  // TODO: change the query to the actual autocomplete search of organizations
-  gqlQuery: `
-query autocompleteSearchOrganization($query: String!, $limit: Int) {
-  autocompleteSearchOrganization(query: $query, limit: $limit) {
-    value
-    label
-    labelPlaceholder
-    heading
-    headingPlaceholder
-    disabled
-    organization
-  }
-}
-`,
+  gqlQuery: AutocompleteSearchOrganizationDocument,
 })
 </script>
 

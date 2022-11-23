@@ -1,6 +1,6 @@
 # TODO: We'll probably need to move/copy this directly into the recipient component.
-query autocompleteSearchRecipient($query: String!, $limit: Int) {
-  autocompleteSearchRecipient(query: $query, limit: $limit) {
+query autocompleteSearchRecipient($input: AutocompleteSearchInput!) {
+  autocompleteSearchRecipient(input: $input) {
     value
     label
     labelPlaceholder

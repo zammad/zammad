@@ -1,80 +1,51 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { escapeRegExp } from 'lodash-es'
-import gql from 'graphql-tag'
 import { getByTestId, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
-import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
+import type {
+  AutocompleteSearchUserQuery,
+  AutocompleteUserEntry,
+} from '@shared/graphql/types'
+import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
 import { getNode } from '@formkit/core'
-import { waitForNextTick } from '@tests/support/utils'
+import { nullableMock, waitForNextTick } from '@tests/support/utils'
 
-const AutocompleteSearchCustomerDocument = gql`
-  query autocompleteSearch($query: String!, $limit: Int) {
-    autocompleteSearchCustomer(query: $query, limit: $limit) {
-      value
-      label
-      labelPlaceholder
-      heading
-      headingPlaceholder
-      disabled
-      user
-    }
-  }
-`
-
-type AutocompleteSearchCustomerQuery = {
-  __typename?: 'Queries'
-  autocompleteSearchCustomer: Array<{
-    __typename?: 'AutocompleteEntry'
-    value: string
-    label: string
-    labelPlaceholder?: Array<string> | null
-    heading?: string | null
-    headingPlaceholder?: Array<string> | null
-    disabled?: boolean | null
-    user?: AvatarUser
-  }>
-}
-
-const mockQueryResult = (
-  query: string,
-  limit: number,
-): AutocompleteSearchCustomerQuery => {
-  const options = testOptions.map((option) => ({
-    ...option,
-    labelPlaceholder: null,
-    headingPlaceholder: null,
-    disabled: null,
-    __typename: 'AutocompleteEntry',
-  }))
+const mockQueryResult = (input: {
+  query: string
+  limit: number
+}): AutocompleteSearchUserQuery => {
+  const options = testOptions.map((option) =>
+    nullableMock({
+      ...option,
+      labelPlaceholder: null,
+      headingPlaceholder: null,
+      disabled: null,
+      icon: null,
+      __typename: 'AutocompleteUserEntry',
+    }),
+  )
 
   const deaccent = (s: string) =>
     s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(escapeRegExp(deaccent(query)), 'i')
+  const filterRegex = new RegExp(escapeRegExp(deaccent(input.query)), 'i')
 
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
       filterRegex.test(deaccent(option.label)) ||
       filterRegex.test(deaccent(option.heading)),
-  ) as unknown as {
-    __typename?: 'AutocompleteEntry'
-    value: string
-    label: string
-    labelPlaceholder?: Array<string> | null
-    disabled?: boolean | null
-    user?: AvatarUser
-  }[]
+  ) as unknown as AutocompleteUserEntry[]
 
   return {
-    autocompleteSearchCustomer: filteredOptions.slice(0, limit ?? 25),
+    autocompleteSearchUser: filteredOptions.slice(0, input.limit ?? 25),
   }
 }
 
@@ -82,10 +53,10 @@ const mockClient = () => {
   const mockApolloClient = createMockClient()
 
   mockApolloClient.setRequestHandler(
-    AutocompleteSearchCustomerDocument,
+    AutocompleteSearchUserDocument,
     (variables) => {
       return Promise.resolve({
-        data: mockQueryResult(variables.query, variables.limit),
+        data: mockQueryResult(variables.input),
       })
     },
   )

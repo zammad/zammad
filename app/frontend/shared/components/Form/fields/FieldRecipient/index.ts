@@ -19,8 +19,8 @@ const setAutoCompleteBehavior = (node: FormKitNode) => {
   node.addProps(['gqlQuery'])
 
   props.gqlQuery = `
-  query autocompleteSearchRecipient($query: String!, $limit: Int) {
-    autocompleteSearchRecipient(query: $query, limit: $limit) {
+  query autocompleteSearchRecipient($input: AutocompleteSearchInput!) {
+    autocompleteSearchRecipient(input: $input) {
       value
       label
       labelPlaceholder

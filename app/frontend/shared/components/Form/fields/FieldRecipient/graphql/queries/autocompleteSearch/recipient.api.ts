@@ -1,4 +1,4 @@
-import * as Types from '../../types';
+import * as Types from '../../../../../../../graphql/types';
 
 import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const AutocompleteSearchRecipientDocument = gql`
-    query autocompleteSearchRecipient($query: String!, $limit: Int) {
-  autocompleteSearchRecipient(query: $query, limit: $limit) {
+    query autocompleteSearchRecipient($input: AutocompleteSearchInput!) {
+  autocompleteSearchRecipient(input: $input) {
     value
     label
     labelPlaceholder

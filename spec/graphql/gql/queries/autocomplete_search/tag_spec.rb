@@ -15,15 +15,15 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
     end
     let(:query) do
       <<~QUERY
-        query autocompleteSearchTag($query: String!, $limit: Int)  {
-          autocompleteSearchTag(query: $query, limit: $limit) {
+        query autocompleteSearchTag($input: AutocompleteSearchInput!)  {
+          autocompleteSearchTag(input: $input) {
             value
             label
           }
         }
       QUERY
     end
-    let(:variables)    { { query: query_string, limit: limit } }
+    let(:variables)    { { input: { query: query_string, limit: limit } } }
     let(:query_string) { 'TagAutoComplete' }
     let(:limit)        { nil }
 

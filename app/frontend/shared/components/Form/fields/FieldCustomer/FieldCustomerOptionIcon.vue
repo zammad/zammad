@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <CommonUserAvatar
     v-if="props.option.user"
-    :entity="props.option.user!"
+    :entity="props.option.user"
     :class="{
       'opacity-30': props.option.disabled,
     }"

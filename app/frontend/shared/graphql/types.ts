@@ -84,6 +84,50 @@ export type AutocompleteEntry = {
   value: Scalars['String'];
 };
 
+/** Type that represents an autocomplete organization entry. */
+export type AutocompleteOrganizationEntry = {
+  __typename?: 'AutocompleteOrganizationEntry';
+  disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  label: Scalars['String'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
+  organization: Organization;
+  value: Scalars['String'];
+};
+
+/** The default fields for autocomplete searches. */
+export type AutocompleteSearchInput = {
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String'];
+};
+
+/** The default fields for organization autocomplete searches. */
+export type AutocompleteSearchOrganizationInput = {
+  /** Customer ID to filter the organizations by */
+  customerId?: InputMaybe<Scalars['ID']>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String'];
+};
+
+/** Type that represents an autocomplete user entry. */
+export type AutocompleteUserEntry = {
+  __typename?: 'AutocompleteUserEntry';
+  disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  label: Scalars['String'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
+  user: User;
+  value: Scalars['String'];
+};
+
 /** Avatar for users */
 export type Avatar = {
   __typename?: 'Avatar';
@@ -975,12 +1019,14 @@ export type Queries = {
   applicationBuildChecksum: Scalars['String'];
   /** Configuration required for front end operation (more results returned for authenticated users) */
   applicationConfig: Array<KeyComplexValue>;
+  /** Search for organizations */
+  autocompleteSearchOrganization: Array<AutocompleteOrganizationEntry>;
   /** Search for recipients */
-  autocompleteSearchRecipient: Array<AutocompleteEntry>;
+  autocompleteSearchRecipient: Array<AutocompleteUserEntry>;
   /** Search for tags */
   autocompleteSearchTag: Array<AutocompleteEntry>;
   /** Search for users */
-  autocompleteSearchUser: Array<AutocompleteEntry>;
+  autocompleteSearchUser: Array<AutocompleteUserEntry>;
   /** Information about the authenticated user */
   currentUser: User;
   /** Return updated form information for a frontend form (e.g. core workflow information or resolved relations). */
@@ -1023,23 +1069,26 @@ export type Queries = {
 
 
 /** All available queries */
+export type QueriesAutocompleteSearchOrganizationArgs = {
+  input: AutocompleteSearchOrganizationInput;
+};
+
+
+/** All available queries */
 export type QueriesAutocompleteSearchRecipientArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  query: Scalars['String'];
+  input: AutocompleteSearchInput;
 };
 
 
 /** All available queries */
 export type QueriesAutocompleteSearchTagArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  query: Scalars['String'];
+  input: AutocompleteSearchInput;
 };
 
 
 /** All available queries */
 export type QueriesAutocompleteSearchUserArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  query: Scalars['String'];
+  input: AutocompleteSearchInput;
 };
 
 
@@ -1661,6 +1710,7 @@ export type User = ObjectAttributeValuesInterface & TagsInterface & {
   fax?: Maybe<Scalars['String']>;
   firstname?: Maybe<Scalars['String']>;
   fullname?: Maybe<Scalars['String']>;
+  hasSecondaryOrganizations?: Maybe<Scalars['Boolean']>;
   id: Scalars['ID'];
   image?: Maybe<Scalars['String']>;
   imageSource?: Maybe<Scalars['String']>;
@@ -1929,6 +1979,13 @@ export type UserUpdateMutationVariables = Exact<{
 
 export type UserUpdateMutation = { __typename?: 'Mutations', userUpdate?: { __typename?: 'UserUpdatePayload', user?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
+export type AutocompleteSearchUserQueryVariables = Exact<{
+  input: AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null } }> };
+
 export type KnowledgeBaseAnswerSuggestionContentTransformMutationVariables = Exact<{
   translationId: Scalars['ID'];
   formId: Scalars['FormId'];
@@ -1977,6 +2034,20 @@ export type FormUploadCacheRemoveMutationVariables = Exact<{
 
 
 export type FormUploadCacheRemoveMutation = { __typename?: 'Mutations', formUploadCacheRemove?: { __typename?: 'FormUploadCacheRemovePayload', success: boolean } | null };
+
+export type AutocompleteSearchOrganizationQueryVariables = Exact<{
+  input: AutocompleteSearchOrganizationInput;
+}>;
+
+
+export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteOrganizationEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } }> };
+
+export type AutocompleteSearchRecipientQueryVariables = Exact<{
+  input: AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type FormUpdaterQueryVariables = Exact<{
   formUpdaterId: EnumFormUpdaterId;
@@ -2081,22 +2152,6 @@ export type ApplicationConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ApplicationConfigQuery = { __typename?: 'Queries', applicationConfig: Array<{ __typename?: 'KeyComplexValue', key: string, value?: any | null }> };
-
-export type AutocompleteSearchRecipientQueryVariables = Exact<{
-  query: Scalars['String'];
-  limit?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
-
-export type AutocompleteSearchUserQueryVariables = Exact<{
-  query: Scalars['String'];
-  limit?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -7,11 +7,17 @@ module Gql::Queries
 
     def coerce_to_result(user)
       {
-        value:   user.email,
-        label:   user.fullname,
-        heading: user.email,
+        value: user.email,
+        label: label(user),
       }
     end
 
+    private
+
+    def label(user)
+      return user.fullname if user.email.blank?
+
+      "#{user.fullname} <#{user.email}>"
+    end
   end
 end

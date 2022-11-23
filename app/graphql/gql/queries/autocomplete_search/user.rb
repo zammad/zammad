@@ -5,24 +5,31 @@ module Gql::Queries
 
     description 'Search for users'
 
-    argument :query, String, description: 'Query from the autocomplete field'
-    argument :limit, Integer, required: false, description: 'Limit for the amount of entries'
+    argument :input, Gql::Types::Input::AutocompleteSearchInputType, required: true, description: 'The input object for the autocomplete search'
 
-    type [Gql::Types::AutocompleteEntryType], null: false
+    type [Gql::Types::AutocompleteUserEntryType], null: false
 
-    def resolve(query:, limit: 50)
+    def resolve(input:)
+      input = input.to_h
+      query = input[:query]
+      limit = input[:limit] || 50
+
       return [] if query.strip.empty?
 
-      # TODO: Check if this is appropriate or if more complex logic from SearchController is needed.
-      ::User.search(query: query, limit: limit, current_user: context.current_user).map { |u| coerce_to_result(u) }
+      Service::Search.new(current_user: context.current_user).execute(
+        term:    query,
+        objects: [::User],
+        options: { limit: limit },
+      ).map { |user| coerce_to_result(user) }
     end
 
     def coerce_to_result(user)
       {
-        value: Gql::ZammadSchema.id_from_object(user),
-        label: user.fullname,
+        value:   user.id,
+        label:   user.fullname,
+        heading: user.organization&.name,
+        user:    user,
       }
     end
-
   end
 end

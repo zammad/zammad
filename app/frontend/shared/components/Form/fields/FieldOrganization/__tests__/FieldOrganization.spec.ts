@@ -1,17 +1,20 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { escapeRegExp } from 'lodash-es'
-import gql from 'graphql-tag'
 import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { getNode } from '@formkit/core'
 import { renderComponent } from '@tests/support/components'
 import { queryByIconName } from '@tests/support/components/iconQueries'
 import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
-import type { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar/types'
+import type {
+  AutocompleteOrganizationEntry,
+  AutocompleteSearchOrganizationQuery,
+} from '@shared/graphql/types'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitForNextTick, waitUntil } from '@tests/support/utils'
+import { nullableMock, waitForNextTick, waitUntil } from '@tests/support/utils'
+import { AutocompleteSearchOrganizationDocument } from '@shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api'
 
 vi.mock('@vueuse/core', async () => {
   const mod = await vi.importActual<typeof import('@vueuse/core')>(
@@ -25,69 +28,37 @@ vi.mock('@vueuse/core', async () => {
   }
 })
 
-const AutocompleteSearchOrganizationDocument = gql`
-  query autocompleteSearchOrganization($query: String!, $limit: Int) {
-    autocompleteSearchOrganization(query: $query, limit: $limit) {
-      value
-      label
-      labelPlaceholder
-      heading
-      headingPlaceholder
-      disabled
-      organization
-    }
-  }
-`
-
-type AutocompleteSearchOrganizationQuery = {
-  __typename?: 'Queries'
-  autocompleteSearchOrganization: Array<{
-    __typename?: 'AutocompleteEntry'
-    value: string
-    label: string
-    labelPlaceholder?: Array<string> | null
-    heading?: string | null
-    headingPlaceholder?: Array<string> | null
-    disabled?: boolean | null
-    organization?: AvatarOrganization
-  }>
-}
-
-const mockQueryResult = (
-  query: string,
-  limit: number,
-): AutocompleteSearchOrganizationQuery => {
-  const options = testOptions.map((option) => ({
-    ...option,
-    labelPlaceholder: null,
-    headingPlaceholder: null,
-    disabled: null,
-    __typename: 'AutocompleteEntry',
-  }))
+const mockQueryResult = (input: {
+  query: string
+  limit: number
+}): AutocompleteSearchOrganizationQuery => {
+  const options = testOptions.map((option) =>
+    nullableMock({
+      ...option,
+      labelPlaceholder: null,
+      headingPlaceholder: null,
+      disabled: null,
+      icon: null,
+      __typename: 'AutocompleteOrganizationEntry',
+    }),
+  )
 
   const deaccent = (s: string) =>
     s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(escapeRegExp(deaccent(query)), 'i')
+  const filterRegex = new RegExp(escapeRegExp(deaccent(input.query)), 'i')
 
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
       filterRegex.test(deaccent(option.label)) ||
       filterRegex.test(deaccent(option.heading)),
-  ) as unknown as {
-    __typename?: 'AutocompleteEntry'
-    value: string
-    label: string
-    labelPlaceholder?: Array<string> | null
-    disabled?: boolean | null
-    organization?: AvatarOrganization
-  }[]
+  ) as unknown as AutocompleteOrganizationEntry[]
 
   return {
-    autocompleteSearchOrganization: filteredOptions.slice(0, limit ?? 25),
+    autocompleteSearchOrganization: filteredOptions.slice(0, input.limit ?? 25),
   }
 }
 
@@ -144,7 +115,7 @@ describe('Form - Field - Organization - Query', () => {
     mockApi = mockGraphQLApi(AutocompleteSearchOrganizationDocument).willBehave(
       (variables) => {
         return {
-          data: mockQueryResult(variables.query, variables.limit),
+          data: mockQueryResult(variables.input),
         }
       },
     )
