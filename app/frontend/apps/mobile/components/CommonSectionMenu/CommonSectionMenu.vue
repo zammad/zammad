@@ -28,7 +28,7 @@ const clickOnAction = (event: MouseEvent) => {
 const session = useSessionStore()
 
 const itemsWithPermission = computed(() => {
-  if (!props.items) return null
+  if (!props.items || !props.items.length) return null
 
   return props.items.filter((item) => {
     if (item.permission) {
@@ -42,13 +42,14 @@ const itemsWithPermission = computed(() => {
 const slots = useSlots()
 
 const hasHelp = computed(() => slots.help || props.help)
+const showLabel = computed(() => {
+  if (!itemsWithPermission.value && !slots.default) return false
+  return slots.header || props.headerLabel || props.actionLabel
+})
 </script>
 
 <template>
-  <div
-    v-if="itemsWithPermission || $slots.default"
-    class="mb-2 flex flex-row justify-between"
-  >
+  <div v-if="showLabel" class="mb-2 flex flex-row justify-between">
     <div class="text-white/80 ltr:pl-3 rtl:pr-3">
       <slot name="header">{{ i18n.t(headerLabel) }}</slot>
     </div>

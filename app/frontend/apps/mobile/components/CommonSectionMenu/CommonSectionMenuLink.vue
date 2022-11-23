@@ -34,23 +34,30 @@ const iconProps = computed<IconProps | null>(() => {
   <component
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
-    class="cursor-pointer border-b border-gray-300 last:border-0"
+    class="cursor-pointer border-b border-white/10 last:border-0"
     data-test-id="section-menu-link"
   >
     <div
       data-test-id="section-menu-item"
-      class="flex items-center justify-between border-b border-gray-300 last:border-0"
+      class="flex items-center justify-between"
     >
       <div class="flex min-h-[54px] items-center">
         <div
-          v-if="iconProps"
+          v-if="iconProps || $slots.icon"
           class="flex h-8 w-8 items-center justify-center ltr:mr-2 rtl:ml-2"
           data-test-id="wrapper-icon"
           :class="{
             [`rounded-lg ${iconBg}`]: iconBg,
           }"
         >
-          <CommonIcon v-bind="iconProps" decorative />
+          <slot name="icon">
+            <CommonIcon
+              v-if="iconProps"
+              v-bind="iconProps"
+              size="base"
+              decorative
+            />
+          </slot>
         </div>
         <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
       </div>

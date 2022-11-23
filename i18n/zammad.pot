@@ -805,6 +805,10 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Add tags"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
 msgstr ""
@@ -3843,8 +3847,16 @@ msgstr ""
 msgid "Edit Organization"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Edit customer"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Edit organization"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
@@ -4379,6 +4391,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid "Execute changes on objects"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Execute configured macros"
 msgstr ""
 
 #: db/seeds/schedulers.rb
@@ -5145,6 +5161,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr ""
 
@@ -6350,6 +6367,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 msgid "Merge"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Merge tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
@@ -9052,6 +9073,10 @@ msgid "Show the chat when ready."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+msgid "Show ticket actions"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
 msgstr ""
 
@@ -9412,6 +9437,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
 msgstr ""
 
@@ -10574,6 +10600,10 @@ msgstr ""
 msgid "Ticket Subscriptions"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Ticket actions"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Ticket could not be created."
 msgstr ""
@@ -10592,6 +10622,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Ticket has been created successfully."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Ticket info"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts

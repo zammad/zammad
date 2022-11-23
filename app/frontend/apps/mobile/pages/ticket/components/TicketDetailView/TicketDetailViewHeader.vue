@@ -17,20 +17,28 @@ interface Props {
 
 defineProps<Props>()
 
-const dialog = useDialog({
-  name: 'ticket-dialog',
+const viewersDialog = useDialog({
+  name: 'ticket-viewers-dialog',
   component: () => import('./TicketViewersDialog.vue'),
-  prefetch: true,
+})
+
+const actionsDialog = useDialog({
+  name: 'ticket-actions-dialog',
+  component: () => import('./TicketActionsDialog.vue'),
 })
 
 const showViewers = () => {
-  return dialog.open({ name: dialog.name })
+  return viewersDialog.open({ name: viewersDialog.name })
+}
+
+const showActions = () => {
+  return actionsDialog.open({ name: actionsDialog.name })
 }
 </script>
 
 <template>
   <header
-    class="grid h-[64px] grid-cols-[70px_auto_70px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
     <CommonBackButton class="justify-self-start" fallback="/" />
     <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
@@ -45,14 +53,14 @@ const showViewers = () => {
       </div>
     </CommonLoader>
     <CommonLoader :loading="loadingUsers" position="right">
-      <button
-        v-if="users.length"
-        class="flex cursor-pointer items-center justify-self-end"
-        data-test-id="viewers-counter"
-        :title="$t('Show ticket viewers')"
-        @click="showViewers()"
-      >
-        <div class="flex">
+      <div class="flex items-center justify-self-end">
+        <button
+          v-if="users.length"
+          class="flex"
+          data-test-id="viewers-counter"
+          :title="$t('Show ticket viewers')"
+          @click="showViewers()"
+        >
           <CommonUserAvatar
             class="z-10"
             :entity="users[0]"
@@ -61,15 +69,21 @@ const showViewers = () => {
           />
           <div
             v-if="users.length - 1"
-            class="z-0 flex h-6 w-6 -translate-x-2 items-center justify-center rounded-full bg-white/80 text-xs text-black"
+            class="z-0 flex h-6 w-6 -translate-x-2 select-none items-center justify-center rounded-full bg-white/80 text-xs text-black"
             role="img"
             :aria-label="$t('Ticket has %s viewers', users.length)"
           >
             +{{ users.length - 1 }}
           </div>
-        </div>
-        <CommonIcon name="mobile-more-vertical" size="base" />
-      </button>
+        </button>
+        <button
+          type="button"
+          :title="$t('Show ticket actions')"
+          @click="showActions()"
+        >
+          <CommonIcon name="mobile-more" size="base" decorative />
+        </button>
+      </div>
     </CommonLoader>
   </header>
 </template>

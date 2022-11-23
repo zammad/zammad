@@ -31,10 +31,10 @@ const localDirection = useVModel(props, 'direction', emit)
 const accessibilityLabel = computed(() => {
   return i18n.t(
     'Tickets are ordered by "%s" column (%s).',
-    props.label,
+    i18n.t(props.label),
     props.direction === EnumOrderDirection.Ascending
-      ? __('ascending')
-      : __('descending'),
+      ? i18n.t('ascending')
+      : i18n.t('descending'),
   )
 })
 
