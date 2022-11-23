@@ -7,7 +7,6 @@ import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '@shared/utils/testSw'
 
-// eslint-disable-next-line no-underscore-dangle
 global.__ = (source) => {
   return source
 }

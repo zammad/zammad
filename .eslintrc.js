@@ -43,6 +43,7 @@ module.exports = {
       'WithStatement',
     ],
 
+    'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
 
     'func-style': ['error', 'expression'],

@@ -37,7 +37,7 @@ export const useArticleAttachments = (options: AttachmentsOptions) => {
 
       return {
         ...attachment,
-        content: previewUrl,
+        previewUrl,
         canDownload,
         downloadUrl,
       }

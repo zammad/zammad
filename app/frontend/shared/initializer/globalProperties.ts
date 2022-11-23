@@ -10,6 +10,5 @@ export default function initializeGlobalProperties(app: App): void {
 
   app.use(applicationConfigPlugin)
 
-  // eslint-disable-next-line no-underscore-dangle
   app.config.globalProperties.__ = window.__
 }

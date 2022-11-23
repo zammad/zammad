@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import type { ExtendedRenderResult } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
@@ -12,6 +13,7 @@ import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/
 const renderFileInput = (props: Record<string, unknown> = {}) => {
   return renderComponent(FormKit, {
     props: {
+      id: 'file',
       type: 'file',
       name: 'file',
       label: 'File',
@@ -99,6 +101,32 @@ describe('Fields - FieldFile', () => {
       'src',
       filesSrc[0],
     )
+  })
+
+  it('exposes files to Form', async () => {
+    const file = new File([], 'foo.png', { type: 'image/png' })
+    const { view } = await uploadFiles([file])
+
+    const node = getNode('file')
+    expect(node).toBeDefined()
+    expect(node?._value).toEqual([
+      expect.objectContaining({ name: 'foo.png', type: 'image/png' }),
+    ])
+
+    node?.input([
+      {
+        name: 'bar.png',
+        type: 'image/png',
+        id: '1',
+        size: 300,
+        previewUrl: 'https://localhost/bar.png',
+      },
+    ])
+
+    const filePreview = await view.findByRole('button', {
+      name: 'Preview bar.png',
+    })
+    expect(filePreview).toBeInTheDocument()
   })
 
   it('renders non-images', async () => {

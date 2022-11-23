@@ -7,7 +7,6 @@ const getGlobalThis = () => {
   return window
 }
 
-// eslint-disable-next-line no-underscore-dangle
 getGlobalThis().__ = (source) => source
 
 // Add 'export' to treat this as a JS module.

@@ -4,7 +4,6 @@ import { computed, type Ref } from 'vue'
 import { type FormFieldContext } from '../types/field'
 
 const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
-  // eslint-disable-next-line no-underscore-dangle
   const currentValue = computed(() => context.value._value)
 
   const hasValue = computed(() => {

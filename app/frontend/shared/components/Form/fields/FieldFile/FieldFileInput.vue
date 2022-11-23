@@ -1,35 +1,35 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import type { InputHTMLAttributes, Ref } from 'vue'
-import { computed, ref } from 'vue'
+import { toRef, computed, ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import useImageViewer from '@shared/composables/useImageViewer'
-import type { Scalars, StoredFile } from '@shared/graphql/types'
+import type { Scalars } from '@shared/graphql/types'
 import { convertFileList } from '@shared/utils/files'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api'
+import type { FieldFileProps, FileUploaded } from './types'
 
-// TODO: First proof of concept, this needs to be finalized during the first real usage.
 // TODO: Add a test + story for this component.
 
 export interface Props {
-  context: FormFieldContext<{
-    accept: InputHTMLAttributes['accept']
-    capture: InputHTMLAttributes['capture']
-    multiple: InputHTMLAttributes['multiple']
-  }>
+  context: FormFieldContext<FieldFileProps>
 }
 
 const props = defineProps<Props>()
 
-type FileUploaded = Pick<StoredFile, 'id' | 'name' | 'size' | 'type'> & {
-  content: string
-}
+const contextReactive = toRef(props, 'context')
 
-const uploadFiles: Ref<FileUploaded[]> = ref([])
+const uploadFiles = computed<FileUploaded[]>({
+  get() {
+    return contextReactive.value._value || []
+  },
+  set(value) {
+    props.context.node.input(value)
+  },
+})
 
 const addFileMutation = new MutationHandler(useFormUploadCacheAddMutation({}))
 const addFileLoading = addFileMutation.loading()
@@ -50,22 +50,23 @@ const onFileChanged = async ($event: Event) => {
   const { files } = input
   const uploads = await convertFileList(files)
 
-  addFileMutation
-    .send({ formId: props.context.formId, files: uploads })
-    .then((data) => {
-      if (data?.formUploadCacheAdd?.uploadedFiles) {
-        uploadFiles.value.push(
-          ...data.formUploadCacheAdd.uploadedFiles.map((file, index) => {
-            return {
-              ...file,
-              content: uploads[index].content,
-            }
-          }),
-        )
-        input.value = ''
-        input.files = null
-      }
-    })
+  const data = await addFileMutation.send({
+    formId: props.context.formId,
+    files: uploads,
+  })
+
+  const uploadedFiles = data?.formUploadCacheAdd?.uploadedFiles
+
+  if (!uploadedFiles) return
+
+  const previewableFile = uploadedFiles.map((file, index) => ({
+    ...file,
+    previewUrl: uploads[index].content,
+  }))
+
+  uploadFiles.value = [...uploadFiles.value, ...previewableFile]
+  input.value = ''
+  input.files = null
 }
 
 const { waitForConfirmation } = useConfirmation()
@@ -131,7 +132,7 @@ const { showImage } = useImageViewer(uploadFiles)
       v-for="uploadFile of uploadFiles"
       :key="uploadFile.id"
       :file="uploadFile"
-      :preview-url="uploadFile.content"
+      :preview-url="uploadFile.previewUrl"
       @preview="canInteract && showImage(uploadFile)"
       @remove="canInteract && removeFile(uploadFile.id)"
     />
