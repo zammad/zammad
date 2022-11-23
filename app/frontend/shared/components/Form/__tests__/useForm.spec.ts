@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import Form from '@shared/components/Form/Form.vue'
-import useForm from '@shared/components/Form/composable'
+import { useForm } from '@shared/components/Form/composable'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import {
   type ExtendedRenderResult,

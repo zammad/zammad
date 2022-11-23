@@ -13,8 +13,8 @@ export class FieldResolverInput extends FieldResolver {
         return 'tel'
       case 'email':
         return 'email'
-      // TODO: what about the 'url' field type?
-      // case 'url'
+      case 'url':
+        return 'url'
       default:
         return 'text'
     }

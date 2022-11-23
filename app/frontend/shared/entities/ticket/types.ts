@@ -8,3 +8,9 @@ export enum TicketState {
   Escalated = 'escalated',
   New = 'new',
 }
+
+export enum TicketCreateArticleType {
+  PhoneIn = 'phone-in',
+  PhoneOut = 'phone-out',
+  EmailOut = 'email-out',
+}

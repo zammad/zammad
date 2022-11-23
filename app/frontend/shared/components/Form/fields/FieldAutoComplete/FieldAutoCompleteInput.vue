@@ -12,11 +12,7 @@ import type { FormFieldContext } from '../../types/field'
 import type { AutoCompleteOption, AutoCompleteProps } from './types'
 
 interface Props {
-  context: FormFieldContext<
-    AutoCompleteProps & {
-      gqlQuery: string
-    }
-  >
+  context: FormFieldContext<AutoCompleteProps>
 }
 
 const props = defineProps<Props>()
@@ -37,7 +33,7 @@ const dialog = useDialog({
 
 const openModal = () => {
   return dialog.open({
-    context: toRef(props, 'context'),
+    context: contextReactive,
     name: nameDialog,
     options: localOptions,
     optionIconComponent: props.context.optionIconComponent
@@ -52,10 +48,11 @@ const openModal = () => {
   })
 }
 
-const { getSelectedOptionIcon, getSelectedOptionLabel } = useSelectOptions(
-  localOptions,
-  toRef(props, 'context'),
-)
+const { optionValueLookup, getSelectedOptionIcon, getSelectedOptionLabel } =
+  useSelectOptions(localOptions, contextReactive)
+
+// Remember current optionValueLookup in node context.
+contextReactive.value.optionValueLookup = optionValueLookup
 
 // Initial options prefill for non-multiple fields (multiple fields needs to be handled in the form updater).
 if (

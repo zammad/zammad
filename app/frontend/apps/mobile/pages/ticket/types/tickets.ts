@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FormFieldValue } from '@shared/components/Form/types'
+import type { TicketCreateArticleType } from '@shared/entities/ticket/types'
 import type { TicketQuery, TicketArticlesQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 
@@ -10,3 +12,19 @@ export type TicketArticle = ConfidentTake<
 >
 
 export type TicketArticleAttachment = TicketArticle['attachments'][number]
+
+export interface TicketFormData {
+  title: string
+  customer_id?: number
+  cc?: string[]
+  body: string
+  // attachments?: UploadFile[] // TODO: field has currently no value handling implemented
+  group_id: number
+  owner_id?: number
+  state_id?: number
+  pending_time?: string
+  priority_id?: number
+  articleSenderType: TicketCreateArticleType
+  tags: string[]
+  [index: string]: FormFieldValue
+}

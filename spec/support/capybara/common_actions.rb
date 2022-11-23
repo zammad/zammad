@@ -33,7 +33,7 @@ module CommonActions
     when :mobile
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
-      within('#login') do
+      within('#signin') do
         fill_in 'login', with: username
         fill_in 'password', with: password
 

@@ -17,3 +17,5 @@ export default {
   fieldType: 'customer',
   definition: fieldDefinition,
 }
+
+export type { AutoCompleteCustomerOption } from './types'

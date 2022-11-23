@@ -8,6 +8,7 @@ import {
   text as inputTextDefinition,
   time as inputTimeDefinition,
   textInput,
+  url as inputUrlDefinition,
 } from '@formkit/inputs'
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import addLink from '@shared/form/features/addLink'
@@ -24,6 +25,7 @@ const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   number: inputCNumberDefinition,
   tel: inputTelDefinition,
   time: inputTimeDefinition,
+  url: inputUrlDefinition,
 }
 
 const inputFields: FormFieldType[] = []

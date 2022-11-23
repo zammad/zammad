@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { getInitials } from '../formatter'
+import { getInitials, toClassName } from '../formatter'
 
 describe('getInitials', () => {
   it('returns ?? initials, if no arguments are present', () => {
@@ -27,5 +27,11 @@ describe('getInitials', () => {
     expect(getInitials('John', 'Doe')).toBe('JD')
     expect(getInitials('John', 'Doe', '')).toBe('JD')
     expect(getInitials('John', 'Doe', 'email@mail.com')).toBe('JD')
+  })
+})
+
+describe('toClassName', () => {
+  it('convert relation to class name', () => {
+    expect(toClassName('TicketState')).toBe('Ticket::State')
   })
 })

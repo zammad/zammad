@@ -16,7 +16,6 @@ export const useUserCreate = () => {
     EnumObjectManagerObjects.User,
   )
 
-  const mutation = useUserAddMutation({})
   const schema = defineFormSchema([
     {
       screen: 'create',
@@ -41,7 +40,7 @@ export const useUserCreate = () => {
 
   const openCreateUserDialog = async () => {
     dialogCreate.openDialog({
-      mutation,
+      mutation: useUserAddMutation,
       schema,
       onSuccess,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserCreate,

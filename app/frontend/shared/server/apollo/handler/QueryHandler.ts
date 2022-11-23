@@ -19,9 +19,6 @@ import type { ReactiveFunction } from '@shared/types/utils'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
 import BaseHandler from './BaseHandler'
 
-// eslint-disable-next-line no-use-before-define
-export const handlers: QueryHandler[] = []
-
 export default class QueryHandler<
   TResult = OperationQueryResult,
   TVariables = OperationVariables,

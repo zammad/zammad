@@ -17,6 +17,7 @@ export type AutoCompleteOption = {
 }
 
 export type AutoCompleteProps = FormFieldContext<{
+  gqlQuery: string
   action?: RouteLocationRaw
   actionIcon?: string
   allowUnknownValues?: boolean

@@ -113,17 +113,18 @@ describe('Form - Field - Organization - Features', () => {
       ...wrapperParameters,
       props: {
         ...testProps,
-        id: 'organization',
+        id: 'organization_id',
         name: 'organization_id',
         value: 123,
         belongsToObjectField: 'organization',
       },
     })
 
-    const node = getNode('organization')
+    const node = getNode('organization_id')
     node!.context!.initialEntityObject = {
       organization: {
         name: 'Zammad Organization',
+        internalId: 123,
       },
     }
 

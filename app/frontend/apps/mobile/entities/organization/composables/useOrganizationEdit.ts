@@ -18,7 +18,6 @@ export const useOrganizationEdit = () => {
     EnumObjectManagerObjects.Organization,
   )
 
-  const mutation = useOrganizationUpdateMutation({})
   const schema = defineFormSchema([
     {
       name: 'name',
@@ -36,6 +35,10 @@ export const useOrganizationEdit = () => {
       screen: 'edit',
       object: EnumObjectManagerObjects.Organization,
     },
+    {
+      type: 'file',
+      name: 'attachments',
+    },
   ])
 
   const openEditOrganizationDialog = async (
@@ -52,7 +55,7 @@ export const useOrganizationEdit = () => {
     dialog.openDialog({
       object: organization,
       schema,
-      mutation,
+      mutation: useOrganizationUpdateMutation,
       formChangeFields,
       onChangedField: (fieldName, newValue) => {
         if (fieldName === 'domain_assignment') {

@@ -204,3 +204,23 @@ describe('Form - Field - Time (Formkit-BuildIn)', () => {
     expect(input).toHaveAttribute('type', 'time')
   })
 })
+
+describe('Form - Field - Url (Formkit-BuildIn)', () => {
+  const wrapper = renderComponent(FormKit, {
+    ...wrapperParameters,
+    props: {
+      name: 'url',
+      type: 'url',
+      id: 'url',
+      label: 'url',
+    },
+  })
+
+  afterAll(() => {
+    wrapper.unmount()
+  })
+
+  it('can render a url input', () => {
+    expect(wrapper.getByLabelText('url')).toHaveAttribute('type', 'url')
+  })
+})

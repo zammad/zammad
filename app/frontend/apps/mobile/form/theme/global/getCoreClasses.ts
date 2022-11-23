@@ -19,7 +19,7 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
     wrapper: `${classes.wrapper || ''} relative`,
     input: `${
       classes.input || ''
-    } formkit-variant-primary:bg-blue formkit-variant-secondary:bg-transparent`,
+    } text-white formkit-variant-primary:bg-blue formkit-variant-secondary:bg-transparent`,
   }
 }
 
@@ -47,6 +47,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     global: {},
     text: addAbsoluteFloatingLabel(classes.text),
     email: addAbsoluteFloatingLabel(classes.email),
+    url: addAbsoluteFloatingLabel(classes.url),
     number: addAbsoluteFloatingLabel(classes.number),
     search: { inner: 'flex', wrapper: 'px-3' },
     tel: addAbsoluteFloatingLabel(classes.tel),
@@ -57,7 +58,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     editor: addFloatingTextareaLabel(classes.editor),
     textarea: addFloatingTextareaLabel(classes.textarea),
     checkbox: {
-      outer: 'formkit-invalid:bg-red-dark',
+      outer: 'formkit-invalid:bg-red-dark formkit-errors:bg-red-dark',
       wrapper: `${
         classes.checkbox?.wrapper || ''
       } ltr:pl-2 rtl:pr-2 w-full justify-between`,
@@ -68,7 +69,9 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     },
     toggle: {
       ...classes.toggle,
-      outer: `${classes.toggle?.outer || ''} px-2 formkit-invalid:bg-red-dark`,
+      outer: `${
+        classes.toggle?.outer || ''
+      } px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark`,
       wrapper: `${classes.toggle?.wrapper || ''} inline-flex w-full h-14 px-2`,
       label: `${
         classes.toggle?.label || ''

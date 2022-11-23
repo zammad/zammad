@@ -82,3 +82,5 @@ export default {
   fieldType: 'radio',
   definition: radioDefinition,
 }
+
+export type { RadioOption } from './types'

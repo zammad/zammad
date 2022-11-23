@@ -15,7 +15,7 @@ const hideField = (node: FormKitNode) => {
     node.on('prop:hidden', ({ payload }) => {
       if (payload) {
         props.outerClass = `${props.outerClass} hidden`
-      } else {
+      } else if (props.outerClass) {
         props.outerClass = props.outerClass.replace('hidden', '')
       }
     })

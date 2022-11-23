@@ -31,18 +31,18 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
     context 'when checking displayed tickets' do
       it 'displays 10 tickets by default' do
-        expect(page).to have_link(href: %r{/mobile/tickets/}, count: 10)
+        expect(page).to have_link(href: %r{/mobile/tickets/\d+}, count: 10)
       end
 
       it 'loads more tickets when scrolling down' do
         wait.until do
-          expect(page).to have_link(href: %r{/mobile/tickets/}, count: 10)
+          expect(page).to have_link(href: %r{/mobile/tickets/\d+}, count: 10)
         end
 
         page.scroll_to :bottom
 
         wait.until do
-          expect(page).to have_link(href: %r{/mobile/tickets/}, count: 20)
+          expect(page).to have_link(href: %r{/mobile/tickets/\d+}, count: 20)
         end
       end
     end
@@ -63,7 +63,9 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
           expect(page).to have_no_css('[role="dialog"]')
         end
 
-        expect(find('a[href^="/mobile/tickets/"]:first-of-type')).to have_text(open_tickets.last.number)
+        within('section') do
+          expect(find('a[href^="/mobile/tickets/"]:first-of-type')).to have_text(open_tickets.last.number)
+        end
       end
     end
 

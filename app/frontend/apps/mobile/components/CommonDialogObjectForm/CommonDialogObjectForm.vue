@@ -1,8 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { UseMutationReturn } from '@vue/apollo-composable'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
+import type { ObjectLike } from '@shared/types/utils'
 import {
   type FormSchemaNode,
   type FormData,
@@ -18,11 +17,12 @@ import type {
   FormFieldValue,
   FormSchemaField,
 } from '@shared/components/Form/types'
+import type { OperationMutationFunction } from '@shared/types/server/apollo/handler'
 import { MutationHandler } from '@shared/server/apollo/handler'
-import type { ObjectLike } from '@shared/types/utils'
 import Form from '@shared/components/Form/Form.vue'
-import { camelize } from '@shared/utils/formatter'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
+import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
+import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import useConfirmation from '../CommonConfirmation/composable'
 
 export interface Props {
@@ -32,8 +32,7 @@ export interface Props {
   formUpdaterId?: EnumFormUpdaterId
   formChangeFields?: Record<string, Partial<FormSchemaField>>
   errorNotificationMessage?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mutation: UseMutationReturn<any, any>
+  mutation: OperationMutationFunction
   schema: FormSchemaNode[]
 }
 
@@ -49,7 +48,7 @@ const emit = defineEmits<{
   ): void
 }>()
 
-const updateQuery = new MutationHandler(props.mutation, {
+const updateMutation = new MutationHandler(props.mutation({}), {
   errorNotificationMessage: props.errorNotificationMessage,
 })
 const { form, isDirty, isDisabled } = useForm()
@@ -68,7 +67,9 @@ const initialFlatObject = {
   ...objectAtrributes,
 }
 
-const { attributes: objectAttributes } = useObjectAttributes(props.type)
+const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
+  props.type,
+)
 const { waitForConfirmation } = useConfirmation()
 
 const cancelDialog = async () => {
@@ -92,30 +93,14 @@ const changedFormField = (
 }
 
 const saveObject = async (formData: FormData) => {
-  const objectAttributeValues = objectAttributes.value
-    .filter(({ isInternal }) => !isInternal)
-    .map(({ name }) => {
-      return {
-        name,
-        value: formData[name],
-      }
-    })
+  const { internalObjectAttributeValues, additionalObjectAttributeValues } =
+    useObjectAttributeFormData(objectAttributesLookup.value, formData)
 
-  const skip = new Set(['id', 'formId', ...Object.keys(objectAtrributes)])
-  const input: Record<string, unknown> = {}
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const key in formData) {
-    if (!skip.has(key)) {
-      input[camelize(key)] = formData[key]
-    }
-  }
-
-  const result = await updateQuery.send({
+  const result = await updateMutation.send({
     id: props.object?.id,
     input: {
-      ...input,
-      objectAttributeValues,
+      ...internalObjectAttributeValues,
+      objectAttributeValues: additionalObjectAttributeValues,
     },
   })
 

@@ -203,7 +203,7 @@ const login = (formData: FormData<LoginFormData>) => {
             ></div>
           </template>
           <Form
-            id="login"
+            id="signin"
             ref="form"
             class="text-left"
             :schema="loginSchema"

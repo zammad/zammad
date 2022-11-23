@@ -37,11 +37,11 @@ const removeRequired = (props: Partial<FormKitProps>) => {
   }
 }
 const addRequiredValidation = (node: FormKitNode) => {
-  if (node.type !== 'input') return
+  const { props, context } = node
+
+  if (!props.definition || !context || node.type !== 'input') return
 
   node.addProps(['required'])
-
-  const { props } = node
 
   if (props.required) {
     addRequired(props)

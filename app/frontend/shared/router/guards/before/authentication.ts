@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
+import type { WatchStopHandle } from 'vue'
 import type {
   NavigationGuard,
   RouteLocationNormalized,
@@ -45,7 +46,7 @@ const authenticationGuard: NavigationGuard = (
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) => {
-  let unwatch: (() => void) | undefined
+  let unwatch: WatchStopHandle | undefined
   const application = useApplicationStore()
 
   if (application.loading) {

@@ -4,7 +4,7 @@ import type { FieldResolverModule } from '@shared/entities/object-attributes/typ
 import FieldResolver from '../FieldResolver'
 
 export class FieldResolverTag extends FieldResolver {
-  fieldType = 'tag'
+  fieldType = 'tags'
 
   // TODO:
   // eslint-disable-next-line class-methods-use-this

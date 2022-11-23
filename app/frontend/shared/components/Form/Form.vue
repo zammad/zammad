@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { isEqual, cloneDeep, merge } from 'lodash-es'
+import { isEqual, cloneDeep, merge, isEmpty } from 'lodash-es'
 import type { ConcreteComponent, Ref } from 'vue'
 import {
   computed,
@@ -25,10 +25,9 @@ import type {
   FormKitSchemaComponent,
   FormKitMessageProps,
 } from '@formkit/core'
-import { createMessage } from '@formkit/core'
-import type { SetRequired } from 'type-fest'
-import type { Stoppable } from '@vueuse/shared'
-import { useTimeoutFn, watchOnce } from '@vueuse/shared'
+import { createMessage, getNode } from '@formkit/core'
+import type { Except, SetRequired } from 'type-fest'
+import { refDebounced, watchOnce } from '@vueuse/shared'
 import getUuid from '@shared/utils/getUuid'
 import log from '@shared/utils/log'
 import { camelize } from '@shared/utils/formatter'
@@ -57,7 +56,11 @@ import {
   type FormValues,
   type FormFieldValue,
   type ReactiveFormSchemData,
+  type FormHandler,
+  type FormHandlerFunction,
+  type ChangedField,
   FormValidationVisibility,
+  FormHandlerExecution,
 } from './types'
 import FormLayout from './FormLayout.vue'
 import FormGroup from './FormGroup.vue'
@@ -72,10 +75,12 @@ export interface Props {
   id?: string
   schema?: FormSchemaNode[]
   formUpdaterId?: EnumFormUpdaterId
+  handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
   // Maybe in the future this is no longer needed, when FormKit supports group
   // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
   multiStepFormGroups?: string[]
+  schemaData?: Except<ReactiveFormSchemData, 'fields'>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
     string,
@@ -148,29 +153,10 @@ const emit = defineEmits<{
 }>()
 
 const showInitialLoadingAnimation = ref(false)
-let loadingAnimationTimeout: Stoppable
-
-const stopLoadingAnimationTimeOut = () => {
-  if (loadingAnimationTimeout) {
-    loadingAnimationTimeout.stop()
-  }
-}
-
-const startInitialLoadingAnimation = () => {
-  stopLoadingAnimationTimeOut()
-
-  loadingAnimationTimeout = useTimeoutFn(() => {
-    showInitialLoadingAnimation.value = true
-  }, 300)
-}
-
-const stopInitialLoadingAnimation = () => {
-  stopLoadingAnimationTimeOut()
-
-  loadingAnimationTimeout = useTimeoutFn(() => {
-    showInitialLoadingAnimation.value = false
-  }, 300)
-}
+const debouncedShowInitialLoadingAnimation = refDebounced(
+  showInitialLoadingAnimation,
+  300,
+)
 
 const formKitInitialNodesSettled = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
@@ -187,7 +173,7 @@ const setFormNode = (node: FormKitNode) => {
   }
 
   node.settled.then(() => {
-    stopInitialLoadingAnimation()
+    showInitialLoadingAnimation.value = false
     formKitInitialNodesSettled.value = true
 
     // Reset directly after the initial request.
@@ -326,12 +312,14 @@ const fixedAndSkippedFields: string[] = []
 
 const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
+  values,
+  ...props.schemaData,
 })
 
 const internalFieldCamelizeName: Record<string, string> = {}
 
 const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
-  if (!props.initialEntityObject) return undefined
+  if (isEmpty(props.initialEntityObject)) return undefined
 
   let value: FormFieldValue
   if (relationFieldBelongsToObjectField[fieldName]) {
@@ -396,6 +384,9 @@ const updateSchemaDataField = (
     ...fieldProps
   } = field
   const showField = show ?? true
+
+  // Not needed in this context.
+  delete fieldProps.if
 
   // Special handling for the disabled prop, so that the form can handle also
   // the disable state from outside.
@@ -487,13 +478,49 @@ const updateChangedFields = (
       value !== values.value[fieldName]
     ) {
       updaterChangedFields.add(fieldName)
-      formNode.value?.at(fieldName)?.input(value, false)
+      getNode(fieldName)?.input(value, false)
     }
   })
 
   nextTick(() => {
     updaterChangedFields.clear()
     formNode.value?.store.remove('formUpdaterProcessing')
+  })
+}
+
+const formHandlerExecution: Record<
+  FormHandlerExecution,
+  FormHandlerFunction[]
+> = {
+  [FormHandlerExecution.Initial]: [],
+  [FormHandlerExecution.FieldChange]: [],
+}
+if (props.handlers) {
+  props.handlers.forEach((handler) => {
+    Object.values(FormHandlerExecution).forEach((execution) => {
+      if (handler.execution.includes(execution)) {
+        formHandlerExecution[execution].push(handler.callback)
+      }
+    })
+  })
+}
+
+const executeFormHandler = (
+  execution: FormHandlerExecution,
+  currentValues: FormValues,
+  changedField?: ChangedField,
+) => {
+  if (formHandlerExecution[execution].length === 0) return
+
+  formHandlerExecution[execution].forEach((handler) => {
+    handler(
+      execution,
+      formNode.value,
+      currentValues,
+      props.changeFields,
+      schemaData,
+      changedField,
+    )
   })
 }
 
@@ -554,14 +581,11 @@ const previousValues = new WeakMap<FormKitNode, FormFieldValue>()
 const changedInputValueHandling = (inputNode: FormKitNode) => {
   inputNode.on('commit', ({ payload: newValue, origin: node }) => {
     const oldValue = previousValues.get(node)
-
     if (isEqual(newValue, oldValue)) return
-
     if (!formKitInitialNodesSettled.value) {
       previousValues.set(node, cloneDeep(newValue))
       return
     }
-
     if (!updaterChangedFields.has(node.name)) {
       handlesFormUpdater(
         inputNode.props.formUpdaterTrigger,
@@ -570,9 +594,12 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
         oldValue,
       )
     }
-
     emit('changed', node.name, newValue, oldValue)
-
+    executeFormHandler(FormHandlerExecution.FieldChange, values.value, {
+      name: node.name,
+      newValue,
+      oldValue,
+    })
     previousValues.set(node, cloneDeep(newValue))
     updaterChangedFields.delete(node.name)
   })
@@ -604,12 +631,13 @@ const buildStaticSchema = () => {
   ): FormKitSchemaComponent => {
     return {
       $cmp: 'FormKit',
-      if: `$fields.${field.name}.show`,
+      if: field.if ? field.if : `$fields.${field.name}.show`,
       bind: `$fields.${field.name}.props`,
       props: {
         type: field.type,
         key: field.name,
-        id: field.id || `form_field_${field.name}`,
+        name: field.name,
+        id: field.id || field.name,
         formId,
         plugins: [changedInputValueHandling],
         triggerFormUpdater: !!props.formUpdaterId,
@@ -620,18 +648,25 @@ const buildStaticSchema = () => {
   const getLayoutType = (
     layoutNode: FormSchemaLayout,
   ): FormKitSchemaDOMNode | FormKitSchemaComponent => {
-    // TODO: this both nodes could maybe be improved, to support also conditions?
+    let layoutField: FormKitSchemaDOMNode | FormKitSchemaComponent
+
     if ('component' in layoutNode) {
-      return {
+      layoutField = {
         $cmp: layoutNode.component,
         props: layoutNode.props,
       }
+    } else {
+      layoutField = {
+        $el: layoutNode.element,
+        attrs: layoutNode.attrs,
+      }
     }
 
-    return {
-      $el: layoutNode.element,
-      attrs: layoutNode.attrs,
+    if (layoutNode.if) {
+      layoutField.if = layoutNode.if
     }
+
+    return layoutField
   }
 
   type ResolveFormSchemaNode = Exclude<FormSchemaNode, string>
@@ -650,28 +685,25 @@ const buildStaticSchema = () => {
         props: {
           type: node.type,
           name: node.name,
+          id: node.name,
           key: node.name,
+          plugins: node.plugins,
         },
       }
     }
 
     if ('object' in node && getFormFieldSchema && getFormFieldsFromScreen) {
       if ('name' in node && node.name && !node.type) {
-        const resolvedField = getFormFieldSchema(
-          node.name,
-          node.object,
-          node.screen,
-        )
+        const { screen, object, ...fieldNode } = node
+
+        const resolvedField = getFormFieldSchema(fieldNode.name, object, screen)
 
         if (!resolvedField) return null
 
-        // Remove no longer needed screen value.
-        delete node.screen
-
         node = {
           ...resolvedField,
-          ...node,
-        }
+          ...fieldNode,
+        } as FormSchemaField
       } else if ('screen' in node && !('name' in node)) {
         const resolvedFields = getFormFieldsFromScreen(node.screen, node.object)
         const formKitFields: ResolveFormKitSchemaNode[] = []
@@ -730,6 +762,20 @@ watchOnce(formKitInitialNodesSettled, () => {
   })
 })
 
+watch(
+  () => props.schemaData,
+  () => Object.assign(schemaData, props.schemaData),
+  {
+    deep: true,
+  },
+)
+
+const setFormSchemaInitialized = () => {
+  if (!formSchemaInitialized.value) {
+    formSchemaInitialized.value = true
+  }
+}
+
 const initializeFormSchema = () => {
   buildStaticSchema()
 
@@ -755,6 +801,11 @@ const initializeFormSchema = () => {
     )
 
     formUpdaterQueryHandler.watchOnResult((queryResult) => {
+      // Execute the form handler function so that they can manipulate the form updater result.
+      if (!formSchemaInitialized.value) {
+        executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
+      }
+
       if (queryResult?.formUpdater) {
         updateChangedFields(
           props.changeFields
@@ -763,12 +814,13 @@ const initializeFormSchema = () => {
         )
       }
 
-      if (!formSchemaInitialized.value) formSchemaInitialized.value = true
+      setFormSchemaInitialized()
     })
   } else {
+    executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
     if (props.changeFields) updateChangedFields(props.changeFields)
 
-    formSchemaInitialized.value = true
+    setFormSchemaInitialized()
   }
 }
 
@@ -777,8 +829,9 @@ const initializeFormSchema = () => {
 // ...
 
 if (props.schema) {
+  showInitialLoadingAnimation.value = true
+
   if (props.useObjectAttributes) {
-    startInitialLoadingAnimation()
     // TODO: rebuild schema, when object attributes
     // was changed from outside(not such important,
     // because we have currently the reload solution like in the desktop view).
@@ -822,10 +875,13 @@ if (props.schema) {
         objectAttributeObjects,
       )
 
-      watch(
+      const unwatchTriggerFormInitialize = watch(
         objectAttributesLoading,
         (loading) => {
-          if (!loading) initializeFormSchema()
+          if (!loading) {
+            nextTick(() => unwatchTriggerFormInitialize())
+            initializeFormSchema()
+          }
         },
         { immediate: true },
       )
@@ -833,7 +889,6 @@ if (props.schema) {
       initializeFormSchema()
     }
   } else {
-    startInitialLoadingAnimation()
     initializeFormSchema()
   }
 }
@@ -841,7 +896,7 @@ if (props.schema) {
 
 <template>
   <div
-    v-if="showInitialLoadingAnimation"
+    v-if="debouncedShowInitialLoadingAnimation"
     class="flex items-center justify-center"
   >
     <CommonIcon name="mobile-loading" animation="spin" />
@@ -854,6 +909,7 @@ if (props.schema) {
     "
     :id="id"
     type="form"
+    novalidate
     :config="formConfig"
     :form-class="localClass"
     :actions="false"
@@ -873,7 +929,9 @@ if (props.schema) {
       :library="additionalComponentLibrary"
     >
       <div
-        v-show="formKitInitialNodesSettled && !showInitialLoadingAnimation"
+        v-show="
+          formKitInitialNodesSettled && !debouncedShowInitialLoadingAnimation
+        "
         ref="formElement"
       >
         <FormKitSchema

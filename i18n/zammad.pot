@@ -757,6 +757,10 @@ msgstr ""
 msgid "Add a Personal Access Token"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Add a message"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
 msgstr ""
@@ -815,6 +819,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Additional information"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb
@@ -1593,6 +1601,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr ""
@@ -2361,6 +2370,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr ""
 
@@ -2445,7 +2455,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr ""
 
@@ -2471,6 +2480,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "Create Text Modules to **spend less time writing responses**. Text Modules can include smart variables like the user's name or email address.\n\nExamples of snippets are:\n\n* Hello Mrs. #{ticket.customer.lastname},\n* Hello Mr. #{ticket.customer.lastname},\n* Hello #{ticket.customer.firstname},\n* My name is #{user.firstname},\n\nOf course, you can also use multi-line snippets.\n\nAvailable objects are:\n* ticket (e.g. ticket.state, ticket.group)\n* ticket.customer (e.g. ticket.customer.firstname, ticket.customer.lastname)\n* ticket.owner (e.g. ticket.owner.firstname, ticket.owner.lastname)\n* ticket.organization (e.g. ticket.organization.name)\n* user (e.g. user.firstname, user.email)\n\nTo select placeholders from a list, just enter \"::\"."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Create Ticket"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb
@@ -2509,6 +2523,11 @@ msgstr ""
 msgid "Create new records"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+msgid "Create new ticket"
+msgstr ""
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 msgid "Create new ticket for this organization"
 msgstr ""
@@ -2527,6 +2546,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Create ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -7466,6 +7489,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Outbound Call"
 msgstr ""
 
@@ -8047,6 +8071,7 @@ msgid "Reauthenticate"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Received Call"
 msgstr ""
 
@@ -8695,6 +8720,10 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Select the type of ticket your are creating"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""
@@ -8723,6 +8752,7 @@ msgid "Send"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr ""
 
@@ -8842,6 +8872,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco
 #: db/seeds/permissions.rb
 msgid "Sessions"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Set a title for your ticket"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10470,10 +10504,6 @@ msgstr ""
 msgid "Ticket Count"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/routes.ts
-msgid "Ticket Create"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
 msgstr ""
@@ -10544,6 +10574,10 @@ msgstr ""
 msgid "Ticket Subscriptions"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Ticket could not be created."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
 msgstr ""
@@ -10554,6 +10588,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Ticket has been created successfully."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
@@ -10726,6 +10764,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/graphql/gql/types/overview_type.rb
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb

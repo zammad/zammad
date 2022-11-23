@@ -31,7 +31,6 @@ module Gql::Types::Input::Ticket
         if context.current_user.permissions?('ticket.customer')
           result[:customer_id] ||= context.current_user.id
         end
-
       end
     end
   end

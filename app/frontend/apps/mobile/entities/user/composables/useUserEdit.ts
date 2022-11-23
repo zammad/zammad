@@ -13,7 +13,6 @@ import type { ConfidentTake } from '@shared/types/utils'
 export const useUserEdit = () => {
   const dialog = useDialogObjectForm('user-edit', EnumObjectManagerObjects.User)
 
-  const mutation = useUserUpdateMutation({})
   const schema = defineFormSchema([
     {
       screen: 'edit',
@@ -30,7 +29,7 @@ export const useUserEdit = () => {
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
     dialog.openDialog({
       object: user,
-      mutation,
+      mutation: useUserUpdateMutation,
       schema,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,
       errorNotificationMessage: __('User could not be updated.'),

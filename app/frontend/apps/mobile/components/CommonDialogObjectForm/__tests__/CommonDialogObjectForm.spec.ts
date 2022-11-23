@@ -13,7 +13,7 @@ import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import { waitUntilApisResolved } from '@tests/support/utils'
-import CommonDialogForm from '../CommonDialogObjectForm.vue'
+import CommonDialogObjectForm from '../CommonDialogObjectForm.vue'
 
 vi.mock('@shared/composables/useDialog')
 
@@ -35,9 +35,18 @@ const renderForm = () => {
     ],
   }
 
+  const useMutationOrganizationUpdate = () => {
+    return useMutation(
+      gql`
+        mutation {
+          organizationUpdate
+        }
+      `,
+    )
+  }
   const sendMock = vi.fn().mockResolvedValue(organization)
   MutationHandler.prototype.send = sendMock
-  const view = renderComponent(CommonDialogForm, {
+  const view = renderComponent(CommonDialogObjectForm, {
     props: {
       name: 'organization',
       object: organization,
@@ -48,13 +57,7 @@ const renderForm = () => {
           object: EnumObjectManagerObjects.Organization,
         },
       ]),
-      mutation: useMutation(
-        gql`
-          mutation {
-            organizationUpdate
-          }
-        `,
-      ),
+      mutation: useMutationOrganizationUpdate,
     },
     form: true,
     formField: true,

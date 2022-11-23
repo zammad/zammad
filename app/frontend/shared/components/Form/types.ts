@@ -3,6 +3,7 @@
 import type {
   FormKitClasses,
   FormKitGroupValue,
+  FormKitNode,
   FormKitPlugin,
   FormKitSchemaAttributes,
   FormKitSchemaCondition,
@@ -38,6 +39,7 @@ export enum FormValidationVisibility {
 export type AllowedClasses = string | Record<string, boolean> | FormKitClasses
 
 export interface FormSchemaField {
+  if?: string
   show?: boolean
   relation?: {
     type: string
@@ -82,6 +84,7 @@ export interface FormSchemaField {
   innerClass?: AllowedClasses
   suffixClass?: AllowedClasses
   inputClass?: AllowedClasses
+  blockClass?: AllowedClasses
   helpClass?: AllowedClasses
   messagesClass?: AllowedClasses
   messageClass?: AllowedClasses
@@ -91,6 +94,7 @@ export interface FormSchemaGroupOrList {
   isGroupOrList: boolean
   type: 'group' | 'list'
   name: string
+  plugins?: FormKitPlugin[]
 }
 
 interface FormSchemaLayoutBase {
@@ -99,6 +103,7 @@ interface FormSchemaLayoutBase {
 }
 
 export interface FormSchemaComponent extends FormSchemaLayoutBase {
+  if?: string
   component: string
   props?: {
     [index: string]: unknown
@@ -106,6 +111,7 @@ export interface FormSchemaComponent extends FormSchemaLayoutBase {
 }
 
 export interface FormSchemaDOMElement extends FormSchemaLayoutBase {
+  if?: string
   element: string
   attrs?: FormKitSchemaAttributes
 }
@@ -155,10 +161,11 @@ export interface ReactiveFormSchemData {
       updateFields: boolean
       props: Except<
         SetOptional<FormSchemaField, 'type'>,
-        'show' | 'props' | 'updateFields'
+        'show' | 'props' | 'updateFields' | 'relation'
       >
     }
   >
+  [index: string]: unknown
 }
 
 export interface FormValues {
@@ -169,3 +176,28 @@ export type FormData<TFormValues = FormValues> = FormKitGroupValue &
   TFormValues & {
     formId: string
   }
+
+export interface ChangedField {
+  name: string
+  newValue: FormFieldValue
+  oldValue: FormFieldValue
+}
+
+export enum FormHandlerExecution {
+  Initial = 'initial',
+  FieldChange = 'fieldChange',
+}
+
+export type FormHandlerFunction = (
+  execution: FormHandlerExecution,
+  formNode: FormKitNode | undefined,
+  values: FormValues,
+  changeFields: Record<string, Partial<FormSchemaField>>,
+  schemaData: ReactiveFormSchemData,
+  changedField?: ChangedField,
+) => void
+
+export interface FormHandler {
+  execution: FormHandlerExecution[]
+  callback: FormHandlerFunction
+}

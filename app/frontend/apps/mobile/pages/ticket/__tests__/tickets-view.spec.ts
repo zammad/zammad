@@ -23,7 +23,7 @@ it('see default list when opening page', async () => {
   expect(plusSign, 'can create a new ticket from here').toBeInTheDocument()
   expect(view.getLinkFromElement(plusSign)).toHaveAttribute(
     'href',
-    '/#ticket/create',
+    '/tickets/create',
   )
 
   await waitForNextTick(true)

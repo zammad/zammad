@@ -54,7 +54,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
 <template>
   <div class="p-4">
     <div class="mt-1.5 mb-3 flex justify-end ltr:mr-1.5 rtl:ml-1.5">
-      <CommonLink link="/#ticket/create">
+      <CommonLink link="/tickets/create" :title="__('Create new ticket')">
         <CommonIcon name="mobile-add" size="small" />
       </CommonLink>
     </div>

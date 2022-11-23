@@ -38,7 +38,7 @@ describe('stepper component', () => {
         order: 4,
         errorCount: 3,
         valid: false,
-        completed: false,
+        completed: true,
         disabled: true,
       },
     }

@@ -6,6 +6,10 @@ export type {
   FormValues,
   FormData,
   AllowedClasses,
+  FormHandlerFunction,
+  FormHandler,
 } from './types'
 
-export { default as useForm } from './composable'
+export { FormHandlerExecution } from './types'
+
+export { useForm, useMultiStepForm } from './composable'

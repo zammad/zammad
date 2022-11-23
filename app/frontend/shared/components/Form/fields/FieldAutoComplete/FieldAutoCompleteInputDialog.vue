@@ -22,11 +22,7 @@ import { AutoCompleteOption } from './types'
 import type { AutoCompleteProps } from './types'
 
 const props = defineProps<{
-  context: FormFieldContext<
-    AutoCompleteProps & {
-      gqlQuery: string
-    }
-  >
+  context: FormFieldContext<AutoCompleteProps>
   name: string
   options: AutoCompleteOption[]
   optionIconComponent: ConcreteComponent

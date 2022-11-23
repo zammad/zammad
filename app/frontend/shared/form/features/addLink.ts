@@ -8,13 +8,17 @@ const addLink = (node: FormKitNode) => {
   node.addProps(['link'])
 
   const toggleLink = (isLink: boolean) => {
-    props.inputClass = isLink ? 'ltr:pr-2 rtl:pl-2' : undefined
+    if (isLink) {
+      props.inputClass = `${props.inputClass} ltr:pr-2 rtl:pl-2`
+    } else if (props.inputClass) {
+      props.inputClass = props.inputClass.replace('ltr:pr-2 rtl:pl-2', '')
+    }
   }
 
   node.on('created', () => {
     toggleLink(!!props.link)
 
-    node.on('prop:size', ({ payload }) => {
+    node.on('prop:link', ({ payload }) => {
       toggleLink(!!payload)
     })
   })

@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const classes = computed(() => {
   if (props.selected) return 'bg-white text-black'
-  if (!props.valid) return 'bg-red-dark'
+  if (props.completed && !props.valid) return 'bg-red-dark'
   if (props.completed) return 'bg-gray-400'
   return 'text-white/70'
 })
@@ -27,7 +27,7 @@ const classes = computed(() => {
     :class="classes"
   >
     <div
-      v-if="errorCount"
+      v-if="completed && errorCount"
       role="status"
       :aria-label="$t('Invalid values in step %s', label)"
       aria-live="assertive"
@@ -37,7 +37,7 @@ const classes = computed(() => {
     </div>
     <template v-if="selected">{{ label }}</template>
     <CommonIcon
-      v-else-if="!valid"
+      v-else-if="completed && !valid"
       decorative
       name="mobile-close"
       size="tiny"

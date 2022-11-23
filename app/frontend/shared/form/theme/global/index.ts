@@ -15,6 +15,7 @@ const classes: FormThemeClasses = {
   },
   text: defaultTextInput,
   email: defaultTextInput,
+  url: defaultTextInput,
   number: defaultTextInput,
   search: defaultTextInput,
   tel: defaultTextInput,

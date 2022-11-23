@@ -163,7 +163,7 @@ const orderDirection = computed({
         <div
           class="flex cursor-pointer items-center justify-self-end text-base"
         >
-          <CommonLink link="/#ticket/create">
+          <CommonLink link="/tickets/create" :title="__('Create new ticket')">
             <CommonIcon name="mobile-add" size="small" />
           </CommonLink>
         </div>

@@ -6,8 +6,10 @@ import type {
   UseQueryOptions,
   UseSubscriptionReturn,
   UseSubscriptionOptions,
+  UseMutationOptions,
 } from '@vue/apollo-composable'
 import type { Ref } from 'vue'
+import type { ReactiveFunction } from '@shared/types/utils'
 import type { NotificationTypes } from '@shared/components/CommonNotifications'
 import type { PageInfo } from '@shared/graphql/types'
 import type { GraphQLHandlerError } from '../../error'
@@ -39,6 +41,18 @@ export type OperationMutationResult = {
   __typename?: 'Mutations'
   [key: string]: unknown
 }
+
+export type OperationMutationOptions<TResult, TVariables> =
+  | UseMutationOptions<TResult, TVariables>
+  | ReactiveFunction<UseMutationOptions<TResult, TVariables>>
+
+export type OperationMutationFunction<
+  TResult = OperationMutationResult,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TVariables = any,
+> = (
+  options: OperationMutationOptions<TResult, TVariables>,
+) => UseMutationReturn<TResult, TVariables>
 
 export type BaseConnection = {
   __typename?: string
