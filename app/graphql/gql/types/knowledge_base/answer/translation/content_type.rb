@@ -10,12 +10,10 @@ module Gql::Types::KnowledgeBase::Answer::Translation
 
     field :body, String
     field :body_prepared, String
-    field :has_attachments, Boolean, null: false, method: :attachments?
+    field :has_attachments, Boolean, null: false, resolver_method: :attachments?
 
     def body_prepared
-      return object.body_with_urls if object.body.exclude?('data-target-type')
-
-      prepare_rich_text_links(object.body_with_urls)
+      prepare_rich_text(object.body_with_urls)
     end
 
     def attachments?
