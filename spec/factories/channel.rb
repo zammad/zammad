@@ -41,13 +41,15 @@ FactoryBot.define do
           adapter:                  'twitter',
           user:                     {
             id:          oauth_token&.split('-')&.first,
-            screen_name: 'nicole_braun',
-            name:        'Nicole Braun',
+            screen_name: 'APITesting001',
+            name:        'Test API Account',
           },
           auth:                     {
             external_credential_id: external_credential.id,
             oauth_token:            oauth_token,
             oauth_token_secret:     oauth_token_secret,
+            consumer_key:           consumer_key,
+            consumer_secret:        consumer_secret,
           },
           sync:                     {
             webhook_id:      '',
@@ -69,11 +71,13 @@ FactoryBot.define do
       end
 
       transient do
-        custom_options { {} }
+        custom_options      { {} }
         external_credential { create(:twitter_credential) }
-        oauth_token { external_credential.credentials[:oauth_token] }
-        oauth_token_secret { external_credential.credentials[:oauth_token_secret] }
-        search_term { 'zammad' }
+        oauth_token         { external_credential.credentials[:oauth_token] }
+        oauth_token_secret  { external_credential.credentials[:oauth_token_secret] }
+        consumer_key        { external_credential.credentials[:consumer_key] }
+        consumer_secret     { external_credential.credentials[:consumer_secret] }
+        search_term         { 'zammad' }
       end
 
       trait :legacy do

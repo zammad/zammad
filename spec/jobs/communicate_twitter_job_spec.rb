@@ -26,9 +26,9 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
 
       let(:links_array) do
         [{
-          url:    'https://twitter.com/_/status/1410147100403417088',
-          target: '_blank',
-          name:   'on Twitter',
+          'url'    => "https://twitter.com/_/status/#{article.reload.message_id}",
+          'target' => '_blank',
+          'name'   => 'on Twitter',
         }]
       end
 
@@ -45,11 +45,11 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
           .with(body: "in_reply_to_status_id&status=#{CGI.escape(article.body)}")
       end
 
-      it 'updates the article with tweet attributes' do
-        expect { described_class.perform_now(article.id) }
-          .to change { article.reload.message_id }.to('1410147100403417088')
-          .and change { article.reload.preferences[:twitter] }.to(hash_including(tweet_attributes))
-          .and change { article.reload.preferences[:links] }.to(links_array)
+      it 'updates the article with tweet attributes', :aggregate_failures do
+        described_class.perform_now(article.id)
+
+        expect(article.reload.preferences[:twitter]).to include(tweet_attributes)
+        expect(article.reload.preferences[:links]).to eq(links_array)
       end
 
       it 'sets the appropriate delivery status attributes' do
@@ -60,11 +60,11 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
       end
 
       context 'with a user mention' do
-        let(:factory_options) { { body: '@zammadtesting Don’t mind me, just testing the API' } }
+        let(:factory_options) { { body: "@APITesting001 Don't mind me, just testing the API.\n#{Faker::Lorem.sentence}" } }
 
         it 'updates the article with tweet recipients' do
           expect { described_class.perform_now(article.id) }
-            .to change { article.reload.to }.to('@ZammadTesting')
+            .to change { article.reload.to }.to('@APITesting001')
         end
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
 
       let(:links_array) do
         [{
-          url:    "https://twitter.com/messages/#{recipient.uid}-1408314039470538752",
+          url:    "https://twitter.com/messages/1408314039470538752-#{recipient.uid}",
           target: '_blank',
           name:   'on Twitter',
         }]
@@ -102,8 +102,7 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
 
       it 'updates the article with DM attributes' do
         expect { described_class.perform_now(article.id) }
-          .to change { article.reload.message_id }.to('1410145389026676741')
-          .and change { article.reload.preferences[:twitter] }.to(hash_including(dm_attributes))
+          .to change { article.reload.preferences[:twitter] }.to(hash_including(dm_attributes))
           .and change { article.reload.preferences[:links] }.to(links_array)
       end
 

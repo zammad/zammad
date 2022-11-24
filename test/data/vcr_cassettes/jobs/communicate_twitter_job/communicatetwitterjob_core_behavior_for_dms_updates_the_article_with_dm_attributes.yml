@@ -11,9 +11,9 @@ http_interactions:
       User-Agent:
       - TwitterRubyGem/7.0.0
       Authorization:
-      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="38c9276a42d314eb2c6504a1585a56f2",
-        oauth_signature="%2Bqoynn5ly%2BM%2F8h39yYuZx6%2B1euY%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1625039834", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="a44a2536570e00ceb12ac46e0a301adf",
+        oauth_signature="fR4i9ihVCRVBR8td%2B63%2FMphQyok%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1665143732", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
       Connection:
       - close
       Content-Type:
@@ -26,7 +26,9 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jun 2021 07:57:14 GMT
+      - Fri, 07 Oct 2022 11:55:32 GMT
+      Perf:
+      - '7626143928'
       Pragma:
       - no-cache
       Server:
@@ -36,25 +38,25 @@ http_interactions:
       Expires:
       - Tue, 31 Mar 1981 05:00:00 GMT
       Set-Cookie:
-      - guest_id=v1%3A162503983462759570; Max-Age=63072000; Expires=Fri, 30 Jun 2023
-        07:57:14 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - guest_id=v1%3A166514373279594225; Max-Age=34214400; Expires=Tue, 07 Nov 2023
+        11:55:32 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
       - lang=en; Path=/
-      - personalization_id="v1_oYMvoU13+VfVDQAVawvLiQ=="; Max-Age=63072000; Expires=Fri,
-        30 Jun 2023 07:57:14 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
       Content-Type:
       - application/json;charset=utf-8
       Cache-Control:
       - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
       Last-Modified:
-      - Wed, 30 Jun 2021 07:57:14 GMT
+      - Fri, 07 Oct 2022 11:55:32 GMT
       X-Transaction:
-      - '0979de2321a1e590'
+      - f9c7c586b5254359
       Content-Length:
-      - '313'
+      - '322'
       X-Access-Level:
       - read-write-directmessages
       X-Frame-Options:
       - SAMEORIGIN
+      X-Transaction-Id:
+      - f9c7c586b5254359
       X-Xss-Protection:
       - '0'
       Content-Disposition:
@@ -65,13 +67,15 @@ http_interactions:
       - BouncerCompliant
       Strict-Transport-Security:
       - max-age=631138519
+      X-Response-Time:
+      - '156'
       X-Connection-Hash:
-      - 87f1635ceda56488ee072f5693ae9d8bd50ae5381b4a4cd81f9febfda6d6314d
+      - e9609c70e37e77e76e4145f2ed66436d0f2974c242c7778b7b6ce5b984addb26
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"event":{"type":"message_create","id":"1410145389026676741","created_timestamp":"1625039834635","message_create":{"target":{"recipient_id":"<TWITTER_DM_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
+      string: '{"event":{"type":"message_create","id":"1578353329574477829","created_timestamp":"1665143732814","message_create":{"target":{"recipient_id":"<TWITTER_DM_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
         ignore this message.","entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]}}}}}'
-  recorded_at: Wed, 30 Jun 2021 07:57:14 GMT
-recorded_with: VCR 6.0.0
+  recorded_at: Fri, 07 Oct 2022 11:55:32 GMT
+recorded_with: VCR 6.1.0

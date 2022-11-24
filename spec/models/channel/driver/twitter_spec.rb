@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DM_RECIPIENT TWITTER_USER_ID] do
   subject(:channel) { create(:twitter_channel) }
 
-  let(:external_credential) { ExternalCredential.find(channel.options[:auth][:external_credential_id]) }
-
   describe '#process', current_user_id: 1 do
     # Twitter channels must be configured to know whose account they're monitoring.
     subject(:channel) do
@@ -736,7 +734,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
     end
 
     context 'for DMs' do
-      let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
+      let(:recipient)       { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
       let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery, recipient: recipient) }
       let(:return_value)    { Twitter::DirectMessage }
 
@@ -775,201 +773,11 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
       end
 
       context '20+ minutes since last run' do
-        before { travel(20.minutes) }
+        before { travel(21.minutes) }
 
         it 'runs again' do
           expect { channel.fetch }
             .to change { channel.reload.preferences[:last_fetch] }
-        end
-      end
-    end
-
-    describe 'Twitter API activity' do
-      it 'sets successful status attributes' do
-        expect { channel.fetch }
-          .to change { channel.reload.attributes }
-          .to hash_including(
-            'status_in'    => 'ok',
-            'last_log_in'  => '',
-            'status_out'   => nil,
-            'last_log_out' => nil
-          )
-      end
-
-      context 'with search term configured (at .options[:sync][:search])' do
-        it 'creates an article for each recent tweet' do
-          expect { channel.fetch }
-            .to change(Ticket, :count).by(2)
-
-          expect(Ticket.last.attributes).to include(
-            'title'       => "Come and join our team to bring Zammad even further forward!   It's gonna be ama...",
-            'preferences' => { 'channel_id'          => channel.id,
-                               'channel_screen_name' => channel.options[:user][:screen_name] },
-            'customer_id' => User.find_by(firstname: 'Mr.Generation', lastname: '').id
-          )
-        end
-
-        context 'for responses to other tweets' do
-          let(:thread) do
-            Ticket.joins(articles: :type).where(ticket_article_types: { name: 'twitter status' })
-              .group('tickets.id').having(
-                case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-                when 'mysql2'
-                  'COUNT("ticket_articles.*") > 1'
-                when 'postgresql'
-                  'COUNT(ticket_articles.*) > 1'
-                end
-              ).first
-          end
-
-          it 'creates articles for parent tweets as well' do
-            channel.fetch
-
-            expect(thread.articles.last.body).to match(%r{zammad}i)       # search result
-            expect(thread.articles.first.body).not_to match(%r{zammad}i)  # parent tweet
-          end
-        end
-
-        context 'and "track_retweets" option' do
-          context 'is false (default)' do
-            it 'skips retweets' do
-              expect { channel.fetch }
-                .not_to change { Ticket.where('title LIKE ?', 'RT @%').count }.from(0)
-            end
-          end
-
-          context 'is true' do
-            subject(:channel) { create(:twitter_channel, custom_options: { sync: { track_retweets: true } }) }
-
-            it 'creates an article for each recent tweet/retweet' do
-              expect { channel.fetch }
-                .to change { Ticket.where('title LIKE ?', 'RT @%').count }.by(49)
-                .and change(Ticket, :count).by(73)
-            end
-          end
-        end
-
-        context 'and "import_older_tweets" option (legacy)' do
-          context 'is false (default)' do
-            it 'skips tweets 15+ days older than channel itself' do
-              expect { channel.fetch }
-                .not_to change { Ticket.where('title LIKE ?', 'GitHub Trending Archive, 29 Nov 2018, Ruby. %').count }.from(0)
-            end
-          end
-
-          context 'is true' do
-            subject(:channel) { create(:twitter_channel, :legacy) }
-
-            it 'creates an article for each tweet' do
-              expect { channel.fetch }
-                .to change { Ticket.where('title LIKE ?', 'GitHub Trending Archive, 29 Nov 2018, Ruby. %').count }.by(1)
-                .and change(Ticket, :count).by(3)
-            end
-          end
-        end
-
-        describe 'duplicate handling' do
-          context 'when fetched tweets have already been imported' do
-            before do
-              tweet_ids.each { |tweet_id| create(:ticket_article, message_id: tweet_id) }
-            end
-
-            let(:tweet_ids) { [1222126386334388225, 1222109934923460608] } # rubocop:disable Style/NumericLiterals
-
-            it 'does not import duplicates' do
-              expect { channel.fetch }.not_to change(Ticket::Article, :count)
-            end
-          end
-
-          describe 'Race condition: when #fetch finds a half-processed, outgoing tweet' do
-            subject!(:channel) do
-              create(:twitter_channel,
-                     search_term:    'zammadzammadzammad',
-                     custom_options: {
-                       user: {
-                         # "outgoing" tweets = authored by this Twitter user ID
-                         id: '1205290247124217856',
-                       },
-                     })
-            end
-
-            # This test case requires the use_vcr: :time_sensitive option
-            # to travel_to(when the VCR cassette was recorded).
-            #
-            # This ensures that #fetch doesn't ignore
-            # the "older" tweets stored in the VCR cassette,
-            # but it also freezes time,
-            # which breaks this test expectation logic:
-            #
-            #     expect { channel.fetch }.to change(Time, :current).by_at_least(5)
-            #
-            # So, we unfreeze time here.
-            before { travel_back }
-
-            let!(:tweet) { create(:twitter_article, body: 'zammadzammadzammad') }
-
-            context '(i.e., after the BG job has posted the article to Twitter…' do
-              # NOTE: This context block cannot be set up programmatically.
-              # Instead, the tweet was posted, fetched, recorded into a VCR cassette,
-              # and then manually copied into the existing VCR cassette for this example.
-
-              context '…but before the BG job has "synced" article.message_id with tweet.id)' do
-                let(:twitter_job) { Delayed::Job.where("handler LIKE '%job_class: CommunicateTwitterJob%#{tweet.id}%'").first }
-
-                around do |example|
-                  Thread.new do
-                    sleep 5 # Simulate other bg jobs holding up the queue.
-                    twitter_job.invoke_job
-                  end.tap { example.run }.join
-                end
-
-                it 'does not import the duplicate tweet (waits up to 60s for BG job to finish)' do
-                  expect { channel.fetch }
-                    .to not_change(Ticket::Article, :count)
-                    .and change(Time, :current).by_at_least(5)
-                end
-              end
-            end
-
-            # To reproduce this test case, the VCR cassette has been modified
-            # so that the fetched tweet has a different ("incoming") author user ID.
-            it 'skips race condition handling for incoming tweets' do
-              expect { channel.fetch }
-                .to change(Ticket::Article, :count)
-                .and change(Time, :current).by_at_most(1)
-            end
-          end
-        end
-
-        context 'for very common search terms' do
-          subject(:channel) { create(:twitter_channel, search_term: 'coronavirus') }
-
-          let(:twitter_articles) { Ticket::Article.joins(:type).where(ticket_article_types: { name: 'twitter status' }) }
-
-          # NOTE: Ordinarily, RSpec examples should be kept as small as possible.
-          # In this case, we bundle these examples together because
-          # separating them would duplicate expensive setup:
-          # even with HTTP caching, this single example takes nearly a minute.
-          #
-          # Also, note that this rate limiting is partially duplicated
-          # in #fetchable?, which prevents #fetch from running
-          # more than once in a 20-minute period.
-          it 'imports max. ~120 articles every 15 minutes' do
-            channel.fetch
-
-            expect((twitter_articles - Ticket.last.articles).count).to be <= 120
-            expect(twitter_articles.count).to be > 120
-
-            travel(14.minutes)
-
-            expect { create(:twitter_channel).fetch }
-              .not_to change(Ticket::Article, :count)
-
-            travel(1.minute)
-
-            expect { create(:twitter_channel).fetch }
-              .to change(Ticket::Article, :count)
-          end
         end
       end
     end

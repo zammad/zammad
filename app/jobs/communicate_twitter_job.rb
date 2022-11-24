@@ -73,42 +73,42 @@ class CommunicateTwitterJob < ApplicationJob
     # regular tweet
     elsif tweet.instance_of?(Twitter::Tweet)
       tweet_type = 'Tweet'
-      tweet_id = tweet.id.to_s
-      article.from = "@#{tweet.user.screen_name}"
-      if tweet.user_mentions
-        to = ''
-        mention_ids = []
-        tweet.user_mentions.each do |user|
-          if to != ''
-            to += ' '
-          end
-          to += "@#{user.screen_name}"
-          mention_ids.push user.id
-        end
-        article.to = to
-        article.preferences['twitter'] = TwitterSync.preferences_cleanup(
-          mention_ids:         mention_ids,
-          geo:                 tweet.geo,
-          retweeted:           tweet.retweeted?,
-          possibly_sensitive:  tweet.possibly_sensitive?,
-          in_reply_to_user_id: tweet.in_reply_to_user_id,
-          place:               tweet.place,
-          retweet_count:       tweet.retweet_count,
-          source:              tweet.source,
-          favorited:           tweet.favorited?,
-          truncated:           tweet.truncated?,
-          created_at:          tweet.created_at,
-        )
 
-        article.message_id = tweet_id
-        article.preferences['links'] = [
-          {
-            url:    TwitterSync::STATUS_URL_TEMPLATE % tweet.id,
-            target: '_blank',
-            name:   'on Twitter',
-          },
-        ]
+      article.from = "@#{tweet.user.screen_name}"
+
+      to = ''
+      mention_ids = []
+      tweet.user_mentions.each do |user|
+        if to != ''
+          to += ' '
+        end
+        to += "@#{user.screen_name}"
+        mention_ids.push user.id
       end
+      article.to = to
+
+      article.preferences['twitter'] = TwitterSync.preferences_cleanup(
+        mention_ids:         mention_ids,
+        geo:                 tweet.geo,
+        retweeted:           tweet.retweeted?,
+        possibly_sensitive:  tweet.possibly_sensitive?,
+        in_reply_to_user_id: tweet.in_reply_to_user_id,
+        place:               tweet.place,
+        retweet_count:       tweet.retweet_count,
+        source:              tweet.source,
+        favorited:           tweet.favorited?,
+        truncated:           tweet.truncated?,
+        created_at:          tweet.created_at,
+      )
+
+      article.message_id = tweet.id.to_s
+      article.preferences['links'] = [
+        {
+          url:    TwitterSync::STATUS_URL_TEMPLATE % tweet.id,
+          target: '_blank',
+          name:   'on Twitter',
+        },
+      ]
     else
       raise "Unknown tweet type '#{tweet.class}'"
     end

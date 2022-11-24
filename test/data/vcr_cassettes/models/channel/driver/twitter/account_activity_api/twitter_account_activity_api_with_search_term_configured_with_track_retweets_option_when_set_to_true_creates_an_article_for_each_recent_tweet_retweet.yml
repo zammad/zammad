@@ -1,0 +1,1368 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: status=Zammad+is+amazing%21+zammad_testing_0509d41afd66476fa52a1c3892f669eb
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="6766d3c20bd89271b91ba5735f706947",
+        oauth_signature="%2Fncbc3fpRBfngfG9tLBuZ6baNuM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199620", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919962100451292; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:33:41 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      X-Transaction:
+      - 81017bfaf29967ae
+      Content-Length:
+      - '1960'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 81017bfaf29967ae
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '178'
+      X-Connection-Hash:
+      - caa166c4dd30c5f36a26bf1685166fe15aec4948bc1f5fa0c717f37f03746e92
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:33:41 GMT
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/retweet/1595364957679501312.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="bd22b268a501cdb95e83da5edca8177e",
+        oauth_signature="yPJOh0WNAyR8TTfX5%2BFVjemnYVI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199621", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919962134098075; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:33:41 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      X-Transaction:
+      - 8b7ca5b7301ca826
+      Content-Length:
+      - '4077'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 8b7ca5b7301ca826
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '232'
+      X-Connection-Hash:
+      - db853a63a8df9386e745a16989a8730216d8ca0a5e1398dc30f2a37fb861fe5b
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:33:41 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="1eaea35cf13e39c87fe64e5d090999fb",
+        oauth_signature="WTM5bPizB%2BGerO8mLOUM7FzSbJ8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199621", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919962174065343; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:33:41 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:33:41 GMT
+      X-Transaction:
+      - 2b15d8811f01ae9e
+      Content-Length:
+      - '355'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 2b15d8811f01ae9e
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Reset:
+      - '1669200480'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '172'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '128'
+      X-Connection-Hash:
+      - 9ce08ac9091bacb117ca817aa44bb21e5e0f303afbaaaf0bbd961dbb77b25f4b
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[],"search_metadata":{"completed_in":0.009,"max_id":1595364937030836224,"max_id_str":"1595364937030836224","query":"zammad_testing_0509d41afd66476fa52a1c3892f669eb","refresh_url":"?since_id=1595364937030836224&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+  recorded_at: Wed, 23 Nov 2022 10:33:41 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="b0956b8b7f4cace421b83d4363dccbcf",
+        oauth_signature="itSysj74iQ%2BcE1%2FWnPXwmAzzTKQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199651", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965203913359; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:12 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      X-Transaction:
+      - 66930a2d7380ac54
+      Content-Length:
+      - '6720'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 66930a2d7380ac54
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Reset:
+      - '1669200480'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '171'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '154'
+      X-Connection-Hash:
+      - d72835eb002620fbfba47313aa63dd8d3337a7da801eb7433a4bd4ec62eb52e9
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"},{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}],"search_metadata":{"completed_in":0.033,"max_id":1595364959214395393,"max_id_str":"1595364959214395393","next_results":"?max_id=1595364957679501311&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&count=100&include_entities=1&result_type=mixed","query":"zammad_testing_0509d41afd66476fa52a1c3892f669eb","refresh_url":"?since_id=1595364959214395393&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+  recorded_at: Wed, 23 Nov 2022 10:34:12 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="6cfa570f09ec77987069aebb4d66cf15",
+        oauth_signature="3nwv8yQMBqCoyN85qgDP0sas1jU%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199652", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965239796563; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:12 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      X-Transaction:
+      - a28eb551648d8233
+      Content-Length:
+      - '6720'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - a28eb551648d8233
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Reset:
+      - '1669200480'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '170'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '148'
+      X-Connection-Hash:
+      - dbfda8eb44cdf41ac3361a5b20589b40e48004b3b324ac46b72f38866d387825
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"},{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"en","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}],"search_metadata":{"completed_in":0.021,"max_id":1595364959214395393,"max_id_str":"1595364959214395393","next_results":"?max_id=1595364957679501311&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&count=100&include_entities=1&result_type=mixed","query":"zammad_testing_0509d41afd66476fa52a1c3892f669eb","refresh_url":"?since_id=1595364959214395393&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+  recorded_at: Wed, 23 Nov 2022 10:34:12 GMT
+- request:
+    method: get
+    uri: http://pbs.twimg.com/profile_images/1577555517483933696/3daY6Q_E_bigger.png
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - pbs.twimg.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '6177'
+      Perf:
+      - '7626143928'
+      Cache-Control:
+      - max-age=604800, must-revalidate
+      Last-Modified:
+      - Wed, 05 Oct 2022 07:03:19 GMT
+      X-Transaction-Id:
+      - 1349d9a204f6b73d
+      Timing-Allow-Origin:
+      - https://twitter.com, https://mobile.twitter.com
+      Strict-Transport-Security:
+      - max-age=631138519
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Content-Length
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - image/png
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      X-Cache:
+      - MISS, HIT
+      X-Tw-Cdn:
+      - FT
+      X-Served-By:
+      - cache-lhr7337-LHR, cache-hhn11548-HHN, cache-tw-ZZZ1
+      Server-Timing:
+      - x-cache;desc=HIT, x-tw-cdn;desc=FT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Wed, 23 Nov 2022 10:34:12 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&include_entities=1&max_id=1595364957679501311&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="35e308de3080523c0199ce76ca956ad4",
+        oauth_signature="s6VNSspazApnvUTKCURrhaLY%2Bck%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199652", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965293406762; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:12 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:12 GMT
+      X-Transaction:
+      - 2d7255d86bb1b6bd
+      Content-Length:
+      - '355'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 2d7255d86bb1b6bd
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Reset:
+      - '1669200480'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '169'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '143'
+      X-Connection-Hash:
+      - 9abb9b30f4b9bed5311345ad2c8edf4d60bb8e18e48b750cacc996c0682928cf
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[],"search_metadata":{"completed_in":0.015,"max_id":1595364957679501311,"max_id_str":"1595364957679501311","query":"zammad_testing_0509d41afd66476fa52a1c3892f669eb","refresh_url":"?since_id=1595364957679501311&q=zammad_testing_0509d41afd66476fa52a1c3892f669eb&result_type=mixed&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+  recorded_at: Wed, 23 Nov 2022 10:34:12 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=200
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="ff2fcd7aed7c2cad6165855af5696eae",
+        oauth_signature="4meCUEPS9aRzozzsdHpOxC%2FTQfM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199652", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:13 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965325529543; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:13 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:13 GMT
+      X-Transaction:
+      - e5c259bb303e6c0c
+      Content-Length:
+      - '5996'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - e5c259bb303e6c0c
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200084'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-App-Rate-Limit-Limit:
+      - '100000'
+      X-App-Rate-Limit-Reset:
+      - '1669285618'
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '875'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-App-Rate-Limit-Remaining:
+      - '99988'
+      X-Response-Time:
+      - '153'
+      X-Connection-Hash:
+      - 9b73ee9669f2540cfa70d41e5916cdf9d4a1d2d4b82f05ba2670d46283d75109
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"},{"created_at":"Wed
+        Nov 23 10:32:29 +0000 2022","id":1595364659300818945,"id_str":"1595364659300818945","text":"Parent
+        tweet without identifier","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}]'
+  recorded_at: Wed, 23 Nov 2022 10:34:13 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/1595364959214395393.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="aed9333467c239b853563f062b44f4fa",
+        oauth_signature="qmdFgKXvrsMEgYcB6mJkFL8Q6Ds%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199653", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:13 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965359399435; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:13 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:13 GMT
+      X-Transaction:
+      - 779c623c1f9db402
+      Content-Length:
+      - '4077'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 779c623c1f9db402
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200084'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '871'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '211'
+      X-Connection-Hash:
+      - 97946cfc8461f076cb51d9b59c95f5e8a1109e945030f18274a52227f27a5ca4
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:34:13 GMT
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/destroy/1595364959214395393.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="a99769f055d4ae884034061695c01449",
+        oauth_signature="ZPXiKMLYAYj3WKVOKIdGqnf6Gfo%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199653", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965398229788; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:14 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      X-Transaction:
+      - ee173c7e8b8f3384
+      Content-Length:
+      - '4077'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - ee173c7e8b8f3384
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '145'
+      X-Connection-Hash:
+      - cf66618d020740be28ee80144f6775584c205bebfa9c81248b2b145cd21ac4a8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364959214395393,"id_str":"1595364959214395393","text":"RT
+        @APITesting001: Zammad is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[{"screen_name":"APITesting001","name":"Test
+        API Account","id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","indices":[3,17]}],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"retweeted_status":{"created_at":"Wed
+        Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":true,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"},"is_quote_status":false,"retweet_count":1,"favorite_count":0,"favorited":false,"retweeted":true,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:34:14 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/1595364659300818945.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="2b21ce07af810a72dd81776d73d1ec04",
+        oauth_signature="Ng2cMJJQWYfCVzkO9AIfvcf5r%2BI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199654", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965431419930; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:14 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      X-Transaction:
+      - d12efaf4d2e23d29
+      Content-Length:
+      - '1916'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - d12efaf4d2e23d29
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200084'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '870'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '197'
+      X-Connection-Hash:
+      - 8363f519a993456d0e3133858f5b2f3183a29e0f88ef5bd5343d6561207e569c
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:32:29 +0000 2022","id":1595364659300818945,"id_str":"1595364659300818945","text":"Parent
+        tweet without identifier","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:34:14 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=200
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_SEARCH_CONSUMER_KEY>", oauth_nonce="9fad0d534e1de850a49514e854d7aa08",
+        oauth_signature="3pqQeHyG2%2FyCsnhDGNy8xUKr%2FO8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199654", oauth_token="<TWITTER_DM_RECIPIENT>-S6DmCAXC1hgOzAsdjK9UGiNHKpmB2L",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965468121144; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:14 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:14 GMT
+      X-Transaction:
+      - 7d930dcba7269d3e
+      Content-Length:
+      - '1918'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 7d930dcba7269d3e
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200084'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-App-Rate-Limit-Limit:
+      - '100000'
+      X-App-Rate-Limit-Reset:
+      - '1669285618'
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '874'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-App-Rate-Limit-Remaining:
+      - '99987'
+      X-Response-Time:
+      - '143'
+      X-Connection-Hash:
+      - 883d465fc7023070ff4687e7075ae85dc651a569bd096d02a113a10bc29eabab
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"created_at":"Wed Nov 23 10:32:29 +0000 2022","id":1595364659300818945,"id_str":"1595364659300818945","text":"Parent
+        tweet without identifier","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad CI Testing\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_DM_RECIPIENT>,"id_str":"<TWITTER_DM_RECIPIENT>","name":"APITesting002","screen_name":"APITesting002","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Wed
+        Oct 05 07:04:47 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1577555517483933696\/3daY6Q_E_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}]'
+  recorded_at: Wed, 23 Nov 2022 10:34:14 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=200
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="e75dda6de12ddc0ffa82980a82aa0628",
+        oauth_signature="O%2BYrJti0xjPoc2tgAKc%2BMzfUpJ4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199654", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965499394548; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:15 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      X-Transaction:
+      - 8efd09af39c5defd
+      Content-Length:
+      - '1962'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 8efd09af39c5defd
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200085'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-App-Rate-Limit-Limit:
+      - '100000'
+      X-App-Rate-Limit-Reset:
+      - '1669285585'
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '878'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-App-Rate-Limit-Remaining:
+      - '99993'
+      X-Response-Time:
+      - '229'
+      X-Connection-Hash:
+      - 46e4a0fd302a91d34f00eae357fc8a3bd7767c710a23fb5615591f7a061c7589
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}]'
+  recorded_at: Wed, 23 Nov 2022 10:34:15 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/show/1595364957679501312.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="0ee7d7638109df3bb58b7b22a65274b8",
+        oauth_signature="VAmguEXD5w1LxxblTsNpSAihn1c%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199655", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965538284115; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:15 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      X-Transaction:
+      - 00e7adfcc648753e
+      Content-Length:
+      - '1960'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 00e7adfcc648753e
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200481'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '895'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '202'
+      X-Connection-Hash:
+      - 96abfe59fbb8a06b4238efdfe3e181016b0a0b6f702240066717e769ba98d253
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:34:15 GMT
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/destroy/1595364957679501312.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="0d0aa876ae6b39618a4921af49cabea3",
+        oauth_signature="Qu5gfIxIh7tgSNEYBQ344VIjmwM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199655", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965576065598; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:15 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:15 GMT
+      X-Transaction:
+      - 3c20300a5e2b80c1
+      Content-Length:
+      - '1960'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 3c20300a5e2b80c1
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '143'
+      X-Connection-Hash:
+      - 53ae668f71211acf3b92ad44da223b6c6c0ba88da75f3595def7df935b60c65b
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Wed Nov 23 10:33:41 +0000 2022","id":1595364957679501312,"id_str":"1595364957679501312","text":"Zammad
+        is amazing! zammad_testing_0509d41afd66476fa52a1c3892f669eb","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Test
+        API Account","screen_name":"APITesting001","location":"","description":"","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"en"}'
+  recorded_at: Wed, 23 Nov 2022 10:34:15 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/user_timeline.json?count=200
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="fc50087833db079f1ce147e0a0c73ef8",
+        oauth_signature="P8WpRPX5GtUv%2BJHt169LQGncgRw%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1669199655", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Nov 2022 10:34:16 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166919965608590841; Max-Age=34214400; Expires=Sun, 24 Dec 2023
+        10:34:16 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Wed, 23 Nov 2022 10:34:16 GMT
+      X-Transaction:
+      - 862d610a78a46e4d
+      Content-Length:
+      - '2'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 862d610a78a46e4d
+      X-Xss-Protection:
+      - '0'
+      X-Rate-Limit-Limit:
+      - '900'
+      X-Rate-Limit-Reset:
+      - '1669200085'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-App-Rate-Limit-Limit:
+      - '100000'
+      X-App-Rate-Limit-Reset:
+      - '1669285620'
+      X-Content-Type-Options:
+      - nosniff
+      X-Rate-Limit-Remaining:
+      - '877'
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-App-Rate-Limit-Remaining:
+      - '99995'
+      X-Response-Time:
+      - '213'
+      X-Connection-Hash:
+      - 72b50c331f88ca2f3f4242ccb7e41382a4c4728b5ce9f9b77c1bd2f6da4f86ce
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "[]"
+  recorded_at: Wed, 23 Nov 2022 10:34:16 GMT
+recorded_with: VCR 6.1.0

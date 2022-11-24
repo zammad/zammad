@@ -169,21 +169,23 @@ returns
 
       result_type = search[:type] || 'mixed'
       Rails.logger.debug { " - searching for '#{search[:term]}'" }
+      Rails.logger.debug { " - result_type '#{result_type}'" }
       older_import = 0
       older_import_max = 20
-      @client.client.search(search[:term], result_type: result_type).collect do |tweet|
+
+      search_result = @client.client.search(search[:term], result_type: result_type)
+      Rails.logger.debug { " - found #{search_result.attrs[:statuses].count} tweets" }
+      search_result.collect do |tweet|
         next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
-        if @sync[:import_older_tweets] != true
-          if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max # rubocop:disable Style/SoleNestedConditional
-            older_import += 1
-            Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
-            next
-          end
+        if @sync[:import_older_tweets] != true && ((@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max)
+          older_import += 1
+          Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
+          next
         end
 
-        next if @client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)
+        next if @client.locale_sender?(tweet)
         next if Ticket::Article.exists?(message_id: tweet.id)
         break if @client.tweet_limit_reached(tweet)
 
@@ -195,29 +197,4 @@ returns
   def track_retweets?
     @channel.options && @channel.options['sync'] && @channel.options['sync']['track_retweets']
   end
-
-  def own_tweet_already_imported?(tweet)
-    event_time = Time.zone.now
-    sleep 4
-    12.times do |loop_count|
-      if Ticket::Article.exists?(message_id: tweet.id)
-        Rails.logger.debug { "Own tweet already imported, skipping tweet #{tweet.id}" }
-        return true
-      end
-      count = Delayed::Job.where('created_at < ?', event_time).count
-      break if count.zero?
-
-      sleep_time = 2 * count
-      sleep_time = 5 if sleep_time > 5
-      Rails.logger.debug { "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})" }
-      sleep sleep_time
-    end
-
-    if Ticket::Article.exists?(message_id: tweet.id)
-      Rails.logger.debug { "Own tweet already imported, skipping tweet #{tweet.id}" }
-      return true
-    end
-    false
-  end
-
 end

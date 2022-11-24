@@ -374,7 +374,7 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #from to sender’s Twitter handle' do
         expect { perform_enqueued_jobs }
           .to change { twitter_article.reload.from }
-          .to('@ZammadTesting')
+          .to('@APITesting001')
       end
 
       it 'sets #to to recipient’s Twitter handle' do
@@ -386,7 +386,6 @@ RSpec.describe Ticket::Article, type: :model do
       it 'sets #message_id to tweet ID (https://twitter.com/_/status/<id>)' do
         expect { perform_enqueued_jobs }
           .to change { twitter_article.reload.message_id }
-          .to('1410130368498372609')
       end
 
       it 'sets #preferences with tweet metadata' do

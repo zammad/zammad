@@ -5,14 +5,14 @@ http_interactions:
     uri: https://api.twitter.com/1.1/statuses/update.json
     body:
       encoding: UTF-8
-      string: in_reply_to_status_id&status=Voluptas+assumenda+repellat+optio.
+      string: in_reply_to_status_id&status=Inventore+saepe+ut+molestias.
     headers:
       User-Agent:
       - TwitterRubyGem/7.0.0
       Authorization:
-      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="6f1b0974d52c7dff4ada82cfd71d417f",
-        oauth_signature="eaBevjZP0KW0L19TZEOqudVUJ3A%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1625040241", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="87a81d47fcebc2fce313597cc902f332",
+        oauth_signature="kTJ%2FU6YQ1zUVSkxVWQEMNhz7BS8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1665143728", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
       Connection:
       - close
       Content-Type:
@@ -25,7 +25,9 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jun 2021 08:04:01 GMT
+      - Fri, 07 Oct 2022 11:55:28 GMT
+      Perf:
+      - '7626143928'
       Pragma:
       - no-cache
       Server:
@@ -35,25 +37,25 @@ http_interactions:
       Expires:
       - Tue, 31 Mar 1981 05:00:00 GMT
       Set-Cookie:
-      - guest_id=v1%3A162504024151908399; Max-Age=63072000; Expires=Fri, 30 Jun 2023
-        08:04:01 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - guest_id=v1%3A166514372879812588; Max-Age=34214400; Expires=Tue, 07 Nov 2023
+        11:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
       - lang=en; Path=/
-      - personalization_id="v1_QVUh69nRFJYUTfXAhSUs5g=="; Max-Age=63072000; Expires=Fri,
-        30 Jun 2023 08:04:01 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
       Content-Type:
       - application/json;charset=utf-8
       Cache-Control:
       - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
       Last-Modified:
-      - Wed, 30 Jun 2021 08:04:01 GMT
+      - Fri, 07 Oct 2022 11:55:28 GMT
       X-Transaction:
-      - 55a8df94767c52b2
+      - d28ae39276873e25
       Content-Length:
-      - '1976'
+      - '1970'
       X-Access-Level:
       - read-write-directmessages
       X-Frame-Options:
       - SAMEORIGIN
+      X-Transaction-Id:
+      - d28ae39276873e25
       X-Xss-Protection:
       - '0'
       Content-Disposition:
@@ -64,17 +66,19 @@ http_interactions:
       - BouncerCompliant
       Strict-Transport-Security:
       - max-age=631138519
+      X-Response-Time:
+      - '168'
       X-Connection-Hash:
-      - 9b9ae44edcf70cf85e5c009ec36793d295653fdd01a2a05a833ce3e1ce315c6b
+      - b393cdd80ca218ee63029e649c95e3b644c1c40faee4ccd8b40bd636ec84ff99
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"created_at":"Wed Jun 30 08:04:01 +0000 2021","id":1410147095659565058,"id_str":"1410147095659565058","text":"Voluptas
-        assumenda repellat optio.","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+      string: '{"created_at":"Fri Oct 07 11:55:28 +0000 2022","id":1578353312784678913,"id_str":"1578353312784678913","text":"Inventore
+        saepe ut molestias.","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
         href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Zammad
-        Integration Test Account","screen_name":"ZammadTesting","location":"","description":"Zammad
-        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"created_at":"Fri
-        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":127,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"ca"}'
-  recorded_at: Wed, 30 Jun 2021 08:04:01 GMT
-recorded_with: VCR 6.0.0
+        Integration Test Account","screen_name":"APITesting001","location":"","description":"Zammad
+        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":57,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"in"}'
+  recorded_at: Fri, 07 Oct 2022 11:55:28 GMT
+recorded_with: VCR 6.1.0

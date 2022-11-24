@@ -116,7 +116,7 @@ RSpec.configure do |config|
     ].compact
 
     VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do |cassette|
-      if vcr_options.include?(:time_sensitive) && !cassette.recording?
+      if vcr_options.include?(:time_sensitive) && !cassette.recording? && %w[1 true].exclude?(ENV['CI_IGNORE_CASSETTES'])
         travel_to(cassette.http_interactions.interactions.first.recorded_at)
       end
 

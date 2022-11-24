@@ -5,7 +5,9 @@ require 'http/uri'
 class TwitterSync
 
   STATUS_URL_TEMPLATE = 'https://twitter.com/_/status/%s'.freeze
-  DM_URL_TEMPLATE = 'https://twitter.com/messages/%s'.freeze
+  DM_URL_TEMPLATE     = 'https://twitter.com/messages/%s'.freeze
+
+  MAX_TWEETS_PER_IMPORT = 120
 
   attr_accessor :client
 
@@ -548,7 +550,7 @@ create a tweet or direct message from an article
   end
 
   def tweet_limit_reached(tweet, factor = 1)
-    max_count = 120
+    max_count = MAX_TWEETS_PER_IMPORT
     max_count *= factor
     type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
     created_at = 15.minutes.ago
