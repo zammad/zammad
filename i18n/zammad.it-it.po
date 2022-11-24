@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-17 18:13+0000\n"
+"PO-Revision-Date: 2022-11-24 11:05+0000\n"
 "Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -3353,7 +3353,7 @@ msgstr "La decrittazione è riuscita."
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco
 #: db/seeds/settings.rb
 msgid "Default"
-msgstr "Default"
+msgstr "Predefinito"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
@@ -3365,7 +3365,7 @@ msgstr "Schermo predefinito"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
-msgstr "Default alla registrazione"
+msgstr "Predefinito alla registrazione"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
@@ -10197,7 +10197,7 @@ msgstr "Sessione"
 
 #: db/seeds/settings.rb
 msgid "Session Timeout"
-msgstr "Sessione scaduta"
+msgstr "Scadenza sessione"
 
 #: app/assets/javascripts/app/controllers/session.coffee
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
@@ -10214,7 +10214,7 @@ msgstr "Impostare la nota come interna/pubblica"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Set as Default"
-msgstr "Setta come predefinito"
+msgstr "Imposta come predefinito"
 
 #: db/seeds/settings.rb
 msgid "Set available ticket types"

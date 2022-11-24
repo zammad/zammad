@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-18 06:29+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2022-11-24 11:05+0000\n"
+"Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
 "Language: sv-se\n"
@@ -549,12 +549,12 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Dataintegritet ** - hjälper dig att radera och verifiera borttagning av "
+"** Dataintegritet ** hjälper dig att radera och verifiera borttagning av "
 "existerande data från systemet.\n"
 "\n"
 "Det kan användas för att ta bort ärenden, organisationer och användare. "
-"Ägaruppsättningen kommer att avaktiveras om den borttagna användaren är en "
-"agent.\n"
+"Ägartilldelningen kommer att avaktiveras om den borttagna användaren är en "
+"handläggare.\n"
 "\n"
 "Uppgifter om datasekretess kommer att utföras var tionde minut. Körningen "
 "kan ta lite längre tid beroende på antalet objekt som ska tas bort."
@@ -1197,7 +1197,7 @@ msgstr "Overksamhetstidsgräns för handläggare"
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
-"Handläggarebegränsnings uppnådd, vänligen kolla dina kontoinställningar."
+"Handläggarebegränsningstiden uppnådd, vänligen kolla dina kontoinställningar."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -2909,7 +2909,7 @@ msgid ""
 "\n"
 "To select placeholders from a list, just enter \"::\"."
 msgstr ""
-"Ska Textmoduler för att **lägga mindre tid på att skriva svar**. Textmodule "
+"Ska Textmoduler för att **lägga mindre tid på att skriva svar**. Textmoduler "
 "kan ta smarta variabler som användarens namn eller mejladress.\n"
 "\n"
 "Exampel på block är:\n"
@@ -5932,7 +5932,7 @@ msgstr "Hur man gör"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 msgid "ID"
-msgstr ""
+msgstr "id"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 msgid "ID:"
@@ -6247,7 +6247,7 @@ msgstr "Inkommande"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "Inbound Call"
-msgstr ""
+msgstr "Mottaget samtal"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Inbound:"
@@ -6884,7 +6884,7 @@ msgstr "Ladda"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Load more"
-msgstr "Läs in mer"
+msgstr "Läs in fler"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
@@ -7645,7 +7645,7 @@ msgstr "Ny version"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee
 msgid "New Webhook"
-msgstr ""
+msgstr "Ny webhook"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "New Workflow"
@@ -8136,10 +8136,8 @@ msgid "Only available for Users which are replacements for other users."
 msgstr "Endast tillgänglig för användare som ersätter andra användare."
 
 #: app/assets/javascripts/app/models/overview.coffee
-#, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid "Only available for Users with shared Organizations"
-msgstr "Endast tillgänglig för användare med delad organisation"
+msgstr "Endast tillgänglig för användare med delade organisationer"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
@@ -9623,10 +9621,8 @@ msgid "Select the customer of the ticket or create one."
 msgstr "Välj kunden för ärendet eller skapa en."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
-#, fuzzy
-#| msgid "Selector"
 msgid "Selected"
-msgstr "Selektor"
+msgstr "Valda"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -11213,7 +11209,7 @@ msgstr ""
 
 #: lib/external_credential/google.rb
 msgid "There is no Google app configured."
-msgstr "Inga Google-appar konfigurerade."
+msgstr "Inga Google-appar är konfigurerade."
 
 #: lib/external_credential/twitter.rb
 msgid "There is no Twitter app configured."
@@ -11633,7 +11629,7 @@ msgstr "Ärende-eskalering"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Ticket failed to save: %s"
-msgstr "Ärendet kunde inte sparas: %s"
+msgstr "Ärendet sparades inte: %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Ticket has %s viewers"
@@ -11879,16 +11875,12 @@ msgid "To configure your system."
 msgstr "För att konfigurera ditt system."
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
-#, fuzzy
-#| msgid ""
-#| "To enable %s for sending http requests to %s, you need create a own "
-#| "\"notification rule\" in %s."
 msgid ""
 "To enable %s for sending HTTP requests to %s, you need to create a "
 "designated \"notification rule\" in %s."
 msgstr ""
-"För att aktivera %s att skicka http-förfrågningar till %s behöver du skapa "
-"en egen \"notifikationsregel\" i %s."
+"För att aktivera %s att skicka HTTP-förfrågningar till %s behöver du skapa "
+"en egen \"notifieringsregel\" i %s."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid ""
@@ -11909,16 +11901,12 @@ msgid "To select placeholders from a list, just enter \"::\"."
 msgstr "För att välja platshållare från en lista, skriv bara in \"::\"."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid ""
-#| "To set up this service you need to create a new |\"Incoming webhook\"| in "
-#| "your %s integration panel, and enter the web hook URL below."
 msgid ""
 "To set up this service you need to create a new |\"Incoming webhook\"| in "
 "your %s integration panel and enter the webhook URL below."
 msgstr ""
-"För att skapa denna tjänst måste du skapa en ny |\"Inkommande webhook\"| i "
-"din %s integrationspanel och ange webbadressen nedan."
+"För att sätta upp tjänsten måste du skapa en ny |\"Inkommande webhook\"| i "
+"din %s-integrationspanel och ange URL:en nedan."
 
 #: db/seeds/roles.rb
 msgid "To work on Tickets."
@@ -12063,16 +12051,12 @@ msgid "Twitter - tweet initials"
 msgstr "Twitter - tweet initialier"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "New Access Token is"
 msgid "Twitter Access Token"
-msgstr "Nytt åtkomsttoken är"
+msgstr "Twitter-åtkomsttoken"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Access Token Secret"
-msgstr "Twitterhemlighet"
+msgstr "Hemlighet för Twitter-åtkomsttoken"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
@@ -12083,16 +12067,12 @@ msgid "Twitter App Credentials"
 msgstr "Twitter App Uppgifter"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Key"
 msgid "Twitter Consumer Key"
-msgstr "Twitternyckel"
+msgstr "Twitter-kundnyckel"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Consumer Secret"
-msgstr "Twitterhemlighet"
+msgstr "Hemlighet för Twitter-kundnyckel"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Dev environment label"
@@ -12147,10 +12127,8 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
-#, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
-msgstr "Ej tilldelade och Öppna"
+msgstr "Ej tilldelade och öppna ärenden"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -12168,16 +12146,12 @@ msgid "Unlock"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
-#, fuzzy
-#| msgid "Notification"
 msgid "Unread notification"
-msgstr "Notifikation"
+msgstr "Oläst notifiering"
 
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
-#, fuzzy
-#| msgid "Notification"
 msgid "Unread notifications"
-msgstr "Notifikation"
+msgstr "Olästa notifieringar"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "Unsubscribe"
@@ -12487,16 +12461,12 @@ msgstr "Användarpreferenser"
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 #: app/assets/javascripts/app/controllers/signup.coffee
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "User could not be created."
-msgstr "%s Objekt har skapats."
+msgstr "Användaren kunde inte skapas."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts
-#, fuzzy
-#| msgid "%s Object(s) are created."
 msgid "User could not be updated."
-msgstr "%s Objekt har skapats."
+msgstr "Användaren kunde inte uppdateras."
 
 #: lib/external_credential/google.rb
 msgid "User email could not be extracted from 'id_token'."
@@ -12525,10 +12495,8 @@ msgid "Username"
 msgstr "Användarnamn"
 
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "Username / email"
 msgid "Username / Email"
-msgstr "Användarnamn / E-post"
+msgstr "Användarnamn / mejl-adress"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -12619,10 +12587,8 @@ msgid "Verification Email not found in mailbox."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#, fuzzy
-#| msgid "When notification is being sent."
 msgid "Verification email could not be sent."
-msgstr "När notifikationer skickas."
+msgstr "Verifikationsmejl kunde inte skickas."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -12693,10 +12659,8 @@ msgid "View this in Zammad"
 msgstr "Visa i webbläsare"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-#, fuzzy
-#| msgid "New Ticket"
 msgid "Viewing ticket"
-msgstr "Nytt ärende"
+msgstr "Tittar på ärende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee
@@ -12713,10 +12677,8 @@ msgid "Visible to everyone"
 msgstr "Synlig för alla"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-#, fuzzy
-#| msgid "Visible to agents & editors"
 msgid "Visible to readers & editors"
-msgstr "Synlig för agenter & redaktörer"
+msgstr "Synlig för läsare & redaktörer"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee
@@ -12749,25 +12711,14 @@ msgstr ""
 "igen senare eller skicka ett e-postmeddelande till oss. Tack!"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes which can't get imported into Zammad, "
-#| "since we currently don't support these kind of workflows."
 msgid ""
 "We detected OTRS BPM processes that can't get imported into Zammad since we "
 "currently don't support this kind of workflows."
 msgstr ""
-"Vi upptäckte OTRS BPM-processer som inte kan importeras till Zammad, "
-"eftersom vi för närvarande inte stöder dessa slags arbetsflöden."
+"Vi upptäckte BPM-processer från OTRS som inte kan importeras till Zammad. Vi "
+"har för närvarande inget stöd för den typen av arbetsflöde."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We found a lot of dynamic fields which are not common in Zammad, as we "
-#| "follow a different approach to ticket attributes. Zammad uses also tags "
-#| "in addition to custom fields to classify tickets. This difference can "
-#| "create a new philosophy of your ticket attributes / tags compared to your "
-#| "current use of dynamic fields in OTRS."
 msgid ""
 "We found a lot of dynamic fields which are not common in Zammad, as we take "
 "a different approach to ticket attributes. Zammad also uses tags in addition "
@@ -12775,26 +12726,22 @@ msgid ""
 "philosophy of your ticket attributes / tags compared to your current use of "
 "dynamic fields in OTRS."
 msgstr ""
-"Vi hittade många dynamiska fält som inte är vanliga i Zammad, eftersom vi "
-"följer en annan inställning till ärende-attributer. Zammad använder också "
-"taggar förutom anpassade fält för att klassificera ärenden. Denna skillnad "
-"kan skapa en ny filosofi för dina ärendeattribut/taggar jämfört med din "
-"nuvarande användning av dynamiska fält i OTRS."
+"Vi hittade många dynamiska fält som inte är vanliga i Zammad på grund av "
+"Zammads annorlunda förhållningssätt till ärende-attribut. Zammad använder "
+"också etiketter förutom anpassade fält för att klassificera ärenden. Det kan "
+"innebära en övergång till användning av ärendeattribut/etiketter jämfört med "
+"din nuvarande användning av dynamiska fält i OTRS."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
-#, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
 msgid ""
 "We have already found %s email(s) in your mailbox. We will move them all "
 "from your mailbox into Zammad."
 msgstr ""
-"Vi har redan hittat %s e-postmeddelanden i din e-postbox. Zammad flyttar "
-"allt från din e-postbox till Zammad."
+"Vi hittade %s mejl i din mejl-låda. Dessa mejl flyttas från din mejl-låda "
+"till Zammad."
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support:"
@@ -12805,12 +12752,9 @@ msgid "We're sorry, but this page doesn't exist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "We've sent admin password login instructions to your email address."
 msgstr ""
-"Vi har skickat instruktioner för återställning av lösenord till din e-"
-"postadress."
+"Vi har skickat instruktioner för adminlösenordsinloggning till din mejl."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 msgid ""
@@ -12906,10 +12850,8 @@ msgid "Week"
 msgstr "Vecka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
-#, fuzzy
-#| msgid "Week"
 msgid "Week(s)"
-msgstr "Vecka"
+msgstr "Vecka/-or"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 msgid "Weibo"
@@ -13009,10 +12951,8 @@ msgid "Will be published"
 msgstr "kommer att publiceras"
 
 #: app/views/knowledge_base/public/_top_banner.html.erb
-#, fuzzy
-#| msgid "Will be published"
 msgid "Will be published on"
-msgstr "kommer att publiceras"
+msgstr "Kommer att publiceras"
 
 #: db/seeds/settings.rb
 msgid "Will be shown in the app and is included in email footers."
@@ -13048,11 +12988,9 @@ msgstr ""
 "genererar en biljett till dig."
 
 #: app/assets/javascripts/app/models/template.coffee
-#, fuzzy
-#| msgid "With templates you can pre-fill ticket attributes."
 msgid ""
 "With templates it is possible to fill pre-filled tickets quickly and easily."
-msgstr "Med mallar kan du för-fylla ärende-attributer."
+msgstr "Med mallar kan du lägga till förifyllda ärenden snabbt och enkelt."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
@@ -13064,19 +13002,14 @@ msgid "With your current configuration the following will happen:"
 msgstr "Med din nuvarande konfiguration kommer följande att hända:"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-#, fuzzy
-#| msgid ""
-#| "With |Date| the ticket numbers will be generated by the current date, the "
-#| "SystemID and the counter. The format looks like \"Year.Month.Day.SystemID."
-#| "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgid ""
 "With |Date| the ticket numbers will be generated by the current date, the "
 "SystemID, and the counter. The format will be \"Year.Month.Day.SystemID."
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
-"Med |Datum|, kommer Ärendenumret att genereras av det aktuella datumet, "
-"SystemID och räknaren. Formatet ser ut som \"År.Månad.Dag.SystemID.Räknare"
-"\" (t ex 201206231010138, 201206231010139)."
+"Med |Datum|, kommer ärendenumret att genereras av det aktuella datumet, "
+"system-id och ett löpnummer. Formatet ser ut som \"år.månad.dag.system-id."
+"löpnummer\" (t ex 201206231010138, 201206231010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Woo hoo! Your email address has been verified!"
@@ -13152,15 +13085,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
-#, fuzzy
-#| msgid ""
-#| "You can connect %s with Zammad. You need to connect your Zammad with %s "
-#| "first."
 msgid ""
 "You can connect %s with Zammad. But first, you will have to connect your "
 "Zammad with %s."
 msgstr ""
-"Du kan ansluta %s med Zammad. Du måste ansluta din Zammad med %s först."
+"Du kan ansluta %s med Zammad. Du måste dock ansluta ditt Zammad med %s först."
 
 #: app/assets/javascripts/app/models/overview.coffee
 msgid ""
@@ -13204,14 +13133,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
-#, fuzzy
-#| msgid ""
-#| "The tutorial on how to manage a %s is hosted on our online documentation "
-#| "%l."
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
 msgstr ""
-"Handledningen om hur man hanterar en %s finns i vår online dokumentation %l."
+"Handledningen om hur man hanterar en %s finns i vår online-dokumentation %l."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid ""
@@ -13299,25 +13224,18 @@ msgstr "Du behöver lägga till Zammad-slutpunkterna i %s:"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
-#, fuzzy
-#| msgid ""
-#| "You use %s in text but no attachment is attached. Do you want to continue?"
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
 "continue?"
 msgstr ""
-"Du använder %s i text men ingen bilaga har bifogats. Vill du fortsätta?"
+"Du använder %s i texten, men ingen bilaga har bifogats. Vill du fortsätta?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
-#, fuzzy
-#| msgid ""
-#| "You're already registered with your email address if you've been in touch "
-#| "with our support team."
 msgid ""
 "You're already registered with your email address if you've been in touch "
 "with our Support team."
 msgstr ""
-"Du är redan registrerad med din e-post om du har varit i kontakt med vår "
+"Du är redan registrerad med din mejladress om du har varit i kontakt med vår "
 "support."
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee
@@ -13346,10 +13264,8 @@ msgid "Your API key."
 msgstr ""
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Email"
 msgid "Your Email"
-msgstr "E-post"
+msgstr "Din mejl"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Your Email Configuration"
@@ -13365,10 +13281,8 @@ msgid "Your Message..."
 msgstr "Ditt meddelande ..."
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Full Name"
 msgid "Your Name"
-msgstr "Fullständigt namn"
+msgstr "Ditt namn"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
@@ -13393,16 +13307,10 @@ msgid "Your Zammad has the following email address:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#, fuzzy
-#| msgid ""
-#| "Your account has not been verified. Please click the link in the "
-#| "verification email."
 msgid ""
 "Your account has not been verified. Please click on the link in the "
 "verification email."
-msgstr ""
-"Ditt konto har inte verifierats. Vänligen klicka på länken i "
-"verifieringsmailet."
+msgstr "Ditt konto har inte verifierats. Klicka på länken i verifieringsmejlet."
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -13422,13 +13330,12 @@ msgid "Your connection is not private"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
 "administrator."
 msgstr ""
-"Det gick inte att verifiera e-post. Vänligen kontakta din administratör."
+"Enligt din användarroll kan du inte skapa nya ärenden. Kontakta din "
+"administratör."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -13440,28 +13347,20 @@ msgid "Zammad"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Chat requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
 msgstr ""
-"Zammad Chat kräver jQuery. Om du inte redan använder den på din webbplats, "
-"inkludera den så här:"
+"Zammads chatt kräver jQuery. Om du inte redan använder det på din webbplats, "
+"inkludera det så här:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
 msgstr ""
-"Zammad Chat kräver jQuery. Om du inte redan använder den på din webbplats, "
-"inkludera den så här:"
+"Zammads formulär kräver jQuery. Om du inte redan använder det på din "
+"webbplats, inkludera det så här:"
 
 #: db/seeds/community_user_resources.rb
 msgid "Zammad Foundation"
@@ -13490,16 +13389,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid ""
-#| "Zammad is currently in maintenance mode. Only administrators can login. "
-#| "Please wait until the maintenance window is over."
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
 "Please wait until the maintenance window is over."
 msgstr ""
 "Zammad är för närvarande i underhållsläge. Endast administratörer kan logga "
-"in. Vänta tills underhållsfönstret har passerat."
+"in. Vänta tills servicefönstret är över."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "Zammad is restarting…"
@@ -13583,10 +13478,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
-#, fuzzy
-#| msgid "pending"
 msgid "ascending"
-msgstr "väntande"
+msgstr "stigande"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco
 msgid "assign tickets"
@@ -13597,16 +13490,12 @@ msgid "at"
 msgstr "kl"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "reached"
 msgid "attached"
-msgstr "uppnådd"
+msgstr "bifogat"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "Attachments"
 msgid "attachment"
-msgstr "Bilagor"
+msgstr "bilaga"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -13623,9 +13512,8 @@ msgstr "före (relativ)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
-#, fuzzy
 msgid "between agent updates"
-msgstr "Senaste uppdateringar"
+msgstr "mellan uppdateringar av handläggare"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "busy"
@@ -13638,9 +13526,8 @@ msgid "can't be empty"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
-#, fuzzy
 msgid "changed to"
-msgstr "Ändrad"
+msgstr "ändrad till"
 
 #: db/seeds/ticket_article_types.rb
 msgid "chat"
@@ -13706,10 +13593,8 @@ msgid "created"
 msgstr "skapad"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "created"
 msgid "created %s"
-msgstr "skapad"
+msgstr "%s skapad"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -13756,18 +13641,14 @@ msgstr "radera"
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
-#, fuzzy
-#| msgid "pending"
 msgid "descending"
-msgstr "väntande"
+msgstr "fallande"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "koppla från"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
-#, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "finns ej"
 
@@ -13824,16 +13705,12 @@ msgid "email sent to '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "closed"
 msgid "enclosed"
-msgstr "stängt"
+msgstr "bifogad"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
-#, fuzzy
-#| msgid "close"
 msgid "enclosure"
-msgstr "stäng"
+msgstr "bilaga"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 msgid "escalated"
@@ -13849,9 +13726,8 @@ msgid "example macro"
 msgstr ""
 
 #: db/seeds/ticket_article_types.rb
-#, fuzzy
 msgid "facebook direct-message"
-msgstr "twitter direkt-meddelande"
+msgstr "Facebook-direkt-meddelande"
 
 #: db/seeds/ticket_article_types.rb
 msgid "facebook feed comment"
@@ -13886,10 +13762,8 @@ msgid "for an agent to respond"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-#, fuzzy
-#| msgid "Forward"
 msgid "forward"
-msgstr "Vidarebefordra"
+msgstr "vidarebefordra"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "from"
@@ -13958,66 +13832,48 @@ msgid "in %s"
 msgstr "om %s"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "in %s"
 msgid "in %s days"
-msgstr "om %s"
+msgstr "om %s dagar"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "in hours"
 msgid "in %s hours"
-msgstr "i timmar"
+msgstr "om %s timmar"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "in %s minutes"
-msgstr "minuter"
+msgstr "om %s minuter"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "in %s months"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
-msgstr "två veckor"
+msgstr "om %s veckor"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "in %s"
 msgid "in %s years"
-msgstr "om %s"
+msgstr "om %s år"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
-msgstr "en dag"
+msgstr "om en dag"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "in hours"
 msgid "in 1 hour"
-msgstr "i timmar"
+msgstr "om en timme"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
-msgstr "minut"
+msgstr "om en minut"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "in 1 month"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
-msgstr "en vecka"
+msgstr "om en vecka"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "in 1 year"
@@ -14062,19 +13918,15 @@ msgstr ""
 msgid "is not"
 msgstr "är inte"
 
-#, fuzzy
-#| msgid "Min. size of number"
 msgid "is not a number"
-msgstr "Min. storlek på nummer"
+msgstr "är inte ett tal"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is not in working time"
 msgstr "är inte i arbetstid"
 
-#, fuzzy
-#| msgid "is not in working time"
 msgid "is not included in the list"
-msgstr "är inte i arbetstid"
+msgstr "är inte i listan"
 
 #: app/assets/javascripts/app/models/_application_model.coffee
 msgid "is required"
@@ -14118,10 +13970,8 @@ msgid "left"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
-#, fuzzy
-#| msgid "See more"
 msgid "load %s more"
-msgstr "Se mer"
+msgstr "läs in %s fler"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "m"
@@ -14141,10 +13991,8 @@ msgstr "matcha en modul"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
-#, fuzzy
-#| msgid "matches"
 msgid "matches found"
-msgstr "matchningar"
+msgstr "matchningar hittades"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
@@ -14201,10 +14049,8 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
-#, fuzzy
-#| msgid "not exist"
 msgid "must exist"
-msgstr "finns ej"
+msgstr "måste finnas"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -14269,16 +14115,12 @@ msgid "note"
 msgstr "notering"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#, fuzzy
-#| msgid "Notification Sender"
 msgid "notification sent to '%s'"
-msgstr "Avsändare notifieringar"
+msgstr "notifiering skickad till '%s'"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
-#, fuzzy
-#| msgid "no"
 msgid "now"
-msgstr "inga"
+msgstr "nu"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -14320,10 +14162,8 @@ msgid "phone"
 msgstr "telefon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
-#, fuzzy
-#| msgid "Public"
 msgid "public"
-msgstr "Publik"
+msgstr "publik"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "published"
@@ -14342,10 +14182,8 @@ msgid "regex mismatch"
 msgstr "regex matchar inte"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
-#, fuzzy
-#| msgid "active"
 msgid "relative"
-msgstr "aktiv"
+msgstr "relativ"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
@@ -14373,10 +14211,8 @@ msgid "reply"
 msgstr "svara"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
-#, fuzzy
-#| msgid "reply"
 msgid "reply all"
-msgstr "svara"
+msgstr "svara alla"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "required"
@@ -14446,16 +14282,12 @@ msgid "show more"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "show"
 msgid "shown"
-msgstr "visa"
+msgstr "visade"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Placetel"
 msgid "sipgate.io Token"
-msgstr "Placetel"
+msgstr "sipgate.io-token"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io alternative FQDN"
@@ -14507,10 +14339,8 @@ msgid "telegram personal-message"
 msgstr "telegram personligt-meddelande"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#, fuzzy
-#| msgid "Retweets are converted to Tickets"
 msgid "this ticket was merged into ticket %s"
-msgstr "Retweets konverteras till ärenden"
+msgstr "Ärendet ihopslaget med ärendet %s"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
@@ -14519,10 +14349,8 @@ msgid "ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#, fuzzy
-#| msgid "Retweets are converted to Tickets"
 msgid "ticket %s was merged into this ticket"
-msgstr "Retweets konverteras till ärenden"
+msgstr "Ärendet %s slogs ihop med det här ärendet"
 
 #: lib/calendar_subscriptions/tickets.rb
 msgid "ticket escalation"
@@ -14625,56 +14453,40 @@ msgid "yes"
 msgstr "ja"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco
-#, fuzzy
-#| msgid ""
-#| "|Increment| increments the ticket number, the SystemID and the counter "
-#| "are used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"|Ökar| stegvis ärendenumret, SystemID och räknare som används med \"SystemID."
-"Counter\" format (t ex 1010138, 1010139)."
+"|Ökar| stegvis ärendenumret, system-id och löpnumret som används med \"system"
+"-id.löpnummer\"-formatet (t ex 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Left| means |[Ticket#12345] Some Subject|"
 msgstr "|Vänster| betyder |[Ärende#12345] Något ämne|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
-#, fuzzy
-#| msgid ""
-#| "|None| means |Some Subject| (without ticket number). In the last case you "
-#| "should enable \"postmaster___follow___up___search___in\" to recognize "
-#| "followups based on email headers and/or body."
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case it "
 "recognizes follow-ups based on email headers."
 msgstr ""
-"|Inga| betyder |Något ämne| (utan ärendenummer). I det sista fallet bör du "
-"aktivera \"postmaster___follow___up___search___in\" för att identifiera "
-"uppföljningar baserade på e-posthuvud och/eller kropp."
+"|Inga| betyder |Något ämne| (utan ärendenummer). I så fall identifieras "
+"uppföljningar baserade på mejlets rubriker."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Höger| betyder |Något ämne [Ärende#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...add object link URL"
 msgid "…add object link URL"
-msgstr "...lägg till objektlänk URL"
+msgstr "... lägg till objekt-url"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...add object title"
 msgid "…add object title"
-msgstr "...lägg till objekttitel"
+msgstr "... lägg till objekttitel"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
-#, fuzzy
-#| msgid "...of whole textarea"
 msgid "…of whole text area"
-msgstr "...av hel textarea"
+msgstr "... av hela textfältet"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
