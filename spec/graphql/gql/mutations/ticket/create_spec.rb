@@ -238,6 +238,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
             it_creates_ticket(articles: 1)
             expect(Ticket.last.articles.last.sender.name).to eq(Ticket::Article::Sender.first.name)
           end
+
+          it 'sets correct "to" and "from" values', :aggregate_failures do
+            it_creates_ticket(articles: 1)
+            expect(Ticket.last.articles.last.from).to eq(agent.fullname)
+            expect(Ticket.last.articles.last.to).to eq("#{customer.fullname} <#{customer.email}>")
+          end
         end
 
         context 'with no type' do
@@ -322,6 +328,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           it 'creates a new ticket + a new article, but falls back to "note" as type' do
             it_creates_ticket(articles: 1)
             expect(Ticket.last.articles.last.type.name).to eq('note')
+          end
+
+          it 'sets correct "to" and "from" values', :aggregate_failures do
+            it_creates_ticket(articles: 1)
+            expect(Ticket.last.articles.last.to).to eq(Ticket.last.group.name)
+            expect(Ticket.last.articles.last.from).to eq(customer.fullname)
           end
         end
 

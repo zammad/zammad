@@ -5,9 +5,12 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     ticket_id = article_data.delete(:ticket_id)
     form_id = article_data.delete(:form_id)
 
+    if Ticket.find(ticket_id).nil?
+      raise ActiveRecord::RecordNotFound, "Ticket #{ticket_id} for new article could not be found."
+    end
+
     Ticket::Article.new(article_data).tap do |article|
-      article.ticket_id = ticket_id
-      article.attachments = attachments(article, form_id)
+      transform_article(article, ticket_id, form_id)
 
       article.save!
 
@@ -22,6 +25,51 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   end
 
   private
+
+  def transform_article(article, ticket_id, form_id)
+    article.ticket_id = ticket_id
+    article.attachments = attachments(article, form_id)
+
+    transform_to_from(article)
+
+    article
+  end
+
+  def transform_to_from(article)
+    ticket = Ticket.find(article.ticket_id)
+
+    customer_display_name = display_name(ticket.customer)
+    group_name = ticket.group.name
+
+    if article.sender.name.eql?('Customer')
+      article.from = customer_display_name
+      article.to = group_name
+    else
+      article.to = customer_display_name
+      article.from = group_name
+    end
+  end
+
+  def display_name(user)
+    if user.fullname.present? && user.email.present?
+      return Mail::Address.new.tap do |addr|
+               addr.display_name = user.fullname
+               addr.address = user.email
+             end.format
+    end
+
+    return user.fullname if user.fullname.present?
+
+    display_name_fallback(user)
+  end
+
+  def display_name_fallback(user)
+    return user.email if user.email.present?
+    return user.phone if user.phone.present?
+    return user.login if user.login.present?
+
+    '???'
+  end
 
   def attachments(article, form_id)
     attachments_inline = []
