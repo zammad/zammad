@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DM_RECIPIENT TWITTER_USER_ID] do
+RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DM_REAL_RECIPIENT TWITTER_USER_ID] do
   subject(:channel) { create(:twitter_channel) }
 
   describe '#process', current_user_id: 1 do
@@ -734,7 +734,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
     end
 
     context 'for DMs' do
-      let(:recipient)       { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
+      let(:recipient)       { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_REAL_RECIPIENT', '1577555254278766596')) }
       let!(:outgoing_tweet) { create(:twitter_dm_article, :pending_delivery, recipient: recipient) }
       let(:return_value)    { Twitter::DirectMessage }
 

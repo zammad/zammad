@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.twitter.com/1.1/direct_messages/events/new.json
     body:
       encoding: UTF-8
-      string: '{"event":{"type":"message_create","message_create":{"target":{"recipient_id":<TWITTER_DM_RECIPIENT>},"message_data":{"text":"Please
+      string: '{"event":{"type":"message_create","message_create":{"target":{"recipient_id":<TWITTER_DM_REAL_RECIPIENT>},"message_data":{"text":"Please
         ignore this message."}}}}'
     headers:
       User-Agent:
@@ -75,7 +75,7 @@ http_interactions:
       - close
     body:
       encoding: UTF-8
-      string: '{"event":{"type":"message_create","id":"1578353327389147140","created_timestamp":"1665143732293","message_create":{"target":{"recipient_id":"<TWITTER_DM_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
+      string: '{"event":{"type":"message_create","id":"1578353327389147140","created_timestamp":"1665143732293","message_create":{"target":{"recipient_id":"<TWITTER_DM_REAL_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
         ignore this message.","entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]}}}}}'
   recorded_at: Fri, 07 Oct 2022 11:55:32 GMT
 recorded_with: VCR 6.1.0

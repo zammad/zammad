@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Twitter > Account Activity API', :use_vcr, integration: true, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_USER_ID TWITTER_DM_RECIPIENT TWITTER_SEARCH_CONSUMER_KEY TWITTER_SEARCH_CONSUMER_SECRET TWITTER_SEARCH_OAUTH_TOKEN TWITTER_SEARCH_OAUTH_TOKEN_SECRET TWITTER_SEARCH_USER_ID] do # rubocop:disable RSpec/DescribeClass
+RSpec.describe 'Twitter > Account Activity API', :use_vcr, integration: true, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_USER_ID TWITTER_DM_REAL_RECIPIENT TWITTER_SEARCH_CONSUMER_KEY TWITTER_SEARCH_CONSUMER_SECRET TWITTER_SEARCH_OAUTH_TOKEN TWITTER_SEARCH_OAUTH_TOKEN_SECRET TWITTER_SEARCH_USER_ID] do # rubocop:disable RSpec/DescribeClass
   subject(:channel) { create(:twitter_channel, custom_options: { sync: { search: nil } }) }
 
   let(:twitter_helper) do

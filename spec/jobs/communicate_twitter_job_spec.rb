@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_USER_ID TWITTER_DM_RECIPIENT], type: :job do
+RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_USER_ID TWITTER_DM_REAL_RECIPIENT], type: :job do
 
   let(:article) { create(:twitter_article, **(try(:factory_options) || {})) }
 
@@ -71,7 +71,7 @@ RSpec.describe CommunicateTwitterJob, required_envs: %w[TWITTER_CONSUMER_KEY TWI
 
     context 'for DMs' do
       let(:article)   { create(:twitter_dm_article, :pending_delivery, recipient: recipient, body: 'Please ignore this message.') }
-      let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_RECIPIENT', '1234567890')) }
+      let(:recipient) { create(:twitter_authorization, uid: ENV.fetch('TWITTER_DM_REAL_RECIPIENT', '1577555254278766596')) }
 
       let(:dm_attributes) do
         {
