@@ -46,6 +46,7 @@ RSpec.describe Role do
               user_preferences.language
               user_preferences.linked_accounts
               user_preferences.avatar
+              user_preferences.appearance
               ticket.customer
             ]
           )
