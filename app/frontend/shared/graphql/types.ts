@@ -718,12 +718,6 @@ export type ObjectAttributeValue = {
   value?: Maybe<Scalars['JSON']>;
 };
 
-
-/** Data of one object attribute value of another object */
-export type ObjectAttributeValueRenderedValueArgs = {
-  templateRenderContext: TemplateRenderContextInput;
-};
-
 /** Data of one object attribute value of another object */
 export type ObjectAttributeValueInput = {
   /** The name of the current object's attribute */

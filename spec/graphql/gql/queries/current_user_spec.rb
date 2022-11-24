@@ -21,7 +21,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
                 name
               }
               value
-              renderedValue(templateRenderContext: {})
+              renderedValue
             }
             organization {
               name

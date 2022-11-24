@@ -14,7 +14,7 @@ module Gql::Types
       return [] if !@object || !context.current_user?
 
       find_object_attributes.reduce([]) do |result, oa|
-        result << { attribute: attribute_hash(oa.attribute), value: @object[oa.attribute[:name].to_sym] }
+        result << { attribute: attribute_hash(oa.attribute), value: @object[oa.attribute[:name].to_sym], parent: @object }
       end
     end
 
