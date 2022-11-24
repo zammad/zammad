@@ -49,6 +49,17 @@ class App.TicketLinkAdd extends App.ControllerModal
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
+    content.on('paste', '[name="ticket_number"]', (e) =>
+      execute = ->
+        # remove ticket hook if present
+        if e.target && e.target.value
+          $('[name="ticket_number"]').val( e.target.value.replace(App.Config.get('ticket_hook'), '') )
+
+      @delay( execute, 0)
+
+      return
+    )
+
     content.on('click', '[name="radio"]', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
