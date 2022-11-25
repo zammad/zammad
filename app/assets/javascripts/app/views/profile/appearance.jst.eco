@@ -12,19 +12,19 @@
         </div>
         <div class="controls">
           <div class="radio">
-            <label class="inline-label radio-replacement">
+            <label class="inline-label radio-replacement u-clickable">
               <input type="radio" value="dark" name="theme"<%= ' checked' if @theme == 'dark' %>>
               <%- @Icon('radio', 'icon-unchecked') %>
               <%- @Icon('radio-checked', 'icon-checked') %>
               <span class="label-text"><%- @T('Dark') %></span>
             </label>
-            <label class="inline-label radio-replacement">
+            <label class="inline-label radio-replacement u-clickable">
               <input type="radio" value="light" name="theme"<%= ' checked' if @theme == 'light' %>>
               <%- @Icon('radio', 'icon-unchecked') %>
               <%- @Icon('radio-checked', 'icon-checked') %>
               <span class="label-text"><%- @T('Light') %></span>
             </label>
-            <label class="inline-label radio-replacement">
+            <label class="inline-label radio-replacement u-clickable">
               <input type="radio" value="auto" name="theme"<%= ' checked' if @theme == 'auto' %>>
               <%- @Icon('radio', 'icon-unchecked') %>
               <%- @Icon('radio-checked', 'icon-checked') %>

@@ -15,8 +15,16 @@ class App.Theme extends App.Controller
   auto: ->
     if window.matchMedia('(prefers-color-scheme: dark)').matches then 'dark' else 'light'
 
-  currentTheme: ->
-    App.Session.get('preferences')?.theme || @auto()
+  currentTheme: (theme) =>
+    theme ||= App.Session.get('preferences')?.theme
+
+    switch theme
+      when 'dark'
+        'dark'
+      when 'light'
+        'light'
+      else
+        @auto()
 
   onMediaQueryChange: (event) =>
     @set(
@@ -29,9 +37,7 @@ class App.Theme extends App.Controller
       save: true
     )
 
-  set: (data) ->
-    return if data.theme == document.documentElement.dataset.theme
-
+  set: (data) =>
     if data.save && App.Session.get()?.id
       App.Ajax.request(
         id:          'preferences'
@@ -40,7 +46,9 @@ class App.Theme extends App.Controller
         data:        JSON.stringify(theme: data.theme)
         processData: true
       )
-    document.documentElement.dataset.theme = data.theme
+      App.Event.trigger('ui:theme:saved', data)
+
+    document.documentElement.dataset.theme = @currentTheme(data.theme)
     App.Event.trigger('ui:theme:changed', data)
 
 App.Config.set('theme', App.Theme, 'Plugins')
