@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Напоминание получено!_
+Заявка требует внимания: получено напоминание для (#{ticket.title}) от клиента "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,0 +1,19 @@
+#{config.product_name}-inloggning från ett nytt land
+
+<div>Hej #{user.firstname},</div>
+<br>
+<div>Det verkar som du använder ditt konto med en <b>känd enhet från ett nytt land</b> på "#{user_device.created_at}":</div>
+<br>
+<div>
+Din enhet: #{user_device.name}<br>
+Din plats (relativ): #{user_device.location}<br>
+Din IP-adress: #{user_device.ip}<br>
+</div>
+<br>
+<div>Landet är tillagt till din lista på kända enheter, du kan se den här:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Om det inte var du, ta genast bort enheten från listan och byt ditt lösenord för #{config.product_name}, samt kontakta din administratör. Någon kan ha fått tillgång till ditt #{config.product_name}-konto.</div>
+<br>
+<div>Dina #{config.product_name}-administratörer</div>
