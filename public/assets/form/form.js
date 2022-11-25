@@ -112,7 +112,7 @@ $(function() {
         'Message': 'Nachricht',
         'Name': 'Name',
         'Your Email': 'Ihre E-Mail',
-        'Your Message…': '',
+        'Your Message…': 'Ihre Nachricht…',
         'Your Name': 'Ihr Name',
       },
       'es': {
@@ -139,7 +139,7 @@ $(function() {
         'Message': 'Poruka',
         'Name': 'Ime',
         'Your Email': 'Vaš e-mail',
-        'Your Message…': '',
+        'Your Message…': 'Vaša poruka…',
         'Your Name': 'Vaše ime',
       },
       'it': {
@@ -193,7 +193,7 @@ $(function() {
         'Message': 'Порука',
         'Name': 'Име',
         'Your Email': 'Ваш имејл',
-        'Your Message…': '',
+        'Your Message…': 'Ваша порука…',
         'Your Name': 'Ваше име',
       },
       'sr-latn-rs': {
@@ -202,8 +202,17 @@ $(function() {
         'Message': 'Poruka',
         'Name': 'Ime',
         'Your Email': 'Vaš imejl',
-        'Your Message…': '',
+        'Your Message…': 'Vaša poruka…',
         'Your Name': 'Vaše ime',
+      },
+      'sv': {
+        'Attachments': 'Bilagor',
+        'Email': 'E-post',
+        'Message': 'Meddelande',
+        'Name': 'Namn',
+        'Your Email': 'Din mejl',
+        'Your Message…': '',
+        'Your Name': 'Ditt namn',
       },
       'zh-cn': {
         'Attachments': '附件',
