@@ -983,6 +983,12 @@ msgstr " टिप्पणी जोड़ें"
 msgid "Add a Personal Access Token"
 msgstr "एक व्यक्तिगत एक्सेस टोकन जोड़ें"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add a message"
+msgstr " टैग जोड़ो"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
 msgstr ""
@@ -1033,6 +1039,12 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr "एक ट्वीट के अंत में प्रेषक आद्याक्षर जोड़ें।"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add tags"
+msgstr " टैग जोड़ो"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
 msgstr ""
@@ -1048,6 +1060,12 @@ msgstr "अतिरिक्त चैनल"
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
 msgstr "Additional follow-up detection"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Notifications"
+msgid "Additional information"
+msgstr " सूचनाएं"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1088,8 +1106,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1343,6 +1361,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
 
@@ -1789,6 +1808,7 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/shared/components/Form/fields/FieldEditor/suggestions/UserMention.ts
 msgid "Before you mention a user, please select a group."
 msgstr ""
 
@@ -1911,6 +1931,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr ""
@@ -2723,6 +2744,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr "जारी रखें"
 
@@ -2810,7 +2832,6 @@ msgstr "देश"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "बनाएँ"
 
@@ -2859,6 +2880,13 @@ msgid ""
 "To select placeholders from a list, just enter \"::\"."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create"
+msgid "Create Ticket"
+msgstr "बनाएँ"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr ""
@@ -2897,6 +2925,13 @@ msgstr ""
 msgid "Create new records"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Create new ticket"
+msgstr "संगठन के टिकट"
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 #, fuzzy
 #| msgid "Tickets of Organization"
@@ -2922,6 +2957,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Create"
 msgid "Create tag"
+msgstr "बनाएँ"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create"
+msgid "Create ticket"
 msgstr "बनाएँ"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -4356,9 +4397,21 @@ msgstr "ग्राहक संपादित करें"
 msgid "Edit Organization"
 msgstr "संगठन संपादित करें"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Customer"
+msgid "Edit customer"
+msgstr "ग्राहक संपादित करें"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Organization"
+msgid "Edit organization"
+msgstr "संगठन संपादित करें"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
@@ -4983,6 +5036,12 @@ msgstr ""
 msgid "Execute changes on objects"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Not configured"
+msgid "Execute configured macros"
+msgstr " विन्यस्त नहीं"
+
 #: db/seeds/schedulers.rb
 msgid "Execute import jobs."
 msgstr ""
@@ -5567,7 +5626,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -5783,6 +5841,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "इतिहास"
 
@@ -6194,7 +6253,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6202,14 +6260,11 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -7094,6 +7149,12 @@ msgstr ""
 msgid "Merge"
 msgstr "मिलाएं"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Tickets"
+msgid "Merge tickets"
+msgstr "टिकटें"
+
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr ""
@@ -7797,6 +7858,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr ""
@@ -8330,6 +8392,7 @@ msgstr " आउटबाउंड"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Outbound Call"
 msgstr " बाहरी कॉल"
 
@@ -8379,7 +8442,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -8953,6 +9015,7 @@ msgid "Reauthenticate"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Received Call"
 msgstr " उठाई गई कॉल"
 
@@ -9688,6 +9751,10 @@ msgstr ""
 msgid "Select the customer of the ticket or create one."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Select the type of ticket your are creating"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""
@@ -9718,6 +9785,7 @@ msgid "Send"
 msgstr "भेजें"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr ""
 
@@ -9841,6 +9909,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/session.coffee
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Set a title for your ticket"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10034,6 +10106,12 @@ msgstr " पिछला टैब"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Show ticket actions"
+msgstr " अवलोकन"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
@@ -10315,7 +10393,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10428,6 +10505,7 @@ msgstr "यहॉ जमा करे"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
 msgstr ""
 
@@ -11734,12 +11812,6 @@ msgstr ""
 msgid "Ticket Count"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/routes.ts
-#, fuzzy
-#| msgid "Ticket %s created!"
-msgid "Ticket Create"
-msgstr "टिकट% s बनाया गया!"
-
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
 msgstr "टिकट हुक"
@@ -11816,6 +11888,18 @@ msgstr "टिकट विषय का आकार"
 msgid "Ticket Subscriptions"
 msgstr "टिकट सदस्यता"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket actions"
+msgstr "टिकट वृद्धि"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Ticket could not be created."
+msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
 msgstr "टिकट वृद्धि"
@@ -11831,6 +11915,18 @@ msgstr "टिकट मुझे सौंपा गया:% s का% s"
 #| msgid "Overview"
 msgid "Ticket has %s viewers"
 msgstr " अवलोकन"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket has been created successfully."
+msgstr "टेस्ट रन सफल रहा।"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Notifications"
+msgid "Ticket info"
+msgstr " सूचनाएं"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
@@ -12050,6 +12146,7 @@ msgstr "समय"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -12873,20 +12970,17 @@ msgstr "उपयोगकर्ता के दृष्टिकोण से
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -12904,7 +12998,6 @@ msgstr "उपयोगकर्ता के दृष्टिकोण से
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "ज़माद में इसे देखें"
 
@@ -14424,7 +14517,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "नहीं"
@@ -14813,7 +14906,7 @@ msgstr "अगले (रिश्तेदार) के भीतर"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "हाँ"
@@ -14875,6 +14968,11 @@ msgstr " ... पूरे टेक्सारिया के"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "Iting आज समय की प्रतीक्षा है"
+
+#, fuzzy
+#~| msgid "Ticket %s created!"
+#~ msgid "Ticket Create"
+#~ msgstr "टिकट% s बनाया गया!"
 
 #, fuzzy
 #~| msgid "Select"
@@ -14977,11 +15075,6 @@ msgstr "Iting आज समय की प्रतीक्षा है"
 #~| msgid "Reporting"
 #~ msgid "Sorting"
 #~ msgstr "समाचार-लेखन"
-
-#, fuzzy
-#~| msgid "Edit Organization"
-#~ msgid "Edit organization"
-#~ msgstr "संगठन संपादित करें"
 
 #~ msgid "Activates lost password feature for users."
 #~ msgstr "उपयोगकर्ताओं के लिए खो पासवर्ड सुविधा को सक्रिय करता है।"

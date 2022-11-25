@@ -1022,6 +1022,12 @@ msgstr "Agregar Nota"
 msgid "Add a Personal Access Token"
 msgstr "Agregar Token de Acceso Personal"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add a message"
+msgstr "Agregar Etiqueta"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
 msgstr ""
@@ -1074,6 +1080,12 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr "Agregar las iniciales al final de un tweet."
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add tags"
+msgstr "Agregar Etiqueta"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
 msgstr ""
@@ -1089,6 +1101,12 @@ msgstr "Canales Adicionales"
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
 msgstr "Detección de seguimiento adicional"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Additional information"
+msgstr "Bloquear Notificaciones"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1131,8 +1149,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1388,6 +1406,7 @@ msgstr "Credenciales de la aplicación para Twitter."
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
 
@@ -1862,6 +1881,7 @@ msgid "Basic Settings"
 msgstr "Ajustes básicos"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/shared/components/Form/fields/FieldEditor/suggestions/UserMention.ts
 msgid "Before you mention a user, please select a group."
 msgstr "Antes de mencionar a un usuario, seleccione un grupo."
 
@@ -1997,6 +2017,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "CC"
@@ -2814,6 +2835,7 @@ msgstr "Contexto"
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr "Continuar"
 
@@ -2908,7 +2930,6 @@ msgstr "País"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Crear"
 
@@ -2981,6 +3002,13 @@ msgstr ""
 "Para seleccionar marcadores de posición de una lista, simplemente ingrese "
 "\"::\"."
 
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Create Ticket"
+msgstr "Crear un Ticket de prueba"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "Crear un Ticket de prueba"
@@ -3017,6 +3045,13 @@ msgstr "Crear nuevo objeto"
 msgid "Create new records"
 msgstr "Crear nuevos registros"
 
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#, fuzzy
+#| msgid "Create new object"
+msgid "Create new ticket"
+msgstr "Crear nuevo objeto"
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 #, fuzzy
 #| msgid "Tickets of Organization"
@@ -3044,6 +3079,12 @@ msgstr ""
 #| msgid "Created At"
 msgid "Create tag"
 msgstr "Creado en"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Create ticket"
+msgstr "Crear un Ticket de prueba"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -4647,9 +4688,21 @@ msgstr "Editar cliente"
 msgid "Edit Organization"
 msgstr "Editar Organización"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Customer"
+msgid "Edit customer"
+msgstr "Editar cliente"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "Editar máscara"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Organization"
+msgid "Edit organization"
+msgstr "Editar Organización"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -5351,6 +5404,12 @@ msgstr "Intercambio de integración para la gestión de contactos."
 msgid "Execute changes on objects"
 msgstr "Ejecutar cambios en los objetos"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Not configured"
+msgid "Execute configured macros"
+msgstr "Sin configurar"
+
 #: db/seeds/schedulers.rb
 msgid "Execute import jobs."
 msgstr "Ejecutar trabajos de importación."
@@ -5953,7 +6012,6 @@ msgstr "Saludo"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6182,6 +6240,7 @@ msgstr "¡Hola! ¿Cuál de nuestros productos?"
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Historia"
 
@@ -6645,7 +6704,6 @@ msgstr "Información: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6653,14 +6711,11 @@ msgstr "Información: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -7577,6 +7632,12 @@ msgstr "Grupo de menciones"
 msgid "Merge"
 msgstr "Mezclar"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge tickets"
+msgstr "Fusionar con Ticket#"
+
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Fusionar con Ticket#"
@@ -8277,6 +8338,7 @@ msgstr "¡Ningún record fue encontrado!"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr "No se han encontrado resultados"
@@ -8825,6 +8887,7 @@ msgstr "Saliente"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Outbound Call"
 msgstr "Llamada saliente"
 
@@ -8872,7 +8935,6 @@ msgstr "Sobrescribir borrador"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -9444,6 +9506,7 @@ msgid "Reauthenticate"
 msgstr "volver a autenticar"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Received Call"
 msgstr "Llamada recibida"
 
@@ -10177,6 +10240,12 @@ msgstr "Seleccionar Plantilla…"
 msgid "Select the customer of the ticket or create one."
 msgstr "Selecciona el cliente del ticket o crea uno."
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Select the customer of the ticket or create one."
+msgid "Select the type of ticket your are creating"
+msgstr "Selecciona el cliente del ticket o crea uno."
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr "Condiciones seleccionadas"
@@ -10207,6 +10276,7 @@ msgid "Send"
 msgstr "Enviar"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr "Enviar Correo"
 
@@ -10329,6 +10399,12 @@ msgstr "Hora de término de la sesión"
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
 msgstr "Sesiones"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create your first ticket"
+msgid "Set a title for your ticket"
+msgstr "Crear Ticket"
 
 #: db/seeds/settings.rb
 msgid "Set agent limit"
@@ -10531,6 +10607,12 @@ msgstr "Pestaña anterior"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr "Mostrar el chat cuando esté listo."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Show ticket actions"
+msgstr "Descripciones"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
@@ -10839,7 +10921,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10952,6 +11033,7 @@ msgstr "Enviar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
 msgstr "Suscribir"
 
@@ -12328,12 +12410,6 @@ msgstr ""
 msgid "Ticket Count"
 msgstr "Boleto %s creado"
 
-#: app/frontend/apps/mobile/pages/ticket/routes.ts
-#, fuzzy
-#| msgid "Ticket %s created!"
-msgid "Ticket Create"
-msgstr "¡Boleto %s creado!"
-
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
 msgstr "Gancho para boletos"
@@ -12410,6 +12486,18 @@ msgstr "Tamaño del asunto del ticket"
 msgid "Ticket Subscriptions"
 msgstr "Suscripciones de boletos"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket actions"
+msgstr "Suscripciones de boletos"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "User could not be created."
+msgid "Ticket could not be created."
+msgstr "No se pudo crear el usuario."
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
 msgstr "Suscripciones de boletos"
@@ -12423,6 +12511,18 @@ msgstr "No se pudo guardar el ticket: %s"
 #| msgid "New Overview"
 msgid "Ticket has %s viewers"
 msgstr "Nueva descripción"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket has been created successfully."
+msgstr "La ejecución de la prueba fue exitosa."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Ticket info"
+msgstr "Bloquear Notificaciones"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
@@ -12644,6 +12744,7 @@ msgstr "Sincronización"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -13476,20 +13577,17 @@ msgstr "Ver desde la perspectiva del usuario"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -13507,7 +13605,6 @@ msgstr "Ver desde la perspectiva del usuario"
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Ver esto en Zammad"
 
@@ -15071,7 +15168,7 @@ msgstr "nuevo & abierto"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "no"
@@ -15464,7 +15561,7 @@ msgstr "dentro del próximo (relativo)"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "sí"
@@ -15514,6 +15611,11 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Ticket %s created!"
+#~ msgid "Ticket Create"
+#~ msgstr "¡Boleto %s creado!"
 
 #~ msgid ""
 #~ "In addition, we have found emails in your mailbox that are older than %s "
@@ -15730,11 +15832,6 @@ msgstr "∅ Tiempo de espera de hoy"
 #~| msgid "Reporting"
 #~ msgid "Sorting"
 #~ msgstr "Informes"
-
-#, fuzzy
-#~| msgid "Edit Organization"
-#~ msgid "Edit organization"
-#~ msgstr "Editar Organización"
 
 #~ msgid "Activates lost password feature for users."
 #~ msgstr "Activa la función de contraseña perdida para los usuarios."

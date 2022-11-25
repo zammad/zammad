@@ -988,6 +988,12 @@ msgstr "ongeraho inyandiko"
 msgid "Add a Personal Access Token"
 msgstr "Ongeraho ikimenyetso cyihariye cyo kwinjira"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add a message"
+msgstr "ongeraho ikimenyetso "
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
 msgstr ""
@@ -1040,6 +1046,12 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr "Ongera iby'ibanze by'uwohereza ku mpera za twita"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add tags"
+msgstr "ongeraho ikimenyetso "
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
 msgstr ""
@@ -1056,6 +1068,12 @@ msgstr "imiyoboro y'inyongera"
 #: db/seeds/settings.rb
 msgid "Additional follow-up detection"
 msgstr "ikurikirana ry'inyongera"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Additional information"
+msgstr "guhagarika imenyesha"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1098,8 +1116,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1360,6 +1378,7 @@ msgstr "Ibyangombwa by'ibanga bya Twitter"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
 
@@ -1826,6 +1845,7 @@ msgid "Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
+#: app/frontend/shared/components/Form/fields/FieldEditor/suggestions/UserMention.ts
 msgid "Before you mention a user, please select a group."
 msgstr ""
 
@@ -1959,6 +1979,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr ""
@@ -2816,6 +2837,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Continue"
 msgstr "komeza "
 
@@ -2905,7 +2927,6 @@ msgstr "Igihugu"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "rema"
 
@@ -2954,6 +2975,13 @@ msgid ""
 "To select placeholders from a list, just enter \"::\"."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/routes.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Create Ticket"
+msgstr "guhimba itike y'igeragezwa"
+
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
 msgstr "guhimba itike y'igeragezwa"
@@ -2994,6 +3022,13 @@ msgstr ""
 msgid "Create new records"
 msgstr "kora ibyo kubika bishya"
 
+#: app/frontend/apps/mobile/pages/home/views/Home.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Create new ticket"
+msgstr "guhimba itike y'igeragezwa"
+
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 #, fuzzy
 #| msgid "Tickets of Organization"
@@ -3020,6 +3055,12 @@ msgstr "gushyiraho amategeko atandukanya amatike y'amasezerano ya serivisi"
 #| msgid "Created at"
 msgid "Create tag"
 msgstr "byahimbwe kuwa"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Create ticket"
+msgstr "guhimba itike y'igeragezwa"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -4532,9 +4573,21 @@ msgstr "hindura umukiriya"
 msgid "Edit Organization"
 msgstr "hindura  ikigo"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Customer"
+msgid "Edit customer"
+msgstr "hindura umukiriya"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Edit Organization"
+msgid "Edit organization"
+msgstr "hindura  ikigo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -5215,6 +5268,12 @@ msgstr "igurana rihujwe ku mpamvu zo gucunga "
 msgid "Execute changes on objects"
 msgstr "kora impinduka ku bintu"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Not configured"
+msgid "Execute configured macros"
+msgstr "Ntabwo byashyizweho"
+
 #: db/seeds/schedulers.rb
 msgid "Execute import jobs."
 msgstr ""
@@ -5829,7 +5888,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6070,6 +6128,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
 #: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Amateka"
 
@@ -6528,7 +6587,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6536,14 +6594,11 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -7468,6 +7523,12 @@ msgstr ""
 msgid "Merge"
 msgstr "huriza hamwe"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge tickets"
+msgstr "guhuzwa na Tike itandukanyijwe"
+
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "guhuzwa na Tike itandukanyijwe"
@@ -8179,6 +8240,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
+#: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "No results found"
 msgstr ""
@@ -8714,6 +8776,7 @@ msgstr "bisohoka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Outbound Call"
 msgstr "guhamagara hanze"
 
@@ -8765,7 +8828,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -9343,6 +9405,7 @@ msgid "Reauthenticate"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Received Call"
 msgstr "kwakira uguhamagara"
 
@@ -10088,6 +10151,12 @@ msgstr "hitamo inyandikorugero"
 msgid "Select the customer of the ticket or create one."
 msgstr "Hitamo umukiriya w'itike cyangwa ureme indi"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Select the customer of the ticket or create one."
+msgid "Select the type of ticket your are creating"
+msgstr "Hitamo umukiriya w'itike cyangwa ureme indi"
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
 msgstr ""
@@ -10118,6 +10187,7 @@ msgid "Send"
 msgstr "ohereza"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts
 msgid "Send Email"
 msgstr "ohereza imeri"
 
@@ -10244,6 +10314,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco db/seeds/permissions.rb
 msgid "Sessions"
 msgstr "ibyiciro/igice"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create your first ticket"
+msgid "Set a title for your ticket"
+msgstr "himba itike yawe ya mbere"
 
 #: db/seeds/settings.rb
 msgid "Set agent limit"
@@ -10457,6 +10533,12 @@ msgstr "ibibanziriza ahagaragara"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Show the chat when ready."
 msgstr "Erekana ikiganiro igihe nyacyo"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Show ticket actions"
+msgstr "incamake"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 #, fuzzy
@@ -10748,7 +10830,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10861,6 +10942,7 @@ msgstr "ohereza"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Subscribe"
 msgstr ""
 
@@ -12173,12 +12255,6 @@ msgstr ""
 msgid "Ticket Count"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/routes.ts
-#, fuzzy
-#| msgid "Ticket %s created!"
-msgid "Ticket Create"
-msgstr "Amatike %s yakozwe"
-
 #: db/seeds/settings.rb
 msgid "Ticket Hook"
 msgstr "tike ireshya"
@@ -12255,6 +12331,18 @@ msgstr "ingano y'umutwe w'itike "
 msgid "Ticket Subscriptions"
 msgstr "kwiyandikisha ku matike"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket actions"
+msgstr "izamuka rya tike"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Ticket could not be created."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
 msgstr "izamuka rya tike"
@@ -12270,6 +12358,18 @@ msgstr "amatike nahawe: %s ya %s"
 #| msgid "New Overview"
 msgid "Ticket has %s viewers"
 msgstr "Incamake nshya"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket has been created successfully."
+msgstr "Igeragezwa ryagenze neza"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Ticket info"
+msgstr "guhagarika imenyesha"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
@@ -12488,6 +12588,7 @@ msgstr "Igenagihe"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Title"
@@ -13314,20 +13415,17 @@ msgstr "reba uhereye ku bakoresha"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
@@ -13345,7 +13443,6 @@ msgstr "reba uhereye ku bakoresha"
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Reba ibi muri Zammad"
 
@@ -14903,7 +15000,7 @@ msgstr "Gishya cyangwa gufungura"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
 msgstr "Oya"
@@ -15294,7 +15391,7 @@ msgstr "muby'imbere(ugereranyije)"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
-#: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
+#: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "yes"
 msgstr "Yego"
@@ -15355,6 +15452,11 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#, fuzzy
+#~| msgid "Ticket %s created!"
+#~ msgid "Ticket Create"
+#~ msgstr "Amatike %s yakozwe"
 
 #, fuzzy
 #~| msgid "Selector"
@@ -15495,11 +15597,6 @@ msgstr "igihe cyo gutegereza uyu munsi"
 #~| msgid "Reporting"
 #~ msgid "Sorting"
 #~ msgstr "Gutanga raporo"
-
-#, fuzzy
-#~| msgid "Edit Organization"
-#~ msgid "Edit organization"
-#~ msgstr "hindura  ikigo"
 
 #~ msgid "Activates lost password feature for users."
 #~ msgstr "imiterere kubakoresha ijambo banga ryazimiye"
