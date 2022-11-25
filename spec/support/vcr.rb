@@ -11,7 +11,7 @@ VCR_IGNORE_MATCHING_REGEXPS = [
 VCR.configure do |config|
   config.cassette_library_dir = 'test/data/vcr_cassettes'
   config.hook_into :webmock
-  config.allow_http_connections_when_no_cassette = false
+  config.allow_http_connections_when_no_cassette = %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
   config.ignore_localhost = true
   config.ignore_request do |request|
     uri = URI(request.uri)
@@ -116,7 +116,7 @@ RSpec.configure do |config|
     ].compact
 
     VCR.use_cassette(cassette_path.join(cassette_name), match_requests_on: request_profile) do |cassette|
-      if vcr_options.include?(:time_sensitive) && !cassette.recording? && %w[1 true].exclude?(ENV['CI_IGNORE_CASSETTES'])
+      if vcr_options.include?(:time_sensitive) && !cassette.recording?
         travel_to(cassette.http_interactions.interactions.first.recorded_at)
       end
 
