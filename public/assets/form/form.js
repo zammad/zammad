@@ -196,6 +196,15 @@ $(function() {
         'Your Message...': 'Vaša poruka…',
         'Your Name': 'Vaše ime',
       },
+      'sv': {
+        'Attachments': 'Bilagor',
+        'Email': 'E-post',
+        'Message': 'Meddelande',
+        'Name': 'Namn',
+        'Your Email': 'Din mejl',
+        'Your Message...': 'Ditt meddelande ...',
+        'Your Name': 'Ditt namn',
+      },
       'zh-cn': {
         'Attachments': '附件',
         'Email': '邮件地址',

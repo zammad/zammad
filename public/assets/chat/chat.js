@@ -537,7 +537,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'You are on waiting list position <strong>%s</strong>.': 'מיקומך בתור <strong>%s</strong>.'
       },
       'hr': {
-        '<strong>Chat</strong> with us!': '<strong>Čavrljajte</strong> sa nama!',
+        '<strong>Chat</strong> with us!': '<strong>Dopisujte se</strong> sa nama!',
         'All colleagues are busy.': 'Svi kolege su zauzeti.',
         'Chat closed by %s': '%s zatvara chat',
         'Compose your message…': 'Sastavite poruku…',
@@ -730,9 +730,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         '<strong>Chat</strong> with us!': '<strong>Chatta</strong> med oss!',
         'All colleagues are busy.': 'Alla kollegor är upptagna.',
         'Chat closed by %s': 'Chatt stängd av %s',
-        'Compose your message…': '',
+        'Compose your message…': 'Skriv ditt meddelande …',
         'Connecting': 'Ansluter',
-        'Connection lost': '',
+        'Connection lost': 'Anslutningen försvann',
         'Connection re-established': 'Anslutningen återupprättas',
         'Offline': 'Offline',
         'Online': 'Online',
