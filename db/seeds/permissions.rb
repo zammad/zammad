@@ -384,6 +384,15 @@ Permission.create_if_not_exists(
 )
 
 Permission.create_if_not_exists(
+  name:         'user_preferences.appearance',
+  note:         __('Manage %s'),
+  preferences:  {
+    translations: [__('Appearance')]
+  },
+  allow_signup: true,
+)
+
+Permission.create_if_not_exists(
   name:        'report',
   note:        __('Report Interface'),
   preferences: {},
@@ -490,4 +499,5 @@ customer.permission_grant('user_preferences.password')
 customer.permission_grant('user_preferences.language')
 customer.permission_grant('user_preferences.linked_accounts')
 customer.permission_grant('user_preferences.avatar')
+customer.permission_grant('user_preferences.appearance')
 customer.permission_grant('ticket.customer')

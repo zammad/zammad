@@ -30,4 +30,4 @@ class App.DarkMode extends App.Controller
 
     @quickToggle.prop('checked', if event.theme is 'dark' then true else false)
 
-App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', checked: (-> document.documentElement.dataset.theme == 'dark'), permission: ['user_preferences.*'] }, 'NavBarRight')
+App.Config.set('DarkMode', { prio: 1000, parent: '#current_user', name: __('Dark Mode'), translate: true, toggle: 'dark-mode-quick', checked: (-> document.documentElement.dataset.theme == 'dark'), permission: ['user_preferences.appearance'] }, 'NavBarRight')

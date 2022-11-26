@@ -1,5 +1,5 @@
 class ProfileAppearance extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.apperance'
+  requiredPermission: 'user_preferences.appearance'
   header: __('Appearance')
   events:
     'change input[name="theme"]': 'updateTheme'
