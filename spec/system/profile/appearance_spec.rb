@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Profile > Out of Office', type: :system do
+RSpec.describe 'Profile > Appearance', type: :system do
   context 'when logged in as a customer', authenticated_as: :user do
     let(:user) { create(:customer) }
 
