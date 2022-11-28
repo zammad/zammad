@@ -8,9 +8,11 @@ import FieldAutoCompleteInput from './FieldAutoCompleteInput.vue'
 export const autoCompleteProps = [
   'action',
   'actionIcon',
+  'additionalQueryParams',
   'allowUnknownValues',
   'clearable',
   'debounceInterval',
+  'defaultFilter',
   'filterInputPlaceholder',
   'filterInputValidation',
   'limit',

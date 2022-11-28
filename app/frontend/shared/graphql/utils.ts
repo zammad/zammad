@@ -8,6 +8,13 @@ export const convertToGraphQLId = (type: string, id: number | string) => {
   return `gid://zammad/${type}/${id}`;
 }
 
+const parseGraphqlId = (graphqlId: string) => parseInt(`${graphqlId}`.replace(/gid:\/\/zammad\/.*\//g, ''), 10);
+
+export const getIdFromGraphQLId = (graphqlId = '') => {
+  const parsedGraphqlId = parseGraphqlId(graphqlId);
+  return Number.isInteger(parsedGraphqlId) ? parsedGraphqlId : null;
+}
+
 export const ensureGraphqlId = (type: string, id: number | string): string => {
   if (isGraphQLId(id)) {
     return id;

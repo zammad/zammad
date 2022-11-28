@@ -31,6 +31,7 @@ export const UserDetailAttributesFragmentDoc = gql`
       closed
     }
   }
+  hasSecondaryOrganizations
   ticketsCount {
     open
     closed

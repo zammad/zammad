@@ -5,7 +5,7 @@ import type { ConcreteComponent, Ref } from 'vue'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { cloneDeep } from 'lodash-es'
-import { refDebounced } from '@vueuse/core'
+import { refDebounced, watchOnce } from '@vueuse/core'
 import { useLazyQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
@@ -28,7 +28,9 @@ const props = defineProps<{
   optionIconComponent: ConcreteComponent
 }>()
 
-const { isCurrentValue } = useValue(toRef(props, 'context'))
+const contextReactive = toRef(props, 'context')
+
+const { isCurrentValue } = useValue(contextReactive)
 
 const emit = defineEmits<{
   (e: 'updateOptions', options: AutoCompleteOption[]): void
@@ -37,7 +39,7 @@ const emit = defineEmits<{
 
 const { sortedOptions, selectOption } = useSelectOptions(
   toRef(props, 'options'),
-  toRef(props, 'context'),
+  contextReactive,
 )
 
 let areLocalOptionsReplaced = false
@@ -102,20 +104,24 @@ const AutocompleteSearchDocument = gql`
 const autocompleteQueryHandler = new QueryHandler(
   useLazyQuery(AutocompleteSearchDocument, () => ({
     input: {
-      query: debouncedFilter.value,
+      query: debouncedFilter.value || props.context.defaultFilter || '',
       limit: props.context.limit,
-      ...props.context.additionalQueryParams,
+      ...(props.context.additionalQueryParams || {}),
     },
   })),
 )
 
-watch(
-  () => debouncedFilter.value,
-  (newValue) => {
-    if (!newValue.length) return
-    autocompleteQueryHandler.load()
-  },
-)
+if (props.context.defaultFilter) {
+  autocompleteQueryHandler.load()
+} else {
+  watchOnce(
+    () => debouncedFilter.value,
+    (newValue) => {
+      if (!newValue.length) return
+      autocompleteQueryHandler.load()
+    },
+  )
+}
 
 const autocompleteQueryResultKey = (
   (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode)
@@ -266,7 +272,7 @@ useTraverseOptions(autocompleteList)
       role="listbox"
     >
       <div
-        v-for="(option, index) in filter
+        v-for="(option, index) in filter || context.defaultFilter
           ? sortedAutocompleteOptions
           : sortedOptions"
         :key="String(option.value)"

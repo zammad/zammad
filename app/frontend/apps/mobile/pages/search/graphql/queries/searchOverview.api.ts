@@ -23,6 +23,7 @@ export const SearchDocument = gql`
       }
       customer {
         id
+        internalId
         fullname
       }
       updatedAt
@@ -39,6 +40,7 @@ export const SearchDocument = gql`
       image
       organization {
         id
+        internalId
         name
       }
       updatedAt

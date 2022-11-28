@@ -24,6 +24,7 @@ const userData = {
   organization: {
     __typename: 'Organization',
     id: '234241',
+    internalId: 1,
     name: 'Zammad Foundation',
     objectAttributeValues: [],
     active: true,
@@ -32,6 +33,7 @@ const userData = {
     __typename: 'Permission',
     names: ['admin'],
   },
+  hasSecondaryOrganizations: false,
 }
 
 describe('Session Store', () => {

@@ -16,11 +16,13 @@ export const UserAttributesFragmentDoc = gql`
   }
   organization {
     id
+    internalId
     name
     active
     objectAttributeValues {
       ...objectAttributeValues
     }
   }
+  hasSecondaryOrganizations
 }
     ${ObjectAttributeValuesFragmentDoc}`;

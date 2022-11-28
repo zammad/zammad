@@ -16,7 +16,7 @@ export const useObjectAttributeFormData = (
   const internalObjectAttributeValues: Record<string, FormFieldValue> = {}
   const additionalObjectAttributeValues: ObjectAttributeValueInput[] = []
 
-  const fullRelationID = (relation: string, value: number) => {
+  const fullRelationID = (relation: string, value: number | string) => {
     return convertToGraphQLId(toClassName(relation), value)
   }
 
@@ -28,7 +28,8 @@ export const useObjectAttributeFormData = (
 
     if (objectAttribute.isInternal) {
       internalObjectAttributeValues[camelize(objectAttribute.name)] =
-        objectAttribute.dataOption.relation && typeof value === 'number'
+        objectAttribute.dataOption.relation &&
+        (typeof value === 'number' || typeof value === 'string')
           ? fullRelationID(objectAttribute.dataOption.relation, value)
           : value
     } else {

@@ -26,6 +26,7 @@ fragment userDetailAttributes on User {
       closed
     }
   }
+  hasSecondaryOrganizations
   ticketsCount {
     open
     closed

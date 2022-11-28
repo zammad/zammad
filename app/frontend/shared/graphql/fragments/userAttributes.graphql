@@ -11,10 +11,12 @@ fragment userAttributes on User {
   }
   organization {
     id
+    internalId
     name
     active
     objectAttributeValues {
       ...objectAttributeValues
     }
   }
+  hasSecondaryOrganizations
 }

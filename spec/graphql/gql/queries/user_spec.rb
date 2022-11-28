@@ -14,6 +14,7 @@ RSpec.describe Gql::Queries::User, type: :graphql do
           user(user: { userId: $userId, userInternalId: $userInternalId }) {
             id
             firstname
+            hasSecondaryOrganizations
           }
         }
       QUERY
@@ -41,6 +42,21 @@ RSpec.describe Gql::Queries::User, type: :graphql do
 
         it 'has data' do
           expect(gql.result.data).to include('firstname' => user.firstname)
+        end
+
+        it 'has no secondary organizations' do
+          expect(gql.result.data).to include('hasSecondaryOrganizations' => false)
+        end
+      end
+
+      context 'with secondardy organizations' do
+        let(:organization)            { create(:organization) }
+        let(:secondary_organizations) { create_list(:organization, 2) }
+        let(:user)                    { create(:user, organization_id: organization.id, organization_ids: secondary_organizations.map(&:id)) }
+        let(:authenticated)           { user }
+
+        it 'has secondary organizations' do
+          expect(gql.result.data).to include('hasSecondaryOrganizations' => true)
         end
       end
 

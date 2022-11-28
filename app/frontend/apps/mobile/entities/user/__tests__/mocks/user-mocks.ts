@@ -52,6 +52,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
       ],
       totalCount: 1,
     },
+    hasSecondaryOrganizations: true,
     objectAttributeValues: [
       {
         attribute: {

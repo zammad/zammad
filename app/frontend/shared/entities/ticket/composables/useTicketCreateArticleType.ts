@@ -2,7 +2,6 @@
 
 import { computed } from 'vue'
 import { useApplicationStore } from '@shared/stores/application'
-import type { RadioOption } from '@shared/components/Form/fields/FieldRadio'
 import { TicketCreateArticleType } from '../types'
 
 export const useTicketCreateArticleType = () => {

@@ -193,6 +193,9 @@ export type FormHandlerFunction = (
   formNode: FormKitNode | undefined,
   values: FormValues,
   changeFields: Record<string, Partial<FormSchemaField>>,
+  updateSchemaDataField: (
+    field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
+  ) => void,
   schemaData: ReactiveFormSchemData,
   changedField?: ChangedField,
 ) => void

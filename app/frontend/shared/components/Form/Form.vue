@@ -518,6 +518,7 @@ const executeFormHandler = (
       formNode.value,
       currentValues,
       props.changeFields,
+      updateSchemaDataField,
       schemaData,
       changedField,
     )

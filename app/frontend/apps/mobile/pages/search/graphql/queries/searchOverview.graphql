@@ -19,6 +19,7 @@ query search(
       }
       customer {
         id
+        internalId
         fullname
       }
       updatedAt
@@ -35,6 +36,7 @@ query search(
       image
       organization {
         id
+        internalId
         name
       }
       updatedAt

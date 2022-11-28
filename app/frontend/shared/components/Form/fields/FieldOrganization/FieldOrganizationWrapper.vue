@@ -30,13 +30,12 @@ const props = defineProps<Props>()
 
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldOrganizationOptionIcon),
-
   initialOptionBuilder: (
     initialEntityObject: ObjectLike,
     value: SelectValue,
     context: Props['context'],
   ) => {
-    if (!context.belongsToObjectField) return null
+    if (!context.belongsToObjectField || !initialEntityObject) return null
 
     const belongsToObject = initialEntityObject[
       context.belongsToObjectField
@@ -46,11 +45,6 @@ Object.assign(props.context, {
 
     return getAutoCompleteOption(belongsToObject)
   },
-
-  // TODO: change the action to the actual new organization route
-  action: '/tickets',
-  actionIcon: 'mobile-new-organization',
-
   gqlQuery: AutocompleteSearchOrganizationDocument,
 })
 </script>

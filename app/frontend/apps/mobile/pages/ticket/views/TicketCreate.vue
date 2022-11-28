@@ -12,7 +12,7 @@ import { useMultiStepForm, useForm } from '@shared/components/Form'
 import { useApplicationStore } from '@shared/stores/application'
 import { useTicketCreateArticleType } from '@shared/entities/ticket/composables/useTicketCreateArticleType'
 import { ButtonVariant } from '@shared/components/Form/fields/FieldButton/types'
-import { useTicketFormOganizationHandling } from '@shared/entities/ticket/composables/useTicketFormOrganizationHandler'
+import { useTicketFormOganizationHandler } from '@shared/entities/ticket/composables/useTicketFormOrganizationHandler'
 import { FormData, type FormSchemaNode } from '@shared/components/Form/types'
 import { i18n } from '@shared/i18n'
 import { MutationHandler } from '@shared/server/apollo/handler'
@@ -317,7 +317,7 @@ const submitButtonDisabled = computed(() => {
       ref="form"
       class="text-left"
       :schema="formSchema"
-      :handlers="[useTicketFormOganizationHandling()]"
+      :handlers="[useTicketFormOganizationHandler()]"
       :multi-step-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"

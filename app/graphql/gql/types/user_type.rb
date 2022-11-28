@@ -22,7 +22,7 @@ module Gql::Types
       belongs_to :organization, Gql::Types::OrganizationType
 
       field :secondary_organizations, Gql::Types::OrganizationType.connection_type
-      field :has_secondary_organizations, Boolean, method: 'secondary_organizations?'
+      field :has_secondary_organizations, Boolean, resolver_method: :secondary_organizations?
 
       field :firstname, String
       field :lastname, String

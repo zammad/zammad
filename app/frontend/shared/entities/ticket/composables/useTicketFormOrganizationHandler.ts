@@ -4,31 +4,44 @@ import { getNode } from '@formkit/core'
 import { FormHandlerExecution } from '@shared/components/Form'
 import type { FormHandlerFunction, FormHandler } from '@shared/components/Form'
 import { useSessionStore } from '@shared/stores/session'
-import type { Organization } from '@shared/graphql/types'
+import type { Organization, Scalars } from '@shared/graphql/types'
 import type { AutoCompleteCustomerOption } from '@shared/components/Form/fields/FieldCustomer'
 import type { UserData } from '@shared/types/store' // TODO: remove this import
-import type { FormSchemaField } from '@shared/components/Form/types'
+import type {
+  FormSchemaField,
+  ReactiveFormSchemData,
+  ChangedField,
+} from '@shared/components/Form/types'
 import { getAutoCompleteOption } from '@shared/entities/organization/utils/getAutoCompleteOption'
 
 // TODO: needs to be aligned, when auto completes has a final state.
-export const useTicketFormOganizationHandling = (): FormHandler => {
+export const useTicketFormOganizationHandler = (): FormHandler => {
+  const executeHandler = (
+    execution: FormHandlerExecution,
+    schemaData: ReactiveFormSchemData,
+    changedField?: ChangedField,
+  ) => {
+    if (!schemaData.fields.organization_id) return false
+    if (
+      execution === FormHandlerExecution.FieldChange &&
+      (!changedField || changedField.name !== 'customer_id')
+    ) {
+      return false
+    }
+
+    return true
+  }
+
   const handleOrganizationField: FormHandlerFunction = (
     execution,
     formNode,
     values,
     changeFields,
+    updateSchemaDataField,
     schemaData,
     changedField,
-    // TODO ...
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
-    if (!schemaData.fields.organization_id) return
-    if (
-      execution === FormHandlerExecution.FieldChange &&
-      (!changedField || changedField.name !== 'customer_id')
-    ) {
-      return
-    }
+    if (!executeHandler(execution, schemaData, changedField)) return
 
     const session = useSessionStore()
 
@@ -59,6 +72,7 @@ export const useTicketFormOganizationHandling = (): FormHandler => {
     }
 
     const setOrganizationField = (
+      customerId: Scalars['ID'],
       organization?: Maybe<Partial<Organization>>,
     ) => {
       if (!organization) return
@@ -66,18 +80,28 @@ export const useTicketFormOganizationHandling = (): FormHandler => {
       organizationField.show = true
       organizationField.required = true
 
-      organizationField.props = {
-        options: [getAutoCompleteOption(organization)],
-      }
-      organizationField.value = organization.id
+      const currentValueOption = getAutoCompleteOption(organization)
+
+      // Some information can be changed during the next user interactions, so update only the current schema data.
+      updateSchemaDataField({
+        name: 'organization_id',
+        props: {
+          defaultFilter: '*',
+          options: [currentValueOption],
+          additionalQueryParams: {
+            customerId,
+          },
+        },
+        value: currentValueOption.value,
+      })
     }
 
     const customer = setCustomer()
-    // TODO: extend if with secondary orga... check
-    if (customer) {
-      setOrganizationField(customer.organization as Organization)
+    if (customer?.hasSecondaryOrganizations) {
+      setOrganizationField(customer.id, customer.organization as Organization)
     }
 
+    // This values should be fixed, until the user change something in the customer_id field.
     changeFields.organization_id = {
       ...(changeFields.organization_id || {}),
       ...organizationField,

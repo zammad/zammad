@@ -36,7 +36,7 @@ Object.assign(props.context, {
     value: SelectValue,
     context: Props['context'],
   ) => {
-    if (!context.belongsToObjectField) return null
+    if (!context.belongsToObjectField || !initialEntityObject) return null
 
     const belongsToObject = initialEntityObject[context.belongsToObjectField]
 
