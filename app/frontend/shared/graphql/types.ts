@@ -1326,8 +1326,14 @@ export type TagsInterface = {
 export type TemplateRenderContextInput = {
   /** Ticket customer (if no ticket exists yet) */
   customerId?: InputMaybe<Scalars['ID']>;
+  /** Group */
+  groupId?: InputMaybe<Scalars['ID']>;
+  /** Organization */
+  organizationId?: InputMaybe<Scalars['ID']>;
   /** Ticket */
   ticketId?: InputMaybe<Scalars['ID']>;
+  /** User (if not present the currently logged in user will be passed) */
+  userId?: InputMaybe<Scalars['ID']>;
 };
 
 /** Text modules */

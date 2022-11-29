@@ -5,15 +5,18 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, type: :graphql do
 
   context 'when searching for text modules' do
-    let(:groups)   { create_list(:group, 2) }
-    let(:agent)    { create(:agent, groups: groups) }
-    let(:ticket)   { create(:ticket, group: groups.first) }
-    let(:customer) { create(:customer) }
+    let(:groups)       { create_list(:group, 2) }
+    let(:agent)        { create(:agent, groups: groups) }
+    let(:ticket)       { create(:ticket, group: groups.first) }
+    let(:customer)     { create(:customer) }
+    let(:group)        { groups.first }
+    let(:organization) { create(:organization) }
+    let(:user)         { create(:user) }
     let!(:text_modules) do
       create_list(:text_module, 4).each_with_index do |tm, i|
         tm.name = "TextModuleTest#{i}"
         tm.keywords = "KeywordTextModuleTest#{i}"
-        tm.content = '#{ticket.customer.fullname}-#{user.fullname}' # rubocop:disable Lint/InterpolationCheck
+        tm.content = 't:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}' # rubocop:disable Lint/InterpolationCheck
         tm.groups = if i <= 2
                       groups
                     elsif i == 3
@@ -26,17 +29,17 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
     end
     let(:query) do
       <<~QUERY
-        query textModuleSuggestions($query: String!, $limit: Int, $ticketId: ID, $customerId: ID)  {
+        query textModuleSuggestions($query: String!, $limit: Int, $ticketId: ID, $customerId: ID, $userId: ID, $groupId: ID, $organizationId: ID)  {
           textModuleSuggestions(query: $query, limit: $limit) {
             name
             keywords
             content
-            renderedContent(templateRenderContext: { ticketId: $ticketId, customerId: $customerId })
+            renderedContent(templateRenderContext: { ticketId: $ticketId, customerId: $customerId, userId: $userId, groupId: $groupId, organizationId: $organizationId })
           }
         }
       QUERY
     end
-    let(:variables)    { { query: query_string, limit: limit, ticketId: gql.id(ticket), customerId: gql.id(customer) } }
+    let(:variables)    { { query: query_string, limit: limit, ticketId: gql.id(ticket), customerId: gql.id(customer), userId: gql.id(user), groupId: gql.id(group), organizationId: gql.id(organization) } }
     let(:query_string) { 'TextModuleTest' }
     let(:limit)        { nil }
 
@@ -79,7 +82,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
             'name'            => text_modules.first.name,
             'keywords'        => text_modules.first.keywords,
             'content'         => text_modules.first.content,
-            'renderedContent' => "#{ticket.customer.fullname}-#{agent.fullname}",
+            'renderedContent' => "t:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}",
           }
         end
         let(:query_string) { text_modules.first.name }
@@ -90,13 +93,13 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
       end
 
       context 'without a ticket, but with a customer present' do
-        let(:variables) { { query: query_string, limit: limit, customerId: gql.id(customer) } }
+        let(:variables) { { query: query_string, limit: limit, ticketId: nil, customerId: gql.id(customer), userId: gql.id(user), groupId: gql.id(group), organizationId: gql.id(organization) } }
         let(:first_text_module_payload) do
           {
             'name'            => text_modules.first.name,
             'keywords'        => text_modules.first.keywords,
             'content'         => text_modules.first.content,
-            'renderedContent' => "#{customer.fullname}-#{agent.fullname}",
+            'renderedContent' => "t:#{customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}",
           }
         end
         let(:query_string) { text_modules.first.name }
