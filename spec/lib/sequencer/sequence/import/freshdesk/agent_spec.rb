@@ -70,6 +70,10 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
       }
     end
 
+    before do
+      stub_request(:get, 'https://yours.freshdesk.com/api/v2/agents/me').to_return(status: 200, body: '', headers: {})
+    end
+
     it 'imports user correctly (increased user count)' do
       expect { process(process_payload) }.to change(User, :count).by(1)
     end
