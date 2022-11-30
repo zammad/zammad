@@ -18,8 +18,6 @@ VCR.configure do |config|
 
     next true if VCR_IGNORE_MATCHING_HOSTS.any?     { |elem| uri.host.include? elem }
     next true if VCR_IGNORE_MATCHING_REGEXPS.any?   { |elem| uri.host.match? elem }
-
-    puts "Using cassette for request #{request.uri}"
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
