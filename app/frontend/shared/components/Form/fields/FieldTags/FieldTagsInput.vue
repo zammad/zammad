@@ -13,9 +13,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const context = toRef(props, 'context')
+const reactiveContext = toRef(props, 'context')
 
-const { localValue } = useValue(context)
+const { localValue } = useValue(reactiveContext)
 
 const selectedTagsList = computed(() => {
   if (!localValue.value || !Array.isArray(localValue.value)) return []
@@ -26,12 +26,15 @@ const dialog = useDialog({
   name: `field-tags-${props.context.node.name}`,
   prefetch: true,
   component: () => import('./FieldTagsDialog.vue'),
+  afterClose: () => {
+    reactiveContext.value.node.emit('dialog:afterClose', reactiveContext.value)
+  },
 })
 
 const showDialog = () => {
   return dialog.open({
     name: dialog.name,
-    context,
+    context: reactiveContext,
   })
 }
 
@@ -40,7 +43,7 @@ const onInputClick = () => {
   showDialog()
 }
 
-useFormBlock(context, onInputClick)
+useFormBlock(reactiveContext, onInputClick)
 </script>
 
 <template>

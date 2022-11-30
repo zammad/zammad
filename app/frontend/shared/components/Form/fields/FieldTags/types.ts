@@ -5,7 +5,6 @@ import type { FormFieldContext } from '../../types/field'
 export interface FieldTagsProps {
   options: FormFieldContext['options']
   disabled?: boolean
-  noOptionsLabelTranslation?: boolean
   canCreate?: boolean
   sorting?: 'label' | 'value'
 }

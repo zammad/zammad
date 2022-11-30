@@ -2,12 +2,14 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
+import type { FormKitNode } from '@formkit/core'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
-import type { FormKitNode } from '@formkit/core'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import { useTicketInformation } from '../../composable/useTicketInformation'
+import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 
 const { attributes: objectAttributes } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
@@ -42,6 +44,8 @@ onMounted(async () => {
 onUnmounted(() => {
   formVisible.value = false
 })
+
+const { isTicketAgent } = useTicketView(ticket)
 </script>
 
 <template>
@@ -59,5 +63,8 @@ onUnmounted(() => {
       group_id: 'group.name',
     }"
   />
+
+  <TicketTags v-if="isTicketAgent && ticket" :ticket="ticket" />
+
   <!-- TODO subscribe -->
 </template>

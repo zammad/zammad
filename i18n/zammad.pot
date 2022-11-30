@@ -9540,6 +9540,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb
@@ -10653,6 +10654,10 @@ msgstr ""
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_reminder_reached/en.html.erb
 msgid "Ticket reminder reached (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket needs attention: reminder reached for (#{ticket.title}) with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+msgid "Ticket tags could not be updated."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue

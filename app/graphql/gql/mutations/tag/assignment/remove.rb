@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
-  class Tag::Assignment::Remove < BaseMutation
+  class Tag::Assignment::Remove < Tag::Assignment::Base
     description 'Removes a tag from an object.'
 
     argument :tag, String, description: 'Name of the tag to remove'
@@ -10,7 +10,8 @@ module Gql::Mutations
     field :success, Boolean, description: 'Was the mutation successful?'
 
     def resolve(tag:, object_id:)
-      object = Gql::ZammadSchema.authorized_object_from_id(object_id, user: context.current_user, query: :update?, type: [::Ticket, ::User, ::KnowledgeBase::Answer])
+      object = fetch_object(object_id)
+
       { success: object.tag_remove(tag, context.current_user.id) }
     end
   end

@@ -171,7 +171,9 @@ describe('MutationHandler', () => {
         expect.assertions(1)
         const mutationHandlerObject = new MutationHandler(sampleMutation())
 
-        await mutationHandlerObject.send()
+        await mutationHandlerObject.send().catch(() => {
+          return null
+        })
 
         const { notifications } = useNotifications()
 
@@ -215,7 +217,9 @@ describe('MutationHandler', () => {
           },
         })
 
-        await mutationHandlerObject.send()
+        await mutationHandlerObject.send().catch(() => {
+          return null
+        })
       })
     })
   })

@@ -55,6 +55,32 @@ RSpec.shared_examples 'HasTags' do
     end
   end
 
+  describe '#tag_update' do
+    let(:items) { %w[foo bar] }
+
+    it 'delegates to Tag.tag_update' do
+      expect(Tag)
+        .to receive(:tag_update)
+        .with(object:        described_class.name,
+              o_id:          subject.id,
+              items:         items,
+              created_by_id: nil)
+
+      subject.tag_update(items)
+    end
+
+    it 'optionally accepts a current_user_id argument' do
+      expect(Tag)
+        .to receive(:tag_update)
+        .with(object:        described_class.name,
+              o_id:          subject.id,
+              items:         items,
+              created_by_id: 1)
+
+      subject.tag_update(items, 1)
+    end
+  end
+
   describe '#tag_list' do
     it 'delegates to Tag.tag_list' do
       expect(Tag)

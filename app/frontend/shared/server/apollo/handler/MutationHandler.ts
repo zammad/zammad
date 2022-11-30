@@ -17,23 +17,25 @@ export default class MutationHandler<
 > {
   public async send(variables?: TVariables): Promise<Maybe<TResult>> {
     return new Promise((resolve, reject) => {
-      this.operationResult
-        .mutate(variables)
-        .then((result) => {
-          if (result?.data) {
-            const { errors } = Object.values(result.data)[0] as {
-              errors: UserError[]
-            }
+      this.operationResult.mutate(variables).then((result) => {
+        if (!result) {
+          return reject(this.operationError().value)
+        }
 
-            if (errors) {
-              const userErrors = new UserError(errors)
-
-              return reject(userErrors)
-            }
+        if (result.data) {
+          const { errors } = Object.values(result.data)[0] as {
+            errors: UserError[]
           }
-          return resolve(result?.data || null)
-        })
-        .catch(() => reject(this.operationError().value))
+
+          if (errors) {
+            const userErrors = new UserError(errors)
+
+            return reject(userErrors)
+          }
+        }
+
+        return resolve(result.data || null)
+      })
     })
   }
 

@@ -2,11 +2,11 @@
 
 <script setup lang="ts">
 import { computed, ref, toRef } from 'vue'
+import { watchIgnorable } from '@vueuse/shared'
 import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
-import { i18n } from '@shared/i18n'
 import stopEvent from '@shared/utils/events'
 import type { FieldTagsContext } from './types'
 import useValue from '../../composables/useValue'
@@ -16,11 +16,12 @@ interface Props {
   context: FieldTagsContext
 }
 
-// TODO call API to get/create tags
+// TODO: call API to list existing tags
+// TODO: we should not toggle already selected tags, when it's added twice, because it's not intuitive.
 
 const props = defineProps<Props>()
 const { localValue } = useValue(toRef(props, 'context'))
-const currentValue = computed(() => localValue.value || [])
+const currentValue = computed<string[]>(() => localValue.value || [])
 const isCurrentValue = (tag: string) => currentValue.value.includes(tag)
 
 const filter = ref('')
@@ -29,12 +30,8 @@ const newTags = ref<{ value: string; label: string }[]>([])
 const filterInput = ref<CommonInputSearchExpose>()
 const tagsListbox = ref<HTMLElement>()
 
-const translatedOptions = computed(() => {
-  const {
-    options = [],
-    noOptionsLabelTranslation,
-    sorting = 'label',
-  } = props.context
+const sortedOptions = computed(() => {
+  const { options = [], sorting = 'label' } = props.context
 
   const allOptions = [...options, ...newTags.value].sort((a, b) => {
     const a1 = (a[sorting] || '').toString()
@@ -42,29 +39,38 @@ const translatedOptions = computed(() => {
     return a1.localeCompare(b1)
   })
 
-  if (!noOptionsLabelTranslation) return allOptions
-
-  return allOptions.map((option) => {
-    option.label = i18n.t(option.label, ...(option.labelPlaceholder || []))
-    return option
-  })
+  return allOptions
 })
 
 const tagExists = (tag: string) => {
-  return translatedOptions.value.some((option) => option.value === tag)
+  return sortedOptions.value.some((option) => option.value === tag)
 }
 
-const filteredTags = computed(() => {
-  if (!filter.value) return translatedOptions.value
+const { ignoreUpdates } = watchIgnorable(
+  currentValue,
+  (newValue) => {
+    newValue.forEach((tag) => {
+      if (!tagExists(tag)) {
+        newTags.value.push({ value: tag, label: tag })
+      }
+    })
+  },
+  { immediate: true },
+)
 
-  return translatedOptions.value.filter((tag) =>
+const filteredTags = computed(() => {
+  if (!filter.value) return sortedOptions.value
+
+  return sortedOptions.value.filter((tag) =>
     tag.label.toLowerCase().includes(filter.value.toLowerCase()),
   )
 })
 
 const removeTag = (tag: string) => {
   const newValue = currentValue.value.filter((item: string) => item !== tag)
-  props.context.node.input(newValue)
+  ignoreUpdates(() => {
+    props.context.node.input(newValue)
+  })
 }
 
 const toggleTag = (tag: string) => {
@@ -74,7 +80,9 @@ const toggleTag = (tag: string) => {
     return
   }
   normalizedValue.push(tag)
-  props.context.node.input(normalizedValue)
+  ignoreUpdates(() => {
+    props.context.node.input(normalizedValue)
+  })
 }
 
 const createTag = () => {

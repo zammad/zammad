@@ -45,6 +45,24 @@ remove an tag of model
 
 =begin
 
+update tags of model
+
+  model = Model.find(123)
+  model.tag_update(['name', 'tag'])
+
+=end
+
+  def tag_update(items, current_user_id = nil)
+    Tag.tag_update(
+      object:        self.class.to_s,
+      o_id:          id,
+      items:         items,
+      created_by_id: current_user_id,
+    )
+  end
+
+=begin
+
 tag list of model
 
   model = Model.find(123)

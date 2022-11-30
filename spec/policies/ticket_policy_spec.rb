@@ -155,4 +155,54 @@ describe TicketPolicy do
     end
 
   end
+
+  describe 'agent access' do
+    context 'when user is customer' do
+      let(:user)   { create(:customer) }
+      let(:record) { create(:ticket, customer: user) }
+
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access]) }
+    end
+
+    context 'when user is agent with read access' do
+      let(:user) { create(:agent) }
+
+      before do
+        user.user_groups.create! group: record.group, access: 'read'
+      end
+
+      it { is_expected.to permit_actions(%i[agent_read_access]) }
+      it { is_expected.to forbid_actions(%i[agent_update_access]) }
+    end
+
+    context 'when user is agent with update access' do
+      let(:user) { create(:agent, groups: [record.group]) }
+
+      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
+    end
+
+    context 'when user is agent-customer with customer access to ticket' do
+      let(:user)   { create(:agent_and_customer) }
+      let(:record) { create(:ticket, customer: user) }
+
+      it { is_expected.to forbid_actions(%i[agent_read_access agent_update_access]) }
+    end
+
+    context 'when user is agent-customer with agent read access to ticket' do
+      let(:user) { create(:agent_and_customer) }
+
+      before do
+        user.user_groups.create! group: record.group, access: 'read'
+      end
+
+      it { is_expected.to permit_actions(%i[agent_read_access]) }
+      it { is_expected.to forbid_actions(%i[agent_update_access]) }
+    end
+
+    context 'when user is agent-customer with agent update access to ticket' do
+      let(:user) { create(:agent_and_customer, groups: [record.group]) }
+
+      it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
+    end
+  end
 end

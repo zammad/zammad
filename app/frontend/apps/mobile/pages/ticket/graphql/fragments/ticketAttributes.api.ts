@@ -49,5 +49,6 @@ export const TicketAttributesFragmentDoc = gql`
   objectAttributeValues {
     ...objectAttributeValues
   }
+  tags
 }
     ${ObjectAttributeValuesFragmentDoc}`;

@@ -128,6 +128,59 @@ remove all tags of certain object
 
 =begin
 
+update tags for certain object
+
+  Tag.tag_update(
+    object: 'Ticket',
+    o_id: ticket.id,
+    items: ['some tag', ['another tag']],
+    created_by_id: current_user.id,
+  )
+
+=end
+
+  def self.tag_update(object:, o_id:, items:, created_by_id: nil)
+    given_tags = items.map(&:strip!)
+    old_tags   = tag_list(object: object, o_id: o_id)
+
+    tag_object_id = Tag::Object.lookup_by_name_and_create(object).id
+
+    added_tags   = given_tags - old_tags
+    removed_tags = old_tags - given_tags
+
+    added_tags.each do |tag_name|
+      tag_item_id = Tag::Item.lookup_by_name_and_create(tag_name).id
+
+      Tag.create(
+        tag_object_id: tag_object_id,
+        tag_item_id:   tag_item_id,
+        o_id:          o_id,
+        created_by_id: created_by_id,
+      )
+    end
+
+    if removed_tags.any?
+      tag_item_ids = removed_tags.map { |tag_name| Tag::Item.lookup_by_name_and_create(tag_name).id }
+
+      Tag
+        .where(
+          tag_object_id: tag_object_id,
+          tag_item_id:   tag_item_ids,
+          o_id:          o_id,
+        )
+        .destroy_all
+    end
+
+    # touch reference
+    if added_tags.any? || removed_tags.any?
+      touch_reference_by_params(object: object, o_id: o_id)
+    end
+
+    true
+  end
+
+=begin
+
 tag list for certain object
 
   tags = Tag.tag_list(

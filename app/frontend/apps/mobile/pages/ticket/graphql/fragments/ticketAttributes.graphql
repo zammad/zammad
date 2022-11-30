@@ -44,4 +44,5 @@ fragment ticketAttributes on Ticket {
   objectAttributeValues {
     ...objectAttributeValues
   }
+  tags
 }

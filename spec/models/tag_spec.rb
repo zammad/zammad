@@ -5,12 +5,7 @@ require 'rails_helper'
 RSpec.describe Tag, type: :model do
   subject(:tag) { create(:tag) }
 
-  describe '.tag_add' do
-    it 'touches the target object' do
-      expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
-        .to change { Ticket.first.updated_at }
-    end
-
+  shared_examples 'tag adding' do
     context 'when a Tag::Object does not exist for the given class' do
       it 'creates it and assigns it to a new Tag' do
         expect { described_class.tag_add(object: 'Foo', item: 'bar', o_id: 1, created_by_id: 1) }
@@ -97,6 +92,15 @@ RSpec.describe Tag, type: :model do
     end
   end
 
+  describe '.tag_add' do
+    it 'touches the target object' do
+      expect { described_class.tag_add(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
+        .to change { Ticket.first.updated_at }
+    end
+
+    include_examples 'tag adding'
+  end
+
   describe '.tag_remove' do
     it 'touches the target object' do
       expect { described_class.tag_remove(object: 'Ticket', item: 'foo', o_id: Ticket.first.id, created_by_id: 1) }
@@ -119,6 +123,46 @@ RSpec.describe Tag, type: :model do
           .not_to change(described_class, :count)
       end
     end
+  end
+
+  describe '.tag_update' do
+    let(:ticket) { Ticket.first }
+
+    it 'touches the target object' do
+      expect { described_class.tag_update(object: 'Ticket', items: ['foo'], o_id: ticket.id, created_by_id: 1) }
+        .to change { ticket.reload.updated_at }
+    end
+
+    it 'adds new tags' do
+      described_class.tag_update(object: 'Ticket', items: %w[foo bar], o_id: ticket.id, created_by_id: 1)
+      expect(ticket.tag_list).to match_array %w[foo bar]
+    end
+
+    context 'with existing tags' do
+      before do
+        %w[tag1 tag2].each { |elem| ticket.tag_add elem, 1 }
+      end
+
+      it 'make no changes if given tags match existing tags' do
+        described_class.tag_update(object: 'Ticket', items: %w[tag1 tag2], o_id: ticket.id, created_by_id: 1)
+
+        expect(ticket.tag_list).to match_array %w[tag1 tag2]
+      end
+
+      it 'removes no longer present tags' do
+        described_class.tag_update(object: 'Ticket', items: ['tag1'], o_id: ticket.id, created_by_id: 1)
+
+        expect(ticket.tag_list).to match_array ['tag1']
+      end
+
+      it 'adds and removes no longer present tags at once' do
+        described_class.tag_update(object: 'Ticket', items: %w[tag1 foo], o_id: ticket.id, created_by_id: 1)
+
+        expect(ticket.tag_list).to match_array %w[tag1 foo]
+      end
+    end
+
+    include_examples 'tag adding'
   end
 
   describe '.tag_list' do

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: :graphql do
-  context 'when assigning a new tag', authenticated_as: :agent do
+RSpec.describe Gql::Mutations::Tag::Assignment::Update, :aggregate_failures, type: :graphql do
+  context 'when updating tags', authenticated_as: :agent do
     let(:agent) { create(:agent, groups: [object.group]) }
     let(:query) do
       <<~QUERY
-        mutation tagAssignmentAdd($tag: String!, $objectId: ID!) {
-          tagAssignmentAdd(tag: $tag, objectId: $objectId) {
+        mutation tagAssignmentUpdate($tags: [String!]!, $objectId: ID!) {
+          tagAssignmentUpdate(tags: $tags, objectId: $objectId) {
             success
             errors {
               message
@@ -21,13 +21,13 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
 
     let(:variables) do
       {
-        tag:      tag,
+        tags:     tags_list,
         objectId: gql.id(object),
       }
     end
 
     let(:object) { create(:ticket) }
-    let(:tag) { 'tag1' }
+    let(:tags_list) { %w[tag1 other_tag] }
 
     before do
       gql.execute(query, variables: variables)
@@ -36,13 +36,15 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
     context 'with ticket write permission' do
       it 'adds the tag' do
         expect(gql.result.data['success']).to be(true)
-        expect(object.reload.tag_list).to eq([tag])
+        expect(object.reload.tag_list).to match_array(tags_list)
       end
 
-      it 'adds an already assigned tag' do
+      it 'removes the tag' do
+        (tags_list + ['tag3']).each { |elem| object.tag_add elem }
         gql.execute(query, variables: variables)
+
         expect(gql.result.data['success']).to be(true)
-        expect(object.reload.tag_list).to eq([tag])
+        expect(object.reload.tag_list).to eq(tags_list)
       end
     end
 
@@ -63,28 +65,5 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'
-
-    context 'when assigning a new tag to KB answer', authenticated_as: :user do
-      include_context 'basic Knowledge Base'
-
-      let(:object) { published_answer }
-
-      context 'when user is editor' do
-        let(:user)   { create(:admin) }
-
-        it 'adds the tag' do
-          expect(gql.result.data['success']).to be(true)
-          expect(object.reload.tag_list).to eq([tag])
-        end
-      end
-
-      context 'when user is not editor' do
-        let(:user) { create(:agent) }
-
-        it 'raises an error' do
-          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
-        end
-      end
-    end
   end
 end
