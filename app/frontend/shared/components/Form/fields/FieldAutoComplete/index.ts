@@ -8,6 +8,7 @@ import FieldAutoCompleteInput from './FieldAutoCompleteInput.vue'
 export const autoCompleteProps = [
   'action',
   'actionIcon',
+  'actionLabel',
   'additionalQueryParams',
   'allowUnknownValues',
   'clearable',
@@ -20,6 +21,8 @@ export const autoCompleteProps = [
   'noOptionsLabelTranslation',
   'belongsToObjectField',
   'optionIcon',
+  'dialogNotFoundMessage',
+  'dialogEmptyMessage',
   'options',
   'initialOptionBuilder',
   'sorting',

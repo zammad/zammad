@@ -10,11 +10,13 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { closeDialog } from '@shared/composables/useDialog'
 import { useRoute, useRouter } from 'vue-router'
-import { getIdFromGraphQLId } from '@shared/graphql/utils'
+import { toRef } from 'vue'
+import { useTicketsMerge } from '../../composable/useTicketsMerge'
+import type { TicketById } from '../../types/tickets'
 
 interface Props {
   name: string
-  ticketId: string
+  ticket: TicketById
 }
 
 const props = defineProps<Props>()
@@ -22,13 +24,17 @@ const props = defineProps<Props>()
 const route = useRoute()
 const router = useRouter()
 
+const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(
+  toRef(props, 'ticket'),
+  () => closeDialog(props.name),
+)
+
 const topButtons: CommonButtonOption[] = [
   {
     label: __('Merge tickets'),
     icon: 'mobile-merge',
-    onAction() {
-      console.log('open merge tickets autocomplete')
-    },
+    permissions: ['ticket.agent'],
+    onAction: openMergeTicketsDialog,
   },
   {
     label: __('Subscribe'),
@@ -42,11 +48,12 @@ const topButtons: CommonButtonOption[] = [
     label: __('Ticket info'),
     icon: 'mobile-info',
     onAction() {
-      const internalId = getIdFromGraphQLId(props.ticketId)
+      if (!props.ticket) return
+
       const informationRoute = {
         name: 'TicketInformationDetails',
         params: {
-          internalId,
+          internalId: props.ticket.internalId,
         },
       }
       closeDialog(props.name)
@@ -68,6 +75,17 @@ const topButtons: CommonButtonOption[] = [
     </template>
     <div class="w-full px-3">
       <CommonButtonGroup class="py-6" mode="full" :options="topButtons" />
+      <FormKit
+        ref="autocompleteRef"
+        type="autocomplete"
+        outer-class="hidden"
+        :label="__('Find a ticket')"
+        :gql-query="gqlQuery"
+        :action-label="__('Confirm merge')"
+        :additional-query-params="{ sourceTicketId: ticket.id }"
+        :label-empty="__('Start typing to find the ticket to merge into.')"
+        action-icon="mobile-merge"
+      />
       <CommonSectionMenu>
         <CommonSectionMenuLink
           :label="__('Execute configured macros')"

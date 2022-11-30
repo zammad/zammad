@@ -10,5 +10,6 @@ export interface CommonButtonOption {
   controls?: string
   labelPlaceholder?: string[]
   disabled?: boolean
+  permissions?: string | string[]
   icon?: string | IconProps
 }

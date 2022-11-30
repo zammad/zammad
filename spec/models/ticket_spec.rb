@@ -122,14 +122,14 @@ RSpec.describe Ticket, type: :model do
 
         it 'raises an error' do
           expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
-            .to raise_error('ticket already merged, no merge into merged ticket possible')
+            .to raise_error('It is not possible to merge into an already merged ticket.')
         end
       end
 
       context 'when attempting to self-merge (i.e., to merge A → A)' do
         it 'raises an error' do
           expect { ticket.merge_to(ticket_id: ticket.id, user_id: 1) }
-            .to raise_error("Can't merge ticket with itself!")
+            .to raise_error('A ticket cannot be merged into itself.')
         end
       end
 

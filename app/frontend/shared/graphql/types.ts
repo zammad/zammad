@@ -73,27 +73,14 @@ export type AttachmentInput = {
 };
 
 /** Type that represents an autocomplete entry. */
-export type AutocompleteEntry = {
-  __typename?: 'AutocompleteEntry';
+export type AutocompleteSearchEntry = {
+  __typename?: 'AutocompleteSearchEntry';
   disabled?: Maybe<Scalars['Boolean']>;
   heading?: Maybe<Scalars['String']>;
   headingPlaceholder?: Maybe<Array<Scalars['String']>>;
   icon?: Maybe<Scalars['String']>;
   label: Scalars['String'];
   labelPlaceholder?: Maybe<Array<Scalars['String']>>;
-  value: Scalars['String'];
-};
-
-/** Type that represents an autocomplete organization entry. */
-export type AutocompleteOrganizationEntry = {
-  __typename?: 'AutocompleteOrganizationEntry';
-  disabled?: Maybe<Scalars['Boolean']>;
-  heading?: Maybe<Scalars['String']>;
-  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
-  icon?: Maybe<Scalars['String']>;
-  label: Scalars['String'];
-  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
-  organization: Organization;
   value: Scalars['String'];
 };
 
@@ -103,6 +90,42 @@ export type AutocompleteSearchInput = {
   limit?: InputMaybe<Scalars['Int']>;
   /** Query from the autocomplete field */
   query: Scalars['String'];
+};
+
+/** Type that represents an autocomplete merge ticket entry. */
+export type AutocompleteSearchMergeTicketEntry = {
+  __typename?: 'AutocompleteSearchMergeTicketEntry';
+  disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  label: Scalars['String'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
+  ticket: Ticket;
+  value: Scalars['String'];
+};
+
+/** The default fields for merge ticket autocomplete searches. */
+export type AutocompleteSearchMergeTicketInput = {
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String'];
+  /** Ticket ID */
+  sourceTicketId?: InputMaybe<Scalars['ID']>;
+};
+
+/** Type that represents an autocomplete organization entry. */
+export type AutocompleteSearchOrganizationEntry = {
+  __typename?: 'AutocompleteSearchOrganizationEntry';
+  disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  label: Scalars['String'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
+  organization: Organization;
+  value: Scalars['String'];
 };
 
 /** The default fields for organization autocomplete searches. */
@@ -116,8 +139,8 @@ export type AutocompleteSearchOrganizationInput = {
 };
 
 /** Type that represents an autocomplete user entry. */
-export type AutocompleteUserEntry = {
-  __typename?: 'AutocompleteUserEntry';
+export type AutocompleteSearchUserEntry = {
+  __typename?: 'AutocompleteSearchUserEntry';
   disabled?: Maybe<Scalars['Boolean']>;
   heading?: Maybe<Scalars['String']>;
   headingPlaceholder?: Maybe<Array<Scalars['String']>>;
@@ -607,6 +630,8 @@ export type Mutations = {
   tagAssignmentUpdate?: Maybe<TagAssignmentUpdatePayload>;
   /** Create a new ticket. */
   ticketCreate?: Maybe<TicketCreatePayload>;
+  /** Create a new ticket. */
+  ticketMerge?: Maybe<TicketMergePayload>;
   /** Update a ticket. */
   ticketUpdate?: Maybe<TicketUpdatePayload>;
   /** Add a new user. */
@@ -704,6 +729,13 @@ export type MutationsTagAssignmentUpdateArgs = {
 /** All available mutations */
 export type MutationsTicketCreateArgs = {
   input: TicketCreateInput;
+};
+
+
+/** All available mutations */
+export type MutationsTicketMergeArgs = {
+  sourceTicketId: Scalars['ID'];
+  targetTicketId: Scalars['ID'];
 };
 
 
@@ -1032,14 +1064,16 @@ export type Queries = {
   applicationBuildChecksum: Scalars['String'];
   /** Configuration required for front end operation (more results returned for authenticated users) */
   applicationConfig: Array<KeyComplexValue>;
+  /** Search for tickets */
+  autocompleteSearchMergeTicket: Array<AutocompleteSearchMergeTicketEntry>;
   /** Search for organizations */
-  autocompleteSearchOrganization: Array<AutocompleteOrganizationEntry>;
+  autocompleteSearchOrganization: Array<AutocompleteSearchOrganizationEntry>;
   /** Search for recipients */
-  autocompleteSearchRecipient: Array<AutocompleteUserEntry>;
+  autocompleteSearchRecipient: Array<AutocompleteSearchUserEntry>;
   /** Search for tags */
-  autocompleteSearchTag: Array<AutocompleteEntry>;
+  autocompleteSearchTag: Array<AutocompleteSearchEntry>;
   /** Search for users */
-  autocompleteSearchUser: Array<AutocompleteUserEntry>;
+  autocompleteSearchUser: Array<AutocompleteSearchUserEntry>;
   /** Information about the authenticated user */
   currentUser: User;
   /** Return updated form information for a frontend form (e.g. core workflow information or resolved relations). */
@@ -1078,6 +1112,12 @@ export type Queries = {
   translations?: Maybe<TranslationsPayload>;
   /** Fetch a user information by ID */
   user: User;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchMergeTicketArgs = {
+  input: AutocompleteSearchMergeTicketInput;
 };
 
 
@@ -1635,6 +1675,17 @@ export type TicketEdge = {
   node: Ticket;
 };
 
+/** Autogenerated return type of TicketMerge. */
+export type TicketMergePayload = {
+  __typename?: 'TicketMergePayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** The source ticket after merging. */
+  sourceTicket?: Maybe<Ticket>;
+  /** The target ticket after merging. */
+  targetTicket?: Maybe<Ticket>;
+};
+
 /** Ticket priorities */
 export type TicketPriority = {
   __typename?: 'TicketPriority';
@@ -1988,6 +2039,13 @@ export type TicketUpdateMutationVariables = Exact<{
 
 export type TicketUpdateMutation = { __typename?: 'Mutations', ticketUpdate?: { __typename?: 'TicketUpdatePayload', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: string, updatedAt: string, pendingTime?: string | null, tags?: Array<string> | null, owner: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name?: string | null }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
+export type AutocompleteSearchMergeTicketQueryVariables = Exact<{
+  input: AutocompleteSearchMergeTicketInput;
+}>;
+
+
+export type AutocompleteSearchMergeTicketQuery = { __typename?: 'Queries', autocompleteSearchMergeTicket: Array<{ __typename?: 'AutocompleteSearchMergeTicketEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, ticket: { __typename?: 'Ticket', id: string, number: string, internalId: number } }> };
+
 export type TicketQueryVariables = Exact<{
   ticketId?: InputMaybe<Scalars['ID']>;
   ticketInternalId?: InputMaybe<Scalars['Int']>;
@@ -2051,7 +2109,7 @@ export type AutocompleteSearchUserQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null } }> };
+export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null } }> };
 
 export type KnowledgeBaseAnswerSuggestionContentTransformMutationVariables = Exact<{
   translationId: Scalars['ID'];
@@ -2107,14 +2165,14 @@ export type AutocompleteSearchOrganizationQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteOrganizationEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } }> };
+export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteSearchOrganizationEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } }> };
 
 export type AutocompleteSearchRecipientQueryVariables = Exact<{
   input: AutocompleteSearchInput;
 }>;
 
 
-export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
+export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type FormUpdaterQueryVariables = Exact<{
   formUpdaterId: EnumFormUpdaterId;
@@ -2181,6 +2239,14 @@ export type TagAssignmentUpdateMutationVariables = Exact<{
 
 
 export type TagAssignmentUpdateMutation = { __typename?: 'Mutations', tagAssignmentUpdate?: { __typename?: 'TagAssignmentUpdatePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+
+export type TicketMergeMutationVariables = Exact<{
+  sourceTicketId: Scalars['ID'];
+  targetTicketId: Scalars['ID'];
+}>;
+
+
+export type TicketMergeMutation = { __typename?: 'Mutations', ticketMerge?: { __typename?: 'TicketMergePayload', errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type TicketOverviewsQueryVariables = Exact<{
   withTicketCount: Scalars['Boolean'];

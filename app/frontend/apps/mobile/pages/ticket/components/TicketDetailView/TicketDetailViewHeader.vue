@@ -6,11 +6,10 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
+import type { TicketById } from '../../types/tickets'
 
 interface Props {
-  ticketNumber: string
-  ticketId: string
-  createdAt: string
+  ticket?: TicketById
   loadingTicket?: boolean
   loadingUsers?: boolean
   users: AvatarUser[]
@@ -33,9 +32,11 @@ const showViewers = () => {
 }
 
 const showActions = () => {
-  return actionsDialog.open({
+  if (!props.ticket) return
+
+  actionsDialog.open({
     name: actionsDialog.name,
-    ticketId: props.ticketId,
+    ticket: props.ticket,
   })
 }
 </script>
@@ -50,9 +51,11 @@ const showActions = () => {
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
         data-test-id="header-content"
       >
-        <div class="font-bold">{{ ticketNumber && `#${ticketNumber}` }}</div>
+        <div class="font-bold">{{ ticket && `#${ticket.number}` }}</div>
         <div class="text-gray">
-          {{ createdAt && $t('created %s', i18n.relativeDateTime(createdAt)) }}
+          {{
+            ticket && $t('created %s', i18n.relativeDateTime(ticket.createdAt))
+          }}
         </div>
       </div>
     </CommonLoader>

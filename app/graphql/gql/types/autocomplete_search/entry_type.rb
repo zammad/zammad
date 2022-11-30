@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module Gql::Types
-  class AutocompleteEntryType < Gql::Types::BaseObject
+module Gql::Types::AutocompleteSearch
+  class EntryType < Gql::Types::BaseObject
 
     description 'Type that represents an autocomplete entry.'
 

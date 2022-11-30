@@ -141,6 +141,7 @@ const ticketEditSchema = [
       <Form
         v-if="initialTicketValue"
         id="form-ticket-edit"
+        :key="ticket?.id || 'null'"
         ref="form"
         :schema="ticketEditSchema"
         :initial-values="initialTicketValue"

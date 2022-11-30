@@ -5,9 +5,9 @@ module Gql::Queries
 
     description 'Search for tags'
 
-    argument :input, Gql::Types::Input::AutocompleteSearchInputType, required: true, description: 'The input object for the autocomplete search'
+    argument :input, Gql::Types::Input::AutocompleteSearch::InputType, required: true, description: 'The input object for the autocomplete search'
 
-    type [Gql::Types::AutocompleteEntryType], null: false
+    type [Gql::Types::AutocompleteSearch::EntryType], null: false
 
     def resolve(input:)
       input = input.to_h

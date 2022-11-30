@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module Gql::Types::Input
-  class AutocompleteSearchOrganizationInputType < AutocompleteSearchInputType
+module Gql::Types::Input::AutocompleteSearch
+  class OrganizationInputType < InputType
 
     description 'The default fields for organization autocomplete searches.'
 

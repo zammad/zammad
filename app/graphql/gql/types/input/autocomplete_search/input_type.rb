@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module Gql::Types::Input
-  class AutocompleteSearchInputType < Gql::Types::BaseInputObject
+module Gql::Types::Input::AutocompleteSearch
+  class InputType < Gql::Types::BaseInputObject
 
     description 'The default fields for autocomplete searches.'
 

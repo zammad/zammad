@@ -124,9 +124,7 @@ const loadPreviousArticles = async () => {
 <template>
   <div class="flex min-h-[calc(100vh_-_5rem)] flex-col pb-20">
     <TicketHeader
-      :ticket-number="ticket?.number || ''"
-      :ticket-id="ticket?.id || ''"
-      :created-at="ticket?.createdAt || ''"
+      :ticket="ticket"
       :users="users"
       :loading-ticket="isLoadingTicket"
       :loading-users="isLoadingTicket"

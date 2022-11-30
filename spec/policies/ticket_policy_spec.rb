@@ -199,6 +199,17 @@ describe TicketPolicy do
       it { is_expected.to forbid_actions(%i[agent_update_access]) }
     end
 
+    context 'when user is agent-customer with agent change access to ticket' do
+      let(:user) { create(:agent_and_customer) }
+
+      before do
+        user.user_groups.create! group: record.group, access: 'change'
+      end
+
+      it { is_expected.to forbid_actions(%i[agent_read_access]) }
+      it { is_expected.to permit_actions(%i[agent_update_access]) }
+    end
+
     context 'when user is agent-customer with agent update access to ticket' do
       let(:user) { create(:agent_and_customer, groups: [record.group]) }
 

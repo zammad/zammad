@@ -11,7 +11,7 @@ import { useDialog } from '@shared/composables/useDialog'
 import { ticketInformationPlugins } from './plugins'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
-const prop = defineProps<{
+defineProps<{
   internalId: string
 }>()
 
@@ -31,7 +31,7 @@ const actionsDialog = useDialog({
 const showActions = () => {
   return actionsDialog.open({
     name: actionsDialog.name,
-    ticketId: prop.internalId,
+    ticket,
   })
 }
 

@@ -39,6 +39,7 @@ search tickets via search index
   result = Ticket.search(
     current_user: User.find(123),
     query:        'search something',
+    scope:        TicketPolicy::ReadScope, # defaults to ReadScope
     limit:        15,
     offset:       100,
   )
@@ -66,6 +67,7 @@ search tickets via database
   result = Ticket.search(
     current_user: User.find(123),
     query: 'some query', # query or condition is required
+    scope: TicketPolicy::ReadScope, # defaults to ReadScope
     condition: {
       'tickets.owner_id' => {
         operator: 'is',
@@ -80,8 +82,8 @@ search tickets via database
               'pending action',
             ],
           ).map(&:id),
-        },
-      ),
+        ),
+      },
     },
     limit: 15,
     offset: 100,
@@ -108,6 +110,7 @@ returns
       # get params
       query        = params[:query]
       condition    = params[:condition]
+      scope        = params[:scope] || TicketPolicy::ReadScope
       limit        = params[:limit] || 12
       offset       = params[:offset] || 0
       current_user = params[:current_user]
@@ -129,7 +132,7 @@ returns
 
         query_or = []
         if current_user.permissions?('ticket.agent')
-          group_ids = current_user.group_ids_access('read')
+          group_ids = current_user.group_ids_access(scope.const_get(:ACCESS_TYPE))
           if group_ids.present?
             access_condition = {
               'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
@@ -191,7 +194,7 @@ returns
       end
 
       order_sql   = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
-      tickets_all = TicketPolicy::ReadScope.new(current_user).resolve
+      tickets_all = scope.new(current_user).resolve
                                            .order(Arel.sql(order_sql))
                                            .offset(offset)
                                            .limit(limit)

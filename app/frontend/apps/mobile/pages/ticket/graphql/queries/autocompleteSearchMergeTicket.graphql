@@ -1,0 +1,18 @@
+query autocompleteSearchMergeTicket(
+  $input: AutocompleteSearchMergeTicketInput!
+) {
+  autocompleteSearchMergeTicket(input: $input) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+    disabled
+    icon
+    ticket {
+      id
+      number
+      internalId
+    }
+  }
+}

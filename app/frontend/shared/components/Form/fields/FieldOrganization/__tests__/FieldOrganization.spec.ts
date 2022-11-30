@@ -8,7 +8,7 @@ import { renderComponent } from '@tests/support/components'
 import { queryByIconName } from '@tests/support/components/iconQueries'
 import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
 import type {
-  AutocompleteOrganizationEntry,
+  AutocompleteSearchOrganizationEntry,
   AutocompleteSearchOrganizationQuery,
 } from '@shared/graphql/types'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
@@ -39,7 +39,7 @@ const mockQueryResult = (input: {
       headingPlaceholder: null,
       disabled: null,
       icon: null,
-      __typename: 'AutocompleteOrganizationEntry',
+      __typename: 'AutocompleteSearchOrganizationEntry',
     }),
   )
 
@@ -55,7 +55,7 @@ const mockQueryResult = (input: {
     (option) =>
       filterRegex.test(deaccent(option.label)) ||
       filterRegex.test(deaccent(option.heading)),
-  ) as unknown as AutocompleteOrganizationEntry[]
+  ) as unknown as AutocompleteSearchOrganizationEntry[]
 
   return {
     autocompleteSearchOrganization: filteredOptions.slice(0, input.limit ?? 25),

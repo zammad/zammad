@@ -5,9 +5,9 @@ module Gql::Queries
 
     description 'Search for organizations'
 
-    argument :input, Gql::Types::Input::AutocompleteSearchOrganizationInputType, required: true, description: 'The input object for the autocomplete search'
+    argument :input, Gql::Types::Input::AutocompleteSearch::OrganizationInputType, required: true, description: 'The input object for the autocomplete search'
 
-    type [Gql::Types::AutocompleteOrganizationEntryType], null: false
+    type [Gql::Types::AutocompleteSearch::OrganizationEntryType], null: false
 
     def resolve(input:)
       input = input.to_h

@@ -497,6 +497,10 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
+#: app/models/ticket.rb
+msgid "A ticket cannot be merged into itself."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr ""
@@ -1130,6 +1134,10 @@ msgstr ""
 msgid "Archived at"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
@@ -1723,10 +1731,6 @@ msgstr ""
 msgid "Can't find User for Token"
 msgstr ""
 
-#: app/models/ticket.rb
-msgid "Can't merge ticket with itself!"
-msgstr ""
-
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr ""
@@ -2258,6 +2262,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Confirm merge"
 msgstr ""
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
@@ -4546,6 +4554,10 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Find a ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr ""
@@ -5774,6 +5786,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Ionicons"
+msgstr ""
+
+#: app/models/ticket.rb
+msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
@@ -7839,6 +7855,10 @@ msgstr ""
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Please select a ticket to merge into."
+msgstr ""
+
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
 msgstr ""
@@ -9304,6 +9324,10 @@ msgstr ""
 #: public/assets/chat/views/customer_timeout.eco
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid "Start new conversation"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Start typing to find the ticket to merge into."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js

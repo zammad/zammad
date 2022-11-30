@@ -54,7 +54,7 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def agent_update_access?
-    agent_access?('update')
+    agent_access?('change')
   end
 
   private

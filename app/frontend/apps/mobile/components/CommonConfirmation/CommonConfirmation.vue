@@ -44,7 +44,12 @@ const callCancelCallback = (isCancel: boolean) => {
       <div
         class="flex h-14 items-center justify-center border-b border-gray-300 text-center text-white"
       >
-        {{ $t(confirmationDialog?.heading) }}
+        {{
+          $t(
+            confirmationDialog?.heading,
+            ...(confirmationDialog?.headingPlaceholder || []),
+          )
+        }}
       </div>
     </template>
   </CommonSectionPopup>

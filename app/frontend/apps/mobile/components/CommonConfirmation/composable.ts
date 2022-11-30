@@ -15,7 +15,7 @@ const useConfirmation = () => {
     heading: string,
     options: Pick<
       ConfirmationOptions,
-      'buttonTextColorClass' | 'buttonTitle'
+      'buttonTextColorClass' | 'buttonTitle' | 'headingPlaceholder'
     > = {},
   ) => {
     return new Promise<boolean>((resolve) => {

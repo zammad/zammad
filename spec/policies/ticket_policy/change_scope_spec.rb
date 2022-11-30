@@ -3,13 +3,13 @@
 require 'rails_helper'
 require 'policies/ticket_policy/shared_examples'
 
-RSpec.describe TicketPolicy::ReadScope do
+RSpec.describe TicketPolicy::ChangeScope do
   context 'with default scope' do
     subject(:scope) { described_class.new(user) }
 
     describe '#resolve' do
       context 'when querying for agent user' do
-        include_examples 'for agent user', 'read'
+        include_examples 'for agent user', 'change'
       end
 
       context 'when querying for customer user' do

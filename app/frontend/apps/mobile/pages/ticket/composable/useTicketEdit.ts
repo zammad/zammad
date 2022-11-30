@@ -21,6 +21,7 @@ export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
       return
     }
     const { internalId } = ticket.owner
+    initialTicketValue.title = ticket.title
     // show Zammad user as empty
     initialTicketValue.owner_id = internalId === 1 ? null : internalId
     // TODO form should support it out of the box

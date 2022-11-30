@@ -2,6 +2,7 @@
 
 export interface ConfirmationOptions {
   heading: string
+  headingPlaceholder?: string[]
   buttonTitle?: string
   buttonTextColorClass?: string
   confirmCallback: () => void

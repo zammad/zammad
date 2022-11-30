@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import type { ConcreteComponent, Ref } from 'vue'
-import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { cloneDeep } from 'lodash-es'
 import { refDebounced, watchOnce } from '@vueuse/core'
@@ -26,6 +26,7 @@ const props = defineProps<{
   name: string
   options: AutoCompleteOption[]
   optionIconComponent: ConcreteComponent
+  noCloseOnSelect?: boolean
 }>()
 
 const contextReactive = toRef(props, 'context')
@@ -102,13 +103,19 @@ const AutocompleteSearchDocument = gql`
 //   the source was changed in the meantime, the result will not be updated. It's unclear if there is a subscription in
 //   place to update the result on any changes.
 const autocompleteQueryHandler = new QueryHandler(
-  useLazyQuery(AutocompleteSearchDocument, () => ({
-    input: {
-      query: debouncedFilter.value || props.context.defaultFilter || '',
-      limit: props.context.limit,
-      ...(props.context.additionalQueryParams || {}),
-    },
-  })),
+  useLazyQuery(
+    AutocompleteSearchDocument,
+    () => ({
+      input: {
+        query: debouncedFilter.value || props.context.defaultFilter || '',
+        limit: props.context.limit,
+        ...(props.context.additionalQueryParams || {}),
+      },
+    }),
+    () => ({
+      enabled: !!(debouncedFilter.value || props.context.defaultFilter),
+    }),
+  ),
 )
 
 if (props.context.defaultFilter) {
@@ -193,7 +200,9 @@ const select = (option: AutoCompleteOption) => {
 
   emit('updateOptions', [option])
 
-  close()
+  if (!props.noCloseOnSelect) {
+    close()
+  }
 }
 
 const OptionIconComponent =
@@ -233,7 +242,8 @@ useTraverseOptions(autocompleteList)
     <template #after-label>
       <CommonIcon
         v-if="context.action || context.onActionClick"
-        :name="context.actionIcon ? context.actionIcon : 'external'"
+        :name="context.actionIcon ? context.actionIcon : 'mobile-external-link'"
+        :label="context.actionLabel"
         class="cursor-pointer text-white"
         size="base"
         tabindex="0"
@@ -361,14 +371,14 @@ useTraverseOptions(autocompleteList)
       class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
       role="alert"
     >
-      {{ i18n.t('No results found') }}
+      {{ i18n.t(context.dialogNotFoundMessage || __('No results found')) }}
     </div>
     <div
       v-else-if="!debouncedFilter && !options.length"
       class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
       role="alert"
     >
-      {{ i18n.t('Start typing to search…') }}
+      {{ i18n.t(context.dialogEmptyMessage || __('Start typing to search…')) }}
     </div>
   </CommonDialog>
 </template>

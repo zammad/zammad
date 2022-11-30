@@ -22,6 +22,7 @@ export type AutoCompleteProps = FormFieldContext<{
   gqlQuery: DocumentNode
   action?: RouteLocationRaw
   actionIcon?: string
+  actionLabel?: string
   allowUnknownValues?: boolean
   clearable?: boolean
   debounceInterval: number
@@ -36,6 +37,8 @@ export type AutoCompleteProps = FormFieldContext<{
   options?: AutoCompleteOption[]
   belongsToObjectField?: string
   additionalQueryParams?: Record<string, JsonValue>
+  dialogNotFoundMessage?: string
+  dialogEmptyMessage?: string
   initialOptionBuilder?: (
     initialEntityObject: ObjectLike,
     value: SelectValue,

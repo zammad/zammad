@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
+import { useSessionStore } from '@shared/stores/session'
 import { computed } from 'vue'
 import type { CommonButtonOption } from './types'
 
@@ -21,6 +22,15 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'update:modelValue', value?: string | number): void
 }>()
+
+const session = useSessionStore()
+
+const filteredOptions = computed(() => {
+  return props.options.filter(
+    (option) =>
+      !option.permissions || session.hasPermission(option.permissions),
+  )
+})
 
 const getIconProps = (option: CommonButtonOption): IconProps => {
   if (!option.icon) return {} as IconProps
@@ -47,7 +57,7 @@ const isTabs = computed(() => props.as === 'tabs')
   >
     <Component
       :is="option.link ? 'CommonLink' : 'button'"
-      v-for="option of options"
+      v-for="option of filteredOptions"
       :key="option.label"
       :role="isTabs ? 'tab' : undefined"
       :disabled="option.disabled"

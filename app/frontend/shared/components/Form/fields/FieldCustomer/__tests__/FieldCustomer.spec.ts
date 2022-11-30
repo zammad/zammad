@@ -9,7 +9,7 @@ import { provideApolloClient } from '@vue/apollo-composable'
 import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
 import type {
   AutocompleteSearchUserQuery,
-  AutocompleteUserEntry,
+  AutocompleteSearchUserEntry,
 } from '@shared/graphql/types'
 import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
 import { getNode } from '@formkit/core'
@@ -26,7 +26,7 @@ const mockQueryResult = (input: {
       headingPlaceholder: null,
       disabled: null,
       icon: null,
-      __typename: 'AutocompleteUserEntry',
+      __typename: 'AutocompleteSearchUserEntry',
     }),
   )
 
@@ -42,7 +42,7 @@ const mockQueryResult = (input: {
     (option) =>
       filterRegex.test(deaccent(option.label)) ||
       filterRegex.test(deaccent(option.heading)),
-  ) as unknown as AutocompleteUserEntry[]
+  ) as unknown as AutocompleteSearchUserEntry[]
 
   return {
     autocompleteSearchUser: filteredOptions.slice(0, input.limit ?? 25),

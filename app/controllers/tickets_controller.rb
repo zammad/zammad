@@ -404,7 +404,6 @@ class TicketsController < ApplicationController
       }
       return
     end
-    authorize!(target_ticket, :update?)
 
     # check source ticket
     source_ticket = Ticket.find_by(id: params[:source_ticket_id])
@@ -415,13 +414,9 @@ class TicketsController < ApplicationController
       }
       return
     end
-    authorize!(source_ticket, :update?)
 
     # merge ticket
-    source_ticket.merge_to(
-      ticket_id:     target_ticket.id,
-      created_by_id: current_user.id,
-    )
+    Service::Ticket::Merge.new(current_user: current_user).execute(source_ticket: source_ticket, target_ticket: target_ticket)
 
     # return result
     render json: {

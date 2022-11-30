@@ -3,7 +3,7 @@
 const now = new Date('2020-02-01 00:00:00')
 vi.setSystemTime(now)
 
-import { convertToGraphQLId } from '@shared/graphql/utils'
+import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import { renderComponent } from '@tests/support/components'
 import TicketDetailViewHeader from '../TicketDetailViewHeader.vue'
 
@@ -13,16 +13,14 @@ beforeAll(async () => {
   await import('../TicketViewersDialog.vue')
 })
 
-const ticketNumber = '5'
-const ticketId = convertToGraphQLId('Ticket', ticketNumber)
+const { ticket } = defaultTicket()
+ticket.createdAt = createdAt.toISOString()
 
 describe('tickets zoom header', () => {
   test('has basic information', () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
-        ticketNumber,
-        ticketId,
-        createdAt: createdAt.toISOString(),
+        ticket,
         users: [],
       },
     })
@@ -32,7 +30,7 @@ describe('tickets zoom header', () => {
       'has back icon',
     ).toBeInTheDocument()
     expect(
-      view.getByText(`#${ticketNumber}`),
+      view.getByText(`#${ticket.number}`),
       'has ticket id',
     ).toBeInTheDocument()
     expect(
@@ -44,9 +42,7 @@ describe('tickets zoom header', () => {
   test('has avatars and opens viewers dialog', async () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
-        ticketNumber,
-        ticketId,
-        createdAt: createdAt.toISOString(),
+        ticket,
         users: [{ id: '654321', firstname: 'John', lastname: 'Doe' }],
       },
       dialog: true,
