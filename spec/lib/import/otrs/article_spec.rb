@@ -170,4 +170,39 @@ RSpec.describe Import::OTRS::Article do
       updates_with(zammad_structure)
     end
   end
+
+  context 'legacy article time keys (lower then OTRS 6)' do
+
+    let(:object_structure) { load_article_json('legacy_article_time_keys') }
+    let(:zammad_structure) do
+      {
+        created_by_id: '3',
+        updated_by_id: 1,
+        ticket_id:     '730',
+        id:            '3970',
+        body:          'test #3',
+        from:          '"Betreuter Kunde" <kunde2@kunde.de>,',
+        to:            'Postmaster',
+        cc:            '',
+        content_type:  'text/plain',
+        subject:       'test #3',
+        in_reply_to:   '',
+        message_id:    '',
+        references:    '',
+        updated_at:    '2015-11-21 00:21:08',
+        created_at:    '2015-11-21 00:17:41',
+        type_id:       5,
+        internal:      false,
+        sender_id:     2
+      }
+    end
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
 end
