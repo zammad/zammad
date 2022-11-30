@@ -36,7 +36,7 @@ const clickHandler = (notification: Notification) => {
 
 <template>
   <div id="Notifications" class="flex w-full justify-center">
-    <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0">
+    <div class="fixed top-0 z-50 ltr:right-0 rtl:left-0" role="alert">
       <TransitionGroup
         tag="div"
         enter-class="opacity-0"

@@ -1,18 +1,11 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-export const isGraphQLId = (id: string | number): id is string => {
-  return typeof id !== 'number' && id.startsWith('gid://zammad/')
+export const isGraphQLId = (id: unknown): id is string => {
+  return typeof id === 'string' && id.startsWith('gid://zammad/')
 };
 
 export const convertToGraphQLId = (type: string, id: number | string) => {
   return `gid://zammad/${type}/${id}`;
-}
-
-const parseGraphqlId = (graphqlId: string) => parseInt(`${graphqlId}`.replace(/gid:\/\/zammad\/.*\//g, ''), 10);
-
-export const getIdFromGraphQLId = (graphqlId = '') => {
-  const parsedGraphqlId = parseGraphqlId(graphqlId);
-  return Number.isInteger(parsedGraphqlId) ? parsedGraphqlId : null;
 }
 
 export const ensureGraphqlId = (type: string, id: number | string): string => {
@@ -21,6 +14,20 @@ export const ensureGraphqlId = (type: string, id: number | string): string => {
   }
 
   return convertToGraphQLId(type, id);
+}
+
+export const parseGraphqlId = (id: string): { relation: string; id: number } => {
+  const [relation, idString] = id.slice('gid://zammad/'.length).split('/');
+
+  return {
+    relation,
+    id: parseInt(idString, 10),
+  };
+}
+
+export const getIdFromGraphQLId = (graphqlId: string) => {
+  const parsedGraphqlId = parseGraphqlId(graphqlId);
+  return parsedGraphqlId.id;
 }
 
 export const convertToGraphQLIds = (type: string, ids: (number | string)[]) => {

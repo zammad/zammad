@@ -6,7 +6,7 @@ import { computed, shallowRef, toRef, ref, reactive, watch } from 'vue'
 import type { ShallowRef, Ref } from 'vue'
 import type { CommonStepperStep } from '@mobile/components/CommonStepper'
 
-interface FormRef {
+export interface FormRef {
   formNode: FormKitNode
 }
 
@@ -18,7 +18,7 @@ export const useForm = () => {
 
   const context = computed(() => node.value?.context)
 
-  const values = computed(() => context?.value?.value)
+  const values = computed(() => context.value?.value)
 
   const state = computed(() => context.value?.state)
 

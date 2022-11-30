@@ -1,28 +1,28 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useHeader } from '@mobile/composables/useHeader'
-import { computed, watch } from 'vue'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useRouter } from 'vue-router'
-import { useApplicationStore } from '@shared/stores/application'
-import { useSessionStore } from '@shared/stores/session'
-import { ErrorStatusCodes } from '@shared/types/error'
-import { whenever } from '@vueuse/shared'
-import type {
-  TicketUpdatesSubscription,
-  TicketUpdatesSubscriptionVariables,
-} from '@shared/graphql/types'
 import { redirectToError } from '@mobile/router/error'
-import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
-import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
+import {
+  EnumFormUpdaterId,
+  EnumObjectManagerObjects,
+} from '@shared/graphql/types'
+import { QueryHandler } from '@shared/server/apollo/handler'
+import { ErrorStatusCodes } from '@shared/types/error'
+import Form from '@shared/components/Form/Form.vue'
+import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import { useForm } from '@shared/components/Form'
+import type { FormData } from '@shared/components/Form/types'
+import { computed, provide, ref } from 'vue'
+import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
+import { useSessionStore } from '@shared/stores/session'
+import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import { useTicketEdit } from '../composable/useTicketEdit'
+import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
-import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
-import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
-import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
-import type { TicketArticle } from '../types/tickets'
-import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 
 interface Props {
   internalId: string
@@ -37,17 +37,9 @@ const ticketQuery = new QueryHandler(
   { errorShowNotification: false },
 )
 
-const session = useSessionStore()
-const application = useApplicationStore()
-
-const articlesQuery = new QueryHandler(
-  useTicketArticlesQuery(() => ({
-    ticketInternalId: Number(props.internalId),
-    pageSize: Number(application.config.ticket_articles_min ?? 5),
-    isAgent: session.hasPermission(['ticket.agent']),
-  })),
-  { errorShowNotification: false },
-)
+const ticketResult = ticketQuery.result()
+const ticket = computed(() => ticketResult.value?.ticket)
+const formVisible = ref(false)
 
 const router = useRouter()
 
@@ -58,115 +50,107 @@ ticketQuery.onError(() => {
   })
 })
 
-const isLoadingTicket = ticketQuery.loading()
+const { initialTicketValue, editTicket } = useTicketEdit(ticket)
+const { form, isValid, isDisabled, isDirty } = useForm()
+const { notify } = useNotifications()
 
-const ticket = computed(() => ticketQuery.result().value?.ticket)
-const result = articlesQuery.result()
+const submitForm = async (formData: FormData) => {
+  const result = await editTicket(formData)
 
-const totalCount = computed(() => result.value?.articles.totalCount || 0)
-
-const toMs = (date: string) => new Date(date).getTime()
-const articles = computed(() => {
-  if (!result.value) {
-    return []
-  }
-  const nodes = result.value.articles.edges.map(({ node }) => node) || []
-  const totalCount = result.value.articles.totalCount || 0
-  // description might've returned with "articles"
-  const description = result.value.description.edges[0]?.node
-  if (totalCount > nodes.length && description) {
-    nodes.unshift(description)
-  }
-  return nodes
-    .filter((a): a is TicketArticle => a != null)
-    .sort((a, b) => toMs(a.createdAt) - toMs(b.createdAt))
-})
-
-useHeader({
-  title: computed(() => {
-    if (!ticket.value) return ''
-    const { number, title } = ticket.value
-    return `#${number} - ${title}`
-  }),
-})
-
-const stopWatch = whenever(
-  () => !isLoadingTicket.value,
-  () => {
-    if (!ticket.value) return
-
-    stopWatch()
-
-    ticketQuery.subscribeToMore<
-      TicketUpdatesSubscriptionVariables,
-      TicketUpdatesSubscription
-    >({
-      document: TicketUpdatesDocument,
-      variables: {
-        ticketId: ticket.value.id,
-      },
+  if (result) {
+    notify({
+      type: NotificationTypes.Success,
+      message: __('Ticket updated successfully.'),
     })
-  },
-)
-
-// TODO get users from graphql
-const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]
-// const usersLoading = ref(true) // TODO
-
-watch(
-  () => articles.value.length,
-  (length) => {
-    if (!length) return
-
-    requestAnimationFrame(() => {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: window.innerHeight,
-      })
-    })
-  },
-  { immediate: true },
-)
-
-const loadPreviousArticles = async () => {
-  await articlesQuery.fetchMore({
-    variables: {
-      pageSize: null,
-      loadDescription: false,
-      cursor: result.value?.articles.pageInfo.startCursor,
-    },
-  })
+  }
 }
+
+const session = useSessionStore()
+// TODO use policies
+// app/assets/javascripts/app/models/ticket.coffee:328
+const canUpdateTicket = computed(() => {
+  if (
+    session.userId === ticket.value?.owner.id ||
+    // TODO should check for agent groups access
+    session.hasPermission('ticket.agent')
+  ) {
+    return true
+  }
+  if (!session.hasPermission('ticket.customer')) return false
+  return session.userId === ticket.value?.customer.id
+})
+
+const canSubmitForm = computed(() => {
+  return isDirty.value && isValid.value && !isDisabled.value
+})
+
+provide(TICKET_INFORMATION_SYMBOL, {
+  ticketQuery,
+  ticket,
+  form,
+  formVisible,
+  canSubmitForm,
+  canUpdateTicket,
+})
+
+const { waitForConfirmation } = useConfirmation()
+
+onBeforeRouteLeave(async () => {
+  if (!isDirty.value) return true
+
+  // TODO store state in global storage instead of this
+  const confirmed = await waitForConfirmation(
+    __('Are you sure? You have unsaved changes that will get lost.'),
+  )
+
+  return confirmed
+})
+
+const ticketEditSchema = [
+  {
+    isLayout: true,
+    component: 'FormGroup',
+    children: [
+      {
+        name: 'title',
+        type: 'text',
+        label: __('Ticket title'),
+        required: true, // TODO core workflow resets it
+      },
+      {
+        screen: 'edit',
+        object: EnumObjectManagerObjects.Ticket,
+      },
+    ],
+  },
+]
 </script>
 
 <template>
-  <div class="flex min-h-[calc(100vh_-_5rem)] flex-col pb-20">
-    <TicketHeader
-      :ticket-id="ticket?.number || ''"
-      :created-at="ticket?.createdAt || ''"
-      :users="users"
-      :loading-ticket="isLoadingTicket"
-      :loading-users="isLoadingTicket"
-    />
+  <RouterView />
+  <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
+  <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
+  <Teleport
+    v-if="canUpdateTicket"
+    :to="formVisible ? '[data-ticket-edit-form]' : 'body'"
+  >
     <CommonLoader
-      :loading="isLoadingTicket"
-      data-test-id="loader-title"
-      class="flex border-b-[0.5px] border-white/10 bg-gray-600/90 py-5 px-4"
+      :class="formVisible ? 'visible' : 'hidden'"
+      :loading="!ticket"
     >
-      <TicketTitle v-if="ticket" :ticket="ticket" />
-    </CommonLoader>
-    <CommonLoader
-      data-test-id="loader-list"
-      :loading="isLoadingTicket"
-      class="mt-2"
-    >
-      <TicketArticlesList
-        :ticket-internal-id="Number(internalId)"
-        :articles="articles"
-        :total-count="totalCount"
-        @load-previous="loadPreviousArticles"
+      <Form
+        v-if="initialTicketValue"
+        id="form-ticket-edit"
+        ref="form"
+        :schema="ticketEditSchema"
+        :initial-values="initialTicketValue"
+        :initial-entity-object="ticket"
+        :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketEdit"
+        use-object-attributes
+        :aria-hidden="!formVisible"
+        :class="formVisible ? 'visible' : 'hidden'"
+        :on-submit="submitForm"
       />
     </CommonLoader>
-  </div>
-  <TicketReplyButton />
+  </Teleport>
 </template>

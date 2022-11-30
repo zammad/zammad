@@ -8,6 +8,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 
 interface Props {
+  ticketNumber: string
   ticketId: string
   createdAt: string
   loadingTicket?: boolean
@@ -15,7 +16,7 @@ interface Props {
   users: AvatarUser[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const viewersDialog = useDialog({
   name: 'ticket-viewers-dialog',
@@ -23,7 +24,7 @@ const viewersDialog = useDialog({
 })
 
 const actionsDialog = useDialog({
-  name: 'ticket-actions-dialog',
+  name: 'ticket-header-actions-dialog',
   component: () => import('./TicketActionsDialog.vue'),
 })
 
@@ -32,7 +33,10 @@ const showViewers = () => {
 }
 
 const showActions = () => {
-  return actionsDialog.open({ name: actionsDialog.name })
+  return actionsDialog.open({
+    name: actionsDialog.name,
+    ticketId: props.ticketId,
+  })
 }
 </script>
 
@@ -46,7 +50,7 @@ const showActions = () => {
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
         data-test-id="header-content"
       >
-        <div class="font-bold">{{ ticketId && `#${ticketId}` }}</div>
+        <div class="font-bold">{{ ticketNumber && `#${ticketNumber}` }}</div>
         <div class="text-gray">
           {{ createdAt && $t('created %s', i18n.relativeDateTime(createdAt)) }}
         </div>

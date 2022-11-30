@@ -20,12 +20,19 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
   private
 
   def perform_payload
+    params = data
+
+    # Add object id information for the perform worklow for already existing objects.
+    if object && !params['id']
+      params['id'] = object.id
+    end
+
     {
       'event'                  => 'core_workflow',
       'request_id'             => meta[:request_id],
       'class_name'             => object_type.to_s,
       'screen'                 => self.class.instance_variable_get(:@core_workflow_screen),
-      'params'                 => data,
+      'params'                 => params,
       'last_changed_attribute' => meta.dig(:changed_field, :name),
     }
   end

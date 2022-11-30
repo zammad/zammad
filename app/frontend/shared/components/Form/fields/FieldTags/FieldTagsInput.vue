@@ -52,7 +52,7 @@ useFormBlock(context, onInputClick)
     <output
       :id="context.id"
       :name="context.node.name"
-      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
+      class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
       :tabindex="context.disabled ? '-1' : '0'"
       v-bind="context.attrs"

@@ -17,7 +17,8 @@ const body = computed(() => {
       .map((field) => translateOption(props.attribute, field))
       .join('::')
   }
-  const value = props.attribute.dataOption.historical_options?.[props.value]
+  const value =
+    props.attribute.dataOption.historical_options?.[props.value] ?? props.value
   return translateOption(props.attribute, value)
 })
 </script>

@@ -5,7 +5,7 @@ import { visitView } from '@tests/support/components/visitView'
 
 describe('testing playground a11y', () => {
   it('has no accessibility violations', async () => {
-    const view = await visitView('/playground')
+    await visitView('/playground')
 
     const configuredAxe = configureAxe({
       // NB: Although "Playground" is not covered by any other tests, it is prudent to run at least a violation check.
@@ -23,7 +23,7 @@ describe('testing playground a11y', () => {
       */
     })
 
-    const results = await configuredAxe(view.html())
+    const results = await configuredAxe(document.body)
     expect(results).toHaveNoViolations()
   })
 })

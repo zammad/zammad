@@ -6,6 +6,7 @@ import {
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
 import type { UserQuery } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
+import { within } from '@testing-library/vue'
 import { visitView } from '@tests/support/components/visitView'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitUntilApisResolved } from '@tests/support/utils'
@@ -21,8 +22,11 @@ const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {
 
   await waitUntilApisResolved(mockUser, mockAttributes)
 
+  // since we have a form with similar labels outside of the view, we need to narrow down the scope
+  const helpers = within(view.container as HTMLElement)
+
   return {
-    view,
+    view: helpers,
     mockUser,
     mockAttributes,
     mockUserSubscription,

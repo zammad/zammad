@@ -127,7 +127,7 @@ test('can refresh data by pulling up', async () => {
 
   await flushPromises()
 
-  expect(view.getByIconName('mobile-loading')).toBeInTheDocument()
+  expect(view.getAllByIconName('mobile-loading')).not.toHaveLength(0)
 
   // TODO test api call
 })

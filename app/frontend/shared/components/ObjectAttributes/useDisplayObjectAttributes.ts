@@ -6,7 +6,7 @@ import type {
 } from '@shared/graphql/types'
 import { useSessionStore } from '@shared/stores/session'
 import type { ObjectLike } from '@shared/types/utils'
-import { keyBy } from 'lodash-es'
+import { keyBy, get } from 'lodash-es'
 import type { Dictionary } from 'ts-essentials'
 import { camelize } from '@shared/utils/formatter'
 import type { Component } from 'vue'
@@ -17,6 +17,7 @@ export interface ObjectAttributesDisplayOptions {
   object: ObjectLike
   attributes: ObjectManagerFrontendAttribute[]
   skipAttributes?: string[]
+  accessors?: Record<string, string>
 }
 
 interface AttributeField {
@@ -48,6 +49,10 @@ export const useDisplayObjectAttributes = (
   })
 
   const getValue = (key: string) => {
+    const accessor = options.accessors?.[key]
+    if (accessor) {
+      return get(options.object, accessor)
+    }
     if (key in attributesObject.value) {
       return attributesObject.value[key].value
     }

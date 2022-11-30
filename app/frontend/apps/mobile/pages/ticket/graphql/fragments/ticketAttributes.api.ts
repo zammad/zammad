@@ -1,6 +1,7 @@
 import * as Types from '../../../../../../shared/graphql/types';
 
 import gql from 'graphql-tag';
+import { ObjectAttributeValuesFragmentDoc } from '../../../../../../shared/graphql/fragments/objectAttributeValues.api';
 export const TicketAttributesFragmentDoc = gql`
     fragment ticketAttributes on Ticket {
   id
@@ -9,8 +10,10 @@ export const TicketAttributesFragmentDoc = gql`
   title
   createdAt
   updatedAt
+  pendingTime
   owner {
     id
+    internalId
     firstname
     lastname
   }
@@ -43,5 +46,8 @@ export const TicketAttributesFragmentDoc = gql`
     defaultCreate
     uiColor
   }
+  objectAttributeValues {
+    ...objectAttributeValues
+  }
 }
-    `;
+    ${ObjectAttributeValuesFragmentDoc}`;

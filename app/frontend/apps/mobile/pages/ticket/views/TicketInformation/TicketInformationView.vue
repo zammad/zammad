@@ -1,44 +1,39 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useHeader } from '@mobile/composables/useHeader'
-import { computed, provide } from 'vue'
+import { computed } from 'vue'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '@shared/stores/session'
-import { useTicketQuery } from '../../graphql/queries/ticket.api'
+import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
+import { useDialog } from '@shared/composables/useDialog'
 import { ticketInformationPlugins } from './plugins'
-import { TICKET_INFORMATION_SYMBOL } from './composable/useTicketInformation'
+import { useTicketInformation } from '../../composable/useTicketInformation'
 
-const props = defineProps<{
+const prop = defineProps<{
   internalId: string
 }>()
 
-// TODO use another query? we only need title and subscribers here
-// ticket form will be loaded with formId
-
-const ticketQuery = new QueryHandler(
-  useTicketQuery({
-    ticketInternalId: Number(props.internalId),
-  }),
-)
-
-const ticketResult = ticketQuery.result()
-const ticket = computed(() => ticketResult.value?.ticket)
+const { ticket, ticketQuery, canSubmitForm, canUpdateTicket } =
+  useTicketInformation()
 
 const loadingTicket = ticketQuery.loading()
 
-provide(TICKET_INFORMATION_SYMBOL, ticket)
+const { hasPermission } = useSessionStore()
 
-useHeader({
-  backTitle: computed(() => `#${props.internalId}`),
-  backUrl: computed(() => `/tickets/${props.internalId}`),
-  title: __('Ticket information'),
+const actionsDialog = useDialog({
+  name: 'ticket-actions-dialog',
+  component: () =>
+    import('../../components/TicketDetailView/TicketActionsDialog.vue'),
 })
 
-const { hasPermission } = useSessionStore()
+const showActions = () => {
+  return actionsDialog.open({
+    name: actionsDialog.name,
+    ticketId: prop.internalId,
+  })
+}
 
 const types = computed<CommonButtonOption[]>(() => {
   return ticketInformationPlugins
@@ -59,13 +54,45 @@ const types = computed<CommonButtonOption[]>(() => {
 </script>
 
 <template>
-  <div class="p-4">
+  <header
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 px-4"
+  >
+    <CommonBackButton
+      class="justify-self-start"
+      :label="`#${internalId}`"
+      :fallback="`/tickets/${internalId}`"
+    />
+    <div
+      class="flex flex-1 items-center justify-center text-center text-lg font-bold"
+    >
+      {{ $t('Ticket information') }}
+    </div>
+    <div class="flex items-center justify-end">
+      <button
+        type="button"
+        :title="$t('Show ticket actions')"
+        @click="showActions()"
+      >
+        <CommonIcon name="mobile-more" size="base" decorative />
+      </button>
+    </div>
+  </header>
+  <div class="flex p-4">
     <!-- TODO fixed size? "..." for long titles -->
-    <h1 class="text-xl font-bold">
+    <h1 class="flex flex-1 items-center text-xl font-bold">
       <CommonLoader position="left" :loading="loadingTicket">
         {{ ticket?.title }}
       </CommonLoader>
     </h1>
+    <button
+      v-if="canUpdateTicket"
+      class="h-10 w-10 rounded-full bg-yellow p-1 text-black disabled:bg-yellow/50"
+      form="form-ticket-edit"
+      :disabled="!canSubmitForm"
+      :title="$t('Save ticket')"
+    >
+      <CommonIcon name="mobile-arrow-up" decorative />
+    </button>
   </div>
   <CommonButtonGroup
     class="px-4 pb-4"

@@ -212,16 +212,33 @@ const createFlatpickr = () => {
 
 // store calendar height to animate it's appearance later
 let flatpickrHeight = 0
-const rerenderFlatpickr = () => {
+const recalculateHeight = async (
+  flatpickr?: flatpickr.Instance,
+): Promise<void> => {
+  if (!flatpickr) return undefined
+  const { calendarContainer } = flatpickr
+  if (!calendarContainer) return undefined
+  const { height } = calendarContainer.style
+  calendarContainer.style.height = 'auto'
+  return new Promise<void>((resolve) => {
+    requestAnimationFrame(() => {
+      flatpickrHeight =
+        calendarContainer.clientHeight || calendarContainer.scrollHeight
+      calendarContainer.style.height = height
+      resolve()
+    })
+  })
+}
+
+const rerenderFlatpickr = async () => {
   const flatpickr = createFlatpickr()
   if (flatpickr) {
     const footer = createCalendarFooter(flatpickr)
     const calendarNode = flatpickr.calendarContainer
     calendarNode.setAttribute('role', 'dialog')
+    calendarNode.setAttribute('aria-label', i18n.t('Calendar'))
     calendarNode.appendChild(footer)
-    requestAnimationFrame(() => {
-      flatpickrHeight = calendarNode.clientHeight || calendarNode.scrollHeight
-    })
+    await recalculateHeight(flatpickr)
   }
   datepicker.value = flatpickr
 }
@@ -249,7 +266,7 @@ watch(
 
 // toggle calendar visibility when showPicker changes
 const showPicker = ref(false)
-watchEffect(() => {
+watchEffect(async () => {
   if (!datepicker.value) return
 
   const calendar = datepicker.value.calendarContainer
@@ -262,6 +279,10 @@ watchEffect(() => {
     calendar.setAttribute('aria-hidden', 'true')
     calendar.style.height = '0px'
   } else {
+    if (!flatpickrHeight) {
+      // if form was initially rendered as hidden, the height will be 0
+      await recalculateHeight(datepicker.value)
+    }
     calendar.style.height = `${flatpickrHeight}px`
     calendar.removeAttribute('aria-hidden')
     clearButton?.removeAttribute('tabindex')

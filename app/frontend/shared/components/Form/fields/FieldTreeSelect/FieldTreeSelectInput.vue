@@ -162,7 +162,7 @@ setupMissingOptionHandling()
       :id="context.id"
       ref="outputElement"
       :name="context.node.name"
-      class="flex grow cursor-pointer items-center focus:outline-none formkit-disabled:pointer-events-none"
+      class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"

@@ -12,7 +12,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
 import { normalizeEdges } from '@shared/utils/helpers'
-import { useTicketInformation } from './composable/useTicketInformation'
+import { useTicketInformation } from '../../composable/useTicketInformation'
 
 interface Props {
   internalId: number
@@ -20,7 +20,7 @@ interface Props {
 
 defineProps<Props>()
 
-const ticket = useTicketInformation()
+const { ticket } = useTicketInformation()
 
 const session = useSessionStore()
 const {

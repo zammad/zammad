@@ -23,7 +23,7 @@ const body = computed(() => {
   }
   return props.value
     .map((key) => {
-      const option = props.attribute.dataOption.historical_options?.[key]
+      const option = props.attribute.dataOption.historical_options?.[key] ?? key
       return translateOption(props.attribute, option)
     })
     .join(', ')

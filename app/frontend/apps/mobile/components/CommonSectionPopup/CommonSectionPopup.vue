@@ -14,6 +14,7 @@ export interface Props {
   noRefocus?: boolean
   noHideOnSelect?: boolean
   zIndex?: number
+  label?: string
 }
 
 const props = defineProps<Props>()
@@ -95,7 +96,7 @@ watch(
         data-test-id="popupWindow"
         @keydown.esc="hidePopup()"
       >
-        <div ref="wrapper" class="wrapper">
+        <div ref="wrapper" class="wrapper" role="alert" :aria-label="label">
           <div class="flex w-full flex-col rounded-xl bg-black">
             <slot name="header" />
             <component

@@ -28,9 +28,9 @@ describe('testing ticket a11y', () => {
 
   test('ticket overview has no accessibility violations', async () => {
     mockTicketsByOverview([])
-    const view = await visitView('/tickets/view')
+    await visitView('/tickets/view')
 
-    const results = await axe(view.html())
+    const results = await axe(document.body)
     expect(results).toHaveNoViolations()
   })
 
@@ -45,7 +45,7 @@ describe('testing ticket a11y', () => {
 
     await waitUntilTicketLoaded()
 
-    const results = await axe(view.html())
+    const results = await axe(document.body)
     expect(results).toHaveNoViolations()
   })
 
@@ -58,11 +58,11 @@ describe('testing ticket a11y', () => {
     mockGraphQLSubscription(OrganizationUpdatesDocument)
     const mockAttributes = mockOrganizationObjectAttributes()
 
-    const view = await visitView('/tickets/1/information/organization')
+    await visitView('/tickets/1/information/organization')
 
     await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
 
-    const results = await axe(view.html())
+    const results = await axe(document.body)
     expect(results).toHaveNoViolations()
   })
 
@@ -71,11 +71,11 @@ describe('testing ticket a11y', () => {
 
     const { mockUser, mockAttributes } = mockUserDetailsApis(defaultUser())
 
-    const view = await visitView('/tickets/1/information/customer')
+    await visitView('/tickets/1/information/customer')
 
     await waitUntilApisResolved(mockUser, mockAttributes)
 
-    const results = await axe(view.html())
+    const results = await axe(document.body)
     expect(results).toHaveNoViolations()
   })
 })

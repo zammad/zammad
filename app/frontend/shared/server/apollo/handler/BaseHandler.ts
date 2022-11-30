@@ -71,6 +71,10 @@ export default abstract class BaseHandler<
     const options = this.handlerOptions
 
     if (options.errorShowNotification) {
+      // TODO enable and fix all tests
+      // if (import.meta.env.DEV) {
+      //   console.error(error)
+      // }
       useNotifications().notify({
         message: options.errorNotificationMessage,
         type: options.errorNotificationType,

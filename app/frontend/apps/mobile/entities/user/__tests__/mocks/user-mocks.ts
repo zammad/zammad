@@ -9,9 +9,11 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { nullableMock } from '@tests/support/utils'
+import { nullableMock, waitUntil } from '@tests/support/utils'
 import { UserDocument } from '../../graphql/queries/user.api'
 import managerAttributes from './managerAttributes.json'
+
+export const userObjectAttributes = () => ({ ...managerAttributes })
 
 export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
   const organization = defaultOrganization()
@@ -99,14 +101,27 @@ export const mockUserManagerAttributes = () => {
   })
 }
 
-export const mockUserDetailsApis = (
-  user?: ConfidentTake<UserQuery, 'user'>,
-) => {
+export const mockUserGql = (user?: ConfidentTake<UserQuery, 'user'>) => {
   const mockedUser = user ?? defaultUser()
 
   const mockUser = mockGraphQLApi(UserDocument).willResolve({
     user: mockedUser,
   })
+
+  const waitUntillUserLoaded = () => waitUntil(() => mockUser.spies.resolve)
+
+  return {
+    mockUser,
+    waitUntillUserLoaded,
+  }
+}
+
+export const mockUserDetailsApis = (
+  user?: ConfidentTake<UserQuery, 'user'>,
+) => {
+  const mockedUser = user ?? defaultUser()
+
+  const { mockUser } = mockUserGql(user)
   const mockAttributes = mockUserManagerAttributes()
   const mockUserSubscription = mockGraphQLSubscription(UserUpdatesDocument)
 

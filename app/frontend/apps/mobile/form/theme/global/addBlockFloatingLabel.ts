@@ -37,8 +37,6 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       ${label}
       absolute top-0 ltr:left-0 rtl:right-0
       py-4 px-2 h-14
-      cursor-pointer
-      formkit-disabled:cursor-default
       text-base
       transition-all duration-100 ease-in-out origin-left
       pointer-events-none

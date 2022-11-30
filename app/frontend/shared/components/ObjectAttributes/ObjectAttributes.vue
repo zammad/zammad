@@ -10,6 +10,7 @@ export interface Props {
   object: ObjectLike
   attributes: ObjectManagerFrontendAttribute[]
   skipAttributes?: string[]
+  accessors?: Record<string, string>
 }
 
 const props = defineProps<Props>()

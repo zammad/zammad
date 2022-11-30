@@ -37,6 +37,7 @@ const callCancelCallback = (isCancel: boolean) => {
   <CommonSectionPopup
     v-model:state="localState"
     :items="[item]"
+    :label="__('Confirm dialog')"
     @close="callCancelCallback"
   >
     <template #header>

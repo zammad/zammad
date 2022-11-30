@@ -2,6 +2,7 @@
 
 import { TicketState } from '@shared/entities/ticket/types'
 import type { TicketArticlesQuery, TicketQuery } from '@shared/graphql/types'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
 import {
   mockGraphQLApi,
@@ -20,21 +21,23 @@ export const defaultTicket = () =>
   nullableMock<TicketQuery>({
     ticket: {
       __typename: 'Ticket',
-      id: '1fssfsg3qr32d',
+      id: convertToGraphQLId('Ticket', 1),
       internalId: 1,
       number: '610001',
       title: 'Test Ticket View',
       createdAt: ticketDate.toISOString(),
       updatedAt: ticketDate.toISOString(),
+      pendingTime: null,
       owner: {
         __typename: 'User',
-        id: 'abc12sf123ad2',
+        internalId: 100,
+        id: convertToGraphQLId('User', 100),
         firstname: 'Max',
         lastname: 'Mustermann',
       },
       customer: {
         __typename: 'User',
-        id: 'fdsf214fse12d',
+        id: convertToGraphQLId('User', 200),
         internalId: 200,
         firstname: 'John',
         lastname: 'Doe',
@@ -42,13 +45,13 @@ export const defaultTicket = () =>
       },
       organization: {
         __typename: 'Organization',
-        id: '3423225dsf0',
+        id: convertToGraphQLId('Organization', 300),
         internalId: 300,
         name: 'Zammad Foundation',
       },
       state: {
         __typename: 'TicketState',
-        id: 'open',
+        id: convertToGraphQLId('Ticket::State', 2),
         name: 'open',
         stateType: {
           __typename: 'TicketStateType',
@@ -57,16 +60,17 @@ export const defaultTicket = () =>
       },
       group: {
         __typename: 'Group',
-        id: 'Users',
+        id: convertToGraphQLId('Group', 1),
         name: 'Users',
       },
       priority: {
         __typename: 'TicketPriority',
-        id: 'low',
-        name: 'low',
+        id: convertToGraphQLId('Ticket::Priority', 1),
+        name: '1 low',
         uiColor: 'low',
         defaultCreate: false,
       },
+      objectAttributeValues: [],
     },
   })
 
@@ -211,6 +215,19 @@ export const defaultArticles = (): TicketArticlesQuery =>
 
 interface MockOptions {
   mockSubscription?: boolean
+}
+
+export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
+  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+
+  const waitUntilTicketLoaded = async () => {
+    await waitUntil(() => mockApiTicket.calls.resolve)
+  }
+
+  return {
+    mockApiTicket,
+    waitUntilTicketLoaded,
+  }
 }
 
 export const mockTicketDetailViewGql = (options: MockOptions = {}) => {

@@ -5,8 +5,10 @@ fragment ticketAttributes on Ticket {
   title
   createdAt
   updatedAt
+  pendingTime
   owner {
     id
+    internalId
     firstname
     lastname
   }
@@ -38,5 +40,8 @@ fragment ticketAttributes on Ticket {
     name
     defaultCreate
     uiColor
+  }
+  objectAttributeValues {
+    ...objectAttributeValues
   }
 }

@@ -267,6 +267,10 @@ describe('Fields - FieldDate - type "date"', () => {
 // Mocking date breaks flatpickr for some reason so, instead we relying
 // on current date for the interaction tests.
 describe('Fields - FieldDate - visuals', () => {
+  beforeEach(() => {
+    vi.stubGlobal('requestAnimationFrame', (cb: () => void) => cb())
+  })
+
   it('calendar visibility changes based on interaction', async () => {
     const view = renderDateField()
 

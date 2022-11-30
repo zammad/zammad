@@ -12,9 +12,9 @@ import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
-import { useTicketInformation } from './composable/useTicketInformation'
+import { useTicketInformation } from '../../composable/useTicketInformation'
 
-const ticket = useTicketInformation()
+const { ticket } = useTicketInformation()
 
 const session = useSessionStore()
 

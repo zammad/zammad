@@ -22,6 +22,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
             owner {
               fullname
             }
+            objectAttributeValues {
+              attribute {
+                name
+              }
+              value
+            }
             tags
           }
           errors {
@@ -59,13 +65,14 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
   let(:expected_base_response) do
     {
-      'id'       => gql.id(Ticket.last),
-      'title'    => 'Ticket Create Mutation Test',
-      'owner'    => { 'fullname' => agent.fullname },
-      'group'    => { 'name' => agent.groups.first.name },
-      'customer' => { 'fullname' => customer.fullname },
-      'priority' => { 'name' => Ticket::Priority.last.name },
-      'tags'     => %w[foo bar],
+      'id'                    => gql.id(Ticket.last),
+      'title'                 => 'Ticket Create Mutation Test',
+      'owner'                 => { 'fullname' => agent.fullname },
+      'group'                 => { 'name' => agent.groups.first.name },
+      'customer'              => { 'fullname' => customer.fullname },
+      'priority'              => { 'name' => Ticket::Priority.last.name },
+      'tags'                  => %w[foo bar],
+      'objectAttributeValues' => [],
     }
   end
 
@@ -100,6 +107,34 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         it 'fails validation' do
           it_fails_to_create_ticket
           expect(gql.result.error_message).to include('Variable $input of type TicketCreateInput! was provided invalid value for title')
+        end
+      end
+
+      context 'with custom object_attribute', db_strategy: :reset do
+        let(:object_attribute) do
+          screens = { create: { 'admin.organization': { shown: true, required: false } } }
+          create(:object_manager_attribute_text, object_name: 'Ticket', screens: screens).tap do |_oa|
+            ObjectManager::Attribute.migration_execute
+          end
+        end
+        let(:input_payload) do
+          input_base_payload.merge(
+            {
+              objectAttributeValues: [ { name: object_attribute.name, value: 'object_attribute_value' } ]
+            }
+          )
+        end
+        let(:expected_response) do
+          expected_base_response.merge(
+            {
+              'objectAttributeValues' => [{ 'attribute' => { 'name'=>object_attribute.name }, 'value' => 'object_attribute_value' }]
+            }
+          )
+        end
+
+        it 'creates the ticket' do
+          it_creates_ticket
+          expect(gql.result.data['ticket']).to eq(expected_response)
         end
       end
 

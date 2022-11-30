@@ -9,12 +9,18 @@ import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSe
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { closeDialog } from '@shared/composables/useDialog'
+import { useRoute, useRouter } from 'vue-router'
+import { getIdFromGraphQLId } from '@shared/graphql/utils'
 
 interface Props {
   name: string
+  ticketId: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const route = useRoute()
+const router = useRouter()
 
 const topButtons: CommonButtonOption[] = [
   {
@@ -36,7 +42,17 @@ const topButtons: CommonButtonOption[] = [
     label: __('Ticket info'),
     icon: 'mobile-info',
     onAction() {
-      console.log('show ticket info')
+      const internalId = getIdFromGraphQLId(props.ticketId)
+      const informationRoute = {
+        name: 'TicketInformationDetails',
+        params: {
+          internalId,
+        },
+      }
+      closeDialog(props.name)
+      if (route.name !== informationRoute.name) {
+        router.push(informationRoute)
+      }
     },
   },
 ]

@@ -1151,6 +1151,7 @@ msgid "Are you sure?"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -1656,6 +1657,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 #: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr ""
@@ -2252,6 +2254,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 msgid "Configure Basic Settings"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+msgid "Confirm dialog"
 msgstr ""
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
@@ -8582,6 +8588,10 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+msgid "Save ticket"
+msgstr ""
+
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
 msgstr ""
@@ -9074,6 +9084,7 @@ msgid "Show the chat when ready."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 msgid "Show ticket actions"
 msgstr ""
 
@@ -10644,8 +10655,16 @@ msgstr ""
 msgid "Ticket reminder reached (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>A ticket needs attention: reminder reached for (#{ticket.title}) with customer \"<b>#{ticket.customer.longname}</b>\".</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "Ticket title"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "Ticket updated successfully."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue

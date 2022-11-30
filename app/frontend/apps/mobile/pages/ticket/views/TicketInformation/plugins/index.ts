@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketQuery } from '@shared/graphql/types'
+import type { TicketById } from '@mobile/pages/ticket/types/tickets'
 import type { RouteRecordRaw } from 'vue-router'
 
 export interface TicketInformationPlugin {
   order: number
   label: string
   route: RouteRecordRaw & { name: string }
-  condition?: (ticket?: TicketQuery['ticket']) => boolean
+  condition?: (ticket?: TicketById) => boolean
 }
 
 const pluginsModules = import.meta.glob<TicketInformationPlugin>(

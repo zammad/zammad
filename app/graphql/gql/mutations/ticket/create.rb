@@ -6,7 +6,7 @@ module Gql::Mutations
 
     argument :input, Gql::Types::Input::Ticket::CreateInputType, description: 'The ticket data'
 
-    field :ticket, Gql::Types::TicketType, description: 'The created user.'
+    field :ticket, Gql::Types::TicketType, description: 'The created ticket.'
 
     def self.authorize(_obj, ctx)
       ctx[:current_user].permissions?(['ticket.agent', 'ticket.customer'])

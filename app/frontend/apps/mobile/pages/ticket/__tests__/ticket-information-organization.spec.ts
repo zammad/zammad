@@ -15,6 +15,7 @@ import {
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
 import type { ConfidentTake } from '@shared/types/utils'
 import type { OrganizationQuery } from '@shared/graphql/types'
+import { within } from '@testing-library/vue'
 import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 const visitTicketOrganization = async (
@@ -32,8 +33,14 @@ const visitTicketOrganization = async (
 
   await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
 
+  const helpers = within(view.container as HTMLElement)
+
   return {
-    view,
+    view: {
+      ...helpers,
+      container: view.container,
+      events: view.events,
+    },
     mockApi,
     mockSubscription,
   }

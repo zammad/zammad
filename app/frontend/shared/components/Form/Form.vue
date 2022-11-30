@@ -47,6 +47,7 @@ import { edgesToArray } from '@shared/utils/helpers'
 import type { FormUpdaterTrigger } from '@shared/types/form'
 import type { ObjectLike } from '@shared/types/utils'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
+import { parseGraphqlId } from '@shared/graphql/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import {
   type FormData,
@@ -318,6 +319,13 @@ const schemaData = reactive<ReactiveFormSchemData>({
 
 const internalFieldCamelizeName: Record<string, string> = {}
 
+const getInternalId = (item?: { id?: string; internalId?: number }) => {
+  if (!item) return undefined
+  if (item.internalId) return item.internalId
+  if (!item.id) return undefined
+  return parseGraphqlId(item.id).id
+}
+
 const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
   if (isEmpty(props.initialEntityObject)) return undefined
 
@@ -331,9 +339,9 @@ const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
     if ('edges' in belongsToObject) {
       value = edgesToArray(
         belongsToObject as { edges?: { node: { internalId: number } }[] },
-      ).map((item) => item.internalId)
+      ).map((item) => getInternalId(item))
     } else {
-      value = belongsToObject?.internalId
+      value = getInternalId(belongsToObject)
     }
   }
 
@@ -418,9 +426,9 @@ const updateSchemaDataField = (
     // Select the correct initial value (at this time localInitialValues has not already the information
     // from the initial entity object, so we need to check it manually).
     combinedFieldProps.value =
-      localInitialValues[field.name] ??
-      getInitialEntityObjectValue(field.name) ??
-      combinedFieldProps.value
+      field.name in localInitialValues
+        ? localInitialValues[field.name]
+        : getInitialEntityObjectValue(field.name) ?? combinedFieldProps.value
 
     // Save current initial value for later usage, when not already exists.
     if (!(field.name in localInitialValues))
@@ -895,6 +903,12 @@ if (props.schema) {
 }
 </script>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <template>
   <div
     v-if="debouncedShowInitialLoadingAnimation"
@@ -908,6 +922,7 @@ if (props.schema) {
       ((formSchemaInitialized && Object.keys(schemaData.fields).length > 0) ||
         $slots.default)
     "
+    v-bind="$attrs"
     :id="id"
     type="form"
     novalidate

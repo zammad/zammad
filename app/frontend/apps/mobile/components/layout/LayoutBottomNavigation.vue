@@ -48,7 +48,7 @@ const notificationCount = computed(() => {
         >
           {{ notificationCount }}
         </div>
-        <CommonIcon name="mobile-notification-subscribed" />
+        <CommonIcon name="mobile-notification-subscribed" decorative />
       </CommonLink>
       <CommonLink
         link="/account"

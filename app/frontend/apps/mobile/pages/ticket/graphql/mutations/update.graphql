@@ -1,0 +1,13 @@
+mutation ticketUpdate(
+  $ticket: LocatorTicketInput!
+  $input: TicketUpdateInput!
+) {
+  ticketUpdate(ticket: $ticket, input: $input) {
+    ticket {
+      ...ticketAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}
