@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Technical Assistance / Question
+    url: https://community.zammad.org/c/trouble-running-zammad-this-is-your-place/5
+    about: Please ask and answer questions here.
+  - name: Feature Requests
+    url: https://community.zammad.org/c/stuff-you-like-zammad-to-have-feel-free-to-discuss-and-add-proposals/6
+    about: Use this to request new features.
