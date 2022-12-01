@@ -21,6 +21,11 @@ module Import
         ContentType: :content_type,
         ChangeTime:  :updated_at,
         CreateTime:  :created_at,
+
+        # Support also the legacy time key names (lower then OTRS 6)
+        Changed:     :updated_at,
+        Created:     :created_at,
+
         ChangedBy:   :updated_by_id,
         CreatedBy:   :created_by_id,
       }.freeze
