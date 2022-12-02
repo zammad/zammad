@@ -10433,11 +10433,20 @@ label + .wizard-buttonList {
   }
 }
 
+.horizontal-filters-alert {
+  margin-bottom: 10px;
+}
+
 .horizontal-filters {
   margin-bottom: 20px;
+
+  &--with-switch {
+    margin-bottom: 10px;
+  }
 }
 
 .horizontal-filter {
+  position: relative;
   display: flex;
   background: var(--background-primary-alt);
   padding: 7px;
@@ -10445,14 +10454,10 @@ label + .wizard-buttonList {
 
   &:first-child {
     border-radius: 4px 4px 0 0;
-
-    @include rtl(border-radius, 0 0 4px 4px);
   }
 
   &:last-child {
     border-radius: 0 0 4px 4px;
-
-    @include rtl(border-radius, 4px 4px 0 0);
   }
 
   &:only-child {
@@ -10474,6 +10479,76 @@ label + .wizard-buttonList {
 
   input[data-item='time'] {
     width: 4.5ch;
+  }
+
+  &[data-level] {
+    padding-left: 54px;
+
+    @include rtl(padding-left, 7px);
+    @include rtl(padding-right, 54px);
+  }
+
+  &[data-level='1'] {
+    padding-left: 0;
+
+    @include rtl(padding-left, 7px);
+    @include rtl(padding-right, 0);
+  }
+
+  &[data-level='2'] {
+    padding-left: 27px;
+
+    @include rtl(padding-left, 7px);
+    @include rtl(padding-right, 27px);
+  }
+
+  &[data-level]::before {
+    content: '';
+    background-color: var(--border-alt);
+    width: 54px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    @include rtl(right, 0);
+  }
+
+  &[data-level='1']::before {
+    width: 0;
+  }
+
+  &[data-level='2']::before {
+    width: 27px;
+  }
+
+  .draggable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 39px;
+    vertical-align: middle;
+    cursor: move;
+  }
+
+  .ui-sortable-helper & {
+    border-color: transparent;
+    border-radius: none;
+    background: var(--background-modifier-lighter);
+
+    &[data-level]::before {
+      background-color: transparent;
+    }
+  }
+
+  &.ui-sortable-placeholder {
+    visibility: visible !important;
+    background: var(--background-primary-alt);
+
+    &[data-level]::before {
+      background-color: var(--border-highlight);
+    }
   }
 }
 
@@ -10532,6 +10607,7 @@ label + .wizard-buttonList {
 .horizontal-filter-value {
   max-width: 60%;
   flex-grow: 1;
+  margin-bottom: 0;
 
   @include phone {
     max-width: 100%;
@@ -10544,6 +10620,29 @@ label + .wizard-buttonList {
 
   .dropdown:only-child {
     flex-grow: 1;
+  }
+}
+
+.horizontal-filters-switch {
+  display: flex;
+  justify-content: end;
+
+  & > label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+
+    .zammad-switch {
+      margin-top: 0;
+      margin-left: 10px;
+
+      @include rtl(margin-left, 0);
+      @include rtl(margin-right, 10px);
+    }
+  }
+
+  & + .js-preview h3 {
+    margin-top: 0;
   }
 }
 

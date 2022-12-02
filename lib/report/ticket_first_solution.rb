@@ -45,14 +45,7 @@ returns
         params[:range_end] = params[:range_start] + 1.minute
       end
 
-      without_merged_tickets = {
-        'ticket_state.name' => {
-          'operator' => 'is not',
-          'value'    => 'merged'
-        }
-      }
-      params[:selector].merge!(without_merged_tickets)
-      query, bind_params, tables = Ticket.selector2sql(params[:selector])
+      query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
       ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
         'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
         params[:range_start],
@@ -92,15 +85,7 @@ returns
 =end
 
   def self.items(params)
-    without_merged_tickets = {
-      'ticket_state.name' => {
-        'operator' => 'is not',
-        'value'    => 'merged'
-      }
-    }
-
-    selector = params[:selector].merge!(without_merged_tickets)
-    query, bind_params, tables = Ticket.selector2sql(selector)
+    query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
     ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
       'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
       params[:range_start],

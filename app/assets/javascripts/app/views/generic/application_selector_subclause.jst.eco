@@ -1,0 +1,25 @@
+<div class="horizontal-filter js-filterElement <% if @is_first: %>unsortable<% end %>" data-subclause="true" <% if not @is_first: %>data-level="<%= @level %>"<% end %>>
+<% if @is_first: %>
+  <div class="js-expertConditions"></div>
+<% else: %>
+  <div class="draggable"><%- @Icon('draggable') %></div>
+<% end %>
+  <div class="horizontal-filter-body">
+    <div class="controls">
+      <div class="u-positionOrigin js-subclauseSelector">
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+    </div>
+  </div>
+  <div class="filter-controls">
+    <div class="filter-control filter-control-remove <% if @is_first: %>is-disabled<% else: %>js-remove<% end %>" title="<%- @Ti('Remove') %>">
+      <%- @Icon('minus-small') %>
+    </div>
+    <div class="filter-control filter-control-add js-add" title="<%- @Ti('Add condition') %>">
+      <%- @Icon('plus-small') %>
+    </div>
+    <div class="filter-control filter-control-subclause js-subclause" title="<%- @Ti('Add subclause') %>">
+      <%- @Icon('subclause-small') %>
+    </div>
+  </div>
+</div>

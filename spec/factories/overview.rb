@@ -33,5 +33,20 @@ FactoryBot.define do
         view_mode_default: 's',
       }
     end
+
+    trait :condition_expert do
+      condition do
+        {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.state_id',
+              operator: 'is',
+              value:    Ticket::State.where(name: %w[new open]).pluck(:id),
+            }
+          ]
+        }
+      end
+    end
   end
 end

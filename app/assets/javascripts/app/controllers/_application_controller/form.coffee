@@ -616,6 +616,19 @@ class App.ControllerForm extends App.Controller
           param[newKey] = null
         delete param[key]
 
+      # get {json}
+      else if key.substr(0, 6) is '{json}'
+        newKey = key.substr(6)
+        if param[key]
+          try
+            param[newKey] = JSON.parse(param[key])
+          catch err
+            param[newKey] = "invalid #{key}"
+            console.log('ERR', err)
+        else
+          param[newKey] = null
+        delete param[key]
+
     # split :: fields, build objects
     inputSelectObject = {}
     for key of param
@@ -671,7 +684,7 @@ class App.ControllerForm extends App.Controller
           param[newKey] = undefined
         delete param[key]
 
-    #App.Log.notice 'ControllerForm', 'formParam', form, param
+    App.Log.debug 'ControllerForm', 'formParam', form, param
     param
 
   @formId: ->

@@ -8,7 +8,7 @@ class App.UiElement.time_range
       week: __('Week(s)'),
       month: __('Month(s)')
       year: __('Year(s)')
-      
+
     for key, value of ranges
       ranges[key] = App.i18n.translateInline(value)
 
@@ -27,14 +27,14 @@ class App.UiElement.time_range
     @localRenderPulldown(element.filter('.js-valueRangeSelector'), values[range], attribute)
     element.find('select.form-control.js-range').on('change', (e) =>
       range = $(e.currentTarget).val()
-      selected_value_name = $(e.currentTarget).prop('name').replace(/::\w+$/, '::value')
-      selected_value = $("select[name='#{selected_value_name}']").val() if selected_value_name
-      @localRenderPulldown($(e.currentTarget).closest('.js-filterElement').find('.js-valueRangeSelector'), values[range], attribute, selected_value)
+      value_selector = $(e.currentTarget).closest('.js-filterElement').find('.js-valueRangeSelector')
+      selected_value = value_selector.find('select').val() if value_selector
+      @localRenderPulldown(value_selector, values[range], attribute, selected_value)
     )
     element
 
   @localRenderPulldown: (el, range, attribute, selected_value) ->
-    return if !range
+    return if !range or !el
     values = {}
     for count in range
       values[count.toString()] = count.toString()

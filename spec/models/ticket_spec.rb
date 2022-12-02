@@ -17,7 +17,6 @@ require 'models/ticket/escalation_examples'
 require 'models/ticket/resets_pending_time_seconds_examples'
 require 'models/ticket/sets_close_time_examples'
 require 'models/ticket/sets_last_owner_update_time_examples'
-require 'models/ticket/selector_2_sql_examples'
 
 RSpec.describe Ticket, type: :model do
   subject(:ticket) { create(:ticket) }
@@ -38,7 +37,6 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'TicketResetsPendingTimeSeconds'
   it_behaves_like 'TicketSetsCloseTime'
   it_behaves_like 'TicketSetsLastOwnerUpdateTime'
-  it_behaves_like 'TicketSelector2Sql'
 
   describe 'Class methods:' do
     describe '.selectors' do

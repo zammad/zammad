@@ -68,6 +68,7 @@ module.exports = class DetectTranslatableString
     'log': true,
     'T': true,
     'controllerBind': true,
+    'debug': true,  # App.Log.debug
     'error': true,  # App.Log.error
     'set': true,  # App.Config.set
     'translateInline': true,

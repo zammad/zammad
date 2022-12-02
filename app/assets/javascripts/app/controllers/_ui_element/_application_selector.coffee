@@ -156,14 +156,24 @@ class App.UiElement.ApplicationSelector
       attribute: attribute
     ) )
 
-  @render: (attribute, params = {}) ->
+  @prepareParamValue: (item, elements, attribute, params) ->
+    paramValue = {}
 
+    for groupAndAttribute, meta of params[attribute.name]
+      continue if !elements[groupAndAttribute]
+      paramValue[groupAndAttribute] = meta
+
+    paramValue
+
+  @render: (attribute, params = {}) ->
+    item = $( App.view('generic/application_selector')(attribute: attribute) )
+    @renderItem(item, attribute, params)
+
+  @renderItem: (item, attribute, params) ->
     [defaults, groups, elements] = @defaults(attribute, params)
 
-    item = $( App.view('generic/application_selector')(attribute: attribute) )
-
     # add filter
-    item.on('click', '.js-add', (e) =>
+    item.off('click.application_selector', '.js-add').on('click.application_selector', '.js-add', (e) =>
       element = $(e.target).closest('.js-filterElement')
 
       # add first available attribute
@@ -186,13 +196,14 @@ class App.UiElement.ApplicationSelector
         row.find('.js-attributeSelector select').trigger('change')
 
       @rebuildAttributeSelectors(item, row, field, elements, {}, attribute)
+      @saveParams(item)
 
       if attribute.preview isnt false
         @preview(item)
     )
 
     # remove filter
-    item.on('click', '.js-remove', (e) =>
+    item.off('click.application_selector', '.js-remove').on('click.application_selector', '.js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
 
       if @hasEmptySelectorAtStart()
@@ -204,14 +215,13 @@ class App.UiElement.ApplicationSelector
         $(e.target).closest('.js-filterElement').remove()
 
       @updateAttributeSelectors(item)
+      @saveParams(item)
+
       if attribute.preview isnt false
         @preview(item)
     )
 
-    paramValue = {}
-    for groupAndAttribute, meta of params[attribute.name]
-      continue if !elements[groupAndAttribute]
-      paramValue[groupAndAttribute] = meta
+    paramValue = @prepareParamValue(item, elements, attribute, params)
 
     # build initial params
     if !_.isEmpty(paramValue)
@@ -230,20 +240,27 @@ class App.UiElement.ApplicationSelector
           item.filter('.js-filter').append(row)
 
     # change attribute selector
-    item.on('change', '.js-attributeSelector select', (e) =>
+    item.off('change.application_selector', '.js-attributeSelector select').on('change.application_selector', '.js-attributeSelector select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
       @updateAttributeSelectors(item)
+      @saveParams(item)
     )
 
     # change operator selector
-    item.on('change', '.js-operator select', (e) =>
+    item.off('change.application_selector', '.js-operator select').on('change.application_selector', '.js-operator select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
+      @saveParams(item)
+    )
+
+    # change attribute value
+    item.off('change.application_selector keyup.application_selector', '.js-value .form-control').on('change.application_selector keyup.application_selector', '.js-value .form-control', =>
+      @saveParams(item)
     )
 
     # bind for preview
@@ -260,14 +277,16 @@ class App.UiElement.ApplicationSelector
           'preview',
         )
 
-      item.on('change', 'select', (e) ->
+      item.off('change.application_selector', 'select').on('change.application_selector', 'select', (e) ->
         triggerSearch()
       )
-      item.on('change keyup', 'input', (e) ->
+      item.off('change.application_selector keyup.application_selector', 'input').on('change.application_selector keyup.application_selector', 'input', (e) ->
         triggerSearch()
       )
 
     @disableRemoveForOneAttribute(item)
+    @saveParams(item)
+
     item
 
   @renderParamValue: (item, attribute, params, paramValue) ->
@@ -279,6 +298,9 @@ class App.UiElement.ApplicationSelector
       row = @rowContainer(groups, elements, attribute)
       @rebuildAttributeSelectors(item, row, groupAndAttribute, elements, meta, attribute)
       item.filter('.js-filter').append(row)
+
+  @saveParams: (item) ->
+    @params = App.ControllerForm.params(item)
 
   @preview: (item) ->
     params = App.ControllerForm.params(item)
@@ -302,6 +324,19 @@ class App.UiElement.ApplicationSelector
       el:         item.find('.js-previewTable')
       ticket_ids: ticket_ids
     )
+
+  @showAlert: (head, message, item) ->
+    alert = item.filter('.js-alert')
+    alert.empty()
+      .append($('<strong></strong>').text(App.i18n.translateContent(head)))
+      .append('\xa0') # extra space
+      .append(App.i18n.translateContent(message))
+      .removeClass('hidden')
+
+  @hideAlert: (item) ->
+    alert = item.filter('.js-alert')
+    alert.addClass('hidden')
+      .empty()
 
   @buildAttributeSelector: (groups, elements) ->
     selection = $('<select class="form-control"></select>')
@@ -461,7 +496,7 @@ class App.UiElement.ApplicationSelector
     elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
-    elementRow.find('.js-preCondition select').on('change', (e) ->
+    elementRow.find('.js-preCondition select').off('change.application_selector').on('change.application_selector', (e) ->
       toggleValue()
     )
 

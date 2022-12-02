@@ -58,13 +58,5 @@ RSpec.describe 'Report', searchindex: true, type: :system do
 
       expect(page).to have_no_css('.modal')
     end
-
-    it 'throws error for a profile when showing a different year than described in the profile' do
-      click '.label-text', text: report_profile.name
-
-      in_modal do
-        expect(page).to have_text 'Conflicting date ranges'
-      end
-    end
   end
 end

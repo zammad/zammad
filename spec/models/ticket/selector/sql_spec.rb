@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples 'TicketSelector2Sql' do
+RSpec.describe Ticket::Selector::Sql do
   context 'when relative time range is selected in ticket selector' do
     def get_condition(operator, range)
       {
@@ -75,7 +75,7 @@ RSpec.shared_examples 'TicketSelector2Sql' do
       it 'calculates proper time interval when today operator is used', :aggregate_failures do
         _, bind_params = Ticket.selector2sql({ 'ticket.created_at' => { 'operator' => 'today' } })
 
-        Time.use_zone(Setting.get('timezone_default').presence) do
+        Time.use_zone(Setting.get('timezone_default_sanitized').presence) do
           expect(bind_params[0].to_s).to eq('2022-10-10 22:00:00 UTC')
           expect(bind_params[1].to_s).to eq('2022-10-11 21:59:59 UTC')
         end

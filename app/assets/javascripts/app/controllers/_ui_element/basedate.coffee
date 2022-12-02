@@ -7,8 +7,9 @@ class App.UiElement.basedate
   @render: (attributeConfig) ->
     attribute = $.extend(true, {}, attributeConfig)
 
-    attribute.nameRaw = attribute.name
-    attribute.name = "{#{@templateName()}}#{attribute.name}"
+    if attribute.name
+      attribute.nameRaw = attribute.name
+      attribute.name = "{#{@templateName()}}#{attribute.name}"
 
     item = $( App.view("generic/#{@templateName()}")(
       attribute: attribute
@@ -61,21 +62,26 @@ class App.UiElement.basedate
       @validation(item, attribute)
     )
 
+  @inputElement: (item, attribute) ->
+    if attribute.name
+      return item.find("[name=\"#{attribute.name}\"]")
+    return item.find('input[type="hidden"]')
+
   @setNewTime: (item, attribute, tolerant = false) ->
     currentInput = @currentInput(item, attribute)
     return if !currentInput
 
     if !@validateInput(currentInput)
-      item.find("[name=\"#{attribute.name}\"]").val('')
+      @inputElement(item, attribute).val('')
       return
 
-    item.find("[name=\"#{attribute.name}\"]").val(@buildTimestamp(currentInput))
+    @inputElement(item, attribute).val(@buildTimestamp(currentInput))
 
   # returns array with date or false if cannot get date
   @currentInput: (item, attribute) ->
     datetime = item.find('.js-datepicker').datepicker('getDate')
     if !datetime || datetime.toString() is 'Invalid Date'
-      item.find("[name=\"#{attribute.name}\"]").val('')
+      @inputElement(item, attribute).val('')
       return false
 
     @log 'setNewTime', datetime
@@ -96,7 +102,7 @@ class App.UiElement.basedate
     throw 'Must override in a subclass'
 
   @setNewTimeInitial: (item, attribute) ->
-    timestamp = item.find("[name=\"#{attribute.name}\"]").val()
+    timestamp = @inputElement(item, attribute).val()
     @log 'setNewTimeInitial', timestamp
     if !timestamp
       @setNoTimestamp(item)
@@ -124,7 +130,7 @@ class App.UiElement.basedate
       item.find('.help-inline').html('')
       item.closest('.form-group').find('.help-inline').html('')
 
-    timestamp = item.find("[name=\"#{attribute.name}\"]").val()
+    timestamp = @inputElement(item, attribute).val()
 
     # check required attributes
     errors = {}

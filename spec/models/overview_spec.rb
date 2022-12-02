@@ -106,4 +106,10 @@ RSpec.describe Overview, type: :model do
       expect(overview_next.prio).to be 124
     end
   end
+
+  describe 'Make conditions AND/OR and thus enable several conditions of same type #2185' do
+    it 'does create overviews with the expert structure' do
+      expect { create(:overview, :condition_expert) }.not_to raise_error
+    end
+  end
 end

@@ -22,34 +22,26 @@ class ReportsController < ApplicationController
     get_params = params_all
     return if !get_params
 
-    begin
-      result = {}
-      get_params[:metric][:backend].each do |backend|
-        condition = get_params[:profile].condition
-        if backend[:condition]
-          backend[:condition].merge(condition)
-        else
-          backend[:condition] = condition
-        end
-        next if !backend[:adapter]
-
-        result[backend[:name]] = backend[:adapter].aggs(
-          range_start:     get_params[:start],
-          range_end:       get_params[:stop],
-          interval:        get_params[:range],
-          selector:        backend[:condition],
-          params:          backend[:params],
-          timezone:        get_params[:timezone],
-          timezone_offset: get_params[:timezone_offset],
-          current_user:    current_user
-        )
+    result = {}
+    get_params[:metric][:backend].each do |backend|
+      condition = get_params[:profile].condition
+      if backend[:condition]
+        backend[:condition].merge(condition)
+      else
+        backend[:condition] = condition
       end
-    rescue => e
-      if e.message.include? 'Conflicting date range'
-        raise Exceptions::UnprocessableEntity, __('Conflicting date ranges. Please check your selected report profile.')
-      end
+      next if !backend[:adapter]
 
-      raise e
+      result[backend[:name]] = backend[:adapter].aggs(
+        range_start:     get_params[:start],
+        range_end:       get_params[:stop],
+        interval:        get_params[:range],
+        selector:        backend[:condition],
+        params:          backend[:params],
+        timezone:        get_params[:timezone],
+        timezone_offset: get_params[:timezone_offset],
+        current_user:    current_user
+      )
     end
 
     render json: {

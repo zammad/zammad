@@ -2054,6 +2054,7 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: {
+    prio:           1000,
     render:         true,
     placeholder:    true,
     authentication: true,
@@ -2109,6 +2110,7 @@ Setting.create_if_not_exists(
   },
   state:       'right',
   preferences: {
+    prio:       2000,
     controller: 'SettingsAreaTicketHookPosition',
     permission: ['admin.ticket'],
   },
@@ -2136,9 +2138,36 @@ Setting.create_if_not_exists(
   },
   state:       'check_if_agent_already_replied',
   preferences: {
+    prio:       3000,
     permission: ['admin.ticket'],
   },
   frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Ticket Conditions Expert Mode'),
+  name:        'ticket_allow_expert_conditions',
+  area:        'Ticket::Base',
+  description: __('Defines if the ticket conditions editor supports complex logical expressions.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_allow_expert_conditions',
+        tag:     'boolean',
+        options: {
+          true  => __('yes'),
+          false => __('no'),
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       4000,
+    permission: ['admin.ticket'],
+  },
+  frontend:    true
 )
 Setting.create_if_not_exists(
   title:       __('Ticket Number Format'),
