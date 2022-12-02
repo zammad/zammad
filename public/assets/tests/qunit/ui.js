@@ -342,6 +342,11 @@ QUnit.test("check pretty date", assert => {
     yfull  = date.getFullYear()
     M      = date.getMinutes()
     H      = date.getHours()
+    l      = (H + 11) % 12 + 1
+    if (l < 10) {
+      l = ' ' + l
+    }
+    P      = H >= 12 ? 'pm' : 'am'
 
     // for less than 6 days
     // weekday HH::MM
@@ -350,7 +355,7 @@ QUnit.test("check pretty date", assert => {
     else if (current.getYear() == date.getYear())
        string = weekday + ' ' + date.getDate() + '. ' + month + ' ' + H + ':' + (M < 10 ? '0':'') + M
     else
-       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + (H < 10 ? '0':'') + H + ':' + (M < 10 ? '0':'') + M
+       string = weekday + ' ' + (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + l + ':' + (M < 10 ? '0':'') + M + ' ' + P
     return string;
   }
 
