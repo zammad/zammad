@@ -51,21 +51,26 @@ examples how to use
     # do validation, ignore some methods
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
 
+    article_tags = %w[article last_article last_internal_article last_external_article
+                      created_article created_internal_article created_external_article]
+
     # aliases
-    map = {
-      'article.body' => 'article.body_as_text_with_quote.text2html',
-      'ticket.tags'  => 'ticket.tag_list',
-    }
+    map = { 'ticket.tags' => 'ticket.tag_list' }
+    article_tags.each do |tag|
+      map["#{tag}.body"] = "#{tag}.body_as_text_with_quote.text2html"
+    end
+
     if map[key]
       key = map[key]
     end
 
     # escape in html mode
     if escape
-      no_escape = {
-        'article.body_as_html'                      => true,
-        'article.body_as_text_with_quote.text2html' => true,
-      }
+      no_escape = {}
+      article_tags.each do |tag|
+        no_escape["#{tag}.body_as_html"] = true
+        no_escape["#{tag}.body_as_text_with_quote.text2html"] = true
+      end
       if no_escape[key]
         escape = false
       end

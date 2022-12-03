@@ -617,13 +617,41 @@ RSpec.describe Ticket, type: :model do
                   })
           end
 
+          let(:objects) do
+            last_article = nil
+            last_internal_article = nil
+            last_external_article = nil
+            all_articles = ticket.articles
+
+            if article.nil?
+              last_article = all_articles.last
+              last_internal_article = all_articles.reverse.find(&:internal?)
+              last_external_article = all_articles.reverse.find { |a| !a.internal? }
+            else
+              last_article = article
+              last_internal_article = article.internal? ? article : all_articles.reverse.find(&:internal?)
+              last_external_article = article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article
+            end
+
+            {
+              ticket:                   ticket,
+              article:                  last_article,
+              last_article:             last_article,
+              last_internal_article:    last_internal_article,
+              last_external_article:    last_external_article,
+              created_article:          article,
+              created_internal_article: article&.internal? ? article : nil,
+              created_external_article: article&.internal? ? nil : article,
+            }
+          end
+
           # required by Ticket#perform_changes for email notifications
           before { article.ticket.group.update(email_address: create(:email_address)) }
 
           it 'passes the first article to NotificationFactory::Mailer' do
             expect(NotificationFactory::Mailer)
               .to receive(:template)
-              .with(hash_including(objects: { ticket: ticket, article: article }))
+              .with(hash_including(objects: objects))
               .at_least(:once)
               .and_call_original
 
@@ -642,6 +670,15 @@ RSpec.describe Ticket, type: :model do
         # Notification triggers should log notification as private or public
         # according to given configuration
         let(:user) { create(:admin, mobile: '+37061010000') }
+        let(:item) do
+          {
+            object:     'Ticket',
+            object_id:  ticket.id,
+            user_id:    user.id,
+            type:       'update',
+            article_id: ticket_article.id
+          }
+        end
 
         before { ticket.group.users << user }
 
@@ -655,7 +692,8 @@ RSpec.describe Ticket, type: :model do
           }.deep_merge(additional_options).deep_stringify_keys
         end
 
-        let(:notification_key) { "notification.#{notification_type}" }
+        let(:notification_key)  { "notification.#{notification_type}" }
+        let!(:ticket_article)   { create(:ticket_article, ticket: ticket) }
 
         shared_examples 'verify log visibility status' do
           shared_examples 'notification trigger' do
@@ -718,7 +756,7 @@ RSpec.describe Ticket, type: :model do
 
         shared_examples 'add a new article' do
           it 'adds a new article' do
-            expect { ticket.perform_changes(performable, 'trigger', ticket, user) }
+            expect { ticket.perform_changes(performable, 'trigger', item, user) }
               .to change { ticket.articles.count }.by(1)
           end
         end
@@ -727,7 +765,7 @@ RSpec.describe Ticket, type: :model do
           include_examples 'add a new article'
 
           it 'adds attachment to the new article' do
-            ticket.perform_changes(performable, 'trigger', ticket, user)
+            ticket.perform_changes(performable, 'trigger', item, user)
             article = ticket.articles.last
 
             expect(article.type.name).to eq('email')
@@ -742,7 +780,7 @@ RSpec.describe Ticket, type: :model do
           include_examples 'add a new article'
 
           it 'does not add attachment to the new article' do
-            ticket.perform_changes(performable, 'trigger', ticket, user)
+            ticket.perform_changes(performable, 'trigger', item, user)
             article = ticket.articles.last
 
             expect(article.type.name).to eq('email')
@@ -765,7 +803,6 @@ RSpec.describe Ticket, type: :model do
 
             before do
               UserInfo.current_user_id = 1
-              ticket_article = create(:ticket_article, ticket: ticket)
 
               create(:store,
                      object:      'Ticket::Article',
@@ -801,7 +838,6 @@ RSpec.describe Ticket, type: :model do
 
             before do
               UserInfo.current_user_id = 1
-              ticket_article = create(:ticket_article, ticket: ticket)
 
               create(:store,
                      object:      'Ticket::Article',

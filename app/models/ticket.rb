@@ -1034,9 +1034,30 @@ result
   # if another email notification trigger preceded this one
   # (see https://github.com/zammad/zammad/issues/1543)
   def build_notification_template_objects(article)
+    last_article = nil
+    last_internal_article = nil
+    last_external_article = nil
+    all_articles = articles
+
+    if article.nil?
+      last_article = all_articles.last
+      last_internal_article = all_articles.reverse.find(&:internal?)
+      last_external_article = all_articles.reverse.find { |a| !a.internal? }
+    else
+      last_article = article
+      last_internal_article = article.internal? ? article : all_articles.reverse.find(&:internal?)
+      last_external_article = article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article
+    end
+
     {
-      ticket:  self,
-      article: article || articles.last
+      ticket:                   self,
+      article:                  last_article,
+      last_article:             last_article,
+      last_internal_article:    last_internal_article,
+      last_external_article:    last_external_article,
+      created_article:          article,
+      created_internal_article: article&.internal? ? article : nil,
+      created_external_article: article&.internal? ? nil : article,
     }
   end
 

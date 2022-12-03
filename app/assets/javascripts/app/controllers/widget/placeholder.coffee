@@ -69,6 +69,30 @@ class App.WidgetPlaceholder extends App.Controller
               content: content
             }
 
+    # modify article placeholders
+    replaces = [
+      { display: __('Last Article'), name: 'last_article' },
+      { display: __('Last Internal Article'), name: 'last_internal_article' },
+      { display: __('Last External Article'), name: 'last_external_article' },
+      { display: __('Created Article'), name: 'created_article' },
+      { display: __('Created Internal Article'), name: 'created_internal_article' },
+      { display: __('Created External Article'), name: 'created_external_article' },
+    ]
+
+    for item in all
+      if item.name.startsWith('Article')
+        for replace in replaces
+          all.push {
+            name: item.name.replace('Article', App.i18n.translateInline(replace.display))
+            content: item.content.replace('article', replace.name)
+            id: item.id.replace('article', replace.name)
+            keywords: item.keywords.replace('article', replace.name)
+          }
+
+    all = _.filter(all, (item) ->
+      return !item.name.startsWith('Article')
+    )
+
     # add config
     for setting in App.Setting.all()
       if setting.frontend && setting.preferences && setting.preferences.placeholder

@@ -59,6 +59,77 @@ RSpec.describe NotificationFactory::Renderer do
       expect { renderer.render }.to raise_error(StandardError)
     end
 
+    context 'with different article variables' do
+
+      let(:customer) { create(:customer, firstname: 'Nicole') }
+      let(:ticket)   { create(:ticket, customer: customer) }
+      let(:objects)  do
+        last_article = nil
+        last_internal_article = nil
+        last_external_article = nil
+        all_articles = ticket.articles
+
+        if article.nil?
+          last_article = all_articles.last
+          last_internal_article = all_articles.reverse.find(&:internal?)
+          last_external_article = all_articles.reverse.find { |a| !a.internal? }
+        else
+          last_article = article
+          last_internal_article = article.internal? ? article : all_articles.reverse.find(&:internal?)
+          last_external_article = article.internal? ? all_articles.reverse.find { |a| !a.internal? } : article
+        end
+
+        {
+          ticket:                   ticket,
+          article:                  last_article,
+          last_article:             last_article,
+          last_internal_article:    last_internal_article,
+          last_external_article:    last_external_article,
+          created_article:          article,
+          created_internal_article: article&.internal? ? article : nil,
+          created_external_article: article&.internal? ? nil : article,
+        }
+      end
+      let(:renderer) do
+        build(:notification_factory_renderer,
+              objects:  objects,
+              template: template)
+      end
+      let(:body)     { 'test' }
+      let(:article)  { create(:ticket_article, ticket: ticket, body: body) }
+
+      context 'with ticket.tags as template' do
+        let(:template) { '#{ticket.tags}' }
+
+        before do
+          ticket.tag_add('Tag1', customer.id)
+        end
+
+        it 'correctly renders ticket tags references' do
+          expect(renderer.render).to eq 'Tag1'
+        end
+      end
+
+      %w[article last_article last_internal_article last_external_article
+         created_article created_internal_article created_external_article].each do |tag|
+        context "with #{tag}.body as template" do
+          let(:template) { "\#{#{tag}.body}" }
+          let(:article) do
+            create(
+              :ticket_article,
+              ticket:   ticket,
+              body:     body,
+              internal: tag.match?('internal')
+            )
+          end
+
+          it "renders an #{tag} body with quote" do
+            expect(renderer.render).to eq "&gt; #{body}<br>"
+          end
+        end
+      end
+    end
+
     context 'when handling ObjectManager::Attribute usage', db_strategy: :reset do
       before do
         create_object_manager_attribute

@@ -2610,10 +2610,22 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created Article"
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created External Article"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created Internal Article"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
@@ -5964,6 +5976,10 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Article"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
 msgstr ""
@@ -5974,6 +5990,14 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last External Article"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Internal Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
