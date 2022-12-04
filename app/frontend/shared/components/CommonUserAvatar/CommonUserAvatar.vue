@@ -14,6 +14,7 @@ export interface Props {
   entity: AvatarUser
   size?: AvatarSize
   personal?: boolean
+  decorative?: boolean
 }
 
 const props = defineProps<Props>()
@@ -112,6 +113,7 @@ const label = computed(() => {
     :class="className"
     :image="image"
     :vip="isVip"
+    :decorative="decorative"
     :aria-label="label"
   />
 </template>

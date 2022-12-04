@@ -54,5 +54,14 @@ module Gql::Types
     # field :type, String
     field :time_unit, Float
     field :preferences, GraphQL::Types::JSON
+
+    internal_fields do
+      field :subscribed, Boolean, null: true
+      field :mentions, Gql::Types::MentionType.connection_type, null: true
+    end
+
+    def subscribed
+      ::Mention.subscribed?(@object, context.current_user)
+    end
   end
 end

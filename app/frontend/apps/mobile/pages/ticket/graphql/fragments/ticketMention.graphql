@@ -1,0 +1,13 @@
+fragment ticketMention on Mention {
+  user {
+    id
+    internalId
+    firstname
+    lastname
+    fullname
+    vip
+    outOfOffice
+    active
+    image
+  }
+}

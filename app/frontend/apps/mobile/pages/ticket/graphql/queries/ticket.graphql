@@ -1,4 +1,9 @@
-query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
+query ticket(
+  $ticketId: ID
+  $ticketInternalId: Int
+  $ticketNumber: String
+  $mentionsCount: Int
+) {
   ticket(
     ticket: {
       ticketId: $ticketId
@@ -7,5 +12,14 @@ query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
     }
   ) {
     ...ticketAttributes
+    mentions(first: $mentionsCount) {
+      totalCount
+      edges {
+        node {
+          ...ticketMention
+        }
+        cursor
+      }
+    }
   }
 }

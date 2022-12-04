@@ -72,6 +72,7 @@ useHeader({
   }),
 })
 
+// TODO move to TicketDetailVIew, so changes will be reflected on other pages
 const stopWatch = whenever(
   () => !isLoadingTicket.value,
   () => {

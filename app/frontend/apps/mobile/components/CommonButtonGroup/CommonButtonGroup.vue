@@ -59,6 +59,7 @@ const isTabs = computed(() => props.as === 'tabs')
       :is="option.link ? 'CommonLink' : 'button'"
       v-for="option of filteredOptions"
       :key="option.label"
+      :type="option.link ? undefined : 'button'"
       :role="isTabs ? 'tab' : undefined"
       :disabled="option.disabled"
       :link="option.link"
@@ -66,7 +67,9 @@ const isTabs = computed(() => props.as === 'tabs')
       :data-value="option.value"
       :class="{
         'bg-gray-600/50 text-white/30': option.disabled,
-        'bg-gray-200': option.value != null && modelValue === option.value,
+        'bg-gray-200':
+          option.selected ||
+          (option.value != null && modelValue === option.value),
         'flex-1 py-2': mode === 'full',
         'py-1': mode === 'compressed',
       }"

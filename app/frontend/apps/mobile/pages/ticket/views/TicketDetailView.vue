@@ -30,9 +30,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const MENTIONS_LIMIT = 5
+
 const ticketQuery = new QueryHandler(
   useTicketQuery(() => ({
     ticketInternalId: Number(props.internalId),
+    mentionsCount: MENTIONS_LIMIT,
   })),
   { errorShowNotification: false },
 )

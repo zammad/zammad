@@ -45,4 +45,5 @@ fragment ticketAttributes on Ticket {
     ...objectAttributeValues
   }
   tags
+  subscribed
 }

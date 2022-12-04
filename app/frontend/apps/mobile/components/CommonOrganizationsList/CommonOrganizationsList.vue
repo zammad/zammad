@@ -4,6 +4,7 @@
 import type { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
+import CommonShowMoreButton from '../CommonShowMoreButton/CommonShowMoreButton.vue'
 
 interface Props {
   organizations: (AvatarOrganization & { id: string; internalId: number })[]
@@ -37,17 +38,11 @@ const emit = defineEmits<{
         {{ organization.name }}
       </span>
     </CommonLink>
-    <button
-      v-if="organizations.length < totalCount"
-      class="flex min-h-[54px] items-center justify-center gap-2"
-      :class="{
-        'cursor-default text-gray-100/50': disableShowMore,
-        'text-blue': !disableShowMore,
-      }"
+    <CommonShowMoreButton
+      :entities="organizations"
       :disabled="disableShowMore"
+      :total-count="totalCount"
       @click="emit('showMore')"
-    >
-      {{ $t('Show %s more', totalCount - organizations.length) }}
-    </button>
+    />
   </CommonSectionMenu>
 </template>

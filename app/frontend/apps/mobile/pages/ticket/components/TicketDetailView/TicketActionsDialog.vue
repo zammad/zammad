@@ -3,16 +3,17 @@
 <script setup lang="ts">
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { closeDialog } from '@shared/composables/useDialog'
 import { useRoute, useRouter } from 'vue-router'
-import { toRef } from 'vue'
-import { useTicketsMerge } from '../../composable/useTicketsMerge'
+import { computed, toRef } from 'vue'
+import { truthy } from '@shared/utils/helpers'
 import type { TicketById } from '../../types/tickets'
+import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
+import { useTicketsMerge } from '../../composable/useTicketsMerge'
 
 interface Props {
   name: string
@@ -24,45 +25,56 @@ const props = defineProps<Props>()
 const route = useRoute()
 const router = useRouter()
 
+const ticketReactive = toRef(props, 'ticket')
+
 const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(
-  toRef(props, 'ticket'),
+  ticketReactive,
   () => closeDialog(props.name),
 )
 
-const topButtons: CommonButtonOption[] = [
-  {
-    label: __('Merge tickets'),
-    icon: 'mobile-merge',
-    permissions: ['ticket.agent'],
-    onAction: openMergeTicketsDialog,
-  },
-  {
-    label: __('Subscribe'),
-    icon: 'mobile-notification-subscribed',
-    value: 'subscribe',
-    onAction() {
-      console.log('subscribe for a ticket')
-    },
-  },
-  {
-    label: __('Ticket info'),
-    icon: 'mobile-info',
-    onAction() {
-      if (!props.ticket) return
+const {
+  isSubscribed,
+  isSubscriptionLoading,
+  canManageSubscription,
+  toggleSubscribe,
+} = useTicketSubscribe(ticketReactive)
 
-      const informationRoute = {
-        name: 'TicketInformationDetails',
-        params: {
-          internalId: props.ticket.internalId,
-        },
-      }
-      closeDialog(props.name)
-      if (route.name !== informationRoute.name) {
-        router.push(informationRoute)
-      }
+const topButtons = computed(() =>
+  [
+    {
+      label: __('Merge tickets'),
+      icon: 'mobile-merge',
+      permissions: ['ticket.agent'],
+      onAction: openMergeTicketsDialog,
     },
-  },
-]
+    canManageSubscription.value && {
+      label: isSubscribed.value ? __('Unsubscribe') : __('Subscribe'),
+      icon: isSubscribed.value
+        ? 'mobile-notification-unsubscribed'
+        : 'mobile-notification-subscribed',
+      value: 'subscribe',
+      selected: isSubscribed.value,
+      disabled: isSubscriptionLoading.value,
+      onAction: toggleSubscribe,
+    },
+    {
+      label: __('Ticket info'),
+      icon: 'mobile-info',
+      onAction() {
+        const informationRoute = {
+          name: 'TicketInformationDetails',
+          params: {
+            internalId: props.ticket.internalId,
+          },
+        }
+        closeDialog(props.name)
+        if (route.name !== informationRoute.name) {
+          router.push(informationRoute)
+        }
+      },
+    },
+  ].filter(truthy),
+)
 </script>
 
 <template>
@@ -114,13 +126,6 @@ const topButtons: CommonButtonOption[] = [
             />
           </template>
         </CommonSectionMenuLink>
-      </CommonSectionMenu>
-      <CommonSectionMenu>
-        <CommonSectionMenuLink
-          :label="__('Add tags')"
-          icon="mobile-tag"
-          icon-bg="bg-pink"
-        />
       </CommonSectionMenu>
     </div>
   </CommonDialog>

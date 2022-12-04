@@ -28,6 +28,8 @@ export const defaultTicket = () =>
       createdAt: ticketDate.toISOString(),
       updatedAt: ticketDate.toISOString(),
       pendingTime: null,
+      subscribed: false,
+      mentions: null,
       owner: {
         __typename: 'User',
         internalId: 100,

@@ -1,21 +1,28 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import type { FormKitNode } from '@formkit/core'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
-import { useTicketInformation } from '../../composable/useTicketInformation'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonUsersList from '@mobile/components/CommonUsersList/CommonUsersList.vue'
+import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useSessionStore } from '@shared/stores/session'
+import CommonShowMoreButton from '@mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
+import { useTicketInformation } from '../../composable/useTicketInformation'
+import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
 
 const { attributes: objectAttributes } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
 )
 
-const { ticket, formVisible, form, canUpdateTicket } = useTicketInformation()
+const { ticket, formVisible, ticketQuery, form, canUpdateTicket } =
+  useTicketInformation()
 
 const waitForFormSettled = () => {
   // will resolve after ticket is loaded with graphql and form is mounted
@@ -46,6 +53,64 @@ onUnmounted(() => {
 })
 
 const { isTicketAgent } = useTicketView(ticket)
+const {
+  canManageSubscription,
+  isSubscribed,
+  isSubscriptionLoading,
+  toggleSubscribe,
+} = useTicketSubscribe(ticket)
+
+const variants = {
+  true: __('yes'),
+  false: __('no'),
+}
+
+let isOutsideUpdate = false
+watch(
+  () => isSubscribed.value,
+  () => {
+    isOutsideUpdate = true
+    nextTick(() => {
+      isOutsideUpdate = false
+    })
+  },
+)
+
+const handleToggleInput = async () => {
+  // do not trigger update, if value was changed from the outside,
+  // and not by clicking on toggle button, otherwise it goes into infinite loop
+  if (isOutsideUpdate) return false
+  return toggleSubscribe()
+}
+
+const session = useSessionStore()
+
+const subscribers = computed(() => {
+  if (!ticket.value?.mentions) return []
+  const subscribers = []
+  for (const { node } of ticket.value.mentions.edges) {
+    if (node.user.id !== session.userId) {
+      subscribers.push(node.user)
+    }
+  }
+  return subscribers
+})
+
+const totalSubscribers = computed(() => {
+  if (!ticket.value?.mentions) return 0
+  const hasMe = ticket.value.mentions.edges.some(
+    ({ node }) => node.user.id === session.userId,
+  )
+  // -1 for current user, who is shown as toggler
+  return ticket.value.mentions.totalCount - (hasMe ? 1 : 0)
+})
+
+const loadingTicket = ticketQuery.loading()
+const loadMoreMentions = () => {
+  ticketQuery.refetch({
+    mentionsCount: null,
+  })
+}
 </script>
 
 <template>
@@ -66,5 +131,40 @@ const { isTicketAgent } = useTicketView(ticket)
 
   <TicketTags v-if="isTicketAgent && ticket" :ticket="ticket" />
 
-  <!-- TODO subscribe -->
+  <CommonSectionMenu
+    v-if="canManageSubscription"
+    :header-label="__('Subscribers')"
+  >
+    <FormKit
+      type="toggle"
+      :model-value="isSubscribed"
+      :label="__('Get notified')"
+      :variants="variants"
+      :disabled="isSubscriptionLoading"
+      :outer-class="{
+        '!px-0': true,
+        'border-b border-white/10': subscribers.length,
+      }"
+      wrapper-class="!px-0"
+      @input-raw="handleToggleInput"
+    >
+      <template #label="context">
+        <label :for="context.id" :class="context.classes.label">
+          <CommonUserAvatar
+            v-if="session.user"
+            class="ltr:mr-3 rtl:ml-3"
+            :entity="session.user"
+          />
+          {{ context.label }}
+        </label>
+      </template>
+    </FormKit>
+    <CommonUsersList :users="subscribers" />
+    <CommonShowMoreButton
+      :entities="subscribers"
+      :total-count="totalSubscribers"
+      :disabled="loadingTicket"
+      @click="loadMoreMentions"
+    />
+  </CommonSectionMenu>
 </template>

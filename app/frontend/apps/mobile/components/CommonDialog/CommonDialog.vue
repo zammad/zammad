@@ -6,7 +6,6 @@ import type { EventHandlers } from '@shared/types/utils'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { onKeyUp, usePointerSwipe } from '@vueuse/core'
 import { nextTick, onMounted, ref, type Events } from 'vue'
-import type { Ref } from 'vue'
 import { closeDialog } from '@shared/composables/useDialog'
 import stopEvent from '@shared/utils/events'
 
@@ -37,14 +36,22 @@ const close = async () => {
   await closeDialog(props.name)
 }
 
-onKeyUp(
-  'Escape',
-  (e) => {
+const canCloseDialog = () => {
+  const currentDialog = dialogElement.value
+  if (!currentDialog) {
+    return false
+  }
+  // close dialog only if this is the last one opened
+  const dialogs = document.querySelectorAll('[data-common-dialog]')
+  return dialogs[dialogs.length - 1] === currentDialog
+}
+
+onKeyUp('Escape', (e) => {
+  if (canCloseDialog()) {
     stopEvent(e)
     close()
-  },
-  { target: dialogElement as Ref<EventTarget> },
-)
+  }
+})
 
 const { distanceY, isSwiping } = usePointerSwipe(dialogElement, {
   onSwipe() {
@@ -99,6 +106,7 @@ export default {
     <div
       :id="`dialog-${name}`"
       ref="dialogElement"
+      data-common-dialog
       class="flex h-full grow flex-col bg-black"
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
       :style="{ transform: `translateY(${top})` }"

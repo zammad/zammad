@@ -49,7 +49,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     email: addAbsoluteFloatingLabel(classes.email),
     url: addAbsoluteFloatingLabel(classes.url),
     number: addAbsoluteFloatingLabel(classes.number),
-    search: { inner: 'flex', wrapper: 'px-3' },
+    search: { ...classes.search, inner: 'flex', wrapper: 'px-3' },
     tel: addAbsoluteFloatingLabel(classes.tel),
     time: addAbsoluteFloatingLabel(classes.time),
     password: addAbsoluteFloatingLabel(classes.password),

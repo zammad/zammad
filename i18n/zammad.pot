@@ -819,10 +819,6 @@ msgstr ""
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-msgid "Add tags"
-msgstr ""
-
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
 msgstr ""
@@ -4882,6 +4878,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Get notified"
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
@@ -9101,8 +9101,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
-#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue
 msgid "Show %s more"
 msgstr ""
 
@@ -9539,6 +9538,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Subscribed Tickets"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Subscribers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
@@ -11207,6 +11210,7 @@ msgid "Unread notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
 msgstr ""
 
@@ -12917,6 +12921,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 #: db/seeds/settings.rb
@@ -13301,6 +13306,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 #: db/seeds/settings.rb

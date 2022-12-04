@@ -33,7 +33,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     const view = renderComponent(TicketActionsDialog, {
       props: {
         name: 'ticket-actions',
-        ticket: currentTicket,
+        ticket: { ...currentTicket, subscribed: null },
       },
       dialog: true,
       form: true,
@@ -41,6 +41,26 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     })
     expect(
       view.queryByRole('button', { name: 'Merge tickets' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it("don't see 'subscribe' button, if have no rights", () => {
+    mockPermissions([])
+
+    const view = renderComponent(TicketActionsDialog, {
+      props: {
+        name: 'ticket-actions',
+        ticket: { ...currentTicket, subscribed: null },
+      },
+      dialog: true,
+      form: true,
+      router: true,
+    })
+    expect(
+      view.queryByRole('button', { name: 'Subscribe' }),
+    ).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Unsubscribe' }),
     ).not.toBeInTheDocument()
   })
 

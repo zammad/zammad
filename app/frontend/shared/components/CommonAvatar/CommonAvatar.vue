@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { i18n } from '@shared/i18n'
 import { computed } from 'vue'
 import type { AvatarSize } from './types'
 
@@ -13,6 +14,7 @@ export interface Props {
   size?: AvatarSize
   vip?: Maybe<boolean>
   ariaLabel?: Maybe<string>
+  decorative?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -33,6 +35,11 @@ const iconSize = computed(() => {
   if (!props.icon) return 'medium'
   return iconSizes[props.size]
 })
+
+const avatarLabel = computed(() => {
+  if (props.decorative) return undefined
+  return props.ariaLabel || i18n.t('Avatar with initials %s', props.initials)
+})
 </script>
 
 <template>
@@ -47,7 +54,8 @@ const iconSize = computed(() => {
       `size-${size}`,
     ]"
     role="img"
-    :aria-label="ariaLabel || $t('Avatar with initials %s', initials)"
+    :aria-label="avatarLabel"
+    :aria-hidden="decorative ? 'true' : undefined"
     data-test-id="common-avatar"
   >
     <CommonIcon

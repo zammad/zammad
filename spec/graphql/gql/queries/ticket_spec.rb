@@ -34,6 +34,17 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               name
             }
             tags
+            subscribed
+            mentions {
+              edges {
+                node {
+                  user {
+                    id
+                  }
+                }
+                cursor
+              }
+            }
           }
         }
       QUERY
@@ -94,6 +105,22 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
 
           it 'raises an exception' do
             expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
+          end
+        end
+
+        context 'when subscribed' do
+          before do
+            ::Mention.subscribe! ticket, agent
+            gql.execute(query, variables: variables)
+          end
+
+          it 'returns subscribed' do
+            expect(gql.result.data).to include('subscribed' => true)
+          end
+
+          it 'returns user in subscribers list' do
+            expect(gql.result.data.dig('mentions', 'edges'))
+              .to include(include('node' => include('user' => include('id' => gql.id(agent)))))
           end
         end
       end
