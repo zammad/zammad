@@ -2,10 +2,11 @@
 
 import { computed } from 'vue'
 import { useApplicationStore } from '@shared/stores/application'
+import type { FormFieldAdditionalProps } from '@shared/components/Form/types'
 import { TicketCreateArticleType } from '../types'
 
 export const useTicketCreateArticleType = (
-  onSubmit?: (e: SubmitEvent) => void,
+  additionalProps: FormFieldAdditionalProps = {},
 ) => {
   const application = useApplicationStore()
 
@@ -64,7 +65,7 @@ export const useTicketCreateArticleType = (
     props: {
       buttons: true,
       options,
-      ...(onSubmit ? { onSubmit } : {}),
+      ...additionalProps,
     },
   }
 

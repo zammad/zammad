@@ -47,10 +47,8 @@ import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 const router = useRouter()
 
 // Add meta header with selected ticket create article type
-// TODO: add customer version or own view?
 // TODO: Signature handling?
 // TODO: Security options?
-// TODO: Discard changes handling
 
 const { form, node, isDirty, isValid, isDisabled, formSubmit } = useForm()
 
@@ -71,7 +69,7 @@ const onSubmit = () => {
 }
 
 const { ticketCreateArticleType, ticketArticleSenderTypeField } =
-  useTicketCreateArticleType(onSubmit)
+  useTicketCreateArticleType({ onSubmit })
 
 const session = useSessionStore()
 
@@ -109,7 +107,7 @@ const getFormSchemaGroupSection = (
             isLayout: true,
             element: 'h4',
             attrs: {
-              class: 'my-10 text-base text-center', // TODO: check size
+              class: 'my-10 text-base text-center',
             },
             children: i18n.t(sectionTitle),
           },
@@ -159,7 +157,7 @@ const ticketArticleTypeSection = getFormSchemaGroupSection(
       isLayout: true,
       element: 'p',
       attrs: {
-        class: 'my-10 text-base text-center', // TODO: check size/styling
+        class: 'my-10 text-base text-center',
       },
       children: '$getAdditionalCreateNote($values.articleSenderType)',
     },
