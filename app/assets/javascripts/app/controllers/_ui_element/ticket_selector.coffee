@@ -777,4 +777,4 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     return App.Config.get('ticket_allow_expert_conditions')
 
   @hasDuplicateSelector: ->
-    return @hasExpertConditions()
+    return @hasExpertConditions() && @isExpertMode

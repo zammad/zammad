@@ -254,6 +254,19 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
           end
         end
       end
+
+      it 'does not allow duplicate attributes when the expert mode is switched off (#4414)' do
+        scroll_into_view('.ticket_selector')
+
+        within '.ticket_selector' do
+          check_expert_mode(false)
+
+          # Check if the State attribute is disabled in the new dropdown.
+          find('.js-filterElement:nth-child(1) .js-add').click
+          attribute_selector = find('.js-filterElement:nth-child(2) .js-attributeSelector select')
+          expect(attribute_selector.find('option', text: 'State').disabled?).to be(true)
+        end
+      end
     end
 
     context 'with existing objects' do
