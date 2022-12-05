@@ -101,7 +101,6 @@ const { waitForConfirmation } = useConfirmation()
 onBeforeRouteLeave(async () => {
   if (!isDirty.value) return true
 
-  // TODO store state in global storage instead of this
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
   )

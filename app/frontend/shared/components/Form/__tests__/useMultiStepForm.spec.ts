@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitPlugin } from '@formkit/core'
+import { computed } from 'vue'
+import { type FormKitPlugin, getNode } from '@formkit/core'
 import Form from '@shared/components/Form/Form.vue'
 import type { Props } from '@shared/components/Form/Form.vue'
 import { useMultiStepForm } from '@shared/components/Form/composable'
@@ -9,6 +10,7 @@ import {
   renderComponent,
 } from '@tests/support/components'
 import { waitForNextTick, waitUntil } from '@tests/support/utils'
+import { waitFor } from '@testing-library/vue'
 
 const wrapperParameters = {
   form: true,
@@ -53,6 +55,9 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
   const wrapper = renderComponent(Form, {
     ...wrapperParameters,
     ...options,
+    attrs: {
+      id: 'test-form',
+    },
     props: { ...(options.props || {}) },
   })
 
@@ -61,9 +66,11 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
   return wrapper
 }
 
+const formNode = computed(() => getNode('test-form'))
+
 describe('useMultiStepForm', () => {
   it('check default active step', async () => {
-    const { multiStepPlugin, activeStep } = useMultiStepForm()
+    const { multiStepPlugin, activeStep } = useMultiStepForm(formNode)
 
     await renderForm({
       props: {
@@ -75,7 +82,7 @@ describe('useMultiStepForm', () => {
   })
 
   it('check all steps', async () => {
-    const { multiStepPlugin, allSteps } = useMultiStepForm()
+    const { multiStepPlugin, allSteps } = useMultiStepForm(formNode)
 
     await renderForm({
       props: {
@@ -104,7 +111,7 @@ describe('useMultiStepForm', () => {
   })
 
   it('check step names', async () => {
-    const { multiStepPlugin, stepNames } = useMultiStepForm()
+    const { multiStepPlugin, stepNames } = useMultiStepForm(formNode)
 
     await renderForm({
       props: {
@@ -116,7 +123,8 @@ describe('useMultiStepForm', () => {
   })
 
   it('check visited step after step switch', async () => {
-    const { multiStepPlugin, setMultiStep, visitedSteps } = useMultiStepForm()
+    const { multiStepPlugin, setMultiStep, visitedSteps } =
+      useMultiStepForm(formNode)
 
     await renderForm({
       props: {
@@ -135,5 +143,25 @@ describe('useMultiStepForm', () => {
     await waitForNextTick()
 
     expect(visitedSteps.value).toStrictEqual(['step1', 'step2'])
+  })
+
+  it('triggers autofocus of the first input in the step', async () => {
+    const { multiStepPlugin, setMultiStep } = useMultiStepForm(formNode)
+
+    const wrapper = await renderForm({
+      props: {
+        schema: getSchema(multiStepPlugin),
+      },
+    })
+
+    // Go to next step.
+    setMultiStep()
+
+    await waitFor(() => {
+      expect(wrapper.getByLabelText('Title')).toHaveFocus()
+    })
+
+    // NB: Due to the test environment not being able to determine whether a focusable element is visible or not
+    //   and multi step sections being hidden via CSS rules, we can test only one (first) step here.
   })
 })

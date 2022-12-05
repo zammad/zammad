@@ -179,6 +179,17 @@ describe('QueryHandler', () => {
       await queryHandlerObject.onLoaded()
     })
 
+    it('on result trigger', async () => {
+      expect.assertions(1)
+
+      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+      queryHandlerObject.onResult((result) => {
+        expect(result.data).toEqual(querySampleResult)
+      })
+      await queryHandlerObject.onLoaded()
+    })
+
     it('receive value immediately in non-reactive way', async () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 

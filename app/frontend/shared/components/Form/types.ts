@@ -29,6 +29,7 @@ export type FormFieldValue =
   | SimpleFormFieldValue
   | SimpleFormFieldValue[]
   | Record<string, SimpleFormFieldValue>
+  | Record<string, SimpleFormFieldValue>[]
 
 // https://formkit.com/essentials/validation#showing-errors
 export enum FormValidationVisibility {
@@ -88,6 +89,7 @@ export interface FormSchemaField {
   inputClass?: AllowedClasses
   blockClass?: AllowedClasses
   helpClass?: AllowedClasses
+  fieldsetClass?: AllowedClasses
   messagesClass?: AllowedClasses
   messageClass?: AllowedClasses
 }

@@ -2,7 +2,11 @@
 
 import type { FormFieldValue } from '@shared/components/Form/types'
 import type { TicketCreateArticleType } from '@shared/entities/ticket/types'
-import type { TicketQuery, TicketArticlesQuery } from '@shared/graphql/types'
+import type {
+  TicketQuery,
+  TicketArticlesQuery,
+  UploadFileInput,
+} from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 
 export type TicketById = TicketQuery['ticket']
@@ -23,7 +27,7 @@ export interface TicketFormData {
   customer_id?: number
   cc?: string[]
   body: string
-  // attachments?: UploadFile[] // TODO: field has currently no value handling implemented
+  attachments?: UploadFileInput[]
   group_id: number
   owner_id?: number
   state_id?: number

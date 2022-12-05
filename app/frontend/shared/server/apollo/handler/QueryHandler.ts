@@ -4,6 +4,7 @@
 import type { Ref, WatchStopHandle } from 'vue'
 import { nextTick, watch } from 'vue'
 import type {
+  ApolloQueryResult,
   FetchMoreOptions,
   FetchMoreQueryOptions,
   OperationVariables,
@@ -218,5 +219,11 @@ export default class QueryHandler<
         immediate: true,
       },
     )
+  }
+
+  public onResult(
+    callback: (result: ApolloQueryResult<TResult>) => void,
+  ): void {
+    this.operationResult.onResult(callback)
   }
 }

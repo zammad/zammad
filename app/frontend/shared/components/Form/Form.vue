@@ -167,6 +167,15 @@ const changeFields = toRef(props, 'changeFields')
 
 const updaterChangedFields = new Set<string>()
 
+const autofocusFirstInput = () => {
+  nextTick(() => {
+    const firstInput = getFirstFocusableElement(formElement.value)
+
+    firstInput?.focus()
+    firstInput?.scrollIntoView({ block: 'nearest' })
+  })
+}
+
 const setFormNode = (node: FormKitNode) => {
   formNode.value = node
 
@@ -186,15 +195,10 @@ const setFormNode = (node: FormKitNode) => {
     testFlags.set(`${formName}.settled`)
     emit('settled')
 
-    if (props.autofocus) {
-      nextTick(() => {
-        const firstInput = getFirstFocusableElement(formElement.value)
-
-        firstInput?.focus()
-        firstInput?.scrollIntoView({ block: 'nearest' })
-      })
-    }
+    if (props.autofocus) autofocusFirstInput()
   })
+
+  node.on('autofocus', autofocusFirstInput)
 
   emit('node', node)
 }
@@ -818,17 +822,17 @@ const initializeFormSchema = () => {
       ),
     )
 
-    formUpdaterQueryHandler.watchOnResult((queryResult) => {
+    formUpdaterQueryHandler.onResult((queryResult) => {
       // Execute the form handler function so that they can manipulate the form updater result.
       if (!formSchemaInitialized.value) {
         executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
       }
 
-      if (queryResult?.formUpdater) {
+      if (queryResult?.data.formUpdater) {
         updateChangedFields(
           changeFields.value
-            ? merge(queryResult.formUpdater, changeFields.value)
-            : queryResult.formUpdater,
+            ? merge(queryResult.data.formUpdater, changeFields.value)
+            : queryResult.data.formUpdater,
         )
       }
 

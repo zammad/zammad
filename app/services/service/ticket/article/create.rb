@@ -3,14 +3,16 @@
 class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   def execute(article_data:)
     ticket_id = article_data.delete(:ticket_id)
-    form_id = article_data.delete(:form_id)
 
     if Ticket.find(ticket_id).nil?
       raise ActiveRecord::RecordNotFound, "Ticket #{ticket_id} for new article could not be found."
     end
 
+    attachments_raw = article_data.delete(:attachments) || {}
+    form_id         = attachments_raw[:form_id]
+
     Ticket::Article.new(article_data).tap do |article|
-      transform_article(article, ticket_id, form_id)
+      transform_article(article, ticket_id, attachments_raw)
 
       article.save!
 
@@ -26,9 +28,9 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
 
   private
 
-  def transform_article(article, ticket_id, form_id)
+  def transform_article(article, ticket_id, attachments_raw)
     article.ticket_id = ticket_id
-    article.attachments = attachments(article, form_id)
+    article.attachments = attachments(article, attachments_raw)
 
     transform_to_from(article)
 
@@ -71,25 +73,47 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     '???'
   end
 
-  def attachments(article, form_id)
-    attachments_inline = []
+  def attachments(article, attachments_raw)
+    inline_attachments = []
     if article.body && article.content_type&.match?(%r{text/html}i)
-      (article.body, attachments_inline) = HtmlSanitizer.replace_inline_images(article.body, article.ticket_id)
+      (article.body, inline_attachments) = HtmlSanitizer.replace_inline_images(article.body, article.ticket_id)
     end
 
-    # find attachments in upload cache
+    form_id = attachments_raw[:form_id]
+
     attachments = form_id ? UploadCache.new(form_id).attachments : []
 
-    # store inline attachments
-    attachments_inline.each do |attachment_inline|
+    # Limit attachments to the ones that were really sent.
+    attachments = limit_attachments(attachments, attachments_raw[:files])
+
+    # Do not forget inline attachments.
+    inline_attachments_map(inline_attachments, attachments)
+
+    attachments
+  end
+
+  def inline_attachments_map(inline_attachments, attachments)
+    inline_attachments.each do |attachment_inline|
       attachments.push({
                          data:        attachment_inline[:data],
                          filename:    attachment_inline[:filename],
                          preferences: attachment_inline[:preferences],
                        })
     end
+  end
 
-    attachments
+  def limit_attachments(attachments, file_meta)
+    return attachments if file_meta.blank?
+
+    attachments.reject { |attachment| file_meta.none? { |file| check_attachment_match(attachment, file) } }
+  end
+
+  def check_attachment_match(attachment, file)
+    if file[:type].present? && attachment[:preferences].present? && attachment[:preferences]['Content-Type'].present?
+      file[:name] == attachment[:filename] && file[:type] == attachment[:preferences]['Content-Type']
+    end
+
+    file[:name] == attachment[:filename]
   end
 
   def time_accounting(article, time_unit)

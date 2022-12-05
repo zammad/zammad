@@ -21,6 +21,27 @@ const addOptionCheckedDataAttribute = (node: FormKitNode) => {
   })
 }
 
+const addSubmitEvent = (node: FormKitNode) => {
+  if (typeof node.props.onSubmit !== 'function') return
+
+  extendSchemaDefinition(node, 'wrapper', {
+    attrs: {
+      onKeypress: (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          event.preventDefault()
+
+          node.props.onSubmit.call(
+            null,
+            new SubmitEvent('submit', {
+              submitter: event.target as HTMLElement,
+            }),
+          )
+        }
+      },
+    },
+  })
+}
+
 const addIconLabel = (node: FormKitNode) => {
   extendSchemaDefinition(node, 'label', {
     children: [
@@ -72,6 +93,7 @@ const handleButtonMode = (node: FormKitNode) => {
 initializeFieldDefinition(radioDefinition, {
   features: [
     addOptionCheckedDataAttribute,
+    addSubmitEvent,
     handleButtonMode,
     addIconLabel,
     formUpdaterTrigger(),

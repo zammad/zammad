@@ -11,6 +11,7 @@ import { mockPermissions } from '@tests/support/mock-permissions'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { waitUntil } from '@tests/support/utils'
 import { waitFor } from '@testing-library/vue'
+import { getNode } from '@formkit/core'
 import {
   mockUserGql,
   userObjectAttributes,
@@ -115,6 +116,8 @@ describe('updating ticket information', () => {
 
     await view.events.type(view.getByLabelText('Ticket title'), '55')
 
+    await getNode('form-ticket-edit')?.settled
+
     const { mockUser } = mockUserGql()
     mockGraphQLSubscription(UserUpdatesDocument)
 
@@ -124,7 +127,7 @@ describe('updating ticket information', () => {
 
     await view.events.click(view.getByRole('link', { name: 'open 4' }))
 
-    expect(
+    await expect(
       view.findByRole('alert', { name: 'Confirm dialog' }),
     ).resolves.toBeInTheDocument()
   })

@@ -1,7 +1,16 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue'
+import { onBeforeRouteLeave, useRouter } from 'vue-router'
 import Form from '@shared/components/Form/Form.vue'
 import {
   EnumFormUpdaterId,
@@ -10,6 +19,7 @@ import {
 } from '@shared/graphql/types'
 import { useMultiStepForm, useForm } from '@shared/components/Form'
 import { useApplicationStore } from '@shared/stores/application'
+import { useTicketCreate } from '@shared/entities/ticket/composables/useTicketCreate'
 import { useTicketCreateArticleType } from '@shared/entities/ticket/composables/useTicketCreateArticleType'
 import { ButtonVariant } from '@shared/components/Form/fields/FieldButton/types'
 import { useTicketFormOganizationHandler } from '@shared/entities/ticket/composables/useTicketFormOrganizationHandler'
@@ -22,18 +32,27 @@ import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
+import { useSessionStore } from '@shared/stores/session'
+import { ErrorStatusCodes } from '@shared/types/error'
+import type UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
+import { errorOptions } from '@mobile/router/error'
+import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { TicketFormData } from '../types/tickets'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api'
+
+const router = useRouter()
 
 // Add meta header with selected ticket create article type
 // TODO: add customer version or own view?
 // TODO: Signature handling?
 // TODO: Security options?
 // TODO: Discard changes handling
+
+const { form, node, isDirty, isValid, isDisabled, formSubmit } = useForm()
 
 const {
   multiStepPlugin,
@@ -43,14 +62,22 @@ const {
   visitedSteps,
   stepNames,
   lastStepName,
-} = useMultiStepForm()
-
-const { form, isValid, isDisabled, formSubmit } = useForm()
+} = useMultiStepForm(node)
 
 const application = useApplicationStore()
 
+const onSubmit = () => {
+  setMultiStep()
+}
+
 const { ticketCreateArticleType, ticketArticleSenderTypeField } =
-  useTicketCreateArticleType()
+  useTicketCreateArticleType(onSubmit)
+
+const session = useSessionStore()
+
+const isCustomer = computed(() => {
+  return session.hasPermission('ticket.customer')
+})
 
 const getFormSchemaGroupSection = (
   stepName: string,
@@ -93,99 +120,106 @@ const getFormSchemaGroupSection = (
   }
 }
 
-const formSchema = defineFormSchema([
-  getFormSchemaGroupSection(
-    'ticketTitle',
-    __('Set a title for your ticket'),
-    [
-      {
-        name: 'title',
-        required: true,
-        object: EnumObjectManagerObjects.Ticket,
-        screen: 'create_top',
-        outerClass: '$reset flex grow items-center',
-        wrapperClass: '$reset',
-        labelClass: '$reset sr-only',
-        blockClass: '$reset',
-        innerClass: '$reset',
-        inputClass:
-          '$reset block bg-transparent border-b-[0.5px] border-white outline-none text-center text-xl placeholder:text-opacity-30', // placeholder: xyz...
-        props: {
-          placeholder: __('Title'),
+const ticketTitleSection = getFormSchemaGroupSection(
+  'ticketTitle',
+  __('Set a title for your ticket'),
+  [
+    {
+      name: 'title',
+      required: true,
+      object: EnumObjectManagerObjects.Ticket,
+      screen: 'create_top',
+      outerClass: '$reset w-full flex grow items-center',
+      wrapperClass: '$reset flex grow',
+      labelClass: '$reset sr-only',
+      blockClass: '$reset flex grow',
+      innerClass: '$reset flex grow px-8',
+      inputClass:
+        '$reset block grow bg-transparent border-b-[0.5px] border-white outline-none text-center text-xl placeholder:text-white placeholder:text-opacity-50',
+      props: {
+        placeholder: __('Title'),
+        onSubmit,
+      },
+    },
+  ],
+  true,
+)
+
+const ticketArticleTypeSection = getFormSchemaGroupSection(
+  'ticketArticleType',
+  __('Select the type of ticket your are creating'),
+  [
+    {
+      ...ticketArticleSenderTypeField,
+      outerClass: 'w-full flex grow items-center',
+      fieldsetClass: 'grow px-4',
+    },
+    {
+      if: '$existingAdditionalCreateNotes() && $getAdditionalCreateNote($values.articleSenderType) !== undefined',
+      isLayout: true,
+      element: 'p',
+      attrs: {
+        class: 'my-10 text-base text-center', // TODO: check size/styling
+      },
+      children: '$getAdditionalCreateNote($values.articleSenderType)',
+    },
+  ],
+  true,
+)
+
+const ticketMetaInformationSection = getFormSchemaGroupSection(
+  'ticketMetaInformation',
+  __('Additional information'),
+  [
+    {
+      isLayout: true,
+      component: 'FormGroup',
+      children: [
+        {
+          screen: 'create_top',
+          object: EnumObjectManagerObjects.Ticket,
         },
-      },
-    ],
-    true,
-  ),
-  getFormSchemaGroupSection(
-    'ticketArticleType',
-    __('Select the type of ticket your are creating'),
-    [
-      {
-        ...ticketArticleSenderTypeField,
-        outerClass: 'grow flex items-center',
-      },
-      {
-        if: '$existingAdditionalCreateNotes() && $getAdditionalCreateNote($values.articleSenderType) !== undefined',
-        isLayout: true,
-        element: 'p',
-        attrs: {
-          class: 'my-10 text-base text-center', // TODO: check size/styling
+        // Because of the current field screen settings in the backend
+        // seed we need to add this manually.
+        {
+          if: '$values.articleSenderType === "email-out"',
+          name: 'cc',
+          label: __('CC'),
+          type: 'recipient',
+          props: {
+            multiple: true,
+            maxlength: 1000,
+          },
         },
-        children: '$getAdditionalCreateNote($values.articleSenderType)',
-      },
-    ],
-    true,
-  ),
-  getFormSchemaGroupSection(
-    'ticketMetaInformation',
-    __('Additional information'),
-    [
-      {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            screen: 'create_top',
-            object: EnumObjectManagerObjects.Ticket,
-          },
-          // Because of the current field screen settings in the backend
-          // seed we need to add this manually.
-          {
-            if: '$values.articleSenderType === "email-out"',
-            name: 'cc',
-            label: __('CC'),
-            type: 'recipient',
-            props: {
-              multiple: true,
-              maxlength: 1000,
-            },
-          },
-        ],
-      },
-      {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            screen: 'create_middle',
-            object: EnumObjectManagerObjects.Ticket,
-          },
-        ],
-      },
-      {
-        isLayout: true,
-        component: 'FormGroup',
-        children: [
-          {
-            screen: 'create_bottom',
-            object: EnumObjectManagerObjects.Ticket,
-          },
-        ],
-      },
-    ],
-  ),
-  getFormSchemaGroupSection('ticketArticleMessage', __('Add a message'), [
+      ],
+    },
+    {
+      isLayout: true,
+      component: 'FormGroup',
+      children: [
+        {
+          screen: 'create_middle',
+          object: EnumObjectManagerObjects.Ticket,
+        },
+      ],
+    },
+    {
+      isLayout: true,
+      component: 'FormGroup',
+      children: [
+        {
+          screen: 'create_bottom',
+          object: EnumObjectManagerObjects.Ticket,
+        },
+      ],
+    },
+  ],
+)
+
+const ticketArticleMessageSection = getFormSchemaGroupSection(
+  'ticketArticleMessage',
+  __('Add a message'),
+  [
     {
       isLayout: true,
       component: 'FormGroup',
@@ -211,15 +245,37 @@ const formSchema = defineFormSchema([
         {
           type: 'file',
           name: 'attachments',
+          props: {
+            multiple: true,
+          },
         },
       ],
     },
-  ]),
-])
+  ],
+)
+
+const customerSchema = [
+  ticketTitleSection,
+  ticketMetaInformationSection,
+  ticketArticleMessageSection,
+]
+
+const agentSchema = [
+  ticketTitleSection,
+  ticketArticleTypeSection,
+  ticketMetaInformationSection,
+  ticketArticleMessageSection,
+]
+
+const formSchema = defineFormSchema(
+  isCustomer.value ? customerSchema : agentSchema,
+)
 
 const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
   errorNotificationMessage: __('Ticket could not be created.'),
 })
+
+const isCreated = ref(false)
 
 const createTicket = async (formData: FormData<TicketFormData>) => {
   const { notify } = useNotifications()
@@ -230,31 +286,58 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
     useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
 
-  const result = await ticketCreateMutation.send({
-    input: {
-      ...internalObjectAttributeValues,
-      article: {
-        // TODO: "from" and "to" needs to be handled on server side
-        cc: formData.cc,
-        body: formData.body,
-        // attachments: {
-        //   files: formData.attachments,
-        //   formId: formData.formId,
-        // },
-        sender: ticketCreateArticleType[formData.articleSenderType].sender,
-        type: ticketCreateArticleType[formData.articleSenderType].type,
-        contentType: 'text/html',
-      },
-      objectAttributeValues: additionalObjectAttributeValues,
-    } as TicketCreateInput,
-  })
+  const input = {
+    ...internalObjectAttributeValues,
+    article: {
+      cc: formData.cc,
+      body: formData.body,
+      sender: isCustomer.value
+        ? 'Customer'
+        : ticketCreateArticleType[formData.articleSenderType].sender,
+      type: isCustomer.value
+        ? 'web'
+        : ticketCreateArticleType[formData.articleSenderType].type,
+      contentType: 'text/html',
+    },
+    objectAttributeValues: additionalObjectAttributeValues,
+  } as TicketCreateInput
 
-  if (result) {
-    notify({
-      type: NotificationTypes.Success,
-      message: __('Ticket has been created successfully.'),
-    })
+  if (formData.attachments && input.article) {
+    input.article.attachments = {
+      files: formData.attachments?.map((file) => ({
+        name: file.name,
+        type: file.type,
+      })),
+      formId: formData.formId,
+    }
   }
+
+  ticketCreateMutation
+    .send({ input })
+    .then((result) => {
+      if (result?.ticketCreate?.ticket) {
+        isCreated.value = true
+
+        notify({
+          type: NotificationTypes.Success,
+          message: __('Ticket has been created successfully.'),
+        })
+
+        // TODO: Add correct handling if permission field is implemented.
+        // if (result.ticketCreate?.ticket?.internalId && result.ticketCreate?.ticket?.policy?.show) {
+        if (result.ticketCreate?.ticket?.internalId) {
+          router.replace(`/tickets/${result.ticketCreate?.ticket?.internalId}`)
+        } else {
+          router.replace({ name: 'Home' })
+        }
+      }
+    })
+    .catch((errors: UserError) => {
+      notify({
+        message: errors.generalErrors[0],
+        type: NotificationTypes.Error,
+      })
+    })
 }
 
 const additionalCreateNotes = computed(
@@ -282,6 +365,77 @@ const submitButtonDisabled = computed(() => {
       visitedSteps.value.length < stepNames.value.length)
   )
 })
+
+const isScrolledToBottom = ref(true)
+
+const setIsScrolledToBottom = () => {
+  isScrolledToBottom.value =
+    window.innerHeight + document.documentElement.scrollTop >=
+    document.body.offsetHeight
+}
+
+watch(
+  () => activeStep.value,
+  () => {
+    nextTick(() => {
+      setIsScrolledToBottom()
+    })
+  },
+)
+
+onMounted(() => {
+  window.addEventListener('scroll', setIsScrolledToBottom)
+  window.addEventListener('resize', setIsScrolledToBottom)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', setIsScrolledToBottom)
+  window.removeEventListener('resize', setIsScrolledToBottom)
+})
+
+const { waitForConfirmation } = useConfirmation()
+
+onBeforeRouteLeave(async () => {
+  // TODO: Can we make this check a bit smarter?
+  //   Why is `isDirty` flag still true on submitted forms?
+  //   Why `isSubmitted` never goes true for multi-step forms?
+  if (!isDirty.value || isCreated.value) return true
+
+  const confirmed = await waitForConfirmation(
+    __('Are you sure? You have unsaved changes that will get lost.'),
+  )
+
+  return confirmed
+})
+</script>
+
+<script lang="ts">
+export default {
+  beforeRouteEnter(to, from, next) {
+    const { ticketCreateEnabled } = useTicketCreate()
+
+    if (!ticketCreateEnabled.value) {
+      errorOptions.value = {
+        title: __('Forbidden'),
+        message: __('Creating new tickets via web is disabled.'),
+        statusCode: ErrorStatusCodes.Forbidden,
+        route: to.fullPath,
+      }
+
+      next({
+        name: 'Error',
+        query: {
+          redirect: '1',
+        },
+        replace: true,
+      })
+
+      return
+    }
+
+    next()
+  },
+}
 </script>
 
 <template>
@@ -302,16 +456,14 @@ const submitButtonDisabled = computed(() => {
           input-class="flex justify-center items-center w-9 h-9 rounded-full text-black text-center formkit-variant-primary:bg-yellow"
           type="button"
           :disabled="submitButtonDisabled"
+          :title="$t('Create ticket')"
           @click="formSubmit"
-          ><CommonIcon
-            :aria-label="__('Create ticket')"
-            name="mobile-arrow-up"
-            size="base"
+          ><CommonIcon name="mobile-arrow-up" size="base" decorative
         /></FormKit>
       </div>
     </div>
   </header>
-  <div class="flex h-full flex-col px-4">
+  <div class="flex h-full flex-col px-4 pb-36">
     <Form
       id="ticket-create"
       ref="form"
@@ -321,25 +473,34 @@ const submitButtonDisabled = computed(() => {
       :multi-step-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
+      :autofocus="true"
       use-object-attributes
       @submit="createTicket($event as FormData<TicketFormData>)"
-    >
-      <template #after-fields>
-        <FormKit
-          type="button"
-          :outer-class="`mt-8 mb-6 ${
-            lastStepName === activeStep ? 'invisible' : ''
-          }`"
-          :aria-hidden="lastStepName === activeStep"
-          wrapper-class="flex grow justify-center items-center"
-          input-class="py-2 px-4 w-full h-14 text-xl font-semibold rounded-xl select-none"
-          :variant="ButtonVariant.Primary"
-          @click="setMultiStep()"
-        >
-          {{ $t('Continue') }}
-        </FormKit>
-      </template>
-    </Form>
-    <CommonStepper v-model="activeStep" :steps="allSteps" class="mb-8 px-8" />
+    />
   </div>
+  <footer
+    :class="{
+      'h-32': lastStepName !== activeStep,
+      'h-14': lastStepName === activeStep,
+      'bg-gray-light backdrop-blur-lg': !isScrolledToBottom,
+    }"
+    class="bottom-navigation fixed bottom-0 z-10 w-full px-4 transition"
+  >
+    <FormKit
+      v-if="lastStepName !== activeStep"
+      :variant="ButtonVariant.Primary"
+      type="button"
+      outer-class="mt-4 mb-2"
+      wrapper-class="flex grow justify-center items-center"
+      input-class="py-2 px-4 w-full h-14 text-xl font-semibold rounded-xl select-none"
+      @click="setMultiStep()"
+    >
+      {{ $t('Continue') }}
+    </FormKit>
+    <CommonStepper
+      v-model="activeStep"
+      :steps="allSteps"
+      class="mt-4 mb-8 px-8"
+    />
+  </footer>
 </template>

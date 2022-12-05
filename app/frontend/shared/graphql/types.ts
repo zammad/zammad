@@ -1908,7 +1908,7 @@ export type TranslationsPayload = {
 /** A file to be uploaded. */
 export type UploadFileInput = {
   /** File content */
-  content: Scalars['BinaryString'];
+  content?: InputMaybe<Scalars['BinaryString']>;
   /** File name. */
   name: Scalars['String'];
   /** File's content-type. */

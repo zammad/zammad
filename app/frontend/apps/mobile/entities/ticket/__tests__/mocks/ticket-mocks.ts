@@ -3,6 +3,7 @@
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import type { ObjectManagerFrontendAttributesPayload } from '@shared/graphql/types'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import { nullableMock } from '@tests/support/utils'
 
 export const ticketObjectAttributes = () => ({
   attributes: [
@@ -270,6 +271,136 @@ export const ticketObjectAttributes = () => ({
   __typename: 'ObjectManagerFrontendAttributesPayload',
 })
 
+export const ticketArticleObjectAttributes = () => ({
+  attributes: [
+    {
+      name: 'type_id',
+      display: 'Type',
+      dataType: 'select',
+      dataOption: {
+        relation: 'TicketArticleType',
+        nulloption: false,
+        multiple: false,
+        null: false,
+        default: 10,
+        translate: true,
+        maxlength: 255,
+        belongs_to: 'type',
+      },
+      isInternal: true,
+      screens: {
+        create_middle: {},
+        edit: {
+          null: false,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+    {
+      name: 'internal',
+      display: 'Visibility',
+      dataType: 'select',
+      dataOption: {
+        options: {
+          true: 'internal',
+          false: 'public',
+        },
+        nulloption: false,
+        multiple: false,
+        null: true,
+        default: false,
+        translate: true,
+        maxlength: 255,
+      },
+      isInternal: true,
+      screens: {
+        create_middle: {},
+        edit: {
+          null: false,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+    {
+      name: 'to',
+      display: 'To',
+      dataType: 'input',
+      dataOption: {
+        type: 'text',
+        maxlength: 1000,
+        null: true,
+      },
+      isInternal: true,
+      screens: {
+        create_middle: {},
+        edit: {
+          null: true,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+    {
+      name: 'cc',
+      display: 'CC',
+      dataType: 'input',
+      dataOption: {
+        type: 'text',
+        maxlength: 1000,
+        null: true,
+      },
+      isInternal: true,
+      screens: {
+        create_top: {},
+        create_middle: {},
+        edit: {
+          null: true,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+    {
+      name: 'body',
+      display: 'Text',
+      dataType: 'richtext',
+      dataOption: {
+        type: 'richtext',
+        maxlength: 150000,
+        upload: true,
+        rows: 8,
+        null: true,
+      },
+      isInternal: true,
+      screens: {
+        create_top: {
+          null: false,
+        },
+        edit: {
+          null: true,
+        },
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
+  ],
+  screens: [
+    {
+      name: 'create_middle',
+      attributes: [],
+      __typename: 'ObjectManagerScreenAttributes',
+    },
+    {
+      name: 'edit',
+      attributes: ['type_id', 'internal', 'to', 'cc', 'body'],
+      __typename: 'ObjectManagerScreenAttributes',
+    },
+    {
+      name: 'create_top',
+      attributes: ['body'],
+      __typename: 'ObjectManagerScreenAttributes',
+    },
+  ],
+  __typename: 'ObjectManagerFrontendAttributesPayload',
+})
+
 export const mockTicketObjectAttributesGql = (
   attributes?: ObjectManagerFrontendAttributesPayload,
 ) => {
@@ -277,3 +408,60 @@ export const mockTicketObjectAttributesGql = (
     objectManagerFrontendAttributes: attributes || ticketObjectAttributes(),
   })
 }
+
+export const ticketPayload = (id = 1) =>
+  nullableMock({
+    id: `gid://zammad/Ticket/${id}`,
+    internalId: id,
+    number: 7800 + id,
+    title: 'Ticket Title',
+    createdAt: '2022-11-30T12:40:15Z',
+    updatedAt: '2022-11-30T12:40:15Z',
+    pendingTime: null,
+    owner: {
+      id: 'gid://zammad/User/1',
+      internalId: 1,
+      firstname: '-',
+      lastname: '',
+      __typename: 'User',
+    },
+    customer: {
+      id: 'gid://zammad/User/2',
+      internalId: 2,
+      firstname: 'Nicole',
+      lastname: 'Braun',
+      fullname: 'Nicole Braun',
+      __typename: 'User',
+    },
+    organization: {
+      id: 'gid://zammad/Organization/1',
+      internalId: 1,
+      name: 'Zammad Foundation',
+      __typename: 'Organization',
+    },
+    state: {
+      id: 'gid://zammad/Ticket::State/2',
+      name: 'open',
+      stateType: {
+        name: 'open',
+        __typename: 'TicketStateType',
+      },
+      __typename: 'TicketState',
+    },
+    group: {
+      id: 'gid://zammad/Group/1',
+      name: 'Users',
+      __typename: 'Group',
+    },
+    priority: {
+      id: 'gid://zammad/Ticket::Priority/2',
+      name: '2 normal',
+      defaultCreate: true,
+      uiColor: null,
+      __typename: 'TicketPriority',
+    },
+    objectAttributeValues: [],
+    tags: null,
+    subscribed: false,
+    __typename: 'Ticket',
+  })

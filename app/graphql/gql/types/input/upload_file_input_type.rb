@@ -7,6 +7,6 @@ module Gql::Types::Input
 
     argument :name, String, description: 'File name.'
     argument :type, String, required: false, description: "File's content-type."
-    argument :content, Gql::Types::BinaryStringType, description: 'File content'
+    argument :content, Gql::Types::BinaryStringType, required: false, description: 'File content'
   end
 end

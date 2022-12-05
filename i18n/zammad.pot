@@ -1167,6 +1167,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -2663,6 +2664,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Creating new tickets via web is disabled."
 msgstr ""
 
 #: app/models/report.rb
@@ -4692,6 +4697,7 @@ msgstr ""
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""

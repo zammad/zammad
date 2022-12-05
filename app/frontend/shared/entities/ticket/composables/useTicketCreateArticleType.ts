@@ -4,7 +4,9 @@ import { computed } from 'vue'
 import { useApplicationStore } from '@shared/stores/application'
 import { TicketCreateArticleType } from '../types'
 
-export const useTicketCreateArticleType = () => {
+export const useTicketCreateArticleType = (
+  onSubmit?: (e: SubmitEvent) => void,
+) => {
   const application = useApplicationStore()
 
   const ticketCreateArticleType = {
@@ -62,6 +64,7 @@ export const useTicketCreateArticleType = () => {
     props: {
       buttons: true,
       options,
+      ...(onSubmit ? { onSubmit } : {}),
     },
   }
 
