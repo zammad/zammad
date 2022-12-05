@@ -3,9 +3,8 @@
 import { computed, shallowRef } from 'vue'
 
 export const isStandalone: boolean =
-  // @ts-expect-error types don't know about Safari's "standalone" mode
-  ('standalone' in window.navigator && window.navigator.standalone) ||
-  // this works in other browsers
+  (('standalone' in window.navigator &&
+    window.navigator.standalone) as boolean) ||
   window.matchMedia('(display-mode: standalone)').matches
 
 interface InstallEvent extends Event {
