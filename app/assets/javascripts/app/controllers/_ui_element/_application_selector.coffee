@@ -287,6 +287,9 @@ class App.UiElement.ApplicationSelector
     @disableRemoveForOneAttribute(item)
     @saveParams(item)
 
+    if attribute.preview isnt false
+      @preview(item)
+
     item
 
   @renderParamValue: (item, attribute, params, paramValue) ->

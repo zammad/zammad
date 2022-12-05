@@ -186,11 +186,6 @@ RSpec.describe 'Manage > Overviews', type: :system do
           within '.table-overview .js-tableBody' do
             find("tr[data-id='#{overview.id}']   td.table-draggable").click
           end
-
-          within '.ticket_selector' do
-            # trigger the preview
-            fill_in 'condition::ticket.customer_id::value_completion',	with: customer_one.firstname
-          end
         end
 
         context 'when single customer exists' do
@@ -267,11 +262,6 @@ RSpec.describe 'Manage > Overviews', type: :system do
           within '.table-overview .js-tableBody' do
             find("tr[data-id='#{overview.id}']   td.table-draggable").click
           end
-
-          within '.ticket_selector' do
-            # trigger the preview
-            fill_in 'condition::ticket.owner_id::value_completion',	with: owner_one.firstname
-          end
         end
 
         context 'when single owner exists' do
@@ -347,11 +337,6 @@ RSpec.describe 'Manage > Overviews', type: :system do
 
           within '.table-overview .js-tableBody' do
             find("tr[data-id='#{overview.id}']   td.table-draggable").click
-          end
-
-          within '.ticket_selector' do
-            # trigger the preview
-            fill_in 'condition::ticket.organization_id::value_completion',	with: organization_one.name
           end
         end
 

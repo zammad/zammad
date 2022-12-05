@@ -306,6 +306,9 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
 
     @applySortable(item, attribute, params)
 
+    if attribute.preview isnt false
+      @preview(item)
+
     item
 
   @saveParams: (item, params, attribute) ->
