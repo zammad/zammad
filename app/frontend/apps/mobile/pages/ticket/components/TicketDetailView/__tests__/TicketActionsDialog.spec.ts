@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
 import { TicketMergeDocument } from '@shared/entities/ticket/graphql/mutations/merge.api'
 import {
   NotificationTypes,
@@ -127,7 +128,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       dialog: true,
       form: true,
       router: true,
-      conformation: true,
+      confirmation: true,
     })
 
     const mergeButton = view.getByRole('button', { name: 'Merge tickets' })
@@ -164,5 +165,55 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     })
 
     expect(getTestRouter().currentRoute.value.path).toBe(`/tickets/5`)
+  })
+
+  it("don't see 'change customer', if have no rights", async () => {
+    mockPermissions([])
+
+    const view = renderComponent(TicketActionsDialog, {
+      props: {
+        name: 'ticket-actions',
+        ticket: currentTicket,
+      },
+      dialog: true,
+      form: true,
+      router: true,
+    })
+
+    expect(
+      view.queryByRole('button', { name: 'Change customer' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('can open change customer, when have rights (and close without confirmation)', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const view = renderComponent(TicketActionsDialog, {
+      props: {
+        name: 'ticket-actions',
+        ticket: currentTicket,
+      },
+      dialog: true,
+      form: true,
+      router: true,
+    })
+
+    const customerChangeButton = view.getByText('Change customer')
+
+    await view.events.click(customerChangeButton)
+
+    await waitFor(() => {
+      expect(
+        view.queryByRole('dialog', { name: 'Change customer' }),
+      ).toBeInTheDocument()
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Cancel' }))
+
+    await waitFor(() => {
+      expect(
+        view.queryByRole('dialog', { name: 'Change customer' }),
+      ).not.toBeInTheDocument()
+    })
   })
 })

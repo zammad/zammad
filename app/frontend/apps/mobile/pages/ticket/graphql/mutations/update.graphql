@@ -1,8 +1,8 @@
 mutation ticketUpdate(
-  $ticket: LocatorTicketInput!
+  $ticketId: ID!
   $input: TicketUpdateInput!
 ) {
-  ticketUpdate(ticket: $ticket, input: $input) {
+  ticketUpdate(ticketId: $ticketId, input: $input) {
     ticket {
       ...ticketAttributes
     }

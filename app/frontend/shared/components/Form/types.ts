@@ -9,11 +9,13 @@ import type {
   FormKitSchemaCondition,
   FormKitSchemaNode,
 } from '@formkit/core'
+import type { Ref } from 'vue'
 import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
 import type { EnumObjectManagerObjects } from '@shared/graphql/types'
+import type { ObjectLike } from '@shared/types/utils'
 import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
 
 export interface FormFieldAdditionalProps {
@@ -192,12 +194,13 @@ export type FormHandlerFunction = (
   execution: FormHandlerExecution,
   formNode: FormKitNode | undefined,
   values: FormValues,
-  changeFields: Record<string, Partial<FormSchemaField>>,
+  changeFields: Ref<Record<string, Partial<FormSchemaField>>>,
   updateSchemaDataField: (
     field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
   ) => void,
   schemaData: ReactiveFormSchemData,
   changedField?: ChangedField,
+  initialEntityObject?: ObjectLike,
 ) => void
 
 export interface FormHandler {

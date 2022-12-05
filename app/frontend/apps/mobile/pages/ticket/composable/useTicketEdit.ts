@@ -55,9 +55,7 @@ export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
       useObjectAttributeFormData(objectAttributesLookup.value, formData)
 
     return mutationUpdate.send({
-      ticket: {
-        ticketId: ticket.value.id,
-      },
+      ticketId: ticket.value.id,
       input: {
         ...internalObjectAttributeValues,
         objectAttributeValues: additionalObjectAttributeValues,

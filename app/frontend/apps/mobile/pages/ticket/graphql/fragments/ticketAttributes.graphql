@@ -18,6 +18,17 @@ fragment ticketAttributes on Ticket {
     firstname
     lastname
     fullname
+    image
+    organization {
+      id
+      internalId
+      name
+      active
+      objectAttributeValues {
+        ...objectAttributeValues
+      }
+    }
+    hasSecondaryOrganizations
   }
   organization {
     id

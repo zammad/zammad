@@ -103,9 +103,9 @@ RSpec.shared_examples 'core workflow' do
       find('label', text: 'category').sibling('.formkit-inner').click
 
       expect(page).to have_css('div[role=option] span', text: 'Change request')
-      find('div[role=option] span', text: 'Incident').sibling('.icon-mobile-chevron-right').click
+      find('div[role=option] span', text: 'Incident').sibling('svg[role=link]').click
       expect(page).to have_css('div[role=option] span', text: 'Hardware')
-      find('div[role=option] span', text: 'Softwareproblem').sibling('.icon-mobile-chevron-right').click
+      find('div[role=option] span', text: 'Softwareproblem').sibling('svg[role=link]').click
       expect(page).to have_css('div[role=option] span', text: 'CRM')
     end
   end

@@ -64,7 +64,7 @@ useHeader({
 
     overviewStore.saveOverviews(includedOverviews.value)
     notify({
-      message: __('Ticket Overview settings are saved'),
+      message: __('Ticket Overview settings are saved.'),
       type: NotificationTypes.Success,
     })
     walker.back('/')

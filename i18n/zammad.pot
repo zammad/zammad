@@ -1166,6 +1166,7 @@ msgid "Are you sure?"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -1759,6 +1760,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr ""
@@ -1847,6 +1849,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Change customer"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
@@ -3881,16 +3888,8 @@ msgstr ""
 msgid "Edit Organization"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-msgid "Edit customer"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-msgid "Edit organization"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
@@ -8643,6 +8642,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Save"
 msgstr ""
 
@@ -10669,7 +10669,7 @@ msgid "Ticket Overview"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-msgid "Ticket Overview settings are saved"
+msgid "Ticket Overview settings are saved."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -10702,6 +10702,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Ticket could not be created."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+msgid "Ticket customer updated successfully."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
@@ -10745,6 +10749,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
 msgid "Ticket tags could not be updated."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+msgid "Ticket tags updated successfully."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue

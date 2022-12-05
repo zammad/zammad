@@ -23,6 +23,17 @@ export const TicketAttributesFragmentDoc = gql`
     firstname
     lastname
     fullname
+    image
+    organization {
+      id
+      internalId
+      name
+      active
+      objectAttributeValues {
+        ...objectAttributeValues
+      }
+    }
+    hasSecondaryOrganizations
   }
   organization {
     id

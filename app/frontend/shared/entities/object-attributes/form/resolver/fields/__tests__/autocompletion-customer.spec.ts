@@ -9,7 +9,6 @@ describe('FieldResolverAutocompletionCustomer', () => {
       name: 'customer',
       display: 'Customer',
       dataOption: {
-        // TODO ...
         belongs_to: 'customer',
       },
       isInternal: true,
@@ -21,6 +20,7 @@ describe('FieldResolverAutocompletionCustomer', () => {
       required: false,
       props: {
         belongsToObjectField: 'customer',
+        noOptionsLabelTranslation: true,
       },
       type: 'customer',
       internal: true,

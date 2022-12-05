@@ -3,10 +3,14 @@
 <script setup lang="ts">
 import { ref, toRef, watch } from 'vue'
 import { isEqual } from 'lodash-es'
-import type { FormKitContext, FormKitNode } from '@formkit/core'
+import type { FormKitNode } from '@formkit/core'
 import FormGroup from '@shared/components/Form/FormGroup.vue'
 import { useTagAssignmentUpdateMutation } from '@shared/entities/tags/graphql/mutations/assignment/update.api'
 import { MutationHandler } from '@shared/server/apollo/handler'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
 import type { TicketById } from '../../types/tickets'
 
 interface Props {
@@ -32,6 +36,8 @@ const tagAssigmentUpdateHandler = new MutationHandler(
   },
 )
 
+const { notify } = useNotifications()
+
 const handleChangedTicketTags = (node: FormKitNode) => {
   node.on('dialog:afterClose', async () => {
     const ticketId = ticketData.value.id
@@ -45,6 +51,12 @@ const handleChangedTicketTags = (node: FormKitNode) => {
       .send({
         objectId: ticketId,
         tags: ticketTags.value,
+      })
+      .then(() => {
+        notify({
+          type: NotificationTypes.Success,
+          message: __('Ticket tags updated successfully.'),
+        })
       })
       .catch(() => {
         // Reset tags again, when error occurs.

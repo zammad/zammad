@@ -40,6 +40,8 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
     updateSchemaDataField,
     schemaData,
     changedField,
+    initialEntityObject,
+    // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
     if (!executeHandler(execution, schemaData, changedField)) return
 
@@ -61,11 +63,14 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
           )[changedField.newValue as number].user as UserData
         }
 
-        if (execution === FormHandlerExecution.Initial && !values.customer_id)
+        if (
+          execution === FormHandlerExecution.FieldChange ||
+          !values.customer_id ||
+          !initialEntityObject
+        )
           return undefined
 
-        // TODO: initial handling needs to be different (we need to use the object entity)
-        return values.customer_id as UserData
+        return initialEntityObject.customer
       }
 
       return session.user
@@ -98,12 +103,17 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
 
     const customer = setCustomer()
     if (customer?.hasSecondaryOrganizations) {
-      setOrganizationField(customer.id, customer.organization as Organization)
+      setOrganizationField(
+        customer.id,
+        execution === FormHandlerExecution.Initial && initialEntityObject
+          ? initialEntityObject.organization
+          : (customer.organization as Organization),
+      )
     }
 
     // This values should be fixed, until the user change something in the customer_id field.
-    changeFields.organization_id = {
-      ...(changeFields.organization_id || {}),
+    changeFields.value.organization_id = {
+      ...(changeFields.value.organization_id || {}),
       ...organizationField,
     }
   }

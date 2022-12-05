@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { toRef } from 'vue'
 import type { AvatarUser } from '@shared/components/CommonUserAvatar'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useDialog } from '@shared/composables/useDialog'
@@ -36,7 +37,7 @@ const showActions = () => {
 
   actionsDialog.open({
     name: actionsDialog.name,
-    ticket: props.ticket,
+    ticket: toRef(props, 'ticket'),
   })
 }
 </script>

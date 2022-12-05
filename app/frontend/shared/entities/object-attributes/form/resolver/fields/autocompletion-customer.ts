@@ -7,11 +7,10 @@ import FieldResolver from '../FieldResolver'
 export class FieldResolverAutocompletionCustomer extends FieldResolver {
   fieldType = 'customer'
 
-  // TODO:
-  // eslint-disable-next-line class-methods-use-this
   public fieldTypeAttributes() {
     return {
       props: {
+        noOptionsLabelTranslation: !this.attributeConfig.translate,
         belongsToObjectField: camelize(
           (this.attributeConfig.belongs_to as string) || '',
         ),

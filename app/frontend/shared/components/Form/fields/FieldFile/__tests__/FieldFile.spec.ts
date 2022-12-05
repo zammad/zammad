@@ -22,7 +22,7 @@ const renderFileInput = (props: Record<string, unknown> = {}) => {
     },
     form: true,
     imageViewer: true,
-    conformation: true,
+    confirmation: true,
   })
 }
 

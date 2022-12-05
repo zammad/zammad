@@ -5,13 +5,12 @@ import { camelize } from '@shared/utils/formatter'
 import FieldResolver from '../FieldResolver'
 
 export class FieldResolverAutocompletionCustomerOrganization extends FieldResolver {
-  fieldType = 'organization' // TODO ...
+  fieldType = 'organization'
 
-  // TODO:
-  // eslint-disable-next-line class-methods-use-this
   public fieldTypeAttributes() {
     return {
       props: {
+        noOptionsLabelTranslation: !this.attributeConfig.translate,
         belongsToObjectField: camelize(
           (this.attributeConfig.belongs_to as string) || '',
         ),

@@ -6,7 +6,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
   let(:query) do
     <<~QUERY
       mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!) {
-        ticketUpdate(ticket: { ticketId: $ticketId }, input: $input) {
+        ticketUpdate(ticketId: $ticketId, input: $input) {
           ticket {
             id
             title

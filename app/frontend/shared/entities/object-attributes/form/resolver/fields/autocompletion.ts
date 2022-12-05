@@ -26,6 +26,7 @@ export class FieldResolverAutocompletion extends FieldResolver {
   public fieldTypeAttributes() {
     return {
       props: {
+        noOptionsLabelTranslation: !this.attributeConfig.translate,
         belongsToObjectField: camelize(
           (this.attributeConfig.belongs_to as string) || '',
         ),

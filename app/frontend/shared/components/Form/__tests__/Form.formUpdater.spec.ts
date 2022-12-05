@@ -205,7 +205,7 @@ const mergedObjectAttributes = mergeFrontendObjectAttributes(
 )
 
 const renderForm = async (
-  initialFormUpdaterQueryResponse: FormUpdaterQuery | FormUpdaterQuery[],
+  formUpdaterQueryResponse: FormUpdaterQuery | FormUpdaterQuery[],
   options: ExtendedMountingOptions<Props> = {},
   objectManagerFrontendAttributes = mergedObjectAttributes,
 ) => {
@@ -214,7 +214,7 @@ const renderForm = async (
   })
 
   const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willResolve(
-    initialFormUpdaterQueryResponse,
+    formUpdaterQueryResponse,
   )
 
   const wrapper = renderComponent(Form, {

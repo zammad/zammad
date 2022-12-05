@@ -64,7 +64,7 @@ const icon = computed(() => {
   return null
 })
 
-const app = useApplicationStore()
+const application = useApplicationStore()
 
 const image = computed(() => {
   if (icon.value) return null
@@ -76,7 +76,7 @@ const image = computed(() => {
 
   // we're using the REST api here to get the image and to also use the browser image cache
   // TODO: this should be re-evaluated when the desktop app is going to be implemented
-  const apiUrl = String(app.config.api_path)
+  const apiUrl = String(application.config.api_path)
   return `${apiUrl}/users/image/${props.entity.image}`
 })
 

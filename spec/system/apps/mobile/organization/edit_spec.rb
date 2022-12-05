@@ -15,6 +15,11 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
     wait_for_gql('apps/mobile/entities/organization/graphql/queries/organization.graphql')
   end
 
+  def save_organization(form_updater_call_number = 2)
+    wait_for_gql('shared/components/Form/graphql/queries/formUpdater.graphql', number: form_updater_call_number)
+    click('button:not(disabled)', text: 'Save')
+  end
+
   context 'when visiting as agent', authenticated_as: :agent do
     it 'can edit organization' do
       open_organization
@@ -24,7 +29,8 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
 
       within('#dialog-organization-edit') do
         find('[name="note"]').send_keys('edit field')
-        click('button', text: 'Save')
+
+        save_organization
       end
 
       wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')
@@ -51,7 +57,8 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       within('#dialog-organization-edit') do
         fill_in('name', with: 'new name')
         fill_in(attribute.name, with: 'some text')
-        click('button', text: 'Save')
+
+        save_organization(3)
       end
 
       wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')

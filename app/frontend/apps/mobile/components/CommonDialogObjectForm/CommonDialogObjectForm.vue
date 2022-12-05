@@ -23,7 +23,7 @@ import Form from '@shared/components/Form/Form.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import useConfirmation from '../CommonConfirmation/composable'
+import { useConfirmationDialog } from '../CommonConfirmation'
 
 export interface Props {
   name: string
@@ -70,7 +70,7 @@ const initialFlatObject = {
 const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
   props.type,
 )
-const { waitForConfirmation } = useConfirmation()
+const { waitForConfirmation } = useConfirmationDialog()
 
 const cancelDialog = async () => {
   if (isDirty.value) {
@@ -129,8 +129,8 @@ const saveObject = async (formData: FormData) => {
       <button
         :form="name"
         class="text-blue"
-        :disabled="isDisabled"
-        :class="{ 'opacity-50': isDisabled }"
+        :disabled="isDisabled || !isDirty"
+        :class="{ 'opacity-50': isDisabled || !isDirty }"
       >
         {{ $t('Save') }}
       </button>

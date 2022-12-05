@@ -8,7 +8,11 @@ module Gql::Types::Input::Ticket
       return context.current_user.permissions?('ticket.agent') ? payload : nil
     end
 
+    # Arguments required for create.
+    argument :group_id, GraphQL::Types::ID, description: 'The group of the ticket.', loads: Gql::Types::GroupType
     argument :title, Gql::Types::NonEmptyStringType, description: 'The title of the ticket.'
+
+    # Arguments specific to create.
     argument :article, Gql::Types::Input::Ticket::ArticleInputType, required: false, description: 'The article data.'
     argument :tags, [String], required: false, description: 'The tags that should be assigned to the new ticket.', prepare: only_for_ticket_agents
 

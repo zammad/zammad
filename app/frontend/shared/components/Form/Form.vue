@@ -120,7 +120,7 @@ const props = withDefaults(defineProps<Props>(), {
     return []
   },
   changeFields: () => {
-    return {}
+    return reactive({})
   },
   validationVisibility: FormValidationVisibility.Submit,
   useObjectAttributes: false,
@@ -162,6 +162,8 @@ const debouncedShowInitialLoadingAnimation = refDebounced(
 const formKitInitialNodesSettled = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
 const formElement = ref<HTMLElement>()
+
+const changeFields = toRef(props, 'changeFields')
 
 const updaterChangedFields = new Set<string>()
 
@@ -391,7 +393,7 @@ const updateSchemaDataField = (
     props: specificProps,
     ...fieldProps
   } = field
-  const showField = show ?? true
+  const showField = show ?? schemaData.fields[field.name]?.show ?? true
 
   // Not needed in this context.
   delete fieldProps.if
@@ -525,10 +527,11 @@ const executeFormHandler = (
       execution,
       formNode.value,
       currentValues,
-      props.changeFields,
+      changeFields,
       updateSchemaDataField,
       schemaData,
       changedField,
+      props.initialEntityObject,
     )
   })
 }
@@ -766,9 +769,15 @@ const buildStaticSchema = () => {
 }
 
 watchOnce(formKitInitialNodesSettled, () => {
-  watch(() => props.changeFields, updateChangedFields, {
-    deep: true,
-  })
+  watch(
+    changeFields,
+    (newValue) => {
+      updateChangedFields(newValue)
+    },
+    {
+      deep: true,
+    },
+  )
 })
 
 watch(
@@ -817,8 +826,8 @@ const initializeFormSchema = () => {
 
       if (queryResult?.formUpdater) {
         updateChangedFields(
-          props.changeFields
-            ? merge(queryResult.formUpdater, props.changeFields)
+          changeFields.value
+            ? merge(queryResult.formUpdater, changeFields.value)
             : queryResult.formUpdater,
         )
       }
@@ -827,7 +836,7 @@ const initializeFormSchema = () => {
     })
   } else {
     executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
-    if (props.changeFields) updateChangedFields(props.changeFields)
+    if (changeFields.value) updateChangedFields(changeFields.value)
 
     setFormSchemaInitialized()
   }

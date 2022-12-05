@@ -61,7 +61,7 @@ const renderForm = () => {
     },
     form: true,
     formField: true,
-    conformation: true,
+    confirmation: true,
   })
   return {
     attributesApi,
@@ -137,6 +137,8 @@ it('doesnt close dialog, if result is unsuccessfull', async () => {
 
   await waitUntilApisResolved(attributesApi)
   sendMock.mockResolvedValue(null)
+
+  await view.events.type(view.getByLabelText('Domain'), 'some-domain@domain.me')
 
   await view.events.click(view.getByRole('button', { name: 'Save' }))
 

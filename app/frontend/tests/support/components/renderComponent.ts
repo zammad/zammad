@@ -38,7 +38,7 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   routerRoutes?: RouteRecordRaw[]
   store?: boolean
   imageViewer?: boolean
-  conformation?: boolean
+  confirmation?: boolean
   form?: boolean
   formField?: boolean
   unmount?: boolean
@@ -255,10 +255,10 @@ afterEach(() => {
   }
 })
 
-let conformationMounted = false
+let confirmationMounted = false
 
-const mountConformation = () => {
-  if (conformationMounted) return
+const mountconfirmation = () => {
+  if (confirmationMounted) return
 
   const Confirmation = {
     components: { CommonConfirmation },
@@ -268,7 +268,7 @@ const mountConformation = () => {
   const { element } = mount(Confirmation, defaultWrapperOptions)
   document.body.appendChild(element)
 
-  conformationMounted = true
+  confirmationMounted = true
 }
 
 const setupVModel = <Props>(wrapperOptions: ExtendedMountingOptions<Props>) => {
@@ -326,8 +326,8 @@ const renderComponent = <Props>(
   if (wrapperOptions?.imageViewer) {
     mountImageViewer()
   }
-  if (wrapperOptions?.conformation) {
-    mountConformation()
+  if (wrapperOptions?.confirmation) {
+    mountconfirmation()
   }
 
   initializeApplicationConfig()

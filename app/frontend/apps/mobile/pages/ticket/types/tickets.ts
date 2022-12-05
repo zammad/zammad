@@ -13,6 +13,11 @@ export type TicketArticle = ConfidentTake<
 
 export type TicketArticleAttachment = TicketArticle['attachments'][number]
 
+export interface TicketCustomerUpdateFormData {
+  customer_id: number
+  organization_id?: number
+}
+
 export interface TicketFormData {
   title: string
   customer_id?: number

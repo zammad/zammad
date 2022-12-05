@@ -8,8 +8,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketUpdateDocument = gql`
-    mutation ticketUpdate($ticket: LocatorTicketInput!, $input: TicketUpdateInput!) {
-  ticketUpdate(ticket: $ticket, input: $input) {
+    mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!) {
+  ticketUpdate(ticketId: $ticketId, input: $input) {
     ticket {
       ...ticketAttributes
     }

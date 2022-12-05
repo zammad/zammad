@@ -1,19 +1,21 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import { closeDialog } from '@shared/composables/useDialog'
-import { useRoute, useRouter } from 'vue-router'
 import { computed, toRef } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { truthy } from '@shared/utils/helpers'
+import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useDialog, closeDialog } from '@shared/composables/useDialog'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
+import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
+import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
+import { useTicketsMerge } from '../../composable/useTicketsMerge'
 import type { TicketById } from '../../types/tickets'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
-import { useTicketsMerge } from '../../composable/useTicketsMerge'
+
+// TODO I think the complete dialog should not be available for none agent user (and maybe also for agents without write permission?)
 
 interface Props {
   name: string
@@ -26,6 +28,7 @@ const route = useRoute()
 const router = useRouter()
 
 const ticketReactive = toRef(props, 'ticket')
+const { isTicketAgent } = useTicketView(ticketReactive)
 
 const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(
   ticketReactive,
@@ -75,16 +78,27 @@ const topButtons = computed(() =>
     },
   ].filter(truthy),
 )
+
+const changeCustomerDialog = useDialog({
+  name: 'ticket-change-customer',
+  component: () =>
+    import(
+      '@mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'
+    ),
+})
+
+const showChangeCustomer = () => {
+  if (!props.ticket) return
+
+  changeCustomerDialog.open({
+    name: changeCustomerDialog.name,
+    ticket: ticketReactive,
+  })
+}
 </script>
 
 <template>
   <CommonDialog :name="name" :label="__('Ticket actions')">
-    <template #before-label>
-      <!-- TODO what is its purpose? -->
-      <button type="button" class="text-white" @click="closeDialog(name)">
-        Cancel
-      </button>
-    </template>
     <div class="w-full px-3">
       <CommonButtonGroup class="py-6" mode="full" :options="topButtons" />
       <FormKit
@@ -98,32 +112,29 @@ const topButtons = computed(() =>
         :label-empty="__('Start typing to find the ticket to merge into.')"
         action-icon="mobile-merge"
       />
+      <!-- Postponed
       <CommonSectionMenu>
         <CommonSectionMenuLink
           :label="__('Execute configured macros')"
           icon="mobile-macros"
           icon-bg="bg-green"
         />
-      </CommonSectionMenu>
+      </CommonSectionMenu> -->
+      <!-- Postponed
       <CommonSectionMenu>
         <CommonSectionMenuLink
           :label="__('History')"
           icon="mobile-history"
           icon-bg="bg-gray"
         />
-      </CommonSectionMenu>
-      <CommonSectionMenu>
-        <CommonSectionMenuLink :label="__('Edit customer')">
+      </CommonSectionMenu> -->
+      <CommonSectionMenu v-if="isTicketAgent">
+        <CommonSectionMenuLink
+          :label="__('Change customer')"
+          @click="showChangeCustomer"
+        >
           <template #icon>
-            <CommonUserAvatar :entity="{ id: '1' }" size="small" />
-          </template>
-        </CommonSectionMenuLink>
-        <CommonSectionMenuLink :label="__('Edit organization')">
-          <template #icon>
-            <CommonOrganizationAvatar
-              :entity="{ name: 'Zammad', active: true }"
-              size="small"
-            />
+            <CommonUserAvatar :entity="ticket.customer" size="small" />
           </template>
         </CommonSectionMenuLink>
       </CommonSectionMenu>

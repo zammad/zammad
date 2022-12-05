@@ -16,18 +16,6 @@ import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { nullableMock, waitForNextTick, waitUntil } from '@tests/support/utils'
 import { AutocompleteSearchOrganizationDocument } from '@shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api'
 
-vi.mock('@vueuse/core', async () => {
-  const mod = await vi.importActual<typeof import('@vueuse/core')>(
-    '@vueuse/core',
-  )
-  return {
-    ...mod,
-    usePointerSwipe: vi
-      .fn()
-      .mockReturnValue({ distanceY: 0, isSwiping: false }),
-  }
-})
-
 const mockQueryResult = (input: {
   query: string
   limit: number
