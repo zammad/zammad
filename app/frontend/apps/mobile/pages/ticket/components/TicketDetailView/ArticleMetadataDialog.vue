@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { getArticleChannelIcon } from '@shared/entities/article/composables/getArticleChannelIcon'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
@@ -17,7 +18,9 @@ interface Props {
 const props = defineProps<Props>()
 
 const channelIcon = computed(() => {
-  return props.article.type?.name?.split(' ')[0]
+  const name = props.article.type?.name
+  if (name) return getArticleChannelIcon(name)
+  return undefined
 })
 
 const links = computed(() => {
@@ -52,7 +55,7 @@ const links = computed(() => {
 </script>
 
 <template>
-  <CommonDialog :label="__('Meta Data')" :name="name" class="px-4">
+  <CommonDialog :label="__('Meta Data')" :name="name" class="p-4">
     <CommonSectionMenu>
       <ArticleMetadataAddress :address="article.from" :label="__('From')" />
       <ArticleMetadataAddress

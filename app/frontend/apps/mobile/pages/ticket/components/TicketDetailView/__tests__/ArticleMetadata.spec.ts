@@ -72,6 +72,7 @@ describe('visuals for metadata', () => {
     )
     const channel = view.getByRole('region', { name: 'Channel' })
     expect(channel).toHaveTextContent(/email/)
+    expect(view.getByIconName('mobile-mail')).toBeInTheDocument()
     const links = getAllByRole(channel, 'link')
     expect(links).toHaveLength(3)
 
