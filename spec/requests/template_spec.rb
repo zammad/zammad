@@ -4,15 +4,24 @@ require 'rails_helper'
 
 RSpec.describe Template, type: :request do
   let(:agent)    { create(:agent) }
+  let(:admin)    { create(:user, roles: Role.where(name: 'Admin')) }
   let(:customer) { create(:customer) }
 
-  describe 'request handling', authenticated_as: :agent do
+  describe 'request handling', authenticated_as: :admin do
     before do
       allow(ActiveSupport::Deprecation).to receive(:warn)
     end
 
     context 'when listing templates' do
-      let!(:templates) { create_list(:template, 10) }
+      let!(:templates) do
+        create_list(:template, 10).tap do |templates|
+          templates.each do |template|
+
+            # Make all templates with even IDs inactive (total of 5).
+            template.update!(active: false) if template.id.even?
+          end
+        end
+      end
 
       it 'returns all' do
         get '/api/v1/templates.json'
@@ -25,6 +34,14 @@ RSpec.describe Template, type: :request do
 
         templates.each_with_index do |template, index|
           expect(json_response[index]['options']).to eq(template.options)
+        end
+      end
+
+      context 'with agent permissions', authenticated_as: :agent do
+        it 'returns active templates only' do
+          get '/api/v1/templates.json'
+
+          expect(json_response.length).to eq(5)
         end
       end
     end
@@ -42,6 +59,34 @@ RSpec.describe Template, type: :request do
         get "/api/v1/templates/#{template.id}.json"
 
         expect(json_response['options']).to eq(template.options)
+      end
+
+      context 'with inactive template' do
+        let!(:inactive_template) { create(:template, active: false) }
+
+        it 'returns ok' do
+          get "/api/v1/templates/#{inactive_template.id}.json"
+
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      context 'with agent permissions', authenticated_as: :agent do
+        it 'returns ok' do
+          get "/api/v1/templates/#{template.id}.json"
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        context 'with inactive template' do
+          let!(:inactive_template) { create(:template, active: false) }
+
+          it 'request is not found' do
+            get "/api/v1/templates/#{inactive_template.id}.json"
+
+            expect(response).to have_http_status(:not_found)
+          end
+        end
       end
     end
 
@@ -64,6 +109,14 @@ RSpec.describe Template, type: :request do
         post '/api/v1/templates.json', params: { name: 'Foo', options: { title: 'Bar', customer_id: customer.id.to_s, customer_id_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }
 
         expect(ActiveSupport::Deprecation).to have_received(:warn)
+      end
+
+      context 'with agent permissions', authenticated_as: :agent do
+        it 'request is forbidden' do
+          post '/api/v1/templates.json', params: { name: 'Foo', options: { 'ticket.title': { value: 'Bar' } } }
+
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
 
@@ -89,6 +142,14 @@ RSpec.describe Template, type: :request do
 
         expect(ActiveSupport::Deprecation).to have_received(:warn)
       end
+
+      context 'with agent permissions', authenticated_as: :agent do
+        it 'request is forbidden' do
+          put "/api/v1/templates/#{template.id}.json", params: { options: { 'ticket.title': { value: 'Foo' } } }
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
 
     context 'when destroying template' do
@@ -98,6 +159,14 @@ RSpec.describe Template, type: :request do
         delete "/api/v1/templates/#{template.id}.json"
 
         expect(response).to have_http_status(:ok)
+      end
+
+      context 'with agent permissions', authenticated_as: :agent do
+        it 'request is forbidden' do
+          delete "/api/v1/templates/#{template.id}.json"
+
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end

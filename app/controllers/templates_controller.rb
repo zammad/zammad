@@ -55,7 +55,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(Template, params)
+    model_index_render(policy_scope(Template), params)
   end
 
 =begin
@@ -76,7 +76,7 @@ curl http://localhost/api/v1/templates/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    model_show_render(Template, params)
+    model_show_render(policy_scope(Template), params)
   end
 
 =begin

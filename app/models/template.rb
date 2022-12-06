@@ -4,6 +4,8 @@ class Template < ApplicationModel
   include ChecksClientNotification
   include Template::Assets
 
+  scope :active, -> { where(active: true) }
+
   store     :options
   validates :name, presence: true
 

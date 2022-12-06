@@ -1,14 +1,12 @@
 class App.Template extends App.Model
-  @configure 'Template', 'name', 'options', 'user_id', 'updated_at'
+  @configure 'Template', 'name', 'options', 'user_id', 'updated_at', 'active'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/templates'
   @configure_attributes = [
     { name: 'name',        display: __('Name'),     tag: 'input', type: 'text', limit: 100, null: false },
     { name: 'options',     display: __('Actions'),  tag: 'ticket_perform_action', user_action: false, article_body_only: true, no_richtext_uploads: true, sender_type: true, skip_unknown_attributes: true, null: true },
     { name: 'updated_at',  display: __('Updated'),  tag: 'datetime', readonly: 1 },
-
-    # TODO: Extend model to support storing of the active flag.
-    # { name: 'active',      display: __('Active'),   tag: 'active', default: true },
+    { name: 'active',      display: __('Active'),   tag: 'active', default: true },
   ]
   @configure_delete = true
   @configure_clone = true
