@@ -23,6 +23,18 @@ RSpec.describe 'Manage > Templates', type: :system do
         click_button('Submit')
       end
     end
+
+    it 'with inactive state' do
+      in_modal do
+        fill_in('name', with: Faker::Name.unique.name)
+        find_field('active').select('inactive')
+        click_button('Submit')
+
+        await_empty_ajax_queue
+
+        expect(Template.last.active).to be(false)
+      end
+    end
   end
 
   context 'when editing an existing template' do
@@ -77,7 +89,7 @@ RSpec.describe 'Manage > Templates', type: :system do
       it 'ignores unknown or invalid attributes (#4316)' do
         in_modal do
           check_input_field_value('options::ticket.title::value', 'Test')
-          expect(find_all('select.form-control').length).to eq(1)
+          expect(find_all('select.form-control').length).to eq(2)
         end
       end
     end
@@ -179,6 +191,27 @@ RSpec.describe 'Manage > Templates', type: :system do
           check_select_field_value('options::ticket.tags::operator', 'add')
           check_input_field_value('options::ticket.tags::value', template.options['ticket.tags']['value'], visible: :all)
         end
+      end
+    end
+
+    context 'with active field' do
+      let(:template) do
+        create(:template,
+               :dummy_data,
+               active: false)
+      end
+
+      it 'shows inactive selection' do
+        check_select_field_value('active', 'false')
+      end
+
+      it 'supports modifying active state' do
+        find_field('active').select('active')
+        click_button('Submit')
+
+        await_empty_ajax_queue
+
+        expect(template.reload.active).to be(true)
       end
     end
   end

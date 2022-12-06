@@ -6,6 +6,7 @@ FactoryBot.define do
     options       { { 'ticket.title': { value: 'Some dummy title' } } }
     updated_by_id { 1 }
     created_by_id { 1 }
+    active        { true }
 
     transient do
       title { 'Title dummy.' }

@@ -397,8 +397,9 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     create_table :templates do |t|
       t.column :name,                 :string,  limit: 250,  null: false
       t.column :options,              :text,    limit: 10.megabytes + 1, null: false
-      t.column :updated_by_id,        :integer,              null: false
-      t.column :created_by_id,        :integer,              null: false
+      t.column :active,               :boolean, null: false, default: true
+      t.column :updated_by_id,        :integer, null: false
+      t.column :created_by_id,        :integer, null: false
       t.timestamps limit: 3, null: false
     end
     add_index :templates, [:name]

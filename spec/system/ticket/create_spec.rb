@@ -1422,4 +1422,17 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Ticket templates are missing active flag #4381' do
+    let!(:active_template)   { create(:template, :dummy_data, active: true) }
+    let!(:inactive_template) { create(:template, :dummy_data, active: false) }
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'filters active templates only' do
+      expect(find('#form-template select[name="id"]')).to have_selector('option', text: active_template.name).and(have_no_selector('option', text: inactive_template.name))
+    end
+  end
 end
