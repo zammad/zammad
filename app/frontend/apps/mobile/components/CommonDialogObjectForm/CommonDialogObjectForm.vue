@@ -51,7 +51,7 @@ const emit = defineEmits<{
 const updateMutation = new MutationHandler(props.mutation({}), {
   errorNotificationMessage: props.errorNotificationMessage,
 })
-const { form, isDirty, isDisabled } = useForm()
+const { form, isDirty, isDisabled, canSubmit } = useForm()
 
 const objectAtrributes: Record<string, string> =
   props.object?.objectAttributeValues?.reduce(
@@ -129,8 +129,8 @@ const saveObject = async (formData: FormData) => {
       <button
         :form="name"
         class="text-blue"
-        :disabled="isDisabled || !isDirty"
-        :class="{ 'opacity-50': isDisabled || !isDirty }"
+        :disabled="!canSubmit"
+        :class="{ 'opacity-50': !canSubmit }"
       >
         {{ $t('Save') }}
       </button>

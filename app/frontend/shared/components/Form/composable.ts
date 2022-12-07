@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createMessage, getNode } from '@formkit/core'
+import { createMessage, getNode, reset } from '@formkit/core'
 import type { FormKitNode } from '@formkit/core'
 import {
   computed,
@@ -13,6 +13,7 @@ import {
 } from 'vue'
 import type { ShallowRef, Ref } from 'vue'
 import type { CommonStepperStep } from '@mobile/components/CommonStepper'
+import type { FormValues } from './types'
 
 export interface FormRef {
   formNode: FormKitNode
@@ -42,8 +43,23 @@ export const useForm = () => {
     return !!context.value?.disabled || !!state.value?.formUpdaterProcessing
   })
 
-  const formReset = () => {
-    node.value?.reset()
+  /**
+   * User can submit form, if it is:
+   * - not disabled
+   * - valid
+   * - has dirty values
+   * After submit, the values should be reset to new values, so "dirty" state can update.
+   * It is done automaticaly, if async `@submit` event is used. Otherwise, `formReset` should be used.
+   */
+  const canSubmit = computed(() => {
+    if (isDisabled.value || !isValid.value) return false
+    return isDirty.value
+  })
+
+  const formReset = (values?: FormValues) => {
+    if (node.value) {
+      reset(node.value, values)
+    }
   }
 
   const formSubmit = () => {
@@ -61,6 +77,7 @@ export const useForm = () => {
     isComplete,
     isSubmitted,
     isDisabled,
+    canSubmit,
     formReset,
     formSubmit,
   }

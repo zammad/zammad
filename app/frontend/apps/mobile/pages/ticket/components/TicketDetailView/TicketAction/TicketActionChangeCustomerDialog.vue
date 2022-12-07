@@ -31,7 +31,7 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-const { form, isDirty, isDisabled } = useForm()
+const { form, isDirty, isDisabled, canSubmit } = useForm()
 
 const { waitForConfirmation } = useConfirmationDialog()
 
@@ -125,8 +125,8 @@ const changeCustomer = async (
       <button
         :form="name"
         class="text-blue"
-        :disabled="isDisabled || !isDirty"
-        :class="{ 'opacity-50': isDisabled || !isDirty }"
+        :disabled="!canSubmit"
+        :class="{ 'opacity-50': !canSubmit }"
       >
         {{ $t('Save') }}
       </button>

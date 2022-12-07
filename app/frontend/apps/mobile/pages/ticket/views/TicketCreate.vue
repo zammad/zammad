@@ -50,7 +50,7 @@ const router = useRouter()
 // TODO: Signature handling?
 // TODO: Security options?
 
-const { form, node, isDirty, isValid, isDisabled, formSubmit } = useForm()
+const { canSubmit, form, node, isDirty, formSubmit } = useForm()
 
 const {
   multiStepPlugin,
@@ -273,7 +273,13 @@ const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
   errorNotificationMessage: __('Ticket could not be created.'),
 })
 
-const isCreated = ref(false)
+const redirectAfterCreate = (internalId?: number) => {
+  if (internalId) {
+    router.replace(`/tickets/${internalId}`)
+  } else {
+    router.replace({ name: 'Home' })
+  }
+}
 
 const createTicket = async (formData: FormData<TicketFormData>) => {
   const { notify } = useNotifications()
@@ -310,12 +316,10 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
     }
   }
 
-  ticketCreateMutation
+  return ticketCreateMutation
     .send({ input })
     .then((result) => {
       if (result?.ticketCreate?.ticket) {
-        isCreated.value = true
-
         notify({
           type: NotificationTypes.Success,
           message: __('Ticket has been created successfully.'),
@@ -323,12 +327,12 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
 
         // TODO: Add correct handling if permission field is implemented.
         // if (result.ticketCreate?.ticket?.internalId && result.ticketCreate?.ticket?.policy?.show) {
-        if (result.ticketCreate?.ticket?.internalId) {
-          router.replace(`/tickets/${result.ticketCreate?.ticket?.internalId}`)
-        } else {
-          router.replace({ name: 'Home' })
+        // we need to wait for form to reset
+        return () => {
+          redirectAfterCreate(result.ticketCreate?.ticket?.internalId)
         }
       }
+      return null
     })
     .catch((errors: UserError) => {
       notify({
@@ -357,8 +361,7 @@ const schemaData = reactive({
 
 const submitButtonDisabled = computed(() => {
   return (
-    !isValid.value ||
-    isDisabled.value ||
+    !canSubmit.value ||
     (activeStep.value !== lastStepName.value &&
       visitedSteps.value.length < stepNames.value.length)
   )
@@ -394,10 +397,7 @@ onUnmounted(() => {
 const { waitForConfirmation } = useConfirmation()
 
 onBeforeRouteLeave(async () => {
-  // TODO: Can we make this check a bit smarter?
-  //   Why is `isDirty` flag still true on submitted forms?
-  //   Why `isSubmitted` never goes true for multi-step forms?
-  if (!isDirty.value || isCreated.value) return true
+  if (!isDirty.value) return true
 
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),

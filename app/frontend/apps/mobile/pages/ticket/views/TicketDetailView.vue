@@ -54,7 +54,7 @@ ticketQuery.onError(() => {
 })
 
 const { initialTicketValue, editTicket } = useTicketEdit(ticket)
-const { form, isValid, isDisabled, isDirty } = useForm()
+const { form, canSubmit, isDirty } = useForm()
 const { notify } = useNotifications()
 
 const submitForm = async (formData: FormData) => {
@@ -83,16 +83,12 @@ const canUpdateTicket = computed(() => {
   return session.userId === ticket.value?.customer.id
 })
 
-const canSubmitForm = computed(() => {
-  return isDirty.value && isValid.value && !isDisabled.value
-})
-
 provide(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   ticket,
   form,
   formVisible,
-  canSubmitForm,
+  canSubmitForm: canSubmit,
   canUpdateTicket,
 })
 

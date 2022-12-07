@@ -25,7 +25,7 @@ import type {
   FormKitSchemaComponent,
   FormKitMessageProps,
 } from '@formkit/core'
-import { createMessage, getNode } from '@formkit/core'
+import { createMessage, getNode, reset } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
 import getUuid from '@shared/utils/getUuid'
@@ -102,10 +102,14 @@ export interface Props {
   objectAttributeSkippedFields?: string[]
 
   // WARNING
+  // Implement the submit in this way, because we need to react on async usage of the submit function.
   // Don't forget that to submit a form with "Enter" key, you need to add a button with type="submit" inside of the form.
   // Or to have a button outside of form with "form" attribite with the same value as the form id.
-  // Implement the submit in this way, because we need to react on async usage of the submit function.
-  onSubmit?: (values: FormData) => Promise<void> | void
+  // After this method is called, form resets its values and state. If you need to call something afterwards,
+  // like make route navigation, you can return a function from the submit handler, which will be called after the form reset.
+  onSubmit?: (
+    values: FormData,
+  ) => Promise<void | (() => void)> | void | (() => void)
 }
 
 // Zammad currently expects formIds to be BigInts. Maybe convert to UUIDs later.
@@ -248,14 +252,15 @@ const onSubmitRaw = () => {
   }
 }
 
-const onSubmit = (values: FormData): Promise<void> | void => {
+const onSubmit = (values: FormData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
 
+  const flatValues = props.multiStepFormGroups
+    ? getFlatValues(values, props.multiStepFormGroups)
+    : values
   const emitValues = {
-    ...(props.multiStepFormGroups
-      ? getFlatValues(values, props.multiStepFormGroups)
-      : values),
+    ...flatValues,
     formId,
   }
 
@@ -263,14 +268,29 @@ const onSubmit = (values: FormData): Promise<void> | void => {
 
   // TODO: Maybe we need to handle the disabled state on submit on our own. In clarification with FormKit (https://github.com/formkit/formkit/issues/236).
   if (submitResult instanceof Promise) {
-    return submitResult.catch((errors: UserError) => {
-      if (errors instanceof UserError) {
-        formNode.value?.setErrors(
-          errors.generalErrors as string[],
-          errors.getFieldErrorList(),
-        )
-      }
-    })
+    return submitResult
+      .then((afterReset) => {
+        // it's possible to destroy Form before this is called
+        if (!formNode.value) return
+        reset(formNode.value, values)
+        if (typeof afterReset === 'function') afterReset()
+      })
+      .catch((errors: UserError) => {
+        if (errors instanceof UserError) {
+          formNode.value?.setErrors(
+            errors.generalErrors as string[],
+            errors.getFieldErrorList(),
+          )
+        }
+      })
+  }
+
+  if (formNode.value) {
+    reset(formNode.value, values)
+  }
+
+  if (typeof submitResult === 'function') {
+    submitResult()
   }
 
   return submitResult

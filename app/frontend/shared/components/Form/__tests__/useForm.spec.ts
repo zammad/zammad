@@ -3,43 +3,48 @@
 import Form from '@shared/components/Form/Form.vue'
 import { useForm } from '@shared/components/Form/composable'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
-import {
-  type ExtendedRenderResult,
-  renderComponent,
-} from '@tests/support/components'
+import { renderComponent } from '@tests/support/components'
 import { waitForNextTick } from '@tests/support/utils'
+import { FormValidationVisibility } from '../types'
 
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
-  unmount: false,
+  unmount: true,
 }
 
-// Initialize a form component.
-const wrapper: ExtendedRenderResult = renderComponent(Form, {
-  ...wrapperParameters,
-  attrs: {
-    id: 'test-form',
+const schema = [
+  {
+    type: 'text',
+    name: 'title',
+    label: 'Title',
   },
-  props: {
-    schema: [
-      {
-        type: 'text',
-        name: 'title',
-        label: 'Title',
-      },
-      {
-        type: 'textarea',
-        name: 'text',
-        label: 'Text',
-        value: 'Some text',
-      },
-    ],
+  {
+    type: 'textarea',
+    name: 'text',
+    label: 'Text',
+    value: 'Some text',
   },
-})
+]
+
+const renderForm = (options: any = {}) => {
+  return renderComponent(Form, {
+    ...wrapperParameters,
+    attrs: {
+      id: 'test-form',
+    },
+    props: {
+      schema,
+    },
+    ...options,
+  })
+}
 
 describe('useForm', () => {
+  // Initialize a form component.
+
   it('existing form node', () => {
+    renderForm()
     const { form, node } = useForm()
 
     form.value = {
@@ -56,6 +61,7 @@ describe('useForm', () => {
   })
 
   it('use different states', () => {
+    renderForm()
     const { form, isValid, isDirty, isComplete, isSubmitted, isDisabled } =
       useForm()
 
@@ -71,6 +77,7 @@ describe('useForm', () => {
   })
 
   it('disabled when form updater is processing', async () => {
+    renderForm()
     const { form, isDisabled } = useForm()
 
     const formNode = getNode('test-form') as FormKitNode
@@ -88,12 +95,11 @@ describe('useForm', () => {
       }),
     )
 
-    await waitForNextTick()
-
     expect(isDisabled.value).toBe(true)
   })
 
   it('use values', () => {
+    renderForm()
     const { form, values } = useForm()
 
     form.value = {
@@ -106,7 +112,8 @@ describe('useForm', () => {
     })
   })
 
-  it('use form submit', () => {
+  it('use form submit', async () => {
+    const wrapper = renderForm()
     const { form, formSubmit } = useForm()
 
     form.value = {
@@ -114,7 +121,107 @@ describe('useForm', () => {
     }
 
     formSubmit()
+    await waitForNextTick()
 
     expect(wrapper.emitted().submit).toBeTruthy()
+  })
+})
+
+describe('submitting form rules', () => {
+  const renderForm = (props: any = {}) => {
+    let form!: ReturnType<typeof useForm>
+    const view = renderComponent(
+      {
+        components: { Form },
+        template: `
+        <Form ref="form" id="form" :schema="schema" v-bind="custom" @submit="onSubmit" />
+        <button form="form" :disabled="!canSubmit">Submit</button>
+        `,
+        setup() {
+          form = useForm()
+
+          const onSubmit = async () => {
+            // noop
+            return 0
+          }
+
+          return {
+            ...form,
+            schema,
+            onSubmit,
+            custom: props,
+          }
+        },
+      },
+      {
+        form: true,
+        attachTo: document.body,
+      },
+    )
+    return {
+      view,
+      utils: form,
+    }
+  }
+
+  it('cannot submit form, when nothing changed, and can submit, when value changes', async () => {
+    const { view, utils } = renderForm()
+    const { canSubmit, form } = utils
+
+    expect(form.value?.formNode).toBeDefined()
+    expect(canSubmit.value).toBeFalsy()
+
+    await view.events.debounced(() =>
+      view.events.type(view.getByLabelText('Title'), 'Some title'),
+    )
+
+    expect(canSubmit.value).toBeTruthy()
+  })
+
+  it('cannot change disabled form', () => {
+    const { utils } = renderForm({ disabled: true })
+    const { canSubmit, isDisabled, form } = utils
+
+    expect(form.value?.formNode).toBeDefined()
+    expect(isDisabled.value).toBeTruthy()
+    expect(canSubmit.value).toBeFalsy()
+  })
+
+  it('cannot change invalid form', () => {
+    const { utils } = renderForm({
+      validationVisibility: FormValidationVisibility.Live,
+      schema: [
+        {
+          ...schema[0],
+          required: true,
+        },
+        schema[1],
+      ],
+    })
+    const { canSubmit, isValid, form } = utils
+
+    expect(form.value?.formNode).toBeDefined()
+    expect(isValid.value).toBeFalsy()
+    expect(canSubmit.value).toBeFalsy()
+  })
+
+  it('can change form, after it was submitted', async () => {
+    const { view, utils } = renderForm()
+    const { canSubmit, form } = utils
+
+    expect(form.value?.formNode).toBeDefined()
+    expect(canSubmit.value).toBeFalsy()
+
+    await view.events.debounced(() =>
+      view.events.type(view.getByLabelText('Title'), 'Some title'),
+    )
+
+    expect(canSubmit.value).toBeTruthy()
+
+    await view.events.click(view.getByText('Submit'))
+
+    // will work, only if @submit is async
+    // or manually called "resetForm"
+    expect(canSubmit.value).toBeFalsy()
   })
 })
