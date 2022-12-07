@@ -11,14 +11,18 @@ class SidebarOrganization extends App.Controller
       badgeIcon: 'group'
       sidebarHead: __('Organization')
       sidebarCallback: @showOrganization
-      sidebarActions: [
-        {
+      sidebarActions: []
+    }
+
+    if @organization_id && App.Organization.exists(@organization_id)
+      organization = App.Organization.find(@organization_id)
+      if organization?.isAccessibleBy(App.User.current(), 'change')
+        @item.sidebarActions.push {
           title:    __('Edit Organization')
           name:     'organization-edit'
           callback: @editOrganization
-        },
-      ]
-    }
+        }
+
     @item
 
   showOrganization: (el) =>

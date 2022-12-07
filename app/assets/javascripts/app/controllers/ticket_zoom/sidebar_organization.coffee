@@ -3,14 +3,16 @@ class SidebarOrganization extends App.Controller
     return if !@ticket.organization_id
 
     actions = []
-    if @permissionCheck('ticket.agent')
-      actions = [
-        {
-          title:    __('Edit Organization')
-          name:     'organization-edit'
-          callback: @editOrganization
-        },
-      ]
+    if @ticket.organization_id && App.Organization.exists(@ticket.organization_id)
+      organization = App.Organization.find(@ticket.organization_id)
+      if organization?.isAccessibleBy(App.User.current(), 'change')
+        actions = [
+          {
+            title:    __('Edit Organization')
+            name:     'organization-edit'
+            callback: @editOrganization
+          }
+        ]
 
     @item = {
       name: 'organization'

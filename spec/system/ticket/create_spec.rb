@@ -17,6 +17,27 @@ RSpec.describe 'Ticket Create', type: :system do
     end
   end
 
+  context 'when using the sidebar' do
+    before do
+      visit 'ticket/create'
+      use_template(create(:template, :dummy_data, customer: create(:customer, :with_org)))
+    end
+
+    it 'does show the edit link for the customer' do
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '#userAction'
+      click_link 'Edit Customer'
+      modal_ready
+    end
+
+    it 'does show the edit link for the organization' do
+      click '.tabsSidebar-tab[data-tab=organization]'
+      click '#userAction'
+      click_link 'Edit Organization'
+      modal_ready
+    end
+  end
+
   context 'when logged in as admin' do
     let(:admin) { create(:admin) }
 

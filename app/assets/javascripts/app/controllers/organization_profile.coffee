@@ -101,19 +101,23 @@ class ActionRow extends App.ControllerObserverActionRow
       container: @el.closest('.content')
     )
 
-  actions: =>
+  actions: (organization) =>
     actions = [
-      {
-        name:     'edit'
-        title:    __('Edit')
-        callback: @editOrganization
-      }
       {
         name:     'history'
         title:    __('History')
         callback: @showHistory
       }
     ]
+
+    if organization.isAccessibleBy(App.User.current(), 'change')
+      actions.unshift {
+        name:     'edit'
+        title:    __('Edit')
+        callback: @editOrganization
+      }
+
+    actions
 
 class Object extends App.ControllerObserver
   memberLimit: 10
