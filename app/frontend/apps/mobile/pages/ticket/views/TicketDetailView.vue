@@ -108,6 +108,9 @@ const ticketEditSchema = [
   {
     isLayout: true,
     component: 'FormGroup',
+    props: {
+      showDirtyMark: true,
+    },
     children: [
       {
         name: 'title',

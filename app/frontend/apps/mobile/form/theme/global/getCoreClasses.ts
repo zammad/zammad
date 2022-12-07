@@ -71,7 +71,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       ...classes.toggle,
       outer: `${
         classes.toggle?.outer || ''
-      } px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark`,
+      } relative px-2 formkit-invalid:bg-red-dark formkit-errors:bg-red-dark`,
       wrapper: `${classes.toggle?.wrapper || ''} inline-flex w-full h-14 px-2`,
       label: `${
         classes.toggle?.label || ''

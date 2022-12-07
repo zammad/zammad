@@ -17,7 +17,14 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
   } = classes
 
   return {
-    outer: `${outer} absolute-floating-input formkit-invalid:bg-red-dark formkit-errors:bg-red-dark flex-col flex px-2`,
+    outer: clean(
+      `${outer}
+      absolute-floating-input
+      relative flex-col flex px-2
+      formkit-invalid:bg-red-dark
+      formkit-errors:bg-red-dark
+    `,
+    ),
     wrapper: `${wrapper} relative flex-1`,
     inner: 'flex ltr:pr-2 rtl:pl-2',
     block: 'flex',

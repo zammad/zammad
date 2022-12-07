@@ -13,18 +13,21 @@ import type { ConfidentTake } from '@shared/types/utils'
 export const useUserEdit = () => {
   const dialog = useDialogObjectForm('user-edit', EnumObjectManagerObjects.User)
 
-  const schema = defineFormSchema([
-    {
-      screen: 'edit',
-      object: EnumObjectManagerObjects.User,
-    },
-    {
-      name: 'active',
-      required: true,
-      screen: 'edit',
-      object: EnumObjectManagerObjects.User,
-    },
-  ])
+  const schema = defineFormSchema(
+    [
+      {
+        screen: 'edit',
+        object: EnumObjectManagerObjects.User,
+      },
+      {
+        name: 'active',
+        required: true,
+        screen: 'edit',
+        object: EnumObjectManagerObjects.User,
+      },
+    ],
+    { showDirtyMark: true },
+  )
 
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
     dialog.openDialog({

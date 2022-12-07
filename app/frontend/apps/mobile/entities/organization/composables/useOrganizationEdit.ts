@@ -18,28 +18,31 @@ export const useOrganizationEdit = () => {
     EnumObjectManagerObjects.Organization,
   )
 
-  const schema = defineFormSchema([
-    {
-      name: 'name',
-      required: true,
-      screen: 'edit',
-      object: EnumObjectManagerObjects.Organization,
-    },
-    {
-      screen: 'edit',
-      object: EnumObjectManagerObjects.Organization,
-    },
-    {
-      name: 'active',
-      required: true,
-      screen: 'edit',
-      object: EnumObjectManagerObjects.Organization,
-    },
-    {
-      type: 'file',
-      name: 'attachments',
-    },
-  ])
+  const schema = defineFormSchema(
+    [
+      {
+        name: 'name',
+        required: true,
+        screen: 'edit',
+        object: EnumObjectManagerObjects.Organization,
+      },
+      {
+        screen: 'edit',
+        object: EnumObjectManagerObjects.Organization,
+      },
+      {
+        name: 'active',
+        required: true,
+        screen: 'edit',
+        object: EnumObjectManagerObjects.Organization,
+      },
+      {
+        type: 'file',
+        name: 'attachments',
+      },
+    ],
+    { showDirtyMark: true },
+  )
 
   const openEditOrganizationDialog = async (
     organization: ConfidentTake<OrganizationQuery, 'organization'>,

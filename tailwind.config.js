@@ -79,6 +79,11 @@ module.exports = {
         '[data-required] &',
         '[data-required]&',
       ])
+      addVariant('formkit-dirty', [
+        '&[data-dirty]',
+        '[data-dirty] &',
+        '[data-dirty]&',
+      ])
       addVariant('formkit-is-checked', [
         '&[data-is-checked]',
         '[data-is-checked] &',

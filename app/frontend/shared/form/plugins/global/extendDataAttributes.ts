@@ -40,6 +40,11 @@ const extendDataAttribues = (node: FormKitNode) => {
         then: 'true',
         else: undefined,
       },
+      'data-dirty': {
+        if: '$state.dirty',
+        then: 'true',
+        else: undefined,
+      },
     },
   })
 }

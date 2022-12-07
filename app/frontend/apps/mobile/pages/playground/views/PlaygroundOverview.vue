@@ -292,7 +292,7 @@ query autocompleteSearchUser($input: AutocompleteSearchInput!) {
     },
   },
 ]
-const linkSchemas = defineFormSchema(linkSchemaRaw)
+const linkSchemas = defineFormSchema(linkSchemaRaw, { showDirtyMark: true })
 
 const schema = defineFormSchema([
   {
