@@ -3,9 +3,23 @@
 require 'rails_helper'
 require 'viewpoint' # Only load this gem when it is really used.
 
-RSpec.describe Import::Exchange::Folder do
-  # see https://github.com/zammad/zammad/issues/2152
+#
+# DEPRECATION WARNING
+#
+# Microsoft announced in July 2018 that Exchange Web Services (EWS) API will not receive any feature updates. This
+# effectively freezes the structure of expected responses that are mocked in this test via VCR cassettes.
+#
+# https://techcommunity.microsoft.com/t5/exchange-team-blog/upcoming-changes-to-exchange-web-services-ews-api-for-office-365/ba-p/608055
+#
+# Furthermore, in September 2022, Microsoft also announced that they will start to turn off basic auth for EWS
+# protocol in Exchange Online. As of this writing, it's not possible to recreate the test responses to EWS API used
+# below without an on-premise system to serve them.
+#
+# https://techcommunity.microsoft.com/t5/exchange-team-blog/basic-authentication-deprecation-in-exchange-online-september/ba-p/3609437
 
+RSpec.describe Import::Exchange::Folder, :integration do
+
+  # see https://github.com/zammad/zammad/issues/2152
   describe '#display_path (#2152)', :use_vcr do
     subject(:folder)         { described_class.new(ews_connection) }
 
@@ -15,6 +29,12 @@ RSpec.describe Import::Exchange::Folder do
     let(:pass)               { 'password' }
     let(:grandchild_of_root) { ews_connection.get_folder_by_name('Inbox') }
     let(:child_of_root)      { ews_connection.get_folder(grandchild_of_root.parent_folder_id) }
+
+    before do
+      if VCR.configuration.allow_http_connections_when_no_cassette?
+        skip 'This test example requires a VCR cassette to work, and they are disabled in the current environment.'
+      end
+    end
 
     context 'when server returns valid UTF-8' do
       context 'and target folder is in root directory' do
