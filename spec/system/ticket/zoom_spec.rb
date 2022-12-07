@@ -48,6 +48,28 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  context 'when using the sidebar' do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users'), customer: create(:customer, :with_org)) }
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show the edit link for the customer' do
+      click '.tabsSidebar-tab[data-tab=customer]'
+      click '#userAction'
+      click_link 'Edit Customer'
+      modal_ready
+    end
+
+    it 'does show the edit link for the organization' do
+      click '.tabsSidebar-tab[data-tab=organization]'
+      click '#userAction'
+      click_link 'Edit Organization'
+      modal_ready
+    end
+  end
+
   context 'when ticket has a calendar attachment' do
     let(:group) { Group.find_by(name: 'Users') }
     let(:store_file_content_name) do

@@ -83,3 +83,8 @@ Using **organizations** you can **group** customers. This has two main benefits:
     else if item.type is 'update'
       return App.i18n.translateContent('%s updated organization |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+
+  isAccessibleBy: (requester, access) ->
+    return true if requester.permission('admin')
+    return true if requester.permission('ticket.agent')
+    return false

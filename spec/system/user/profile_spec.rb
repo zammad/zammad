@@ -9,6 +9,13 @@ RSpec.describe 'User Profile', type: :system do
   let(:organizations) { create_list(:organization, 20) }
   let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }
 
+  it 'does show the edit link' do
+    visit "#user/profile/#{customer.id}"
+    click '#userAction label'
+    click_link 'Edit'
+    modal_ready
+  end
+
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
       customer

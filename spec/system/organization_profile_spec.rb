@@ -3,10 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Organization Profile', type: :system do
+  let(:organization) { create(:organization) }
+
+  it 'does show the edit link' do
+    visit "#organization/profile/#{organization.id}"
+    click '#userAction label'
+    click_link 'Edit'
+    modal_ready
+  end
 
   context 'members section' do
-    let(:organization) { create(:organization) }
-    let(:members)      { organization.members.order(id: :asc) }
+    let(:members) { organization.members.order(id: :asc) }
 
     before do
       create_list(:customer, 50, organization: organization)
