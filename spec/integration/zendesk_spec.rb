@@ -52,14 +52,14 @@ RSpec.describe 'Zendesk import', db_strategy: :reset, integration: true, require
           'total'       => 2,
         },
         'Tickets'       => {
-          'skipped'     => 1,
+          'skipped'     => 0,
           'created'     => 142,
           'updated'     => 2,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 145,
-          'total'       => 145,
+          'sum'         => 144,
+          'total'       => 144,
         },
       }
     end
