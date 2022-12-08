@@ -6,7 +6,7 @@ class App.Group extends App.Model
   @configure_attributes = [
     { name: 'name',                 display: __('Name'),              tag: 'input',  type: 'text', limit: 100, null: false },
     { name: 'assignment_timeout',   display: __('Assignment timeout'), tag: 'input', note: __('Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.'), type: 'text', limit: 100, null: true },
-    { name: 'follow_up_possible',   display: __('Follow-up possible'),tag: 'select', default: 'yes', options: { yes: 'yes', 'new_ticket': 'do not reopen ticket but create new ticket', 'new_ticket_after_certain_time': 'do not reopen ticket after certain time but create new ticket' }, null: false, note: __('Follow-up for closed ticket possible or not.'), translate: true },
+    { name: 'follow_up_possible',   display: __('Follow-up possible'),tag: 'select', default: 'yes', options: { yes: __('yes'), 'new_ticket': __('do not reopen ticket but create new ticket'), 'new_ticket_after_certain_time': __('do not reopen ticket after certain time but create new ticket') }, null: false, note: __('Follow-up for closed ticket possible or not.'), translate: true },
     { name: 'reopen_time_in_days',  display: __('Reopening time in days'), tag: 'input',  type: 'integer', null: true },
     { name: 'follow_up_assignment', display: __('Assign follow-ups'), tag: 'select', default: 'yes', options: { true: 'yes', false: 'no' }, null: false, note: __('Assign follow-up to latest agent again.'), translate: true },
     { name: 'email_address_id',     display: __('Email'),             tag: 'select', multiple: false, null: true, relation: 'EmailAddress', nulloption: true, do_not_log: true },

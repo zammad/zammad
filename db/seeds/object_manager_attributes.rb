@@ -1749,9 +1749,9 @@ ObjectManager::Attribute.add(
   data_option: {
     default:   'yes',
     options:   {
-      yes:                           'yes',
-      new_ticket:                    'do not reopen ticket but create new ticket',
-      new_ticket_after_certain_time: 'do not reopen ticket after certain time but create new ticket',
+      yes:                           __('yes'),
+      new_ticket:                    __('do not reopen ticket but create new ticket'),
+      new_ticket_after_certain_time: __('do not reopen ticket after certain time but create new ticket'),
     },
     null:      false,
     note:      __('Follow-up for closed ticket possible or not.'),
