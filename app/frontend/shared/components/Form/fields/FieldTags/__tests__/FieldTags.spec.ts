@@ -1,9 +1,16 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
+import { AutocompleteSearchTagDocument } from '@shared/entities/tags/graphql/queries/autocompleteTags.api'
 import { getByText, queryByRole } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
 import { getByIconName } from '@tests/support/components/iconQueries'
+import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
+import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import type { FieldTagsProps } from '../types'
 
 const defaultTags = [
@@ -12,8 +19,14 @@ const defaultTags = [
   { label: 'paid', value: 'paid' },
 ]
 
-const renderFieldTags = (props: Partial<FieldTagsProps> = {}) =>
-  renderComponent(FormKit, {
+let mockApi: MockGraphQLInstance
+
+const renderFieldTags = (props: Partial<FieldTagsProps> = {}) => {
+  mockApi = mockGraphQLApi(AutocompleteSearchTagDocument).willResolve({
+    autocompleteSearchTag: defaultTags,
+  })
+
+  return renderComponent(FormKit, {
     form: true,
     formField: true,
     dialog: true,
@@ -21,10 +34,10 @@ const renderFieldTags = (props: Partial<FieldTagsProps> = {}) =>
       type: 'tags',
       name: 'tags',
       label: 'Tags',
-      options: defaultTags,
       ...props,
     },
   })
+}
 
 beforeAll(async () => {
   await import('../FieldTagsDialog.vue')
@@ -64,6 +77,12 @@ describe('Form - Field - Tags', () => {
 
     expect(getByText(node, 'paid')).toBeInTheDocument()
     expect(getByText(node, 'support')).toBeInTheDocument()
+
+    expect(mockApi.spies.resolve).toHaveBeenCalledWith({
+      input: {
+        query: '',
+      },
+    })
   })
 
   it('can deselect tags', async () => {
@@ -98,7 +117,7 @@ describe('Form - Field - Tags', () => {
 
     const filterInput = view.getByPlaceholderText('Tag name…')
 
-    await view.events.type(filterInput, 'paid')
+    await view.events.debounced(() => view.events.type(filterInput, 'paid'))
 
     const options = view.getAllByRole('option')
 
@@ -109,6 +128,13 @@ describe('Form - Field - Tags', () => {
       view.queryByTitle('Create tag'),
       "can't create, because prop is false",
     ).not.toBeInTheDocument()
+
+    expect(mockApi.spies.resolve).toHaveBeenCalledTimes(2)
+    expect(mockApi.spies.resolve).toHaveBeenCalledWith({
+      input: {
+        query: 'paid',
+      },
+    })
   })
 
   it("can't add existing tag", async () => {
@@ -139,11 +165,15 @@ describe('Form - Field - Tags', () => {
 
     await view.events.type(filterInput, 'paid{Tab}')
 
-    const option = view.getByRole('option', { name: 'paid' })
-    expect(option).toBeChecked()
-    expect(option).toHaveAttribute('aria-selected', 'true')
+    const { notify } = useNotifications()
 
-    expect(filterInput, 'resets input').toHaveDisplayValue('')
+    expect(notify).toHaveBeenCalledWith({
+      message: 'Tag "%s" already exists.',
+      messagePlaceholder: ['paid'],
+      type: NotificationTypes.Warn,
+    })
+
+    expect(filterInput, 'resets input').toHaveDisplayValue('paid')
   })
 
   it("clicking disabled field doesn't select dialog", async () => {

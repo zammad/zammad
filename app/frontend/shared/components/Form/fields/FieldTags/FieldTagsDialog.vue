@@ -8,6 +8,12 @@ import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputS
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import stopEvent from '@shared/utils/events'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '@shared/components/CommonNotifications'
+import { QueryHandler } from '@shared/server/apollo/handler'
+import { useAutocompleteSearchTagQuery } from '@shared/entities/tags/graphql/queries/autocompleteTags.api'
 import type { FieldTagsContext } from './types'
 import useValue from '../../composables/useValue'
 
@@ -15,9 +21,6 @@ interface Props {
   name: string
   context: FieldTagsContext
 }
-
-// TODO: call API to list existing tags
-// TODO: we should not toggle already selected tags, when it's added twice, because it's not intuitive.
 
 const props = defineProps<Props>()
 const { localValue } = useValue(toRef(props, 'context'))
@@ -27,23 +30,36 @@ const isCurrentValue = (tag: string) => currentValue.value.includes(tag)
 const filter = ref('')
 const newTags = ref<{ value: string; label: string }[]>([])
 
+const tagsQuery = new QueryHandler(
+  useAutocompleteSearchTagQuery(() => ({ input: { query: filter.value } }), {
+    debounce: 300,
+  }),
+)
+
+const autocompleteTags = computed(() => {
+  const result = tagsQuery.result()
+  return result.value?.autocompleteSearchTag || []
+})
+
 const filterInput = ref<CommonInputSearchExpose>()
 const tagsListbox = ref<HTMLElement>()
 
 const sortedOptions = computed(() => {
-  const { options = [], sorting = 'label' } = props.context
+  const { sorting = 'label' } = props.context
 
-  const allOptions = [...options, ...newTags.value].sort((a, b) => {
-    const a1 = (a[sorting] || '').toString()
-    const b1 = (b[sorting] || '').toString()
-    return a1.localeCompare(b1)
-  })
+  const allOptions = [...autocompleteTags.value, ...newTags.value]
+    .sort((a, b) => {
+      const a1 = (a[sorting] || '').toString()
+      const b1 = (b[sorting] || '').toString()
+      return a1.localeCompare(b1)
+    })
+    .map((tag) => tag.label)
 
-  return allOptions
+  return Array.from(new Set(allOptions))
 })
 
 const tagExists = (tag: string) => {
-  return sortedOptions.value.some((option) => option.value === tag)
+  return sortedOptions.value.some((option) => option === tag)
 }
 
 const { ignoreUpdates } = watchIgnorable(
@@ -62,7 +78,7 @@ const filteredTags = computed(() => {
   if (!filter.value) return sortedOptions.value
 
   return sortedOptions.value.filter((tag) =>
-    tag.label.toLowerCase().includes(filter.value.toLowerCase()),
+    tag.toLowerCase().includes(filter.value.toLowerCase()),
   )
 })
 
@@ -85,12 +101,17 @@ const toggleTag = (tag: string) => {
   })
 }
 
+const { notify } = useNotifications()
+
 const createTag = () => {
   const tag = filter.value
   if (!tag) return
   if (tagExists(tag)) {
-    toggleTag(tag)
-    filter.value = ''
+    notify({
+      type: NotificationTypes.Warn,
+      message: __('Tag "%s" already exists.'),
+      messagePlaceholder: [tag],
+    })
     return
   }
 
@@ -149,20 +170,20 @@ const processSearchKeydown = (event: KeyboardEvent) => {
     >
       <button
         v-for="option of filteredTags"
-        :key="option.value"
+        :key="option"
         class="flex w-full items-center px-4 focus:bg-blue-highlight focus:outline-none"
         role="option"
-        :aria-selected="isCurrentValue(option.value)"
-        :aria-checked="isCurrentValue(option.value)"
-        @click="toggleTag(option.value)"
-        @keydown.space.prevent="toggleTag(option.value)"
+        :aria-selected="isCurrentValue(option)"
+        :aria-checked="isCurrentValue(option)"
+        @click="toggleTag(option)"
+        @keydown.space.prevent="toggleTag(option)"
       >
         <CommonIcon
           :class="{
-            '!text-white': isCurrentValue(option.value),
+            '!text-white': isCurrentValue(option),
           }"
           :name="
-            isCurrentValue(option.value)
+            isCurrentValue(option)
               ? 'mobile-check-box-yes'
               : 'mobile-check-box-no'
           "
@@ -172,7 +193,7 @@ const processSearchKeydown = (event: KeyboardEvent) => {
         />
 
         <span class="flex-1 py-3 text-left">
-          {{ option.label }}
+          {{ option }}
         </span>
       </button>
     </div>

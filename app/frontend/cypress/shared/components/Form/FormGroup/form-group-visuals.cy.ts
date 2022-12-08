@@ -184,9 +184,9 @@ describe('grouping form fields', () => {
               label: 'Date 2',
             },
             {
-              type: 'tags',
-              name: 'tags',
-              label: 'Tags',
+              type: 'treeselect',
+              name: 'treeselect',
+              label: 'Treeselect',
               value: ['test'],
               props: {
                 link: '/',
@@ -244,11 +244,10 @@ describe('grouping form fields', () => {
     cy.findByLabelText('Textarea').type('test')
     cy.findByLabelText('Date 2').type('2021-01-01')
 
-    cy.findByLabelText('Tags')
+    cy.findByLabelText('Treeselect')
       .click()
       .then(() => {
         cy.findByRole('option', { name: 'test' }).click()
-        cy.findByText('Done').click()
       })
 
     cy.findByLabelText('Select')

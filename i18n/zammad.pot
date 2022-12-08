@@ -9618,6 +9618,10 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+msgid "Tag \"%s\" already exists."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco

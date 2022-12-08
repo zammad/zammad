@@ -2350,6 +2350,13 @@ export type TagAssignmentUpdateMutationVariables = Exact<{
 
 export type TagAssignmentUpdateMutation = { __typename?: 'Mutations', tagAssignmentUpdate?: { __typename?: 'TagAssignmentUpdatePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
+export type AutocompleteSearchTagQueryVariables = Exact<{
+  input: AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchTagQuery = { __typename?: 'Queries', autocompleteSearchTag: Array<{ __typename?: 'AutocompleteSearchEntry', value: string, label: string }> };
+
 export type TicketCustomerUpdateMutationVariables = Exact<{
   ticketId: Scalars['ID'];
   input: TicketCustomerUpdateInput;
