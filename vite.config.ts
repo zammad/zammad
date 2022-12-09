@@ -139,6 +139,10 @@ export default defineConfig(({ mode, command }) => {
       clearMocks: true,
       css: false,
       testTimeout: 30_000,
+      deps: {
+        // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
+        inline: ['@tiptap/extension-mention'],
+      },
     },
     plugins,
   }
