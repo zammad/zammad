@@ -151,9 +151,9 @@ export const useSessionStore = defineStore(
       )
     }
 
-    // TODO: more like a workaround to avoid some definedchecks during the usage, maybe
-    // we have a different solution or remove it again.
-    const userId = computed(() => user.value?.id as string)
+    // In case of unauthenticated users, current user ID may be an empty string.
+    //   Use with care.
+    const userId = computed(() => user.value?.id || '')
 
     return {
       id,
