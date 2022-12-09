@@ -8,14 +8,6 @@ GIT
       nokogiri
       nori
 
-GIT
-  remote: https://github.com/zammad-deps/mail
-  revision: 9265cf75bbe376f595944bd10d2dd953f863e765
-  branch: 2-7-stable
-  specs:
-    mail (2.7.2.edge)
-      mini_mime (>= 0.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -277,6 +269,11 @@ GEM
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    mail (2.8.0)
+      mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
     memoizable (0.4.2)
@@ -298,7 +295,15 @@ GEM
     mysql2 (0.5.4)
     naught (1.1.0)
     nestful (1.1.4)
+    net-imap (0.3.1)
+      net-protocol
     net-ldap (0.17.1)
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.2.0)
+      timeout
+    net-smtp (0.3.3)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -541,6 +546,7 @@ GEM
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.11)
+    timeout (0.3.1)
     twilio-ruby (5.73.4)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, <= 2.5)
@@ -653,7 +659,7 @@ DEPENDENCIES
   json
   koala
   listen
-  mail!
+  mail
   messagebird-rest
   mime-types
   minitest-profile

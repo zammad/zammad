@@ -91,6 +91,37 @@ RSpec.describe Channel::EmailParser, type: :model do
         RAW
       end
     end
+
+    describe 'inline attachment' do
+      let(:cid)   { '485376C9-2486-4351-B932-E2010998F579@home' }
+      let(:html)  { "test <img src='cid:#{cid}'>" }
+      let(:store) { create(:store_image, preferences: store_preferences) }
+
+      let(:store_preferences) do
+        {
+          'Content-ID':   cid,
+          'Mime-Type':    'image/jpg',
+          'Content-Type': 'application/others; name=inline_image.jpg'
+        }
+      end
+
+      it 'gets Content-ID' do
+        mail = Channel::EmailBuild.build(
+          from:         'sender@example.com',
+          to:           'recipient@example.com',
+          body:         html,
+          content_type: 'text/html',
+          attachments:  [ store ],
+        )
+
+        parser = described_class.new
+        data = parser.parse(mail.to_s)
+
+        inline_image_attachment = data[:attachments].last
+
+        expect(inline_image_attachment[:preferences]['Content-ID']).to eq cid
+      end
+    end
   end
 
   describe '#process' do

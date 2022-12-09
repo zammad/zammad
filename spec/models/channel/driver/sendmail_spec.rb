@@ -7,7 +7,7 @@ RSpec.describe Channel::Driver::Sendmail do
 
     let(:address) { Faker::Internet.email }
     let(:body)    { Faker::Lorem.sentence(word_count: 3) }
-    let(:file)    { Rails.root.join("tmp/mails/#{address}") }
+    let(:file)    { Rails.root.join("tmp/mails/#{address}.eml") }
 
     around do |example|
       ENV['ZAMMAD_MAIL_TO_FILE'] = '1'
