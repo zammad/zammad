@@ -1,0 +1,25 @@
+.template_browser-core_capybara_integration:
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration --profile 10 spec/system
+
+capybara:integration:chrome:
+  extends:
+    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_integration
+    - .variables_auth
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, auth]
+
+capybara:integration:firefox:
+  extends:
+    - .template_browser-core_capybara_firefox
+    - .template_browser-core_capybara_integration
+    - .variables_auth
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, redis]
+    - !reference [.services, auth]

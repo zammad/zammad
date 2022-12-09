@@ -25,6 +25,12 @@
     CI_PROXY_USER: 'zammad'
     CI_PROXY_PASSWORD: 'zammad'
 
+.variables_auth:
+  variables:
+    KEYCLOAK_BASE_URL: http://auth:8080
+    KEYCLOAK_ADMIN: admin
+    KEYCLOAK_ADMIN_PASSWORD: admin
+
 .services:
   mysql:
     name: $CI_REGISTRY/docker/zammad-mysql:stable
@@ -66,3 +72,7 @@
   proxy:
     name: $CI_REGISTRY/docker/zammad-proxies:stable
     alias: proxy
+
+  auth:
+    name: $CI_REGISTRY/docker/zammad-auth:stable
+    alias: auth
