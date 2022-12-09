@@ -65,7 +65,13 @@ export interface ExtendedRenderResult extends RenderResult {
   getLinkFromElement(element: Element): HTMLAnchorElement
 }
 
-const plugins: (Plugin | [Plugin, ...unknown[]])[] = []
+const plugins: (Plugin | [Plugin, ...unknown[]])[] = [
+  (app) => {
+    app.config.globalProperties.i18n = i18n
+    app.config.globalProperties.$t = i18n.t.bind(i18n)
+    app.config.globalProperties.__ = (source: string) => source
+  },
+]
 
 const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
   global: {
@@ -73,11 +79,6 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonIcon,
       CommonLink,
       CommonDateTime,
-    },
-    mocks: {
-      i18n,
-      $t: i18n.t.bind(i18n),
-      __: (source: string) => source,
     },
     stubs: {},
     plugins,

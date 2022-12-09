@@ -49,7 +49,7 @@ export class I18N {
   }
 }
 
-export const i18n = reactive(new I18N())
+export const i18n = reactive(new I18N()) as I18N
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
