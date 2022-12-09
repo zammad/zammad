@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-17 18:13+0000\n"
+"PO-Revision-Date: 2022-12-01 08:58+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -78,9 +78,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Erstellt von #{current_user.longname} um "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Erstellt von #{current_user.longname} um #{ticket."
+"updated_at}_\n"
 "* Gruppe: #{ticket.group.name}\n"
 "* Besitzer: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -104,10 +104,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Eskaliert seit #{ticket.escalation_at}_\n"
-"Das Ticket (#{ticket.title}) von \"#{ticket.customer.longname}\" ist seit \""
-"#{ticket.escalation_at}\" eskaliert!\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eskaliert seit #{ticket.escalation_at}_\n"
+"Das Ticket (#{ticket.title}) von \"#{ticket.customer.longname}\" ist seit "
+"\"#{ticket.escalation_at}\" eskaliert!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -128,8 +128,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Erinnerung erreicht!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Erinnerung erreicht!_\n"
 "Dieses Ticket benötigt Ihre Aufmerksamkeit: Warten auf Erinnerung erreicht "
 "für (#{ticket.title}) von Kunde \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Aktualisiert von #{current_user.longname} um "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Aktualisiert von #{current_user.longname} um "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -184,10 +184,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Wird um #{ticket.escalation_at} eskalieren_\n"
-"Das Ticket (#{ticket.title}) von \"#{ticket.customer.longname}\" wird um \""
-"#{ticket.escalation_at}\" eskalieren!\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Wird um #{ticket.escalation_at} eskalieren_\n"
+"Das Ticket (#{ticket.title}) von \"#{ticket.customer.longname}\" wird um "
+"\"#{ticket.escalation_at}\" eskalieren!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -238,8 +238,8 @@ msgstr ""
 "<div>Das neue Land wurde in die Liste der bekannten Geräte hinzugefügt, "
 "diese Liste können Sie hier einsehen:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Wenn dies nicht Sie waren, dann entfernen Sie bitte das Gerät aus der "
 "Liste, ändern Ihr Konto-Passwort und kontaktieren Ihren Administrator. "
@@ -280,8 +280,8 @@ msgstr ""
 "\n"
 "<div>Hallo #{user.fullname},</div>\n"
 "<br>\n"
-"<div>es sieht aus, als ob Sie sich mit <b>einem neuen Gerät</b> um \""
-"#{user_device.created_at}\" angemeldet haben:</div>\n"
+"<div>es sieht aus, als ob Sie sich mit <b>einem neuen Gerät</b> um "
+"\"#{user_device.created_at}\" angemeldet haben:</div>\n"
 "<br>\n"
 "<div>\n"
 "Ihr Gerät: #{user_device.name}<br>\n"
@@ -292,8 +292,8 @@ msgstr ""
 "<div>Das Gerät wurde in die Liste der bekannten Geräte hinzugefügt, diese "
 "Liste können Sie hier einsehen:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Wenn dies nicht Sie waren, dann entfernen Sie bitte das Gerät aus der "
 "Liste, ändern Ihr Konto-Passwort und kontaktieren Ihren Administrator. "
@@ -1157,8 +1157,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1177,8 +1177,9 @@ msgstr ""
 "<div>Bitte klicken Sie den unten stehenden Link (oder kopieren Sie die URL "
 "in Ihren Browser), um fortzufahren:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}"
-"\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}</a></div>\n"
 "<br>\n"
 "<div>Dieser Link führt Sie auf eine Seite, auf welcher Sie sich anmelden "
 "können.</div>\n"
@@ -1373,8 +1374,8 @@ msgstr ""
 "<div>Hallo #{recipient.fullname},</div>\n"
 "<br>\n"
 "<div>\n"
-"ein anderes Ticket wurde zusammengefasst zu Ticket (#{ticket.title}) von \""
-"<b>#{current_user.longname}</b>\".\n"
+"ein anderes Ticket wurde zusammengefasst zu Ticket (#{ticket.title}) von "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -1441,6 +1442,7 @@ msgstr "Anmeldedaten der Twitter App."
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Aussehen"
 
@@ -2271,8 +2273,6 @@ msgstr "Geändert:"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
@@ -2717,8 +2717,8 @@ msgstr ""
 "unten.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
 "<br>\n"
 "<div>Ihr #{config.product_name}-Team</div>\n"
 
@@ -5886,8 +5886,6 @@ msgstr "Begrüßung"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6585,8 +6583,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6594,29 +6590,21 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
@@ -6839,9 +6827,9 @@ msgstr ""
 "<div>ich (#{current_user.firstname} #{current_user.lastname}) möchte Sie zu "
 "#{config.product_name} einladen - unserer Kundensupport-Plattform.</div>\n"
 "<br>\n"
-"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">hier</a> das Password gesetzt "
-"werden.</div>\n"
+"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">hier</a> das Password gesetzt werden."
+"</div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
 "<br>\n"
@@ -8747,8 +8735,6 @@ msgstr "Entwurf überschreiben"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10051,7 +10037,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelectItem.vue
 msgid "Selected"
-msgstr "ausgewählt"
+msgstr "Ausgewählt"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10676,8 +10662,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10898,7 +10882,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Take Reply-To header as sender/from of email."
-msgstr "Nutze \"Reply-To\"-Feld as Absender einer E-Mail."
+msgstr "Nutze \"Reply-To\"-Feld als Absender einer E-Mail."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
@@ -10972,8 +10956,8 @@ msgstr ""
 "\n"
 "<div>Hallo #{agent.fullname},</div>\n"
 "<br>\n"
-"<div>dies ist ein <b>Test Ticket</b>. Ich bin ein Kunde und benötige Hilfe! "
-":)</div>\n"
+"<div>dies ist ein <b>Test Ticket</b>. Ich bin ein Kunde und benötige "
+"Hilfe! :)</div>\n"
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
@@ -13266,38 +13250,31 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "In Zammad anzeigen"
 

@@ -79,9 +79,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket"
-".updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
+"updated_at}_\n"
 "* Группа: #{ticket.group.name}\n"
 "* Владелец: #{ticket.owner.fullname}\n"
 "* Состояние: #{t(ticket.state.name)}\n"
@@ -105,8 +105,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Эскалирована с #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Эскалирована с #{ticket.escalation_at}_\n"
 "Заявка (#{ticket.title}) от \"#{ticket.customer.longname}\" была "
 "эскалирована с \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -129,8 +129,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Напоминание получено!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Напоминание получено!_\n"
 "Заявка требует внимания: получено напоминание для (#{ticket.title}) от "
 "клиента \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -157,9 +157,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Обновлено пользователем #{current_user."
-"longname} в #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Обновлено пользователем #{current_user.longname} в "
+"#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -185,8 +185,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Пройдет эскалацию с #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Пройдет эскалацию с #{ticket.escalation_at}_\n"
 "Заявка (#{ticket.title}) от \"#{ticket.customer.longname}\" пройдет "
 "эскалацию с \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -239,8 +239,8 @@ msgstr ""
 "<div>Страна добавлена в список известных устройств, который вы можете "
 "просмотреть здесь.:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Если это были не вы, удалите устройство, измените пароль учетной записи "
 "и обратитесь к своему администратору. Кто-то мог получить "
@@ -281,8 +281,8 @@ msgstr ""
 "\n"
 "<div>Здравствуйте #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Похоже, вы вошли в свою учетную запись <b> с нового устройства </b> в \""
-"#{user_device.created_at}\":</div>\n"
+"<div>Похоже, вы вошли в свою учетную запись <b> с нового устройства </b> в "
+"\"#{user_device.created_at}\":</div>\n"
 "<br>\n"
 "<div>\n"
 "Ваше устройство: #{user_device.name}<br>\n"
@@ -293,8 +293,8 @@ msgstr ""
 "<div>Ваше устройство было добавлено в список известных устройств, который вы "
 "можете просмотреть здесь.:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Если это были не вы, удалите устройство, измените пароль учетной записи "
 "и обратитесь к своему администратору. Кто-то мог получить "
@@ -1149,6 +1149,27 @@ msgstr "Пароль для авторизации администратора"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Administration login to #{config.product_name}\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>We received a request for an administration login for your #{config."
+#| "product_name} account <b>#{user.login}</b>.</div>\n"
+#| "<br>\n"
+#| "<div>Please, click on the link below (or copy and paste the URL into your "
+#| "browser) to proceed:</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
+#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</"
+#| "a></div>\n"
+#| "<br>\n"
+#| "<div>This link takes you to a page where you can log in.</div>\n"
+#| "<br>\n"
+#| "<div>If you don't want to log in, please ignore this message.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1160,8 +1181,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1180,8 +1201,9 @@ msgstr ""
 "<div>Пожалуйста, нажмите на ссылку ниже (или скопируйте и вставьте URL-адрес "
 "в адресную строку браузера), чтобы продолжить:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}"
-"\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"div>\n"
 "<br>\n"
 "<div>Эта ссылка ведет на страницу, где вы можете войти в систему.</div>\n"
 "<br>\n"
@@ -1378,8 +1400,8 @@ msgstr ""
 "<div>Здравствуйте, #{recipient.firstname}.</div> \n"
 "<br> \n"
 "<div> \n"
-"Другая заявка была объединена с заявкой (#{ticket.title}) пользователем \""
-"<b>#{current_user.longname}</b>\". \n"
+"Другая заявка была объединена с заявкой (#{ticket.title}) пользователем "
+"\"<b>#{current_user.longname}</b>\". \n"
 "</div> \n"
 "<br> \n"
 "<div> \n"
@@ -1446,6 +1468,7 @@ msgstr "Учетные данные для приложения Twitter."
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Вид"
 
@@ -1522,7 +1545,8 @@ msgstr "Вы уверены?"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
-msgstr "Вы уверены? У вас есть несохраненные изменения, которые будут потеряны."
+msgstr ""
+"Вы уверены? У вас есть несохраненные изменения, которые будут потеряны."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2272,8 +2296,6 @@ msgstr "Изменено:"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
@@ -2708,12 +2730,12 @@ msgstr ""
 "<div>Здравствуйте, #{user.firstname}.</div>\n"
 "<br>\n"
 "<div>Подтвердите свой адрес электронной почты, чтобы завершить учетную "
-"запись #{config.product_name}. Это легко, просто нажмите на ссылку "
-"ниже.</div>\n"
+"запись #{config.product_name}. Это легко, просто нажмите на ссылку ниже.</"
+"div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
 "<br>\n"
 "<div>Команда #{config.product_name}</div>\n"
 
@@ -5874,8 +5896,6 @@ msgstr "Приветствие"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6577,8 +6597,6 @@ msgstr "Информация: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6586,29 +6604,21 @@ msgstr "Информация: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
@@ -6831,9 +6841,9 @@ msgstr ""
 "<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю вас в "
 "#{config.product_name} - нашу платформу поддержки клиентов.</div>\n"
 "<br>\n"
-"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">сюда</a> и установите свой "
-"пароль.</div>\n"
+"<div>Нажмите <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">сюда</a> и установите свой пароль.</"
+"div>\n"
 "<br>\n"
 "<div>Наслаждайтесь,</div>\n"
 "<br>\n"
@@ -8748,8 +8758,6 @@ msgstr "Перезаписать черновик"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10670,8 +10678,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -12080,8 +12086,8 @@ msgstr ""
 "<div>Здравствуйте, #{recipient.firstname}.</div> \n"
 "<br> \n"
 "<div> \n"
-"Заявка (#{ticket.title}) была объединена с другой заявкой пользователем \""
-"<b>#{current_user.longname}</b>\". \n"
+"Заявка (#{ticket.title}) была объединена с другой заявкой пользователем "
+"\"<b>#{current_user.longname}</b>\". \n"
 "</div> \n"
 "<br> \n"
 "<div> \n"
@@ -12923,8 +12929,8 @@ msgstr ""
 "<div>Здравствуйте, #{recipient.firstname}.</div>\n"
 "<br>\n"
 "<div>\n"
-"Заявка (#{ticket.title}) была обновлена \"<b>#{current_user.longname}</b>\"."
-"\n"
+"Заявка (#{ticket.title}) была обновлена \"<b>#{current_user.longname}</b>"
+"\".\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
@@ -12947,8 +12953,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\""
-">Посмотреть это в#{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app"
+"\">Посмотреть это в#{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -13270,38 +13276,31 @@ msgstr "Вид от имени пользователя"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Перейти к заявке в Zammad"
 

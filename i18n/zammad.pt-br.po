@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-15 14:32+0000\n"
-"Last-Translator: Diego <diegowave@gmail.com>\n"
+"PO-Revision-Date: 2022-12-09 13:28+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
@@ -78,9 +78,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket"
-".updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket."
+"updated_at}_\n"
 "* #{t('Group')}: #{ticket.group.name}\n"
 "* #{t('Owner')}: #{ticket.owner.fullname}\n"
 "* #{t('State')}: #{t(ticket.state.name)}\n"
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" foi escalado "
 "desde \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -128,8 +128,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Lembrete!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Lembrete!_\n"
 "Um ticket precisa de atenção, lembrete criado para (#{ticket.title}) com "
 "usuário \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id} "
-"|Ticket##{ticket.number}>: Atualizado por #{current_user.longname} em "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id} |"
+"Ticket##{ticket.number}>: Atualizado por #{current_user.longname} em "
 "#{ticket.updated_at}\n"
 "<% if @objects[:changes].present? %>\n"
 "<% @objects[:changes].each do |key, value| %>\n"
@@ -184,8 +184,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" vai ser "
 "escalado em \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -227,8 +227,8 @@ msgstr ""
 "<div>Oi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>Isto é como se você tivesse usado sua conta com um <b>dispositivo "
-"conhecido, porém, de um outro país</b> em \"#{user_device.created_at}\""
-":</div>\n"
+"conhecido, porém, de um outro país</b> em \"#{user_device.created_at}\":</"
+"div>\n"
 "<br>\n"
 "<div>\n"
 "Seu dispositivo: #{user_device.name}<br>\n"
@@ -239,8 +239,8 @@ msgstr ""
 "<div>O país foi adicionado na sua lista de dispositivos conhecidos, que pode "
 "ser visto aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, remova o dispositivo, altere sua senha e entre em "
 "contato com o Administrador. Alguém pode ter ganho acesso não autorizado à "
@@ -293,8 +293,8 @@ msgstr ""
 "<div>Seu dispositivo foi adicionado na lista de dispositivos conhecidos, "
 "qual você pode ver aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, remova o dispositivo, altere sua senha e entre em "
 "contato com o Administrador. Alguém pode ter ganho acesso não autorizado à "
@@ -1156,8 +1156,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1176,8 +1176,9 @@ msgstr ""
 "<div>Por favor, clique no link abaixo (ou copie e cole o URL no seu "
 "navegador) para continuar:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}"
-"\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}</a></div>\n"
 "<br>\n"
 "<div>Este link leva a uma página onde você pode fazer login.</div>\n"
 "<br>\n"
@@ -1367,8 +1368,8 @@ msgstr ""
 "<div>Oi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Outro ticket foi mesclado no ticket (#{ticket.title}) por \"<b>#{current_user"
-".longname}</b>\".\n"
+"Outro ticket foi mesclado no ticket (#{ticket.title}) por "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -1435,6 +1436,7 @@ msgstr "Credenciais do aplicativo para o Twitter."
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr "Aparência"
 
@@ -2186,7 +2188,8 @@ msgstr ""
 "Não é possível apagar o registo porque o registro %{record} é dependente}"
 
 msgid "Cannot delete record because dependent %{record} exist"
-msgstr "Não é possível apagar o registo porque dependente do registro %{record}"
+msgstr ""
+"Não é possível apagar o registo porque dependente do registro %{record}"
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
@@ -2256,8 +2259,6 @@ msgstr "Alterado:"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
@@ -5832,8 +5833,6 @@ msgstr "Saudações"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6525,8 +6524,6 @@ msgstr "Informações: %s"
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6534,29 +6531,21 @@ msgstr "Informações: %s"
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
@@ -6778,8 +6767,8 @@ msgstr ""
 "<div>Eu (#{current_user.firstname} #{current_user.lastname}) estou te "
 "convidando para #{config.product_name} - nossa plataforma de suporte.</div>\n"
 "<br>\n"
-"<div>Clique <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">aqui</a> e crie sua senha.</div>\n"
+"<div>Clique <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">aqui</a> e crie sua senha.</div>\n"
 "<br>\n"
 "<div>Divirta-se,</div>\n"
 "<br>\n"
@@ -8688,8 +8677,6 @@ msgstr "Substituir rascunho"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -9566,8 +9553,8 @@ msgstr ""
 "#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.name}</a></div>\n"
 "<br>\n"
-"<div>Este link leva você a uma página onde você pode alterar sua senha.</div>"
-"\n"
+"<div>Este link leva você a uma página onde você pode alterar sua senha.</"
+"div>\n"
 "<br>\n"
 "<div>Se você não quiser redefinir sua senha, ignore esta mensagem. Sua senha "
 "não será redefinida.</div>\n"
@@ -10293,8 +10280,8 @@ msgstr "Mostrar todos…"
 #: db/seeds/settings.rb
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
-"Mostrar semanas do calendário no seletor de campos \"data\" ou \"data e "
-"hora\""
+"Mostrar semanas do calendário no seletor de campos \"data\" ou \"data e hora"
+"\""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Show chat automatically"
@@ -10498,7 +10485,8 @@ msgstr "Algo deu errado. Entre em contato com seu administrador."
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Sorry, but you have insufficient rights to open this page."
-msgstr "Desculpe, mas você não tem direitos suficientes para abrir esta página."
+msgstr ""
+"Desculpe, mas você não tem direitos suficientes para abrir esta página."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
@@ -10600,8 +10588,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10894,8 +10880,8 @@ msgstr ""
 "\n"
 "<div>Prezado #{agent.firstname},</div>\n"
 "<br>\n"
-"<div>Este é um <b>ticket de teste</b>. Sou cliente e preciso de ajuda! "
-":)</div>\n"
+"<div>Este é um <b>ticket de teste</b>. Sou cliente e preciso de ajuda! :)</"
+"div>\n"
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
@@ -11976,8 +11962,8 @@ msgstr ""
 "<div>Oi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"O ticket (#{ticket.title}) foi mesclado em outro ticket por \""
-"<b>#{current_user.longname}</b>\".\n"
+"O ticket (#{ticket.title}) foi mesclado em outro ticket por "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -12826,8 +12812,8 @@ msgstr ""
 "<div>Olá, #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"O ticket (#{ticket.title}) foi atualizado por \"<b>#{current_user."
-"longname}</b>\".\n"
+"O ticket (#{ticket.title}) foi atualizado por \"<b>#{current_user.longname}</"
+"b>\".\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
@@ -12850,8 +12836,8 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
-"if @objects[:article] %>/#{article.id} <% end %>\" target=\"zammad_app\""
-">Veja isso em #{config.product_name}</a>\n"
+"if @objects[:article] %>/#{article.id} <% end %>\" target=\"zammad_app"
+"\">Veja isso em #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -13169,38 +13155,31 @@ msgstr "Visualizar da perspectiva do usuário"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Veja isso no Zammad"
 
@@ -14045,8 +14024,8 @@ msgstr ""
 "Infelizmente, seu e-mail intitulado \"#{mail.subject}\" não pôde ser "
 "entregue a um ou mais destinatários.\n"
 "\n"
-"Sua mensagem era #{mail.msg_size} MB, mas só aceitamos mensagens até #{config"
-".postmaster_max_size} MB.\n"
+"Sua mensagem era #{mail.msg_size} MB, mas só aceitamos mensagens até "
+"#{config.postmaster_max_size} MB.\n"
 "\n"
 "Reduza o tamanho da mensagem e tente novamente. Obrigado pela compreensão.\n"
 "\n"

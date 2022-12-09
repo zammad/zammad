@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-09 03:30+0000\n"
-"Last-Translator: Damian Ferrari <damianferrari.ar@gmail.com>\n"
+"PO-Revision-Date: 2022-12-01 08:57+0000\n"
+"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/es/>\n"
+"zammad-stable/es/>\n"
 "Language: es-es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,6 +78,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Creado por #{current_user.longname} el #{ticket"
+".updated_at}_\n"
+"* Grupo: #{ticket.group.name}\n"
+"* Propietario: #{ticket.owner.fullname}\n"
+"* Estado: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -93,6 +104,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Tiquete##{ticket.number}>: Escalado el #{ticket.escalation_at}_\n"
+"El tiquete (#{ticket.title}) de \"#{ticket.customer.longname}\" ha sido "
+"escalado desde \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -108,6 +128,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Tiquete##{ticket.number}>: Recordatorio alcanzado!_\n"
+"Un tiquete necesita atencion: limite de recordatorio alcanzado (#{ticket."
+"title}) con cliente \"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -127,6 +156,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Tiquete##{ticket.number}>: Actualizado por #{current_user.longname} el "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -142,6 +184,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Tiquete##{ticket.number}>: Escalara el #{ticket.escalation_at}_\n"
+"El tiquete (#{ticket.title}) de \"#{ticket.customer.longname}\" escalara el "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -227,32 +278,6 @@ msgstr ""
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "#{config.product_name} signin detected from a new device\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>It looks like you signed into your account <b>using a new device</b> "
-#| "on \"#{user_device.created_at}\":</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "Your device: #{user_device.name}<br>\n"
-#| "Your location (relative): #{user_device.location}<br>\n"
-#| "Your IP: #{user_device.ip}<br>\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<div>Your device has been added to your list of known devices, which you "
-#| "can view here:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
-#| "\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
-#| "<br>\n"
-#| "<div>If this wasn't you, remove the device, changing your account "
-#| "password, and contacting your administrator. Somebody might have gained "
-#| "unauthorized access to your account.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "#{config.product_name} login from a new device\n"
 "\n"
@@ -283,8 +308,8 @@ msgstr ""
 "\n"
 "<div>Buenos días #{user.firstname},</div>\n"
 "<br>\n"
-"<div>parece haber accedido a <b>un nuevo dispositivo</b> para "
-"\"#{user_device.created_at}\" a:</div>\n"
+"<div>Parece haber accedido a <b>un nuevo dispositivo</b> \"#{user_device."
+"created_at}\" en:</div>\n"
 "<br>\n"
 "<div>\n"
 "Su dispositivo: #{user_device.name}<br>\n"
@@ -298,7 +323,7 @@ msgstr ""
 "<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>\n"
 "<br>\n"
 "<div>En caso contrario, eliminar el dispositivo de la lista, cambiar la "
-"contraseña de la cuenta y contactar su administrador. Alguien podría\n"
+"contraseña de la cuenta y contactar a su administrador. Alguien podría\n"
 "tener acceso no autorizado a su cuenta.</div>\n"
 "<br>\n"
 "<div>Siempre atentamente </div>\n"
@@ -306,17 +331,15 @@ msgstr ""
 "<div>El equipo #{config.product_name} </div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "Confirmar"
+msgstr "%s (confirmar)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (desconocido)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -355,7 +378,7 @@ msgstr "Hace %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "%s attached files"
-msgstr "Archivos adjuntos"
+msgstr "%s archivos adjuntos"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -407,12 +430,12 @@ msgstr "%s credenciales"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s days ago"
-msgstr "%s Días atrás"
+msgstr "%s días atrás"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
-msgstr "%s cambiar finalizado a |%s|!"
+msgstr "%s finalizado , cambiar a |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -422,7 +445,7 @@ msgstr "%s carpetas"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
 msgid "%s groups to %s roles assignments"
-msgstr "Asignación de %s grupo a %s rol"
+msgstr "asignación de %s grupo a %s rol"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s hours ago"
@@ -433,7 +456,7 @@ msgstr "%s horas atrás"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "%s is inactive, please select an active one."
-msgstr "&s está inactivo, por favor seleccione alguno activo."
+msgstr "%s está inactivo, por favor seleccione uno activo."
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "%s minutes ago"
@@ -457,23 +480,23 @@ msgstr "Se han borrado %s objeto(s)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
-msgstr "%s Objecto(s) serán creados."
+msgstr "%s objeto(s) serán creados."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be deleted."
-msgstr "%s Objecto(s) serán borrados."
+msgstr "%s objeto(s) serán borrados."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be updated."
-msgstr "%s Objecto(s) serán actualizado."
+msgstr "%s objeto(s) serán actualizado."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s of my tickets are currently in process."
-msgstr "%s De mis tickets están en proceso."
+msgstr "%s de mis tickets están en proceso."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated."
-msgstr "%s de mis tickets escalados."
+msgstr "%s de mis tickets escalaron."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -484,8 +507,8 @@ msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
-"%s recomienda usar OAuth. %s anunció que eliminará la compatibilidad con la "
-"autenticación básica en el futuro."
+"%s recomienda usar OAuth. %s se anunció que se eliminará la compatibilidad "
+"con la autenticación básica en el futuro."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee
 msgid "%s required!"
@@ -1073,7 +1096,7 @@ msgstr "Crear un Token de acceso personal"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
-msgstr ""
+msgstr "Añadir texto de acuerdo antes de enviar."
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -1153,10 +1176,8 @@ msgid "Admin Interface"
 msgstr "Interfaz de administración"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin Password Login"
-msgstr "Enlazar contaseña"
+msgstr "Entrar con clave de Admin"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1172,8 +1193,8 @@ msgid ""
 "<div>Please, click on the link below (or copy and paste the URL into your "
 "browser) to proceed:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
 "div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
@@ -1182,6 +1203,28 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Entrar como administrador en #{config.product_name}\n"
+"\n"
+"<div>Buenos días #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Hemos recibido una solicitud de restablecimiento de contraseña para "
+"#{config.product_name} cuenta <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>Si desea restablecer su contraseña, pulse sobre el enlace a "
+"continuación (o copie la URL en un navegador):</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.name}</a></div>\n"
+"<br>\n"
+"<div>Este enlace abre una página donde puede cambiar su contraseña.</div>\n"
+"<br>\n"
+"<div>Si no desea restablecer su contraseña puede ignorar este mensaje. La "
+"contraseña no se cambia.</div>\n"
+"<br>\n"
+"<div>Siempre atentamente</div>\n"
+"<br>\n"
+"<div>El equipo #{config.product_name} </div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
 msgid "Administrator Account"
@@ -1440,7 +1483,7 @@ msgstr "ID de Aplicación"
 
 #: db/seeds/settings.rb
 msgid "App Secret"
-msgstr "Aplicación secreta"
+msgstr "Clave de esta aplicación"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
@@ -1468,6 +1511,7 @@ msgstr "Credenciales de la app de Twitter."
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
+#: db/seeds/permissions.rb
 msgid "Appearance"
 msgstr ""
 
@@ -1477,7 +1521,7 @@ msgstr "Aplicación"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
-msgstr "Aplicación secreta"
+msgstr "Clave de esta aplicación"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
@@ -2311,8 +2355,6 @@ msgstr "Modificado"
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
@@ -5410,10 +5452,8 @@ msgid "Facebook App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
-#, fuzzy
-#| msgid "App Secret"
 msgid "Facebook App Secret"
-msgstr "Aplicación secreta"
+msgstr "Clave de la aplicación Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5960,8 +6000,6 @@ msgstr "Saludos"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -6687,8 +6725,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
@@ -6696,29 +6732,21 @@ msgstr ""
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/pt-br.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/pt-br.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/pt-br.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/pt-br.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Information"
@@ -8997,8 +9025,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -10988,8 +11014,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/pt-br.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/slack/ticket_create/fr.md.erb
@@ -12146,7 +12170,7 @@ msgstr "%s Objecto(s) se han createdo."
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
 msgid "Third-party Applications"
-msgstr "Aplicaciones tercer-izadas"
+msgstr "Aplicaciones de terceros"
 
 #: lib/telegram_helper.rb
 msgid "This bot already exists."
@@ -13790,38 +13814,31 @@ msgstr "Vista desde la perspectiva del usuario"
 #: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
-#: app/views/mailer/ticket_create/ru.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
-#: app/views/mailer/ticket_escalation/ru.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
-#: app/views/mailer/ticket_escalation_warning/ru.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
-#: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb
 #: app/views/mailer/ticket_update_received_merge/fr.html.erb
-#: app/views/mailer/ticket_update_received_merge/ru.html.erb
 msgid "View this in Zammad"
 msgstr "Ver en Zammad"
 
