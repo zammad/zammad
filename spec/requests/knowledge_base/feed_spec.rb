@@ -69,4 +69,104 @@ RSpec.describe 'KnowledgeBase feed', authenticated_as: :user, type: :request do
       expect(response).to have_http_status :ok
     end
   end
+
+  context 'with granular permissions', :aggregate_failures do
+    before do
+      admin = create(:admin)
+      internal_answer
+      published_answer
+      KnowledgeBase::PermissionsUpdate.new(category, admin).update_using_params!(granular_permissions)
+    end
+
+    let(:role_admin)   { Role.find_by(name: 'Admin') }
+    let(:role_agent)   { Role.find_by(name: 'Agent') }
+
+    let(:granular_permissions) do
+      {
+        permissions: {
+          role_admin.id => 'editor',
+          role_agent.id => 'none'
+        }
+      }
+    end
+
+    context 'with admin user' do
+      let(:user) { create(:admin) }
+
+      it 'shows answer in root' do
+        get feed_knowledge_base_path(knowledge_base, locale_name)
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include internal_answer.translations.first.title
+        expect(response.body).to include published_answer.translations.first.title
+      end
+
+      it 'shows answer in category' do
+        get feed_knowledge_base_category_path(knowledge_base, category, locale_name)
+
+        expect(response).to have_http_status :ok
+        expect(response.body).to include internal_answer.translations.first.title
+        expect(response.body).to include published_answer.translations.first.title
+      end
+
+      context 'with a token', authenticated_as: false do
+        let(:token) { Token.ensure_token! 'KnowledgeBaseFeed', user.id }
+
+        it 'shows answer in root' do
+          get feed_knowledge_base_path(knowledge_base, locale_name, token: token)
+
+          expect(response).to have_http_status :ok
+          expect(response.body).to include internal_answer.translations.first.title
+          expect(response.body).to include published_answer.translations.first.title
+        end
+
+        it 'shows answer in category' do
+          get feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token)
+
+          expect(response).to have_http_status :ok
+          expect(response.body).to include internal_answer.translations.first.title
+          expect(response.body).to include published_answer.translations.first.title
+        end
+      end
+    end
+
+    context 'with agent user' do
+      let(:user) { create(:agent) }
+      let(:token) { Token.ensure_token! 'KnowledgeBaseFeed', user.id }
+
+      it 'does not show answer in root' do
+        get feed_knowledge_base_path(knowledge_base, locale_name)
+
+        expect(response).to have_http_status :ok
+        expect(response.body).not_to include internal_answer.translations.first.title
+        expect(response.body).to include published_answer.translations.first.title
+      end
+
+      it 'shows answer in category' do
+        get feed_knowledge_base_category_path(knowledge_base, category, locale_name)
+
+        expect(response).to have_http_status :ok
+        expect(response.body).not_to include internal_answer.translations.first.title
+        expect(response.body).to include published_answer.translations.first.title
+      end
+
+      context 'with a token', authenticated_as: false do
+        it 'does not show answer in root' do
+          get feed_knowledge_base_path(knowledge_base, locale_name, token: token)
+
+          expect(response).to have_http_status :ok
+          expect(response.body).not_to include internal_answer.translations.first.title
+          expect(response.body).to include published_answer.translations.first.title
+        end
+
+        it 'shows answer in category' do
+          get feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token)
+
+          expect(response).to have_http_status :ok
+          expect(response.body).not_to include internal_answer.translations.first.title
+          expect(response.body).to include published_answer.translations.first.title
+        end
+      end
+    end
+  end
 end
