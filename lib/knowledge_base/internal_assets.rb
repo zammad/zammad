@@ -6,6 +6,10 @@ class KnowledgeBase
       def all
         editor + reader + public_reader
       end
+
+      def internally_visible
+        editor + reader
+      end
     end
 
     attr_reader :assets

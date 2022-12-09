@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::FeedsController < KnowledgeBase::BaseController
+  ITEMS_IN_FEED = 10
+
   prepend_before_action { authorize! }
   skip_before_action :authentication_check
   prepend_before_action -> { authentication_check_only }, only: %i[root category]
@@ -20,7 +22,7 @@ class KnowledgeBase::FeedsController < KnowledgeBase::BaseController
     @answers = scope
       .localed(@locale)
       .sorted_by_internally_published
-      .limit(10)
+      .limit(ITEMS_IN_FEED)
 
     render :feed
   end
@@ -37,7 +39,7 @@ class KnowledgeBase::FeedsController < KnowledgeBase::BaseController
     @answers = scope
       .localed(@locale)
       .sorted_by_internally_published
-      .limit(10)
+      .limit(ITEMS_IN_FEED)
 
     render :feed
   end
@@ -48,15 +50,36 @@ class KnowledgeBase::FeedsController < KnowledgeBase::BaseController
     categories = KnowledgeBase::InternalAssets
       .new(effective_user, categories_filter: category_filter)
       .accessible_categories
-      .all
 
-    @knowledge_base.answers.where(category_id: categories)
+    if categories.public_reader.none?
+      return @knowledge_base.answers.where(category_id: categories.all)
+    end
+
+    answer_ids = granular_public_answers_ids(categories) + granular_internal_answers_ids(categories)
+
+    @knowledge_base.answers.where(id: answer_ids)
+  end
+
+  def granular_public_answers_ids(categories)
+    @knowledge_base.answers
+      .where(category_id: categories.public_reader)
+      .sorted_by_published
+      .limit(ITEMS_IN_FEED)
+      .pluck(:id)
+  end
+
+  def granular_internal_answers_ids(categories)
+    @knowledge_base.answers
+      .where(category_id: categories.internally_visible)
+      .sorted_by_internally_published
+      .limit(ITEMS_IN_FEED)
+      .pluck(:id)
   end
 
   def effective_user
     return current_user if current_user.present?
 
-    Token.check(action: 'KnowledgeBaseFeed', name: given_token)
+    Token.check(action: 'KnowledgeBaseFeed', name: params[:token])
   end
 
   def ensure_response_format
