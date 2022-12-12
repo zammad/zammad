@@ -157,64 +157,61 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
 
     it 'does not quote article when bits other than the article are selected' do
       within(:active_content) do
-        selection = highlight_and_get_selection(before_article_content_selector, '')
+        highlight_text(before_article_content_selector, '')
         click_reply
 
         within(:richtext) do
-          expect(page).to have_no_text(selection)
+          expect(page).to have_no_text("Test Ticket\nTicket##{ticket.number} - created just now")
         end
       end
     end
 
     it 'quotes article when bits inside the article are selected' do
       within(:active_content) do
-        selection = highlight_and_get_selection(article_content_selector, '')
+        highlight_text(article_content_selector, '')
         click_reply
 
         within(:richtext) do
-          expect(page).to have_text(selection)
+          expect(page).to have_text('some message 123')
         end
       end
     end
 
     it 'quotes only article when bits before the article are selected as well' do
       within(:active_content) do
-        selection = highlight_and_get_selection(before_article_content_selector, article_content_selector)
-        expected_text = find(article_content_selector).text
+        highlight_text(before_article_content_selector, article_content_selector)
 
         click_reply
 
         within(:richtext) do
-          expect(page).to have_no_text(selection)
-          expect(page).to have_text(expected_text)
+          expect(page).to have_no_text("Test Ticket\nTicket##{ticket.number} - created just now\nsome message 123")
+          expect(page).to have_text('some message 123')
         end
       end
     end
 
     it 'quotes only article when bits after the article are selected as well' do
       within(:active_content) do
-        selection = highlight_and_get_selection(article_content_selector, after_article_content_selector)
-        expected_text = find(article_content_selector).text
+        highlight_text(article_content_selector, after_article_content_selector)
 
         click_reply
 
         within(:richtext) do
-          expect(page).to have_no_text(selection)
-          expect(page).to have_text(expected_text)
+          expect(page).to have_no_text("some message 123\njust now")
+          expect(page).to have_text('some message 123')
         end
       end
     end
 
     it 'quotes only article when bits both before and after the article are selected as well' do
       within(:active_content) do
-        selection = highlight_and_get_selection(before_article_content_selector, after_article_content_selector)
-        expected_text = find(article_content_selector).text
+        highlight_text(before_article_content_selector, after_article_content_selector)
 
         click_reply
 
         within(:richtext) do
-          expect(page).to have_no_text(selection)
-          expect(page).to have_text(expected_text)
+          expect(page).to have_no_text("Test Ticket\nTicket##{ticket.number} - created just now\nsome message 123\njust now")
+          expect(page).to have_text('some message 123')
         end
       end
     end
@@ -261,7 +258,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     click '.js-ArticleAction[data-type=emailReply]'
   end
 
-  def highlight_and_get_selection(start_selector, end_selector)
+  def highlight_text(start_selector, end_selector)
     find(start_selector)
       .execute_script(<<~JAVASCRIPT, end_selector)
         let [ end_selector ] = arguments
@@ -275,8 +272,6 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         range.setEnd(end_node, end_node.childNodes.length)
         window.getSelection().addRange(range)
       JAVASCRIPT
-
-    find(start_selector).evaluate_script 'window.getSelection().toString().trim()'
   end
 
   def highlight_and_click_reply
