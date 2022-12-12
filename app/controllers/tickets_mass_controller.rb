@@ -44,7 +44,6 @@ class TicketsMassController < ApplicationController
 
     @tickets.each do |elem|
       authorize!(elem, :follow_up?)
-      authorize!(elem, :update?)
     end
   rescue Pundit::NotAuthorizedError => e
     render json: { error: true, ticket_id: e.record.id }, status: :unprocessable_entity

@@ -86,20 +86,92 @@ describe TicketPolicy do
       context 'to yes' do
         let(:group) { create(:group, follow_up_possible: 'yes') }
 
-        it { is_expected.to permit_actions(%i[follow_up]) }
+        context 'when user is customer' do
+          let(:user) { record.customer }
+
+          it { is_expected.to permit_actions(%i[follow_up]) }
+        end
+
+        context 'when user has no access' do
+          it { is_expected.to forbid_actions(%i[follow_up]) }
+        end
+
+        context 'when user has change access' do
+          before do
+            user.user_groups.create! group: group, access: 'change'
+          end
+
+          it { is_expected.to permit_actions(%i[follow_up]) }
+        end
+
+        context 'when user has read access' do
+          before do
+            user.user_groups.create! group: group, access: 'read'
+          end
+
+          it { is_expected.to forbid_actions(%i[follow_up]) }
+        end
       end
 
       context 'to new_ticket' do
         let(:group) { create(:group, follow_up_possible: 'new_ticket') }
 
-        it { is_expected.to permit_actions(%i[follow_up]) }
+        context 'when user is customer' do
+          let(:user) { record.customer }
+
+          it { is_expected.to forbid_actions(%i[follow_up]) }
+        end
+
+        context 'when user has no access' do
+          it { is_expected.to forbid_actions(%i[follow_up]) }
+        end
+
+        context 'when user has change access' do
+          before do
+            user.user_groups.create! group: group, access: 'change'
+          end
+
+          it { is_expected.to permit_actions(%i[follow_up]) }
+        end
+
+        context 'when user has read access' do
+          before do
+            user.user_groups.create! group: group, access: 'read'
+          end
+
+          it { is_expected.to forbid_actions(%i[follow_up]) }
+        end
       end
 
       context 'to new_ticket_after_certain_time' do
         let(:group) { create(:group, follow_up_possible: 'new_ticket_after_certain_time', reopen_time_in_days: 2) }
 
         context 'when reopen_time_in_days is within configured time frame' do
-          it { is_expected.to permit_actions(%i[follow_up]) }
+          context 'when user is customer' do
+            let(:user) { record.customer }
+
+            it { is_expected.to permit_actions(%i[follow_up]) }
+          end
+
+          context 'when user has no access' do
+            it { is_expected.to forbid_actions(%i[follow_up]) }
+          end
+
+          context 'when user has change access' do
+            before do
+              user.user_groups.create! group: group, access: 'change'
+            end
+
+            it { is_expected.to permit_actions(%i[follow_up]) }
+          end
+
+          context 'when user has read access' do
+            before do
+              user.user_groups.create! group: group, access: 'read'
+            end
+
+            it { is_expected.to forbid_actions(%i[follow_up]) }
+          end
         end
 
         context 'when reopen_time_in_days is outside configured time frame' do
@@ -108,7 +180,31 @@ describe TicketPolicy do
             travel 3.days
           end
 
-          it { is_expected.to permit_actions(%i[follow_up]) }
+          context 'when user is customer' do
+            let(:user) { record.customer }
+
+            it { is_expected.to forbid_actions(%i[follow_up]) }
+          end
+
+          context 'when user has no access' do
+            it { is_expected.to forbid_actions(%i[follow_up]) }
+          end
+
+          context 'when user has change access' do
+            before do
+              user.user_groups.create! group: group, access: 'change'
+            end
+
+            it { is_expected.to permit_actions(%i[follow_up]) }
+          end
+
+          context 'when user has read access' do
+            before do
+              user.user_groups.create! group: group, access: 'read'
+            end
+
+            it { is_expected.to forbid_actions(%i[follow_up]) }
+          end
         end
       end
 

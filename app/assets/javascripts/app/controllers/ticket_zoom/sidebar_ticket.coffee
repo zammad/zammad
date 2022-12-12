@@ -18,8 +18,6 @@ class Edit extends App.Controller
   render: (draft = {}) =>
     defaults = @ticket.attributes()
     delete defaults.article # ignore article infos
-    group = App.Group.find(defaults.group_id)
-    ticketStateType = App.TicketState.find(defaults.state_id).name
 
     taskState = @taskGet('ticket')
     handlers = @Config.get('TicketZoomFormHandler')
@@ -29,24 +27,6 @@ class Edit extends App.Controller
       # remove core workflow data because it should trigger a request to get data
       # for the new ticket + eventually changed task state
       @formMeta.core_workflow = undefined
-
-    isDisabled = !@ticket.editable()
-
-    # if ticket is closed and not re-openable
-    if group.follow_up_possible == 'new_ticket' && ticketStateType is 'closed'
-      isDisabled = true
-
-    # if ticket is closed and not re-openable
-    if group.follow_up_possible == 'new_ticket_after_certain_time' && ticketStateType is 'closed' && @ticket.last_close_at
-      closed_since = (new Date - Date.parse(@ticket.last_close_at)) / (24 * 60 * 60 * 1000)
-      if closed_since >= group.reopen_time_in_days
-        isDisabled = true
-      else
-        isDisabled = false
-
-    # if ticket is shown by admin
-    if @permissionCheck('admin')
-      isDisabled = false
 
     # reset updated_at for the sidbar because we render a new state
     # it is used to compare the ticket with the rendered data later
@@ -61,7 +41,7 @@ class Edit extends App.Controller
       filter:         @formMeta.filter
       formMeta:       @formMeta
       params:         _.extend(defaults, draft)
-      isDisabled:     isDisabled
+      isDisabled:     @isDisabledByFollowupRules(defaults)
       taskKey:        @taskKey
       core_workflow: {
         callbacks: [@markForm]
@@ -79,6 +59,25 @@ class Edit extends App.Controller
       return if data.ticket_id.toString() isnt @ticket.id.toString()
       @render()
     )
+
+  isDisabledByFollowupRules: (attributes) =>
+    return false if @ticket.userGroupAccess('change')
+
+    group           = App.Group.find(attributes.group_id)
+    ticketStateType = App.TicketState.find(attributes.state_id).name
+    initialState    = !@ticket.editable()
+
+    return initialState if ticketStateType isnt 'closed'
+
+    switch group.follow_up_possible
+      when 'yes'
+        return initialState
+      when 'new_ticket'
+        return true
+      when 'new_ticket_after_certain_time'
+        closed_since = (new Date - Date.parse(@ticket.last_close_at)) / (24 * 60 * 60 * 1000)
+
+        return closed_since >= group.reopen_time_in_days
 
 class SidebarTicket extends App.Controller
   constructor: ->
