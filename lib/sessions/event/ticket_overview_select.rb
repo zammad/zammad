@@ -4,11 +4,11 @@ class Sessions::Event::TicketOverviewSelect < Sessions::Event::Base
 
 =begin
 
-Event module to serve spool messages and send them to new client connection.
+Observing every ticket overview of each agent session does not scale well on larger systems (e.g. 60 ticket overviews per agent).
+With this change, only the five most recently used ones are checked on every iteration.
+A full check is still performed (every 60 seconds). This reduces the overall load.
 
-To execute this manually, just paste the following into the browser console
-
-  App.WebSocket.send({event:'spool'})
+  App.WebSocket.send({event:'ticket_overview_select'}, data: { view: ''})
 
 =end
 

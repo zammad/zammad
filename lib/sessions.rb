@@ -230,7 +230,7 @@ send message to recipient client
 e. g.
 
   Sessions.send_to(user_id, {
-    event: 'session:takeover',
+    event: 'session_takeover',
     data: {
       taskbar_id: 12312
     },
