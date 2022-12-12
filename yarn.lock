@@ -24,10 +24,10 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apollo/client@^3.7.1":
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.1.tgz#86ce47c18a0714e229231148b0306562550c2248"
-  integrity sha512-xu5M/l7p9gT9Fx7nF3AQivp0XukjB7TM7tOd5wifIpI8RskYveL4I+rpTijzWrnqCPZabkbzJKH7WEAKdctt9w==
+"@apollo/client@^3.7.2":
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.7.2.tgz#71b6846c1d99b81d041a1134f5679e30ec0363a0"
+  integrity sha512-ohAIpXl3mTa1Fd3GT/K37VwQJfTIuuJRp4aOlJ4q/hlx0Wxh+RqDrbn0awtVCOdhGDQN+CQQmVzIqFKn6GziXQ==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/context" "^0.7.0"
