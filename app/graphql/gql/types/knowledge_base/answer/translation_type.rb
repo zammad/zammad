@@ -2,7 +2,7 @@
 
 module Gql::Types::KnowledgeBase::Answer
   class TranslationType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Knowledge Base Answer Translation'
 

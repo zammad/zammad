@@ -16,5 +16,8 @@ query user(
       }
       totalCount
     }
+    policy {
+      update
+    }
   }
 }

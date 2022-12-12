@@ -2,10 +2,11 @@
 
 module Gql::Types
   class UserType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalIdField
-    include Gql::Concerns::HasInternalNoteField
-    include Gql::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasInternalIdField
+    include Gql::Types::Concerns::HasInternalNoteField
+    include Gql::Types::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::HasPolicyField
 
     description 'Users (admins, agents and customers)'
 

@@ -5,6 +5,7 @@ import type {
   ObjectManagerFrontendAttributesPayload,
   OrganizationQuery,
 } from '@shared/graphql/types'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { ConfidentTake } from '@shared/types/utils'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { nullableMock } from '@tests/support/utils'
@@ -15,7 +16,7 @@ export const defaultOrganization = (): ConfidentTake<
 > =>
   nullableMock({
     __typename: 'Organization',
-    id: '3423225dsf0',
+    id: convertToGraphQLId('Organization', 100),
     internalId: 100,
     name: 'Some Organization',
     shared: false,
@@ -24,6 +25,9 @@ export const defaultOrganization = (): ConfidentTake<
     active: true,
     note: 'Save something as this note',
     objectAttributeValues: [],
+    policy: {
+      update: true,
+    },
     ticketsCount: {
       open: 3,
       closed: 1,
@@ -35,7 +39,7 @@ export const defaultOrganization = (): ConfidentTake<
           __typename: 'UserEdge',
           node: {
             __typename: 'User',
-            id: 'fds2342das23ds21sa',
+            id: convertToGraphQLId('User', 1),
             internalId: 1,
             vip: false,
             firstname: 'John',

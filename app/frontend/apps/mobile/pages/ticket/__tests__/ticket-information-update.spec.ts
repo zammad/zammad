@@ -7,7 +7,6 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { waitUntil } from '@tests/support/utils'
 import { waitFor } from '@testing-library/vue'
@@ -17,9 +16,10 @@ import {
   userObjectAttributes,
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
-import { mockTicketGql } from './mocks/detail-view'
+import type { TicketQuery } from '@shared/graphql/types'
+import { defaultTicket, mockTicketGql } from './mocks/detail-view'
 
-const visitTicketInformation = async () => {
+const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
     ({ object }) => {
       if (object === 'Ticket') {
@@ -32,7 +32,7 @@ const visitTicketInformation = async () => {
       }
     },
   )
-  const { mockApiTicket } = mockTicketGql()
+  const { mockApiTicket } = mockTicketGql(ticket)
   mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
       group_id: {
@@ -83,15 +83,18 @@ const visitTicketInformation = async () => {
 
 describe('updating ticket information', () => {
   it("doesn't show 'save' button, if user has no rights to update a ticket", async () => {
-    mockPermissions([])
-    const { view } = await visitTicketInformation()
+    const ticketQuery = defaultTicket()
+    ticketQuery.ticket.policy = {
+      update: false,
+      __typename: 'Policy',
+    }
+    const { view } = await visitTicketInformation(ticketQuery)
     expect(
       view.queryByRole('button', { name: 'Save ticket' }),
     ).not.toBeInTheDocument()
   })
 
   it('title has focus', async () => {
-    mockPermissions(['ticket.agent'])
     const { view } = await visitTicketInformation()
 
     expect(view.getByLabelText('Ticket title')).toHaveFocus()
@@ -111,7 +114,6 @@ describe('updating ticket information', () => {
   })
 
   it('shows confirm popup, when leaving', async () => {
-    mockPermissions(['ticket.agent'])
     const { view } = await visitTicketInformation()
 
     await view.events.type(view.getByLabelText('Ticket title'), '55')

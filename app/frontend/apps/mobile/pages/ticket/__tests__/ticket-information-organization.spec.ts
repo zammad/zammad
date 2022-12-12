@@ -5,7 +5,6 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitUntil } from '@tests/support/utils'
 import { OrganizationDocument } from '@mobile/entities/organization/graphql/queries/organization.api'
 import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
@@ -48,7 +47,6 @@ const visitTicketOrganization = async (
 
 describe('static organization', () => {
   it('shows organization', async () => {
-    mockPermissions(['ticket.agent'])
     const organization = defaultOrganization()
     const { view, mockSubscription } = await visitTicketOrganization(
       organization,
@@ -94,7 +92,6 @@ describe('static organization', () => {
   })
 
   it('shows organization members', async () => {
-    mockPermissions(['ticket.agent'])
     const organization = defaultOrganization()
     const { view, mockApi } = await visitTicketOrganization({
       ...organization,
@@ -146,8 +143,11 @@ describe('static organization', () => {
   })
 
   it('cannot edit organization without permission', async () => {
-    mockPermissions([])
     const organization = defaultOrganization()
+    organization.policy = {
+      update: false,
+      __typename: 'Policy',
+    }
     const { view } = await visitTicketOrganization(organization)
 
     expect(

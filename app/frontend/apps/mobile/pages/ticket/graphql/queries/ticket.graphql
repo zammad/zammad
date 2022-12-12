@@ -12,6 +12,9 @@ query ticket(
     }
   ) {
     ...ticketAttributes
+    policy {
+      update
+    }
     mentions(first: $mentionsCount) {
       totalCount
       edges {

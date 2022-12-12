@@ -42,6 +42,10 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
             updatedBy {
               firstname
             }
+            policy {
+              update
+              destroy
+            }
           }
         }
       QUERY
@@ -53,7 +57,15 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'has data' do
-        expect(gql.result.data).to include('fullname' => agent.fullname)
+        expect(gql.result.data).to include('fullname' => agent.fullname, 'policy' => { 'update' => false, 'destroy' => false })
+      end
+
+      context 'when admin' do
+        let(:agent) { create(:admin) }
+
+        it 'has policy field data' do
+          expect(gql.result.data).to include('policy' => { 'update' => true, 'destroy' => true })
+        end
       end
 
       it 'has objectAttributeValue data for User' do

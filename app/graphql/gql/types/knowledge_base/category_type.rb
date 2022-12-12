@@ -2,8 +2,8 @@
 
 module Gql::Types::KnowledgeBase
   class CategoryType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Knowledge Base Category'
 

@@ -4,6 +4,7 @@ import { defaultOrganization } from '@mobile/entities/organization/__tests__/moc
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
 import type { UserQuery } from '@shared/graphql/types'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { ConfidentTake } from '@shared/types/utils'
 import {
   mockGraphQLApi,
@@ -20,15 +21,20 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
 
   const user = nullableMock<ConfidentTake<UserQuery, 'user'>>({
     __typename: 'User',
-    id: 'dsad34dasd21',
-    internalId: 200,
+    id: convertToGraphQLId('User', 1),
+    internalId: 1,
     firstname: 'John',
     lastname: 'Doe',
     fullname: 'John Doe',
     active: true,
+    vip: false,
+    image: null,
     ticketsCount: {
       open: 4,
       closed: 2,
+    },
+    policy: {
+      update: true,
     },
     organization: {
       __typename: 'Organization',
@@ -45,7 +51,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
           __typename: 'OrganizationEdge',
           node: {
             __typename: 'Organization',
-            id: 'dsa34fsa223d',
+            id: convertToGraphQLId('Organization', 10),
             name: 'Dammaz',
             internalId: 10,
             active: true,

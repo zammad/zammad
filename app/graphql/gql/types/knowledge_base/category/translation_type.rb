@@ -2,8 +2,8 @@
 
 module Gql::Types::KnowledgeBase::Category
   class TranslationType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Knowledge Base Category Translation'
 

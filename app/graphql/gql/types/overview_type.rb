@@ -2,8 +2,8 @@
 
 module Gql::Types
   class OverviewType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Ticket overviews'
 

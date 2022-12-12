@@ -2,7 +2,7 @@
 
 module Gql::Types::KnowledgeBase
   class LocaleType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Knowledge Base Locale'
 

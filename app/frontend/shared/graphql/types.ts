@@ -970,6 +970,8 @@ export type Organization = ObjectAttributeValuesInterface & {
   /** Internal note */
   note?: Maybe<Scalars['String']>;
   objectAttributeValues?: Maybe<Array<ObjectAttributeValue>>;
+  /** Pundit policy queries for the current object and user. */
+  policy: Policy;
   shared?: Maybe<Scalars['Boolean']>;
   ticketsCount?: Maybe<TicketCount>;
   /** Last update date/time of the record */
@@ -1098,6 +1100,13 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']>;
+};
+
+/** Access Pundit policy queries for the current object and user. */
+export type Policy = {
+  __typename?: 'Policy';
+  destroy: Scalars['Boolean'];
+  update: Scalars['Boolean'];
 };
 
 /** Public links available in the system */
@@ -1555,6 +1564,8 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   organization?: Maybe<Organization>;
   owner: User;
   pendingTime?: Maybe<Scalars['ISO8601DateTime']>;
+  /** Pundit policy queries for the current object and user. */
+  policy: Policy;
   preferences?: Maybe<Scalars['JSON']>;
   priority: TicketPriority;
   state: TicketState;
@@ -1946,6 +1957,8 @@ export type User = ObjectAttributeValuesInterface & TagsInterface & {
   outOfOfficeStartAt?: Maybe<Scalars['ISO8601Date']>;
   permissions?: Maybe<UserPermission>;
   phone?: Maybe<Scalars['String']>;
+  /** Pundit policy queries for the current object and user. */
+  policy: Policy;
   preferences?: Maybe<Scalars['JSON']>;
   secondaryOrganizations?: Maybe<OrganizationConnection>;
   tags?: Maybe<Array<Scalars['String']>>;
@@ -2074,7 +2087,7 @@ export type OrganizationQueryVariables = Exact<{
 }>;
 
 
-export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, vip?: boolean | null } }> } | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } };
+export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, vip?: boolean | null } }> } | null, policy: { __typename?: 'Policy', update: boolean }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } };
 
 export type OrganizationUpdatesSubscriptionVariables = Exact<{
   organizationId: Scalars['ID'];
@@ -2090,7 +2103,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Queries', user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, email?: string | null, web?: string | null, vip?: boolean | null, phone?: string | null, mobile?: string | null, fax?: string | null, note?: string | null, active?: boolean | null, hasSecondaryOrganizations?: boolean | null, secondaryOrganizations?: { __typename?: 'OrganizationConnection', totalCount: number, edges: Array<{ __typename?: 'OrganizationEdge', node: { __typename?: 'Organization', id: string, internalId: number, active?: boolean | null, name?: string | null } }> } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } };
+export type UserQuery = { __typename?: 'Queries', user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, email?: string | null, web?: string | null, vip?: boolean | null, phone?: string | null, mobile?: string | null, fax?: string | null, note?: string | null, active?: boolean | null, hasSecondaryOrganizations?: boolean | null, secondaryOrganizations?: { __typename?: 'OrganizationConnection', totalCount: number, edges: Array<{ __typename?: 'OrganizationEdge', node: { __typename?: 'Organization', id: string, internalId: number, active?: boolean | null, name?: string | null } }> } | null, policy: { __typename?: 'Policy', update: boolean }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null } };
 
 export type AccountAvatarAddMutationVariables = Exact<{
   images: AvatarInput;
@@ -2163,7 +2176,7 @@ export type TicketQueryVariables = Exact<{
 }>;
 
 
-export type TicketQuery = { __typename?: 'Queries', ticket: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: string, updatedAt: string, pendingTime?: string | null, tags?: Array<string> | null, subscribed?: boolean | null, mentions?: { __typename?: 'MentionConnection', totalCount: number, edges: Array<{ __typename?: 'MentionEdge', cursor: string, node: { __typename?: 'Mention', user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, image?: string | null } } }> } | null, owner: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, hasSecondaryOrganizations?: boolean | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null }, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name?: string | null }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } };
+export type TicketQuery = { __typename?: 'Queries', ticket: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, createdAt: string, updatedAt: string, pendingTime?: string | null, tags?: Array<string> | null, subscribed?: boolean | null, policy: { __typename?: 'Policy', update: boolean }, mentions?: { __typename?: 'MentionConnection', totalCount: number, edges: Array<{ __typename?: 'MentionEdge', cursor: string, node: { __typename?: 'Mention', user: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, image?: string | null } } }> } | null, owner: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null }, customer: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, hasSecondaryOrganizations?: boolean | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } | null }, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null } | null, state: { __typename?: 'TicketState', id: string, name: string, stateType: { __typename?: 'TicketStateType', name: string } }, group: { __typename?: 'Group', id: string, name?: string | null }, priority: { __typename?: 'TicketPriority', id: string, name: string, defaultCreate: boolean, uiColor?: string | null }, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string, dataType: string, dataOption?: any | null } }> | null } };
 
 export type TicketArticlesQueryVariables = Exact<{
   ticketId?: InputMaybe<Scalars['ID']>;

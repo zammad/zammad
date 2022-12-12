@@ -25,6 +25,9 @@ export const OrganizationDocument = gql`
       }
       totalCount
     }
+    policy {
+      update
+    }
     ...organizationAttributes
   }
 }

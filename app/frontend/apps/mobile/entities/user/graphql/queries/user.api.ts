@@ -21,6 +21,9 @@ export const UserDocument = gql`
       }
       totalCount
     }
+    policy {
+      update
+    }
   }
 }
     ${UserDetailAttributesFragmentDoc}`;

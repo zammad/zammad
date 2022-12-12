@@ -2,8 +2,8 @@
 
 module Gql::Types::Ticket
   class StateTypeType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalNoteField
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasInternalNoteField
 
     description 'Ticket state types'
 

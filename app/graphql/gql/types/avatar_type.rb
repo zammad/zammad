@@ -2,7 +2,7 @@
 
 module Gql::Types
   class AvatarType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Avatar for users'
 

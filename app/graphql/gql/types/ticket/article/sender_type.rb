@@ -2,7 +2,7 @@
 
 module Gql::Types::Ticket::Article
   class SenderType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Ticket article senders'
 

@@ -1,5 +1,14 @@
-query organization($organizationId: ID, $organizationInternalId: Int, $membersCount: Int) {
-  organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
+query organization(
+  $organizationId: ID
+  $organizationInternalId: Int
+  $membersCount: Int
+) {
+  organization(
+    organization: {
+      organizationId: $organizationId
+      organizationInternalId: $organizationInternalId
+    }
+  ) {
     members(first: $membersCount) {
       edges {
         node {
@@ -13,6 +22,9 @@ query organization($organizationId: ID, $organizationInternalId: Int, $membersCo
         }
       }
       totalCount
+    }
+    policy {
+      update
     }
     ...organizationAttributes
   }

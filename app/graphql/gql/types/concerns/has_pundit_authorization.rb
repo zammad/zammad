@@ -2,7 +2,7 @@
 
 # Provide the internal id only for objects that need it, for example
 #   in URLs.
-module Gql::Concerns::HasPunditAuthorization
+module Gql::Types::Concerns::HasPunditAuthorization
   extend ActiveSupport::Concern
 
   included do

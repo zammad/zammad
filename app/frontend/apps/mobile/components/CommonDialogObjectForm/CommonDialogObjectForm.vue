@@ -34,6 +34,7 @@ export interface Props {
   errorNotificationMessage?: string
   mutation: OperationMutationFunction
   schema: FormSchemaNode[]
+  keyMap?: Record<string, string | false>
 }
 
 const props = defineProps<Props>()
@@ -94,7 +95,11 @@ const changedFormField = (
 
 const saveObject = async (formData: FormData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(objectAttributesLookup.value, formData)
+    useObjectAttributeFormData(
+      objectAttributesLookup.value,
+      formData,
+      props.keyMap,
+    )
 
   const result = await updateMutation.send({
     id: props.object?.id,

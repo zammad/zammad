@@ -2,7 +2,7 @@
 
 module Gql::Types
   class LocaleType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Locales available in the system'
 

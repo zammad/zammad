@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-module Gql::Concerns::IsModelObject
+module Gql::Types::Concerns::IsModelObject
   extend ActiveSupport::Concern
 
   included do

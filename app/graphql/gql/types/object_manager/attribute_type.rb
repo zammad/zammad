@@ -2,7 +2,7 @@
 
 module Gql::Types::ObjectManager
   class AttributeType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'An object manager attribute record'
 

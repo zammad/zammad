@@ -2,12 +2,14 @@
 
 # Provide the internal id only for objects that need it, for example
 #   in URLs.
-module Gql::Concerns::HasInternalNoteField
+module Gql::Types::Concerns::HasInternalIdField
   extend ActiveSupport::Concern
 
   included do
-    internal_fields do
-      field :note, String, description: 'Internal note'
+    field :internal_id, Integer, null: false, description: 'Internal database ID'
+    def internal_id
+      object.id
     end
   end
+
 end

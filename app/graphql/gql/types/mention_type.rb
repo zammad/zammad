@@ -2,7 +2,7 @@
 
 module Gql::Types
   class MentionType < BaseObject
-    include Gql::Concerns::IsModelObject
+    include Gql::Types::Concerns::IsModelObject
 
     description 'Mention'
 

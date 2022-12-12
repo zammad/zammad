@@ -30,6 +30,9 @@ export const defaultTicket = () =>
       pendingTime: null,
       subscribed: false,
       mentions: null,
+      policy: {
+        update: true,
+      },
       owner: {
         __typename: 'User',
         internalId: 100,

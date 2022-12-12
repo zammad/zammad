@@ -8,15 +8,12 @@ import CommonTicketStateList from '@mobile/components/CommonTicketStateList/Comm
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { useSessionStore } from '@shared/stores/session'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
 const { ticket } = useTicketInformation()
-
-const session = useSessionStore()
 
 const {
   organization,
@@ -65,7 +62,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
       :attributes="objectAttributes"
       :skip-attributes="['name']"
     >
-      <template v-if="session.hasPermission(['ticket.agent'])" #after-fields>
+      <template v-if="organization.policy.update" #after-fields>
         <button
           class="p-4 text-blue"
           @click="openEditOrganizationDialog(organization!)"

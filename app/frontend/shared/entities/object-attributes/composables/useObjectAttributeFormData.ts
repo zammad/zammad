@@ -11,6 +11,7 @@ import { camelize, toClassName } from '@shared/utils/formatter'
 export const useObjectAttributeFormData = (
   objectAttributes: Map<string, ObjectManagerFrontendAttribute>,
   formData: FormValues,
+  keyMap: Record<string, string | false> = {},
 ) => {
   const internalObjectAttributeValues: Record<string, FormFieldValue> = {}
   const additionalObjectAttributeValues: ObjectAttributeValueInput[] = []
@@ -41,8 +42,12 @@ export const useObjectAttributeFormData = (
     if (!objectAttribute || value === undefined) return
 
     if (objectAttribute.isInternal) {
-      internalObjectAttributeValues[camelize(objectAttribute.name)] =
-        ensureRelationId(objectAttribute, value)
+      const name = keyMap[fieldName] ?? camelize(fieldName)
+      if (name === false) return
+      internalObjectAttributeValues[name] = ensureRelationId(
+        objectAttribute,
+        value,
+      )
     } else {
       additionalObjectAttributeValues.push({
         name: objectAttribute.name,

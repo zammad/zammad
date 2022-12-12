@@ -7,12 +7,12 @@ import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttribut
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
-import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonUsersList from '@mobile/components/CommonUsersList/CommonUsersList.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useSessionStore } from '@shared/stores/session'
 import CommonShowMoreButton from '@mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue'
+import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
@@ -52,7 +52,6 @@ onUnmounted(() => {
   formVisible.value = false
 })
 
-const { isTicketAgent } = useTicketView(ticket)
 const {
   canManageSubscription,
   isSubscribed,
@@ -129,7 +128,13 @@ const loadMoreMentions = () => {
     }"
   />
 
-  <TicketTags v-if="isTicketAgent && ticket" :ticket="ticket" />
+  <TicketTags v-if="canUpdateTicket && ticket" :ticket="ticket" />
+
+  <CommonSectionMenu v-else-if="ticket?.tags?.length">
+    <CommonSectionMenuItem :label="__('Tags')">
+      {{ ticket.tags.join(', ') }}
+    </CommonSectionMenuItem>
+  </CommonSectionMenu>
 
   <CommonSectionMenu
     v-if="canManageSubscription"

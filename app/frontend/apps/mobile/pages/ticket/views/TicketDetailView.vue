@@ -18,7 +18,6 @@ import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
-import { useSessionStore } from '@shared/stores/session'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
@@ -68,20 +67,7 @@ const submitForm = async (formData: FormData) => {
   }
 }
 
-const session = useSessionStore()
-// TODO use policies
-// app/assets/javascripts/app/models/ticket.coffee:328
-const canUpdateTicket = computed(() => {
-  if (
-    session.userId === ticket.value?.owner.id ||
-    // TODO should check for agent groups access
-    session.hasPermission('ticket.agent')
-  ) {
-    return true
-  }
-  if (!session.hasPermission('ticket.customer')) return false
-  return session.userId === ticket.value?.customer.id
-})
+const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
 
 provide(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,

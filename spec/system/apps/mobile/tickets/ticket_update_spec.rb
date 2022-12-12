@@ -29,36 +29,42 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end
 
-  # TODO: uncomment when policies are implemented,
   #  - policy says that only agent with "read" access, but not "change" access can view this
   #  - if user can view ticket, he can also change it
-  # context 'when user cannot update ticket', authenticated_as: :viewer do
-  #   let(:organization) { create(:organization, shared: true) }
-  #   let(:viewer)   {
-  #     user = create(:agent, groups: [group], organization: organization)
-  #     user.group_names_access_map = {
-  #       group.name => 'read',
-  #     }
-  #     user.save!
-  #     user
-  #   }
-  #   let(:owner)    { create(:customer, groups: [group], organization: organization) }
-  #   let(:ticket)   { create(:ticket, owner: owner, group: group, organization: organization) }
+  context 'when user cannot update ticket', authenticated_as: :viewer do
+    let(:organization) { create(:organization, shared: true) }
+    let(:viewer) do
+      user = create(:agent, groups: [group], organization: organization)
+      user.group_names_access_map = {
+        group.name => 'read',
+      }
+      user.save!
+      user
+    end
+    let(:owner)    { create(:customer, groups: [group], organization: organization) }
+    let(:ticket)   { create(:ticket, owner: owner, group: group, organization: organization) }
+    let(:tags) do
+      [
+        Tag::Item.lookup_by_name_and_create('foo'),
+        Tag::Item.lookup_by_name_and_create('bar'),
+      ]
+    end
 
-  #   it 'does not show update button' do
-  #     visit "/tickets/#{ticket.id}/information"
+    before do
+      create(:tag, o: ticket, tag_item: tags.first)
+      create(:tag, o: ticket, tag_item: tags.last)
+    end
 
-  #     expect(page).to have_no_css('button[title="Save ticket"]')
-  #     expect(page).to have_no_css('button[form="form-ticket-edit"]')
-  #   end
+    it 'does not show "save" button, but shows form as menu with sections' do
+      visit "/tickets/#{ticket.id}/information"
 
-  #   it 'shows form as menu with sections' do
-  #     visit "/tickets/#{ticket.id}/information"
-
-  #     expect(find('section', text: %r{Group})).to have_text(ticket.group.name)
-  #     expect(find('section', text: %r{State})).to have_text(ticket.state.name)
-  #   end
-  # end
+      expect(page).to have_no_button('Save ticket', disabled: true)
+      expect(page).to have_no_css('output', text: 'Tags')
+      expect(find('section', text: %r{Tags})).to have_text('foo, bar')
+      expect(find('section', text: %r{Group})).to have_text(ticket.group.name)
+      expect(find('section', text: %r{State})).to have_text(ticket.state.name)
+    end
+  end
 
   context 'when user can update ticket' do
     context 'when there are no custom object attributes' do

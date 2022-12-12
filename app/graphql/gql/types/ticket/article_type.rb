@@ -2,9 +2,9 @@
 
 module Gql::Types::Ticket
   class ArticleType < Gql::Types::BaseObject
-    include Gql::Concerns::IsModelObject
-    include Gql::Concerns::HasInternalIdField
-    include Gql::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasInternalIdField
+    include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Ticket articles'
 
