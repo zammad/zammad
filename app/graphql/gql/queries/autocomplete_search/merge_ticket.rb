@@ -45,9 +45,10 @@ module Gql::Queries
 
     def coerce_to_result(ticket)
       {
-        value:  Gql::ZammadSchema.id_from_object(ticket),
-        label:  "#{ticket.number} #{ticket.title}",
-        ticket: ticket,
+        value:   Gql::ZammadSchema.id_from_object(ticket),
+        label:   ticket.title,
+        heading: "##{ticket.number} · #{ticket.customer.fullname}",
+        ticket:  ticket,
       }
     end
 

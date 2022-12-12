@@ -323,21 +323,23 @@ useTraverseOptions(autocompleteList)
         <OptionIconComponent :option="option" />
         <div
           v-if="(option as AutoCompleteOption).heading"
-          class="flex grow flex-col"
+          class="flex grow flex-col overflow-hidden"
         >
           <span
             :class="{
               'opacity-30': option.disabled,
             }"
-            class="grow text-sm text-gray-100"
+            class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-100"
           >
-            {{ (option as AutoCompleteOption).heading }}
+            <span>{{ (option as AutoCompleteOption).heading }}</span>
           </span>
+          <!-- since it has fixed height, we add ellipsis on the first line -->
+          <!-- TODO: should it be fixed? or we should allow multiline with maximum lines (3?) -->
           <span
             :class="{
               'opacity-30': option.disabled,
             }"
-            class="grow text-lg font-semibold leading-[22px]"
+            class="grow overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold leading-[22px]"
           >
             {{ option.label || option.value }}
           </span>
@@ -348,7 +350,7 @@ useTraverseOptions(autocompleteList)
             'font-semibold !text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          class="grow text-white/80"
+          class="grow overflow-hidden text-ellipsis whitespace-nowrap text-white/80"
         >
           {{ option.label || option.value }}
         </span>

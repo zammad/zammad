@@ -107,7 +107,7 @@ export default {
       :id="`dialog-${name}`"
       ref="dialogElement"
       data-common-dialog
-      class="flex h-full grow flex-col bg-black"
+      class="flex h-full grow flex-col overflow-x-hidden bg-black"
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
       :style="{ transform: `translateY(${top})` }"
     >

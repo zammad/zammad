@@ -22,6 +22,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
           autocompleteSearchMergeTicket(input: $input) {
             value
             label
+            heading
             ticket {
               number
             }
@@ -73,9 +74,10 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
       context 'with exact search' do
         let(:second_ticket_payload) do
           {
-            'value'  => gql.id(tickets.second),
-            'label'  => "#{tickets.second.number} #{tickets.second.title}",
-            'ticket' => { 'number' => tickets.second.number },
+            'value'   => gql.id(tickets.second),
+            'label'   => tickets.second.title,
+            'heading' => "##{tickets.second.number} · #{tickets.second.customer.fullname}",
+            'ticket'  => { 'number' => tickets.second.number },
           }
         end
         let(:query_string) { tickets.second.number }

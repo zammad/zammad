@@ -10,8 +10,8 @@ const classes: FormThemeClasses = {
   global: {
     wrapper: 'formkit-disabled:opacity-30',
     help: 'mt-0.5 text-xs',
-    messages: 'list-none p-0 mt-1 mb-0',
-    message: 'text-red-bright mb-1 text-xs',
+    messages: 'list-none',
+    message: 'text-red-bright pb-1 text-xs',
   },
   text: defaultTextInput,
   email: defaultTextInput,

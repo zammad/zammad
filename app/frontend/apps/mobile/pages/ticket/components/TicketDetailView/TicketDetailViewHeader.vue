@@ -46,7 +46,11 @@ const showActions = () => {
   <header
     class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
-    <CommonBackButton class="justify-self-start" fallback="/" />
+    <CommonBackButton
+      class="justify-self-start"
+      fallback="/"
+      :ignore="[`/tickets/${ticket?.internalId}/information`]"
+    />
     <CommonLoader data-test-id="loader-header" :loading="loadingTicket">
       <div
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"

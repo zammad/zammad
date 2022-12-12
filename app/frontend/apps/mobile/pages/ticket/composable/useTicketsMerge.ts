@@ -10,13 +10,14 @@ import { useDialog } from '@shared/composables/useDialog'
 import UserError from '@shared/errors/UserError'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { ref, markRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTicketMergeMutation } from '@shared/entities/ticket/graphql/mutations/merge.api'
 import type { AutocompleteSearchMergeTicketEntry } from '@shared/graphql/types'
 import { keyBy } from 'lodash-es'
 import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api'
 import type { TicketById } from '../types/tickets'
+import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
 
 export const useTicketsMerge = (
   sourceTicket: Ref<TicketById>,
@@ -109,7 +110,7 @@ export const useTicketsMerge = (
       context,
       name: 'tickets-search',
       options: [],
-      optionIconComponent: null,
+      optionIconComponent: markRaw(TicketMergeStatus),
       noCloseOnSelect: true,
       onUpdateOptions(options: AutocompleteSearchMergeTicketEntry[]) {
         localOptions = keyBy(options, 'value')

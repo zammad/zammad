@@ -2153,7 +2153,7 @@ export type AutocompleteSearchMergeTicketQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchMergeTicketQuery = { __typename?: 'Queries', autocompleteSearchMergeTicket: Array<{ __typename?: 'AutocompleteSearchMergeTicketEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, ticket: { __typename?: 'Ticket', id: string, number: string, internalId: number } }> };
+export type AutocompleteSearchMergeTicketQuery = { __typename?: 'Queries', autocompleteSearchMergeTicket: Array<{ __typename?: 'AutocompleteSearchMergeTicketEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, ticket: { __typename?: 'Ticket', id: string, number: string, internalId: number, state: { __typename?: 'TicketState', id: string, name: string } } }> };
 
 export type TicketQueryVariables = Exact<{
   ticketId?: InputMaybe<Scalars['ID']>;

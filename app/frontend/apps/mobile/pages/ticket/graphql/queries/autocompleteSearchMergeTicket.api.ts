@@ -19,6 +19,10 @@ export const AutocompleteSearchMergeTicketDocument = gql`
       id
       number
       internalId
+      state {
+        id
+        name
+      }
     }
   }
 }

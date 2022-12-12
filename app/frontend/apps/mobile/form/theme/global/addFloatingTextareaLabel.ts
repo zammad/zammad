@@ -53,5 +53,6 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
       formkit-required:required
       formkit-invalid:text-red-bright
     `),
+    messages: 'px-2',
   }
 }
