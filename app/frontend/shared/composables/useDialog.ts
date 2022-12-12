@@ -5,7 +5,6 @@ import {
   pushComponent,
 } from '@shared/components/DynamicInitializer/manage'
 import { noop } from 'lodash-es'
-import type { AsyncComponentLoader, Component } from 'vue'
 import {
   computed,
   defineAsyncComponent,
@@ -13,7 +12,10 @@ import {
   onUnmounted,
   getCurrentInstance,
   onMounted,
+  nextTick,
 } from 'vue'
+import type { AsyncComponentLoader, Component } from 'vue'
+import testFlags from '@shared/utils/testFlags'
 
 interface DialogOptions {
   name: string
@@ -64,7 +66,12 @@ export const openDialog = async (
   await pushComponent('dialog', name, component, props)
 
   return new Promise<void>((resolve) => {
-    options.component().finally(() => resolve())
+    options.component().finally(() => {
+      resolve()
+      nextTick(() => {
+        testFlags.set(`${name}.opened`)
+      })
+    })
   })
 }
 
@@ -78,6 +85,10 @@ export const closeDialog = async (name: string) => {
   if (options.afterClose) {
     await options.afterClose()
   }
+
+  nextTick(() => {
+    testFlags.set(`${name}.closed`)
+  })
 }
 
 export const useDialog = (options: DialogOptions) => {

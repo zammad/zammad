@@ -79,7 +79,7 @@ RSpec.shared_examples 'core workflow' do
              })
     end
 
-    it 'does reduces the category options to and it also sets further required fields to mandatory and visible.' do
+    it 'reduces the category options and sets further required fields to mandatory and visible' do
       before_it.call
 
       expect(page).to have_css('label', text: 'group_example')
@@ -92,7 +92,7 @@ RSpec.shared_examples 'core workflow' do
       find('label', text: 'group_example').sibling('.formkit-inner').click
       click('span', text: %r{value_2}i)
 
-      wait_for_gql('shared/components/Form/graphql/queries/formUpdater.graphql', number: 2)
+      wait_for_form_updater(2)
 
       operating_system = find('label', text: 'operating_system')
       operating_system.ancestor('.formkit-outer[data-required=true]')
@@ -103,9 +103,11 @@ RSpec.shared_examples 'core workflow' do
       find('label', text: 'category').sibling('.formkit-inner').click
 
       expect(page).to have_css('div[role=option] span', text: 'Change request')
-      find('div[role=option] span', text: 'Incident').sibling('.icon-mobile-chevron-right').click
+
+      find('div[role=option] span', text: 'Incident').sibling('svg[role=link]').click
       expect(page).to have_css('div[role=option] span', text: 'Hardware')
-      find('div[role=option] span', text: 'Softwareproblem').sibling('.icon-mobile-chevron-right').click
+
+      find('div[role=option] span', text: 'Softwareproblem').sibling('svg[role=link]').click
       expect(page).to have_css('div[role=option] span', text: 'CRM')
     end
   end
