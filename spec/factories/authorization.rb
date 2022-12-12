@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :authorization do
-    transient do
-      user { create(:customer) }
-    end
+    uid      { Faker::Number.number(digits: 10) }
+    user     { create(:customer) }
+    provider { 'foo' }
 
     factory :twitter_authorization do
       provider { 'twitter' }

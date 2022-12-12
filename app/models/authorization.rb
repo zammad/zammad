@@ -2,7 +2,7 @@
 
 class Authorization < ApplicationModel
   belongs_to    :user, optional: true
-  after_create  :delete_user_cache
+  after_create  :delete_user_cache, :notification_send
   after_update  :delete_user_cache
   after_destroy :delete_user_cache
   validates     :user_id,  presence: true
@@ -105,6 +105,35 @@ class Authorization < ApplicationModel
     return if !user
 
     user.touch # rubocop:disable Rails/SkipsModelValidations
+  end
+
+  # An account is considered linked if the user originates from a source other than the current authorization provider.
+  def linked_account?
+    user.source != provider
+  end
+
+  def notification_send
+
+    # Send a notification only if the feature is turned on and the account is linked.
+    return if !Setting.get('auth_third_party_linking_notification') || !user || !linked_account?
+
+    template = 'user_auth_provider'
+
+    if user.email.blank?
+      Rails.logger.info { "Unable to send a notification (#{template}) to user_id: #{user.id} be cause of missing email address." }
+      return
+    end
+
+    Rails.logger.debug { "Send notification (#{template}) to: #{user.email}" }
+
+    NotificationFactory::Mailer.notification(
+      template: template,
+      user:     user,
+      objects:  {
+        user:     user,
+        provider: provider,
+      }
+    )
   end
 
 end

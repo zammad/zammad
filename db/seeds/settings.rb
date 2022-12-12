@@ -1269,6 +1269,32 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       __('Automatic account linking notification'),
+  name:        'auth_third_party_linking_notification',
+  area:        'Security::ThirdPartyAuthentication',
+  description: __('Enables sending of an email notification to a user when they link their account with a third-party application.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'auth_third_party_linking_notification',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    permission: ['admin.security'],
+    prio:       20,
+  },
+  state:       false,
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       __('Authentication via %s'),
   name:        'auth_twitter',
   area:        'Security::ThirdPartyAuthentication',

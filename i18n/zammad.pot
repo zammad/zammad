@@ -80,6 +80,12 @@ msgstr ""
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
+#. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_auth_provider/en.html.erb
+msgid "#{config.product_name} account linked with a third-party application\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you linked your account <b>with a third-party application</b> \"#{provider}\".</div>\n<br>\n<div>If this wasn't you, please remove the linked account from your profile and change your third-party application password. Somebody might have gained unauthorized access to your account on the third-party service.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
@@ -1404,6 +1410,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Automatic account linking notification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -4144,6 +4154,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables priority icons in ticket overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Enables sending of an email notification to a user when they link their account with a third-party application."
 msgstr ""
 
 #: db/seeds/settings.rb
