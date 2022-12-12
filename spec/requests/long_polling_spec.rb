@@ -105,15 +105,8 @@ RSpec.describe 'LongPolling', type: :request do
       spool_list = Sessions.spool_list(Time.now.utc.to_i, agent.id)
       expect(spool_list).to eq([])
 
-      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'broadcast', spool: true, recipient: { user_id: [agent.id] }, data: { taskbar_id: 9_391_633 } } }, as: :json
+      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'session_takeover', spool: true, data: { taskbar_id: 9_391_633 } } }, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to eq({})
-
-      get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to eq({ 'event' => 'pong' })
 
       travel 2.seconds
 
@@ -121,8 +114,7 @@ RSpec.describe 'LongPolling', type: :request do
       expect(spool_list).to eq([])
 
       spool_list = Sessions.spool_list(nil, agent.id)
-      expect(spool_list).to eq([{ message: { 'taskbar_id' => 9_391_633 }, type: 'direct' }])
-
+      expect(spool_list).to eq([{ message: { 'data' => { 'taskbar_id'=>9_391_633 }, 'event' => 'session_takeover', 'spool' => true }, type: 'broadcast' }])
     end
 
     it 'automatically cleans-up old spool entries' do
