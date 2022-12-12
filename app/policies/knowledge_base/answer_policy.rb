@@ -28,6 +28,13 @@ class KnowledgeBase::AnswerPolicy < ApplicationPolicy
     false
   end
 
+  # Compatibility with Ticket policy
+  # When using in GQL together with tickets
+  # For example Tag mutations
+  def agent_update_access?
+    access_editor?
+  end
+
   private
 
   def access

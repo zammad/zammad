@@ -53,6 +53,10 @@ class TicketPolicy < ApplicationPolicy
     agent_access?('read')
   end
 
+  def agent_update_access?
+    agent_access?('change')
+  end
+
   private
 
   def follow_up_possible?
