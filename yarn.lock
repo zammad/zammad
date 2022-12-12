@@ -1185,6 +1185,13 @@
   dependencies:
     "@formkit/utils" "1.0.0-beta.13-c578106"
 
+"@formkit/core@1.0.0-beta.9-f64c966":
+  version "1.0.0-beta.9-f64c966"
+  resolved "https://registry.yarnpkg.com/@formkit/core/-/core-1.0.0-beta.9-f64c966.tgz#170ebbe7f88eed30934b957d8adccdebb303ac62"
+  integrity sha512-EOUlP129AhGR6CgUIHlc1L9zkBfuHf3GGr/6s3m2r2CFlfgFEu3/cVeIUQtc75MpfLtfnLOk1cNW+z1vKfcOJQ==
+  dependencies:
+    "@formkit/utils" "1.0.0-beta.9-f64c966"
+
 "@formkit/dev@1.0.0-beta.13-c578106", "@formkit/dev@^1.0.0-beta.13-c578106":
   version "1.0.0-beta.13-c578106"
   resolved "https://registry.yarnpkg.com/@formkit/dev/-/dev-1.0.0-beta.13-c578106.tgz#113464c3cbe66ec19e4a9c0b871719c8759fa9b2"
@@ -1227,11 +1234,11 @@
     "@formkit/validation" "1.0.0-beta.13-c578106"
 
 "@formkit/tailwindcss@^1.0.0-beta.13-c578106":
-  version "1.0.0-beta.13-c578106"
-  resolved "https://registry.yarnpkg.com/@formkit/tailwindcss/-/tailwindcss-1.0.0-beta.13-c578106.tgz#81b3594462072721a77621093e7c14e845936dbf"
-  integrity sha512-70uI0Jeh21ln4lMyZiA+UM+6q/60jh83I6lbWShp1G/KQ5i0udbDrV0zfzF1jEgil7sItEiIRSPuFtkshk94mA==
+  version "1.0.0-beta.9-f64c966"
+  resolved "https://registry.yarnpkg.com/@formkit/tailwindcss/-/tailwindcss-1.0.0-beta.9-f64c966.tgz#6aee01eb94b5d1e6f6680288294fa11711d37136"
+  integrity sha512-U4uLNPmdkbX3xQZiDmYaSgtImyNNgqEccfgbH85eoCeHkJD7r6BhjPCTdYnSh/8NoGGLX0rp0rcyO42aB+uNwQ==
   dependencies:
-    "@formkit/themes" "1.0.0-beta.13-c578106"
+    "@formkit/themes" "1.0.0-beta.9-f64c966"
 
 "@formkit/themes@1.0.0-beta.13-c578106", "@formkit/themes@^1.0.0-beta.13-c578106":
   version "1.0.0-beta.13-c578106"
@@ -1240,10 +1247,22 @@
   dependencies:
     "@formkit/core" "1.0.0-beta.13-c578106"
 
+"@formkit/themes@1.0.0-beta.9-f64c966":
+  version "1.0.0-beta.9-f64c966"
+  resolved "https://registry.yarnpkg.com/@formkit/themes/-/themes-1.0.0-beta.9-f64c966.tgz#e1c872291458f4aedb36b91b8279ad9a1856efbe"
+  integrity sha512-Iy/9KoNAZfB/MI6HUfsuxSg8+Ys2veuXoyJNr5AaNDRfzihrv3wIIv1nZuonXgQm3X7+mnfrSybBcXPtqnKU7Q==
+  dependencies:
+    "@formkit/core" "1.0.0-beta.9-f64c966"
+
 "@formkit/utils@1.0.0-beta.13-c578106", "@formkit/utils@^1.0.0-beta.13-c578106":
   version "1.0.0-beta.13-c578106"
   resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-1.0.0-beta.13-c578106.tgz#cb036a4a2d5ba10d474aaf05eca96a0adbaed22b"
   integrity sha512-BXRJSKM+gK/fIepEtuEiaDFFQHKAp76+z0w36Vor3TDmv/aLn7cnTOZA6YDLtkdm0ps34zjIh+fGtHsWyCKFfA==
+
+"@formkit/utils@1.0.0-beta.9-f64c966":
+  version "1.0.0-beta.9-f64c966"
+  resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-1.0.0-beta.9-f64c966.tgz#a0541ecbc14529c00ff16c00dc03dec004085b6f"
+  integrity sha512-MPldWKsqmabj7LzMOlha0G6Fn+a6hShc7jyiF1j0P9rJdj9lYyk7t286co4CxqhQNgOpU0XOv7FZroq8k6clzQ==
 
 "@formkit/validation@1.0.0-beta.13-c578106", "@formkit/validation@^1.0.0-beta.13-c578106":
   version "1.0.0-beta.13-c578106"
@@ -7370,10 +7389,10 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.1.0, postcss-value-parser@^
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^5.2.17, postcss@^8.1.10, postcss@^8.4.0, postcss@^8.4.16, postcss@^8.4.18, postcss@^8.4.19:
-  version "8.4.19"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.19.tgz#61178e2add236b17351897c8bcc0b4c8ecab56fc"
-  integrity sha512-h+pbPsyhlYj6N2ozBmHhHrs9DzGmbaarbLvWipMRO7RLS+v4onj26MPFXA5OBYFxyqYhUJK456SwDcY9H2/zsA==
+postcss@^5.2.17, postcss@^8.1.10, postcss@^8.4.0, postcss@^8.4.16, postcss@^8.4.18, postcss@^8.4.19, postcss@^8.4.20:
+  version "8.4.20"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.20.tgz#64c52f509644cecad8567e949f4081d98349dc56"
+  integrity sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
@@ -7434,10 +7453,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-tailwindcss@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.2.0.tgz#5d6823ef8356103fd0aa19d1e08cb49534100464"
-  integrity sha512-Ruqig/mdWCSpqdq9WK44nrmqM4BFWTzBPhPGwC5NK3coV9eZntEQPB84MGZbjAg0XQU02jVRHXNRPREBzxvM+A==
+prettier-plugin-tailwindcss@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.2.1.tgz#989b35afd86c550cb671da69891aba4f4a051159"
+  integrity sha512-aIO8IguumORyRsmT+E7JfJ3A9FEoyhqZR7Au7TBOege3VZkgMvHJMkufeYp4zjnDK2iq4ktkvGMNOQR9T8lisQ==
 
 prettier@2.7.1, prettier@^2.7.1:
   version "2.7.1"
@@ -7991,10 +8010,10 @@ safe-regex@^2.1.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.56.1:
-  version "1.56.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.56.1.tgz#94d3910cd468fd075fa87f5bb17437a0b617d8a7"
-  integrity sha512-VpEyKpyBPCxE7qGDtOcdJ6fFbcpOM+Emu7uZLxVrkX8KVU/Dp5UF7WLvzqRuUhB6mqqQt1xffLoG+AndxTZrCQ==
+sass@^1.56.2:
+  version "1.56.2"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.56.2.tgz#9433b345ab3872996c82a53a58c014fd244fd095"
+  integrity sha512-ciEJhnyCRwzlBCB+h5cCPM6ie/6f8HrhZMQOf5vlU60Y1bI1rx5Zb0vlDZvaycHsg/MqFfF1Eq2eokAa32iw8w==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
