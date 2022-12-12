@@ -27,6 +27,7 @@ class TestFlags {
     if (!VITE_TEST_MODE) return
     await this.mutex.runExclusive(() => {
       this.flags.set(flag, true)
+      console.log('[testFlags] set flag "%s"', flag)
     })
   }
 

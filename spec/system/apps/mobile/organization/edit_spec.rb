@@ -16,7 +16,7 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
   end
 
   def save_organization(form_updater_call_number = 2)
-    wait_for_gql('shared/components/Form/graphql/queries/formUpdater.graphql', number: form_updater_call_number)
+    wait_for_form_updater(form_updater_call_number)
     click('button:not(disabled)', text: 'Save')
   end
 
@@ -28,7 +28,7 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       wait_for_form_to_settle('organization-edit')
 
       within('#dialog-organization-edit') do
-        find('[name="note"]').send_keys('edit field')
+        find('[name="note"]').click.send_keys('edit field')
 
         save_organization
       end
@@ -54,8 +54,10 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       click('button', text: 'Edit')
       wait_for_form_to_settle('organization-edit')
 
+      wait_for_form_updater(1)
       within('#dialog-organization-edit') do
         fill_in('name', with: 'new name')
+        wait_for_form_updater(2)
         fill_in(attribute.name, with: 'some text')
 
         save_organization(3)
