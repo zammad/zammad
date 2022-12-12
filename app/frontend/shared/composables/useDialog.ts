@@ -12,8 +12,10 @@ import {
   onUnmounted,
   getCurrentInstance,
   onMounted,
+  nextTick,
 } from 'vue'
 import type { AsyncComponentLoader, Component } from 'vue'
+import testFlags from '@shared/utils/testFlags'
 
 interface DialogOptions {
   name: string
@@ -75,7 +77,12 @@ export const openDialog = async (
   await pushComponent('dialog', name, component, props)
 
   return new Promise<void>((resolve) => {
-    options.component().finally(() => resolve())
+    options.component().finally(() => {
+      resolve()
+      nextTick(() => {
+        testFlags.set(`${name}.opened`)
+      })
+    })
   })
 }
 
@@ -95,6 +102,10 @@ export const closeDialog = async (name: string) => {
     lastFocusedElement.focus({ preventScroll: true })
     delete lastFocusedElements[name]
   }
+
+  nextTick(() => {
+    testFlags.set(`${name}.closed`)
+  })
 }
 
 export const useDialog = (options: DialogOptions) => {

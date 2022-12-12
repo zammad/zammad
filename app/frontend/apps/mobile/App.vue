@@ -66,6 +66,18 @@ emitter.on('sessionInvalid', async () => {
 onBeforeUnmount(() => {
   emitter.off('sessionInvalid')
 })
+
+// Do not animate transitions in the test mode.
+const transition = VITE_TEST_MODE
+  ? undefined
+  : {
+      enterActiveClass: 'duration-300 ease-out',
+      enterFromClass: 'opacity-0 translate-y-3/4',
+      enterToClass: 'opacity-100 translate-y-0',
+      leaveActiveClass: 'duration-200 ease-in',
+      leaveFromClass: 'opacity-100 translate-y-0',
+      leaveToClass: 'opacity-0 translate-y-3/4',
+    }
 </script>
 
 <template>
@@ -80,15 +92,5 @@ onBeforeUnmount(() => {
   >
     <RouterView />
   </div>
-  <DynamicInitializer
-    name="dialog"
-    :transition="{
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 translate-y-3/4',
-      enterToClass: 'opacity-100 translate-y-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 translate-y-0',
-      leaveToClass: 'opacity-0 translate-y-3/4',
-    }"
-  />
+  <DynamicInitializer name="dialog" :transition="transition" />
 </template>
