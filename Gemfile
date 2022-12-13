@@ -114,7 +114,8 @@ gem 'twitter'
 # channels - email additions
 gem 'email_address'
 gem 'htmlentities'
-gem 'mail'
+# TODO: remove git information once v2.8 is released and works with Zammad
+gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 

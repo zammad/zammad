@@ -600,10 +600,10 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       h['x-any-recipient'] = h.values.select(&:present?).join(', ')
       h['message_id']      = imported_fields['message-id']
       h['subject']         = imported_fields['subject']
-      h['date']            = begin
-        Time.zone.parse(mail.date.to_s)
+      begin
+        h['date'] = Time.zone.parse(mail.date.to_s) || imported_fields['date']
       rescue
-        nil
+        h['date'] = nil
       end
     end
 

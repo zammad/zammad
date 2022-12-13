@@ -7,7 +7,7 @@ RSpec.describe Channel::Filter::InternalArticleCheck do
   let(:vendor_email)    { 'vendor@example.com' }
   let(:article_to)      { vendor_email }
   let(:from)            { "From: <#{vendor_email}>" }
-  let(:message_id)      { '<some_message_id_999@example.com>' }
+  let(:message_id)      { 'some_message_id_999@example.com' }
   let(:in_reply_to)     { message_id }
   let(:article_subject) { "Subject: #{ticket.subject_build('some subject')}" }
   let(:ticket_article)  { build(:ticket_article, ticket: ticket, to: article_to, internal: false, message_id: message_id) }
@@ -183,17 +183,6 @@ RSpec.describe Channel::Filter::InternalArticleCheck do
       let(:in_reply_to) { '' }
 
       include_examples 'checks last outgoing mail'
-    end
-
-    # Mail gem changed Message-Id handling in 2.7 -> 2.8
-    # Now Message-ID is automatically wrapped in <...>
-    # This checks that email incoming with non-wrapped Message-ID is successfully matched to stored wrapped Message-ID
-    context 'when <Message-Id> is stored in database, but incoming email has Message-Id' do
-      let(:message_id) { 'some_message_id_999@example.com' }
-
-      before { ticket_article.update! internal: true, message_id: "<#{message_id}>" }
-
-      include_examples 'sets new article to internal'
     end
   end
 end
