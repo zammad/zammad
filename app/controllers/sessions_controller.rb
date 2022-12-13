@@ -62,6 +62,10 @@ class SessionsController < ApplicationController
       ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
+    if session['saml_uid'] || session['saml_session_index']
+      return saml_destroy
+    end
+
     reset_session
 
     # Remove the user id from the session
@@ -219,26 +223,6 @@ class SessionsController < ApplicationController
     render json: {}
   end
 
-  def saml_destroy
-    raise Exceptions::UnprocessableEntity, __('No SAML info found in the session data.') if !session['saml_uid'] || !session['saml_session_index']
-
-    options = SamlDatabase.setup
-    settings = OneLogin::RubySaml::Settings.new(options)
-
-    logout_request = OneLogin::RubySaml::Logoutrequest.new
-
-    # Since we created a new SAML request, save the transaction_id
-    # to compare it with the response we get back
-    session['saml_transaction_id'] = logout_request.uuid
-
-    settings.name_identifier_value = session['saml_uid']
-    settings.sessionindex = session['saml_session_index']
-
-    url = logout_request.create(settings)
-
-    render json: { url: url }
-  end
-
   private
 
   def authenticate_with_password
@@ -291,6 +275,24 @@ class SessionsController < ApplicationController
     end
 
     config
+  end
+
+  def saml_destroy
+    options = SamlDatabase.setup
+    settings = OneLogin::RubySaml::Settings.new(options)
+
+    logout_request = OneLogin::RubySaml::Logoutrequest.new
+
+    # Since we created a new SAML request, save the transaction_id
+    # to compare it with the response we get back
+    session['saml_transaction_id'] = logout_request.uuid
+
+    settings.name_identifier_value = session['saml_uid']
+    settings.sessionindex = session['saml_session_index']
+
+    url = logout_request.create(settings)
+
+    render json: { url: url }
   end
 
 end

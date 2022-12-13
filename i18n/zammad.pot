@@ -7023,10 +7023,6 @@ msgstr ""
 msgid "No Proxy"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb
-msgid "No SAML info found in the session data."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
 msgid "No SSL"

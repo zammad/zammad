@@ -59,32 +59,20 @@ class App.Auth
       # tasks left in the queue
       Spine.Ajax.clearQueue()
 
-      session = App.Session.get()
+      App.Ajax.request(
+        id:   'logout'
+        type: 'DELETE'
+        url:  App.Config.get('api_path') + '/signout'
+        success: (data, status, xhr) =>
+          if data && data.url
+            return location.replace(data.url)
 
-      if typeof(session) != 'undefined' && session.source == 'saml'
-        App.Ajax.request(
-          id:   'logout'
-          type: 'DELETE'
-          url:  '/auth/saml/logout'
-          success: (data, status, xhr) ->
-            location.replace(data.url)
+          # set logout (config, session, ...)
+          @_logout(rerender, callback)
 
-          error: (xhr, statusText, error) =>
-            @_loginError()
-        )
-      else
-        App.Ajax.request(
-          id:   'logout'
-          type: 'DELETE'
-          url:  App.Config.get('api_path') + '/signout'
-          success: =>
-
-            # set logout (config, session, ...)
-            @_logout(rerender, callback)
-
-          error: (xhr, statusText, error) =>
-            @_loginError()
-        )
+        error: (xhr, statusText, error) =>
+          @_loginError()
+      )
     Spine.Ajax.queue(performLogut)
 
   @_login: (data, type) ->
