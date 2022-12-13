@@ -118,10 +118,7 @@ describe('Form - Field - Organization - Query', () => {
       },
     })
 
-    // Resolve `defineAsyncComponent()` calls first.
-    await vi.dynamicImportSettled()
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -217,10 +214,7 @@ describe('Form - Field - Organization - Query', () => {
       },
     })
 
-    // Resolve `defineAsyncComponent()` calls first.
-    await vi.dynamicImportSettled()
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
 
     const filterElement = wrapper.getByRole('searchbox')
 
