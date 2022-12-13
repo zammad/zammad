@@ -183,57 +183,66 @@ describe('Creating new ticket as agent', () => {
     ).toBeInTheDocument()
   })
 
-  it('redirects to detail view after successful ticket creation', async () => {
-    const mockCustomer = mockCustomerQueryResult()
-    const mockTicket = mockTicketCreate()
+  it.each([
+    { index: 0, button: 'arrow submit button' },
+    { index: 1, button: 'text submit button' },
+  ])(
+    'redirects to detail view after successful ticket creation when clicked on $button',
+    async ({ index }) => {
+      const mockCustomer = mockCustomerQueryResult()
+      const mockTicket = mockTicketCreate()
 
-    const { mockFormUpdater, view } = await visitTicketCreate()
+      const { mockFormUpdater, view } = await visitTicketCreate()
 
-    await view.events.type(view.getByLabelText('Title'), 'Ticket Title')
-    await waitUntil(() => mockFormUpdater.calls.resolve === 2)
+      await view.events.type(view.getByLabelText('Title'), 'Ticket Title')
+      await waitUntil(() => mockFormUpdater.calls.resolve === 2)
 
-    await nextStep(view)
-    await nextStep(view)
+      await nextStep(view)
+      await nextStep(view)
 
-    // Customer selection.
-    await view.events.click(view.getByLabelText('Customer'))
-    await view.events.type(view.getByRole('searchbox'), 'nicole')
+      // Customer selection.
+      await view.events.click(view.getByLabelText('Customer'))
+      await view.events.type(view.getByRole('searchbox'), 'nicole')
 
-    await waitUntil(() => mockCustomer.calls.resolve)
+      await waitUntil(() => mockCustomer.calls.resolve)
 
-    await view.events.click(view.getByText('Nicole Braun'))
+      await view.events.click(view.getByText('Nicole Braun'))
 
-    await waitUntil(() => mockFormUpdater.calls.resolve === 3)
+      await waitUntil(() => mockFormUpdater.calls.resolve === 3)
 
-    // Group selection.
-    await view.events.click(view.getByLabelText('Group'))
-    await view.events.click(view.getByText('Users'))
-    await waitUntil(() => mockFormUpdater.calls.resolve === 4)
+      // Group selection.
+      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(view.getByText('Users'))
+      await waitUntil(() => mockFormUpdater.calls.resolve === 4)
 
-    await nextStep(view)
+      await nextStep(view)
 
-    // Text input.
-    const editorNode = getNode('body')
-    await editorNode?.input('Article body', false)
+      // Text input.
+      const editorNode = getNode('body')
+      await editorNode?.input('Article body', false)
 
-    await waitUntil(() => mockFormUpdater.calls.resolve === 5)
+      await waitUntil(() => mockFormUpdater.calls.resolve === 5)
 
-    const submitButton = view.getByRole('button', { name: 'Create ticket' })
-    await waitUntil(() => !submitButton.hasAttribute('disabled'))
+      // there is button with "arrow up" and actual button
+      const submitButton = view.getAllByRole('button', {
+        name: 'Create ticket',
+      })[index]
+      await waitUntil(() => !submitButton.hasAttribute('disabled'))
 
-    expect(submitButton).not.toBeDisabled()
+      expect(submitButton).not.toBeDisabled()
 
-    await view.events.click(submitButton)
+      await view.events.click(submitButton)
 
-    await waitUntil(() => mockTicket.calls.resolve)
+      await waitUntil(() => mockTicket.calls.resolve)
 
-    await expect(view.findByRole('alert')).resolves.toHaveTextContent(
-      'Ticket has been created successfully.',
-    )
+      await expect(view.findByRole('alert')).resolves.toHaveTextContent(
+        'Ticket has been created successfully.',
+      )
 
-    const router = getTestRouter()
-    expect(router.replace).toHaveBeenCalledWith('/tickets/1')
-  })
+      const router = getTestRouter()
+      expect(router.replace).toHaveBeenCalledWith('/tickets/1')
+    },
+  )
 
   it('shows confirm popup, when leaving', async () => {
     const { view } = await visitTicketCreate()

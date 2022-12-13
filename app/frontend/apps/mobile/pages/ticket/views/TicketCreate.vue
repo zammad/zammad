@@ -369,6 +369,14 @@ const submitButtonDisabled = computed(() => {
   )
 })
 
+const moveStep = () => {
+  if (activeStep.value === lastStepName.value) {
+    formSubmit()
+    return
+  }
+  setMultiStep()
+}
+
 const isScrolledToBottom = ref(true)
 
 const setIsScrolledToBottom = () => {
@@ -480,22 +488,20 @@ export default {
   </div>
   <footer
     :class="{
-      'h-32': lastStepName !== activeStep,
-      'h-14': lastStepName === activeStep,
       'bg-gray-light backdrop-blur-lg': !isScrolledToBottom,
     }"
-    class="bottom-navigation fixed bottom-0 z-10 w-full px-4 transition"
+    class="bottom-navigation fixed bottom-0 z-10 h-32 w-full px-4 transition"
   >
     <FormKit
-      v-if="lastStepName !== activeStep"
       :variant="ButtonVariant.Primary"
       type="button"
       outer-class="mt-4 mb-2"
+      :disabled="lastStepName === activeStep && submitButtonDisabled"
       wrapper-class="flex grow justify-center items-center"
       input-class="py-2 px-4 w-full h-14 text-xl font-semibold rounded-xl select-none"
-      @click="setMultiStep()"
+      @click="moveStep()"
     >
-      {{ $t('Continue') }}
+      {{ lastStepName === activeStep ? $t('Create ticket') : $t('Continue') }}
     </FormKit>
     <CommonStepper
       v-model="activeStep"

@@ -32,7 +32,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
   end
 
   def submit_form
-    find_button('Create ticket').click
+    find_button('Create ticket', match: :first).click
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/create.graphql')
   end
 
@@ -47,7 +47,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
 
   shared_examples 'creating a ticket' do |article_type:, direction: nil|
     it 'can complete all steps' do
-      expect(find_button('Create ticket', disabled: true).disabled?).to be(true)
+      expect(find_button('Create ticket', match: :first, disabled: true).disabled?).to be(true)
 
       # Step 1.
       find_field('Title').fill_in(with: Faker::Name.name_with_middle)
