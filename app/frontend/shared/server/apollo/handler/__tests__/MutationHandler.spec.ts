@@ -28,7 +28,7 @@ const mutationSampleErrorResult = {
   errors: [
     {
       message: 'GraphQL Error',
-      extensions: { type: 'Exceptions::NotAuthorized' },
+      extensions: { type: 'Exceptions::Unknown' },
     },
   ],
 }
@@ -196,7 +196,7 @@ describe('MutationHandler', () => {
         })
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
-          type: 'Exceptions::NotAuthorized',
+          type: 'Exceptions::Unknown',
           message: 'GraphQL Error',
         })
       })

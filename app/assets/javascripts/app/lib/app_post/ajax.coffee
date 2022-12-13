@@ -96,6 +96,16 @@ class _ajaxSingleton
       # 200, all is fine
       return if status is 200
 
+      try
+        json = JSON.parse(detail)
+        error = json.error
+        error_human = json.error_human || error
+
+      error_human = detail if !error_human
+
+      if App.Session.get()?.id && (status is 401 || (status is 403 && error && error is 'Authentication required'))
+        App.Event.trigger('auth:session_invalid')
+
       # do not show any error message for various 4** codes (handled by controllers)
       return if status is 401
       return if status is 403
@@ -105,13 +115,7 @@ class _ajaxSingleton
       # do not show any error message with code 502
       return if status is 502
 
-      try
-        json = JSON.parse(detail)
-        text = json.error_human || json.error
-
-      text = detail if !text
-
-      escaped = App.Utils.htmlEscape(text)
+      escaped = App.Utils.htmlEscape(error_human)
 
       # show error message
       new App.ControllerTechnicalErrorModal(

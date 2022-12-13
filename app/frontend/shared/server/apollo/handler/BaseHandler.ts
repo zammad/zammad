@@ -70,7 +70,40 @@ export default abstract class BaseHandler<
   protected handleError(error: ApolloError): void {
     const options = this.handlerOptions
 
-    if (options.errorShowNotification) {
+    let triggerNotification = options.errorShowNotification
+
+    const { graphQLErrors, networkError } = error
+    let errorHandler: GraphQLHandlerError
+
+    if (graphQLErrors.length > 0) {
+      const { message, extensions }: GraphQLErrorReport = graphQLErrors[0]
+      const type =
+        (extensions?.type as GraphQLErrorTypes) ||
+        GraphQLErrorTypes.NetworkError
+
+      errorHandler = {
+        type:
+          (extensions?.type as GraphQLErrorTypes) ||
+          GraphQLErrorTypes.NetworkError,
+        message,
+      }
+
+      triggerNotification = type !== GraphQLErrorTypes.NotAuthorized
+    } else if (networkError) {
+      errorHandler = {
+        type: GraphQLErrorTypes.NetworkError,
+      }
+    } else {
+      errorHandler = {
+        type: GraphQLErrorTypes.UnkownError,
+      }
+    }
+
+    if (options.errorCallback) {
+      options.errorCallback(errorHandler)
+    }
+
+    if (triggerNotification) {
       // TODO enable and fix all tests
       // if (import.meta.env.DEV) {
       //   console.error(error)
@@ -79,30 +112,6 @@ export default abstract class BaseHandler<
         message: options.errorNotificationMessage,
         type: options.errorNotificationType,
       })
-    }
-
-    if (options.errorCallback) {
-      const { graphQLErrors, networkError } = error
-      let errorHandler: GraphQLHandlerError
-
-      if (graphQLErrors.length > 0) {
-        const { message, extensions }: GraphQLErrorReport = graphQLErrors[0]
-        errorHandler = {
-          type:
-            (extensions?.type as GraphQLErrorTypes) ||
-            GraphQLErrorTypes.NetworkError,
-          message,
-        }
-      } else if (networkError) {
-        errorHandler = {
-          type: GraphQLErrorTypes.NetworkError,
-        }
-      } else {
-        errorHandler = {
-          type: GraphQLErrorTypes.UnkownError,
-        }
-      }
-      options.errorCallback(errorHandler)
     }
   }
 

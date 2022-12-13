@@ -28,7 +28,7 @@ const subscriptionSampleErrorResult = {
   errors: [
     {
       message: 'GraphQL Error',
-      extensions: { type: 'Exceptions::NotAuthorized' },
+      extensions: { type: 'Exceptions::Unknown' },
     },
   ],
 }
@@ -238,7 +238,7 @@ describe('SubscriptionHandler', () => {
         expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
-          type: 'Exceptions::NotAuthorized',
+          type: 'Exceptions::Unknown',
           message: 'GraphQL Error',
         })
       })

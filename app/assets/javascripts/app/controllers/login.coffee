@@ -22,6 +22,10 @@ class Login extends App.ControllerFullPage
       data = {
         errorMessage: App.i18n.translateContent('Due to inactivity, you have been automatically logged out.')
       }
+    if window.location.hash is '#session_invalid'
+      data = {
+        errorMessage: App.i18n.translateContent('The session is no longer valid. Please log in again.')
+      }
 
     @title __('Sign in')
 
@@ -148,3 +152,4 @@ class Login extends App.ControllerFullPage
 App.Config.set('login', Login, 'Routes')
 App.Config.set('login/admin/:password_auth_token', Login, 'Routes')
 App.Config.set('session_timeout', Login, 'Routes')
+App.Config.set('session_invalid', Login, 'Routes')

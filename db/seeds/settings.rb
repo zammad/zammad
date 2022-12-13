@@ -1869,10 +1869,17 @@ Setting.create_if_not_exists(
         placeholder: 'https://capriza.github.io/samling/samling.html',
       },
       {
+        display:     __('IDP Single Logout target URL'),
+        null:        true,
+        name:        'idp_slo_service_url',
+        tag:         'input',
+        placeholder: 'https://capriza.github.io/samling/slo.html',
+      },
+      {
         display:     __('IDP certificate'),
         null:        true,
         name:        'idp_cert',
-        tag:         'input',
+        tag:         'textarea',
         placeholder: '-----BEGIN CERTIFICATE-----\n...-----END CERTIFICATE-----',
       },
       {

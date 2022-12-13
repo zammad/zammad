@@ -2,7 +2,7 @@
 
 class SessionsController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, only: %i[switch_to_user list delete]
-  skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth]
+  skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth saml_destroy]
   skip_before_action :user_device_log, only: %i[create_sso]
 
   def show
@@ -217,6 +217,26 @@ class SessionsController < ApplicationController
   def delete
     SessionHelper.destroy(params[:id])
     render json: {}
+  end
+
+  def saml_destroy
+    raise Exceptions::UnprocessableEntity, __('No SAML info found in the session data.') if !session['saml_uid'] || !session['saml_session_index']
+
+    options = SamlDatabase.setup
+    settings = OneLogin::RubySaml::Settings.new(options)
+
+    logout_request = OneLogin::RubySaml::Logoutrequest.new
+
+    # Since we created a new SAML request, save the transaction_id
+    # to compare it with the response we get back
+    session['saml_transaction_id'] = logout_request.uuid
+
+    settings.name_identifier_value = session['saml_uid']
+    settings.sessionindex = session['saml_session_index']
+
+    url = logout_request.create(settings)
+
+    render json: { url: url }
   end
 
   private

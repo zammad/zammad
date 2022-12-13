@@ -2,22 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe 'SAML TESTING', integration: true, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN KEYCLOAK_ADMIN_PASSWORD], type: :system do
+RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true, required_envs: %w[KEYCLOAK_BASE_URL KEYCLOAK_ADMIN KEYCLOAK_ADMIN_PASSWORD], type: :system do
   # Shared/persistent variables
   saml_initialized = false
   saml_access_token = ''
 
-  let(:saml_base_url)               { ENV['KEYCLOAK_BASE_URL'] }
-  let(:zammad_base_url)             { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
-  let(:saml_auth_endpoint)          { "#{saml_base_url}/realms/master/protocol/openid-connect/token" }
-  let(:saml_auth_payload)           { { username: ENV['KEYCLOAK_ADMIN'], password: ENV['KEYCLOAK_ADMIN_PASSWORD'], grant_type: 'password', client_id: 'admin-cli' } }
-  let(:saml_client_import_endpoint) { "#{saml_base_url}/admin/realms/zammad/clients" }
-  let(:saml_auth_headers)           { { Authorization: "Bearer #{saml_access_token}" } }
-  let(:saml_client_json)            { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('ZAMMAD_BASE_URL', zammad_base_url) }
+  let(:saml_base_url)                { ENV['KEYCLOAK_BASE_URL'] }
+  let(:zammad_base_url)              { "#{Capybara.app_host}:#{Capybara.current_session.server.port}" }
+  let(:saml_auth_endpoint)           { "#{saml_base_url}/realms/master/protocol/openid-connect/token" }
+  let(:saml_auth_payload)            { { username: ENV['KEYCLOAK_ADMIN'], password: ENV['KEYCLOAK_ADMIN_PASSWORD'], grant_type: 'password', client_id: 'admin-cli' } }
+  let(:saml_client_import_endpoint)  { "#{saml_base_url}/admin/realms/zammad/clients" }
+  let(:saml_auth_headers)            { { Authorization: "Bearer #{saml_access_token}" } }
+  let(:saml_client_json)             { Rails.root.join('test/data/saml/zammad-client.json').read.gsub('ZAMMAD_BASE_URL', zammad_base_url) }
+  let(:saml_realm_zammad_descriptor) { "#{saml_base_url}/realms/zammad/protocol/saml/descriptor" }
+  let(:saml_realm_zammad_accounts)   { "#{saml_base_url}/realms/zammad/account" }
 
   # Only before(:each) can access let() variables.
   before do
-    return if saml_initialized
+    next if saml_initialized
 
     # Get auth token
     response = UserAgent.post(saml_auth_endpoint, saml_auth_payload)
@@ -33,11 +35,85 @@ RSpec.describe 'SAML TESTING', integration: true, required_envs: %w[KEYCLOAK_BAS
     saml_initialized = true
   end
 
-  context 'with SAML authentication' do
-    it 'works as expected ;)' do
-      # TODO: real tests must follow later.
-      expect(saml_initialized).to be(true)
+  def set_saml_config
+    # setup Zammad SAML authentication
+    response = UserAgent.get(saml_realm_zammad_descriptor)
+    raise 'No Zammad realm descriptor found' if !response.success?
+
+    match = response.body.match(%r{<ds:X509Certificate>(?<cert>.+)</ds:X509Certificate>})
+    raise 'No X509Certificate found' if !match[:cert]
+
+    auth_saml_credentials =
+      {
+        display_name:           'SAML',
+        idp_sso_target_url:     "#{saml_base_url}/realms/zammad/protocol/saml",
+        idp_slo_service_url:    "#{saml_base_url}/realms/zammad/protocol/saml",
+        idp_cert:               "-----BEGIN CERTIFICATE-----\n#{match[:cert]}\n-----END CERTIFICATE-----",
+        name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+      }
+    Setting.set('auth_saml_credentials', auth_saml_credentials)
+    Setting.set('auth_saml', true)
+    Setting.set('fqdn', zammad_base_url.gsub(%r{^https?://}, ''))
+  end
+
+  # shared_examples does not work.
+  def login_saml
+    visit '/#login'
+    find('.auth-provider--saml').click
+
+    find_by_id('kc-form')
+    expect(page).to have_current_path(%r{/realms/zammad/protocol/saml\?SAMLRequest=.+})
+    expect(page).to have_css('#kc-form-login')
+
+    within '#kc-form-login' do
+      fill_in 'username', with: 'john.doe'
+      fill_in 'password', with: 'test'
+
+      click_button
+    end
+
+    find_by_id('app')
+    expect(page).to have_current_route('ticket/view/my_tickets')
+  end
+
+  describe 'SP login and SP logout' do
+    before do
+      set_saml_config
+    end
+
+    it 'is successful' do
+      login_saml
+
+      visit saml_realm_zammad_accounts
+      find_by_id('landingWelcomeMessage')
+      expect(page).to have_css('#landingSignOutButton')
+
+      visit '/#logout'
+      find_by_id('app')
+      expect(page).to have_current_route('login')
+
+      visit saml_realm_zammad_accounts
+      find_by_id('landingWelcomeMessage')
+      expect(page).to have_no_css('#landingSignOutButton')
     end
   end
 
+  describe 'SP login and IDP logout' do
+    before do
+      set_saml_config
+    end
+
+    it 'is successful' do
+      login_saml
+
+      visit saml_realm_zammad_accounts
+
+      find_by_id('landingWelcomeMessage')
+      find('#landingSignOutButton').click
+
+      visit '/'
+      find_by_id('app')
+      expect(page).to have_current_route('login')
+    end
+  end
 end

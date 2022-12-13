@@ -34,6 +34,8 @@ if (route.query.invalidatedSession === '1') {
     message: __('The session is no longer valid. Please log in again.'),
     type: NotificationTypes.Warn,
   })
+
+  // TODO: After showing this we should remove the query parameter from the URL.
 }
 
 const authentication = useAuthenticationStore()
