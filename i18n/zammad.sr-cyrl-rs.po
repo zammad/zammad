@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-22 03:30+0000\n"
+"PO-Revision-Date: 2022-12-12 16:02+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -193,6 +193,36 @@ msgstr ""
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
 "<% end %>\n"
+
+#. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_auth_provider/en.html.erb
+msgid ""
+"#{config.product_name} account linked with a third-party application\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you linked your account <b>with a third-party "
+"application</b> \"#{provider}\".</div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the linked account from your profile "
+"and change your third-party application password. Somebody might have gained "
+"unauthorized access to your account on the third-party service.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+"#{config.product_name} налог повезан са апликацијом трећег лица\n"
+"\n"
+"<div>Здраво #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Изгледа да сте повезали ваш налог <b>са апликацијом трећег лица</b> "
+"„#{provider}”.</div>\n"
+"<br>\n"
+"<div>Уколико ово нисте били ви, молимо уклоните повезани налог из вашег "
+"профила и промените вашу лозинку у апликацији трећег лица. Постоји могућност "
+"да је неко неовлашћено приступио вашем налогу на сервису трећег лица.</div>\n"
+"<br>\n"
+"<div>Ваш #{config.product_name} тим</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -786,6 +816,10 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "Отворен је пробни тикет, можете га пронаћи у вашем „%s” прегледу %l."
 
+#: app/models/ticket.rb
+msgid "A ticket cannot be merged into itself."
+msgstr "Није могуће спојити тикет са самим собом."
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Корисник је обавезан!"
@@ -1052,10 +1086,8 @@ msgid "Add a Personal Access Token"
 msgstr "Додај лични кључ за приступ"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Add image"
 msgid "Add a message"
-msgstr "Додај слику"
+msgstr "Напиши поруку"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
@@ -1072,6 +1104,11 @@ msgstr "Додај опцију прилога за отпремање."
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
+
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+msgid "Add condition"
+msgstr "Додај услов"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
@@ -1101,11 +1138,10 @@ msgstr "Додај наслов другог реда"
 msgid "Add sender initials to end of a tweet."
 msgstr "Додај иницијале пошиљаоца на крај твита."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Add Tag"
-msgid "Add tags"
-msgstr "Додај ознаку"
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+msgid "Add subclause"
+msgstr "Додај потклаузулу"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1124,8 +1160,6 @@ msgid "Additional follow-up detection"
 msgstr "Додатна детекција настављања"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Additional information"
 msgstr "Информације тикета"
 
@@ -1501,6 +1535,10 @@ msgstr "Архивирано"
 msgid "Archived at"
 msgstr "Архивирано у"
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
+msgstr "Да ли сте сигурни да желите да спојите тикет (#%s) са #%s?"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1516,6 +1554,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
@@ -1525,6 +1564,9 @@ msgid "Are you sure?"
 msgstr "Да ли сте сигурни?"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Да ли сте сигурни? Имате незапамћене измене које ће бити изгубљене."
 
@@ -1777,6 +1819,10 @@ msgstr "Стање аутоматског затварања"
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
 msgstr "Аутоматско повезивање налога приликом иницијалне пријаве"
+
+#: db/seeds/settings.rb
+msgid "Automatic account linking notification"
+msgstr "Аутоматско обавештавање о повезивању налога"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -2079,7 +2125,9 @@ msgstr "БН"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Календар"
 
@@ -2144,10 +2192,6 @@ msgstr "Није било могуће обрисати, објекат има �
 msgid "Can't find User for Token"
 msgstr "Није било могуће пронађи корисника на основу кључа"
 
-#: app/models/ticket.rb
-msgid "Can't merge ticket with itself!"
-msgstr "Тикет се не може спојити са собом!"
-
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr "Није било могуће послати нагомилане поруке, неаутентификована сесија"
@@ -2172,6 +2216,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Откажи"
@@ -2225,6 +2270,10 @@ msgstr "Категорија"
 msgid "Category page layout"
 msgstr "Распоред странице категорије"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Caution!"
+msgstr "Опрез!"
+
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "Није било могуће наћи сертификат за проверу."
@@ -2257,6 +2306,11 @@ msgstr "Измени објекте"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
 msgstr "Измените вашу лозинку"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Change customer"
+msgstr "Промени клијента"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2682,6 +2736,14 @@ msgstr "Подеси апликацију"
 msgid "Configure Basic Settings"
 msgstr "Подеси основна подешавања"
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+msgid "Confirm dialog"
+msgstr "Дијалог потврде"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Confirm merge"
+msgstr "Потврди спајање"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -2729,14 +2791,6 @@ msgstr "Потврда"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr "Неуспела потврда."
-
-#: lib/search_index_backend.rb
-msgid "Conflicting date ranges"
-msgstr "Неусаглашени периоди"
-
-#: app/controllers/reports_controller.rb
-msgid "Conflicting date ranges. Please check your selected report profile."
-msgstr "Неусаглашени периоди. Молимо проверите одабрани профил извештаја."
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -2990,10 +3044,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create Ticket"
-msgstr "Отвори пробни тикет"
+msgstr "Отвори тикет"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3033,10 +3085,8 @@ msgstr "Додај нове записе"
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
-#, fuzzy
-#| msgid "Create new object"
 msgid "Create new ticket"
-msgstr "Додај нови објекат"
+msgstr "Отвори нови тикет"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 msgid "Create new ticket for this organization"
@@ -3060,10 +3110,8 @@ msgid "Create tag"
 msgstr "Додај ознаку"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create ticket"
-msgstr "Отвори пробни тикет"
+msgstr "Отвори тикет"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -3097,11 +3145,23 @@ msgstr "Додај:"
 msgid "Created"
 msgstr "Додато"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created Article"
+msgstr "Додат чланак"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
 msgstr "Додато у"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created External Article"
+msgstr "Додат екстерни чланак"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Created Internal Article"
+msgstr "Додат интерни чланак"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -3136,6 +3196,10 @@ msgstr "Додато у:"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "Додато од стране"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+msgid "Creating new tickets via web is disabled."
+msgstr "Отварање нових тикета путем веб интерфејса је онемогућено."
 
 #: app/models/report.rb
 msgid "Creation Channels"
@@ -3713,6 +3777,12 @@ msgid ""
 msgstr ""
 "Одређује да ли је i-doit (https://www.i-doit.org/) интеграција укључена или "
 "не."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports complex logical expressions."
+msgstr ""
+"Одређује да ли уредник услова тикета подржава комплексне логичке изразе."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4578,21 +4648,9 @@ msgstr "Измени клијента"
 msgid "Edit Organization"
 msgstr "Измени организацију"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Customer"
-msgid "Edit customer"
-msgstr "Измени клијента"
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "Измени форму"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Organization"
-msgid "Edit organization"
-msgstr "Измени организацију"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
@@ -4893,6 +4951,14 @@ msgstr "Укључује приказ прилога."
 #: db/seeds/settings.rb
 msgid "Enables priority icons in ticket overviews."
 msgstr "Укључује иконице приоритета у прегледима тикета."
+
+#: db/seeds/settings.rb
+msgid ""
+"Enables sending of an email notification to a user when they link their "
+"account with a third-party application."
+msgstr ""
+"Укључује слање имејл обавештења кориснику када повежу свој налог са "
+"апликацијом трећег лица."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5279,10 +5345,8 @@ msgid "Execute changes on objects"
 msgstr "Изврши измене на објектима"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Not configured"
 msgid "Execute configured macros"
-msgstr "Није подешено"
+msgstr "Изврши подешене макрое"
 
 #: db/seeds/schedulers.rb
 msgid "Execute import jobs."
@@ -5303,6 +5367,10 @@ msgstr "Стручњак"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Expert Settings"
 msgstr "Стручна подешавања"
+
+#: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+msgid "Expert mode"
+msgstr "Стручни режим"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
@@ -5427,6 +5495,10 @@ msgstr "Систем датотека"
 msgid "Filter"
 msgstr "Филтер"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Find a ticket"
+msgstr "Пронађи тикет"
+
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr "Пронађите шта тражите, нпр. „кључне речи”"
@@ -5543,6 +5615,7 @@ msgstr ""
 "Из безбедносних разлога, API кључ ће бити приказан само једанпут. Неопходно "
 "је да га сачувате на безбедном месту пре него што наставите."
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr "Забрањено"
@@ -5729,6 +5802,10 @@ msgstr "Услуга географске локације"
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
 msgstr "Први кораци"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Get notified"
+msgstr "Буди обавештен(а)"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -6809,6 +6886,10 @@ msgstr "Позови клијенте да отворе тикете у Zammad"
 msgid "Ionicons"
 msgstr "Ionicons"
 
+#: app/models/ticket.rb
+msgid "It is not possible to merge into an already merged ticket."
+msgstr "Није могуће спојити већ спојени тикет."
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
 msgstr "Број ставки по страни"
@@ -6966,6 +7047,10 @@ msgstr "Језик"
 msgid "Languages"
 msgstr "Језици"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Article"
+msgstr "Последњи чланак"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
 msgstr "Последњи одговор оператера у"
@@ -6977,6 +7062,14 @@ msgstr "Последњи одговор у"
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
 msgstr "Последњи одговор клијента у"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last External Article"
+msgstr "Последњи екстерни чланак"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Internal Article"
+msgstr "Последњи интерни чланак"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
@@ -7337,9 +7430,21 @@ msgstr "март"
 msgid "Mark all as read"
 msgstr "Обележи све као прочитано"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match all (AND)"
+msgstr "Конјункција (AND)"
+
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
 msgstr "Уколико се следеће подудара"
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match any (OR)"
+msgstr "Дисјункција (OR)"
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match none (NOT)"
+msgstr "Негација (NOT)"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -7426,10 +7531,8 @@ msgid "Merge"
 msgstr "Споји"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge tickets"
-msgstr "Споји са Ticket#"
+msgstr "Споји тикете"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
@@ -8922,7 +9025,7 @@ msgstr "Молимо кликните на линк из имејл поруке
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
 
-#: app/models/ticket.rb
+#: app/models/ticket/selector/sql.rb
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -8961,6 +9064,10 @@ msgstr "Молимо унесите исправан URL."
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Неопходан прималац у „За” или „CC”."
+
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Please select a ticket to merge into."
+msgstr "Молимо одаберите тикет за спајање."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
@@ -9307,6 +9414,7 @@ msgstr "Удаљено"
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -9788,6 +9896,7 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Save"
 msgstr "Сачувај"
 
@@ -9804,6 +9913,10 @@ msgstr "Сачувај као"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "Сачувај конфигурацију"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+msgid "Save ticket"
+msgstr "Сачувај тикет"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -9972,10 +10085,8 @@ msgid "Select the customer of the ticket or create one."
 msgstr "Изабери клијента тикета или додај новог."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Select the customer of the ticket or create one."
 msgid "Select the type of ticket your are creating"
-msgstr "Изабери клијента тикета или додај новог."
+msgstr "Изабери тип новог тикета"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10127,10 +10238,8 @@ msgid "Sessions"
 msgstr "Сесије"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create your first ticket"
 msgid "Set a title for your ticket"
-msgstr "Отвори свој први тикет"
+msgstr "Одреди наслов свог тикета"
 
 #: db/seeds/settings.rb
 msgid "Set agent limit"
@@ -10265,8 +10374,7 @@ msgstr ""
 msgid "Show"
 msgstr "Прикажи"
 
-#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
-#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue
 msgid "Show %s more"
 msgstr "Прикажи још %s"
 
@@ -10325,10 +10433,9 @@ msgid "Show the chat when ready."
 msgstr "Прикажи ћаскање када буде спремно."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
-#, fuzzy
-#| msgid "Show ticket viewers"
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 msgid "Show ticket actions"
-msgstr "Прикажи гледаоце тикета"
+msgstr "Прикажи радње тикета"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "Show ticket viewers"
@@ -10565,6 +10672,10 @@ msgstr "Започни ново"
 msgid "Start new conversation"
 msgstr "Започни нови разговор"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Start typing to find the ticket to merge into."
+msgstr "Унеси текст за претрагу тикета за спајање."
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Start typing to search for users…"
 msgstr "Унеси текст за претрагу корисника…"
@@ -10727,6 +10838,10 @@ msgstr "Претплати се на државне празнике у"
 msgid "Subscribed Tickets"
 msgstr "Претплаћени тикети"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Subscribers"
+msgstr "Претплатници"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr "Подешавања претплате"
@@ -10798,6 +10913,10 @@ msgstr "Понашање прозора након извршене радње �
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Прозор има промене, да ли заиста желите да га затворите?"
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+msgid "Tag \"%s\" already exists."
+msgstr "Ознака „%s” већ постоји."
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco
@@ -10805,6 +10924,8 @@ msgstr "Прозор има промене, да ли заиста желите 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
@@ -11973,6 +12094,10 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Expert Mode"
+msgstr "Стручни режим услова тикета"
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr "Број тикета"
@@ -12020,8 +12145,8 @@ msgid "Ticket Overview"
 msgstr "Преглед тикета"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-msgid "Ticket Overview settings are saved"
-msgstr "Подешавања прегледа тикета су сачувана"
+msgid "Ticket Overview settings are saved."
+msgstr "Подешавања прегледа тикета су сачувана."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overviews"
@@ -12048,16 +12173,16 @@ msgid "Ticket Subscriptions"
 msgstr "Претплате тикета"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "Ticket actions"
-msgstr "Ескалација тикета"
+msgstr "Радње тикета"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "User could not be created."
 msgid "Ticket could not be created."
-msgstr "Није било могуће додати корисника."
+msgstr "Није било могуће отворити тикет."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+msgid "Ticket customer updated successfully."
+msgstr "Клијент тикета је успешно освежен."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
@@ -12072,14 +12197,10 @@ msgid "Ticket has %s viewers"
 msgstr "Тикет има %s гледаоца"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
-msgstr "Пробно извршавање је било успешно."
+msgstr "Тикет је успешно отворен."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Ticket info"
 msgstr "Информације тикета"
 
@@ -12138,9 +12259,33 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"Ticket selector contains expert conditions. If you turn off the expert mode, "
+"it can lead to data loss in your condition attributes."
+msgstr ""
+"Услови тикета садрже стручне изразе. Уколико искључите стручни режим, ово "
+"може довести до губитка података у атрибутима услова."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+msgid "Ticket tags could not be updated."
+msgstr "Није било могуће освежити ознаке тикета."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+msgid "Ticket tags updated successfully."
+msgstr "Означе тикета су успешно освежене."
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "Ticket title"
+msgstr "Наслов тикета"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "Освежавање тикета"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "Ticket updated successfully."
+msgstr "Тикет је успешно освежен."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Ticket viewers"
@@ -12651,6 +12796,7 @@ msgid "Unread notifications"
 msgstr "Непрочитана обавештења"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
 msgstr "Откажи претплату"
 
@@ -13749,6 +13895,16 @@ msgstr "Можете користити следећу скрипту за сл�
 msgid "You currently don't have any tickets."
 msgstr "Тренутно немате ниједан тикет."
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"You disabled the expert mode. This will downgrade all expert conditions and "
+"can lead to data loss in your condition attributes. Please check your "
+"conditions before saving."
+msgstr ""
+"Искључили сте стручни режим. Ово ће уназадити све стручне услове и може "
+"довести до губитка података у атрибутима ваших услова. Молимо проверите "
+"своје услове пре снимања."
+
 #: app/controllers/import_freshdesk_controller.rb
 msgid "You do not have administrator permission."
 msgstr "Немате администраторске дозволе."
@@ -14201,11 +14357,13 @@ msgstr "додато %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user"
 msgstr "тренутни корисник"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user organization"
 msgstr "организација тренутног корисника"
 
@@ -14250,6 +14408,16 @@ msgstr "опадајуће"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "искључи"
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket after certain time but create new ticket"
+msgstr "уместо поновног отварања након извесног времена отвори нови тикет"
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket but create new ticket"
+msgstr "уместо поновног отварања отвори нови тикет"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
@@ -14676,8 +14844,10 @@ msgstr "ново и отворено"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/settings.rb
 msgid "no"
 msgstr "не"
 
@@ -14708,6 +14878,7 @@ msgid "not set"
 msgstr "није постављено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "not set (not defined)"
 msgstr "није постављено (није одређено)"
 
@@ -14924,11 +15095,13 @@ msgstr "sms"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific organization"
 msgstr "конкретна организација"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific user"
 msgstr "конкретан корисник"
 
@@ -15051,10 +15224,13 @@ msgid "within next (relative)"
 msgstr "у следећих (релативно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 msgid "yes"
 msgstr "да"
 
@@ -15097,6 +15273,24 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Edit customer"
+#~ msgstr "Измени клијента"
+
+#~ msgid "Edit organization"
+#~ msgstr "Измени организацију"
+
+#~ msgid "Add tags"
+#~ msgstr "Додај ознаку"
+
+#~ msgid "Conflicting date ranges"
+#~ msgstr "Неусаглашени периоди"
+
+#~ msgid "Conflicting date ranges. Please check your selected report profile."
+#~ msgstr "Неусаглашени периоди. Молимо проверите одабрани профил извештаја."
+
+#~ msgid "Can't merge ticket with itself!"
+#~ msgstr "Тикет се не може спојити са собом!"
 
 #~ msgid "Ticket Create"
 #~ msgstr "Отварање тикета"

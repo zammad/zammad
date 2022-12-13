@@ -238,6 +238,24 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
+#. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_auth_provider/en.html.erb
+msgid ""
+"#{config.product_name} account linked with a third-party application\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you linked your account <b>with a third-party "
+"application</b> \"#{provider}\".</div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the linked account from your profile "
+"and change your third-party application password. Somebody might have gained "
+"unauthorized access to your account on the third-party service.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
@@ -973,6 +991,12 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "測試工單已建立，您可以在工單總覽 “%s” ％l 中找到它。"
 
+#: app/models/ticket.rb
+#, fuzzy
+#| msgid "Retweets are converted to Tickets"
+msgid "A ticket cannot be merged into itself."
+msgstr "轉推 Retweets 將轉換為工單"
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "需要一個使用者！"
@@ -1258,6 +1282,13 @@ msgstr "新增附件上傳選項。"
 msgid "Add bullet list"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "Add condition"
+msgstr "儲存的條件"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
 msgstr ""
@@ -1294,11 +1325,10 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr "新增寄件人姓名縮寫在 Twitter 結尾。"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Add Tag"
-msgid "Add tags"
-msgstr "新增標籤"
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+msgid "Add subclause"
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1761,6 +1791,10 @@ msgstr "已封存"
 msgid "Archived at"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1774,6 +1808,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
@@ -1783,6 +1818,9 @@ msgid "Are you sure?"
 msgstr "您確定嗎？"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -2054,6 +2092,12 @@ msgstr "自動關閉狀態"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
+msgstr "初始登入時自動建立帳戶連結"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Automatic account link on initial logon"
+msgid "Automatic account linking notification"
 msgstr "初始登入時自動建立帳戶連結"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -2363,7 +2407,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "行事曆"
 
@@ -2436,10 +2482,6 @@ msgstr ""
 msgid "Can't find User for Token"
 msgstr ""
 
-#: app/models/ticket.rb
-msgid "Can't merge ticket with itself!"
-msgstr ""
-
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr ""
@@ -2462,6 +2504,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "取消"
@@ -2517,6 +2560,12 @@ msgstr "類別"
 msgid "Category page layout"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#, fuzzy
+#| msgid "Duration"
+msgid "Caution!"
+msgstr "通話時間"
+
 #: lib/secure_mailing/smime/incoming.rb
 #, fuzzy
 #| msgid "When notification is being sent."
@@ -2553,6 +2602,13 @@ msgstr "更動物件"
 #| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "更動您的密碼"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Change Customer"
+msgid "Change customer"
+msgstr "更動客戶"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -3020,6 +3076,18 @@ msgstr "配置 App"
 msgid "Configure Basic Settings"
 msgstr "基本設定"
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#, fuzzy
+#| msgid "Confirm/submit dialog"
+msgid "Confirm dialog"
+msgstr "確認/提交 對話框"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Configure"
+msgid "Confirm merge"
+msgstr "配置"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -3067,14 +3135,6 @@ msgstr "配置"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
-msgstr ""
-
-#: lib/search_index_backend.rb
-msgid "Conflicting date ranges"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "Conflicting date ranges. Please check your selected report profile."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -3433,11 +3493,29 @@ msgstr "建立"
 msgid "Created"
 msgstr "建立於"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created Article"
+msgstr "建立一個測試工單"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created External Article"
+msgstr "建立一個測試工單"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created Internal Article"
+msgstr "建立一個測試工單"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -3474,6 +3552,12 @@ msgstr "建立在"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "建立由"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Creating new tickets via web is disabled."
+msgstr "機構中的工單"
 
 #: app/models/report.rb
 #, fuzzy
@@ -4033,6 +4117,11 @@ msgstr ""
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4894,21 +4983,9 @@ msgstr "編輯客戶"
 msgid "Edit Organization"
 msgstr "編輯機構"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Customer"
-msgid "Edit customer"
-msgstr "編輯客戶"
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "編輯遮罩"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Organization"
-msgid "Edit organization"
-msgstr "編輯機構"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -5194,6 +5271,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables priority icons in ticket overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Enables sending of an email notification to a user when they link their "
+"account with a third-party application."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5639,6 +5722,12 @@ msgstr "專家"
 msgid "Expert Settings"
 msgstr "專家設定"
 
+#: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#, fuzzy
+#| msgid "Expert"
+msgid "Expert mode"
+msgstr "專家"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
 msgstr "專家"
@@ -5768,6 +5857,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "過濾器"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Find a ticket"
+msgstr "指派工單"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
@@ -5899,6 +5994,7 @@ msgstr ""
 "基於安全考量，API token 僅顯示一次。您需要先將其複製到安全的地方，然後再繼"
 "續。"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
@@ -6101,6 +6197,12 @@ msgstr "Geo 地理位置服務"
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Account not verified"
+msgid "Get notified"
+msgstr "帳號尚未通過驗證"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -7252,6 +7354,10 @@ msgstr "邀請客戶在 Zammad 反應問題"
 msgid "Ionicons"
 msgstr ""
 
+#: app/models/ticket.rb
+msgid "It is not possible to merge into an already merged ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
 msgstr "每頁項目"
@@ -7420,6 +7526,12 @@ msgstr "語言"
 msgid "Languages"
 msgstr "語言"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Article"
+msgid "Last Article"
+msgstr "文章"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
 msgstr ""
@@ -7430,6 +7542,14 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last External Article"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Internal Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
@@ -7806,9 +7926,21 @@ msgstr "三月"
 msgid "Mark all as read"
 msgstr "標記所有為已讀"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match all (AND)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
 msgstr "符合以下所有條件"
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match any (OR)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match none (NOT)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -9514,7 +9646,7 @@ msgstr "請點選驗證郵件中的連結。"
 msgid "Please contact your administrator."
 msgstr ""
 
-#: app/models/ticket.rb
+#: app/models/ticket/selector/sql.rb
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -9554,6 +9686,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Please select a ticket to merge into."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -9926,6 +10062,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -10410,6 +10547,7 @@ msgstr "星期六"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Save"
 msgstr "儲存"
 
@@ -10428,6 +10566,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "儲存配置"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Save ticket"
+msgstr "建立一個測試工單"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -10920,8 +11064,7 @@ msgstr "該電子郵箱的電子郵件應匯入為封存或一般電子郵件？
 msgid "Show"
 msgstr "顯示"
 
-#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
-#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue
 #, fuzzy
 #| msgid "See more"
 msgid "Show %s more"
@@ -10987,6 +11130,7 @@ msgid "Show the chat when ready."
 msgstr "準備好後顯示文字對談。"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 #, fuzzy
 #| msgid "Overviews"
 msgid "Show ticket actions"
@@ -11248,6 +11392,10 @@ msgstr "重新開始"
 msgid "Start new conversation"
 msgstr "開始新的對話"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Start typing to find the ticket to merge into."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
 #| msgid "Start typing to search for users..."
@@ -11418,6 +11566,12 @@ msgstr "訂閱公共假期於"
 msgid "Subscribed Tickets"
 msgstr "關注的工單"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Subscribe"
+msgid "Subscribers"
+msgstr "關注"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr "訂閱設定"
@@ -11487,6 +11641,12 @@ msgstr "工單操作後的頁籤行為"
 msgid "Tab has changed, do you really want to close it?"
 msgstr "頁籤已有更動，您確定要關閉?"
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#, fuzzy
+#| msgid "Account already exists!"
+msgid "Tag \"%s\" already exists."
+msgstr "帳戶已經存在！"
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco
@@ -11494,6 +11654,8 @@ msgstr "頁籤已有更動，您確定要關閉?"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
@@ -12774,6 +12936,10 @@ msgstr ""
 "target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Expert Mode"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr ""
@@ -12825,7 +12991,7 @@ msgstr "新增工單總覽"
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Overviews"
-msgid "Ticket Overview settings are saved"
+msgid "Ticket Overview settings are saved."
 msgstr "總覽"
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -12865,6 +13031,12 @@ msgstr "工單提升等級"
 #| msgid "%s Object(s) are created."
 msgid "Ticket could not be created."
 msgstr "%s 個物件已建立。"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket customer updated successfully."
+msgstr "測試運行成功。"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
@@ -12973,9 +13145,39 @@ msgstr ""
 "target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"Ticket selector contains expert conditions. If you turn off the expert mode, "
+"it can lead to data loss in your condition attributes."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Ticket tags could not be updated."
+msgstr "%s 個物件已建立。"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket tags updated successfully."
+msgstr "測試運行成功。"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket title"
+msgstr "工單更新"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "工單更新"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket updated successfully."
+msgstr "測試運行成功。"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -13534,6 +13736,7 @@ msgid "Unread notifications"
 msgstr "通知"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
 msgstr "取消關注"
 
@@ -14669,6 +14872,13 @@ msgstr "您可以使用以下 Script 腳本將資料發佈到 %s。"
 msgid "You currently don't have any tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"You disabled the expert mode. This will downgrade all expert conditions and "
+"can lead to data loss in your condition attributes. Please check your "
+"conditions before saving."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 msgid "You do not have administrator permission."
 msgstr ""
@@ -15134,11 +15344,13 @@ msgstr "建立於"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user"
 msgstr "目前使用者"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user organization"
 msgstr "用前使用者機構"
 
@@ -15185,6 +15397,16 @@ msgstr "待處理"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "斷開"
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket after certain time but create new ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket but create new ticket"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
@@ -15648,8 +15870,10 @@ msgstr "新增 & 開啟"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/settings.rb
 msgid "no"
 msgstr "否"
 
@@ -15680,6 +15904,7 @@ msgid "not set"
 msgstr "未設定"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "not set (not defined)"
 msgstr "未設定 (未定義)"
 
@@ -15914,11 +16139,13 @@ msgstr "簡訊"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific organization"
 msgstr "特定的機構"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific user"
 msgstr "特定的使用者"
 
@@ -16045,10 +16272,13 @@ msgid "within next (relative)"
 msgstr "在下一個 (相對)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 msgid "yes"
 msgstr "是的"
 
@@ -16107,6 +16337,21 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Edit Customer"
+#~ msgid "Edit customer"
+#~ msgstr "編輯客戶"
+
+#, fuzzy
+#~| msgid "Edit Organization"
+#~ msgid "Edit organization"
+#~ msgstr "編輯機構"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "Add tags"
+#~ msgstr "新增標籤"
 
 #, fuzzy
 #~| msgid "Ticket %s created!"

@@ -192,6 +192,24 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
+#. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_auth_provider/en.html.erb
+msgid ""
+"#{config.product_name} account linked with a third-party application\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you linked your account <b>with a third-party "
+"application</b> \"#{provider}\".</div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the linked account from your profile "
+"and change your third-party application password. Somebody might have gained "
+"unauthorized access to your account on the third-party service.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
@@ -786,6 +804,12 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "สร้าง ticket ทดสอบแล้ว คุณสามารถดูได้ในภาพรวม \"%s\" %l"
 
+#: app/models/ticket.rb
+#, fuzzy
+#| msgid "this ticket was merged into ticket %s"
+msgid "A ticket cannot be merged into itself."
+msgstr "ticket อีกใบถูกรวมเข้าเป็น ticket |%s|"
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "ต้องการ User!"
@@ -1069,6 +1093,13 @@ msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่
 msgid "Add bullet list"
 msgstr "เพิ่มรายการหัวข้อย่อย"
 
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+#, fuzzy
+#| msgid "add option"
+msgid "Add condition"
+msgstr "เพิ่มทางเลือก"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
 msgstr "เพิ่มหัวเรื่องระดับแรก"
@@ -1097,11 +1128,10 @@ msgstr "เพิ่มหัวเรื่องระดับที่สอ
 msgid "Add sender initials to end of a tweet."
 msgstr "เพิ่มชื่อย่อของผู้ส่งที่ส่วนท้ายของทวีต"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Add Tag"
-msgid "Add tags"
-msgstr "เพิ่มแทค"
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+msgid "Add subclause"
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1459,6 +1489,10 @@ msgstr "จัดเก็บแล้ว"
 msgid "Archived at"
 msgstr "จัดเก็บที่"
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1472,6 +1506,7 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
@@ -1481,6 +1516,9 @@ msgid "Are you sure?"
 msgstr "แน่ใจหรือ?"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #, fuzzy
 #| msgid ""
 #| "Are you sure you want to reload? You have unsaved changes that will get "
@@ -1735,6 +1773,12 @@ msgstr "สถานะปิดอัตโนมัติ"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
+msgstr "ลิงค์บัญชีอัตโนมัติเมื่อเข้าสู่ระบบครั้งแรก"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Automatic account link on initial logon"
+msgid "Automatic account linking notification"
 msgstr "ลิงค์บัญชีอัตโนมัติเมื่อเข้าสู่ระบบครั้งแรก"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -2029,7 +2073,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
@@ -2094,10 +2140,6 @@ msgstr "ลบไม่ได้ วัตถุมีการอ้างอ�
 msgid "Can't find User for Token"
 msgstr "ไม่พบผู้ใช้สำหรับโทเค็น"
 
-#: app/models/ticket.rb
-msgid "Can't merge ticket with itself!"
-msgstr "ไม่สามารถรวม ticket กับตัวเองได้!"
-
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr "ส่ง spool ไม่ได้ ประวัติการเข้าสู่ระบบไม่ผ่านการตรวจสอบสิทธิ์"
@@ -2120,6 +2162,7 @@ msgstr "อัปเดตรหัสผ่านไม่ได้ รหั�
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "ยกเลิก"
@@ -2175,6 +2218,12 @@ msgstr "หมวดหมู่"
 msgid "Category page layout"
 msgstr "เค้าโครงหน้าหมวดหมู่"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#, fuzzy
+#| msgid "Duration"
+msgid "Caution!"
+msgstr "ความยาว"
+
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
 msgstr "ไม่พบใบรับรองสำหรับการตรวจสอบ"
@@ -2207,6 +2256,13 @@ msgstr "เปลี่ยนวัตถุ"
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
 msgstr "เปลี่ยนรหัสผ่านของคุณ"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Change Customer"
+msgid "Change customer"
+msgstr "เปลี่ยนลูกค้า"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2640,6 +2696,18 @@ msgstr "กำหนดค่าแอพ"
 msgid "Configure Basic Settings"
 msgstr "ตั้งค่าเบื้องต้น"
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#, fuzzy
+#| msgid "Confirm/submit dialog"
+msgid "Confirm dialog"
+msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Configure"
+msgid "Confirm merge"
+msgstr "ตั้งค่า"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -2674,14 +2742,6 @@ msgstr "การยืนยัน"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
 msgstr "การยืนยันล้มเหลว"
-
-#: lib/search_index_backend.rb
-msgid "Conflicting date ranges"
-msgstr "ช่วงวันที่ที่ขัดแย้งกัน"
-
-#: app/controllers/reports_controller.rb
-msgid "Conflicting date ranges. Please check your selected report profile."
-msgstr "ช่วงวันที่ที่ขัดแย้งกัน โปรดตรวจสอบโปรไฟล์รายงานที่คุณเลือก"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -3041,11 +3101,29 @@ msgstr "สร้าง"
 msgid "Created"
 msgstr "สร้าง"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Created At"
+msgid "Created Article"
+msgstr "สร้าง ที่"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
 msgstr "สร้าง ที่"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create new object"
+msgid "Created External Article"
+msgstr "สร้างวัตถุใหม่"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create new object"
+msgid "Created Internal Article"
+msgstr "สร้างวัตถุใหม่"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -3082,6 +3160,12 @@ msgstr "สร้างที่"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "สร้างโดย"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Create new ticket for this user"
+msgid "Creating new tickets via web is disabled."
+msgstr "สร้าง Tickets ใหม่สําหรับผู้ใช้รายนี้"
 
 #: app/models/report.rb
 msgid "Creation Channels"
@@ -3630,6 +3714,11 @@ msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports complex logical expressions."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4447,21 +4536,9 @@ msgstr "แก้ไขลูกค้า"
 msgid "Edit Organization"
 msgstr "แก้ไของค์กร"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Customer"
-msgid "Edit customer"
-msgstr "แก้ไขลูกค้า"
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr "แก้ไขหน้ากาก"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Organization"
-msgid "Edit organization"
-msgstr "แก้ไของค์กร"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
@@ -4744,6 +4821,12 @@ msgstr "เปิดใช้งานการแสดงตัวอย่า
 #: db/seeds/settings.rb
 msgid "Enables priority icons in ticket overviews."
 msgstr "เปิดใช้งานไอคอนลำดับความสำคัญในภาพรวมตั๋ว"
+
+#: db/seeds/settings.rb
+msgid ""
+"Enables sending of an email notification to a user when they link their "
+"account with a third-party application."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5132,6 +5215,12 @@ msgstr "ผู้เชี่ยวชาญ"
 msgid "Expert Settings"
 msgstr "ตั้งค่ามืออาชีพ"
 
+#: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#, fuzzy
+#| msgid "Expert"
+msgid "Expert mode"
+msgstr "ผู้เชี่ยวชาญ"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
 msgstr "ผู้เชี่ยวชาญ"
@@ -5258,6 +5347,12 @@ msgstr "ระบบแฟ้ม"
 msgid "Filter"
 msgstr "ตัวกรอง"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Editing ticket"
+msgid "Find a ticket"
+msgstr "แก้ไข tickets"
+
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
 msgstr ""
@@ -5376,6 +5471,7 @@ msgstr ""
 "ด้วยเหตุผลด้านความปลอดภัย โทเค็น API จะแสดงเพียงครั้งเดียว "
 "คุณจะต้องบันทึกไว้ในที่ที่ปลอดภัยก่อนดำเนินการต่อ"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr "ห้ามใช้"
@@ -5570,6 +5666,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
 msgstr "เริ่ม"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Account not verified"
+msgid "Get notified"
+msgstr "บัญชีไม่ได้รับการยืนยัน"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -6607,6 +6709,10 @@ msgstr "เชิญลูกค้าสร้างปัญหาใน Zamma
 msgid "Ionicons"
 msgstr "Ionicons"
 
+#: app/models/ticket.rb
+msgid "It is not possible to merge into an already merged ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
 msgstr ""
@@ -6766,6 +6872,12 @@ msgstr "ภาษา"
 msgid "Languages"
 msgstr "ภาษา"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Article"
+msgid "Last Article"
+msgstr "บทความ"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
 msgstr ""
@@ -6777,6 +6889,14 @@ msgstr ""
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
 msgstr "ลูกค้าติดต่อล่าสุดที่"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last External Article"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Internal Article"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
@@ -7133,8 +7253,20 @@ msgstr "มีนาคม"
 msgid "Mark all as read"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match all (AND)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match any (OR)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match none (NOT)"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
@@ -8705,7 +8837,7 @@ msgstr "โปรดคลิกลิงก์ในอีเมลยืนย
 msgid "Please contact your administrator."
 msgstr ""
 
-#: app/models/ticket.rb
+#: app/models/ticket/selector/sql.rb
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -8746,6 +8878,12 @@ msgstr ""
 #| msgid "Need recipient in \"TO\" or \"CC\"."
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "ต้องการผู้รับใน \"TO\" หรือ \"CC\""
+
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+#, fuzzy
+#| msgid "This ticket was merged into"
+msgid "Please select a ticket to merge into."
+msgstr "Ticket นี้ถูกรวมเข้ากับ"
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
@@ -9091,6 +9229,7 @@ msgstr "รีโมท"
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -9537,6 +9676,7 @@ msgstr "วันเสาร์"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Save"
 msgstr "บันทึก"
 
@@ -9553,6 +9693,12 @@ msgstr "บันทึกเป็น"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Save ticket"
+msgstr "ทดสอบสร้าง Ticket"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -10006,8 +10152,7 @@ msgstr "อีเมลจากกล่องจดหมายนี้คว
 msgid "Show"
 msgstr "แสดง"
 
-#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
-#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue
 msgid "Show %s more"
 msgstr "แสดง %s เพิ่ม"
 
@@ -10063,6 +10208,7 @@ msgid "Show the chat when ready."
 msgstr "แสดงแชทเมื่อพร้อม"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 #, fuzzy
 #| msgid "Show ticket viewers"
 msgid "Show ticket actions"
@@ -10306,6 +10452,10 @@ msgstr ""
 msgid "Start new conversation"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Start typing to find the ticket to merge into."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Start typing to search for users…"
 msgstr ""
@@ -10470,6 +10620,12 @@ msgstr ""
 msgid "Subscribed Tickets"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Subscribe"
+msgid "Subscribers"
+msgstr "บอกรับ"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr ""
@@ -10539,6 +10695,12 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "Tag \"%s\" already exists."
+msgstr "รายการนี้อยู่แล้ว!."
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco
@@ -10546,6 +10708,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
@@ -11690,6 +11854,10 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Expert Mode"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr "จำนวน Ticket"
@@ -11739,7 +11907,7 @@ msgstr "ภาพรวม Ticket ทั้งหมด"
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Ticket Overviews"
-msgid "Ticket Overview settings are saved"
+msgid "Ticket Overview settings are saved."
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -11779,6 +11947,12 @@ msgstr "Ticket ขยาย"
 #| msgid "User could not be created."
 msgid "Ticket could not be created."
 msgstr "ไม่สามารถสร้างผู้ใช้ได้"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket customer updated successfully."
+msgstr "การทดสอบดำเนินการสำเร็จ"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
@@ -11843,9 +12017,39 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"Ticket selector contains expert conditions. If you turn off the expert mode, "
+"it can lead to data loss in your condition attributes."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "User could not be created."
+msgid "Ticket tags could not be updated."
+msgstr "ไม่สามารถสร้างผู้ใช้ได้"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket tags updated successfully."
+msgstr "การทดสอบดำเนินการสำเร็จ"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket title"
+msgstr "Ticket อัปเดต"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "Ticket อัปเดต"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket updated successfully."
+msgstr "การทดสอบดำเนินการสำเร็จ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -12341,6 +12545,7 @@ msgid "Unread notifications"
 msgstr "การแจ้งเตือน"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
 msgstr "ยกเลิกการสมัคร"
 
@@ -13377,6 +13582,13 @@ msgstr "สามารถใช้สคริปต์ต่อไปนี้
 msgid "You currently don't have any tickets."
 msgstr "ขณะนี้ไม่มี Ticket ใด ๆ"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"You disabled the expert mode. This will downgrade all expert conditions and "
+"can lead to data loss in your condition attributes. Please check your "
+"conditions before saving."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 msgid "You do not have administrator permission."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ"
@@ -13804,11 +14016,13 @@ msgstr "สร้าง %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user"
 msgstr "ผู้ใช้ปัจจุบัน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user organization"
 msgstr "องค์กร ผู้ใช้ปัจจุบัน"
 
@@ -13853,6 +14067,18 @@ msgstr "กำลัง"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "ตัดการเชื่อมต่อ"
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket after certain time but create new ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+#, fuzzy
+#| msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
+msgid "do not reopen ticket but create new ticket"
+msgstr "ไม่สามารถติดตามผล ticket ที่ปิดได้ โปรดสร้าง ticket ใหม่"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
@@ -14293,8 +14519,10 @@ msgstr "ใหม่ & เปิด"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/settings.rb
 msgid "no"
 msgstr "ไม่"
 
@@ -14325,6 +14553,7 @@ msgid "not set"
 msgstr "ยังไม่ได้ตั้งค่า"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "not set (not defined)"
 msgstr "ไม่ได้ตั้ง (ไม่ได้กำหนดไว้ )"
 
@@ -14547,11 +14776,13 @@ msgstr "sms"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific organization"
 msgstr "เฉพาะองค์กร"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific user"
 msgstr "ผู้ใช้เฉพาะ"
 
@@ -14674,10 +14905,13 @@ msgid "within next (relative)"
 msgstr "within next (relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 msgid "yes"
 msgstr "ใช่"
 
@@ -14726,6 +14960,30 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Edit Customer"
+#~ msgid "Edit customer"
+#~ msgstr "แก้ไขลูกค้า"
+
+#, fuzzy
+#~| msgid "Edit Organization"
+#~ msgid "Edit organization"
+#~ msgstr "แก้ไของค์กร"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "Add tags"
+#~ msgstr "เพิ่มแทค"
+
+#~ msgid "Conflicting date ranges"
+#~ msgstr "ช่วงวันที่ที่ขัดแย้งกัน"
+
+#~ msgid "Conflicting date ranges. Please check your selected report profile."
+#~ msgstr "ช่วงวันที่ที่ขัดแย้งกัน โปรดตรวจสอบโปรไฟล์รายงานที่คุณเลือก"
+
+#~ msgid "Can't merge ticket with itself!"
+#~ msgstr "ไม่สามารถรวม ticket กับตัวเองได้!"
 
 #~ msgid "Ticket Create"
 #~ msgstr "สร้าง Ticket"
@@ -14907,9 +15165,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "Configure Base"
 #~ msgstr "กำหนดค่า Base"
-
-#~ msgid "This ticket was merged into"
-#~ msgstr "Ticket นี้ถูกรวมเข้ากับ"
 
 #~ msgid "sent to"
 #~ msgstr "ส่งถึง"

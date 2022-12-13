@@ -135,6 +135,24 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 
+#. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/user_auth_provider/en.html.erb
+msgid ""
+"#{config.product_name} account linked with a third-party application\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you linked your account <b>with a third-party "
+"application</b> \"#{provider}\".</div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the linked account from your profile "
+"and change your third-party application password. Somebody might have gained "
+"unauthorized access to your account on the third-party service.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_device_new_location/en.html.erb
@@ -725,6 +743,12 @@ msgid ""
 msgstr ""
 "itike yo kugerageza yakozwe. Ushobora kuyibona mu ncamake yawe \"%s\"%|"
 
+#: app/models/ticket.rb
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "A ticket cannot be merged into itself."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr ""
@@ -1010,6 +1034,13 @@ msgstr "ongeraho uburyo bwo komekaho umugereka kugira ngo wohereze"
 msgid "Add bullet list"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+#, fuzzy
+#| msgid "Action"
+msgid "Add condition"
+msgstr "Igikorwa"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
 msgstr ""
@@ -1046,11 +1077,10 @@ msgstr ""
 msgid "Add sender initials to end of a tweet."
 msgstr "Ongera iby'ibanze by'uwohereza ku mpera za twita"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Add Tag"
-msgid "Add tags"
-msgstr "ongeraho ikimenyetso "
+#: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+msgid "Add subclause"
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1432,6 +1462,10 @@ msgstr "bibitswe"
 msgid "Archived at"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
@@ -1445,6 +1479,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
@@ -1454,6 +1489,9 @@ msgid "Are you sure?"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -1725,6 +1763,12 @@ msgstr " Imimerere yo kwifunga"
 
 #: db/seeds/settings.rb
 msgid "Automatic account link on initial logon"
+msgstr "konti yihuza mu kwinjira bwa mbere"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Automatic account link on initial logon"
+msgid "Automatic account linking notification"
 msgstr "konti yihuza mu kwinjira bwa mbere"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
@@ -2040,7 +2084,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "ingengabihe"
 
@@ -2113,10 +2159,6 @@ msgstr ""
 msgid "Can't find User for Token"
 msgstr ""
 
-#: app/models/ticket.rb
-msgid "Can't merge ticket with itself!"
-msgstr ""
-
 #: lib/sessions/event/spool.rb
 msgid "Can't send spool, session not authenticated"
 msgstr ""
@@ -2139,6 +2181,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
 msgstr "Guhagarika"
@@ -2194,6 +2237,12 @@ msgstr "ikiciro"
 msgid "Category page layout"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+#, fuzzy
+#| msgid "Duration"
+msgid "Caution!"
+msgstr "igihe bimara"
+
 #: lib/secure_mailing/smime/incoming.rb
 #, fuzzy
 #| msgid "When notification is being sent."
@@ -2230,6 +2279,13 @@ msgstr "Hindura ibintu"
 #| msgid "Change your password"
 msgid "Change Your Password"
 msgstr "hindura ijambo banga"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Change Customer"
+msgid "Change customer"
+msgstr "hindura umukiriya"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
@@ -2697,6 +2753,18 @@ msgstr ""
 msgid "Configure Basic Settings"
 msgstr "Iboneza shingiro"
 
+#: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#, fuzzy
+#| msgid "Confirm/submit dialog"
+msgid "Confirm dialog"
+msgstr "kwemeza/kohereza ikiganiro"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "Configure"
+msgid "Confirm merge"
+msgstr "Boneza"
+
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
@@ -2732,14 +2800,6 @@ msgstr "iboneza "
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Confirmation failed."
-msgstr ""
-
-#: lib/search_index_backend.rb
-msgid "Conflicting date ranges"
-msgstr ""
-
-#: app/controllers/reports_controller.rb
-msgid "Conflicting date ranges. Please check your selected report profile."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
@@ -3096,11 +3156,29 @@ msgstr "rema"
 msgid "Created"
 msgstr "Cyaremwe"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created Article"
+msgstr "guhimba itike y'igeragezwa"
+
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created External Article"
+msgstr "guhimba itike y'igeragezwa"
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Created Internal Article"
+msgstr "guhimba itike y'igeragezwa"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -3137,6 +3215,12 @@ msgstr "byahimbwe kuwa"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created by"
 msgstr "byahimbwe na"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Creating new tickets via web is disabled."
+msgstr "amatike y'umuryango"
 
 #: app/models/report.rb
 #, fuzzy
@@ -3705,6 +3789,11 @@ msgstr ""
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4573,21 +4662,9 @@ msgstr "hindura umukiriya"
 msgid "Edit Organization"
 msgstr "hindura  ikigo"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Customer"
-msgid "Edit customer"
-msgstr "hindura umukiriya"
-
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
 msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Edit Organization"
-msgid "Edit organization"
-msgstr "hindura  ikigo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -4878,6 +4955,12 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables priority icons in ticket overviews."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Enables sending of an email notification to a user when they link their "
+"account with a third-party application."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5296,6 +5379,12 @@ msgstr "inzobere"
 msgid "Expert Settings"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/application_selector.jst.eco
+#, fuzzy
+#| msgid "Expert"
+msgid "Expert mode"
+msgstr "inzobere"
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
 msgstr "Inararibonye"
@@ -5425,6 +5514,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco
 msgid "Filter"
 msgstr "akayunguruzo"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Find a ticket"
+msgstr "Tanga amatike"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 #, fuzzy
@@ -5556,6 +5651,7 @@ msgstr ""
 "Ku bw'impanvu z'umutekano, ikimenyetso cya API cyerekanwa rimwe gusa. "
 "Uzakenerera kucyandukura ahantu hizewe mbere yo gukomeza."
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
@@ -5758,6 +5854,12 @@ msgstr "Serivisi y'ahantu h'ibidukikije"
 #: app/assets/javascripts/app/controllers/getting_started.coffee
 msgid "Get Started"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Account not verified"
+msgid "Get notified"
+msgstr "konti ntiyagenzuwe"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -6871,6 +6973,10 @@ msgstr "Gutumira/Guhamagarira abakiriya guhimba ibibazo m' uburyo bwihuse"
 msgid "Ionicons"
 msgstr ""
 
+#: app/models/ticket.rb
+msgid "It is not possible to merge into an already merged ticket."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
 msgstr "ibintu ukurikije ipaji"
@@ -7040,6 +7146,12 @@ msgstr "Ururimi "
 msgid "Languages"
 msgstr "Indimi"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+#, fuzzy
+#| msgid "Article"
+msgid "Last Article"
+msgstr "Ingingo"
+
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
 msgstr ""
@@ -7050,6 +7162,14 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Customer At"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last External Article"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee
+msgid "Last Internal Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
@@ -7427,9 +7547,21 @@ msgstr "werurwe"
 msgid "Mark all as read"
 msgstr "Shyiraho akamenyestso nk'aho  byasomwe"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match all (AND)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
 msgstr "Bihuza ibikurikira byose"
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match any (OR)"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid "Match none (NOT)"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
@@ -9082,7 +9214,7 @@ msgstr "Nyamuneka, kanda kuri link muri imeri yo kugenzura"
 msgid "Please contact your administrator."
 msgstr ""
 
-#: app/models/ticket.rb
+#: app/models/ticket/selector/sql.rb
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -9123,6 +9255,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
+msgid "Please select a ticket to merge into."
 msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb
@@ -9492,6 +9628,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
+#: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
@@ -9954,6 +10091,7 @@ msgstr "kuwa gatandatu"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 msgid "Save"
 msgstr "bika"
 
@@ -9972,6 +10110,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "bika iboneza"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Save ticket"
+msgstr "guhimba itike y'igeragezwa"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -10468,8 +10612,7 @@ msgstr ""
 msgid "Show"
 msgstr "garagaza"
 
-#: app/frontend/apps/mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue
-#: app/frontend/apps/mobile/components/CommonUsersList/CommonUsersList.vue
+#: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue
 #, fuzzy
 #| msgid "See more"
 msgid "Show %s more"
@@ -10535,6 +10678,7 @@ msgid "Show the chat when ready."
 msgstr "Erekana ikiganiro igihe nyacyo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
 #, fuzzy
 #| msgid "Overviews"
 msgid "Show ticket actions"
@@ -10788,6 +10932,10 @@ msgstr "Tangira inshya"
 msgid "Start new conversation"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
+msgid "Start typing to find the ticket to merge into."
+msgstr ""
+
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #, fuzzy
 #| msgid "Search for users"
@@ -10958,6 +11106,12 @@ msgstr "kwiyandikisha mu minsi mikuru rusande ukoresheje"
 msgid "Subscribed Tickets"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "My assigned Tickets"
+msgid "Subscribers"
+msgstr "amatike nahawe/nagenewe"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr "igenamiterere ryífatabuguzi"
@@ -11027,6 +11181,12 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Ibyo ureba byahindutse, urashaka koko kubifunga?"
 
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
+#, fuzzy
+#| msgid "%s Object(s) are deleted."
+msgid "Tag \"%s\" already exists."
+msgstr " ikintu%s cyasibwe(ibintu %s byasibwe)"
+
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/knowledge_base/_reader_tags.jst.eco
@@ -11034,6 +11194,8 @@ msgstr "Ibyo ureba byahindutse, urashaka koko kubifunga?"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 #: app/assets/javascripts/app/views/widget/tag.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/views/knowledge_base/public/answers/show.html.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/permissions.rb
@@ -12251,6 +12413,10 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Ticket Conditions Expert Mode"
+msgstr ""
+
 #: app/models/report.rb
 msgid "Ticket Count"
 msgstr ""
@@ -12302,7 +12468,7 @@ msgstr "Incamake nshya"
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Overviews"
-msgid "Ticket Overview settings are saved"
+msgid "Ticket Overview settings are saved."
 msgstr "incamake"
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -12342,6 +12508,12 @@ msgstr "izamuka rya tike"
 #| msgid "%s Object(s) are created."
 msgid "Ticket could not be created."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket customer updated successfully."
+msgstr "Igeragezwa ryagenze neza"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket escalation"
@@ -12408,9 +12580,39 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"Ticket selector contains expert conditions. If you turn off the expert mode, "
+"it can lead to data loss in your condition attributes."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Ticket tags could not be updated."
+msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket tags updated successfully."
+msgstr "Igeragezwa ryagenze neza"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket title"
+msgstr "kuvugurura tike"
+
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 msgid "Ticket update"
 msgstr "kuvugurura tike"
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket updated successfully."
+msgstr "Igeragezwa ryagenze neza"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -12930,6 +13132,7 @@ msgid "Unread notifications"
 msgstr "Kumenyesha"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Unsubscribe"
 msgstr ""
 
@@ -14021,6 +14224,13 @@ msgstr "Mushobora gukoresha imyandikire ikurikira mu gushyira imbonwa kuri %s"
 msgid "You currently don't have any tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
+msgid ""
+"You disabled the expert mode. This will downgrade all expert conditions and "
+"can lead to data loss in your condition attributes. Please check your "
+"conditions before saving."
+msgstr ""
+
 #: app/controllers/import_freshdesk_controller.rb
 msgid "You do not have administrator permission."
 msgstr ""
@@ -14489,11 +14699,13 @@ msgstr "cyaremwe"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user"
 msgstr "ubikoresha ubu"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "current user organization"
 msgstr "umuryango w'ubu w'umukoresha"
 
@@ -14540,6 +14752,16 @@ msgstr "ntibirarangira"
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "va ku murondo"
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket after certain time but create new ticket"
+msgstr ""
+
+#: app/assets/javascripts/app/models/group.coffee
+#: db/seeds/object_manager_attributes.rb
+msgid "do not reopen ticket but create new ticket"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 #, fuzzy
@@ -15000,8 +15222,10 @@ msgstr "Gishya cyangwa gufungura"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/settings.rb
 msgid "no"
 msgstr "Oya"
 
@@ -15032,6 +15256,7 @@ msgid "not set"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "not set (not defined)"
 msgstr "Ntabwo byashyizweho"
 
@@ -15262,11 +15487,13 @@ msgstr "ubutumwa bugufi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific organization"
 msgstr "umuryango wihariye"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "specific user"
 msgstr "umukoresha wihariye"
 
@@ -15389,10 +15616,13 @@ msgid "within next (relative)"
 msgstr "muby'imbere(ugereranyije)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee
+#: app/assets/javascripts/app/models/group.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
+#: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 msgid "yes"
 msgstr "Yego"
 
@@ -15452,6 +15682,21 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#, fuzzy
+#~| msgid "Edit Customer"
+#~ msgid "Edit customer"
+#~ msgstr "hindura umukiriya"
+
+#, fuzzy
+#~| msgid "Edit Organization"
+#~ msgid "Edit organization"
+#~ msgstr "hindura  ikigo"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "Add tags"
+#~ msgstr "ongeraho ikimenyetso "
 
 #, fuzzy
 #~| msgid "Ticket %s created!"
