@@ -166,7 +166,7 @@ $(function() {
         'Message': 'Wiadomość',
         'Name': 'Nazwa',
         'Your Email': 'Adres e-mail',
-        'Your Message…': '',
+        'Your Message…': 'Twoja wiadomość…',
         'Your Name': 'Imię i nazwisko',
       },
       'pt-br': {
