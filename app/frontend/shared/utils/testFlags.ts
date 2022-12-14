@@ -27,7 +27,9 @@ class TestFlags {
     if (!VITE_TEST_MODE) return
     await this.mutex.runExclusive(() => {
       this.flags.set(flag, true)
-      console.log('[testFlags] set flag "%s"', flag)
+      if (import.meta.env.DEBUG_TEST_FLAGS) {
+        console.log('[testFlags] set flag "%s"', flag)
+      }
     })
   }
 

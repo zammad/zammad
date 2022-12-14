@@ -38,6 +38,7 @@ import type {
   FormUpdaterRelationField,
   FormUpdaterQuery,
   FormUpdaterQueryVariables,
+  ObjectAttributeValue,
 } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
@@ -49,6 +50,7 @@ import type { ObjectLike } from '@shared/types/utils'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { parseGraphqlId } from '@shared/graphql/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
+import type { FormFieldAdditionalProps } from './types'
 import {
   type FormData,
   type FormSchemaField,
@@ -407,6 +409,19 @@ const setInternalField = (fieldName: string, internal: boolean) => {
   internalFieldCamelizeName[fieldName] = camelize(fieldName)
 }
 
+const updateSchemaLink = (
+  specificProps: FormFieldAdditionalProps,
+  fieldName: string,
+) => {
+  // native fields don't have link attribute, and we don't have a way to get rendered link from graphql
+  const values = (props.initialEntityObject?.objectAttributeValues ||
+    []) as ObjectAttributeValue[]
+  const attribute = values.find(({ attribute }) => attribute.name === fieldName)
+  if (attribute?.renderedLink) {
+    specificProps.link = attribute.renderedLink
+  }
+}
+
 const updateSchemaDataField = (
   field: FormSchemaField | SetRequired<Partial<FormSchemaField>, 'name'>,
 ) => {
@@ -414,7 +429,7 @@ const updateSchemaDataField = (
     show,
     updateFields,
     relation,
-    props: specificProps,
+    props: specificProps = {},
     ...fieldProps
   } = field
   const showField = show ?? schemaData.fields[field.name]?.show ?? true
@@ -427,6 +442,8 @@ const updateSchemaDataField = (
   if ('disabled' in fieldProps && !fieldProps.disabled) {
     fieldProps.disabled = undefined
   }
+
+  updateSchemaLink(fieldProps, field.name)
 
   if (schemaData.fields[field.name]) {
     schemaData.fields[field.name] = {

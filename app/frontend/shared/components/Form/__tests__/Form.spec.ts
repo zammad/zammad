@@ -19,6 +19,7 @@ import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/fr
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
+  router: true,
 }
 
 const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
@@ -306,6 +307,45 @@ describe('Form.vue - Edge Cases', () => {
     expect(wrapper.getByLabelText('Shared')).toHaveValue('no')
     expect(wrapper.getByLabelText('Domain Assignment')).toHaveValue('yes')
     expect(wrapper.getByLabelText('Organization')).toHaveTextContent('Example')
+  })
+
+  it('adds link attribute for custom fields with linktemplate', async () => {
+    const wrapper = await renderForm({
+      props: {
+        schema: [
+          {
+            type: 'text',
+            name: 'custom_title',
+            label: 'Custom Title',
+          },
+        ],
+        initialEntityObject: {
+          title: 'Initial title',
+          objectAttributeValues: [
+            {
+              attribute: {
+                name: 'custom_title',
+                display: 'Custom Title',
+                dataType: 'input',
+                dataOption: {
+                  default: '',
+                  type: 'text',
+                  linktemplate: 'https://example.com/#{rendered}',
+                  null: true,
+                },
+              },
+              value: '',
+              renderedLink: 'https://example.com/rendered',
+            },
+          ],
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('link')).toHaveAttribute(
+      'href',
+      'https://example.com/rendered',
+    )
   })
 
   it('can use form layout in schema', async () => {

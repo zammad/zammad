@@ -25,10 +25,9 @@ const { fields } = useDisplayObjectAttributes(props)
         :is="objectAttributesConfig.wrapper"
         :label="field.attribute.display"
       >
-        <!-- TODO link template might have #{}, but we don't have access to those, it should come from backend -->
         <CommonLink
-          v-if="field.attribute.dataOption?.linktemplate"
-          :link="field.attribute.dataOption?.linktemplate"
+          v-if="field.link"
+          :link="field.link"
           :class="objectAttributesConfig.classes.link"
         >
           <Component

@@ -24,6 +24,7 @@ interface AttributeField {
   attribute: ObjectManagerFrontendAttribute
   component: Component
   value: unknown
+  link: Maybe<string>
 }
 
 const attributesDeclarations = import.meta.glob<AttributeDeclaration>(
@@ -70,6 +71,11 @@ export const useDisplayObjectAttributes = (
     return value == null || value === ''
   }
 
+  const getLink = (name: string) => {
+    const attribute = attributesObject.value[name]
+    return attribute?.renderedLink || null
+  }
+
   const session = useSessionStore()
 
   const fields = computed<AttributeField[]>(() => {
@@ -85,6 +91,7 @@ export const useDisplayObjectAttributes = (
           attribute,
           component: definitionsByType[attribute.dataType],
           value,
+          link: getLink(attribute.name),
         }
       })
       .filter(({ attribute, value, component }) => {

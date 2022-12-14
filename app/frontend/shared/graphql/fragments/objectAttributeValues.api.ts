@@ -10,5 +10,6 @@ export const ObjectAttributeValuesFragmentDoc = gql`
     dataOption
   }
   value
+  renderedLink
 }
     `;

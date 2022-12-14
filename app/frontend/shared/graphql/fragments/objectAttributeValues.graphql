@@ -6,4 +6,5 @@ fragment objectAttributeValues on ObjectAttributeValue {
     dataOption
   }
   value
+  renderedLink
 }

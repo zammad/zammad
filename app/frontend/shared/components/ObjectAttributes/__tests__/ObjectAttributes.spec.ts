@@ -197,34 +197,6 @@ describe('common object attributes interface', () => {
     )
   })
 
-  it('has linktemplate link, even for tel/email', () => {
-    const object = {
-      phone: '+49 123456789',
-    }
-
-    const view = renderComponent(ObjectAttributes, {
-      props: {
-        object,
-        attributes: [
-          {
-            ...attributesByKey.phone,
-            dataOption: {
-              ...attributesByKey.phone.dataOption,
-              linktemplate: 'https://link.com',
-            },
-          },
-        ],
-      },
-    })
-
-    const phoneRegion = view.getByRole('region', { name: 'Phone' })
-    const phoneLink = getByRole(phoneRegion, 'link', {
-      name: '+49 123456789',
-    })
-
-    expect(phoneLink).toHaveAttribute('href', 'https://link.com')
-  })
-
   it('translates translatable', () => {
     mockPermissions(['admin.user', 'ticket.agent'])
 
@@ -346,5 +318,75 @@ describe('common object attributes interface', () => {
 
     expect(view.getByRole('region', { name: 'show' })).toBeInTheDocument()
     expect(view.queryByRole('region', { name: 'skip' })).not.toBeInTheDocument()
+  })
+
+  it('renders links', () => {
+    const object = {
+      objectAttributeValues: [
+        {
+          attribute: {
+            ...attributesByKey.integer_field,
+            dataOption: {
+              ...attributesByKey.integer_field.dataOption,
+              linktemplate: 'https://integer.com/#{render}',
+            },
+          },
+          value: 600,
+          renderedLink: 'https://integer.com/rendered',
+        },
+        {
+          attribute: attributesByKey.some_url,
+          value: 'https://url.com',
+        },
+        {
+          attribute: {
+            ...attributesByKey.some_email,
+            dataOption: {
+              ...attributesByKey.integer_field.dataOption,
+              linktemplate: 'https://email.com/#{render}',
+            },
+          },
+          value: 'email@email.com',
+          renderedLink: 'https://email.com/rendered',
+        },
+        {
+          attribute: {
+            ...attributesByKey.phone,
+            dataOption: {
+              ...attributesByKey.integer_field.dataOption,
+              linktemplate: 'https://phone.com/#{render}',
+            },
+          },
+          value: '+49 123456789',
+          renderedLink: 'https://phone.com/rendered',
+        },
+      ],
+    }
+
+    const attributes = object.objectAttributeValues.map((v) => v.attribute)
+
+    const view = renderComponent(ObjectAttributes, {
+      props: {
+        object,
+        attributes,
+        skipAttributes: ['skip'],
+      },
+      router: true,
+    })
+
+    const getRegion = (name: string) => view.getByRole('region', { name })
+
+    expect(
+      getByRole(getRegion('Integer Field'), 'link', { name: '600' }),
+    ).toHaveAttribute('href', 'https://integer.com/rendered')
+    expect(
+      getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' }),
+    ).toHaveAttribute('href', 'https://phone.com/rendered')
+    expect(
+      getByRole(getRegion('Email'), 'link', { name: 'email@email.com' }),
+    ).toHaveAttribute('href', 'https://email.com/rendered')
+    expect(
+      getByRole(getRegion('Url'), 'link', { name: 'https://url.com' }),
+    ).toHaveAttribute('href', 'https://url.com')
   })
 })

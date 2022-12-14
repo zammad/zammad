@@ -7,14 +7,11 @@ module Gql::Types
 
     field :attribute, Gql::Types::ObjectManager::FrontendAttributeType, null: false, description: 'The object attribute record'
     field :value, GraphQL::Types::JSON, description: "The value of the current object's object attribute"
-    field :rendered_value, GraphQL::Types::JSON, description: 'Rendered version of the value that considers templates which are defined'
+    field :rendered_link, String, description: 'Rendered version of link, if attribute has defined template'
 
-    def rendered_value
-      value = @object[:value]
-      return value if !value.is_a?(String)
-
+    def rendered_link
       template = @object.dig(:attribute, :data_option, 'linktemplate')
-      return value if !template
+      return nil if !template
 
       NotificationFactory::Renderer.new(
         objects:  { @object[:parent].class.name.downcase.to_sym => @object[:parent] },

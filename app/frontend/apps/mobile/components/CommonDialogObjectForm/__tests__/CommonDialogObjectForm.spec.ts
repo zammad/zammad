@@ -30,8 +30,12 @@ const renderForm = () => {
     note: '',
     active: false,
     objectAttributeValues: [
-      { attribute: attributes.textarea, value: 'old value' },
-      { attribute: attributes.test, value: 'some test' },
+      {
+        attribute: attributes.textarea,
+        value: 'old value',
+        renderedLink: null,
+      },
+      { attribute: attributes.test, value: 'some test', renderedLink: null },
     ],
   }
 

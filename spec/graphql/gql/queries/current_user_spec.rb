@@ -21,7 +21,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
                 name
               }
               value
-              renderedValue
+              renderedLink
             }
             organization {
               name
@@ -70,7 +70,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
       it 'has objectAttributeValue data for User' do
         oas = gql.result.data['objectAttributeValues']
-        expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }).to include('value' => 'TestDepartment', 'renderedValue' => 'TestDepartment')
+        expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }).to include('value' => 'TestDepartment', 'renderedLink' => nil)
       end
 
       context 'with custom object attribute with linktemplate', db_strategy: :reset do
@@ -89,7 +89,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
 
         it 'has rendered objectAttributeValue data for User' do
           oas = gql.result.data['objectAttributeValues']
-          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedValue' => "http://test?#{agent.fullname}")
+          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => "http://test?#{agent.fullname}")
         end
       end
 

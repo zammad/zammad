@@ -76,6 +76,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
           __typename: 'ObjectManagerFrontendAttribute',
         },
         value: '',
+        renderedLink: null,
         __typename: 'ObjectAttributeValue',
       },
       {
@@ -93,6 +94,7 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
           __typename: 'ObjectManagerFrontendAttribute',
         },
         value: '',
+        renderedLink: null,
         __typename: 'ObjectAttributeValue',
       },
     ],
