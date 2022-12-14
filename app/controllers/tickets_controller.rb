@@ -241,7 +241,6 @@ class TicketsController < ApplicationController
   def update
     ticket = Ticket.find(params[:id])
     authorize!(ticket, :follow_up?)
-    authorize!(ticket)
 
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
