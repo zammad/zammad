@@ -1333,6 +1333,10 @@ msgstr ""
 msgid "Attribute not editable!"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -11203,6 +11207,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "UID Attribute Name"
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco

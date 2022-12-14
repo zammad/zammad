@@ -27,6 +27,7 @@
     "client.secret.creation.time": "1670334049",
     "saml.force.post.binding": "true",
     "saml.encrypt": "false",
+    "post.logout.redirect.uris": "+",
     "saml_assertion_consumer_url_post": "ZAMMAD_BASE_URL/auth/saml/callback",
     "saml.server.signature": "true",
     "saml.server.signature.keyinfo.ext": "false",
@@ -51,6 +52,8 @@
       "consentRequired": false,
       "config": {
         "attribute.nameformat": "Basic",
+        "user.attribute": "firstName",
+        "aggregate.attrs": "false",
         "friendly.name": "Given name",
         "attribute.name": "first_name"
       }
@@ -62,8 +65,22 @@
       "consentRequired": false,
       "config": {
         "attribute.nameformat": "Basic",
+        "user.attribute": "email",
+        "aggregate.attrs": "false",
         "friendly.name": "Email address",
         "attribute.name": "email"
+      }
+    },
+    {
+      "name": "uid",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "user.attribute": "uid",
+        "aggregate.attrs": "false",
+        "friendly.name": "Unique Identifier",
+        "attribute.name": "uid"
       }
     },
     {
@@ -73,6 +90,8 @@
       "consentRequired": false,
       "config": {
         "attribute.nameformat": "Basic",
+        "user.attribute": "username",
+        "aggregate.attrs": "false",
         "friendly.name": "Full name",
         "attribute.name": "name"
       }
@@ -84,6 +103,8 @@
       "consentRequired": false,
       "config": {
         "attribute.nameformat": "Basic",
+        "user.attribute": "lastName",
+        "aggregate.attrs": "false",
         "friendly.name": "Family name",
         "attribute.name": "last_name"
       }

@@ -35,7 +35,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     saml_initialized = true
   end
 
-  def set_saml_config
+  def set_saml_config(name_identifier_format: nil, uid_attribute: nil)
     # setup Zammad SAML authentication
     response = UserAgent.get(saml_realm_zammad_descriptor)
     raise 'No Zammad realm descriptor found' if !response.success?
@@ -49,8 +49,9 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
         idp_sso_target_url:     "#{saml_base_url}/realms/zammad/protocol/saml",
         idp_slo_service_url:    "#{saml_base_url}/realms/zammad/protocol/saml",
         idp_cert:               "-----BEGIN CERTIFICATE-----\n#{match[:cert]}\n-----END CERTIFICATE-----",
-        name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+        name_identifier_format: name_identifier_format || 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
       }
+    auth_saml_credentials[:uid_attribute] = uid_attribute if uid_attribute
     Setting.set('auth_saml_credentials', auth_saml_credentials)
     Setting.set('auth_saml', true)
     Setting.set('fqdn', zammad_base_url.gsub(%r{^https?://}, ''))
@@ -76,6 +77,12 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     expect(page).to have_current_route('ticket/view/my_tickets')
   end
 
+  def logout_saml
+    visit '/#logout'
+    find_by_id('app')
+    expect(page).to have_current_route('login')
+  end
+
   describe 'SP login and SP logout' do
     before do
       set_saml_config
@@ -88,9 +95,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       find_by_id('landingWelcomeMessage')
       expect(page).to have_css('#landingSignOutButton')
 
-      visit '/#logout'
-      find_by_id('app')
-      expect(page).to have_current_route('login')
+      logout_saml
 
       visit saml_realm_zammad_accounts
       find_by_id('landingWelcomeMessage')
@@ -114,6 +119,36 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       visit '/'
       find_by_id('app')
       expect(page).to have_current_route('login')
+    end
+  end
+
+  describe "use custom user attribute 'uid' as uid_attribute" do
+    before do
+      set_saml_config(uid_attribute: 'uid')
+    end
+
+    it 'is successful' do
+      login_saml
+
+      user = User.find_by(email: 'john.doe@saml.example.com')
+      expect(user.login).to eq('73f7c02f-77b1-4cb7-9a2a-0e7a3aeeda52')
+
+      logout_saml
+    end
+  end
+
+  describe 'use unspecified (IDP provided) name identifier' do
+    before do
+      set_saml_config(name_identifier_format: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified')
+    end
+
+    it 'is successful' do
+      login_saml
+
+      user = User.find_by(email: 'john.doe@saml.example.com')
+      expect(user.login).to eq('john.doe')
+
+      logout_saml
     end
   end
 end

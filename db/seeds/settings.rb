@@ -1897,6 +1897,14 @@ Setting.create_if_not_exists(
         placeholder: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
       },
       {
+        display:     __('UID Attribute Name'),
+        null:        true,
+        name:        'uid_attribute',
+        tag:         'input',
+        placeholder: '',
+        help:        __('Attribute that uniquely identifies the user. If unset, the name identifier returned by the IDP is used.')
+      },
+      {
         display:  __('Your callback URL'),
         null:     true,
         name:     'callback_url',
