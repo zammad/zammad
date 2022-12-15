@@ -4,9 +4,9 @@ module Mixin
   module RequiredSubPaths
 
     def self.included(base)
-      path     = caller_locations(1..1).first.path
-      sub_path = File.join(File.dirname(path), File.basename(path, '.rb'))
-      eager_load_recursive(base, sub_path)
+      base_path     = ActiveSupport::Dependencies.search_for_file base.name.underscore
+      backends_path = base_path.delete_suffix File.extname(base_path)
+      eager_load_recursive(base, backends_path)
     end
 
     # Loads a directory recursively. This can be needed when accessing
