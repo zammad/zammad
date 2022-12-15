@@ -85,8 +85,13 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
   },
 }
 
+interface MockedRouter extends Router {
+  mockMethods(): void
+  restoreMethods(): void
+}
+
 let routerInitialized = false
-let router: Router
+let router: MockedRouter
 
 export const getTestRouter = () => router
 
@@ -125,13 +130,21 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   router = createRouter({
     history: createWebHistory(),
     routes: localRoutes,
-  })
+  }) as MockedRouter
+  // cannot use "as const" here, because ESLint fails with obscure error :shrug:
+  const methods = ['push', 'replace', 'back', 'go', 'forward'] as unknown as [
+    'push',
+  ]
 
-  vi.spyOn(router, 'push')
-  vi.spyOn(router, 'replace')
-  vi.spyOn(router, 'back')
-  vi.spyOn(router, 'go')
-  vi.spyOn(router, 'forward')
+  methods.forEach((name) => vi.spyOn(router, name))
+  router.mockMethods = () => {
+    methods.forEach((name) =>
+      vi.mocked(router[name]).mockImplementation(() => Promise.resolve()),
+    )
+  }
+  router.restoreMethods = () => {
+    methods.forEach((name) => vi.mocked(router[name]).mockRestore())
+  }
 
   plugins.push(router)
   plugins.push({
@@ -247,6 +260,8 @@ const mountImageViewer = () => {
 }
 
 afterEach(() => {
+  router?.restoreMethods()
+
   if (!imageViewerMounted) return
 
   imageViewerOptions.value = {

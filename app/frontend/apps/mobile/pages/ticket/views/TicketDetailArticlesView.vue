@@ -7,18 +7,13 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
-import { whenever } from '@vueuse/shared'
-import type {
-  TicketUpdatesSubscription,
-  TicketUpdatesSubscriptionVariables,
-} from '@shared/graphql/types'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
 import type { TicketArticle } from '../types/tickets'
-import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 import { useTicketInformation } from '../composable/useTicketInformation'
 
 interface Props {
@@ -32,7 +27,7 @@ const application = useApplicationStore()
 
 const articlesQuery = new QueryHandler(
   useTicketArticlesQuery(() => ({
-    ticketInternalId: Number(props.internalId),
+    ticketId: convertToGraphQLId('Ticket', props.internalId),
     pageSize: Number(application.config.ticket_articles_min ?? 5),
     isAgent: session.hasPermission(['ticket.agent']),
   })),
@@ -71,26 +66,6 @@ useHeader({
     return `#${number} - ${title}`
   }),
 })
-
-// TODO move to TicketDetailVIew, so changes will be reflected on other pages
-const stopWatch = whenever(
-  () => !isLoadingTicket.value,
-  () => {
-    if (!ticket.value) return
-
-    stopWatch()
-
-    ticketQuery.subscribeToMore<
-      TicketUpdatesSubscriptionVariables,
-      TicketUpdatesSubscription
-    >({
-      document: TicketUpdatesDocument,
-      variables: {
-        ticketId: ticket.value.id,
-      },
-    })
-  },
-)
 
 // TODO get users from graphql
 const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]

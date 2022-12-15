@@ -20,7 +20,7 @@ import { mockTicketDetailViewGql } from './mocks/detail-view'
 const visitTicketOrganization = async (
   organization: ConfidentTake<OrganizationQuery, 'organization'>,
 ) => {
-  mockTicketDetailViewGql({ mockSubscription: false })
+  mockTicketDetailViewGql()
 
   const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
     organization,

@@ -1,18 +1,22 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormValues } from '@shared/components/Form'
-import type { FormFieldValue, FormData } from '@shared/components/Form/types'
+import type { FormRef } from '@shared/components/Form/composable'
+import type { FormData } from '@shared/components/Form/types'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import type { TicketUpdateInput } from '@shared/graphql/types'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, ShallowRef } from 'vue'
 import { reactive, watch } from 'vue'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 import type { TicketById } from '../types/tickets'
 
-export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
+export const useTicketEdit = (
+  ticket: ComputedRef<TicketById | undefined>,
+  form: ShallowRef<FormRef | undefined>,
+) => {
   const initialTicketValue = reactive<FormValues>({})
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
 
@@ -20,11 +24,12 @@ export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
     if (!ticket) {
       return
     }
-    const { internalId } = ticket.owner
+    const ticketId = initialTicketValue.id || ticket.id
+    const { internalId: ownerInternalId } = ticket.owner
+    initialTicketValue.id = ticket.id
     initialTicketValue.title = ticket.title
     // show Zammad user as empty
-    initialTicketValue.owner_id = internalId === 1 ? null : internalId
-    // TODO form should support it out of the box
+    initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
     const attributes =
       ticket.objectAttributeValues?.reduce(
         (acc: Record<string, unknown>, cur) => {
@@ -34,11 +39,13 @@ export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
         {},
       ) || {}
     Object.assign(initialTicketValue, attributes)
+    form.value?.resetForm(initialTicketValue, ticket, {
+      // don't reset to new values, if user changes something
+      // if ticket is different, it's probably navigation to another ticket,
+      // so we can safely reset the form
+      resetDirty: ticketId !== ticket.id,
+    })
   })
-
-  const updateTicketField = (key: string, value: FormFieldValue) => {
-    initialTicketValue[key] = value
-  }
 
   const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
     EnumObjectManagerObjects.Ticket,
@@ -65,7 +72,6 @@ export const useTicketEdit = (ticket: ComputedRef<TicketById | undefined>) => {
 
   return {
     initialTicketValue,
-    updateTicketField,
     editTicket,
   }
 }

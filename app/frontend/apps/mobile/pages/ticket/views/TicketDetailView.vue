@@ -2,6 +2,10 @@
 
 <script setup lang="ts">
 import { redirectToError } from '@mobile/router/error'
+import type {
+  TicketUpdatesSubscription,
+  TicketUpdatesSubscriptionVariables,
+} from '@shared/graphql/types'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -12,32 +16,48 @@ import Form from '@shared/components/Form/Form.vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useForm } from '@shared/components/Form'
 import type { FormData } from '@shared/components/Form/types'
-import { computed, provide, ref } from 'vue'
+import { computed, provide, ref, Teleport } from 'vue'
+import { noop } from 'lodash-es'
 import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
 import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
+import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 
 interface Props {
   internalId: string
 }
 
 const props = defineProps<Props>()
+const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
 const MENTIONS_LIMIT = 5
 
 const ticketQuery = new QueryHandler(
   useTicketQuery(() => ({
-    ticketInternalId: Number(props.internalId),
+    ticketId: ticketId.value,
     mentionsCount: MENTIONS_LIMIT,
   })),
   { errorShowNotification: false },
 )
+
+ticketQuery.subscribeToMore<
+  TicketUpdatesSubscriptionVariables,
+  TicketUpdatesSubscription
+>(() => ({
+  document: TicketUpdatesDocument,
+  variables: {
+    ticketId: ticketId.value,
+  },
+  // we already redirect on query error
+  onError: noop,
+}))
 
 const ticketResult = ticketQuery.result()
 const ticket = computed(() => ticketResult.value?.ticket)
@@ -52,8 +72,8 @@ ticketQuery.onError(() => {
   })
 })
 
-const { initialTicketValue, editTicket } = useTicketEdit(ticket)
 const { form, canSubmit, isDirty } = useForm()
+const { initialTicketValue, editTicket } = useTicketEdit(ticket, form)
 const { notify } = useNotifications()
 
 const submitForm = async (formData: FormData) => {

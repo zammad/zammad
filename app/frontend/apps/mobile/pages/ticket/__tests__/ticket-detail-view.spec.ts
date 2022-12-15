@@ -3,6 +3,7 @@
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
+import { ApolloError } from '@apollo/client/errors'
 import { getAllByTestId } from '@testing-library/vue'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
@@ -139,6 +140,9 @@ test("redirects to error page, if can't find ticket", async () => {
   mockGraphQLApi(TicketArticlesDocument).willFailWithError([
     { message: 'The ticket 9866 could not be found', extensions: {} },
   ])
+  mockGraphQLSubscription(TicketUpdatesDocument).error(
+    new ApolloError({ errorMessage: "Couldn't find Ticket with 'id'=9866" }),
+  )
 
   await visitView('/tickets/9866')
 

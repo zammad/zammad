@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { createMessage, getNode, reset } from '@formkit/core'
+import { createMessage, getNode } from '@formkit/core'
 import type { FormKitNode } from '@formkit/core'
 import {
   computed,
@@ -13,10 +13,24 @@ import {
 } from 'vue'
 import type { ShallowRef, Ref } from 'vue'
 import type { CommonStepperStep } from '@mobile/components/CommonStepper'
+import type { ObjectLike } from '@shared/types/utils'
 import type { FormValues } from './types'
+
+interface ResetOptions {
+  /**
+   * Should reset dirty fields to new values.
+   * @default true
+   */
+  resetDirty?: boolean
+}
 
 export interface FormRef {
   formNode: FormKitNode
+  resetForm(
+    initialValues?: FormValues,
+    object?: ObjectLike,
+    options?: ResetOptions,
+  ): void
 }
 
 // TODO: only a start, needs to be extended during the way...
@@ -56,10 +70,12 @@ export const useForm = () => {
     return isDirty.value
   })
 
-  const formReset = (values?: FormValues) => {
-    if (node.value) {
-      reset(node.value, values)
-    }
+  const formReset = (
+    values?: FormValues,
+    object?: ObjectLike,
+    options?: ResetOptions,
+  ) => {
+    form.value?.resetForm(values, object, options)
   }
 
   const formSubmit = () => {

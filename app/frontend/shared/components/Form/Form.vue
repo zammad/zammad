@@ -211,10 +211,6 @@ const setFormNode = (node: FormKitNode) => {
 
 const formNodeContext = computed(() => formNode.value?.context)
 
-defineExpose({
-  formNode,
-})
-
 // Build the flat value, when multi step form groups are used.
 const getFlatValues = (values: FormValues, multiStepFormGroups: string[]) => {
   const flatValues = {
@@ -354,13 +350,16 @@ const getInternalId = (item?: { id?: string; internalId?: number }) => {
   return parseGraphqlId(item.id).id
 }
 
-const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
-  if (isEmpty(props.initialEntityObject)) return undefined
+const getInitialEntityObjectValue = (
+  fieldName: string,
+  initialEntityObject = props.initialEntityObject,
+): FormFieldValue => {
+  if (isEmpty(initialEntityObject)) return undefined
 
   let value: FormFieldValue
   if (relationFieldBelongsToObjectField[fieldName]) {
     const belongsToObject =
-      props.initialEntityObject[relationFieldBelongsToObjectField[fieldName]]
+      initialEntityObject[relationFieldBelongsToObjectField[fieldName]]
 
     if (!belongsToObject) return undefined
 
@@ -375,15 +374,57 @@ const getInitialEntityObjectValue = (fieldName: string): FormFieldValue => {
 
   if (!value) {
     value =
-      props.initialEntityObject[
-        internalFieldCamelizeName[fieldName] || fieldName
-      ]
+      initialEntityObject[internalFieldCamelizeName[fieldName] || fieldName]
   }
 
   return value
 }
 
-const localInitialValues: FormValues = props.initialValues || {}
+const resetForm = (
+  values: FormValues = {},
+  object: ObjectLike | undefined = undefined,
+  { resetDirty = true }: { resetDirty?: boolean } = {},
+) => {
+  const localValues: FormValues = {}
+  const dirtyNodes: FormKitNode[] = []
+
+  Object.entries(schemaData.fields).forEach(([field, { props }]) => {
+    const formElement = getNode(props.id || props.name)
+    if (!resetDirty && formElement?.context?.state.dirty) {
+      dirtyNodes.push(formElement)
+      localValues[field] = formElement._value as FormFieldValue
+      return
+    }
+    if (field in values) {
+      localValues[field] = values[field]
+      return
+    }
+    const objectValues = getInitialEntityObjectValue(field, object)
+    if (objectValues !== undefined) {
+      localValues[field] = objectValues
+    }
+  })
+
+  if (formNode.value) {
+    const resetValues = Object.keys(localValues).length
+      ? localValues
+      : undefined
+
+    reset(formNode.value, resetValues)
+
+    // keep dirty nodes as dirty
+    dirtyNodes.forEach((node) => {
+      node.input(node._value, false)
+    })
+  }
+}
+
+defineExpose({
+  formNode,
+  resetForm,
+})
+
+const localInitialValues: FormValues = { ...props.initialValues }
 
 const initializeFieldRelation = (
   fieldName: string,

@@ -1,10 +1,14 @@
 // Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-import { onMounted, ref } from 'vue'
+import type { Ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import type { FormKitNode } from '@formkit/core'
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
-import type { ExtendedMountingOptions } from '@tests/support/components'
+import type {
+  ExtendedMountingOptions,
+  ExtendedRenderResult,
+} from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { waitForNextTick, waitUntil } from '@tests/support/utils'
@@ -15,6 +19,7 @@ import type { FormValues } from '@shared/components/Form'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
+import type { FormRef } from '../composable'
 
 const wrapperParameters = {
   form: true,
@@ -704,5 +709,88 @@ describe('Form.vue - Empty', () => {
       props: {},
     })
     expect(wrapper.html()).not.toContain('form')
+  })
+})
+
+describe('Form.vue - Reset', () => {
+  const renderForm = async () => {
+    return new Promise<{
+      view: ExtendedRenderResult
+      form: Ref<FormRef>
+    }>((resolve) => {
+      const view = renderComponent(
+        {
+          template: `<div><Form ref="form" :schema="schema" /></div>`,
+          components: {
+            Form,
+          },
+          setup() {
+            const schema = [
+              {
+                type: 'text',
+                name: 'title',
+                label: 'Title',
+              },
+              {
+                type: 'textarea',
+                name: 'text',
+                label: 'Textarea',
+                value: 'Some text',
+              },
+            ]
+            const form = ref<FormRef>()
+            onMounted(() => {
+              nextTick(() => {
+                resolve({ view, form: form as Ref<FormRef> })
+              })
+            })
+            return { schema, form }
+          },
+        } as any,
+        {
+          form: true,
+        },
+      )
+    })
+  }
+
+  it('resets all values to original ones', async () => {
+    const { view, form } = await renderForm()
+    const input = view.getByLabelText('Title')
+    const textarea = view.getByLabelText('Textarea')
+    await view.events.type(input, 'New title')
+    await view.events.clear(textarea)
+    await view.events.type(textarea, 'New text')
+    form.value.resetForm()
+    await waitForNextTick()
+    expect(input).toHaveValue('')
+    expect(textarea).toHaveValue('Some text')
+  })
+
+  it('resets all values to provided values', async () => {
+    const { view, form } = await renderForm()
+    const input = view.getByLabelText('Title')
+    const textarea = view.getByLabelText('Textarea')
+    expect(input).toHaveValue('')
+    expect(textarea).toHaveValue('Some text')
+    form.value.resetForm({
+      title: 'New title',
+      text: 'New text',
+    })
+    await waitForNextTick()
+    expect(input).toHaveValue('New title')
+    expect(textarea).toHaveValue('New text')
+  })
+
+  it("doesn't reset dirty values, if asked to", async () => {
+    const { view, form } = await renderForm()
+    const input = view.getByLabelText('Title')
+    const textarea = view.getByLabelText('Textarea')
+    await view.events.type(input, 'New title')
+    form.value.resetForm({ text: 'Some text' }, {}, { resetDirty: false })
+    await waitForNextTick()
+    expect(input).toHaveValue('New title')
+    expect(textarea).toHaveValue('Some text')
+    expect(getNode('title')?.context?.state.dirty).toBe(true)
   })
 })

@@ -50,7 +50,7 @@ describe('testing ticket a11y', () => {
   })
 
   test('ticket organization information has no accessibility violations', async () => {
-    mockTicketDetailViewGql({ mockSubscription: false })
+    mockTicketDetailViewGql()
 
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
       organization: defaultOrganization(),
@@ -67,7 +67,7 @@ describe('testing ticket a11y', () => {
   })
 
   test('ticket user information has no accessibility violations', async () => {
-    mockTicketDetailViewGql({ mockSubscription: false })
+    mockTicketDetailViewGql()
 
     const { mockUser, mockAttributes } = mockUserDetailsApis(defaultUser())
 

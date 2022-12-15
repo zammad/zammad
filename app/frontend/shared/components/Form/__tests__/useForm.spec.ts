@@ -49,6 +49,7 @@ describe('useForm', () => {
 
     form.value = {
       formNode: getNode('test-form') as FormKitNode,
+      resetForm: vi.fn(),
     }
 
     const currentNode = node.value as FormKitNode
@@ -67,6 +68,7 @@ describe('useForm', () => {
 
     form.value = {
       formNode: getNode('test-form') as FormKitNode,
+      resetForm: vi.fn(),
     }
 
     expect(isValid.value).toBe(true)
@@ -84,6 +86,7 @@ describe('useForm', () => {
 
     form.value = {
       formNode,
+      resetForm: vi.fn(),
     }
 
     formNode.store.set(
@@ -104,6 +107,7 @@ describe('useForm', () => {
 
     form.value = {
       formNode: getNode('test-form') as FormKitNode,
+      resetForm: vi.fn(),
     }
 
     expect(values.value).toStrictEqual({
@@ -118,6 +122,7 @@ describe('useForm', () => {
 
     form.value = {
       formNode: getNode('test-form') as FormKitNode,
+      resetForm: vi.fn(),
     }
 
     formSubmit()

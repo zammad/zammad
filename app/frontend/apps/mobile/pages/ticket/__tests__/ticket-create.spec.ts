@@ -231,6 +231,10 @@ describe('Creating new ticket as agent', () => {
 
       expect(submitButton).not.toBeDisabled()
 
+      // don't actually redirect
+      const router = getTestRouter()
+      router.mockMethods()
+
       await view.events.click(submitButton)
 
       await waitUntil(() => mockTicket.calls.resolve)
@@ -239,7 +243,6 @@ describe('Creating new ticket as agent', () => {
         'Ticket has been created successfully.',
       )
 
-      const router = getTestRouter()
       expect(router.replace).toHaveBeenCalledWith('/tickets/1')
     },
   )

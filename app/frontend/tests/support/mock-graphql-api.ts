@@ -188,8 +188,8 @@ export const mockGraphQLSubscription = <T>(
 
       await waitForNextTick(true)
     },
-    error: mockSubscription.error,
-    complete: mockSubscription.complete,
+    error: mockSubscription.error.bind(mockSubscription),
+    complete: mockSubscription.complete.bind(mockSubscription),
     closed: () => mockSubscription.closed,
   }
 }

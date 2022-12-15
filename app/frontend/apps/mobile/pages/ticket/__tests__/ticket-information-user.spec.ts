@@ -13,7 +13,7 @@ import { waitUntilApisResolved } from '@tests/support/utils'
 import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {
-  mockTicketDetailViewGql({ mockSubscription: false })
+  mockTicketDetailViewGql()
 
   const { mockUser, mockUserSubscription, mockAttributes } =
     mockUserDetailsApis(user)

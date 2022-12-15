@@ -17,7 +17,7 @@ import {
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
 import type { TicketQuery } from '@shared/graphql/types'
-import { defaultTicket, mockTicketGql } from './mocks/detail-view'
+import { defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view'
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
@@ -32,7 +32,7 @@ const visitTicketInformation = async (ticket?: TicketQuery) => {
       }
     },
   )
-  const { mockApiTicket } = mockTicketGql(ticket)
+  const { mockApiTicket } = mockTicketDetailViewGql({ ticket })
   mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
       group_id: {
