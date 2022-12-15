@@ -150,6 +150,26 @@ const useSelectOptions = (
     return targetElements
   }
 
+  const handleValuesForNonExistingOptions = () => {
+    if (!hasValue.value) return
+
+    if (context.value.multiple) {
+      const availableValues = currentValue.value.filter(
+        (selectValue: string | number) =>
+          typeof optionValueLookup.value[selectValue] !== 'undefined',
+      ) as SelectValue[]
+
+      if (availableValues.length !== currentValue.value.length) {
+        context.value.node.input(availableValues, false)
+      }
+
+      return
+    }
+
+    if (typeof optionValueLookup.value[currentValue.value] === 'undefined')
+      clearValue(false)
+  }
+
   // Setup a mechanism to handle missing options, including:
   //   - appending historical options for current values
   //   - clearing value in case options are missing
@@ -183,27 +203,12 @@ const useSelectOptions = (
 
     // Reject non-existent values during the initialization phase.
     //   Note that this behavior is controlled by a dedicated flag.
-    if (
-      context.value.rejectNonExistentValues &&
-      hasValue.value &&
-      typeof optionValueLookup.value[currentValue.value] === 'undefined'
-    )
-      clearValue()
+    if (context.value.rejectNonExistentValues)
+      handleValuesForNonExistingOptions()
 
     // Set up a watcher that clears a missing option value on subsequent mutations of the options prop.
     //   In this case, the dedicated flag is ignored.
-    watch(
-      () => options.value,
-      () => {
-        if (
-          !hasValue.value ||
-          typeof optionValueLookup.value[currentValue.value] !== 'undefined'
-        )
-          return
-
-        clearValue()
-      },
-    )
+    watch(() => options.value, handleValuesForNonExistingOptions)
   }
 
   return {

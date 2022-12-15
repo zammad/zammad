@@ -19,9 +19,9 @@ const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
     return valueContainer.value.includes(value)
   }
 
-  const clearValue = () => {
+  const clearValue = (asyncSettling = true) => {
     if (!hasValue.value) return
-    context.value.node.input(undefined)
+    context.value.node.input(undefined, asyncSettling)
   }
 
   const localValue = computed({

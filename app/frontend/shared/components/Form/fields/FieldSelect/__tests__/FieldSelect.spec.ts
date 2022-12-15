@@ -200,6 +200,48 @@ describe('Form - Field - Select - Options', () => {
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
+  it('supports clearing of the existing multiple values when options goes away', async () => {
+    const optionsProp = cloneDeep(testOptions)
+
+    optionsProp.push(
+      ...[
+        {
+          value: 3,
+          label: 'Item D',
+        },
+        {
+          value: 4,
+          label: 'Item E',
+        },
+      ],
+    )
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'select',
+        value: [2, 3, 4],
+        options: optionsProp,
+        multiple: true,
+      },
+    })
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(3)
+
+    await wrapper.rerender({
+      options: testOptions,
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toEqual([2])
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item C')
+  })
+
   it('supports disabled property', async () => {
     const disabledOptions = [
       {

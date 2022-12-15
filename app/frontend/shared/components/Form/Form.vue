@@ -676,6 +676,7 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
   inputNode.on('commit', ({ payload: newValue, origin: node }) => {
     const oldValue = previousValues.get(node)
     if (isEqual(newValue, oldValue)) return
+
     if (!formKitInitialNodesSettled.value) {
       previousValues.set(node, cloneDeep(newValue))
       return

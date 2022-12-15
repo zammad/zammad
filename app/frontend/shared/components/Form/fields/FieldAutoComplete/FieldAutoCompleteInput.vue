@@ -137,8 +137,8 @@ useFormBlock(contextReactive, onInputClick)
         size="base"
         role="button"
         tabindex="0"
-        @click.stop="clearValue"
-        @keypress.space.prevent.stop="clearValue"
+        @click.stop="clearValue()"
+        @keypress.space.prevent.stop="clearValue()"
       />
     </output>
   </div>
