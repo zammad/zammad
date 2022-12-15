@@ -47,7 +47,7 @@ Before executing the following snippet, please, make sure to look up the most re
 For Linux and macOS:
 
 ```screen
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 nvm install node
 npm install -g yarn
 
@@ -67,7 +67,7 @@ To ensure a well-readable and maintainable code base, we're using linting tools 
 For Linux and macOS:
 
 ```screen
-npm install -g coffeelint@1
+npm install -g @coffeelint/cli
 npm install -g stylelint
 ```
 
