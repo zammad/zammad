@@ -7,6 +7,7 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
+import { useSessionStore } from '@shared/stores/session'
 import type { TicketById } from '../../types/tickets'
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const session = useSessionStore()
 
 const viewersDialog = useDialog({
   name: 'ticket-viewers-dialog',
@@ -89,6 +91,7 @@ const showActions = () => {
           </div>
         </button>
         <button
+          v-if="session.hasPermission('ticket.agent')"
           type="button"
           :title="$t('Show ticket actions')"
           @click="showActions()"

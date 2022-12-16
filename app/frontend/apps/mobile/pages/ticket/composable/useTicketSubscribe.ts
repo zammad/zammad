@@ -6,14 +6,12 @@ import { MutationHandler } from '@shared/server/apollo/handler'
 import { useMentionSubscribeMutation } from '@shared/entities/ticket/graphql/mutations/subscribe.api'
 import { useMentionUnsubscribeMutation } from '@shared/entities/ticket/graphql/mutations/unsubscribe.api'
 import type { TicketQuery } from '@shared/graphql/types'
-import { useSessionStore } from '@shared/stores/session'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import type { TicketById } from '../types/tickets'
 
 export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
-  const session = useSessionStore()
-  const canManageSubscription = computed(() => {
-    return session.hasPermission('ticket.agent')
-  })
+  const { isTicketAgent } = useTicketView(ticket)
+  const canManageSubscription = computed(() => isTicketAgent.value)
 
   const createTicketCacheUpdater = (subscribed: boolean) => {
     return (previousQuery: Record<string, unknown>) => {

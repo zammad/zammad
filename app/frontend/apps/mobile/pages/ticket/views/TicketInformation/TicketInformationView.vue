@@ -69,6 +69,7 @@ const types = computed<CommonButtonOption[]>(() => {
     </div>
     <div class="flex items-center justify-end">
       <button
+        v-if="hasPermission('ticket.agent')"
         type="button"
         :title="$t('Show ticket actions')"
         @click="showActions()"
@@ -95,6 +96,7 @@ const types = computed<CommonButtonOption[]>(() => {
     </button>
   </div>
   <CommonButtonGroup
+    v-if="types.length > 1"
     class="px-4 pb-4"
     as="tabs"
     controls="route-ticket-information-tabpanel"

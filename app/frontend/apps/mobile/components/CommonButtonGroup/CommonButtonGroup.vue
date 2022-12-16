@@ -28,7 +28,8 @@ const session = useSessionStore()
 const filteredOptions = computed(() => {
   return props.options.filter(
     (option) =>
-      !option.permissions || session.hasPermission(option.permissions),
+      !option.hidden &&
+      (!option.permissions || session.hasPermission(option.permissions)),
   )
 })
 

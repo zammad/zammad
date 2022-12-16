@@ -11,6 +11,7 @@ export interface CommonButtonOption {
   selected?: boolean
   labelPlaceholder?: string[]
   disabled?: boolean
+  hidden?: boolean
   permissions?: string | string[]
   icon?: string | IconProps
 }

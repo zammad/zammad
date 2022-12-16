@@ -47,6 +47,10 @@ export const defaultTicket = () =>
         firstname: 'John',
         lastname: 'Doe',
         fullname: 'John Doe',
+        policy: {
+          __typename: 'Policy',
+          update: true,
+        },
       },
       organization: {
         __typename: 'Organization',

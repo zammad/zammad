@@ -16,10 +16,12 @@ import {
   userObjectAttributes,
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import type { TicketQuery } from '@shared/graphql/types'
 import { defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view'
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
+  mockPermissions(['ticket.agent'])
   mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
     ({ object }) => {
       if (object === 'Ticket') {

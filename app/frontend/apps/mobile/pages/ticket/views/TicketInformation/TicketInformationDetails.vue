@@ -13,6 +13,8 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import { useSessionStore } from '@shared/stores/session'
 import CommonShowMoreButton from '@mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
+import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
@@ -110,9 +112,13 @@ const loadMoreMentions = () => {
     mentionsCount: null,
   })
 }
+
+const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 </script>
 
 <template>
+  <CommonLoader :loading="!ticket" />
+
   <div data-ticket-edit-form />
 
   <ObjectAttributes
@@ -128,7 +134,10 @@ const loadMoreMentions = () => {
     }"
   />
 
-  <TicketTags v-if="canUpdateTicket && ticket" :ticket="ticket" />
+  <TicketTags
+    v-if="isTicketAgent && isTicketEditable && ticket"
+    :ticket="ticket"
+  />
 
   <CommonSectionMenu v-else-if="ticket?.tags?.length">
     <CommonSectionMenuItem :label="__('Tags')">

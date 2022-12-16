@@ -11,7 +11,7 @@ export default <TicketInformationPlugin>{
     component: () => import('../TicketInformationCustomer.vue'),
     meta: {
       requiresAuth: true,
-      requiredPermission: [],
+      requiredPermission: ['ticket.agent'],
     },
   },
   order: 200,

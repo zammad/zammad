@@ -55,20 +55,10 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', app:
   end
 
   context 'when visiting as customer', authenticated_as: :user do
-    it 'see the same content, but can\'t edit' do
-      open_user
+    it 'user is redirected to error' do
+      visit "/tickets/#{ticket.id}/information/customer"
 
-      expect(page).to have_text(ticket.title)
-      expect(page).to have_text(user.fullname)
-      expect(page).to have_no_text('Edit Customer')
-
-      expect(find('section', text: %r{Address})).to have_text(user.address)
-
-      user.update!(firstname: 'Rose')
-
-      wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
-
-      expect(page).to have_text('Rose Devereaux')
+      expect_current_route('/error')
     end
   end
 end

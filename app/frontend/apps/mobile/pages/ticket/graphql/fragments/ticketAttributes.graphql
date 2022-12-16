@@ -29,6 +29,9 @@ fragment ticketAttributes on Ticket {
       }
     }
     hasSecondaryOrganizations
+    policy {
+      update
+    }
   }
   organization {
     id

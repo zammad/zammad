@@ -28,7 +28,7 @@ const route = useRoute()
 const router = useRouter()
 
 const ticketReactive = toRef(props, 'ticket')
-const { isTicketAgent } = useTicketView(ticketReactive)
+const { isTicketAgent, isTicketEditable } = useTicketView(ticketReactive)
 
 const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(
   ticketReactive,
@@ -47,15 +47,16 @@ const topButtons = computed(() =>
     {
       label: __('Merge tickets'),
       icon: 'mobile-merge',
-      permissions: ['ticket.agent'],
+      hidden: !isTicketEditable.value || !isTicketAgent.value,
       onAction: openMergeTicketsDialog,
     },
-    canManageSubscription.value && {
+    {
       label: isSubscribed.value ? __('Unsubscribe') : __('Subscribe'),
       icon: isSubscribed.value
         ? 'mobile-notification-unsubscribed'
         : 'mobile-notification-subscribed',
       value: 'subscribe',
+      hidden: !canManageSubscription.value,
       selected: isSubscribed.value,
       disabled: isSubscriptionLoading.value,
       onAction: toggleSubscribe,
@@ -128,7 +129,7 @@ const showChangeCustomer = () => {
           icon-bg="bg-gray"
         />
       </CommonSectionMenu> -->
-      <CommonSectionMenu v-if="isTicketAgent">
+      <CommonSectionMenu v-if="isTicketEditable && isTicketAgent">
         <CommonSectionMenuLink
           :label="__('Change customer')"
           @click="showChangeCustomer"

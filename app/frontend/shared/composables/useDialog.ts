@@ -87,6 +87,8 @@ export const openDialog = async (
 }
 
 export const closeDialog = async (name: string) => {
+  if (!dialogsOpened.value.has(name)) return
+
   const options = getDialogOptions(name)
 
   await destroyComponent('dialog', name)

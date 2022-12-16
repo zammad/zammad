@@ -34,6 +34,9 @@ export const TicketAttributesFragmentDoc = gql`
       }
     }
     hasSecondaryOrganizations
+    policy {
+      update
+    }
   }
   organization {
     id
