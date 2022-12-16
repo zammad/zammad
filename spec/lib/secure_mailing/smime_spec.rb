@@ -313,6 +313,27 @@ RSpec.describe SecureMailing::SMIME do
             expect(mail[:body]).to include(raw_body)
           end
         end
+
+        context 'sender is not signer' do
+          before do
+            create(:smime_certificate, :with_private, fixture: system_email_address)
+          end
+
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_not_signer.eml').read
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies with comment' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to match('Message is not signed by sender.')
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
       end
 
       context 'no sender certificate' do

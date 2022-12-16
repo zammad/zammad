@@ -120,6 +120,11 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
       mail[:attachments].delete_if do |attachment|
         signed?(attachment.dig(:preferences, 'Content-Type'))
       end
+
+      if !sender_is_signer?
+        success = false
+        comment = __('Message is not signed by sender.')
+      end
     end
 
     article_preferences[:security][:sign] = {
@@ -221,5 +226,17 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
     mail_new.each do |local_key, local_value|
       mail[local_key] = local_value
     end
+  end
+
+  def sender_is_signer?
+    signers = @verify_sign_p7enc.certificates.map do |cert|
+      email = cert.subject.to_s.match(%r{emailAddress=(?<address>[^/]+)})
+      email[:address]
+    end
+
+    result = signers.include?(mail[:mail_instance].from.first)
+    Rails.logger.warn { "S/MIME mail #{mail[:message_id]} signed by #{signers.join(', ')} but sender is #{mail[:mail_instance].from.first}" } if !result
+
+    result
   end
 end
