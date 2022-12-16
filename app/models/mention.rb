@@ -52,4 +52,17 @@ class Mention < ApplicationModel
     mentionable.update(updated_by: updated_by)
     mentionable.touch # rubocop:disable Rails/SkipsModelValidations
   end
+
+  # Check if given user is able to subscribe to a given object
+  # @param object to subscribe to
+  # @param mentioned user
+  # @return Boolean
+  def self.mentionable?(object, user)
+    case object
+    when Ticket
+      TicketPolicy.new(user, object).agent_read_access?
+    else
+      false
+    end
+  end
 end

@@ -5,20 +5,17 @@ class MentionsController < ApplicationController
   prepend_before_action { authentication_check }
 
   # GET /api/v1/mentions
-  def list
-    list = Mention.where(condition).order(created_at: :desc)
+  def index
+    list = mentionable_object.mentions
 
     if response_full?
-      assets = {}
-      item_ids = []
-      list.each do |item|
-        item_ids.push item.id
-        assets = item.assets(assets)
-      end
+      item_ids = list.map(&:id)
+      assets   = ApplicationModel::CanAssets.reduce list
+
       render json: {
         record_ids: item_ids,
         assets:     assets,
-      }, status: :ok
+      }
       return
     end
 
@@ -31,7 +28,7 @@ class MentionsController < ApplicationController
   # POST /api/v1/mentions
   def create
     success = Mention.create!(
-      mentionable: mentionable!,
+      mentionable: mentionable_object,
       user:        current_user,
     )
     if success
@@ -51,50 +48,14 @@ class MentionsController < ApplicationController
     end
   end
 
-  private
-
-  def mentionable_type!
-    @mentionable_type ||= begin
-      raise __("The parameter 'mentionable_type' is invalid.") if 'Ticket'.freeze != params[:mentionable_type]
-
-      params[:mentionable_type]
+  def mentionable_object
+    @mentionable_object ||= begin
+      case params[:mentionable_type]
+      when 'Ticket'
+        Ticket.find_by id: params[:mentionable_id]
+      else
+        raise Exceptions::UnprocessableEntity, __("The parameter 'mentionable_type' is invalid.")
+      end
     end
-  end
-
-  def mentionable!
-    object = mentionable_type!.constantize.find(params[:mentionable_id])
-    authorize!(object, :agent_read_access?)
-    object
-  end
-
-  def fill_condition_mentionable(condition)
-    condition[:mentionable_type] = mentionable_type!
-    return if params[:mentionable_id].blank?
-
-    condition[:mentionable_id] = params[:mentionable_id]
-  end
-
-  def fill_condition_id(condition)
-    return if params[:id].blank?
-
-    condition[:id] = params[:id]
-  end
-
-  def fill_condition_user(condition)
-    return if params[:user_id].blank?
-
-    condition[:user] = User.find(params[:user_id])
-  end
-
-  def condition
-    condition = {}
-    fill_condition_id(condition)
-    fill_condition_user(condition)
-
-    return condition if params[:mentionable_type].blank?
-
-    mentionable!
-    fill_condition_mentionable(condition)
-    condition
   end
 end
