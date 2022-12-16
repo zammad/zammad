@@ -4331,6 +4331,19 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
+  title:       __('Exchange OAuth'),
+  name:        'exchange_oauth',
+  area:        'Integration::Exchange',
+  description: __('Defines the Exchange OAuth config.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
   title:       __('Exchange integration'),
   name:        'exchange_integration',
   area:        'Integration::Switch',

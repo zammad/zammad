@@ -538,18 +538,18 @@
     {
       "warning_type": "SSL Verification Bypass",
       "warning_code": 71,
-      "fingerprint": "cce91e3b231a7971f9f9d2298b8bba7b309610f4b98a88e530cac6fdd8efa1c4",
+      "fingerprint": "c7311ebfec11c51dead99054a31ec84773b4d0d4848c11a15801c439d35d2171",
       "check_name": "SSLVerify",
       "message": "SSL certificate verification was bypassed",
       "file": "app/controllers/integration/exchange_controller.rb",
-      "line": 17,
+      "line": 92,
       "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
       "code": "Autodiscover::Client.new(:email => params[:user], :password => params[:password]).http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "Integration::ExchangeController",
-        "method": "autodiscover"
+        "method": "autodiscover_basic_auth_check"
       },
       "user_input": null,
       "confidence": "High",
@@ -741,6 +741,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2022-12-09 10:43:55 +0100",
+  "updated": "2022-12-14 13:16:26 +0100",
   "brakeman_version": "5.4.0"
 }

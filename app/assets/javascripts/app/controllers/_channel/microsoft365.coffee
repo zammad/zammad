@@ -129,7 +129,7 @@ class ChannelAccountOverview extends App.ControllerSubContent
 
     if @error_code is 'AADSTS65004'
       @error_code = undefined
-      new AdminConsentInfo(container: @container)
+      new App.AdminConsentInfo(container: @container)
 
   show: (params) =>
     for key, value of params
@@ -436,7 +436,7 @@ class AppConfig extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
-class AdminConsentInfo extends App.ControllerModal
+class App.AdminConsentInfo extends App.ControllerModal
   buttonClose: true
   small: true
   buttonSubmit: __('Close')

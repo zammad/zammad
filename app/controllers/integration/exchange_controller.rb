@@ -5,23 +5,35 @@ class Integration::ExchangeController < ApplicationController
 
   prepend_before_action { authentication_check && authorize! }
 
+  def index
+    assets = {}
+    external_credential_ids = []
+    ExternalCredential.where(name: 'exchange').each do |external_credential|
+      assets = external_credential.assets(assets)
+      external_credential_ids.push external_credential.id
+    end
+
+    render json: {
+      assets:                  assets,
+      oauth:                   Setting.get('exchange_oauth'),
+      external_credential_ids: external_credential_ids,
+      callback_url:            ExternalCredential.callback_url('exchange'),
+    }
+  end
+
+  def destroy_oauth
+    Setting.set('exchange_oauth', {})
+    render json: {}
+  end
+
   def autodiscover
+    if params[:authentication_method].present? && params[:authentication_method] == 'oauth'
+      render json: {}
+      return
+    end
+
     answer_with do
-      require 'autodiscover' # Only load this gem when it is really used.
-      client = Autodiscover::Client.new(
-        email:    params[:user],
-        password: params[:password],
-      )
-
-      if params[:disable_ssl_verify]
-        client.http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      end
-
-      begin
-        { endpoint: client.autodiscover&.ews_url }
-      rescue Errno::EADDRNOTAVAIL
-        {}
-      end
+      autodiscover_basic_auth_check
     end
   end
 
@@ -64,6 +76,26 @@ class Integration::ExchangeController < ApplicationController
       endpoint:           params[:endpoint],
       user:               params[:user],
       password:           params[:password],
+      auth_type:          params[:auth_type],
+      access_token:       Setting.get('exchange_oauth')[:access_token],
     }
+  end
+
+  def autodiscover_basic_auth_check
+    require 'autodiscover' # Only load this gem when it is really used.
+    client = Autodiscover::Client.new(
+      email:    params[:user],
+      password: params[:password],
+    )
+
+    if params[:disable_ssl_verify]
+      client.http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
+    begin
+      { endpoint: client.autodiscover&.ews_url }
+    rescue Errno::EADDRNOTAVAIL
+      {}
+    end
   end
 end

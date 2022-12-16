@@ -15,13 +15,22 @@
       <tr>
         <td class="settings-list-row-control"><%- @T('Endpoint') %>
         <td class="settings-list-row-control"><%= @config.endpoint %>
-      <tbody>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('User') %>
-          <td class="settings-list-row-control"><%= @config.user %>
-        <tr>
-          <td class="settings-list-row-control"><%- @T('Password') %>
-          <td class="settings-list-row-control"><%= @M(@config.password) %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Authentication via') %>
+        <td class="settings-list-row-control">
+        <% if @config.auth_type == 'oauth': %>
+          <%- @T('OAuth') %>
+        <% else: %>
+          <%- @T('Basic Authentication') %>
+        <% end %>
+    <% if @config.auth_type != 'oauth': %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('User') %>
+        <td class="settings-list-row-control"><%= @config.user %>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Password') %>
+        <td class="settings-list-row-control"><%= @M(@config.password) %>
+    <% end %>
     </tbody>
   </table>
 

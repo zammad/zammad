@@ -27,7 +27,9 @@ class Integrations extends App.ControllerSubContent
         break
 
     new config.controller(
-      el: @el
+      el:           @el
+      success_code: params.success_code
+      error_code:   params.error_code
     )
 
   render: =>
@@ -54,9 +56,11 @@ class Integrations extends App.ControllerSubContent
 
     return if !@requestedIntegration
     @show(
-      target: @target
-      integration: @integration
-      noRender: true
+      target:       @target
+      integration:  @integration
+      success_code: @success_code
+      error_code:   @error_code
+      noRender:     true
     )
     @requestedIntegration = undefined
 

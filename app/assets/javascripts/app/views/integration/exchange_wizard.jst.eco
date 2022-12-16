@@ -10,6 +10,8 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
+
+        <p><%- @T('Please enter the endpoint and select the authentication method for accessing Exchange Web Services.') %></p>
         <table class="settings-list" style="width: 100%;">
           <thead>
             <tr>
@@ -18,11 +20,37 @@
           </thead>
           <tbody>
             <tr>
-              <td class="settings-list-row-control"><%- @T('User') %>
-              <td class="settings-list-control-cell"><input type="text" name="user" class="form-control form-control--small js-user" value="" placeholder="user@your-exchange.tld" autocomplete="off" required>
+              <td class="settings-list-row-control"><%- @T('Endpoint') %></td>
+              <td class="settings-list-control-cell"><input type="text" name="endpoint" class="form-control form-control--small" value="" placeholder="https://outlook.office365.com/EWS/Exchange.asmx" autocomplete="off" required></td>
+            </tr>
             <tr>
-              <td class="settings-list-row-control"><%- @T('Password') %>
-              <td class="settings-list-control-cell"><input type="password" name="password" class="form-control form-control--small js-password" value="" placeholder="" autocomplete="new-password" required>
+            <td class="settings-list-row-control"><%- @T('Authentication via') %>
+              <td class="settings-list-control-cell">
+                <select name="authentication_method" class="form-control form-control--small js-authentication-method" required>
+                  <option value="basic"><%- @T('Basic Authentication') %></option>
+                  <option value="oauth"<% if _.isEmpty(@exchange_oauth): %> disabled="disabled"<% end %>><%- @T('OAuth') %></option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="basic-auth hide"><%- @T('Please enter your Exchange credentials.') %></p>
+        <table class="settings-list basic-auth hide" style="width: 100%;">
+          <thead>
+            <tr>
+              <th width="30%"><%- @T('Name') %>
+              <th width="70%"><%- @T('Value') %>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="settings-list-row-control"><%- @T('User') %></td>
+              <td class="settings-list-control-cell"><input type="text" name="user" class="form-control form-control--small js-user" value="" placeholder="user@your-exchange.tld" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td class="settings-list-row-control"><%- @T('Password') %></td>
+              <td class="settings-list-control-cell"><input type="password" name="password" class="form-control form-control--small js-password" value="" placeholder="" autocomplete="new-password"></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -53,44 +81,6 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form class="modal-content setup wizard hide js-bind">
-    <div class="modal-header">
-      <div class="modal-close js-close">
-        <%- @Icon('diagonal-cross') %>
-      </div>
-      <h1 class="modal-title"><%- @T('Exchange') %> <%- @T('Configuration') %></h1>
-    </div>
-    <div class="modal-body">
-      <div class="wizard-body vertical justified">
-        <div class="alert alert--danger hide" role="alert"></div>
-        <table class="settings-list" style="width: 100%;">
-          <thead>
-            <tr>
-              <th width="30%"><%- @T('Name') %>
-              <th width="70%"><%- @T('Value') %>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="settings-list-row-control"><%- @T('Endpoint') %>
-              <td class="settings-list-control-cell"><input type="text" name="endpoint" class="form-control form-control--small" value="" placeholder="https://outlook.office365.com/EWS/Exchange.asmx" autocomplete="off" required>
-
-            <tr>
-              <td class="settings-list-row-control"><%- @T('User') %>
-              <td class="settings-list-control-cell"><input type="text" name="user" class="form-control form-control--small js-user" value="" placeholder="" autocomplete="off" required>
-            <tr>
-              <td class="settings-list-row-control"><%- @T('Password') %>
-              <td class="settings-list-control-cell"><input type="password" name="password" class="form-control form-control--small js-password" value="" placeholder="" autocomplete="new-password" required>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="modal-rightFooter">
-        <button class="btn btn--primary align-right js-submit"><%- @T('Connect') %></button>
-      </div>
-    </div>
-  </form>
-
   <form class="modal-content setup wizard hide js-folders">
     <div class="modal-header">
       <div class="modal-close js-close">
@@ -114,7 +104,7 @@
     </div>
     <div class="modal-footer">
       <div class="modal-rightFooter">
-        <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-bind"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-discover"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
         <button class="btn btn--primary align-right js-submitTry is-disabled"><%- @T('Continue') %></button>
