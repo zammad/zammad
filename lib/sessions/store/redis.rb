@@ -15,7 +15,7 @@ class Sessions::Store::Redis
 
   def create(client_id, data)
     @redis.set client_session_key(client_id), data
-    @redis.sadd SESSIONS_KEY, client_id
+    @redis.sadd? SESSIONS_KEY, client_id
   end
 
   def sessions
@@ -27,7 +27,7 @@ class Sessions::Store::Redis
   end
 
   def destroy(client_id)
-    @redis.srem SESSIONS_KEY, client_id
+    @redis.srem? SESSIONS_KEY, client_id
     @redis.del client_session_key(client_id)
     @redis.del client_messages_key(client_id)
   end
@@ -132,7 +132,7 @@ class Sessions::Store::Redis
 
   def add_node(node_id, data)
     @redis.set node_key(node_id), data.to_json
-    @redis.sadd NODES_KEY, node_id
+    @redis.sadd? NODES_KEY, node_id
   end
 
   def each_node_session(&block)
@@ -143,7 +143,7 @@ class Sessions::Store::Redis
 
   def create_node_session(node_id, client_id, data)
     @redis.set node_client_session_key(node_id, client_id), data.to_json
-    @redis.sadd node_sessions_key(node_id), client_id
+    @redis.sadd? node_sessions_key(node_id), client_id
   end
 
   def each_session_by_node(node_id)
