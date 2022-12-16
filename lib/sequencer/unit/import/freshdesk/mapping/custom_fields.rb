@@ -16,6 +16,9 @@ class Sequencer::Unit::Import::Freshdesk::Mapping::CustomFields < Sequencer::Uni
   def custom_fields
     resource['custom_fields'].each_with_object({}) do |(freshdesk_name, value), result|
       local_name = custom_fields_map[freshdesk_name]
+
+      next if local_name.blank?
+
       result[ local_name.to_sym ] = value
     end
   end

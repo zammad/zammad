@@ -37,7 +37,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :r
           'cf_test_checkbox'   => true,
           'cf_custom_integer'  => 999,
           'cf_custom_dropdown' => 'key_2',
-          'cf_custom_decimal'  => '1.1'
+          'cf_custom_decimal'  => '1.1',
+          'cf_not_existing'    => 'not_existing',
         },
         'created_at' => '2021-05-14T12:29:27Z',
         'updated_at' => '2021-05-14T12:30:19Z',
