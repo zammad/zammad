@@ -95,6 +95,21 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
       end
     end
 
+    context 'when field is a datetime' do
+      let(:resource) do
+        base_resource.merge(
+          {
+            'name' => 'cf_custom_datetime',
+            'type' => 'custom_date_time',
+          }
+        )
+      end
+
+      it 'adds a custom field' do
+        expect { process(process_payload) }.to change(Ticket, :column_names).by(['cf_custom_datetime'])
+      end
+    end
+
     context 'when field is a checkbox' do
       let(:resource) do
         base_resource.merge(
@@ -190,8 +205,8 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer:
         )
       end
 
-      it 'raises an error' do
-        expect { process(process_payload) }.to raise_error(RuntimeError, "The custom field type 'custom_unknown' cannot be mapped to an internal field, aborting.")
+      it 'ignore field' do
+        expect { process(process_payload) }.to not_change(Ticket, :column_names)
       end
     end
 

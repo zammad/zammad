@@ -6,30 +6,22 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
   skip_any_action
 
   uses :resource, :sanitized_name, :model_class
-  provides :config
+  provides :config, :action
 
   def process
-    state.provide(:config) do
-      {
-        object:        model_class.to_s,
-        name:          DEFAULT_FIELD_NAME_MAP[resource['name']] || sanitized_name,
-        display:       resource['label'],
-        data_type:     data_type,
-        data_option:   data_option,
-        editable:      true,
-        active:        true,
-        screens:       screens,
-        position:      resource['position'],
-        created_by_id: 1,
-        updated_by_id: 1,
-      }
+    if !data_type
+      state.provide(:action, :skipped)
+      return
     end
+
+    state.provide(:config, provide_config)
   end
 
   private
 
   DATA_TYPE_MAP = {
     'custom_date'         => 'date',
+    'custom_date_time'    => 'datetime',
     'custom_checkbox'     => 'boolean',
     'custom_dropdown'     => 'select',
     'custom_text'         => 'input',
@@ -45,9 +37,29 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
     'ticket_type' => 'type',
   }.freeze
 
+  def provide_config
+    {
+      object:        model_class.to_s,
+      name:          DEFAULT_FIELD_NAME_MAP[resource['name']] || sanitized_name,
+      display:       resource['label'],
+      data_type:     data_type,
+      data_option:   data_option,
+      editable:      true,
+      active:        true,
+      screens:       screens,
+      position:      resource['position'],
+      created_by_id: 1,
+      updated_by_id: 1,
+    }
+  end
+
   def data_type
     @data_type ||= DATA_TYPE_MAP[resource['type']]
-    raise "The custom field type '#{resource['type']}' cannot be mapped to an internal field, aborting." if !@data_type
+
+    if !@data_type
+      Rails.logger.debug { "The custom field type '#{resource['type']}' cannot be mapped to an internal field, skipping." }
+      return
+    end
 
     @data_type
   end
@@ -62,7 +74,7 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
   def data_type_options # rubocop:disable Metrics/CyclomaticComplexity
 
     case data_type
-    when 'date'
+    when 'date', 'datetime'
       {
         future: true,
         past:   true,
