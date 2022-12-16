@@ -341,7 +341,7 @@ returns
 
     return if mention_user_ids.blank?
 
-    if !MentionPolicy.new(updated_by, Mention.new).create?
+    if !TicketPolicy.new(updated_by, ticket).create_mentions?
       return if ApplicationHandleInfo.postmaster?
       return if updated_by.id == 1
 

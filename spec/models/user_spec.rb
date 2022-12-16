@@ -1182,8 +1182,8 @@ RSpec.describe User, type: :model do
       recent_view           = create(:recent_view, created_by: user)
       avatar                = create(:avatar, o_id: user.id)
       overview              = create(:overview, created_by_id: user.id, user_ids: [user.id])
-      mention               = create(:mention, mentionable: create(:ticket), user: user)
-      mention_created_by    = create(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user)
+      mention               = build(:mention, mentionable: create(:ticket), user: user).tap { |elem| elem.save!(validate: false) }
+      mention_created_by    = build(:mention, mentionable: create(:ticket), user: create(:agent), created_by: user).tap { |elem| elem.save!(validate: false) }
       user_created_by       = create(:customer, created_by_id: user.id, updated_by_id: user.id, out_of_office_replacement_id: user.id)
       chat_session          = create(:'chat/session', user: user)
       chat_message          = create(:'chat/message', chat_session: chat_session)

@@ -248,7 +248,7 @@ RSpec.describe SearchIndexBackend do
     let(:agent1)        { create(:agent, organization: organization1, groups: [group1]) }
     let(:customer1)     { create(:customer, organization: organization1, firstname: 'special-first-name') }
     let(:ticket1) do
-      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1)
+      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1, group: group1)
       ticket.tag_add('t1', 1)
       ticket
     end

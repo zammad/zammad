@@ -231,7 +231,7 @@ RSpec.describe Ticket, type: :model do
       end
 
       context 'when both tickets having mentions to the same user' do
-        let(:watcher) { create(:agent) }
+        let(:watcher) { create(:agent, groups: [ticket.group, target_ticket.group]) }
 
         before do
           create(:mention, mentionable: ticket, user: watcher)
@@ -241,6 +241,18 @@ RSpec.describe Ticket, type: :model do
 
         it 'does remove the link from the merged ticket' do
           expect(target_ticket.mentions.count).to eq(1) # one mention to watcher user
+        end
+      end
+
+      context 'when merging a ticket with mentioned user who has no access to the target ticket' do
+        let(:watcher) { create(:agent, groups: [ticket.group]) }
+
+        it 'does remove the link from the merged ticket' do
+          create(:mention, mentionable: ticket, user: watcher)
+
+          expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
+            .to change { target_ticket.mentions.count }
+            .to(1)
         end
       end
 
@@ -2097,8 +2109,8 @@ RSpec.describe Ticket, type: :model do
       it 'does not inform mention user about ticket creation because of no permissions' do
         check_notification do
           ticket = create(:ticket, group: no_access_group)
-          create(:mention, mentionable: ticket, user: user_read_mentions)
-          create(:mention, mentionable: ticket, user: user_only_mentions)
+          build(:mention, mentionable: ticket, user: user_read_mentions).save!(validate: false)
+          build(:mention, mentionable: ticket, user: user_only_mentions).save!(validate: false)
           perform_enqueued_jobs commit_transaction: true
           not_sent(
             template: 'ticket_create',

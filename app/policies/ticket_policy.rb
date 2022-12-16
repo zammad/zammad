@@ -57,6 +57,10 @@ class TicketPolicy < ApplicationPolicy
     agent_access?('change')
   end
 
+  def create_mentions?
+    agent_read_access?
+  end
+
   private
 
   def follow_up_possible?

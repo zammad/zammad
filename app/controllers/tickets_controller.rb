@@ -174,7 +174,7 @@ class TicketsController < ApplicationController
 
       # create mentions if given
       if params[:mentions].present?
-        authorize!(Mention.new, :create?)
+        authorize!(ticket, :create_mentions?)
         Array(params[:mentions]).each do |user_id|
           Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
         end

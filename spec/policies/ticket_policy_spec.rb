@@ -312,4 +312,14 @@ describe TicketPolicy do
       it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
     end
   end
+
+  describe '#create_mentions?' do
+    let(:user) { create(:agent) }
+
+    it 'delegates to #agent_read_access?' do
+      allow(policy).to receive(:agent_read_access?)
+      policy.create_mentions?
+      expect(policy).to have_received(:agent_read_access?)
+    end
+  end
 end
