@@ -60,7 +60,7 @@ class Sessions::Store::Redis
     key = client_messages_key(client_id)
     @redis.rpush(key, data.to_json).positive?
     # Make sure message keys are cleaned up even if they are no longer listed in 'sessions'.
-    @redis.expire(key, 1.hour, nx: true)
+    @redis.expire(key, 1.hour, NX: true)
   end
 
   def queue(client_id)
