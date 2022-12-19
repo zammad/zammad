@@ -327,10 +327,17 @@ class App.Ticket extends App.Model
 
   editable: (permission = 'change') ->
     user = App.User.current()
+
     return false if !user?
-    return true if @currentView() is 'customer' && @userIsCustomer()
-    return true if @currentView() is 'customer' && user.organization_id && @organization_id && user.organization_id is @organization_id
+    return true  if @editableByCustomer(user)
+
     return @userGroupAccess(permission)
+
+  editableByCustomer: (user) ->
+    return false if @currentView() != 'customer'
+    return true  if @userIsCustomer()
+
+    user.allOrganizationIds().includes(@organization_id)
 
   userGroupAccess: (permission) ->
     user = App.User.current()
