@@ -32,6 +32,15 @@ window.onload = function() {
     organization_id: undefined,
     owner_id: 1,
     group_id: 1,
+  },
+  {
+    id: 5,
+    title: 'ticket5',
+    state_id: 1,
+    customer_id: 66,
+    organization_id: 123,
+    owner_id: 1,
+    group_id: 1,
   }])
 
   App.User.refresh([{
@@ -61,6 +70,7 @@ window.onload = function() {
     lastname: 'Habebe',
     email: 'hh3@example.com',
     organization_id: undefined,
+    organization_ids: [123], // secondary organization
     role_ids: [3],
     active: true,
   }])
@@ -117,6 +127,8 @@ window.onload = function() {
     assert.ok(!ticket3.editable(), 'no access');
     ticket4 = App.Ticket.find(4);
     assert.ok(!ticket4.editable(), 'no access');
+    ticket5 = App.Ticket.find(5);
+    assert.ok(!ticket5.editable(), 'no access');
   });
 
   QUnit.test('ticket.editabe customer user #2', assert => {
@@ -129,6 +141,8 @@ window.onload = function() {
     assert.ok(!ticket3.editable(), 'no access');
     ticket4 = App.Ticket.find(4);
     assert.ok(!ticket4.editable(), 'no access');
+    ticket5 = App.Ticket.find(5);
+    assert.ok(!ticket5.editable(), 'no access');
   });
 
   QUnit.test('ticket.editabe customer user #3', assert => {
@@ -141,6 +155,8 @@ window.onload = function() {
     assert.ok(ticket3.editable(), 'access via customer_id');
     ticket4 = App.Ticket.find(4);
     assert.ok(!ticket4.editable(), 'no access');
+    ticket5 = App.Ticket.find(5);
+    assert.ok(ticket5.editable(), 'access via secondary organization');
   });
 
 }
