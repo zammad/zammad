@@ -14,10 +14,12 @@ import {
   watch,
   watchEffect,
   computed,
+  nextTick,
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router'
 import { useRawHTMLIcon } from '@shared/components/CommonIcon'
+import testFlags from '@shared/utils/testFlags'
 import type { FormFieldContext } from '../../types/field'
 import useValue from '../../composables/useValue'
 
@@ -194,6 +196,7 @@ const createFlatpickr = () => {
     weekNumbers: application.config.datepicker_show_calendar_weeks === true,
     prevArrow: iconPrevArrow,
     nextArrow: iconNextArrow,
+    animate: !VITE_TEST_MODE,
     formatDate(date) {
       const isoDate = date.toISOString()
       if (time.value) return i18n.dateTime(isoDate)
@@ -278,6 +281,10 @@ watchEffect(async () => {
     todayButton?.setAttribute('tabindex', '-1')
     calendar.setAttribute('aria-hidden', 'true')
     calendar.style.height = '0px'
+
+    nextTick(() => {
+      testFlags.set(`field-date-time-${props.context.id}.opened`)
+    })
   } else {
     if (!flatpickrHeight) {
       // if form was initially rendered as hidden, the height will be 0
@@ -287,6 +294,10 @@ watchEffect(async () => {
     calendar.removeAttribute('aria-hidden')
     clearButton?.removeAttribute('tabindex')
     todayButton?.removeAttribute('tabindex')
+
+    nextTick(() => {
+      testFlags.set(`field-date-time-${props.context.id}.closed`)
+    })
   }
 })
 
@@ -340,8 +351,11 @@ span.flatpickr-weekday {
 
 .flatpickr-calendar {
   box-shadow: none;
-  transition: height 0.5s;
   overflow: hidden;
+}
+
+.flatpickr-calendar.animate {
+  transition: height 0.5s;
 }
 
 .flatpickr-calendar:not([aria-hidden]) {

@@ -178,6 +178,7 @@ onMounted(() => {
       class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
       tabindex="0"
       role="button"
+      :aria-label="$t('Back to previous page')"
       @click="goToPreviousPage()"
       @keypress.space.prevent="goToPreviousPage()"
     >

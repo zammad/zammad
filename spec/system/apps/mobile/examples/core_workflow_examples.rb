@@ -87,30 +87,25 @@ RSpec.shared_examples 'core workflow' do
       expect(page).to have_no_css('label', text: 'operating_system')
       expect(page).to have_no_css('label', text: 'software_used')
 
-      # Select a other group value, to trigger core workflow.
-      # TODO: add helper functions for new tech stack / mobile view
-      find('label', text: 'group_example').sibling('.formkit-inner').click
-      click('span', text: %r{value_2}i)
+      within_form(form_updater_gql_number: form_updater_gql_number) do
 
-      wait_for_form_updater(2)
+        # Select another group value, to trigger core workflow.
+        find_select('group_example').select_option('value_2')
 
-      operating_system = find('label', text: 'operating_system')
-      operating_system.ancestor('.formkit-outer[data-required=true]')
+        expect(find_input('operating_system')['data-required']).to eq('true')
+        expect(find_select('software_used')['data-required']).to eq('true')
 
-      software_used = find('label', text: 'software_used')
-      software_used.ancestor('.formkit-outer[data-required=true]')
+        category = find_treeselect('category')
 
-      find('label', text: 'category').sibling('.formkit-inner').click
+        category.select_option('Change request')
+        expect(category).to have_selected_option('Change request')
 
-      wait_for_test_flag('field-tree-select-category.opened')
+        category.select_option('Incident::Hardware')
+        expect(category).to have_selected_option_with_parent('Incident::Hardware')
 
-      expect(page).to have_css('div[role=option] span', text: 'Change request')
-
-      find('div[role=option] span', text: 'Incident').sibling('svg[role=link]').click
-      expect(page).to have_css('div[role=option] span', text: 'Hardware')
-
-      find('div[role=option] span', text: 'Softwareproblem').sibling('svg[role=link]').click
-      expect(page).to have_css('div[role=option] span', text: 'CRM')
+        category.select_option('Incident::Softwareproblem::CRM')
+        expect(category).to have_selected_option_with_parent('Incident::Softwareproblem::CRM')
+      end
     end
   end
 end

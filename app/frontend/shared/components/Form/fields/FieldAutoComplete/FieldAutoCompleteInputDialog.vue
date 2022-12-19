@@ -280,6 +280,7 @@ useTraverseOptions(autocompleteList)
       :aria-label="$t('Select…')"
       class="flex grow flex-col items-start self-stretch overflow-y-auto"
       role="listbox"
+      :aria-multiselectable="context.multiple"
     >
       <div
         v-for="(option, index) in filter || context.defaultFilter

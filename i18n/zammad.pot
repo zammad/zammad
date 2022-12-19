@@ -1500,6 +1500,10 @@ msgstr ""
 msgid "Back to overview"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "Back to previous page"
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr ""

@@ -236,6 +236,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'Ticket' }
+      let(:form_updater_gql_number) { 1 }
       let(:before_it) do
         lambda {
           visit "/tickets/#{ticket.id}/information"

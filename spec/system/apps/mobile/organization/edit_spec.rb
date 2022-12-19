@@ -74,6 +74,7 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'Organization' }
+      let(:form_updater_gql_number) { 1 }
       let(:before_it) do
         lambda {
           open_organization

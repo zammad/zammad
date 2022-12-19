@@ -177,3 +177,111 @@ Example usage: `find :active_ticket_article, 123`
 `find` also allows to manually check elements before returning
 
 `find('.popular_class') { |elem| process(elem) }`
+
+### Form helpers for the new stack
+
+#### Finding fields
+
+FormKit-based fields have a custom implementation, so a number of helpers is provided to make it easier to find them via their labels:
+
+```ruby
+find_input('Title')
+find_select('Owner')
+find_treeselect('Category')
+find_autocomplete('Customer')
+find_editor('Text')
+find_datepicker('Pending till')
+```
+
+Radio fields do not have textual labels, so they can be found via their identifiers instead:
+
+```ruby
+find_radio('articleSenderType')
+```
+
+In case of ambiguous labels, make sure to pass `exact_text` option:
+
+```ruby
+find_datepicker(nil, exact_text: 'Date')
+```
+
+### Executing actions on fields
+
+Returned form field elements have some special syntactic sugar that provide actions depending on the type of the field:
+
+```ruby
+find_input('Title').type('Foo Bar')
+find_editor('Text').type('Lorem ipsum dolor sit amet.')
+
+find_radio('articleSenderType').select_choice('Outbound Call')
+
+find_datepicker('Date Picker').select_date(Date.tomorrow)
+find_datepicker('Pending till').select_datetime('2023-01-01T09:00:00.000Z')
+find_datepicker('Date').type_date(Date.today)
+find_datepicker('Date Time').type_datetime(DateTime.now)
+
+find_select('Owner').select_option('Test Admin Agent')
+find_select('Multi Select').select_options(['Option 1', 'Option 2'])
+find_treeselect('Tree Select').select_option('Parent 1::Option A')
+find_treeselect('Multi Tree Select').select_options(['Parent 1::Option A', 'Parent 2::Option C'])
+
+find_treeselect('Tree Select').search_for_option('Parent 1::Option A')
+find_autocomplete('Customer').search_for_option(customer.lastname)
+find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3])
+
+find_toggle('Boolean').toggle
+find_toggle('Boolean').toggle_on
+find_toggle('Boolean').toggle_off
+```
+
+To wait for a custom GraphQL response in autocomplete fields, you can provide expected `gql_filename` and/or `gql_number` arguments:
+
+```ruby
+find_autocomplete('Custom').search_for_option('foo', gql_filename: 'apps/mobile/entities/user/graphql/queries/user.graphql', gql_number: 4)
+```
+
+Clearing selections and input is also possible, if the field supports it:
+
+```ruby
+find_select('Select').clear_selection
+find_treeselect('Tree Select').clear_selection
+find_autocomplete('Auto Complete').clear_selection
+find_editor('Text').clear
+find_datepicker('Date Picker').clear
+```
+
+All custom actions are chainable, in the same way as other Capybara actions:
+
+```ruby
+find_treeselect('Tree Select').clear_selection.search_for_option('Option C')
+find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3]).select_options(%w[foo bar])
+```
+
+### Form context
+
+In order to stabilize multiple field interactions, actions can be executed within the same form context:
+
+```ruby
+within_form(form_updater_gql_number: 2) do
+  find_autocomplete('CC').search_for_options([email_address_1, email_address_2])
+  find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3]).select_options(%w[foo bar])
+  find_editor('Text').type(body)
+end
+```
+
+Within the same context all form updater responses (Core Workflow) are automatically tracked and waited on, as well as multiple types of GraphQL responses behind the autocomplete fields. To define a custom starting form updater response number, use the `form_updater_gql_number` argument.
+
+### Custom matchers
+
+A number of useful test matchers is also available, including their negated versions:
+
+```ruby
+expect(find_select('Select')).to have_selected_option('Option 1')
+expect(find_select('Select')).to have_no_selected_option('Option 2')
+expect(find_select('Multi Select')).to have_selected_options(['Option 1', 'Option 2'])
+expect(find_treeselect('Tree Select')).to have_selected_option_with_parent('Parent 1::Option A')
+expect(find_editor('Text')).to have_text('foo bar')
+expect(find_datepicker('Date')).to have_date(Date.today)
+expect(find_datepicker('Date Time')).to have_datetime(DateTime.now)
+expect(find_toggle('Boolean')).to be_toggled_on
+```

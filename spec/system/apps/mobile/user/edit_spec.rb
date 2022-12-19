@@ -20,6 +20,7 @@ RSpec.describe 'Mobile > User > Can edit user', app: :mobile, type: :system do
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'User' }
+      let(:form_updater_gql_number) { 1 }
       let(:before_it) do
         lambda {
           open_user

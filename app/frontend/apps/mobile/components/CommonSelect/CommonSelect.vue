@@ -9,6 +9,7 @@ import stopEvent from '@shared/utils/events'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { computed, nextTick, ref } from 'vue'
+import testFlags from '@shared/utils/testFlags'
 import CommonSelectItem from './CommonSelectItem.vue'
 
 export interface Props {
@@ -63,6 +64,10 @@ const openDialog = () => {
     )
     const focusElement = selected || focusableElements[0]
     focusElement?.focus()
+
+    nextTick(() => {
+      testFlags.set('common-select.opened')
+    })
   })
 }
 
@@ -72,6 +77,10 @@ const closeDialog = () => {
   if (!props.noRefocus) {
     nextTick(() => lastFocusableOutsideElement?.focus())
   }
+
+  nextTick(() => {
+    testFlags.set('common-select.closed')
+  })
 }
 
 defineExpose({
@@ -139,14 +148,17 @@ const select = (option: SelectOption) => {
     closeDialog()
   }
 }
+
+const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
 </script>
 
 <template>
   <slot :open="openDialog" :close="closeDialog" />
   <Teleport to="body">
-    <Transition :duration="{ enter: 300, leave: 200 }">
+    <Transition :duration="duration">
       <div
         v-if="showDialog"
+        id="common-select"
         class="fixed inset-0 z-10 flex overflow-y-auto"
         :aria-label="$t('Dialog window with selections')"
         role="dialog"

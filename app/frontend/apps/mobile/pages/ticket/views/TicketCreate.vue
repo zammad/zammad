@@ -128,14 +128,14 @@ const ticketTitleSection = getFormSchemaGroupSection(
       object: EnumObjectManagerObjects.Ticket,
       screen: 'create_top',
       outerClass:
-        '$reset w-full grow justify-center flex items-center flex-col',
+        '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
       wrapperClass: '$reset flex w-full',
       labelClass: '$reset sr-only',
       blockClass: '$reset flex w-full',
       innerClass: '$reset flex justify-center items-center px-8 w-full',
       messagesClass: 'pt-2',
       inputClass:
-        '$reset block bg-transparent grow border-b-[0.5px] border-white outline-none text-center text-xl placeholder:text-white placeholder:text-opacity-50',
+        '$reset formkit-input block bg-transparent grow border-b-[0.5px] border-white outline-none text-center text-xl placeholder:text-white placeholder:text-opacity-50',
       props: {
         placeholder: __('Title'),
         onSubmit,

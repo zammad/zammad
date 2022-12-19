@@ -49,28 +49,31 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     it 'can complete all steps' do
       expect(find_button('Create ticket', match: :first, disabled: true).disabled?).to be(true)
 
-      # Step 1.
-      find_field('Title').fill_in(with: Faker::Name.name_with_middle)
-      next_step
+      within_form(form_updater_gql_number: 1) do
 
-      # Step 2.
-      case article_type
-      when 'email'
-        click 'label', text: 'Send Email'
-      when 'phone'
-        if direction == 'out'
-          click 'label', text: 'Outbound Call'
+        # Step 1.
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        # Step 2.
+        case article_type
+        when 'email'
+          find_radio('articleSenderType').select_choice('Send Email')
+        when 'phone'
+          if direction == 'out'
+            find_radio('articleSenderType').select_choice('Outbound Call')
+          end
         end
+        next_step
+
+        # Step 3.
+        find_autocomplete('Customer').search_for_option(customer.lastname)
+        find_autocomplete('CC') if article_type == 'email'
+        next_step
+
+        # Step 4.
+        find_editor('Text').type(Faker::Hacker.say_something_smart)
       end
-      next_step
-
-      # Step 3.
-      select_customer(customer)
-      find('.formkit-outer', text: 'CC') if article_type == 'email'
-      next_step
-
-      # Step 4.
-      editor_field_set(Faker::Hacker.say_something_smart)
 
       submit_form
 
@@ -90,45 +93,48 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
   context 'with entered form fields' do
     it 'remembers the data when switching between steps' do
 
-      # Step 1.
-      title = Faker::Name.name_with_middle
-      find_field('Title').fill_in(with: title)
-      next_step
+      within_form(form_updater_gql_number: 1) do
 
-      # Step 2.
-      type = 'Outbound Call'
-      click 'label', text: type
-      next_step
+        # Step 1.
+        title = Faker::Name.name_with_middle
+        find_input('Title').type(title)
+        next_step
 
-      # Step 3.
-      select_customer(customer)
-      next_step
+        # Step 2.
+        type = 'Outbound Call'
+        find_radio('articleSenderType').select_choice(type)
+        next_step
 
-      # Step 4.
-      body = Faker::Hacker.say_something_smart
-      editor_field_set(body)
+        # Step 3.
+        find_autocomplete('Customer').search_for_option(customer.lastname)
+        next_step
 
-      # Step 1.
-      go_to_step(1)
-      expect(find_field('Title').value).to eq(title)
+        # Step 4.
+        body = Faker::Hacker.say_something_smart
+        find_editor('Text').type(body)
 
-      # Step 3.
-      go_to_step(3)
-      expect(find('.formkit-outer', text: 'Customer')).to have_text(customer.fullname)
+        # Step 1.
+        go_to_step(1)
+        expect(find_input('Title')).to have_value(title)
 
-      # Step 2.
-      go_to_step(2)
-      expect(find('label', text: type)['data-is-checked']).to eq('true')
+        # Step 3.
+        go_to_step(3)
+        expect(find_autocomplete('Customer')).to have_selected_option(customer.fullname)
 
-      # Step 4.
-      go_to_step(4)
-      expect(find('[name="body"]')).to have_text(body)
+        # Step 2.
+        go_to_step(2)
+        expect(find_radio('articleSenderType')).to have_selected_choice(type)
+
+        # Step 4.
+        go_to_step(4)
+        expect(find_editor('Text')).to have_text(body)
+      end
     end
 
     it 'shows a confirmation dialog when leaving the screen' do
-      find_field('Title').fill_in(with: Faker::Name.name_with_middle)
-
-      wait_for_gql('shared/components/Form/graphql/queries/formUpdater.graphql', number: 2)
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+      end
 
       find('button[aria-label="Go back"]').click
 
@@ -142,42 +148,42 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     it 'focuses first visible field when switching between steps' do
 
       # Step 1.
-      check_is_focused find_field('Title')
+      check_is_focused find_input('Title').input_element
       next_step
 
       # Step 2.
-      check_is_focused find('label', text: 'Received Call').find('input')
+      check_is_focused find_radio('articleSenderType').find('label', text: 'Received Call').find('input')
       next_step
 
       # Step 3.
-      check_is_focused find('.formkit-outer', text: 'Customer').find('output', visible: :all)
+      check_is_focused find_autocomplete('Customer').input_element
       next_step
 
       # Step 4.
-      check_is_focused find('[name="body"]')
+      check_is_focused find_editor('Text').input_element
 
       # Step 1.
       go_to_step(1)
-      check_is_focused find_field('Title')
+      check_is_focused find_input('Title').input_element
 
       # Step 3.
       go_to_step(3)
-      check_is_focused find('.formkit-outer', text: 'Customer').find('output', visible: :all)
+      check_is_focused find_autocomplete('Customer').input_element
 
       # Step 2.
       go_to_step(2)
-      check_is_focused find('label', text: 'Received Call').find('input')
+      check_is_focused find_radio('articleSenderType').find('label', text: 'Received Call').find('input')
 
       # Step 4.
       go_to_step(4)
-      check_is_focused find('[name="body"]')
+      check_is_focused find_editor('Text').input_element
     end
 
     it 'advances to the next step on submit' do
-      find_field('Title').send_keys :enter
+      find_input('Title').input_element.send_keys :enter
       check_is_step(2)
 
-      find('label', text: 'Received Call').find('input').send_keys :enter
+      find_radio('articleSenderType').find('label', text: 'Received Call').find('input').send_keys :enter
       check_is_step(3)
     end
   end
@@ -185,12 +191,16 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
   describe 'Core Workflow' do
     include_examples 'core workflow' do
       let(:object_name) { 'Ticket' }
+      let(:form_updater_gql_number) { 2 }
       let(:before_it) do
         lambda {
           visit '/tickets/create'
           wait_for_form_to_settle('ticket-create')
 
-          find_field('Title').fill_in(with: Faker::Name.name_with_middle)
+          within_form(form_updater_gql_number: 1) do
+            find_input('Title').type(Faker::Name.name_with_middle)
+          end
+
           next_step
           next_step
         }
