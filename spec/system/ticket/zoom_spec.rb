@@ -2351,6 +2351,33 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Multiselect marked as dirty', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => []) }
+
+    def authenticate
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => true,
+                   'required' => false,
+                 }
+               }
+             })
+      ObjectManager::Attribute.migration_execute
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show values properly and can save values also' do
+      expect(page).to have_no_css('.attributeBar-reset')
+    end
+  end
+
   describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset, mariadb: true do
     let(:field_name) { SecureRandom.uuid }
     let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
