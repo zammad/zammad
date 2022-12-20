@@ -15,9 +15,11 @@ RSpec.describe Authorization, type: :model do
   end
 
   describe 'Account linking notification', sends_notification_emails: true do
-    subject(:authorization) { create(:authorization, user: agent, provider: 'github') }
+    subject(:authorization) { create(:authorization, user: agent, provider: provider) }
 
-    let(:agent) { create(:agent) }
+    let(:agent)         { create(:agent) }
+    let(:provider)      { 'github' }
+    let(:provider_name) { 'GitHub' }
 
     shared_examples 'sending out email notification' do
       it 'sends out an email notification' do
@@ -27,7 +29,7 @@ RSpec.describe Authorization, type: :model do
           sent(
             template: 'user_auth_provider',
             user:     authorization.user,
-            objects:  hash_including({ user: authorization.user, provider: authorization.provider })
+            objects:  hash_including({ user: authorization.user, provider: provider_name })
           )
         end
       end
@@ -41,7 +43,7 @@ RSpec.describe Authorization, type: :model do
           not_sent(
             template: 'user_auth_provider',
             user:     authorization.user,
-            objects:  hash_including({ user: authorization.user, provider: authorization.provider })
+            objects:  hash_including({ user: authorization.user, provider: provider_name })
           )
         end
       end
@@ -66,6 +68,17 @@ RSpec.describe Authorization, type: :model do
         let(:agent) { create(:agent, source: 'github') }
 
         it_behaves_like 'not sending out email notification'
+      end
+
+      context 'with SAML as the provider' do
+        let(:provider)      { 'saml' }
+        let(:provider_name) { 'Custom Provider' }
+
+        before do
+          Setting.set('auth_saml_credentials', { display_name: provider_name })
+        end
+
+        it_behaves_like 'sending out email notification'
       end
     end
 

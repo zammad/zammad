@@ -1185,8 +1185,8 @@ Setting.create_if_not_exists(
   area:        'Security::Authentication',
   description: __('Enables user authentication via %s.'),
   preferences: {
-    title_i18n:       ['internal database'],
-    description_i18n: ['internal database'],
+    title_i18n:       [__('internal database')],
+    description_i18n: [__('internal database')],
     permission:       ['admin.security'],
   },
   state:       {
@@ -1201,8 +1201,8 @@ Setting.create_if_not_exists(
   area:        'Security::Authentication',
   description: __('Enables user authentication via %s.'),
   preferences: {
-    title_i18n:       ['developer password'],
-    description_i18n: ['developer password'],
+    title_i18n:       [__('developer password')],
+    description_i18n: [__('developer password')],
     permission:       ['admin.security'],
   },
   state:       {
@@ -1217,8 +1217,8 @@ Setting.create_if_not_exists(
   area:        'Security::Authentication',
   description: __('Enables user authentication via %s.'),
   preferences: {
-    title_i18n:       ['LDAP'],
-    description_i18n: ['LDAP'],
+    title_i18n:       [__('LDAP')],
+    description_i18n: [__('LDAP')],
     permission:       ['admin.security'],
   },
   state:       {
@@ -1316,8 +1316,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_twitter_credentials'],
-    title_i18n:       ['Twitter'],
-    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('Twitter')],
+    description_i18n: [__('Twitter'), __('Twitter Developer Site'), 'https://dev.twitter.com/apps'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1379,8 +1379,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_facebook_credentials'],
-    title_i18n:       ['Facebook'],
-    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('Facebook')],
+    description_i18n: [__('Facebook'), __('Facebook Developer Site'), 'https://developers.facebook.com/apps/'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1444,8 +1444,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_google_oauth2_credentials'],
-    title_i18n:       ['Google'],
-    description_i18n: ['Google', 'Google API Console Site', 'https://console.cloud.google.com/apis/credentials'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('Google')],
+    description_i18n: [__('Google'), __('Google API Console Site'), 'https://console.cloud.google.com/apis/credentials'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1508,8 +1508,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_linkedin_credentials'],
-    title_i18n:       ['LinkedIn'],
-    description_i18n: ['LinkedIn', 'LinkedIn Developer Site', 'https://www.linkedin.com/developer/apps'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('LinkedIn')],
+    description_i18n: [__('LinkedIn'), __('LinkedIn Developer Site'), 'https://www.linkedin.com/developer/apps'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1572,8 +1572,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_github_credentials'],
-    title_i18n:       ['Github'],
-    description_i18n: ['Github', 'GitHub OAuth Applications', 'https://github.com/settings/applications'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('GitHub')],
+    description_i18n: [__('GitHub'), __('GitHub OAuth Applications'), 'https://github.com/settings/applications'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1636,8 +1636,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_gitlab_credentials'],
-    title_i18n:       ['GitLab'],
-    description_i18n: ['GitLab', 'GitLab Applications', 'https://your-gitlab-host/admin/applications'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('GitLab')],
+    description_i18n: [__('GitLab'), __('GitLab Applications'), 'https://your-gitlab-host/admin/applications'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1707,8 +1707,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_microsoft_office365_credentials'],
-    title_i18n:       ['Microsoft'],
-    description_i18n: ['Microsoft', __('Microsoft Application Registration Portal'), 'https://portal.azure.com'],
+    title_i18n:       [__('Microsoft')],
+    description_i18n: [__('Microsoft'), __('Microsoft Application Registration Portal'), 'https://portal.azure.com'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1777,8 +1777,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_weibo_credentials'],
-    title_i18n:       ['Weibo'],
-    description_i18n: ['Sina Weibo', 'Sina Weibo Open Portal', 'http://open.weibo.com'], # rubocop:disable Zammad/DetectTranslatableString
+    title_i18n:       [__('Weibo')],
+    description_i18n: [__('Sina Weibo'), __('Sina Weibo Open Portal'), 'http://open.weibo.com'],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -1840,8 +1840,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              ['auth_saml_credentials'],
-    title_i18n:       ['SAML'],
-    description_i18n: ['SAML'],
+    title_i18n:       [__('SAML')],
+    description_i18n: [__('SAML')],
     permission:       ['admin.security'],
   },
   state:       false,
@@ -5082,8 +5082,8 @@ Setting.create_if_not_exists(
   preferences: {
     controller:       'SettingsAreaSwitch',
     sub:              {},
-    title_i18n:       ['SSO'],
-    description_i18n: ['SSO'],
+    title_i18n:       [__('SSO')],
+    description_i18n: [__('SSO')],
     permission:       ['admin.security'],
   },
   state:       false,

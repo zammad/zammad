@@ -131,9 +131,32 @@ class Authorization < ApplicationModel
       user:     user,
       objects:  {
         user:     user,
-        provider: provider,
+        provider: provider_name(provider),
       }
     )
+  end
+
+  def provider_name(provider)
+    return saml_display_name(provider) if provider == 'saml'
+
+    provider_title(provider)
+  end
+
+  # In case of SAML authentication provider, there is a separate display name setting that may be defined.
+  def saml_display_name(provider)
+    begin
+      Setting.get('auth_saml_credentials')['display_name']
+    rescue
+      provider_title(provider)
+    end
+  end
+
+  def provider_title(provider)
+    begin
+      Setting.find_by(name: "auth_#{provider}").preferences['title_i18n'].shift
+    rescue
+      provider
+    end
   end
 
 end

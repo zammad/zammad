@@ -83,7 +83,7 @@ msgstr ""
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_auth_provider/en.html.erb
-msgid "#{config.product_name} account linked with a third-party application\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you linked your account <b>with a third-party application</b> \"#{provider}\".</div>\n<br>\n<div>If this wasn't you, please remove the linked account from your profile and change your third-party application password. Somebody might have gained unauthorized access to your account on the third-party service.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "#{config.product_name} account linked with a third-party application\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>It looks like you linked your account <b>with a third-party application</b> \"#{t(provider)}\".</div>\n<br>\n<div>If this wasn't you, please remove the linked account from your profile and change your third-party application password. Somebody might have gained unauthorized access to your account on the third-party service.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
@@ -4546,6 +4546,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: db/seeds/settings.rb
 msgid "Facebook"
 msgstr ""
 
@@ -4563,6 +4564,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 msgid "Facebook App Secret"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Facebook Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -4959,11 +4964,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "GitHub OAuth Applications"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -4980,11 +4990,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "GitLab Applications"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5033,7 +5048,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Google API Console Site"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6012,6 +6032,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr ""
 
@@ -6207,11 +6228,16 @@ msgid "Linked Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
@@ -6559,6 +6585,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr ""
 
@@ -8707,6 +8734,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
 
@@ -9346,6 +9374,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
 msgstr ""
 
 #: public/assets/chat/views/customer_timeout.eco
@@ -11213,6 +11249,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: db/seeds/settings.rb
 msgid "Twitter"
 msgstr ""
 
@@ -11254,6 +11291,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Dev environment label"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Twitter Developer Site"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -11954,6 +11995,7 @@ msgid "Week(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
 
@@ -12630,6 +12672,10 @@ msgstr ""
 msgid "descending"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "developer password"
+msgstr ""
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr ""
@@ -12893,6 +12939,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "internal database"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
