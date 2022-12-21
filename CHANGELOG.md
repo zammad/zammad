@@ -1,5 +1,25 @@
 # Change Log
 
+## [5.3.1](https://github.com/zammad/zammad/tree/5.3.1) (2022-12-21)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.3.0...5.3.1)
+
+**Fixed bugs:**
+
+- Taskbar is not marked as having changes if one of multiselect selections is unselected [4441](https://github.com/zammad/zammad/issues/4441) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Ticket fields are readonly for users with secondary organizations on tickets created by another user [4426](https://github.com/zammad/zammad/issues/4426) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Freshdesk custom field types which can not be mapped will abort the complete import [4342](https://github.com/zammad/zammad/issues/4342) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
+- Redis database content keeps growing forever [4349](https://github.com/zammad/zammad/issues/4349) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Zammad assumes caller_locations's path exists on disk [4356](https://github.com/zammad/zammad/issues/4356) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Agents cannot reopen tickets when group follow-up setting is set to "do not reopen" [4386](https://github.com/zammad/zammad/issues/4386) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Can not use RSS feed in Microsoft Teams (invalid url) [4403](https://github.com/zammad/zammad/issues/4403) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge%20base)]
+- JS error on user save: Uncaught TypeError: Cannot read properties of null (reading 'length') [4419](https://github.com/zammad/zammad/issues/4419) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Ticket templates are missing active flag [4381](https://github.com/zammad/zammad/issues/4381) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[ticket templates](https://github.com/zammad/zammad/labels/ticket%20templates)]
+- OTRS migration from lower then OTRS 6 doesn't import article creation time [4400](https://github.com/zammad/zammad/issues/4400) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- Sync with computer always ends in light mode [4365](https://github.com/zammad/zammad/issues/4365) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+- Appearance setting within profile not available to customers [4368](https://github.com/zammad/zammad/issues/4368) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+- The local time zone overwrites the one set in Zammad  [4377](https://github.com/zammad/zammad/issues/4377) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+- HTML escaping is shown in the frontend for overview settings [4366](https://github.com/zammad/zammad/issues/4366) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+
 ## [5.3.0](https://github.com/zammad/zammad/tree/5.3.0) (2022-11-22)
 
 [Full Changelog](https://github.com/zammad/zammad/compare/5.2.3...5.3.0)
