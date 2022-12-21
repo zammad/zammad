@@ -179,7 +179,7 @@ class Ldap
 
     @protocol = $1.to_sym
     @host     = $2
-    @ssl      = @protocol == :ldaps
+    @ssl = @protocol == :starttls || @protocol == :ldaps
   end
 
   def parse_host
@@ -191,11 +191,20 @@ class Ldap
 
   def handle_ssl_config
     return if !@ssl
-
-    @port       ||= @config.fetch(:port, 636)
-    @encryption   = {
-      method: :simple_tls,
-    }
+    
+    @config[:host_url] =~ %r{\A([^:]+)://(.+?)/?\z}
+    @protocol = $1.to_sym
+    if @protocol == :ldaps then
+      @port ||= @config.fetch(:port, 636)
+        @encryption = {
+            method: :simple_tls,
+        }
+    else
+        @port ||= @config.fetch(:port,389)
+        @encryption = {
+            method: :start_tls,
+        }
+    end
 
     return if @config[:ssl_verify]
 
