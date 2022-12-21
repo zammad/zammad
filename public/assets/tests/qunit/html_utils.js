@@ -1969,6 +1969,17 @@ QUnit.test("check form diff", assert => {
   result = App.Utils.formDiff(dataNow, dataLast)
   assert.deepEqual(result, diff, 'check form diff')
 
+  dataNow = {
+    array: [1,2]
+  }
+  dataLast = {
+    array: [2, 3]
+  }
+  diff = {
+    array: ['1', '3']
+  }
+  result = App.Utils.formDiff(dataNow, dataLast)
+  assert.deepEqual(result, diff, 'check form diff in arrays both ways')
 });
 
 // check decimal format
