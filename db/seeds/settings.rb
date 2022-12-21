@@ -2187,7 +2187,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title:       __('Ticket Conditions Expert Mode'),
   name:        'ticket_allow_expert_conditions',
-  area:        'Ticket::Base',
+  area:        'Ticket::Core',
   description: __('Defines if the ticket conditions editor supports complex logical expressions.'),
   options:     {
     form: [
@@ -2203,10 +2203,10 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       false,
+  state:       true,
   preferences: {
-    prio:       4000,
-    permission: ['admin.ticket'],
+    online_service_disable: true,
+    permission:             ['admin.ticket'],
   },
   frontend:    true
 )
