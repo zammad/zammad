@@ -226,7 +226,7 @@ GEM
       activesupport (>= 5.0)
     gmail_xoauth (0.4.2)
       oauth (>= 0.3.6)
-    graphql (2.0.15)
+    graphql (2.0.16)
     graphql-batch (0.5.1)
       graphql (>= 1.10, < 3)
       promise.rb (~> 0.7.2)
