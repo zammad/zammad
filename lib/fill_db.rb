@@ -8,6 +8,16 @@ module FillDb
 fill your database with demo records
 
   FillDb.load(
+    object_manager_attributes: {
+      user: {
+        'input': 1,
+        'multiselect': 1,
+      },
+      ticket: {
+        'textarea': 1,
+        'multiselect': 1,
+      },
+    },
     agents: 50,
     customers: 1000,
     groups: 20,
@@ -16,6 +26,7 @@ fill your database with demo records
     tickets: 100,
     knowledge_base_answers: 100,
     knowledge_base_categories: 20,
+    public_links: 2,
     nice: 0,
   )
 
@@ -28,6 +39,7 @@ or if you only want to create 100 tickets
   FillDb.load(tickets: 10000, nice: 0)
   FillDb.load(knowledge_base_answers: 100, nice: 0)
   FillDb.load(knowledge_base_categories: 20, nice: 0)
+  FillDb.load(public_links: 2, nice: 0)
 
 =end
 
@@ -39,7 +51,9 @@ or if you only want to create 100 tickets
   end
 
   def self.load_data(params)
-    nice                      = params[:nice] || 0.5
+    nice = params[:nice] || 0.5
+
+    object_manager_attributes = params[:object_manager_attributes]
     agents                    = params[:agents] || 0
     customers                 = params[:customers] || 0
     groups                    = params[:groups] || 0
@@ -48,8 +62,10 @@ or if you only want to create 100 tickets
     tickets                   = params[:tickets] || 0
     knowledge_base_answers    = params[:knowledge_base_answers] || 0
     knowledge_base_categories = params[:knowledge_base_categories] || 0
+    public_links              = params[:public_links] || 0
 
     puts 'load db with:'
+    puts " object_manager_attributes: #{object_manager_attributes}"
     puts " agents: #{agents}"
     puts " customers: #{customers}"
     puts " groups: #{groups}"
@@ -58,9 +74,64 @@ or if you only want to create 100 tickets
     puts " tickets: #{tickets}"
     puts " knowledge_base_answers: #{knowledge_base_answers}"
     puts " knowledge_base_categories: #{knowledge_base_categories}"
+    puts " public_links: #{public_links}"
 
     # set current user
     UserInfo.current_user_id = 1
+
+    # create object attributes
+    object_manager_attributes_value_lookup = {}
+    if object_manager_attributes.present?
+      ActiveRecord::Base.transaction do
+        object_manager_attributes.each do |object, attribute_types|
+          attribute_types.each do |attribute_type, amount|
+            next if amount.zero?
+
+            object_manager_attributes_value_lookup[object] ||= {}
+
+            amount.times do |index|
+              name = "#{attribute_type}_#{counter}"
+
+              object_attribute_creation = public_send("create_object_attribute_type_#{attribute_type}",
+                                                      object:     object,
+                                                      name:       name,
+                                                      display:    name,
+                                                      editable:   true,
+                                                      active:     true,
+                                                      screens:    {
+                                                        create_middle: {
+                                                          '-all-' => {
+                                                            shown:    true,
+                                                            required: false,
+                                                          },
+                                                        },
+                                                        create:        {
+                                                          '-all-' => {
+                                                            shown:    true,
+                                                            required: false,
+                                                          },
+                                                        },
+                                                        edit:          {
+                                                          '-all-' => {
+                                                            shown:    true,
+                                                            required: false,
+                                                          },
+                                                        },
+                                                      },
+                                                      to_migrate: true,
+                                                      to_delete:  false,
+                                                      to_config:  false,
+                                                      position:   1000 + index)
+
+              ObjectManager::Attribute.add(object_attribute_creation[:attribute_params])
+
+              object_manager_attributes_value_lookup[object][name] = object_attribute_creation[:value]
+            end
+          end
+        end
+        ObjectManager::Attribute.migration_execute(false)
+      end
+    end
 
     # organizations
     organization_pool = []
@@ -70,7 +141,16 @@ or if you only want to create 100 tickets
     else
       (1..organizations).each do
         ActiveRecord::Base.transaction do
-          organization = Organization.create!(name: "FillOrganization::#{counter}", active: true)
+          create_params = {
+            name:   "FillOrganization::#{counter}",
+            active: true
+          }
+
+          if object_manager_attributes_value_lookup[:organization].present?
+            create_params = create_params.merge(object_manager_attributes_value_lookup[:organization])
+          end
+
+          organization = Organization.create!(create_params)
           organization_pool.push organization
         end
       end
@@ -88,7 +168,8 @@ or if you only want to create 100 tickets
       (1..agents).each do
         ActiveRecord::Base.transaction do
           suffix = counter.to_s
-          user = User.create_or_update(
+
+          create_params = {
             login:     "filldb-agent-#{suffix}",
             firstname: "agent #{suffix}",
             lastname:  "agent #{suffix}",
@@ -97,7 +178,14 @@ or if you only want to create 100 tickets
             active:    true,
             roles:     roles,
             groups:    groups_all,
-          )
+          }
+
+          if object_manager_attributes_value_lookup[:user].present?
+            create_params = create_params.merge(object_manager_attributes_value_lookup[:user])
+          end
+
+          user = User.create_or_update(create_params)
+
           sleep nice
           agent_pool.push user
         end
@@ -122,7 +210,8 @@ or if you only want to create 100 tickets
           if organization_pool.present? && true_or_false.sample
             organization = organization_pool.sample
           end
-          user = User.create_or_update(
+
+          create_params = {
             login:        "filldb-customer-#{suffix}",
             firstname:    "customer #{suffix}",
             lastname:     "customer #{suffix}",
@@ -131,7 +220,14 @@ or if you only want to create 100 tickets
             active:       true,
             organization: organization,
             roles:        roles,
-          )
+          }
+
+          if object_manager_attributes_value_lookup[:user].present?
+            create_params = create_params.merge(object_manager_attributes_value_lookup[:user])
+          end
+
+          user = User.create_or_update(create_params)
+
           sleep nice
           customer_pool.push user
         end
@@ -147,7 +243,17 @@ or if you only want to create 100 tickets
     else
       (1..groups).each do
         ActiveRecord::Base.transaction do
-          group = Group.create!(name: "FillGroup::#{counter}", active: true)
+
+          create_params = {
+            name:   "FillGroup::#{counter}",
+            active: true,
+          }
+
+          if object_manager_attributes_value_lookup[:group].present?
+            create_params = create_params.merge(object_manager_attributes_value_lookup[:group])
+          end
+
+          group = Group.create!(create_params)
           group_pool.push group
           Role.where(name: 'Agent').first.users.where(active: true).each do |user|
             user_groups = user.groups
@@ -198,7 +304,8 @@ or if you only want to create 100 tickets
         ActiveRecord::Base.transaction do
           customer = customer_pool.sample
           agent    = agent_pool.sample
-          ticket = Ticket.create!(
+
+          create_params = {
             title:         "some title äöüß#{counter}",
             group:         group_pool.sample,
             customer:      customer,
@@ -207,7 +314,13 @@ or if you only want to create 100 tickets
             priority:      priority_pool.sample,
             updated_by_id: agent.id,
             created_by_id: agent.id,
-          )
+          }
+
+          if object_manager_attributes_value_lookup[:ticket].present?
+            create_params = create_params.merge(object_manager_attributes_value_lookup[:ticket])
+          end
+
+          ticket = Ticket.create!(create_params)
 
           # create article
           Ticket::Article.create!(
@@ -243,18 +356,28 @@ or if you only want to create 100 tickets
       end
     end
 
-    return if knowledge_base_answers.zero?
+    if knowledge_base_answers.positive?
+      ActiveRecord::Base.transaction do
+        create_knowledge_base_answers(
+          amount:            knowledge_base_answers,
+          categories_amount: knowledge_base_categories,
+          categories:        knowledge_base_categories_created,
+          knowledge_base:    knowledge_base,
+          agents:            agent_pool,
+          sleep_time:        nice,
+        )
+      end
+    end
+
+    return if public_links.zero?
 
     ActiveRecord::Base.transaction do
-      create_knowledge_base_answers(
-        amount:            knowledge_base_answers,
-        categories_amount: knowledge_base_categories,
-        categories:        knowledge_base_categories_created,
-        knowledge_base:    knowledge_base,
-        agents:            agent_pool,
-        sleep_time:        nice,
+      create_public_links(
+        amount:     public_links,
+        sleep_time: nice,
       )
     end
+
   end
 
   def self.counter
@@ -373,6 +496,274 @@ or if you only want to create 100 tickets
 
       sleep sleep_time
     end
+  end
+
+  def self.create_public_links(params)
+    public_links_amount = params[:amount]
+    sleep_time = params[:sleep_time]
+
+    public_links_amount.times do |index|
+      public_link = PublicLink.create!(
+        title:         "Example#{counter}",
+        screen:        %w[login signup],
+        link:          "https://zammad#{counter}.com",
+        new_tab:       true,
+        prio:          index,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      puts " PublicLink #{public_link.id} created"
+
+      sleep sleep_time
+    end
+  end
+
+  def self.create_object_attribute_type_input(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'input',
+        data_option: {
+          type:      'text',
+          maxlength: 200,
+          null:      true,
+          translate: false,
+        }
+      ),
+      value:            'example value',
+    }
+  end
+
+  def self.create_object_attribute_type_textarea(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'textarea',
+        data_option: {
+          type:      'textarea',
+          maxlength: 200,
+          rows:      4,
+          null:      true,
+          translate: false,
+        }
+      ),
+      value:            "example value\nwith line break",
+    }
+  end
+
+  def self.create_object_attribute_type_integer(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'integer',
+        data_option: {
+          default: 0,
+          null:    true,
+          min:     0,
+          max:     9999,
+        }
+      ),
+      value:            99,
+    }
+  end
+
+  def self.create_object_attribute_type_boolean(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'boolean',
+        data_option: {
+          default: false,
+          null:    true,
+          options: {
+            true  => 'yes',
+            false => 'no',
+          }
+        }
+      ),
+      value:            true,
+    }
+  end
+
+  def self.create_object_attribute_type_date(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'date',
+        data_option: {
+          diff: 24,
+          null: true,
+        }
+      ),
+      value:            '2022-12-01',
+    }
+  end
+
+  def self.create_object_attribute_type_datettime(params)
+    {
+      attribute_params: params.merge(
+        data_type:   'datetime',
+        data_option: {
+          diff:   24,
+          future: true,
+          past:   true,
+          null:   true,
+        }
+      ),
+      value:            '2022-10-01 12:00:00',
+    }
+  end
+
+  def self.create_object_attribute_type_select(params)
+    multiple = params[:data_type] == 'multiselect'
+
+    {
+      attribute_params: params.merge(
+        data_type:   params[:data_type] || 'select',
+        data_option: {
+          default:    multiple ? [] : '',
+          options:    {
+            'key_1' => 'value_1',
+            'key_2' => 'value_2',
+            'key_3' => 'value_3',
+            'key_4' => 'value_4',
+          },
+          multiple:   multiple,
+          translate:  true,
+          nulloption: true,
+          null:       true,
+        }
+      ),
+      value:            multiple ? %w[key_1 key_3] : 'key_3',
+    }
+  end
+
+  def self.create_object_attribute_type_multiselect(params)
+    create_object_attribute_type_select(
+      params.merge(
+        data_type: 'multiselect',
+      )
+    )
+  end
+
+  def self.create_object_attribute_type_tree_select(params)
+    multiple = params[:data_type] == 'multi_tree_select'
+
+    {
+      attribute_params: params.merge(
+        data_type:   params[:data_type] || 'tree_select',
+        data_option: {
+          default:    multiple ? [] : '',
+          options:    [
+            {
+              'name'     => 'Incident',
+              'value'    => 'Incident',
+              'children' => [
+                {
+                  'name'     => 'Hardware',
+                  'value'    => 'Incident::Hardware',
+                  'children' => [
+                    {
+                      'name'  => 'Monitor',
+                      'value' => 'Incident::Hardware::Monitor'
+                    },
+                    {
+                      'name'  => 'Mouse',
+                      'value' => 'Incident::Hardware::Mouse'
+                    },
+                    {
+                      'name'  => 'Keyboard',
+                      'value' => 'Incident::Hardware::Keyboard'
+                    }
+                  ]
+                },
+                {
+                  'name'     => 'Softwareproblem',
+                  'value'    => 'Incident::Softwareproblem',
+                  'children' => [
+                    {
+                      'name'  => 'CRM',
+                      'value' => 'Incident::Softwareproblem::CRM'
+                    },
+                    {
+                      'name'  => 'EDI',
+                      'value' => 'Incident::Softwareproblem::EDI'
+                    },
+                    {
+                      'name'     => 'SAP',
+                      'value'    => 'Incident::Softwareproblem::SAP',
+                      'children' => [
+                        {
+                          'name'  => 'Authentication',
+                          'value' => 'Incident::Softwareproblem::SAP::Authentication'
+                        },
+                        {
+                          'name'  => 'Not reachable',
+                          'value' => 'Incident::Softwareproblem::SAP::Not reachable'
+                        }
+                      ]
+                    },
+                    {
+                      'name'     => 'MS Office',
+                      'value'    => 'Incident::Softwareproblem::MS Office',
+                      'children' => [
+                        {
+                          'name'  => 'Excel',
+                          'value' => 'Incident::Softwareproblem::MS Office::Excel'
+                        },
+                        {
+                          'name'  => 'PowerPoint',
+                          'value' => 'Incident::Softwareproblem::MS Office::PowerPoint'
+                        },
+                        {
+                          'name'  => 'Word',
+                          'value' => 'Incident::Softwareproblem::MS Office::Word'
+                        },
+                        {
+                          'name'  => 'Outlook',
+                          'value' => 'Incident::Softwareproblem::MS Office::Outlook'
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              'name'     => 'Service request',
+              'value'    => 'Service request',
+              'children' => [
+                {
+                  'name'  => 'New software requirement',
+                  'value' => 'Service request::New software requirement'
+                },
+                {
+                  'name'  => 'New hardware',
+                  'value' => 'Service request::New hardware'
+                },
+                {
+                  'name'  => 'Consulting',
+                  'value' => 'Service request::Consulting'
+                }
+              ]
+            },
+            {
+              'name'  => 'Change request',
+              'value' => 'Change request'
+            }
+          ],
+          multiple:   multiple,
+          translate:  true,
+          nulloption: true,
+          null:       true,
+        }
+      ),
+      value:            multiple ? ['Change request', 'Incident::Hardware::Monitor', 'Incident::Softwareproblem::MS Office::Word'] : 'Incident::Hardware::Monitor',
+    }
+  end
+
+  def self.create_object_attribute_type_multi_tree_select(params)
+    create_object_attribute_type_tree_select(
+      params.merge(
+        data_type: 'multi_tree_select',
+      )
+    )
   end
 end
 # rubocop:enable Rails/Output
