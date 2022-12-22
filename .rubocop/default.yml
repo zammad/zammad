@@ -429,6 +429,7 @@ Zammad/DetectTranslatableString:
     - "lib/sequencer/**/*.rb"
     - "lib/import/**/*.rb"
     - "lib/tasks/**/*.rb"
+    - "lib/fill_db.rb"
 
 Zammad/ForbidTranslatableMarker:
   Enabled: true
