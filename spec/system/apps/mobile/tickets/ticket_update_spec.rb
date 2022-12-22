@@ -75,19 +75,21 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         expect(page.find_button('Save ticket', disabled: true).disabled?).to be(true)
 
-        input_title = find_field('Ticket title')
-        expect(input_title.value).to eq('Ticket Title')
-        input_title.fill_in(with: 'New Title')
+        within_form(form_updater_gql_number: 1) do
+          title = find_input('Ticket title')
+          expect(title).to have_value('Ticket Title')
+          title.type('New Title')
 
-        state_output = find_by_label('State')
-        expect(state_output).to have_text(ticket.state.name)
-        select_option(state_output, 'closed')
-        expect(state_output).to have_text('closed')
+          state = find_select('State')
+          expect(state).to have_selected_option(ticket.state.name)
+          state.select_option('closed')
+          expect(state).to have_selected_option('closed')
 
-        priority_output = find_by_label('Priority')
-        expect(priority_output).to have_text(ticket.priority.name)
-        select_option(priority_output, '3 high')
-        expect(priority_output).to have_text('3 high')
+          priority = find_select('Priority')
+          expect(priority).to have_selected_option(ticket.priority.name)
+          priority.select_option('3 high')
+          expect(priority).to have_selected_option('3 high')
+        end
 
         ticket.reload
 
@@ -109,12 +111,13 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         wait_for_form_to_settle('form-ticket-edit')
 
-        owner_output = find_by_label('Owner')
-        expect(owner_output).to have_text(owner.fullname)
+        within_form(form_updater_gql_number: 1) do
+          owner_field = find_select('Owner')
+          expect(owner_field).to have_selected_option(owner.fullname)
 
-        owner_output.find('[aria-label="Clear Selection"]').click
-
-        expect(owner_output).to have_text('', exact: true, wait: 2)
+          owner_field.clear_selection
+          expect(owner_field).to have_no_selected_option(owner.fullname)
+        end
 
         submit_form
 
@@ -123,33 +126,33 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         expect(ticket.owner.id).to be(1)
       end
 
-      it 'changing ticket state to pending requires pending time' do
+      it 'changing ticket state to pending requires pending time', time_zone: 'Europe/London' do
         visit "/tickets/#{ticket.id}/information"
 
         wait_for_form_to_settle('form-ticket-edit')
 
         expect(page).to have_no_css('label', text: 'Pending until')
 
-        priority_output = find_by_label('State')
-        select_option(priority_output, 'pending reminder')
-
-        date_input = find_field('Pending till')
-        expect(date_input.value).to eq('')
-
-        expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
-
         date = 1.day.from_now.beginning_of_minute
-        date_string = date.strftime('%Y-%m-%d %H:%M %P')
-        date_input.fill_in(with: date_string)
+
+        within_form(form_updater_gql_number: 1) do
+          find_select('State').select_option('pending reminder')
+
+          date_input = find_datepicker('Pending till')
+          expect(date_input.input_element.value).to eq('')
+
+          expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
+
+          date_input.type_datetime(date)
+        end
 
         ticket.reload
         expect(ticket.pending_time).to be_nil
 
-        date_input.send_keys(:enter)
         submit_form
 
         ticket.reload
-        expect(ticket.pending_time.localtime.strftime('%Y-%m-%d %H:%M %P')).to eq(date_string)
+        expect(ticket.pending_time.localtime).to eq(date)
       end
 
       it 'can save form on another page' do
@@ -157,8 +160,9 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         wait_for_form_to_settle('form-ticket-edit')
 
-        input_title = find_field('Ticket title')
-        input_title.fill_in(with: 'New Title')
+        within_form(form_updater_gql_number: 1) do
+          find_input('Ticket title').type('New Title')
+        end
 
         click('button', text: 'Customer')
 
@@ -175,18 +179,19 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         wait_for_form_to_settle('form-ticket-edit')
 
-        owner_output = find_by_label('Owner')
-        expect(owner_output).to have_text(owner.fullname)
+        within_form(form_updater_gql_number: 1) do
+          owner_field = find_select('Owner')
+          expect(owner_field).to have_selected_option(owner.fullname)
 
-        group_output = find_by_label('Group')
-        group_output.find('[aria-label="Clear Selection"]').click
+          group = find_select('Group')
+          group.clear_selection
 
-        expect(owner_output).to have_text('', exact: true, wait: 2)
+          expect(owner_field).to have_no_selected_option(owner.fullname)
 
-        select_option(find_outer('Group'), 'Users')
-
-        select_option(find_outer('Owner'), agent.fullname)
-        expect(owner_output).to have_text(agent.fullname)
+          group.select_option('Users')
+          owner_field.select_option(agent.fullname)
+          expect(owner_field).to have_selected_option(agent.fullname)
+        end
 
         ticket.reload
         expect(ticket.owner.id).not_to eq(agent.id)
@@ -213,17 +218,19 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         wait_for_form_to_settle('form-ticket-edit')
 
-        attribute_field = find_field(attribute.display)
-        expect(attribute_field.value).to eq('Attribute Text')
+        within_form(form_updater_gql_number: 1) do
+          attribute_field = find_input(attribute.display)
+          expect(attribute_field).to have_value('Attribute Text')
 
-        attribute_field.fill_in(with: '', fill_options: { clear: :backspace })
+          attribute_field.clear
 
-        expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
+          expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
 
-        attribute_field.fill_in(with: 'New Text')
+          attribute_field.type('New Text')
 
-        expect(find_button('Save ticket').disabled?).to be(false)
-        expect(ticket[attribute.name]).to eq('Attribute Text')
+          expect(find_button('Save ticket').disabled?).to be(false)
+          expect(ticket[attribute.name]).to eq('Attribute Text')
+        end
 
         submit_form
 

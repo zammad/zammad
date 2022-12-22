@@ -28,7 +28,9 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       wait_for_form_to_settle('organization-edit')
 
       within('#dialog-organization-edit') do
-        find('[name="note"]').click.send_keys('edit field')
+        within_form do
+          find_editor('Note').type('edit field')
+        end
 
         save_organization
       end
@@ -54,11 +56,11 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       click('button', text: 'Edit')
       wait_for_form_to_settle('organization-edit')
 
-      wait_for_form_updater(1)
       within('#dialog-organization-edit') do
-        fill_in('name', with: 'new name')
-        wait_for_form_updater(2)
-        fill_in(attribute.name, with: 'some text')
+        within_form do
+          find_editor('Name').type('new name')
+          find_input('Custom Text').type('some text')
+        end
 
         save_organization(3)
       end

@@ -34,10 +34,10 @@ module CommonActions
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
       within('#signin') do
-        fill_in 'login', with: username
-        fill_in 'password', with: password
+        find_input('Username / Email').type(username)
+        find_input('Password').type(password)
 
-        check 'rememberMe' if remember_me
+        find_toggle('Remember me').toggle_on if remember_me
 
         click_button
       end

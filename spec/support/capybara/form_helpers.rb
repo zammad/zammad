@@ -20,6 +20,7 @@ module FormHelpers
   #   find_autocomplete('Customer')
   #   find_editor('Text')
   #   find_datepicker('Pending till')
+  #   find_toggle('Remember me')
   #
   #   # In case of ambiguous labels, make sure to pass `exact_text` option
   #   find_datepicker(nil, exact_text: 'Date')
@@ -88,11 +89,11 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   # Returns identifier of the form field.
-  def field_id
+  def field_id # rubocop:disable Metrics/CyclomaticComplexity
     return element.find('.formkit-input', visible: :all)['id'] if input? || type_date? || type_datetime?
     return element.find('.formkit-fieldset')['id'] if type_radio?
     return element.find('[role="textbox"]')['id'] if type_editor?
-    return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle?
+    return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle? || type_checkbox?
 
     element.find('output', visible: :all)['id']
   end
@@ -301,14 +302,14 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   find_datepicker('Date Picker').select_date(Date.today)
   #   find_datepicker('Date Picker').select_date('2023-01-01')
   #
-  def select_date(date, with_time: false)
+  def select_date(date, with_time: false) # rubocop:disable Metrics/CyclomaticComplexity
     raise 'Field does not support selecting dates' if !type_date? && !type_datetime?
 
     element.click
 
     wait_for_test_flag("field-date-time-#{field_id}.opened")
 
-    date = Date.parse(date) if !date.is_a?(Date)
+    date = Date.parse(date) if !date.is_a?(Date) && !date.is_a?(DateTime) && !date.is_a?(Time)
 
     element.find('[aria-label="Year"]').fill_in with: date.year
     element.find('[aria-label="Month"]').find('option', text: date.strftime('%B')).select_option
@@ -323,6 +324,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag("field-date-time-#{field_id}.closed")
 
+    maybe_wait_for_form_updater
+
     self # support chaining
   end
 
@@ -335,17 +338,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_datetime(datetime)
     raise 'Field does not support selecting datetimes' if !type_datetime?
 
-    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime)
+    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime) && !datetime.is_a?(Time)
 
     select_date(datetime, with_time: true) do
       element.find('[aria-label="Hour"]').fill_in with: datetime.hour
-      element.find('[aria-label="Minute"]').fill_in with: datetime.minute
+      element.find('[aria-label="Minute"]').fill_in with: datetime.min
 
       meridian_indicator = element.find('[title="Click to toggle"]')
       meridian_indicator.click if meridian_indicator.text != datetime.strftime('%p')
     end
-
-    self # support chaining
   end
 
   # Types date into a date field.
@@ -380,10 +381,10 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def type_datetime(datetime)
     raise 'Field does not support typing datetimes' if !type_datetime?
 
-    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime)
+    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime) && !datetime.is_a?(Time)
 
     # NB: For some reason, Flatpickr does not support localized date with time input, only ISO date works ATM.
-    input_element.fill_in with: datetime.strftime('%Y-%m-%d %-l:%M %P')
+    input_element.fill_in with: datetime.strftime('%Y-%m-%d %H:%M')
 
     wait_for_test_flag("field-date-time-#{field_id}.opened")
 
@@ -411,7 +412,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle
-    raise 'Field does not support toggling' if !type_toggle?
+    raise 'Field does not support toggling' if !type_toggle? && !type_checkbox?
 
     element.find('label').click
 
@@ -419,7 +420,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle_on
-    raise 'Field does not support toggling on' if !type_toggle?
+    raise 'Field does not support toggling on' if !type_toggle? && !type_checkbox?
 
     element.find('label').click if !input_element.checked?
 
@@ -427,7 +428,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle_off
-    raise 'Field does not support toggling off' if !type_toggle?
+    raise 'Field does not support toggling off' if !type_toggle? && !type_checkbox?
 
     element.find('label').click if input_element.checked?
 
@@ -451,7 +452,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def input?
-    type_text? || type_color? || type_email? || type_number? || type_tel? || type_time? || type_url?
+    type_text? || type_color? || type_email? || type_number? || type_tel? || type_url? || type_password?
   end
 
   def autocomplete?
@@ -546,10 +547,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def search_for_autocomplete_option(query, gql_filename: '', gql_number: 1, **find_options)
-    element.click
+  def search_for_autocomplete_option(query, gql_filename: '', gql_number: 1, already_open: false, **find_options)
+    if !already_open
+      element.click
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+      wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+    end
 
     within dialog_element do
       find('[role="searchbox"]').fill_in with: query
@@ -786,6 +789,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     close_date_picker(element)
 
     wait_for_test_flag("field-date-time-#{field_id}.closed")
+
+    maybe_wait_for_form_updater
 
     self # support chaining
   end

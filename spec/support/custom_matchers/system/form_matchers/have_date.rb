@@ -30,8 +30,8 @@ module FormMatchers
     def timestamp
       datetime = expected
 
-      if !expected.is_a?(DateTime)
-        datetime = Date.parse(expected)
+      if !expected.is_a?(DateTime) && !expected.is_a?(Time)
+        datetime = DateTime.parse(expected)
       end
 
       # TODO: Support locales other than `en`, depending on the language of the current user.

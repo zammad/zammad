@@ -20,17 +20,6 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     find("button[order=\"#{step}\"]").click
   end
 
-  def select_customer(customer)
-    find('.formkit-outer', text: 'Customer').click
-    find('[role=searchbox]').fill_in(with: customer.lastname)
-    wait_for_gql('shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql')
-    click '[role="option"]', text: customer.fullname
-  end
-
-  def editor_field_set(text)
-    find('[name="body"]').send_keys(text)
-  end
-
   def submit_form
     find_button('Create ticket', match: :first).click
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/create.graphql')

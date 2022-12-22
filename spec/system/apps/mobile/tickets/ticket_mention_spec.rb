@@ -15,7 +15,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
   it 'can subscribe to a ticket inside a dialog' do
     visit_information
 
-    expect(find_field('Get notified', visible: :all).checked?).to be false
+    expect(find_toggle('Get notified')).to be_toggled_off
     expect(::Mention.subscribed?(ticket, agent)).to be false
 
     find_button('Show ticket actions').click
@@ -27,7 +27,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
 
     click_on 'Done'
 
-    expect(find_field('Get notified', visible: :all).checked?).to be true
+    expect(find_toggle('Get notified')).to be_toggled_on
     expect(::Mention.subscribed?(ticket, agent)).to be true
   end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
 
     visit_information
 
-    expect(find_field('Get notified', visible: :all).checked?).to be true
+    expect(find_toggle('Get notified')).to be_toggled_on
 
     find_button('Show ticket actions').click
     find_button('Unsubscribe').click
@@ -50,16 +50,16 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
   it 'can subscribe to a ticket in information page' do
     visit_information
 
-    subscribe_field = find_field('Get notified', visible: :all)
+    subscribe_field = find_toggle('Get notified')
 
-    expect(subscribe_field.checked?).to be false
+    expect(subscribe_field).to be_toggled_off
 
-    subscribe_field.ancestor('.formkit-outer').click
+    subscribe_field.toggle_on
 
     wait_for_gql 'shared/entities/ticket/graphql/mutations/subscribe.graphql'
 
+    expect(subscribe_field).to be_toggled_on
     expect(::Mention.subscribed?(ticket, agent)).to be true
-    expect(subscribe_field.checked?).to be true
 
     # don't see myself in a list of subscribers
 
@@ -72,14 +72,15 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
 
     visit_information
 
-    subscribe_field = find_field('Get notified', visible: :all)
+    subscribe_field = find_toggle('Get notified')
 
-    expect(subscribe_field.checked?).to be true
+    expect(subscribe_field).to be_toggled_on
 
-    subscribe_field.ancestor('.formkit-outer').click
+    subscribe_field.toggle_off
+
     wait_for_gql 'shared/entities/ticket/graphql/mutations/unsubscribe.graphql'
 
-    expect(subscribe_field.checked?).to be false
+    expect(subscribe_field).to be_toggled_off
     expect(::Mention.subscribed?(ticket, agent)).to be false
   end
 
