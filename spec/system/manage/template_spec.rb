@@ -35,6 +35,21 @@ RSpec.describe 'Manage > Templates', type: :system do
         expect(Template.last.active).to be(false)
       end
     end
+
+    it 'with cc attribute #4421' do
+      cc_recipients = Array.new(2) { Faker::Internet.unique.email }.join(', ')
+
+      in_modal do
+        fill_in('name', with: Faker::Name.unique.name)
+        find('.js-attributeSelector select').find(:option, 'CC').select_option
+        fill_in('options::article.cc::value', with: cc_recipients)
+        click_button('Submit')
+
+        await_empty_ajax_queue
+      end
+
+      expect(Template.last.options['article.cc']['value']).to eq(cc_recipients)
+    end
   end
 
   context 'when editing an existing template' do
@@ -191,6 +206,21 @@ RSpec.describe 'Manage > Templates', type: :system do
           check_select_field_value('options::ticket.tags::operator', 'add')
           check_input_field_value('options::ticket.tags::value', template.options['ticket.tags']['value'], visible: :all)
         end
+      end
+    end
+
+    context 'with cc attribute #4421' do
+      let(:template) do
+        create(:template,
+               options: {
+                 'article.cc': {
+                   value: Array.new(3) { Faker::Internet.unique.email }.join(', '),
+                 },
+               })
+      end
+
+      it 'restores correct value' do
+        check_input_field_value('options::article.cc::value', template.options['article.cc']['value'])
       end
     end
 

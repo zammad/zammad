@@ -1456,4 +1456,73 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(find('#form-template select[name="id"]')).to have_selector('option', text: active_template.name).and(have_no_selector('option', text: inactive_template.name))
     end
   end
+
+  describe 'CC field cannot be customized in the new ticket templates #4421', authenticated_as: :agent do
+    let(:group)         { create(:group) }
+    let(:agent)         { create(:agent, groups: [group]) }
+    let(:customer)      { create(:customer) }
+    let(:cc_recipients) { Array.new(3) { Faker::Internet.unique.email }.join(', ') }
+    let!(:template) do
+      create(:template,
+             options: {
+               'ticket.title':          {
+                 value: Faker::Name.name_with_middle,
+               },
+               'ticket.customer_id':    {
+                 value:            customer.id,
+                 value_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>",
+               },
+               'ticket.group_id':       {
+                 value: group.id,
+               },
+               'ticket.formSenderType': {
+                 value: form_sender_type,
+               },
+               'article.cc':            {
+                 value: cc_recipients,
+               },
+               'article.body':          {
+                 value: Faker::Hacker.say_something_smart,
+               },
+             })
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    context 'with email article type' do
+      let(:form_sender_type) { 'email-out' }
+
+      it 'applies configured cc value' do
+        use_template(template)
+
+        await_empty_ajax_queue
+
+        expect(page).to have_css('label', text: 'CC')
+
+        check_input_field_value('cc', cc_recipients, visible: :all)
+
+        click '.js-submit'
+
+        expect(Ticket::Article.last).to have_attributes(cc: cc_recipients)
+      end
+    end
+
+    context 'with phone article type' do
+      let(:form_sender_type) { 'phone-out' }
+
+      it 'ignores configured cc value' do
+        use_template(template)
+
+        await_empty_ajax_queue
+
+        expect(page).to have_no_css('label', text: 'CC')
+
+        click '.js-submit'
+
+        expect(Ticket::Article.last).not_to have_attributes(cc: cc_recipients)
+      end
+    end
+  end
 end
