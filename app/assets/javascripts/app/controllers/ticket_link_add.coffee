@@ -1,4 +1,6 @@
 class App.TicketLinkAdd extends App.ControllerModal
+  @include App.TicketNumberInput
+
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -45,16 +47,10 @@ class App.TicketLinkAdd extends App.ControllerModal
     if @ticketIdsRecentViewed
       @buildContentTable(content, @ticketIdsRecentViewed, 'ticket-merge-recent-tickets')
 
-    content.on('focus', '[name="ticket_number"]', (e) ->
-      $(e.target).parents().find('[name="radio"]').prop('checked', false)
-    )
+    @removeTicketSelectionOnFocus(content, 'ticket_number')
+    @stripTicketHookOnPaste(content, 'ticket_number')
+    @updateTicketNumberOnRadioClick(content, 'ticket_number')
 
-    content.on('click', '[name="radio"]', (e) ->
-      if $(e.target).prop('checked')
-        ticket_id = $(e.target).val()
-        ticket    = App.Ticket.fullLocal( ticket_id )
-        $(e.target).parents().find('[name="ticket_number"]').val(ticket.number)
-    )
     content
 
   buildContentTable: (container, ticket_ids, tableId) ->

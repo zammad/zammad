@@ -20,7 +20,7 @@ RSpec.describe ObjectManager::Attribute::SetDefaults, time_zone: 'Europe/London'
         create("object_manager_attribute_#{key}", name: "rspec_#{key}_no_default", default: nil)
       end
 
-      create(:object_manager_attribute_text, name: 'rspec_empty', default: '')
+      create('object_manager_attribute_text', name: 'rspec_empty', default: '')
 
       ObjectManager::Attribute.migration_execute
     end
