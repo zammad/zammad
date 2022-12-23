@@ -1,6 +1,4 @@
 class App.TicketMerge extends App.ControllerModal
-  @include App.TicketNumberInput
-
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -51,9 +49,27 @@ class App.TicketMerge extends App.ControllerModal
       radio:      true
     )
 
-    @removeTicketSelectionOnFocus(content, 'target_ticket_number')
-    @stripTicketHookOnPaste(content, 'target_ticket_number')
-    @updateTicketNumberOnRadioClick(content, 'target_ticket_number')
+    content.on('focus', '[name="target_ticket_number"]', (e) ->
+      $(e.target).parents().find('[name="radio"]').prop('checked', false)
+    )
+
+    content.on('paste', '[name="target_ticket_number"]', (e) =>
+      execute = ->
+        # remove ticket hook if present
+        if e.target && e.target.value
+          $('[name="target_ticket_number"]').val( e.target.value.replace(App.Config.get('ticket_hook'), '') )
+
+      @delay( execute, 0)
+
+      return
+    )
+
+    content.on('click', '[name="radio"]', (e) ->
+      if $(e.target).prop('checked')
+        ticket_id = $(e.target).val()
+        ticket    = App.Ticket.fullLocal(ticket_id)
+        $(e.target).parents().find('[name="target_ticket_number"]').val(ticket.number)
+    )
 
     content
 

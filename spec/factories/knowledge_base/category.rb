@@ -12,7 +12,7 @@ FactoryBot.define do
     before(:create) do |category|
       next if category.translations.present?
 
-      category.translations << create('knowledge_base/category/translation', category: category)
+      category.translations << create(:'knowledge_base/category/translation', category: category)
     end
 
     trait :empty # empty placeholder for better readability
