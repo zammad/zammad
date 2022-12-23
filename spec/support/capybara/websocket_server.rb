@@ -13,9 +13,13 @@ RSpec.configure do |config|
     server_required = example.metadata.fetch(:websocket, true)
 
     if server_required
+      port = ENV['WS_PORT'] || 6042
+
+      ensure_port_available!(port)
+
       websocket_server = Thread.new do
         WebsocketServer.run(
-          p: ENV['WS_PORT'] || 6042,
+          p: port,
           b: '0.0.0.0',
           s: false,
           v: false,
@@ -33,5 +37,13 @@ RSpec.configure do |config|
 
     # give thread time to terminate
     sleep 0.01 while websocket_server.status
+  end
+
+  def ensure_port_available!(port)
+    %w[0.0.0.0 127.0.0.1].each do |host|
+      TCPServer.new(host, port).close # release port immediately
+    end
+  rescue Errno::EADDRINUSE
+    raise "Couldn't start WebSocket server. Maybe another websocket server process is already running?"
   end
 end
