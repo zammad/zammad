@@ -42,7 +42,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
   end
 
   before do
-    searchindex_model_reload([::Organization])
+    searchindex_model_reload([Organization])
   end
 
   describe 'request handling' do

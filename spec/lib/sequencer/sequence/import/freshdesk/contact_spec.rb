@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Contact, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Contact, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing customers from Freshdesk' do
 

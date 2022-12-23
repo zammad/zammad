@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing tickets from Zendesk' do
 
@@ -147,11 +147,11 @@ RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket, db_strategy: :res
 
       # We only want to test here the Ticket API, so disable other modules in the sequence
       #   that make their own HTTP requests.
-      custom_sequence = Sequencer::Sequence::Import::Zendesk::Ticket.sequence.dup
+      custom_sequence = described_class.sequence.dup
       custom_sequence.delete('Import::Zendesk::Ticket::Comments')
       custom_sequence.delete('Import::Zendesk::Ticket::Tags')
 
-      allow(Sequencer::Sequence::Import::Zendesk::Ticket).to receive(:sequence) { custom_sequence }
+      allow(described_class).to receive(:sequence) { custom_sequence }
 
     end
 

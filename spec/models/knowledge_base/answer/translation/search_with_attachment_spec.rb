@@ -16,7 +16,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, searchind
       published_answer
       published_answer.add_attachment File.open "spec/fixtures/files/upload/#{filename}"
 
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, described_class])
     end
 
     it do

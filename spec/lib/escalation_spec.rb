@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Escalation do
+RSpec.describe Escalation do
   let(:instance)              { described_class.new ticket, force: force }
   let(:instance_with_history) { described_class.new ticket_with_history, force: force }
   let(:instance_with_open)    { described_class.new open_ticket_with_history, force: force }

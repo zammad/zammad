@@ -35,7 +35,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
     let(:limit)        { nil }
 
     before do
-      searchindex_model_reload([::Ticket])
+      searchindex_model_reload([Ticket])
       gql.execute(query, variables: variables)
     end
 

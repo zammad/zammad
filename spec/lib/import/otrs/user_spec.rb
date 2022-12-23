@@ -68,7 +68,7 @@ RSpec.describe Import::OTRS::User do
     allow(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
   end
 
-  let(:import_object)     { ::User }
+  let(:import_object)     { User }
   let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 

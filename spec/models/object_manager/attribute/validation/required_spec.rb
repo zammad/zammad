@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'models/object_manager/attribute/validation/backend_examples'
 
-RSpec.describe ::ObjectManager::Attribute::Validation::Required do
+RSpec.describe ObjectManager::Attribute::Validation::Required do
 
   subject do
     described_class.new(

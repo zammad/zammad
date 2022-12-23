@@ -28,9 +28,9 @@ RSpec.describe Gql::Mutations::Mention::Subscribe, :aggregate_failures, type: :g
 
   context 'when logged in as an agent', authenticated_as: :agent do
     it 'subscribes to a ticket' do
-      allow(::Mention).to receive(:subscribe!)
+      allow(Mention).to receive(:subscribe!)
       gql.execute(query, variables: variables)
-      expect(::Mention).to have_received(:subscribe!).with(object, agent)
+      expect(Mention).to have_received(:subscribe!).with(object, agent)
     end
   end
 

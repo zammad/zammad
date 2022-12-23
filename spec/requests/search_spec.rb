@@ -56,7 +56,7 @@ RSpec.describe 'Search', type: :request do
 
   describe 'request handling', performs_jobs: true, searchindex: true do
     before do
-      searchindex_model_reload([::Ticket, ::User, ::Organization])
+      searchindex_model_reload([Ticket, User, Organization])
     end
 
     it 'does settings index with nobody' do
@@ -511,7 +511,7 @@ RSpec.describe 'Search', type: :request do
 
     context 'with elasticsearch', searchindex: true do
       before do
-        searchindex_model_reload([::Ticket, ::User, ::Organization])
+        searchindex_model_reload([Ticket, User, Organization])
       end
 
       include_examples 'search for organization ids'

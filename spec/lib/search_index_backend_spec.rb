@@ -7,7 +7,7 @@ RSpec.describe SearchIndexBackend do
   before do |example|
     next if !example.metadata[:searchindex]
 
-    searchindex_model_reload([::Ticket, ::User, ::Organization])
+    searchindex_model_reload([Ticket, User, Organization])
   end
 
   describe '.build_query' do

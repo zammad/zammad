@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
 
-require ::File.expand_path('../config/environment', __dir__)
+require File.expand_path('../config/environment', __dir__)
 
 class CheckPostgresArrayColumns
   def self.run

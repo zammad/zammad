@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence do
 
   context 'when importing posts from Kayako' do
 

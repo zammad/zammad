@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Organization, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::Organization, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing organizations from Zendesk' do
 

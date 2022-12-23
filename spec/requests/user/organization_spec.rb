@@ -27,7 +27,7 @@ RSpec.describe 'User Organization', performs_jobs: true, searchindex: true, type
   end
 
   before do
-    searchindex_model_reload([::Organization])
+    searchindex_model_reload([Organization])
   end
 
   describe 'request handling' do

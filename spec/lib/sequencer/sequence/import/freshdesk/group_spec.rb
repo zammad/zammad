@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Group, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Group, sequencer: :sequence do
 
   context 'when importing groups from Freshdesk' do
 

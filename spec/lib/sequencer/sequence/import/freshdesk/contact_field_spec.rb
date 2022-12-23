@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::ContactField, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::ContactField, sequencer: :sequence do
 
   context 'when tryping to import contact fields from Freshdesk', db_strategy: :reset do
 

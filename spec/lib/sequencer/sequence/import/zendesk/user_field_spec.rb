@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::UserField, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::UserField, sequencer: :sequence do
 
   context 'when trying to import user fields from Zendesk', db_strategy: :reset do
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::TicketField, sequencer: :sequence do
 
   context 'when trying to import ticket fields from Freshdesk', db_strategy: :reset do
 

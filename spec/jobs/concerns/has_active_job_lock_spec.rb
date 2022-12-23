@@ -86,7 +86,7 @@ RSpec.describe HasActiveJobLock, type: :job do
       context 'when Delayed::Job gets destroyed' do
 
         before do
-          ::ActiveJob::Base.queue_adapter = :delayed_job
+          ActiveJob::Base.queue_adapter = :delayed_job
         end
 
         it 'is ensured that ActiveJobLock gets removed' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::CompanyField, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::CompanyField, sequencer: :sequence do
 
   context 'when trying to import company fields from Freshdesk', db_strategy: :reset do
 

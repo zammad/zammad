@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
   let(:ldap_source) { create(:ldap_source) }
 
   context 'lost group assignment' do

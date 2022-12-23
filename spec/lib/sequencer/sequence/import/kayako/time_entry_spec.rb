@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::TimeEntry, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Kayako::TimeEntry, sequencer: :sequence do
 
   context 'when importing time_entry from Kayako' do
 

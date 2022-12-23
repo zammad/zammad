@@ -1442,7 +1442,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     describe 'with searchindex', searchindex: true do
       before do
-        searchindex_model_reload([::User])
+        searchindex_model_reload([User])
       end
 
       it 'does find both users' do
@@ -1487,7 +1487,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       create(:agent, firstname: 'Test-Agent1')
       create(:agent, firstname: 'Test-Agent2')
 
-      searchindex_model_reload([::User])
+      searchindex_model_reload([User])
     end
 
     it 'uses elasticsearch when query is non empty' do
@@ -1626,7 +1626,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     context 'with elasticsearch', searchindex: true do
       before do
-        searchindex_model_reload([::User])
+        searchindex_model_reload([User])
       end
 
       include_examples 'ids requests'

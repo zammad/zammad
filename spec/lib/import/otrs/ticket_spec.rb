@@ -28,7 +28,7 @@ RSpec.describe Import::OTRS::Ticket do
     expect(Import::OTRS::ArticleCustomerFactory).to receive(:import)
     expect(Import::OTRS::ArticleFactory).to receive(:import)
     expect(Import::OTRS::HistoryFactory).to receive(:import)
-    allow(::User).to receive(:find_by).and_return(nil)
+    allow(User).to receive(:find_by).and_return(nil)
     # needed, otherwise 'ActiveRecord::UnknownAttributeError' for
     # DynamicFields will arise
     allow(Import::OTRS::DynamicFieldFactory).to receive('skip_field?').and_return(true)
@@ -123,7 +123,7 @@ RSpec.describe Import::OTRS::Ticket do
     end
 
     def article_based_customer_expectation
-      user = instance_double(::User)
+      user = instance_double(User)
       allow(user).to receive(:id).and_return(1337)
       allow(Import::OTRS::ArticleCustomer).to receive(:find).with(hash_including('From' => '458@company-sales.com')).and_return(user)
     end

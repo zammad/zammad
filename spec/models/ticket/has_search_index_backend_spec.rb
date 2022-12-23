@@ -22,7 +22,7 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
     before do
       article && organization
 
-      searchindex_model_reload([::Ticket, ::Organization])
+      searchindex_model_reload([Ticket, Organization])
     end
 
     it 'finds added tickets' do

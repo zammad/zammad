@@ -10,7 +10,7 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
 
   before do
     answer
-    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
   end
 
   context 'when published answer' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequence do
 
   context 'when importing agents from Freshdesk' do
 

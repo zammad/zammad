@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Group, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::Group, sequencer: :sequence do
 
   context 'when importing groups from Zendesk' do
 

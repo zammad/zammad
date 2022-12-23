@@ -11,14 +11,14 @@ RSpec.describe Import::OTRS::PriorityFactory do
     import_data = {
       name: 'test',
     }
-    allow(::Import::OTRS::Priority).to receive(:new)
+    allow(Import::OTRS::Priority).to receive(:new)
     described_class.import([import_data])
 
-    expect(::Import::OTRS::Priority).to have_received(:new).with(import_data)
+    expect(Import::OTRS::Priority).to have_received(:new).with(import_data)
   end
 
   it 'sets default create Priority' do
-    priority                = ::Ticket::Priority.first
+    priority                = Ticket::Priority.first
     priority.default_create = false
     priority.callback_loop  = true
     priority.save
@@ -32,7 +32,7 @@ RSpec.describe Import::OTRS::PriorityFactory do
   end
 
   it "doesn't set default create Priority in diff import" do
-    priority                = ::Ticket::Priority.first
+    priority                = Ticket::Priority.first
     priority.default_create = false
     priority.callback_loop  = true
     priority.save

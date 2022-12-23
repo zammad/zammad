@@ -10,7 +10,7 @@ RSpec.describe 'HasSearchIndexBackend', searchindex: true, type: :model do
     before do
       user && organization
 
-      searchindex_model_reload([::User, ::Organization])
+      searchindex_model_reload([User, Organization])
     end
 
     it 'finds added users' do

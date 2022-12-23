@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::TicketField, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::TicketField, sequencer: :sequence do
 
   context 'when trying to import ticket fields from Zendesk', db_strategy: :reset do
 

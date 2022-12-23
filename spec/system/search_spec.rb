@@ -15,7 +15,7 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
 
   before do
     ticket_1 && ticket_2
-    searchindex_model_reload([::Ticket, ::Organization, ::User])
+    searchindex_model_reload([Ticket, Organization, User])
 
     visit '/'
   end
@@ -300,7 +300,7 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       create(:customer, firstname: 'Firstname', lastname: 'Active', active: true)
       create(:customer, firstname: 'Firstname', lastname: 'Inactive', active: false)
 
-      searchindex_model_reload([::User, ::Organization])
+      searchindex_model_reload([User, Organization])
     end
 
     it 'check that inactive organizations are marked correctly' do

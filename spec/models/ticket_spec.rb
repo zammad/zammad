@@ -1685,7 +1685,7 @@ RSpec.describe Ticket, type: :model do
 
       include_examples 'search permissions' do
         before do
-          searchindex_model_reload([::Ticket])
+          searchindex_model_reload([described_class])
         end
       end
     end

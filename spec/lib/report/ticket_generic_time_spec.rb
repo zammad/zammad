@@ -554,7 +554,7 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
 
       ticket_with_category
 
-      searchindex_model_reload([::Ticket])
+      searchindex_model_reload([Ticket])
     end
 
     let(:ticket_with_category) do

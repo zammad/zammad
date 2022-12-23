@@ -20,7 +20,7 @@ RSpec.shared_context 'when checking custom RuboCop cops' do
       .merge(cop_config)
   end
 
-  let(:config) { ::RuboCop::Config.new({ described_class.cop_name => cur_cop_config }, "#{Rails.configuration.root}/.rubocop.yml") }
+  let(:config) { RuboCop::Config.new({ described_class.cop_name => cur_cop_config }, "#{Rails.configuration.root}/.rubocop.yml") }
   let(:cop) { described_class.new(config, cop_options) }
 end
 

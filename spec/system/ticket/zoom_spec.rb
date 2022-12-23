@@ -1673,7 +1673,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket_open
       ticket_closed
       perform_enqueued_jobs
-      searchindex_model_reload([::Ticket, ::User, ::Organization])
+      searchindex_model_reload([Ticket, User, Organization])
     end
 
     it 'does show open and closed tickets in advanced search url' do

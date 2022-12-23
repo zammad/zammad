@@ -36,7 +36,7 @@ RSpec.describe 'Elasticsearch', aggregate_failures: true, performs_jobs: true, s
       agent
       customers
 
-      searchindex_model_reload([::User])
+      searchindex_model_reload([User])
     end
 
     it 'active users appear before inactive users in search results' do
@@ -53,7 +53,7 @@ RSpec.describe 'Elasticsearch', aggregate_failures: true, performs_jobs: true, s
       agent
       organizations
 
-      searchindex_model_reload([::Organization])
+      searchindex_model_reload([Organization])
     end
 
     it 'active organizations appear before inactive organizations in search results' do
@@ -70,7 +70,7 @@ RSpec.describe 'Elasticsearch', aggregate_failures: true, performs_jobs: true, s
       agent
       tickets
 
-      searchindex_model_reload([::Ticket])
+      searchindex_model_reload([Ticket])
     end
 
     it 'ordering of tickets are not affected by the lack of active flags' do

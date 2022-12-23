@@ -16,7 +16,7 @@ RSpec.shared_context 'with report examples' do
     ticket_after_72h
     ticket_before_40d
 
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   let(:group_1)  { Group.lookup(name: 'Users') }

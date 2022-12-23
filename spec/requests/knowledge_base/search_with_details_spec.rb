@@ -7,7 +7,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
   before do
     published_answer
-    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
   end
 
   let(:endpoint) { '/api/v1/knowledge_bases/search' }
@@ -38,7 +38,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     before do
       alternative_translation
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns answer in locale without category translation' do
@@ -55,7 +55,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     before do
       child_category_translation
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category in locale without category translation', authenticated_as: -> { create(:admin) } do
@@ -75,7 +75,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     before do
       answer_cut_tree && answer_full_tree
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
@@ -121,7 +121,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     before do
       answers
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns success' do

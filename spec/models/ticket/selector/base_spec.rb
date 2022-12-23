@@ -11,7 +11,7 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
   before do
     Ticket.destroy_all
     ticket_1 && ticket_2 && ticket_3
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   it 'does support AND conditions', :aggregate_failures do

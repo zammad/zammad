@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::GenericObject, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Kayako::GenericObject, db_strategy: :reset, sequencer: :sequence do
   context 'when importing group list with generic object' do
     let(:resources_payloud) do
       {

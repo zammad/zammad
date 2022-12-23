@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Kayako::Team, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Kayako::Team, sequencer: :sequence do
 
   context 'when importing teams from Kayako' do
 

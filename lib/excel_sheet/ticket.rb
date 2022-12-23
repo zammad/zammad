@@ -66,26 +66,26 @@ class ExcelSheet::Ticket < ExcelSheet
       .each { |elem| elem[:width] = 20 }
       .then { |objects| header.concat(objects) }
 
-    header.concat([
-                    { display: __('Created At'), name: 'created_at', width: 18, data_type: 'datetime' },
-                    { display: __('Updated At'), name: 'updated_at', width: 18, data_type: 'datetime' },
-                    { display: __('Closed At'), name: 'close_at', width: 18, data_type: 'datetime' },
-                    { display: __('Close Escalation At'), name: 'close_escalation_at', width: 18, data_type: 'datetime' },
-                    { display: __('Close In Min'), name: 'close_in_min', width: 10, data_type: 'integer' },
-                    { display: __('Close Diff In Min'), name: 'close_diff_in_min', width: 10, data_type: 'integer' },
-                    { display: __('First Response At'), name: 'first_response_at', width: 18, data_type: 'datetime' },
-                    { display: __('First Response Escalation At'), name: 'first_response_escalation_at', width: 18, data_type: 'datetime' },
-                    { display: __('First Response In Min'), name: 'first_response_in_min', width: 10, data_type: 'integer' },
-                    { display: __('First Response Diff In Min'), name: 'first_response_diff_in_min', width: 10, data_type: 'integer' },
-                    { display: __('Update Escalation At'), name: 'update_escalation_at', width: 18, data_type: 'datetime' },
-                    { display: __('Update In Min'), name: 'update_in_min', width: 10, data_type: 'integer' },
-                    { display: __('Update Diff In Min'), name: 'update_diff_in_min', width: 10, data_type: 'integer' },
-                    { display: __('Last Contact At'), name: 'last_contact_at', width: 18, data_type: 'datetime' },
-                    { display: __('Last Contact Agent At'), name: 'last_contact_agent_at', width: 18, data_type: 'datetime' },
-                    { display: __('Last Contact Customer At'), name: 'last_contact_customer_at', width: 18, data_type: 'datetime' },
-                    { display: __('Article Count'), name: 'article_count', width: 10, data_type: 'integer' },
-                    { display: __('Escalation At'), name: 'escalation_at', width: 18, data_type: 'datetime' },
-                  ])
+    header.push(
+      { display: __('Created At'), name: 'created_at', width: 18, data_type: 'datetime' },
+      { display: __('Updated At'), name: 'updated_at', width: 18, data_type: 'datetime' },
+      { display: __('Closed At'), name: 'close_at', width: 18, data_type: 'datetime' },
+      { display: __('Close Escalation At'), name: 'close_escalation_at', width: 18, data_type: 'datetime' },
+      { display: __('Close In Min'), name: 'close_in_min', width: 10, data_type: 'integer' },
+      { display: __('Close Diff In Min'), name: 'close_diff_in_min', width: 10, data_type: 'integer' },
+      { display: __('First Response At'), name: 'first_response_at', width: 18, data_type: 'datetime' },
+      { display: __('First Response Escalation At'), name: 'first_response_escalation_at', width: 18, data_type: 'datetime' },
+      { display: __('First Response In Min'), name: 'first_response_in_min', width: 10, data_type: 'integer' },
+      { display: __('First Response Diff In Min'), name: 'first_response_diff_in_min', width: 10, data_type: 'integer' },
+      { display: __('Update Escalation At'), name: 'update_escalation_at', width: 18, data_type: 'datetime' },
+      { display: __('Update In Min'), name: 'update_in_min', width: 10, data_type: 'integer' },
+      { display: __('Update Diff In Min'), name: 'update_diff_in_min', width: 10, data_type: 'integer' },
+      { display: __('Last Contact At'), name: 'last_contact_at', width: 18, data_type: 'datetime' },
+      { display: __('Last Contact Agent At'), name: 'last_contact_agent_at', width: 18, data_type: 'datetime' },
+      { display: __('Last Contact Customer At'), name: 'last_contact_customer_at', width: 18, data_type: 'datetime' },
+      { display: __('Article Count'), name: 'article_count', width: 10, data_type: 'integer' },
+      { display: __('Escalation At'), name: 'escalation_at', width: 18, data_type: 'datetime' },
+    )
 
   end
 

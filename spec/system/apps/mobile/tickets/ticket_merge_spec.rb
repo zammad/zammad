@@ -9,7 +9,7 @@ RSpec.describe 'Mobile > Ticket > Merge tickets', app: :mobile, authenticated_as
   let!(:target_ticket) { create(:ticket, title: 'Target', group: group) }
 
   before do
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   context 'when merging tickets', searchindex: true do

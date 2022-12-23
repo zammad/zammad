@@ -28,9 +28,9 @@ RSpec.describe Gql::Mutations::Mention::Unsubscribe, :aggregate_failures, type: 
 
   context 'when logged in as an agent', authenticated_as: :agent do
     it 'unsubscribes from a ticket' do
-      allow(::Mention).to receive(:unsubscribe!)
+      allow(Mention).to receive(:unsubscribe!)
       gql.execute(query, variables: variables)
-      expect(::Mention).to have_received(:unsubscribe!).with(object, agent)
+      expect(Mention).to have_received(:unsubscribe!).with(object, agent)
     end
   end
 

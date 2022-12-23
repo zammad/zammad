@@ -22,7 +22,7 @@ RSpec.describe Channel::Driver::Sms::MessageBird do
 
     api = channel.driver_instance.new
 
-    expect { api.send(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(::MessageBird::ServerException)
+    expect { api.send(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(MessageBird::ServerException)
   end
 
   private

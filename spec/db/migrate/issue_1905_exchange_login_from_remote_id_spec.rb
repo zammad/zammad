@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
-  let(:backend) { ::Import::Exchange }
+  let(:backend) { Import::Exchange }
 
   it 'removes :item_id from attributes' do
 

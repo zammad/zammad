@@ -6,7 +6,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::ResetPrimaryKeySequence, 
 
   it 'calls DbHelper.import_post for given model_class' do
 
-    model_class = ::User
+    model_class = User
 
     expect(DbHelper).to receive(:import_post).with(model_class.table_name)
 

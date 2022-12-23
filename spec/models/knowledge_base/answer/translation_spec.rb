@@ -16,7 +16,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
 
   def handle_elasticsearch(enabled)
     if enabled
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     else
       Setting.set('es_url', nil)
     end

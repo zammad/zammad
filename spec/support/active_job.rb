@@ -45,15 +45,15 @@ RSpec.configure do |config|
 
     config.around(:each, key => value) do |example|
 
-      default_queue_adapter           = ::ActiveJob::Base.queue_adapter
-      ::ActiveJob::Base.queue_adapter = :test
+      default_queue_adapter = ActiveJob::Base.queue_adapter
+      ActiveJob::Base.queue_adapter = :test
 
       clear_jobs
 
       example.run
 
     ensure
-      ::ActiveJob::Base.queue_adapter = default_queue_adapter
+      ActiveJob::Base.queue_adapter = default_queue_adapter
     end
   end
 

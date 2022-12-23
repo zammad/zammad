@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::User, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing users from Zendesk' do
 

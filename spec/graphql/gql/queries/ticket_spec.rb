@@ -110,7 +110,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
 
         context 'when subscribed' do
           before do
-            ::Mention.subscribe! ticket, agent
+            Mention.subscribe! ticket, agent
             gql.execute(query, variables: variables)
           end
 

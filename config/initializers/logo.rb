@@ -9,7 +9,7 @@ Rails.application.reloader.to_prepare do
     next if Setting.column_names.exclude?('state_current')
 
     StaticAssets.sync
-  rescue ::ActiveRecord::NoDatabaseError
+  rescue ActiveRecord::NoDatabaseError
     Rails.logger.debug("Database doesn't exist. Skipping StaticAssets.sync")
   end
 end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'models/object_manager/attribute/validation/backend_examples'
 
-RSpec.describe ::ObjectManager::Attribute::Validation::FuturePast do
+RSpec.describe ObjectManager::Attribute::Validation::FuturePast do
 
   subject do
     described_class.new(

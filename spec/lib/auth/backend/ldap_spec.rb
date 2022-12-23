@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'lib/auth/backend/backend_examples'
 
-RSpec.describe ::Auth::Backend::Ldap do
+RSpec.describe Auth::Backend::Ldap do
 
   let(:ldap_source) { create(:ldap_source) }
   let(:user)        { create(:user, source: "Ldap::#{ldap_source.id}") }

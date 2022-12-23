@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :reset, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :reset, sequencer: :sequence do
 
   context 'when importing tickets from Freshdesk' do
 
@@ -152,11 +152,11 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :r
 
       # We only want to test here the Ticket API, so disable other modules in the sequence
       #   that make their own HTTP requests.
-      custom_sequence = Sequencer::Sequence::Import::Freshdesk::Ticket.sequence.dup
+      custom_sequence = described_class.sequence.dup
       custom_sequence.delete('Import::Freshdesk::Ticket::TimeEntries')
       custom_sequence.delete('Import::Freshdesk::Ticket::Conversations')
 
-      allow(Sequencer::Sequence::Import::Freshdesk::Ticket).to receive(:sequence) { custom_sequence }
+      allow(described_class).to receive(:sequence) { custom_sequence }
     end
 
     it 'adds tickets' do

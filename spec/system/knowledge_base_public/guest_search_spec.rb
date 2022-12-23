@@ -8,7 +8,7 @@ RSpec.describe 'Public Knowledge Base for guest search', authenticated_as: false
   before do
     published_answer && draft_answer && internal_answer
 
-    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
 
     visit help_no_locale_path
   end

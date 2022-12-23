@@ -38,7 +38,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Mixin::Log::ContextIdenti
 
   context "when 'model_class' attribute is given" do
 
-    let(:model_class) { ::User }
+    let(:model_class) { User }
     let(:parameters)  { { model_class: model_class } }
 
     it 'adds Model class name and lookup_keys' do

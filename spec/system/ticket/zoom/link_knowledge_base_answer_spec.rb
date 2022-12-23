@@ -17,7 +17,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', authenticated_as: :au
     shared_examples 'verify linking' do |elasticsearch:|
       before do
         if elasticsearch
-          searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+          searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
         end
 
         visit "#ticket/zoom/#{ticket.id}"
