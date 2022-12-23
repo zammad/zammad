@@ -355,7 +355,7 @@ GEM
     omniauth-weibo-oauth2 (0.5.2)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
-    openssl (3.0.1)
+    openssl (3.1.0)
     overcommit (0.59.1)
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
