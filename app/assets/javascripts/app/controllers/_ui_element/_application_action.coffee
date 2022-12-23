@@ -16,9 +16,9 @@ UI Element options:
 
 - Allows pre conditions like current_user.id or user session specific values (default: true)
 
-**attribute.article_body_only**
+**attribute.article_body_cc_only**
 
-- Renders only article body text attribute (default: false)
+- Renders only article body and cc attributes (default: false)
 
 **attribute.no_dates**
 
@@ -52,7 +52,7 @@ class App.UiElement.ApplicationAction
         model: 'Ticket'
       article:
         name: __('Article')
-        model: if attribute.article_body_only then 'TicketArticle' else 'Article'
+        model: if attribute.article_body_cc_only then 'TicketArticle' else 'Article'
 
     if attribute.notification
       groups.notification =
@@ -73,10 +73,10 @@ class App.UiElement.ApplicationAction
 
         for row in App[groupMeta.model].configure_attributes
 
-          # ignore all article attributes except body
-          if attribute.article_body_only
+          # ignore all article attributes except body and cc
+          if attribute.article_body_cc_only
             if groupMeta.model is 'TicketArticle'
-              if row.name isnt 'body'
+              if row.name isnt 'body' and row.name isnt 'cc'
                 continue
 
           # ignore all date and datetime attributes
@@ -265,7 +265,7 @@ class App.UiElement.ApplicationAction
       elementRow.find('.js-setAttribute').html('').addClass('hide')
       elementRow.find('.js-setArticle').html('').addClass('hide')
       @buildNotificationArea(notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
-    else if !attribute.article_body_only && _.isArray(articleTypeMatch) && articleType = articleTypeMatch[1]
+    else if !attribute.article_body_cc_only && _.isArray(articleTypeMatch) && articleType = articleTypeMatch[1]
       elementRow.find('.js-setAttribute').html('').addClass('hide')
       elementRow.find('.js-setNotification').html('').addClass('hide')
       @buildArticleArea(articleType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)

@@ -736,7 +736,7 @@ QUnit.test( "ticket_perform_action check template attributes", assert => {
           display:                   'TicketPerformAction8',
           tag:                       'ticket_perform_action',
           user_action:               false,
-          article_body_only:         true,
+          article_body_cc_only:      true,
           sender_type:               true,
           no_richtext_uploads:       true,
           skip_unknown_attributes:   true,
@@ -764,6 +764,7 @@ QUnit.test( "ticket_perform_action check template attributes", assert => {
   var options = select.find('option').map((index, option) => option.value).toArray().sort()
   var test_options = [
     'article.body',
+    'article.cc',
     'ticket.customer_id',
     'ticket.formSenderType',
     'ticket.group_id',
