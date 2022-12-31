@@ -1,7 +1,7 @@
 {
   "Age": 200536176,
   "PriorityID": "3",
-  "ContentType": null,
+  "ContentType": "text/plain; charset=utf-8",
   "DynamicField_SugarCRMCompanySelection": [
     "Firma 1 - 117c26c0-11d4-7b8b-cb8f-4f7cb6823dd8",
     "Firma 2 - 1111111-11d4-7b8b-cb8f-4f7cb6823dd8",
@@ -87,7 +87,7 @@
   "DynamicField_Department": null,
   "ArticleType": "email-external",
   "StateType": "new",
-  "FromRealname": "OTRS Feedback",
+  "FromRealname": "Betreuter Kunde",
   "EscalationSolutionTime": "0",
   "LockID": "2",
   "TicketNumber": "2010080210123456",
@@ -96,5 +96,5 @@
   "CreateTimeUnix": "1280750400",
   "SLAID": null,
   "DynamicField_ITSMCriticality": null,
-  "From": "OTRS Feedback <feedback@otrs.org>"
+  "From": "\"Betreuter Kunde\" <kunde2@kunde.de>"
 }

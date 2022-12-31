@@ -21,11 +21,12 @@ module Import
         ContentType: :content_type,
         ChangeTime:  :updated_at,
         CreateTime:  :created_at,
+        ChangeBy:    :updated_by_id,
+        CreateBy:    :created_by_id,
 
-        # Support also the legacy time key names (lower then OTRS 6)
+        # Support also the legacy key names (lower then OTRS 6)
         Changed:     :updated_at,
         Created:     :created_at,
-
         ChangedBy:   :updated_by_id,
         CreatedBy:   :created_by_id,
       }.freeze
@@ -91,6 +92,7 @@ module Import
           .merge(from_mapping(article))
           .merge(article_type(article))
           .merge(article_sender_type(article))
+          .merge(article_created_and_updated_by_id(article))
       end
 
       def map_content_type(mapped)
@@ -111,6 +113,41 @@ module Import
         {
           sender_id: @sender_type_id[article['SenderType']] || @sender_type_id['note-internal']
         }
+      end
+
+      def article_created_and_updated_by_id(article)
+        return {} if article['SenderType'] != 'customer'
+
+        created_by_id = get_article_created_by_id(article)
+        return {} if get_article_created_by_id(article) != 1
+        return {} if article['From'].blank?
+
+        user = Import::OTRS::ArticleCustomer.find(article)
+        return {} if !user
+
+        mapping = {
+          created_by_id: user.id,
+        }
+
+        updated_by_id = get_article_updated_by_id(article)
+        if !updated_by_id || updated_by_id == created_by_id
+          mapping[:updated_by_id] = user.id
+        end
+
+        mapping
+      end
+
+      def get_article_created_by_id(article)
+        return article['CreatedBy'].to_i if article['CreatedBy'].present?
+
+        article['CreateBy'].to_i
+      end
+
+      def get_article_updated_by_id(article)
+        return article['UpdatedBy'].to_i if article['UpdatedBy'].present?
+        return article['UpdateBy'].to_i if article['UpdateBy'].present?
+
+        nil
       end
 
       def initialize_article_sender_types
