@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { merge } from 'lodash-es'
 import initializeStore from '@shared/stores'
@@ -57,13 +57,17 @@ interface CheckFormMatchOptions {
 }
 
 export const checkFormMatchesSnapshot = (options?: CheckFormMatchOptions) => {
-  const title = options?.subTitle ? `${Cypress.currentTest.title} - ${options.subTitle}` : Cypress.currentTest.title
+  const title = options?.subTitle
+    ? `${Cypress.currentTest.title} - ${options.subTitle}`
+    : Cypress.currentTest.title
   const wrapperSelector = options?.wrapperSelector || '.formkit-outer'
 
   return cy.wrap(document.fonts.ready).then(() => {
     cy.get(wrapperSelector).matchImage({
       title,
-      imagesDir: options?.type ? `__image_snapshots__/${options.type}` : undefined,
+      imagesDir: options?.type
+        ? `__image_snapshots__/${options.type}`
+        : undefined,
     })
   })
 }

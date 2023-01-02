@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitForAnimationFrame } from '@shared/utils/helpers'
 import { getByAltText, queryByAltText } from '@testing-library/vue'

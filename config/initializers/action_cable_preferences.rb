@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
   if ENV['REDIS_URL'].present?

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # This temporary workaround for issue #2656.
 # The root cause is an issue in Rails: https://github.com/rails/rails/issues/33600
