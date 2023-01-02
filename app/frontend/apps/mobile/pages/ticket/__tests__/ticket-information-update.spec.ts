@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { ticketObjectAttributes } from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
 import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'

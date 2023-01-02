@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { ProductAboutDocument } from '@shared/graphql/queries/about.api'
 import { TranslationsDocument } from '@shared/graphql/queries/translations.api'

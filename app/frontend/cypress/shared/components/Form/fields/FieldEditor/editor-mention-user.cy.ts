@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { mountComponent, mockApolloClient } from '@cy/utils'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
