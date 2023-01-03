@@ -110,15 +110,18 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   # Usage:
   #
   #   find_treeselect('Tree Select').search_for_option('Parent 1::Option A')
-  #   find_autocomplete('Customer').search_for_option(customer.lastname)
+  #   find_autocomplete('Tags').search_for_option(tag_1)
   #
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
   #   find_autocomplete('Custom').search_for_option('foo', gql_filename: 'apps/mobile/entities/user/graphql/queries/user.graphql', gql_number: 4)
   #
-  def search_for_option(query, gql_filename: '', gql_number: 1, **find_options)
+  #   # To select an autocomplete option with a different text than the query, provide an optional `label` parameter.
+  #   find autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+  #
+  def search_for_option(query, label: query, gql_filename: '', gql_number: 1, **find_options)
     return search_for_options(query, gql_filename: gql_filename, gql_number: gql_number, **find_options) if query.is_a?(Array)
     return search_for_tags_option(query, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_option(query, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_option(query, label: label, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
@@ -151,9 +154,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
   #   find_autocomplete('Tags').search_for_option('foo', gql_number: 3)
   #
-  def search_for_options(queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
     return search_for_tags_options(queries, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_options(queries, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_options(queries, labels: labels, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
@@ -548,7 +551,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def search_for_autocomplete_option(query, gql_filename: '', gql_number: 1, already_open: false, **find_options)
+  def search_for_autocomplete_option(query, label: query, gql_filename: '', gql_number: 1, already_open: false, **find_options)
     if !already_open
       element.click
 
@@ -560,7 +563,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
       wait_for_autocomplete_gql(gql_filename, gql_number)
 
-      find('[role="option"]', text: query, **find_options).click
+      find('[role="option"]', text: label, **find_options).click
 
       maybe_wait_for_form_updater
     end
@@ -598,20 +601,20 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def search_for_autocomplete_options(queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_autocomplete_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
     element.click
 
     wait_for_test_flag("field-auto-complete-#{field_id}.opened")
 
     within dialog_element do
-      queries.each do |query|
+      queries.each_with_index do |query, index|
         find('[role="searchbox"]').fill_in with: query
 
         wait_for_autocomplete_gql(gql_filename, gql_number)
 
         raise 'Field does not support multiple selection' if !multi_select?
 
-        find('[role="option"]', text: query, **find_options).click
+        find('[role="option"]', text: labels[index], **find_options).click
 
         maybe_wait_for_form_updater
 

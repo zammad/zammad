@@ -56,7 +56,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         next_step
 
         # Step 3.
-        find_autocomplete('Customer').search_for_option(customer.lastname)
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
         find_autocomplete('CC') if article_type == 'email'
         next_step
 
@@ -95,7 +95,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         next_step
 
         # Step 3.
-        find_autocomplete('Customer').search_for_option(customer.lastname)
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
         next_step
 
         # Step 4.
