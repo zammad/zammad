@@ -9,7 +9,7 @@ module FormHelpers
   # Returns the outer container element of the form field via its label.
   #   The returned object is always an instance of `Capybara::Node::Element``, with some added sugar on top.
   def find_outer(label, **find_options)
-    ZammadFormFieldCapybaraElementDelegator.new(find('.formkit-outer', text: label, **find_options), @form_context)
+    ZammadFormFieldCapybaraElementDelegator.new(find('.formkit-outer') { |element| element.has_css?('label', text: label, **find_options) }, @form_context)
   end
 
   # Usage:
@@ -89,8 +89,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   # Returns identifier of the form field.
-  def field_id # rubocop:disable Metrics/CyclomaticComplexity
+  def field_id # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     return element.find('.formkit-input', visible: :all)['id'] if input? || type_date? || type_datetime?
+    return element.find('textarea')['id'] if type_textarea?
     return element.find('.formkit-fieldset')['id'] if type_radio?
     return element.find('[role="textbox"]')['id'] if type_editor?
     return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle? || type_checkbox?
