@@ -140,7 +140,13 @@ describe('testing visuals for "FieldAutocomplete"', () => {
 
     it(`renders long ${type}`, () => {
       mountFormField(type, { label: type, value: 5, options })
-      checkFormMatchesSnapshot({ type })
+      checkFormMatchesSnapshot({
+        type,
+        assertion: ($el) => {
+          expect($el.height()).to.be.above(60)
+          return $el
+        },
+      })
     })
   })
 })
