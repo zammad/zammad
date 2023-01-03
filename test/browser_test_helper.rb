@@ -1404,7 +1404,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     end
     return if params[:no_sleep]
 
-    sleep 2 * params[:files].count
+    sleep params[:files].count * 2
   end
 
 =begin

@@ -384,7 +384,7 @@ remove whole data from index
         next if order_by&.at(index).blank?
 
         # for sorting values use .keyword values (no analyzer is used - plain values)
-        if elem !~ %r{\.} && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
+        if elem.exclude?('.') && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
           elem += '.keyword'
         end
 

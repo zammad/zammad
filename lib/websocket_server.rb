@@ -163,7 +163,7 @@ class WebsocketServer
   end
 
   def self.send_to_client
-    return if @clients.size.zero?
+    return if @clients.empty?
 
     # log 'debug', 'checking for data to send...'
     @clients.each do |client_id, client|

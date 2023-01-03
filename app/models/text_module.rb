@@ -51,7 +51,7 @@ import text modules from i18n/text_modules/*.yml if no text modules exist yet.
     file_content = File.read(filename)
     result = Psych.load(file_content)
 
-    raise "Can't load text modules from #{filename}" if result.length.zero?
+    raise "Can't load text modules from #{filename}" if result.empty?
 
     ActiveRecord::Base.transaction do
       result.each do |text_module|

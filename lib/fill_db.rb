@@ -121,7 +121,7 @@ or if you only want to create 100 tickets
                                                       to_migrate: true,
                                                       to_delete:  false,
                                                       to_config:  false,
-                                                      position:   1000 + index)
+                                                      position:   index + 1000)
 
               ObjectManager::Attribute.add(object_attribute_creation[:attribute_params])
 

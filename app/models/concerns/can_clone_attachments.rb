@@ -48,7 +48,7 @@ returns
         next if body.blank?
 
         content_disposition = new_attachment.preferences['Content-Disposition'] || new_attachment.preferences['content_disposition']
-        next if content_disposition.present? && content_disposition !~ %r{inline}
+        next if content_disposition.present? && content_disposition.exclude?('inline')
 
         content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
         next if content_id.blank?
