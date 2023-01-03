@@ -72,6 +72,7 @@
   "UntilTime": 0,
   "EscalationUpdateTime": "0",
   "CreatedBy": "3",
+  "ChangedBy": "3",
   "Queue": "Postmaster",
   "DynamicField_ITSMRepairStartTime": null,
   "ToRealname": "Postmaster",
