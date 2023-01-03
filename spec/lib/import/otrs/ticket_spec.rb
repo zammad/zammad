@@ -140,4 +140,37 @@ RSpec.describe Import::OTRS::Ticket do
       updates_with(zammad_structure)
     end
   end
+
+  context 'pending state' do
+
+    let(:object_structure) { load_ticket_json('pending_state') }
+    let(:zammad_structure) do
+      {
+        title:         'test #3',
+        owner_id:      1,
+        customer_id:   1,
+        created_by_id: '3',
+        updated_by_id: 1,
+        updated_at:    '2014-11-21 00:21:08',
+        created_at:    '2014-11-21 00:17:40',
+        number:        '20141121305000012',
+        group_id:      '1',
+        state_id:      Ticket::State.find_by(name: 'pending close').id.to_s,
+        pending_time:  Time.zone.at(Time.zone.parse('2014-12-06 12:50:11').to_i),
+        priority_id:   '3',
+        id:            '730',
+        close_at:      '2014-11-21 00:21:08'
+      }
+    end
+
+    it 'creates' do
+      import_backend_expectations
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      import_backend_expectations
+      updates_with(zammad_structure)
+    end
+  end
 end
