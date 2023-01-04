@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/contexts/factory_context'
@@ -16,7 +16,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
 
   def handle_elasticsearch(enabled)
     if enabled
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     else
       Setting.set('es_url', nil)
     end

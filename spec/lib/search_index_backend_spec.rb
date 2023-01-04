@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,7 +7,7 @@ RSpec.describe SearchIndexBackend do
   before do |example|
     next if !example.metadata[:searchindex]
 
-    searchindex_model_reload([::Ticket, ::User, ::Organization])
+    searchindex_model_reload([Ticket, User, Organization])
   end
 
   describe '.build_query' do
@@ -248,7 +248,7 @@ RSpec.describe SearchIndexBackend do
     let(:agent1)        { create(:agent, organization: organization1, groups: [group1]) }
     let(:customer1)     { create(:customer, organization: organization1, firstname: 'special-first-name') }
     let(:ticket1) do
-      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1)
+      ticket = create(:ticket, title: 'some-title1', state_id: 1, created_by: agent1, group: group1)
       ticket.tag_add('t1', 1)
       ticket
     end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 ENV['RAILS_ENV'] = 'test'
 # rubocop:disable Lint/NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
@@ -1404,7 +1404,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     end
     return if params[:no_sleep]
 
-    sleep 2 * params[:files].count
+    sleep params[:files].count * 2
   end
 
 =begin

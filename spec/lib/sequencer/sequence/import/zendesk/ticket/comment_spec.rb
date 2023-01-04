@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'zendesk_api'
 
-RSpec.describe ::Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strategy: :reset, required_envs: %w[IMPORT_ZENDESK_ENDPOINT], sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strategy: :reset, required_envs: %w[IMPORT_ZENDESK_ENDPOINT], sequencer: :sequence do
 
   let(:hostname) { URI.parse(ENV['IMPORT_ZENDESK_ENDPOINT']).hostname }
 

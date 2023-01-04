@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -183,7 +183,7 @@ RSpec.describe 'Form helpers', app: :mobile, authenticated_as: :agent, db_strate
 
     it 'provides test helpers' do
       el = find_autocomplete('Customer')
-      el.search_for_option(customer.lastname) # search for fullname does not work without ES
+      el.search_for_option(customer.email, label: customer.fullname) # search for fullname does not work without ES
       expect(el).to have_selected_option(customer.fullname)
 
       el = find_autocomplete('Organization')

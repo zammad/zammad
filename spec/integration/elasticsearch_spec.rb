@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -95,7 +95,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
 
     before do
       agent
-      searchindex_model_reload([::User])
+      searchindex_model_reload([User])
     end
 
     it 'without sensible data' do
@@ -111,7 +111,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
 
     before do
       customer
-      searchindex_model_reload([::User])
+      searchindex_model_reload([User])
     end
 
     it 'without sensible data' do
@@ -131,7 +131,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
     context 'without sensible data' do
       before do
         ticket
-        searchindex_model_reload([::Ticket])
+        searchindex_model_reload([Ticket])
       end
 
       it 'without sensible data', :aggregate_failures do
@@ -145,7 +145,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
       before do
         ticket && article && attachment
 
-        searchindex_model_reload([::Ticket])
+        searchindex_model_reload([Ticket])
       end
 
       it 'with article + attachment', :aggregate_failures do
@@ -158,7 +158,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
     describe 'and findable' do
       before do
         ticket
-        searchindex_model_reload([::Ticket])
+        searchindex_model_reload([Ticket])
       end
 
       it 'as agent' do
@@ -182,7 +182,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
           tickets
           articles
 
-          searchindex_model_reload([::Ticket])
+          searchindex_model_reload([Ticket])
         end
 
         it 'by tag' do
@@ -253,7 +253,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
               name:          'Tag4711',
               updated_by_id: agent.id,
             )
-            searchindex_model_reload([::Ticket])
+            searchindex_model_reload([Ticket])
           end
 
           it 'tags' do
@@ -267,7 +267,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
       context 'with customer' do
         before do
           tickets
-          searchindex_model_reload([::Ticket])
+          searchindex_model_reload([Ticket])
         end
 
         it 'by query OR clause' do

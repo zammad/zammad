@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -20,6 +20,6 @@ end
 
 RSpec.shared_examples 'validate backend' do
   it 'included in backends list' do
-    expect(::ObjectManager::Attribute::Validation.backends).to include(described_class)
+    expect(ObjectManager::Attribute::Validation.backends).to include(described_class)
   end
 end

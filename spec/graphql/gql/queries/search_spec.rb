@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -98,7 +98,7 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
 
     context 'with search index', searchindex: true do
       let(:es_setup) do
-        searchindex_model_reload([::Ticket, ::User, ::Organization])
+        searchindex_model_reload([Ticket, User, Organization])
       end
 
       include_examples 'test search query'

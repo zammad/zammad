@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
   include CanBeImported
@@ -341,7 +341,7 @@ returns
 
     return if mention_user_ids.blank?
 
-    if !MentionPolicy.new(updated_by, Mention.new).create?
+    if !TicketPolicy.new(updated_by, ticket).create_mentions?
       return if ApplicationHandleInfo.postmaster?
       return if updated_by.id == 1
 

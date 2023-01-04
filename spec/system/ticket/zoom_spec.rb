@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -1673,7 +1673,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       ticket_open
       ticket_closed
       perform_enqueued_jobs
-      searchindex_model_reload([::Ticket, ::User, ::Organization])
+      searchindex_model_reload([Ticket, User, Organization])
     end
 
     it 'does show open and closed tickets in advanced search url' do
@@ -2348,6 +2348,33 @@ RSpec.describe 'Ticket zoom', type: :system do
       page.select 'pending reminder', from: 'state_id'
       page.select '3 high', from: 'priority_id'
       expect(page).to have_select('state_id', selected: 'new')
+    end
+  end
+
+  describe 'Multiselect marked as dirty', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => []) }
+
+    def authenticate
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => true,
+                   'required' => false,
+                 }
+               }
+             })
+      ObjectManager::Attribute.migration_execute
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does show values properly and can save values also' do
+      expect(page).to have_no_css('.attributeBar-reset')
     end
   end
 

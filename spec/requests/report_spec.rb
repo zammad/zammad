@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -58,7 +58,7 @@ RSpec.describe 'Report', searchindex: true, type: :request do
     create(:ticket, title: 'ticket for report #9', created_at: Time.zone.parse('2019-03-31T23:30:00Z'))
     create(:ticket, title: 'ticket for report #10', created_at: Time.zone.parse('2019-04-01T00:30:00Z'))
 
-    searchindex_model_reload([::Ticket, ::User])
+    searchindex_model_reload([Ticket, User])
   end
 
   describe 'request handling' do

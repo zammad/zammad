@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory 'knowledge_base/category', aliases: %i[knowledge_base_category] do
@@ -12,7 +12,7 @@ FactoryBot.define do
     before(:create) do |category|
       next if category.translations.present?
 
-      category.translations << create('knowledge_base/category/translation', category: category)
+      category.translations << create(:'knowledge_base/category/translation', category: category)
     end
 
     trait :empty # empty placeholder for better readability

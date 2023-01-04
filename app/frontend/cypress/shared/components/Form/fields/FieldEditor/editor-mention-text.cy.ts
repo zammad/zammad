@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockApolloClient } from '@cy/utils'
 import { TextModuleSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.api'

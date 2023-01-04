@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,86 +7,78 @@ describe Controllers::TagsControllerPolicy do
 
   let(:record_class) { TagsController }
 
+  let(:record) do
+    rec        = record_class.new
+    rec.params = params
+    rec
+  end
+
   context 'with ticket' do
     let(:ticket) { create(:ticket) }
 
-    let(:record) do
-      rec             = record_class.new
-      rec.action_name = action_name
-      rec.params      = {
+    let(:params) do
+      {
         object: 'Ticket',
         o_id:   ticket.id,
       }
-
-      rec
     end
 
-    shared_examples 'basic checks' do
-      context 'when user has edit permission' do
-        let(:user) { create(:agent, groups: [ticket.group]) }
+    context 'when user has edit permission' do
+      let(:user) { create(:agent, groups: [ticket.group]) }
 
-        it { is_expected.to permit_action(action_name) }
+      it { is_expected.to permit_actions(%i[add remove]) }
+    end
+
+    context 'when user has no edit permission' do
+      let(:user) { create(:agent) }
+
+      it { is_expected.to forbid_actions(%i[add remove]) }
+    end
+
+    context 'when user has no edit permission on this ticket' do
+      let(:user) { create(:agent) }
+
+      before do
+        user.user_groups.create! group: ticket.group, access: 'read'
       end
 
-      context 'when user has no edit permission' do
-        let(:user) { create(:agent) }
-
-        it { is_expected.to forbid_action(action_name) }
-      end
+      it { is_expected.to forbid_actions(%i[add remove]) }
     end
 
-    describe '#add?' do
-      let(:action_name) { :add }
+    context 'when user is customer' do
+      let(:user) { ticket.customer }
 
-      include_examples 'basic checks'
-    end
-
-    describe '#remove?' do
-      let(:action_name) { :remove }
-
-      include_examples 'basic checks'
+      it { is_expected.to forbid_actions(%i[add remove]) }
     end
   end
 
   context 'with knowledge base answer' do
     let(:kb_answer) { create(:knowledge_base_answer) }
 
-    let(:record) do
-      rec             = record_class.new
-      rec.action_name = action_name
-      rec.params      = {
+    let(:params) do
+      {
         object: 'KnowledgeBase::Answer',
         o_id:   kb_answer.id,
       }
-
-      rec
     end
 
-    shared_examples 'basic checks' do
-      context 'when user has edit permission' do
-        let(:role) { create(:role, permission_names: %w[knowledge_base.editor]) }
-        let(:user) { create(:agent, roles: [role]) }
+    context 'when user has edit permission' do
+      let(:role) { create(:role, permission_names: %w[knowledge_base.editor]) }
+      let(:user) { create(:agent, roles: [role]) }
 
-        it { is_expected.to permit_action(action_name) }
-      end
-
-      context 'when user has no edit permission' do
-        let(:user) { create(:agent) }
-
-        it { is_expected.to forbid_action(action_name) }
-      end
+      it { is_expected.to permit_actions(%i[add remove]) }
     end
 
-    describe '#add?' do
-      let(:action_name) { :add }
+    context 'when user has no edit permission' do
+      let(:user) { create(:agent) }
 
-      include_examples 'basic checks'
+      it { is_expected.to forbid_actions(%i[add remove]) }
     end
 
-    describe '#remove?' do
-      let(:action_name) { :remove }
+    context 'when user is customer' do
+      let(:user) { create(:customer) }
 
-      include_examples 'basic checks'
+      it { is_expected.to forbid_actions(%i[add remove]) }
     end
   end
 

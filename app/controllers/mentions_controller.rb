@@ -1,24 +1,21 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class MentionsController < ApplicationController
-  prepend_before_action -> { authorize! }
-  prepend_before_action { authentication_check }
+  prepend_before_action :authorize!
+  prepend_before_action :authentication_check
 
   # GET /api/v1/mentions
-  def list
-    list = Mention.where(condition).order(created_at: :desc)
+  def index
+    list = mentionable_object.mentions
 
     if response_full?
-      assets = {}
-      item_ids = []
-      list.each do |item|
-        item_ids.push item.id
-        assets = item.assets(assets)
-      end
+      item_ids = list.map(&:id)
+      assets   = ApplicationModel::CanAssets.reduce list
+
       render json: {
         record_ids: item_ids,
         assets:     assets,
-      }, status: :ok
+      }
       return
     end
 
@@ -30,71 +27,26 @@ class MentionsController < ApplicationController
 
   # POST /api/v1/mentions
   def create
-    success = Mention.create!(
-      mentionable: mentionable!,
-      user:        current_user,
-    )
-    if success
-      render json: success, status: :created
-    else
-      render json: success.errors, status: :unprocessable_entity
-    end
+    Mention.subscribe! mentionable_object, current_user
+
+    render json: true, status: :created
   end
 
   # DELETE /api/v1/mentions
   def destroy
-    success = Mention.find_by(user: current_user, id: params[:id]).destroy
-    if success
-      render json: success, status: :ok
-    else
-      render json: success.errors, status: :unprocessable_entity
+    Mention.where(user: current_user, id: params[:id]).destroy_all
+
+    render json: true, status: :ok
+  end
+
+  def mentionable_object
+    @mentionable_object ||= begin
+      case params[:mentionable_type]
+      when 'Ticket'
+        Ticket.find_by id: params[:mentionable_id]
+      else
+        raise Exceptions::UnprocessableEntity, __("The parameter 'mentionable_type' is invalid.")
+      end
     end
-  end
-
-  private
-
-  def mentionable_type!
-    @mentionable_type ||= begin
-      raise __("The parameter 'mentionable_type' is invalid.") if 'Ticket'.freeze != params[:mentionable_type]
-
-      params[:mentionable_type]
-    end
-  end
-
-  def mentionable!
-    object = mentionable_type!.constantize.find(params[:mentionable_id])
-    authorize!(object, :agent_read_access?)
-    object
-  end
-
-  def fill_condition_mentionable(condition)
-    condition[:mentionable_type] = mentionable_type!
-    return if params[:mentionable_id].blank?
-
-    condition[:mentionable_id] = params[:mentionable_id]
-  end
-
-  def fill_condition_id(condition)
-    return if params[:id].blank?
-
-    condition[:id] = params[:id]
-  end
-
-  def fill_condition_user(condition)
-    return if params[:user_id].blank?
-
-    condition[:user] = User.find(params[:user_id])
-  end
-
-  def condition
-    condition = {}
-    fill_condition_id(condition)
-    fill_condition_user(condition)
-
-    return condition if params[:mentionable_type].blank?
-
-    mentionable!
-    fill_condition_mentionable(condition)
-    condition
   end
 end

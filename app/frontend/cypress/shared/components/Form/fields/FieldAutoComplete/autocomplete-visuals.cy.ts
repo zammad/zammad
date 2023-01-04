@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
@@ -140,7 +140,13 @@ describe('testing visuals for "FieldAutocomplete"', () => {
 
     it(`renders long ${type}`, () => {
       mountFormField(type, { label: type, value: 5, options })
-      checkFormMatchesSnapshot({ type })
+      checkFormMatchesSnapshot({
+        type,
+        assertion: ($el) => {
+          expect($el.height()).to.be.above(60)
+          return $el
+        },
+      })
     })
   })
 })

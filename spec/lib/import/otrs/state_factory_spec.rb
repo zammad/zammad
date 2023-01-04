@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/import/transaction_factory_examples'
@@ -24,11 +24,11 @@ RSpec.describe Import::OTRS::StateFactory do
       state_backend_param.push(load_state_json(state))
     end
 
-    ticket_state_id = ::ObjectManager::Attribute.get(
+    ticket_state_id = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'state_id',
     )
-    ticket_pending_time = ::ObjectManager::Attribute.get(
+    ticket_pending_time = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'pending_time',
     )
@@ -48,11 +48,11 @@ RSpec.describe Import::OTRS::StateFactory do
 
   it "doesn't update ObjectManager Ticket state_id and pending_time filter in diff import" do
 
-    ticket_state_id = ::ObjectManager::Attribute.get(
+    ticket_state_id = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'state_id',
     )
-    ticket_pending_time = ::ObjectManager::Attribute.get(
+    ticket_pending_time = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'pending_time',
     )
@@ -75,7 +75,7 @@ RSpec.describe Import::OTRS::StateFactory do
   end
 
   it 'sets default create and update State' do
-    state                   = ::Ticket::State.first
+    state                   = Ticket::State.first
     state.default_create    = false
     state.default_follow_up = false
     state.callback_loop     = true
@@ -92,7 +92,7 @@ RSpec.describe Import::OTRS::StateFactory do
   end
 
   it "doesn't set default create and update State in diff import" do
-    state                   = ::Ticket::State.first
+    state                   = Ticket::State.first
     state.default_create    = false
     state.default_follow_up = false
     state.callback_loop     = true

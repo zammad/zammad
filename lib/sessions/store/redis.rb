@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Store::Redis
   SESSIONS_KEY = 'sessions'.freeze
@@ -58,9 +58,11 @@ class Sessions::Store::Redis
 
   def send_data(client_id, data)
     key = client_messages_key(client_id)
-    @redis.rpush(key, data.to_json).positive?
-    # Make sure message keys are cleaned up even if they are no longer listed in 'sessions'.
-    @redis.expire(key, 1.hour, nx: true)
+    key_is_new = !@redis.exists?(key)
+    @redis.rpush(key, data.to_json).positive?.tap do
+      # Make sure message keys are cleaned up even if they are no longer listed in 'sessions'.
+      @redis.expire(key, 1.hour) if key_is_new
+    end
   end
 
   def queue(client_id)

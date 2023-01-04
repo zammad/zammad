@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { checkFormMatchesSnapshot, mountFormField } from '@cy/utils'
 import { FormValidationVisibility } from '@shared/components/Form/types'

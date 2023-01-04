@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -110,7 +110,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
 
         context 'when subscribed' do
           before do
-            ::Mention.subscribe! ticket, agent
+            Mention.subscribe! ticket, agent
             gql.execute(query, variables: variables)
           end
 

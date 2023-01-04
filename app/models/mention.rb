@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Mention < ApplicationModel
   include ChecksClientNotification
@@ -84,5 +84,18 @@ class Mention < ApplicationModel
       &.destroy!
 
     true
+  end
+
+  # Check if given user is able to subscribe to a given object
+  # @param object to subscribe to
+  # @param mentioned user
+  # @return Boolean
+  def self.mentionable?(object, user)
+    case object
+    when Ticket
+      TicketPolicy.new(user, object).agent_read_access?
+    else
+      false
+    end
   end
 end

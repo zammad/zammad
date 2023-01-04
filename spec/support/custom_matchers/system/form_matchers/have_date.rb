@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module FormMatchers
   extend RSpec::Matchers::DSL
@@ -30,8 +30,8 @@ module FormMatchers
     def timestamp
       datetime = expected
 
-      if !expected.is_a?(DateTime)
-        datetime = Date.parse(expected)
+      if !expected.is_a?(DateTime) && !expected.is_a?(Time)
+        datetime = DateTime.parse(expected)
       end
 
       # TODO: Support locales other than `en`, depending on the language of the current user.

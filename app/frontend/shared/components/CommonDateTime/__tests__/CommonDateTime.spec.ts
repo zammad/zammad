@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 

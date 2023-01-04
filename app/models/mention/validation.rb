@@ -1,22 +1,9 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Mention::Validation < ActiveModel::Validator
-  attr_reader :record
-
   def validate(record)
-    @record = record
-    check_user_permission
-  end
+    return if Mention.mentionable? record.mentionable, record.user
 
-  private
-
-  def check_user_permission
-    return if MentionPolicy.new(record.user, record).create?
-
-    invalid_because(:user, 'has no ticket.agent permissions')
-  end
-
-  def invalid_because(attribute, message)
-    record.errors.add attribute, message
+    record.errors.add :user, 'has no agent access to this ticket'
   end
 end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable zammad/zammad-detect-translatable-string */
@@ -12,6 +12,15 @@ import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
 import { ref } from 'vue'
 
 const linkSchemaRaw = [
+  {
+    type: 'security',
+    name: 'security',
+    label: 'Security',
+    required: true,
+    props: {
+      allowed: ['sign', 'encryption'],
+    },
+  },
   {
     type: 'editor',
     name: 'editor',

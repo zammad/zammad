@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -310,6 +310,16 @@ describe TicketPolicy do
       let(:user) { create(:agent_and_customer, groups: [record.group]) }
 
       it { is_expected.to permit_actions(%i[agent_read_access agent_update_access]) }
+    end
+  end
+
+  describe '#create_mentions?' do
+    let(:user) { create(:agent) }
+
+    it 'delegates to #agent_read_access?' do
+      allow(policy).to receive(:agent_read_access?)
+      policy.create_mentions?
+      expect(policy).to have_received(:agent_read_access?)
     end
   end
 end

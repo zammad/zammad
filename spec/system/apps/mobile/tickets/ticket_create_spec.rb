@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile/examples/core_workflow_examples'
@@ -18,17 +18,6 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
 
   def go_to_step(step)
     find("button[order=\"#{step}\"]").click
-  end
-
-  def select_customer(customer)
-    find('.formkit-outer', text: 'Customer').click
-    find('[role=searchbox]').fill_in(with: customer.lastname)
-    wait_for_gql('shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql')
-    click '[role="option"]', text: customer.fullname
-  end
-
-  def editor_field_set(text)
-    find('[name="body"]').send_keys(text)
   end
 
   def submit_form
@@ -67,7 +56,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         next_step
 
         # Step 3.
-        find_autocomplete('Customer').search_for_option(customer.lastname)
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
         find_autocomplete('CC') if article_type == 'email'
         next_step
 
@@ -106,7 +95,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         next_step
 
         # Step 3.
-        find_autocomplete('Customer').search_for_option(customer.lastname)
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
         next_step
 
         # Step 4.

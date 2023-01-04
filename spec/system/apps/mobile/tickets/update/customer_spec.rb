@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -13,18 +13,12 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
     click_button 'Change customer'
   end
 
-  def select_entry(type, search_text)
-    find('label', text: type).sibling('.formkit-inner').click
-    find('[role="searchbox"]').fill_in(with: search_text)
-    find('[role="option"]', text: search_text).click
-  end
-
   context 'with a single-organization customer' do
     let(:organization) { create(:organization) }
     let(:customer) { create(:customer, organization: organization) }
 
     it 'allows selecting customer' do
-      select_entry('Customer', customer.firstname)
+      find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
       click_button 'Save'
 
       wait.until do
@@ -39,8 +33,8 @@ RSpec.describe 'Mobile > Ticket > Update Customer', app: :mobile, authenticated_
     let(:customer)       { create(:customer, organization: organization, organizations: secondary_orgs) }
 
     it 'allows selecting customer' do
-      select_entry('Customer', customer.firstname)
-      select_entry('Organization', secondary_orgs.last.name)
+      find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+      find_autocomplete('Organization').search_for_option(secondary_orgs.last.name)
       click_button 'Save'
 
       wait.until do

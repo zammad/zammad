@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,9 +28,9 @@ RSpec.describe Gql::Mutations::Mention::Subscribe, :aggregate_failures, type: :g
 
   context 'when logged in as an agent', authenticated_as: :agent do
     it 'subscribes to a ticket' do
-      allow(::Mention).to receive(:subscribe!)
+      allow(Mention).to receive(:subscribe!)
       gql.execute(query, variables: variables)
-      expect(::Mention).to have_received(:subscribe!).with(object, agent)
+      expect(Mention).to have_received(:subscribe!).with(object, agent)
     end
   end
 

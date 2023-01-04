@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -13,8 +13,8 @@ end
 
 RSpec.shared_examples 'Import::OTRS::History' do
   it 'responds to init_callback' do
-    expect(::History).to receive(:add)
-    allow(::History::Attribute).to receive(:exists?).and_return(true)
+    expect(History).to receive(:add)
+    allow(History::Attribute).to receive(:exists?).and_return(true)
     blank_instance = described_class.new({})
     expect(blank_instance).to respond_to('init_callback')
   end

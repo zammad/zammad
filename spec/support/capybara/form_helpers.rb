@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative './test_flags'
 
@@ -9,7 +9,7 @@ module FormHelpers
   # Returns the outer container element of the form field via its label.
   #   The returned object is always an instance of `Capybara::Node::Element``, with some added sugar on top.
   def find_outer(label, **find_options)
-    ZammadFormFieldCapybaraElementDelegator.new(find('.formkit-outer', text: label, **find_options), @form_context)
+    ZammadFormFieldCapybaraElementDelegator.new(find('.formkit-outer') { |element| element.has_css?('label', text: label, **find_options) }, @form_context)
   end
 
   # Usage:
@@ -20,6 +20,7 @@ module FormHelpers
   #   find_autocomplete('Customer')
   #   find_editor('Text')
   #   find_datepicker('Pending till')
+  #   find_toggle('Remember me')
   #
   #   # In case of ambiguous labels, make sure to pass `exact_text` option
   #   find_datepicker(nil, exact_text: 'Date')
@@ -88,11 +89,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   # Returns identifier of the form field.
-  def field_id
+  def field_id # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     return element.find('.formkit-input', visible: :all)['id'] if input? || type_date? || type_datetime?
+    return element.find('textarea')['id'] if type_textarea?
     return element.find('.formkit-fieldset')['id'] if type_radio?
     return element.find('[role="textbox"]')['id'] if type_editor?
-    return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle?
+    return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle? || type_checkbox?
 
     element.find('output', visible: :all)['id']
   end
@@ -108,15 +110,18 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   # Usage:
   #
   #   find_treeselect('Tree Select').search_for_option('Parent 1::Option A')
-  #   find_autocomplete('Customer').search_for_option(customer.lastname)
+  #   find_autocomplete('Tags').search_for_option(tag_1)
   #
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
   #   find_autocomplete('Custom').search_for_option('foo', gql_filename: 'apps/mobile/entities/user/graphql/queries/user.graphql', gql_number: 4)
   #
-  def search_for_option(query, gql_filename: '', gql_number: 1, **find_options)
+  #   # To select an autocomplete option with a different text than the query, provide an optional `label` parameter.
+  #   find autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+  #
+  def search_for_option(query, label: query, gql_filename: '', gql_number: 1, **find_options)
     return search_for_options(query, gql_filename: gql_filename, gql_number: gql_number, **find_options) if query.is_a?(Array)
     return search_for_tags_option(query, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_option(query, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_option(query, label: label, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
@@ -149,9 +154,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
   #   find_autocomplete('Tags').search_for_option('foo', gql_number: 3)
   #
-  def search_for_options(queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
     return search_for_tags_options(queries, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_options(queries, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_options(queries, labels: labels, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
@@ -301,14 +306,14 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   find_datepicker('Date Picker').select_date(Date.today)
   #   find_datepicker('Date Picker').select_date('2023-01-01')
   #
-  def select_date(date, with_time: false)
+  def select_date(date, with_time: false) # rubocop:disable Metrics/CyclomaticComplexity
     raise 'Field does not support selecting dates' if !type_date? && !type_datetime?
 
     element.click
 
     wait_for_test_flag("field-date-time-#{field_id}.opened")
 
-    date = Date.parse(date) if !date.is_a?(Date)
+    date = Date.parse(date) if !date.is_a?(Date) && !date.is_a?(DateTime) && !date.is_a?(Time)
 
     element.find('[aria-label="Year"]').fill_in with: date.year
     element.find('[aria-label="Month"]').find('option', text: date.strftime('%B')).select_option
@@ -323,6 +328,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag("field-date-time-#{field_id}.closed")
 
+    maybe_wait_for_form_updater
+
     self # support chaining
   end
 
@@ -335,17 +342,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_datetime(datetime)
     raise 'Field does not support selecting datetimes' if !type_datetime?
 
-    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime)
+    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime) && !datetime.is_a?(Time)
 
     select_date(datetime, with_time: true) do
       element.find('[aria-label="Hour"]').fill_in with: datetime.hour
-      element.find('[aria-label="Minute"]').fill_in with: datetime.minute
+      element.find('[aria-label="Minute"]').fill_in with: datetime.min
 
       meridian_indicator = element.find('[title="Click to toggle"]')
       meridian_indicator.click if meridian_indicator.text != datetime.strftime('%p')
     end
-
-    self # support chaining
   end
 
   # Types date into a date field.
@@ -380,10 +385,10 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def type_datetime(datetime)
     raise 'Field does not support typing datetimes' if !type_datetime?
 
-    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime)
+    datetime = DateTime.parse(datetime) if !datetime.is_a?(DateTime) && !datetime.is_a?(Time)
 
     # NB: For some reason, Flatpickr does not support localized date with time input, only ISO date works ATM.
-    input_element.fill_in with: datetime.strftime('%Y-%m-%d %-l:%M %P')
+    input_element.fill_in with: datetime.strftime('%Y-%m-%d %H:%M')
 
     wait_for_test_flag("field-date-time-#{field_id}.opened")
 
@@ -411,7 +416,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle
-    raise 'Field does not support toggling' if !type_toggle?
+    raise 'Field does not support toggling' if !type_toggle? && !type_checkbox?
 
     element.find('label').click
 
@@ -419,7 +424,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle_on
-    raise 'Field does not support toggling on' if !type_toggle?
+    raise 'Field does not support toggling on' if !type_toggle? && !type_checkbox?
 
     element.find('label').click if !input_element.checked?
 
@@ -427,7 +432,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def toggle_off
-    raise 'Field does not support toggling off' if !type_toggle?
+    raise 'Field does not support toggling off' if !type_toggle? && !type_checkbox?
 
     element.find('label').click if input_element.checked?
 
@@ -451,7 +456,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def input?
-    type_text? || type_color? || type_email? || type_number? || type_tel? || type_time? || type_url?
+    type_text? || type_color? || type_email? || type_number? || type_tel? || type_url? || type_password?
   end
 
   def autocomplete?
@@ -546,17 +551,19 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def search_for_autocomplete_option(query, gql_filename: '', gql_number: 1, **find_options)
-    element.click
+  def search_for_autocomplete_option(query, label: query, gql_filename: '', gql_number: 1, already_open: false, **find_options)
+    if !already_open
+      element.click
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+      wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+    end
 
     within dialog_element do
       find('[role="searchbox"]').fill_in with: query
 
       wait_for_autocomplete_gql(gql_filename, gql_number)
 
-      find('[role="option"]', text: query, **find_options).click
+      find('[role="option"]', text: label, **find_options).click
 
       maybe_wait_for_form_updater
     end
@@ -594,20 +601,20 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def search_for_autocomplete_options(queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_autocomplete_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
     element.click
 
     wait_for_test_flag("field-auto-complete-#{field_id}.opened")
 
     within dialog_element do
-      queries.each do |query|
+      queries.each_with_index do |query, index|
         find('[role="searchbox"]').fill_in with: query
 
         wait_for_autocomplete_gql(gql_filename, gql_number)
 
         raise 'Field does not support multiple selection' if !multi_select?
 
-        find('[role="option"]', text: query, **find_options).click
+        find('[role="option"]', text: labels[index], **find_options).click
 
         maybe_wait_for_form_updater
 
@@ -786,6 +793,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     close_date_picker(element)
 
     wait_for_test_flag("field-date-time-#{field_id}.closed")
+
+    maybe_wait_for_form_updater
 
     self # support chaining
   end

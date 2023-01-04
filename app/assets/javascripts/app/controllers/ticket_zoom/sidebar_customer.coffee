@@ -46,7 +46,7 @@ class SidebarCustomer extends App.Controller
     if @Config.get('ui_sidebar_open_ticket_indicator_colored') is true
       if counter == 2
         cssClass = 'tabsSidebar-tab-count--warning'
-      if counter > 3
+      else if counter > 2
         cssClass = 'tabsSidebar-tab-count--danger'
 
     {

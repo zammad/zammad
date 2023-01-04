@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -11,7 +11,7 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
   before do
     Ticket.destroy_all
     ticket_1 && ticket_2 && ticket_3
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   it 'does support AND conditions', :aggregate_failures do

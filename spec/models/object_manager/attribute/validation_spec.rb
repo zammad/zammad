@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/mixin/has_backends_examples'
@@ -32,33 +32,33 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
 
     it 'sends .validate to backends' do
       subject.validate(record)
-      expect(backend).to have_received(:validate).with(record: record, attribute: instance_of(::ObjectManager::Attribute)).at_least(:once)
+      expect(backend).to have_received(:validate).with(record: record, attribute: instance_of(ObjectManager::Attribute)).at_least(:once)
     end
 
     context 'for cached ObjectManager::Attribute records' do
 
       it 'fetches current records when in memory Cache is blank' do
-        allow(::ObjectManager::Attribute).to receive(:where).and_call_original
+        allow(ObjectManager::Attribute).to receive(:where).and_call_original
         subject.validate(record)
-        expect(::ObjectManager::Attribute).to have_received(:where).twice
+        expect(ObjectManager::Attribute).to have_received(:where).twice
       end
 
       it "doesn't fetch current records when in memory Cache is valid" do
         subject.validate(record)
 
-        allow(::ObjectManager::Attribute).to receive(:where).and_call_original
+        allow(ObjectManager::Attribute).to receive(:where).and_call_original
         subject.validate(record)
-        expect(::ObjectManager::Attribute).to have_received(:where).once
+        expect(ObjectManager::Attribute).to have_received(:where).once
       end
 
       it 'fetches current records when in memory Cache is outdated' do
         subject.validate(record)
 
-        ::ObjectManager::Attribute.last.touch
+        ObjectManager::Attribute.last.touch
 
-        allow(::ObjectManager::Attribute).to receive(:where).and_call_original
+        allow(ObjectManager::Attribute).to receive(:where).and_call_original
         subject.validate(record)
-        expect(::ObjectManager::Attribute).to have_received(:where).twice
+        expect(ObjectManager::Attribute).to have_received(:where).twice
       end
     end
 
@@ -85,13 +85,13 @@ RSpec.describe ObjectManager::Attribute::Validation, application_handle: 'applic
       context 'when caused by ObjectManager::Attribute records' do
 
         it 'is skipped because no custom attributes are present' do
-          ::ObjectManager::Attribute.update(editable: false)
+          ObjectManager::Attribute.update(editable: false)
           subject.validate(record)
           expect(backend).not_to have_received(:validate)
         end
 
         it 'is skipped because no active attributes are present' do
-          ::ObjectManager::Attribute.update(active: false)
+          ObjectManager::Attribute.update(active: false)
           subject.validate(record)
           expect(backend).not_to have_received(:validate)
         end

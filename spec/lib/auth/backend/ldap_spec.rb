@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/auth/backend/backend_examples'
 
-RSpec.describe ::Auth::Backend::Ldap do
+RSpec.describe Auth::Backend::Ldap do
 
   let(:ldap_source) { create(:ldap_source) }
   let(:user)        { create(:user, source: "Ldap::#{ldap_source.id}") }

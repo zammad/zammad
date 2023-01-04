@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'TicketEnqueuesTicketUserTicketCounterJob', type: :job do
   subject { create(described_class.name.underscore) }
 
-  let(:customer) { create('customer') }
+  let(:customer) { create(:customer) }
 
   it 'enqueues a job for the customer' do
     subject.customer = customer

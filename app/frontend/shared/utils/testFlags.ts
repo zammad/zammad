@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { Mutex } from 'async-mutex'
 
@@ -27,7 +27,7 @@ class TestFlags {
     if (!VITE_TEST_MODE) return
     await this.mutex.runExclusive(() => {
       this.flags.set(flag, true)
-      if (import.meta.env.DEBUG_TEST_FLAGS) {
+      if (import.meta.env.VITE_DEBUG_TEST_FLAGS) {
         console.log('[testFlags] set flag "%s"', flag)
       }
     })

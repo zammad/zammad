@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :channel do
     area          { 'Email::Dummy' }
-    group         { ::Group.find(1) }
+    group         { Group.find(1) }
     active        { true }
     options       { nil }
     preferences   { nil }

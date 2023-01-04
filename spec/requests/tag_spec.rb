@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,37 +6,39 @@ RSpec.describe Tag, type: :request do
 
   describe 'request handling', authenticated_as: :agent do
 
-    let(:agent) { create(:agent) }
+    let(:ticket)  { Ticket.first }
+    let(:agent)   { create(:agent, groups: [ticket.group]) }
+    let(:payload) { { object: ticket.class.name, item: 'bar', o_id: ticket.id } }
 
     context 'tag adding' do
       it 'returns created' do
-        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+        post '/api/v1/tags/add', params: payload
 
         expect(response).to have_http_status(:created)
       end
 
       it 'deletes tag' do
-        post '/api/v1/tags/add', params: { object: 'Foo', item: 'bar', o_id: 1 }
+        post '/api/v1/tags/add', params: payload
 
-        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_present
+        expect(described_class.tag_list(payload)).to be_present
       end
     end
 
     context 'tag removal', authenticated_as: :agent do
       before do
-        described_class.tag_add(object: 'Foo', item: 'bar', o_id: 1, created_by_id: 1)
+        described_class.tag_add(**payload, created_by_id: 1)
       end
 
       it 'returns ok' do
-        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+        delete '/api/v1/tags/remove', params: payload
 
         expect(response).to have_http_status(:ok)
       end
 
       it 'deletes tag' do
-        delete '/api/v1/tags/remove', params: { object: 'Foo', item: 'bar', o_id: 1 }
+        delete '/api/v1/tags/remove', params: payload
 
-        expect(described_class.tag_list({ object: 'Foo', item: 'bar', o_id: 1 })).to be_empty
+        expect(described_class.tag_list(payload)).to be_empty
       end
     end
 

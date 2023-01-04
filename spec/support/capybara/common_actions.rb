@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module CommonActions
 
@@ -34,10 +34,10 @@ module CommonActions
       wait_for_test_flag('applicationLoaded.loaded', skip_clearing: true)
 
       within('#signin') do
-        fill_in 'login', with: username
-        fill_in 'password', with: password
+        find_input('Username / Email').type(username)
+        find_input('Password').type(password)
 
-        check 'rememberMe' if remember_me
+        find_toggle('Remember me').toggle_on if remember_me
 
         click_button
       end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -85,7 +85,19 @@ module Import
           updated_by_id: 1,
         }
           .merge(from_mapping(ticket))
+          .merge(map_pending_time(ticket))
           .merge(dynamic_fields(ticket))
+      end
+
+      def map_pending_time(ticket)
+        return {} if !ticket['RealTillTimeNotUsed']
+
+        pending_time = ticket['RealTillTimeNotUsed'].to_i
+        return {} if pending_time.zero?
+
+        {
+          pending_time: Time.zone.at(pending_time),
+        }
       end
 
       def dynamic_fields(ticket)

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchIndexBackend
 
@@ -384,7 +384,7 @@ remove whole data from index
         next if order_by&.at(index).blank?
 
         # for sorting values use .keyword values (no analyzer is used - plain values)
-        if elem !~ %r{\.} && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
+        if elem.exclude?('.') && elem !~ %r{_(time|date|till|id|ids|at)$} && elem != 'id'
           elem += '.keyword'
         end
 

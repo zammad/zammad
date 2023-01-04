@@ -226,7 +226,7 @@ find_treeselect('Tree Select').select_option('Parent 1::Option A')
 find_treeselect('Multi Tree Select').select_options(['Parent 1::Option A', 'Parent 2::Option C'])
 
 find_treeselect('Tree Select').search_for_option('Parent 1::Option A')
-find_autocomplete('Customer').search_for_option(customer.lastname)
+find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
 find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3])
 
 find_toggle('Boolean').toggle

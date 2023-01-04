@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -9,7 +9,7 @@ RSpec.describe 'Mobile > Ticket > Merge tickets', app: :mobile, authenticated_as
   let!(:target_ticket) { create(:ticket, title: 'Target', group: group) }
 
   before do
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   context 'when merging tickets', searchindex: true do

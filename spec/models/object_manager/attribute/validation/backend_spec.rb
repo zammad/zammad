@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -14,7 +14,7 @@ RSpec.describe ObjectManager::Attribute::Validation::Backend do
     end
 
     let(:record)    { build(:user) }
-    let(:attribute) { ::ObjectManager::Attribute.find_by(name: 'firstname') }
+    let(:attribute) { ObjectManager::Attribute.find_by(name: 'firstname') }
 
     it 'has attr_accessor for record' do
       expect(subject.record).to eq(record)

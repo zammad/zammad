@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
@@ -174,7 +174,7 @@ class TicketsController < ApplicationController
 
       # create mentions if given
       if params[:mentions].present?
-        authorize!(Mention.new, :create?)
+        authorize!(ticket, :create_mentions?)
         Array(params[:mentions]).each do |user_id|
           Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
         end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input
   class UserInputType < Gql::Types::BaseInputObject
@@ -10,7 +10,7 @@ module Gql::Types::Input
     argument :lastname, String, required: false, description: 'The user last name'
     argument :email, String, description: 'The user email'
     argument :password, String, required: false, description: 'The user password'
-    argument :organization_id, Integer, required: false, description: 'The organization the user belongs to'
+    argument :organization_id, GraphQL::Types::ID, required: false, description: 'The organization the user belongs to', loads: Gql::Types::OrganizationType
     argument :web, String, required: false, description: 'The user web'
     argument :phone, String, required: false, description: 'The user phone'
     argument :mobile, String, required: false, description: 'The user mobile'

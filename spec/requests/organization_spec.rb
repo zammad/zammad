@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -42,7 +42,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
   end
 
   before do
-    searchindex_model_reload([::Organization])
+    searchindex_model_reload([Organization])
   end
 
   describe 'request handling' do

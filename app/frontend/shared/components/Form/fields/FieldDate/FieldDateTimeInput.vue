@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { i18n } from '@shared/i18n'
@@ -283,7 +283,7 @@ watchEffect(async () => {
     calendar.style.height = '0px'
 
     nextTick(() => {
-      testFlags.set(`field-date-time-${props.context.id}.opened`)
+      testFlags.set(`field-date-time-${props.context.id}.closed`)
     })
   } else {
     if (!flatpickrHeight) {
@@ -296,7 +296,7 @@ watchEffect(async () => {
     todayButton?.removeAttribute('tabindex')
 
     nextTick(() => {
-      testFlags.set(`field-date-time-${props.context.id}.closed`)
+      testFlags.set(`field-date-time-${props.context.id}.opened`)
     })
   }
 })

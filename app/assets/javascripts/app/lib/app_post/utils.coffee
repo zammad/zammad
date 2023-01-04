@@ -929,7 +929,10 @@ class App.Utils
     for dataNowkey, dataNowValue of dataNow
       if dataNow[dataNowkey] isnt dataLast[dataNowkey]
         if _.isArray( dataNow[dataNowkey] ) && _.isArray( dataLast[dataNowkey] )
-          diff = _.difference( dataNow[dataNowkey], dataLast[dataNowkey] )
+          diffFromLast = _.difference( dataNow[dataNowkey], dataLast[dataNowkey] )
+          diffFromNow  = _.difference( dataLast[dataNowkey], dataNow[dataNowkey] )
+          diff         = diffFromLast.concat(diffFromNow)
+
           if !_.isEmpty( diff )
             changes[dataNowkey] = diff
         else if _.isObject( dataNow[dataNowkey] ) &&  _.isObject( dataLast[dataNowkey] )

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TagsControllerPolicy < Controllers::ApplicationControllerPolicy
   default_permit!('admin.tag')
@@ -14,23 +14,22 @@ class Controllers::TagsControllerPolicy < Controllers::ApplicationControllerPoli
   private
 
   def object_update?
+    object_policy.agent_update_access?
+  end
+
+  def klass
     case record.params[:object]
     when 'Ticket'
-      return ticket_update?
+      Ticket
     when %r{KnowledgeBase::Answer(?:::.+)?}
-      return kb_answer_update?
+      KnowledgeBase::Answer
     end
-
-    true
   end
 
-  def ticket_update?
-    ticket = Ticket.find(record.params[:o_id])
-    TicketPolicy.new(user, ticket).update?
-  end
+  def object_policy
+    object = klass.find record.params[:o_id]
+    policy = Pundit::PolicyFinder.new(object).policy!
 
-  def kb_answer_update?
-    answer = KnowledgeBase::Answer.find(record.params[:o_id])
-    KnowledgeBase::AnswerPolicy.new(user, answer).update?
+    policy.new user, object
   end
 end

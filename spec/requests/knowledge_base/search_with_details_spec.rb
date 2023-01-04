@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,7 +7,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
   before do
     published_answer
-    searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+    searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
   end
 
   let(:endpoint) { '/api/v1/knowledge_bases/search' }
@@ -34,11 +34,11 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
   context 'when category translation to one of locales is missing' do
     let(:search_phrase) { 'search_phrase' }
-    let(:alternative_translation) { create('knowledge_base/answer/translation', title: search_phrase, kb_locale: alternative_locale, answer: published_answer) }
+    let(:alternative_translation) { create(:'knowledge_base/answer/translation', title: search_phrase, kb_locale: alternative_locale, answer: published_answer) }
 
     before do
       alternative_translation
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns answer in locale without category translation' do
@@ -50,12 +50,12 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
   context 'when parent category translation to one of locales is missing' do
     let(:search_phrase) { 'search_phrase' }
-    let(:child_category)             { create('knowledge_base/category', parent: category) }
-    let(:child_category_translation) { create('knowledge_base/category/translation', title: search_phrase, kb_locale: alternative_locale, category: child_category) }
+    let(:child_category)             { create(:'knowledge_base/category', parent: category) }
+    let(:child_category_translation) { create(:'knowledge_base/category/translation', title: search_phrase, kb_locale: alternative_locale, category: child_category) }
 
     before do
       child_category_translation
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category in locale without category translation', authenticated_as: -> { create(:admin) } do
@@ -65,17 +65,17 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
   end
 
   context 'when answer tree is long' do
-    let(:category1) { create('knowledge_base/category') }
-    let(:category2)        { create('knowledge_base/category', parent: category1) }
-    let(:category3)        { create('knowledge_base/category', parent: category2) }
+    let(:category1) { create(:'knowledge_base/category') }
+    let(:category2)        { create(:'knowledge_base/category', parent: category1) }
+    let(:category3)        { create(:'knowledge_base/category', parent: category2) }
     let(:answer_cut_tree)  { create(:knowledge_base_answer, :published, :with_attachment, category: category3) }
-    let(:category4)        { create('knowledge_base/category') }
-    let(:category5)        { create('knowledge_base/category', parent: category4) }
+    let(:category4)        { create(:'knowledge_base/category') }
+    let(:category5)        { create(:'knowledge_base/category', parent: category4) }
     let(:answer_full_tree) { create(:knowledge_base_answer, :published, :with_attachment, category: category5) }
 
     before do
       answer_cut_tree && answer_full_tree
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
@@ -121,7 +121,7 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     before do
       answers
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
     end
 
     it 'returns success' do

@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # This file is used by Rack-based servers to start the application.
 
-require ::File.expand_path('config/environment', __dir__)
+require File.expand_path('config/environment', __dir__)
 run Zammad::Application
 
 # set config to do no self notification

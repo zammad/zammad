@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Sessions
 
@@ -230,7 +230,7 @@ send message to recipient client
 e. g.
 
   Sessions.send_to(user_id, {
-    event: 'session:takeover',
+    event: 'session_takeover',
     data: {
       taskbar_id: 12312
     },

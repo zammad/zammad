@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -68,7 +68,7 @@ RSpec.describe Import::OTRS::User do
     allow(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
   end
 
-  let(:import_object)     { ::User }
+  let(:import_object)     { User }
   let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class WebsocketServer
 
@@ -163,7 +163,7 @@ class WebsocketServer
   end
 
   def self.send_to_client
-    return if @clients.size.zero?
+    return if @clients.empty?
 
     # log 'debug', 'checking for data to send...'
     @clients.each do |client_id, client|

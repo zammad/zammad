@@ -742,19 +742,25 @@ class App.TicketZoom extends App.Controller
       return if !renderedUpdatedAt
       return if currentStore.ticket.updated_at.toString() isnt renderedUpdatedAt
 
-      for key, value of currentStore.ticket
-        if value is null || value is undefined
-          currentStore.ticket[key] = ''
+      @formDiffSimplifyEmptyValues(currentStore)
     if currentParams.ticket
-      for key, value of currentParams.ticket
-        if value is null || value is undefined
-          currentParams.ticket[key] = ''
+      @formDiffSimplifyEmptyValues(currentParams)
 
-    # get diff of model
-    modelDiff =
+    {
       ticket:  @forRemoveMeta(App.Utils.formDiff(currentParams.ticket, currentStore.ticket))
       article: @forRemoveMeta(App.Utils.formDiff(currentParams.article, currentStore.article))
-    modelDiff
+    }
+
+  formDiffSimplifyEmptyValues: (params) ->
+    for key, value of params.ticket
+      if value is null || value is undefined
+        params.ticket[key] = ''
+
+      tagName = App.Ticket.configure_attributes.find((elem) -> elem.name == key)?.tag
+
+      if ['multiselect', 'multi_tree_select'].includes(tagName)
+        if _.isEmpty(value) || _.isEqual(value, [''])
+          params.ticket[key] = ''
 
   forRemoveMeta: (params = {}) ->
     paramsNew = {}

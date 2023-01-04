@@ -8,24 +8,17 @@ class SessionTakeOver extends App.Controller
       =>
         @spoolSent = true
 
-        # broadcast to other browser instance
         App.WebSocket.send(
-          event: 'broadcast'
-          spool:  true
-          recipient:
-            user_id: [ App.Session.get( 'id' ) ]
+          event: 'session_takeover',
           data:
-            event: 'session:takeover'
-            data:
-              taskbar_id: App.TaskManager.TaskbarId()
+            taskbar_id: App.TaskManager.TaskbarId()
         )
     )
 
     # session take over message
     @controllerBind(
-      'session:takeover'
+      'session_takeover'
       (data) =>
-
         # only if spool messages are already sent
         return if !@spoolSent
 

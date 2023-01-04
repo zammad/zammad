@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,7 +8,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
   let(:group)            { create(:group) }
   let(:agent)            { create(:agent) }
   let(:open_tickets)     { create_list(:ticket, 20, customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.lookup(name: 'open')) }
-  let(:overview_tickets) { ::Ticket::Overviews.tickets_for_overview(Overview.find_by(link: 'all_open'), agent).limit(nil) }
+  let(:overview_tickets) { Ticket::Overviews.tickets_for_overview(Overview.find_by(link: 'all_open'), agent).limit(nil) }
 
   before do
     Overview.find_by(link: 'all_open').update!(

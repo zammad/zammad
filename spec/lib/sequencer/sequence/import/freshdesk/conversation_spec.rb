@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: :sequence do
 
   context 'when importing conversations from Freshdesk' do
     let(:inline_image_url) { 'https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc' }

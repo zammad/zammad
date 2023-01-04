@@ -55,11 +55,7 @@
   "Service": "",
   "Type": "Incident",
   "ContentCharset": "",
-  "DynamicField_TETest": [
-    "test",
-    "test1",
-    "test3"
-  ],
+  "DynamicField_TETest": ["test", "test1", "test3"],
   "Responsible": "root@localhost",
   "SenderType": "customer",
   "ResponsibleID": "1",
@@ -78,7 +74,7 @@
   "DynamicField_SugarCRMCompanySelectedID": "22222222-11d4-7b8b-cb8f-4f7cb6823dd8",
   "UntilTime": 0,
   "EscalationUpdateTime": "0",
-  "CreatedBy": "1",
+  "CreateBy": "1",
   "Queue": "Raw",
   "DynamicField_ITSMRepairStartTime": null,
   "ToRealname": "Your OTRS System",

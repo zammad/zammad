@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_context 'with report examples' do
   before do |example|
@@ -16,7 +16,7 @@ RSpec.shared_context 'with report examples' do
     ticket_after_72h
     ticket_before_40d
 
-    searchindex_model_reload([::Ticket])
+    searchindex_model_reload([Ticket])
   end
 
   let(:group_1)  { Group.lookup(name: 'Users') }

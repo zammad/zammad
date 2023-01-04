@@ -2036,7 +2036,7 @@ export type UserInput = {
   /** Additional custom attributes (names + values) */
   objectAttributeValues?: InputMaybe<Array<ObjectAttributeValueInput>>;
   /** The organization the user belongs to */
-  organizationId?: InputMaybe<Scalars['Int']>;
+  organizationId?: InputMaybe<Scalars['ID']>;
   /** The user password */
   password?: InputMaybe<Scalars['String']>;
   /** The user phone */

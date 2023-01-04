@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -13,11 +13,12 @@ RSpec.describe 'Mobile > App Account Page', app: :mobile, type: :system do
 
     context 'when updating locale', authenticated_as: :agent do
       it 'check that user can see and change locale' do
-        # current locale is visible
-        expect(page).to have_content('English')
+        locale = find_treeselect('Language')
 
-        click('output', text: %r{English}i)
-        click('span', text: %r{Dansk}i)
+        # current locale is visible
+        expect(locale).to have_selected_option('English (United States)')
+
+        locale.select_option('Dansk')
         wait_for_gql('apps/mobile/pages/account/graphql/mutations/locale.graphql')
         agent.reload
         expect(agent.preferences[:locale]).to eq('da')

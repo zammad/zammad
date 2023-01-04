@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -22,7 +22,7 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
     before do
       article && organization
 
-      searchindex_model_reload([::Ticket, ::Organization])
+      searchindex_model_reload([Ticket, Organization])
     end
 
     it 'finds added tickets' do

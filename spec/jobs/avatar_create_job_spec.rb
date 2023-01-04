@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,7 +10,7 @@ RSpec.describe AvatarCreateJob, type: :job do
 
   context 'with avatar auto detection' do
     before do
-      allow(::Avatar).to receive(:auto_detection).and_return(avatar)
+      allow(Avatar).to receive(:auto_detection).and_return(avatar)
       user
       travel 1.minute
     end
@@ -47,7 +47,7 @@ RSpec.describe AvatarCreateJob, type: :job do
   end
 
   it 'retries on exception' do
-    allow(::Avatar).to receive(:auto_detection).and_raise(RuntimeError)
+    allow(Avatar).to receive(:auto_detection).and_raise(RuntimeError)
 
     perform
     expect(described_class).to have_been_enqueued

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
@@ -16,7 +16,7 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, searchind
       published_answer
       published_answer.add_attachment File.open "spec/fixtures/files/upload/#{filename}"
 
-      searchindex_model_reload([::KnowledgeBase::Translation, ::KnowledgeBase::Category::Translation, ::KnowledgeBase::Answer::Translation])
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, described_class])
     end
 
     it do

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
 import type { FormUpdaterQuery } from '@shared/graphql/types'

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'messagebird'
@@ -22,7 +22,7 @@ RSpec.describe Channel::Driver::Sms::MessageBird do
 
     api = channel.driver_instance.new
 
-    expect { api.send(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(::MessageBird::ServerException)
+    expect { api.send(channel.options, { recipient: 'asd', message: message_body }) }.to raise_exception(MessageBird::ServerException)
   end
 
   private

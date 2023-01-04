@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory 'knowledge_base/answer', aliases: %i[knowledge_base_answer] do
@@ -14,7 +14,7 @@ FactoryBot.define do
     before(:create) do |answer, context|
       next if answer.translations.present?
 
-      answer.translations << build('knowledge_base/answer/translation', *context.translation_traits, answer: answer, **context.translation_attributes)
+      answer.translations << build(:'knowledge_base/answer/translation', *context.translation_traits, answer: answer, **context.translation_attributes)
     end
 
     trait :draft # empty placeholder for better readability

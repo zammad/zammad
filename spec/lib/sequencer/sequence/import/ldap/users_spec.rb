@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2022 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Ldap::Users, sequencer: :sequence do
   let(:ldap_source) { create(:ldap_source) }
 
   context 'lost group assignment' do
