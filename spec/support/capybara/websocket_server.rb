@@ -6,7 +6,6 @@ RSpec.configure do |config|
     # Temporary Hack: skip tests if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
     # TODO: Remove when this switch is not needed any more.
     if example.metadata[:app] == :mobile && ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
-      example.skip 'Do not execute mobile tests.'
       next
     end
 
