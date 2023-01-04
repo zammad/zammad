@@ -13,6 +13,15 @@ import { ref } from 'vue'
 
 const linkSchemaRaw = [
   {
+    type: 'security',
+    name: 'security',
+    label: 'Security',
+    required: true,
+    props: {
+      allowed: ['sign', 'encryption'],
+    },
+  },
+  {
     type: 'editor',
     name: 'editor',
     label: 'Editor',

@@ -3,8 +3,11 @@
 import { computed, type Ref } from 'vue'
 import { type FormFieldContext } from '../types/field'
 
-const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
-  const currentValue = computed(() => context.value._value)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useValue = <T = any>(
+  context: Ref<FormFieldContext<{ multiple?: boolean }>>,
+) => {
+  const currentValue = computed(() => context.value._value as T)
 
   const hasValue = computed(() => {
     return context.value.fns.hasValue(currentValue.value)
@@ -14,9 +17,9 @@ const useValue = (context: Ref<FormFieldContext<{ multiple?: boolean }>>) => {
     context.value.multiple ? currentValue.value : [currentValue.value],
   )
 
-  const isCurrentValue = (value: unknown) => {
+  const isCurrentValue = (value: T) => {
     if (!hasValue.value) return false
-    return valueContainer.value.includes(value)
+    return (valueContainer.value as unknown as T[]).includes(value)
   }
 
   const clearValue = (asyncSettling = true) => {
