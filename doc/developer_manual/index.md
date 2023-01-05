@@ -20,6 +20,7 @@ Welcome to the developer docs of Zammad. 👋 This is a work in progress, and yo
 # Cookbook / Recipes
 
 - [How to diagnose email bugs](cookbook/how-to-diagnose-email-bugs.md)
+- [How to setup S/MIME integration](cookbook/how-to-setup-smime-integration.md)
 - [How to use debuggers with Zammad](cookbook/how-to-use-debuggers.md)
 - [How to test with RSpec / Capybara](cookbook/how-to-test-with-rspec-and-capybara.md)
 - [How to test with QUnit](cookbook/how-to-test-with-qunit.md)
