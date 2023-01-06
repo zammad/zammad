@@ -16,7 +16,7 @@ import Form from '@shared/components/Form/Form.vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useForm } from '@shared/components/Form'
 import type { FormData } from '@shared/components/Form/types'
-import { computed, provide, ref, Teleport } from 'vue'
+import { computed, provide, ref } from 'vue'
 import { noop } from 'lodash-es'
 import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
 import {

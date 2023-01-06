@@ -14,6 +14,7 @@ import UserMention, { UserLink } from '../suggestions/UserMention'
 import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion'
 import TextModuleSuggestion from '../suggestions/TextModuleSuggestion'
 import Image from './Image'
+import Signature from './Signature'
 import type { FieldEditorProps } from '../types'
 
 export default (
@@ -27,6 +28,7 @@ export default (
   OrderedList,
   ListItem,
   Image,
+  Signature,
   Link.configure({
     openOnClick: false,
     autolink: false,

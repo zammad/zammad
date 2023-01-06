@@ -1194,6 +1194,8 @@ export type Queries = {
   ticketArticles: TicketArticleConnection;
   /** Ticket overviews available in the system */
   ticketOverviews: OverviewConnection;
+  /** Fetch a ticket signature by group ID */
+  ticketSignature?: Maybe<Signature>;
   /** Fetch tickets of a given ticket overview */
   ticketsByOverview: TicketConnection;
   /** Translations for a given locale */
@@ -1330,6 +1332,13 @@ export type QueriesTicketOverviewsArgs = {
 
 
 /** All available queries */
+export type QueriesTicketSignatureArgs = {
+  groupId: Scalars['ID'];
+  ticketId?: InputMaybe<Scalars['ID']>;
+};
+
+
+/** All available queries */
 export type QueriesTicketsByOverviewArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -1371,6 +1380,32 @@ export type Role = {
 
 /** Objects found by search */
 export type SearchResult = Organization | Ticket | User;
+
+/** Signature */
+export type Signature = {
+  __typename?: 'Signature';
+  active: Scalars['Boolean'];
+  body?: Maybe<Scalars['String']>;
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime'];
+  /** User that created this record */
+  createdBy: User;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  /** Internal note */
+  note?: Maybe<Scalars['String']>;
+  renderedBody?: Maybe<Scalars['String']>;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime'];
+  /** Last user that updated this record */
+  updatedBy: User;
+};
+
+
+/** Signature */
+export type SignatureRenderedBodyArgs = {
+  ticketId?: InputMaybe<Scalars['ID']>;
+};
 
 /** Represents a stored file. */
 export type StoredFile = {
@@ -2462,6 +2497,14 @@ export type SessionIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SessionIdQuery = { __typename?: 'Queries', sessionId: string };
+
+export type TicketSignatureQueryVariables = Exact<{
+  groupId: Scalars['ID'];
+  ticketId?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type TicketSignatureQuery = { __typename?: 'Queries', ticketSignature?: { __typename?: 'Signature', id: string, renderedBody?: string | null } | null };
 
 export type TranslationsQueryVariables = Exact<{
   locale: Scalars['String'];

@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 
 import type { Ref, WatchStopHandle } from 'vue'
-import { nextTick, watch } from 'vue'
+import { watch } from 'vue'
 import type {
   ApolloQueryResult,
   FetchMoreOptions,
@@ -33,8 +33,10 @@ export default class QueryHandler<
   public async trigger(variables?: TVariables) {
     this.load(variables)
     // load triggers "forceDisable", which triggers a watcher,
-    // so we need to wait for the quey to be created before we can refetch
-    await nextTick()
+    // so we need to wait for the query to be created before we can refetch
+    // we can't use nextTick, because queries variables are not updated yet
+    // and it will call the server with the first variables and the new ones
+    await new Promise((r) => setTimeout(r, 0))
     const query = this.operationResult.query.value as ObservableQuery<TResult>
     // this will take result from cache, respecting variables
     // if it's not in cache, it will fetch result from server

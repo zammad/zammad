@@ -14,6 +14,9 @@ We emphasize to set following environment variables for developing Zammad.
   Z_LOCALES=en-us:de-de
   ```
 
+  **Note:** Make sure to include your locale in `$Z_LOCALES`.
+
+
 ## Cloning Repository
 
 It's possible to clone the repository via HTTPS and SSH.

@@ -280,7 +280,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def type_editor(text)
     raise 'Field does not support typing' if !type_editor?
 
-    input_element.click.send_keys(text)
+    cursor_home_shortcut = mac_platform? ? %i[command up] : %i[control home]
+    input_element.click.send_keys(cursor_home_shortcut).send_keys(text)
 
     maybe_wait_for_form_updater
 

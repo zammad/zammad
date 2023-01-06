@@ -8,7 +8,11 @@ import { useEventListener } from '@vueuse/core'
 import { ref, toRef, watch } from 'vue'
 import useValue from '../../composables/useValue'
 import getExtensions from './extensions/list'
-import type { EditorCustomPlugins, FieldEditorProps } from './types'
+import type {
+  EditorCustomPlugins,
+  FieldEditorProps,
+  PossibleSignature,
+} from './types'
 import FieldEditorActionBar from './FieldEditorActionBar.vue'
 
 interface Props {
@@ -130,6 +134,32 @@ const focusEditor = () => {
 useEventListener('click', (e) => {
   const label = document.querySelector(`label[for="${props.context.id}"]`)
   if (label === e.target) focusEditor()
+})
+
+const addSignature = (signature: PossibleSignature) => {
+  if (!editor.value) return
+  const currentPosition = editor.value.state.selection.anchor
+  const positionFromEnd = editor.value.state.doc.content.size - currentPosition
+  // don't use "chain()", because we change positions a lot
+  // and chain doesn't know about it
+  editor.value.commands.removeSignature()
+  editor.value.commands.addSignature(signature)
+  const newPosition =
+    signature.position === 'top'
+      ? editor.value.state.doc.content.size - positionFromEnd
+      : currentPosition
+  editor.value.commands.focus(newPosition)
+}
+
+const removeSignature = () => {
+  if (!editor.value) return
+  const currentPosition = editor.value.state.selection.anchor
+  editor.value.chain().removeSignature().focus(currentPosition).run()
+}
+
+Object.assign(props.context, {
+  addSignature,
+  removeSignature,
 })
 </script>
 
