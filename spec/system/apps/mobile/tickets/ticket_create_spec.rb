@@ -97,13 +97,13 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         next_step
 
         # only label is rendered as text
-        expect(find_editor('Text').input_element).to have_text('', exact: true)
+        expect(find_editor('Text')).to have_text_value('', exact: true)
 
         go_to_step(3)
         find_select('Group').select_option('Users')
 
         go_to_step(4)
-        expect(find_editor('Text')).to have_text(agent.fullname) # default signature is added
+        expect(find_editor('Text')).to have_text_value(agent.fullname) # default signature is added
       end
     end
 
@@ -118,13 +118,13 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(agent.fullname)
 
         go_to_step(3)
         find_select('Group').select_option(group1.name)
 
         next_step
-        expect(find_editor('Text')).to have_text('custom signature')
+        expect(find_editor('Text')).to have_text_value('custom signature')
       end
     end
 
@@ -139,13 +139,13 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(agent.fullname)
 
         go_to_step(3)
         find_select('Group').select_option(group3.name)
 
         next_step
-        expect(find_editor('Text').input_element).to have_text('', exact: true)
+        expect(find_editor('Text')).to have_text_value('', exact: true)
       end
     end
 
@@ -160,7 +160,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(agent.fullname)
 
         go_to_step(2)
         find_radio('articleSenderType').select_choice('Outbound Call')
@@ -168,7 +168,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         go_to_step(4)
 
         # only label is rendered as text
-        expect(find_editor('Text').input_element).to have_text('', exact: true)
+        expect(find_editor('Text')).to have_text_value('', exact: true)
       end
     end
   end
@@ -210,7 +210,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
 
         # Step 4.
         go_to_step(4)
-        expect(find_editor('Text')).to have_text(body)
+        expect(find_editor('Text')).to have_text_value(body)
       end
     end
 

@@ -39,11 +39,11 @@ module FormMatchers
     end
 
     failure_message do
-      %(expected #{actual.field_id} to have selected options with parent #{expected})
+      %(expected #{actual.field_id} to have selected options with parent "#{expected}")
     end
 
     failure_message_when_negated do
-      %(expected #{actual.field_id} not to have selected options with parent #{expected})
+      %(expected #{actual.field_id} not to have selected options with parent "#{expected}")
     end
   end
 
