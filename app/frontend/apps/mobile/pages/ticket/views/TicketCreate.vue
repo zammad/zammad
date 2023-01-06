@@ -41,13 +41,13 @@ import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButt
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
 import { errorOptions } from '@mobile/router/error'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import { useTicketSignature } from '@shared/composables/useTicketSignature'
 import { TicketFormData } from '../types/tickets'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 
 const router = useRouter()
 
 // Add meta header with selected ticket create article type
-// TODO: Signature handling?
 // TODO: Security options?
 
 const { canSubmit, form, node, isDirty, formSubmit } = useForm()
@@ -415,6 +415,8 @@ onBeforeRouteLeave(async () => {
 
   return confirmed
 })
+
+const { signatureHandling } = useTicketSignature()
 </script>
 
 <script lang="ts">
@@ -477,7 +479,7 @@ export default {
       ref="form"
       class="text-left"
       :schema="formSchema"
-      :handlers="[useTicketFormOganizationHandler()]"
+      :handlers="[useTicketFormOganizationHandler(), signatureHandling('body')]"
       :multi-step-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"

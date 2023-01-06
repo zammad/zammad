@@ -79,6 +79,100 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     it_behaves_like 'creating a ticket', article_type: 'email'
   end
 
+  context 'with signatures' do
+    let(:signature1) { create(:signature, body: '<strong>custom signature</strong>') }
+    let(:group1)     { create(:group, signature: signature1) }
+    let(:group2)     { Group.find_by(name: 'Users') }
+    let(:group3)     { create(:group) }
+    let(:agent)      { create(:agent, groups: [group1, group2, group3]) }
+
+    it 'adds signature' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_radio('articleSenderType').select_choice('Send Email')
+
+        next_step
+        next_step
+
+        # only label is rendered as text
+        expect(find_editor('Text').input_element).to have_text('', exact: true)
+
+        go_to_step(3)
+        find_select('Group').select_option('Users')
+
+        go_to_step(4)
+        expect(find_editor('Text')).to have_text(agent.fullname) # default signature is added
+      end
+    end
+
+    it 'changes signature, when group is changed' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_radio('articleSenderType').select_choice('Send Email')
+        next_step
+
+        find_select('Group').select_option('Users')
+        next_step
+
+        expect(find_editor('Text')).to have_text(agent.fullname)
+
+        go_to_step(3)
+        find_select('Group').select_option(group1.name)
+
+        next_step
+        expect(find_editor('Text')).to have_text('custom signature')
+      end
+    end
+
+    it 'removes signature, when another group without signature is selected' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_radio('articleSenderType').select_choice('Send Email')
+        next_step
+
+        find_select('Group').select_option('Users')
+        next_step
+
+        expect(find_editor('Text')).to have_text(agent.fullname)
+
+        go_to_step(3)
+        find_select('Group').select_option(group3.name)
+
+        next_step
+        expect(find_editor('Text').input_element).to have_text('', exact: true)
+      end
+    end
+
+    it 'removes signature when type is not email' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_radio('articleSenderType').select_choice('Send Email')
+        next_step
+
+        find_select('Group').select_option('Users')
+        next_step
+
+        expect(find_editor('Text')).to have_text(agent.fullname)
+
+        go_to_step(2)
+        find_radio('articleSenderType').select_choice('Outbound Call')
+
+        go_to_step(4)
+
+        # only label is rendered as text
+        expect(find_editor('Text').input_element).to have_text('', exact: true)
+      end
+    end
+  end
+
   context 'with entered form fields' do
     it 'remembers the data when switching between steps' do
 

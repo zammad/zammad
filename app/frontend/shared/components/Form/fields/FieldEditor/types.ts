@@ -8,8 +8,19 @@ import type {
 import type { ConfidentTake } from '@shared/types/utils'
 import type { ImageFileData } from '@shared/utils/files'
 
+export interface PossibleSignature {
+  position?: 'bottom' | 'top'
+  active?: boolean
+  body: string
+  id: number
+}
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
+    signature: {
+      addSignature: (signature: PossibleSignature) => ReturnType
+      removeSignature: () => ReturnType
+    }
     mentions: {
       openUserMention: () => ReturnType
       openTextMention: () => ReturnType
@@ -37,6 +48,11 @@ export type MentionTextItem = ConfidentTake<
 >[number]
 
 export type MentionType = 'user' | 'knowledge-base' | 'text'
+
+export interface FieldEditorContext {
+  addSignature?(signature: PossibleSignature): void
+  removeSignature?(): void
+}
 
 export interface FieldEditorProps {
   groupId?: string
