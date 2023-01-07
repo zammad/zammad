@@ -711,6 +711,16 @@ QUnit.test("htmlCleanup", assert => {
   assert.equal(result.find('th').first().attr('abc'), undefined)
   assert.equal(result.find('th').first().attr('style'), undefined)
 
+  // https://github.com/zammad/zammad/issues/4445
+  source = '<meta charset=\'utf-8\'><span style="color: rgb(219, 219, 220);">This is a black font colour with white background</span>'
+  should = '<span>This is a black font colour with white background</span>'
+  result = App.Utils.htmlCleanup(source)
+  assert.equal(result.html(), should, source)
+
+  source = '<meta charset=\'utf-8\'><div class="article-content" style="box-sizing: border-box; color: rgb(219, 219, 220); position: relative; z-index: 1; padding: 0px 55px;"><div class="bubble-gap" style="box-sizing: border-box;"><div class="internal-border" style="box-sizing: border-box; padding: 5px; border-radius: 5px; margin: -5px;"><div class="textBubble" style="box-sizing: border-box; padding: 10px 20px; background: var(--background-article-customer); border-radius: 2px; border-color: var(--border-article-customer); box-shadow: none; position: relative;"><div class="textBubble-content" id="article-content-4" data-id="4" style="box-sizing: border-box; overflow: hidden; position: relative;"><div class="richtext-content" style="box-sizing: border-box;"><div style="box-sizing: border-box;">This is a black font colour with white background</div></div></div></div></div></div></div>'
+  should = '<div><div><div><div><div id="article-content-4"><div><div>This is a black font colour with white background</div></div></div></div></div></div></div>'
+  result = App.Utils.htmlCleanup(source)
+  assert.equal(result.html(), should, source)
 });
 
 // wrap

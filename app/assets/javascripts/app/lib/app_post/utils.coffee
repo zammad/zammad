@@ -82,6 +82,7 @@ class App.Utils
       'color:rgb(88, 88, 86)' # use in UI, ignore it
       'color:#b3b3b3' # use in UI, ignore it
       'color:rgb(34, 34, 34)' # use in UI, ignore it
+      'color:rgb(219, 219, 220)' # use in UI, ignore it
     ],
     'SPAN': [
       'color:white',
@@ -95,6 +96,7 @@ class App.Utils
       'color:rgb(88, 88, 86)' # use in UI, ignore it
       'color:#b3b3b3' # use in UI, ignore it
       'color:rgb(34, 34, 34)' # use in UI, ignore it
+      'color:rgb(219, 219, 220)' # use in UI, ignore it
     ],
     'TABLE': [
       'font-size:0',
