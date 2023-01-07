@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-07 03:30+0000\n"
+"PO-Revision-Date: 2022-12-20 03:30+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -4881,7 +4881,7 @@ msgid ""
 "auth/sso on user interaction."
 msgstr ""
 "Włącza przycisk do uwierzytelniania użytkownika przez %s. Przycisk "
-"przekieruje do /auth/sso po interakcji użytkownika."
+"przekieruje do autoryzacji/logowania jednokrotnego po interakcji użytkownika."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Enables console logging."
@@ -8833,7 +8833,7 @@ msgstr "Osoby tworzące zgłoszenia proszą o pomoc."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Perform action of the following"
-msgstr "Zastosuj akcję dla"
+msgstr "Wykonaj następujące czynności"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
@@ -10478,7 +10478,7 @@ msgid ""
 "Zammad is back again."
 msgstr ""
 "Niektóre ustawienia systemu uległy zmianie, Zammad uruchamia się ponownie. "
-"Proszę poczekać, aż Zammad wróci."
+"Proszę poczekać, aż Zammad powróci."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid ""
@@ -11903,8 +11903,8 @@ msgid ""
 "This signature is inactive, it won't be included in the reply. Change state "
 "<a href=\"#channels/email\">here</a>"
 msgstr ""
-"Ten podpis jest nieaktywny, nie zostanie dołączony do odpowiedzi. Zmień stan "
-"<a href=\"#channels/email\">tutaj</a>"
+"Ten podpis jest nieaktywny, nie zostanie uwzględniony w odpowiedzi. Zmień "
+"stan <a href=\"#channels/email\">tutaj</a>"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -13670,8 +13670,8 @@ msgstr ""
 "Możesz zdefiniować różne podpisy dla każdej grupy, co pozwala na użycie "
 "innego podpisu dla każdego działu.\n"
 "\n"
-"Po utworzeniu podpisu tutaj będziesz musiał również edytować grupy, w "
-"których chcesz go używać."
+"Po utworzeniu tutaj podpisu będziesz także musiał edytować grupy, w których "
+"chcesz go użyć."
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-01 08:57+0000\n"
-"Last-Translator: flo-blg <flboulanger@gmail.com>\n"
+"PO-Revision-Date: 2023-01-07 10:26+0000\n"
+"Last-Translator: oulmi <ko@ibl.fr>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -56,28 +56,15 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
-"\"Base de données\" toutes les pièces jointes sont stocké dans la base de "
-"données (non recommandé pour stocker de grandes quantités de données). "
-"\"Filesystem\" stocke les données dans le système de fichiers. Vous pouvez "
-"passer d'un module à l'autre même sur un système déjà en production sans "
-"aucune perte de données."
+"\"Base de données\" stocke toutes les pièces jointes dans la base de données "
+"(non recommandé pour stocker de grandes quantités de données). \"Filesystem\""
+" stocke les données dans le système de fichiers. Vous pouvez passer d'un "
+"module à l'autre même sur un système déjà en production sans aucune perte de "
+"données."
 
 #. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_create/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
-#| "updated_at}_\n"
-#| "* #{t('Group')}: #{ticket.group.name}\n"
-#| "* #{t('Owner')}: #{ticket.owner.fullname}\n"
-#| "* #{t('State')}: #{t(ticket.state.name)}\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -92,12 +79,12 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Créé par #{current_user.longname} à #{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Créé par #{current_user.longname} à #{ticket."
 "updated_at}_\n"
-"* #{t('Group')}: #{ticket.group.name}\n"
-"* #{t('Owner')}: #{ticket.owner.fullname}\n"
-"* #{t('State')}: #{t(ticket.state.name)}\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -106,17 +93,6 @@ msgstr ""
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_escalation/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\n"
-#| "A ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" is "
-#| "escalated since \"#{ticket.escalation_at}\"!\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -129,10 +105,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Escaladé à #{ticket.escalation_at}_\n"
-"Un ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" va escalader "
-"depuis \"#{ticket.escalation_at}\"!\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Escaladé à #{ticket.escalation_at}_\n"
+"Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" a été "
+"escaladé depuis \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -141,17 +117,6 @@ msgstr ""
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/slack/ticket_reminder_reached/en.md.erb
-#, fuzzy
-#| msgid ""
-#| "# #{ticket.title}\n"
-#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-#| "Ticket##{ticket.number}>: Reminder reached!_\n"
-#| "A ticket needs attention, reminder reached for (#{ticket.title}) with "
-#| "customer \"*#{ticket.customer.longname}*\".\n"
-#| "\n"
-#| "<% if @objects[:article] %>\n"
-#| "#{article.body_as_text}\n"
-#| "<% end %>\n"
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -164,9 +129,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Rappel atteint!_\n"
-"Un ticket a besoin d'attention, rappel atteint pour (#{ticket.title}) avec "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Rappel atteint!_\n"
+"Un ticket a besoin d'attention: rappel atteint pour (#{ticket.title}) avec "
 "client \"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -411,7 +376,7 @@ msgstr "Confirmer"
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (inconnu)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -449,10 +414,8 @@ msgid "%s ago"
 msgstr "il y a %s"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "%s attached files"
-msgstr "Fichiers Attachés"
+msgstr "Fichiers Attachés %s"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -948,6 +911,8 @@ msgstr "A propos"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
+"Accepter la politique des données personnelles et les conditions "
+"d'utilisation"
 
 #: db/seeds/permissions.rb
 msgid "Access to %s"
@@ -1604,7 +1569,7 @@ msgstr "Informations d'identification pour Twitter."
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 #: db/seeds/permissions.rb
 msgid "Appearance"
-msgstr ""
+msgstr "Affichage"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Application"
@@ -2380,7 +2345,7 @@ msgid "Cannot delete category"
 msgstr "Impossible de supprimer la catégorie"
 
 msgid "Cannot delete record because a dependent %{record} exists"
-msgstr ""
+msgstr "Ne peut supprimer l'enregistrement car une dépendance %{record} existe"
 
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr ""
@@ -9482,7 +9447,7 @@ msgstr "Veuillez saisir votre nouveau mot de passe !"
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
-msgstr ""
+msgstr "Veuillez patienter jusqu'à ce que vous receviez l'email d'approbation."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 msgid "Please wait…"
@@ -9723,16 +9688,16 @@ msgstr "Liste D'attente"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "Queue already exists!"
-msgstr ""
+msgstr "La file d'attente existe déjà !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Raw"
-msgstr ""
+msgstr "Brut"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
-msgstr ""
+msgstr "Lire"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 #, fuzzy
@@ -9743,7 +9708,7 @@ msgstr "Temps réel"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
-msgstr ""
+msgstr "Se réauthentifier"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 msgid "Received Call"
@@ -9799,7 +9764,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Register"
-msgstr ""
+msgstr "S'enregistrer"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Register as a new customer"
@@ -9826,7 +9791,7 @@ msgstr "Se souvenir de moi"
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco
 msgid "Remote"
-msgstr ""
+msgstr "à distance"
 
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco
@@ -9921,7 +9886,7 @@ msgstr "Répondre à"
 
 #: db/seeds/permissions.rb
 msgid "Report Interface"
-msgstr ""
+msgstr "Tableau de bord"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -9940,7 +9905,7 @@ msgstr "Rapport"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Request"
-msgstr ""
+msgstr "Demande"
 
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
@@ -9950,7 +9915,7 @@ msgstr "Demander le droit"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
-msgstr ""
+msgstr "Demande de modification"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco
 msgid "Request password login for admin?"
@@ -9966,11 +9931,11 @@ msgstr "Demander le droit"
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'downloadBackendSelected' is missing."
-msgstr ""
+msgstr "La paramètre obligatoire 'downloadBackendSelected' est manquant."
 
 #: app/controllers/reports_controller.rb
 msgid "Required parameter 'profile' is missing."
-msgstr ""
+msgstr "Le paramètre obligatoire 'profile' est manquant."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -9997,7 +9962,7 @@ msgstr "Réinitialiser le mot de passe"
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password failed!"
-msgstr ""
+msgstr "La réinitialisation du mot de passe a échoué !"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -10114,11 +10079,11 @@ msgstr "Annuler les changements…"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Response"
-msgstr ""
+msgstr "Réponse"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Restart failed jobs"
-msgstr ""
+msgstr "Redémarrer les travaux échoués"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Restore Defaults"
@@ -10130,7 +10095,7 @@ msgstr "Restreindre aux utilisateurs suivants"
 
 #: app/assets/javascripts/app/views/generic/object_import/result.jst.eco
 msgid "Result:"
-msgstr ""
+msgstr "Résultat :"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"

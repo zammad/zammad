@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-08 03:30+0000\n"
+"PO-Revision-Date: 2022-12-19 07:09+0000\n"
 "Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -1147,27 +1147,6 @@ msgstr "Accesso amministrativo con password"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Administration login to #{config.product_name}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request for an administration login for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>Please, click on the link below (or copy and paste the URL into your "
-#| "browser) to proceed:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</"
-#| "a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can log in.</div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to log in, please ignore this message.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1197,16 +1176,16 @@ msgstr ""
 "login}</b> su #{config.product_name}.</div>\n"
 "<br>\n"
 "<div>Per favore clicca sul link sotto (o fai copia/incolla nel browser) per "
-"accettare:</div>\n"
+"procedere:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+"name}</a></div>\n"
 "<br>\n"
 "<div>Questo collegamento porta a una pagina da cui potrai accedere.</div>\n"
 "<br>\n"
-"<div>Se non hai necessità di accedere, puoi ignorare questo messaggio.</"
-"div>\n"
+"<div>Se non hai necessità di accedere, puoi ignorare questo messaggio.</div>"
+"\n"
 "<br>\n"
 "<div>Il team #{config.product_name}</div>\n"
 
@@ -12621,7 +12600,7 @@ msgstr "Twitter Secret"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Dev environment label"
-msgstr ""
+msgstr "Etichetta ambiente di sviluppo di Twitter"
 
 #: db/seeds/settings.rb
 msgid "Twitter Key"
@@ -14465,6 +14444,8 @@ msgid ""
 "https://example.com/?q=#{object.attribute_name} - use ticket, user or "
 "organization as object"
 msgstr ""
+"https://esempio.com/?q=#{object.attribute_name} - utilizza il ticket, "
+"l'utente o l'organizzazione come oggetto"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
@@ -14871,10 +14852,8 @@ msgid "reply all"
 msgstr "rispondi a tutti"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "is required"
 msgid "required"
-msgstr "è richiesto"
+msgstr "richiesto"
 
 #: db/seeds/settings.rb
 msgid "right"
@@ -14940,10 +14919,8 @@ msgid "show more"
 msgstr "mostra altro"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "show"
 msgid "shown"
-msgstr "mostra"
+msgstr "mostrato"
 
 #: db/seeds/settings.rb
 msgid "sipgate.io Token"
