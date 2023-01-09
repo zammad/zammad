@@ -32,7 +32,6 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
 
   content: ->
     @image = @image.replace(/view=preview/, 'view=inline')
-    @image = @image.replace(/style="[^"]*"/, '')
     "<div class=\"centered imagePreview\">#{@image}</div>"
 
   onSubmit: =>
