@@ -147,7 +147,7 @@ msgid ""
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>It looks like you linked your account <b>with a third-party "
-"application</b> \"#{provider}\".</div>\n"
+"application</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the linked account from your profile "
 "and change your third-party application password. Somebody might have gained "
@@ -750,7 +750,10 @@ msgstr "Access to Agent Tickets based on Group Access"
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr "دسترسی به تیکتهای مشتریان بر اساس کاربر کنونی و شرکت"
 
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -913,6 +916,7 @@ msgstr ""
 msgid "Add"
 msgstr "افزودن"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1110,6 +1114,10 @@ msgstr "حساب کاربری ادمین قبلا ایجاد شده است"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "رفتن به تیکت بعدی از پنجره مرورکلی"
+
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
+msgid "After approval, please re-connect your Exchange account."
+msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1323,6 +1331,7 @@ msgstr "نسخه اپلیکیشن"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
 msgstr "امکان تایید اپلیکیشن وجود ندارد."
 
@@ -1405,6 +1414,7 @@ msgstr "آیا از بارگذاری مجدد مطمئن هستید؟ تغییر
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1603,6 +1613,12 @@ msgstr "مقدار 'ایمیل' الزامی است!"
 msgid "Attribute not editable!"
 msgstr "مقدار قابل ویرایش نیست!"
 
+#: db/seeds/settings.rb
+msgid ""
+"Attribute that uniquely identifies the user. If unset, the name identifier "
+"returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -1651,6 +1667,13 @@ msgstr "تصدیق هویت امکان‌پذیر نیست"
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr "تصدیق هویت الزامی است"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authentication via"
+msgstr "احراز هویت از طریق %s"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1765,6 +1788,12 @@ msgstr "بازگشت به View من"
 msgid "Back to overview"
 msgstr "بازگشت به View من"
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "Back to my view"
+msgid "Back to previous page"
+msgstr "بازگشت به View من"
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr "بازگشت به نتایج جستجو"
@@ -1801,6 +1830,13 @@ msgstr "Base DN"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
 msgstr "آبجکت‌های پایه"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Basic Authentication"
+msgstr "احراز هویت"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2446,12 +2482,15 @@ msgstr ""
 msgid "Click here"
 msgstr "اینجا کلیک نمایید"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "شناسه مشتری"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -2580,6 +2619,7 @@ msgstr "تنظیم کردن"
 msgid "Config has changed"
 msgstr "تنظیمات تغییر کرده است"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2596,6 +2636,7 @@ msgstr "تنظیمات %s"
 msgid "Configure"
 msgstr "تنظیم کردن"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2669,6 +2710,13 @@ msgstr "برقراری ارتباط"
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
 msgstr "کانال‌های ارتباطی"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#, fuzzy
+#| msgid "Connect Google App"
+msgid "Connect Exchange App"
+msgstr "اتصال به اپلیکیشن گوگل"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -3774,6 +3822,12 @@ msgid "Defines the Clearbit config."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the Exchange config."
+msgid "Defines the Exchange OAuth config."
+msgstr "تعریف تنظیمات سرویس ایمیل (اکس‌چنج)."
+
+#: db/seeds/settings.rb
 msgid "Defines the Exchange config."
 msgstr "تعریف تنظیمات سرویس ایمیل (اکس‌چنج)."
 
@@ -4002,6 +4056,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -4894,6 +4949,7 @@ msgstr "منطقه زمانی را وارد کنید"
 msgid "Enter your %s API token gained from your account profile settings."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -5045,9 +5101,17 @@ msgid "Excepted users"
 msgstr "کاربران استثناء"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
+msgstr "سیستم ایمیل (اکس‌چنج)"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Exchange"
+msgid "Exchange OAuth"
 msgstr "سیستم ایمیل (اکس‌چنج)"
 
 #: db/seeds/settings.rb
@@ -5121,7 +5185,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "فیسبوک"
 
@@ -5143,6 +5207,12 @@ msgstr ""
 #, fuzzy
 #| msgid "App Secret"
 msgid "Facebook App Secret"
+msgstr "رمز اپلیکیشن"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "App Secret"
+msgid "Facebook Developer Site"
 msgstr "رمز اپلیکیشن"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -5555,12 +5625,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
 msgstr "احراز هویت اپلیکیشن گیت‌هاب"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitHub OAuth Applications"
+msgstr "اپلیکیشن‌ها"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -5576,12 +5653,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitLab Applications"
+msgstr "اپلیکیشن‌ها"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -5629,8 +5713,15 @@ msgstr "پیام خداحافظی"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
 msgstr "گوگل"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google API Console Site"
+msgstr "رمز مشتری"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -6002,6 +6093,10 @@ msgstr "شناسه"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "IDP Single Logout target URL"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6724,6 +6819,7 @@ msgstr "پایگاه دانش چندزبانه"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -6926,11 +7022,16 @@ msgid "Linked Tickets"
 msgstr "تیکتهای پیوند شده"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "لینکدین"
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
@@ -7284,6 +7385,10 @@ msgstr "پیام پس از ارسال فرم"
 msgid "Message for login page."
 msgstr "پیام صفحه ورود."
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Message is not signed by sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "پیام‌ها"
@@ -7303,6 +7408,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "مایکروسافت"
 
@@ -7836,6 +7942,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7851,6 +7958,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
 msgstr "داده ای جهت نمایش وجود ندارد"
+
+#: lib/external_credential/exchange.rb
+#, fuzzy
+#| msgid "No Facebook app configured!"
+msgid "No Exchange app configured!"
+msgstr "اپلیکیشن فیسبوک پیکربندی نشده!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -8180,6 +8293,12 @@ msgstr "نوامبر"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "عدد"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "OAuth"
+msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8797,6 +8916,12 @@ msgstr "لطفا یک متن وارد نمایید."
 msgid "Please enter a valid email address."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid ""
+"Please enter the endpoint and select the authentication method for accessing "
+"Exchange Web Services."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr ""
@@ -8804,6 +8929,12 @@ msgstr ""
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Please enter a text."
+msgid "Please enter your Exchange credentials."
+msgstr "لطفا یک متن وارد نمایید."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
@@ -8849,6 +8980,7 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr "لطفا رمز عبور جدید خودتان را وارد نمایید!"
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
@@ -9099,6 +9231,7 @@ msgstr "خواندن"
 msgid "Real-time"
 msgstr "بصورت لحظه‌ای"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9299,6 +9432,7 @@ msgstr "گزارش‌دهی"
 msgid "Request"
 msgstr "درخواست"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 #, fuzzy
 #| msgid "Request for Change"
@@ -9612,6 +9746,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
 
@@ -10296,6 +10431,14 @@ msgstr "امضاء"
 msgid "Simple Line Icons"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Sina Weibo"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
+msgstr ""
+
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation was closed."
@@ -10749,6 +10892,8 @@ msgstr "قالب‌ها"
 msgid "Templates"
 msgstr "قالب‌ها"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #, fuzzy
 #| msgid "Agent Name"
@@ -10914,6 +11059,7 @@ msgstr "لینک این سیستم پشتیبانی."
 msgid "The active reporting profile could not be found."
 msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
 #| msgid "The password could not be set. Please contact your administrator."
@@ -11037,6 +11183,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "The entry could not be created."
 msgstr "امکان ایجاداین ورودی وجود ندارد."
 
@@ -11288,15 +11435,18 @@ msgstr ""
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_id' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 #, fuzzy
 #| msgid "The resized image is invalid."
 msgid "The required parameter 'code' is missing."
@@ -11421,6 +11571,7 @@ msgid ""
 "them manually."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/login.coffee
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
@@ -11483,7 +11634,7 @@ msgstr "تصویر با تغییر اندازه معتبر نیست."
 msgid "The uploaded image could not be processed."
 msgstr "تصویر بارگذاری شده قابل پردازش نیست."
 
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
@@ -12453,7 +12604,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "توییتر"
 
@@ -12506,6 +12657,12 @@ msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Twitter Secret"
+msgid "Twitter Developer Site"
+msgstr "رمز تویتر"
+
+#: db/seeds/settings.rb
 msgid "Twitter Key"
 msgstr "کلید توییتر"
 
@@ -12539,6 +12696,12 @@ msgstr "نوع"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Attribute"
+msgid "UID Attribute Name"
+msgstr "مقدار %s"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -12633,6 +12796,10 @@ msgstr "زمان بروزرسانی"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Update as closed"
 msgstr "بروزرسانی به عنوان بسته‌شده"
+
+#: db/seeds/schedulers.rb
+msgid "Update exchange oauth 2 token."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Update existing records"
@@ -13279,6 +13446,7 @@ msgid "Week(s)"
 msgstr "هفته"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
 
@@ -13498,6 +13666,7 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -13549,6 +13718,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+msgid ""
+"You can find a tutorial on how to manage an %s in our online documentation "
+"%l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -13735,6 +13910,7 @@ msgstr ""
 "حساب کاربری شما تائید نشده است. لطفا\" لینک درون ایمیل تائید که برای شما "
 "ارسال شده است را کلیک کنید ( ممکن است در اسپم باکس شما قرار گرفته باشد)."
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -14073,6 +14249,12 @@ msgstr "حذف"
 msgid "descending"
 msgstr "در انتظار"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New password"
+msgid "developer password"
+msgstr "رمز عبور جدید"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "قطع ارتباط"
@@ -14360,6 +14542,12 @@ msgstr "غیرفعال"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
+msgstr "داخلی"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "internal"
+msgid "internal database"
 msgstr "داخلی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee

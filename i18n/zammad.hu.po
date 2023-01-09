@@ -147,7 +147,7 @@ msgid ""
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>It looks like you linked your account <b>with a third-party "
-"application</b> \"#{provider}\".</div>\n"
+"application</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the linked account from your profile "
 "and change your third-party application password. Somebody might have gained "
@@ -759,7 +759,10 @@ msgstr ""
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -922,6 +925,7 @@ msgstr ""
 msgid "Add"
 msgstr "Hozzáadás"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1109,6 +1113,13 @@ msgstr "A rendszergazdai fiók már létre lett hozva"
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
+#, fuzzy
+#| msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgid "After approval, please re-connect your Exchange account."
+msgstr ""
+"A jóváhagyást követően kérjük, csatlakoztassa újra Microsoft365 postafiókját."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1321,6 +1332,7 @@ msgstr "Alkalmazás verzió"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
 msgstr "Az alkalmazást nem lehetett ellenőrizni."
 
@@ -1403,6 +1415,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1590,6 +1603,12 @@ msgstr ""
 msgid "Attribute not editable!"
 msgstr "A tulajdonság nem szerkeszthető!"
 
+#: db/seeds/settings.rb
+msgid ""
+"Attribute that uniquely identifies the user. If unset, the name identifier "
+"returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -1632,6 +1651,13 @@ msgstr ""
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr "Hitelesítés szükséges"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authentication via"
+msgstr "Hitelesítés ezzel: %s"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1742,6 +1768,12 @@ msgstr "Vissza a nézetemhez"
 msgid "Back to overview"
 msgstr "Vissza az áttekintéshez"
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "Back to overview"
+msgid "Back to previous page"
+msgstr "Vissza az áttekintéshez"
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr "Vissza a keresési találatokhoz"
@@ -1780,6 +1812,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
 msgstr "Alap objektum"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Basic Authentication"
+msgstr "Hitelesítés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2419,12 +2458,15 @@ msgstr "Clearbit integráció"
 msgid "Click here"
 msgstr "Kattintson ide"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "Ügyfél azonosító"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -2551,6 +2593,7 @@ msgstr "Konfiguráció"
 msgid "Config has changed"
 msgstr "A konfiguráció megváltozott"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2567,6 +2610,7 @@ msgstr ""
 msgid "Configure"
 msgstr "Konfigurálás"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2634,6 +2678,13 @@ msgstr "Csatlakozás"
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
 msgstr "Kapcsolódási Csatornák"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#, fuzzy
+#| msgid "Connect Google App"
+msgid "Connect Exchange App"
+msgstr "Google App csatlakoztatása"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -3707,6 +3758,12 @@ msgid "Defines the Clearbit config."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Exchange config"
+msgid "Defines the Exchange OAuth config."
+msgstr "Exchange konfiguráció"
+
+#: db/seeds/settings.rb
 msgid "Defines the Exchange config."
 msgstr ""
 
@@ -3937,6 +3994,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -4819,6 +4877,7 @@ msgstr "Adja meg az időzónát"
 msgid "Enter your %s API token gained from your account profile settings."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -4968,9 +5027,17 @@ msgid "Excepted users"
 msgstr "Kivételt képező felhasználók"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
+msgstr "Exchange"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Exchange"
+msgid "Exchange OAuth"
 msgstr "Exchange"
 
 #: db/seeds/settings.rb
@@ -5040,7 +5107,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -5059,6 +5126,12 @@ msgstr "Facebook alkalmazás hitelesítő adatok"
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 msgid "Facebook App Secret"
 msgstr "Facebook alkalmazás titok"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Facebook Developer Site"
+msgstr "Fejlesztői rendszer"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5461,12 +5534,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
 msgstr "GitHub alkalmazás hitelesítő adatok"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitHub OAuth Applications"
+msgstr "Applikációk"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -5482,12 +5562,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr "GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
 msgstr "GitLab alkalmazás hitelesítő adatok"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitLab Applications"
+msgstr "Applikációk"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -5535,8 +5622,15 @@ msgstr "Elköszönő üzenet"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Google Client Secret"
+msgid "Google API Console Site"
+msgstr "Google ügyfél titok"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -5890,6 +5984,10 @@ msgstr "Azonosító:"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "IDP Single Logout target URL"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -6602,6 +6700,7 @@ msgstr "A Tudásbázis többnyelvű támogatása"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -6800,12 +6899,19 @@ msgid "Linked Tickets"
 msgstr "Hozzá tartozó jegyek"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
 msgstr "LinkedIn alkalmazás hitelesítő adatok"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "LinkedIn Developer Site"
+msgstr "Fejlesztői rendszer"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -7146,6 +7252,10 @@ msgstr ""
 msgid "Message for login page."
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Message is not signed by sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Üzenetek"
@@ -7163,6 +7273,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Módszer (AJAX végpont)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -7692,6 +7803,7 @@ msgstr "Nincs %s konfigurálva."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7707,6 +7819,12 @@ msgstr "Nincs %s konfigurálva."
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
 msgstr "Nincsenek bejegyzések"
+
+#: lib/external_credential/exchange.rb
+#, fuzzy
+#| msgid "No Facebook app configured!"
+msgid "No Exchange app configured!"
+msgstr "Nincs Facebook alkalmazás konfigurálva!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -8018,6 +8136,12 @@ msgstr "november"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Szám"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "OAuth"
+msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8630,6 +8754,12 @@ msgstr "Kérjük, írjon be egy szöveget."
 msgid "Please enter a valid email address."
 msgstr "Kérjük, adjon meg egy érvényes e-mail címet."
 
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid ""
+"Please enter the endpoint and select the authentication method for accessing "
+"Exchange Web Services."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "Kérjük, adja meg a rögzíteni kívánt időpontot."
@@ -8637,6 +8767,12 @@ msgstr "Kérjük, adja meg a rögzíteni kívánt időpontot."
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr "Kérjük, adjon meg érvényes elérési utat vagy tartományt"
+
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Please enter a text."
+msgid "Please enter your Exchange credentials."
+msgstr "Kérjük, írjon be egy szöveget."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
@@ -8677,6 +8813,7 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr "Kérjük, adja meg új jelszavát!"
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr "Kérjük, várjon, amíg megkapja a jóváhagyásról szóló értesítő e-mailt."
@@ -8915,6 +9052,7 @@ msgstr "Olvasás"
 msgid "Real-time"
 msgstr "Valós idejű"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9103,6 +9241,7 @@ msgstr "Jelentés"
 msgid "Request"
 msgstr "Kérelem"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr "Rendszergazdai hozzájárulás kérése"
@@ -9412,6 +9551,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
 
@@ -10074,6 +10214,14 @@ msgstr "Regisztrációs képernyő"
 msgid "Simple Line Icons"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Sina Weibo"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
+msgstr ""
+
 #: public/assets/chat/views/customer_timeout.eco
 #, fuzzy
 #| msgid ""
@@ -10533,6 +10681,8 @@ msgstr "Sablon"
 msgid "Templates"
 msgstr "Sablonok"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 msgid "Tenant UUID/Name"
 msgstr ""
@@ -10694,6 +10844,7 @@ msgstr ""
 msgid "The active reporting profile could not be found."
 msgstr "%s objektum létrehozva."
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
@@ -10812,6 +10963,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "The entry could not be created."
 msgstr ""
 
@@ -11063,15 +11215,18 @@ msgstr ""
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_id' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'code' is missing."
 msgstr ""
 
@@ -11182,6 +11337,7 @@ msgid ""
 "them manually."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/login.coffee
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
@@ -11246,7 +11402,7 @@ msgstr ""
 msgid "The uploaded image could not be processed."
 msgstr "%s objektum létrehozva."
 
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
@@ -12209,7 +12365,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -12262,6 +12418,12 @@ msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Twitter Developer Site"
+msgstr "Fejlesztői rendszer"
+
+#: db/seeds/settings.rb
 msgid "Twitter Key"
 msgstr "Twitter Key"
 
@@ -12293,6 +12455,12 @@ msgstr "Típus:"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Attribute"
+msgid "UID Attribute Name"
+msgstr "Tulajdonságok"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -12388,6 +12556,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Update as closed"
 msgstr "Lezárás"
+
+#: db/seeds/schedulers.rb
+msgid "Update exchange oauth 2 token."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Update existing records"
@@ -13049,6 +13221,7 @@ msgid "Week(s)"
 msgstr "Hét"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
 
@@ -13265,6 +13438,7 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -13316,6 +13490,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+msgid ""
+"You can find a tutorial on how to manage an %s in our online documentation "
+"%l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -13496,6 +13676,7 @@ msgid ""
 "verification email."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -13834,6 +14015,12 @@ msgstr "törlés"
 msgid "descending"
 msgstr "függő"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New password"
+msgid "developer password"
+msgstr "Új jelszó"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr ""
@@ -14123,6 +14310,12 @@ msgstr "inaktív"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
+msgstr "belső"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "internal"
+msgid "internal database"
 msgstr "belső"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee

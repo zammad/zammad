@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-12 03:30+0000\n"
+"PO-Revision-Date: 2022-12-21 03:30+0000\n"
 "Last-Translator: kirkkak <kirkka.kivilo@gmail.com>\n"
 "Language-Team: Estonian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/et/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -147,7 +147,7 @@ msgid ""
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>It looks like you linked your account <b>with a third-party "
-"application</b> \"#{provider}\".</div>\n"
+"application</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the linked account from your profile "
 "and change your third-party application password. Somebody might have gained "
@@ -217,10 +217,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "Kinnita"
+msgstr "%s (kinnita)"
 
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
@@ -265,10 +263,8 @@ msgid "%s ago"
 msgstr "%s tagasi"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "%s attached files"
-msgstr "Lisatud Failid"
+msgstr "%s lisatud failid"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -317,10 +313,8 @@ msgid "%s credentials"
 msgstr "%s kasutajaandmed"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s days ago"
-msgstr "%s tagasi"
+msgstr "%s päeva tagasi"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -338,10 +332,8 @@ msgid "%s groups to %s roles assignments"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s hours ago"
-msgstr "%s tagasi"
+msgstr "%s tundi tagasi"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -351,16 +343,12 @@ msgid "%s is inactive, please select an active one."
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minutes"
 msgid "%s minutes ago"
-msgstr "minutit"
+msgstr "%s minutit tagasi"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s months ago"
-msgstr "%s tagasi"
+msgstr "%s kuud tagasi"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
@@ -425,9 +413,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#, fuzzy
 msgid "%s tickets"
-msgstr "suuna piletid"
+msgstr "%s piletid"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
@@ -437,7 +424,7 @@ msgstr "suuna piletid"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 msgid "%s updated article for |%s|"
-msgstr "% uuendas artiklit |%s|"
+msgstr "%s uuendas artiklit |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -477,16 +464,12 @@ msgid "%s user to %s user"
 msgstr "%s kasutaja %s kasutajale"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "%s tagasi"
+msgstr "%s nädalat tagasi"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "%s tagasi"
+msgstr "%s aastat tagasi"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "%s% are currently in process"
@@ -527,64 +510,52 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
-#, fuzzy
-#| msgid "Attached Files"
 msgid "1 attached file"
-msgstr "Lisatud Failid"
+msgstr "1 lisatud fail"
 
 #: db/seeds/settings.rb
 msgid "1 day"
 msgstr "1 päev"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 päev"
+msgstr "1 päev tagasi"
 
 #: db/seeds/settings.rb
 msgid "1 hour"
 msgstr "1 tund"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 tund"
+msgstr "1 tund tagasi"
 
 #: db/seeds/ticket_priorities.rb
 msgid "1 low"
 msgstr "1 madal"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minut"
+msgstr "1 minut tagasi"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 month ago"
-msgstr ""
+msgstr "1 kuu tagasi"
 
 #: db/seeds/settings.rb
 msgid "1 week"
 msgstr "1 nädal"
 
 #: app/frontend/shared/i18n/dates.ts
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 nädal"
+msgstr "1 nädal tagasi"
 
 #: app/frontend/shared/i18n/dates.ts
 msgid "1 year ago"
-msgstr ""
+msgstr "1 aasta tagasi"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket %s created!"
 msgid "1. Ticket Create"
-msgstr "Pilet %s loodud!"
+msgstr "1. Loo Pilet"
 
 #: db/seeds/settings.rb
 msgid "2 hours"
@@ -603,10 +574,8 @@ msgid "2 weeks"
 msgstr "2 nädalat"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket update"
 msgid "2. Ticket Update"
-msgstr "Pileti uuendamine"
+msgstr "2. Pileti Uuendus"
 
 #: db/seeds/ticket_priorities.rb
 msgid "3 high"
@@ -617,28 +586,27 @@ msgid "3 weeks"
 msgstr "3 nädalat"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#, fuzzy
 msgid "3. Ticket Reminder Reached"
-msgstr ""
+msgstr "3. Pileti meeldetuletus aeg käes"
 
 #: db/seeds/settings.rb
 msgid "4 weeks"
 msgstr "4 nädalat"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "4. Ticket Escalation"
-msgstr "Pileti eskalatsioon"
+msgstr "4. Pileti Eskalatsioon"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 #, fuzzy
 #| msgid "Ticket escalation"
 msgid "5. Ticket Escalation Warning"
-msgstr "Pileti eskalatsioon"
+msgstr "5. Pileti Eskalatsiooni Hoiatus"
 
 #: public/assets/chat/chat-no-jquery.coffee public/assets/chat/chat.coffee
 msgid "<strong>Chat</strong> with us!"
-msgstr ""
+msgstr "<strong>Vestle</strong> meiega!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -666,12 +634,13 @@ msgid ""
 "A new session was created with your account. This session will be stopped to "
 "prevent a conflict."
 msgstr ""
-"Uus sessioon loodi sinu kontoga, Antud sessioon lõpetatakse vältimaks "
+"Uus sessioon loodi sinu kontoga. Antud sessioon lõpetatakse vältimaks "
 "konflikte."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
+#, fuzzy
 msgid "A new version of Zammad is available, please reload your browser."
-msgstr ""
+msgstr "Saadaval uus versioon Zammadist, palun värskenda sirvikuakent."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 msgid ""
@@ -698,14 +667,12 @@ msgid ""
 msgstr ""
 
 #: app/models/ticket.rb
-#, fuzzy
-#| msgid "Ticket |%s| was merged into another ticket"
 msgid "A ticket cannot be merged into itself."
-msgstr "Pilet %s| ühendati teise piletiga"
+msgstr "Piletit ei saa ühendada iseendaga."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
-msgstr ""
+msgstr "Kasutaja vajalik!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -714,7 +681,7 @@ msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #: db/seeds/settings.rb
 msgid "API Password Access"
@@ -722,7 +689,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 msgid "API Token"
-msgstr ""
+msgstr "API Token"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
@@ -757,7 +724,10 @@ msgstr ""
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -875,7 +845,6 @@ msgstr "Aktiivne"
 
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco
-#, fuzzy
 msgid "Active Agents"
 msgstr "Aktiivsed Töötajad"
 
@@ -921,6 +890,7 @@ msgstr ""
 msgid "Add"
 msgstr "Lisa"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1117,6 +1087,10 @@ msgstr "Administraatori konto on juba loodud"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
+msgid "After approval, please re-connect your Exchange account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
@@ -1327,6 +1301,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
 msgstr "Rakendust ei ole võimalik verifitseerida."
 
@@ -1409,6 +1384,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1600,6 +1576,12 @@ msgstr ""
 msgid "Attribute not editable!"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid ""
+"Attribute that uniquely identifies the user. If unset, the name identifier "
+"returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -1622,22 +1604,16 @@ msgid "Authentication"
 msgstr "Autentimine"
 
 #: lib/email_helper/probe.rb
-#, fuzzy
-#| msgid "Authentication failed, username incorrect!"
 msgid "Authentication failed due to incorrect credentials."
-msgstr "Autentimine ebaõnnestus, ebakorrektne kasutajanimi!"
+msgstr "Autentimine ebaõnnestus, ebakorrektne kasutajanimi."
 
 #: lib/email_helper/probe.rb
-#, fuzzy
-#| msgid "Authentication failed, username incorrect!"
 msgid "Authentication failed due to incorrect username."
-msgstr "Autentimine ebaõnnestus, ebakorrektne kasutajanimi!"
+msgstr "Autentimine ebaõnnestus, ebakorrektne kasutajanimi."
 
 #: app/controllers/import_otrs_controller.rb lib/email_helper/probe.rb
-#, fuzzy
-#| msgid "Authentication failed!"
 msgid "Authentication failed."
-msgstr "Autentimine ebaõnnestus!"
+msgstr "Autentimine ebaõnnestus."
 
 #: lib/email_helper/probe.rb
 msgid "Authentication not possible (not offered by the service)"
@@ -1648,6 +1624,13 @@ msgstr ""
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Authentication via"
+msgstr "Autentimine"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1760,6 +1743,12 @@ msgstr "Tagasi minu vaatesse"
 msgid "Back to overview"
 msgstr "Tagasi minu vaatesse"
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "Back to my view"
+msgid "Back to previous page"
+msgstr "Tagasi minu vaatesse"
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr ""
@@ -1796,6 +1785,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
 msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Basic Authentication"
+msgstr "Autentimine"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2168,10 +2164,8 @@ msgid "Change order"
 msgstr "Muuda järjestust"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Changed"
 msgid "Changed:"
-msgstr "Muudetud"
+msgstr "Muudetud:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
@@ -2383,10 +2377,8 @@ msgid "Clean up ActiveJob locks."
 msgstr ""
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Continue session"
 msgid "Clean up cache."
-msgstr "Continue session"
+msgstr "Puhasta vahemälu."
 
 #: db/seeds/schedulers.rb
 #, fuzzy
@@ -2434,12 +2426,15 @@ msgstr ""
 msgid "Click here"
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -2566,6 +2561,7 @@ msgstr "Seadistus"
 msgid "Config has changed"
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2582,6 +2578,7 @@ msgstr ""
 msgid "Configure"
 msgstr "Seadista"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2654,6 +2651,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+msgid "Connect Exchange App"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
@@ -2957,10 +2959,8 @@ msgid "Create your first ticket"
 msgstr "Loo oma esimene pilet"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Create"
 msgid "Create:"
-msgstr "Loo"
+msgstr "Loo:"
 
 #: app/assets/javascripts/app/models/application.coffee
 #: app/assets/javascripts/app/models/calendar.coffee
@@ -3022,10 +3022,8 @@ msgid "Created at"
 msgstr "Loodud"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
-#, fuzzy
-#| msgid "Created at"
 msgid "Created at:"
-msgstr "Loodud"
+msgstr "Loodud:"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -3047,10 +3045,8 @@ msgid "Created by"
 msgstr "Loonud"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Creating new tickets via web is disabled."
-msgstr "Organisatsiooni Piletid"
+msgstr "Piletite loomine veebi kaudu on deaktiveeritud."
 
 #: app/models/report.rb
 #, fuzzy
@@ -3746,6 +3742,10 @@ msgid "Defines the Clearbit config."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines the Exchange OAuth config."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines the Exchange config."
 msgstr ""
 
@@ -3974,6 +3974,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -4064,22 +4065,16 @@ msgid "Delete records"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete:"
-msgstr "Kustuta"
+msgstr "Kustuta:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Deleted Organization"
 msgid "Deleted Organization:"
-msgstr "Kustutatud Organisatsioon"
+msgstr "Kustutatud Organisatsioon:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Deleted tickets (%s in total)"
 msgid "Deleted tickets (%s in total):"
-msgstr "Kustutatud pileteid (%s kokku)"
+msgstr "Kustutatud pileteid (%s kokku):"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
@@ -4090,10 +4085,8 @@ msgid "Deletion failed."
 msgstr "Kustutamine ebaõnnestus."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
-#, fuzzy
-#| msgid "Deletion failed."
 msgid "Delivery failed:"
-msgstr "Kustutamine ebaõnnestus."
+msgstr "Kättetoimetamine ebaõnnestus:"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Department"
@@ -4765,10 +4758,8 @@ msgid "Encryption"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#, fuzzy
-#| msgid "Encrypt"
 msgid "Encryption:"
-msgstr "Krüpteeri"
+msgstr "Krüpteering:"
 
 #: app/assets/javascripts/app/models/webhook.coffee
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -4809,16 +4800,12 @@ msgid "Enter Private Key Secret"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/title.jst.eco
-#, fuzzy
-#| msgid "Enter Title..."
 msgid "Enter Title…"
 msgstr "Sisesta Pealkiri…"
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
-#, fuzzy
-#| msgid "Enter your username or email address"
 msgid "Enter a valid email address."
-msgstr "Sisesta oma kasutajanimi või e-posti aadress"
+msgstr "Sisesta oma e-posti aadress."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -4857,6 +4844,7 @@ msgstr "Sisesta ajavöönd"
 msgid "Enter your %s API token gained from your account profile settings."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -4992,10 +4980,8 @@ msgid "Example Payload"
 msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
-#, fuzzy
-#| msgid "Example"
 msgid "Example:"
-msgstr "Näide"
+msgstr "Näide:"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Examples"
@@ -5008,10 +4994,17 @@ msgid "Excepted users"
 msgstr "%s lõi kasutaja |%s|"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+msgid "Exchange OAuth"
+msgstr "Muudetud"
 
 #: db/seeds/settings.rb
 msgid "Exchange config"
@@ -5082,7 +5075,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -5102,6 +5095,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 msgid "Facebook App Secret"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Facebook Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -5261,10 +5258,8 @@ msgid "Folder"
 msgstr "Kaust"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
-#, fuzzy
-#| msgid "Folder"
 msgid "Folder:"
-msgstr "Kaust"
+msgstr "Kaust:"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -5507,12 +5502,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New Application"
+msgid "GitHub OAuth Applications"
+msgstr "Uus Rakendus"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -5528,12 +5530,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New Application"
+msgid "GitLab Applications"
+msgstr "Uus Rakendus"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -5581,7 +5590,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Google API Console Site"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -5934,6 +5948,10 @@ msgid "IDP SSO target URL"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "IDP Single Logout target URL"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "IDP certificate"
 msgstr ""
 
@@ -6209,10 +6227,8 @@ msgid "Inbound Call"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
-#, fuzzy
-#| msgid "Inbound"
 msgid "Inbound:"
-msgstr "Sissetulev"
+msgstr "Sissetulev:"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Incident"
@@ -6355,7 +6371,7 @@ msgstr "Sisemine"
 #, fuzzy
 #| msgid "The object could not be created."
 msgid "Internal Knowledge Base feed:"
-msgstr "Objekti ei õnnestunud luua."
+msgstr "Sisemine Teadmusbaasi:"
 
 #: app/models/import_job.rb
 msgid ""
@@ -6651,6 +6667,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr ""
 
@@ -6756,10 +6773,8 @@ msgid "Last sync"
 msgstr ""
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
-#, fuzzy
-#| msgid "Last contact"
 msgid "Last sync at:"
-msgstr "Viimane kontakt"
+msgstr "Viimane sünkroniseerimine:"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Last used"
@@ -6855,11 +6870,16 @@ msgid "Linked Tickets"
 msgstr "Lingitud Piletid"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
@@ -6932,7 +6952,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Log in to %s"
-msgstr ""
+msgstr "Logi sisse %s"
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -7203,6 +7223,10 @@ msgstr ""
 msgid "Message for login page."
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Message is not signed by sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Sõnumid"
@@ -7222,6 +7246,7 @@ msgid "Method (AJAX endpoint)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -7724,10 +7749,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "New User"
 msgid "New user?"
-msgstr "Uus Kasutaja"
+msgstr "Uus kasutaja?"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -7751,6 +7774,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7766,6 +7790,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
 msgstr ""
+
+#: lib/external_credential/exchange.rb
+#, fuzzy
+#| msgid "The object could not be created."
+msgid "No Exchange app configured!"
+msgstr "Objekti ei õnnestunud luua."
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -7801,10 +7831,8 @@ msgid "No categories"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
-#, fuzzy
-#| msgid "Configuration"
 msgid "No configuration set."
-msgstr "Seadistus"
+msgstr "Seadistamata."
 
 #: app/views/knowledge_base/public/categories/index.html.erb
 #: app/views/knowledge_base/public/tags/show.html.erb
@@ -8011,10 +8039,8 @@ msgid "Note - default visibility"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
-#, fuzzy
-#| msgid "Note"
 msgid "Note:"
-msgstr "Märkus"
+msgstr "Märkus:"
 
 #: app/assets/javascripts/app/models/email_address.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -8036,10 +8062,8 @@ msgstr "Märkus"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-#, fuzzy
-#| msgid "Notice"
 msgid "Notice:"
-msgstr "Märkus"
+msgstr "Teade:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/views/mailer/application.html.erb
@@ -8087,6 +8111,12 @@ msgstr "November"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Number"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "OAuth"
+msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8397,10 +8427,8 @@ msgid "Outbound Call"
 msgstr "Väljaminev kõne"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
-#, fuzzy
-#| msgid "Outbound"
 msgid "Outbound:"
-msgstr "Väljaminev"
+msgstr "Väljaminev:"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee
 msgid "Outdated Browser"
@@ -8695,12 +8723,22 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid ""
+"Please enter the endpoint and select the authentication method for accessing "
+"Exchange Web Services."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr ""
 
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "Please enter your Exchange credentials."
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
@@ -8730,10 +8768,8 @@ msgid "Please select at least one folder."
 msgstr "Palun vali vähemalt üks kaust."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Please select at least one folder."
 msgid "Please select at least one ticket overview"
-msgstr "Palun vali vähemalt üks kaust."
+msgstr "Palun vali vähemalt üks piletite ülevaade"
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -8745,6 +8781,7 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
@@ -8822,10 +8859,8 @@ msgid "Previous in overview"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
-#, fuzzy
-#| msgid "Deleted tickets (%s in total)"
 msgid "Previously owned tickets (%s in total):"
-msgstr "Kustutatud pileteid (%s kokku)"
+msgstr "Eelnevalt omatud pileteid (%s kokku):"
 
 #: app/assets/javascripts/app/models/overview.coffee
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -8993,6 +9028,7 @@ msgstr ""
 msgid "Real-time"
 msgstr "Reaalajas"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9189,6 +9225,7 @@ msgstr "Raporteerimine"
 msgid "Request"
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr ""
@@ -9368,10 +9405,8 @@ msgid "Roles are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/user.jst.eco
-#, fuzzy
-#| msgid "Roles"
 msgid "Roles:"
-msgstr "Rollid"
+msgstr "Rollid:"
 
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -9498,6 +9533,7 @@ msgid "SSL/STARTTLS"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr ""
 
@@ -9633,10 +9669,8 @@ msgid "Search for…"
 msgstr "Otsi…"
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
-#, fuzzy
-#| msgid "Enter your username or email address"
 msgid "Search or enter email address…"
-msgstr "Sisesta oma kasutajanimi või e-posti aadress"
+msgstr "Otsi või sisesta oma e-posti aadress…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee
@@ -10153,10 +10187,8 @@ msgid "Sign up"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
-#, fuzzy
-#| msgid "Sign in"
 msgid "Sign:"
-msgstr "Logi sisse"
+msgstr "Logi sisse:"
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 #: app/assets/javascripts/app/models/group.coffee
@@ -10188,6 +10220,14 @@ msgstr "Signatuur"
 msgid "Simple Line Icons"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Sina Weibo"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
+msgstr ""
+
 #: public/assets/chat/views/customer_timeout.eco
 msgid ""
 "Since you didn't respond in the last %s minutes your conversation was closed."
@@ -10203,7 +10243,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Deletion failed."
 msgid "Single selection field"
-msgstr "Kustutamine ebaõnnestus."
+msgstr "Üksikvalik väli"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single tree selection field"
@@ -10395,20 +10435,16 @@ msgstr "Seisund"
 
 #: app/assets/javascripts/app/views/generic/error/generic.jst.eco
 #: app/assets/javascripts/app/views/generic/error/placeholder.jst.eco
-#, fuzzy
-#| msgid "Status"
 msgid "Status Code:"
-msgstr "Seisund"
+msgstr "Oleku Kood:"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Status Type"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
-#, fuzzy
-#| msgid "Status"
 msgid "Status:"
-msgstr "Seisund"
+msgstr "Olek:"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -10633,6 +10669,8 @@ msgstr "Mallid"
 msgid "Templates"
 msgstr "Mallid"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #, fuzzy
 #| msgid "Agent Name"
@@ -10796,6 +10834,7 @@ msgstr ""
 msgid "The active reporting profile could not be found."
 msgstr "Objekti ei õnnestunud luua."
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr ""
@@ -10912,6 +10951,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "The entry could not be created."
 msgstr ""
 
@@ -11120,10 +11160,8 @@ msgid "The raw logo could not be read."
 msgstr "Objekti ei õnnestunud luua."
 
 #: app/assets/javascripts/app/controllers/report.coffee
-#, fuzzy
-#| msgid "The object could not be created."
 msgid "The report could not be generated"
-msgstr "Objekti ei õnnestunud luua."
+msgstr "Raportit ei õnnestunud luua"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
@@ -11157,15 +11195,18 @@ msgstr ""
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_id' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'code' is missing."
 msgstr ""
 
@@ -11276,6 +11317,7 @@ msgid ""
 "them manually."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/login.coffee
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
@@ -11336,7 +11378,7 @@ msgstr ""
 msgid "The uploaded image could not be processed."
 msgstr "Üleslaetud pilti ei ole võimalik töödelda."
 
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
@@ -12283,7 +12325,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr ""
 
@@ -12328,6 +12370,10 @@ msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Twitter Developer Site"
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Twitter Key"
 msgstr ""
 
@@ -12353,14 +12399,18 @@ msgid "Type"
 msgstr "Tüüp"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
-#, fuzzy
-#| msgid "Type"
 msgid "Type:"
-msgstr "Tüüp"
+msgstr "Tüüp:"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Attribute"
+msgid "UID Attribute Name"
+msgstr "%s Atribuut"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -12453,6 +12503,10 @@ msgstr "Muutmisaeg"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Update as closed"
+msgstr ""
+
+#: db/seeds/schedulers.rb
+msgid "Update exchange oauth 2 token."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
@@ -12794,10 +12848,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco
-#, fuzzy
-#| msgid "Users"
 msgid "Users:"
-msgstr "Kasutajad"
+msgstr "Kasutajad:"
 
 #: app/assets/javascripts/app/models/organization.coffee
 msgid ""
@@ -13100,6 +13152,7 @@ msgid "Week(s)"
 msgstr "Nädal"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr ""
 
@@ -13257,10 +13310,8 @@ msgid "Words"
 msgstr "Sõnad"
 
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
-#, fuzzy
-#| msgid "Words"
 msgid "Words:"
-msgstr "Sõnad"
+msgstr "Sõnad:"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Workflow"
@@ -13316,6 +13367,7 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -13367,6 +13419,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+msgid ""
+"You can find a tutorial on how to manage an %s in our online documentation "
+"%l."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -13545,6 +13603,7 @@ msgid ""
 "verification email."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -13883,6 +13942,12 @@ msgstr "kustuta"
 msgid "descending"
 msgstr "ootel"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New password"
+msgid "developer password"
+msgstr "Uus parool"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr ""
@@ -14168,6 +14233,10 @@ msgstr ""
 msgid "internal"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "internal database"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is"
@@ -14199,10 +14268,8 @@ msgstr ""
 msgid "is required"
 msgstr ""
 
-#, fuzzy
-#| msgid "%s required!"
 msgid "is reserved"
-msgstr "%s vajalik!"
+msgstr "reserveeritud"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
@@ -14269,10 +14336,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
-#, fuzzy
-#| msgid "maybe"
 msgid "maybe:"
-msgstr "võibolla"
+msgstr "võib-olla:"
 
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
 msgid "merged"
@@ -14502,10 +14567,8 @@ msgid "reply all"
 msgstr "vasta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
-#, fuzzy
-#| msgid "%s required!"
 msgid "required"
-msgstr "%s vajalik!"
+msgstr "vajalik"
 
 #: db/seeds/settings.rb
 msgid "right"

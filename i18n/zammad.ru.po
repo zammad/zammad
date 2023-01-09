@@ -203,7 +203,7 @@ msgid ""
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>It looks like you linked your account <b>with a third-party "
-"application</b> \"#{provider}\".</div>\n"
+"application</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the linked account from your profile "
 "and change your third-party application password. Somebody might have gained "
@@ -878,7 +878,10 @@ msgstr ""
 "Доступ к заявкам клиента на основе текущего_пользователя (current_user) и "
 "организации"
 
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -1041,6 +1044,7 @@ msgstr "Адаптер"
 msgid "Add"
 msgstr "Добавить"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1253,6 +1257,14 @@ msgstr "Учетная запись администратора уже созд
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "Перейти к следующей заявке из представления"
+
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
+#, fuzzy
+#| msgid "After approval, please re-connect your Microsoft365 mailbox."
+msgid "After approval, please re-connect your Exchange account."
+msgstr ""
+"После утверждения, пожалуйста, повторно подключите свой почтовый ящик "
+"Microsoft365."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1484,6 +1496,7 @@ msgstr "Версия приложения"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
 msgstr "Не удалось проверить учетную запись."
 
@@ -1568,6 +1581,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1757,6 +1771,12 @@ msgstr "Атрибут «электронная почта» (email) обяза�
 msgid "Attribute not editable!"
 msgstr "Атрибут недоступен для редактирования!"
 
+#: db/seeds/settings.rb
+msgid ""
+"Attribute that uniquely identifies the user. If unset, the name identifier "
+"returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -1799,6 +1819,13 @@ msgstr "Аутентификация невозможна (не предлага
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr "Требуется аутентификация"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authentication via"
+msgstr "Аутентификация через %s"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1913,6 +1940,12 @@ msgstr "Вернуться к моему виду"
 msgid "Back to overview"
 msgstr "Назад к обзору"
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "Back to overview"
+msgid "Back to previous page"
+msgstr "Назад к обзору"
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr "Вернуться к результатам поиска"
@@ -1950,6 +1983,13 @@ msgstr "Base DN (База поиска)"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
 msgstr "Базовые объекты"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Basic Authentication"
+msgstr "Аутентификация"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2606,12 +2646,15 @@ msgstr "Интеграция с Clearbit"
 msgid "Click here"
 msgstr "Щелкните здесь"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "Идентификатор клиента"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -2740,6 +2783,7 @@ msgstr "Настройки"
 msgid "Config has changed"
 msgstr "Настройки были изменены"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2756,6 +2800,7 @@ msgstr "Настройки для %s"
 msgid "Configure"
 msgstr "Настроить"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2841,6 +2886,13 @@ msgstr "Подключить"
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
 msgstr "Подключение каналов"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#, fuzzy
+#| msgid "Connect Google App"
+msgid "Connect Exchange App"
+msgstr "Подключить приложение Google"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -4056,6 +4108,12 @@ msgid "Defines the Clearbit config."
 msgstr "Определяет настройки Clearbit."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the Exchange config."
+msgid "Defines the Exchange OAuth config."
+msgstr "Определяет настройки Exchange."
+
+#: db/seeds/settings.rb
 msgid "Defines the Exchange config."
 msgstr "Определяет настройки Exchange."
 
@@ -4324,6 +4382,7 @@ msgstr "Определяет серверную операцию."
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -5236,6 +5295,7 @@ msgstr ""
 "Введите свой API-ключ %s, полученный в настройках профиля вашей учетной "
 "записи."
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -5426,9 +5486,17 @@ msgid "Excepted users"
 msgstr "Исключенные пользователи"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
+msgstr "Exchange"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Exchange"
+msgid "Exchange OAuth"
 msgstr "Exchange"
 
 #: db/seeds/settings.rb
@@ -5502,7 +5570,7 @@ msgstr "Извлечение информации о вложениях zammad �
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -5521,6 +5589,12 @@ msgstr "Учетные данные приложения Facebook"
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 msgid "Facebook App Secret"
 msgstr "Пароль приложения Facebook"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Facebook Developer Site"
+msgstr "Системный разработчик"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5928,12 +6002,19 @@ msgstr "Получение ключа доступа"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
 msgstr "Учетные данные приложения GitHub"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitHub OAuth Applications"
+msgstr "Приложения"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -5949,12 +6030,19 @@ msgstr "Ошибка запроса GitHub! Подробности смотри�
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr "GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
 msgstr "Учетные данные приложения GitLab"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitLab Applications"
+msgstr "Приложения"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -6002,8 +6090,15 @@ msgstr "Прощальное сообщение"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Google Client Secret"
+msgid "Google API Console Site"
+msgstr "Пароль клиента Google"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -6373,6 +6468,14 @@ msgstr "Идентификатор (ID):"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
+msgstr ""
+"Целевой URL системы единого входа для поставщика идентификационной "
+"информации (IDP SSO)"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "IDP SSO target URL"
+msgid "IDP Single Logout target URL"
 msgstr ""
 "Целевой URL системы единого входа для поставщика идентификационной "
 "информации (IDP SSO)"
@@ -7150,6 +7253,7 @@ msgstr "Многоязычная поддержка базы знаний"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr "Легковесный протокол доступа к каталогам (LDAP)"
 
@@ -7350,12 +7454,19 @@ msgid "Linked Tickets"
 msgstr "Связанная заявка"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
 msgstr "Учетные данные приложения LinkedIn"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "LinkedIn Developer Site"
+msgstr "Системный разработчик"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -7705,6 +7816,10 @@ msgstr "Сообщение после отправки формы"
 msgid "Message for login page."
 msgstr "Сообщение для страницы входа."
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Message is not signed by sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Сообщения"
@@ -7722,6 +7837,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Метод (конечная точка (endpoint) AJAX)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -8267,6 +8383,7 @@ msgstr "%s не настроен(а/о)."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8282,6 +8399,12 @@ msgstr "%s не настроен(а/о)."
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
 msgstr "Нет записей"
+
+#: lib/external_credential/exchange.rb
+#, fuzzy
+#| msgid "No Facebook app configured!"
+msgid "No Exchange app configured!"
+msgstr "Приложение Facebook не настроено!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -8595,6 +8718,12 @@ msgstr "Ноябрь"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "Число"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "OAuth"
+msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -9203,6 +9332,12 @@ msgstr "Пожалуйста, введите текст."
 msgid "Please enter a valid email address."
 msgstr "Пожалуйста, введите действующий адрес электронной почты."
 
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid ""
+"Please enter the endpoint and select the authentication method for accessing "
+"Exchange Web Services."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "Пожалуйста, введите время, которое вы хотите зафиксировать."
@@ -9210,6 +9345,12 @@ msgstr "Пожалуйста, введите время, которое вы х�
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr "Пожалуйста, введите действительный путь или домен"
+
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Please enter a text."
+msgid "Please enter your Exchange credentials."
+msgstr "Пожалуйста, введите текст."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
@@ -9255,6 +9396,7 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr "Пожалуйста, введите свой новый пароль!"
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
@@ -9493,6 +9635,7 @@ msgstr "Только чтение"
 msgid "Real-time"
 msgstr "Реальное время"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9683,6 +9826,7 @@ msgstr "Составление отчетов"
 msgid "Request"
 msgstr "Запрос"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr "Запрос согласия администратора"
@@ -10037,6 +10181,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr "ТЕВ (SSO)"
 
@@ -10717,6 +10862,16 @@ msgstr "Подпись"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Weibo"
+msgid "Sina Weibo"
+msgstr "Weibo"
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
+msgstr ""
+
 #: public/assets/chat/views/customer_timeout.eco
 #, fuzzy
 #| msgid ""
@@ -11176,6 +11331,8 @@ msgstr "Шаблон"
 msgid "Templates"
 msgstr "Шаблоны"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 msgid "Tenant UUID/Name"
 msgstr "Идентификатор клиента (Tenant UUID/Name)"
@@ -11341,6 +11498,7 @@ msgstr "URL этой установки Zammad."
 msgid "The active reporting profile could not be found."
 msgstr "Не удалось найти активный профиль отчетности."
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr "Запрос на согласование был отправлен вашему администратору."
@@ -11471,6 +11629,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "The entry could not be created."
 msgstr "Не удалось создать запись."
 
@@ -11721,15 +11880,18 @@ msgstr ""
 msgid "The required parameter 'area' is missing."
 msgstr "Отсутствует обязательный параметр «Область» (area)."
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_id' is missing."
 msgstr "Отсутствует обязательный параметр «идентификатор клиента» (client_id)."
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_secret' is missing."
 msgstr "Отсутствует обязательный параметр «Пароль клиента» (client_secret)."
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'code' is missing."
 msgstr "Отсутствует обязательный параметр «код» (code)."
 
@@ -11868,6 +12030,7 @@ msgstr ""
 "Настройки сервера не могут быть определены автоматически. Пожалуйста, "
 "настройте их вручную."
 
+#: app/assets/javascripts/app/controllers/login.coffee
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr "Сессия больше недействительна. Пожалуйста, войдите снова."
@@ -11926,7 +12089,7 @@ msgstr "Ключ для входа с паролем администратор�
 msgid "The uploaded image could not be processed."
 msgstr "Загруженное изображение не может быть обработано."
 
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 "«Предпочитаемое_имя_пользователя» (preferred_username) не может быть "
@@ -13002,7 +13165,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -13055,6 +13218,12 @@ msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Twitter Developer Site"
+msgstr "Системный разработчик"
+
+#: db/seeds/settings.rb
 msgid "Twitter Key"
 msgstr "Twitter Key"
 
@@ -13086,6 +13255,12 @@ msgstr "Тип:"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
 msgstr "Идентификатор пользователя (UID)"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Attribute"
+msgid "UID Attribute Name"
+msgstr "%s Атрибут"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -13183,6 +13358,10 @@ msgstr "Время Обновления"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Update as closed"
 msgstr "Пометить закрытым"
+
+#: db/seeds/schedulers.rb
+msgid "Update exchange oauth 2 token."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Update existing records"
@@ -13935,6 +14114,7 @@ msgid "Week(s)"
 msgstr "Неделя(-и/-ь)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr "Weibo"
 
@@ -14171,6 +14351,7 @@ msgstr "Вы получаете это, потому что являетесь �
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Вы получаете это, потому что были упомянуты в этой заявке."
 
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -14236,6 +14417,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr ""
+"Вы можете найти руководство по управлению %s в нашей онлайн-документации %l."
+
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can find a tutorial on how to manage a %s in our online documentation "
+#| "%l."
+msgid ""
+"You can find a tutorial on how to manage an %s in our online documentation "
+"%l."
 msgstr ""
 "Вы можете найти руководство по управлению %s в нашей онлайн-документации %l."
 
@@ -14448,6 +14640,7 @@ msgstr ""
 "Ваш аккаунт не подтвержден. Пожалуйста, нажмите на ссылку в электронном "
 "письме с подтверждением."
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -14802,6 +14995,12 @@ msgstr "удалить"
 msgid "descending"
 msgstr "по убыванию"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New password"
+msgid "developer password"
+msgstr "Новый пароль"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "отключиться"
@@ -15072,6 +15271,12 @@ msgstr "неактивный"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
+msgstr "внутренний"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "internal"
+msgid "internal database"
 msgstr "внутренний"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee

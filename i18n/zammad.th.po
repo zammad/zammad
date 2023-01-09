@@ -201,7 +201,7 @@ msgid ""
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
 "<div>It looks like you linked your account <b>with a third-party "
-"application</b> \"#{provider}\".</div>\n"
+"application</b> \"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>If this wasn't you, please remove the linked account from your profile "
 "and change your third-party application password. Somebody might have gained "
@@ -864,7 +864,10 @@ msgstr "การเข้าถึง Tickets ของเจ้าหน้า
 msgid "Access to Customer Tickets based on current_user and organization"
 msgstr "การเข้าถึง Tickets ของลูกค้าตาม บน current_user และองค์กร"
 
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -1025,6 +1028,7 @@ msgstr "อะแดปเตอร์"
 msgid "Add"
 msgstr "เพิ่ม"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1216,6 +1220,10 @@ msgstr "สร้างบัญชีผู้ดูแลระบบแล้
 #: app/assets/javascripts/app/models/macro.coffee
 msgid "Advance to next ticket from overview"
 msgstr "เลื่อนไปยัง ticket ถัดไปจากภาพรวม"
+
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
+msgid "After approval, please re-connect your Exchange account."
+msgstr ""
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1423,6 +1431,7 @@ msgstr "เวอร์ชันแอป"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "App could not be verified."
 msgstr "ไม่สามารถตรวจสอบแอปได้"
 
@@ -1505,6 +1514,7 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
@@ -1692,6 +1702,12 @@ msgstr "ต้องการแอตทริบิวต์ 'อีเมล'
 msgid "Attribute not editable!"
 msgstr "แก้ไขแอตทริบิวต์ไม่ได้!"
 
+#: db/seeds/settings.rb
+msgid ""
+"Attribute that uniquely identifies the user. If unset, the name identifier "
+"returned by the IDP is used."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Attributes"
@@ -1740,6 +1756,13 @@ msgstr "ไม่สามารถตรวจสอบได้ (ไม่ม�
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr "ต้องการการยืนยันตัวบุคคล"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication via %s"
+msgid "Authentication via"
+msgstr "การตรวจสอบสิทธิ์ผ่าน %s"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1852,6 +1875,12 @@ msgstr "กลับมาที่มุมมองของฉัน"
 msgid "Back to overview"
 msgstr "กลับมาที่มุมมองของฉัน"
 
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "Back to overview"
+msgid "Back to previous page"
+msgstr "กลับมาที่มุมมองของฉัน"
+
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
 msgstr "กลับไปที่ผลการค้นหา"
@@ -1888,6 +1917,13 @@ msgstr "Base DN"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Base Objects"
 msgstr "Base Objects"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Authentication"
+msgid "Basic Authentication"
+msgstr "การยึนยันตน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2535,12 +2571,15 @@ msgstr "Clearbit integration"
 msgid "Click here"
 msgstr "คลิกที่นี่"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client ID"
 msgstr "รหัสลูกค้า"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
@@ -2669,6 +2708,7 @@ msgstr "การกำหนดค่า"
 msgid "Config has changed"
 msgstr "คอนฟิกเปลี่ยนไป"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2685,6 +2725,7 @@ msgstr "การกำหนดค่าสำหรับ %s"
 msgid "Configure"
 msgstr "ตั้งค่า"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2756,6 +2797,13 @@ msgstr "เชื่อมต่อ"
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 msgid "Connect Channels"
 msgstr "เชื่อมต่อช่อง"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#, fuzzy
+#| msgid "Connect Google App"
+msgid "Connect Exchange App"
+msgstr "เชื่อมต่อ Google App"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -3881,6 +3929,12 @@ msgid "Defines the Clearbit config."
 msgstr "กำหนดการกำหนดค่า Clearbit"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the Exchange config."
+msgid "Defines the Exchange OAuth config."
+msgstr "กำหนดการกำหนดค่า Exchange"
+
+#: db/seeds/settings.rb
 msgid "Defines the Exchange config."
 msgstr "กำหนดการกำหนดค่า Exchange"
 
@@ -4118,6 +4172,7 @@ msgstr "กำหนดแบ็กเอนด์ transaction"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -5002,6 +5057,7 @@ msgstr "ป้อนเขตเวลา"
 msgid "Enter your %s API token gained from your account profile settings."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -5167,9 +5223,17 @@ msgid "Excepted users"
 msgstr "ผู้ใช้ที่ได้รับการยกเว้น"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
+msgstr "Exchange"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Exchange"
+msgid "Exchange OAuth"
 msgstr "Exchange"
 
 #: db/seeds/settings.rb
@@ -5243,7 +5307,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Facebook"
 msgstr "เฟสบุ๊ค"
 
@@ -5266,6 +5330,12 @@ msgstr "ข้อมูลรับรองแอพ Facebook"
 #| msgid "Facebook App Credentials"
 msgid "Facebook App Secret"
 msgstr "ข้อมูลรับรองแอพ Facebook"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Facebook Developer Site"
+msgstr "ผู้พัฒนาระบบ"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5679,12 +5749,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub App Credentials"
 msgstr "GitHub App Credentials"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitHub OAuth Applications"
+msgstr "โปรแกรม"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -5700,12 +5777,19 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "GitLab"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "GitLab App Credentials"
 msgstr "ข้อมูลรับรองแอป GitLab"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Applications"
+msgid "GitLab Applications"
+msgstr "โปรแกรม"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -5753,8 +5837,15 @@ msgstr "ข้อความอำลา"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Google"
 msgstr "กูเกิล"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Client Secret"
+msgid "Google API Console Site"
+msgstr "Client ความลับ"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -6109,6 +6200,12 @@ msgstr "ID"
 
 #: db/seeds/settings.rb
 msgid "IDP SSO target URL"
+msgstr "IDP SSO target URL"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "IDP SSO target URL"
+msgid "IDP Single Logout target URL"
 msgstr "IDP SSO target URL"
 
 #: db/seeds/settings.rb
@@ -6835,6 +6932,7 @@ msgstr "ศูนย์การเรียนรู้ รองรับห�
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
+#: db/seeds/settings.rb
 msgid "LDAP"
 msgstr "LDAP"
 
@@ -7033,12 +7131,19 @@ msgid "Linked Tickets"
 msgstr "Tickets ที่เชื่อมโยง"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr ""
 
 #: db/seeds/settings.rb
 msgid "LinkedIn App Credentials"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "LinkedIn Developer Site"
+msgstr "ผู้พัฒนาระบบ"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -7379,6 +7484,10 @@ msgstr "ข้อความหลังจากส่งแบบฟอร์
 msgid "Message for login page."
 msgstr "ข้อความสำหรับหน้าล็อกอิน"
 
+#: lib/secure_mailing/smime/incoming.rb
+msgid "Message is not signed by sender."
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "ข้อความ"
@@ -7396,6 +7505,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "วิธี (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -7919,6 +8029,7 @@ msgstr "ไม่มี %s ที่กำหนดค่าไว้"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -7934,6 +8045,12 @@ msgstr "ไม่มี %s ที่กำหนดค่าไว้"
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 msgid "No Entries"
 msgstr "ไม่มีรายการ"
+
+#: lib/external_credential/exchange.rb
+#, fuzzy
+#| msgid "Exchange config"
+msgid "No Exchange app configured!"
+msgstr "Exchange config"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -8249,6 +8366,12 @@ msgstr "พฤศจิกายน"
 #: app/graphql/gql/types/overview_type.rb
 msgid "Number"
 msgstr "ตัวเลข"
+
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid "OAuth"
+msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8853,6 +8976,12 @@ msgstr "กรุณากรอกข้อความ"
 msgid "Please enter a valid email address."
 msgstr "กรุณาใส่อีเมลที่ใช้งานได้"
 
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+msgid ""
+"Please enter the endpoint and select the authentication method for accessing "
+"Exchange Web Services."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "โปรดป้อนเวลาที่คุณต้องการบันทึก"
@@ -8860,6 +8989,12 @@ msgstr "โปรดป้อนเวลาที่คุณต้องกา
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
 msgstr "โปรดป้อนเส้นทางหรือโดเมนที่ถูกต้อง"
+
+#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
+#, fuzzy
+#| msgid "Please enter a text."
+msgid "Please enter your Exchange credentials."
+msgstr "กรุณากรอกข้อความ"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Please execute database changes only in a maintenance window."
@@ -8903,6 +9038,7 @@ msgstr ""
 msgid "Please supply your new password!"
 msgstr "กรุณาระบุรหัสผ่านใหม่ของคุณ!"
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
@@ -9142,6 +9278,7 @@ msgstr "อ่าน"
 msgid "Real-time"
 msgstr "เรียลไทม์"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9332,6 +9469,7 @@ msgstr "การรายงาน"
 msgid "Request"
 msgstr "ร้องขอ"
 
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr ""
@@ -9641,6 +9779,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "SSO"
 msgstr "SSO"
 
@@ -10305,6 +10444,16 @@ msgstr "หน้าจอลงทะเบียน"
 msgid "Simple Line Icons"
 msgstr ""
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Weibo"
+msgid "Sina Weibo"
+msgstr "Weibo"
+
+#: db/seeds/settings.rb
+msgid "Sina Weibo Open Portal"
+msgstr ""
+
 #: public/assets/chat/views/customer_timeout.eco
 #, fuzzy
 #| msgid ""
@@ -10754,6 +10903,8 @@ msgstr "แม่แบบ"
 msgid "Templates"
 msgstr "แม่แบบ"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #, fuzzy
 #| msgid "App Tenant ID"
@@ -10911,6 +11062,7 @@ msgstr ""
 msgid "The active reporting profile could not be found."
 msgstr "ไม่พบโปรไฟล์การรายงานที่ใช้งานอยู่"
 
+#: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 #, fuzzy
 #| msgid "The password could not be set. Please contact your administrator."
@@ -11035,6 +11187,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
+#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "The entry could not be created."
 msgstr ""
 
@@ -11278,15 +11431,18 @@ msgstr ""
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_id' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: lib/external_credential/google.rb lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/google.rb
+#: lib/external_credential/microsoft365.rb
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The required parameter 'code' is missing."
@@ -11401,6 +11557,7 @@ msgid ""
 "them manually."
 msgstr "ไม่สามารถตรวจพบการตั้งค่าเซิร์ฟเวอร์โดยอัตโนมัติ โปรดกำหนดค่าด้วยตนเอง"
 
+#: app/assets/javascripts/app/controllers/login.coffee
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "The session is no longer valid. Please log in again."
 msgstr ""
@@ -11459,7 +11616,7 @@ msgstr "ภาพที่ปรับขนาดไม่ถูกต้อง
 msgid "The uploaded image could not be processed."
 msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
 
-#: lib/external_credential/microsoft365.rb
+#: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "ไม่สามารถแยก 'preferred_username' ของผู้ใช้ออกจาก 'id_token'."
 
@@ -12412,7 +12569,7 @@ msgstr "ทวีตที่มีข้อความค้นหาจะเ
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb
+#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
 msgid "Twitter"
 msgstr "ทวิตเตอร์"
 
@@ -12465,6 +12622,12 @@ msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Developer System"
+msgid "Twitter Developer Site"
+msgstr "ผู้พัฒนาระบบ"
+
+#: db/seeds/settings.rb
 msgid "Twitter Key"
 msgstr "Twitter Key"
 
@@ -12498,6 +12661,12 @@ msgstr "ชนิด"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "UID"
 msgstr "UID"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s Attribute"
+msgid "UID Attribute Name"
+msgstr "%s Attribute"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
@@ -12591,6 +12760,10 @@ msgstr "อัพเดทเวลา"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Update as closed"
 msgstr "ปิดอัพเดท"
+
+#: db/seeds/schedulers.rb
+msgid "Update exchange oauth 2 token."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Update existing records"
@@ -13254,6 +13427,7 @@ msgid "Week(s)"
 msgstr "สัปดาห์"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: db/seeds/settings.rb
 msgid "Weibo"
 msgstr "Weibo"
 
@@ -13478,6 +13652,7 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/assets/javascripts/app/views/exchange/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -13537,6 +13712,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
+msgstr "สามารถค้นหาคำแนะนำเกี่ยวกับวิธีการจัดการ %s ได้ในเอกสารออนไลน์ของเรา %l"
+
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
+#, fuzzy
+#| msgid ""
+#| "You can find a tutorial on how to manage a %s in our online documentation "
+#| "%l."
+msgid ""
+"You can find a tutorial on how to manage an %s in our online documentation "
+"%l."
 msgstr "สามารถค้นหาคำแนะนำเกี่ยวกับวิธีการจัดการ %s ได้ในเอกสารออนไลน์ของเรา %l"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -13734,6 +13919,7 @@ msgid ""
 "verification email."
 msgstr "บัญชีของคุณยังไม่ได้รับการยืนยัน โปรดคลิกลิงก์ในอีเมลยืนยัน"
 
+#: app/assets/javascripts/app/views/exchange/app_config.jst.eco
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
@@ -14064,6 +14250,12 @@ msgstr "ลบ"
 msgid "descending"
 msgstr "กำลัง"
 
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "New password"
+msgid "developer password"
+msgstr "รหัสผ่านใหม่"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "disconnect"
 msgstr "ตัดการเชื่อมต่อ"
@@ -14333,6 +14525,12 @@ msgstr "ไม่ได้ใช้งาน"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "internal"
+msgstr "ภายใน"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "internal"
+msgid "internal database"
 msgstr "ภายใน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
