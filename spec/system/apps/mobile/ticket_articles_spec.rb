@@ -66,4 +66,43 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       expect(page).to have_no_text('load')
     end
   end
+
+  context 'when retrying security' do
+    let(:ticket) do
+      # Import S/MIME mail without certificates present.
+      Setting.set('smime_integration', true)
+      smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_is_signer.eml').read
+      allow(ARGF).to receive(:read).and_return(smime_mail)
+      Channel::Driver::MailStdin.new
+      Ticket.last
+    end
+
+    let(:agent) { create(:agent, groups: [ticket.group]) }
+
+    it 'updates state on successful retry' do
+      visit "/tickets/#{ticket.id}"
+
+      create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+
+      find_button('Security Error').click
+      find_button('Try again').click
+
+      # visually updates state
+      expect(find('[aria-label="Signed"]')).to be_present
+
+      expect(page).to have_text('The signature was successfully verified.')
+      expect(page).to have_no_text('Security Error')
+    end
+
+    it 'shows error on unsucessful retry' do
+      visit "/tickets/#{ticket.id}"
+
+      find_button('Security Error').click
+      find_button('Try again').click
+
+      expect(page).to have_text('Certificate for verification could not be found.')
+      expect(page).to have_text('Security Error')
+      expect(page).to have_no_css('[aria-label="Signed"]')
+    end
+  end
 end

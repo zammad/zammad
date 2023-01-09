@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 const show = computed(() => {
   const { address } = props
   if (!address) return false
-  return address.raw || address.parsed?.length
+  return (address.raw && address.raw !== '-  <>') || address.parsed?.length
 })
 </script>
 

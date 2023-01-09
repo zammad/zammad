@@ -58,4 +58,11 @@ fragment ticketArticleAttributes on TicketArticle {
   sender {
     name
   }
+  securityState {
+    encryptionMessage
+    encryptionSuccess
+    signingMessage
+    signingSuccess
+    type
+  }
 }

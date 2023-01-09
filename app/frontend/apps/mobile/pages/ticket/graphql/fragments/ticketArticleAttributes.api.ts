@@ -62,5 +62,12 @@ export const TicketArticleAttributesFragmentDoc = gql`
   sender {
     name
   }
+  securityState {
+    encryptionMessage
+    encryptionSuccess
+    signingMessage
+    signingSuccess
+    type
+  }
 }
     `;

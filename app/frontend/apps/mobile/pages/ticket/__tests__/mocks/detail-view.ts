@@ -225,6 +225,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
 interface MockOptions {
   mockSubscription?: boolean
   ticket?: TicketQuery
+  articles?: TicketArticlesQuery
 }
 
 export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
@@ -247,7 +248,7 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
 
   const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
   const mockApiArticles = mockGraphQLApi(TicketArticlesDocument).willResolve(
-    defaultArticles(),
+    options.articles || defaultArticles(),
   )
   let mockTicketSubscription: ExtendedIMockSubscription
   if (mockSubscription) {

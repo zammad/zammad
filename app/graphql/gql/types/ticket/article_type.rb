@@ -23,11 +23,17 @@ module Gql::Types::Ticket
     field :references, String
     field :body, String, null: false
     field :internal, Boolean, null: false
-    field :preferences, ::GraphQL::Types::JSON
     field :origin_by, Gql::Types::UserType
+
+    field :preferences, ::GraphQL::Types::JSON
+    field :security_state, Gql::Types::Ticket::Article::SecurityStateType
 
     field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
+
+    def security_state
+      @object.preferences['security']
+    end
   end
 end

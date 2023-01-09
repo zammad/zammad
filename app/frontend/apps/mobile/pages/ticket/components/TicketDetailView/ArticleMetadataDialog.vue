@@ -6,6 +6,7 @@ import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
+import { i18n } from '@shared/i18n'
 import ArticleMetadataAddress from './ArticleMetadataAddress.vue'
 import type { TicketArticle } from '../../types/tickets'
 
@@ -52,6 +53,24 @@ const links = computed(() => {
   })
   return links
 })
+
+const sign = computed(() => {
+  const security = props.article.securityState
+  if (!security || security.signingSuccess == null) return null
+  return {
+    message: security.signingMessage,
+    success: security.signingSuccess,
+  }
+})
+
+const encryptionMessage = computed(() => {
+  const security = props.article.securityState
+  if (!security?.encryptionSuccess) return null
+  let message = i18n.t('Encrypted')
+  if (security.encryptionMessage)
+    message += ` (${i18n.t(security.encryptionMessage)})`
+  return message
+})
 </script>
 
 <template>
@@ -84,7 +103,7 @@ const links = computed(() => {
             :link="url"
             :rest-api="api"
             :target="target"
-            class="text-sm text-white/75 after:inline after:content-['|'] last:after:hidden ltr:after:ml-1 rtl:after:mr-1"
+            class="text-sm text-white/75 after:inline after:content-['|'] last:after:hidden ltr:mr-1 ltr:after:ml-1 rtl:ml-1 rtl:after:mr-1"
           >
             {{ $t(label) }}
           </CommonLink>
@@ -92,6 +111,30 @@ const links = computed(() => {
       </CommonSectionMenuItem>
       <CommonSectionMenuItem :label="__('Sent')">
         <CommonDateTime :date-time="article.createdAt" type="absolute" />
+      </CommonSectionMenuItem>
+      <!-- app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34 -->
+      <CommonSectionMenuItem
+        v-if="sign || encryptionMessage"
+        :label="__('Security')"
+      >
+        <div class="flex gap-1">
+          <span v-if="encryptionMessage" class="inline-flex items-center gap-1">
+            <CommonIcon name="mobile-lock" size="tiny" />
+            {{ encryptionMessage }}
+          </span>
+          <span
+            v-if="sign"
+            class="inline-flex items-center gap-1"
+            :class="{ 'text-orange': !sign.success }"
+          >
+            <CommonIcon
+              :name="sign.success ? 'mobile-signed' : 'mobile-not-signed'"
+              size="tiny"
+            />
+            {{ sign.success ? $t('Signed') : $t('Unsigned') }}
+            {{ sign.message ? ` (${sign.message})` : '' }}
+          </span>
+        </div>
       </CommonSectionMenuItem>
     </CommonSectionMenu>
   </CommonDialog>

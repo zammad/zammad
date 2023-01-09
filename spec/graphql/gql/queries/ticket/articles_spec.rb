@@ -68,6 +68,13 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   preferences
                 }
                 preferences
+                securityState {
+                  type
+                  signingSuccess
+                  signingMessage
+                  encryptionSuccess
+                  encryptionMessage
+                }
                 body
                 internal
                 createdAt
@@ -114,8 +121,8 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         let(:article1) { articles.first }
         let(:expected_article1) do
           {
-            'subject'    => article1.subject,
-            'cc'         => {
+            'subject'       => article1.subject,
+            'cc'            => {
               'parsed' => [
                 {
                   'emailAddress' => 'ci@zammad.org',
@@ -124,17 +131,18 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
               ],
               'raw'    => cc,
             },
-            'to'         => {
+            'to'            => {
               'parsed' => nil,
               'raw'    => to,
             },
-            'references' => article1.references,
-            'type'       => {
+            'references'    => article1.references,
+            'type'          => {
               'name' => article1.type.name,
             },
-            'sender'     => {
+            'sender'        => {
               'name' => article1.sender.name,
             },
+            'securityState' => nil,
           }
         end
 
@@ -159,6 +167,30 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
           it 'finds articles' do
             expect(response_total_count).to eq(articles.count + 1)
+          end
+        end
+
+        context 'with securityState information' do
+          let(:articles) do
+            create_list(
+              :ticket_article, 1, :outbound_email, ticket: ticket, to: to, cc: cc,
+              preferences: {
+                'security' => { 'type' => 'S/MIME', 'sign' => { 'success' => false, 'comment' => 'Message is not signed by sender.' }, 'encryption' => { 'success' => false, 'comment' => nil } }
+              }
+            )
+          end
+          let(:expected_security_state) do
+            {
+              'type'              => 'S/MIME',
+              'signingSuccess'    => false,
+              'signingMessage'    => 'Message is not signed by sender.',
+              'encryptionSuccess' => false,
+              'encryptionMessage' => nil,
+            }
+          end
+
+          it 'includes securityStatus information' do
+            expect(response_articles.first).to include({ 'securityState' => expected_security_state })
           end
         end
       end

@@ -9,7 +9,7 @@ import { nextTick, type Ref, shallowRef, watch } from 'vue'
 import type { PopupItem } from './types'
 
 export interface Props {
-  items: PopupItem[]
+  items?: PopupItem[]
   state: boolean
   noRefocus?: boolean
   noHideOnSelect?: boolean

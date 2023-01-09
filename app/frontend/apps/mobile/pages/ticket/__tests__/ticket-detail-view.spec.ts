@@ -4,7 +4,10 @@ const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { ApolloError } from '@apollo/client/errors'
-import { getAllByTestId } from '@testing-library/vue'
+import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
+import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
+import { getAllByTestId, getByLabelText } from '@testing-library/vue'
+import { getByIconName } from '@tests/support/components/iconQueries'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import createMockClient from '@tests/support/mock-apollo-client'
@@ -267,4 +270,126 @@ test('can load more articles', async () => {
   await view.events.click(view.getByText('load 1 more'))
 
   expect(view.getAllByRole('comment')).toHaveLength(3)
+})
+
+describe('calling API to retry encryption', () => {
+  it('updates ticket description', async () => {
+    const articlesQuery = defaultArticles()
+    const article = articlesQuery.description.edges[0].node
+    article.securityState = {
+      __typename: 'TicketArticleSecurityState',
+      encryptionMessage: '',
+      encryptionSuccess: false,
+      signingMessage: 'Certificate for verification could not be found.',
+      signingSuccess: false,
+    }
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      articles: articlesQuery,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    const securityError = view.getByRole('button', { name: 'Security Error' })
+    await view.events.click(securityError)
+
+    const retryResult = {
+      __typename: 'TicketArticleSecurityState',
+      encryptionMessage: '',
+      encryptionSuccess: false,
+      signingMessage:
+        '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
+      signingSuccess: true,
+      type: 'S/MIME',
+    } as const
+
+    const mutation = mockGraphQLApi(
+      TicketArticleRetrySecurityProcessDocument,
+    ).willResolve<TicketArticleRetrySecurityProcessMutation>({
+      ticketArticleRetrySecurityProcess: {
+        __typename: 'TicketArticleRetrySecurityProcessPayload',
+        retryResult,
+        article: {
+          __typename: 'TicketArticle',
+          id: article.id,
+          securityState: { ...retryResult },
+        },
+        errors: null,
+      },
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Try again' }))
+
+    expect(mutation.spies.resolve).toHaveBeenCalled()
+
+    expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+
+    const [articlesElement] = view.getAllByRole('comment')
+
+    expect(getByLabelText(articlesElement, 'Signed')).toBeInTheDocument()
+    expect(getByIconName(articlesElement, 'mobile-signed')).toBeInTheDocument()
+  })
+
+  it('updates non-description article', async () => {
+    const articlesQuery = defaultArticles()
+    const article = articlesQuery.articles.edges[0].node
+    article.securityState = {
+      __typename: 'TicketArticleSecurityState',
+      encryptionMessage: '',
+      encryptionSuccess: false,
+      signingMessage: 'Certificate for verification could not be found.',
+      signingSuccess: false,
+    }
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      articles: articlesQuery,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    const securityError = view.getByRole('button', { name: 'Security Error' })
+    await view.events.click(securityError)
+
+    const retryResult = {
+      __typename: 'TicketArticleSecurityState',
+      encryptionMessage: '',
+      encryptionSuccess: false,
+      signingMessage:
+        '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com',
+      signingSuccess: true,
+      type: 'S/MIME',
+    } as const
+
+    const mutation = mockGraphQLApi(
+      TicketArticleRetrySecurityProcessDocument,
+    ).willResolve<TicketArticleRetrySecurityProcessMutation>({
+      ticketArticleRetrySecurityProcess: {
+        __typename: 'TicketArticleRetrySecurityProcessPayload',
+        retryResult,
+        article: {
+          __typename: 'TicketArticle',
+          id: article.id,
+          securityState: { ...retryResult },
+        },
+        errors: null,
+      },
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Try again' }))
+
+    expect(mutation.spies.resolve).toHaveBeenCalled()
+
+    expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+
+    const [, firstCommentArticle] = view.getAllByRole('comment')
+
+    expect(getByLabelText(firstCommentArticle, 'Signed')).toBeInTheDocument()
+    expect(
+      getByIconName(firstCommentArticle, 'mobile-signed'),
+    ).toBeInTheDocument()
+  })
 })

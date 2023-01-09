@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import { waitForAnimationFrame } from '@shared/utils/helpers'
 import { getByAltText, queryByAltText } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
@@ -15,7 +16,7 @@ const renderArticleBubble = (props = {}) => {
       content: 'Some Content',
       contentType: 'text/html',
       ticketInternalId: 1,
-      articleInternalId: 1,
+      articleId: convertToGraphQLId('Ticket::Article', 1),
       user: {
         id: '2',
         firstname: 'Max',
@@ -64,7 +65,7 @@ describe('component for displaying text article', () => {
     ).not.toBeInTheDocument()
     expect(view.getByText('Me'), 'instead of name shows me').toBeInTheDocument()
 
-    await view.events.click(view.getByIconName('mobile-more'))
+    await view.events.click(view.getByTitle('Article actions'))
 
     expect(view.emitted()).toHaveProperty('showContext')
 
@@ -185,7 +186,7 @@ describe('component for displaying text article', () => {
   it('renders attachments', () => {
     const view = renderArticleBubble({
       ticketInternalId: 6,
-      articleInternalId: 12,
+      articleId: convertToGraphQLId('Ticket::Article', 12),
       attachments: [
         {
           internalId: '1',

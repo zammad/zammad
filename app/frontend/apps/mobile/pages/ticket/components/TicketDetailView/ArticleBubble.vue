@@ -8,14 +8,19 @@ import { computed } from 'vue'
 import { i18n } from '@shared/i18n'
 import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
-import type { TicketArticlesQuery } from '@shared/graphql/types'
+import type {
+  TicketArticleSecurityState,
+  TicketArticlesQuery,
+} from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 import useImageViewer from '@shared/composables/useImageViewer'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import stopEvent from '@shared/utils/events'
+import { getIdFromGraphQLId } from '@shared/graphql/utils'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore'
 import type { TicketArticleAttachment } from '../../types/tickets'
 import { useArticleAttachments } from '../../composable/useArticleAttachments'
+import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
 
 interface Props {
   position: 'left' | 'right'
@@ -24,9 +29,10 @@ interface Props {
   user?: Maybe<
     ConfidentTake<TicketArticlesQuery, 'articles.edges.node.createdBy'>
   >
+  security?: Maybe<TicketArticleSecurityState>
   contentType: string
   ticketInternalId: number
-  articleInternalId: number
+  articleId: string
   attachments: TicketArticleAttachment[]
 }
 
@@ -37,14 +43,22 @@ const emit = defineEmits<{
 
 const session = useSessionStore()
 
-const bubbleClasses = computed(() => {
+const colorClasses = computed(() => {
   const { internal, position } = props
 
   if (internal) return 'border border-blue bg-black'
+  if (position === 'left') return 'border border-black bg-white text-black'
+  return 'border border-black bg-blue text-black'
+})
+
+const bubbleClasses = computed(() => {
+  const { internal, position } = props
+
+  if (internal) return undefined
 
   return {
-    'rounded-bl-sm bg-white text-black': position === 'left',
-    'rounded-br-sm bg-blue text-black': position === 'right',
+    'rounded-bl-sm': position === 'left',
+    'rounded-br-sm': position === 'right',
   }
 })
 
@@ -73,14 +87,6 @@ const colorsClasses = computed(() => {
       icon: 'border-white/40',
     }
   }
-  if (props.position === 'right') {
-    return {
-      top: 'border-t-[0.5px] border-white',
-      amount: 'text-white/80',
-      file: 'border-white',
-      icon: 'border-white',
-    }
-  }
   return {
     top: 'border-t-[0.5px] border-black',
     amount: 'text-black/60',
@@ -94,7 +100,7 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
 
 const { attachments: articleAttachments } = useArticleAttachments({
   ticketInternalId: props.ticketInternalId,
-  articleInternalId: props.articleInternalId,
+  articleInternalId: getIdFromGraphQLId(props.articleId),
   attachments: computed(() => props.attachments),
 })
 
@@ -108,7 +114,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
 
 <template>
   <div
-    :id="`article-${articleInternalId}`"
+    :id="`article-${articleId}`"
     role="comment"
     class="Article relative flex"
     :class="{
@@ -129,13 +135,13 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
     </div>
     <div
       class="content flex flex-col overflow-hidden rounded-3xl px-4 py-2"
-      :class="bubbleClasses"
+      :class="[bubbleClasses, colorClasses]"
     >
       <div
-        class="flex text-xs font-bold text-black/90"
+        class="flex items-center text-xs font-bold"
         data-test-id="article-username"
       >
-        <CommonIcon v-if="internal" size="tiny" name="mobile-lock" />
+        <CommonIcon v-if="internal" size="xs" name="mobile-lock" />
         <span
           class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
         >
@@ -154,7 +160,6 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
         class="relative"
         :class="{
           bubbleGradient: hasShowMore && !shownMore,
-          '-mb-3': !attachments.length,
         }"
       >
         <button
@@ -165,7 +170,11 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           {{ shownMore ? $t('See less') : $t('See more') }}
         </button>
       </div>
-      <div v-if="attachments.length" class="mt-1" :class="colorsClasses.top">
+      <div
+        v-if="attachments.length"
+        class="mt-1 mb-2"
+        :class="colorsClasses.top"
+      >
         <div class="py-1 text-xs" :class="colorsClasses.amount">
           {{
             attachments.length === 1
@@ -192,16 +201,28 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           @preview="previewImage($event, attachment)"
         />
       </div>
-      <div class="flex h-3 justify-end">
+      <div
+        class="absolute -bottom-4 flex min-h-[24px] gap-1"
+        :class="[position === 'left' ? 'left-10 flex-row-reverse' : 'right-10']"
+      >
+        <ArticleSecurityBadge
+          v-if="security"
+          :article-id="articleId"
+          :success-class="colorClasses"
+          :security="security"
+        />
         <button
-          class="z-10"
+          :class="[
+            colorClasses,
+            'flex h-6 w-6 items-center justify-center rounded-md',
+          ]"
           type="button"
           data-name="article-context"
           :title="$t('Article actions')"
           @click="emit('showContext')"
           @keydown.enter.prevent="emit('showContext')"
         >
-          <CommonIcon name="mobile-more" size="tiny" decorative />
+          <CommonIcon name="mobile-more-vertical" size="tiny" decorative />
         </button>
       </div>
     </div>

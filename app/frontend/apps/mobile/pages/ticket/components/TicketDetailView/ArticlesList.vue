@@ -57,7 +57,7 @@ const filterAttachments = (article: TicketArticle) => {
     ref="articlesElement"
     role="group"
     aria-label="Articles"
-    class="relative flex-1 space-y-4 px-4 pt-4"
+    class="relative flex-1 space-y-5 px-4 pt-4"
   >
     <!-- TODO counter indicator, use role="timer" -->
     <!-- <button
@@ -77,8 +77,9 @@ const filterAttachments = (article: TicketArticle) => {
             ? 'left'
             : 'right'
         "
+        :security="row.article.securityState"
         :ticket-internal-id="ticketInternalId"
-        :article-internal-id="row.article.internalId"
+        :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
         @show-context="showArticleContext(row.article, ticketInternalId)"
       />
