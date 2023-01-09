@@ -65,4 +65,11 @@ describe Ticket::ArticlePolicy do
     it { is_expected.to permit_actions(%i[show]) }
   end
 
+  context 'when customer is agent and customer' do
+    let(:user)            { ticket_customer }
+    let(:ticket_customer) { create(:agent_and_customer) }
+
+    it { is_expected.to permit_actions(%i[show]) }
+    it { is_expected.to forbid_actions(%i[update destroy]) }
+  end
 end
