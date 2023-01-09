@@ -11,10 +11,7 @@ class Ticket::ArticlePolicy < ApplicationPolicy
   end
 
   def update?
-    return false if !access?(__method__)
-    return true if user.permissions?(['ticket.agent', 'admin'])
-
-    not_authorized('ticket.agent or admin permission required')
+    ticket_policy.agent_update_access?
   end
 
   def destroy?
@@ -57,9 +54,12 @@ class Ticket::ArticlePolicy < ApplicationPolicy
   end
 
   def access?(query)
-    ticket = Ticket.lookup(id: record.ticket_id)
-    return false if record.internal == true && !TicketPolicy.new(user, ticket).agent_read_access?
+    return false if record.internal && !ticket_policy.agent_read_access?
 
-    Pundit.authorize(user, ticket, query)
+    ticket_policy.send(query)
+  end
+
+  def ticket_policy
+    @ticket_policy ||= TicketPolicy.new(user, Ticket.lookup(id: record.ticket_id))
   end
 end

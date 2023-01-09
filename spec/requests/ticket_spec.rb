@@ -1358,7 +1358,7 @@ RSpec.describe 'Ticket', type: :request do
       put "/api/v1/ticket_articles/#{json_response['id']}", params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (ticket.agent or admin permission required)!')
+      expect(json_response['error']).to eq('Not authorized')
 
       delete "/api/v1/tickets/#{ticket.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
