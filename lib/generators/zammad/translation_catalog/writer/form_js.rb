@@ -2,14 +2,9 @@
 
 class Zammad::TranslationCatalog::Writer::FormJs < Zammad::TranslationCatalog::Writer::Base
 
+  optional true
+
   def write(extracted_strings)
-
-    # Only execute for Zammad, not for addons.
-    return if options['addon_path']
-
-    # Do not run in CI.
-    return if options['check']
-
     content = serialized(translation_map(extracted_strings))
     write_file('public/assets/form/form.js', content)
   end

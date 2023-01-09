@@ -55,6 +55,10 @@ This will update the `i18n/zammad.pot` file in Zammad. To do this for an existin
 
 `rails generate zammad:translation_catalog --addon-path /path/to/addon`
 
+To perform additional tasks such as updating template files from translations, use:
+
+`rails generate zammad:translation_catalog --full`
+
 ### Testing Translation Changes from Weblate
 
 To test any changes made to translations in Weblate that are not yet published to Zammad,

@@ -2,18 +2,10 @@
 
 class Zammad::TranslationCatalog::Writer::ViewTemplates < Zammad::TranslationCatalog::Writer::Base
 
+  optional true
+
   def write(_strings)
-
-    # Only execute for Zammad, not for addons.
-    return if options['addon_path']
-
-    # Do not run in CI.
-    return if options['check']
-
-    extractor = Zammad::TranslationCatalog::Extractor::ViewTemplates.new(options: options)
-    extractor.extract_translatable_strings
-
-    extractor.extracted_strings.sorted_values.each do |extracted_string|
+    extracted_strings.sorted_values.each do |extracted_string|
       Locale.all.each do |locale|
         next if locale.locale.start_with?('en')
 
@@ -23,6 +15,10 @@ class Zammad::TranslationCatalog::Writer::ViewTemplates < Zammad::TranslationCat
   end
 
   private
+
+  def extracted_strings
+    Zammad::TranslationCatalog::Extractor::ViewTemplates.new(options: options).tap(&:extract_translatable_strings).extracted_strings
+  end
 
   def handle_template(extracted_string, locale)
     target_filename = extracted_string.references.first.sub(%r{/en.}, "/#{locale.alias.presence || locale.locale}.")

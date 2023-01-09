@@ -14,10 +14,14 @@ class Zammad::TranslationCatalogGenerator < Rails::Generators::Base
 
         # Regenerate for an addon
         rails generate zammad:translation_catalog --addon-path /path/to/addon
+
+        # Perform additional tasks such as updating template files from translations
+        rails generate zammad:translation_catalog --full
   DESCRIPTION
 
   class_option :check, type: :boolean, required: false, desc: 'Only check if the catalog file is up-to-date.'
   class_option :addon_path, type: :string, required: false, banner: '/path/to/addon', desc: 'Generate catalog for the specified addon module only.'
+  class_option :full, type: :boolean, required: false, desc: 'Perform additional tasks such as updating template files from translations.'
 
   # Make sure .descendants always has the full list.
   Mixin::RequiredSubPaths.eager_load_recursive Zammad::TranslationCatalog, "#{__dir__}/translation_catalog"
@@ -56,7 +60,8 @@ class Zammad::TranslationCatalogGenerator < Rails::Generators::Base
 
   def write_strings(extracted_strings)
     Zammad::TranslationCatalog::Writer::Base.descendants.each do |klass|
-      klass.new(options: options).write(extracted_strings)
+      writer = klass.new(options: options)
+      writer.write(extracted_strings) if !writer.skip?
     end
   end
 

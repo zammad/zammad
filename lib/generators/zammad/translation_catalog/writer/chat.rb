@@ -2,14 +2,9 @@
 
 class Zammad::TranslationCatalog::Writer::Chat < Zammad::TranslationCatalog::Writer::Base
 
+  optional true
+
   def write(extracted_strings)
-
-    # Only execute for Zammad, not for addons.
-    return if options['addon_path']
-
-    # Do not run in CI.
-    return if options['check']
-
     content = serialized(translation_map(extracted_strings))
     ['public/assets/chat/chat.coffee', 'public/assets/chat/chat-no-jquery.coffee'].each do |f|
       write_file(f, content)
