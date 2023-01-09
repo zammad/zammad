@@ -370,8 +370,14 @@ class App.TicketZoomArticleNew extends App.Controller
       .toggleClass('is-public', !internal)
       .toggleClass('is-internal', internal)
 
-    value = if internal then 'true' else ''
+    visibilityTextType = if internal then "internal-note" else "public-note"
+    @visibilityTextWrapper
+      .find('.article-visibility-text')
+      .addClass('is-hidden')
+      .filter("[data-type='#{visibilityTextType}']")
+      .removeClass('is-hidden')
 
+    value = if internal then 'true' else ''
     @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>

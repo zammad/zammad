@@ -6894,18 +6894,8 @@ a.list-group-item.active > .badge,
   display: none;
 }
 
-.article-add {
-  .article-visibility-text {
-    display: none;
-  }
-
-  &.is-open.is-internal .article-visibility-text[data-type='internal-note'] {
-    display: block;
-  }
-
-  &.is-open.is-public .article-visibility-text[data-type='public-note'] {
-    display: block;
-  }
+.article-add .article-visibility-text.is-hidden {
+  display: none;
 }
 
 .textBubble {
