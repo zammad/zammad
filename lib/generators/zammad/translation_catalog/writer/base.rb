@@ -3,8 +3,30 @@
 class Zammad::TranslationCatalog::Writer::Base
   attr_reader :options
 
+  class << self
+    def optional(value)
+      @optional = value
+    end
+
+    def optional?
+      @optional
+    end
+  end
+
   def initialize(options:)
     @options = options
+  end
+
+  def skip?
+    return false if !self.class.optional?
+
+    # Only execute for Zammad, not for addons.
+    return true if options['addon_path']
+
+    # Do not run in CI.
+    return true if options['check']
+
+    !@options['full']
   end
 
   protected

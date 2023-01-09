@@ -2,6 +2,8 @@
 
 class Zammad::TranslationCatalog::Writer::Pot < Zammad::TranslationCatalog::Writer::Base
 
+  optional false
+
   def write(extracted_strings)
 
     pot = build_pot_content(extracted_strings)
