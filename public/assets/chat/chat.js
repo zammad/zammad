@@ -529,11 +529,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Online': 'Online',
         'Scroll down to see new messages': 'Skroluj w dół, aby zobaczyć wiadomości',
         'Send': 'Wyślij',
-        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa została zamknięta.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Ponieważ nie odpowiedziałeś w ciągu ostatnich %s minut, Twoja rozmowa z <strong>%s</strong> została zamknięta.',
         'Start new conversation': 'Rozpocznij nową rozmowę',
         'Today': 'Dzisiaj',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Przepraszamy, znalezienie wolnego konsultanta zajmuje więcej czasu niż oczekiwano. Spróbuj ponownie później lub wyślij nam e-mail. Dziękujemy!',
         'You are on waiting list position <strong>%s</strong>.': 'Jesteś na pozycji listy oczekujących <strong>%s</strong>.'
       },
       'pt-br': {
