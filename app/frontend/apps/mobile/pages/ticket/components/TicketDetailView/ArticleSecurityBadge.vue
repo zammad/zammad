@@ -120,6 +120,7 @@ const popupItems = computed(() =>
         {
           label: __('Try again'),
           onAction: tryAgain,
+          noHideOnSelect: true,
         },
       ]
     : [],
@@ -162,7 +163,6 @@ const popupItems = computed(() =>
   <CommonSectionPopup
     v-model:state="showPopup"
     :items="popupItems"
-    no-hide-on-select
   >
     <template #header>
       <div

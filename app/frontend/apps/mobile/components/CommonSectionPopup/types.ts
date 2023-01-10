@@ -6,4 +6,5 @@ export interface PopupItem {
   class?: string
   attributes?: Record<string, unknown>
   onAction?(): void
+  noHideOnSelect?: boolean
 }

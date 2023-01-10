@@ -3,6 +3,8 @@
 import type { PopupItem } from '@mobile/components/CommonSectionPopup'
 import { useDialog } from '@shared/composables/useDialog'
 import { computed, ref, shallowRef } from 'vue'
+import { MutationHandler } from '@shared/server/apollo/handler'
+import { useTicketArticleChangeVisibilityMutation } from '@shared/entities/article/graphql/mutations/change_visibility.api'
 import type { TicketArticle } from '../types/tickets'
 
 export const useTicketArticleContext = () => {
@@ -14,42 +16,72 @@ export const useTicketArticleContext = () => {
       import('../components/TicketDetailView/ArticleMetadataDialog.vue'),
   })
 
-  const contextOptions: PopupItem[] = [
-    {
-      label: __('Make internal'),
-      onAction() {
-        console.log('make internal')
+  const isInternal = computed<boolean>(
+    () => articleForContext.value?.internal || false,
+  )
+
+  const changeVisibilityAction = (
+    articleId: string,
+    targetInternalState: boolean,
+  ) => {
+    const errorNotificationMessage = targetInternalState
+      ? __('The article could not be set to internal.')
+      : __('The article could not be set to public.')
+
+    const mutation = new MutationHandler(
+      useTicketArticleChangeVisibilityMutation({
+        variables: { articleId, internal: targetInternalState },
+      }),
+      { errorNotificationMessage },
+    )
+
+    mutation.send()
+  }
+
+  const contextOptions = computed<PopupItem[]>(() => {
+    const articleId = articleForContext.value?.id
+    if (!articleId) return []
+
+    const targetInternalState = !isInternal.value
+
+    return [
+      {
+        label: targetInternalState
+          ? __('Set to internal')
+          : __('Set to public'),
+        onAction: () => changeVisibilityAction(articleId, targetInternalState),
       },
-    },
-    {
-      label: __('Reply'),
-      onAction() {
-        console.log('reply')
+      {
+        label: __('Reply'),
+        onAction() {
+          console.log('reply')
+        },
       },
-    },
-    {
-      label: __('Forward'),
-      onAction() {
-        console.log('forward')
+      {
+        label: __('Forward'),
+        onAction() {
+          console.log('forward')
+        },
       },
-    },
-    {
-      label: __('Split'),
-      onAction() {
-        console.log('split')
+      {
+        label: __('Split'),
+        onAction() {
+          console.log('split')
+        },
       },
-    },
-    {
-      label: __('Show meta data'),
-      onAction() {
-        metadataDialog.open({
-          name: metadataDialog.name,
-          article: articleForContext.value,
-          ticketInternalId: ticketInternalId.value,
-        })
+      {
+        label: __('Show meta data'),
+        noHideOnSelect: true,
+        onAction() {
+          metadataDialog.open({
+            name: metadataDialog.name,
+            article: articleForContext.value,
+            ticketInternalId: ticketInternalId.value,
+          })
+        },
       },
-    },
-  ]
+    ]
+  })
 
   const articleContextShown = computed({
     get: () => articleForContext.value != null,

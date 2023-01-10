@@ -100,7 +100,6 @@ const filterAttachments = (article: TicketArticle) => {
   <CommonSectionPopup
     v-model:state="articleContextShown"
     :items="contextOptions"
-    no-hide-on-select
     :z-index="9"
   />
   <ArticlesPullDown

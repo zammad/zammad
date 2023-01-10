@@ -15,6 +15,13 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       expect(page).to have_text(article.body)
       expect(page).to have_no_text('load')
     end
+
+    it 'switches article to internal' do
+      visit "/tickets/#{ticket.id}"
+      find('[data-name="article-context"]').click
+      click_on 'Set to internal'
+      expect(page).to have_css('.Article.Internal')
+    end
   end
 
   context 'when opening ticket with 6 articles page' do

@@ -177,4 +177,36 @@ describe('popup behaviour', () => {
 
     expect(button).not.toHaveFocus()
   })
+
+  it('closes list after clicking', async () => {
+    const items: PopupItem[] = [
+      {
+        label: 'Hide Popup',
+      },
+      {
+        label: 'Keep Popup',
+        noHideOnSelect: true,
+      },
+    ]
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        items,
+      },
+      router: true,
+      vModel: {
+        state: true,
+      },
+    })
+
+    const [hideItem, keepItem] = items
+
+    await view.events.click(view.getByText(keepItem.label))
+
+    expect(view.queryByTestId('popupWindow')).toBeInTheDocument()
+
+    await view.events.click(view.getByText(hideItem.label))
+
+    expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+  })
 })

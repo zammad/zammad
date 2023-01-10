@@ -12,7 +12,6 @@ export interface Props {
   items?: PopupItem[]
   state: boolean
   noRefocus?: boolean
-  noHideOnSelect?: boolean
   zIndex?: number
   label?: string
 }
@@ -30,9 +29,9 @@ const hidePopup = (cancel = true) => {
   localState.value = false
 }
 
-const onItemClick = (action: PopupItem['onAction']) => {
-  if (action) action()
-  if (!props.noHideOnSelect) {
+const onItemClick = (item: PopupItem) => {
+  if (item.onAction) item.onAction()
+  if (!item.noHideOnSelect) {
     hidePopup(false)
   }
 }
@@ -108,7 +107,7 @@ watch(
               :class="item.class"
               :type="!item.link && 'button'"
               v-bind="item.attributes"
-              @click="onItemClick(item.onAction)"
+              @click="onItemClick(item)"
             >
               {{ $t(item.label) }}
             </component>

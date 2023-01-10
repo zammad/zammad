@@ -1,0 +1,11 @@
+mutation ticketArticleChangeVisibility($articleId: ID!, $internal: Boolean!) {
+  ticketArticleChangeVisibility(articleId: $articleId, internal: $internal) {
+    article {
+      id
+      internal
+    }
+    errors {
+      ...errors
+    }
+  }
+}

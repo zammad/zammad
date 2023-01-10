@@ -178,7 +178,7 @@ test('show article context on click', async () => {
 
   await view.events.click(contextTriggers[0])
 
-  expect(view.getByText('Make internal')).toBeInTheDocument()
+  expect(view.getByText('Set to internal')).toBeInTheDocument()
   expect(view.getByText('Reply')).toBeInTheDocument()
 
   // TODO actions itself should be tested when reply will be implemented
