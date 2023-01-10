@@ -2732,4 +2732,67 @@ RSpec.describe 'Ticket zoom', type: :system do
       expect(page).to have_css('.js-ArticleAction[data-type=emailReply]')
     end
   end
+
+  describe 'Open ticket indicator coloring setting' do
+    let(:elem)     { find('[data-tab="customer"]') }
+    let(:customer) { create(:customer) }
+    let(:group)    { Group.first }
+    let(:ticket)   { create(:ticket, customer: customer, group: group) }
+
+    before do
+      Setting.set 'ui_sidebar_open_ticket_indicator_colored', state
+
+      customer.update! preferences: { tickets_open: tickets_count }
+
+      visit "ticket/zoom/#{ticket.id}"
+    end
+
+    context 'when enabled' do
+      let(:state) { true }
+
+      context 'with 1 ticket' do
+        let(:tickets_count) { 1 }
+
+        it 'does not highlight' do
+          expect(elem)
+            .to have_no_selector('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
+        end
+      end
+
+      context 'with 2 tickets' do
+        let(:tickets_count) { 2 }
+
+        it 'highlights as warning' do
+          create(:ticket, customer: customer, group: group)
+
+          expect(elem)
+            .to have_no_selector('.tabsSidebar-tab-count--danger')
+            .and have_selector('.tabsSidebar-tab-count--warning')
+        end
+      end
+
+      context 'with 3 tickets' do
+        let(:tickets_count) { 3 }
+
+        it 'highlights as danger' do
+          expect(elem)
+            .to have_selector('.tabsSidebar-tab-count--danger')
+            .and have_no_selector('.tabsSidebar-tab-count--warning')
+        end
+      end
+    end
+
+    context 'when disabled' do
+      let(:state) { false }
+
+      context 'with 2 tickets' do
+        let(:tickets_count) { 2 }
+
+        it 'does not highlight' do
+          expect(elem)
+            .to have_no_selector('.tabsSidebar-tab-count--danger, .tabsSidebar-tab-count--warning')
+        end
+      end
+    end
+  end
 end
