@@ -94,7 +94,7 @@ RSpec.configure do |config|
 
     spec_path     = Pathname.new(example.file_path).realpath
     cassette_path = spec_path.relative_path_from(Rails.root.join('spec')).sub(%r{_spec\.rb$}, '')
-    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z\-]+}, '_').downcase
+    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z-]+}, '_').downcase
 
     # handle file name limit of 255 chars
     if cassette_name.length > 253

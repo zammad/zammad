@@ -421,13 +421,7 @@ execute all pending package migrations at once
                  "#{fullpath}/#{file}"
                end
 
-    begin
-      data = File.open(location, 'rb')
-      contents = data.read
-    rescue => e
-      raise e
-    end
-    contents
+    File.binread(location)
   end
 
   def self._write_file(file, permission, data)
@@ -460,15 +454,11 @@ execute all pending package migrations at once
     end
 
     # install file
-    begin
-      logger.info "NOTICE: install '#{location}' (#{permission})"
-      file = File.new(location, 'wb')
-      file.write(data)
-      file.close
-      File.chmod(permission.to_s.to_i(8), location)
-    rescue => e
-      raise e
-    end
+    logger.info "NOTICE: install '#{location}' (#{permission})"
+    file = File.new(location, 'wb')
+    file.write(data)
+    file.close
+    File.chmod(permission.to_s.to_i(8), location)
     true
   end
 
