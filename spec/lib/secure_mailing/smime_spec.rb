@@ -334,6 +334,29 @@ RSpec.describe SecureMailing::SMIME do
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
         end
+
+        context 'sender certificate with another sender name signed by trusted CA (#4457)' do
+          before do
+            create(:smime_certificate, fixture: 'SenderNameCA')
+          end
+
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_name_with_trusted_ca.eml').read
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies' do
+            expect(mail[:from]).to include('Zammad Helpdesk <smime-sender-name@example.com>')
+            expect(mail[:body]).to include(raw_body)
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com')
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
       end
 
       context 'no sender certificate' do

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 echo "Zammad S/MIME test certificate generation"
 
 if [[ ! -e "$CERT_DIR/RootCA.key" ]] || [[ ! -e "$CERT_DIR/RootCA.crt" ]]
@@ -158,6 +160,31 @@ do
     cp pass.secret $CERT_DIR/$EMAIL_ADDRESS.secret
   fi
 done
+
+echo "Generating sender name CA certificate"
+
+if [[ ! -e "$CERT_DIR/SenderNameCA.key" ]] || [[ ! -e "$CERT_DIR/SenderNameCA.crt" ]]
+then
+  echo "Generating SenderNameCA.key and SenderNameCA.crt"
+  openssl req -x509 -new -nodes -days 73000 -keyout $CERT_DIR/SenderNameCA.key -out $CERT_DIR/SenderNameCA.crt -config sender_name_ca.cnf
+
+  echo "Generating SenderNameCA.secret"
+  cp pass.secret $CERT_DIR/SenderNameCA.secret
+fi
+
+EMAIL_ADDRESS="smime-sender-name@example.com"
+
+if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]]
+then
+  echo "Generating $EMAIL_ADDRESS.key and $EMAIL_ADDRESS.csr (certificate signing request)"
+  openssl req -new -nodes -keyout $CERT_DIR/$EMAIL_ADDRESS.key -out $CERT_DIR/$EMAIL_ADDRESS.csr -config sender_name.cnf
+
+  echo "Generating $EMAIL_ADDRESS.crt (certificate)"
+  openssl x509 -req -days 73000 -in $CERT_DIR/$EMAIL_ADDRESS.csr -CA $CERT_DIR/SenderNameCA.crt -CAkey $CERT_DIR/SenderNameCA.key -CAcreateserial -CAserial /tmp/SenderNameCA.seq -out $CERT_DIR/$EMAIL_ADDRESS.crt -addtrust emailProtection -addreject clientAuth -addreject serverAuth -trustout -extensions v3_ca -extfile v3_ca.cnf -passin file:pass.secret
+
+  echo "Generating $EMAIL_ADDRESS.secret"
+  cp pass.secret $CERT_DIR/$EMAIL_ADDRESS.secret
+fi
 
 # run command passed to docker run
 exec "$@"

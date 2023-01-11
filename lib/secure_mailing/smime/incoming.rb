@@ -229,13 +229,31 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::Handler
   end
 
   def sender_is_signer?
-    signers = @verify_sign_p7enc.certificates.map do |cert|
-      email = cert.subject.to_s.match(%r{emailAddress=(?<address>[^/]+)})
-      email[:address]
-    end
+    signers = email_addresses_from_subject_alt_name
 
     result = signers.include?(mail[:mail_instance].from.first)
     Rails.logger.warn { "S/MIME mail #{mail[:message_id]} signed by #{signers.join(', ')} but sender is #{mail[:mail_instance].from.first}" } if !result
+
+    result
+  end
+
+  def email_addresses_from_subject_alt_name
+    result = []
+
+    @verify_sign_p7enc.certificates.each do |cert|
+      subject_alt_name = cert.extensions.detect { |extension| extension.oid == 'subjectAltName' }
+      next if subject_alt_name.nil?
+
+      entries = subject_alt_name.value.split(%r{,\s?})
+      entries.each do |entry|
+        identifier, email_address = entry.split(':').map(&:downcase)
+
+        next if identifier.exclude?('email') && identifier.exclude?('rfc822')
+        next if !EmailAddressValidation.new(email_address).valid?
+
+        result.push(email_address)
+      end
+    end
 
     result
   end
