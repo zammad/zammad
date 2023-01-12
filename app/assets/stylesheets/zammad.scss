@@ -10123,8 +10123,9 @@ label + .wizard-buttonList {
   }
 
   img {
-    max-width: 100%;
-    max-height: calc(100vh - 218px);
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 218px) !important;
   }
 }
 
