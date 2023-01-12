@@ -271,6 +271,9 @@ class Sessions::Store::File
       file.truncate 0 # Truncate only after locking to avoid empty state
       file.write data
     end
+  rescue Errno::ENOENT => e
+    Rails.logger.debug { "Can't write data to web socket session file #{filename}, maybe the session was removed in the meantime: #{e.inspect}" }
+    Rails.logger.debug e
   end
 
   def read_with_lock(filename)
