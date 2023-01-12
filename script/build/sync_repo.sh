@@ -5,7 +5,7 @@ set -ex
 GITHUB_DEST=$1
 
 # This can be called for branches or tags. Filter out private branches first.
-if [[ $CI_COMMIT_BRANCH =~ ^(private|cherry-pick-|renovate/|dependabot/) ]]
+if [[ $CI_COMMIT_BRANCH =~ ^(private|cherry-pick-|renovate|dependabot) ]]
 then
   echo "Do not sync internal branch ${CI_COMMIT_BRANCH}."
   exit 0

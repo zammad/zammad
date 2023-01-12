@@ -13,7 +13,7 @@ namespace :zammad do
       next if args[:elasticsearch] != 'with_elasticsearch'
 
       Setting.set('es_url', 'http://elasticsearch:9200')
-      Setting.set('es_index', "browser_test_#{ENV['CI_BUILD_ID']}")
+      Setting.set('es_index', "browser_test_#{ENV['CI_JOB_ID']}")
 
       Rake::Task['zammad:searchindex:rebuild'].invoke
     end

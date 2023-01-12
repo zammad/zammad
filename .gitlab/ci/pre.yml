@@ -21,6 +21,12 @@
 'push to github':
   stage: pre
   cache: []
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: '$CI_COMMIT_BRANCH =~ /^(private|cherry-pick-|renovate|dependabot)/'
+      when: never
+    - when: always
   before_script:
     - test -d $HOME/.ssh || mkdir $HOME/.ssh
     - ssh-keyscan github.com >> $HOME/.ssh/known_hosts
