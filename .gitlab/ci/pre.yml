@@ -18,7 +18,6 @@
     - yarn --cwd ./.eslint-plugin-zammad install
   after_script: []
 
-# Executed on a dedicated runner.
 'push to github':
   stage: pre
   cache: []
@@ -31,4 +30,27 @@
   script:
     - git fetch --unshallow
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
+  after_script: []
+
+'publish source archives':
+  stage: pre
+  tags:
+    - push-to-ftp
+  cache: []
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "stable"'
+      when: always
+    - when: never
+  before_script:
+    - test -d $HOME/.ssh || mkdir $HOME/.ssh
+    - ssh-keyscan ftp.zammad.com >> $HOME/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$FTP_ZAMMAD_COM_SSH_PRIVATE_KEY" | ssh-add -
+    - ssh-add -l
+  script:
+    - script/build/deploy_archives.sh
   after_script: []
