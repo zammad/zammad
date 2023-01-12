@@ -9,8 +9,8 @@ stateOrProvinceName    = Berlin
 localityName           = Berlin
 organizationName       = Example Security
 organizationalUnitName = IT Department
-commonName             = Sender Name
-emailAddress           = smime-sender-name@example.com
+commonName             = Sender with CA
+emailAddress           = smime-sender-ca@example.com
 
 [v3_req]
 basicConstraints = CA:FALSE

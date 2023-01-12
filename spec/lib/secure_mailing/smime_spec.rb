@@ -314,6 +314,24 @@ RSpec.describe SecureMailing::SMIME do
           end
         end
 
+        context 'sender is signer' do
+          let(:sender_email_address) { system_email_address }
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_is_signer.eml').read
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(sender_certificate_subject)
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
+
         context 'sender is not signer' do
           before do
             create(:smime_certificate, :with_private, fixture: system_email_address)
@@ -337,11 +355,11 @@ RSpec.describe SecureMailing::SMIME do
 
         context 'sender certificate with another sender name signed by trusted CA (#4457)' do
           before do
-            create(:smime_certificate, fixture: 'SenderNameCA')
+            create(:smime_certificate, fixture: 'SenderCA')
           end
 
           let(:mail) do
-            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_name_with_trusted_ca.eml').read
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/sender_is_signer_with_ca.eml').read
             mail = Channel::EmailParser.new.parse(smime_mail.to_s)
             SecureMailing.incoming(mail)
 
@@ -349,7 +367,7 @@ RSpec.describe SecureMailing::SMIME do
           end
 
           it 'verifies' do
-            expect(mail[:from]).to include('Zammad Helpdesk <smime-sender-name@example.com>')
+            expect(mail[:from]).to include('Zammad Helpdesk <smime-sender-ca@example.com>')
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
             expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com')

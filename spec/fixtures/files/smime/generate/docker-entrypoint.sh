@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 echo "Zammad S/MIME test certificate generation"
 
 if [[ ! -e "$CERT_DIR/RootCA.key" ]] || [[ ! -e "$CERT_DIR/RootCA.crt" ]]
@@ -161,30 +159,66 @@ do
   fi
 done
 
-echo "Generating sender name CA certificate"
+echo "Generating sender CA certificate"
 
-if [[ ! -e "$CERT_DIR/SenderNameCA.key" ]] || [[ ! -e "$CERT_DIR/SenderNameCA.crt" ]]
+if [[ ! -e "$CERT_DIR/SenderCA.key" ]] || [[ ! -e "$CERT_DIR/SenderCA.crt" ]]
 then
-  echo "Generating SenderNameCA.key and SenderNameCA.crt"
-  openssl req -x509 -new -nodes -days 73000 -keyout $CERT_DIR/SenderNameCA.key -out $CERT_DIR/SenderNameCA.crt -config sender_name_ca.cnf
+  echo "Generating SenderCA.key and SenderCA.crt"
+  openssl req -x509 -new -nodes -days 73000 -keyout $CERT_DIR/SenderCA.key -passout file:pass.secret -out $CERT_DIR/SenderCA.crt -config sender_ca.cnf
 
-  echo "Generating SenderNameCA.secret"
-  cp pass.secret $CERT_DIR/SenderNameCA.secret
+  echo "Generating SenderCA.secret"
+  cp pass.secret $CERT_DIR/SenderCA.secret
 fi
 
-EMAIL_ADDRESS="smime-sender-name@example.com"
+echo "Generating sender certificate (with CA)"
+
+EMAIL_ADDRESS="smime-sender-ca@example.com"
 
 if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]]
 then
   echo "Generating $EMAIL_ADDRESS.key and $EMAIL_ADDRESS.csr (certificate signing request)"
-  openssl req -new -nodes -keyout $CERT_DIR/$EMAIL_ADDRESS.key -out $CERT_DIR/$EMAIL_ADDRESS.csr -config sender_name.cnf
+  openssl req -new -keyout $CERT_DIR/$EMAIL_ADDRESS.key -passout file:pass.secret -out $CERT_DIR/$EMAIL_ADDRESS.csr -config sender.cnf
 
   echo "Generating $EMAIL_ADDRESS.crt (certificate)"
-  openssl x509 -req -days 73000 -in $CERT_DIR/$EMAIL_ADDRESS.csr -CA $CERT_DIR/SenderNameCA.crt -CAkey $CERT_DIR/SenderNameCA.key -CAcreateserial -CAserial /tmp/SenderNameCA.seq -out $CERT_DIR/$EMAIL_ADDRESS.crt -addtrust emailProtection -addreject clientAuth -addreject serverAuth -trustout -extensions v3_ca -extfile v3_ca.cnf -passin file:pass.secret
+  openssl x509 -req -days 73000 -in $CERT_DIR/$EMAIL_ADDRESS.csr -CA $CERT_DIR/SenderCA.crt -CAkey $CERT_DIR/SenderCA.key -CAcreateserial -CAserial /tmp/SenderCA.seq -out $CERT_DIR/$EMAIL_ADDRESS.crt -addtrust emailProtection -addreject clientAuth -addreject serverAuth -trustout -extensions v3_ca -extfile v3_ca.cnf -passin file:pass.secret
 
   echo "Generating $EMAIL_ADDRESS.secret"
   cp pass.secret $CERT_DIR/$EMAIL_ADDRESS.secret
 fi
+
+echo "Generating test mails"
+
+for TEST_MAIL_SIGNER in sender_is_signer,smime1@example.com sender_not_signer,smime1@example.com sender_is_signer_with_ca,smime-sender-ca@example.com
+do
+  TEST_MAIL=${TEST_MAIL_SIGNER%,*}
+  TEST_SIGNER=${TEST_MAIL_SIGNER#*,}
+
+  if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml" ]]
+  then
+    if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.head.txt" ]] || [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.body.txt" ]]
+    then
+      echo "$CERT_DIR/$TEST_MAIL.eml.head.txt or $CERT_DIR/$TEST_MAIL.eml.body.txt not found, skipping..."
+      continue
+    fi
+
+    if [[ ! -e "$CERT_DIR/$TEST_SIGNER.crt" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.key" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.secret" ]]
+    then
+      echo "$CERT_DIR/$TEST_SIGNER.secret or $CERT_DIR/$TEST_SIGNER.secret or $CERT_DIR/$TEST_SIGNER.secret not found, skipping..."
+      continue
+    fi
+
+    if [ $TEST_SIGNER != "smime-sender-ca@example.com" ]
+    then
+      CERTFILE="RootCA.crt"
+    else
+      CERTFILE="SenderCA.crt"
+    fi
+
+    echo "Generating $CERT_DIR/$TEST_MAIL.eml"
+    openssl smime -sign -in "$CERT_DIR/$TEST_MAIL.eml.body.txt" -out "$CERT_DIR/$TEST_MAIL.eml" -signer "$CERT_DIR/$TEST_SIGNER.crt" -inkey "$CERT_DIR/$TEST_SIGNER.key" -certfile "$CERT_DIR/$CERTFILE" -text -passin "file:$CERT_DIR/$TEST_SIGNER.secret"
+    cat "$CERT_DIR/$TEST_MAIL.eml.head.txt" "$CERT_DIR/$TEST_MAIL.eml" > /tmp/test_mail && mv /tmp/test_mail "$CERT_DIR/$TEST_MAIL.eml"
+  fi
+done
 
 # run command passed to docker run
 exec "$@"
