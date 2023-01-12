@@ -891,6 +891,8 @@ RSpec.describe Ticket, type: :model do
 
         it 'send no trigger base notification' do
           expect(ticket.send(:trigger_based_notification?, customer)).to be(false)
+          expect(customer.reload.preferences[:mail_delivery_failed]).to be(true)
+          expect(customer.preferences[:mail_delivery_failed_data]).to eq(failed_date)
         end
 
         context 'with failed date 61 days ago' do
@@ -899,6 +901,19 @@ RSpec.describe Ticket, type: :model do
 
           it 'send trigger base notification' do
             expect(ticket.send(:trigger_based_notification?, customer)).to be(true)
+            expect(customer.reload.preferences[:mail_delivery_failed]).to be(false)
+            expect(customer.preferences[:mail_delivery_failed_data]).to be_nil
+          end
+        end
+
+        context 'with failed date 70 days ago' do
+
+          let(:failed_date) { 70.days.ago }
+
+          it 'send trigger base notification' do
+            expect(ticket.send(:trigger_based_notification?, customer)).to be(true)
+            expect(customer.reload.preferences[:mail_delivery_failed]).to be(false)
+            expect(customer.preferences[:mail_delivery_failed_data]).to be_nil
           end
         end
       end

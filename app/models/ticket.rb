@@ -1850,8 +1850,15 @@ result
     return 0 if !user.preferences[:mail_delivery_failed]
     return 0 if user.preferences[:mail_delivery_failed_data].blank?
 
-    # blocked for 60 full days
-    (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
+    # blocked for 60 full days; see #4459
+    remaining_days = (user.preferences[:mail_delivery_failed_data].to_date - Time.zone.now.to_date).to_i + 61
+    return remaining_days if remaining_days.positive?
+
+    # cleanup user preferences
+    user.preferences[:mail_delivery_failed] = false
+    user.preferences[:mail_delivery_failed_data] = nil
+    user.save!
+    0
   end
 
 end
