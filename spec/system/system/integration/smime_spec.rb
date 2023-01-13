@@ -64,8 +64,16 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
   end
 
   context 'Adding private keys allows adding certificates #3727' do
-    let!(:private_key) do
-      Rails.root.join('spec/fixtures/files/smime/issue_3727.key').read
+    let(:private_key) do
+      Rails.root.join('spec/fixtures/files/smime/issue_3727.key').read.chomp
+    end
+
+    let(:private_key_secret) do
+      Rails.root.join('spec/fixtures/files/smime/issue_3727.secret').read.chomp
+    end
+
+    let(:certificate_fingerprint) do
+      Rails.root.join('spec/fixtures/files/smime/issue_3727.fingerprint').read.chomp
     end
 
     it 'does add public and private key in one file' do
@@ -73,11 +81,12 @@ RSpec.describe 'Manage > Integration > S/MIME', type: :system do
       # add private key
       click '.js-addPrivateKey'
       fill_in 'Paste Private Key', with: private_key
+      fill_in 'Enter Private Key Secret', with: private_key_secret
       click '.js-submit'
 
       # check result
       expect(Setting.get('smime_integration')).to be true
-      expect(SMIMECertificate.last.fingerprint).to eq('db49277070afcfc657bd71d04be4dd7e28f1685a')
+      expect(SMIMECertificate.last.fingerprint).to eq(certificate_fingerprint)
       expect(SMIMECertificate.last.raw).to include('CERTIFICATE')
       expect(SMIMECertificate.last.raw).not_to include('PRIVATE')
       expect(SMIMECertificate.last.private_key).to include('PRIVATE')

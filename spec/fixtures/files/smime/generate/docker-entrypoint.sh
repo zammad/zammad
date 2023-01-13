@@ -78,6 +78,17 @@ do
   fi
 done
 
+echo "Generating a combo of private key and certificate for issue #3727"
+
+if [[ ! -e "$CERT_DIR/issue_3727.key" ]]
+then
+  cat "$CERT_DIR/smime1@example.com.key" "$CERT_DIR/smime1@example.com.crt" > "$CERT_DIR/issue_3727.key"
+  cp "$CERT_DIR/smime1@example.com.secret" "$CERT_DIR/issue_3727.secret"
+
+  # Get SHA1 fingerprint of the certificate, in lowercase.
+  openssl x509 -fingerprint -sha1 -noout -in "$CERT_DIR/smime1@example.com.crt" | sed -r 's/.*=([0-9A-F:]{59})/\1/' | sed 's/://g' | tr '[:upper:]' '[:lower:]' > "$CERT_DIR/issue_3727.fingerprint"
+fi
+
 echo "Generating from CA chain"
 # shellcheck disable=SC2043
 for EMAIL_ADDRESS in chain@example.com
