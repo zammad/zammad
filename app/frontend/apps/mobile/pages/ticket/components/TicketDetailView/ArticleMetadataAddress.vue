@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
-import type { TicketArticle } from '../../types/tickets'
+import type { TicketArticle } from '@shared/entities/ticket/types'
 
 interface Props {
   address?: TicketArticle['from']

@@ -6,7 +6,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
-import { useTicketArticleRetrySecurityProcessMutation } from '@shared/entities/article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
+import { useTicketArticleRetrySecurityProcessMutation } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleSecurityState } from '@shared/graphql/types'
 import { i18n } from '@shared/i18n'
 import { MutationHandler } from '@shared/server/apollo/handler'
@@ -160,10 +160,7 @@ const popupItems = computed(() =>
       :label="$t('Signed')"
     />
   </button>
-  <CommonSectionPopup
-    v-model:state="showPopup"
-    :items="popupItems"
-  >
+  <CommonSectionPopup v-model:state="showPopup" :items="popupItems">
     <template #header>
       <div
         class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4"

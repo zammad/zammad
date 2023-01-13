@@ -4,7 +4,7 @@ import { useApplicationStore } from '@shared/stores/application'
 import { canDownloadFile } from '@shared/utils/files'
 import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
-import type { TicketArticleAttachment } from '../types/tickets'
+import type { TicketArticleAttachment } from '@shared/entities/ticket/types'
 
 interface AttachmentsOptions {
   ticketInternalId: number

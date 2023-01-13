@@ -1,14 +1,14 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { getArticleChannelIcon } from '@shared/entities/article/composables/getArticleChannelIcon'
+import { getArticleChannelIcon } from '@shared/entities/ticket-article/composables/getArticleChannelIcon'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
 import { i18n } from '@shared/i18n'
+import type { TicketArticle } from '@shared/entities/ticket/types'
 import ArticleMetadataAddress from './ArticleMetadataAddress.vue'
-import type { TicketArticle } from '../../types/tickets'
 
 interface Props {
   name: string

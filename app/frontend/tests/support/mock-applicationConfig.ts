@@ -2,10 +2,10 @@
 
 import { useApplicationStore } from '@shared/stores/application'
 import type { ConfigList } from '@shared/types/store'
-import { initializeStore } from './components/renderComponent'
+import { initializePiniaStore } from './components/renderComponent'
 
 export const mockApplicationConfig = (config: ConfigList) => {
-  initializeStore()
+  initializePiniaStore()
 
   const application = useApplicationStore()
 

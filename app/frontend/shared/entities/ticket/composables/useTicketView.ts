@@ -1,27 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
-import type { TicketById } from '@mobile/pages/ticket/types/tickets'
-import { useSessionStore } from '@shared/stores/session'
+import type { TicketById } from '@shared/entities/ticket/types'
+import { getTicketView } from '../utils/getTicketView'
 
 export const useTicketView = (ticket: Ref<TicketById | undefined>) => {
-  const session = useSessionStore()
+  const view = computed(() => ticket.value && getTicketView(ticket.value))
 
-  const isTicketEditable = computed(() => {
-    return ticket.value?.policy.update ?? false
-  })
-
-  const isTicketCustomer = computed(() => {
-    return (
-      session.hasPermission('ticket.customer') &&
-      !session.hasPermission('ticket.agent') &&
-      !!ticket.value
-    )
-  })
-
-  const isTicketAgent = computed(() => {
-    return session.hasPermission('ticket.agent') && !!ticket.value
-  })
+  const isTicketEditable = computed(() => view.value?.isTicketEditable || false)
+  const isTicketCustomer = computed(() => view.value?.isTicketCustomer || false)
+  const isTicketAgent = computed(() => view.value?.isTicketAgent || false)
 
   return { isTicketAgent, isTicketCustomer, isTicketEditable }
 }

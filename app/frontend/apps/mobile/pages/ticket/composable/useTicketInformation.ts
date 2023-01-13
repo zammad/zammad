@@ -5,7 +5,7 @@ import type { TicketQuery, TicketQueryVariables } from '@shared/graphql/types'
 import type { QueryHandler } from '@shared/server/apollo/handler'
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
 import { inject } from 'vue'
-import type { TicketById } from '../types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 
 export const TICKET_INFORMATION_SYMBOL = Symbol('ticket')
 

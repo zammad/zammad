@@ -3,7 +3,7 @@
 import { i18n } from '@shared/i18n'
 import type { Ref } from 'vue'
 import { computed } from 'vue'
-import type { TicketArticle } from '../types/tickets'
+import type { TicketArticle } from '@shared/entities/ticket/types'
 
 interface ArticleRow {
   type: 'article-bubble'

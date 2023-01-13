@@ -4,7 +4,7 @@ const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
 import { ApolloError } from '@apollo/client/errors'
-import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
+import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
 import { getAllByTestId, getByLabelText } from '@testing-library/vue'
 import { getByIconName } from '@tests/support/components/iconQueries'
@@ -179,7 +179,8 @@ test('show article context on click', async () => {
   await view.events.click(contextTriggers[0])
 
   expect(view.getByText('Set to internal')).toBeInTheDocument()
-  expect(view.getByText('Reply')).toBeInTheDocument()
+  expect(view.getByText('Split')).toBeInTheDocument()
+  // expect(view.getByText('Reply')).toBeInTheDocument()
 
   // TODO actions itself should be tested when reply will be implemented
 })

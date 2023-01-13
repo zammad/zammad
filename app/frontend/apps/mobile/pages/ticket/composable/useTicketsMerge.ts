@@ -15,8 +15,8 @@ import { useRouter } from 'vue-router'
 import { useTicketMergeMutation } from '@shared/entities/ticket/graphql/mutations/merge.api'
 import type { AutocompleteSearchMergeTicketEntry } from '@shared/graphql/types'
 import { keyBy } from 'lodash-es'
+import type { TicketById } from '@shared/entities/ticket/types'
 import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api'
-import type { TicketById } from '../types/tickets'
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
 
 export const useTicketsMerge = (

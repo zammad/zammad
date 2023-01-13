@@ -8,12 +8,12 @@ import { QueryHandler } from '@shared/server/apollo/handler'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import { convertToGraphQLId } from '@shared/graphql/utils'
+import type { TicketArticle } from '@shared/entities/ticket/types'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
-import type { TicketArticle } from '../types/tickets'
 import { useTicketInformation } from '../composable/useTicketInformation'
 
 interface Props {
@@ -118,7 +118,8 @@ const loadPreviousArticles = async () => {
       class="mt-2"
     >
       <TicketArticlesList
-        :ticket-internal-id="Number(internalId)"
+        v-if="ticket"
+        :ticket="ticket"
         :articles="articles"
         :total-count="totalCount"
         @load-previous="loadPreviousArticles"

@@ -10,8 +10,6 @@ import type { Matcher, RenderResult } from '@testing-library/vue'
 import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { merge, cloneDeep } from 'lodash-es'
-import type { TestingPinia } from '@pinia/testing'
-import { createTestingPinia } from '@pinia/testing'
 import { plugin as formPlugin } from '@formkit/vue'
 import { buildFormKitPluginConfig } from '@shared/form'
 import applicationConfigPlugin from '@shared/plugins/applicationConfigPlugin'
@@ -23,13 +21,12 @@ import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageV
 import { imageViewerOptions } from '@shared/composables/useImageViewer'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
-import { useApplicationStore } from '@shared/stores/application'
 import { initializeObjectAttributes } from '@mobile/object-attributes/initializeObjectAttributes'
 import { i18n } from '@shared/i18n'
-import type { Store } from 'pinia'
 import buildIconsQueries from './iconQueries'
 import buildLinksQueries from './linkQueries'
 import { waitForNextTick } from '../utils'
+import { cleanupStores, initializeStore } from './initializeStore'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
 
@@ -48,7 +45,7 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   }
 }
 
-type UserEvent = ReturnType<typeof userEvent['setup']>
+type UserEvent = ReturnType<(typeof userEvent)['setup']>
 
 interface PageEvents extends UserEvent {
   debounced(fn: () => unknown, ms?: number): Promise<void>
@@ -162,23 +159,11 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   routerInitialized = true
 }
 
-let storeInitialized = false
-
-let pinia: TestingPinia
-export const getTestPinia = () => pinia
-const stores = new Set<Store>()
-
-export const initializeStore = () => {
-  if (storeInitialized) return
-
-  pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
-  plugins.push({ install: pinia.install })
-  pinia.use((context) => {
-    stores.add(context.store)
-  })
-  storeInitialized = true
-  const app = useApplicationStore()
-  app.config.api_path = '/api'
+export const initializePiniaStore = () => {
+  const store = initializeStore()
+  if (store) {
+    plugins.push({ install: store.install })
+  }
 }
 
 let formInitialized = false
@@ -198,7 +183,7 @@ let applicationConfigInitialized = false
 const initializeApplicationConfig = () => {
   if (applicationConfigInitialized) return
 
-  initializeStore()
+  initializePiniaStore()
 
   plugins.push(applicationConfigPlugin)
 
@@ -217,12 +202,7 @@ export const cleanup = () => {
     }
   })
 
-  if (!pinia || !stores.size) return
-  stores.forEach((store) => {
-    store.$dispose()
-  })
-  pinia.state.value = {}
-  stores.clear()
+  cleanupStores()
 }
 
 globalThis.cleanupComponents = cleanup
@@ -331,7 +311,7 @@ const renderComponent = <Props>(
     initializeRouter(wrapperOptions?.routerRoutes)
   }
   if (wrapperOptions?.store) {
-    initializeStore()
+    initializePiniaStore()
   }
   if (wrapperOptions?.form) {
     initializeForm()

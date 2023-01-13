@@ -2392,23 +2392,6 @@ export type FormUpdaterQueryVariables = Exact<{
 
 export type FormUpdaterQuery = { __typename?: 'Queries', formUpdater: any };
 
-export type SecurityStateFragment = { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null };
-
-export type TicketArticleChangeVisibilityMutationVariables = Exact<{
-  articleId: Scalars['ID'];
-  internal: Scalars['Boolean'];
-}>;
-
-
-export type TicketArticleChangeVisibilityMutation = { __typename?: 'Mutations', ticketArticleChangeVisibility?: { __typename?: 'TicketArticleChangeVisibilityPayload', article?: { __typename?: 'TicketArticle', id: string, internal: boolean } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
-
-export type TicketArticleRetrySecurityProcessMutationVariables = Exact<{
-  articleId: Scalars['ID'];
-}>;
-
-
-export type TicketArticleRetrySecurityProcessMutation = { __typename?: 'Mutations', ticketArticleRetrySecurityProcess?: { __typename?: 'TicketArticleRetrySecurityProcessPayload', retryResult?: { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null } | null, article?: { __typename?: 'TicketArticle', id: string, securityState?: { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
-
 export type ObjectManagerFrontendAttributesQueryVariables = Exact<{
   object: EnumObjectManagerObjects;
 }>;
@@ -2470,6 +2453,23 @@ export type AutocompleteSearchTagQueryVariables = Exact<{
 
 
 export type AutocompleteSearchTagQuery = { __typename?: 'Queries', autocompleteSearchTag: Array<{ __typename?: 'AutocompleteSearchEntry', value: string, label: string }> };
+
+export type SecurityStateFragment = { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null };
+
+export type TicketArticleChangeVisibilityMutationVariables = Exact<{
+  articleId: Scalars['ID'];
+  internal: Scalars['Boolean'];
+}>;
+
+
+export type TicketArticleChangeVisibilityMutation = { __typename?: 'Mutations', ticketArticleChangeVisibility?: { __typename?: 'TicketArticleChangeVisibilityPayload', article?: { __typename?: 'TicketArticle', id: string, internal: boolean } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+
+export type TicketArticleRetrySecurityProcessMutationVariables = Exact<{
+  articleId: Scalars['ID'];
+}>;
+
+
+export type TicketArticleRetrySecurityProcessMutation = { __typename?: 'Mutations', ticketArticleRetrySecurityProcess?: { __typename?: 'TicketArticleRetrySecurityProcessPayload', retryResult?: { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null } | null, article?: { __typename?: 'TicketArticle', id: string, securityState?: { __typename?: 'TicketArticleSecurityState', type?: string | null, signingSuccess?: boolean | null, signingMessage?: string | null, encryptionSuccess?: boolean | null, encryptionMessage?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type TicketCustomerUpdateMutationVariables = Exact<{
   ticketId: Scalars['ID'];

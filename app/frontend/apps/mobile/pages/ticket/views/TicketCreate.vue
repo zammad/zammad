@@ -42,7 +42,7 @@ import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButt
 import { errorOptions } from '@mobile/router/error'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { useTicketSignature } from '@shared/composables/useTicketSignature'
-import { TicketFormData } from '../types/tickets'
+import { TicketFormData } from '@shared/entities/ticket/types'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 
 const router = useRouter()

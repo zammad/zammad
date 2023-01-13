@@ -4,19 +4,19 @@
 // TODO scroll to bottom when data is loaded(?)
 import { toRef, shallowRef } from 'vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import ArticleBubble from './ArticleBubble.vue'
 import ArticlesPullDown from './ArticlesPullDown.vue'
 import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
 import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
 import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
-import type { TicketArticle } from '../../types/tickets'
 import { useTicketArticleRows } from '../../composable/useTicketArticlesRows'
 import { useTicketArticleContext } from '../../composable/useTicketArticleContext'
 import ArticleSystem from './ArticleSystem.vue'
 
 interface Props {
   articles: TicketArticle[]
-  ticketInternalId: number
+  ticket: TicketById
   totalCount: number
 }
 
@@ -78,10 +78,10 @@ const filterAttachments = (article: TicketArticle) => {
             : 'right'
         "
         :security="row.article.securityState"
-        :ticket-internal-id="ticketInternalId"
+        :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
-        @show-context="showArticleContext(row.article, ticketInternalId)"
+        @show-context="showArticleContext(row.article, ticket)"
       />
       <ArticleSystem
         v-if="row.type === 'system'"

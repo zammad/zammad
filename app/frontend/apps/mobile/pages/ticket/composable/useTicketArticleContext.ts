@@ -3,80 +3,64 @@
 import type { PopupItem } from '@mobile/components/CommonSectionPopup'
 import { useDialog } from '@shared/composables/useDialog'
 import { computed, ref, shallowRef } from 'vue'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import { useTicketArticleChangeVisibilityMutation } from '@shared/entities/article/graphql/mutations/change_visibility.api'
-import type { TicketArticle } from '../types/tickets'
+import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
+import { createArticleActions } from '@shared/entities/ticket-article/action/plugins'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
-  const ticketInternalId = ref(0)
+  const ticketForContext = shallowRef<TicketById>()
+  const selectionRange = ref<Range>()
   const metadataDialog = useDialog({
     name: 'article-metadata',
     component: () =>
       import('../components/TicketDetailView/ArticleMetadataDialog.vue'),
   })
 
-  const isInternal = computed<boolean>(
-    () => articleForContext.value?.internal || false,
-  )
+  const triggerId = ref(0)
 
-  const changeVisibilityAction = (
-    articleId: string,
-    targetInternalState: boolean,
-  ) => {
-    const errorNotificationMessage = targetInternalState
-      ? __('The article could not be set to internal.')
-      : __('The article could not be set to public.')
+  const recalculate = () => {
+    triggerId.value += 1
+  }
 
-    const mutation = new MutationHandler(
-      useTicketArticleChangeVisibilityMutation({
-        variables: { articleId, internal: targetInternalState },
-      }),
-      { errorNotificationMessage },
-    )
-
-    mutation.send()
+  const disposeCallbacks: (() => unknown)[] = []
+  const onDispose = (callback: () => unknown) => {
+    disposeCallbacks.push(callback)
   }
 
   const contextOptions = computed<PopupItem[]>(() => {
-    const articleId = articleForContext.value?.id
-    if (!articleId) return []
+    const ticket = ticketForContext.value
+    const article = articleForContext.value
 
-    const targetInternalState = !isInternal.value
+    // trigger ID cannot be less than 0, so it's just a hint for vue to recalculate computed
+    if (!article || !ticket || triggerId.value < 0) return []
+
+    // clear all side effects before recalculating
+    disposeCallbacks.forEach((callback) => callback())
+    disposeCallbacks.length = 0
+
+    const actions = createArticleActions(ticket, article, {
+      recalculate,
+      onDispose,
+    }).map((action) => {
+      const { perform, link, label } = action
+      if (!perform) return action
+      return {
+        label,
+        link,
+        onAction: () =>
+          perform(ticket, article, { selection: selectionRange.value }),
+      }
+    })
 
     return [
-      {
-        label: targetInternalState
-          ? __('Set to internal')
-          : __('Set to public'),
-        onAction: () => changeVisibilityAction(articleId, targetInternalState),
-      },
-      {
-        label: __('Reply'),
-        onAction() {
-          console.log('reply')
-        },
-      },
-      {
-        label: __('Forward'),
-        onAction() {
-          console.log('forward')
-        },
-      },
-      {
-        label: __('Split'),
-        onAction() {
-          console.log('split')
-        },
-      },
+      ...actions,
       {
         label: __('Show meta data'),
-        noHideOnSelect: true,
         onAction() {
           metadataDialog.open({
             name: metadataDialog.name,
-            article: articleForContext.value,
-            ticketInternalId: ticketInternalId.value,
+            article,
+            ticketInternalId: ticket.internalId,
           })
         },
       },
@@ -91,14 +75,24 @@ export const useTicketArticleContext = () => {
       // setting it to "false" is done via "update:modelValue"
       if (!value) {
         articleForContext.value = undefined
+        // TODO: add tests, when we have an action that uses it
+        disposeCallbacks.forEach((callback) => callback())
+        disposeCallbacks.length = 0
       }
     },
   })
 
-  const showArticleContext = (article: TicketArticle, ticketId: number) => {
+  const showArticleContext = (article: TicketArticle, ticket: TicketById) => {
     metadataDialog.prefetch()
     articleForContext.value = article
-    ticketInternalId.value = ticketId
+    ticketForContext.value = ticket
+    try {
+      // TODO: only put range, if it's inside the article
+      // can throw RangeError
+      selectionRange.value = window.getSelection()?.getRangeAt(0)
+    } catch {
+      selectionRange.value = undefined
+    }
   }
 
   return {

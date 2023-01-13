@@ -11,8 +11,8 @@ import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSe
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
+import type { TicketById } from '@shared/entities/ticket/types'
 import { useTicketsMerge } from '../../composable/useTicketsMerge'
-import type { TicketById } from '../../types/tickets'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
 
 // TODO I think the complete dialog should not be available for none agent user (and maybe also for agents without write permission?)

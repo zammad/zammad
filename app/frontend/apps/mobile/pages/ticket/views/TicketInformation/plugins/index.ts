@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById } from '@mobile/pages/ticket/types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 import type { RouteRecordRaw } from 'vue-router'
 
 export interface TicketInformationPlugin {

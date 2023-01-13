@@ -19,9 +19,9 @@ import UserError from '@shared/errors/UserError'
 import { useTicketCustomerUpdateMutation } from '@shared/entities/ticket/graphql/mutations/customerUpdate.api'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import type { TicketById } from '@mobile/pages/ticket/types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
-import { TicketCustomerUpdateFormData } from '@mobile/pages/ticket/types/tickets'
+import { TicketCustomerUpdateFormData } from '@shared/entities/ticket/types'
 import { useConfirmationDialog } from '@mobile/components/CommonConfirmation'
 
 export interface Props {

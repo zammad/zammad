@@ -11,7 +11,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
-import type { TicketById } from '../../types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 
 interface Props {
   ticket: TicketById

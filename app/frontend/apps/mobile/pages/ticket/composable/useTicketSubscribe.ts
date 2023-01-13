@@ -7,7 +7,7 @@ import { useMentionSubscribeMutation } from '@shared/entities/ticket/graphql/mut
 import { useMentionUnsubscribeMutation } from '@shared/entities/ticket/graphql/mutations/unsubscribe.api'
 import type { TicketQuery } from '@shared/graphql/types'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
-import type { TicketById } from '../types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 
 export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
   const { isTicketAgent } = useTicketView(ticket)

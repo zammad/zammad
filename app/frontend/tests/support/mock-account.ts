@@ -2,10 +2,10 @@
 
 import { useSessionStore } from '@shared/stores/session'
 import type { UserData } from '@shared/types/store'
-import { initializeStore } from './components/renderComponent'
+import { initializePiniaStore } from './components/renderComponent'
 
 export const mockAccount = (mockUser: Partial<UserData>) => {
-  initializeStore()
+  initializePiniaStore()
   const user = useSessionStore()
   user.user = {
     id: '123',

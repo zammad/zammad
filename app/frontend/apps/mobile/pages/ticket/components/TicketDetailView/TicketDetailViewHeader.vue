@@ -8,7 +8,7 @@ import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useSessionStore } from '@shared/stores/session'
-import type { TicketById } from '../../types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 
 interface Props {
   ticket?: TicketById

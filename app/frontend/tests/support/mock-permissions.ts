@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { useSessionStore } from '@shared/stores/session'
-import { initializeStore } from './components/renderComponent'
+import { initializePiniaStore } from './components/renderComponent'
 
 export const mockPermissions = (permissions: string[]) => {
-  initializeStore()
+  initializePiniaStore()
 
   const session = useSessionStore()
   if (!session.user) {

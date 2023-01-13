@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById } from '@mobile/pages/ticket/types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { ref } from 'vue'

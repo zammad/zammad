@@ -10,8 +10,8 @@ import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { ComputedRef, ShallowRef } from 'vue'
 import { reactive, watch } from 'vue'
+import type { TicketById } from '@shared/entities/ticket/types'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
-import type { TicketById } from '../types/tickets'
 
 export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,

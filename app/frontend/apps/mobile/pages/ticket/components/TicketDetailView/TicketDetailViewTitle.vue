@@ -5,7 +5,7 @@ import CommonTicketPriorityIndicator from '@shared/components/CommonTicketPriori
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { computed } from 'vue'
-import type { TicketById } from '../../types/tickets'
+import type { TicketById } from '@shared/entities/ticket/types'
 
 interface Props {
   ticket: TicketById
