@@ -20,7 +20,7 @@
     # First, checkout stable and set it up.
     - git fetch --unshallow
     - git checkout stable
-    - !reference [.scripts, source_rvm] # TODO: this will cause issues if we have Ruby version changes.
+    - !reference [.scripts, source_rvm]
     - rvm use 3.0.4
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]

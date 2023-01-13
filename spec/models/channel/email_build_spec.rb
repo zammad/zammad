@@ -86,7 +86,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
 
       it 'does not include content* properties in attachment preferences' do
         expect(file_attachment).not_to include(
-          'preferences' => include('content-alternative')
+          'preferences' => include('content-alternative', 'Content-ID')
         )
       end
     end

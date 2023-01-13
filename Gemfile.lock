@@ -8,14 +8,6 @@ GIT
       nokogiri
       nori
 
-GIT
-  remote: https://github.com/zammad-deps/mail
-  revision: 9265cf75bbe376f595944bd10d2dd953f863e765
-  branch: 2-7-stable
-  specs:
-    mail (2.7.2.edge)
-      mini_mime (>= 0.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -278,6 +270,11 @@ GEM
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    mail (2.8.0.1)
+      mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
     memoizable (0.4.2)
@@ -672,7 +669,7 @@ DEPENDENCIES
   json
   koala
   listen
-  mail!
+  mail
   messagebird-rest
   mime-types
   minitest-profile
