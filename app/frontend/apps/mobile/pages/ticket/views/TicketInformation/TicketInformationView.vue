@@ -10,13 +10,20 @@ import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButt
 import { useDialog } from '@shared/composables/useDialog'
 import { ticketInformationPlugins } from './plugins'
 import { useTicketInformation } from '../../composable/useTicketInformation'
+import TicketDetailViewUpdateButton from '../../components/TicketDetailView/TicketDetailViewUpdateButton.vue'
 
 defineProps<{
   internalId: string
 }>()
 
-const { ticket, ticketQuery, canSubmitForm, canUpdateTicket } =
-  useTicketInformation()
+const {
+  ticket,
+  ticketQuery,
+  newTicketArticlePresent,
+  isTicketFormGroupValid,
+  isArticleFormGroupValid,
+  showArticleReplyDialog,
+} = useTicketInformation()
 
 const loadingTicket = ticketQuery.loading()
 
@@ -51,6 +58,16 @@ const types = computed<CommonButtonOption[]>(() => {
       }
     })
 })
+
+const submitForm = () => {
+  if (
+    isTicketFormGroupValid.value &&
+    newTicketArticlePresent.value &&
+    !isArticleFormGroupValid.value
+  ) {
+    showArticleReplyDialog()
+  }
+}
 </script>
 
 <template>
@@ -79,21 +96,17 @@ const types = computed<CommonButtonOption[]>(() => {
     </div>
   </header>
   <div class="flex p-4">
-    <!-- TODO fixed size? "..." for long titles -->
-    <h1 class="flex flex-1 items-center text-xl font-bold">
+    <h1
+      class="flex flex-1 items-center break-words text-xl font-bold leading-7 line-clamp-3"
+    >
       <CommonLoader position="left" :loading="loadingTicket">
         {{ ticket?.title }}
       </CommonLoader>
     </h1>
-    <button
-      v-if="canUpdateTicket"
-      class="h-10 w-10 rounded-full bg-yellow p-1 text-black disabled:bg-yellow/50"
-      form="form-ticket-edit"
-      :disabled="!canSubmitForm"
-      :title="$t('Save ticket')"
-    >
-      <CommonIcon name="mobile-arrow-up" decorative />
-    </button>
+    <TicketDetailViewUpdateButton
+      class="rtl-mr-3 ltr:ml-3"
+      @click="submitForm"
+    />
   </div>
   <CommonButtonGroup
     v-if="types.length > 1"

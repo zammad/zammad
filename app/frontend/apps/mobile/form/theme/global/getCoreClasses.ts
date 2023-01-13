@@ -24,25 +24,6 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
   }
 }
 
-export const addSelectLabel = (classes: Classes = {}): Classes => {
-  const {
-    label = '',
-    arrow = '',
-    outer = '',
-    wrapper = '',
-    inner = '',
-  } = classes
-
-  return addBlockFloatingLabel({
-    ...classes,
-    label: `${label} formkit-label-hidden:hidden`,
-    arrow: `${arrow} formkit-label-hidden:hidden`,
-    outer: `${outer} formkit-label-hidden:!min-h-[initial] formkit-label-hidden:!p-0`,
-    wrapper: `${wrapper} formkit-label-hidden:!py-0`,
-    inner: `${inner} formkit-label-hidden:!p-0`,
-  })
-}
-
 const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
   return {
     global: {},
@@ -74,7 +55,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       inner: `${classes.toggle?.inner || ''} flex items-center h-full`,
     }),
     tags: addBlockFloatingLabel(classes.tags),
-    select: addSelectLabel(classes.select),
+    select: addBlockFloatingLabel(classes.select),
     treeselect: addBlockFloatingLabel(classes.treeselect),
     autocomplete: addBlockFloatingLabel(classes.autocomplete),
     customer: addBlockFloatingLabel(classes.customer),

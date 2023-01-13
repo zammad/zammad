@@ -7,6 +7,7 @@ RSpec.describe 'Mobile > Ticket', app: :mobile, authenticated_as: :agent, type: 
   let(:agent)  { create(:agent, groups: [group]) }
   let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
 
+  # TODO: we should add a test which checks also the handling for multiple tabs
   context 'when subscribing to a ticket' do
     it 'updates the content on the page' do
       visit "/tickets/#{ticket.id}"

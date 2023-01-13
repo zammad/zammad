@@ -23,7 +23,7 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
     params = data
 
     # Add object id information for the perform worklow for already existing objects.
-    if object && !params['id']
+    if object
       params['id'] = object.id
     end
 

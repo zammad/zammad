@@ -769,8 +769,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     return form_context.form_gql_number(:tags) if type_tags?
   end
 
+  def triggers_form_updater?
+    element['data-triggers-form-updater'] == 'true'
+  end
+
   def maybe_wait_for_form_updater
-    return if form_context.nil?
+    return if form_context.nil? || !triggers_form_updater?
 
     gql_number = form_context.form_gql_number(:form_updater)
 

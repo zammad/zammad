@@ -59,12 +59,6 @@ const filterAttachments = (article: TicketArticle) => {
     aria-label="Articles"
     class="relative flex-1 space-y-5 px-4 pt-4"
   >
-    <!-- TODO counter indicator, use role="timer" -->
-    <!-- <button
-      class="absolute -top-7 right-4 flex h-14 w-14 items-center justify-center rounded-full bg-yellow text-black"
-    >
-      <CommonIcon name="mobile-arrow-up" />
-    </button> -->
     <template v-for="row in rows" :key="row.key">
       <ArticleBubble
         v-if="row.type === 'article-bubble'"

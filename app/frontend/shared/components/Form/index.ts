@@ -8,6 +8,7 @@ export type {
   AllowedClasses,
   FormHandlerFunction,
   FormHandler,
+  FormRef,
 } from './types'
 
 export { FormHandlerExecution } from './types'

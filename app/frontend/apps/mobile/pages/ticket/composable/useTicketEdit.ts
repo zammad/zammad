@@ -1,15 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormValues } from '@shared/components/Form'
-import type { FormRef } from '@shared/components/Form/composable'
-import type { FormData } from '@shared/components/Form/types'
+import type { ComputedRef, ShallowRef } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
+import type { FormValues, FormRef, FormData } from '@shared/components/Form'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import type { TicketUpdateInput } from '@shared/graphql/types'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
-import type { ComputedRef, ShallowRef } from 'vue'
-import { reactive, watch } from 'vue'
 import type { TicketById } from '@shared/entities/ticket/types'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
@@ -27,24 +25,34 @@ export const useTicketEdit = (
     const ticketId = initialTicketValue.id || ticket.id
     const { internalId: ownerInternalId } = ticket.owner
     initialTicketValue.id = ticket.id
-    initialTicketValue.title = ticket.title
     // show Zammad user as empty
     initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
-    const attributes =
-      ticket.objectAttributeValues?.reduce(
-        (acc: Record<string, unknown>, cur) => {
-          acc[cur.attribute.name] = cur.value
-          return acc
-        },
-        {},
-      ) || {}
-    Object.assign(initialTicketValue, attributes)
+
     form.value?.resetForm(initialTicketValue, ticket, {
       // don't reset to new values, if user changes something
       // if ticket is different, it's probably navigation to another ticket,
       // so we can safely reset the form
       resetDirty: ticketId !== ticket.id,
     })
+  })
+
+  const isTicketFormGroupValid = computed(() => {
+    const ticketGroup = form.value?.formNode?.at('ticket')
+    return !!ticketGroup?.context?.state.valid
+  })
+
+  const newTicketArticleRequested = ref(false)
+  const newTicketArticlePresent = ref(false)
+
+  const articleFormGroupNode = computed(() => {
+    if (!newTicketArticlePresent.value && !newTicketArticleRequested.value)
+      return undefined
+
+    return form.value?.formNode?.at('article')
+  })
+
+  const isArticleFormGroupValid = computed(() => {
+    return !!articleFormGroupNode.value?.context?.state.valid
   })
 
   const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
@@ -61,6 +69,8 @@ export const useTicketEdit = (
     const { internalObjectAttributeValues, additionalObjectAttributeValues } =
       useObjectAttributeFormData(objectAttributesLookup.value, formData)
 
+    // TODO: Add article handling, when needed
+
     return mutationUpdate.send({
       ticketId: ticket.value.id,
       input: {
@@ -72,6 +82,11 @@ export const useTicketEdit = (
 
   return {
     initialTicketValue,
+    isTicketFormGroupValid,
+    isArticleFormGroupValid,
+    articleFormGroupNode,
+    newTicketArticleRequested,
+    newTicketArticlePresent,
     editTicket,
   }
 }

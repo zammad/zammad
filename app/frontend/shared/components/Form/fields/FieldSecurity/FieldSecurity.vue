@@ -72,12 +72,12 @@ useTraverseOptions(optionsContainer, { direction: 'horizontal' })
       :key="option"
       role="option"
       type="button"
-      class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base font-bold"
+      class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base"
       :class="{
         'bg-gray-600/50 text-white/30': isDisabled(option),
         'cursor-pointer': !isDisabled(option),
         'bg-gray-300 text-white': !isCurrentValue(option),
-        'bg-white text-black': isCurrentValue(option),
+        'bg-white font-semibold text-black': isCurrentValue(option),
       }"
       :tabindex="isDisabled(option) ? -1 : 0"
       :disabled="isDisabled(option)"

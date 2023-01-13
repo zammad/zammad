@@ -1,14 +1,15 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useHeader } from '@mobile/composables/useHeader'
 import { computed, watch } from 'vue'
+import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { TicketArticle } from '@shared/entities/ticket/types'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
@@ -35,6 +36,7 @@ const articlesQuery = new QueryHandler(
 )
 
 const { ticket, ticketQuery } = useTicketInformation()
+const { isTicketEditable } = useTicketView(ticket)
 
 const isLoadingTicket = ticketQuery.loading()
 
@@ -126,5 +128,5 @@ const loadPreviousArticles = async () => {
       />
     </CommonLoader>
   </div>
-  <TicketReplyButton />
+  <TicketReplyButton v-if="isTicketEditable" />
 </template>

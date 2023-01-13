@@ -38,6 +38,7 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
       focus:outline-none
       placeholder:text-transparent
       pt-6
+      formkit-label-hidden:pt-4
     `),
     label: clean(`
       ${label}

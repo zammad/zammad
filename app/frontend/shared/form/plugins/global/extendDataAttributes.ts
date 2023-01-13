@@ -35,6 +35,11 @@ const extendDataAttribues = (node: FormKitNode) => {
         then: 'true',
         else: undefined,
       },
+      'data-label-hidden': {
+        if: '$labelSrOnly === true',
+        then: 'true',
+        else: undefined,
+      },
       'data-required': {
         if: "$fns.hasRule($parsedRules, 'required')",
         then: 'true',
@@ -42,6 +47,11 @@ const extendDataAttribues = (node: FormKitNode) => {
       },
       'data-dirty': {
         if: '$state.dirty',
+        then: 'true',
+        else: undefined,
+      },
+      'data-triggers-form-updater': {
+        if: '$triggerFormUpdater',
         then: 'true',
         else: undefined,
       },

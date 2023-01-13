@@ -31,6 +31,15 @@ export type FormFieldValue =
   | Record<string, SimpleFormFieldValue>
   | Record<string, SimpleFormFieldValue>[]
 
+export interface FormValues {
+  [index: string]: FormFieldValue
+}
+
+export type FormData<TFormValues = FormValues> = FormKitGroupValue &
+  TFormValues & {
+    formId: string
+  }
+
 // https://formkit.com/essentials/validation#showing-errors
 export enum FormValidationVisibility {
   Blur = 'blur',
@@ -55,6 +64,7 @@ export interface FormSchemaField {
   internal?: boolean
   value?: FormFieldValue
   label?: string
+  labelSrOnly?: boolean
   labelPlaceholder?: string
   placeholder?: string
   help?: string
@@ -95,6 +105,7 @@ export interface FormSchemaField {
 }
 
 export interface FormSchemaGroupOrList {
+  if?: string
   isGroupOrList: boolean
   type: 'group' | 'list'
   name: string
@@ -172,15 +183,6 @@ export interface ReactiveFormSchemData {
   [index: string]: unknown
 }
 
-export interface FormValues {
-  [index: string]: FormFieldValue
-}
-
-export type FormData<TFormValues = FormValues> = FormKitGroupValue &
-  TFormValues & {
-    formId: string
-  }
-
 export interface ChangedField {
   name: string
   newValue: FormFieldValue
@@ -208,4 +210,22 @@ export type FormHandlerFunction = (
 export interface FormHandler {
   execution: FormHandlerExecution[]
   callback: FormHandlerFunction
+}
+
+export interface FormResetOptions {
+  /**
+   * Should reset dirty fields to new values.
+   * @default true
+   */
+  resetDirty?: boolean
+}
+
+export interface FormRef {
+  formNode: FormKitNode
+  resetForm(
+    initialValues?: FormValues,
+    object?: ObjectLike,
+    options?: FormResetOptions,
+    groupNode?: FormKitNode,
+  ): void
 }

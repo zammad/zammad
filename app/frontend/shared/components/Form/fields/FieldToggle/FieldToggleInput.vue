@@ -8,6 +8,7 @@ import type { FormFieldContext } from '../../types/field'
 
 const props = defineProps<{
   context: FormFieldContext<{
+    // TODO: need to be changed to "options", because otherwise core workflow can not handle this
     variants?: {
       true?: string
       false?: string

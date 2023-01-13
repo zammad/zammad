@@ -14,26 +14,8 @@ import {
 import type { ShallowRef, Ref } from 'vue'
 import type { CommonStepperStep } from '@mobile/components/CommonStepper'
 import type { ObjectLike } from '@shared/types/utils'
-import type { FormValues } from './types'
+import type { FormRef, FormResetOptions, FormValues } from './types'
 
-interface ResetOptions {
-  /**
-   * Should reset dirty fields to new values.
-   * @default true
-   */
-  resetDirty?: boolean
-}
-
-export interface FormRef {
-  formNode: FormKitNode
-  resetForm(
-    initialValues?: FormValues,
-    object?: ObjectLike,
-    options?: ResetOptions,
-  ): void
-}
-
-// TODO: only a start, needs to be extended during the way...
 export const useForm = () => {
   const form: ShallowRef<FormRef | undefined> = shallowRef()
 
@@ -60,26 +42,46 @@ export const useForm = () => {
   /**
    * User can submit form, if it is:
    * - not disabled
-   * - valid
    * - has dirty values
    * After submit, the values should be reset to new values, so "dirty" state can update.
    * It is done automaticaly, if async `@submit` event is used. Otherwise, `formReset` should be used.
    */
   const canSubmit = computed(() => {
-    if (isDisabled.value || !isValid.value) return false
+    if (isDisabled.value) return false
     return isDirty.value
   })
 
   const formReset = (
     values?: FormValues,
     object?: ObjectLike,
-    options?: ResetOptions,
+    options?: FormResetOptions,
   ) => {
     form.value?.resetForm(values, object, options)
   }
 
+  const formGroupReset = (
+    groupNode: FormKitNode,
+    values?: FormValues,
+    object?: ObjectLike,
+    options?: FormResetOptions,
+  ) => {
+    form.value?.resetForm(values, object, options, groupNode)
+  }
+
   const formSubmit = () => {
     node.value?.submit()
+  }
+
+  const waitForFormSettled = () => {
+    return new Promise<FormKitNode>((resolve) => {
+      const interval = setInterval(() => {
+        if (!node.value) return
+
+        const formNode = node.value
+        clearInterval(interval)
+        formNode.settled.then(() => resolve(formNode))
+      })
+    })
   }
 
   return {
@@ -95,7 +97,9 @@ export const useForm = () => {
     isDisabled,
     canSubmit,
     formReset,
+    formGroupReset,
     formSubmit,
+    waitForFormSettled,
   }
 }
 

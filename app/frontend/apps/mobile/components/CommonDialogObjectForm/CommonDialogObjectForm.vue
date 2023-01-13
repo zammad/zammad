@@ -122,7 +122,7 @@ const saveObject = async (formData: FormData) => {
   <CommonDialog class="w-full" no-autofocus :name="name">
     <template #before-label>
       <button
-        class="text-blue"
+        class="text-white"
         :disabled="isDisabled"
         :class="{ 'opacity-50': isDisabled }"
         @click="cancelDialog"

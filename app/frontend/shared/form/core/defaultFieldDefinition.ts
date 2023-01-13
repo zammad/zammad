@@ -8,6 +8,7 @@ import addBlurEvent from '../features/addBlurEvent'
 
 const defaultProps: (keyof FormDefaultProps)[] = [
   'formId',
+  'labelSrOnly',
   'labelPlaceholder',
   'internal',
 ]

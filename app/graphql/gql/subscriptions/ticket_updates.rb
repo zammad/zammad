@@ -16,6 +16,7 @@ module Gql::Subscriptions
 
     # This can either be passed a ::Ticket for ticket updates, or a ::Ticket::Article if a specific article was changed.
     def update(ticket_id:)
+      Rails.logger.error "TICKET: #{object.inspect}"
       if object.is_a?(::Ticket::Article)
         return { ticket: object.ticket, ticket_article: object }
       end

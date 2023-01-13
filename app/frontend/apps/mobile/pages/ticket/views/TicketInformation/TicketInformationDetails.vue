@@ -2,11 +2,9 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
-import type { FormKitNode } from '@formkit/core'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { getFocusableElements } from '@shared/utils/getFocusableElements'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonUsersList from '@mobile/components/CommonUsersList/CommonUsersList.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
@@ -15,6 +13,7 @@ import CommonShowMoreButton from '@mobile/components/CommonShowMoreButton/Common
 import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import { useConfirmationDialog } from '@mobile/components/CommonConfirmation'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
@@ -23,35 +22,44 @@ const { attributes: objectAttributes } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
 )
 
-const { ticket, formVisible, ticketQuery, form, canUpdateTicket } =
-  useTicketInformation()
+const {
+  form,
+  initialFormTicketValue,
+  ticket,
+  updateFormLocation,
+  ticketQuery,
+  canUpdateTicket,
+} = useTicketInformation()
 
-const waitForFormSettled = () => {
-  // will resolve after ticket is loaded with graphql and form is mounted
-  return new Promise<FormKitNode>((resolve) => {
-    const interval = setInterval(() => {
-      const formNode = form.value?.formNode
-      if (!formNode) return
-      clearInterval(interval)
-      formNode.settled.then(() => resolve(formNode))
-    })
-  })
+const ticketFormGroupNode = computed(() => {
+  return form.value?.formNode?.at('ticket')
+})
+
+const { waitForConfirmation } = useConfirmationDialog()
+
+const discardTicketEditDialog = async () => {
+  if (!ticketFormGroupNode.value) return
+
+  const confirmed = await waitForConfirmation(
+    __('Are you sure? You have unsaved changes that will get lost.'),
+  )
+
+  if (!confirmed) return
+
+  form.value?.resetForm(
+    initialFormTicketValue,
+    ticket.value,
+    { resetDirty: true },
+    ticketFormGroupNode.value,
+  )
 }
 
-onMounted(async () => {
-  formVisible.value = true
-
-  await waitForFormSettled()
-  const formElement = document.querySelector(
-    '#form-ticket-edit',
-  ) as HTMLFormElement
-  const fields = getFocusableElements(formElement)
-
-  fields[0]?.focus()
+onMounted(() => {
+  updateFormLocation('[data-ticket-edit-form]')
 })
 
 onUnmounted(() => {
-  formVisible.value = false
+  updateFormLocation('body')
 })
 
 const {
@@ -120,6 +128,17 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
   <CommonLoader :loading="!ticket" />
 
   <div data-ticket-edit-form />
+
+  <FormKit
+    v-if="ticketFormGroupNode?.context?.state.dirty"
+    wrapper-class="mt-4 mb-4 flex grow justify-center items-center"
+    input-class="py-2 px-4 w-full h-14 text-base text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
+    type="button"
+    name="discardTicketInformation"
+    @click="discardTicketEditDialog"
+  >
+    {{ $t('Discard your unsaved changes') }}
+  </FormKit>
 
   <ObjectAttributes
     v-if="!canUpdateTicket && ticket"

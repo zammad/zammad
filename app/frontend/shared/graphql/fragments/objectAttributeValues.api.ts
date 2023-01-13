@@ -6,8 +6,6 @@ export const ObjectAttributeValuesFragmentDoc = gql`
   attribute {
     name
     display
-    dataType
-    dataOption
   }
   value
   renderedLink

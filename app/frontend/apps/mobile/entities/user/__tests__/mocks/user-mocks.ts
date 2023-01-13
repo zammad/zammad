@@ -66,13 +66,6 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
         attribute: {
           name: 'department',
           display: 'Department',
-          dataType: 'input',
-          dataOption: {
-            type: 'text',
-            maxlength: 200,
-            null: true,
-            item_class: 'formGroup--halfSize',
-          },
           __typename: 'ObjectManagerFrontendAttribute',
         },
         value: '',
@@ -83,14 +76,6 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
         attribute: {
           name: 'address',
           display: 'Address',
-          dataType: 'textarea',
-          dataOption: {
-            type: 'text',
-            maxlength: 500,
-            rows: 4,
-            null: true,
-            item_class: 'formGroup--halfSize',
-          },
           __typename: 'ObjectManagerFrontendAttribute',
         },
         value: '',

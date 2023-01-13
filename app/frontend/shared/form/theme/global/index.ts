@@ -9,6 +9,7 @@ const defaultTextInput: Record<string, string> = {
 const classes: FormThemeClasses = {
   global: {
     wrapper: 'formkit-disabled:opacity-30',
+    label: 'formkit-label-hidden:sr-only',
     help: 'mt-0.5 text-xs',
     messages: 'list-none',
     message: 'text-red-bright pb-1 text-xs',

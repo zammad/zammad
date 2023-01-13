@@ -221,8 +221,6 @@ describe('Creating new ticket as agent', () => {
       const editorNode = getNode('body')
       await editorNode?.input('Article body', false)
 
-      await waitUntil(() => mockFormUpdater.calls.resolve === 5)
-
       // there is button with "arrow up" and actual button
       const submitButton = view.getAllByRole('button', {
         name: 'Create ticket',

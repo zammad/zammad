@@ -159,7 +159,8 @@ const ticketArticleTypeSection = getFormSchemaGroupSection(
       isLayout: true,
       element: 'p',
       attrs: {
-        class: 'my-10 text-base text-center',
+        // TODO: check styling for this hint
+        class: 'my-10 text-base text-center text-yellow',
       },
       children: '$getAdditionalCreateNote($values.articleSenderType)',
     },
@@ -188,8 +189,8 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
           type: 'recipient',
           props: {
             multiple: true,
-            maxlength: 1000,
           },
+          triggerFormUpdater: false,
         },
       ],
     },
@@ -235,6 +236,7 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
               },
             },
           },
+          triggerFormUpdater: false,
         },
       ],
     },
@@ -480,7 +482,7 @@ export default {
       class="text-left"
       :schema="formSchema"
       :handlers="[useTicketFormOganizationHandler(), signatureHandling('body')]"
-      :multi-step-form-groups="Object.keys(allSteps)"
+      :flatten-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
       :autofocus="true"
@@ -500,7 +502,7 @@ export default {
       outer-class="mt-4 mb-2"
       :disabled="lastStepName === activeStep && submitButtonDisabled"
       wrapper-class="flex grow justify-center items-center"
-      input-class="py-2 px-4 w-full h-14 text-xl font-semibold rounded-xl select-none"
+      input-class="py-2 px-4 w-full h-14 text-lg rounded-xl select-none"
       @click="moveStep()"
     >
       {{ lastStepName === activeStep ? $t('Create ticket') : $t('Continue') }}

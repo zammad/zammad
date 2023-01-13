@@ -58,7 +58,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
     it 'does not show "save" button, but shows form as menu with sections' do
       visit "/tickets/#{ticket.id}/information"
 
-      expect(page).to have_no_button('Save ticket', disabled: true)
+      expect(page).to have_no_button('Save ticket')
       expect(page).to have_no_css('output', text: 'Tags')
       expect(find('section', text: %r{Tags})).to have_text('foo, bar')
       expect(find('section', text: %r{Group})).to have_text(ticket.group.name)
@@ -141,7 +141,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
           date_input = find_datepicker('Pending till')
           expect(date_input.input_element.value).to eq('')
 
-          expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
+          expect(find_button('Save ticket')).to have_css('[role="status"][aria-label="Validation failed"]')
 
           date_input.type_datetime(date)
         end
@@ -224,11 +224,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
           attribute_field.clear
 
-          expect(find_button('Save ticket', disabled: true).disabled?).to be(true)
+          expect(find_button('Save ticket')).to have_css('[role="status"][aria-label="Validation failed"]')
 
           attribute_field.type('New Text')
 
-          expect(find_button('Save ticket').disabled?).to be(false)
+          expect(find_button('Save ticket')).to have_no_css('[role="status"][aria-label="Validation failed"]')
           expect(ticket[attribute.name]).to eq('Attribute Text')
         end
 

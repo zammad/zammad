@@ -6,7 +6,7 @@ import type { NewNotification } from './types'
 import { type Notification, NotificationTypes } from './types'
 
 const notifications = ref<Notification[]>([])
-const defaultNotificationDurationMS = 5000
+const defaultNotificationDurationMS = 3000
 
 const removeNotification = (id: string) => {
   notifications.value = notifications.value.filter(

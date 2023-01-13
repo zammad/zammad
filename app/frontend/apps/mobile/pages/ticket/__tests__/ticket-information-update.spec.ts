@@ -9,7 +9,6 @@ import {
 } from '@tests/support/mock-graphql-api'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { waitUntil } from '@tests/support/utils'
-import { waitFor } from '@testing-library/vue'
 import { getNode } from '@formkit/core'
 import {
   mockUserGql,
@@ -94,25 +93,6 @@ describe('updating ticket information', () => {
     expect(
       view.queryByRole('button', { name: 'Save ticket' }),
     ).not.toBeInTheDocument()
-  })
-
-  it('title has focus', async () => {
-    const { view } = await visitTicketInformation()
-
-    expect(view.getByLabelText('Ticket title')).toHaveFocus()
-
-    const { mockUser } = mockUserGql()
-    mockGraphQLSubscription(UserUpdatesDocument)
-
-    await view.events.click(view.getByRole('tab', { name: 'Customer' }))
-
-    await waitUntil(() => mockUser.calls.resolve)
-
-    await view.events.click(view.getByRole('tab', { name: 'Ticket' }))
-
-    await waitFor(() => {
-      expect(view.getByLabelText('Ticket title')).toHaveFocus()
-    })
   })
 
   it('shows confirm popup, when leaving', async () => {

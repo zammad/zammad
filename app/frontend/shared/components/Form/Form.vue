@@ -46,7 +46,7 @@ import { useObjectAttributeFormFields } from '@shared/entities/object-attributes
 import testFlags from '@shared/utils/testFlags'
 import { edgesToArray } from '@shared/utils/helpers'
 import type { FormUpdaterTrigger } from '@shared/types/form'
-import type { ObjectLike } from '@shared/types/utils'
+import type { EntityObject } from '@shared/types/entity'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { parseGraphqlId } from '@shared/graphql/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
@@ -68,12 +68,6 @@ import {
 import FormLayout from './FormLayout.vue'
 import FormGroup from './FormGroup.vue'
 
-// TODO:
-// - Maybe some default buttons inside the components with loading cycle on submit?
-// (- Disabled form on submit? (i think it's the default of FormKit, but only when a promise will be returned from the submit handler))
-// - Reset/Clear form handling?
-// - Add usage of "clearErrors(true)"?
-
 export interface Props {
   id?: string
   schema?: FormSchemaNode[]
@@ -82,7 +76,7 @@ export interface Props {
   changeFields?: Record<string, Partial<FormSchemaField>>
   // Maybe in the future this is no longer needed, when FormKit supports group
   // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
-  multiStepFormGroups?: string[]
+  flattenFormGroups?: string[]
   schemaData?: Except<ReactiveFormSchemData, 'fields'>
   formKitPlugins?: FormKitPlugin[]
   formKitSectionsSchema?: Record<
@@ -93,7 +87,7 @@ export interface Props {
 
   // Can be used to define initial values on frontend side and fetched schema from the server.
   initialValues?: Partial<FormValues>
-  initialEntityObject?: ObjectLike
+  initialEntityObject?: EntityObject
   queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
@@ -103,7 +97,6 @@ export interface Props {
   useObjectAttributes?: boolean
   objectAttributeSkippedFields?: string[]
 
-  // WARNING
   // Implement the submit in this way, because we need to react on async usage of the submit function.
   // Don't forget that to submit a form with "Enter" key, you need to add a button with type="submit" inside of the form.
   // Or to have a button outside of form with "form" attribite with the same value as the form id.
@@ -211,15 +204,15 @@ const setFormNode = (node: FormKitNode) => {
 
 const formNodeContext = computed(() => formNode.value?.context)
 
-// Build the flat value, when multi step form groups are used.
-const getFlatValues = (values: FormValues, multiStepFormGroups: string[]) => {
+// Build the flat value when its requested for specific form groups.
+const getFlatValues = (values: FormValues, formGroups: string[]) => {
   const flatValues = {
     ...values,
   }
 
-  multiStepFormGroups.forEach((stepFormGroup) => {
-    Object.assign(flatValues, flatValues[stepFormGroup])
-    delete flatValues[stepFormGroup]
+  formGroups.forEach((formGroup) => {
+    Object.assign(flatValues, flatValues[formGroup])
+    delete flatValues[formGroup]
   })
 
   return flatValues
@@ -231,9 +224,9 @@ const values = computed<FormValues>(() => {
     return {}
   }
 
-  if (!props.multiStepFormGroups) return formNodeContext.value.value
+  if (!props.flattenFormGroups) return formNodeContext.value.value
 
-  return getFlatValues(formNodeContext.value.value, props.multiStepFormGroups)
+  return getFlatValues(formNodeContext.value.value, props.flattenFormGroups)
 })
 
 const relationFields: FormUpdaterRelationField[] = []
@@ -254,8 +247,8 @@ const onSubmit = (values: FormData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
 
-  const flatValues = props.multiStepFormGroups
-    ? getFlatValues(values, props.multiStepFormGroups)
+  const flatValues = props.flattenFormGroups
+    ? getFlatValues(values, props.flattenFormGroups)
     : values
   const emitValues = {
     ...flatValues,
@@ -264,7 +257,6 @@ const onSubmit = (values: FormData) => {
 
   const submitResult = props.onSubmit(emitValues)
 
-  // TODO: Maybe we need to handle the disabled state on submit on our own. In clarification with FormKit (https://github.com/formkit/formkit/issues/236).
   if (submitResult instanceof Promise) {
     return submitResult
       .then((afterReset) => {
@@ -276,6 +268,7 @@ const onSubmit = (values: FormData) => {
       .catch((errors: UserError) => {
         if (errors instanceof UserError) {
           formNode.value?.setErrors(
+            // TODO: we need to check/style the general error output when we want to show it related to the form
             errors.generalErrors as string[],
             errors.getFieldErrorList(),
           )
@@ -350,6 +343,32 @@ const getInternalId = (item?: { id?: string; internalId?: number }) => {
   return parseGraphqlId(item.id).id
 }
 
+let initialEntityObjectAttributeMap: Record<string, FormFieldValue> = {}
+const setInitialEntityObjectAttributeMap = (
+  initialEntityObject = props.initialEntityObject,
+) => {
+  if (isEmpty(initialEntityObject)) return
+
+  const { objectAttributeValues } = initialEntityObject
+
+  if (!objectAttributeValues) return
+
+  // Reduce object attribute values to flat structure
+  initialEntityObjectAttributeMap =
+    objectAttributeValues.reduce((acc: Record<string, FormFieldValue>, cur) => {
+      const { attribute } = cur
+
+      if (!attribute || !attribute.name) return acc
+
+      acc[attribute.name] = cur.value
+      return acc
+    }, {}) || {}
+}
+
+// Initialize the initial entity object attribute map during the setup in a static way.
+// It will maybe be updated later, when the resetForm is used with a different entity object.
+setInitialEntityObjectAttributeMap()
+
 const getInitialEntityObjectValue = (
   fieldName: string,
   initialEntityObject = props.initialEntityObject,
@@ -373,50 +392,117 @@ const getInitialEntityObjectValue = (
   }
 
   if (!value) {
+    const targetFieldName = internalFieldCamelizeName[fieldName] || fieldName
+
     value =
-      initialEntityObject[internalFieldCamelizeName[fieldName] || fieldName]
+      targetFieldName in initialEntityObjectAttributeMap
+        ? initialEntityObjectAttributeMap[targetFieldName]
+        : initialEntityObject[targetFieldName]
   }
 
   return value
 }
 
-const resetForm = (
-  values: FormValues = {},
-  object: ObjectLike | undefined = undefined,
-  { resetDirty = true }: { resetDirty?: boolean } = {},
+const getResetFormValues = (
+  rootNode: FormKitNode,
+  values: FormValues,
+  object?: EntityObject,
+  groupNode?: FormKitNode,
+  resetDirty = true,
 ) => {
-  const localValues: FormValues = {}
+  const resetValues: FormValues = {}
   const dirtyNodes: FormKitNode[] = []
+
+  const setResetFormValue = (
+    name: string,
+    value: FormFieldValue,
+    parentName?: string,
+  ) => {
+    if (parentName) {
+      resetValues[parentName] ||= {}
+      ;(resetValues[parentName] as Record<string, FormFieldValue>)[name] = value
+      return
+    }
+
+    resetValues[name] = value
+  }
 
   Object.entries(schemaData.fields).forEach(([field, { props }]) => {
     const formElement = getNode(props.id || props.name)
+
+    let parentName = ''
+    if (formElement?.parent && formElement?.parent.name !== rootNode.name) {
+      parentName = formElement.parent.name
+    }
+
+    // Do not use the parentName, when we are in group node reset context.
+    const groupName = groupNode?.name
+    if (groupName) {
+      if (parentName !== groupName) return
+      parentName = ''
+    }
+
     if (!resetDirty && formElement?.context?.state.dirty) {
       dirtyNodes.push(formElement)
-      localValues[field] = formElement._value as FormFieldValue
+      setResetFormValue(field, formElement._value as FormFieldValue, parentName)
       return
     }
+
     if (field in values) {
-      localValues[field] = values[field]
+      setResetFormValue(field, values[field], parentName)
       return
     }
-    const objectValues = getInitialEntityObjectValue(field, object)
-    if (objectValues !== undefined) {
-      localValues[field] = objectValues
+    if (parentName && parentName in values) {
+      const value = (values[parentName] as Record<string, FormFieldValue>)[
+        field
+      ]
+
+      setResetFormValue(field, value, parentName)
+      return
+    }
+
+    const objectValue = getInitialEntityObjectValue(field, object)
+    if (objectValue !== undefined) {
+      setResetFormValue(field, objectValue, parentName)
     }
   })
 
-  if (formNode.value) {
-    const resetValues = Object.keys(localValues).length
-      ? localValues
-      : undefined
-
-    reset(formNode.value, resetValues)
-
-    // keep dirty nodes as dirty
-    dirtyNodes.forEach((node) => {
-      node.input(node._value, false)
-    })
+  return {
+    dirtyNodes,
+    resetValues,
   }
+}
+
+const resetForm = (
+  values: FormValues = {},
+  object: EntityObject | undefined = undefined,
+  { resetDirty = true }: { resetDirty?: boolean } = {},
+  groupNode: FormKitNode | undefined = undefined,
+) => {
+  if (!formNode.value) return
+
+  const rootNode = formNode.value
+
+  if (object) setInitialEntityObjectAttributeMap(object)
+
+  const { dirtyNodes, resetValues } = getResetFormValues(
+    rootNode,
+    values,
+    object,
+    groupNode,
+    resetDirty,
+  )
+
+  reset(
+    groupNode || rootNode,
+    Object.keys(resetValues).length ? resetValues : undefined,
+  )
+
+  // keep dirty nodes as dirty
+  // TODO: check if we need to skip the formUpdater???
+  dirtyNodes.forEach((node) => {
+    node.input(node._value, false)
+  })
 }
 
 defineExpose({
@@ -681,7 +767,10 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       previousValues.set(node, cloneDeep(newValue))
       return
     }
-    if (!updaterChangedFields.has(node.name)) {
+    if (
+      inputNode.props.triggerFormUpdater &&
+      !updaterChangedFields.has(node.name)
+    ) {
       handlesFormUpdater(
         inputNode.props.formUpdaterTrigger,
         node.name,
@@ -724,18 +813,20 @@ const buildStaticSchema = () => {
   const buildFormKitField = (
     field: FormSchemaField,
   ): FormKitSchemaComponent => {
+    const fieldId = field.id || field.name
+
     return {
       $cmp: 'FormKit',
       if: field.if ? field.if : `$fields.${field.name}.show`,
       bind: `$fields.${field.name}.props`,
       props: {
         type: field.type,
-        key: field.name,
+        key: fieldId,
         name: field.name,
-        id: field.id || field.name,
+        id: fieldId,
         formId,
         plugins: [changedInputValueHandling],
-        triggerFormUpdater: !!props.formUpdaterId,
+        triggerFormUpdater: field.triggerFormUpdater ?? !!props.formUpdaterId,
       },
     }
   }
@@ -777,6 +868,7 @@ const buildStaticSchema = () => {
     if ('isGroupOrList' in node && node.isGroupOrList) {
       return {
         $cmp: 'FormKit',
+        ...(node.if && { if: node.if }),
         props: {
           type: node.type,
           name: node.name,
@@ -927,8 +1019,6 @@ const initializeFormSchema = () => {
 
 // TODO: maybe we should react on schema changes and rebuild the static schema with a new form-id and re-rendering of
 // the complete form (= use the formId as the key for the whole form to trigger the re-rendering of the component...)
-// ...
-
 if (props.schema) {
   showInitialLoadingAnimation.value = true
 

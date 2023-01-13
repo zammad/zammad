@@ -15,11 +15,10 @@ import { waitForNextTick, waitUntil } from '@tests/support/utils'
 import Form from '@shared/components/Form/Form.vue'
 import type { Props } from '@shared/components/Form/Form.vue'
 import UserError from '@shared/errors/UserError'
-import type { FormValues } from '@shared/components/Form'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
-import type { FormRef } from '../composable'
+import type { FormRef, FormValues } from '..'
 
 const wrapperParameters = {
   form: true,
@@ -628,14 +627,14 @@ describe('Form.vue - with object attributes', () => {
   })
 })
 
-describe('Form.vue - Multi step form groups', () => {
-  it('check for flat value structure for multi step form group submit', async () => {
+describe('Form.vue - Flatten form groups', () => {
+  it('check for flat value structure on submit', async () => {
     const submitCallbackSpy = vi.fn()
 
     const wrapper = await renderForm({
       props: {
         id: 'multi-step-form',
-        multiStepFormGroups: ['step1', 'step2'],
+        flattenFormGroups: ['step1', 'step2'],
         schema: [
           {
             type: 'group',
@@ -737,6 +736,19 @@ describe('Form.vue - Reset', () => {
                 label: 'Textarea',
                 value: 'Some text',
               },
+              {
+                type: 'group',
+                name: 'group',
+                isGroupOrList: true,
+                children: [
+                  {
+                    type: 'text',
+                    name: 'example',
+                    label: 'Example',
+                    value: 'Some example',
+                  },
+                ],
+              },
             ]
             const form = ref<FormRef>()
             onMounted(() => {
@@ -756,41 +768,80 @@ describe('Form.vue - Reset', () => {
 
   it('resets all values to original ones', async () => {
     const { view, form } = await renderForm()
+
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
+    const example = view.getByLabelText('Example')
     await view.events.type(input, 'New title')
     await view.events.clear(textarea)
     await view.events.type(textarea, 'New text')
+    await view.events.type(example, 'New example')
+
     form.value.resetForm()
     await waitForNextTick()
     expect(input).toHaveValue('')
     expect(textarea).toHaveValue('Some text')
+    expect(example).toHaveValue('Some example')
   })
 
   it('resets all values to provided values', async () => {
     const { view, form } = await renderForm()
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
+    const example = view.getByLabelText('Example')
+
     expect(input).toHaveValue('')
     expect(textarea).toHaveValue('Some text')
+    expect(example).toHaveValue('Some example')
+
     form.value.resetForm({
       title: 'New title',
       text: 'New text',
+      example: 'New example',
     })
     await waitForNextTick()
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('New text')
+    expect(example).toHaveValue('New example')
   })
 
   it("doesn't reset dirty values, if asked to", async () => {
     const { view, form } = await renderForm()
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
+    const example = view.getByLabelText('Example')
+
     await view.events.type(input, 'New title')
+    await view.events.clear(example)
+    await view.events.type(example, 'New example')
+
     form.value.resetForm({ text: 'Some text' }, {}, { resetDirty: false })
     await waitForNextTick()
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('Some text')
+    expect(example).toHaveValue('New example')
     expect(getNode('title')?.context?.state.dirty).toBe(true)
+    expect(getNode('example')?.context?.state.dirty).toBe(true)
+  })
+
+  it('resets only specific group node', async () => {
+    const { view, form } = await renderForm()
+
+    const input = view.getByLabelText('Title')
+    const textarea = view.getByLabelText('Textarea')
+    const example = view.getByLabelText('Example')
+
+    await view.events.type(input, 'New title')
+    await view.events.clear(textarea)
+    await view.events.type(textarea, 'New text')
+    await view.events.type(example, 'New example')
+
+    form.value.resetForm({}, undefined, undefined, getNode('example'))
+    await waitForNextTick()
+    expect(input).toHaveValue('New title')
+    expect(textarea).toHaveValue('New text')
+    expect(example).toHaveValue('Some example')
+    expect(getNode('title')?.context?.state.dirty).toBe(true)
+    expect(getNode('example')?.context?.state.dirty).toBe(false)
   })
 })
