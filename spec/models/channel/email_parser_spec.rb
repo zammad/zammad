@@ -8,7 +8,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     shared_examples 'parses email correctly' do |stored_email|
       context "for #{stored_email}" do
         let(:yml_file)                 { stored_email.ext('yml') }
-        let(:content)                  { YAML.load(File.read(yml_file)) } # rubocop:disable Security/YAMLLoad
+        let(:content)                  { YAML.load(File.read(yml_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
         let(:parsed)                   { described_class.new.parse(File.read(stored_email)) }
         let(:expected_msg)             { content.except(:attachments) }
         let(:parsed_msg)               { parsed.slice(*expected_msg.keys) }
@@ -1636,7 +1636,7 @@ RSpec.describe Channel::EmailParser, type: :model do
 
     it 'does create search index jobs for new email tickets' do
       ticket, = described_class.new.process({}, new_email)
-      job = Delayed::Job.all.detect { |row| YAML.load(row.handler).job_data['arguments'] == ['Ticket', ticket.id] } # rubocop:disable Security/YAMLLoad
+      job = Delayed::Job.all.detect { |row| YAML.load(row.handler, permitted_classes: [ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper]).job_data['arguments'] == ['Ticket', ticket.id] }
       expect(job).to be_present
     end
   end

@@ -2,8 +2,8 @@
 
 class HtmlSanitizer
   class Base
-    def with_timeout(string, &block)
-      Timeout.timeout(PROCESSING_TIMEOUT, &block)
+    def with_timeout(string, &)
+      Timeout.timeout(PROCESSING_TIMEOUT, &)
     rescue Timeout::Error
       Rails.logger.error "Could not process string via #{self.class.name} in #{PROCESSING_TIMEOUT} seconds. Current state: #{string}"
       UNPROCESSABLE_HTML_MSG

@@ -105,6 +105,9 @@ Style/DefWithParentheses:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
   Enabled: false
 
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
 Layout/HashAlignment:
   Description: >-
                  Align the elements of a hash literal if they span more than

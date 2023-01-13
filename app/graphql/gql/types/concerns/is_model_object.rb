@@ -33,7 +33,7 @@ module Gql::Types::Concerns::IsModelObject
     #   because the ConnectionTypes generate their own, non-preloadable queries.
     # See also https://github.com/Shopify/graphql-batch/issues/114.
 
-    def belongs_to(association, *args, **kwargs, &block)
+    def belongs_to(association, *args, **kwargs, &)
       given_foreign_key = kwargs.delete(:foreign_key)
       given_through_key = kwargs.delete(:through_key)
 
@@ -41,19 +41,19 @@ module Gql::Types::Concerns::IsModelObject
         load_belongs_to(object, association, given_foreign_key, given_through_key)
       end
 
-      field(association, *args, **kwargs, is_dependent_field: true, &block)
+      field(association, *args, **kwargs, is_dependent_field: true, &)
     end
 
-    def has_one(association, *args, **kwargs, &block) # rubocop:disable Naming/PredicateName
+    def has_one(association, *args, **kwargs, &) # rubocop:disable Naming/PredicateName
       kwargs[:resolver_method] = association_resolver(association) do
         definition = object.class.reflections[association.to_s]
         Gql::RecordLoader.for(definition.klass, column: definition.foreign_key).load(object.id)
       end
 
-      field(association, *args, **kwargs, is_dependent_field: true, &block)
+      field(association, *args, **kwargs, is_dependent_field: true, &)
     end
 
-    def lookup_field(name, *args, **kwargs, &block)
+    def lookup_field(name, *args, **kwargs, &)
       method_name = (kwargs.delete(:method) || name).to_s
 
       kwargs[:resolver_method] = lookup_resolver(name) do
@@ -64,21 +64,21 @@ module Gql::Types::Concerns::IsModelObject
           &.name
       end
 
-      field(name, *args, **kwargs, &block)
+      field(name, *args, **kwargs, &)
     end
 
     private
 
-    def association_resolver(association, &block)
-      define_dynamic_resolver(:"resolve_#{association}_association", &block)
+    def association_resolver(association, &)
+      define_dynamic_resolver(:"resolve_#{association}_association", &)
     end
 
-    def lookup_resolver(name, &block)
-      define_dynamic_resolver(:"resolve_#{name}_lookup", &block)
+    def lookup_resolver(name, &)
+      define_dynamic_resolver(:"resolve_#{name}_lookup", &)
     end
 
-    def define_dynamic_resolver(name, &block)
-      define_method(name, &block)
+    def define_dynamic_resolver(name, &)
+      define_method(name, &)
 
       name
     end

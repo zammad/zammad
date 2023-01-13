@@ -3,7 +3,7 @@
 class TwitterDatabase < OmniAuth::Strategies::Twitter
   option :name, 'twitter'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_twitter_credentials') || {}

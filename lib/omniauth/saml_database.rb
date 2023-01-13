@@ -34,7 +34,7 @@ class SamlDatabase < OmniAuth::Strategies::SAML
     session.destroy
   end
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
     args[0] = self.class.setup
 
     super

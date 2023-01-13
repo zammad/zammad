@@ -22,8 +22,8 @@ class Transaction
     finish_execute
   end
 
-  def self.execute(options = {}, &block)
-    Transaction.new(options).execute(&block)
+  def self.execute(options = {}, &)
+    Transaction.new(options).execute(&)
   end
 
   private

@@ -20,11 +20,11 @@ module ActiveRecord
         query.offset(@offset).limit(@size).all
       end
 
-      def as_batches(query, &blk)
+      def as_batches(query, &)
         records = get_records(query)
         while records.any?
           @offset += records.size
-          records.each(&blk)
+          records.each(&)
 
           if @limit
             @limit -= records.size
@@ -40,8 +40,8 @@ module ActiveRecord
       end
     end
 
-    def as_batches(args = {}, &blk)
-      Batch.new(arel, args).as_batches(self, &blk)
+    def as_batches(args = {}, &)
+      Batch.new(arel, args).as_batches(self, &)
     end
   end
 

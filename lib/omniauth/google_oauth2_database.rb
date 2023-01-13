@@ -3,7 +3,7 @@
 class GoogleOauth2Database < OmniAuth::Strategies::GoogleOauth2
   option :name, 'google_oauth2'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_google_oauth2_credentials') || {}

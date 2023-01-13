@@ -442,14 +442,14 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
   private
 
-  def method_missing(method_name, *args, &block)
+  def method_missing(method_name, *args, &)
 
     # Simulate pseudo-methods in format of `#type_[name]?` in order to determine the internal type of the field.
     if method_name.to_s =~ %r{^type_(.+)\?$}
       return element['data-type'] == $1
     end
 
-    super(method_name, *args, &block)
+    super(method_name, *args, &)
   end
 
   def respond_to_missing?(method_name, include_private = false)

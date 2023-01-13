@@ -18,12 +18,7 @@ class GraphqlChannel < ApplicationCable::Channel
       channel:      self,
     }
 
-    result = Gql::ZammadSchema.execute(
-      query:          query,
-      context:        context,
-      variables:      variables,
-      operation_name: operation_name
-    )
+    result = Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
 
     payload = {
       result: result.to_h,

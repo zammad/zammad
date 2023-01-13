@@ -3,7 +3,7 @@
 class FacebookDatabase < OmniAuth::Strategies::Facebook
   option :name, 'facebook'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_facebook_credentials') || {}

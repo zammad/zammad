@@ -62,11 +62,11 @@ class TicketsMassController < ApplicationController
     clean_params
   end
 
-  def execute_transaction(tickets, &block)
+  def execute_transaction(tickets, &)
     failed_record = nil
 
     ActiveRecord::Base.transaction do
-      tickets.each(&block)
+      tickets.each(&)
 
       assets = ApplicationModel::CanAssets.reduce tickets
 

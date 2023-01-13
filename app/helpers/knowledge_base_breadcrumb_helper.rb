@@ -10,11 +10,7 @@ module KnowledgeBaseBreadcrumbHelper
 
     return if objects.empty?
 
-    render 'knowledge_base/public/breadcrumb',
-           {
-             objects:        objects,
-             knowledge_base: knowledge_base
-           }
+    render 'knowledge_base/public/breadcrumb', { objects:, knowledge_base: }
   end
 
   def calculate_breadcrumb_path(object, alternative)
@@ -49,11 +45,11 @@ module KnowledgeBaseBreadcrumbHelper
   def breadcrumb_path_for(object, locale = params.fetch(:locale))
     case object
     when KnowledgeBase
-      help_root_path(locale: locale)
+      help_root_path(locale:)
     when KnowledgeBase::Category
-      help_category_path(object.translation, locale: locale)
+      help_category_path(object.translation, locale:)
     when KnowledgeBase::Answer
-      help_answer_path(object.category.translation, object.translation, locale: locale)
+      help_answer_path(object.category.translation, object.translation, locale:)
     end
   end
 

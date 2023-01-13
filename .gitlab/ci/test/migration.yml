@@ -21,11 +21,13 @@
     - git fetch --unshallow
     - git checkout stable
     - !reference [.scripts, source_rvm] # TODO: this will cause issues if we have Ruby version changes.
+    - rvm use 3.0.4
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]
     - !reference [.scripts, zammad_db_init]
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
+    - rvm use 3.1.3
     - !reference [.scripts, bundle_install]
     - bundle exec rails db:migrate
     - bundle exec rspec --profile 10 spec/db

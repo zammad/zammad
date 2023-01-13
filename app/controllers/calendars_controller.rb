@@ -13,12 +13,7 @@ class CalendarsController < ApplicationController
 
     ical_feeds = Calendar.ical_feeds
     timezones = Calendar.timezones
-    render json: {
-      record_ids: record_ids,
-      ical_feeds: ical_feeds,
-      timezones:  timezones,
-      assets:     assets,
-    }, status: :ok
+    render json: { record_ids:, ical_feeds:, timezones:, assets: }, status: :ok
   end
 
   def index

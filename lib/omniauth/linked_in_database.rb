@@ -3,7 +3,7 @@
 class LinkedInDatabase < OmniAuth::Strategies::LinkedIn
   option :name, 'linkedin'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_linkedin_credentials') || {}

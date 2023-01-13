@@ -152,6 +152,7 @@ GEM
     csv (3.2.6)
     daemons (1.4.1)
     dalli (3.2.3)
+    date (3.3.3)
     debug_inspector (1.1.0)
     delayed_job (4.1.11)
       activesupport (>= 3.0, < 8.0)
@@ -298,7 +299,21 @@ GEM
     mysql2 (0.5.4)
     naught (1.1.0)
     nestful (1.1.4)
+    net-ftp (0.2.0)
+      net-protocol
+      time
+    net-http (0.3.2)
+      uri
+    net-imap (0.3.4)
+      date
+      net-protocol
     net-ldap (0.17.1)
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.2.1)
+      timeout
+    net-smtp (0.3.3)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -541,6 +556,9 @@ GEM
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.11)
+    time (0.2.1)
+      date
+    timeout (0.3.1)
     twilio-ruby (5.74.1)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, <= 2.6)
@@ -567,6 +585,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    uri (0.12.0)
     vcr (6.1.0)
     version_gem (1.1.1)
     viewpoint (1.1.1)
@@ -658,7 +677,12 @@ DEPENDENCIES
   mime-types
   minitest-profile
   mysql2
+  net-ftp
+  net-http
+  net-imap
   net-ldap
+  net-pop
+  net-smtp
   oauth2
   omniauth-facebook
   omniauth-github
@@ -720,7 +744,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.0.4p208
+   ruby 3.1.3p185
 
 BUNDLED WITH
-   2.3.23
+   2.4.1

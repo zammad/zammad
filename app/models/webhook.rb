@@ -19,7 +19,7 @@ class Webhook < ApplicationModel
     uri = URI.parse(endpoint)
 
     errors.add(:endpoint, __('The provided endpoint is invalid, no http or https protocol was specified.')) if !uri.is_a?(URI::HTTP)
-    errors.add(:endpoint, __('The provided endpoint is invalid, no hostname was specified.')) if uri.host.nil?
+    errors.add(:endpoint, __('The provided endpoint is invalid, no hostname was specified.')) if uri.host.blank?
   rescue URI::InvalidURIError
     errors.add :endpoint, __('The provided endpoint is invalid.')
   end

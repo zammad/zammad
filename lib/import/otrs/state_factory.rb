@@ -20,7 +20,7 @@ module Import
         end
       end
 
-      def import_loop(records, *_args, &import_block)
+      def import_loop(records, *_args, &)
         super
         update_attribute_settings
       end

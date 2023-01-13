@@ -95,7 +95,7 @@ class KnowledgeBase < ApplicationModel
   end
 
   def custom_address_prefix(request)
-    host        = custom_address_uri.host || request.headers.env['SERVER_NAME']
+    host        = custom_address_uri.host.presence || request.headers.env['SERVER_NAME']
     port        = request.headers.env['SERVER_PORT']
     port_silent = (request.ssl? && port == '443') || (!request.ssl? && port == '80')
     port_string = port_silent ? '' : ":#{port}"
@@ -115,7 +115,7 @@ class KnowledgeBase < ApplicationModel
   end
 
   def canonical_host
-    custom_address_uri&.host || Setting.get('fqdn')
+    custom_address_uri&.host.presence || Setting.get('fqdn')
   end
 
   def canonical_scheme_host

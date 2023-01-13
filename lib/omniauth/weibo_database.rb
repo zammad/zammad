@@ -3,7 +3,7 @@
 class WeiboDatabase < OmniAuth::Strategies::Weibo
   option :name, 'weibo'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_weibo_credentials') || {}

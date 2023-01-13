@@ -36,8 +36,8 @@ module Sequencer::Unit::Import::Zendesk::SubSequence::Base
     "Import::Zendesk::#{resource_klass}"
   end
 
-  def resource_iteration(&block)
-    resource_collection.public_send(resource_iteration_method, &block)
+  def resource_iteration(&)
+    resource_collection.public_send(resource_iteration_method, &)
   rescue ZendeskAPI::Error::NetworkError, Faraday::SSLError => e
     return if expected_exception?(e)
     raise if !retry_exception?(e)

@@ -8,6 +8,6 @@ FactoryBot.define do
     escape   { true }
     trusted  { false }
 
-    initialize_with { new(objects: objects, locale: locale, template: template, escape: escape, trusted: trusted) }
+    initialize_with { new(objects:, locale:, template:, escape:, trusted:) }
   end
 end

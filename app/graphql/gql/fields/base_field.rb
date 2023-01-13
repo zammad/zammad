@@ -19,7 +19,7 @@ module Gql::Fields
     # Identify if this field is a nested member of an already authorized object.
     attr_reader :is_dependent_field
 
-    def initialize(*args, **kwargs, &block)
+    def initialize(*args, **kwargs, &)
 
       kwargs[:extensions] ||= []
       kwargs[:extensions].push(DependentFieldExension)
@@ -40,13 +40,13 @@ end
 # Field handling extensions that must be also available to interfaces.
 module GraphQL::Schema::Member::HasFields
   # Declare fields in passed block as 'ScopedField's.
-  def scoped_fields(&block)
-    fields_with_class(Gql::Fields::ScopedField, &block)
+  def scoped_fields(&)
+    fields_with_class(Gql::Fields::ScopedField, &)
   end
 
   # Declare fields in passed block as 'InternalField's.
-  def internal_fields(&block)
-    fields_with_class(Gql::Fields::InternalField, &block)
+  def internal_fields(&)
+    fields_with_class(Gql::Fields::InternalField, &)
   end
 
   def fields_with_class(type)

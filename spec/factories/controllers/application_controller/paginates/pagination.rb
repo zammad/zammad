@@ -7,6 +7,6 @@ FactoryBot.define do
     default { nil }
     max { nil }
 
-    initialize_with { new(params, default: default, max: max) }
+    initialize_with { new(params, default:, max:) }
   end
 end

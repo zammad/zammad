@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.0.4'
+ruby '3.1.3'
 gem 'rails', '~> 6.1.0'
 
 # core - rails additions
@@ -118,6 +118,13 @@ gem 'htmlentities'
 gem 'mail', git: 'https://github.com/zammad-deps/mail', branch: '2-7-stable'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
+
+# networking libraries were removed from stdlib in ruby 3.1..
+gem 'net-ftp',  require: false
+gem 'net-http', require: false
+gem 'net-imap', require: false
+gem 'net-pop',  require: false
+gem 'net-smtp', require: false
 
 # convert from punycode ACE strings to unicode UTF-8 strings and visa versa
 gem 'simpleidn'

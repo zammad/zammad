@@ -12,8 +12,8 @@ class Sequencer::Unit
   #
   # @see #initialize
   # @see #process
-  def self.process(unit, parameters, &block)
-    new(unit).process(parameters, &block)
+  def self.process(unit, parameters, &)
+    new(unit).process(parameters, &)
   end
 
   # Initializes a new Sequencer::Unit for processing it.

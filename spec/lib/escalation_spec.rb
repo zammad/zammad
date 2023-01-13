@@ -694,7 +694,7 @@ RSpec.describe Escalation do
     expect(open_ticket_with_history.escalation_at).to eq open_ticket_with_history.created_at + 85.minutes
   end
 
-  def without_update_escalation_information_callback(&block)
-    Ticket.without_callback(:commit, :after, :update_escalation_information, &block)
+  def without_update_escalation_information_callback(&)
+    Ticket.without_callback(:commit, :after, :update_escalation_information, &)
   end
 end

@@ -19,16 +19,16 @@ module Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
     @default_parameter ||= default_params
   end
 
-  def sequence_resource(resource = nil, &block)
-    parameters = sanitized_sequence_parameters!(resource, &block)
+  def sequence_resource(resource = nil, &)
+    parameters = sanitized_sequence_parameters!(resource, &)
     return if parameters.blank?
 
     ::Sequencer.process(sequence_name,
                         parameters: parameters)
   end
 
-  def sanitized_sequence_parameters!(resource, &block)
-    parameters = sequence_parameters(resource, &block)
+  def sanitized_sequence_parameters!(resource, &)
+    parameters = sequence_parameters(resource, &)
 
     if parameters.nil?
       logger.debug { "Skipping processing of Sub-Sequence '#{sequence_name}'. `sequence_resource` block returned `nil` in '#{self.class.name}'." }
@@ -53,9 +53,9 @@ module Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
     yield(parameters)
   end
 
-  def sequence_resources(resources, &block)
+  def sequence_resources(resources, &)
     resources.each do |resource|
-      sequence_resource(resource, &block)
+      sequence_resource(resource, &)
     end
   end
 end

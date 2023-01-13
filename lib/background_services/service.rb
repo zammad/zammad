@@ -28,9 +28,9 @@ class BackgroundServices::Service
     end
   end
 
-  def self.run_in_service_context(&block)
+  def self.run_in_service_context(&)
     Rails.application.executor.wrap do
-      ApplicationHandleInfo.use('scheduler', &block)
+      ApplicationHandleInfo.use('scheduler', &)
     end
   end
 

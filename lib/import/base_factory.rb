@@ -36,8 +36,8 @@ module Import
       backend_class(record, *args).new(record, *args)
     end
 
-    def import_loop(records, *_args, &import_block)
-      records.each(&import_block)
+    def import_loop(records, *_args, &)
+      records.each(&)
     end
 
     def module_name

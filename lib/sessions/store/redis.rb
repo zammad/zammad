@@ -137,9 +137,9 @@ class Sessions::Store::Redis
     @redis.sadd? NODES_KEY, node_id
   end
 
-  def each_node_session(&block)
+  def each_node_session(&)
     @redis.smembers(NODES_KEY).each do |node_id|
-      each_session_by_node(node_id, &block)
+      each_session_by_node(node_id, &)
     end
   end
 

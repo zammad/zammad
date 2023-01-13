@@ -3,7 +3,7 @@
 class GithubDatabase < OmniAuth::Strategies::GitHub
   option :name, 'github'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_github_credentials') || {}

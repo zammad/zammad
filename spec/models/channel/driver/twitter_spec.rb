@@ -11,7 +11,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
       create(:twitter_channel, custom_options: { user: { id: payload[:for_user_id] } })
     end
 
-    let(:payload) { YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess]) }
+    let(:payload) { YAML.safe_load(File.read(payload_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
 
     # https://git.zammad.com/zammad/zammad/-/issues/305
     shared_examples 'for user processing' do
@@ -133,7 +133,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
         context 'for duplicate messages' do
           before do
             channel.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
+              YAML.safe_load(File.read(payload_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
@@ -162,7 +162,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
             channel.process(
               YAML.safe_load(
                 Rails.root.join('test/data/twitter/webhook_events/direct_message-incoming.yml').read,
-                [ActiveSupport::HashWithIndifferentAccess]
+                permitted_classes: [ActiveSupport::HashWithIndifferentAccess]
               )
             )
           end
@@ -248,7 +248,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
         context 'for duplicate messages' do
           before do
             channel.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
+              YAML.safe_load(File.read(payload_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
@@ -398,7 +398,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
         context 'for duplicate tweets' do
           before do
             channel.process(
-              YAML.safe_load(File.read(payload_file), [ActiveSupport::HashWithIndifferentAccess])
+              YAML.safe_load(File.read(payload_file), permitted_classes: [ActiveSupport::HashWithIndifferentAccess])
             )
           end
 
@@ -415,7 +415,7 @@ RSpec.describe Channel::Driver::Twitter, required_envs: %w[TWITTER_CONSUMER_KEY 
           let(:parent_tweet_payload) do
             YAML.safe_load(
               Rails.root.join('test/data/twitter/webhook_events/tweet_create-user_mention.yml').read,
-              [ActiveSupport::HashWithIndifferentAccess]
+              permitted_classes: [ActiveSupport::HashWithIndifferentAccess]
             )
           end
 

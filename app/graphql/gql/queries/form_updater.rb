@@ -14,8 +14,8 @@ module Gql::Queries
 
     type GraphQL::Types::JSON, null: false
 
-    def initialize(*args, **kwargs, &block)
-      super(*args, **kwargs, &block)
+    def initialize(*args, **kwargs, &)
+      super(*args, **kwargs, &)
 
       arguments = context[:current_arguments]
 

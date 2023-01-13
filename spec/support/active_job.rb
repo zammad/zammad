@@ -19,14 +19,14 @@ module ZammadActiveJobSystemHelper
 
   alias original_perform_enqueued_jobs perform_enqueued_jobs
 
-  def perform_enqueued_jobs(**kwargs, &block)
+  def perform_enqueued_jobs(**kwargs, &)
     if kwargs[:commit_transaction]
       TransactionDispatcher.commit
       kwargs.delete :commit_transaction
     end
 
     ActiveJobLock.destroy_all
-    original_perform_enqueued_jobs(**kwargs, &block)
+    original_perform_enqueued_jobs(**kwargs, &)
   end
 end
 

@@ -57,7 +57,8 @@ class ConfigureEnvironment
       return
     end
 
-    cnf = YAML.load_file(File.join(__dir__, '../config/database/database.yml'))
+    # Ruby 3.1 uses Psych 4 which made aliases support optional
+    cnf = YAML.load_file(File.join(__dir__, '../config/database/database.yml'), aliases: true)
     cnf.delete('default')
 
     database = ENV['ENFORCE_DB_SERVICE'] || %w[postgresql mysql].shuffle.find do |db|

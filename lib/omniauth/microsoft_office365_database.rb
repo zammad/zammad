@@ -3,7 +3,7 @@
 class MicrosoftOffice365Database < OmniAuth::Strategies::MicrosoftOffice365
   option :name, 'microsoft_office365'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_microsoft_office365_credentials') || {}

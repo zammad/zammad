@@ -5,7 +5,7 @@ module Gql::Fields
   # Represents fields that can be restricted by by Pundit 'FieldScope' results.
   class ScopedField < BaseField
 
-    def initialize(*args, **kwargs, &block)
+    def initialize(*args, **kwargs, &)
       # Schema verification check: require nullability for scoped fields.
       if !kwargs[:null].nil? && !kwargs[:null]
         raise "The scoped field #{kwargs[:name]} must be nullable."

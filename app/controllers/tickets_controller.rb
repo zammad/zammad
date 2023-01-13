@@ -415,7 +415,7 @@ class TicketsController < ApplicationController
     end
 
     # merge ticket
-    Service::Ticket::Merge.new(current_user: current_user).execute(source_ticket: source_ticket, target_ticket: target_ticket)
+    Service::Ticket::Merge.new(current_user:).execute(source_ticket:, target_ticket:)
 
     # return result
     render json: {

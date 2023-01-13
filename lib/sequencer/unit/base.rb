@@ -43,10 +43,10 @@ class Sequencer::Unit::Base
   #  instance.id
   #
   # @return [Array<Symbol>] the list of all declared uses of a Unit.
-  def self.uses(*attributes, &block)
+  def self.uses(*attributes, &)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &block)
+      attributes: attributes(*attributes, &)
     ) do |attribute|
       use_getter(attribute)
     end
@@ -90,10 +90,10 @@ class Sequencer::Unit::Base
   #  instance.id
   #
   # @return [Array<Symbol>] the list of all declared optionals of a Unit.
-  def self.optional(*attributes, &block)
+  def self.optional(*attributes, &)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &block)
+      attributes: attributes(*attributes, &)
     ) do |attribute|
       use_getter(attribute)
     end
@@ -147,10 +147,10 @@ class Sequencer::Unit::Base
   #  self.action = :created
   #
   # @return [Array<Symbol>] the list of all declared provides of a Unit.
-  def self.provides(*attributes, &block)
+  def self.provides(*attributes, &)
     declaration_accessor(
       key:        __method__,
-      attributes: attributes(*attributes, &block)
+      attributes: attributes(*attributes, &)
     ) do |attribute|
       provide_setter(attribute)
     end
@@ -237,8 +237,8 @@ class Sequencer::Unit::Base
   # This method is an instance wrapper around the class method .instance_variable_cached.
   # It will behave the same but passed the instance scope to create an
   # cached instance variable.
-  def instance_variable_cached(key, &block)
-    self.class.instance_variable_cached(key, scope: self, &block)
+  def instance_variable_cached(key, &)
+    self.class.instance_variable_cached(key, scope: self, &)
   end
 
   # This method is an convenience wrapper to create an instance

@@ -3,7 +3,7 @@
 class GitLabDatabase < OmniAuth::Strategies::GitLab
   option :name, 'gitlab'
 
-  def initialize(app, *args, &block)
+  def initialize(app, *args, &)
 
     # database lookup
     config  = Setting.get('auth_gitlab_credentials') || {}

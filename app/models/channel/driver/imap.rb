@@ -576,8 +576,8 @@ returns
     true
   end
 
-  def timeout(seconds, &block)
-    Timeout.timeout(seconds, &block)
+  def timeout(seconds, &)
+    Timeout.timeout(seconds, &)
   end
 
 end
