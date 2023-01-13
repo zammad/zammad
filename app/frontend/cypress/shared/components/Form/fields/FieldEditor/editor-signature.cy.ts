@@ -29,10 +29,10 @@ const BREAK_HTML = '<p><br class="ProseMirror-trailingBreak"></p>'
 const ORIGINAL_TEXT = 'Some Original Text'
 
 const SIGNATURE =
-  '<strong>Signature</strong><br><div>Context</div><br>---<br><em>Phone: +1234556778</em>'
+  '<strong>Signature</strong><div>Context</div><br>---<br><em>Phone: +1234556778</em>'
 
 const PARSED_SIGNATURE =
-  '<strong><p>Signature<br>Context<br>---<br><em>Phone: +1234556778</em></p></strong>'
+  '<strong><p>Signature</p></strong><p>Context</p><p><br>---<br><em>Phone: +1234556778</em></p>'
 
 const WRAPPED_SIGNATURE = (id: string, str: string) => {
   return `<div data-signature="true" class="signature" data-signature-id="${id}">${str}</div>`
