@@ -5,8 +5,9 @@ Zammad even greater by fixing some issues, you'll need a development environment
 
 The following software/tools are needed for this.
 
-Right now, we only have instructions for macOS users. Linux users should adapt
-accordingly and are encouraged to contribute their info!
+Right now, we only have instructions for macOS users and Linux users using an dpkg/apt package manager
+based distribution. Users of Linux distributions with other package managers should adapt accordingly
+and are encouraged to contribute their info!
 
 ## Dependencies for Zammad
 
@@ -21,8 +22,28 @@ brew install postgresql forego imlib2 openssl@1.1 direnv geckodriver chromedrive
 For Linux:
 
 ```screen
-...
+sudo apt install postgresql libimlib2 openssl direnv shellcheck
 ```
+Unfortunately there is no `forego` package / binary available for Linux. We recommend to build
+it from [source](https://github.com/ddollar/forego) or alternatively use
+[foreman](https://github.com/ddollar/foreman).
+
+```screen
+sudo mkdir -p /usr/local/lib/gecko
+curl -L -k -s https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz -o - | sudo tar -xzf - -C /usr/local/lib/gecko/
+sudo mv /usr/local/lib/gecko/geckodriver /usr/local/lib/gecko/geckodriver-0.32.0
+sudo ln -sf /usr/local/lib/gecko/geckodriver-0.32.0 /usr/local/bin/geckodriver
+```
+
+```screen
+sudo mkdir -p /usr/local/lib/chrome
+curl -L -k -s https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip -o - | zcat - | sudo tee /usr/local/lib/chrome/chromedriver-109.0.5414.74 >/dev/null
+sudo chmod +x /usr/local/lib/chrome/chromedriver-109.0.5414.74
+sudo ln -sf /usr/local/lib/chrome/chromedriver-109.0.5414.74 /usr/local/bin/chromedriver
+```
+
+Beware chromedriver version has to match your installed chrome browser version.
+
 
 ## RVM
 
@@ -87,7 +108,13 @@ brew services start elastic/tap/elasticsearch-full
 For Linux:
 
 ```screen
-...
+sudo apt install apt-transport-https
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elasticsearch.list
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+sudo apt update
+sudo apt install elasticsearch
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+sudo systemctl restart elasticsearch.service
 ```
 
 ## Ruby
