@@ -112,7 +112,10 @@ class CoreWorkflow::Attributes
   end
 
   def screen_value(attribute, type)
-    attribute[:screens].dig(@payload['screen'], type)
+    screen_value = attribute[:screens].dig(@payload['screen'], type)
+    return screen_value if !screen_value.nil?
+
+    attribute[type.to_sym]
   end
 
   def request_id_default
@@ -238,7 +241,7 @@ class CoreWorkflow::Attributes
       values |= Array(saved_value).map(&:to_s)
     end
 
-    if attribute[:nulloption] && values.exclude?('')
+    if screen_value(attribute, 'nulloption') && values.exclude?('')
       values.unshift('')
     end
 

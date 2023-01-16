@@ -249,6 +249,18 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
         expect(result[:restrict_values]['state_id']).not_to include(Ticket::State.find_by(name: 'new').id.to_s)
       end
     end
+
+    it 'does show empty value for create_middle' do
+      expect(result[:restrict_values]['state_id']).to include('')
+    end
+
+    context 'with customer user' do
+      let(:action_user) { create(:customer) }
+
+      it 'does not show empty value for create_middle' do
+        expect(result[:restrict_values]['state_id']).not_to include('')
+      end
+    end
   end
 
   describe '.perform - Default - Priority' do

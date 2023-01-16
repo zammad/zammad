@@ -23,7 +23,7 @@ module Gql::Mutations
     def update(current_organization, input)
       params = input.to_h
 
-      set_core_workflow_information(params, ::Organization, 'update')
+      set_core_workflow_information(params, ::Organization, 'edit')
 
       current_organization.with_lock do
         current_organization.update!(params)

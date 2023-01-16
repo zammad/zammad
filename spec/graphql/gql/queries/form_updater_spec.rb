@@ -35,7 +35,7 @@ RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graph
         'title'    => {
           disabled: false,
           hidden:   false,
-          required: false, # TODO: currently wrong
+          required: true,
           show:     true,
         }
       }
