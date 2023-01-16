@@ -60,6 +60,16 @@ FactoryBot.define do
       from { ticket.group.name }
     end
 
+    trait :internal_note do
+      transient do
+        type_name   { 'note' }
+        sender_name { 'Agent' }
+      end
+
+      from     { ticket.group.name }
+      internal { true }
+    end
+
     trait :inbound_web do
       transient do
         type_name   { 'web' }

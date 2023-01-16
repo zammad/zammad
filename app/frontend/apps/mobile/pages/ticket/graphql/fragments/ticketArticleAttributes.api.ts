@@ -58,6 +58,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   }
   type {
     name
+    communication
   }
   sender {
     name

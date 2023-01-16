@@ -7,5 +7,6 @@ module Gql::Types::Ticket::Article
     description 'Ticket article types'
 
     field :name, String
+    field :communication, Boolean
   end
 end

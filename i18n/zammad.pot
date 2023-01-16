@@ -1156,6 +1156,10 @@ msgstr ""
 msgid "Archived at"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "Are you sure to remove this article?"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -3580,6 +3584,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "Delete Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
@@ -9995,6 +10003,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "The article could not be deleted."
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts

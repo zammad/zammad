@@ -22,6 +22,19 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       click_on 'Set to internal'
       expect(page).to have_css('.Article.Internal')
     end
+
+    context 'when article is deletable', current_user_id: -> { agent.id } do
+      let!(:article) { create(:ticket_article, :internal_note, body: 'Article 1', ticket: ticket) }
+
+      it 'deletes article' do
+        visit "/tickets/#{ticket.id}"
+        find('[data-name="article-context"]').click
+        click_on 'Delete Article'
+        click_on 'OK'
+
+        expect(page).to have_no_text(article.body)
+      end
+    end
   end
 
   context 'when opening ticket with 6 articles page' do
