@@ -50,20 +50,19 @@ import type { EntityObject } from '@shared/types/entity'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { parseGraphqlId } from '@shared/graphql/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
-import type { FormFieldAdditionalProps } from './types'
-import {
-  type FormData,
-  type FormSchemaField,
-  type FormSchemaLayout,
-  type FormSchemaNode,
-  type FormValues,
-  type FormFieldValue,
-  type ReactiveFormSchemData,
-  type FormHandler,
-  type FormHandlerFunction,
-  type ChangedField,
-  FormValidationVisibility,
-  FormHandlerExecution,
+import { FormHandlerExecution, FormValidationVisibility } from './types'
+import type {
+  ChangedField,
+  FormData,
+  FormFieldAdditionalProps,
+  FormFieldValue,
+  FormHandler,
+  FormHandlerFunction,
+  FormSchemaField,
+  FormSchemaLayout,
+  FormSchemaNode,
+  FormValues,
+  ReactiveFormSchemData,
 } from './types'
 import FormLayout from './FormLayout.vue'
 import FormGroup from './FormGroup.vue'
