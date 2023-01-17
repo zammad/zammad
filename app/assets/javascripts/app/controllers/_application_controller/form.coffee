@@ -533,8 +533,10 @@ class App.ControllerForm extends App.Controller
         else
           param[item.name].push value
       else
-        if item.multiple && typeof value is 'string'
-          param[item.name] = new Array(value)
+        if item.multiple
+          param[item.name] = []
+          if typeof value is 'string'
+            param[item.name].push value
         else
           param[item.name] = value
 

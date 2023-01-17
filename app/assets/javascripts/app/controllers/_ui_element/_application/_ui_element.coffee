@@ -226,7 +226,7 @@ class App.UiElement.ApplicationUiElement
     attribute.options = result
 
   # set selected attributes
-  @selectedOptions: (attribute) ->
+  @selectedOptions: (attribute, params) ->
     return if !attribute.options
 
     # lookup of any record, if it needs to be selected
@@ -234,6 +234,8 @@ class App.UiElement.ApplicationUiElement
       if @_selectedOptionsIsSelected(attribute.value, record)
         record.selected = 'selected'
         record.checked = 'checked'
+
+    return if params?.id
 
     # if nothing is selected / checked, use default as selected / checked
     selected = false

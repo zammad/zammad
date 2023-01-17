@@ -116,7 +116,7 @@ QUnit.test('renders with expert mode turned off by default', (assert) => {
     condition: {
       'ticket.state_id': {
         operator: 'is',
-        value: null,
+        value: [],
       },
     },
   }

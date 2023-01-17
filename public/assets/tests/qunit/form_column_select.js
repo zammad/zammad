@@ -28,7 +28,7 @@ QUnit.test( "column_select check", assert => {
 
   var params = App.ControllerForm.params(el)
   var test_params = {
-    column_select1: null,
+    column_select1: [],
     column_select2: ['aaa', 'bbb'],
     column_select3: ['1', '2'],
   }

@@ -2438,7 +2438,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       # unset all values
       multiselect_unset_all
       click '.js-submit'
-      wait.until { ticket.reload[field_name].nil? }
+      wait.until { ticket.reload[field_name] == [] }
     end
   end
 

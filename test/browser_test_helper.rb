@@ -3441,6 +3441,10 @@ wait untill text in selector disabppears
       css:      '.content.active a.js-new',
       mute_log: true,
     )
+    select(
+      css:   'select[name="condition::ticket.state_id::value"]',
+      value: 'open',
+    )
     modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
