@@ -382,16 +382,16 @@ RSpec/Rails/InferredSpecType:
   Description: 'Identifies redundant spec type.'
   Enabled: false  # We use types to add DSL to rspec.
 
-RSpec/Capybara/SpecificFinders:
+Capybara/SpecificFinders:
   Description: 'Checks if there is a more specific finder offered by Capybara.'
   Enabled: false
   # False positives, autocorrection makes weird suggestions.
 
-RSpec/Capybara/SpecificActions:
+Capybara/SpecificActions:
   Description: 'Checks for there is a more specific actions offered by Capybara.'
   Enabled: false
 
-RSpec/Capybara/NegationMatcher:
+Capybara/NegationMatcher:
   Description: Enforces use of have_no_* or not_to for negated expectations.
   EnforcedStyle: have_no
 
