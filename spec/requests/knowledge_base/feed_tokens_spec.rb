@@ -21,6 +21,12 @@ RSpec.describe 'KnowledgeBase::FeedTokens', authenticated_as: :user, type: :requ
 
       expect(json_response['token']).to be_present
     end
+
+    it 'creates a persistent token' do
+      get endpoint
+
+      expect(Token.find_by(action: 'KnowledgeBaseFeed')).to be_persistent
+    end
   end
 
   describe '#update' do
@@ -34,6 +40,12 @@ RSpec.describe 'KnowledgeBase::FeedTokens', authenticated_as: :user, type: :requ
       patch endpoint
 
       expect(json_response['token']).to be_present
+    end
+
+    it 'creates a persistent token' do
+      get endpoint
+
+      expect(Token.find_by(action: 'KnowledgeBaseFeed')).to be_persistent
     end
   end
 end

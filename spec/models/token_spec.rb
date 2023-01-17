@@ -272,7 +272,7 @@ RSpec.describe Token, type: :model do
     end
   end
 
-  describe '#ensure_token!' do
+  describe '.ensure_token!' do
     it 'returns token when not present' do
       expect(described_class.ensure_token!('token', user.id)).to be_present
     end
@@ -282,15 +282,27 @@ RSpec.describe Token, type: :model do
 
       expect(described_class.ensure_token!(token.action, token.user.id)).to eq(token.name)
     end
+
+    describe 'with persistent argument' do
+      it 'creates not-persistent token if argument omitted' do
+        described_class.ensure_token!('token', user.id)
+        expect(described_class.find_by(action: 'token')).not_to be_persistent
+      end
+
+      it 'creates persistent token when flag given' do
+        described_class.ensure_token!('token', user.id, persistent: true)
+        expect(described_class.find_by(action: 'token')).to be_persistent
+      end
+    end
   end
 
-  describe '.renew_token!' do
+  describe '#renew_token!' do
     it 'changes token' do
       expect { token.renew_token! }.to change { token.reload.name }
     end
   end
 
-  describe '#renew_token!' do
+  describe '.renew_token!' do
     it 'creates token when not present' do
       expect(described_class.renew_token!('token', user.id)).to be_present
     end
@@ -299,6 +311,20 @@ RSpec.describe Token, type: :model do
       token
 
       expect { described_class.renew_token!(token.action, token.user.id) }.to change { token.reload.name }
+    end
+
+    describe 'with persistent argument' do
+      it 'creates not-persistent token if argument omitted' do
+        described_class.renew_token!('token', user.id)
+
+        expect(described_class.find_by(action: 'token')).not_to be_persistent
+      end
+
+      it 'creates persistent token when flag given' do
+        described_class.renew_token!('token', user.id, persistent: true)
+
+        expect(described_class.find_by(action: 'token')).to be_persistent
+      end
     end
   end
 
