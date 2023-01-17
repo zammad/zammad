@@ -18,51 +18,29 @@ RSpec.describe 'Mobile > Ticket > Update > Tags', app: :mobile, authenticated_as
   end
 
   it 'shows existing tags' do
-    within tags_element do
-      expect(page)
-        .to have_text(%r{tag1}i)
-        .and(have_text(%r{other_tag}i))
-    end
+    expect(find_autocomplete('Tags')).to have_selected_options([%r{tag1}i, %r{other_tag}i])
   end
 
   it 'adds additional tag' do
-    tags_element.click
-
-    search_box = find(:fillable_field, placeholder: 'Tag name…')
-
-    search_box.send_keys 'test'
-    search_box.send_keys :enter
-
-    find('button', text: 'test')
-
-    click_on 'Done'
+    tags = find_autocomplete('Tags')
+    tags.search_for_option('test')
 
     wait_for_gql('shared/entities/tags/graphql/mutations/assignment/update.graphql')
 
-    within tags_element do
-      expect(page).to have_text(%r{test}i)
-    end
-
+    expect(tags).to have_selected_option(%r{test}i)
     expect(ticket.reload.tag_list).to match_array %w[tag1 other_tag test]
   end
 
   it 'removes an existing tag' do
-    tags_element.click
+    tags = find_autocomplete('Tags')
 
-    click_on 'tag1'
-
-    find('button[aria-checked="false"]', text: 'tag1')
-
-    click_on 'Done'
+    # Despite the name of the action, the following DESELECTS the currently selected tag.
+    #   This works because this value is already selected in the field.
+    tags.select_option('tag1')
 
     wait_for_gql('shared/entities/tags/graphql/mutations/assignment/update.graphql')
 
-    within tags_element do
-      expect(page)
-        .to have_no_text(%r{tag1}i)
-        .and have_text(%r{other_tag}i)
-    end
-
+    expect(tags).to have_no_selected_option(%r{tag1}i).and have_selected_option(%r{other_tag}i)
     expect(ticket.reload.tag_list).to match_array %w[other_tag]
   end
 end

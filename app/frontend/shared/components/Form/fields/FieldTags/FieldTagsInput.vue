@@ -23,7 +23,7 @@ const selectedTagsList = computed(() => {
 })
 
 const dialog = useDialog({
-  name: `field-tags-${props.context.node.name}`,
+  name: `field-tags-${props.context.id}`,
   prefetch: true,
   component: () => import('./FieldTagsDialog.vue'),
   afterClose: () => {
