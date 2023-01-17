@@ -11,7 +11,7 @@ You're going to love Zammad!
 
 ## Status
 
-- Toolchain: ![ci](https://github.com/zammad/zammad/workflows/ci/badge.svg) ![build-docker-compose-images](https://github.com/zammad/zammad/workflows/build-docker-compose-images/badge.svg) ![build-docker-image](https://github.com/zammad/zammad/workflows/build-docker-image/badge.svg) [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Documentation Status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
+- Toolchain: ![docker-release](https://github.com/zammad/zammad/workflows/docker-release/badge.svg) ![build-docker-image](https://github.com/zammad/zammad/workflows/build-docker-image/badge.svg) [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Documentation Status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
 - Issues: [![Percentage of issues still open](https://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")
 - Download DEB/RPM: [![](https://img.shields.io/badge/Branch-stable-blue.svg)](https://packager.io/gh/zammad/zammad#stable) [![](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad#develop)
 - Docker multi container image: [![](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
