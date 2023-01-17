@@ -97,7 +97,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    expect(
+    await expect(
       view.findByRole('dialog', { name: 'Customer' }),
     ).resolves.toBeInTheDocument()
 
@@ -132,7 +132,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    expect(
+    await expect(
       view.findByRole('dialog', { name: 'Customer' }),
     ).resolves.toBeInTheDocument()
 
@@ -205,7 +205,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    expect(
+    await expect(
       view.findByRole('dialog', { name: 'Customer' }),
     ).resolves.toBeInTheDocument()
 

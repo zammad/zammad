@@ -7,13 +7,11 @@ import { imageViewerOptions } from '@shared/composables/useImageViewer'
 </script>
 
 <template>
-  <Teleport to="body">
-    <VueEasyLightbox
-      data-test-id="imageViewer"
-      :imgs="imageViewerOptions.images"
-      :index="imageViewerOptions.index"
-      :visible="imageViewerOptions.visible"
-      @hide="imageViewerOptions.visible = false"
-    />
-  </Teleport>
+  <VueEasyLightbox
+    data-test-id="imageViewer"
+    :imgs="imageViewerOptions.images"
+    :index="imageViewerOptions.index"
+    :visible="imageViewerOptions.visible"
+    @hide="imageViewerOptions.visible = false"
+  />
 </template>

@@ -202,7 +202,7 @@ describe('Creating new ticket as agent', () => {
 
       // Customer selection.
       await view.events.click(view.getByLabelText('Customer'))
-      await view.events.type(view.getByRole('searchbox'), 'nicole')
+      await view.events.type(await view.findByRole('searchbox'), 'nicole')
 
       await waitUntil(() => mockCustomer.calls.resolve)
 

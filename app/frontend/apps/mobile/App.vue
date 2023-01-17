@@ -84,7 +84,9 @@ const transition = VITE_TEST_MODE
   <template v-if="application.loaded">
     <CommonNotifications />
     <CommonConfirmation />
-    <CommonImageViewer />
+    <Teleport to="body">
+      <CommonImageViewer />
+    </Teleport>
   </template>
   <div
     v-if="application.loaded"

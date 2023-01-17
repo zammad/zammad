@@ -242,8 +242,6 @@ const mountImageViewer = () => {
 afterEach(() => {
   router?.restoreMethods()
 
-  if (!imageViewerMounted) return
-
   imageViewerOptions.value = {
     visible: false,
     index: 0,

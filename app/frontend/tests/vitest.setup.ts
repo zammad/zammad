@@ -15,6 +15,7 @@ window.sw = new ServiceWorkerHelper()
 
 configure({
   testIdAttribute: 'data-test-id',
+  asyncUtilTimeout: 5000,
 })
 
 Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
