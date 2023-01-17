@@ -425,7 +425,7 @@ QUnit.test('form checks', assert => {
     condition: {
       'ticket.state_id': {
         operator: 'is',
-        value: null,
+        value: [],
       },
     },
     executions: {
@@ -544,7 +544,7 @@ QUnit.test('form checks', assert => {
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: null,
+        value: [],
         value_completion: ''
       },
     },
@@ -610,7 +610,7 @@ QUnit.test('form checks', assert => {
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: null,
+        value: [],
         value_completion: ''
       },
     },
@@ -672,7 +672,7 @@ QUnit.test('form checks', assert => {
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: null,
+        value: [],
         value_completion: ''
       },
     },
@@ -730,7 +730,7 @@ QUnit.test('form checks', assert => {
       'ticket.created_by_id': {
         operator: 'is',
         pre_condition: 'current_user.id',
-        value: null,
+        value: [],
         value_completion: ''
       },
     },

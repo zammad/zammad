@@ -69,6 +69,7 @@ RSpec.describe 'Manage > Sla', type: :system do
 
       in_modal do
         fill_in :name, with: 'SLA with custom calendar'
+        select 'open', from: 'condition::ticket.state_id::value'
         select calendar.name, from: :calendar_id
         click '.js-submit'
       end
