@@ -67,6 +67,10 @@
     - cp public/assets/chat/chat.js tmp/chat.js
     - yarn install --cwd public/assets/chat
     - (cd public/assets/chat && npx gulp build)
+    - echo "First characters of public/assets/chat/chat.js"
+    - head -c300 public/assets/chat/chat.js; echo # Insert newline after chat content
+    - echo "First characters of tmp/chat.js"
+    - head -c300 tmp/chat.js; echo # Insert newline after chat content
     - cmp public/assets/chat/chat.js tmp/chat.js
 
 'lint: js & css':
