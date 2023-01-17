@@ -150,12 +150,12 @@ cleanup old token
   # @param [Integer, User] user
   #
   # @return [String]
-  def self.ensure_token!(action_name, user_id = UserInfo.current_user_id)
+  def self.ensure_token!(action_name, user_id = UserInfo.current_user_id, persistent: false)
     instance = fetch(action_name, user_id)
 
     return instance.name if instance.present?
 
-    create!(action: action_name, user_id: user_id).name
+    create!(action: action_name, user_id: user_id, persistent: persistent).name
   end
 
   # regenerates an existing token
@@ -164,10 +164,10 @@ cleanup old token
   # @param [Integer, User] user
   #
   # @return [String]
-  def self.renew_token!(action_name, user_id = UserInfo.current_user_id)
+  def self.renew_token!(action_name, user_id = UserInfo.current_user_id, persistent: false)
     instance = fetch(action_name, user_id)
 
-    return create(action: action_name, user_id: user_id).name if !instance
+    return create(action: action_name, user_id: user_id, persistent: persistent).name if !instance
 
     instance.renew_token!
   end
