@@ -1584,4 +1584,54 @@ RSpec.describe 'Ticket Create', type: :system do
       end
     end
   end
+
+  describe 'Not possible to select multiple values in a multi-tree select when a workflow with a select action is executed #4465', authenticated_as: :authenticate, db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        'create_middle' => {
+          'ticket.agent' => {
+            'shown'    => true,
+            'required' => false,
+          }
+        }
+      }
+    end
+
+    def authenticate
+      create(:object_manager_attribute_multi_tree_select, name: field_name, display: field_name, screens: screens)
+      ObjectManager::Attribute.migration_execute
+
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.priority_id': {
+                 operator: 'select',
+                 select:   [Ticket::Priority.find_by(name: '3 high').id.to_s]
+               },
+             })
+
+      true
+    end
+
+    def multi_tree_select_click(value)
+      page.evaluate_script("document.querySelector(\"div[data-attribute-name='#{field_name}'] .js-optionsList li[data-value='#{value}'] .searchableSelect-option-text\").click()")
+      await_empty_ajax_queue
+    end
+
+    before do
+      visit 'ticket/create'
+    end
+
+    it 'does not clear the values of the multi tree select' do
+      multi_tree_select_click('Incident')
+      multi_tree_select_click('Service request')
+      multi_tree_select_click('Change request')
+      select '1 low', from: 'priority_id'
+      select 'pending reminder', from: 'state_id'
+      expect(page).to have_selector('span.token-label', text: 'Incident')
+      expect(page).to have_selector('span.token-label', text: 'Service request')
+      expect(page).to have_selector('span.token-label', text: 'Change request')
+    end
+  end
 end
