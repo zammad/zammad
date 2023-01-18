@@ -263,6 +263,14 @@ export enum EnumSearchableModels {
   User = 'User'
 }
 
+/** Ticket article security options, e.g. for S/MIME */
+export enum EnumSecurityOption {
+  /** Encrypt article */
+  Encryption = 'encryption',
+  /** Sign article */
+  Sign = 'sign'
+}
+
 /** Option to choose SQL sorting direction */
 export enum EnumTextDirection {
   /** Left-to-right */
@@ -1749,6 +1757,8 @@ export type TicketArticleInput = {
   internal?: InputMaybe<Scalars['Boolean']>;
   /** The article preferences. */
   preferences?: InputMaybe<Scalars['JSON']>;
+  /** The article security options. */
+  security?: InputMaybe<Array<EnumSecurityOption>>;
   /** The article sender. */
   sender?: InputMaybe<Scalars['String']>;
   /** The article subject. */

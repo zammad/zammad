@@ -48,7 +48,6 @@ import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 const router = useRouter()
 
 // Add meta header with selected ticket create article type
-// TODO: Security options?
 
 const { canSubmit, form, node, isDirty, formSubmit } = useForm()
 
@@ -190,7 +189,6 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
           props: {
             multiple: true,
           },
-          triggerFormUpdater: false,
         },
       ],
     },
@@ -225,6 +223,12 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
       isLayout: true,
       component: 'FormGroup',
       children: [
+        {
+          if: '$smimeIntegration === true && $values.articleSenderType === "email-out"',
+          name: 'security',
+          label: __('Security'),
+          type: 'security',
+        },
         {
           name: 'body',
           screen: 'create_top',
@@ -285,6 +289,10 @@ const redirectAfterCreate = (internalId?: number) => {
   }
 }
 
+const smimeIntegration = computed(
+  () => (application.config.smime_integration as boolean) || {},
+)
+
 const createTicket = async (formData: FormData<TicketFormData>) => {
   const { notify } = useNotifications()
 
@@ -306,6 +314,7 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
         ? 'web'
         : ticketCreateArticleType[formData.articleSenderType].type,
       contentType: 'text/html',
+      security: formData.security,
     },
     objectAttributeValues: additionalObjectAttributeValues,
   } as TicketCreateInput
@@ -355,6 +364,7 @@ const schemaData = reactive({
   activeStep,
   visitedSteps,
   allSteps,
+  smimeIntegration,
   existingAdditionalCreateNotes: () => {
     return Object.keys(additionalCreateNotes).length > 0
   },

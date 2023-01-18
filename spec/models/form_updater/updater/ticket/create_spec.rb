@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 require 'models/form_updater/concerns/checks_core_workflow_examples'
+require 'models/form_updater/concerns/has_security_options_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
@@ -63,4 +64,5 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   end
 
   include_examples 'ChecksCoreWorkflow', object_name: 'Ticket'
+  include_examples 'HasSecurityOptions'
 end

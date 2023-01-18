@@ -17,10 +17,12 @@ module Gql::Types::Input::Ticket
     argument :time_unit, Float, required: false, description: 'The article accounted time.'
     argument :preferences, GraphQL::Types::JSON, required: false, description: 'The article preferences.'
     argument :attachments, Gql::Types::Input::AttachmentInputType, required: false, description: 'The article attachments.'
+    argument :security, [Gql::Types::Enum::SecurityOptionType], required: false, description: 'The article security options.'
 
     transform :transform_type
     transform :transform_sender
     transform :transform_customer_article
+    transform :transform_security
 
     def transform_type(payload)
       payload.to_h.tap do |result|
@@ -47,6 +49,25 @@ module Gql::Types::Input::Ticket
       end
 
       payload[:internal] = false
+
+      payload
+    end
+
+    def transform_security(payload)
+      security = payload.delete(:security) if payload[:security]
+
+      return payload if !Setting.get('smime_integration')
+
+      payload[:preferences] ||= {}
+      payload[:preferences]['security'] = {
+        'type'       => 'S/MIME',
+        'encryption' => {
+          'success' => security&.include?('encryption'),
+        },
+        'sign'       => {
+          'success' => security&.include?('sign'),
+        },
+      }
 
       payload
     end

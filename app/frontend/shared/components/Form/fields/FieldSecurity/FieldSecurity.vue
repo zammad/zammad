@@ -4,11 +4,8 @@
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { computed, ref, toRef } from 'vue'
 import useValue from '../../composables/useValue'
+import type { SecurityOption, SecurityValue, SecurityAllowed } from './types'
 import type { FormFieldContext } from '../../types/field'
-
-type SecurityOption = 'encryption' | 'sign'
-type SecurityValue = SecurityOption[] | null | undefined
-type SecurityAllowed = SecurityOption[]
 
 interface FieldSecurityProps {
   context: FormFieldContext<{
