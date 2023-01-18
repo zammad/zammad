@@ -12,6 +12,10 @@ class CoreWorkflow::Result::Backend
     @field.sub(%r{.*\.}, '')
   end
 
+  def multiple?
+    @result_object.payload['params'][field].is_a?(Array) || @result_object.attributes.object_elements_hash.dig(field, :multiple)
+  end
+
   def set_rerun
     return if @skip_rerun
 

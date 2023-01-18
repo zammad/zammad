@@ -13,7 +13,10 @@ class CoreWorkflow::Result::AutoSelect < CoreWorkflow::Result::Backend
   end
 
   def last_value
-    @result_object.result[:restrict_values][field].last
+    result = @result_object.result[:restrict_values][field].last
+    return [result] if multiple?
+
+    result
   end
 
   def params_set?

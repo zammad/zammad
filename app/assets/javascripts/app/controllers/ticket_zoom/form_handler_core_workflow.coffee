@@ -100,7 +100,7 @@ class App.FormHandlerCoreWorkflow
 
         # get deep value if needed for store attributes
         paramValue = params[item.name]
-        if data.select[item.name]
+        if data.select[item.name] isnt undefined
           paramValue = data.select[item.name]
           coreWorkflowParams[classname][item.name] = paramValue
           delete coreWorkflowRestrictions[classname]
@@ -124,7 +124,7 @@ class App.FormHandlerCoreWorkflow
         coreWorkflowRestrictions[classname][item.name] = App.FormHandlerCoreWorkflow.restrictValuesAttributeCache(attribute, values)
 
         valueFound = false
-        if item.tag is 'multiselect'
+        if item.multiple
           if _.isArray(paramValue)
             paramValue = _.intersection(paramValue, values)
             if paramValue.length > 0
@@ -187,22 +187,6 @@ class App.FormHandlerCoreWorkflow
           ui.optional(field, form)
 
   # fill in data in input fields
-  @select: (classname, form, ui, attributes, params, data) ->
-    return if _.isEmpty(data)
-
-    for field, values of data
-      if !_.isArray(values)
-        values = [values]
-
-      for value in values
-        fieldElement = $("div[data-attribute-name='" + field + "']")
-        if fieldElement.hasClass('tree_select') || fieldElement.hasClass('multi_tree_select')
-          fieldElement.find(".js-option[data-value='" + value + "'] span").trigger('click')
-        else
-          form.find('[name="' + field + '"]').val(value)
-      coreWorkflowParams[classname][field] = values
-
-  # fill in data in input fields
   @fillIn: (classname, form, ui, attributes, params, data) ->
     return if _.isEmpty(data)
 
@@ -259,7 +243,6 @@ class App.FormHandlerCoreWorkflow
   @runWorkflow: (data, classname, form, ui, attributes, params) ->
     App.Collection.loadAssets(data.assets)
     App.FormHandlerCoreWorkflow.restrictValues(classname, form, ui, attributes, params, data)
-    App.FormHandlerCoreWorkflow.select(classname, form, ui, attributes, params, data.select)
     App.FormHandlerCoreWorkflow.fillIn(classname, form, ui, attributes, params, data.fill_in)
     App.FormHandlerCoreWorkflow.changeVisibility(form, ui, data.visibility)
     App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
