@@ -4,7 +4,7 @@ class LdapSource < ApplicationModel
   include CanPriorization
   include ChecksClientNotification
 
-  default_scope { order('prio ASC, id ASC') }
+  default_scope { order(:prio, :id) }
   scope :active, -> { where(active: true) }
 
   store :preferences

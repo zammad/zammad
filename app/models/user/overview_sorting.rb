@@ -8,7 +8,7 @@ class User::OverviewSorting < ApplicationModel
   belongs_to :created_by, class_name: 'User'
   belongs_to :updated_by, class_name: 'User'
 
-  default_scope { order('prio ASC, id ASC') }
+  default_scope { order(:prio, :id) }
 
   def self.prio_create(id:, prio:, current_user:)
     overview = Overview.find(id)

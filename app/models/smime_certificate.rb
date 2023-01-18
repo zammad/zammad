@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
-  default_scope { order('not_after_at DESC, not_before_at DESC, id DESC') }
+  default_scope { order(not_after_at: :desc, not_before_at: :desc, id: :desc) }
 
   validates :fingerprint, uniqueness: { case_sensitive: true }
 

@@ -13,7 +13,7 @@ class PublicLink < ApplicationModel
 
   before_validation :check_link
 
-  default_scope { order('prio ASC, id ASC') }
+  default_scope { order(:prio, :id) }
 
   belongs_to :created_by, class_name: 'User'
   belongs_to :updated_by, class_name: 'User'
