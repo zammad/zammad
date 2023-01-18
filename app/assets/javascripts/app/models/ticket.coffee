@@ -387,3 +387,6 @@ class App.Ticket extends App.Model
       attrs.shared_draft_id = @shared_draft_id
 
     attrs
+
+  displayName: ->
+    return @title || '???'
