@@ -282,7 +282,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
             host:      inbound_host,
             port:      993,
             ssl:       true,
-            auth_type: 'LOGIN',
+            auth_type: 'PLAIN',
             user:      email,
             password:  password,
           }
