@@ -138,7 +138,7 @@
     "prosemirror-view": "^1.29.1",
     "tippy.js": "^6.3.7",
     "ua-parser-js": "^1.0.33",
-    "uuid": "^8.3.2",
+    "uuid": "^9.0.0",
     "vue": "^3.2.45",
     "vue-advanced-cropper": "^2.8.8",
     "vue-easy-lightbox": "1.11.0",
