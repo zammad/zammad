@@ -1500,7 +1500,7 @@
     lodash "~4.17.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/plugin-helpers@^3.1.1", "@graphql-codegen/plugin-helpers@^3.1.2":
+"@graphql-codegen/plugin-helpers@^3.0.0", "@graphql-codegen/plugin-helpers@^3.1.1", "@graphql-codegen/plugin-helpers@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-3.1.2.tgz#69a2e91178f478ea6849846ade0a59a844d34389"
   integrity sha512-emOQiHyIliVOIjKVKdsI5MXj312zmRDwmHpyUTZMjfpvxq/UVAHUJIVdVf+lnjjrI+LXBTgMlTWTgHQfmICxjg==
@@ -1532,15 +1532,15 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript-vue-apollo@^3.3.6":
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-vue-apollo/-/typescript-vue-apollo-3.3.6.tgz#4c37e8a06482890b1cc2fef4d83eae293ecb4b8d"
-  integrity sha512-Ra5jrFle0mt4MbWJwSqMaCwF3rehMpSVylJOMZASWr4WYJhvxmUcIkbQPxvrIrGgS4woTR/6pL1NWhzurlfsoQ==
+"@graphql-codegen/typescript-vue-apollo@^3.3.7":
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-vue-apollo/-/typescript-vue-apollo-3.3.7.tgz#1a421bf005c04bd489796bb6f4186077fadf6e44"
+  integrity sha512-vb5gR5B+5gvMtXUG/fnLzPz+QM3aeeVezCRKygeOrHorA9sPtRLKH54FHeQzRCMp0Sbz36jdljpe/LaFoDiiDw==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "^2.7.2"
+    "@graphql-codegen/plugin-helpers" "^3.0.0"
     "@graphql-codegen/visitor-plugin-common" "2.13.1"
     auto-bind "~4.0.0"
-    change-case-all "1.0.14"
+    change-case-all "1.0.15"
     tslib "~2.4.0"
 
 "@graphql-codegen/typescript@^2.8.7":

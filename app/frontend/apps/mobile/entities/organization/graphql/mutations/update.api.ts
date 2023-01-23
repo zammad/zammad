@@ -20,7 +20,7 @@ export const OrganizationUpdateDocument = gql`
 }
     ${OrganizationAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useOrganizationUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>>) {
+export function useOrganizationUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>(OrganizationUpdateDocument, options);
 }
 export type OrganizationUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>;

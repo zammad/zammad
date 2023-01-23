@@ -25,7 +25,7 @@ export const AccountAvatarAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useAccountAvatarAddMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables>>) {
+export function useAccountAvatarAddMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables>(AccountAvatarAddDocument, options);
 }
 export type AccountAvatarAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.AccountAvatarAddMutation, Types.AccountAvatarAddMutationVariables>;

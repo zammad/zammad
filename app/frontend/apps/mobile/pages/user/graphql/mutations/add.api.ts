@@ -20,7 +20,7 @@ export const UserAddDocument = gql`
 }
     ${UserAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useUserAddMutation(options: VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables>>) {
+export function useUserAddMutation(options: VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserAddMutation, Types.UserAddMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.UserAddMutation, Types.UserAddMutationVariables>(UserAddDocument, options);
 }
 export type UserAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserAddMutation, Types.UserAddMutationVariables>;

@@ -19,7 +19,7 @@ export const OnlineNotificationMarkAllAsSeenDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useOnlineNotificationMarkAllAsSeenMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>>) {
+export function useOnlineNotificationMarkAllAsSeenMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>(OnlineNotificationMarkAllAsSeenDocument, options);
 }
 export type OnlineNotificationMarkAllAsSeenMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>;

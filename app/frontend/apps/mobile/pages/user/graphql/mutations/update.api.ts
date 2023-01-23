@@ -20,7 +20,7 @@ export const UserUpdateDocument = gql`
 }
     ${UserAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useUserUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.UserUpdateMutation, Types.UserUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserUpdateMutation, Types.UserUpdateMutationVariables>>) {
+export function useUserUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.UserUpdateMutation, Types.UserUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserUpdateMutation, Types.UserUpdateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.UserUpdateMutation, Types.UserUpdateMutationVariables>(UserUpdateDocument, options);
 }
 export type UserUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserUpdateMutation, Types.UserUpdateMutationVariables>;

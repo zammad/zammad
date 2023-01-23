@@ -26,7 +26,7 @@ export const TicketArticleRetrySecurityProcessDocument = gql`
 }
     ${SecurityStateFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useTicketArticleRetrySecurityProcessMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables>>) {
+export function useTicketArticleRetrySecurityProcessMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables>(TicketArticleRetrySecurityProcessDocument, options);
 }
 export type TicketArticleRetrySecurityProcessMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleRetrySecurityProcessMutation, Types.TicketArticleRetrySecurityProcessMutationVariables>;

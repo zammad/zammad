@@ -20,7 +20,7 @@ export const TicketCustomerUpdateDocument = gql`
 }
     ${TicketAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useTicketCustomerUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables>>) {
+export function useTicketCustomerUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables>(TicketCustomerUpdateDocument, options);
 }
 export type TicketCustomerUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketCustomerUpdateMutation, Types.TicketCustomerUpdateMutationVariables>;

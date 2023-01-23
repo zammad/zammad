@@ -16,7 +16,7 @@ export const OnlineNotificationDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useOnlineNotificationDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>>) {
+export function useOnlineNotificationDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>(OnlineNotificationDeleteDocument, options);
 }
 export type OnlineNotificationDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>;

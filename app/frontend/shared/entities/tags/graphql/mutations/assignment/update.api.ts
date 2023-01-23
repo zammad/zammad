@@ -16,7 +16,7 @@ export const TagAssignmentUpdateDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTagAssignmentUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables>>) {
+export function useTagAssignmentUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables>(TagAssignmentUpdateDocument, options);
 }
 export type TagAssignmentUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TagAssignmentUpdateMutation, Types.TagAssignmentUpdateMutationVariables>;

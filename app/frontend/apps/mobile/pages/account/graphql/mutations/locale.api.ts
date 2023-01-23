@@ -16,7 +16,7 @@ export const AccountLocaleDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useAccountLocaleMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables>>) {
+export function useAccountLocaleMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables>(AccountLocaleDocument, options);
 }
 export type AccountLocaleMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.AccountLocaleMutation, Types.AccountLocaleMutationVariables>;

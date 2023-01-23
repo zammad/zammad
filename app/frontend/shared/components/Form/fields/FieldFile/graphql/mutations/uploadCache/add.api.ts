@@ -17,7 +17,7 @@ export const FormUploadCacheAddDocument = gql`
   }
 }
     `;
-export function useFormUploadCacheAddMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>>) {
+export function useFormUploadCacheAddMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>(FormUploadCacheAddDocument, options);
 }
 export type FormUploadCacheAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.FormUploadCacheAddMutation, Types.FormUploadCacheAddMutationVariables>;

@@ -12,7 +12,7 @@ export const FormUploadCacheRemoveDocument = gql`
   }
 }
     `;
-export function useFormUploadCacheRemoveMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>>) {
+export function useFormUploadCacheRemoveMutation(options: VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>(FormUploadCacheRemoveDocument, options);
 }
 export type FormUploadCacheRemoveMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.FormUploadCacheRemoveMutation, Types.FormUploadCacheRemoveMutationVariables>;

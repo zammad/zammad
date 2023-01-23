@@ -16,7 +16,7 @@ export const MentionUnsubscribeDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useMentionUnsubscribeMutation(options: VueApolloComposable.UseMutationOptions<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables>>) {
+export function useMentionUnsubscribeMutation(options: VueApolloComposable.UseMutationOptions<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables>(MentionUnsubscribeDocument, options);
 }
 export type MentionUnsubscribeMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.MentionUnsubscribeMutation, Types.MentionUnsubscribeMutationVariables>;

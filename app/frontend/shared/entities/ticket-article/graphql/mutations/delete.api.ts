@@ -16,7 +16,7 @@ export const TicketArticleDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketArticleDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables>>) {
+export function useTicketArticleDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables>(TicketArticleDeleteDocument, options);
 }
 export type TicketArticleDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleDeleteMutation, Types.TicketArticleDeleteMutationVariables>;

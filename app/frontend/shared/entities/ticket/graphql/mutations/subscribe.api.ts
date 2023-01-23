@@ -16,7 +16,7 @@ export const MentionSubscribeDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useMentionSubscribeMutation(options: VueApolloComposable.UseMutationOptions<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables>>) {
+export function useMentionSubscribeMutation(options: VueApolloComposable.UseMutationOptions<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables>(MentionSubscribeDocument, options);
 }
 export type MentionSubscribeMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.MentionSubscribeMutation, Types.MentionSubscribeMutationVariables>;

@@ -15,7 +15,7 @@ export const TicketMergeDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketMergeMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>>) {
+export function useTicketMergeMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>(TicketMergeDocument, options);
 }
 export type TicketMergeMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>;

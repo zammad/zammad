@@ -19,7 +19,7 @@ export const TicketArticleChangeVisibilityDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketArticleChangeVisibilityMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>>) {
+export function useTicketArticleChangeVisibilityMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>(TicketArticleChangeVisibilityDocument, options);
 }
 export type TicketArticleChangeVisibilityMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>;

@@ -16,7 +16,7 @@ export const AccountAvatarDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useAccountAvatarDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables>>) {
+export function useAccountAvatarDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables>(AccountAvatarDeleteDocument, options);
 }
 export type AccountAvatarDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.AccountAvatarDeleteMutation, Types.AccountAvatarDeleteMutationVariables>;
