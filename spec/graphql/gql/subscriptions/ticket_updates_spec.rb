@@ -12,13 +12,8 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       subscription ticketUpdates($ticketId: ID!) {
         ticketUpdates(ticketId: $ticketId) {
           ticket {
-            id
-            internalId
             title
-          }
-          ticketArticle {
-            id
-            subject
+            articleCount
           }
         }
       }
@@ -34,7 +29,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       let(:agent) { create(:agent, groups: [ticket.group]) }
 
       it 'subscribes' do
-        expect(gql.result.data).to eq({ 'ticket' => nil, 'ticketArticle' => nil })
+        expect(gql.result.data).to eq({ 'ticket' => nil })
       end
 
       it 'receives ticket updates' do
@@ -44,35 +39,36 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       end
 
       context 'when a new article is created', :aggregate_failures do
-        it 'receives ticket updates' do
-          article = create(:ticket_article,
-                           ticket:  ticket,
-                           subject: 'subcription test',
-                           from:    'no-reply@zammad.com')
+        before do
+          create(:ticket_article, ticket: ticket, subject: 'subscription test', from: 'no-reply@zammad.com')
+        end
 
-          article.internal = !article.internal
-          article.save!
+        it 'receives ticket update message' do
+          expect(mock_channel.mock_broadcasted_messages).to eq(
+            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket', 'articleCount' => 1 } } } }, more: true } ]
+          )
+        end
+      end
 
-          expect(mock_channel.mock_broadcasted_messages.count).to be(2)
-          expect(mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketUpdates']['ticket']['title']).to eq(ticket.title)
-          expect(mock_channel.mock_broadcasted_messages.last[:result]['data']['ticketUpdates']['ticketArticle']['subject']).to eq(article.subject)
+      context 'when an article is removed', :aggregate_failures do
+        before do
+          create(:ticket_article, ticket: ticket, subject: 'subcription test', from: 'no-reply@zammad.com').tap do |article|
+            mock_channel.mock_broadcasted_messages.clear
+            article.destroy!
+          end
+        end
+
+        it 'receives article remove push message' do
+          expect(mock_channel.mock_broadcasted_messages).to eq(
+            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket', 'articleCount' => 0 } } } }, more: true } ]
+          )
         end
       end
 
       context 'when the group is changed and permission is lost' do
         it 'does stop receiving ticket updates' do
           ticket.update!(group: create(:group))
-
-          expect(mock_channel.mock_broadcasted_messages.first[:result]).to include(
-            {
-              'data'   => nil,
-              'errors' => include(
-                include(
-                  'message' => 'not allowed to show? this Ticket',
-                ),
-              ),
-            }
-          )
+          expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to show? this Ticket')
         end
       end
 

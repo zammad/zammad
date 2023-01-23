@@ -20,6 +20,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
       visit "/tickets/#{ticket.id}"
       find('[data-name="article-context"]').click
       click_on 'Set to internal'
+      wait_for_gql('shared/entities/ticket-article/graphql/mutations/changeVisibility.graphql')
       expect(page).to have_css('.Article.Internal')
     end
 

@@ -14,7 +14,7 @@ import { useConfirmationDialog } from '@mobile/components/CommonConfirmation'
 interface Props {
   name: string
   ticket: TicketById
-  articleFormGroupNode: FormKitNode
+  articleFormGroupNode?: FormKitNode
   newTicketArticlePresent: boolean
   form: ShallowRef<FormRef | undefined>
 }
@@ -35,7 +35,7 @@ const label = computed(() =>
 const { waitForConfirmation } = useConfirmationDialog()
 
 const articleFormGroupNodeContext = computed(
-  () => props.articleFormGroupNode.context,
+  () => props.articleFormGroupNode?.context,
 )
 
 const rememberArticleFormData = cloneDeep(
@@ -45,12 +45,6 @@ const rememberArticleFormData = cloneDeep(
 const dialogFormIsDirty = computed(() => {
   if (!props.newTicketArticlePresent)
     return !!articleFormGroupNodeContext.value?.state.dirty
-
-  console.log(
-    'rememberArticleFormData',
-    rememberArticleFormData,
-    articleFormGroupNodeContext.value?._value,
-  )
 
   return !isEqual(
     rememberArticleFormData,
@@ -71,7 +65,7 @@ const cancelDialog = async () => {
   // For the first time we need to do nothing, because the article
   // group will be removed again from the form.
   if (props.newTicketArticlePresent) {
-    props.articleFormGroupNode.input(rememberArticleFormData)
+    props.articleFormGroupNode?.input(rememberArticleFormData)
   }
 
   closeDialog(props.name)
@@ -79,19 +73,19 @@ const cancelDialog = async () => {
 
 const discardDialog = async () => {
   const confirmed = await waitForConfirmation(
-    __('Are you sure? You current article preperation will be removed.'),
+    __('Are you sure? The prepared article will be removed.'),
   )
 
   if (!confirmed) return
 
   // Reset only the article group.
-  props.articleFormGroupNode.reset()
+  props.articleFormGroupNode?.reset()
 
   emit('discard')
   closeDialog(props.name)
 }
 
-onMounted(async () => {
+onMounted(() => {
   emit('showArticleForm')
 })
 
@@ -103,11 +97,6 @@ const close = () => {
   emit('done')
   closeDialog(props.name)
 }
-
-console.log(
-  'props.articleFormGroupNode',
-  articleFormGroupNodeContext.value?.state,
-)
 </script>
 
 <template>

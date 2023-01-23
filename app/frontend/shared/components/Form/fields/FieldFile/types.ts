@@ -10,5 +10,5 @@ export interface FieldFileProps {
 }
 
 export type FileUploaded = Pick<StoredFile, 'id' | 'name' | 'size' | 'type'> & {
-  previewUrl?: string
+  content?: string
 }

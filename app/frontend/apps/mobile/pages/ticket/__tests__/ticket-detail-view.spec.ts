@@ -21,6 +21,7 @@ import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
+import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 import {
   defaultArticles,
@@ -146,6 +147,9 @@ test("redirects to error page, if can't find ticket", async () => {
   mockGraphQLSubscription(TicketUpdatesDocument).error(
     new ApolloError({ errorMessage: "Couldn't find Ticket with 'id'=9866" }),
   )
+  mockGraphQLSubscription(TicketArticleUpdatesDocument).error(
+    new ApolloError({ errorMessage: "Couldn't find Ticket with 'id'=9866" }),
+  )
 
   await visitView('/tickets/9866')
 
@@ -200,6 +204,7 @@ test('change content on subscription', async () => {
       ticketUpdates: {
         __typename: 'TicketUpdatesPayload',
         ticket: nullableMock({ ...ticket, title: 'Some New Title' }),
+        ticketArticle: null,
       },
     },
   })
@@ -229,6 +234,7 @@ test('can load more articles', async () => {
               __typename: 'PageInfo',
               hasPreviousPage: false,
               startCursor: '',
+              endCursor: '',
             },
           },
         },
@@ -245,6 +251,7 @@ test('can load more articles', async () => {
             __typename: 'PageInfo',
             hasPreviousPage: true,
             startCursor: article1.cursor,
+            endCursor: '',
           },
         },
       },
@@ -253,6 +260,7 @@ test('can load more articles', async () => {
 
   mockGraphQLApi(TicketDocument).willResolve(defaultTicket())
   mockGraphQLSubscription(TicketUpdatesDocument)
+  mockGraphQLSubscription(TicketArticleUpdatesDocument)
   createMockClient([
     {
       operationDocument: TicketArticlesDocument,

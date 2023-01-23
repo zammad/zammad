@@ -129,6 +129,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag("field-tree-select-#{field_id}.opened")
 
+    # calculate before closing, since we cannot access it, if dialog is closed
+    is_multi_select = multi_select?
+
     browse_for_option(query, **find_options) do |option|
       find('[role="searchbox"]').fill_in with: option
       find('[role="option"]', text: option, **find_options).click
@@ -136,7 +139,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       maybe_wait_for_form_updater
     end
 
-    send_keys(:escape) if multi_select?
+    send_keys(:escape) if is_multi_select
 
     wait_for_test_flag("field-tree-select-#{field_id}.closed")
 
@@ -205,9 +208,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag('common-select.opened')
 
+    # calculate before closing, since we cannot access it, if dialog is closed
+    is_multi_select = multi_select?
+
     select_option_by_label(label, **find_options)
 
-    send_keys(:escape) if multi_select?
+    send_keys(:escape) if is_multi_select
 
     wait_for_test_flag('common-select.closed')
 
@@ -479,18 +485,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     end
   end
 
-  # Currently, it's possible to determine if the field supports multi selection only while the dialog is visible.
-  #   If the dialog is closed, we consider the field is single selection only.
+  # Input elements in supported fields define data attribute for "multiple" state.
   def multi_select?
-    begin
-      dialog_element.find('[role="listbox"]', wait: false)['aria-multiselectable'] == 'true'
-    rescue
-      begin
-        find('[role="listbox"]', wait: false)['aria-multiselectable'] == 'true'
-      rescue
-        false
-      end
-    end
+    input_element['data-multiple'] == 'true'
   end
 
   def select_option_by_label(label, **find_options)
@@ -559,6 +556,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       wait_for_test_flag("field-auto-complete-#{field_id}.opened")
     end
 
+    # calculate before closing, since we cannot access it, if dialog is closed
+    is_multi_select = multi_select?
+
     within dialog_element do
       find('[role="searchbox"]').fill_in with: query
 
@@ -569,7 +569,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       maybe_wait_for_form_updater
     end
 
-    send_keys(:escape) if multi_select?
+    send_keys(:escape) if is_multi_select
 
     wait_for_test_flag("field-auto-complete-#{field_id}.closed")
 
@@ -635,13 +635,16 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag("field-tree-select-#{field_id}.opened")
 
+    # calculate before closing, since we cannot access it, if dialog is closed
+    is_multi_select = multi_select?
+
     browse_for_option(label, **find_options) do |option|
       find('[role="option"]', text: option, **find_options).click
 
       maybe_wait_for_form_updater
     end
 
-    send_keys(:escape) if multi_select?
+    send_keys(:escape) if is_multi_select
 
     wait_for_test_flag("field-tree-select-#{field_id}.closed")
 
@@ -667,9 +670,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     wait_for_test_flag("field-auto-complete-#{field_id}.opened")
 
+    # calculate before closing, since we cannot access it, if dialog is closed
+    is_multi_select = multi_select?
+
     select_option_by_label(label, **find_options)
 
-    send_keys(:escape) if multi_select?
+    send_keys(:escape) if is_multi_select
 
     wait_for_test_flag("field-auto-complete-#{field_id}.closed")
 

@@ -103,6 +103,7 @@ useFormBlock(contextReactive, onInputClick)
       :aria-disabled="context.disabled"
       :aria-label="i18n.t('Select…')"
       :tabindex="context.disabled ? '-1' : '0'"
+      :data-multiple="context.multiple"
       v-bind="{
         ...context.attrs,
         onBlur: undefined,

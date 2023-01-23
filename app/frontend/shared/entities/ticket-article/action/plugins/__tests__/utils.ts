@@ -4,7 +4,7 @@ import { defaultArticles } from '@mobile/pages/ticket/__tests__/mocks/detail-vie
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { initializeStore } from '@tests/support/components/initializeStore'
 import { createArticleActions, createArticleTypes } from '../index'
-import type { CommonTicketActionAddOptions } from '../types'
+import type { TicketActionAddOptions } from '../types'
 
 export const createTicketArticle = () => {
   const { description } = defaultArticles()
@@ -12,7 +12,7 @@ export const createTicketArticle = () => {
 }
 
 const defaultOptions: Pick<
-  CommonTicketActionAddOptions,
+  TicketActionAddOptions,
   'onDispose' | 'recalculate'
 > = {
   recalculate: vi.fn(),
@@ -25,13 +25,10 @@ export const createTestArticleActions = (
   options = defaultOptions,
 ) => {
   initializeStore()
-  return createArticleActions(ticket, article, options)
+  return createArticleActions(ticket, article, 'mobile', options)
 }
 
-export const createTestArticleTypes = (
-  ticket: TicketById,
-  options = defaultOptions,
-) => {
+export const createTestArticleTypes = (ticket: TicketById) => {
   initializeStore()
-  return createArticleTypes(ticket, options)
+  return createArticleTypes(ticket, 'mobile')
 }

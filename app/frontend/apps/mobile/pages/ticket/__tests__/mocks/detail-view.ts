@@ -13,6 +13,7 @@ import { nullableMock, waitUntil } from '@tests/support/utils'
 import { TicketDocument } from '../../graphql/queries/ticket.api'
 
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api'
+import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api'
 import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api'
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
@@ -98,7 +99,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
           __typename: 'TicketArticleEdge',
           node: {
             __typename: 'TicketArticle',
-            id: '1fs4323qr32d',
+            id: convertToGraphQLId('TicketArticle', 1),
             internalId: 1,
             createdAt: ticketDate.toISOString(),
             to: address,
@@ -149,7 +150,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
           __typename: 'TicketArticleEdge',
           node: {
             __typename: 'TicketArticle',
-            id: '1fs432fdsfsg3',
+            id: convertToGraphQLId('TicketArticle', 2),
             internalId: 2,
             to: address,
             replyTo: address,
@@ -183,7 +184,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
           __typename: 'TicketArticleEdge',
           node: {
             __typename: 'TicketArticle',
-            id: '1fs4sfsg3qr30f',
+            id: convertToGraphQLId('TicketArticle', 3),
             internalId: 3,
             to: address,
             replyTo: address,
@@ -256,6 +257,9 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
   } else {
     mockTicketSubscription = {} as ExtendedIMockSubscription
   }
+  const mockTicketArticleSubscription = mockGraphQLSubscription(
+    TicketArticleUpdatesDocument,
+  )
 
   const waitUntilTicketLoaded = async () => {
     await waitUntil(
@@ -268,6 +272,7 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     mockApiArticles,
     mockApiTicket,
     mockTicketSubscription,
+    mockTicketArticleSubscription,
     waitUntilTicketLoaded,
   }
 }

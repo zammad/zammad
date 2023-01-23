@@ -61,7 +61,7 @@ const onFileChanged = async ($event: Event) => {
 
   const previewableFile = uploadedFiles.map((file, index) => ({
     ...file,
-    previewUrl: uploads[index].content,
+    content: uploads[index].content,
   }))
 
   uploadFiles.value = [...uploadFiles.value, ...previewableFile]
@@ -132,7 +132,7 @@ const { showImage } = useImageViewer(uploadFiles)
       v-for="uploadFile of uploadFiles"
       :key="uploadFile.id"
       :file="uploadFile"
-      :preview-url="uploadFile.previewUrl"
+      :preview-url="uploadFile.content"
       @preview="canInteract && showImage(uploadFile)"
       @remove="canInteract && removeFile(uploadFile.id)"
     />

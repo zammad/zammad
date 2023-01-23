@@ -58,6 +58,7 @@ useFormBlock(reactiveContext, onInputClick)
       class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled"
       :tabindex="context.disabled ? '-1' : '0'"
+      data-multiple="true"
       v-bind="context.attrs"
       @keypress.space.prevent="showDialog()"
       @blur="context.handlers.blur"

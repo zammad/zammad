@@ -46,7 +46,7 @@ fragment ticketArticleAttributes on TicketArticle {
   body
   internal
   createdAt
-  createdBy @include(if: $isAgent) {
+  createdBy {
     id
     fullname
     firstname

@@ -6,11 +6,8 @@ import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
-import {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-} from '@shared/graphql/types'
-import type UserError from '@shared/errors/UserError'
+import { EnumFormUpdaterId } from '@shared/graphql/types'
+import UserError from '@shared/errors/UserError'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { ErrorStatusCodes } from '@shared/types/error'
 import Form from '@shared/components/Form/Form.vue'
@@ -18,18 +15,19 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useForm, FormData } from '@shared/components/Form'
 import { computed, provide, ref, reactive } from 'vue'
 import { noop } from 'lodash-es'
-import { onBeforeRouteLeave, RouterView, useRouter, useRoute } from 'vue-router'
+import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
 import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { convertToGraphQLId } from '@shared/graphql/utils'
-import { useDialog } from '@shared/composables/useDialog'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
+import { useTicketArticleReply } from '../composable/useTicketArticleReply'
+import { useTicketEditForm } from '../composable/useTicketEditForm'
 
 interface Props {
   internalId: string
@@ -48,6 +46,9 @@ const ticketQuery = new QueryHandler(
   { errorShowNotification: false },
 )
 
+const ticketResult = ticketQuery.result()
+const ticket = computed(() => ticketResult.value?.ticket)
+
 ticketQuery.subscribeToMore<
   TicketUpdatesSubscriptionVariables,
   TicketUpdatesSubscription
@@ -56,17 +57,13 @@ ticketQuery.subscribeToMore<
   variables: {
     ticketId: ticketId.value,
   },
-  // we already redirect on query error
   onError: noop,
 }))
 
-const ticketResult = ticketQuery.result()
-const ticket = computed(() => ticketResult.value?.ticket)
 const formLocation = ref('body')
 const formVisible = computed(() => formLocation.value !== 'body')
 
 const router = useRouter()
-const route = useRoute()
 
 ticketQuery.onError(() => {
   return redirectToError(router, {
@@ -77,42 +74,41 @@ ticketQuery.onError(() => {
 
 const { form, canSubmit, isDirty, formSubmit } = useForm()
 
+const { initialTicketValue, isTicketFormGroupValid, editTicket } =
+  useTicketEdit(ticket, form)
+
 const {
-  initialTicketValue,
-  articleFormGroupNode,
-  isTicketFormGroupValid,
-  isArticleFormGroupValid,
-  editTicket,
   newTicketArticleRequested,
   newTicketArticlePresent,
-} = useTicketEdit(ticket, form)
+  isArticleFormGroupValid,
+  openArticleReplyDialog,
+} = useTicketArticleReply(ticket, form)
 
 const { notify } = useNotifications()
 
 const submitForm = async (formData: FormData) => {
-  // TODO: Maybe this can also be moved in the editTicket function?
-  return editTicket(formData)
-    .then((result) => {
-      if (result?.ticketUpdate?.ticket) {
-        notify({
-          type: NotificationTypes.Success,
-          message: __('Ticket updated successfully.'),
-        })
+  try {
+    const result = await editTicket(formData)
 
-        // Reset article form after ticket update and reseted form.
-        return () => {
-          newTicketArticlePresent.value = false
-        }
+    if (result?.ticketUpdate?.ticket) {
+      notify({
+        type: NotificationTypes.Success,
+        message: __('Ticket updated successfully.'),
+      })
+
+      // Reset article form after ticket update and reseted form.
+      return () => {
+        newTicketArticlePresent.value = false
       }
-
-      return null
-    })
-    .catch((errors: UserError) => {
+    }
+  } catch (errors) {
+    if (errors instanceof UserError) {
       notify({
         message: errors.generalErrors[0],
         type: NotificationTypes.Error,
       })
-    })
+    }
+  }
 }
 
 const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
@@ -126,48 +122,8 @@ const isFormValid = computed(() => {
   return isTicketFormGroupValid.value && isArticleFormGroupValid.value
 })
 
-const articleReplyDialog = useDialog({
-  name: 'ticket-article-reply',
-  component: () =>
-    import(
-      '@mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue'
-    ),
-  beforeOpen: () => {
-    newTicketArticleRequested.value = true
-  },
-  afterClose: () => {
-    newTicketArticleRequested.value = false
-  },
-})
-
 const showArticleReplyDialog = () => {
-  if (!ticket.value) return
-
-  articleReplyDialog.open({
-    name: articleReplyDialog.name,
-    ticket,
-    form,
-    newTicketArticlePresent,
-    articleFormGroupNode,
-    updateFormLocation,
-    onDone() {
-      newTicketArticlePresent.value = true
-    },
-    onDiscard() {
-      newTicketArticlePresent.value = false
-    },
-    onShowArticleForm() {
-      updateFormLocation('[data-ticket-article-reply-form]')
-    },
-    onHideArticleForm() {
-      if (route.name === 'TicketInformationDetails') {
-        updateFormLocation('[data-ticket-edit-form]')
-        return
-      }
-
-      updateFormLocation('body')
-    },
-  })
+  return openArticleReplyDialog({ updateFormLocation })
 }
 
 provide(TICKET_INFORMATION_SYMBOL, {
@@ -199,163 +155,14 @@ onBeforeRouteLeave(async () => {
   return confirmed
 })
 
-const ticketEditSchema = [
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    props: {
-      style: {
-        if: '$formLocation !== "[data-ticket-edit-form]"',
-        then: 'display: none;',
-      },
-      showDirtyMark: true,
-    },
-    children: [
-      {
-        type: 'group',
-        name: 'ticket', // will be flattened in the form submit result
-        isGroupOrList: true,
-        children: [
-          {
-            name: 'title',
-            type: 'text',
-            label: __('Ticket title'),
-            required: true, // TODO core workflow resets it (fix needed: https://github.com/zammad/zammad/issues/4415)
-          },
-          {
-            screen: 'edit',
-            object: EnumObjectManagerObjects.Ticket,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    isLayout: true,
-    component: 'FormGroup',
-    props: {
-      style: {
-        if: '$formLocation !== "[data-ticket-article-reply-form]"',
-        then: 'display: none;',
-      },
-    },
-    children: [
-      {
-        if: '$newTicketArticleRequested || $newTicketArticlePresent',
-        type: 'group',
-        name: 'article',
-        isGroupOrList: true,
-        children: [
-          {
-            name: 'articleType',
-            label: __('Article Type'),
-            labelSrOnly: true,
-            type: 'select',
-            props: {
-              // TODO: needs to be defined from the ticket article action layer
-              options: [
-                {
-                  value: 'note',
-                  label: __('Note'),
-                  icon: 'mobile-note',
-                },
-                {
-                  value: 'phone',
-                  label: __('Phone'),
-                  icon: 'mobile-phone',
-                },
-              ],
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'internal',
-            label: __('Visibility'),
-            labelSrOnly: true,
-            type: 'select',
-            props: {
-              options: [
-                {
-                  value: true,
-                  label: __('Internal'),
-                  icon: 'mobile-lock',
-                },
-                {
-                  value: false,
-                  label: __('Public'),
-                  icon: 'mobile-unlock',
-                },
-              ],
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'to',
-            label: __('To'),
-            type: 'recipient',
-            props: {
-              multiple: true,
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'cc',
-            label: __('CC'),
-            type: 'recipient',
-            props: {
-              multiple: true,
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'subject',
-            label: __('Subject'),
-            type: 'text',
-            props: {
-              maxlength: 200,
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'security',
-            label: __('Security'),
-            type: 'security',
-            props: {
-              // TODO ...
-            },
-            triggerFormUpdater: false,
-          },
-          {
-            name: 'body',
-            screen: 'edit',
-            object: EnumObjectManagerObjects.TicketArticle,
-            props: {
-              meta: {
-                mentionUser: {
-                  groupNodeId: 'group_id',
-                },
-              },
-            },
-            triggerFormUpdater: false,
-            required: true, // debug
-          },
-          {
-            type: 'file',
-            name: 'attachments',
-            props: {
-              multiple: true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-]
+const { currentArticleType, ticketEditSchema, articleTypeHandler } =
+  useTicketEditForm(ticket)
 
 const ticketEditSchemaData = reactive({
   formLocation,
   newTicketArticleRequested,
   newTicketArticlePresent,
+  currentArticleType,
 })
 </script>
 
@@ -375,6 +182,7 @@ const ticketEditSchemaData = reactive({
         ref="form"
         :schema="ticketEditSchema"
         :flatten-form-groups="['ticket']"
+        :handlers="[articleTypeHandler()]"
         :schema-data="ticketEditSchemaData"
         :initial-values="initialTicketValue"
         :initial-entity-object="ticket"

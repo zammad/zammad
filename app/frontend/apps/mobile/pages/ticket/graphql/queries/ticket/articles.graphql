@@ -2,9 +2,9 @@ query ticketArticles(
   $ticketId: ID
   $ticketInternalId: Int
   $ticketNumber: String
-  $cursor: String
+  $beforeCursor: String
+  $afterCursor: String
   $pageSize: Int
-  $isAgent: Boolean!
   $loadDescription: Boolean = true
 ) {
   description: ticketArticles(
@@ -27,7 +27,8 @@ query ticketArticles(
       ticketInternalId: $ticketInternalId
       ticketNumber: $ticketNumber
     }
-    before: $cursor
+    before: $beforeCursor
+    after: $afterCursor
     last: $pageSize
   ) {
     totalCount
@@ -38,6 +39,7 @@ query ticketArticles(
       cursor
     }
     pageInfo {
+      endCursor
       startCursor
       hasPreviousPage
     }

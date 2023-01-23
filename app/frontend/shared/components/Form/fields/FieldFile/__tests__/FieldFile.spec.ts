@@ -119,7 +119,7 @@ describe('Fields - FieldFile', () => {
         type: 'image/png',
         id: '1',
         size: 300,
-        previewUrl: 'https://localhost/bar.png',
+        content: 'https://localhost/bar.png',
       },
     ])
 

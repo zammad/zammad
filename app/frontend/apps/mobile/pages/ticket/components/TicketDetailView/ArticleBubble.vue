@@ -98,9 +98,11 @@ const colorsClasses = computed(() => {
 const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
   useArticleToggleMore()
 
+const articleInternalId = computed(() => getIdFromGraphQLId(props.articleId))
+
 const { attachments: articleAttachments } = useArticleAttachments({
   ticketInternalId: props.ticketInternalId,
-  articleInternalId: getIdFromGraphQLId(props.articleId),
+  articleInternalId: articleInternalId.value,
   attachments: computed(() => props.attachments),
 })
 
@@ -114,14 +116,13 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
 
 <template>
   <div
-    :id="`article-${articleId}`"
+    :id="`article-${articleInternalId}`"
     role="comment"
     class="Article relative flex"
     :class="{
       Internal: internal,
-      Right: !internal && position === 'right',
-      Left: !internal && position === 'left',
-      'flex-row-reverse': position === 'right',
+      'Right flex-row-reverse': position === 'right',
+      Left: position === 'left',
     }"
   >
     <div
@@ -253,14 +254,14 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   pointer-events: none;
 }
 
-.Right .bubbleGradient::before {
+.Right:not(.Internal) .bubbleGradient::before {
   background: linear-gradient(
     rgba(255, 255, 255, 0),
     theme('colors.blue.DEFAULT')
   );
 }
 
-.Left .bubbleGradient::before {
+.Left:not(.Internal) .bubbleGradient::before {
   background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.white'));
 }
 

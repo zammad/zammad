@@ -21,7 +21,7 @@ describe('note type', () => {
       })
       const types = createTestArticleTypes(ticket)
       expect(types[0]).toMatchObject({
-        name: 'note',
+        value: 'note',
         internal,
       })
     },

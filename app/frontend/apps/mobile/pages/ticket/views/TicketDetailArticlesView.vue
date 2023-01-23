@@ -6,16 +6,21 @@ import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useApplicationStore } from '@shared/stores/application'
-import { useSessionStore } from '@shared/stores/session'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { TicketArticle } from '@shared/entities/ticket/types'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
+import type {
+  TicketArticleUpdatesSubscription,
+  TicketArticleUpdatesSubscriptionVariables,
+} from '@shared/graphql/types'
+import { noop } from 'lodash-es'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
 import { useTicketInformation } from '../composable/useTicketInformation'
+import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
 
 interface Props {
   internalId: string
@@ -23,24 +28,59 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const session = useSessionStore()
 const application = useApplicationStore()
 
 const articlesQuery = new QueryHandler(
   useTicketArticlesQuery(() => ({
     ticketId: convertToGraphQLId('Ticket', props.internalId),
     pageSize: Number(application.config.ticket_articles_min ?? 5),
-    isAgent: session.hasPermission(['ticket.agent']),
   })),
   { errorShowNotification: false },
 )
+
+const result = articlesQuery.result()
+
+articlesQuery.subscribeToMore<
+  TicketArticleUpdatesSubscriptionVariables,
+  TicketArticleUpdatesSubscription
+>({
+  document: TicketArticleUpdatesDocument,
+  variables: {
+    ticketId: convertToGraphQLId('Ticket', props.internalId),
+  },
+  onError: noop,
+  updateQuery(previous, { subscriptionData }) {
+    const updates = subscriptionData.data.ticketArticleUpdates
+    if (updates.deletedArticleId) {
+      const edges = previous.articles.edges.filter(
+        (edge) => edge.node.id !== updates.deletedArticleId,
+      )
+      return {
+        ...previous,
+        articles: {
+          ...previous.articles,
+          edges,
+          totalCount: previous.articles.totalCount - 1,
+        },
+      }
+    }
+    if (updates.createdArticle) {
+      articlesQuery.fetchMore({
+        variables: {
+          pageSize: null,
+          loadDescription: false,
+          afterCursor: result.value?.articles.pageInfo.endCursor,
+        },
+      })
+    }
+    return previous
+  },
+})
 
 const { ticket, ticketQuery } = useTicketInformation()
 const { isTicketEditable } = useTicketView(ticket)
 
 const isLoadingTicket = ticketQuery.loading()
-
-const result = articlesQuery.result()
 
 const totalCount = computed(() => result.value?.articles.totalCount || 0)
 
@@ -93,7 +133,7 @@ const loadPreviousArticles = async () => {
     variables: {
       pageSize: null,
       loadDescription: false,
-      cursor: result.value?.articles.pageInfo.startCursor,
+      beforeCursor: result.value?.articles.pageInfo.startCursor,
     },
   })
 }

@@ -11,12 +11,17 @@ interface TicketArticlePerformOptions {
   selection?: Range
 }
 
-export interface CommonTicketActionAddOptions {
+export interface CommonTicketAddOptions {
   view: ReturnType<typeof getTicketView>
   config: ConfigList
+}
+
+export interface TicketActionAddOptions extends CommonTicketAddOptions {
   recalculate: () => void
   onDispose(callback: () => unknown): void
 }
+
+export type TicketTypeAddOptions = CommonTicketAddOptions
 
 export type TicketViewPolicy = 'change' | 'read'
 export type TicketViewPolicyMap = {
@@ -39,10 +44,9 @@ export interface TicketArticleAction {
   ): void
 }
 
-export interface TicketArticleType {
-  apps: AppName[]
-  name: string
-  icon: AppSpecificRecord<string>
+export interface AppSpecificTicketArticleType {
+  value: string
+  icon: string
   label: string
   attributes: string[]
   internal: boolean
@@ -57,6 +61,12 @@ export interface TicketArticleType {
   updateForm?(ticket: TicketById, formValues: FormValues): FormValues
 }
 
+export interface TicketArticleType
+  extends Omit<AppSpecificTicketArticleType, 'icon'> {
+  apps: AppName[]
+  icon: AppSpecificRecord<string>
+}
+
 // inspired by tiptap plugins config
 export interface TicketArticleActionPlugin {
   order: number
@@ -64,10 +74,10 @@ export interface TicketArticleActionPlugin {
   addActions?(
     ticket: TicketById,
     article: TicketArticle,
-    options: CommonTicketActionAddOptions,
+    options: TicketActionAddOptions,
   ): TicketArticleAction[]
   addTypes?(
     ticket: TicketById,
-    options: CommonTicketActionAddOptions,
+    options: TicketTypeAddOptions,
   ): TicketArticleType[]
 }

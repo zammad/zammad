@@ -15,6 +15,8 @@ module Gql::Types::Input::Ticket
     argument :state_id, GraphQL::Types::ID, required: false, description: 'The state of the ticket.', loads: Gql::Types::Ticket::StateType
     argument :pending_time, GraphQL::Types::ISO8601DateTime, required: false, description: 'The pending time of the ticket.', prepare: only_for_ticket_agents
 
+    argument :article, Gql::Types::Input::Ticket::ArticleInputType, required: false, description: 'The article data.'
+
     transform :remove_nil_fields
 
     def remove_nil_fields(payload)

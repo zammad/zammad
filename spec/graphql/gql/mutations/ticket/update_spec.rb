@@ -38,12 +38,13 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
       }
     QUERY
   end
-  let(:agent)    { create(:agent, groups: [ Group.find_by(name: 'Users')]) }
-  let(:customer) { create(:customer) }
-  let(:user)     { agent }
-  let(:group)    { agent.groups.first }
-  let(:priority) { Ticket::Priority.last }
-  let(:ticket)   { create(:ticket, group: agent.groups.first, customer: customer) }
+  let(:agent)           { create(:agent, groups: [ Group.find_by(name: 'Users')]) }
+  let(:customer)        { create(:customer) }
+  let(:user)            { agent }
+  let(:group)           { agent.groups.first }
+  let(:priority)        { Ticket::Priority.last }
+  let(:ticket)          { create(:ticket, group: agent.groups.first, customer: customer) }
+  let(:article_payload) { nil }
 
   let(:input_base_payload) do
     {
@@ -52,6 +53,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
       priorityId: gql.id(priority),
       customerId: gql.id(customer),
       ownerId:    gql.id(agent),
+      article:    article_payload
       # pending_time: 10.minutes.from_now,
       # type: ...
     }
@@ -91,6 +93,22 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         it 'fails validation' do
           gql.execute(query, variables: variables)
           expect(gql.result.error_message).to include('Variable $input of type TicketUpdateInput! was provided invalid value for title')
+        end
+      end
+
+      context 'with an article payload' do
+        let(:article_payload) do
+          {
+            body: 'dummy',
+            type: 'note',
+          }
+        end
+
+        it 'adds a new article with a specific type' do
+          expect { gql.execute(query, variables: variables) }
+            .to change(Ticket::Article, :count).by(1)
+
+          expect(Ticket.last.articles.last.type.name).to eq('note')
         end
       end
 

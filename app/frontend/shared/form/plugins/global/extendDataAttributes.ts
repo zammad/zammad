@@ -8,7 +8,14 @@ import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 const extendDataAttribues = (node: FormKitNode) => {
   const { props, context } = node
 
-  if (!props.definition || !context || node.type !== 'input') return
+  if (!props.definition || !context) return
+
+  context.fns.includes = (array: unknown[], value: unknown): boolean => {
+    if (!Array.isArray(array)) return false
+    return array.includes(value)
+  }
+
+  if (node.type !== 'input') return
 
   // Add the parsedRules as props, so that the value is reactive and
   // `$parsedRules` can be used in the if condition (https://github.com/formkit/formkit/issues/356).

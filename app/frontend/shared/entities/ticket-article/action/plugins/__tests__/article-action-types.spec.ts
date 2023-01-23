@@ -9,7 +9,7 @@ describe('article action plugins - types', () => {
     const types = createTestArticleTypes(ticket)
     expect(types).toHaveLength(1)
     expect(types[0]).toMatchObject({
-      name: 'note',
+      value: 'note',
       attributes: ['attachments'],
     })
   })

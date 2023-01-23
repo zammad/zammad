@@ -17,7 +17,6 @@ const updateCacheAfterRemoving = (
   ticket: TicketById,
   article: TicketArticle,
 ) => {
-  const session = useSessionStore()
   const application = useApplicationStore()
 
   cache.updateQuery(
@@ -26,7 +25,6 @@ const updateCacheAfterRemoving = (
       variables: {
         ticketId: ticket.id,
         pageSize: Number(application.config.ticket_articles_min ?? 5),
-        isAgent: session.hasPermission(['ticket.agent']),
       },
     },
     (data) => {

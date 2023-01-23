@@ -33,6 +33,7 @@ module.exports = {
     'zammad/zammad-detect-translatable-string': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'consistent-return': 'off', // allow implicit return
 
     // Loosen AirBnB's strict rules a bit to allow 'for .. of'
     'no-restricted-syntax': [

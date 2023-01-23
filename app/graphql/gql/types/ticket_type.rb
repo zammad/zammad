@@ -51,7 +51,7 @@ module Gql::Types
 
     # field :create_article_type_id, Integer
     # field :create_article_sender_id, Integer
-    field :article_count, Integer
+    field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
     field :time_unit, Float
     field :preferences, GraphQL::Types::JSON

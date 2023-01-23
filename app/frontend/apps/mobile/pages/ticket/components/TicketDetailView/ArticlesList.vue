@@ -66,11 +66,7 @@ const filterAttachments = (article: TicketArticle) => {
         :user="row.article.createdBy"
         :internal="row.article.internal"
         :content-type="row.article.contentType"
-        :position="
-          row.article.sender?.name !== 'Customer' || row.article.internal
-            ? 'left'
-            : 'right'
-        "
+        :position="row.article.sender?.name !== 'Customer' ? 'left' : 'right'"
         :security="row.article.securityState"
         :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"

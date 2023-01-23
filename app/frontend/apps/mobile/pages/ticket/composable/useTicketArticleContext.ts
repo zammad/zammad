@@ -38,7 +38,7 @@ export const useTicketArticleContext = () => {
     disposeCallbacks.forEach((callback) => callback())
     disposeCallbacks.length = 0
 
-    const actions = createArticleActions(ticket, article, {
+    const actions = createArticleActions(ticket, article, 'mobile', {
       recalculate,
       onDispose,
     }).map((action) => {

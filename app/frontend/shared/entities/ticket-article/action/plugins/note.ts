@@ -11,7 +11,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       internal = !!config.ui_ticket_zoom_article_note_new_internal
     const type: TicketArticleType = {
       apps: ['mobile'],
-      name: 'note',
+      value: 'note',
       label: __('Note'),
       icon: {
         mobile: 'mobile-note',

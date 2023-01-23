@@ -5,13 +5,22 @@ module Ticket::Article::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    after_update :trigger_subscriptions
+    after_create  :trigger_create_subscriptions
+    after_update  :trigger_update_subscriptions
+    after_destroy :trigger_destroy_subscriptions
   end
 
   private
 
-  def trigger_subscriptions
-    # Trigger the TicketUpdate subscription, but pass the article to signal that this article changed.
-    Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(ticket) })
+  def trigger_create_subscriptions
+    Gql::Subscriptions::TicketArticleUpdates.trigger_after_create(self)
+  end
+
+  def trigger_update_subscriptions
+    Gql::Subscriptions::TicketArticleUpdates.trigger_after_update(self)
+  end
+
+  def trigger_destroy_subscriptions
+    Gql::Subscriptions::TicketArticleUpdates.trigger_after_destroy(self)
   end
 end

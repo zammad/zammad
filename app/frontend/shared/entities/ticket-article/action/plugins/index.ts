@@ -3,10 +3,13 @@
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
 import { useApplicationStore } from '@shared/stores/application'
+import type { AppName } from '@shared/types/app'
 import type {
-  CommonTicketActionAddOptions,
+  TicketTypeAddOptions,
+  TicketActionAddOptions,
   TicketArticleActionPlugin,
   TicketViewPolicyMap,
+  AppSpecificTicketArticleType,
 } from './types'
 
 const pluginsModules = import.meta.glob<TicketArticleActionPlugin>(
@@ -21,8 +24,9 @@ export const articleActionPlugins = Object.values(pluginsModules).sort(
   (p1, p2) => p1.order - p2.order,
 )
 
-const createFilterByView = (options: CommonTicketActionAddOptions) => {
-  return (object: { view: TicketViewPolicyMap }) => {
+const createFilter = (options: TicketTypeAddOptions, app: AppName) => {
+  return (object: { view: TicketViewPolicyMap; apps: AppName[] }) => {
+    if (!object.apps.includes(app)) return false
     const view = object.view[options.view.ticketView]
     if (!view || !view.length) return false
     if (view.includes('read')) return true
@@ -34,7 +38,8 @@ const createFilterByView = (options: CommonTicketActionAddOptions) => {
 export const createArticleActions = (
   ticket: TicketById,
   article: TicketArticle,
-  _options: Pick<CommonTicketActionAddOptions, 'onDispose' | 'recalculate'>,
+  app: AppName,
+  _options: Pick<TicketActionAddOptions, 'onDispose' | 'recalculate'>,
 ) => {
   const application = useApplicationStore()
   const options = {
@@ -42,7 +47,7 @@ export const createArticleActions = (
     view: getTicketView(ticket),
     config: application.config,
   }
-  const filterByView = createFilterByView(options)
+  const filterByView = createFilter(options, app)
   return articleActionPlugins
     .map((p) => p.addActions?.(ticket, article, options) || [])
     .flat()
@@ -51,17 +56,23 @@ export const createArticleActions = (
 
 export const createArticleTypes = (
   ticket: TicketById,
-  _options: Pick<CommonTicketActionAddOptions, 'onDispose' | 'recalculate'>,
-) => {
+  app: AppName,
+): AppSpecificTicketArticleType[] => {
   const application = useApplicationStore()
-  const options = {
-    ..._options,
+  const options: TicketTypeAddOptions = {
     view: getTicketView(ticket),
     config: application.config,
   }
-  const filterByView = createFilterByView(options)
-  return articleActionPlugins
-    .map((p) => p.addTypes?.(ticket, options) || [])
-    .flat()
-    .filter(filterByView)
+  const filterByView = createFilter(options, app)
+  return (
+    articleActionPlugins
+      .map((p) => p.addTypes?.(ticket, options) || [])
+      .flat()
+      .filter(filterByView)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(({ apps, ...type }) => ({
+        ...type,
+        icon: type.icon[app],
+      }))
+  )
 }

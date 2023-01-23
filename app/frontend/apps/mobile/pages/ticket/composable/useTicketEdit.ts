@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ComputedRef, ShallowRef } from 'vue'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
+import { pick } from 'lodash-es'
 import type { FormValues, FormRef, FormData } from '@shared/components/Form'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
@@ -9,7 +10,18 @@ import type { TicketUpdateInput } from '@shared/graphql/types'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { TicketById } from '@shared/entities/ticket/types'
+import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
+
+interface ArticleFormValues {
+  articleType: string
+  body: string
+  internal: boolean
+  cc?: string[]
+  to?: string[]
+  subject?: string
+  attachments?: FileUploaded[]
+}
 
 export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,
@@ -41,23 +53,32 @@ export const useTicketEdit = (
     return !!ticketGroup?.context?.state.valid
   })
 
-  const newTicketArticleRequested = ref(false)
-  const newTicketArticlePresent = ref(false)
+  const { attributesLookup: ticketObjectAttributesLookup } =
+    useObjectAttributes(EnumObjectManagerObjects.Ticket)
 
-  const articleFormGroupNode = computed(() => {
-    if (!newTicketArticlePresent.value && !newTicketArticleRequested.value)
-      return undefined
+  const processArticle = (
+    formId: string,
+    article: ArticleFormValues | undefined,
+  ) => {
+    if (!article) return null
 
-    return form.value?.formNode?.at('article')
-  })
+    const attachments = article.attachments || []
+    const files = attachments.map((file) =>
+      pick(file, ['content', 'name', 'type']),
+    )
 
-  const isArticleFormGroupValid = computed(() => {
-    return !!articleFormGroupNode.value?.context?.state.valid
-  })
-
-  const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
-    EnumObjectManagerObjects.Ticket,
-  )
+    return {
+      type: article.articleType,
+      body: article.body,
+      internal: article.internal,
+      cc: article.cc,
+      to: article.to,
+      subject: article.subject,
+      contentType: 'text/html', // TODO can be plain text
+      attachments: attachments.length ? { files, formId } : null,
+      // TODO security
+    }
+  }
 
   const editTicket = async (formData: FormData) => {
     if (!ticket.value) return undefined
@@ -67,15 +88,17 @@ export const useTicketEdit = (
     }
 
     const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-      useObjectAttributeFormData(objectAttributesLookup.value, formData)
+      useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
 
-    // TODO: Add article handling, when needed
+    const formArticle = formData.article as ArticleFormValues | undefined
+    const article = processArticle(formData.formId, formArticle)
 
     return mutationUpdate.send({
       ticketId: ticket.value.id,
       input: {
         ...internalObjectAttributeValues,
         objectAttributeValues: additionalObjectAttributeValues,
+        article,
       } as TicketUpdateInput,
     })
   }
@@ -83,10 +106,6 @@ export const useTicketEdit = (
   return {
     initialTicketValue,
     isTicketFormGroupValid,
-    isArticleFormGroupValid,
-    articleFormGroupNode,
-    newTicketArticleRequested,
-    newTicketArticlePresent,
     editTicket,
   }
 }

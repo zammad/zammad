@@ -50,7 +50,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   body
   internal
   createdAt
-  createdBy @include(if: $isAgent) {
+  createdBy {
     id
     fullname
     firstname
