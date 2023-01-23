@@ -33,7 +33,7 @@ class Sequencer::Unit::Import::Zendesk::Common::ArticleTypeId < Sequencer::Unit:
   def remote_name_twitter
     return 'twitter status' if resource.via.source.rel == 'mention'
 
-    'twitter direct message'
+    'twitter direct-message'
   end
 
   def direct_mapping
