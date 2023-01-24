@@ -14,60 +14,7 @@ class App.Model extends Spine.Model
     @constructor.className
 
   displayName: ->
-    return @name if @name
-    if @realname
-      return "#{@realname} <#{@email}>"
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @title
-      return @title
-    if @subject
-      return @subject
-    if @phone
-      return @phone
-    if @login
-      return @login
-    return '???'
-
-  displayNameLong: ->
-    return @name if @name
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    if !_.isEmpty(name)
-      if !_.isEmpty(@organization)
-        if typeof @organization is 'object'
-          name = "#{name} (#{@organization.name})"
-        else
-          name = "#{name} (#{@organization})"
-      else if !_.isEmpty(@department)
-        name = "#{name} (#{@department})"
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @title
-      return @title
-    if @subject
-      return @subject
-    if @phone
-      return @phone
-    if @login
-      return @login
-    return '???'
+    return @name || '???'
 
   # shows the icon representing the object itself (e. g. the organization icon in organization profile or ticket sidebar)
   icon: (user) ->
