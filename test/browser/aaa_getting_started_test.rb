@@ -170,6 +170,9 @@ class AaaGettingStartedTest < TestCase
     # click(
     #  css: '.js-agent input[name="group_ids"][value="1"]',
     # )
+    watch_for(
+      css: '.js-agent .js-groupListItem[value=full]',
+    )
     check(css: '.js-agent .js-groupListItem[value=full]')
     click(
       css: '.js-agent .btn--success',
