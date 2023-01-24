@@ -9,6 +9,7 @@
     - .template_lint
   services:
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]

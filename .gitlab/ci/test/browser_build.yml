@@ -2,6 +2,7 @@ browser:build:
   stage: test
   services:
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
   artifacts:
     expire_in: 1 week
     paths:

@@ -8,6 +8,7 @@
     TZ: "Europe/Berlin"       # Required for the zammad-ci-otrsimport-app containers
   services:
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
     - !reference [.services, selenium-chrome]
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db

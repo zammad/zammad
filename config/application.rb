@@ -82,11 +82,9 @@ module Zammad
     end
 
     # define websocket session store
-    config.websocket_session_store = if ENV['REDIS_URL'].present?
-                                       :redis
-                                     else
-                                       :file
-                                     end
+    # The web socket session store will fall back to localhost Redis usage if REDIS_URL is not set.
+    # In this case, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
+    config.websocket_session_store = ENV['REDIS_URL'].present? && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? ? :redis : :file
 
     # default preferences by permission
     config.preferences_default_by_permission = {

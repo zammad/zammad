@@ -13,6 +13,7 @@ capybara:integration:chrome:
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
+    - !reference [.services, redis]
     - !reference [.services, auth]
 
 capybara:integration:firefox:

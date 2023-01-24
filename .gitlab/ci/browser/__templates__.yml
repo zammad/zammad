@@ -93,6 +93,7 @@
     - .variables_selenium_chrome
   services:
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
     - !reference [.services, selenium-chrome]
   variables:
     RAILS_ENV: "production"

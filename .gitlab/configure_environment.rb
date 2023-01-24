@@ -81,10 +81,10 @@ class ConfigureEnvironment
 
   def self.configure_redis
     has_redis = network_host_exists?('redis')
-    needs_redis = database_type == 'mysql' && ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
+    needs_redis = ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
 
     if needs_redis && !has_redis
-      raise 'Redis was not found, but is required for ActionCable on MySQL based systems.'
+      raise 'Redis was not found, but is required for ActionCable.'
     end
 
     if has_redis && [true, needs_redis].sample
@@ -93,7 +93,7 @@ class ConfigureEnvironment
       return
     end
 
-    puts 'Using File as web socket session store and the PostgreSQL adapter for ActionCable.'
+    puts 'Not using Redis.'
     @env_file_content += "unset REDIS_URL\n"
   end
 

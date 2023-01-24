@@ -1,30 +1,24 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
-  if ENV['REDIS_URL'].present?
-    Rails.application.config.action_cable.cable = {
-      'adapter'        => 'redis',
-      'url'            => ENV['REDIS_URL'],
-      'channel_prefix' => "zammad_#{Rails.env}"
-    }
-    Rails.logger.info 'Using the "Redis" adapter for ActionCable.'
-  else
-    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql'
-      raise 'Please provide a working redis instance via REDIS_URL - this is required on MySQL databases.'
-    end
+  require 'redis'
+  require 'hiredis'
 
-    # The 'postgresql' adapter does not work correctly in Capybara currently, so use
-    #   'test' instead.
-    if Rails.env.test?
-      Rails.application.config.action_cable.cable = {
-        'adapter' => 'test',
-      }
-      Rails.logger.info 'Using the "test" adapter for ActionCable.'
-    else
-      Rails.application.config.action_cable.cable = {
-        'adapter' => 'postgresql',
-      }
-      Rails.logger.info 'Using the "PostgreSQL" adapter for ActionCable.'
-    end
+  # If REDIS_URL is not set, fall back to default port / localhost, to ease configuration
+  #   for simple installations.
+  redis_url = ENV['REDIS_URL'].presence || 'redis://localhost:6379'
+  Rails.application.config.action_cable.cable = {
+    adapter:        :redis,
+    driver:         :hiredis,
+    url:            redis_url,
+    channel_prefix: "zammad_#{Rails.env}",
+  }
+  begin
+    Redis.new(driver: :hiredis, url: redis_url).ping
+    Rails.logger.info { "ActionCable is using the redis instance at #{redis_url}." }
+  rescue Redis::CannotConnectError => e
+    warn "There was an error trying to connect to Redis via #{redis_url}. Please make sure Redis is available."
+    warn e.inspect
+    exit! # rubocop:disable Rails/Exit
   end
 end
