@@ -1169,16 +1169,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(1, Cti::CallerId.where(user_id: agent1_id).count)
 
     Taskbar.create!(
-      client_id: 123,
-      key:       'Ticket-1',
-      callback:  'TicketZoom',
-      params:    {
+      key:      'Ticket-1',
+      callback: 'TicketZoom',
+      params:   {
         id: 1,
       },
-      state:     {},
-      user_id:   agent1_id,
-      prio:      1,
-      notify:    false,
+      state:    {},
+      user_id:  agent1_id,
+      prio:     1,
+      notify:   false,
     )
     assert_equal(1, Taskbar.where(user_id: agent1_id).count)
 

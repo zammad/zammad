@@ -10,7 +10,7 @@ module SessionHelper::CollectionBase
     collections[ Locale.to_app_model ]                = Locale.where(active: true)
     collections[ User::OverviewSorting.to_app_model ] = User::OverviewSorting.where(user: user)
 
-    collections[ Taskbar.to_app_model ] = Taskbar.where(user_id: user.id)
+    collections[ Taskbar.to_app_model ] = Taskbar.where(user_id: user.id, app: :desktop)
     collections[ Taskbar.to_app_model ].each do |item|
       assets = item.assets(assets)
     end

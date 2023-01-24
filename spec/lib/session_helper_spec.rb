@@ -29,4 +29,17 @@ RSpec.describe SessionHelper do
       end
     end
   end
+
+  describe 'taskbars' do
+    let(:user)      { create(:user) }
+    let(:taskbar_1) { create(:taskbar, user: user) }
+    let(:taskbar_2) { create(:taskbar, user: user, app: 'mobile') }
+
+    before { taskbar_1 && taskbar_2 }
+
+    it 'returns desktop taskbars' do
+      collections = described_class.json_hash(user)[:collections]
+      expect(collections[Taskbar.to_app_model]).to eq([taskbar_1])
+    end
+  end
 end

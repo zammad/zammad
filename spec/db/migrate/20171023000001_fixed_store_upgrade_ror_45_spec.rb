@@ -11,9 +11,8 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
   context 'when DB contains `store`d attributes saved as unpermitted ActionController::Parameters' do
     before do
       ActiveRecord::Base.connection.execute(<<~SQL.tap { |sql| sql.delete!('`') if !mysql? }) # rubocop:disable Rails/SquishedSQLHeredocs
-        INSERT INTO taskbars (`user_id`, `client_id`, `key`, `callback`, `state`, `params`, `prio`, `notify`, `active`, `preferences`, `last_contact`, `updated_at`, `created_at`)
+        INSERT INTO taskbars (`user_id`, `key`, `callback`, `state`, `params`, `prio`, `notify`, `active`, `preferences`, `last_contact`, `updated_at`, `created_at`)
         VALUES (#{user.id},
-                '123',
                 'Ticket-123',
                 'TicketZoom',
                 '#{state.to_yaml}',

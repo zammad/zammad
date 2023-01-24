@@ -11,6 +11,8 @@ class Taskbar < ApplicationModel
 
   belongs_to :user
 
+  validates :app, inclusion: { in: %w[desktop mobile] }
+
   before_create   :update_last_contact, :set_user, :update_preferences_infos
   before_update   :update_last_contact, :set_user, :update_preferences_infos
 
@@ -24,6 +26,12 @@ class Taskbar < ApplicationModel
   client_notification_send_to :user_id
 
   attr_accessor :local_update
+
+  scope :related_taskbars, lambda { |taskbar|
+    where(key: taskbar.key)
+      .where.not(id: taskbar.id)
+      .order(:created_at, :id)
+  }
 
   def state_changed?
     return false if state.blank?
@@ -57,6 +65,16 @@ class Taskbar < ApplicationModel
     add_attachments_to_attributes(super)
   end
 
+  def preferences_task_info
+    output = { user_id:, last_contact:, changed: state_changed?, apps: [app] }
+    output[:id] = id if persisted?
+    output
+  end
+
+  def related_taskbars
+    self.class.related_taskbars(self)
+  end
+
   private
 
   def update_last_contact
@@ -84,57 +102,45 @@ class Taskbar < ApplicationModel
   end
 
   def update_preferences_infos
-    return true if key == 'Search'
-    return true if local_update
+    return if key == 'Search'
+    return if local_update
 
-    # find other same open tasks
-    if !preferences
-      self.preferences = {}
-    end
-    preferences[:tasks] = []
-    Taskbar.where(key: key).order(:created_at, :id).each do |taskbar|
-      if taskbar.id == id
-        local_changed = state_changed?
-        local_last_contact = last_contact
-      else
-        local_changed = taskbar.state_changed?
-        local_last_contact = taskbar.last_contact
-      end
-      task = {
-        id:           taskbar.id,
-        user_id:      taskbar.user_id,
-        last_contact: local_last_contact,
-        changed:      local_changed,
-      }
-      preferences[:tasks].push task
-    end
-    if !id
-      changed = state_changed?
-      task = {
-        user_id:      user_id,
-        last_contact: last_contact,
-        changed:      changed,
-      }
-      preferences[:tasks].push task
+    preferences = self.preferences || {}
+    preferences[:tasks] = collect_related_tasks
+
+    update_related_taskbars(preferences)
+
+    # remember preferences for current taskbar
+    self.preferences = preferences if !destroyed?
+  end
+
+  def collect_related_tasks
+    related_taskbars
+      .map(&:preferences_task_info)
+      .push(preferences_task_info)
+      .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
+      .values
+      .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
+  end
+
+  def reduce_related_tasks(elem, memo)
+    if memo[elem[:user_id]]
+      memo[elem[:user_id]][:apps].concat elem[:apps]
+      memo[elem[:user_id]][:changed] = true if elem[:changed]
+      return
     end
 
-    # update other taskbars
-    Taskbar.where(key: key).order(:created_at, :id).each do |taskbar|
-      next if taskbar.id == id
+    memo[elem[:user_id]] = elem
+  end
 
+  def update_related_taskbars(preferences)
+    related_taskbars.each do |taskbar|
       taskbar.with_lock do
         taskbar.preferences = preferences
         taskbar.local_update = true
         taskbar.save!
       end
     end
-
-    return true if destroyed?
-
-    # remember preferences for current taskbar
-    self.preferences = preferences
-
-    true
   end
 
   def notify_clients

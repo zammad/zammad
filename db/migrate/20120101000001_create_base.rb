@@ -309,7 +309,6 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :taskbars do |t|
       t.references :user,                           null: false
       t.datetime :last_contact,                     null: false, limit: 3
-      t.string :client_id,                          null: false
       t.string :key,                   limit: 100,  null: false
       t.string :callback,              limit: 100,  null: false
       t.text :state,                   limit: 20.megabytes + 1, null: true
@@ -318,10 +317,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :prio,                              null: false
       t.boolean :notify,                            null: false, default: false
       t.boolean :active,                            null: false, default: false
+      t.string :app,                                null: false, default: 'desktop'
       t.timestamps limit: 3, null: false
     end
     add_index :taskbars, [:user_id]
-    add_index :taskbars, [:client_id]
     add_index :taskbars, [:key]
     add_foreign_key :taskbars, :users
 

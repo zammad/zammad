@@ -3,8 +3,14 @@
 require 'rails_helper'
 require 'models/taskbar/has_attachments_examples'
 
-RSpec.describe Taskbar do
+RSpec.describe Taskbar, type: :model do
   it_behaves_like 'Taskbar::HasAttachments'
+
+  context 'item' do
+    subject(:taskbar) { create(:taskbar) }
+
+    it { is_expected.to validate_inclusion_of(:app).in_array(%w[desktop mobile]) }
+  end
 
   context 'key = Search' do
 
@@ -127,30 +133,28 @@ RSpec.describe Taskbar do
       described_class.destroy_all
       UserInfo.current_user_id = 1
       taskbar1 = described_class.create(
-        client_id: 123,
-        key:       'Ticket-1234',
-        callback:  'TicketZoom',
-        params:    {
+        key:      'Ticket-1234',
+        callback: 'TicketZoom',
+        params:   {
           id: 1234,
         },
-        state:     {},
-        prio:      1,
-        notify:    false,
-        user_id:   1,
+        state:    {},
+        prio:     1,
+        notify:   false,
+        user_id:  1,
       )
 
       UserInfo.current_user_id = 2
       taskbar2 = described_class.create(
-        client_id: 123,
-        key:       'Ticket-1234',
-        callback:  'TicketZoom',
-        params:    {
+        key:      'Ticket-1234',
+        callback: 'TicketZoom',
+        params:   {
           id: 1234,
         },
-        state:     {},
-        prio:      2,
-        notify:    false,
-        user_id:   1,
+        state:    {},
+        prio:     2,
+        notify:   false,
+        user_id:  1,
       )
 
       taskbar1.reload
@@ -168,16 +172,15 @@ RSpec.describe Taskbar do
       expect(taskbar2.preferences[:tasks][1][:changed]).to be(false)
 
       taskbar3 = described_class.create(
-        client_id: 123,
-        key:       'Ticket-4444',
-        callback:  'TicketZoom',
-        params:    {
+        key:      'Ticket-4444',
+        callback: 'TicketZoom',
+        params:   {
           id: 4444,
         },
-        state:     {},
-        prio:      2,
-        notify:    false,
-        user_id:   1,
+        state:    {},
+        prio:     2,
+        notify:   false,
+        user_id:  1,
       )
 
       taskbar1.reload
@@ -203,16 +206,15 @@ RSpec.describe Taskbar do
       UserInfo.current_user_id = agent_id
 
       taskbar4 = described_class.create(
-        client_id: 123,
-        key:       'Ticket-1234',
-        callback:  'TicketZoom',
-        params:    {
+        key:      'Ticket-1234',
+        callback: 'TicketZoom',
+        params:   {
           id: 1234,
         },
-        state:     {},
-        prio:      4,
-        notify:    false,
-        user_id:   1,
+        state:    {},
+        prio:     4,
+        notify:   false,
+        user_id:  1,
       )
 
       taskbar1.reload
@@ -461,4 +463,193 @@ RSpec.describe Taskbar do
     end
   end
 
+  describe '#preferences_task_info' do
+    it 'returns task info for an existing taskbar without changes' do
+      taskbar = create(:taskbar)
+
+      expect(taskbar.preferences_task_info)
+        .to eq({ id: taskbar.id, user_id: 1, last_contact: taskbar.last_contact, changed: false, apps: %w[desktop] })
+    end
+
+    it 'returns task info for an existing taskbar with changes' do
+      taskbar = create(:taskbar, state: { a: 123 })
+
+      expect(taskbar.preferences_task_info)
+        .to eq({ id: taskbar.id, user_id: 1, last_contact: taskbar.last_contact, changed: true, apps: %w[desktop] })
+    end
+
+    it 'returns task info for a new taskbar' do
+      taskbar = build(:taskbar)
+
+      expect(taskbar.preferences_task_info)
+        .to eq({ user_id: 1, last_contact: taskbar.last_contact, changed: false, apps: %w[desktop] })
+    end
+  end
+
+  describe '#update_preferences_infos' do
+    it 'do not process search taskbars' do
+      taskbar = build(:taskbar, key: 'Search')
+
+      allow(taskbar).to receive(:collect_related_tasks)
+      taskbar.save
+      expect(taskbar).not_to have_received(:collect_related_tasks)
+    end
+
+    it 'do not process items with local_update flag' do
+      taskbar = create(:taskbar)
+
+      allow(taskbar).to receive(:collect_related_tasks)
+      taskbar.state = { a: 'b' }
+      taskbar.local_update = true
+      taskbar.save
+      expect(taskbar).not_to have_received(:collect_related_tasks)
+    end
+
+    context 'with other taskbars' do
+      let(:key)           { Random.hex }
+      let(:other_user)    { create(:user) }
+      let(:other_taskbar) { create(:taskbar, key: key, user: other_user) }
+
+      before { other_taskbar }
+
+      it 'sets tasks when creating a taskbar' do
+        taskbar = create(:taskbar, key: key)
+
+        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+      end
+
+      it 'updates related items when creating a taskbar' do
+        create(:taskbar, key: key)
+
+        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+      end
+
+      it 'sets tasks when updating a taskbar' do
+        taskbar = create(:taskbar, key: key)
+        taskbar.update_columns preferences: {}
+
+        taskbar.update! state: { a: :b }
+
+        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+      end
+
+      it 'sets tasks when updating a taskbar with same user but different app' do
+        taskbar = create(:taskbar, key: key, user: other_user, app: 'mobile')
+        taskbar.update_columns preferences: {}
+
+        taskbar.update! state: { a: :b }
+
+        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id, apps: include('desktop', 'mobile')))
+      end
+
+      it 'updates related items when updating a taskbar' do
+        taskbar = create(:taskbar, key: key)
+
+        other_taskbar.update_columns preferences: {}
+
+        taskbar.update! state: { a: :b }
+
+        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+      end
+
+      it 'updates related items when destroying a taskbar' do
+        taskbar = create(:taskbar, key: key)
+        taskbar.destroy!
+
+        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id))
+      end
+    end
+  end
+
+  describe '#collect_related_tasks' do
+    let(:key)       { Random.hex }
+    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_2) { create(:taskbar, key: key, user: create(:user)) }
+
+    before { taskbar_2 }
+
+    it 'returns tasks for self and related items' do
+      expect(taskbar_1.send(:collect_related_tasks))
+        .to eq([taskbar_2.preferences_task_info, taskbar_1.preferences_task_info])
+    end
+
+    it 'returns tasks for a new taskbar' do
+      new_taskbar = build(:taskbar, key: key)
+
+      expect(new_taskbar.send(:collect_related_tasks))
+        .to eq([taskbar_2.preferences_task_info, new_taskbar.preferences_task_info])
+    end
+  end
+
+  describe '#reduce_related_tasks' do
+    let(:elem) { { user_id: 123, apps: ['desktop'], changed: false } }
+    let(:memo) { {} }
+
+    it 'adds new task details' do
+      taskbar = create(:taskbar)
+
+      taskbar.send(:reduce_related_tasks, elem, memo)
+
+      expect(memo).to include(elem[:user_id] => include(apps: include('desktop'), changed: false))
+    end
+
+    it 'extends existing task details with additional apps' do
+      taskbar = create(:taskbar)
+
+      another_elem = { user_id: 123, apps: ['mobile'], changed: true }
+
+      taskbar.send(:reduce_related_tasks, elem, memo)
+      taskbar.send(:reduce_related_tasks, another_elem, memo)
+
+      expect(memo).to include(elem[:user_id] => include(apps: include('desktop', 'mobile'), changed: true))
+    end
+  end
+
+  describe '#update_related_taskbars' do
+    let(:key)       { Random.hex }
+    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_2) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_3) { create(:taskbar, user: taskbar_1.user) }
+
+    before { taskbar_1 && taskbar_2 && taskbar_3 }
+
+    it 'updates related taskbars' do
+      taskbar_1.send(:update_related_taskbars, { a: 1 })
+
+      expect(taskbar_2.reload).to have_attributes(preferences: { a: 1 })
+      expect(taskbar_3.reload).not_to have_attributes(preferences: { a: 1 })
+    end
+  end
+
+  describe '#related_taskbars' do
+    let(:key)       { Random.hex }
+    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_2) { create(:taskbar, key: key, user: taskbar_1.user, app: 'mobile') }
+    let(:taskbar_3) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_4) { create(:taskbar, user: create(:user)) }
+
+    it 'calls related_taskbars scope' do
+      taskbar = create(:taskbar)
+
+      allow(described_class).to receive(:related_taskbars)
+
+      taskbar.related_taskbars
+
+      expect(described_class).to have_received(:related_taskbars).with(taskbar)
+    end
+  end
+
+  describe '.related_taskbars' do
+    let(:key)       { Random.hex }
+    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_2) { create(:taskbar, key: key, user: taskbar_1.user, app: 'mobile') }
+    let(:taskbar_3) { create(:taskbar, key: key, user: create(:user)) }
+    let(:taskbar_4) { create(:taskbar, user: create(:user)) }
+
+    before { taskbar_1 && taskbar_2 && taskbar_3 && taskbar_4 }
+
+    it 'returns all taskbars with the same key except given taskbars' do
+      expect(described_class.related_taskbars(taskbar_1)).to match_array([taskbar_2, taskbar_3])
+    end
+  end
 end

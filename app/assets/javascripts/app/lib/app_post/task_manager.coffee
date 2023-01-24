@@ -239,7 +239,6 @@ class _taskManagerSingleton extends App.Controller
         key:       params.key
         params:    params.params
         callback:  params.controller
-        client_id: 123
         prio:      @newPrio()
         notify:    false
         active:    params.show

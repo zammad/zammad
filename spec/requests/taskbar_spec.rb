@@ -15,30 +15,28 @@ RSpec.describe 'Taskbars', type: :request do
 
     it 'does task ownership' do
       params = {
-        user_id:   customer.id,
-        client_id: '123',
-        key:       'Ticket-5',
-        callback:  'TicketZoom',
-        state:     {
+        user_id:  customer.id,
+        key:      'Ticket-5',
+        callback: 'TicketZoom',
+        state:    {
           ticket:  {
             owner_id: agent.id,
           },
           article: {},
         },
-        params:    {
+        params:   {
           ticket_id: 5,
           shown:     true,
         },
-        prio:      3,
-        notify:    false,
-        active:    false,
+        prio:     3,
+        notify:   false,
+        active:   false,
       }
 
       authenticated_as(agent)
       post '/api/v1/taskbar', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(json_response).to be_a(Hash)
-      expect(json_response['client_id']).to eq('123')
       expect(json_response['user_id']).to eq(agent.id)
       expect(json_response['params']['ticket_id']).to eq(5)
       expect(json_response['params']['shown']).to be(true)
@@ -52,7 +50,6 @@ RSpec.describe 'Taskbars', type: :request do
       put "/api/v1/taskbar/#{taskbar_id}", params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
-      expect(json_response['client_id']).to eq('123')
       expect(json_response['user_id']).to eq(agent.id)
       expect(json_response['params']['ticket_id']).to eq(5)
       expect(json_response['params']['shown']).to be(false)
