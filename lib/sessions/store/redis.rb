@@ -5,7 +5,6 @@ class Sessions::Store::Redis
   MESSAGES_KEY = 'messages'.freeze
   SPOOL_KEY = 'spool'.freeze
   NODES_KEY = 'nodes'.freeze
-  DEFAULT_TTL = 1.month # Make sure unused keys get cleaned up eventually.
 
   def initialize
     # Only load redis if it is really used.
@@ -15,11 +14,8 @@ class Sessions::Store::Redis
   end
 
   def create(client_id, data)
-    client_session_key = client_session_key(client_id)
-    @redis.set client_session_key, data
-    @redis.expire client_session_key, DEFAULT_TTL
+    @redis.set client_session_key(client_id), data
     @redis.sadd? SESSIONS_KEY, client_id
-    @redis.expire SESSIONS_KEY, DEFAULT_TTL
   end
 
   def sessions
@@ -37,9 +33,7 @@ class Sessions::Store::Redis
   end
 
   def set(client_id, data)
-    client_session_key = client_session_key(client_id)
-    @redis.set client_session_key, data.to_json
-    @redis.expire client_session_key, DEFAULT_TTL
+    @redis.set client_session_key(client_id), data.to_json
   end
 
   def get(client_id)
@@ -88,7 +82,6 @@ class Sessions::Store::Redis
 
   def add_to_spool(data)
     @redis.rpush SPOOL_KEY, data.to_json
-    @redis.expire SPOOL_KEY, DEFAULT_TTL
   end
 
   def each_spool()
@@ -140,11 +133,8 @@ class Sessions::Store::Redis
   end
 
   def add_node(node_id, data)
-    node_key = node_key(node_id)
-    @redis.set node_key, data.to_json
-    @redis.expire node_key, DEFAULT_TTL
+    @redis.set node_key(node_id), data.to_json
     @redis.sadd? NODES_KEY, node_id
-    @redis.expire NODES_KEY, DEFAULT_TTL
   end
 
   def each_node_session(&)
@@ -154,12 +144,8 @@ class Sessions::Store::Redis
   end
 
   def create_node_session(node_id, client_id, data)
-    node_client_session_key = node_client_session_key(node_id, client_id)
-    @redis.set node_client_session_key, data.to_json
-    @redis.expire node_client_session_key, DEFAULT_TTL
-    node_sessions_key = node_sessions_key(node_id)
-    @redis.sadd? node_sessions_key, client_id
-    @redis.expire node_sessions_key, DEFAULT_TTL
+    @redis.set node_client_session_key(node_id, client_id), data.to_json
+    @redis.sadd? node_sessions_key(node_id), client_id
   end
 
   def each_session_by_node(node_id)
