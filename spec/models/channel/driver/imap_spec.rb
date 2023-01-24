@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Imap, required_envs: %w[IMAP_ASCII_8BIT_HOST IMAP_ASCII_8BIT_USER IMAP_ASCII_8BIT_PASSWORD] do
+RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_SERVER MAIL_ADDRESS_ASCII MAIL_PASS_ASCII] do
   # https://github.com/zammad/zammad/issues/2964
   context 'when connecting with a ASCII 8-Bit password' do
     it 'succeeds' do
 
       params = {
-        host:     ENV['IMAP_ASCII_8BIT_HOST'],
-        user:     ENV['IMAP_ASCII_8BIT_USER'],
-        password: ENV['IMAP_ASCII_8BIT_PASSWORD'],
+        host:     ENV['MAIL_SERVER'],
+        user:     ENV['MAIL_ADDRESS_ASCII'],
+        password: ENV['MAIL_PASS_ASCII'],
       }
 
       result = described_class.new.fetch(params, nil, 'check')
