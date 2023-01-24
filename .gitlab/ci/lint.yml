@@ -105,6 +105,7 @@
 'refresh global envs':
   services:
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
   stage: lint
   # ensure that only one Job runs in the whole project (branches etc.)
   resource_group: global_refresh_envs
