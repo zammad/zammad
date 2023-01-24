@@ -24,6 +24,7 @@ For Linux:
 ```screen
 sudo apt install postgresql libimlib2 openssl direnv shellcheck
 ```
+
 Unfortunately there is no `forego` package / binary available for Linux. We recommend to build
 it from [source](https://github.com/ddollar/forego) or alternatively use
 [foreman](https://github.com/ddollar/foreman).
@@ -43,7 +44,6 @@ sudo ln -sf /usr/local/lib/chrome/chromedriver-109.0.5414.74 /usr/local/bin/chro
 ```
 
 Beware chromedriver version has to match your installed chrome browser version.
-
 
 ## RVM
 
@@ -116,6 +116,35 @@ sudo apt install elasticsearch
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
 sudo systemctl restart elasticsearch.service
 ```
+
+## Redis
+
+If you would like to develop something for the new mobile front end, you need
+
+- to set `ENABLE_EXPERIMENTAL_MOBILE_FRONTEND` to `true`
+- and install a Redis server on your machine.
+
+For macOS:
+
+```screen
+brew install redis
+brew services start redis
+```
+
+For Linux (Ubuntu/Debian):
+
+```screen
+sudo apt install lsb-release
+
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt-get update
+sudo apt-get install redis
+```
+
+Most major Linux distributions provide packages for Redis.
 
 ## Ruby
 
