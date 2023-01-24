@@ -101,7 +101,7 @@ returns
         .distinct
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
         .joins(db_query_params.tables)
-        .count()
+        .count
 
       {
         overview: {

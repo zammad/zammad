@@ -120,7 +120,7 @@ class ImportZendeskController < ApplicationController
   private
 
   def setup_done
-    count = User.all.count()
+    count = User.all.count
     done = true
     if count <= 2
       done = false

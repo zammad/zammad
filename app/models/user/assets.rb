@@ -44,7 +44,7 @@ returns
       # get linked accounts
       local_attributes['accounts'] = Rails.cache.fetch("User/authorizations/#{cache_key_with_version}") do
         local_accounts = {}
-        authorizations = self.authorizations()
+        authorizations = self.authorizations
         authorizations.each do |authorization|
           local_accounts[authorization.provider] = {
             uid:      authorization[:uid],
