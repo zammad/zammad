@@ -17,7 +17,12 @@ if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
     Redis.new(driver: :hiredis, url: redis_url).ping
     Rails.logger.info { "ActionCable is using the redis instance at #{redis_url}." }
   rescue Redis::CannotConnectError => e
-    warn "There was an error trying to connect to Redis via #{redis_url}. Please make sure Redis is available."
+    warn "There was an error trying to connect to Redis via #{redis_url}."
+    if ENV['REDIS_URL'].present?
+      warn 'Please make sure Redis is available.'
+    else
+      warn 'Please provide a Redis instance at localhost:6379 or set REDIS_URL to point to a different location.'
+    end
     warn e.inspect
     exit! # rubocop:disable Rails/Exit
   end
