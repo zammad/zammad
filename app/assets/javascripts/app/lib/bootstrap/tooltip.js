@@ -480,7 +480,12 @@
       callback && callback()
     }
 
-    this.$element.trigger(e)
+    // https://github.com/zammad/zammad/issues/4422
+    // sometimes DOM element may be removed while popover is being hidden
+    // cannot trigger event on an already removed element!
+    if(this.$element) {
+      this.$element.trigger(e)
+    }
 
     if (e.isDefaultPrevented()) return
 
