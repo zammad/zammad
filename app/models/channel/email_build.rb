@@ -177,9 +177,10 @@ returns
 =end
 
   def self.recipient_line(realname, email)
-    return "#{realname} <#{email}>" if realname.match?(%r{^[A-z]+$}i)
-
-    "\"#{realname.gsub('"', '\"')}\" <#{email}>"
+    Mail::Address.new.tap do |address|
+      address.display_name = realname
+      address.address      = email
+    end.format
   end
 
 =begin

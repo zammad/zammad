@@ -58,7 +58,7 @@ module Ticket::Article::AddsMetadataGeneral
     is_customer = !TicketPolicy.new(user, ticket).agent_read_access?
 
     if (type.name == 'web' || type.name == 'phone') && is_customer
-      self.from = "#{user.firstname} #{user.lastname} <#{user.email}>"
+      self.from = Channel::EmailBuild.recipient_line "#{user.firstname} #{user.lastname}", user.email
       return
     end
     self.from = "#{user.firstname} #{user.lastname}"

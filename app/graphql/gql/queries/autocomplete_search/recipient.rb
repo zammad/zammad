@@ -17,7 +17,7 @@ module Gql::Queries
     def label(user)
       return user.fullname if user.email.blank?
 
-      "#{user.fullname} <#{user.email}>"
+      Channel::EmailBuild.recipient_line user.fullname, user.email
     end
   end
 end

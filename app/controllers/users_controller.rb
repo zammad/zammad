@@ -263,7 +263,7 @@ class UsersController < ApplicationController
       user_all.each do |user|
         realname = user.fullname
         if user.email.present? && realname != user.email
-          realname = "#{realname} <#{user.email}>"
+          realname = Channel::EmailBuild.recipient_line realname, user.email
         end
         a = if params[:term]
               { id: user.id, label: realname, value: user.email, inactive: !user.active }

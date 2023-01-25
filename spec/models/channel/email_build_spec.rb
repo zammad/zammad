@@ -350,8 +350,8 @@ RSpec.describe Channel::EmailBuild, type: :model do
     context 'with special characters (|) in the realname' do
       let(:realname) { 'Somebody | Some Org' }
 
-      it 'wraps the realname with quotes and wraps the email with <>' do
-        expected_recipient_line = '"Somebody | Some Org" <some.body@example.com>'
+      it 'wraps the email with <>' do
+        expected_recipient_line = 'Somebody | Some Org <some.body@example.com>'
         expect(generated_recipient_line).to eq expected_recipient_line
       end
     end
@@ -359,8 +359,8 @@ RSpec.describe Channel::EmailBuild, type: :model do
     context 'with special characters (spaces) in the realname' do
       let(:realname) { 'Test Admin Agent via Support' }
 
-      it 'wraps the realname with quotes and wraps the email with <>' do
-        expected_recipient_line = '"Test Admin Agent via Support" <some.body@example.com>'
+      it 'wraps the email with <>' do
+        expected_recipient_line = 'Test Admin Agent via Support <some.body@example.com>'
         expect(generated_recipient_line).to eq expected_recipient_line
       end
     end
