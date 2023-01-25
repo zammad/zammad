@@ -2,6 +2,7 @@
 
 import { defaultArticles } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
+import type { AppName } from '@shared/types/app'
 import { initializeStore } from '@tests/support/components/initializeStore'
 import { createArticleActions, createArticleTypes } from '../index'
 import type { TicketActionAddOptions } from '../types'
@@ -28,7 +29,10 @@ export const createTestArticleActions = (
   return createArticleActions(ticket, article, 'mobile', options)
 }
 
-export const createTestArticleTypes = (ticket: TicketById) => {
+export const createTestArticleTypes = (
+  ticket: TicketById,
+  app: AppName = 'mobile',
+) => {
   initializeStore()
-  return createArticleTypes(ticket, 'mobile')
+  return createArticleTypes(ticket, app)
 }

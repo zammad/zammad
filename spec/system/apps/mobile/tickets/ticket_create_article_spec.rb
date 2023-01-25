@@ -13,10 +13,21 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end
 
+  def save_article()
+    find_button('Done').click
+    find_button('Save ticket').click
+
+    wait_for_ticket_edit
+  end
+
+  def open_article_dialog()
+    visit "/tickets/#{ticket.id}"
+    find_button('Add reply').click
+  end
+
   context 'when creating a new article as an agent', authenticated_as: :agent do
     it 'creates an internal note (default)' do
-      visit "/tickets/#{ticket.id}"
-      find_button('Add reply').click
+      open_article_dialog
 
       expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
       expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
@@ -25,10 +36,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       expect(text).to have_text_value('', exact: true)
       text.type('This is a note')
 
-      find_button('Done').click
-      find_button('Save ticket').click
-
-      wait_for_ticket_edit
+      save_article
 
       expect(Ticket::Article.last).to have_attributes(
         type_id:  Ticket::Article::Type.lookup(name: 'note').id,
@@ -39,8 +47,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     it 'creates a public note' do
-      visit "/tickets/#{ticket.id}"
-      find_button('Add reply').click
+      open_article_dialog
 
       find_select('Visibility', visible: :all).select_option('Public')
 
@@ -48,10 +55,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       expect(text).to have_text_value('', exact: true)
       text.type('This is a note!')
 
-      find_button('Done').click
-      find_button('Save ticket').click
-
-      wait_for_ticket_edit
+      save_article
 
       expect(Ticket::Article.last).to have_attributes(
         type_id:  Ticket::Article::Type.lookup(name: 'note').id,
@@ -113,9 +117,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     it 'changes ticket data together with the article' do
-      visit "/tickets/#{ticket.id}"
-
-      find_button('Add reply').click
+      open_article_dialog
 
       find_editor('Text').type('This is a note!')
 
@@ -135,6 +137,53 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
         type_id: Ticket::Article::Type.lookup(name: 'note').id,
         body:    '<p>This is a note!</p>',
       )
+    end
+
+    context 'when creating a phone article' do
+      it 'creates a phone article' do
+        open_article_dialog
+
+        find_select('Article Type', visible: :all).select_option('Phone')
+
+        text = find_editor('Text')
+        expect(text).to have_text_value('', exact: true)
+        text.type('This is a note!')
+
+        save_article
+
+        expect(Ticket::Article.last).to have_attributes(
+          type_id:  Ticket::Article::Type.lookup(name: 'phone').id,
+          internal: false,
+          body:     '<p>This is a note!</p>',
+        )
+      end
+
+      it 'creates a phone article with attachments' do
+        open_article_dialog
+
+        find_select('Article Type', visible: :all).select_option('Phone')
+
+        text = find_editor('Text')
+        expect(text).to have_text_value('', exact: true)
+        text.type('This is a note!')
+
+        find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
+
+        # need to wait until the file is uploaded
+        expect(page).to have_text('small.png', wait: 60)
+
+        save_article
+
+        expect(Store.last.filename).to eq('small.png')
+        expect(Ticket::Article.last).to have_attributes(
+          type_id:     Ticket::Article::Type.lookup(name: 'phone').id,
+          internal:    false,
+          body:        '<p>This is a note!</p>',
+          attachments: [
+            Store.last
+          ]
+        )
+      end
     end
 
     # TODO: test security settings

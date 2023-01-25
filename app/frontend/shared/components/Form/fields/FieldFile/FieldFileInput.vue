@@ -159,6 +159,7 @@ const { showImage } = useImageViewer(uploadFiles)
     ref="fileInput"
     data-test-id="fileInput"
     type="file"
+    :name="context.id"
     class="hidden"
     aria-hidden="true"
     :accept="props.context.accept"
