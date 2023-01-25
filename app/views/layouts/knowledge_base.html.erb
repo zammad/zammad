@@ -21,11 +21,11 @@
 
   <header class="header js-header">
     <div class="container">
-      <h1 class="logo">
+      <span class="logo">
         <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale]), @knowledge_base) do %>
           <img src="/assets/images/<%= Setting.get('product_logo') %>">
         <% end %>
-      </h1>
+      </span>
       <nav class="menu">
         <% menu_items.location_header.each do |menu_item| %>
           <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
