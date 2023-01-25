@@ -54,11 +54,26 @@ export interface FieldEditorContext {
   removeSignature?(): void
 }
 
+export type EditorContentType = 'text/html' | 'text/plain'
+
 export interface FieldEditorProps {
   groupId?: string
   ticketId?: string
   customerId?: string
+  /**
+   * @default 'text/html'
+   */
+  contentType?: EditorContentType
+  /**
+   * "meta" represents an object, where the key is a plugin, and the value is an object with plugin-specific options
+   */
   meta?: {
+    footer?: {
+      disabled?: boolean
+      text?: string
+      maxlength?: number
+      warningLength?: number
+    }
     image?: {
       disabled?: boolean
     }

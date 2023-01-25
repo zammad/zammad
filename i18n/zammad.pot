@@ -12359,6 +12359,10 @@ msgstr ""
 msgid "You don't have the necessary permissions to access this page."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
+msgid "You have exceeded the character limit by %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr ""

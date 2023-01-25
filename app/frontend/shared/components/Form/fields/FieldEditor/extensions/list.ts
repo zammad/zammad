@@ -5,6 +5,7 @@ import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 import Link from '@tiptap/extension-link'
 import StarterKit from '@tiptap/starter-kit'
+import CharacterCount from '@tiptap/extension-character-count'
 
 import type { Extensions } from '@tiptap/core'
 
@@ -17,23 +18,47 @@ import Image from './Image'
 import Signature from './Signature'
 import type { FieldEditorProps } from '../types'
 
-export default (
-  context: Ref<FormFieldContext<FieldEditorProps>>,
-): Extensions => [
+export const getPlainExtensions = (): Extensions => [
+  StarterKit.configure({
+    blockquote: false,
+    bold: false,
+    bulletList: false,
+    code: false,
+    codeBlock: false,
+    dropcursor: false,
+    gapcursor: false,
+    heading: false,
+    history: false,
+    horizontalRule: false,
+    italic: false,
+    listItem: false,
+    orderedList: false,
+    strike: false,
+  }),
+  CharacterCount,
+]
+
+export const getHtmlExtensions = (): Extensions => [
   StarterKit.configure({
     orderedList: false,
     listItem: false,
   }),
+  CharacterCount,
   Underline,
   OrderedList,
   ListItem,
-  Image,
-  Signature,
   Link.configure({
     openOnClick: false,
     autolink: false,
   }),
   UserLink,
+]
+
+export const getCustomExtensions = (
+  context: Ref<FormFieldContext<FieldEditorProps>>,
+): Extensions => [
+  Image,
+  Signature,
   UserMention(context),
   KnowledgeBaseSuggestion(context),
   TextModuleSuggestion(context),

@@ -21,6 +21,8 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
+  const editorType = computed(() => currentArticleType.value?.contentType)
+
   const editorMeta = computed(() => {
     return {
       mentionUser: {
@@ -120,7 +122,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         triggerFormUpdater: false,
       },
       {
-        // includes security and is possible to enable it
         if: '$fns.includes($currentArticleType.attributes, "security")',
         name: 'security',
         label: __('Security'),
@@ -135,6 +136,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         screen: 'edit',
         object: EnumObjectManagerObjects.TicketArticle,
         props: {
+          contentType: editorType,
           meta: editorMeta,
         },
         triggerFormUpdater: false,

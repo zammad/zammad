@@ -8,10 +8,11 @@ import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
 import { nextTick, ref, toRef } from 'vue'
 import type { Ref } from 'vue'
 import useEditorActions from './useEditorActions'
-import type { EditorCustomPlugins } from './types'
+import type { EditorContentType, EditorCustomPlugins } from './types'
 
 const props = defineProps<{
   editor?: Editor
+  contentType: EditorContentType
   visible: boolean
   disabledPlugins: EditorCustomPlugins[]
 }>()
@@ -24,7 +25,11 @@ const emit = defineEmits<{
 const actionBar = ref<HTMLElement>()
 const editor = toRef(props, 'editor')
 
-const { actions, isActive } = useEditorActions(editor, props.disabledPlugins)
+const { actions, isActive } = useEditorActions(
+  editor,
+  props.contentType,
+  props.disabledPlugins,
+)
 
 const opacityGradientEnd = ref('0')
 const opacityGradientStart = ref('0')

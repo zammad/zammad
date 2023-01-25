@@ -1,22 +1,37 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
+import FieldEditorFooter from './FieldEditorFooter.vue'
+import type { FieldEditorProps } from './types'
 
 const FieldEditor = defineAsyncComponent(() => import('./FieldEditorInput.vue'))
 
 interface Props {
-  context: FormFieldContext
+  context: FormFieldContext<FieldEditorProps>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const editorRerenderKey = computed(() => {
+  // when plain changes, we need to rerender the editor
+  const type = props.context.contentType === 'text/plain' ? 'plain' : 'html'
+  return `${type}-${props.context.id}`
+})
 </script>
 
 <template>
   <Suspense>
-    <FieldEditor :context="context" v-bind="$attrs" />
+    <FieldEditor v-bind="$attrs" :key="editorRerenderKey" :context="context" />
     <template #fallback>
-      <div class="h-[96px]" />
+      <div class="p-2">
+        <div class="h-20" />
+        <FieldEditorFooter
+          v-if="context.meta?.footer && !context.meta.footer.disabled"
+          :footer="context.meta.footer"
+          :characters="0"
+        />
+      </div>
     </template>
   </Suspense>
 </template>

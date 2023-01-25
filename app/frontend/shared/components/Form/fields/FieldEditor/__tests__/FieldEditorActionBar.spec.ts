@@ -8,6 +8,7 @@ describe('keyboard interactions', () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
         visible: true,
+        contentType: 'text/html',
         disabledPlugins: [],
       },
     })
@@ -35,6 +36,7 @@ describe('keyboard interactions', () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
         visible: true,
+        contentType: 'text/html',
         disabledPlugins: [],
       },
     })
@@ -52,6 +54,7 @@ describe('keyboard interactions', () => {
   it('hides on blur', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
+        contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
       },
@@ -65,6 +68,7 @@ describe('keyboard interactions', () => {
   it('hides on escape', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
+        contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
       },
@@ -79,6 +83,7 @@ describe('keyboard interactions', () => {
   it('hides on click outside', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
+        contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
       },
@@ -91,9 +96,10 @@ describe('keyboard interactions', () => {
 })
 
 describe('basic toolbar testing', () => {
-  it("don't see disabled actions", async () => {
+  it("don't see disabled actions", () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
+        contentType: 'text/html',
         visible: true,
         disabledPlugins: ['mentionUser'],
       },
@@ -105,5 +111,36 @@ describe('basic toolbar testing', () => {
     expect(view.queryByLabelText('Mention user')).not.toBeInTheDocument()
     expect(view.queryByText('Mention user')).not.toBeInTheDocument()
     expect(view.queryByIconName('mobile-at-sign')).not.toBeInTheDocument()
+  })
+
+  it("don't see plain text actions", () => {
+    const view = renderComponent(FieldEditorActionBar, {
+      props: {
+        contentType: 'text/plain',
+        visible: true,
+        disabledPlugins: [],
+      },
+    })
+
+    expect(
+      view.getByLabelText('Insert text from text module'),
+    ).toBeInTheDocument()
+    expect(view.getByIconName('mobile-snippet')).toBeInTheDocument()
+
+    expect(
+      view.getByLabelText('Insert text from Knowledge Base article'),
+    ).toBeInTheDocument()
+    expect(view.getByIconName('mobile-mention-kb')).toBeInTheDocument()
+
+    expect(
+      view.queryByRole('button', { name: 'Mention user' }),
+    ).not.toBeInTheDocument()
+    expect(view.queryByLabelText('Mention user')).not.toBeInTheDocument()
+
+    expect(view.queryByLabelText('Add link')).not.toBeInTheDocument()
+    expect(view.queryByLabelText('Add image')).not.toBeInTheDocument()
+    expect(
+      view.queryByLabelText('Format as underlined'),
+    ).not.toBeInTheDocument()
   })
 })

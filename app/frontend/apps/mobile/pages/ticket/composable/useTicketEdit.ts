@@ -11,6 +11,7 @@ import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { TicketById } from '@shared/entities/ticket/types'
 import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
+import type { SecurityValue } from '@shared/components/Form/fields/FieldSecurity/types'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
 interface ArticleFormValues {
@@ -21,6 +22,8 @@ interface ArticleFormValues {
   to?: string[]
   subject?: string
   attachments?: FileUploaded[]
+  contentType?: string
+  security?: SecurityValue
 }
 
 export const useTicketEdit = (
@@ -74,9 +77,9 @@ export const useTicketEdit = (
       cc: article.cc,
       to: article.to,
       subject: article.subject,
-      contentType: 'text/html', // TODO can be plain text
+      contentType: article.contentType || 'text/html',
       attachments: attachments.length ? { files, formId } : null,
-      // TODO security
+      security: article.security,
     }
   }
 

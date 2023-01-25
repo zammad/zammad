@@ -32,6 +32,8 @@ export default function buildMentionExtension<T>(
       const { nodeAfter } = editor.view.state.selection.$to
       const overrideSpace = nodeAfter?.text?.startsWith(' ')
 
+      // activators start with a space, so we need to decrease the range
+      range.from -= 1
       if (overrideSpace) {
         range.to += 1
       }

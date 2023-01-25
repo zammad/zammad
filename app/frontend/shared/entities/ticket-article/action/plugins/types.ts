@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormValues } from '@shared/components/Form'
+import type { FormData } from '@shared/components/Form'
 import type { FieldEditorProps } from '@shared/components/Form/fields/FieldEditor/types'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import type { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
@@ -51,14 +51,14 @@ export interface AppSpecificTicketArticleType {
   attributes: string[]
   internal: boolean
   view: TicketViewPolicyMap
-  // TODO: to disable some features, need extensions to allow "plain text" in a different issue
+  contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
   // when clicked on type, and type is not selected
   onSelected?(ticket: TicketById): void
   // when clicked on other type, but this one is selected
   onDeselected?(ticket: TicketById): void
   // TODO use actual type instead of FormValues
-  updateForm?(ticket: TicketById, formValues: FormValues): FormValues
+  updateForm?(formValues: FormData): FormData
 }
 
 export interface TicketArticleType

@@ -13,5 +13,3 @@ export const mountEditor = (props: Record<string, unknown> = {}) => {
     },
   })
 }
-
-export default {}

@@ -6,7 +6,7 @@ import FieldEditorWrapper from './FieldEditorWrapper.vue'
 
 const fieldDefinition = createInput(
   FieldEditorWrapper,
-  ['groupId', 'ticketId', 'customerId', 'meta'],
+  ['groupId', 'ticketId', 'customerId', 'meta', 'contentType'],
   {
     features: [formUpdaterTrigger('delayed')],
   },

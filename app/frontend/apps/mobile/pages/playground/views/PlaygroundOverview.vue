@@ -9,7 +9,7 @@ import { useDialog } from '@shared/composables/useDialog'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 const linkSchemaRaw = [
   {
@@ -26,6 +26,7 @@ const linkSchemaRaw = [
     name: 'editor',
     label: 'Editor',
     required: true,
+    // props: editorProps,
   },
   {
     type: 'textarea',
@@ -359,6 +360,36 @@ const steps = {
     disabled: true,
   },
 }
+
+const editorProps = reactive({
+  contentType: 'text/plain',
+  meta: {
+    footer: {
+      text: '/AB',
+      maxlength: 276,
+      warningLength: 30,
+    },
+  },
+})
+
+const updateEditorProps = () => {
+  editorProps.contentType =
+    editorProps.contentType === 'text/plain' ? 'text/html' : 'text/plain'
+}
+
+const editorSchema = defineFormSchema([
+  {
+    type: 'editor',
+    name: 'editor',
+    label: 'Editor',
+    required: true,
+    props: Object.keys(editorProps).reduce((acc, key) => {
+      acc[key] = computed(() => editorProps[key as keyof typeof editorProps])
+      return acc
+    }, {} as Record<string, unknown>),
+  },
+])
+const logSubmit = console.log
 </script>
 
 <template>
@@ -367,10 +398,18 @@ const steps = {
       Dialog
     </button>
 
+    <button type="button" @click="updateEditorProps">
+      CHANGE EDITOR PROPS
+    </button>
+
+    <button form="form">Submit</button>
+
     <CommonStepper v-model="currentStep" class="mx-20" :steps="steps" />
 
     <!-- TODO where to put this? -->
     <button @click="openCreateUserDialog()">Create user</button>
+
+    <Form id="form" :schema="editorSchema" @submit="logSubmit" />
 
     <CommonButtonGroup
       class="py-4"

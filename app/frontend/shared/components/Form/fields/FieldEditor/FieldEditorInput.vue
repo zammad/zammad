@@ -5,15 +5,22 @@ import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { convertFileList } from '@shared/utils/files'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { ref, toRef, watch } from 'vue'
+import { computed, onUnmounted, ref, toRef, watch } from 'vue'
 import useValue from '../../composables/useValue'
-import getExtensions from './extensions/list'
+import {
+  getCustomExtensions,
+  getHtmlExtensions,
+  getPlainExtensions,
+} from './extensions/list'
 import type {
+  EditorContentType,
   EditorCustomPlugins,
   FieldEditorProps,
   PossibleSignature,
 } from './types'
 import FieldEditorActionBar from './FieldEditorActionBar.vue'
+import FieldEditorFooter from './FieldEditorFooter.vue'
+import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention'
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>
@@ -30,10 +37,25 @@ const disabledPlugins = Object.entries(props.context.meta || {})
   .filter(([, value]) => value.disabled)
   .map(([key]) => key as EditorCustomPlugins)
 
-const editorExtensions = getExtensions(reactiveContext).filter(
-  (extension) =>
-    !disabledPlugins.includes(extension.name as EditorCustomPlugins),
+const contentType = computed<EditorContentType>(
+  () => props.context.contentType || 'text/html',
 )
+
+// remove user mention in plain text mode and inline images
+if (contentType.value === 'text/plain') {
+  disabledPlugins.push(userMentionPluginName, 'image')
+}
+
+const editorExtensions =
+  contentType.value === 'text/plain'
+    ? getPlainExtensions()
+    : getHtmlExtensions()
+
+getCustomExtensions(reactiveContext).forEach((extension) => {
+  if (!disabledPlugins.includes(extension.name as EditorCustomPlugins)) {
+    editorExtensions.push(extension)
+  }
+})
 
 const showActionBar = ref(false)
 const editor = useEditor({
@@ -75,12 +97,10 @@ const editor = useEditor({
   editable: props.context.disabled !== true,
   content: currentValue.value,
   onUpdate({ editor }) {
-    const html = editor.getHTML()
-    if (html === '<p></p>') {
-      props.context.node.input('')
-    } else {
-      props.context.node.input(html)
-    }
+    const content =
+      contentType.value === 'text/plain' ? editor.getText() : editor.getHTML()
+    const value = content === '<p></p>' ? '' : content
+    props.context.node.input(value)
   },
   onFocus() {
     showActionBar.value = true
@@ -119,10 +139,18 @@ watch(
 // )
 
 // Set the new editor value, when it was changed from outside (e.G. form schema update).
-props.context.node.on('input', ({ payload: value }) => {
-  if (editor.value && value !== editor.value.getHTML()) {
+const updateValueKey = props.context.node.on('input', ({ payload: value }) => {
+  const currentValue =
+    contentType.value === 'text/plain'
+      ? editor.value?.getText()
+      : editor.value?.getHTML()
+  if (editor.value && value !== currentValue) {
     editor.value.commands.setContent(value, false)
   }
+})
+
+onUnmounted(() => {
+  props.context.node.off(updateValueKey)
 })
 
 const focusEditor = () => {
@@ -157,6 +185,13 @@ const removeSignature = () => {
   editor.value.chain().removeSignature().focus(currentPosition).run()
 }
 
+const characters = computed(() => {
+  if (!editor.value) return 0
+  return editor.value.storage.characterCount.characters({
+    node: editor.value.state.doc,
+  })
+})
+
 Object.assign(props.context, {
   addSignature,
   removeSignature,
@@ -164,14 +199,23 @@ Object.assign(props.context, {
 </script>
 
 <template>
-  <EditorContent
-    ref="editorVueInstance"
-    data-test-id="field-editor"
-    class="px-2 py-2"
-    :editor="editor"
-  />
+  <div class="p-2">
+    <EditorContent
+      ref="editorVueInstance"
+      data-test-id="field-editor"
+      :editor="editor"
+    />
+    <FieldEditorFooter
+      v-if="context.meta?.footer && !context.meta.footer.disabled && editor"
+      :footer="context.meta.footer"
+      :characters="characters"
+    />
+  </div>
+
+  <!-- TODO: questionable usability - it moves, when new line is added -->
   <FieldEditorActionBar
     :editor="editor"
+    :content-type="contentType"
     :visible="showActionBar"
     :disabled-plugins="disabledPlugins"
     @hide="showActionBar = false"

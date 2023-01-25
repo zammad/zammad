@@ -84,9 +84,18 @@ const {
   openArticleReplyDialog,
 } = useTicketArticleReply(ticket, form)
 
+const { currentArticleType, ticketEditSchema, articleTypeHandler } =
+  useTicketEditForm(ticket)
+
 const { notify } = useNotifications()
 
 const submitForm = async (formData: FormData) => {
+  const updateForm = currentArticleType.value?.updateForm
+
+  if (updateForm) {
+    formData = updateForm(formData)
+  }
+
   try {
     const result = await editTicket(formData)
 
@@ -154,9 +163,6 @@ onBeforeRouteLeave(async () => {
 
   return confirmed
 })
-
-const { currentArticleType, ticketEditSchema, articleTypeHandler } =
-  useTicketEditForm(ticket)
 
 const ticketEditSchemaData = reactive({
   formLocation,
