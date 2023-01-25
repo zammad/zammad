@@ -183,6 +183,15 @@ Scheduler.create_if_not_exists(
   updated_by_id: 1,
   created_by_id: 1,
 )
+Scheduler.create_if_not_exists(
+  name:          __("Clean up 'DataPrivacyTask'."),
+  method:        'DataPrivacyTask.cleanup',
+  period:        1.day,
+  prio:          2,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
 Scheduler.create_or_update(
   name:          __('Delete obsolete classic IMAP backup.'),
   method:        'ImapAuthenticationMigrationCleanupJob.perform_now',

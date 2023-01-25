@@ -84,4 +84,26 @@ RSpec.describe DataPrivacyTask, type: :model do
       end
     end
   end
+
+  describe '.cleanup' do
+    let(:task) { create(:data_privacy_task) }
+
+    it 'does does not delete new tasks' do
+      task
+      described_class.cleanup
+      expect { task.reload }.not_to raise_error
+    end
+
+    it 'does does delete old tasks' do
+      travel_to 7.months.ago
+      task
+      travel_back
+      described_class.cleanup
+      expect { task.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'does make sure that the cleanup returns truthy value for scheduler' do
+      expect(described_class.cleanup).to be(true)
+    end
+  end
 end

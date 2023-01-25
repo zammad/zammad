@@ -102,4 +102,9 @@ class DataPrivacyTask < ApplicationModel
   def prepare_deletion_preview_anonymize
     preferences[:user] = Pseudonymisation.of_hash(preferences[:user])
   end
+
+  def self.cleanup(diff = 6.months)
+    where('created_at < ?', diff.ago).destroy_all
+    true
+  end
 end
