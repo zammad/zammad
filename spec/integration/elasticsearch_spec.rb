@@ -192,7 +192,7 @@ RSpec.describe 'Elasticsearch', searchindex: true do
         end
 
         it 'by customer' do
-          result = Ticket.search(current_user: agent, query: tickets[0].customer.lastname)
+          result = Ticket.search(current_user: agent, query: tickets[0].customer.email)
           expect(result[0]['id']).to eq(tickets[0].id)
           expect(result.size).to eq(1)
         end
