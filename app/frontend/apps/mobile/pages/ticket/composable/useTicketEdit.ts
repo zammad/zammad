@@ -12,6 +12,7 @@ import { MutationHandler } from '@shared/server/apollo/handler'
 import type { TicketById } from '@shared/entities/ticket/types'
 import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
 import type { SecurityValue } from '@shared/components/Form/fields/FieldSecurity/types'
+import { getNode } from '@formkit/core'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
 interface ArticleFormValues {
@@ -19,6 +20,7 @@ interface ArticleFormValues {
   body: string
   internal: boolean
   cc?: string[]
+  inReplyTo?: string
   to?: string[]
   subject?: string
   attachments?: FileUploaded[]
@@ -70,6 +72,8 @@ export const useTicketEdit = (
       pick(file, ['content', 'name', 'type']),
     )
 
+    const contentType = getNode('body')?.context?.contentType || 'text/html'
+
     return {
       type: article.articleType,
       body: article.body,
@@ -77,7 +81,8 @@ export const useTicketEdit = (
       cc: article.cc,
       to: article.to,
       subject: article.subject,
-      contentType: article.contentType || 'text/html',
+      inReplyTo: article.inReplyTo,
+      contentType,
       attachments: attachments.length ? { files, formId } : null,
       security: article.security,
     }

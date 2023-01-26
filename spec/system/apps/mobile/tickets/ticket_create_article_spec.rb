@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'system/apps/mobile/examples/core_workflow_examples'
+require 'system/apps/mobile/examples/create_article_examples'
 
 RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }
@@ -9,18 +9,18 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
   let(:customer)  { create(:customer) }
   let(:ticket)    { create(:ticket, customer: customer, group: group) }
 
-  def wait_for_ticket_edit()
+  def wait_for_ticket_edit
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end
 
-  def save_article()
+  def save_article
     find_button('Done').click
     find_button('Save ticket').click
 
     wait_for_ticket_edit
   end
 
-  def open_article_dialog()
+  def open_article_dialog
     visit "/tickets/#{ticket.id}"
     find_button('Add reply').click
   end
@@ -39,10 +39,11 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       save_article
 
       expect(Ticket::Article.last).to have_attributes(
-        type_id:  Ticket::Article::Type.lookup(name: 'note').id,
-        internal: true,
-        sender:   Ticket::Article::Sender.lookup(name: 'Agent'),
-        body:     '<p>This is a note</p>',
+        type_id:      Ticket::Article::Type.lookup(name: 'note').id,
+        internal:     true,
+        content_type: 'text/html',
+        sender:       Ticket::Article::Sender.lookup(name: 'Agent'),
+        body:         '<p>This is a note</p>',
       )
     end
 
@@ -58,38 +59,38 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       save_article
 
       expect(Ticket::Article.last).to have_attributes(
-        type_id:  Ticket::Article::Type.lookup(name: 'note').id,
-        internal: false,
-        body:     '<p>This is a note!</p>',
+        type_id:      Ticket::Article::Type.lookup(name: 'note').id,
+        internal:     false,
+        content_type: 'text/html',
+        body:         '<p>This is a note!</p>',
       )
     end
 
-    # TODO: uncomment test, when "to" field is working
-    # https://github.com/zammad/coordination-feature-mobile-view/issues/371
-    # it 'creates a public email (default)' do
-    #   visit "/tickets/#{ticket.id}"
-    #   find_button('Add reply').click
+    it 'creates a public email (default)' do
+      visit "/tickets/#{ticket.id}"
+      find_button('Add reply').click
 
-    #   find_select('Article Type', visible: :all).select_option('Email')
+      find_select('Article Type', visible: :all).select_option('Email')
 
-    #   find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
-    #   find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
+      find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
+      find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
 
-    #   find_editor('Text').type('This is a note!')
+      find_editor('Text').type('This is a note!')
 
-    #   find_button('Done').click
-    #   find_button('Save ticket').click
+      find_button('Done').click
+      find_button('Save ticket').click
 
-    #   wait_for_ticket_edit
+      wait_for_ticket_edit
 
-    #   expect(Ticket::Article.last).to have_attributes(
-    #     type_id: Ticket::Article::Type.lookup(name: 'email').id,
-    #     to: 'zammad_test_to@zammad.com',
-    #     cc: 'zammad_test_cc@zammad.com',
-    #     internal: false,
-    #     body: '<p>This is a note!</p>',
-    #   )
-    # end
+      expect(Ticket::Article.last).to have_attributes(
+        type_id:      Ticket::Article::Type.lookup(name: 'email').id,
+        to:           'zammad_test_to@zammad.com',
+        cc:           'zammad_test_cc@zammad.com',
+        internal:     false,
+        content_type: 'text/html',
+        body:         '<p>This is a note!</p>',
+      )
+    end
 
     it 'creates an internal email' do
       visit "/tickets/#{ticket.id}"
@@ -110,9 +111,10 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       wait_for_ticket_edit
 
       expect(Ticket::Article.last).to have_attributes(
-        type_id:  Ticket::Article::Type.lookup(name: 'email').id,
-        internal: true,
-        body:     '<p>This is a note!</p>',
+        type_id:      Ticket::Article::Type.lookup(name: 'email').id,
+        internal:     true,
+        content_type: 'text/html',
+        body:         '<p>This is a note!</p>',
       )
     end
 
@@ -134,55 +136,31 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
       expect(ticket.reload.title).to eq('New title')
       expect(Ticket::Article.last).to have_attributes(
-        type_id: Ticket::Article::Type.lookup(name: 'note').id,
-        body:    '<p>This is a note!</p>',
+        type_id:      Ticket::Article::Type.lookup(name: 'note').id,
+        content_type: 'text/html',
+        body:         '<p>This is a note!</p>',
       )
     end
 
     context 'when creating a phone article' do
-      it 'creates a phone article' do
-        open_article_dialog
-
-        find_select('Article Type', visible: :all).select_option('Phone')
-
-        text = find_editor('Text')
-        expect(text).to have_text_value('', exact: true)
-        text.type('This is a note!')
-
-        save_article
-
-        expect(Ticket::Article.last).to have_attributes(
-          type_id:  Ticket::Article::Type.lookup(name: 'phone').id,
-          internal: false,
-          body:     '<p>This is a note!</p>',
-        )
+      include_examples 'create article', type_label: 'Phone', internal: false, attachments: true, conditional: false do
+        let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
+        let(:type)         { Ticket::Article::Type.lookup(name: 'phone') }
+        let(:content_type) { 'text/html' }
       end
+    end
 
-      it 'creates a phone article with attachments' do
-        open_article_dialog
-
-        find_select('Article Type', visible: :all).select_option('Phone')
-
-        text = find_editor('Text')
-        expect(text).to have_text_value('', exact: true)
-        text.type('This is a note!')
-
-        find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
-
-        # need to wait until the file is uploaded
-        expect(page).to have_text('small.png', wait: 60)
-
-        save_article
-
-        expect(Store.last.filename).to eq('small.png')
-        expect(Ticket::Article.last).to have_attributes(
-          type_id:     Ticket::Article::Type.lookup(name: 'phone').id,
-          internal:    false,
-          body:        '<p>This is a note!</p>',
-          attachments: [
-            Store.last
-          ]
-        )
+    context 'when creating sms article' do
+      include_examples 'create article', type_label: 'Sms', internal: false, attachments: false, conditional: true do
+        let(:article) do
+          create(
+            :ticket_article,
+            ticket: ticket,
+            type:   Ticket::Article::Type.find_by(name: 'sms'),
+          )
+        end
+        let(:type)         { Ticket::Article::Type.lookup(name: 'sms') }
+        let(:content_type) { 'text/plain' }
       end
     end
 

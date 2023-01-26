@@ -23,7 +23,7 @@ interface TicketInformation {
   isTicketFormGroupValid: ComputedRef<boolean>
   isArticleFormGroupValid: ComputedRef<boolean>
   formSubmit: () => void
-  showArticleReplyDialog: () => void
+  showArticleReplyDialog: () => Promise<void>
 }
 
 export const useTicketInformation = () => {

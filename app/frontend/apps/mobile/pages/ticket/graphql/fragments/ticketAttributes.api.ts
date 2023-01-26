@@ -63,6 +63,9 @@ export const TicketAttributesFragmentDoc = gql`
   objectAttributeValues {
     ...objectAttributeValues
   }
+  policy {
+    update
+  }
   tags
   subscribed
 }

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { markRaw, ref, toRef } from 'vue'
+import { markRaw, ref, toRef, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import type { ObjectLike } from '@shared/types/utils'
@@ -22,6 +22,13 @@ const { hasValue, valueContainer, currentValue, clearValue } =
   useValue(contextReactive)
 
 const localOptions = ref(props.context.options || [])
+
+watch(
+  () => props.context.options,
+  (options) => {
+    localOptions.value = options || []
+  },
+)
 
 const nameDialog = `field-auto-complete-${props.context.id}`
 

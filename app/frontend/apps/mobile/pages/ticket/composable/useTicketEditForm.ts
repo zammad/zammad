@@ -59,6 +59,10 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
     isGroupOrList: true,
     children: [
       {
+        type: 'hidden',
+        name: 'inReplyTo',
+      },
+      {
         name: 'articleType',
         label: __('Article Type'),
         labelSrOnly: true,

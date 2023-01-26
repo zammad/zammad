@@ -58,6 +58,9 @@ fragment ticketAttributes on Ticket {
   objectAttributeValues {
     ...objectAttributeValues
   }
+  policy {
+    update
+  }
   tags
   subscribed
 }

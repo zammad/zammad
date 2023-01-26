@@ -2,9 +2,11 @@
 
 import type { PopupItem } from '@mobile/components/CommonSectionPopup'
 import { useDialog } from '@shared/composables/useDialog'
-import { computed, ref, shallowRef } from 'vue'
+import { computed, nextTick, ref, shallowRef } from 'vue'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { createArticleActions } from '@shared/entities/ticket-article/action/plugins'
+import type { TicketArticlePerformOptions } from '@shared/entities/ticket-article/action/plugins/types'
+import { useTicketInformation } from './useTicketInformation'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
@@ -16,6 +18,8 @@ export const useTicketArticleContext = () => {
       import('../components/TicketDetailView/ArticleMetadataDialog.vue'),
   })
 
+  const { showArticleReplyDialog, form } = useTicketInformation()
+
   const triggerId = ref(0)
 
   const recalculate = () => {
@@ -26,6 +30,32 @@ export const useTicketArticleContext = () => {
   const onDispose = (callback: () => unknown) => {
     disposeCallbacks.push(callback)
   }
+
+  const openReplyDialog: TicketArticlePerformOptions['openReplyDialog'] =
+    async (values = {}) => {
+      const formNode = form.value?.formNode
+      if (!formNode) return
+
+      await showArticleReplyDialog()
+
+      const { articleType, ...otherOptions } = values
+
+      formNode.find('articleType')?.input(articleType, false)
+      // trigger new fields that depend on the articleType
+      await nextTick()
+
+      for (const [key, value] of Object.entries(otherOptions)) {
+        const node = formNode.find(key, 'name')
+        node?.input(value, false)
+        // TODO: make handling more generic(?)
+        if (node && (key === 'to' || key === 'cc')) {
+          const options = Array.isArray(value)
+            ? value.map((v) => ({ value: v, label: v }))
+            : [{ value, label: value }]
+          node.emit('prop:options', options)
+        }
+      }
+    }
 
   const contextOptions = computed<PopupItem[]>(() => {
     const ticket = ticketForContext.value
@@ -48,7 +78,10 @@ export const useTicketArticleContext = () => {
         label,
         link,
         onAction: () =>
-          perform(ticket, article, { selection: selectionRange.value }),
+          perform(ticket, article, {
+            selection: selectionRange.value,
+            openReplyDialog,
+          }),
       }
     })
 

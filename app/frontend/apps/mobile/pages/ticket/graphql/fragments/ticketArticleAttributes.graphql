@@ -8,6 +8,7 @@ fragment ticketArticleAttributes on TicketArticle {
       emailAddress
     }
   }
+  messageId
   to {
     raw
     parsed {

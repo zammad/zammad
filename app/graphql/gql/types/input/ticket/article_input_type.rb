@@ -14,6 +14,7 @@ module Gql::Types::Input::Ticket
     argument :to, [String], required: false, description: 'The article recipient address.'
     argument :cc, [String], required: false, description: 'The article CC address.'
     argument :content_type, String, required: false, description: 'The article content type.'
+    argument :in_reply_to, String, required: false, description: 'Message id of the article this article replies to.'
     argument :time_unit, Float, required: false, description: 'The article accounted time.'
     argument :preferences, GraphQL::Types::JSON, required: false, description: 'The article preferences.'
     argument :attachments, Gql::Types::Input::AttachmentInputType, required: false, description: 'The article attachments.'

@@ -12,8 +12,9 @@ query ticket(
     }
   ) {
     ...ticketAttributes
-    policy {
-      update
+    createArticleType {
+      id
+      name
     }
     mentions(first: $mentionsCount) {
       totalCount

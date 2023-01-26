@@ -13,8 +13,9 @@ export const TicketDocument = gql`
     ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}
   ) {
     ...ticketAttributes
-    policy {
-      update
+    createArticleType {
+      id
+      name
     }
     mentions(first: $mentionsCount) {
       totalCount

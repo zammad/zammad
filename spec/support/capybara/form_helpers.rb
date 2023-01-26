@@ -446,6 +446,35 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
+  def open
+    element.click
+    wait_until_opened
+
+    self # support chaining
+  end
+
+  def close
+    send_keys(:escape)
+    wait_until_closed
+
+    self # support chaining
+  end
+
+  # Dialogs are teleported to the root element, so we must search them within the document body.
+  #   In order to improve the test performance, we don't do any implicit waits here.
+  #   Instead, we do explicit waits when opening/closing dialogs within the actions.
+  def dialog_element
+    if type_select?
+      page.find('#common-select[role="dialog"]', wait: false)
+    elsif type_treeselect?
+      page.find("[role=\"dialog\"] #dialog-field-tree-select-#{field_id}", wait: false)
+    elsif type_tags?
+      page.find("[role=\"dialog\"] #dialog-field-tags-#{field_id}", wait: false)
+    elsif autocomplete?
+      page.find("[role=\"dialog\"] #dialog-field-auto-complete-#{field_id}", wait: false)
+    end
+  end
+
   private
 
   def method_missing(method_name, *args, &)
@@ -470,24 +499,29 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     type_autocomplete? || type_customer? || type_organization? || type_recipient?
   end
 
-  # Dialogs are teleported to the root element, so we must search them within the document body.
-  #   In order to improve the test performance, we don't do any implicit waits here.
-  #   Instead, we do explicit waits when opening/closing dialogs within the actions.
-  def dialog_element
-    if type_select?
-      page.find('#common-select[role="dialog"]', wait: false)
-    elsif type_treeselect?
-      page.find("[role=\"dialog\"] #dialog-field-tree-select-#{field_id}", wait: false)
-    elsif type_tags?
-      page.find("[role=\"dialog\"] #dialog-field-tags-#{field_id}", wait: false)
-    elsif autocomplete?
-      page.find("[role=\"dialog\"] #dialog-field-auto-complete-#{field_id}", wait: false)
-    end
-  end
-
   # Input elements in supported fields define data attribute for "multiple" state.
   def multi_select?
     input_element['data-multiple'] == 'true'
+  end
+
+  def wait_until_opened
+    return wait_for_test_flag('common-select.opened') if type_select?
+    return wait_for_test_flag("field-tree-select-#{field_id}.opened") if type_treeselect?
+    return wait_for_test_flag("field-date-time-#{field_id}.opened") if type_date? || !type_datetime
+    return wait_for_test_flag("field-tags-#{field_id}.opened") if type_tags?
+    return wait_for_test_flag("field-auto-complete-#{field_id}.opened") if autocomplete?
+
+    raise 'Element cannot be opened'
+  end
+
+  def wait_until_closed
+    return wait_for_test_flag('common-select.closed') if type_select?
+    return wait_for_test_flag("field-tree-select-#{field_id}.closed") if type_treeselect?
+    return wait_for_test_flag("field-date-time-#{field_id}.closed") if type_date? || !type_datetime
+    return wait_for_test_flag("field-tags-#{field_id}.closed") if type_tags?
+    return wait_for_test_flag("field-auto-complete-#{field_id}.closed") if autocomplete?
+
+    raise 'Element cannot be closed'
   end
 
   def select_option_by_label(label, **find_options)

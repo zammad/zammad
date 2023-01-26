@@ -34,6 +34,11 @@ export const defaultTicket = () =>
       policy: {
         update: true,
       },
+      createArticleType: {
+        id: convertToGraphQLId('TicketArticleType', 5),
+        name: 'email',
+        __typename: 'TicketArticleType',
+      },
       owner: {
         __typename: 'User',
         internalId: 100,

@@ -3,9 +3,6 @@ subscription ticketUpdates($ticketId: ID!) {
     ticket {
       ...ticketAttributes
       articleCount
-      policy {
-        update
-      }
       mentions {
         totalCount
         edges {

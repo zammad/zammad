@@ -13,9 +13,6 @@ export const TicketUpdatesDocument = gql`
     ticket {
       ...ticketAttributes
       articleCount
-      policy {
-        update
-      }
       mentions {
         totalCount
         edges {

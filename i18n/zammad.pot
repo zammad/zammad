@@ -8482,6 +8482,10 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+msgid "Reply"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
 msgstr ""
@@ -9483,6 +9487,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Slack integration"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+msgid "Sms"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco

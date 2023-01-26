@@ -12,6 +12,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
       emailAddress
     }
   }
+  messageId
   to {
     raw
     parsed {

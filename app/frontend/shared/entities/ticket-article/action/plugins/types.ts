@@ -1,14 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormData } from '@shared/components/Form'
+import type { FormData, FormValues } from '@shared/components/Form'
 import type { FieldEditorProps } from '@shared/components/Form/fields/FieldEditor/types'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import type { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
 import type { AppName, AppSpecificRecord } from '@shared/types/app'
 import type { ConfigList } from '@shared/types/store'
 
-interface TicketArticlePerformOptions {
+export interface TicketArticlePerformOptions {
   selection?: Range
+  openReplyDialog(values?: FormValues): void
 }
 
 export interface CommonTicketAddOptions {

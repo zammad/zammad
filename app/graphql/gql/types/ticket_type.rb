@@ -26,6 +26,7 @@ module Gql::Types
     belongs_to :organization, Gql::Types::OrganizationType
     belongs_to :owner, Gql::Types::UserType, null: false
     belongs_to :customer, Gql::Types::UserType, null: false
+    belongs_to :create_article_type, Gql::Types::Ticket::Article::TypeType
 
     field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
     field :number, String, null: false
@@ -49,7 +50,6 @@ module Gql::Types
     field :escalation_at, GraphQL::Types::ISO8601DateTime
     field :pending_time, GraphQL::Types::ISO8601DateTime
 
-    # field :create_article_type_id, Integer
     # field :create_article_sender_id, Integer
     field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
