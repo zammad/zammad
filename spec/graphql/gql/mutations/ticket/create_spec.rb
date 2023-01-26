@@ -265,13 +265,13 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           let(:article_payload) do
             {
               body:   'dummy',
-              sender: Ticket::Article::Sender.first.name,
+              sender: 'Agent',
             }
           end
 
           it 'creates a new ticket + a new article with a specific sender' do
             it_creates_ticket(articles: 1)
-            expect(Ticket.last.articles.last.sender.name).to eq(Ticket::Article::Sender.first.name)
+            expect(Ticket.last.articles.last.sender.name).to eq('Agent')
           end
 
           it 'sets correct "to" and "from" values', :aggregate_failures do
@@ -308,6 +308,36 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           end
         end
       end
+
+      context 'with to: and cc: being string values' do
+        let(:article_payload) do
+          {
+            body: 'dummy',
+            to:   'to@example.com',
+            cc:   'cc@example.com',
+          }
+        end
+
+        it 'creates a new ticket + a new article and sets correct "to" and "cc" values', :aggregate_failures do
+          it_creates_ticket(articles: 1)
+          expect(Ticket.last.articles.last).to have_attributes(to: 'to@example.com', cc: 'cc@example.com')
+        end
+      end
+
+      context 'with to: and cc: containing array values' do
+        let(:article_payload) do
+          {
+            body: 'dummy',
+            to:   ['to@example.com', 'to2@example.com'],
+            cc:   ['cc@example.com', 'cc2@example.com'],
+          }
+        end
+
+        it 'creates a new ticket + a new article and sets correct "to" and "cc" values', :aggregate_failures do
+          it_creates_ticket(articles: 1)
+          expect(Ticket.last.articles.last).to have_attributes(to: 'to@example.com, to2@example.com', cc: 'cc@example.com, cc2@example.com')
+        end
+      end
     end
 
     context 'with a customer', authenticated_as: :customer do
@@ -342,7 +372,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           let(:article_payload) do
             {
               body:   'dummy',
-              sender: Ticket::Article::Sender.first.name,
+              sender: 'Agent',
             }
           end
 

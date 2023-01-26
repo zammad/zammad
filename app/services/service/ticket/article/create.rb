@@ -8,8 +8,17 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
       raise ActiveRecord::RecordNotFound, "Ticket #{ticket_id} for new article could not be found."
     end
 
+    create_article(article_data, ticket_id)
+  end
+
+  private
+
+  def create_article(article_data, ticket_id)
+
     attachments_raw = article_data.delete(:attachments) || {}
     form_id         = attachments_raw[:form_id]
+
+    preprocess_article_data(article_data)
 
     Ticket::Article.new(article_data).tap do |article|
       transform_article(article, ticket_id, attachments_raw)
@@ -20,13 +29,18 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
         time_accounting(article, article_data[:time_unit])
       end
 
-      return article if form_id.blank?
-
-      form_id_cleanup(form_id)
+      form_id_cleanup(form_id) if form_id.present?
     end
   end
 
-  private
+  def preprocess_article_data(article_data)
+    # Coerce recipient lists.
+    %i[to cc].each do |field|
+      if article_data[field].is_a? Array
+        article_data[field] = article_data[field].join(', ')
+      end
+    end
+  end
 
   def transform_article(article, ticket_id, attachments_raw)
     article.ticket_id = ticket_id
@@ -39,7 +53,6 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
 
   def transform_to_from(article)
     ticket = Ticket.find(article.ticket_id)
-
     customer_display_name = display_name(ticket.customer)
     group_name = ticket.group.name
 
@@ -47,7 +60,7 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
       article.from = customer_display_name
       article.to = group_name
     else
-      article.to = customer_display_name
+      article.to ||= customer_display_name
       article.from = group_name
     end
   end

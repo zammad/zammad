@@ -1757,7 +1757,7 @@ export type TicketArticleInput = {
   /** The article body. */
   body?: InputMaybe<Scalars['String']>;
   /** The article CC address. */
-  cc?: InputMaybe<Scalars['String']>;
+  cc?: InputMaybe<Array<Scalars['String']>>;
   /** The article content type. */
   contentType?: InputMaybe<Scalars['String']>;
   /** The article sender address. */
@@ -1777,7 +1777,7 @@ export type TicketArticleInput = {
   /** The article accounted time. */
   timeUnit?: InputMaybe<Scalars['Float']>;
   /** The article recipient address. */
-  to?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Array<Scalars['String']>>;
   /** The article type. */
   type?: InputMaybe<Scalars['String']>;
 };
