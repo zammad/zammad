@@ -52,5 +52,10 @@ FactoryBot.define do
         end
       end
     end
+
+    factory :sms_message_bird_credential do
+      name        { 'message_bird' }
+      credentials { { token: 'nJC9GLTRXNHgMBCsbb1Rjy105' } }
+    end
   end
 end

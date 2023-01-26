@@ -210,5 +210,27 @@ FactoryBot.define do
         }
       end
     end
+
+    factory :sms_message_bird_channel do
+      area { 'Sms::Account' }
+      status_in { 'ok' }
+      status_out { 'ok' }
+
+      options do
+        {
+          adapter:       'sms/message_bird',
+          webhook:       "http://localhost:3000/api/v1/sms_webhook/#{webhook_token}",
+          sender:        '+490123456789',
+          token:         external_credential.credentials['token'],
+          webhook_token: webhook_token,
+        }.deep_merge(custom_options)
+      end
+
+      transient do
+        custom_options      { {} }
+        external_credential { create(:sms_message_bird_credential) }
+        webhook_token       { '0dc0aa647f509fc89a0aad8d3e86dcae' }
+      end
+    end
   end
 end

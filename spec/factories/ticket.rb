@@ -28,5 +28,17 @@ FactoryBot.define do
         }
       end
     end
+
+    factory :sms_ticket do
+      transient do
+        channel { create(:sms_message_bird_channel) }
+      end
+
+      preferences do
+        {
+          channel_id: channel.id,
+        }
+      end
+    end
   end
 end

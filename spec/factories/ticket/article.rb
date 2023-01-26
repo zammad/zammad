@@ -143,5 +143,66 @@ FactoryBot.define do
         end
       end
     end
+
+    factory :sms_article do
+      inbound
+
+      transient do
+        type_name { 'sms' }
+      end
+
+      association :ticket, factory: :sms_ticket
+      from { Faker::PhoneNumber.cell_phone_in_e164 }
+      to   { Faker::PhoneNumber.cell_phone_in_e164 }
+      subject { nil }
+      body { Faker::Lorem.sentence }
+      message_id { Faker::Number.number(digits: 19) }
+      content_type { 'text/plain' }
+
+      after(:create) do |article, context|
+        next if context.sender_name == 'Agent'
+
+        context.ticket.preferences.tap do |p|
+          p['sms'] = {
+            originator: article.from,
+            recipient:  article.to,
+          }
+        end
+
+        context.ticket.save!
+      end
+
+      trait :inbound do
+        transient do
+          sender_name { 'Customer' }
+        end
+
+        preferences do
+          {
+            channel_id: ticket.preferences['channel_id'],
+            sms:        {
+              reference: message_id,
+            },
+          }
+        end
+      end
+
+      trait :outbound do
+        transient do
+          sender_name { 'Agent' }
+        end
+
+        in_reply_to { Faker::Number.number(digits: 19) }
+
+        preferences do
+          {
+            delivery_retry:          1,
+            delivery_status_message: nil,
+            delivery_status:         'success',
+            delivery_status_date:    Time.current,
+          }
+        end
+      end
+    end
   end
 end
