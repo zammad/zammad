@@ -11,15 +11,13 @@ VCR_IGNORE_MATCHING_REGEXPS = [
 VCR.configure do |config|
   config.cassette_library_dir = 'test/data/vcr_cassettes'
   config.hook_into :webmock
-  config.allow_http_connections_when_no_cassette = false
+  config.allow_http_connections_when_no_cassette = %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
   config.ignore_localhost = true
   config.ignore_request do |request|
     uri = URI(request.uri)
 
     next true if VCR_IGNORE_MATCHING_HOSTS.any?     { |elem| uri.host.include? elem }
     next true if VCR_IGNORE_MATCHING_REGEXPS.any?   { |elem| uri.host.match? elem }
-
-    puts "Using cassette for request #{request.uri}"
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
@@ -96,7 +94,7 @@ RSpec.configure do |config|
 
     spec_path     = Pathname.new(example.file_path).realpath
     cassette_path = spec_path.relative_path_from(Rails.root.join('spec')).sub(%r{_spec\.rb$}, '')
-    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z\-]+}, '_').downcase
+    cassette_name = "#{example.metadata[:example_group][:full_description]}/#{example.description}".gsub(%r{[^0-9A-Za-z-]+}, '_').downcase
 
     # handle file name limit of 255 chars
     if cassette_name.length > 253

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequence do
+RSpec.describe Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequence do
 
   context 'when importing agents from Freshdesk' do
 
@@ -68,6 +68,10 @@ RSpec.describe ::Sequencer::Sequence::Import::Freshdesk::Agent, sequencer: :sequ
         active:     true,
         last_login: DateTime.parse('2021-05-10T07:52:58Z'),
       }
+    end
+
+    before do
+      stub_request(:get, 'https://yours.freshdesk.com/api/v2/agents/me').to_return(status: 200, body: '', headers: {})
     end
 
     it 'imports user correctly (increased user count)' do
