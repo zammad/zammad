@@ -26,7 +26,7 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
   end
 
   def query_sort_by_index(query)
-    query[:sort] = SearchIndexBackend.search_by_index_sort(options[:sort_by], options[:order_by])
+    query[:sort] = SearchIndexBackend.search_by_index_sort(sort_by: options[:sort_by], order_by: options[:order_by])
     query
   end
 

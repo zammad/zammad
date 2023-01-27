@@ -847,4 +847,22 @@ RSpec.describe SearchIndexBackend do
       end
     end
   end
+
+  describe '.search_by_index_sort' do
+    it 'does return a sort value' do
+      expect(described_class.search_by_index_sort(sort_by: ['title'], order_by: 'desc')).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
+    end
+
+    it 'does return a sort value for fulltext searches' do
+      expect(described_class.search_by_index_sort(sort_by: ['title'], order_by: 'desc', fulltext: true)).to eq([{ 'title.keyword'=>{ order: 'd' } }, '_score'])
+    end
+
+    it 'does return a default sort value' do
+      expect(described_class.search_by_index_sort).to eq([{ updated_at: { order: 'desc' } }, '_score'])
+    end
+
+    it 'does return a default sort value for fulltext searches' do
+      expect(described_class.search_by_index_sort(fulltext: true)).to eq(['_score'])
+    end
+  end
 end

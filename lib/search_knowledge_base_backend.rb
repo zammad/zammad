@@ -215,6 +215,10 @@ class SearchKnowledgeBaseBackend
     hash[:order_by] = @params[:order_by].values
   end
 
+  def options_apply_fulltext(hash)
+    hash[:fulltext] = true
+  end
+
   def options(pagination: nil)
     output = base_options
 
@@ -222,6 +226,7 @@ class SearchKnowledgeBaseBackend
     options_apply_scope(output)
     options_apply_pagination(output, pagination)
     options_apply_order(output)
+    options_apply_fulltext(output)
 
     output
   end

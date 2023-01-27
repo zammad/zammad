@@ -375,7 +375,7 @@ remove whole data from index
     end
   end
 
-  def self.search_by_index_sort(sort_by = nil, order_by = nil)
+  def self.search_by_index_sort(sort_by: nil, order_by: nil, fulltext: false)
     result = (sort_by || [])
       .map(&:to_s)
       .each_with_object([])
@@ -395,7 +395,8 @@ remove whole data from index
         )
       end
 
-    if result.blank?
+    # if we have no fulltext search then the primary default sort is updated at else score
+    if result.blank? && !fulltext
       result.push(
         updated_at: {
           order: 'desc',
@@ -636,6 +637,7 @@ generate url for index or document access (only for internal use)
 @option options [Hash] :query_extension applied to ElasticSearch query
 @option options [Array<String>] :order_by ordering directions, desc or asc
 @option options [Array<String>] :sort_by fields to sort by
+@option options [Array<String>] :fulltext If no sorting is defined the current fallback is the sorting by updated_at. But for fulltext searches it makes more sense to search by _score as default. This parameter allows to change to the fallback to _score.
 
 =end
 
@@ -650,7 +652,7 @@ generate url for index or document access (only for internal use)
     data = {
       from:  options[:from],
       size:  options[:limit],
-      sort:  search_by_index_sort(options[:sort_by], options[:order_by]),
+      sort:  search_by_index_sort(sort_by: options[:sort_by], order_by: options[:order_by], fulltext: options[:fulltext]),
       query: {
         bool: {
           must: []
