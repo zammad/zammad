@@ -81,4 +81,20 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       let(:to) { article.to }
     end
   end
+
+  context 'when article was created as a facebook post' do
+    let(:article) do
+      create(
+        :ticket_article,
+        ticket: ticket,
+        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+        type:   Ticket::Article::Type.lookup(name: 'facebook feed post'),
+      )
+    end
+
+    include_examples 'reply article', 'Facebook', attachments: false do
+      let(:type_id)     { Ticket::Article::Type.lookup(name: 'facebook feed comment').id }
+      let(:in_reply_to) { nil }
+    end
+  end
 end

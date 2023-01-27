@@ -11,6 +11,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
   let(:new_text)          { 'This is a note' }
   let(:result_text)       { new_text || current_text }
   let(:in_reply_to)       { article.message_id }
+  let(:type_id)           { article.type_id }
 
   before do
     article
@@ -54,7 +55,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
 
     attributes = {
-      type_id:     article.type_id,
+      type_id:     type_id,
       internal:    internal,
       body:        result_text,
       in_reply_to: in_reply_to

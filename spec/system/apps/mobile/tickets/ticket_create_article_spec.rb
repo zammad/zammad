@@ -209,6 +209,20 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       end
     end
 
+    context 'when replying to a facebook post' do
+      include_examples 'create article', 'Facebook', attachments: false do
+        let(:article) do
+          create(
+            :ticket_article,
+            ticket: ticket,
+            sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+            type:   Ticket::Article::Type.lookup(name: 'facebook feed post'),
+          )
+        end
+        let(:type)         { Ticket::Article::Type.lookup(name: 'facebook feed comment') }
+        let(:content_type) { 'text/plain' }
+      end
+    end
     # TODO: test security settings
   end
 end

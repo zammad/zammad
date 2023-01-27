@@ -16,7 +16,13 @@ describe.each([
   // these can be replied when sender is agent
   ['twitter status', { sender: ['Agent', 'Customer'] }],
   ['twitter direct-message', { sender: ['Agent', 'Customer'] }],
-])('%s action reply', (name, { sender }) => {
+  [
+    'facebook feed comment',
+    { sender: ['Agent', 'Customer'], createArticleType: 'facebook feed post' },
+  ],
+])('%s action reply', (name, options) => {
+  const { sender = ['Customer'], createArticleType } = options as any
+
   const createEligibleData = () => createEligibleTicketArticleReplyData(name)
 
   describe('seeing possible article actions', () => {
@@ -66,7 +72,7 @@ describe.each([
     it('customer cannot choose reply type', () => {
       setupView('customer')
       const { ticket } = defaultTicket()
-      ticket.createArticleType!.name = name
+      ticket.createArticleType!.name = createArticleType || name
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
@@ -74,7 +80,8 @@ describe.each([
     it(`cannot choose ${name}, if ticket is not telegram`, () => {
       setupView('agent')
       const { ticket } = defaultTicket()
-      ticket.createArticleType!.name = name === 'email' ? 'note' : 'email'
+      ticket.createArticleType!.name =
+        (createArticleType || name) === 'email' ? 'note' : 'email'
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
@@ -83,7 +90,7 @@ describe.each([
       setupView('agent')
       const { ticket } = defaultTicket()
       ticket.policy.update = false
-      ticket.createArticleType!.name = name
+      ticket.createArticleType!.name = createArticleType || name
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeUndefined()
     })
@@ -92,7 +99,7 @@ describe.each([
       setupView('agent')
       const { ticket } = defaultTicket()
       ticket.policy.update = true
-      ticket.createArticleType!.name = name
+      ticket.createArticleType!.name = createArticleType || name
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeDefined()
     })
