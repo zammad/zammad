@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'reply article' do |type_label:, internal:, attachments:|
+RSpec.shared_examples 'reply article' do |type_label, note, internal: false, attachments: false|
   let(:group)             { Group.find_by(name: 'Users') }
   let(:agent)             { create(:agent, groups: [group]) }
   let(:customer)          { create(:customer) }
   let(:to)                { nil }
-  let(:cc)                { nil }
+  let(:new_to)            { nil }
   let(:trigger_label)     { 'Reply' }
-  let(:has_text)          { '' }
+  let(:current_text)      { '' }
   let(:new_text)          { 'This is a note' }
 
   before do
@@ -16,34 +16,26 @@ RSpec.shared_examples 'reply article' do |type_label:, internal:, attachments:|
 
   # test only that reply works, because edge cases are covered by unit tests
   # rubocop:disable RSpec/ExampleLength
-  it "can reply with #{type_label}" do
+  it "can reply with #{type_label} #{note || ''}" do
     visit "/tickets/#{ticket.id}"
     find_button('Article actions').click
 
     find_button(trigger_label).click
 
     expect(find_select('Article Type', visible: :all)).to have_selected_option(type_label)
-    if internal
-      expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
-    else
-      expect(find_select('Visibility', visible: :all)).to have_selected_option('Public')
-    end
-
-    if article.from.present?
-      expect(find_select('To', visible: :all)).to have_value(" #{article.from}")
-    end
+    expect(find_select('Visibility', visible: :all)).to have_selected_option(internal ? 'Internal' : 'Public')
 
     if to.present?
-      find_select('To').search_for_option(to)
-    end
-
-    if cc.present?
-      find_select('CC').search_for_option(cc)
+      expect(find_select('To', visible: :all)).to have_value(" #{to}")
     end
 
     text = find_editor('Text')
-    expect(text).to have_text_value(has_text, exact: true)
+    expect(text).to have_text_value(current_text, exact: true)
     text.type(new_text)
+
+    if new_to.present?
+      find_select('To', visible: :all).search_for_option(new_to)
+    end
 
     if attachments
       find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
@@ -66,13 +58,11 @@ RSpec.shared_examples 'reply article' do |type_label:, internal:, attachments:|
       in_reply_to: article.message_id,
     }
 
-    attributes[:to] = if to.present?
-                        to
-                      elsif article.from.present?
-                        article.from
-                      end
-
-    attributes[:cc] = cc
+    if new_to.present?
+      attributes[:to] = new_to
+    elsif to.present?
+      attributes[:to] = to
+    end
 
     if attachments
       attributes[:attachments] = [Store.last]

@@ -10,23 +10,22 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 300,
 
   addActions(ticket, article) {
-    if (article.sender?.name !== 'Customer' || article.type?.name !== 'sms')
-      return []
+    const sender = article.sender?.name
+    const type = article.type?.name
+
+    if (sender !== 'Customer' || type !== 'telegram personal-message') return []
+
     const action: TicketArticleAction = {
       apps: ['mobile'],
       label: __('Reply'),
-      name: 'sms',
-      icon: {
-        mobile: 'mobile-reply',
-      },
+      name: 'telegram personal-message',
+      icon: { mobile: 'mobile-reply' },
       view: {
         agent: ['change'],
       },
       perform(ticket, article, { openReplyDialog }) {
-        const from = article.from?.raw
         const articleData = {
-          articleType: 'sms',
-          to: from ? [from] : [],
+          articleType: type,
           inReplyTo: article.messageId,
         }
 
@@ -38,24 +37,26 @@ const actionPlugin: TicketArticleActionPlugin = {
 
   addTypes(ticket) {
     const descriptionType = ticket.createArticleType?.name
-    if (descriptionType !== 'sms') return []
+
+    if (descriptionType !== 'telegram personal-message') return []
+
     const type: TicketArticleType = {
       apps: ['mobile'],
-      value: 'sms',
-      label: __('Sms'),
+      value: 'telegram personal-message',
+      label: __('Telegram'),
       icon: {
-        mobile: 'mobile-message',
+        mobile: 'mobile-telegram',
       },
       view: {
         agent: ['change'],
       },
-      attributes: ['to'],
+      attributes: ['attachments'],
       internal: false,
       contentType: 'text/plain',
       editorMeta: {
         footer: {
-          maxlength: 160,
-          warningLength: 30,
+          maxlength: 10000,
+          warningLength: 5000,
         },
       },
     }

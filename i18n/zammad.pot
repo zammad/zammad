@@ -8483,6 +8483,7 @@ msgid "Replacement"
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Reply"
 msgstr ""
 
@@ -9854,6 +9855,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Telegram"
 msgstr ""
 

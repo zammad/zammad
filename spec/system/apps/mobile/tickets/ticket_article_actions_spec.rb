@@ -20,6 +20,23 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       )
     end
 
-    include_examples 'reply article', type_label: 'Sms', internal: false, attachments: false
+    include_examples 'reply article', 'Sms', 'with default fields' do
+      let(:to) { '+41234567890' }
+    end
+
+    # TODO: add custom "to" field, when frontend supports phone in "to"
+  end
+
+  context 'when article was created as a telegram message' do
+    let(:article) do
+      create(
+        :ticket_article,
+        ticket: ticket,
+        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+        type:   Ticket::Article::Type.lookup(name: 'telegram personal-message'),
+      )
+    end
+
+    include_examples 'reply article', 'Telegram', attachments: true
   end
 end

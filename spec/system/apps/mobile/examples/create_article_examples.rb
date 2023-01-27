@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'create article' do |type_label:, internal:, attachments:, conditional:|
+RSpec.shared_examples 'create article' do |type_label, internal: false, attachments: false, conditional: true|
   let(:group)     { Group.find_by(name: 'Users') }
   let(:agent)     { create(:agent, groups: [group]) }
   let(:customer)  { create(:customer) }

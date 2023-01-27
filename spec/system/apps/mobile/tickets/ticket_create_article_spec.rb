@@ -143,7 +143,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when creating a phone article' do
-      include_examples 'create article', type_label: 'Phone', internal: false, attachments: true, conditional: false do
+      include_examples 'create article', 'Phone', attachments: true, conditional: false do
         let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
         let(:type)         { Ticket::Article::Type.lookup(name: 'phone') }
         let(:content_type) { 'text/html' }
@@ -151,7 +151,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when creating sms article' do
-      include_examples 'create article', type_label: 'Sms', internal: false, attachments: false, conditional: true do
+      include_examples 'create article', 'Sms', conditional: true do
         let(:article) do
           create(
             :ticket_article,
@@ -160,6 +160,20 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
           )
         end
         let(:type)         { Ticket::Article::Type.lookup(name: 'sms') }
+        let(:content_type) { 'text/plain' }
+      end
+    end
+
+    context 'when creating telegram article' do
+      include_examples 'create article', 'Telegram', attachments: true do
+        let(:article) do
+          create(
+            :ticket_article,
+            ticket: ticket,
+            type:   Ticket::Article::Type.find_by(name: 'telegram personal-message'),
+          )
+        end
+        let(:type)         { Ticket::Article::Type.lookup(name: 'telegram personal-message') }
         let(:content_type) { 'text/plain' }
       end
     end
