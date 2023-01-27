@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-24 11:05+0000\n"
+"PO-Revision-Date: 2023-01-27 03:30+0000\n"
 "Last-Translator: Louise Forsen <louise.forsen@entryevent.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -276,6 +276,30 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} inloggning ifrån en ny enhet\n"
+"\n"
+"<div>Hej #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Det ser ut som att du har loggat in på ditt konto <b>med en ny enhet</"
+"b> vid den \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Din enhet: #{user_device.name}<br>\n"
+"Din position (relativ): #{user_device.location}<br>\n"
+"Din IP-adress: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Din enhet har lagts till i din lista med kända enheter, du kan se "
+"listan här:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>Om det inte var du, ta bort enheten, ändra ditt lösenord och kontakta "
+"din administratör. Då någon kan ha gett sig själv olovligt tillträde till "
+"ditt konto.</div>\n"
+"<br>\n"
+"<div>Ditt #{config.product_name} Team</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 msgid "%s (confirm)"
@@ -821,7 +845,7 @@ msgstr "Konto-SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee
 msgid "Account Time"
-msgstr "Kontotid"
+msgstr "Registrera tid"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -1157,9 +1181,8 @@ msgstr ""
 "<div>Om det stämmer klicka på länken nedan (eller kopiera och klistra in URL:"
 "en i din webbläsare) för att fortsätta:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></"
-"div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}"
+"\">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>\n"
 "<br>\n"
 "<div>Länken leder till en inloggningssida.</div>\n"
 "<br>\n"
@@ -1881,7 +1904,7 @@ msgstr "Bind Användare"
 
 #: db/seeds/settings.rb
 msgid "Block Notifications"
-msgstr "Blockera notifikationer"
+msgstr "Blockera notifieringar"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -3112,29 +3135,34 @@ msgstr "Nuvarande lösenord"
 
 #: app/controllers/users_controller.rb
 msgid "Current password is wrong!"
-msgstr ""
+msgstr "Fel lösenord!"
 
 #: app/controllers/users_controller.rb
 msgid "Current password needed!"
-msgstr ""
+msgstr "Skriv ditt aktuella lösenord!"
 
 #: app/controllers/application_controller/has_user.rb
+#, fuzzy
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
+"Den aktuella användaren saknar behörighet att använda 'From'/'X-On-Behalf-"
+"Of'!"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
 msgid "Currently no overview is assigned to your roles."
-msgstr ""
+msgstr "För tillfället så finns det ingen översikt tilldelad dina roller."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
+"För tillfället så finns det ingen översikt tilldelad dina roller. Kontakta "
+"dina administratör."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
-msgstr ""
+msgstr "Anpassad"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3143,7 +3171,7 @@ msgstr "Custom URL"
 
 #: lib/knowledge_base/server_snippet.rb
 msgid "Custom address is not set"
-msgstr ""
+msgstr "En anpassad adress har inte ställts in"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -3190,11 +3218,11 @@ msgstr "Kunder i organisationen kan se varandras objekt."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Cut"
-msgstr ""
+msgstr "Klipp"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco
 msgid "Dark"
-msgstr ""
+msgstr "Mörk"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee
 msgid "Dark Mode"
@@ -3215,15 +3243,15 @@ msgstr "GDPR-borttagning"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
-msgstr ""
+msgstr "GDPR-borttagnings-uppgift"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTasks"
-msgstr ""
+msgstr "GDPR-borttagnings-uppgifter"
 
 #: db/seeds/settings.rb
 msgid "Database"
-msgstr ""
+msgstr "Databas"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Database Update Required"
@@ -3244,7 +3272,7 @@ msgstr "Dag- och tidsfält"
 
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
-msgstr ""
+msgstr "Datum (År.Månad.Dag.SystemID.Räknare)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Date field"
@@ -3277,7 +3305,7 @@ msgstr "December"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption failed!"
-msgstr ""
+msgstr "Avkrypteringen misslyckades!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 msgid "Decryption was successful."
@@ -3296,11 +3324,11 @@ msgstr "Standard"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco
 msgid "Default Behavior"
-msgstr ""
+msgstr "Standardbeteende"
 
 #: db/seeds/settings.rb
 msgid "Default Screen"
-msgstr ""
+msgstr "Standardskärm"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3308,7 +3336,7 @@ msgstr "STANDARD VID REGISTRERING"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
-msgstr ""
+msgstr "Standardkalender för ärendeabonneringar"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -3318,15 +3346,15 @@ msgstr "Standard-caller-id för utgående samtal."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (hours)"
-msgstr ""
+msgstr "Standardtidsdifferens (timmar)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Default time diff (minutes)"
-msgstr ""
+msgstr "Standardtidsdifferens (minuter)"
 
 #: db/seeds/settings.rb
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Standardtyp för nytt ärende"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
@@ -3339,29 +3367,31 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
-msgstr ""
+msgstr "Definiera maximal storlek på bilagor för elastisk sökning."
 
 #: db/seeds/settings.rb
 msgid "Define max. payload size for Elasticsearch."
-msgstr ""
+msgstr "Definiera maximal total storlek för elastisk sökning."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
-msgstr ""
+msgstr "Definiera distributionspipelines för elastisk sökning."
 
 #: db/seeds/settings.rb
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
+"Definiera postmaster-filter för att kontrollera om uppföljningar skapas ("
+"baserat på administratörens inställningar)."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter to import archive mailboxes."
-msgstr ""
+msgstr "Definiera postmaster-filter för att importera arkivbrevlådor."
 
 #: db/seeds/settings.rb
 msgid "Define postmaster filter."
-msgstr ""
+msgstr "Definiera postmaster-filter."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid ""
@@ -3369,14 +3399,18 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+"Definiera köer eller samtalsdestinationer (beroende på vad som passar din "
+"telefonväxel: s.k. PBX) och koppla dina agenter till dem. På så sätt kan "
+"Zammad stödja dina agenter genom att visa dem endast relevanta samtalsinlägg "
+"och notiser."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Definiera det maximala antalet ärenden som visas i översikterna."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
-msgstr ""
+msgstr "Definierar namnet på det elastiska sökindexet."
 
 #: db/seeds/settings.rb
 msgid "Defines Freshdesk endpoint authentication API key."
@@ -3384,58 +3418,68 @@ msgstr "Definierar API-nyckeln för slutpunktsautentisering med Freshdesk."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr ""
+msgstr "Definierar HTTP Basic Auth-lösenordet för elastisk sökning."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr ""
+msgstr "Definierar HTTP Basic Auth-användare för elastisk sökning."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
+"Definierar lösenordet för grundläggande HTTP-autentisering (endast om OTRS "
+"skyddas via grundläggande HTTP-autentisering)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
+"Definierar användare för grundläggande HTTP-autentisering (endast om OTRS "
+"skyddas via grundläggande HTTP-autentisering)."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication password."
-msgstr ""
+msgstr "Definierar lösenordet för autentisering av Kayako API-anrop."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication user."
-msgstr "Definierar användaren för slutpunktsautentisering med Kayako."
+msgstr "Definierar användaren för autentisering av Kayako API-anrop."
 
 #: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
-msgstr ""
+msgstr "Definierar autentiseringsnyckeln för OTRS API-anrop."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr "Definierar API-nyckeln för slutpunktsautentisering med Zendesk."
+msgstr "Definierar API-nyckel för autentisering av Zendesk API-anrop."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
+msgstr "Definierar användaren för autentisering med Zendesk API-anrop."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definierar ett Freshdesk API-anrop för att importera användare, ärenden, "
+"status och artiklar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definierar ett Kayako API-anrop för att importera användare, ärenden, status "
+"och artiklar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definierar ett Zendesk API-anrop för att importera användare, ärenden, "
+"status och artiklar."
 
 #: db/seeds/settings.rb
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
@@ -3925,7 +3969,7 @@ msgstr "Definierar e-postadressen för tjänstens e-post."
 
 #: db/seeds/settings.rb
 msgid "Defines the sender of email notifications."
-msgstr "Definierar avsändaren för e-postnotifikationer."
+msgstr "Definierar avsändaren för e-postnotifieringar."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5641,7 +5685,6 @@ msgstr "Hälsning"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -6364,7 +6407,7 @@ msgstr "Infogar en horisontell linje"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts a mention for a user"
-msgstr ""
+msgstr "Taggar en användare"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Inserts knowledge base answer"
@@ -8391,7 +8434,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -8645,7 +8687,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
-msgstr "Ange så mycket tid du vill redovisa."
+msgstr "Ange tiden tid du vill redovisa."
 
 #: app/models/knowledge_base.rb
 msgid "Please enter valid path or domain"
@@ -8657,7 +8699,7 @@ msgstr "Kör endast databasuppdateringar under servicefönster."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee
 msgid "Please fill in all fields"
-msgstr ""
+msgstr "Fyll i alla fält"
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please include a valid url."
@@ -8876,11 +8918,11 @@ msgstr "Publicera artikeln"
 
 #: app/views/knowledge_base/public/answers/show.html.erb
 msgid "Published %s"
-msgstr "Publicerade %s"
+msgstr "Publicerad %s"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco
 msgid "Published at"
-msgstr ""
+msgstr "Publicerad"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Purple"
@@ -10232,7 +10274,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -14070,7 +14111,7 @@ msgstr "ny och öppen"
 #: app/frontend/apps/mobile/components/CommonObjectAttributes/AttributeBoolean/AttributeBoolean.vue
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts
 msgid "no"
-msgstr "inga"
+msgstr "nej"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "no issues"

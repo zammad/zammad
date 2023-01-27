@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-20 03:30+0000\n"
+"PO-Revision-Date: 2023-01-24 03:30+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -1178,8 +1178,8 @@ msgstr ""
 "aby kontynuować:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
+"div>\n"
 "<br>\n"
 "<div>Ten link prowadzi do strony, na której możesz się zalogować.</div>\n"
 "<br>\n"
@@ -5853,7 +5853,6 @@ msgstr "Pozdrowienie"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -6774,10 +6773,10 @@ msgstr ""
 "<div>Cześć #{user.firstname},</div>\n"
 "<br>\n"
 "<div>(#{current_user.firstname} #{current_user.lastname}) zaprasza Cię do "
-"#{config.product_name} - nasze platformy obsługi klienta.</div>\n"
+"#{config.product_name} - naszej platformy obsługi Klienta.</div>\n"
 "<br>\n"
-"<div>Kliknij <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.name}\">tutaj</a> i ustaw swoje hasło.</div>\n"
+"<div>Kliknij <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.name}\">tutaj</a> i ustaw swoje hasło.</div>\n"
 "<br>\n"
 "<div>Pozdrawiamy,</div>\n"
 "<br>\n"
@@ -8689,7 +8688,6 @@ msgstr "Zastąp wersję roboczą"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -10602,7 +10600,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
