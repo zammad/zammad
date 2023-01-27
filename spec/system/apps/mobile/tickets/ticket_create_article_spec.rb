@@ -178,6 +178,37 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       end
     end
 
+    context 'when replying to twitter status ticket' do
+      include_examples 'create article', 'Twitter', attachments: false do
+        let(:article) do
+          create(
+            :twitter_article,
+            ticket: ticket,
+            sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+          )
+        end
+        let(:type)         { Ticket::Article::Type.lookup(name: 'twitter status') }
+        let(:content_type) { 'text/plain' }
+        let(:result_text)  { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
+      end
+    end
+
+    context 'when replying to twitter dm ticket' do
+      include_examples 'create article', 'Twitter', attachments: false do
+        let(:article) do
+          create(
+            :twitter_dm_article,
+            ticket: ticket,
+            sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+          )
+        end
+        let(:type)         { Ticket::Article::Type.lookup(name: 'twitter direct-message') }
+        let(:content_type) { 'text/plain' }
+        let(:to)           { article.from }
+        let(:result_text)  { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
+      end
+    end
+
     # TODO: test security settings
   end
 end

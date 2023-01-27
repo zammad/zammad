@@ -63,4 +63,5 @@ fragment ticketAttributes on Ticket {
   }
   tags
   subscribed
+  preferences
 }

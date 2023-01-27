@@ -11,7 +11,7 @@ export const getTestPinia = () => pinia
 const stores = new Set<Store>()
 
 export const initializeStore = () => {
-  if (storeInitialized) return null
+  if (storeInitialized) return pinia
 
   pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
   // plugins.push({ install: pinia.install })

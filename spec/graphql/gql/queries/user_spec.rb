@@ -5,8 +5,12 @@ require 'rails_helper'
 RSpec.describe Gql::Queries::User, type: :graphql do
   context 'when fetching user' do
     let(:authenticated) { create(:agent) }
-    let(:user)          { create(:user) }
-    let(:variables)     { { userId: gql.id(user) } }
+    let(:user)          do
+      create(:user).tap do |user|
+        create(:authorization, provider: 'testprovider', username: 'testuser', user_id: user.id)
+      end
+    end
+    let(:variables) { { userId: gql.id(user) } }
 
     let(:query) do
       <<~QUERY
@@ -15,6 +19,10 @@ RSpec.describe Gql::Queries::User, type: :graphql do
             id
             firstname
             hasSecondaryOrganizations
+            authorizations {
+              username
+              provider
+            }
           }
         }
       QUERY
@@ -26,7 +34,10 @@ RSpec.describe Gql::Queries::User, type: :graphql do
 
     context 'with authenticated session', authenticated_as: :authenticated do
       it 'has data' do
-        expect(gql.result.data).to include('firstname' => user.firstname)
+        expect(gql.result.data).to include(
+          'firstname'      => user.firstname,
+          'authorizations' => [ { 'provider' => 'testprovider', 'username' => 'testuser' } ],
+        )
       end
 
       context 'without user' do

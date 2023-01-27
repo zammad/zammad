@@ -1,11 +1,13 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'create article' do |type_label, internal: false, attachments: false, conditional: true|
-  let(:group)     { Group.find_by(name: 'Users') }
-  let(:agent)     { create(:agent, groups: [group]) }
-  let(:customer)  { create(:customer) }
-  let(:to)        { '' }
-  let(:cc)        { '' }
+  let(:group)       { Group.find_by(name: 'Users') }
+  let(:agent)       { create(:agent, groups: [group]) }
+  let(:customer)    { create(:customer) }
+  let(:to)          { nil }
+  let(:cc)          { nil }
+  let(:new_text)    { 'This is a note' }
+  let(:result_text) { content_type == 'text/html' ? "<p>#{new_text}</p>" : new_text }
 
   # expected variables:
   # ticket
@@ -44,6 +46,7 @@ RSpec.shared_examples 'create article' do |type_label, internal: false, attachme
       article
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it "can create article #{type_label}" do
       open_article_dialog
 
@@ -57,16 +60,15 @@ RSpec.shared_examples 'create article' do |type_label, internal: false, attachme
 
       text = find_editor('Text')
       expect(text).to have_text_value('', exact: true)
-      text.type('This is a note')
+      text.type(new_text)
 
-      # TODO: when to and cc is fixed, enable this, + add check in attributes
-      # if to.present?
-      #   find_field('To', visible: :all).search_for_option(to)
-      # end
+      if to.present?
+        find_select('To', visible: :all).search_for_option(to)
+      end
 
-      # if cc.present?
-      #   find_field('CC', visible: :all).search_for_option(cc)
-      # end
+      if cc.present?
+        find_select('CC', visible: :all).search_for_option(cc)
+      end
 
       if attachments
         find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
@@ -85,7 +87,15 @@ RSpec.shared_examples 'create article' do |type_label, internal: false, attachme
         content_type: content_type,
       }
 
-      attributes[:body] = content_type == 'text/html' ? '<p>This is a note</p>' : 'This is a note'
+      if to.present?
+        attributes[:to] = to
+      end
+
+      if cc.present?
+        attributes[:to] = to
+      end
+
+      attributes[:body] = result_text
 
       if attachments
         attributes[:attachments] = [Store.last]
@@ -94,5 +104,6 @@ RSpec.shared_examples 'create article' do |type_label, internal: false, attachme
 
       expect(Ticket::Article.last).to have_attributes(attributes)
     end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

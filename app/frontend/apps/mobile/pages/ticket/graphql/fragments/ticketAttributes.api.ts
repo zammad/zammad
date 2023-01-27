@@ -68,5 +68,6 @@ export const TicketAttributesFragmentDoc = gql`
   }
   tags
   subscribed
+  preferences
 }
     ${ObjectAttributeValuesFragmentDoc}`;

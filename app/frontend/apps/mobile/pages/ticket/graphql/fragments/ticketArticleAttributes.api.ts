@@ -56,6 +56,11 @@ export const TicketArticleAttributesFragmentDoc = gql`
     fullname
     firstname
     lastname
+    authorizations {
+      provider
+      uid
+      username
+    }
   }
   type {
     name

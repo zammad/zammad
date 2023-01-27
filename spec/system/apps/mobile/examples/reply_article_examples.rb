@@ -9,6 +9,8 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
   let(:trigger_label)     { 'Reply' }
   let(:current_text)      { '' }
   let(:new_text)          { 'This is a note' }
+  let(:result_text)       { new_text || current_text }
+  let(:in_reply_to)       { article.message_id }
 
   before do
     article
@@ -31,7 +33,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
 
     text = find_editor('Text')
     expect(text).to have_text_value(current_text, exact: true)
-    text.type(new_text)
+    text.type(new_text) if new_text
 
     if new_to.present?
       find_select('To', visible: :all).search_for_option(new_to)
@@ -54,8 +56,8 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     attributes = {
       type_id:     article.type_id,
       internal:    internal,
-      body:        new_text,
-      in_reply_to: article.message_id,
+      body:        result_text,
+      in_reply_to: in_reply_to
     }
 
     if new_to.present?

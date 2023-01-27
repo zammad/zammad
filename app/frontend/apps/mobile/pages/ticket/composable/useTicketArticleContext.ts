@@ -6,6 +6,7 @@ import { computed, nextTick, ref, shallowRef } from 'vue'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { createArticleActions } from '@shared/entities/ticket-article/action/plugins'
 import type { TicketArticlePerformOptions } from '@shared/entities/ticket-article/action/plugins/types'
+import type { EditorContentType } from '@shared/components/Form/fields/FieldEditor/types'
 import { useTicketInformation } from './useTicketInformation'
 
 export const useTicketArticleContext = () => {
@@ -57,6 +58,13 @@ export const useTicketArticleContext = () => {
       }
     }
 
+  const getNewArticleBody = (type: EditorContentType): string => {
+    const bodyElement = form.value?.formNode.find('body', 'name')
+    if (!bodyElement) return ''
+    const getEditorValue = bodyElement.context?.getEditorValue
+    return typeof getEditorValue === 'function' ? getEditorValue(type) : ''
+  }
+
   const contextOptions = computed<PopupItem[]>(() => {
     const ticket = ticketForContext.value
     const article = articleForContext.value
@@ -81,6 +89,7 @@ export const useTicketArticleContext = () => {
           perform(ticket, article, {
             selection: selectionRange.value,
             openReplyDialog,
+            getNewArticleBody,
           }),
       }
     })

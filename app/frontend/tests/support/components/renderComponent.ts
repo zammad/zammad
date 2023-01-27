@@ -159,11 +159,12 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   routerInitialized = true
 }
 
+let storeInitialized = false
 export const initializePiniaStore = () => {
+  if (storeInitialized) return
   const store = initializeStore()
-  if (store) {
-    plugins.push({ install: store.install })
-  }
+  plugins.push({ install: store.install })
+  storeInitialized = true
 }
 
 let formInitialized = false

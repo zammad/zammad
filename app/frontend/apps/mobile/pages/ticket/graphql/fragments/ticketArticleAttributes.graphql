@@ -52,6 +52,11 @@ fragment ticketArticleAttributes on TicketArticle {
     fullname
     firstname
     lastname
+    authorizations {
+      provider
+      uid
+      username
+    }
   }
   type {
     name

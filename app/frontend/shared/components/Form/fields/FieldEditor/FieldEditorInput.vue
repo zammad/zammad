@@ -110,6 +110,14 @@ const editor = useEditor({
   },
 })
 
+Object.assign(props.context, {
+  getEditorValue: (type: EditorContentType) => {
+    return type === 'text/plain'
+      ? editor.value?.getText()
+      : editor.value?.getHTML()
+  },
+})
+
 watch(
   () => props.context.id,
   (id) => {

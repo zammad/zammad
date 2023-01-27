@@ -39,4 +39,46 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
     include_examples 'reply article', 'Telegram', attachments: true
   end
+
+  context 'when article was created as a twitter status' do
+    let(:article) do
+      create(
+        :twitter_article,
+        ticket: ticket,
+        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      )
+    end
+
+    include_examples 'reply article', 'Twitter', attachments: false do
+      let(:current_text) { "#{article.from} " }
+      let(:new_text)     { '' }
+      let(:result_text)  { "#{article.from}&nbsp\n/#{agent.firstname.first}#{agent.lastname.first}" }
+    end
+  end
+
+  context 'when article was created as a twitter dm' do
+    include_examples 'reply article', 'Twitter', 'DM when sender is customer', attachments: false do
+      let(:article) do
+        create(
+          :twitter_dm_article,
+          ticket: ticket,
+          sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+        )
+      end
+      let(:result_text) { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
+      let(:to) { article.from }
+    end
+
+    include_examples 'reply article', 'Twitter', 'DM when sender is agent', attachments: false do
+      let(:article) do
+        create(
+          :twitter_dm_article,
+          ticket: ticket,
+          sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+        )
+      end
+      let(:result_text) { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
+      let(:to) { article.to }
+    end
+  end
 end

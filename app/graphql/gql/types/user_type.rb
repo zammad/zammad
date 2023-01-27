@@ -25,6 +25,8 @@ module Gql::Types
       field :secondary_organizations, Gql::Types::OrganizationType.connection_type
       field :has_secondary_organizations, Boolean, resolver_method: :secondary_organizations?
 
+      field :authorizations, [Gql::Types::AuthorizationType]
+
       field :firstname, String
       field :lastname, String
       field :fullname, String
