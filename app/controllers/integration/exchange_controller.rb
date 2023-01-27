@@ -66,7 +66,8 @@ class Integration::ExchangeController < ApplicationController
     {
       ews_attributes: params[:attributes].permit!.to_h,
       ews_folder_ids: params[:folders],
-      ews_config:     ews_config
+      ews_config:     ews_config,
+      params:         params,
     }
   end
 

@@ -1,34 +1,3 @@
-class App.ExchangeTabs extends App.ControllerTabs
-  requiredPermission: 'admin.integration.exchange'
-  header: __('Exchange')
-
-  constructor: ->
-    super
-
-    if @success_code is '1'
-      @Config.set('lastTab', '#c-oauth')
-      @navigate '#system/integration/exchange'
-    else if @error_code is 'AADSTS65004'
-      @Config.set('lastTab', '#c-oauth')
-      new App.AdminConsentInfo(container: @container)
-
-    @title __('Exchange'), true
-
-    @tabs = [
-      {
-        name:       __('Account'),
-        target:     'c-account',
-        controller: Exchange,
-      },
-      {
-        name:       __('OAuth'),
-        target:     'c-oauth',
-        controller: ExchangeOAuth,
-      }
-    ]
-
-    @render()
-
 class Exchange extends App.ControllerIntegrationBase
   featureIntegration: 'exchange_integration'
   featureName: __('Exchange')
@@ -38,6 +7,14 @@ class Exchange extends App.ControllerIntegrationBase
   ]
   events:
     'change .js-switch input': 'switch'
+
+  constructor: ->
+    super
+
+    if @success_code is '1'
+      @navigate '#system/integration/exchange'
+    else if @error_code is 'AADSTS65004'
+      new App.AdminConsentInfo(container: @container)
 
   render: =>
     super
@@ -74,10 +51,16 @@ class Exchange extends App.ControllerIntegrationBase
 class Form extends App.Controller
   elements:
     '.js-lastImport': 'lastImport'
-    '.js-wizard': 'wizardButton'
+    '.js-wizard':     'wizardButton'
   events:
-    'click .js-wizard': 'startWizard'
-    'click .js-start-sync': 'startSync'
+    'click .js-wizard':                 'startWizard'
+    'click .js-start-sync':             'startSync'
+    'click .js-new-app':                'newApp'
+    'click .js-delete-app':             'deleteApp'
+    'click .js-reauthenticate-app':     'reauthenticateApp'
+    'click .js-config-app':             'configApp'
+    'click .js-admin-consent':          'adminConsent'
+    'change .js-authentication-method': 'changeAuthenticationMethod'
 
   constructor: ->
     super
@@ -91,6 +74,11 @@ class Form extends App.Controller
   setConfig: (value) =>
     App.Setting.set('exchange_config', value, {notify: true})
     @startSync()
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
 
   render: (top = false) =>
     @config = @currentConfig()
@@ -111,10 +99,90 @@ class Form extends App.Controller
       @$('.js-notConfigured').addClass('hide')
       @$('.js-summary').removeClass('hide')
 
+    @interval(@loadExchangeData, 30000)
+    @loadExchangeData(true)
+
     if top
       a = =>
         @scrollToIfNeeded($('.content.active .page-header'))
       @delay(a, 500)
+
+  loadExchangeData: (initial = false) =>
+    @startLoading()
+    @ajax(
+      id:   'exchange_index'
+      type: 'GET'
+      url:  "#{@apiPath}/integration/exchange/index"
+      processData: true
+      success: (data, status, xhr) =>
+        @stopLoading()
+        App.Collection.loadAssets(data.assets)
+        @callbackUrl = data.callback_url
+        @exchange_oauth = data.oauth
+
+        # if no exchange app is registered, show intro
+        external_credential = App.ExternalCredential.findByAttribute('name', 'exchange')
+        if !external_credential
+          @$('.js-oAuthContent').html($(App.view('exchange/oauth_intro')())).removeClass('hide')
+        else
+          @$('.js-oAuthContent').html($(App.view('exchange/token_information')(
+            oauth: data.oauth
+            external_credential: external_credential
+          ))).removeClass('hide')
+
+        @setAuthenticationMethod(initial)
+    )
+    true
+
+  setAuthenticationMethod: (initial) ->
+    method = @el.find('.js-authentication-method').val() || 'basic'
+    if initial
+      method = 'basic'
+      if !_.isEmpty(@exchange_oauth)
+        method = 'oauth'
+
+    @el.find('.js-authentication-method').val(method).trigger('change')
+
+  changeAuthenticationMethod: ->
+    method = @el.find('.js-authentication-method').val()
+    if method is 'basic'
+      @el.find('.js-oAuthContent').addClass('hide')
+    else
+      @el.find('.js-oAuthContent').removeClass('hide')
+
+    @currentAuthenticationMethod = method
+
+  configApp: =>
+    new AppConfig(
+      container: @el.parents('.content')
+      callbackUrl: @callbackUrl
+    )
+
+  newApp: (e) ->
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
+
+  adminConsent: (e) ->
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account?prompt=consent"
+
+  deleteApp: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    new App.ControllerConfirm(
+      message: __('Are you sure?')
+      callback: =>
+        @ajax(
+          id:   'exchange_delete'
+          type: 'DELETE'
+          url:  "#{@apiPath}/integration/exchange/oauth"
+          success: (data, status, xhr) =>
+            @render()
+        )
+      container: @el.closest('.content')
+    )
+
+  reauthenticateApp: (e) =>
+    e.preventDefault()
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
 
   startSync: =>
     @ajax(
@@ -132,6 +200,7 @@ class Form extends App.Controller
     new ConnectionWizard(
       container: @el.closest('.content')
       config: @config
+      currentAuthenticationMethod: @currentAuthenticationMethod
       callback: (config) =>
         @setConfig(config)
     )
@@ -180,7 +249,7 @@ class Form extends App.Controller
         # show analyzing
         new ConnectionWizard(
           container: @el.closest('.content')
-          config: job.payload
+          config: job.payload.params
           start: 'tryLoop'
           callback: (config) =>
             @wizardButton.attr('disabled', false)
@@ -209,7 +278,6 @@ class ConnectionWizard extends App.ControllerWizardModal
     'click .js-remove':                        'removeRow'
     'click .js-userMappingForm .js-add':       'addUserMapping'
     'click .js-goToSlide':                     'goToSlide'
-    'change .js-authentication-method':        'changeAuthenticationMethod'
 
   elements:
     '.modal-body': 'body'
@@ -222,6 +290,9 @@ class ConnectionWizard extends App.ControllerWizardModal
     super
 
     @wizardConfig = $.extend(true, {}, @config)
+
+    if @currentAuthenticationMethod isnt undefined
+      @wizardConfig.auth_type = @currentAuthenticationMethod
 
     if @container
       @el.addClass('modal--local')
@@ -244,9 +315,6 @@ class ConnectionWizard extends App.ControllerWizardModal
     if @slide
       @showSlide(@slide)
 
-    if @start
-      @[@start]()
-
   render: =>
     @ajax(
       id:   'exchange_index'
@@ -261,7 +329,10 @@ class ConnectionWizard extends App.ControllerWizardModal
         )
 
         @showDiscoverDetails()
-        @changeAuthenticationMethod()
+        @presetAuthenticationMethod()
+
+        if @start
+          @[@start]()
     )
 
   save: (e) =>
@@ -281,8 +352,6 @@ class ConnectionWizard extends App.ControllerWizardModal
     if @wizardConfig.auth_type is 'basic'
       @$('.js-discover input[name="user"]').val(@wizardConfig.user)
       @$('.js-discover input[name="password"]').val(@wizardConfig.password)
-    else if @wizardConfig.auth_type is 'oauth' && !_.isEmpty(@exchange_oauth)
-      @$('.js-discover select[name="authentication_method"]').val('oauth')
 
   showSlideDiscover: =>
     @showSlide('js-discover')
@@ -294,10 +363,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     @wizardConfig.endpoint           = params.endpoint
     @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
 
-    if params.authentication_method is 'oauth'
-      @wizardConfig.auth_type = 'oauth'
-    else
-      @wizardConfig.auth_type = 'basic'
+    if params.authentication_method is 'basic'
       @wizardConfig.user      = params.user
       @wizardConfig.password  = params.password
 
@@ -528,8 +594,8 @@ class ConnectionWizard extends App.ControllerWizardModal
     e.preventDefault()
     @userMappingForm.find('tbody tr').last().before(@buildRowUserAttribute())
 
-  changeAuthenticationMethod: ->
-    current_method = @el.find('select[name="authentication_method"]').val() || @wizardConfig.auth_type || 'basic'
+  presetAuthenticationMethod: ->
+    current_method = @wizardConfig.auth_type || 'basic'
     required       = true
     if current_method is 'basic'
       @el.find('table.basic-auth, p.basic-auth').removeClass('hide')
@@ -612,11 +678,6 @@ class AppConfig extends App.ControllerModal
     )
     content
 
-  onClosed: =>
-    return if !@isChanged
-    @isChanged = false
-    @load()
-
   onSubmit: (e) =>
     @formDisable(e)
 
@@ -634,7 +695,6 @@ class AppConfig extends App.ControllerModal
           @external_credential.load(name: 'exchange', credentials: data.attributes)
           @external_credential.save(
             done: =>
-              @isChanged = true
               @close()
             fail: =>
               @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
@@ -644,93 +704,13 @@ class AppConfig extends App.ControllerModal
         @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
-class ExchangeOAuth extends App.ControllerSubContent
-  requiredPermission: 'admin.integration.exchange'
-  events:
-    'click .js-new':                'new'
-    'click .js-admin-consent':      'adminConsent'
-    'click .js-delete':             'delete'
-    'click .js-reauthenticate':     'reauthenticate'
-    'click .js-configApp':          'configApp'
-
-  constructor: ->
-    super
-
-    @interval(@load, 30000)
-    @load()
-
-  load: =>
-    @startLoading()
-    @ajax(
-      id:   'exchange_index'
-      type: 'GET'
-      url:  "#{@apiPath}/integration/exchange/index"
-      processData: true
-      success: (data, status, xhr) =>
-        @stopLoading()
-        App.Collection.loadAssets(data.assets)
-        @callbackUrl = data.callback_url
-        @render(data)
-    )
-
-  render: (data) =>
-
-    # if no exchange app is registered, show intro
-    external_credential = App.ExternalCredential.findByAttribute('name', 'exchange')
-    if !external_credential
-      @html App.view('exchange/index')()
-      return
-
-    @html App.view('exchange/list')(
-      oauth: data.oauth
-      external_credential: external_credential
-    )
-
-  show: (params) =>
-    for key, value of params
-      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
-        @[key] = value
-
-  configApp: =>
-    new AppConfig(
-      container: @el.parents('.content')
-      callbackUrl: @callbackUrl
-      load: @load
-    )
-
-  new: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
-
-  adminConsent: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account?prompt=consent"
-
-  delete: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    new App.ControllerConfirm(
-      message: __('Are you sure?')
-      callback: =>
-        @ajax(
-          id:   'exchange_delete'
-          type: 'DELETE'
-          url:  "#{@apiPath}/integration/exchange/oauth"
-          success: (data, status, xhr) =>
-            @load()
-        )
-      container: @el.closest('.content')
-    )
-
-  reauthenticate: (e) =>
-    e.preventDefault()
-    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
-
 App.Config.set(
   'IntegrationExchange'
   {
     name: __('Exchange')
     target: '#system/integration/exchange'
     description: __('Exchange integration for contacts management.')
-    controller: App.ExchangeTabs
+    controller: Exchange
     state: State
     permission: ['admin.integration.exchange']
   }

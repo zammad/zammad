@@ -23,15 +23,6 @@
               <td class="settings-list-row-control"><%- @T('Endpoint') %></td>
               <td class="settings-list-control-cell"><input type="text" name="endpoint" class="form-control form-control--small" value="" placeholder="https://outlook.office365.com/EWS/Exchange.asmx" autocomplete="off" required></td>
             </tr>
-            <tr>
-            <td class="settings-list-row-control"><%- @T('Authentication via') %>
-              <td class="settings-list-control-cell">
-                <select name="authentication_method" class="form-control form-control--small js-authentication-method" required>
-                  <option value="basic"><%- @T('Basic Authentication') %></option>
-                  <option value="oauth"<% if _.isEmpty(@exchange_oauth): %> disabled="disabled"<% end %>><%- @T('OAuth') %></option>
-                </select>
-              </td>
-            </tr>
           </tbody>
         </table>
 

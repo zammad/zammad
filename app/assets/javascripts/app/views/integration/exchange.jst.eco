@@ -1,4 +1,22 @@
 <div class="js-lastImport"></div>
+
+<div class="js-authenticationSwitch clearfix">
+  <h2><%- @T('Authentication') %></h2>
+  <p><%- @T('Please select the authentication method that should be used to establish the connection to your Exchange server.') %></p>
+
+  <div class="input formGroup--halfSize formGroup--standalone">
+    <div class="controls controls--select">
+      <select name="authentication_method" class="form-control js-authentication-method">
+        <option value="basic"><%- @T('Basic Authentication') %></option>
+        <option value="oauth"><%- @T('OAuth') %></option>
+      </select>
+      <%- @Icon('arrow-down') %>
+    </div>
+  </div>
+</div>
+
+<div class="js-oAuthContent hide"></div>
+
 <div class="js-notConfigured">
   <p><%- @T('No %s configured.', 'Exchange') %></p>
   <button type="submit" class="btn btn--primary js-wizard"><%- @T('Configure') %></button>
@@ -15,14 +33,6 @@
       <tr>
         <td class="settings-list-row-control"><%- @T('Endpoint') %>
         <td class="settings-list-row-control"><%= @config.endpoint %>
-      <tr>
-        <td class="settings-list-row-control"><%- @T('Authentication via') %>
-        <td class="settings-list-row-control">
-        <% if @config.auth_type == 'oauth': %>
-          <%- @T('OAuth') %>
-        <% else: %>
-          <%- @T('Basic Authentication') %>
-        <% end %>
     <% if @config.auth_type != 'oauth': %>
       <tr>
         <td class="settings-list-row-control"><%- @T('User') %>
