@@ -100,4 +100,18 @@ RSpec.describe 'Manage > Groups', type: :system do
       end
     end
   end
+
+  describe 'Issue #4475 - Group edit dialog shows ??? in email select box', authenticated_as: -> { user } do
+    let(:user)          { create(:admin, groups: [group]) }
+    let(:email_address) { create(:email_address) }
+    let(:group)         { create(:group, email_address: email_address) }
+
+    it 'shows correct email address display name' do
+      visit '#manage/groups'
+
+      click "tr[data-id='#{group.id}']"
+
+      expect(page).to have_select('email_address_id', text: "#{email_address.realname} <#{email_address.email}>")
+    end
+  end
 end
