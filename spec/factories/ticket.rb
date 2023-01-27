@@ -40,5 +40,17 @@ FactoryBot.define do
         }
       end
     end
+
+    factory :telegram_ticket do
+      transient do
+        channel { create(:telegram_channel) }
+      end
+
+      preferences do
+        {
+          channel_id: channel.id,
+        }
+      end
+    end
   end
 end

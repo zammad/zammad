@@ -204,5 +204,85 @@ FactoryBot.define do
         end
       end
     end
+
+    factory :telegram_article do
+      inbound
+
+      transient do
+        type_name { 'telegram personal-message' }
+        channel { Channel.find(ticket.preferences[:channel_id]) }
+        username { Faker::Internet.username }
+      end
+
+      association :ticket, factory: :telegram_ticket
+      to { "@#{channel[:options][:bot][:username]}" }
+      subject { nil }
+      body { Faker::Lorem.sentence }
+      message_id { "#{Faker::Number.decimal(l_digits: 1, r_digits: 10)}@telegram" }
+      content_type { 'text/plain' }
+
+      after(:create) do |article, context|
+        pp article, context
+        context.ticket.preferences.tap do |p|
+          p['telegram'] = {
+            bid:     context.channel[:options][:bot][:id],
+            chat_id: (article.preferences[:telegram] && article.preferences[:telegram][:chat_id]) || Faker::Number.number(digits: 10),
+          }
+        end
+
+        context.ticket.save!
+      end
+
+      trait :inbound do
+        transient do
+          sender_name { 'Customer' }
+        end
+
+        created_by_id { ticket.customer_id } # NB: influences the value for the from field!
+
+        preferences do
+          {
+            message:   {
+              created_at: Time.current.to_i,
+              message_id: message_id,
+              from:       ActionController::Parameters.new(
+                'id'            => Faker::Number.number,
+                'is_bot'        => false,
+                'first_name'    => Faker::Name.first_name,
+                'last_name'     => Faker::Name.last_name,
+                'username'      => username,
+                'language_code' => 'en',
+              ),
+            },
+            update_id: Faker::Number.number(digits: 8),
+          }
+        end
+      end
+
+      trait :outbound do
+        transient do
+          sender_name { 'Agent' }
+        end
+
+        to { "@#{username}" }
+        created_by_id { create(:agent).id } # NB: influences the value for the from field!
+        in_reply_to { "#{Faker::Number.decimal(l_digits: 1, r_digits: 10)}@telegram" }
+
+        preferences do
+          {
+            delivery_retry:          1,
+            telegram:                {
+              date:       Time.current.to_i,
+              from_id:    Faker::Number.number(digits: 10),
+              chat_id:    Faker::Number.number(digits: 10),
+              message_id: Faker::Number.number,
+            },
+            delivery_status_message: nil,
+            delivery_status:         'success',
+            delivery_status_date:    Time.current,
+          }
+        end
+      end
+    end
   end
 end

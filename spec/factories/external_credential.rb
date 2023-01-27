@@ -55,7 +55,12 @@ FactoryBot.define do
 
     factory :sms_message_bird_credential do
       name        { 'message_bird' }
-      credentials { { token: 'nJC9GLTRXNHgMBCsbb1Rjy105' } }
+      credentials { { token: Faker::Alphanumeric.alphanumeric(number: 25) } }
+    end
+
+    factory :telegram_credential do
+      name        { 'telegram' }
+      credentials { { api_token: "#{Faker::Alphanumeric.alphanumeric(number: 7)}-#{Faker::Alphanumeric.alphanumeric(number: 13)}_#{Faker::Alphanumeric.alphanumeric(number: 7)}_#{Faker::Alphanumeric.alphanumeric(number: 5)}" } }
     end
   end
 end

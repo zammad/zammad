@@ -229,7 +229,34 @@ FactoryBot.define do
       transient do
         custom_options      { {} }
         external_credential { create(:sms_message_bird_credential) }
-        webhook_token       { '0dc0aa647f509fc89a0aad8d3e86dcae' }
+        webhook_token       { Faker::Crypto.md5 }
+      end
+    end
+
+    factory :telegram_channel do
+      area { 'Telegram::Bot' }
+
+      options do
+        {
+          bot:            {
+            id:         bid,
+            username:   "#{Faker::Internet.username}bot",
+            first_name: Faker::Name.first_name,
+            last_name:  Faker::Name.last_name,
+          },
+          callback_token: callback_token,
+          callback_url:   "http://localhost:3000/api/v1/channels_telegram_webhook/#{callback_token}?bid=#{bid}",
+          api_token:      "#{bid}:#{external_credential.credentials['api_token']}",
+          welcome:        Faker::Lorem.sentence,
+          goodbye:        Faker::Lorem.sentence,
+        }.deep_merge(custom_options)
+      end
+
+      transient do
+        custom_options      { {} }
+        external_credential { create(:telegram_credential) }
+        bid { Faker::Number.number(digits: 10) }
+        callback_token { Faker::Alphanumeric.alphanumeric(number: 14) }
       end
     end
   end
