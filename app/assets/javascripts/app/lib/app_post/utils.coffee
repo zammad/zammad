@@ -1536,3 +1536,14 @@ class App.Utils
       return 'image/jpeg'
 
     return 'image/png'
+
+  # Constructs a recipient email address with display name in a safe way
+  @buildEmailAddress: (display_name, email) ->
+    if !display_name || display_name is undefined || display_name is null
+      return email
+
+    # Inspired by https://github.com/closeio/addresscompiler/blob/master/src/addresscompiler.js
+    if (!/^[\w ']*$/.test(display_name) && /^[\x00-\x7F\xA0-\xFF]*$/.test(display_name))
+      display_name = '"' + display_name.replace(/([\\"])/g, '\\$1') + '"'
+
+    return display_name + ' <' + email + '>'

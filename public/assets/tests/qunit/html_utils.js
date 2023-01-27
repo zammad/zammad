@@ -3575,3 +3575,26 @@ QUnit.test("#safeParseHtml", assert => {
   result = App.Utils.safeParseHtml(html)
   assert.equal(unwrap(result), should)
 })
+
+QUnit.test("#buildEmailAddress", assert => {
+  assert.equal(
+    App.Utils.buildEmailAddress(undefined, 'undef@example.com'),
+    'undef@example.com'
+  )
+  assert.equal(
+    App.Utils.buildEmailAddress(null, 'null@example.com'),
+    'null@example.com'
+  )
+  assert.equal(
+    App.Utils.buildEmailAddress('', 'nobody@example.com'),
+    'nobody@example.com'
+  )
+  assert.equal(
+    App.Utils.buildEmailAddress('John Doe', 'john.doe@example.com'),
+    'John Doe <john.doe@example.com>'
+  )
+  assert.equal(
+    App.Utils.buildEmailAddress('Somebody @ "Company"', 'some.body@example.com'),
+    '"Somebody @ \\"Company\\"" <some.body@example.com>'
+  )
+})

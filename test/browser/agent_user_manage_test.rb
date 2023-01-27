@@ -8,7 +8,7 @@ class AgentUserManageTest < TestCase
     customer_user_email = "customer-test-#{random_number}@example.com"
     firstname           = "Customer Firstname #{random_number}"
     lastname            = 'Customer Lastname'
-    fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"
+    fullname            = "\"#{firstname} #{lastname}\" <#{customer_user_email}>"
 
     @browser = browser_instance
     login(

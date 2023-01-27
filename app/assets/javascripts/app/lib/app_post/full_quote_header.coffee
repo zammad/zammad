@@ -72,7 +72,7 @@ class App.FullQuoteHeader
     output = "#{user.displayName()}"
 
     if !user.permission('ticket.agent') && user.email
-      output += " <#{user.email}>"
+      output = App.Utils.buildEmailAddress(user.displayName(), user.email)
 
     output
 

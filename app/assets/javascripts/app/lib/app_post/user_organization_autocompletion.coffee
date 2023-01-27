@@ -17,6 +17,8 @@ class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompl
   buildObjectItem: (object) =>
     realname = object.displayName()
     if @Config.get('ui_user_organization_selector_with_email') && !_.isEmpty(object.email)
+      # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
+      #   quoting would confuse sorting in the GUI.
       realname += " <#{object.email}>"
 
     icon = @objectIcon

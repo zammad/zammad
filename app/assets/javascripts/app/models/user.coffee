@@ -417,6 +417,8 @@ class App.User extends App.Model
 
   displayName: ->
     if @realname
+      # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
+      #   quoting would confuse sorting in the GUI.
       return "#{@realname} <#{@email}>"
     if !_.isEmpty(@firstname)
       name = @firstname

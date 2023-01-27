@@ -116,12 +116,9 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       if objectId && App[@objectSingle].exists(objectId)
         object = App[@objectSingle].find(objectId)
         name = object.displayName()
-        if object.email
 
-          # quote name for special character
-          if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
-            name = "\"#{name}\""
-          name += " <#{object.email}>"
+        if object.email
+          name = App.Utils.buildEmailAddress(object.displayName(), object.email)
 
         @objectSelect.val(name)
 
@@ -342,6 +339,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
           object = App[@objectSingle].find(value)
           name = object.displayName()
           if object.email
+            # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
+            #   quoting would confuse sorting in the GUI.
             name += " <#{object.email}>"
         else if @params && @params["#{@attribute.name}_completion"]
           name = @params["#{@attribute.name}_completion"]
