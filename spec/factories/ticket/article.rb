@@ -162,6 +162,7 @@ FactoryBot.define do
       after(:create) do |article, context|
         next if context.sender_name == 'Agent'
 
+        context.ticket.title = article.body
         context.ticket.preferences.tap do |p|
           p['sms'] = {
             originator: article.from,
@@ -222,7 +223,9 @@ FactoryBot.define do
       content_type { 'text/plain' }
 
       after(:create) do |article, context|
-        pp article, context
+        next if context.sender_name == 'Agent'
+
+        context.ticket.title = article.body
         context.ticket.preferences.tap do |p|
           p['telegram'] = {
             bid:     context.channel[:options][:bot][:id],
@@ -277,6 +280,78 @@ FactoryBot.define do
               chat_id:    Faker::Number.number(digits: 10),
               message_id: Faker::Number.number,
             },
+            delivery_status_message: nil,
+            delivery_status:         'success',
+            delivery_status_date:    Time.current,
+          }
+        end
+      end
+    end
+
+    factory :facebook_article do
+      inbound
+
+      transient do
+        channel { Channel.find(ticket.preferences[:channel_id]) }
+        post_id { Faker::Number.number(digits: 15) }
+        permalink_url { "https://www.facebook.com/#{channel[:options][:pages][0][:id]}/posts/#{post_id}/?comment_id=#{post_id}" }
+      end
+
+      association :ticket, factory: :facebook_ticket
+      subject { nil }
+      body { Faker::Lorem.sentence }
+      message_id { "#{Faker::Number.number(digits: 16)}_#{Faker::Number.number(digits: 15)}" }
+      content_type { 'text/plain' }
+
+      after(:create) do |article, context|
+        next if context.sender_name == 'Agent'
+
+        context.ticket.title = article.body
+        context.ticket.preferences.tap do |p|
+          p['channel_fb_object_id'] = context.post_id,
+                                      p['facebook'] = {
+                                        permalink_url: context.permalink_url,
+                                      }
+        end
+
+        context.ticket.save!
+      end
+
+      trait :inbound do
+        transient do
+          type_name { 'facebook feed post' }
+          sender_name { 'Customer' }
+        end
+
+        from { ticket.customer.fullname }
+        to { channel[:options][:pages][0][:name] }
+
+        preferences do
+          {
+            links: [
+              {
+                url:    permalink_url,
+                target: '_blank',
+                name:   'on Facebook',
+              },
+            ],
+          }
+        end
+      end
+
+      trait :outbound do
+        transient do
+          type_name { 'facebook feed comment' }
+          sender_name { 'Agent' }
+        end
+
+        from { channel[:options][:pages][0][:name] }
+        to { ticket.customer.fullname }
+        in_reply_to { "#{Faker::Number.number(digits: 16)}_#{Faker::Number.number(digits: 15)}" }
+
+        preferences do
+          {
+            delivery_retry:          1,
             delivery_status_message: nil,
             delivery_status:         'success',
             delivery_status_date:    Time.current,
