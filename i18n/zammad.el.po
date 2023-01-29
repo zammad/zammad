@@ -841,10 +841,7 @@ msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 "Πρόσβαση στα αιτήματα πελατών με βάση τον τρέχοντα χρήστη και τον οργανισμό."
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -1007,7 +1004,7 @@ msgstr ""
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1106,6 +1103,7 @@ msgstr "Προσθήκη συνδέσμου"
 msgid "Add ordered list"
 msgstr "Μορφοποίηση ως λίστα παραγγελίας"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 #, fuzzy
 #| msgid "reply"
@@ -1510,6 +1508,12 @@ msgstr "Αρχειοθετημένο"
 msgid "Archived at"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Are you sure to remove this article?"
+msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1537,10 +1541,19 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Είστε σίγουρος/η;"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Are you sure? The prepared article will be removed."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Are you sure? You have changes that will get lost."
+msgstr ""
+
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -1556,6 +1569,12 @@ msgstr ""
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
 msgstr "Article Count"
+
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#, fuzzy
+#| msgid "Article"
+msgid "Article Type"
+msgstr "Αρθρο"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 #, fuzzy
@@ -1574,6 +1593,10 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "Article could not be deleted."
 msgstr "%s Object(s) are created."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "Article uses different security mechanism."
+msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -1759,6 +1782,7 @@ msgid "August"
 msgstr "Aυγουστος"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Authentication"
 
@@ -1785,13 +1809,6 @@ msgstr ""
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr ""
-
-#: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-#, fuzzy
-#| msgid "Authentication via %s"
-msgid "Authentication via"
-msgstr "Authentication via %s"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1957,7 +1974,6 @@ msgid "Base Objects"
 msgstr "Βασικά αντικείμενα"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #, fuzzy
 #| msgid "Authentication"
 msgid "Basic Authentication"
@@ -2105,6 +2121,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
@@ -2264,6 +2281,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
@@ -2603,6 +2621,10 @@ msgid "Clean up 'Cti::Log'."
 msgstr ""
 
 #: db/seeds/schedulers.rb
+msgid "Clean up 'DataPrivacyTask'."
+msgstr ""
+
+#: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
 msgstr ""
 
@@ -2668,7 +2690,7 @@ msgid "Click here"
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
@@ -2808,7 +2830,7 @@ msgstr "Διαμόρφωση"
 msgid "Config has changed"
 msgstr ""
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2825,7 +2847,7 @@ msgstr ""
 msgid "Configure"
 msgstr "Διαμορφώστε"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2903,7 +2925,7 @@ msgid "Connect Channels"
 msgstr "Συνδέστε κανάλια"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #, fuzzy
 #| msgid "Connect Facebook App"
 msgid "Connect Exchange App"
@@ -3531,7 +3553,14 @@ msgstr "Δεκέμβριος"
 msgid "Decryption failed!"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "Delivery failed"
+msgid "Decryption failed! %s"
+msgstr "Η παράδοση απέτυχε"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 #, fuzzy
 #| msgid "Connection test successful"
 msgid "Decryption was successful."
@@ -4329,7 +4358,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -4348,6 +4377,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Διαγραφή"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete Article"
+msgstr "Διαγραφή Αρχείου"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Delete Avatar?"
@@ -4579,6 +4614,13 @@ msgstr "Απόρριψη"
 msgid "Discard Changes"
 msgstr "Απόρριψη Αλλαγών"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Discard your unsaved changes."
+msgid "Discard your unsaved changes"
+msgstr "Απόρριψη των μη αποθηκευμένων αλλαγών."
+
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Discard your unsaved changes."
@@ -4671,6 +4713,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr ""
@@ -4778,6 +4821,13 @@ msgstr "Επεξεργασία Οργανισμού"
 msgid "Edit mask"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+#, fuzzy
+#| msgid "reply"
+msgid "Edit reply"
+msgstr "απαντηση"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
 #| msgid "assign tickets"
@@ -4836,6 +4886,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "Email"
@@ -5172,10 +5223,13 @@ msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encrypted"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
 msgstr ""
 
@@ -5443,8 +5497,6 @@ msgid "Excepted users"
 msgstr "Χρήστες που εξαιρούνται"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
@@ -5873,10 +5925,6 @@ msgstr "Μορφοποίηση ως |έντονο|"
 msgid "Format as ||italic||"
 msgstr "Μορφοποίηση ως || πλάγια γραφή ||"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
-msgid "Forward"
-msgstr ""
-
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "Συχνότητα"
@@ -6142,7 +6190,6 @@ msgstr " Χαιρετισμός"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -6989,6 +7036,7 @@ msgstr "Ενσωματώσεις"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
 msgstr "Εσωτερικός"
 
@@ -7677,12 +7725,6 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb
 msgid "Maintenance mode enabled!"
 msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
-#, fuzzy
-#| msgid "set to internal"
-msgid "Make internal"
-msgstr "ορισμός σε εσωτερικό"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
@@ -8456,7 +8498,7 @@ msgstr "Δεν έχει διαμορφωθεί το %s"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8725,6 +8767,7 @@ msgstr "Δεν έχει διαμορφωθεί"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "Σημείωση"
@@ -8811,11 +8854,16 @@ msgstr "Νοέμβριος"
 msgid "Number"
 msgstr "Αριθμός"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "OAuth"
 msgstr ""
+
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
+#, fuzzy
+#| msgid "Configuration"
+msgid "OAuth Configuration"
+msgstr "Διαμόρφωση"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -9185,7 +9233,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -9370,6 +9417,7 @@ msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Phone"
 msgstr "Τηλέφωνο"
@@ -9509,6 +9557,12 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+msgid ""
+"Please select the authentication method that should be used to establish the "
+"connection to your Exchange server."
 msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb
@@ -9698,6 +9752,7 @@ msgid "Proxy address"
 msgstr "Διεύθυνση διακομιστή μεσολάβησης."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Public"
 msgstr "Δημόσιο"
 
@@ -9782,7 +9837,7 @@ msgstr ""
 msgid "Real-time"
 msgstr "Πραγματικός χρόνος"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9947,7 +10002,9 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #, fuzzy
 #| msgid "reply"
 msgid "Reply"
@@ -9985,7 +10042,7 @@ msgstr "Reporting"
 msgid "Request"
 msgstr ""
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr ""
@@ -10357,7 +10414,7 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Save ticket"
@@ -10477,11 +10534,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/permissions.rb
 msgid "Security"
 msgstr "Ασφάλεια"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
 msgstr ""
 
@@ -10752,6 +10813,18 @@ msgid ""
 "limits"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+#, fuzzy
+#| msgid "set to internal"
+msgid "Set to internal"
+msgstr "ορισμός σε εσωτερικό"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+#, fuzzy
+#| msgid "Public"
+msgid "Set to public"
+msgstr "Δημόσιο"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Set up a new system"
 msgstr ""
@@ -10935,6 +11008,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Sign"
 msgstr ""
 
@@ -10985,6 +11059,12 @@ msgstr "Υπογραφή"
 msgid "Signature verification failed!"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Signature verification failed! %s"
+msgstr "Εκτελέστηκε μαζική ενέργεια!"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -10992,6 +11072,8 @@ msgid "Signatures"
 msgstr "Υπογραφές"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Signed"
 msgstr ""
 
@@ -11070,6 +11152,12 @@ msgstr ""
 msgid "Slack integration"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+#, fuzzy
+#| msgid "sms"
+msgid "Sms"
+msgstr "SMS"
+
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
 #: app/assets/javascripts/app/views/sla/index.jst.eco
@@ -11144,7 +11232,7 @@ msgstr "Πηγή"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts
 #, fuzzy
 #| msgid "split"
 msgid "Split"
@@ -11214,7 +11302,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -11296,6 +11383,7 @@ msgstr "Οδός"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Subject"
 msgstr "Θέμα"
 
@@ -11455,6 +11543,7 @@ msgstr "Target"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -11475,7 +11564,7 @@ msgid "Templates"
 msgstr "Templates"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 msgid "Tenant UUID/Name"
 msgstr ""
@@ -11650,6 +11739,24 @@ msgstr "%s Object(s) are created."
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
 msgstr "Unable to verify email. Please contact your administrator."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The article could not be deleted."
+msgstr "%s Object(s) are created."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The article could not be set to internal."
+msgstr "%s Object(s) are created."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "The article could not be set to public."
+msgstr "%s Object(s) are created."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -12135,6 +12242,7 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr ""
 
@@ -12163,6 +12271,7 @@ msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr ""
 
@@ -12802,7 +12911,7 @@ msgstr "%s Object(s) are created."
 msgid "Ticket tags updated successfully."
 msgstr "Επιτυχής Ενημέρωση "
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -13010,6 +13119,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "Πρός"
@@ -13156,6 +13266,12 @@ msgstr "Εκκινητές"
 msgid "Triggers are …"
 msgstr "Εκκινητές"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "again"
+msgid "Try again"
+msgstr "ξανά"
+
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
 msgstr ""
@@ -13185,7 +13301,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
+#: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -13330,6 +13448,12 @@ msgstr "Ειδοποίηση"
 #| msgid "Notification"
 msgid "Unread notifications"
 msgstr "Ειδοποίηση"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#, fuzzy
+#| msgid "Assigned"
+msgid "Unsigned"
+msgstr "Ανατέθηκε"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
@@ -13748,6 +13872,12 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Validation failed"
+msgstr "Εκτελέστηκε μαζική ενέργεια!"
+
 msgid "Validation failed: %{errors}"
 msgstr ""
 
@@ -13858,6 +13988,7 @@ msgstr "Νέο Δελτίο"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Visibility"
 msgstr ""
@@ -14256,7 +14387,7 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -14364,6 +14495,10 @@ msgstr ""
 
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
+msgid "You have exceeded the character limit by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
@@ -15766,6 +15901,16 @@ msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
 
 #, fuzzy
+#~| msgid "Authentication via %s"
+#~ msgid "Authentication via"
+#~ msgstr "Authentication via %s"
+
+#, fuzzy
+#~| msgid "set to internal"
+#~ msgid "Make internal"
+#~ msgstr "ορισμός σε εσωτερικό"
+
+#, fuzzy
 #~| msgid "Edit Customer"
 #~ msgid "Edit customer"
 #~ msgstr "Επεξεγασία Πελάτη"
@@ -15911,11 +16056,6 @@ msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
 #, fuzzy
 #~ msgid "Response Time"
 #~ msgstr "Πρώτος χρόνος απόκρισης"
-
-#, fuzzy
-#~| msgid "Sure to delete this object?"
-#~ msgid "Are you sure to delete this draft?"
-#~ msgstr "Ειστε σιγουρος για την διαγραφη του αντικειμένου;"
 
 #, fuzzy
 #~| msgid "Unable to save changes."

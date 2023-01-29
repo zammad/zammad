@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-22 03:30+0000\n"
+"PO-Revision-Date: 2023-01-29 19:54+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -876,10 +876,7 @@ msgid "Access to Customer Tickets based on current_user and organization"
 msgstr ""
 "Приступ тикетима клијената на основу тренутног корисника и организације"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Account"
@@ -1042,7 +1039,7 @@ msgstr "Адаптер"
 msgid "Add"
 msgstr "Додај"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -1130,6 +1127,7 @@ msgstr "Додај везу"
 msgid "Add ordered list"
 msgstr "Додај листу са бројевима"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
 msgid "Add reply"
 msgstr "Додај одговор"
@@ -1544,6 +1542,10 @@ msgstr "Архивирано"
 msgid "Archived at"
 msgstr "Архивирано у"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "Are you sure to remove this article?"
+msgstr "Да ли сте сигурни да желите да уклоните овај чланак?"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr "Да ли сте сигурни да желите да спојите тикет (#%s) са #%s?"
@@ -1573,10 +1575,19 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Да ли сте сигурни?"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Are you sure? The prepared article will be removed."
+msgstr "Да ли сте сигурни? Ваше незапамћени чланак ће бити изгубљен."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Are you sure? You have changes that will get lost."
+msgstr "Да ли сте сигурни? Имате измене које ће бити изгубљене."
+
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Да ли сте сигурни? Имате незапамћене измене које ће бити изгубљене."
 
@@ -1593,6 +1604,10 @@ msgstr "Чланак - дијалог потврде видљивости"
 msgid "Article Count"
 msgstr "Број чланака"
 
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+msgid "Article Type"
+msgstr "Тип чланка"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
 msgstr "Радње чланака"
@@ -1608,6 +1623,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 msgid "Article could not be deleted."
 msgstr "Није било могуће обрисати чланак."
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "Article uses different security mechanism."
+msgstr "Чланак користи другачији безбедносни механизам."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -1779,6 +1798,7 @@ msgid "August"
 msgstr "август"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "Authentication"
 msgstr "Аутентификација"
 
@@ -1803,11 +1823,6 @@ msgstr "Аутентификација није могућа (услуга је 
 #: lib/user_context.rb
 msgid "Authentication required"
 msgstr "Неопходна аутентификација"
-
-#: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid "Authentication via"
-msgstr "Аутентификација путем"
 
 #: db/seeds/settings.rb
 msgid "Authentication via %s"
@@ -1964,7 +1979,6 @@ msgid "Base Objects"
 msgstr "Основни објекти"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Basic Authentication"
 msgstr "Basic Authentication"
 
@@ -2103,6 +2117,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
@@ -2248,6 +2263,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Cancel"
@@ -2555,6 +2571,10 @@ msgid "Clean up 'Cti::Log'."
 msgstr "Очисти ’Cti::Log’."
 
 #: db/seeds/schedulers.rb
+msgid "Clean up 'DataPrivacyTask'."
+msgstr "Обриши задатак приватности података."
+
+#: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
 msgstr "Очисти HttpLog."
 
@@ -2610,7 +2630,7 @@ msgid "Click here"
 msgstr "Кликни овде"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
@@ -2744,7 +2764,7 @@ msgstr "Конфигурација"
 msgid "Config has changed"
 msgstr "Измењена конфигурација"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -2761,7 +2781,7 @@ msgstr "Конфигурација за %s"
 msgid "Configure"
 msgstr "Подеси"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
@@ -2844,7 +2864,7 @@ msgid "Connect Channels"
 msgstr "Повежи канале"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 msgid "Connect Exchange App"
 msgstr "Повежи Exchange апликацију"
 
@@ -3445,7 +3465,12 @@ msgstr "децембар"
 msgid "Decryption failed!"
 msgstr "Неуспело дешифровање!"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "Decryption failed! %s"
+msgstr "Неуспело дешифровање! %s"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
 msgstr "Успешно дешифровање."
 
@@ -4281,7 +4306,7 @@ msgstr "Одређује позадински модул."
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/topics.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -4300,6 +4325,10 @@ msgstr "Одређује позадински модул."
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Delete"
 msgstr "Избриши"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "Delete Article"
+msgstr "Избриши чланак"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Delete Avatar?"
@@ -4515,6 +4544,11 @@ msgstr "Откажи"
 msgid "Discard Changes"
 msgstr "Откажи промене"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Discard your unsaved changes"
+msgstr "Откажи своје несачуване измене"
+
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Discard your unsaved changes."
@@ -4593,6 +4627,7 @@ msgstr "Без синхронизације"
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
 msgstr "Готово"
@@ -4699,6 +4734,11 @@ msgstr "Измени организацију"
 msgid "Edit mask"
 msgstr "Измени форму"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
+msgid "Edit reply"
+msgstr "Измени одговор"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Editing ticket"
 msgstr "Освежавају тикет"
@@ -4757,6 +4797,7 @@ msgstr "Неопходно је подесити Elasticsearch!"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: db/seeds/object_manager_attributes.rb public/assets/form/form.js
 msgid "Email"
 msgstr "Имејл"
@@ -5089,10 +5130,13 @@ msgstr ""
 "Шифровање имејл поруке (уколико није могуће, свеједно пошаљи обавештење)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encrypted"
 msgstr "Шифровано"
 
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Encryption"
 msgstr "Шифровање"
 
@@ -5370,8 +5414,6 @@ msgid "Excepted users"
 msgstr "Изузети корисници"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Exchange"
@@ -5756,10 +5798,6 @@ msgstr "Форматирај као |подебљано|"
 msgid "Format as ||italic||"
 msgstr "Форматирај као ||курзив||"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
-msgid "Forward"
-msgstr "Проследи"
-
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "Учесталост"
@@ -6007,7 +6045,6 @@ msgstr "Поздрав"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -6774,6 +6811,7 @@ msgstr "Интеграције"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
 msgstr "Интерно"
 
@@ -7442,10 +7480,6 @@ msgstr "Режим одржавања"
 #: app/controllers/application_controller/authenticates.rb
 msgid "Maintenance mode enabled!"
 msgstr "Режим одржавања је укључен!"
-
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
-msgid "Make internal"
-msgstr "Пребаци у интерно"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Manage"
@@ -8200,7 +8234,7 @@ msgstr "Нема подешавања за %s."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/generic/admin/empty.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
@@ -8454,6 +8488,7 @@ msgstr "Није подешено"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Note"
 msgstr "Напомена"
@@ -8534,11 +8569,14 @@ msgstr "новембар"
 msgid "Number"
 msgstr "Број"
 
-#: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "OAuth"
 msgstr "OAuth"
+
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
+msgid "OAuth Configuration"
+msgstr "OAuth конфигурација"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8885,7 +8923,6 @@ msgstr "Преиначи нацрт"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -9057,6 +9094,7 @@ msgid "Personal overview order was reset."
 msgstr "Лични редослед прегледа је поништен."
 
 #: app/assets/javascripts/app/controllers/cti.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Phone"
 msgstr "Позив"
@@ -9187,6 +9225,14 @@ msgstr "Молимо одаберите бар један фолдер."
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Please select at least one ticket overview"
 msgstr "Молимо одаберите бар један преглед тикета"
+
+#: app/assets/javascripts/app/views/integration/exchange.jst.eco
+msgid ""
+"Please select the authentication method that should be used to establish the "
+"connection to your Exchange server."
+msgstr ""
+"Молимо одаберите метод аутентификације за остваривање везе са вашим Exchange "
+"сервером."
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
@@ -9363,6 +9409,7 @@ msgid "Proxy address"
 msgstr "Прокси адреса"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Public"
 msgstr "Јавно"
 
@@ -9437,7 +9484,7 @@ msgstr "Читање"
 msgid "Real-time"
 msgstr "У реалном времену"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Reauthenticate"
@@ -9590,7 +9637,9 @@ msgstr "Време поновног отварања у данима"
 msgid "Replacement"
 msgstr "Замена"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 msgid "Reply"
 msgstr "Одговори"
 
@@ -9626,7 +9675,7 @@ msgstr "Извештавање"
 msgid "Request"
 msgstr "Захтев"
 
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Request Admin Consent"
 msgstr "Захтев за сагласност администратора"
@@ -10029,7 +10078,7 @@ msgstr "Сачувај као"
 msgid "Save configuration"
 msgstr "Сачувај конфигурацију"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
 msgid "Save ticket"
 msgstr "Сачувај тикет"
 
@@ -10137,11 +10186,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 #: db/seeds/permissions.rb
 msgid "Security"
 msgstr "Безбедност"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Security Error"
 msgstr "Безбедносна грешка"
 
@@ -10404,6 +10457,14 @@ msgstr ""
 "Подешава временски оквир у секундама. Уколико је постављено на 0 можете "
 "обрисати напомене без временских ограничења"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+msgid "Set to internal"
+msgstr "Постави на интерно"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+msgid "Set to public"
+msgstr "Постави на јавно"
+
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco
 msgid "Set up a new system"
 msgstr "Подеси нови систем"
@@ -10577,6 +10638,7 @@ msgstr "Трака са стране прилога"
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Sign"
 msgstr "Потписивање"
 
@@ -10624,6 +10686,10 @@ msgstr "Потпис"
 msgid "Signature verification failed!"
 msgstr "Неуспела потврда потписа!"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "Signature verification failed! %s"
+msgstr "Неуспела потврда потписа! %s"
+
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -10631,6 +10697,8 @@ msgid "Signatures"
 msgstr "Потписи"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Signed"
 msgstr "Потписано"
 
@@ -10695,6 +10763,10 @@ msgstr "Slack конфигурација"
 #: db/seeds/settings.rb
 msgid "Slack integration"
 msgstr "Slack интеграција"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
+msgid "Sms"
+msgstr "SMS"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco
@@ -10769,7 +10841,7 @@ msgstr "Извори"
 msgid "Special character required"
 msgstr "Неопходан специјални знак"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts
 msgid "Split"
 msgstr "Раздели"
 
@@ -10839,7 +10911,6 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/fr.md.erb
 #: app/views/slack/ticket_create/pt-br.md.erb
 #: app/views/slack/ticket_create/zh-cn.md.erb
 #: app/views/slack/ticket_create/zh-tw.md.erb
@@ -10917,6 +10988,7 @@ msgstr "Улица"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Subject"
 msgstr "Предмет"
 
@@ -11076,6 +11148,7 @@ msgstr "Циљ"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 msgid "Telegram"
 msgstr "Telegram"
 
@@ -11094,7 +11167,7 @@ msgid "Templates"
 msgstr "Шаблони"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco
-#: app/assets/javascripts/app/views/exchange/list.jst.eco
+#: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 msgid "Tenant UUID/Name"
 msgstr "UUID/назив станара апликације"
@@ -11263,6 +11336,18 @@ msgstr "Није пронађен активни профил за извешт�
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "The admin consent request was sent to your administrator."
 msgstr "Захтев за сагласност је послат вашем администратору."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
+msgid "The article could not be deleted."
+msgstr "Није било могуће обрисати чланак."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+msgid "The article could not be set to internal."
+msgstr "Није било могуће поставити чланак на интерно."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
+msgid "The article could not be set to public."
+msgstr "Није било могуће поставити чланак на јавно."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid "The article does not belong to the specified ticket."
@@ -11739,6 +11824,7 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr "Није пронађена обавезна вредност external_credential у кешу."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Неуспео поновни безбедносни процес!"
 
@@ -11769,6 +11855,7 @@ msgid "The sign-in failed. Please contact the Support team."
 msgstr "Пријављивање није успело. Молимо контактирајте тим подршке."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The signature was successfully verified."
 msgstr "Потпис је успешно потврђен."
 
@@ -12406,7 +12493,7 @@ msgstr "Није било могуће освежити ознаке тикет�
 msgid "Ticket tags updated successfully."
 msgstr "Означе тикета су успешно освежене."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Ticket title"
 msgstr "Наслов тикета"
 
@@ -12624,6 +12711,7 @@ msgstr "Наслов форме"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "За"
@@ -12778,6 +12866,10 @@ msgstr "Окидачи"
 msgid "Triggers are …"
 msgstr "Окидачи су …"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "Try again"
+msgstr "Покушај поново"
+
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee
 msgid "Trying to reconnect…"
 msgstr "Поновна успостава везе…"
@@ -12808,7 +12900,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
-#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
+#: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
+#: db/seeds/settings.rb
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -12933,6 +13027,10 @@ msgstr "Непрочитано обавештење"
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue
 msgid "Unread notifications"
 msgstr "Непрочитана обавештења"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+msgid "Unsigned"
+msgstr "Непотписано"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
@@ -13389,6 +13487,10 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
+msgid "Validation failed"
+msgstr "Неуспешна валидација"
+
 msgid "Validation failed: %{errors}"
 msgstr "Неуспешна валидација: %{errors}"
 
@@ -13497,6 +13599,7 @@ msgstr "Гледају тикета"
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Visibility"
 msgstr "Видљивост"
@@ -13925,7 +14028,7 @@ msgstr "Добијате ово зато што сте власник овог �
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Добијате ово зато што сте поменути у овом тикету."
 
-#: app/assets/javascripts/app/views/exchange/index.jst.eco
+#: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
@@ -14065,6 +14168,10 @@ msgstr "Немате администраторске дозволе."
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "You don't have the necessary permissions to access this page."
 msgstr "Немате довољно дозвола за приступ овој страни."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
+msgid "You have exceeded the character limit by %s"
+msgstr "Прекорачили сте дозвољени број знакова за %s"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
@@ -15435,6 +15542,15 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Authentication via"
+#~ msgstr "Аутентификација путем"
+
+#~ msgid "Forward"
+#~ msgstr "Проследи"
+
+#~ msgid "Make internal"
+#~ msgstr "Пребаци у интерно"
 
 #~ msgid "Edit customer"
 #~ msgstr "Измени клијента"
