@@ -4,6 +4,9 @@ class Taskbar < ApplicationModel
   include ChecksClientNotification
   include ::Taskbar::HasAttachments
   include Taskbar::Assets
+  include Taskbar::TriggersSubscriptions
+
+  TASKBAR_APPS = %w[desktop mobile].freeze
 
   store           :state
   store           :params
@@ -11,7 +14,7 @@ class Taskbar < ApplicationModel
 
   belongs_to :user
 
-  validates :app, inclusion: { in: %w[desktop mobile] }
+  validates :app, inclusion: { in: TASKBAR_APPS }
 
   before_create   :update_last_contact, :set_user, :update_preferences_infos
   before_update   :update_last_contact, :set_user, :update_preferences_infos

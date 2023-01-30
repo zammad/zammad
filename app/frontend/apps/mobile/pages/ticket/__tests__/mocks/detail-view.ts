@@ -1,7 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { TicketState } from '@shared/entities/ticket/types'
-import type { TicketArticlesQuery, TicketQuery } from '@shared/graphql/types'
+import type {
+  TicketArticlesQuery,
+  TicketLiveUserDeletePayload,
+  TicketLiveUserUpsertPayload,
+  TicketQuery,
+} from '@shared/graphql/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
 import {
@@ -9,10 +14,13 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { nullableMock, waitUntil } from '@tests/support/utils'
+import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api'
+import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api'
 
 import { TicketDocument } from '../../graphql/queries/ticket.api'
 
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api'
+import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api'
 import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api'
 import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api'
 
@@ -237,6 +245,36 @@ interface MockOptions {
   articles?: TicketArticlesQuery
 }
 
+export const mockTicketLiveUsersGql = () => {
+  const mockTicketLiveUsersSubscription = mockGraphQLSubscription(
+    TicketLiveUserUpdatesDocument,
+  )
+
+  const mockTicketLiveUserUpsert = mockGraphQLApi(
+    TicketLiveUserUpsertDocument,
+  ).willResolve(
+    nullableMock<TicketLiveUserUpsertPayload>({
+      success: true,
+      errors: null,
+    }),
+  )
+
+  const mockTicketLiveUserDelete = mockGraphQLApi(
+    TicketLiveUserDeleteDocument,
+  ).willResolve(
+    nullableMock<TicketLiveUserDeletePayload>({
+      success: true,
+      errors: null,
+    }),
+  )
+
+  return {
+    mockTicketLiveUsersSubscription,
+    mockTicketLiveUserUpsert,
+    mockTicketLiveUserDelete,
+  }
+}
+
 export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
   const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
 
@@ -275,6 +313,8 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     )
   }
 
+  const mockTicketLiveUser = mockTicketLiveUsersGql()
+
   return {
     ticket: ticket.ticket,
     mockApiArticles,
@@ -282,5 +322,6 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     mockTicketSubscription,
     mockTicketArticleSubscription,
     waitUntilTicketLoaded,
+    ...mockTicketLiveUser,
   }
 }

@@ -68,7 +68,7 @@ describe('TicketTags', () => {
     expect(tags[0]).toHaveTextContent('tag2')
   })
 
-  it('rest ticket tags again on update error', async () => {
+  it('reset ticket tags again on update error', async () => {
     const mockTagAssignmentUpdateApi = mockGraphQLApi(
       TagAssignmentUpdateDocument,
     ).willFailWithError([

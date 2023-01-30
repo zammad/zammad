@@ -1,15 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { reactive, shallowRef } from 'vue'
+import { reactive } from 'vue'
+import { useReactiveNow } from '@shared/composables/useReactiveNow'
 import type { TranslationMap } from './translator'
 import { Translator } from './translator'
 import * as dates from './dates'
 
-const reactiveNow = shallowRef(new Date())
-
-window.setInterval(() => {
-  reactiveNow.value = new Date()
-}, 1000)
+const reactiveNow = useReactiveNow()
 
 export class I18N {
   private translator = new Translator()

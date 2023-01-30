@@ -1,0 +1,16 @@
+fragment ticketLiveUserAttributes on TicketLiveUser {
+  user {
+    id
+    firstname
+    lastname
+    fullname
+    email
+    vip
+    outOfOffice
+    active
+    image
+  }
+  editing
+  lastInteraction
+  apps
+}

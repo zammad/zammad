@@ -28,6 +28,7 @@ import { useTicketQuery } from '../graphql/queries/ticket.api'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
 import { useTicketArticleReply } from '../composable/useTicketArticleReply'
 import { useTicketEditForm } from '../composable/useTicketEditForm'
+import { useTicketLiveUser } from '../composable/useTicketLiveUser'
 
 interface Props {
   internalId: string
@@ -135,6 +136,8 @@ const showArticleReplyDialog = () => {
   return openArticleReplyDialog({ updateFormLocation })
 }
 
+const { liveUserList } = useTicketLiveUser(ticket, canSubmit)
+
 provide(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   initialFormTicketValue: initialTicketValue,
@@ -150,6 +153,7 @@ provide(TICKET_INFORMATION_SYMBOL, {
   isArticleFormGroupValid,
   formSubmit,
   showArticleReplyDialog,
+  liveUserList,
 })
 
 const { waitForConfirmation } = useConfirmation()

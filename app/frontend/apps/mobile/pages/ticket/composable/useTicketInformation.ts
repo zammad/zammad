@@ -4,7 +4,11 @@ import type { ComputedRef, Ref, ShallowRef } from 'vue'
 import { inject } from 'vue'
 import type { TicketById } from '@shared/entities/ticket/types'
 import type { FormRef, FormValues } from '@shared/components/Form'
-import type { TicketQuery, TicketQueryVariables } from '@shared/graphql/types'
+import type {
+  TicketQuery,
+  TicketQueryVariables,
+  TicketLiveUser,
+} from '@shared/graphql/types'
 import type { QueryHandler } from '@shared/server/apollo/handler'
 
 export const TICKET_INFORMATION_SYMBOL = Symbol('ticket')
@@ -24,6 +28,7 @@ interface TicketInformation {
   isArticleFormGroupValid: ComputedRef<boolean>
   formSubmit: () => void
   showArticleReplyDialog: () => Promise<void>
+  liveUserList: Ref<TicketLiveUser[]>
 }
 
 export const useTicketInformation = () => {

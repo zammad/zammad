@@ -77,7 +77,7 @@ articlesQuery.subscribeToMore<
   },
 })
 
-const { ticket, ticketQuery } = useTicketInformation()
+const { ticket, liveUserList, ticketQuery } = useTicketInformation()
 const { isTicketEditable } = useTicketView(ticket)
 
 const isLoadingTicket = ticketQuery.loading()
@@ -109,10 +109,6 @@ useHeader({
   }),
 })
 
-// TODO get users from graphql
-const users = [{ id: '1' }, { id: '2', lastname: 'Smith', firstname: 'John' }]
-// const usersLoading = ref(true) // TODO
-
 watch(
   () => articles.value.length,
   (length) => {
@@ -143,9 +139,8 @@ const loadPreviousArticles = async () => {
   <div class="flex min-h-[calc(100vh_-_5rem)] flex-col pb-20">
     <TicketHeader
       :ticket="ticket"
-      :users="users"
+      :live-user-list="liveUserList"
       :loading-ticket="isLoadingTicket"
-      :loading-users="isLoadingTicket"
     />
     <CommonLoader
       :loading="isLoadingTicket"

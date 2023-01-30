@@ -11,4 +11,12 @@ RSpec.describe Gql::ZammadSchema, type: :graphql do
   it 'resolves GraphQL::ID values' do
     expect(described_class.object_from_id('gid://zammad/Ticket/1')).to eq(Ticket.first)
   end
+
+  it 'resolves internal IDs to GraphQL::IDs' do
+    expect(described_class.id_from_internal_id(Ticket, 1)).to eq('gid://zammad/Ticket/1')
+  end
+
+  it 'resolves internal IDs to GraphQL::IDs (with class name as string)' do
+    expect(described_class.id_from_internal_id('Ticket', 1)).to eq('gid://zammad/Ticket/1')
+  end
 end

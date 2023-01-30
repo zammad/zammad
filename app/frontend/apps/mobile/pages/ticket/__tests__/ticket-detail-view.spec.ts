@@ -27,6 +27,7 @@ import {
   defaultArticles,
   defaultTicket,
   mockTicketDetailViewGql,
+  mockTicketLiveUsersGql,
 } from './mocks/detail-view'
 
 beforeEach(() => {
@@ -257,6 +258,8 @@ test('can load more articles', async () => {
       },
     }
   })
+
+  mockTicketLiveUsersGql()
 
   mockGraphQLApi(TicketDocument).willResolve(defaultTicket())
   mockGraphQLSubscription(TicketUpdatesDocument)

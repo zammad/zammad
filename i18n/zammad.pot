@@ -3707,6 +3707,7 @@ msgid "Designer"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Desktop"
 msgstr ""
 
@@ -3989,8 +3990,12 @@ msgstr ""
 msgid "Edit reply"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Editing ticket"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
+msgid "Editing"
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
+msgid "Editing on Desktop"
 msgstr ""
 
 #: db/seeds/settings.rb

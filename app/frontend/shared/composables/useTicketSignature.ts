@@ -15,6 +15,7 @@ import { convertToGraphQLId, getIdFromGraphQLId } from '@shared/graphql/utils'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
 
+// TODO: can maybe be moved inside ticket entity?
 export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
   const signatureQuery = new QueryHandler(
     useTicketSignatureLazyQuery({ groupId: '' }),

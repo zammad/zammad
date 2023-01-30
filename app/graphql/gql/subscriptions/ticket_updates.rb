@@ -2,10 +2,9 @@
 
 module Gql::Subscriptions
   class TicketUpdates < BaseSubscription
+    description 'Updates to ticket records'
 
     argument :ticket_id, GraphQL::Types::ID, description: 'Ticket identifier'
-
-    description 'Updates to ticket records'
 
     field :ticket, Gql::Types::TicketType, description: 'Updated ticket'
 

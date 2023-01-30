@@ -4,6 +4,7 @@ const now = new Date('2020-02-01 00:00:00')
 vi.setSystemTime(now)
 
 import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
+import { EnumTaskbarApp } from '@shared/graphql/types'
 import { renderComponent } from '@tests/support/components'
 import TicketDetailViewHeader from '../TicketDetailViewHeader.vue'
 
@@ -43,12 +44,17 @@ describe('tickets zoom header', () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
         ticket,
-        users: [{ id: '654321', firstname: 'John', lastname: 'Doe' }],
+        liveUserList: [
+          {
+            editing: false,
+            user: { id: '654321', firstname: 'John', lastname: 'Doe' },
+            lastInteraction: new Date().toISOString(),
+            apps: [EnumTaskbarApp.Desktop],
+          },
+        ],
       },
       dialog: true,
     })
-
-    vi.useRealTimers()
 
     expect(
       view.getByRole('img', { name: /John Doe/ }),
@@ -60,25 +66,36 @@ describe('tickets zoom header', () => {
     ).not.toBeInTheDocument()
 
     await view.rerender({
-      users: [
-        { id: '654321', firstname: 'Dorothy', lastname: 'Zbornak' },
-        { id: '654320', firstname: 'Rose', lastname: 'Nylund' },
-        { id: '654329', firstname: 'Blanche', lastname: 'Devereaux' },
-        { id: '654322', firstname: 'Sophia', lastname: 'Petrillo' },
+      liveUserList: [
+        {
+          editing: false,
+          user: { id: '654321', firstname: 'John', lastname: 'Doe' },
+          lastInteraction: new Date().toISOString(),
+          apps: [EnumTaskbarApp.Desktop],
+        },
+        {
+          editing: false,
+          user: { id: '123123', firstname: 'Rose', lastname: 'Nylund' },
+          lastInteraction: new Date().toISOString(),
+          apps: [EnumTaskbarApp.Desktop],
+        },
+        {
+          editing: false,
+          user: { id: '524523', firstname: 'Sophia', lastname: 'Petrillo' },
+          lastInteraction: new Date('2019-01-01 00:00:00').toISOString(),
+          apps: [EnumTaskbarApp.Mobile],
+        },
       ],
     })
 
-    const counter = view.getByLabelText(/Ticket has 4 viewers/)
+    const counter = view.getByLabelText(/Ticket has 3 viewers/)
 
     expect(counter, 'has a counter').toBeInTheDocument()
-    expect(counter).toHaveTextContent('+3')
+    expect(counter).toHaveTextContent('+2')
 
     await view.events.click(view.getByTestId('viewers-counter'))
 
-    // TODO assert the same users
-
-    expect(await view.findByText('Editing ticket')).toBeInTheDocument()
-    expect(view.getByText('Viewing ticket')).toBeInTheDocument()
+    expect(await view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
   })
 })

@@ -2,10 +2,9 @@
 
 module Gql::Subscriptions
   class OnlineNotificationsCount < BaseSubscription
+    description 'Updates unseen notifications count'
 
     argument :user_id, GraphQL::Types::ID, 'ID of the user to receive updates for', loads: Gql::Types::UserType
-
-    description 'Updates unseen notifications count'
 
     field :unseen_count, Integer, null: false, description: 'Count of unseen notifications for the user'
 

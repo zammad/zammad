@@ -26,7 +26,7 @@ module CommonActions
     ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
     if !page.current_path || page.current_path.exclude?('login')
-      visit '/', skip_waiting: true
+      visit '/', skip_waiting: true, app: app
     end
 
     case app

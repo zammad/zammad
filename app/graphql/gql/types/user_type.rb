@@ -11,7 +11,6 @@ module Gql::Types
     description 'Users (admins, agents and customers)'
 
     implements Gql::Types::ObjectAttributeValuesInterface
-    implements Gql::Types::TagsInterface
 
     # Special handling for users: GraphQL allows all authenticated users
     #   to look at other user records, but only some non-sensitive fields.

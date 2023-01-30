@@ -2,19 +2,18 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
-import type { AvatarUser } from '@shared/components/CommonUserAvatar'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useSessionStore } from '@shared/stores/session'
+import type { TicketLiveUser } from '@shared/graphql/types'
 import type { TicketById } from '@shared/entities/ticket/types'
 
 interface Props {
   ticket?: TicketById
+  liveUserList?: TicketLiveUser[]
   loadingTicket?: boolean
-  loadingUsers?: boolean
-  users: AvatarUser[]
 }
 
 const props = defineProps<Props>()
@@ -31,7 +30,10 @@ const actionsDialog = useDialog({
 })
 
 const showViewers = () => {
-  return viewersDialog.open({ name: viewersDialog.name })
+  return viewersDialog.open({
+    name: viewersDialog.name,
+    liveUsers: toRef(props, 'liveUserList'),
+  })
 }
 
 const showActions = () => {
@@ -46,7 +48,7 @@ const showActions = () => {
 
 <template>
   <header
-    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-3"
   >
     <CommonBackButton
       class="justify-self-start"
@@ -65,29 +67,28 @@ const showActions = () => {
           }}
         </div>
       </div>
-    </CommonLoader>
-    <CommonLoader :loading="loadingUsers" position="right">
       <div class="flex items-center justify-self-end">
         <button
-          v-if="users.length"
-          class="flex"
+          v-if="liveUserList?.length"
+          class="flex ltr:mr-0.5 rtl:ml-0.5"
           data-test-id="viewers-counter"
+          role="button"
           :title="$t('Show ticket viewers')"
           @click="showViewers()"
         >
           <CommonUserAvatar
             class="z-10"
-            :entity="users[0]"
+            :entity="liveUserList[0].user"
             personal
             size="xs"
           />
           <div
-            v-if="users.length - 1"
+            v-if="liveUserList.length - 1"
             class="z-0 flex h-6 w-6 -translate-x-2 select-none items-center justify-center rounded-full bg-white/80 text-xs text-black"
             role="img"
-            :aria-label="$t('Ticket has %s viewers', users.length)"
+            :aria-label="$t('Ticket has %s viewers', liveUserList.length)"
           >
-            +{{ users.length - 1 }}
+            +{{ liveUserList.length - 1 }}
           </div>
         </button>
         <button

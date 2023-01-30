@@ -33,6 +33,11 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   # Relay-style Object Identification:
 
+  # Return a string UUID for the internal ID.
+  def self.id_from_internal_id(klass, internal_id)
+    GlobalID.new(::URI::GID.build(app: GlobalID.app, model_name: klass.to_s, model_id: internal_id)).to_s
+  end
+
   # Return a string UUID for `object`
   def self.id_from_object(object, _type_definition = nil, _query_ctx = nil)
     object.to_global_id.to_s
