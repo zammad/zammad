@@ -18,5 +18,7 @@ module Rszr
     sample_image = Rszr::Image.load sample_path
 
     sample_image.height != 25
+  rescue Rszr::LoadError
+    true  # Platform with outdated imlib2, handle gracefully.
   end
 end
