@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Lembrete alcançado!_
+Um ticket necessita de atenção: lembrete alcançado para (#{ticket.title}) do cliente "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

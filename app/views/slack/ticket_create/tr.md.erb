@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: #{current_user.longname} tarafından #{ticket.updated_at}'da yaratıldı
+* Grup: #{ticket.group.name}
+* Sahip: #{ticket.owner.fullname}
+* Durum: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,12 +1,12 @@
-El ticket escalará (#{ticket.title})
+El ticket será escalado (#{ticket.title})
 
-<div>Buenos días #{recipient.firstname},</div>
+<div>Buenos días, #{recipient.firstname}:</div>
 <br>
-<div>Un ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" escalará a "#{ticket.escalation_at}"!</div>
+<div>¡El ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" se escalará a las "#{ticket.escalation_at}"!</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Información:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ El ticket escalará (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Ver en #{config.product_name}</a>
 </div>

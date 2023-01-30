@@ -1,12 +1,12 @@
 Recordatorio alcanzado (#{ticket.title})
 
-<div>Buenos días #{recipient.firstname},</div>
+<div>Buenos días, #{recipient.firstname}:</div>
 <br>
-<div>Un ticket necesita atención, recordatorio alcanzado para (#{ticket.title}) con el cliente "<b>#{ticket.customer.longname}</b>".</div>
+<div>Un ticket necesita su atención: recordatorio alcanzado para (#{ticket.title}) con el cliente "<b>#{ticket.customer.longname}</b>".</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Información:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Recordatorio alcanzado (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Ver en #{config.product_name}</a>
 </div>
