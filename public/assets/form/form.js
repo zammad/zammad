@@ -117,7 +117,7 @@ $(function() {
       },
       'es': {
         'Attachments': 'Adjuntos',
-        'Email': 'Correo',
+        'Email': 'Correo electrónico',
         'Message': 'Mensaje',
         'Name': 'Nombre',
         'Your Email': 'Tu correo electrónico',

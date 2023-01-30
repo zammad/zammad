@@ -451,7 +451,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Connection re-established': 'Conexión reestablecida',
         'Offline': 'Desconectado',
         'Online': 'En línea',
-        'Scroll down to see new messages': 'Haga scroll hacia abajo para ver nuevos mensajes',
+        'Scroll down to see new messages': 'Desplace hacia abajo para ver nuevos mensajes',
         'Send': 'Enviar',
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Puesto que usted no respondió en los últimos %s minutos su conversación se ha cerrado.',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Puesto que usted no respondió en los últimos %s minutos su conversación con <strong>%s</strong> se ha cerrado.',

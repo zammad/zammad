@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Tiketti##{ticket.number}>: Luonut #{current_user.longname} päivitetty #{ticket.updated_at}_
+* Ryhmä: #{ticket.group.name}
+* Omistaja: #{ticket.owner.fullname}
+* Tila: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
