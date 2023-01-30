@@ -8,21 +8,21 @@ Capybara.register_driver(:zammad_chrome) do |app|
 
   # Turn on browser logs
   chrome_options = Selenium::WebDriver::Chrome::Options.new(
-    logging_prefs:   {
+    logging_prefs:    {
       browser: 'ALL'
     },
-    prefs:           {
+    prefs:            {
       'intl.accept_languages'                                => 'en-US',
       'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
-    args:            %w[--enable-logging --v=1],
-    # Disable the "Chrome is controlled by automation software" info bar.
-    excludeSwitches: ['enable-automation'],
+    args:             %w[--enable-logging --v=1],
+    # Disable the "Chrome is being controlled by automated test software." info bar.
+    exclude_switches: ['enable-automation'],
   )
 
   driver_args = {
-    browser:      :chrome,
-    capabilities: chrome_options
+    browser: :chrome,
+    options: chrome_options
   }
 
   if ENV['REMOTE_URL'].present?
@@ -35,7 +35,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
   end
 
   if ENV['BROWSER_HEADLESS'].present?
-    driver_args[:capabilities].headless!
+    driver_args[:options].add_argument '--headless=new' # native headless for v109+
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
@@ -56,8 +56,8 @@ Capybara.register_driver(:zammad_firefox) do |app|
   profile['permissions.default.desktop-notification'] = 1 # ALLOW notifications
 
   driver_args = {
-    browser:      :firefox,
-    capabilities: Selenium::WebDriver::Firefox::Options.new(profile: profile),
+    browser: :firefox,
+    options: Selenium::WebDriver::Firefox::Options.new(profile: profile),
   }
 
   if ENV['REMOTE_URL'].present?
@@ -70,7 +70,7 @@ Capybara.register_driver(:zammad_firefox) do |app|
   end
 
   if ENV['BROWSER_HEADLESS'].present?
-    driver_args[:capabilities].headless!
+    driver_args[:options].add_argument '-headless'
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
