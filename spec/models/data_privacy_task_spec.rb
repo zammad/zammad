@@ -95,7 +95,7 @@ RSpec.describe DataPrivacyTask, type: :model do
     end
 
     it 'does does delete old tasks' do
-      travel_to 7.months.ago
+      travel_to 13.months.ago
       task
       travel_back
       described_class.cleanup
