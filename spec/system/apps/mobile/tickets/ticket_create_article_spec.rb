@@ -22,10 +22,26 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
   def open_article_dialog
     visit "/tickets/#{ticket.id}"
+
+    wait_for_form_to_settle('form-ticket-edit')
+
     find_button('Add reply').click
   end
 
   context 'when creating a new article as an agent', authenticated_as: :agent do
+    it 'disables the done button when the form is not dirty' do
+      open_article_dialog
+
+      expect(find_button('Done', disabled: true).disabled?).to be(true)
+    end
+
+    it 'enables the done button when the form is dirty' do
+      open_article_dialog
+      find_editor('Text').type('foobar')
+
+      expect(find_button('Done').disabled?).to be(false)
+    end
+
     it 'creates an internal note (default)' do
       open_article_dialog
 

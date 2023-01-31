@@ -108,9 +108,10 @@ const close = () => {
     </template>
     <template #after-label>
       <button
-        class="grow text-blue"
+        class="grow text-blue disabled:opacity-50"
         tabindex="0"
         role="button"
+        :disabled="!dialogFormIsDirty"
         @pointerdown.stop
         @click="close()"
         @keypress.space.prevent="close()"
