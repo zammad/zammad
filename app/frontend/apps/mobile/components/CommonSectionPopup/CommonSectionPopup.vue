@@ -77,16 +77,21 @@ watch(
   },
   { immediate: true },
 )
+
+// Do not animate transitions in the test mode.
+const transition = VITE_TEST_MODE
+  ? undefined
+  : {
+      enterActiveClass: 'window-open',
+      enterFromClass: 'window-close',
+      leaveActiveClass: 'window-open',
+      leaveToClass: 'window-close',
+    }
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition
-      leave-active-class="window-open"
-      enter-active-class="window-open"
-      enter-from-class="window-close"
-      leave-to-class="window-close"
-    >
+    <Transition v-bind="transition">
       <div
         v-if="localState"
         class="window fixed bottom-0 left-0 flex h-screen w-screen flex-col justify-end px-4 pb-4 text-white"
