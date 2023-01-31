@@ -1333,16 +1333,11 @@ RSpec.describe 'Ticket Create', type: :system do
         let(:operator)       { 'relative' }
         let(:template_value) { value.to_s }
         let(:date) do
-          # Since front-end uses a JS-specific function to add a single month to the current date,
-          #   calculating the value here with Ruby-specific code may lead to unexpected values.
-          #   E.g.:
-          #   - now = Mon Jan 30 2023 09:43:38 GMT+0000
-          #   - now.setMonth(now.getMonth() + 1) = Thu Mar 02 2023 09:43:38 GMT+0000
-          #   - 1.month.from_now = Tue Feb 28 2023 09:43:38 GMT+0000
-          #   Therefore, we mimic the behavior of `setMonth()` from the ECMAScript specification.
-          #   https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date.prototype.setmonth
-          if range == 'month' && value == 1
-            Time.current + (Time.current.end_of_month.day * 24 * 60 * 60)
+          # Since front-end uses a JS-specific function to add a month value to the current date,
+          #   calculating the value here with Ruby code may lead to unexpected values.
+          #   Therefore, we use a reimplementation of the ECMAScript function instead.
+          if range == 'month'
+            frontend_relative_month(Time.current, value)
           else
             value.send(range).from_now
           end
