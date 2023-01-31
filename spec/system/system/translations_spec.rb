@@ -17,26 +17,25 @@ RSpec.describe 'System > Translations', type: :system do
         visit '/#system/translation'
         field = find('.content.active input.js-Item[data-source="Translations"]')
         original_value = field.value
-        field.fill_in(with: 'ModifiedString')
-        field.native.send_keys :tab
+        field.fill_in(with: 'ModifiedString', fill_options: { clear: :backspace })
+        field.send_keys :tab
 
         # Cause nav to re-render
         visit '/#dashboard'
         visit '/#system/translation'
 
         within :active_content do
-
-          expect(find('.sidebar a[href="#system/translation"]').text).to eq('ModifiedString')
+          expect(find('.sidebar a[href="#system/translation"]')).to have_text('ModifiedString', exact: true)
           find('input.js-Item[data-source="Translations"]').ancestor('tr').find('.js-Reset').click
           # Let find() wait for the field to be updated...
           expect(find("input.js-Item[data-source='Translations'][value='#{original_value}']").value).to eq(original_value)
-          expect(find('.sidebar a[href="#system/translation"]').text).to eq('ModifiedString')
+          expect(find('.sidebar a[href="#system/translation"]')).to have_text('ModifiedString', exact: true)
         end
 
         # Cause nav to re-render
         visit '/#dashboard'
         visit '/#system/translation'
-        expect(find('.sidebar a[href="#system/translation"]').text).to eq(original_value)
+        expect(find('.sidebar a[href="#system/translation"]')).to have_text(original_value, exact: true)
       end
     end
 
