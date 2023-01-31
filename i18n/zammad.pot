@@ -2146,6 +2146,10 @@ msgstr ""
 msgid "Clean up expired sessions."
 msgstr ""
 
+#: db/seeds/schedulers.rb
+msgid "Clean up mobile taskbars."
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Clear"
 msgstr ""
