@@ -36,7 +36,7 @@ export class Walker {
 
   public async back(path: RouteLocationRaw, ignore: string[] = []) {
     const previous = this.previousRoute.value
-    if (previous && !ignore.includes(previous)) {
+    if (previous && !ignore.find((entry) => previous.includes(entry))) {
       return this.router.back()
     }
     return this.router.push(path)

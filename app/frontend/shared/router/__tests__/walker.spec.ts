@@ -49,4 +49,28 @@ describe('testing walker', () => {
     expect(walker.hasBackUrl).toBe(true)
     expect(walker.getBackUrl('/fallback')).toBe('/back')
   })
+
+  it('does not cycle with ignore list match', async () => {
+    window.history.replaceState(
+      { back: '/tickets/1/information/customer' },
+      '',
+      '/tickets/1/information/customer',
+    )
+    const router = buildRouter()
+    const walker = new Walker(router)
+    await walker.back('/fallback', ['/tickets/1/information'])
+    expect(router.push).toHaveBeenCalledWith('/fallback')
+  })
+
+  it('does not cycle without ignore list match', async () => {
+    window.history.replaceState(
+      { back: '/tickets/1/information/customer' },
+      '',
+      '/tickets/1/information/customer',
+    )
+    const router = buildRouter()
+    const walker = new Walker(router)
+    await walker.back('/fallback', ['/tickets/99999/information'])
+    expect(router.back).toHaveBeenCalled()
+  })
 })
