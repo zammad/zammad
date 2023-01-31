@@ -29,7 +29,7 @@ module Gql::Subscriptions
       { live_users: transform_tasks(taskbar_item) }
     end
 
-    def transform_tasks(taskbar_item)
+    def transform_tasks(taskbar_item) # rubocop:disable Metrics/AbcSize
       tasks = taskbar_item.preferences[:tasks]
       return [] if tasks.blank?
 
@@ -37,11 +37,13 @@ module Gql::Subscriptions
       return [] if tasks.blank?
 
       tasks.map do |task|
+        app_item = task[:apps].values.min_by { |app| app[:last_contact] }
+
         {
           user:             ::User.find_by(id: task[:user_id]),
-          editing:          task[:changed],
-          last_interaction: task[:last_contact],
-          apps:             task[:apps],
+          editing:          app_item[:changed],
+          last_interaction: app_item[:last_contact],
+          apps:             task[:apps].keys,
         }
       end
     end

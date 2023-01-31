@@ -68,7 +68,8 @@ RSpec.describe 'Popover', type: :system do
 
     within :active_content do
       taskbar.update! preferences: { 'tasks' => [{
-        'user_id' => create(:admin).id
+        'user_id' => create(:admin).id,
+        'apps'    => taskbar.preferences['tasks'].first['apps'],
       }] }
       TransactionDispatcher.commit
 

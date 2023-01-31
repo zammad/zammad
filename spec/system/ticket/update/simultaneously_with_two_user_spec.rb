@@ -7,13 +7,63 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
   let(:ticket) { create(:ticket, group: group) }
   let(:agent)  { User.find_by(login: 'agent1@example.com') }
 
-  def check_avatar(text, changed: true)
-    changed_class = changed ? 'changed' : 'not-changed'
+  # rubocop:disable RSpec/InstanceVariable
+  define :have_avatar do |expected|
+    chain(:changed, :text)
 
-    within(:active_content) do
-      expect(page).to have_css(".js-attributeBar .js-avatar .avatar--#{changed_class}", text: text)
+    match do
+      elem = find_element
+
+      return false if elem.nil?
+
+      return true if !@icon && !@no_icon
+
+      return elem.has_no_css? '.icon' if @no_icon
+
+      elem.has_css? ".icon-#{@icon}"
+    end
+
+    def find_element
+      if expected.is_a? User
+        actual.find "#{base_selector}#{select_by_user}"
+      else
+        actual.find base_selector, text: expected
+      end
+    rescue
+      nil
+    end
+
+    match_when_negated do
+      if expected.is_a? User
+        return actual.has_no_css? "#{base_selector}#{select_by_user}"
+      end
+
+      actual.has_no_css? base_selector, text: expected
+    end
+
+    chain :changed! do
+      @changed = true
+    end
+
+    chain :with_icon do |icon|
+      @icon = icon
+    end
+
+    chain :with_no_icon! do
+      @no_icon = true
+    end
+
+    def select_by_user
+      "[data-id='#{expected.id}']"
+    end
+
+    def base_selector
+      changed_class = @changed ? 'changed' : 'not-changed'
+
+      ".js-attributeBar .js-avatar .avatar--#{changed_class}"
     end
   end
+  # rubocop:enable RSpec/InstanceVariable
 
   def check_taskbar_tab(ticket_id, title: nil, modified: false)
     tab_data_key = "Ticket-#{ticket_id}"
@@ -45,10 +95,10 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
     end
 
     it 'avatar from other user should be visible in ticket zoom' do
-      check_avatar('AT', changed: false)
+      expect(page).to have_avatar('AT')
 
       using_session(:second_browser) do
-        check_avatar('TA', changed: false)
+        expect(page).to have_avatar('TA')
       end
     end
 
@@ -59,10 +109,10 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
         expect(page).to have_css('.js-reset')
       end
 
-      check_avatar('AT', changed: false)
+      expect(page).to have_avatar('AT')
 
       using_session(:second_browser) do
-        check_avatar('TA', changed: true)
+        expect(page).to have_avatar('TA').changed!
 
         within(:active_content) do
           find('.js-textarea').send_keys('some other note')
@@ -71,7 +121,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
         end
       end
 
-      check_avatar('AT', changed: true)
+      expect(page).to have_avatar('AT').changed!
 
       using_session(:second_browser) do
         within(:active_content) do
@@ -81,10 +131,10 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
           expect(page).to have_css('.article-content', text: 'some other note')
         end
 
-        check_avatar('TA', changed: true)
+        expect(page).to have_avatar('TA').changed!
       end
 
-      check_avatar('AT', changed: false)
+      expect(page).to have_avatar('AT')
       check_taskbar_tab(ticket.id, title: ticket.title, modified: true)
 
       within(:active_content) do
@@ -97,7 +147,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
       end
 
       using_session(:second_browser) do
-        check_avatar('TA', changed: false)
+        expect(page).to have_avatar('TA')
 
         expect(page).to have_css('.article-content', text: 'some note')
         check_taskbar_tab(ticket.id, title: ticket.title, modified: true)
@@ -109,11 +159,11 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
       using_session(:second_browser) do
         refresh
 
-        check_avatar('TA', changed: false)
+        expect(page).to have_avatar('TA')
         expect(page).to have_no_css('.js-reset')
       end
 
-      check_avatar('AT', changed: false)
+      expect(page).to have_avatar('AT')
       expect(page).to have_no_css('.js-reset')
     end
 
@@ -125,7 +175,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
           expect(page).to have_css('.js-reset')
         end
 
-        check_avatar('TA', changed: false)
+        expect(page).to have_avatar('TA')
 
         # We need to wait for the auto save feature.
         wait.until do
@@ -135,7 +185,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
         refresh
       end
 
-      check_avatar('AT', changed: true)
+      expect(page).to have_avatar('AT').changed!
 
       using_session(:second_browser) do
         refresh
@@ -146,7 +196,7 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
         end
       end
 
-      check_avatar('AT', changed: false)
+      expect(page).to have_avatar('AT')
     end
 
     it 'change title with second user' do
@@ -174,6 +224,136 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', type:
       # Refresh and check that modified flag is gone
       refresh
       check_taskbar_tab(ticket.id, title: 'TTTsome level 2 <b>subject</b> 123äöü', modified: false)
+    end
+  end
+
+  context 'when working on multiple platforms', authenticated_as: :user do
+    let(:ticket)       { create(:ticket) }
+    let(:user)         { create(:agent, groups: [ticket.group]) }
+    let(:another_user) { create(:agent, groups: [ticket.group]) }
+    let(:key)          { "Ticket-#{ticket.id}" }
+    let(:path)         { "ticket/zoom/#{ticket.id}" }
+
+    let(:taskbar_mobile)  { create(:taskbar, user: user, app: :mobile, key: key) }
+    let(:taskbar_desktop) { create(:taskbar, user: user, app: :desktop, key: key) }
+
+    let(:another_taskbar_mobile)  { create(:taskbar, user: another_user, app: :mobile, key: key) }
+    let(:another_taskbar_desktop) { create(:taskbar, user: another_user, app: :desktop, key: key) }
+
+    context 'when looking on a ticket' do
+      before do
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'does not show current user' do
+        expect(page).not_to have_avatar(user)
+      end
+    end
+
+    context 'when another user is looking on desktop' do
+      before do
+        another_taskbar_desktop
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows another user' do
+        expect(page).to have_avatar(another_user).with_no_icon!
+      end
+    end
+
+    context 'when another user is looking on mobile' do
+      before do
+        another_taskbar_mobile
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows another user' do
+        expect(page).to have_avatar(another_user).with_icon(:mobile)
+      end
+    end
+
+    context 'when another user is looking on mobile and desktop' do
+      before do
+        another_taskbar_mobile
+        another_taskbar_desktop
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows another user' do
+        expect(page).to have_avatar(another_user).with_no_icon!
+      end
+    end
+
+    context 'when another user is editing on desktop' do
+      before do
+        another_taskbar_desktop.update!(state: { a: 1 })
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows another user' do
+        expect(page).to have_avatar(another_user).with_icon(:pen).changed!
+      end
+    end
+
+    context 'when another user is editing on mobile' do
+      before do
+        another_taskbar_mobile.update!(state: { a: 1 })
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows another user' do
+        expect(page).to have_avatar(another_user).with_icon(:pen).changed!
+      end
+    end
+
+    context 'when same user is looking on mobile too' do
+      before do
+        taskbar_mobile
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows same user' do
+        expect(page).not_to have_avatar(user)
+      end
+    end
+
+    context 'when same user is editing' do
+      before do
+        taskbar_desktop.update!(state: { a: 1 })
+
+        visit path
+      end
+
+      it 'do not show same user' do
+        expect(page).not_to have_avatar(user)
+      end
+    end
+
+    context 'when same user is editing on mobile' do
+      before do
+        taskbar_mobile.update!(state: { a: 1 })
+        taskbar_desktop
+
+        visit path
+      end
+
+      it 'shows same user' do
+        expect(page).to have_avatar(user).with_icon(:'mobile-edit').changed!
+      end
     end
   end
 end

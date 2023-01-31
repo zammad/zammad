@@ -69,7 +69,7 @@ class Taskbar < ApplicationModel
   end
 
   def preferences_task_info
-    output = { user_id:, last_contact:, changed: state_changed?, apps: [app] }
+    output = { user_id:, apps: { app.to_sym => { last_contact: last_contact, changed: state_changed? } } }
     output[:id] = id if persisted?
     output
   end
@@ -118,22 +118,22 @@ class Taskbar < ApplicationModel
   end
 
   def collect_related_tasks
-    related_taskbars
-      .map(&:preferences_task_info)
-      .push(preferences_task_info)
+    related_taskbars.map(&:preferences_task_info)
+      .tap { |arr| arr.push(preferences_task_info) if !destroyed? }
       .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
       .values
       .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
   end
 
   def reduce_related_tasks(elem, memo)
-    if memo[elem[:user_id]]
-      memo[elem[:user_id]][:apps].concat elem[:apps]
-      memo[elem[:user_id]][:changed] = true if elem[:changed]
+    key = elem[:user_id]
+
+    if memo[key]
+      memo[key].deep_merge! elem
       return
     end
 
-    memo[elem[:user_id]] = elem
+    memo[key] = elem
   end
 
   def update_related_taskbars(preferences)

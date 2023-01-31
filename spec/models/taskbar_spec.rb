@@ -160,16 +160,16 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(2)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(2)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
 
       taskbar3 = described_class.create(
         key:      'Ticket-4444',
@@ -186,21 +186,21 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(2)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(2)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
 
       agent_id = create(:agent).id
       UserInfo.current_user_id = agent_id
@@ -220,34 +220,34 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       UserInfo.current_user_id = 2
       taskbar2.state = { article: {}, ticket: {} }
@@ -256,34 +256,34 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       UserInfo.current_user_id = 2
       taskbar2.state = { article: { body: 'some body' }, ticket: {} }
@@ -292,34 +292,34 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       UserInfo.current_user_id = 1
       taskbar1.state = { article: { body: '' }, ticket: { state_id: 123 } }
@@ -328,34 +328,34 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
 
       taskbar1_last_contact = taskbar1.last_contact.to_s
       taskbar2_last_contact = taskbar2.last_contact.to_s
@@ -371,44 +371,44 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][1][:last_contact].to_s).to eq(taskbar2_last_contact)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][1][:last_contact].to_s).to eq(taskbar2_last_contact)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
-      expect(taskbar3.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar3_last_contact)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar3_last_contact)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][1][:last_contact].to_s).to eq(taskbar2_last_contact)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       UserInfo.current_user_id = 2
       taskbar2.state = { article: { body: 'some body 222' }, ticket: {} }
@@ -418,44 +418,44 @@ RSpec.describe Taskbar, type: :model do
       taskbar1.reload
       expect(taskbar1.preferences[:tasks].count).to eq(3)
       expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][1][:last_contact].to_s).not_to eq(taskbar2_last_contact)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
       expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       taskbar2.reload
       expect(taskbar2.preferences[:tasks].count).to eq(3)
       expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][1][:last_contact].to_s).not_to eq(taskbar2_last_contact)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
       expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       taskbar3.reload
       expect(taskbar3.preferences[:tasks].count).to eq(1)
       expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:changed]).to be(false)
-      expect(taskbar3.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar3_last_contact)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar3_last_contact)
 
       taskbar4.reload
       expect(taskbar4.preferences[:tasks].count).to eq(3)
       expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][0][:last_contact].to_s).to eq(taskbar1_last_contact)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
       expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][1][:last_contact].to_s).not_to eq(taskbar2_last_contact)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
+      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
       expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:last_contact].to_s).to eq(taskbar4_last_contact)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
+      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
 
       travel_back
 
@@ -468,21 +468,27 @@ RSpec.describe Taskbar, type: :model do
       taskbar = create(:taskbar)
 
       expect(taskbar.preferences_task_info)
-        .to eq({ id: taskbar.id, user_id: 1, last_contact: taskbar.last_contact, changed: false, apps: %w[desktop] })
+        .to eq({
+                 id: taskbar.id, user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: false } }
+               })
     end
 
     it 'returns task info for an existing taskbar with changes' do
       taskbar = create(:taskbar, state: { a: 123 })
 
       expect(taskbar.preferences_task_info)
-        .to eq({ id: taskbar.id, user_id: 1, last_contact: taskbar.last_contact, changed: true, apps: %w[desktop] })
+        .to eq({
+                 id: taskbar.id, user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: true } }
+               })
     end
 
     it 'returns task info for a new taskbar' do
       taskbar = build(:taskbar)
 
       expect(taskbar.preferences_task_info)
-        .to eq({ user_id: 1, last_contact: taskbar.last_contact, changed: false, apps: %w[desktop] })
+        .to eq({
+                 user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: false } }
+               })
     end
   end
 
@@ -539,7 +545,8 @@ RSpec.describe Taskbar, type: :model do
 
         taskbar.update! state: { a: :b }
 
-        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id, apps: include('desktop', 'mobile')))
+        expect(taskbar.preferences[:tasks])
+          .to include(include(user_id: other_user.id, apps: have_key(:desktop).and(have_key(:mobile))))
       end
 
       it 'updates related items when updating a taskbar' do
@@ -579,10 +586,19 @@ RSpec.describe Taskbar, type: :model do
       expect(new_taskbar.send(:collect_related_tasks))
         .to eq([taskbar_2.preferences_task_info, new_taskbar.preferences_task_info])
     end
+
+    it 'do not include task of the destroyed taskbar' do
+      taskbar_1
+
+      taskbar_2.destroy!
+
+      expect(taskbar_2.send(:collect_related_tasks))
+        .to eq([taskbar_1.preferences_task_info])
+    end
   end
 
   describe '#reduce_related_tasks' do
-    let(:elem) { { user_id: 123, apps: ['desktop'], changed: false } }
+    let(:elem) { { user_id: 123, changed: { desktop: false } } }
     let(:memo) { {} }
 
     it 'adds new task details' do
@@ -590,18 +606,18 @@ RSpec.describe Taskbar, type: :model do
 
       taskbar.send(:reduce_related_tasks, elem, memo)
 
-      expect(memo).to include(elem[:user_id] => include(apps: include('desktop'), changed: false))
+      expect(memo).to include(elem[:user_id] => include(changed: include(desktop: false)))
     end
 
     it 'extends existing task details with additional apps' do
       taskbar = create(:taskbar)
 
-      another_elem = { user_id: 123, apps: ['mobile'], changed: true }
+      another_elem = { user_id: 123, changed: { mobile: true } }
 
       taskbar.send(:reduce_related_tasks, elem, memo)
       taskbar.send(:reduce_related_tasks, another_elem, memo)
 
-      expect(memo).to include(elem[:user_id] => include(apps: include('desktop', 'mobile'), changed: true))
+      expect(memo).to include(elem[:user_id] => include(changed: include(desktop: false, mobile: true)))
     end
   end
 
