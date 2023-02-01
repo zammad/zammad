@@ -84,7 +84,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    acts_as_list (1.0.4)
+    acts_as_list (1.1.0)
       activerecord (>= 4.2)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
@@ -137,7 +137,7 @@ GEM
     coffee-script-source (1.12.2)
     composite_primary_keys (13.0.4)
       activerecord (~> 6.1.0)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     crack (0.4.5)
       rexml
     crass (1.0.6)
