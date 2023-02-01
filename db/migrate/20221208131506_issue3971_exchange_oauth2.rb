@@ -26,6 +26,7 @@ class Issue3971ExchangeOauth2 < ActiveRecord::Migration[6.1]
       active:        true,
       updated_by_id: 1,
       created_by_id: 1,
+      last_run:      Time.zone.now,
     )
   end
 end
