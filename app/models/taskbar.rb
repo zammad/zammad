@@ -30,10 +30,11 @@ class Taskbar < ApplicationModel
 
   attr_accessor :local_update
 
+  default_scope { order(:id) }
+
   scope :related_taskbars, lambda { |taskbar|
     where(key: taskbar.key)
       .where.not(id: taskbar.id)
-      .order(:created_at, :id)
   }
 
   def state_changed?
