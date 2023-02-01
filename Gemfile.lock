@@ -159,7 +159,7 @@ GEM
     diffy (3.4.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    doorkeeper (5.6.3)
+    doorkeeper (5.6.4)
       railties (>= 5)
     dotenv (2.8.1)
     dry-cli (0.7.0)
