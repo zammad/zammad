@@ -46,10 +46,10 @@ describe('tickets zoom header', () => {
         ticket,
         liveUserList: [
           {
-            editing: false,
             user: { id: '654321', firstname: 'John', lastname: 'Doe' },
+            app: EnumTaskbarApp.Desktop,
             lastInteraction: new Date().toISOString(),
-            apps: [EnumTaskbarApp.Desktop],
+            editing: false,
           },
         ],
       },
@@ -68,22 +68,22 @@ describe('tickets zoom header', () => {
     await view.rerender({
       liveUserList: [
         {
-          editing: false,
           user: { id: '654321', firstname: 'John', lastname: 'Doe' },
+          app: EnumTaskbarApp.Desktop,
           lastInteraction: new Date().toISOString(),
-          apps: [EnumTaskbarApp.Desktop],
+          editing: false,
         },
         {
-          editing: false,
           user: { id: '123123', firstname: 'Rose', lastname: 'Nylund' },
+          app: EnumTaskbarApp.Desktop,
           lastInteraction: new Date().toISOString(),
-          apps: [EnumTaskbarApp.Desktop],
+          editing: false,
         },
         {
-          editing: false,
           user: { id: '524523', firstname: 'Sophia', lastname: 'Petrillo' },
+          app: EnumTaskbarApp.Mobile,
           lastInteraction: new Date('2019-01-01 00:00:00').toISOString(),
-          apps: [EnumTaskbarApp.Mobile],
+          editing: false,
         },
       ],
     })
@@ -93,7 +93,7 @@ describe('tickets zoom header', () => {
     expect(counter, 'has a counter').toBeInTheDocument()
     expect(counter).toHaveTextContent('+2')
 
-    await view.events.click(view.getByTestId('viewers-counter'))
+    await view.events.click(view.getByTitle('Show ticket viewers'))
 
     expect(await view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()

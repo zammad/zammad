@@ -16,7 +16,7 @@ describe('displaying single ticket viewer items', () => {
     const view = renderComponent(TicketViewerItem, {
       props: {
         user,
-        apps: [EnumTaskbarApp.Desktop],
+        app: EnumTaskbarApp.Desktop,
         editing: false,
       },
     })
@@ -30,7 +30,7 @@ describe('displaying single ticket viewer items', () => {
     const view = renderComponent(TicketViewerItem, {
       props: {
         user,
-        apps: [EnumTaskbarApp.Desktop],
+        app: EnumTaskbarApp.Desktop,
         editing: true,
       },
     })
@@ -44,7 +44,7 @@ describe('displaying single ticket viewer items', () => {
     const view = renderComponent(TicketViewerItem, {
       props: {
         user,
-        apps: [EnumTaskbarApp.Mobile],
+        app: EnumTaskbarApp.Mobile,
         editing: true,
       },
     })
@@ -58,7 +58,7 @@ describe('displaying single ticket viewer items', () => {
     const view = renderComponent(TicketViewerItem, {
       props: {
         user,
-        apps: [EnumTaskbarApp.Mobile],
+        app: EnumTaskbarApp.Mobile,
         editing: false,
       },
     })
@@ -77,7 +77,7 @@ describe('displaying single ticket viewer items', () => {
     const view = renderComponent(TicketViewerItem, {
       props: {
         user,
-        apps: [EnumTaskbarApp.Mobile],
+        app: EnumTaskbarApp.Mobile,
         editing: false,
         idle: true,
       },

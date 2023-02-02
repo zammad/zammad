@@ -136,7 +136,7 @@ const showArticleReplyDialog = () => {
   return openArticleReplyDialog({ updateFormLocation })
 }
 
-const { liveUserList } = useTicketLiveUser(ticket, canSubmit)
+const { liveUserList } = useTicketLiveUser(ticket, isDirty)
 
 provide(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,

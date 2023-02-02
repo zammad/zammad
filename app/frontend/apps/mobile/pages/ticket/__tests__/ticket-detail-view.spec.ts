@@ -6,11 +6,13 @@ vi.setSystemTime(now)
 import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import { getAllByTestId, getByLabelText } from '@testing-library/vue'
 import { getByIconName } from '@tests/support/components/iconQueries'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import createMockClient from '@tests/support/mock-apollo-client'
+import { mockAccount } from '@tests/support/mock-account'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import {
   mockGraphQLApi,
@@ -403,5 +405,267 @@ describe('calling API to retry encryption', () => {
     expect(
       getByIconName(firstCommentArticle, 'mobile-signed'),
     ).toBeInTheDocument()
+  })
+})
+
+describe('ticket viewers inside a ticket', () => {
+  it('displays information with newer last interaction (and without own entry)', async () => {
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
+      mockTicketDetailViewGql()
+
+    mockAccount({
+      lastname: 'Doe',
+      firstname: 'John',
+      fullname: 'John Doe',
+      id: convertToGraphQLId('User', 4),
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await mockTicketLiveUsersSubscription.next({
+      data: {
+        ticketLiveUserUpdates: {
+          liveUsers: [
+            {
+              user: {
+                id: 'gid://zammad/User/4',
+                firstname: 'Agent 1',
+                lastname: 'Test',
+                fullname: 'Agent 1 Test',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-02-01T10:55:26Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+            {
+              user: {
+                id: 'gid://zammad/User/160',
+                firstname: 'John',
+                lastname: 'Doe',
+                fullname: 'John Doe',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'desktop',
+                  editing: false,
+                  lastInteraction: '2022-01-31T10:30:24Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-01-31T16:45:53Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+            {
+              user: {
+                id: 'gid://zammad/User/165',
+                firstname: 'Rose',
+                lastname: 'Nylund',
+                fullname: 'Rose Nylund',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-01-31T16:45:53Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+          ],
+          __typename: 'TicketLiveUserUpdatesPayload',
+        },
+      },
+    })
+
+    const counter = view.getByLabelText(/Ticket has 2 viewers/)
+
+    expect(counter, 'has a counter').toBeInTheDocument()
+    expect(counter).toHaveTextContent('+1')
+    await view.events.click(view.getByTitle('Show ticket viewers'))
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    )
+
+    expect(view.getByText('Opened in tabs')).toBeInTheDocument()
+    expect(
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    ).toHaveTextContent('John Doe')
+    expect(view.queryByIconName('mobile-desktop')).not.toBeInTheDocument()
+
+    await mockTicketLiveUsersSubscription.next({
+      data: {
+        ticketLiveUserUpdates: {
+          liveUsers: [
+            {
+              user: {
+                id: 'gid://zammad/User/160',
+                firstname: 'John',
+                lastname: 'Doe',
+                fullname: 'John Doe',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'desktop',
+                  editing: false,
+                  lastInteraction: '2022-01-31T18:30:24Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-01-31T16:45:53Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+          ],
+          __typename: 'TicketLiveUserUpdatesPayload',
+        },
+      },
+    })
+
+    expect(view.queryByIconName('mobile-desktop')).toBeInTheDocument()
+  })
+
+  it('editing has always the highest priority', async () => {
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
+      mockTicketDetailViewGql()
+
+    mockAccount({
+      lastname: 'Doe',
+      firstname: 'John',
+      fullname: 'John Doe',
+      id: convertToGraphQLId('User', 4),
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await mockTicketLiveUsersSubscription.next({
+      data: {
+        ticketLiveUserUpdates: {
+          liveUsers: [
+            {
+              user: {
+                id: 'gid://zammad/User/160',
+                firstname: 'John',
+                lastname: 'Doe',
+                fullname: 'John Doe',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'desktop',
+                  editing: true,
+                  lastInteraction: '2022-01-31T10:30:24Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-01-31T16:45:53Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+          ],
+          __typename: 'TicketLiveUserUpdatesPayload',
+        },
+      },
+    })
+
+    await view.events.click(view.getByTitle('Show ticket viewers'))
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    )
+
+    expect(
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    ).toHaveTextContent('John Doe')
+    expect(view.queryByIconName('mobile-desktop-edit')).toBeInTheDocument()
+  })
+
+  it('show current user avatar when editing on other device', async () => {
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
+      mockTicketDetailViewGql()
+
+    mockAccount({
+      lastname: 'Doe',
+      firstname: 'John',
+      fullname: 'John Doe',
+      id: convertToGraphQLId('User', 4),
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await mockTicketLiveUsersSubscription.next({
+      data: {
+        ticketLiveUserUpdates: {
+          liveUsers: [
+            {
+              user: {
+                id: 'gid://zammad/User/4',
+                firstname: 'Agent 1',
+                lastname: 'Test',
+                fullname: 'Agent 1 Test',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-02-01T10:55:26Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+                {
+                  name: 'desktop',
+                  editing: true,
+                  lastInteraction: '2022-02-01T09:55:26Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+          ],
+          __typename: 'TicketLiveUserUpdatesPayload',
+        },
+      },
+    })
+
+    await view.events.click(view.getByTitle('Show ticket viewers'))
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    )
+
+    expect(
+      view.queryByRole('dialog', { name: 'Ticket viewers' }),
+    ).toHaveTextContent('Agent 1 Test')
+    expect(view.queryByIconName('mobile-desktop-edit')).toBeInTheDocument()
   })
 })

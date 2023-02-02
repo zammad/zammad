@@ -29,21 +29,26 @@ module Gql::Subscriptions
       { live_users: transform_tasks(taskbar_item) }
     end
 
-    def transform_tasks(taskbar_item) # rubocop:disable Metrics/AbcSize
-      tasks = taskbar_item.preferences[:tasks]
-      return [] if tasks.blank?
+    def transform_tasks(taskbar_item)
+      taskbar_item
+        .preferences
+        .fetch(:tasks, [])
+        .map { |task| transform_single_task(task) }
+    end
 
-      tasks = tasks.reject { |task| task[:user_id].eql?(context.current_user.id) }
-      return [] if tasks.blank?
+    def transform_single_task(task)
+      {
+        user: ::User.find_by(id: task[:user_id]),
+        apps: transform_task_apps(task[:apps]),
+      }
+    end
 
-      tasks.map do |task|
-        app_item = task[:apps].values.min_by { |app| app[:last_contact] }
-
+    def transform_task_apps(apps)
+      apps.map do |app, data|
         {
-          user:             ::User.find_by(id: task[:user_id]),
-          editing:          app_item[:changed],
-          last_interaction: app_item[:last_contact],
-          apps:             task[:apps].keys,
+          name:             app,
+          editing:          data[:changed],
+          last_interaction: data[:last_contact],
         }
       end
     end

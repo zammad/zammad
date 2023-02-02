@@ -6,6 +6,8 @@ import type {
   TicketQuery,
   TicketArticlesQuery,
   UploadFileInput,
+  TicketLiveUser,
+  EnumTaskbarApp,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 
@@ -22,6 +24,13 @@ export enum TicketCreateArticleType {
   PhoneIn = 'phone-in',
   PhoneOut = 'phone-out',
   EmailOut = 'email-out',
+}
+
+export interface TicketLiveAppUser {
+  user: TicketLiveUser['user']
+  editing: boolean
+  lastInteraction: string
+  app: EnumTaskbarApp
 }
 
 export type TicketById = TicketQuery['ticket']

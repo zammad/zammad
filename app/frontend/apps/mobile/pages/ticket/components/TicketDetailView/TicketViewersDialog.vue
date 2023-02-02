@@ -3,14 +3,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useReactiveNow } from '@shared/composables/useReactiveNow'
-import type { TicketLiveUser } from '@shared/graphql/types'
+import type { TicketLiveAppUser } from '@shared/entities/ticket/types'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import TicketViewerItem from './TicketViewerItem.vue'
 
 interface Props {
   name: string
-  liveUsers: TicketLiveUser[]
+  liveUsers: TicketLiveAppUser[]
 }
 
 const props = defineProps<Props>()
@@ -20,10 +20,10 @@ const IDLE_TIME_MS = 5 * 60 * 1000
 
 const reactiveNow = useReactiveNow()
 
-// TODO: At the moment the detailed output is in specification, needs to be aligned after ta decission was done.
+// TODO: We should move this in a shared composable, for usage in the desktop app.
 const userViewingTicket = computed(() => {
-  const viewingUsers: TicketLiveUser[] = []
-  const idleUsers: TicketLiveUser[] = []
+  const viewingUsers: TicketLiveAppUser[] = []
+  const idleUsers: TicketLiveAppUser[] = []
 
   props.liveUsers.forEach((liveUser) => {
     if (
@@ -59,7 +59,7 @@ const userViewingTicket = computed(() => {
         :key="`${index}-${viewingUser.user.id}`"
         :user="viewingUser.user"
         :editing="viewingUser.editing"
-        :apps="viewingUser.apps"
+        :app="viewingUser.app"
       />
     </CommonSectionMenu>
     <CommonSectionMenu
@@ -77,7 +77,7 @@ const userViewingTicket = computed(() => {
         :key="`${index}-${idleUser.user.id}`"
         :user="idleUser.user"
         :editing="idleUser.editing"
-        :apps="idleUser.apps"
+        :app="idleUser.app"
         idle
       />
     </CommonSectionMenu>

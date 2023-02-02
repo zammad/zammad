@@ -14,8 +14,10 @@ export const TicketLiveUserAttributesFragmentDoc = gql`
     active
     image
   }
-  editing
-  lastInteraction
-  apps
+  apps {
+    name
+    editing
+    lastInteraction
+  }
 }
     `;

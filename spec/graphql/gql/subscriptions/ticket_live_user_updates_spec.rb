@@ -20,9 +20,11 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
               firstname
               lastname
             }
-            editing
-            lastInteraction
-            apps
+            apps {
+              name
+              editing
+              lastInteraction
+            }
           }
         }
       }
@@ -45,37 +47,37 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
 
   context 'when subscribed' do
     it 'subscribes and delivers initial data' do
-      expect(gql.result.data['liveUsers'].size).to eq(1)
-      expect(gql.result.data['liveUsers'].first).not_to include('user' => {
-                                                                  'firstname' => agent.firstname,
-                                                                  'lastname'  => agent.lastname,
-                                                                })
-
+      expect(gql.result.data['liveUsers'].size).to eq(2)
       expect(gql.result.data['liveUsers'].first).to include('user' => {
-                                                              'firstname' => another_agent.firstname,
-                                                              'lastname'  => another_agent.lastname,
+                                                              'firstname' => agent.firstname,
+                                                              'lastname'  => agent.lastname,
                                                             })
 
-      expect(gql.result.data['liveUsers'].first).to include('editing' => false)
+      expect(gql.result.data['liveUsers'].last).to include('user' => {
+                                                             'firstname' => another_agent.firstname,
+                                                             'lastname'  => another_agent.lastname,
+                                                           })
+
+      expect(gql.result.data['liveUsers'].last['apps'].first).to include('editing' => false)
     end
 
     it 'receives taskbar updates' do
       update_taskbar_item(live_user_entry_another_agent, { editing: true }, another_agent.id)
 
       result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketLiveUserUpdates', 'liveUsers')
-      expect(result.size).to eq(1)
-
-      expect(result.first).not_to include('user' => {
-                                            'firstname' => agent.firstname,
-                                            'lastname'  => agent.lastname,
-                                          })
+      expect(result.size).to eq(2)
 
       expect(result.first).to include('user' => {
-                                        'firstname' => another_agent.firstname,
-                                        'lastname'  => another_agent.lastname,
+                                        'firstname' => agent.firstname,
+                                        'lastname'  => agent.lastname,
                                       })
 
-      expect(result.first).to include('editing' => true)
+      expect(result.last).to include('user' => {
+                                       'firstname' => another_agent.firstname,
+                                       'lastname'  => another_agent.lastname,
+                                     })
+
+      expect(result.last['apps'].first).to include('editing' => true)
     end
 
     context 'with multiple viewers' do
@@ -86,7 +88,7 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
         update_taskbar_item(live_user_entry_another_agent, { editing: true }, another_agent.id)
 
         result = mock_channel.mock_broadcasted_messages.last.dig(:result, 'data', 'ticketLiveUserUpdates', 'liveUsers')
-        expect(result.size).to eq(1)
+        expect(result.size).to eq(2)
 
         UserInfo.current_user_id = third_agent.id
         live_user_entry_third_agent
@@ -95,22 +97,17 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
         update_taskbar_item(live_user_entry_third_agent, { editing: true }, third_agent.id)
 
         result = mock_channel.mock_broadcasted_messages.last.dig(:result, 'data', 'ticketLiveUserUpdates', 'liveUsers')
-        expect(result.size).to eq(2)
-
-        expect(result.first).not_to include('user' => {
-                                              'firstname' => agent.firstname,
-                                              'lastname'  => agent.lastname,
-                                            })
-
-        expect(result.last).not_to include('user' => {
-                                             'firstname' => agent.firstname,
-                                             'lastname'  => agent.lastname,
-                                           })
+        expect(result.size).to eq(3)
 
         expect(result.first).to include('user' => {
-                                          'firstname' => another_agent.firstname,
-                                          'lastname'  => another_agent.lastname,
+                                          'firstname' => agent.firstname,
+                                          'lastname'  => agent.lastname,
                                         })
+
+        expect(result[1]).to include('user' => {
+                                       'firstname' => another_agent.firstname,
+                                       'lastname'  => another_agent.lastname,
+                                     })
 
         expect(result.last).to include('user' => {
                                          'firstname' => third_agent.firstname,

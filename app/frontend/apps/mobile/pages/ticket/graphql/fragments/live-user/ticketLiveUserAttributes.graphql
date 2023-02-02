@@ -10,7 +10,9 @@ fragment ticketLiveUserAttributes on TicketLiveUser {
     active
     image
   }
-  editing
-  lastInteraction
-  apps
+  apps {
+    name
+    editing
+    lastInteraction
+  }
 }

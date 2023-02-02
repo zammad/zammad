@@ -10,13 +10,13 @@ interface Props {
   user: AvatarUser
   editing: boolean
   idle?: boolean
-  apps: EnumTaskbarApp[]
+  app: EnumTaskbarApp
 }
 
 const props = defineProps<Props>()
 
 const showDesktopIcon = computed(() => {
-  return props.apps.includes(EnumTaskbarApp.Desktop)
+  return props.app === EnumTaskbarApp.Desktop
 })
 
 const idleClasses = computed(() => {

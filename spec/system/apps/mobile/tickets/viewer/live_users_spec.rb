@@ -57,8 +57,8 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
 
       expect(page)
         .to have_text('Opened in tabs')
-        .and have_no_text('Viewing ticket')
         .and have_no_text(agent.fullname)
+        .and have_no_text('Viewing ticket')
         .and have_text(another_agent.fullname)
         .and have_no_css('.icon.icon-mobile-edit')
 
@@ -145,6 +145,34 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         expect(page)
           .to have_text('Viewing ticket')
           .and have_text(another_agent.fullname)
+          .and have_css('.icon.icon-mobile-desktop-edit')
+      end
+    end
+
+    context 'when current user is using both desktop and mobile' do
+      it 'shows correct icons' do
+        visit "/tickets/#{ticket.id}"
+
+        using_session(:customer) do
+          login(
+            username:    agent.login,
+            password:    'test',
+            remember_me: false,
+            app:         :desktop,
+          )
+
+          visit "/#ticket/zoom/#{ticket.id}", app: :desktop
+
+          within :active_content, '.tabsSidebar' do
+            select 'closed', from: 'State'
+          end
+        end
+
+        open_viewers_dialog
+
+        expect(page)
+          .to have_text('Viewing ticket')
+          .and have_text(agent.fullname)
           .and have_css('.icon.icon-mobile-desktop-edit')
       end
     end
