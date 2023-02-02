@@ -22,7 +22,7 @@ set -e
 : "${RAILS_ENV:=production}"
 : "${RAILS_LOG_TO_STDOUT:=true}"
 : "${RAILS_TRUSTED_PROXIES:=['127.0.0.1', '::1']}"
-: "${RSYNC_ADDITIONAL_PARAMS:=--no-perms --no-owner}"
+: "${RSYNC_PARAMS:=-a --no-perms --no-owner}"
 : "${ZAMMAD_DIR:=/opt/zammad}"
 : "${ZAMMAD_RAILSSERVER_HOST:=zammad-railsserver}"
 : "${ZAMMAD_RAILSSERVER_PORT:=3000}"
@@ -45,9 +45,9 @@ if [ "$1" = 'zammad-init' ]; then
   # install / update zammad
   test -f "${ZAMMAD_READY_FILE}" && rm "${ZAMMAD_READY_FILE}"
   # shellcheck disable=SC2086
-  rsync -a ${RSYNC_ADDITIONAL_PARAMS} --delete --exclude 'public/assets/images/*' --exclude 'storage/fs/*' "${ZAMMAD_TMP_DIR}/" "${ZAMMAD_DIR}"
+  rsync ${RSYNC_PARAMS} --delete --exclude 'public/assets/images/*' --exclude 'storage/fs/*' "${ZAMMAD_TMP_DIR}/" "${ZAMMAD_DIR}"
   # shellcheck disable=SC2086
-  rsync -a ${RSYNC_ADDITIONAL_PARAMS} "${ZAMMAD_TMP_DIR}"/public/assets/images/ "${ZAMMAD_DIR}"/public/assets/images
+  rsync ${RSYNC_PARAMS} "${ZAMMAD_TMP_DIR}"/public/assets/images/ "${ZAMMAD_DIR}"/public/assets/images
 
   until (echo > /dev/tcp/"${POSTGRESQL_HOST}"/"${POSTGRESQL_PORT}") &> /dev/null; do
     echo "zammad railsserver waiting for postgresql server to be ready..."
