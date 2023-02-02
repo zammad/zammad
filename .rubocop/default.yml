@@ -419,6 +419,14 @@ Zammad/ExistsResetColumnInformation:
     - 'db/migrate/201*_*.rb'
     - 'db/migrate/2020*_*.rb'
 
+Zammad/MigrationSchedulerLastRun:
+  Include:
+    - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"
+  Exclude:
+    - 'db/migrate/201*_*.rb'
+    - 'db/migrate/2020*_*.rb'
+
 Zammad/DetectTranslatableString:
   Enabled: true
   Include:
