@@ -21,19 +21,42 @@ module Gql::Types::Ticket
     field :in_reply_to, String
     field :content_type, String, null: false
     field :references, String
-    field :body, String, null: false
+    field :body, String, null: false, description: 'Raw body as saved in the database.'
+    field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
     field :internal, Boolean, null: false
     field :origin_by, Gql::Types::UserType
 
     field :preferences, ::GraphQL::Types::JSON
     field :security_state, Gql::Types::Ticket::Article::SecurityStateType
 
-    field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false
+    field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'All attached files as stored in the database.'
+    field :attachments_without_inline, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'Attachments for display, with inline images filtered out.'
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
 
+    def body_with_urls
+      display_article['body']
+    end
+
+    def attachments_without_inline
+      # TODO: This uses asset handling related code which does more than what we need here.
+      #   On the long run it might be better to store the display flag directly with the attachments,
+      #   rather than always calculating it on-the-fly.
+      select_ids = display_article['attachments'].pluck('id')
+      @object.attachments.select do |attachment|
+        select_ids.include?(attachment.id)
+      end
+    end
+
     def security_state
       @object.preferences['security']
+    end
+
+    private
+
+    def display_article
+      # TODO: This uses asset handling related code which does more than what we need here.
+      @display_article ||= @object.class.insert_urls(@object.attributes_with_association_ids)
     end
   end
 end

@@ -46,7 +46,7 @@ const { rows } = useTicketArticleRows(
 )
 
 const filterAttachments = (article: TicketArticle) => {
-  return article.attachments.filter(
+  return article.attachmentsWithoutInline.filter(
     (file) => !file.preferences || !file.preferences['original-format'],
   )
 }
@@ -62,7 +62,7 @@ const filterAttachments = (article: TicketArticle) => {
     <template v-for="row in rows" :key="row.key">
       <ArticleBubble
         v-if="row.type === 'article-bubble'"
-        :content="row.article.body"
+        :content="row.article.bodyWithUrls"
         :user="row.article.createdBy"
         :internal="row.article.internal"
         :content-type="row.article.contentType"

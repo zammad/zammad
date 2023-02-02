@@ -36,7 +36,7 @@ const links = computed(() => {
       target: '_blank',
     })
   }
-  article.attachments.forEach((file) => {
+  article.attachmentsWithoutInline.forEach((file) => {
     if (file.preferences?.['original-format'] !== true) {
       return
     }

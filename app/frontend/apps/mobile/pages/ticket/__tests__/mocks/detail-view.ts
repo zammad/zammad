@@ -128,7 +128,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               authorizations: [],
             },
             internal: false,
-            body: '<p>Body <b>of a test ticket</b></p>',
+            bodyWithUrls: '<p>Body <b>of a test ticket</b></p>',
             sender: {
               __typename: 'TicketArticleSender',
               name: 'Customer',
@@ -138,7 +138,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               name: 'article',
             },
             contentType: 'text/html',
-            attachments: [
+            attachmentsWithoutInline: [
               // should not be visible
               {
                 __typename: 'StoredFile',
@@ -180,7 +180,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               authorizations: [],
             },
             internal: false,
-            body: '<p>energy equals power times time</p>',
+            bodyWithUrls: '<p>energy equals power times time</p>',
             sender: {
               __typename: 'TicketArticleSender',
               name: 'Agent',
@@ -189,7 +189,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               __typename: 'TicketArticleType',
               name: 'article',
             },
-            attachments: [],
+            attachmentsWithoutInline: [],
             preferences: {},
             contentType: 'text/html',
           },
@@ -215,7 +215,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               authorizations: [],
             },
             internal: true,
-            body: '<p>only agents can see this haha</p>',
+            bodyWithUrls: '<p>only agents can see this haha</p>',
             sender: {
               __typename: 'TicketArticleSender',
               name: 'Agent',
@@ -225,7 +225,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               name: 'article',
             },
             contentType: 'text/html',
-            attachments: [],
+            attachmentsWithoutInline: [],
             preferences: {},
           },
           cursor: 'MI',

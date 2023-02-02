@@ -40,7 +40,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   inReplyTo
   contentType
   references
-  attachments {
+  attachmentsWithoutInline {
     internalId
     name
     size
@@ -48,7 +48,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
     preferences
   }
   preferences
-  body
+  bodyWithUrls
   internal
   createdAt
   createdBy {

@@ -36,7 +36,7 @@ fragment ticketArticleAttributes on TicketArticle {
   inReplyTo
   contentType
   references
-  attachments {
+  attachmentsWithoutInline {
     internalId
     name
     size
@@ -44,7 +44,7 @@ fragment ticketArticleAttributes on TicketArticle {
     preferences
   }
   preferences
-  body
+  bodyWithUrls
   internal
   createdAt
   createdBy {

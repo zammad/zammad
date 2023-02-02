@@ -39,7 +39,8 @@ export type TicketArticle = ConfidentTake<
   'articles.edges.node'
 >
 
-export type TicketArticleAttachment = TicketArticle['attachments'][number]
+export type TicketArticleAttachment =
+  TicketArticle['attachmentsWithoutInline'][number]
 
 export interface TicketCustomerUpdateFormData {
   customer_id: number

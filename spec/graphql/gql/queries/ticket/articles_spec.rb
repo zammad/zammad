@@ -61,11 +61,10 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 contentType
                 references
                 attachments {
-                  internalId
                   name
-                  size
-                  type
-                  preferences
+                }
+                attachmentsWithoutInline {
+                  name
                 }
                 preferences
                 securityState {
@@ -76,6 +75,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   encryptionMessage
                 }
                 body
+                bodyWithUrls
                 internal
                 createdAt
                 createdBy @include(if: $isAgent) {
@@ -105,7 +105,37 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     let(:ticket)               { create(:ticket, customer: customer) }
     let(:cc)                   { 'Zammad CI <ci@zammad.org>' }
     let(:to)                   { '@unparseable_address' }
-    let!(:articles)            { create_list(:ticket_article, 5, :outbound_email, ticket: ticket, to: to, cc: cc) }
+    let(:cid)                  { "#{SecureRandom.uuid}@zammad.example.com" }
+    let!(:articles) do
+      create_list(:ticket_article, 2, :outbound_email, ticket: ticket, to: to, cc: cc, content_type: 'text/html', body: "<img src=\"cid:#{cid}\"> some text") do |article, _i|
+        create(
+          :store,
+          object:      'Ticket::Article',
+          o_id:        article.id,
+          data:        'fake',
+          filename:    'inline_image.jpg',
+          preferences: {
+            'Content-Type'        => 'image/jpeg',
+            'Mime-Type'           => 'image/jpeg',
+            'Content-ID'          => "<#{cid}>",
+            'Content-Disposition' => 'inline',
+          }
+        )
+        create(
+          :store,
+          object:      'Ticket::Article',
+          o_id:        article.id,
+          data:        'fake',
+          filename:    'attached_image.jpg',
+          preferences: {
+            'Content-Type'        => 'image/jpeg',
+            'Mime-Type'           => 'image/jpeg',
+            'Content-ID'          => "<#{cid}.not.referenced>",
+            'Content-Disposition' => 'inline',
+          }
+        )
+      end
+    end
     let!(:internal_article)    { create(:ticket_article, :outbound_email, ticket: ticket, internal: true) }
     let(:response_articles)    { gql.result.nodes }
     let(:response_total_count) { gql.result.data['totalCount'] }
@@ -118,11 +148,12 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
       context 'with permission' do
         let(:agent) { create(:agent, groups: [ticket.group]) }
-        let(:article1) { articles.first }
+        let(:article1)   { articles.first }
+        let(:inline_url) { "/api/v1/ticket_attachment/#{article1['ticket_id']}/#{article1['id']}/#{article1.attachments.first[:id]}?view=inline" }
         let(:expected_article1) do
           {
-            'subject'       => article1.subject,
-            'cc'            => {
+            'subject'                  => article1.subject,
+            'cc'                       => {
               'parsed' => [
                 {
                   'emailAddress' => 'ci@zammad.org',
@@ -131,18 +162,22 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
               ],
               'raw'    => cc,
             },
-            'to'            => {
+            'to'                       => {
               'parsed' => nil,
               'raw'    => to,
             },
-            'references'    => article1.references,
-            'type'          => {
+            'references'               => article1.references,
+            'type'                     => {
               'name' => article1.type.name,
             },
-            'sender'        => {
+            'sender'                   => {
               'name' => article1.sender.name,
             },
-            'securityState' => nil,
+            'securityState'            => nil,
+            'body'                     => "<img src=\"cid:#{cid}\"> some text",
+            'bodyWithUrls'             => "<img src=\"#{inline_url}\" style=\"max-width:100%;\"> some text",
+            'attachments'              => [{ 'name'=>'inline_image.jpg' }, { 'name'=>'attached_image.jpg' }],
+            'attachmentsWithoutInline' => [{ 'name'=>'attached_image.jpg' }],
           }
         end
 
