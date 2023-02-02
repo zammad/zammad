@@ -15,6 +15,8 @@ RSpec.describe 'Mobile > Ticket > Update > Tags', app: :mobile, authenticated_as
     %w[tag1 other_tag].each { |elem| ticket.tag_add elem, 1 }
 
     visit "/tickets/#{ticket.id}/information"
+
+    wait_for_form_to_settle('form-ticket-edit')
   end
 
   it 'shows existing tags' do
