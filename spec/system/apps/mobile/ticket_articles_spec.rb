@@ -6,18 +6,25 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
   let(:group)                { create(:group) }
   let(:agent)                { create(:agent, groups: [group]) }
 
+  before do
+    article if defined?(article)
+    articles if defined?(articles)
+
+    visit "/tickets/#{ticket.id}"
+
+    wait_for_form_to_settle('form-ticket-edit')
+  end
+
   context 'when opening ticket with a single article' do
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
-    let!(:article) { create(:ticket_article, body: 'Article 1', ticket: ticket, internal: false) }
+    let(:article) { create(:ticket_article, body: 'Article 1', ticket: ticket, internal: false) }
 
     it 'see a single article and no "load more"' do
-      visit "/tickets/#{ticket.id}"
       expect(page).to have_text(article.body)
       expect(page).to have_no_text('load')
     end
 
     it 'switches article to internal' do
-      visit "/tickets/#{ticket.id}"
       find('[data-name="article-context"]').click
       click_on 'Set to internal'
       wait_for_gql('shared/entities/ticket-article/graphql/mutations/changeVisibility.graphql')
@@ -25,10 +32,9 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     end
 
     context 'when article is deletable', current_user_id: -> { agent.id } do
-      let!(:article) { create(:ticket_article, :internal_note, body: 'Article 1', ticket: ticket) }
+      let(:article) { create(:ticket_article, :internal_note, body: 'Article 1', ticket: ticket) }
 
       it 'deletes article' do
-        visit "/tickets/#{ticket.id}"
         find('[data-name="article-context"]').click
         click_on 'Delete Article'
         click_on 'OK'
@@ -40,15 +46,13 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
   context 'when opening ticket with 6 articles page' do
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
-    let!(:articles) do
+    let(:articles) do
       (1..6).map do |number|
         create(:ticket_article, body: "Article #{number}", ticket: ticket)
       end
     end
 
     it 'see all 6 articles' do
-      visit "/tickets/#{ticket.id}"
-
       articles.each do |article|
         expect(page).to have_text(article.body, count: 1)
       end
@@ -59,15 +63,13 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
   context 'when opening ticket with a lot of articles' do
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
-    let!(:articles) do
+    let(:articles) do
       (1..10).map do |number|
         create(:ticket_article, body: "Article #{number}.", ticket: ticket)
       end
     end
 
     it 'can use "load more" button' do
-      visit "/tickets/#{ticket.id}"
-
       expect(page).to have_text('Article 1.')
 
       (5..9).each do |number|
@@ -101,8 +103,6 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     let(:agent) { create(:agent, groups: [ticket.group]) }
 
     it 'updates state on successful retry' do
-      visit "/tickets/#{ticket.id}"
-
       create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
 
       find_button('Security Error').click
@@ -116,8 +116,6 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     end
 
     it 'shows error on unsucessful retry' do
-      visit "/tickets/#{ticket.id}"
-
       find_button('Security Error').click
       find_button('Try again').click
 
