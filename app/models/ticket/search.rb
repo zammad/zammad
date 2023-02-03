@@ -141,19 +141,16 @@ returns
           end
         end
         if current_user.permissions?('ticket.customer')
-          access_condition = if !current_user.organization || (!current_user.organization.shared || current_user.organization.shared == false)
-                               {
-                                 'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
-                               }
-                             #  customer_id: XXX
-                             #          conditions = [ 'customer_id = ?', current_user.id ]
-                             else
-                               {
-                                 'query_string' => { 'query' => "customer_id:#{current_user.id} OR organization_id:#{current_user.organization.id}" }
-                               }
-                               # customer_id: XXX OR organization_id: XXX
-                               #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-                             end
+          organizations_query = current_user.all_organizations.where(shared: true).map { |o| "organization_id:#{o.id}" }.join(' OR ')
+          access_condition    = if organizations_query.present?
+                                  {
+                                    'query_string' => { 'query' => "customer_id:#{current_user.id} OR #{organizations_query}" }
+                                  }
+                                else
+                                  {
+                                    'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
+                                  }
+                                end
           query_or.push(access_condition)
         end
 

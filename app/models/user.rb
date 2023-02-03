@@ -919,6 +919,10 @@ try to find correct name
     Organization.where(id: all_organization_ids).any?(&:shared)
   end
 
+  def all_organizations
+    Organization.where(id: all_organization_ids)
+  end
+
   def all_organization_ids
     ([organization_id] + organization_ids).uniq
   end

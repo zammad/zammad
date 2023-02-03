@@ -100,4 +100,71 @@ RSpec.describe 'HasSearchIndexBackend', performs_jobs: true, searchindex: true, 
       expect(Delayed::Job.where("handler LIKE '%SearchIndexJob%' AND handler LIKE '%Organization%'").count).to be > 0
     end
   end
+
+  describe 'Search doesnt show tickets belonging to secondary organization #4425' do
+    let(:organization_a) { create(:organization, shared: true) }
+    let(:organization_b) { create(:organization, shared: false) }
+
+    let(:customer_a) { create(:customer, :with_org, organizations: [organization_a, organization_b]) }
+    let(:customer_b) { create(:customer, :with_org, organizations: [organization_a, organization_b]) }
+
+    let(:ticket_customer_a_shared) do
+      ticket = create(:ticket, title: 'findme', customer: customer_a, organization: organization_a)
+      create(:ticket_article, ticket: ticket)
+      ticket
+    end
+    let(:ticket_customer_a_nonshared) do
+      ticket = create(:ticket, title: 'findme', customer: customer_a, organization: organization_b)
+      create(:ticket_article, ticket: ticket)
+      ticket
+    end
+    let(:ticket_customer_b_shared) do
+      ticket = create(:ticket, title: 'findme', customer: customer_b, organization: organization_a)
+      create(:ticket_article, ticket: ticket)
+      ticket
+    end
+    let(:ticket_customer_b_nonshared) do
+      ticket = create(:ticket, title: 'findme', customer: customer_b, organization: organization_b)
+      create(:ticket_article, ticket: ticket)
+      ticket
+    end
+
+    before do
+      ticket_customer_a_shared
+      ticket_customer_a_nonshared
+      ticket_customer_b_shared
+      ticket_customer_b_nonshared
+      searchindex_model_reload([Ticket, User, Organization])
+    end
+
+    context 'with ES' do
+      it 'customer does find shared tickets', :aggregate_failures do
+        result = Ticket.search(
+          current_user: customer_a,
+          query:        'findme',
+          full:         true,
+        )
+
+        expect(result).to include(ticket_customer_a_shared)
+        expect(result).to include(ticket_customer_a_nonshared)
+        expect(result).to include(ticket_customer_b_shared)
+        expect(result).not_to include(ticket_customer_b_nonshared)
+      end
+    end
+
+    context 'with DB', searchindex: false do
+      it 'customer does find shared tickets', :aggregate_failures do
+        result = Ticket.search(
+          current_user: customer_a,
+          query:        'findme',
+          full:         true,
+        )
+
+        expect(result).to include(ticket_customer_a_shared)
+        expect(result).to include(ticket_customer_a_nonshared)
+        expect(result).to include(ticket_customer_b_shared)
+        expect(result).not_to include(ticket_customer_b_nonshared)
+      end
+    end
+  end
 end
