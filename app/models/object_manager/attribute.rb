@@ -889,7 +889,7 @@ is certain attribute used by triggers, overviews or schedulers
     end
 
     # do not allow model method names as attributes
-    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id]
+    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id action]
     if name.match?(%r{^(#{reserved_words.join('|')})$})
       errors.add(:name, "#{name} is a reserved word! (1)")
     end
