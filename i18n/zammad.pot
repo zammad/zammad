@@ -3652,10 +3652,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: app/assets/javascripts/app/models/public_link.coffee
-msgid "Display in new tab"
-msgstr ""
-
 #: app/assets/javascripts/app/models/email_address.coffee
 #: db/seeds/settings.rb
 msgid "Display name"
@@ -7291,6 +7287,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 #: db/seeds/overviews.rb
 msgid "Open Tickets"
+msgstr ""
+
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Open in new tab"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
