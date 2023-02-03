@@ -96,8 +96,6 @@
     - .template_lint_rails
   allow_failure: true
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
     - when: manual
   script:
     - bundle exec rake zammad:ci:bundle:orphaned 5
@@ -115,9 +113,7 @@
     paths:
       - fresh.env
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/'
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
       when: manual
       allow_failure: true
     - when: on_success

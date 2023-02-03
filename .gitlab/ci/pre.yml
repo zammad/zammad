@@ -22,9 +22,7 @@
   stage: pre
   cache: []
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^(private|cherry-pick-|renovate|dependabot)/'
+    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|renovate|dependabot)/
       when: never
     - when: always
   before_script:
@@ -44,11 +42,9 @@
     - push-to-ftp
   cache: []
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
     - if: $CI_COMMIT_TAG
       when: always
-    - if: '$CI_COMMIT_BRANCH == "stable"'
+    - if: $CI_COMMIT_BRANCH == "stable"
       when: always
     - when: never
   before_script:
