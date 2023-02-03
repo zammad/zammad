@@ -6869,17 +6869,17 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-linkify-html@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/linkify-html/-/linkify-html-4.1.0.tgz#c7881090a21020e06d956039450c239b3ca06536"
-  integrity sha512-cQSNN4i5V1xRjdSUEnXgn855xsl+usD7zBSsNyMSFBf4NlaZFocn7cExJA217azxODeqea79b6fDPXLa7jdkcA==
-
 linkify-it@^3.0.1:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-3.0.3.tgz#a98baf44ce45a550efb4d49c769d07524cc2fa2e"
   integrity sha512-ynTsyrFSdE5oZ/O9GEf00kPngmOfVwazR5GKDq6EYfhlpFug3J2zybX56a2PRRpc9P+FuSoGNAwjlbDs9jJBPQ==
   dependencies:
     uc.micro "^1.0.1"
+
+linkify-string@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/linkify-string/-/linkify-string-4.1.0.tgz#c1bd6bd26a6a574e1ffa04cde333c2736b0d3d03"
+  integrity sha512-mw4KyPoE/vP0lamGbFFtDsutxOw0b+3g2/lH5bwS7X4tRHQyLBoJ60avPVGUoHfU8G1bLS329u13hhpxBIqFiA==
 
 linkifyjs@^3.0.5:
   version "3.0.5"

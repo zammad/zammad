@@ -183,6 +183,17 @@ describe('component for displaying text article', () => {
     expect(link).toHaveAttribute('href', 'http://example.com')
   })
 
+  it('render html-like plain text as plain text', () => {
+    const sample = '<p>&It;div&gt;hello world&lt;/div&gt;</p>'
+
+    const view = renderArticleBubble({
+      content: sample,
+      contentType: 'text/plain',
+    })
+
+    expect(view.container).toHaveTextContent(sample)
+  })
+
   it('renders attachments', () => {
     const view = renderArticleBubble({
       ticketInternalId: 6,
