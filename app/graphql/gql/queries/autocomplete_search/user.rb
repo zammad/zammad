@@ -16,11 +16,17 @@ module Gql::Queries
 
       return [] if query.strip.empty?
 
-      Service::Search.new(current_user: context.current_user).execute(
+      results = Service::Search.new(current_user: context.current_user).execute(
         term:    query,
         objects: [::User],
         options: { limit: limit },
-      ).map { |user| coerce_to_result(user) }
+      )
+
+      post_process(results, input: input)
+    end
+
+    def post_process(results, input:)
+      results.map { |user| coerce_to_result(user) }
     end
 
     def coerce_to_result(user)

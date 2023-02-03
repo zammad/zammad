@@ -5,19 +5,56 @@ module Gql::Queries
 
     description 'Search for recipients'
 
-    def coerce_to_result(user)
+    argument :input, Gql::Types::Input::AutocompleteSearch::RecipientInputType, required: true, description: 'The input object for the recipient autocomplete search'
+
+    def post_process(results, input:)
+      results.flat_map do |user|
+        case input[:contact]
+        when 'phone'
+          user_phone_contacts(user)
+        else
+          user_email_contact(user)
+        end
+      end.map { |user| coerce_to_result(user) }
+    end
+
+    def coerce_to_result(contact)
       {
-        value: user.email,
-        label: label(user),
+        value:   contact[:contact],
+        label:   contact[:contact],
+        heading: contact[:name],
       }
     end
 
     private
 
-    def label(user)
-      return user.fullname if user.email.blank?
+    def user_phone_contacts(user)
+      contacts = []
 
-      Channel::EmailBuild.recipient_line user.fullname, user.email
+      if user.mobile.present?
+        contacts.push({
+                        name:    user.fullname,
+                        contact: user.mobile,
+                      })
+      end
+
+      if user.phone.present?
+        contacts.push({
+                        name:    user.fullname,
+                        contact: user.phone,
+                      })
+      end
+
+      contacts
+    end
+
+    def user_email_contact(user)
+      return [] if user.email.empty?
+
+      {
+        name:    user.fullname,
+        contact: user.email,
+      }
     end
   end
 end

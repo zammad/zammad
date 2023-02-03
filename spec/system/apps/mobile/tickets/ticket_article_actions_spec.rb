@@ -20,11 +20,22 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       )
     end
 
-    include_examples 'reply article', 'Sms', 'with default fields' do
-      let(:to) { '+41234567890' }
+    context 'with default fields' do
+      include_examples 'reply article', 'Sms', 'with default fields' do
+        let(:to) { '+41234567890' }
+      end
     end
 
-    # TODO: add custom "to" field, when frontend supports phone in "to"
+    context 'with additional custom recipient' do
+      let(:phone_number) { Faker::PhoneNumber.cell_phone_in_e164 }
+
+      include_examples 'reply article', 'Sms', 'to another recipient number' do
+        let(:new_to)      { phone_number }
+        let(:expected_to) { [phone_number, '+41234567890'].join(', ') }
+      end
+    end
+
+    # TODO: Check how we can test sending to customer numbers.
   end
 
   context 'when article was created as a telegram message' do

@@ -51,6 +51,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       },
       attributes: ['to'],
       internal: false,
+      recipientContact: 'phone',
       contentType: 'text/plain',
       editorMeta: {
         footer: {

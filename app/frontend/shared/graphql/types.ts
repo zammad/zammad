@@ -155,6 +155,16 @@ export type AutocompleteSearchOrganizationInput = {
   query: Scalars['String'];
 };
 
+/** The default fields for recipient autocomplete searches. */
+export type AutocompleteSearchRecipientInput = {
+  /** User contact type option, i.e. email or phone */
+  contact?: InputMaybe<EnumUserContact>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String'];
+};
+
 /** Type that represents an autocomplete user entry. */
 export type AutocompleteSearchUserEntry = {
   __typename?: 'AutocompleteSearchUserEntry';
@@ -300,6 +310,14 @@ export enum EnumTextDirection {
   Ltr = 'ltr',
   /** Right-to-left */
   Rtl = 'rtl'
+}
+
+/** User contact option */
+export enum EnumUserContact {
+  /** User email address */
+  Email = 'email',
+  /** User phone number */
+  Phone = 'phone'
 }
 
 /** Represents the form changed field information. */
@@ -1294,7 +1312,7 @@ export type QueriesAutocompleteSearchOrganizationArgs = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchRecipientArgs = {
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchRecipientInput;
 };
 
 
@@ -2561,7 +2579,7 @@ export type AutocompleteSearchOrganizationQueryVariables = Exact<{
 export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteSearchOrganizationEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } }> };
 
 export type AutocompleteSearchRecipientQueryVariables = Exact<{
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchRecipientInput;
 }>;
 
 

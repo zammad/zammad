@@ -128,6 +128,11 @@ describe('Form - Field - Recipient - Features', () => {
 
     const filterElement = wrapper.getByRole('searchbox')
 
+    expect(filterElement).toHaveAttribute(
+      'placeholder',
+      'Search or enter email address…',
+    )
+
     await wrapper.events.type(filterElement, 'foo@bar.tld')
 
     let selectOptions = wrapper.getAllByRole('option')
@@ -185,5 +190,44 @@ describe('Form - Field - Recipient - Features', () => {
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('foo@bar.tld')
+  })
+
+  it('supports search and input of contact phone options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        contact: 'phone',
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    expect(filterElement).toHaveAttribute(
+      'placeholder',
+      'Search or enter phone number…',
+    )
+
+    await wrapper.events.type(filterElement, 'bar')
+
+    expect(
+      wrapper.queryByText("This field doesn't contain an allowed value."),
+    ).toBeInTheDocument()
+
+    await wrapper.events.clear(filterElement)
+
+    await wrapper.events.type(filterElement, '+499876543210')
+
+    expect(
+      wrapper.queryByText("This field doesn't contain an allowed value."),
+    ).not.toBeInTheDocument()
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent('+499876543210')
   })
 })
