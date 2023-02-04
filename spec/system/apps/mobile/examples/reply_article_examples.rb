@@ -6,6 +6,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
   let(:customer)          { create(:customer) }
   let(:to)                { nil }
   let(:new_to)            { nil }
+  let(:expected_to)       { nil }
   let(:trigger_label)     { 'Reply' }
   let(:current_text)      { '' }
   let(:new_text)          { 'This is a note' }
@@ -20,7 +21,9 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
       in_reply_to: in_reply_to
     }
 
-    if new_to.present?
+    if new_to.present? && expected_to.present?
+      attributes[:to] = expected_to
+    elsif new_to.present?
       attributes[:to] = new_to
     elsif to.present?
       attributes[:to] = to
@@ -46,7 +49,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     expect(find_select('Visibility', visible: :all)).to have_selected_option(internal ? 'Internal' : 'Public')
 
     if to.present?
-      expect(find_select('To', visible: :all)).to have_value(" #{to}")
+      expect(find_autocomplete('To')).to have_value(" #{to}")
     end
 
     text = find_editor('Text')
@@ -54,7 +57,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     text.type(new_text) if new_text
 
     if new_to.present?
-      find_select('To', visible: :all).search_for_option(new_to)
+      find_autocomplete('To').search_for_option(new_to)
     end
 
     if attachments

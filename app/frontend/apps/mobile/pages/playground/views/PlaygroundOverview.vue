@@ -243,22 +243,15 @@ query autocompleteSearchUser($input: AutocompleteSearchInput!) {
   },
   {
     type: 'recipient',
-    name: 'recipient',
-    label: 'Recipient',
+    name: 'recipient_email',
+    label: 'Recipient Email',
+  },
+  {
+    type: 'recipient',
+    name: 'recipient_phone',
+    label: 'Recipient Phone',
     props: {
-      gqlQuery: `
-query autocompleteSearchUser($input: AutocompleteSearchInput!) {
-  autocompleteSearchUser(input: $input) {
-    value
-    label
-    labelPlaceholder
-    heading
-    headingPlaceholder
-    disabled
-    icon
-  }
-}
-`,
+      contact: 'phone',
     },
   },
   {

@@ -49,4 +49,18 @@ RSpec.describe 'HasSearchIndexBackend', searchindex: true, type: :model do
       expect { user.update(firstname: user.firstname) }.not_to change(Delayed::Job, :count)
     end
   end
+
+  describe 'Search doesnt show tickets belonging to secondary organization #4425' do
+    let(:user) { create(:user, organization: create(:organization), organizations: [create(:organization, name: SecureRandom.uuid)]) }
+
+    before do
+      user
+      searchindex_model_reload([User, Organization])
+    end
+
+    it 'does find user by secondary organization' do
+      result = SearchIndexBackend.search(user.organizations.first.name, 'User', sort_by: ['updated_at'], order_by: ['desc'])
+      expect(result).to eq([{ id: user.id.to_s, type: 'User' }])
+    end
+  end
 end

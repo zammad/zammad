@@ -5,9 +5,9 @@ set -ex
 GITHUB_DEST=$1
 
 # This can be called for branches or tags. Filter out private branches first.
-if [[ $CI_COMMIT_BRANCH =~ ^(private|cherry-pick-|renovate|dependabot) ]]
+if [[ $CI_COMMIT_REF_NAME =~ ^(private|cherry-pick-|renovate|dependabot) ]]
 then
-  echo "Do not sync internal branch ${CI_COMMIT_BRANCH}."
+  echo "Do not sync internal branch ${CI_COMMIT_REF_NAME}."
   exit 0
 fi
 
@@ -21,13 +21,13 @@ then
 fi
 git remote add github "$GITHUB_DEST"
 
-if [ "$CI_COMMIT_BRANCH" ]
+if [ "$CI_COMMIT_TAG" ]
 then
-  # Commit
-  git checkout "$CI_COMMIT_BRANCH"
-  git reset --hard origin/"$CI_COMMIT_BRANCH"
-  git push -f github "$CI_COMMIT_BRANCH"
-else
   # Tag
   git push github --tags
+else
+  # Commit
+  git checkout "$CI_COMMIT_REF_NAME"
+  git reset --hard origin/"$CI_COMMIT_REF_NAME"
+  git push -f github "$CI_COMMIT_REF_NAME"
 fi

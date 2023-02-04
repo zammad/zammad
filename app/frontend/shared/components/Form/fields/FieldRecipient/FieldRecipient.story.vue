@@ -35,7 +35,8 @@ const testOptions: AutoCompleteOption[] = [
   },
   {
     value: 'corge@bar.tld',
-    label: 'Corge',
+    label: 'Corge (%s)',
+    labelPlaceholder: ['3rd'],
     heading: 'corge@bar.tld',
   },
 ]
@@ -122,7 +123,7 @@ const variants = [
     name: 'recipient_options',
   },
   {
-    options: null,
+    options: testOptions,
     action: null,
     actionIcon: null,
     clearable: false,

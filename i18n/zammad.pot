@@ -3822,10 +3822,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: app/assets/javascripts/app/models/public_link.coffee
-msgid "Display in new tab"
-msgstr ""
-
 #: app/assets/javascripts/app/models/email_address.coffee
 #: db/seeds/settings.rb
 msgid "Display name"
@@ -7588,6 +7584,10 @@ msgstr ""
 msgid "Open Tickets"
 msgstr ""
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Open in new tab"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
 msgstr ""
@@ -8917,6 +8917,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+msgid "Search or enter phone number…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee

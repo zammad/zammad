@@ -18,6 +18,11 @@ class User
           attributes['permissions'].push permission.name
         end
         attributes['role_ids'] = role_ids
+
+        attributes['organization_ids'] = organization_ids
+        attributes['organizations']    = organizations.each_with_object([]) do |organization, result|
+          result << organization.search_index_attribute_lookup(include_references: false)
+        end
       end
 
       attributes

@@ -4,9 +4,7 @@
 .template_migration_from_mysql_to_postgresql:
   stage: test
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/'
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
       when: manual
       allow_failure: true
     - when: on_success

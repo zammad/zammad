@@ -86,13 +86,97 @@ FactoryBot.define do
 
     factory :twitter_article do
       transient do
-        type_name { 'twitter status' }
+        type_name   { 'twitter status' }
+        sender_name { 'Agent' }
       end
 
       association :ticket, factory: :twitter_ticket
-      message_id { '775410014383026176' }
-      body { Faker::Lorem.sentence }
-      sender_name { 'Agent' }
+      subject      { nil }
+      body         { Faker::Lorem.sentence }
+      content_type { 'text/plain' }
+      message_id   { Faker::Number.number(digits: 18) }
+
+      after(:create) do |article, context|
+        next if context.sender_name == 'Agent'
+
+        context.ticket.title = article.body
+
+        context.ticket.save!
+      end
+
+      trait :inbound do
+        transient do
+          sender_name  { 'Customer' }
+          username     { Faker::Twitter.screen_name }
+          sender_id    { Faker::Number.number(digits: 18) }
+          recipient_id { Faker::Number.number(digits: 19) }
+        end
+
+        from { "@#{username}" }
+        to   { "@#{ticket.preferences['channel_screen_name']}" }
+        body { "#{to} #{Faker::Lorem.question}" }
+
+        preferences do
+          {
+            twitter: {
+              mention_ids:         [recipient_id],
+              geo:                 {},
+              retweeted:           false,
+              possibly_sensitive:  false,
+              in_reply_to_user_id: recipient_id,
+              place:               {},
+              retweet_count:       0,
+              source:              '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
+              favorited:           false,
+              truncated:           false
+            },
+            links:   [
+              {
+                url:    "https://twitter.com/_/status/#{sender_id}",
+                target: '_blank',
+                name:   'on Twitter',
+              },
+            ],
+          }
+        end
+      end
+
+      trait :outbound do
+        transient do
+          username     { Faker::Twitter.screen_name }
+          sender_id    { Faker::Number.number(digits: 18) }
+          recipient_id { Faker::Number.number(digits: 19) }
+        end
+
+        from        { "@#{ticket.preferences['channel_screen_name']}" }
+        to          { "@#{username}" }
+        body        { "#{to} #{Faker::Lorem.sentence}" }
+        in_reply_to { Faker::Number.number(digits: 19) }
+
+        preferences do
+          {
+            twitter: {
+              mention_ids:         [recipient_id],
+              geo:                 {},
+              retweeted:           false,
+              possibly_sensitive:  false,
+              in_reply_to_user_id: recipient_id,
+              place:               {},
+              retweet_count:       0,
+              source:              '<a href="https://www.canva.com" rel="nofollow">Canva</a>',
+              favorited:           false,
+              truncated:           false
+            },
+            links:   [
+              {
+                url:    "https://twitter.com/_/status/#{sender_id}",
+                target: '_blank',
+                name:   'on Twitter',
+              },
+            ],
+          }
+        end
+      end
 
       trait :reply do
         in_reply_to { Faker::Number.number(digits: 19) }

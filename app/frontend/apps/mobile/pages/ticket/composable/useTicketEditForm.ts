@@ -21,6 +21,10 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
+  const recipientContact = computed(
+    () => currentArticleType.value?.recipientContact,
+  )
+
   const editorType = computed(() => currentArticleType.value?.contentType)
 
   const editorMeta = computed(() => {
@@ -101,6 +105,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         label: __('To'),
         type: 'recipient',
         props: {
+          contact: recipientContact,
           multiple: true,
         },
         triggerFormUpdater: false,
@@ -111,6 +116,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         label: __('CC'),
         type: 'recipient',
         props: {
+          contact: recipientContact,
           multiple: true,
         },
         triggerFormUpdater: false,

@@ -1,12 +1,8 @@
 .review_app_scripts:
   assign_port:
-    # $CI_OPEN_MERGE_REQUESTS lists all open MRs like: 'gitlab-org/gitlab!333,gitlab-org/gitlab-foss!11'
     # Assign an unprivileged port for the web server based on MR ID.
     - |
-      APP_MR_ID=$(echo $CI_OPEN_MERGE_REQUESTS | cut '-d,' -f 1,1 | tr -dc '0-9')
-      if [ -z "$APP_MR_ID" ]; then echo "Cannot find MR ID, exiting..."; exit 1; fi
-      echo "Found first MR $APP_MR_ID."
-      APP_PORT=$(( $APP_MR_ID % 64000 + 1024 ))
+      APP_PORT=$(( $CI_MERGE_REQUEST_ID % 64000 + 1024 ))
       echo "Assigned port number $APP_PORT."
   build_docker_compose_files:
     - !reference [.review_app_scripts, assign_port]
@@ -62,14 +58,14 @@
             "firstname": "Test Admin",
             "lastname": "Agent",
             "email": "admin@example.com",
-            "password": "${APP_MR_ID}"
+            "password": "${CI_MERGE_REQUEST_ID}"
           },
           {
             "login": "agent1@example.com",
             "firstname": "Agent 1",
             "lastname": "Test",
             "email": "agent1@example.com",
-            "password": "${APP_MR_ID}",
+            "password": "${CI_MERGE_REQUEST_ID}",
             "roles": ["Agent"]
           }
         ],
@@ -172,13 +168,7 @@
     name: ${APP_NAME}
     url: https://${APP_FQDN}#getting_started/auto_wizard/${CI_JOB_TOKEN}
   rules:
-    # Don't run as MR pipeline, as the other jobs are all in a push pipeline.
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-      when: never
-    # Only run if there is a MR.
-    - if: $CI_OPEN_MERGE_REQUESTS == null
-      when: never
-    - if: '$CI_COMMIT_BRANCH =~ /^private/'
+    - if: $CI_MERGE_REQUEST_ID
       when: manual
       allow_failure: true
     - when: never

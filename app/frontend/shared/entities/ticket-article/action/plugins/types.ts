@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormData, FormValues } from '@shared/components/Form'
+import type { FieldRecipientContact } from '@shared/components/Form/fields/FieldRecipient'
 import type {
   EditorContentType,
   FieldEditorProps,
@@ -56,6 +57,7 @@ export interface AppSpecificTicketArticleType {
   attributes: string[]
   internal: boolean
   view: TicketViewPolicyMap
+  recipientContact?: FieldRecipientContact
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
   // when clicked on type, and type is not selected
