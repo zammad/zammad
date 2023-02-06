@@ -4,7 +4,7 @@ import type { Content, Editor } from '@tiptap/core'
 import type { SuggestionOptions } from '@tiptap/suggestion'
 import { VueRenderer } from '@tiptap/vue-3'
 import tippy, { type GetReferenceClientRect, type Instance } from 'tippy.js'
-import { PluginKey } from 'prosemirror-state'
+import { PluginKey } from '@tiptap/pm/state'
 
 import SuggestionsList from '../SuggestionsList.vue'
 import type { MentionType } from '../types'

@@ -11,7 +11,7 @@ const isCYCI = !process.env.CY_OPEN
 const root = resolve(dir, '..')
 
 // we don't need to optimize graphql and apollo
-const skipDeps = ['graphql', 'apollo']
+const skipDeps = ['graphql', 'apollo', '@tiptap/pm']
 
 export default defineConfig({
   videosFolder: '.cypress/videos',

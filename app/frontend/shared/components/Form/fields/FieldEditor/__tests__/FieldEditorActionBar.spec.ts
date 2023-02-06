@@ -3,6 +3,19 @@
 import { renderComponent } from '@tests/support/components'
 import FieldEditorActionBar from '../FieldEditorActionBar.vue'
 
+// not actually executed in a unit test, should speed up tests
+vi.mock('@tiptap/vue-3', () => {
+  return {
+    VueRenderer: () => true,
+  }
+})
+
+vi.mock('@tiptap/pm/state', () => {
+  return {
+    PluginKey: vi.fn((name: string) => name),
+  }
+})
+
 describe('keyboard interactions', () => {
   it('can use arrows to traverse toolbar', async () => {
     const view = renderComponent(FieldEditorActionBar, {

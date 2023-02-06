@@ -2,7 +2,7 @@
 
 import { mergeAttributes, Node } from '@tiptap/core'
 import type { Range } from '@tiptap/core'
-import { DOMParser, type Node as ProseNode } from 'prosemirror-model'
+import { DOMParser, type Node as ProseNode } from '@tiptap/pm/model'
 
 export default Node.create({
   name: 'signature',
