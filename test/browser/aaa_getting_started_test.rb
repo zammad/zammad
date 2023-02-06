@@ -35,10 +35,6 @@ class AaaGettingStartedTest < TestCase
       value: 'admin@example.com',
     )
     set(
-      css:   '.js-admin input[name="firstname"]',
-      value: 'Test Admin',
-    )
-    set(
       css:   '.js-admin input[name="password"]',
       value: 'TEst1234äöüß',
     )
@@ -177,7 +173,7 @@ class AaaGettingStartedTest < TestCase
       css: '.js-agent .btn--success',
     )
     watch_for(
-      css:   'body',
+      css:   '#notify',
       value: 'Invitation sent',
     )
     location_check(
