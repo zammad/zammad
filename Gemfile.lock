@@ -135,7 +135,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    composite_primary_keys (13.0.4)
+    composite_primary_keys (13.0.7)
       activerecord (~> 6.1.0)
     concurrent-ruby (1.2.0)
     crack (0.4.5)
