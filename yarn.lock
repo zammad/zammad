@@ -1923,22 +1923,22 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
   integrity sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==
 
-"@histoire/app@^0.12.4":
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/@histoire/app/-/app-0.12.4.tgz#4c377f5d6c8fe13f6a7bcd3b961c973638eec347"
-  integrity sha512-noemJQ3q5ofHbBJGJ9FgLIdoV4Feyn3zHMhOQjHZRPETdoAak2adALO4UWKVnFu75+R43SLtoV7HnK0TAPx5kw==
+"@histoire/app@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@histoire/app/-/app-0.13.0.tgz#c2dd3c771023e312300f1df4063f5169be8ce358"
+  integrity sha512-ldpBxjb4LM/VcTa6100jj8SogX1bTJb7feDj2sYBxFSHZGmaK03s5Bom40KEhgaMMSCZ3EQZJszwD3LbFkyGCA==
   dependencies:
-    "@histoire/controls" "^0.12.4"
-    "@histoire/shared" "^0.12.4"
-    "@histoire/vendors" "^0.12.4"
+    "@histoire/controls" "^0.13.0"
+    "@histoire/shared" "^0.13.0"
+    "@histoire/vendors" "^0.13.0"
     "@types/flexsearch" "^0.7.3"
     flexsearch "0.7.21"
     shiki-es "^0.1.2"
 
-"@histoire/controls@^0.12.4":
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/@histoire/controls/-/controls-0.12.4.tgz#1c250c0c424938cad8d8b660f2452c7dd9d06075"
-  integrity sha512-p4qa11vXqhSMsnXW1p+n7ZqawoHVErLFL24yNnA9peMuXnR306/0cvdAnsLMQJdq5mDNayOY5Di69YKVQ0Shqg==
+"@histoire/controls@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@histoire/controls/-/controls-0.13.0.tgz#d6dd4e4948a38f263b381abf0ebf4ddf1086fd8a"
+  integrity sha512-9JhP3rrl97ffmRt1U0z7LgKKDrctsH/NgKTP/WaGF2WZxxT8jPgxlq0tPrJnyjj6skVgH819xVB7Lk75l9+VHg==
   dependencies:
     "@codemirror/commands" "^6.1.1"
     "@codemirror/lang-json" "^6.0.0"
@@ -1947,21 +1947,21 @@
     "@codemirror/state" "^6.1.2"
     "@codemirror/theme-one-dark" "^6.1.0"
     "@codemirror/view" "^6.3.0"
-    "@histoire/vendors" "^0.12.4"
+    "@histoire/vendors" "^0.13.0"
 
-"@histoire/plugin-vue@^0.12.4":
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/@histoire/plugin-vue/-/plugin-vue-0.12.4.tgz#8c151da729fd1e17bda14ce3bff4b3438650783c"
-  integrity sha512-2xgBDwEHmiY053hPWy4rKnnMjntVcg8qfIYJGyITwFWSfNTq+6ez/HjWzUcHT6qwFMglUHq+rDlQb9gYZF+Edw==
+"@histoire/plugin-vue@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@histoire/plugin-vue/-/plugin-vue-0.13.0.tgz#e62b2706a9f16376d3d2f94c0a7d91d2187c4d1f"
+  integrity sha512-xPvOWaJ4OISSKoBrLFLQZySHyoiQxa3vgI9vLA0FlhJ+YSie+R3lCsS6/9XAnuaOK6h0t9CkXZfe59yg68CJ5Q==
   dependencies:
-    "@histoire/controls" "^0.12.4"
-    "@histoire/shared" "^0.12.4"
-    "@histoire/vendors" "^0.12.4"
+    "@histoire/controls" "^0.13.0"
+    "@histoire/shared" "^0.13.0"
+    "@histoire/vendors" "^0.13.0"
 
-"@histoire/shared@^0.12.4":
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/@histoire/shared/-/shared-0.12.4.tgz#037b1013170e8b5ffd6bd93001171f4a642e379a"
-  integrity sha512-dVSrfsEu17KczjyHVW8yPvSlguhEV7hWjDSwsjlUrRdbe7hwztX4GbbcCIWvG5hy5gASpKpQq6FJa5uTs0HOsg==
+"@histoire/shared@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@histoire/shared/-/shared-0.13.0.tgz#b7939691ab164812cd418c0b69ee84dc36e80746"
+  integrity sha512-J/4yVFQxSx/I00YzWXwFDqd1wY4uZIu6OF7HLBUrzTmSJrzWI3tEHsNj0xgiw0Wu1Wx8wqhN2RKoAQLah6VKeA==
   dependencies:
     "@types/fs-extra" "^9.0.13"
     "@types/markdown-it" "^12.2.3"
@@ -1969,10 +1969,10 @@
     pathe "^0.2.0"
     picocolors "^1.0.0"
 
-"@histoire/vendors@^0.12.4":
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/@histoire/vendors/-/vendors-0.12.4.tgz#f34d5011be176eba26ae4bd378e38efc172369e5"
-  integrity sha512-NIi0krz19iSjPHhIsGLrW4Q3tvrCLfvCet2kFA8crKPX6inaMZm8g/+pDQBqlh9DRCXVbxV5RWQKcumrIFbrmw==
+"@histoire/vendors@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@histoire/vendors/-/vendors-0.13.0.tgz#dde0460c91ae7c733764af40ed8d088e29299f39"
+  integrity sha512-zJnXmrnfqKuinNktAYLjdxaM+ppMmOWf4xFA7zeTRzH/vkA34LWQxaCefGuGM5rV0cPQ+Z4llq9X3d6196WqrQ==
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
@@ -5909,15 +5909,15 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
-histoire@^0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.12.4.tgz#7c59f64d9612a6f9d40b7f479f11f22c24159942"
-  integrity sha512-q20Zncdh+GI2jDXiry1JS1DrN5qprKpl452AnS/P06Vgowqf79aG85E0XmhNpX2r8HI2HmIntwZ5FLd6hxYobQ==
+histoire@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.13.0.tgz#f0afab36016b30715d9b3201e0208baa1796a942"
+  integrity sha512-5CZJVz89/lk1eh3GPI7VX7B9o4izf9xMgi4eGkeGCwpGn/zxLqCFhHJtUkpsDKnzmipeh4opp+PdEorecWBDbQ==
   dependencies:
-    "@histoire/app" "^0.12.4"
-    "@histoire/controls" "^0.12.4"
-    "@histoire/shared" "^0.12.4"
-    "@histoire/vendors" "^0.12.4"
+    "@histoire/app" "^0.13.0"
+    "@histoire/controls" "^0.13.0"
+    "@histoire/shared" "^0.13.0"
+    "@histoire/vendors" "^0.13.0"
     "@types/flexsearch" "^0.7.3"
     "@types/markdown-it" "^12.2.3"
     birpc "^0.1.1"
@@ -5944,7 +5944,7 @@ histoire@^0.12.4:
     shiki-es "^0.1.2"
     sirv "^2.0.2"
     tinypool "^0.1.2"
-    vite-node "0.26.0"
+    vite-node "0.28.4"
 
 hoist-non-react-statics@^3.3.2:
   version "3.3.2"
@@ -9805,22 +9805,24 @@ vary@^1:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-vite-node@0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-0.26.0.tgz#b070b812a9e90431f48fa9c2640e3cb6f60b4cce"
-  integrity sha512-nLtHWCv6reONl1oFsKhQ/LT7n3UNLpvVARAJlmGrQV6qSElht/9AdN41Pa+WSkw2Winh682UzM0Yw0GNlfqejw==
-  dependencies:
-    debug "^4.3.4"
-    mlly "^1.0.0"
-    pathe "^0.2.0"
-    source-map "^0.6.1"
-    source-map-support "^0.5.21"
-    vite "^3.0.0 || ^4.0.0"
-
 vite-node@0.28.1:
   version "0.28.1"
   resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-0.28.1.tgz#e2af53e112e57455a474e9f7a6478b1cdf79a6ab"
   integrity sha512-Mmab+cIeElkVn4noScCRjy8nnQdh5LDIR4QCH/pVWtY15zv5Z1J7u6/471B9JZ2r8CEIs42vTbngaamOVkhPLA==
+  dependencies:
+    cac "^6.7.14"
+    debug "^4.3.4"
+    mlly "^1.1.0"
+    pathe "^1.1.0"
+    picocolors "^1.0.0"
+    source-map "^0.6.1"
+    source-map-support "^0.5.21"
+    vite "^3.0.0 || ^4.0.0"
+
+vite-node@0.28.4:
+  version "0.28.4"
+  resolved "https://registry.yarnpkg.com/vite-node/-/vite-node-0.28.4.tgz#ce709cde2200d86a2a45457fed65f453234b0261"
+  integrity sha512-KM0Q0uSG/xHHKOJvVHc5xDBabgt0l70y7/lWTR7Q0pR5/MrYxadT+y32cJOE65FfjGmJgxpVEEY+69btJgcXOQ==
   dependencies:
     cac "^6.7.14"
     debug "^4.3.4"
