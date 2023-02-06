@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, authenticated_as: :agent, type: :graphql do
   let(:agent)                         { create(:agent) }
-  let(:another_agent)                 { create(:agent) }
+  let(:customer)                      { create(:customer) }
   let(:ticket)                        { create(:ticket) }
   let(:live_user_entry)               { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: agent.id, app: 'mobile', state: { editing: true }) }
-  let(:live_user_entry_another_agent) { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: another_agent.id, app: 'mobile', state: { editing: false }) }
+  let(:live_user_entry_customer)      { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: customer.id, app: 'mobile', state: { editing: false }) }
 
   let(:mock_channel) { build_mock_channel }
   let(:variables) { { userId: Gql::ZammadSchema.id_from_object(agent), key: "Ticket-#{ticket.id}", app: 'mobile' } }
@@ -32,7 +32,7 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
   end
 
   before do
-    live_user_entry && live_user_entry_another_agent
+    live_user_entry && live_user_entry_customer
 
     gql.execute(subscription, variables: variables, context: { channel: mock_channel })
   end
@@ -54,15 +54,15 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
                                                             })
 
       expect(gql.result.data['liveUsers'].last).to include('user' => {
-                                                             'firstname' => another_agent.firstname,
-                                                             'lastname'  => another_agent.lastname,
+                                                             'firstname' => customer.firstname,
+                                                             'lastname'  => customer.lastname,
                                                            })
 
       expect(gql.result.data['liveUsers'].last['apps'].first).to include('editing' => false)
     end
 
     it 'receives taskbar updates' do
-      update_taskbar_item(live_user_entry_another_agent, { editing: true }, another_agent.id)
+      update_taskbar_item(live_user_entry_customer, { editing: true }, customer.id)
 
       result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketLiveUserUpdates', 'liveUsers')
       expect(result.size).to eq(2)
@@ -73,8 +73,8 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
                                       })
 
       expect(result.last).to include('user' => {
-                                       'firstname' => another_agent.firstname,
-                                       'lastname'  => another_agent.lastname,
+                                       'firstname' => customer.firstname,
+                                       'lastname'  => customer.lastname,
                                      })
 
       expect(result.last['apps'].first).to include('editing' => true)
@@ -85,7 +85,7 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
       let(:live_user_entry_third_agent) { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: third_agent.id, app: 'mobile', state: { editing: false }) }
 
       it 'receives taskbar updates for all viewers' do
-        update_taskbar_item(live_user_entry_another_agent, { editing: true }, another_agent.id)
+        update_taskbar_item(live_user_entry_customer, { editing: true }, customer.id)
 
         result = mock_channel.mock_broadcasted_messages.last.dig(:result, 'data', 'ticketLiveUserUpdates', 'liveUsers')
         expect(result.size).to eq(2)
@@ -105,8 +105,8 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
                                         })
 
         expect(result[1]).to include('user' => {
-                                       'firstname' => another_agent.firstname,
-                                       'lastname'  => another_agent.lastname,
+                                       'firstname' => customer.firstname,
+                                       'lastname'  => customer.lastname,
                                      })
 
         expect(result.last).to include('user' => {
@@ -114,6 +114,12 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
                                          'lastname'  => third_agent.lastname,
                                        })
       end
+    end
+  end
+
+  context 'when a customer', authenticated_as: :customer do
+    it 'can not use subscription wihtout agent permission' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
 end

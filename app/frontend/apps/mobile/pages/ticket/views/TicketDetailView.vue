@@ -1,7 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { redirectToError } from '@mobile/router/error'
+import { computed, provide, ref, reactive } from 'vue'
+import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
+import { noop } from 'lodash-es'
 import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
@@ -11,18 +13,18 @@ import UserError from '@shared/errors/UserError'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { ErrorStatusCodes } from '@shared/types/error'
 import Form from '@shared/components/Form/Form.vue'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useForm, FormData } from '@shared/components/Form'
-import { computed, provide, ref, reactive } from 'vue'
-import { noop } from 'lodash-es'
-import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
 import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
-import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import { useApplicationStore } from '@shared/stores/application'
+import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
+import type { TicketInformation } from '@mobile/entities/ticket/types'
+import { redirectToError } from '@mobile/router/error'
+import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -93,6 +95,8 @@ const {
   articleTypeSelectHandler,
 } = useTicketEditForm(ticket)
 
+const { isTicketAgent } = useTicketView(ticket)
+
 const { notify } = useNotifications()
 
 const submitForm = async (formData: FormData) => {
@@ -141,9 +145,9 @@ const showArticleReplyDialog = () => {
   return openArticleReplyDialog({ updateFormLocation })
 }
 
-const { liveUserList } = useTicketLiveUser(ticket, isDirty)
+const { liveUserList } = useTicketLiveUser(ticket, isTicketAgent, isDirty)
 
-provide(TICKET_INFORMATION_SYMBOL, {
+provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   initialFormTicketValue: initialTicketValue,
   ticket,

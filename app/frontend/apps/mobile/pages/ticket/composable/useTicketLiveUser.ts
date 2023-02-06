@@ -20,6 +20,7 @@ import { useTicketLiveUserUpdatesSubscription } from '../graphql/subscriptions/l
 
 export const useTicketLiveUser = (
   ticket: Ref<TicketById | undefined>,
+  isTicketAgent: ComputedRef<boolean>,
   canSubmitForm: ComputedRef<boolean>,
 ) => {
   const liveUserList = ref<TicketLiveAppUser[]>([])
@@ -102,7 +103,7 @@ export const useTicketLiveUser = (
         // At the end a cache for the subscription is not really needed, but we should create an issue on
         // apollo client side, when we have a minimal reproduction.
         fetchPolicy: 'no-cache',
-        enabled: liveUserSubscritionEnabled.value,
+        enabled: liveUserSubscritionEnabled.value && isTicketAgent.value,
       }),
     ),
   )

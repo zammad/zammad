@@ -1543,7 +1543,7 @@ export type Subscriptions = {
   pushMessages: PushMessagesPayload;
   /** Updates to ticket records */
   ticketArticleUpdates: TicketArticleUpdatesPayload;
-  /** Updates to ticket live users. */
+  /** Updates to ticket live users (for agents). */
   ticketLiveUserUpdates: TicketLiveUserUpdatesPayload;
   /** Updates to ticket records */
   ticketUpdates: TicketUpdatesPayload;

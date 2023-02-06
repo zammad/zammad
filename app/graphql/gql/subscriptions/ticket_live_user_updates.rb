@@ -3,7 +3,7 @@
 module Gql::Subscriptions
   class TicketLiveUserUpdates < BaseSubscription
 
-    description 'Updates to ticket live users.'
+    description 'Updates to ticket live users (for agents).'
 
     argument :user_id, GraphQL::Types::ID, loads: Gql::Types::UserType, description: 'ID of the user to receive updates for'
     argument :key, String, description: 'Taskbar key to filter for.'
@@ -12,7 +12,7 @@ module Gql::Subscriptions
     field :live_users, [Gql::Types::Ticket::LiveUserType], description: 'Current live users from the ticket.'
 
     def authorized?(user:, key:, app:)
-      context.current_user == user
+      context.current_user.permissions?(['ticket.agent']) && context.current_user == user
     end
 
     def subscribe(user:, key:, app:)

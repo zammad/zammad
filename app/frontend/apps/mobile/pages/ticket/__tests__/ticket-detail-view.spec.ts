@@ -19,7 +19,7 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { nullableMock, waitUntil } from '@tests/support/utils'
+import { nullableMock, waitForTimeout, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
@@ -419,6 +419,7 @@ describe('ticket viewers inside a ticket', () => {
       fullname: 'John Doe',
       id: convertToGraphQLId('User', 4),
     })
+    mockPermissions(['ticket.agent'])
 
     const view = await visitView('/tickets/1')
 
@@ -557,6 +558,7 @@ describe('ticket viewers inside a ticket', () => {
       fullname: 'John Doe',
       id: convertToGraphQLId('User', 4),
     })
+    mockPermissions(['ticket.agent'])
 
     const view = await visitView('/tickets/1')
 
@@ -618,6 +620,7 @@ describe('ticket viewers inside a ticket', () => {
       fullname: 'John Doe',
       id: convertToGraphQLId('User', 4),
     })
+    mockPermissions(['ticket.agent'])
 
     const view = await visitView('/tickets/1')
 
@@ -667,5 +670,63 @@ describe('ticket viewers inside a ticket', () => {
       view.queryByRole('dialog', { name: 'Ticket viewers' }),
     ).toHaveTextContent('Agent 1 Test')
     expect(view.queryByIconName('mobile-desktop-edit')).toBeInTheDocument()
+  })
+
+  it('customer should only add live user entry but not subscribe', async () => {
+    const {
+      waitUntilTicketLoaded,
+      mockTicketLiveUserUpsert,
+      mockTicketLiveUsersSubscription,
+    } = mockTicketDetailViewGql()
+
+    mockAccount({
+      lastname: 'Braun',
+      firstname: 'Nicole',
+      fullname: 'Nicole Braun',
+      id: convertToGraphQLId('User', 3),
+    })
+    mockPermissions(['ticket.customer'])
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await waitUntil(() => mockTicketLiveUserUpsert.calls.resolve === 1)
+
+    await mockTicketLiveUsersSubscription.next({
+      data: {
+        ticketLiveUserUpdates: {
+          liveUsers: [
+            {
+              user: {
+                id: 'gid://zammad/User/160',
+                firstname: 'John',
+                lastname: 'Doe',
+                fullname: 'John Doe',
+                __typename: 'User',
+              },
+              apps: [
+                {
+                  name: 'desktop',
+                  editing: false,
+                  lastInteraction: '2022-01-31T18:30:24Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+                {
+                  name: 'mobile',
+                  editing: false,
+                  lastInteraction: '2022-01-31T16:45:53Z',
+                  __typename: 'TicketLiveUserApp',
+                },
+              ],
+              __typename: 'TicketLiveUser',
+            },
+          ],
+          __typename: 'TicketLiveUserUpdatesPayload',
+        },
+      },
+    })
+
+    expect(view.queryByTitle('Show ticket viewers')).not.toBeInTheDocument()
   })
 })
