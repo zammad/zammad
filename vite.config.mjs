@@ -1,20 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+/* eslint-disable security/detect-non-literal-fs-filename */
 
 import { createRequire } from 'module'
-import type { ServerOptions } from 'https'
-import { defineConfig, type ResolvedConfig } from 'vite'
+import { defineConfig } from 'vite'
 import VuePlugin from '@vitejs/plugin-vue'
-import {
-  createSvgIconsPlugin,
-  type ViteSvgIconsPlugin,
-} from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { VitePWA } from 'vite-plugin-pwa'
-import path from 'path'
-import fs from 'fs'
+import { resolve, dirname } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import tsconfig from './tsconfig.base.json' assert { type: 'json' }
 
-import tsconfig from './tsconfig.base.json'
+const dir = dirname(fileURLToPath(import.meta.url))
 
-const SSL_PATH = path.resolve(__dirname, 'config', 'ssl')
+const SSL_PATH = resolve(dir, 'config', 'ssl')
 
 export default defineConfig(({ mode, command }) => {
   const isStory = Boolean(process.env.HISTOIRE)
@@ -26,10 +25,7 @@ export default defineConfig(({ mode, command }) => {
   const svgPlugin = createSvgIconsPlugin({
     // Specify the directory containing all icon assets assorted by sets.
     iconDirs: [
-      path.resolve(
-        __dirname,
-        'app/frontend/shared/components/CommonIcon/assets',
-      ),
+      resolve(dir, 'app/frontend/shared/components/CommonIcon/assets'),
     ],
 
     // Specify symbolId format to include directory as icon set and filename as icon name.
@@ -37,15 +33,13 @@ export default defineConfig(({ mode, command }) => {
 
     svgoOptions: {
       plugins: [{ name: 'preset-default' }],
-    } as ViteSvgIconsPlugin['svgoOptions'],
+    },
   })
 
   if (isStory) {
     // Patch svg plugin for stories, because it's not working with SSR.
-    const svgConfigResolved = svgPlugin.configResolved as (
-      cfg: ResolvedConfig,
-    ) => void
-    svgConfigResolved({ command: 'build' } as ResolvedConfig)
+    const svgConfigResolved = svgPlugin.configResolved
+    svgConfigResolved({ command: 'build' })
     delete svgPlugin.configResolved
     const { load } = svgPlugin
     svgPlugin.load = function fakeLoad(id) {
@@ -90,12 +84,12 @@ export default defineConfig(({ mode, command }) => {
     // plugins.push(ManualChunks())
   }
 
-  let https: ServerOptions | false = false
+  let https = false
 
   // vite-ruby controlls this variable, it's either "true" or "false"
   if (process.env.VITE_RUBY_HTTPS === 'true') {
-    const SSL_CERT = fs.readFileSync(path.resolve(SSL_PATH, 'localhost.crt'))
-    const SSL_KEY = fs.readFileSync(path.resolve(SSL_PATH, 'localhost.key'))
+    const SSL_CERT = readFileSync(resolve(SSL_PATH, 'localhost.crt'))
+    const SSL_KEY = readFileSync(resolve(SSL_PATH, 'localhost.key'))
 
     https = {
       cert: SSL_CERT,
@@ -109,12 +103,12 @@ export default defineConfig(({ mode, command }) => {
     },
     resolve: {
       alias: {
-        '@mobile': path.resolve(__dirname, 'app/frontend/apps/mobile'),
-        '@shared': path.resolve(__dirname, 'app/frontend/shared'),
-        '@tests': path.resolve(__dirname, 'app/frontend/tests'),
-        '@stories': path.resolve(__dirname, 'app/frontend/stories'),
-        '@cy': path.resolve(__dirname, '.cypress'),
-        '@': path.resolve(__dirname, 'app/frontend'),
+        '@mobile': resolve(dir, 'app/frontend/apps/mobile'),
+        '@shared': resolve(dir, 'app/frontend/shared'),
+        '@tests': resolve(dir, 'app/frontend/tests'),
+        '@stories': resolve(dir, 'app/frontend/stories'),
+        '@cy': resolve(dir, '.cypress'),
+        '@': resolve(dir, 'app/frontend'),
         '^vue-easy-lightbox$':
           'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
       },

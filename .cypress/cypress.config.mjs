@@ -1,11 +1,14 @@
 import { defineConfig } from 'cypress'
 import { rm } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { initPlugin as initVisualRegressionPlugin } from '@frsource/cypress-plugin-visual-regression-diff/plugins'
-import pkg from '../package.json'
+import pkg from '../package.json' assert { type: 'json' }
+
+const dir = dirname(fileURLToPath(import.meta.url))
 
 const isCYCI = !process.env.CY_OPEN
-const root = resolve(__dirname, '..')
+const root = resolve(dir, '..')
 
 // we don't need to optimize graphql and apollo
 const skipDeps = ['graphql', 'apollo']
@@ -46,8 +49,8 @@ export default defineConfig({
       viteConfig: {
         mode: 'cypress',
         root,
-        configFile: resolve(__dirname, '..', 'vite.config.ts'),
-        cacheDir: resolve(__dirname, 'node_modules', '.vite'),
+        configFile: resolve(dir, '..', 'vite.config.mjs'),
+        cacheDir: resolve(dir, 'node_modules', '.vite'),
         server: {
           fs: {
             strict: false,

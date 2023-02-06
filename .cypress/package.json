@@ -1,9 +1,10 @@
 {
   "private": true,
+  "type": "module",
   "devDependencies": {
     "@frsource/cypress-plugin-visual-regression-diff": "^2.3.12",
-    "@testing-library/cypress": "^8.0.7",
-    "cypress": "^10.11.0",
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.5.1",
     "cypress-real-events": "^1.7.6"
   }
 }

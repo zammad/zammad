@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mountComponent, mockApolloClient } from '@cy/utils'
-import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
+import { mockApolloClient } from '@cy/utils'
+import { useNotifications } from '@shared/components/CommonNotifications'
 import { MentionSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 
@@ -9,15 +9,17 @@ import { mountEditor } from './utils'
 
 describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
   it('shows notification when no group is provided', () => {
-    mountComponent(CommonNotifications as any)
+    const { notifications } = useNotifications()
     mountEditor()
 
-    cy.findByRole('textbox').type('@@t')
-
-    cy.get('#Notifications').should(
-      'have.text',
-      'Before you mention a user, please select a group.',
-    )
+    cy.findByRole('textbox')
+      .type('@@t')
+      .then(() => {
+        expect(notifications.value).to.have.length(1)
+        expect(notifications.value[0].message).to.equal(
+          'Before you mention a user, please select a group.',
+        )
+      })
   })
 
   it('inserts found text', () => {

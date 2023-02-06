@@ -83,10 +83,10 @@
     pngjs "6.0.0"
     sharp "0.31.1"
 
-"@testing-library/cypress@^8.0.7":
-  version "8.0.7"
-  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-8.0.7.tgz#18315eba3cf8852808afadf122e4858406384015"
-  integrity sha512-3HTV725rOS+YHve/gD9coZp/UcPK5xhr4H0GMnq/ni6USdtzVtSOG9WBFtd8rYnrXk8rrGD+0toRFYouJNIG0Q==
+"@testing-library/cypress@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-9.0.0.tgz#3facad49c4654a99bbd138f83f33b415d2d6f097"
+  integrity sha512-c1XiCGeHGGTWn0LAU12sFUfoX3qfId5gcSE2yHode+vsyHDWraxDPALjVnHd4/Fa3j4KBcc5k++Ccy6A9qnkMA==
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@testing-library/dom" "^8.1.0"
@@ -447,10 +447,10 @@ cypress-real-events@^1.7.6:
   resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.6.tgz#6f17e0b2ceea1d6dc60f6737d8f84cc517bbbb4c"
   integrity sha512-yP6GnRrbm6HK5q4DH6Nnupz37nOfZu/xn1xFYqsE2o4G73giPWQOdu6375QYpwfU1cvHNCgyD2bQ2hPH9D7NMw==
 
-cypress@^10.11.0:
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.11.0.tgz#e9fbdd7638bae3d8fb7619fd75a6330d11ebb4e8"
-  integrity sha512-lsaE7dprw5DoXM00skni6W5ElVVLGAdRUUdZjX2dYsGjbY/QnpzWZ95Zom1mkGg0hAaO/QVTZoFVS7Jgr/GUPA==
+cypress@^12.5.1:
+  version "12.5.1"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.5.1.tgz#effdcccdd5a6187d61d497300903d4f3b5b21b6e"
+  integrity sha512-ZmCmJ3lsyeOpBfh410m5+AO2CO1AxAzFBt7k6/uVbNcrNZje1vdiwYTpj2ksPKg9mjr9lR6V8tmlDNMvr4H/YQ==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
