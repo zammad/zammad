@@ -3028,10 +3028,10 @@
     "@volar/typescript" "1.0.24"
     "@volar/vue-language-core" "1.0.24"
 
-"@vue/apollo-composable@^4.0.0-beta.1":
-  version "4.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.0-beta.1.tgz#ef7181503785c464bfddb8025870d24b5c8813af"
-  integrity sha512-WjyePUFYft7dZMNrO63DuP5bsl1AO1SKhfy688r2HXlyrCQAxvfRXOiPqnPzhmRn7kyWTKfrwwhkFJfnSq7vyA==
+"@vue/apollo-composable@^4.0.0-beta.2":
+  version "4.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@vue/apollo-composable/-/apollo-composable-4.0.0-beta.2.tgz#4614ac9bd8b545a91c7e2b9f8b86b82351454789"
+  integrity sha512-SGZ1uklEldjG9UTMQnHyr9N4+C4D6hZXn3LDkDtpMVLAQksh30sqapSOFkEowOBVWyc/7f/JiCGADOhvxCWRxw==
   dependencies:
     throttle-debounce "^3.0.1"
     ts-essentials "^9.1.2"
@@ -10019,10 +10019,10 @@ vue-demi@*, vue-demi@^0.13.1:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
-vue-easy-lightbox@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.11.0.tgz#1d448f8641ebd012d094d3b88a5a479555891d48"
-  integrity sha512-t9ouC2rHz/VMt/XSbnVgkED/7Dqe/DHrX6mW4AUj5Kt1PSr3czVk+ecBtF/Q4ivmSdkNJRk2/6D5PGcwxJuozQ==
+vue-easy-lightbox@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.12.0.tgz#c275547ba39e7788574335f28fe56b804d3cf163"
+  integrity sha512-An7R3Fr+veHhGcLS1ly+O8XLhayObckJ3t7jupQn9IxXUQH3qA1mkG5DuAg9n4gwzF3fDn+jcORQ3iTp3UdEDg==
 
 vue-eslint-parser@^9.0.0, vue-eslint-parser@^9.0.1:
   version "9.1.0"

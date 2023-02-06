@@ -12,6 +12,7 @@ import { getByIconName } from '@tests/support/components/iconQueries'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import type { FieldTagsProps } from '../types'
+import { waitForTimeout, waitForNextTick, waitUntil } from '../../../../../../tests/support/utils'
 
 const defaultTags = [
   { label: 'test', value: 'test' },
@@ -118,6 +119,7 @@ describe('Form - Field - Tags', () => {
     const filterInput = view.getByPlaceholderText('Tag name…')
 
     await view.events.debounced(() => view.events.type(filterInput, 'paid'))
+    await waitUntil(() => view.queryAllByRole('option'))
 
     const options = view.getAllByRole('option')
 
@@ -151,8 +153,6 @@ describe('Form - Field - Tags', () => {
 
     expect(createButton).toBeDisabled()
     await view.events.click(createButton)
-
-    // TODO api not called
   })
 
   it('can select new tag, when creating existing one', async () => {
