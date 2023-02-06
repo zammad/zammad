@@ -73,30 +73,36 @@ class TestCase < ActiveSupport::TestCase
       options = Selenium::WebDriver::Firefox::Options.new(
         profile: profile
       )
+
+      if ENV['BROWSER_HEADLESS'].present?
+        options.add_argument '-headless'
+      end
     when 'chrome'
       options = Selenium::WebDriver::Chrome::Options.new(
-        logging_prefs:   {
+        logging_prefs:    {
           browser: 'ALL'
         },
-        prefs:           {
+        prefs:            {
           'intl.accept_languages'                                => 'en-US',
           'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
         },
-        args:            %w[--enable-logging --v=1],
-        # Disable the "Chrome is controlled by automation software" info bar.
-        excludeSwitches: ['enable-automation'],
+        args:             %w[--enable-logging --v=1],
+        # Disable the "Chrome is being controlled by automated test software." info bar.
+        exclude_switches: ['enable-automation'],
       )
+
+      if ENV['BROWSER_HEADLESS'].present?
+        options.add_argument '--headless=new' # native headless for v109+
+      end
     end
-    if ENV['BROWSER_HEADLESS'].present?
-      options.headless!
-    end
+
     options
   end
 
   def browser_instance
     @browsers ||= {}
     if ENV['REMOTE_URL'].blank?
-      local_browser = Selenium::WebDriver.for(browser.to_sym, capabilities: browser_options)
+      local_browser = Selenium::WebDriver.for(browser.to_sym, options: browser_options)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
       return local_browser
@@ -125,9 +131,9 @@ class TestCase < ActiveSupport::TestCase
 
     local_browser = Selenium::WebDriver.for(
       :remote,
-      url:          ENV['REMOTE_URL'],
-      http_client:  http_client,
-      capabilities: browser_options,
+      url:         ENV['REMOTE_URL'],
+      http_client: http_client,
+      options:     browser_options,
     )
     @browsers[local_browser.hash] = local_browser
     browser_instance_preferences(local_browser)
