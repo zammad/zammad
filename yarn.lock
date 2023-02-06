@@ -5089,10 +5089,10 @@ eslint-plugin-prettier@^4.0.0, eslint-plugin-prettier@^4.2.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-security@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-security/-/eslint-plugin-security-1.7.0.tgz#013892f0c7cc010c7731d52169db46b0414299ea"
-  integrity sha512-+ahcCh7M5w7fdFaNccaChBGq8nd3Wa+XvGJS+hY74kvrMhG4EuLbljRIjilOqh1iDMW/EckB1oOWmiVIYlVACQ==
+eslint-plugin-security@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-security/-/eslint-plugin-security-1.7.1.tgz#0e9c4a471f6e4d3ca16413c7a4a51f3966ba16e4"
+  integrity sha512-sMStceig8AFglhhT2LqlU5r+/fn9OwsA72O5bBuQVTssPCdQAOQzL+oMn/ZcpeUY6KcNfLJArgcrsSULNjYYdQ==
   dependencies:
     safe-regex "^2.1.1"
 
