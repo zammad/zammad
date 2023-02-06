@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manage > Channels > Email', type: :system do
 
-  context 'when managing email channels', required_envs: %w[MAILBOX_INIT] do
+  context 'when managing email channels', required_envs: %w[MAIL_ADDRESS MAIL_PASS] do
 
     before do
       visit '/#channels/email'
@@ -28,8 +28,8 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
     end
 
     context 'when creating new channels' do
-      let(:mailbox_user)     { ENV['MAILBOX_INIT'].split(':')[0] }
-      let(:mailbox_password) { ENV['MAILBOX_INIT'].split(':')[1] }
+      let(:mailbox_user)     { ENV['MAIL_ADDRESS'] }
+      let(:mailbox_password) { ENV['MAIL_PASS'] }
 
       before do
         # Make sure the channel is loaded

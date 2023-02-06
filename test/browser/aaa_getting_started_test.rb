@@ -4,13 +4,12 @@ require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
   def test_a_getting_started
-    if !ENV['MAILBOX_INIT']
-      # raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@zammad.com:somepass'"
-      puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@zammad.com:somepass'"
+    if !ENV['MAIL_ADDRESS'] || !ENV['MAIL_PASS']
+      puts 'NOTICE: Need MAIL_ADDRESS and MAIL_PASS as ENV variables.'
       return
     end
-    mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
-    mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
+    mailbox_user     = ENV['MAIL_ADDRESS']
+    mailbox_password = ENV['MAIL_PASS']
 
     @browser = browser_instance
     location(url: browser_url)

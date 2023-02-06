@@ -14,25 +14,28 @@ class EmailPostmasterToSender < ActiveSupport::TestCase
     if ENV['MAIL_SERVER'].blank?
       raise "Need MAIL_SERVER as ENV variable like export MAIL_SERVER='mx.example.com'"
     end
-    if ENV['MAIL_SERVER_ACCOUNT'].blank?
-      raise "Need MAIL_SERVER_ACCOUNT as ENV variable like export MAIL_SERVER_ACCOUNT='user:somepass'"
+    if ENV['MAIL_ADDRESS'].blank?
+      raise 'Need MAIL_ADDRESS as ENV variable'
+    end
+    if ENV['MAIL_PASS'].blank?
+      raise 'Need MAIL_PASS as ENV variable'
     end
 
     @server_address = ENV['MAIL_SERVER']
-    @server_login = ENV['MAIL_SERVER_ACCOUNT'].split(':')[0]
-    @server_password = ENV['MAIL_SERVER_ACCOUNT'].split(':')[1]
+    @server_login = ENV['MAIL_ADDRESS']
+    @server_password = ENV['MAIL_PASS']
 
     @folder = "postmaster_to_sender_#{@test_id}"
 
-    if ENV['MAIL_SERVER_EMAIL'].blank?
-      raise "Need MAIL_SERVER_EMAIL as ENV variable like export MAIL_SERVER_EMAIL='admin@example.com'"
+    if ENV['MAIL_ADDRESS'].blank?
+      raise "Need MAIL_ADDRESS as ENV variable like export MAIL_ADDRESS='admin@example.com'"
     end
 
-    @sender_email_address = ENV['MAIL_SERVER_EMAIL']
+    @sender_email_address = ENV['MAIL_ADDRESS']
 
     @email_address = EmailAddress.create!(
       realname:      'me Helpdesk',
-      email:         "some-zammad-#{ENV['MAIL_SERVER_EMAIL']}",
+      email:         "some-zammad-#{ENV['MAIL_ADDRESS']}",
       updated_by_id: 1,
       created_by_id: 1,
     )

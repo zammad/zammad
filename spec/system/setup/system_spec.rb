@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'System setup process', authenticated_as: false, required_envs: %w[MAILBOX_INIT], set_up: false, type: :system do
+RSpec.describe 'System setup process', authenticated_as: false, required_envs: %w[MAIL_ADDRESS MAIL_PASS], set_up: false, type: :system do
 
   def fqdn
     match_data = %r{://(.+?)(:.+?|/.+?|)$}.match(app_host)
@@ -13,8 +13,8 @@ RSpec.describe 'System setup process', authenticated_as: false, required_envs: %
 
   it 'Setting up a new system' do
 
-    mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
-    mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
+    mailbox_user     = ENV['MAIL_ADDRESS']
+    mailbox_password = ENV['MAIL_PASS']
 
     visit '/'
 

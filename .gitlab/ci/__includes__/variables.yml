@@ -6,19 +6,13 @@ variables:
   # Browser tests and variables
   RAILS_SERVE_STATIC_FILES: "true"
   TZ: "Europe/London"
-  # docker-imap-devel variables required for browser tests
+  # docker-imap-devel variables required for mail tests
   MAILNAME: "mail.test.dc.zammad.com"
-  MAILBOX_INIT: "zammad@mail.test.dc.zammad.com:zammad"
+  MAIL_SERVER: "mail"
   MAIL_ADDRESS: "zammad@mail.test.dc.zammad.com"
   MAIL_PASS: "zammad"
-  # docker-imap-devel variables required for integration tests
-  MAIL_SERVER: "mail"
-  MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
-  MAIL_SERVER_EMAIL: "zammad@mail.test.dc.zammad.com"
   MAIL_ADDRESS_ASCII: "zammad-test@mail.test.dc.zammad.com"
   MAIL_PASS_ASCII: '¼¿B3È;yÚ}&J¢Q;{Bü@_£)D"5>RÌ8eoø’'
-  KEEP_ON_MAIL_SERVER: "mail"
-  KEEP_ON_MAIL_SERVER_ACCOUNT: "zammad@mail.test.dc.zammad.com:zammad"
 
   # Settings for elasticsearch, if active
   ES_INDEX: 'estest.ci'

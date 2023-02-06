@@ -6,15 +6,18 @@ require 'net/imap'
 class EmailKeepOnServerTest < ActiveSupport::TestCase
   setup do
 
-    if ENV['KEEP_ON_MAIL_SERVER'].blank?
-      raise "Need KEEP_ON_MAIL_SERVER as ENV variable like export KEEP_ON_MAIL_SERVER='mx.example.com'"
+    if ENV['MAIL_SERVER'].blank?
+      raise "Need MAIL_SERVER as ENV variable like export MAIL_SERVER='mx.example.com'"
     end
-    if ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].blank?
-      raise "Need KEEP_ON_MAIL_SERVER_ACCOUNT as ENV variable like export KEEP_ON_MAIL_SERVER_ACCOUNT='user:somepass'"
+    if ENV['MAIL_ADDRESS'].blank?
+      raise 'Need MAIL_ADDRESS as ENV variable'
+    end
+    if ENV['MAIL_PASS'].blank?
+      raise 'Need MAIL_PASS as ENV variable'
     end
 
-    @server_login = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[0]
-    @server_password = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[1]
+    @server_login = ENV['MAIL_ADDRESS']
+    @server_password = ENV['MAIL_PASS']
 
     @folder = "keep_on_mail_server_#{SecureRandom.uuid}"
 
@@ -39,7 +42,7 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
         inbound:  {
           adapter: 'imap',
           options: {
-            host:     ENV['KEEP_ON_MAIL_SERVER'],
+            host:     ENV['MAIL_SERVER'],
             user:     @server_login,
             password: @server_password,
             ssl:      true,
@@ -65,7 +68,7 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
     @channel.save!
 
     # clean mailbox
-    imap = Net::IMAP.new(ENV['KEEP_ON_MAIL_SERVER'], 993, true, nil, false)
+    imap = Net::IMAP.new(ENV['MAIL_SERVER'], 993, true, nil, false)
     imap.login(@server_login, @server_password)
     imap.create(@folder)
     imap.select(@folder)
@@ -153,7 +156,7 @@ hello world
     @channel.save!
 
     # clean mailbox
-    imap = Net::IMAP.new(ENV['KEEP_ON_MAIL_SERVER'], 993, true, nil, false)
+    imap = Net::IMAP.new(ENV['MAIL_SERVER'], 993, true, nil, false)
     imap.login(@server_login, @server_password)
     imap.create(@folder)
     imap.select(@folder)

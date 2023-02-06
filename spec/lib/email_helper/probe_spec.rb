@@ -2,19 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe EmailHelper::Probe, integration: true do
-  let(:expected_result_failed) do
-    {
-      result:  'failed',
-      message: message_human,
-    }
-  end
+RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SERVER MAIL_ADDRESS MAIL_PASS] do
+  let(:expected_result_failed)  { { result: 'failed', message: message_human, } }
+  let(:expected_result_invalid) { { result: 'invalid', message_human: message_human, } }
 
-  let(:expected_result_invalid) do
-    {
-      result:        'invalid',
-      message_human: message_human,
-    }
+  before do
+    allow(EmailHelper).to receive(:mx_records).and_return([ ENV['MAIL_SERVER'] ])
   end
 
   shared_examples 'probe tests with invalid result' do
@@ -86,29 +79,17 @@ RSpec.describe EmailHelper::Probe, integration: true do
       include_examples 'probe tests with invalid result'
     end
 
-    context 'when incorrect credentials are used' do
-      let(:host)          { 'imap.gmail.com' }
-      let(:message_human) { [ 'Authentication failed due to incorrect username.', 'Authentication failed due to incorrect credentials.' ] }
-
-      include_examples 'probe tests with invalid result'
-    end
-
     context 'when authentication fails' do
-      let(:host)          { 'mx2.zammad.com' }
+      let(:host)          { ENV['MAIL_SERVER'] }
       let(:message_human) { [ 'Authentication failed.', 'This host cannot be reached.' ] }
 
-      before do
-        stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
-      end
-
       include_examples 'probe tests with invalid result'
     end
 
-    context 'when doing a real test', required_envs: %w[EMAILHELPER_MAILBOX_1] do
-      let(:host)           { 'mx2.zammad.com' }
-      let(:real_user_data) { ENV['EMAILHELPER_MAILBOX_1'].split(':') }
-      let(:user)           { real_user_data.first }
-      let(:password)       { real_user_data.last }
+    context 'when doing a real test' do
+      let(:host)           { ENV['MAIL_SERVER'] }
+      let(:user)           { ENV['MAIL_ADDRESS'] }
+      let(:password)       { ENV['MAIL_PASS'] }
 
       it { is_expected.to include(result: 'ok') }
     end
@@ -170,32 +151,19 @@ RSpec.describe EmailHelper::Probe, integration: true do
       include_examples 'probe tests with invalid result'
     end
 
-    context 'when incorrect credentials are used' do
-      let(:host)          { 'smtp.gmail.com' }
-      let(:message_human) { 'Authentication failed.' }
-
-      include_examples 'probe tests with invalid result'
-    end
-
     context 'when authentication fails' do
-      let(:host)          { 'mx2.zammad.com' }
-      let(:port)          { 587 }
+      let(:host)          { ENV['MAIL_SERVER'] }
+      let(:port)          { 25 }
       let(:message_human) { 'Authentication failed.' }
-
-      before do
-        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
-        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
-      end
 
       include_examples 'probe tests with invalid result'
     end
 
-    context 'when doing a real test', required_envs: %w[EMAILHELPER_MAILBOX_1] do
-      let(:host)           { 'mx2.zammad.com' }
-      let(:port)           { 587 }
-      let(:real_user_data) { ENV['EMAILHELPER_MAILBOX_1'].split(':') }
-      let(:user)           { real_user_data.first }
-      let(:password)       { real_user_data.last }
+    context 'when doing a real test' do
+      let(:host)           { ENV['MAIL_SERVER'] }
+      let(:port)           { 25 }
+      let(:user)           { ENV['MAIL_ADDRESS'] }
+      let(:password)       { ENV['MAIL_PASS'] }
 
       let(:outbound_params) do
         {
@@ -204,14 +172,10 @@ RSpec.describe EmailHelper::Probe, integration: true do
             host:     host,
             port:     port,
             user:     user,
+            ssl:      false,
             password: password,
           },
         }
-      end
-
-      before do
-        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
-        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
       end
 
       it { is_expected.to include(result: 'ok') }
@@ -242,8 +206,8 @@ RSpec.describe EmailHelper::Probe, integration: true do
     end
 
     context 'when doing real tests' do
-      let(:email)    { real_user_data.first }
-      let(:password) { real_user_data.last }
+      let(:email)          { ENV['MAIL_ADDRESS'] }
+      let(:password)       { ENV['MAIL_PASS'] }
 
       shared_examples 'do real testing' do
         it 'contains all information for a successful probe' do
@@ -252,7 +216,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
               setting: include(
                 inbound: include(
                   options: include(
-                    host: inbound_host
+                    host: host
                   ),
                 ),
               ),
@@ -261,7 +225,7 @@ RSpec.describe EmailHelper::Probe, integration: true do
               setting: include(
                 outbound: include(
                   options: include(
-                    host: outbound_host,
+                    host: host,
                   ),
                 ),
               ),
@@ -269,33 +233,8 @@ RSpec.describe EmailHelper::Probe, integration: true do
         end
       end
 
-      context 'with zammad', required_envs: %w[EMAILHELPER_MAILBOX_1] do
-        let(:real_user_data) { ENV['EMAILHELPER_MAILBOX_1'].split(':') }
-        let(:inbound_host)   { 'mx2.zammad.com' }
-        let(:outbound_host)  { inbound_host }
-
-        before do
-          stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 5.seconds)
-          stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 10.seconds)
-
-          options = {
-            host:      inbound_host,
-            port:      993,
-            ssl:       true,
-            auth_type: 'PLAIN',
-            user:      email,
-            password:  password,
-          }
-          imap_delete_old_mails(options)
-        end
-
-        include_examples 'do real testing'
-      end
-
-      context 'with gmail', required_envs: %w[EMAILHELPER_MAILBOX_2] do
-        let(:real_user_data) { ENV['EMAILHELPER_MAILBOX_2'].split(':') }
-        let(:inbound_host)   { 'pop.gmail.com' }
-        let(:outbound_host)  { 'smtp.gmail.com' }
+      context 'when doing a real test' do
+        let(:host) { ENV['MAIL_SERVER'] }
 
         include_examples 'do real testing'
       end

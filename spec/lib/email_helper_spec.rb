@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe EmailHelper do
+
+  # This should continue to be a live test using DNS.
   describe '#mx_records', integration: true do
     context 'when checking for regular domains' do
       subject(:result) { described_class.mx_records(domain) }
@@ -79,20 +81,19 @@ RSpec.describe EmailHelper do
     end
   end
 
-  describe '#provider_inbound_mx', integration: true do
-    subject(:result) { described_class.provider_inbound_mx(user, email, password, mx_domains) }
+  describe '#provider_inbound_mx' do
+    subject(:result) { described_class.provider_inbound_mx(user, email, password, [mx_domain]) }
 
     let(:email)        { 'linus@zammad.com' }
     let(:password)     { 'some_pw' }
-    let(:parsed_email) { described_class.parse_email(email) }
-    let(:user)         { parsed_email.first }
-    let(:domain)       { parsed_email.last }
-    let(:mx_domains)   { described_class.mx_records(domain) }
+    let(:user)         { 'linus' }
+    let(:domain)       { 'zammad.com' }
+    let(:mx_domain)    { 'mx2.zammad.com' }
 
     let(:expected_result) do
       [
-        provider_inbound_mx_setting(mx_domains[0], 993, user, password),
-        provider_inbound_mx_setting(mx_domains[0], 993, email, password),
+        provider_inbound_mx_setting(mx_domain, 993, user, password),
+        provider_inbound_mx_setting(mx_domain, 993, email, password),
       ]
     end
 
@@ -117,9 +118,8 @@ RSpec.describe EmailHelper do
 
     let(:email)        { 'linus@zammad.com' }
     let(:password)     { 'some_pw' }
-    let(:parsed_email) { described_class.parse_email(email) }
-    let(:user)         { parsed_email.first }
-    let(:domain)       { parsed_email.last }
+    let(:user)         { 'linus' }
+    let(:domain)       { 'zammad.com' }
 
     let(:expected_result) do
       [
@@ -152,24 +152,23 @@ RSpec.describe EmailHelper do
     it { is_expected.to eq(expected_result) }
   end
 
-  describe '#provider_outbound_mx', integration: true do
-    subject(:result) { described_class.provider_outbound_mx(user, email, password, mx_domains) }
+  describe '#provider_outbound_mx' do
+    subject(:result) { described_class.provider_outbound_mx(user, email, password, [mx_domain]) }
 
     let(:email)        { 'linus@zammad.com' }
     let(:password)     { 'some_pw' }
-    let(:parsed_email) { described_class.parse_email(email) }
-    let(:user)         { parsed_email.first }
-    let(:domain)       { parsed_email.last }
-    let(:mx_domains)   { described_class.mx_records(domain) }
+    let(:user)         { 'linus' }
+    let(:domain)       { 'zammad.com' }
+    let(:mx_domain)    { 'mx.zammad.com' }
 
     let(:expected_result) do
       [
-        provider_outbound_mx_setting(mx_domains[0], 465, true, user, password),
-        provider_outbound_mx_setting(mx_domains[0], 465, true, email, password),
-        provider_outbound_mx_setting(mx_domains[0], 587, nil, user, password),
-        provider_outbound_mx_setting(mx_domains[0], 587, nil, email, password),
-        provider_outbound_mx_setting(mx_domains[0], 25, true, user, password),
-        provider_outbound_mx_setting(mx_domains[0], 25, true, email, password),
+        provider_outbound_mx_setting(mx_domain, 465, true, user, password),
+        provider_outbound_mx_setting(mx_domain, 465, true, email, password),
+        provider_outbound_mx_setting(mx_domain, 587, nil, user, password),
+        provider_outbound_mx_setting(mx_domain, 587, nil, email, password),
+        provider_outbound_mx_setting(mx_domain, 25, true, user, password),
+        provider_outbound_mx_setting(mx_domain, 25, true, email, password),
       ]
     end
 
@@ -199,9 +198,8 @@ RSpec.describe EmailHelper do
 
     let(:email)        { 'linus@zammad.com' }
     let(:password)     { 'some_pw' }
-    let(:parsed_email) { described_class.parse_email(email) }
-    let(:user)         { parsed_email.first }
-    let(:domain)       { parsed_email.last }
+    let(:user)         { 'linus' }
+    let(:domain)       { 'zammad.com' }
 
     let(:expected_result) do
       [
