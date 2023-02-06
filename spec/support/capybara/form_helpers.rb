@@ -273,8 +273,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   find_input('Title').type(body)
   #   find_editor('Text').type(body)
   #
-  def type(text)
-    return type_editor(text) if type_editor?
+  def type(text, **type_options)
+    return type_editor(text, **type_options) if type_editor?
 
     input_element.fill_in with: text
 
@@ -283,11 +283,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  def type_editor(text)
+  def type_editor(text, click: true)
     raise 'Field does not support typing' if !type_editor?
 
     cursor_home_shortcut = mac_platform? ? %i[command up] : %i[control home]
-    input_element.click.send_keys(cursor_home_shortcut).send_keys(text)
+    input_element.click.send_keys(cursor_home_shortcut) if click
+    input_element.send_keys(text)
 
     maybe_wait_for_form_updater
 

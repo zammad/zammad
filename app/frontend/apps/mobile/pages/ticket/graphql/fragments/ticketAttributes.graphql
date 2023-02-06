@@ -19,6 +19,7 @@ fragment ticketAttributes on Ticket {
     lastname
     fullname
     image
+    email
     organization {
       id
       internalId
@@ -48,6 +49,10 @@ fragment ticketAttributes on Ticket {
   group {
     id
     name
+    emailAddress {
+      name
+      emailAddress
+    }
   }
   priority {
     id

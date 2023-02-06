@@ -10,6 +10,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   messageId
@@ -18,6 +19,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   cc {
@@ -25,6 +27,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   subject
@@ -33,6 +36,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   messageId
@@ -51,11 +55,16 @@ export const TicketArticleAttributesFragmentDoc = gql`
   bodyWithUrls
   internal
   createdAt
+  originBy {
+    id
+    fullname
+  }
   createdBy {
     id
     fullname
     firstname
     lastname
+    email
     authorizations {
       provider
       uid

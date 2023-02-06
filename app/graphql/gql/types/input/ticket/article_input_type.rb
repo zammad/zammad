@@ -14,6 +14,7 @@ module Gql::Types::Input::Ticket
     argument :to, [String], required: false, description: 'The article recipient address.'
     argument :cc, [String], required: false, description: 'The article CC address.'
     argument :content_type, String, required: false, description: 'The article content type.'
+    argument :subtype, String, required: false, description: 'The article subtype.'
     argument :in_reply_to, String, required: false, description: 'Message id of the article this article replies to.'
     argument :time_unit, Float, required: false, description: 'The article accounted time.'
     argument :preferences, GraphQL::Types::JSON, required: false, description: 'The article preferences.'
@@ -21,6 +22,7 @@ module Gql::Types::Input::Ticket
     argument :security, [Gql::Types::Enum::SecurityOptionType], required: false, description: 'The article security options.'
 
     transform :transform_type
+    transform :transform_subtype
     transform :transform_sender
     transform :transform_customer_article
     transform :transform_security
@@ -32,6 +34,7 @@ module Gql::Types::Input::Ticket
     end
 
     def transform_sender(payload)
+      # TODO: not correct, should use "agent_read_access?" check from ticket_policy
       sender_name = context.current_user.permissions?('ticket.agent') ? 'Agent' : 'Customer'
       article_sender = payload[:sender].presence || sender_name
 
@@ -50,6 +53,17 @@ module Gql::Types::Input::Ticket
       end
 
       payload[:internal] = false
+
+      payload
+    end
+
+    def transform_subtype(payload)
+      subtype = payload.delete(:subtype) if payload[:subtype]
+
+      if subtype.present?
+        payload[:preferences] ||= {}
+        payload[:preferences][:subtype] = subtype
+      end
 
       payload
     end

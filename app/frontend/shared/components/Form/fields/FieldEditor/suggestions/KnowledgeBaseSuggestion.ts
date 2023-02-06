@@ -42,6 +42,7 @@ export default (context: Ref<FormFieldContext>) => {
       activator: ACTIVATOR,
       allowSpaces: true,
       type: 'knowledge-base',
+      // TODO: possible race condition
       async insert(props: MentionKnowledgeBaseItem) {
         const result = await translateHandler.send({
           translationId: props.id,

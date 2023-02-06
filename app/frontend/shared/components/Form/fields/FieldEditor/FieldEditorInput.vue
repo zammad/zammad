@@ -3,9 +3,11 @@
 <script setup lang="ts">
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { convertFileList } from '@shared/utils/files'
+import type { Editor } from '@tiptap/vue-3'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { computed, onUnmounted, ref, toRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
+import testFlags from '@shared/utils/testFlags'
 import useValue from '../../composables/useValue'
 import {
   getCustomExtensions,
@@ -15,6 +17,7 @@ import {
 import type {
   EditorContentType,
   EditorCustomPlugins,
+  FieldEditorContext,
   FieldEditorProps,
   PossibleSignature,
 } from './types'
@@ -110,14 +113,6 @@ const editor = useEditor({
   },
 })
 
-Object.assign(props.context, {
-  getEditorValue: (type: EditorContentType) => {
-    return type === 'text/plain'
-      ? editor.value?.getText()
-      : editor.value?.getHTML()
-  },
-})
-
 watch(
   () => props.context.id,
   (id) => {
@@ -172,25 +167,51 @@ useEventListener('click', (e) => {
   if (label === e.target) focusEditor()
 })
 
+// insert signature before full article blockquote or at the end of the document
+const resolveSignaturePosition = (editor: Editor) => {
+  let blockquotePosition: number | null = null
+  editor.state.doc.descendants((node, pos) => {
+    if (node.type.name === 'blockquote' && node.attrs['data-full']) {
+      blockquotePosition = pos
+      return false
+    }
+  })
+  if (blockquotePosition !== null) {
+    return { position: 'top', from: blockquotePosition }
+  }
+  return { position: 'bottom', from: editor.state.doc.content.size || 0 }
+}
+
 const addSignature = (signature: PossibleSignature) => {
-  if (!editor.value) return
+  if (!editor.value || editor.value.isDestroyed || !editor.value.isEditable)
+    return
   const currentPosition = editor.value.state.selection.anchor
   const positionFromEnd = editor.value.state.doc.content.size - currentPosition
   // don't use "chain()", because we change positions a lot
   // and chain doesn't know about it
   editor.value.commands.removeSignature()
-  editor.value.commands.addSignature(signature)
-  const newPosition =
-    signature.position === 'top'
-      ? editor.value.state.doc.content.size - positionFromEnd
-      : currentPosition
-  editor.value.commands.focus(newPosition)
+  const { position, from } = resolveSignaturePosition(editor.value)
+  editor.value.commands.addSignature({ ...signature, position, from })
+  // calculate new position from the end of the signature otherwise
+  editor.value.commands.focus(
+    signature.position ??
+      (currentPosition < from
+        ? currentPosition
+        : editor.value.state.doc.content.size - positionFromEnd),
+  )
+  requestAnimationFrame(() => {
+    testFlags.set('editor.signatureAdd')
+  })
 }
 
 const removeSignature = () => {
-  if (!editor.value) return
+  if (!editor.value || editor.value.isDestroyed || !editor.value.isEditable)
+    return
   const currentPosition = editor.value.state.selection.anchor
   editor.value.chain().removeSignature().focus(currentPosition).run()
+  requestAnimationFrame(() => {
+    testFlags.set('editor.removeSignature')
+  })
 }
 
 const characters = computed(() => {
@@ -200,9 +221,28 @@ const characters = computed(() => {
   })
 })
 
-Object.assign(props.context, {
+const editorCustomContext = {
+  _loaded: true,
+  getEditorValue: (type: EditorContentType) => {
+    if (!editor.value) return ''
+
+    return type === 'text/plain'
+      ? editor.value.getText()
+      : editor.value.getHTML()
+  },
   addSignature,
   removeSignature,
+  focus: focusEditor,
+}
+
+Object.assign(props.context, editorCustomContext)
+
+onMounted(() => {
+  const onLoad = props.context.onLoad as ((
+    context: FieldEditorContext,
+  ) => void)[]
+  onLoad.forEach((fn) => fn(editorCustomContext))
+  onLoad.length = 0
 })
 </script>
 

@@ -24,6 +24,7 @@ export const TicketAttributesFragmentDoc = gql`
     lastname
     fullname
     image
+    email
     organization {
       id
       internalId
@@ -53,6 +54,10 @@ export const TicketAttributesFragmentDoc = gql`
   group {
     id
     name
+    emailAddress {
+      name
+      emailAddress
+    }
   }
   priority {
     id

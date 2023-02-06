@@ -1,18 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'reply article' do |type_label, note, internal: false, attachments: false|
-  let(:group)             { Group.find_by(name: 'Users') }
-  let(:agent)             { create(:agent, groups: [group]) }
-  let(:customer)          { create(:customer) }
-  let(:to)                { nil }
-  let(:new_to)            { nil }
-  let(:expected_to)       { nil }
-  let(:trigger_label)     { 'Reply' }
-  let(:current_text)      { '' }
-  let(:new_text)          { 'This is a note' }
-  let(:result_text)       { new_text || current_text }
-  let(:in_reply_to)       { article.message_id }
-  let(:type_id)           { article.type_id }
   let(:attributes) do
     attributes = {
       type_id:     type_id,
@@ -21,13 +9,18 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
       in_reply_to: in_reply_to
     }
 
-    if new_to.present? && expected_to.present?
-      attributes[:to] = expected_to
-    elsif new_to.present?
-      attributes[:to] = new_to
-    elsif to.present?
-      attributes[:to] = to
-    end
+    saved_to = result_to if result_to.present?
+    saved_to = saved_to.join(', ') if saved_to.is_a?(Array)
+
+    saved_cc = cc if cc.present?
+    saved_cc = saved_cc.join(', ') if saved_cc.is_a?(Array)
+
+    saved_subject = article_subject if article_subject.present?
+    saved_subject = new_subject if new_subject.present?
+
+    attributes[:to] = saved_to if saved_to.present?
+    attributes[:cc] = saved_cc if cc.present?
+    attributes[:subject] = saved_subject if saved_subject.present?
 
     attributes
   end
@@ -37,7 +30,9 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
 
     visit "/tickets/#{ticket.id}"
 
+    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
     wait_for_form_to_settle('form-ticket-edit')
+    before_click.call
 
     find_button('Article actions').click
     find_button(trigger_label).click
@@ -45,20 +40,21 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
 
   # test only that reply works, because edge cases are covered by unit tests
   it "can reply with #{type_label} #{note || ''}" do
+    after_click.call
+
     expect(find_select('Article Type', visible: :all)).to have_selected_option(type_label)
     expect(find_select('Visibility', visible: :all)).to have_selected_option(internal ? 'Internal' : 'Public')
 
-    if to.present?
-      expect(find_autocomplete('To')).to have_value(" #{to}")
-    end
+    expect(find_autocomplete('To')).to have_selected_options(to) if to.present?
+    expect(find_autocomplete('CC')).to have_selected_options(cc) if cc.present?
+    expect(find_select('Subject', visible: :all)).to have_value(article_subject) if article_subject.present?
 
     text = find_editor('Text')
-    expect(text).to have_text_value(current_text, exact: true)
-    text.type(new_text) if new_text
+    expect(text).to have_text_value(current_text, exact: text_exact)
+    text.type(new_text, click: false) if new_text
 
-    if new_to.present?
-      find_autocomplete('To').search_for_option(new_to)
-    end
+    find_autocomplete('To').search_for_option(new_to) if new_to.present?
+    find_field('Subject', visible: :all).input(new_subject) if new_subject.present?
 
     if attachments
       find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
@@ -75,7 +71,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
 
     if attachments
-      attributes[:attachments] = [Store.last]
+      attributes[:attachments] = result_attachments
       expect(Store.last.filename).to eq('small.png')
     end
 

@@ -4,16 +4,22 @@ import type { FormData, FormValues } from '@shared/components/Form'
 import type { FieldRecipientContact } from '@shared/components/Form/fields/FieldRecipient'
 import type {
   EditorContentType,
+  FieldEditorContext,
   FieldEditorProps,
 } from '@shared/components/Form/fields/FieldEditor/types'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import type { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
 import type { AppName, AppSpecificRecord } from '@shared/types/app'
 import type { ConfigList } from '@shared/types/store'
+import type { SelectionData } from '@shared/utils/selection'
+
+export interface TicketArticleSelectionOptions {
+  body: FieldEditorContext
+}
 
 export interface TicketArticlePerformOptions {
-  selection?: Range
-  openReplyDialog(values?: FormValues): void
+  selection?: SelectionData
+  openReplyDialog(values?: FormValues): Promise<void>
   getNewArticleBody(type: EditorContentType): string
 }
 
@@ -23,7 +29,7 @@ export interface CommonTicketAddOptions {
 }
 
 export interface TicketActionAddOptions extends CommonTicketAddOptions {
-  recalculate: () => void
+  recalculate(): void
   onDispose(callback: () => unknown): void
 }
 
@@ -60,10 +66,14 @@ export interface AppSpecificTicketArticleType {
   recipientContact?: FieldRecipientContact
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
-  // when clicked on type, and type is not selected
-  onSelected?(ticket: TicketById): void
+  // when clicked on type, and type is not selected, or when dialog is opened with this type
+  onOpened?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+  onSelected?(ticket: TicketById, options: TicketArticleSelectionOptions): void
   // when clicked on other type, but this one is selected
-  onDeselected?(ticket: TicketById): void
+  onDeselected?(
+    ticket: TicketById,
+    options: TicketArticleSelectionOptions,
+  ): void
   // TODO use actual type instead of FormValues
   updateForm?(formValues: FormData): FormData
 }

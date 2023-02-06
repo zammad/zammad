@@ -9,8 +9,8 @@ import type { ConfidentTake } from '@shared/types/utils'
 import type { ImageFileData } from '@shared/utils/files'
 
 export interface PossibleSignature {
-  position?: 'bottom' | 'top'
   active?: boolean
+  position?: number
   body: string
   id: number
 }
@@ -18,7 +18,12 @@ export interface PossibleSignature {
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     signature: {
-      addSignature: (signature: PossibleSignature) => ReturnType
+      addSignature: (
+        signature: Omit<PossibleSignature, 'position'> & {
+          position: string
+          from: number
+        },
+      ) => ReturnType
       removeSignature: () => ReturnType
     }
     mentions: {
@@ -48,13 +53,14 @@ export type MentionTextItem = ConfidentTake<
 >[number]
 
 export type MentionType = 'user' | 'knowledge-base' | 'text'
+export type EditorContentType = 'text/html' | 'text/plain'
 
 export interface FieldEditorContext {
-  addSignature?(signature: PossibleSignature): void
-  removeSignature?(): void
+  addSignature(signature: PossibleSignature): void
+  removeSignature(): void
+  focus(): void
+  getEditorValue(type: EditorContentType): string
 }
-
-export type EditorContentType = 'text/html' | 'text/plain'
 
 export interface FieldEditorProps {
   groupId?: string

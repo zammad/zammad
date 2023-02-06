@@ -21,6 +21,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     useTextModuleSuggestionsLazyQuery({ query: '' }),
   )
 
+  // TODO: possible race condition
   const getTextModules = async (query: string) => {
     const { meta: editorMeta = {} } = context.value
     const meta = editorMeta[PLUGIN_NAME] || {}

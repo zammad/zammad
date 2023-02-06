@@ -4896,6 +4896,10 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+msgid "Forward"
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr ""
@@ -7506,6 +7510,7 @@ msgid "Ok"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 msgid "On %s, %s wrote:"
 msgstr ""
 
@@ -8481,11 +8486,16 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 msgid "Reply"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+msgid "Reply All"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee

@@ -22,6 +22,7 @@ import {
 } from '@shared/components/CommonNotifications'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { convertToGraphQLId } from '@shared/graphql/utils'
+import { useApplicationStore } from '@shared/stores/application'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -85,8 +86,12 @@ const {
   openArticleReplyDialog,
 } = useTicketArticleReply(ticket, form)
 
-const { currentArticleType, ticketEditSchema, articleTypeHandler } =
-  useTicketEditForm(ticket)
+const {
+  currentArticleType,
+  ticketEditSchema,
+  articleTypeHandler,
+  articleTypeSelectHandler,
+} = useTicketEditForm(ticket)
 
 const { notify } = useNotifications()
 
@@ -168,8 +173,15 @@ onBeforeRouteLeave(async () => {
   return confirmed
 })
 
+const application = useApplicationStore()
+
+const smimeIntegration = computed(
+  () => (application.config.smime_integration as boolean) ?? false,
+)
+
 const ticketEditSchemaData = reactive({
   formLocation,
+  smimeIntegration,
   newTicketArticleRequested,
   newTicketArticlePresent,
   currentArticleType,
@@ -193,6 +205,7 @@ const ticketEditSchemaData = reactive({
         :schema="ticketEditSchema"
         :flatten-form-groups="['ticket']"
         :handlers="[articleTypeHandler()]"
+        :form-kit-plugins="[articleTypeSelectHandler]"
         :schema-data="ticketEditSchemaData"
         :initial-values="initialTicketValue"
         :initial-entity-object="ticket"

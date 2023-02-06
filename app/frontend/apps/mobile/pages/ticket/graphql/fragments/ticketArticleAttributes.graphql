@@ -6,6 +6,7 @@ fragment ticketArticleAttributes on TicketArticle {
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   messageId
@@ -14,6 +15,7 @@ fragment ticketArticleAttributes on TicketArticle {
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   cc {
@@ -21,6 +23,7 @@ fragment ticketArticleAttributes on TicketArticle {
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   subject
@@ -29,6 +32,7 @@ fragment ticketArticleAttributes on TicketArticle {
     parsed {
       name
       emailAddress
+      isSystemAddress
     }
   }
   messageId
@@ -47,11 +51,16 @@ fragment ticketArticleAttributes on TicketArticle {
   bodyWithUrls
   internal
   createdAt
+  originBy {
+    id
+    fullname
+  }
   createdBy {
     id
     fullname
     firstname
     lastname
+    email
     authorizations {
       provider
       uid

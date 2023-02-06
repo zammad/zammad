@@ -10,7 +10,6 @@ import type {
   OperationVariables,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
-import type { ObservableQuery } from '@apollo/client/core/ObservableQuery'
 import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
@@ -37,7 +36,8 @@ export default class QueryHandler<
     // we can't use nextTick, because queries variables are not updated yet
     // and it will call the server with the first variables and the new ones
     await new Promise((r) => setTimeout(r, 0))
-    const query = this.operationResult.query.value as ObservableQuery<TResult>
+    const query = this.operationResult.query.value
+    if (!query) return null
     // this will take result from cache, respecting variables
     // if it's not in cache, it will fetch result from server
     const result = await query.result()

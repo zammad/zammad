@@ -82,56 +82,65 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       )
     end
 
-    it 'creates a public email (default)' do
-      visit "/tickets/#{ticket.id}"
-      find_button('Add reply').click
+    context 'when creating an email' do
+      let(:signature) { create(:signature, active: true, body: "\#{user.firstname}<br>Signature!") }
+      let(:group)     { create(:group, signature: signature) }
 
-      find_select('Article Type', visible: :all).select_option('Email')
+      it 'creates a public email (default)' do
+        visit "/tickets/#{ticket.id}"
+        find_button('Add reply').click
 
-      find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
-      find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
+        find_select('Article Type', visible: :all).select_option('Email')
 
-      find_editor('Text').type('This is a note!')
+        wait_for_test_flag('editor.signatureAdd')
 
-      find_button('Done').click
-      find_button('Save ticket').click
+        find_editor('Text').type('This is a note!', click: false)
 
-      wait_for_ticket_edit
+        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
+        find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
 
-      expect(Ticket::Article.last).to have_attributes(
-        type_id:      Ticket::Article::Type.lookup(name: 'email').id,
-        to:           'zammad_test_to@zammad.com',
-        cc:           'zammad_test_cc@zammad.com',
-        internal:     false,
-        content_type: 'text/html',
-        body:         '<p>This is a note!</p>',
-      )
-    end
+        find_button('Done').click
+        find_button('Save ticket').click
 
-    it 'creates an internal email' do
-      visit "/tickets/#{ticket.id}"
-      find_button('Add reply').click
+        wait_for_ticket_edit
 
-      find_select('Article Type', visible: :all).select_option('Email')
+        expect(Ticket::Article.last).to have_attributes(
+          type_id:      Ticket::Article::Type.lookup(name: 'email').id,
+          to:           'zammad_test_to@zammad.com',
+          cc:           'zammad_test_cc@zammad.com',
+          internal:     false,
+          content_type: 'text/html',
+          body:         "<p>This is a note!</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+        )
+      end
 
-      visibility = find_select('Visibility', visible: :all)
-      expect(visibility).to have_selected_option('Public')
+      it 'creates an internal email' do
+        visit "/tickets/#{ticket.id}"
+        find_button('Add reply').click
 
-      visibility.select_option('Internal')
+        find_select('Article Type', visible: :all).select_option('Email')
 
-      find_editor('Text').type('This is a note!')
+        wait_for_test_flag('editor.signatureAdd')
 
-      find_button('Done').click
-      find_button('Save ticket').click
+        find_editor('Text').type('This is a note!', click: false)
 
-      wait_for_ticket_edit
+        visibility = find_select('Visibility', visible: :all)
+        expect(visibility).to have_selected_option('Public')
 
-      expect(Ticket::Article.last).to have_attributes(
-        type_id:      Ticket::Article::Type.lookup(name: 'email').id,
-        internal:     true,
-        content_type: 'text/html',
-        body:         '<p>This is a note!</p>',
-      )
+        visibility.select_option('Internal')
+
+        find_button('Done').click
+        find_button('Save ticket').click
+
+        wait_for_ticket_edit
+
+        expect(Ticket::Article.last).to have_attributes(
+          type_id:      Ticket::Article::Type.lookup(name: 'email').id,
+          internal:     true,
+          content_type: 'text/html',
+          body:         "<p>This is a note!</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+        )
+      end
     end
 
     it 'changes ticket data together with the article' do

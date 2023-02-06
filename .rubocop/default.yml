@@ -355,6 +355,10 @@ Layout/MultilineMethodCallIndentation:
 Lint/UnusedMethodArgument:
   AllowUnusedKeywordArguments: true
 
+Naming/PredicateName:
+  Exclude:
+    - "app/graphql/gql/types/**/*"
+
 RSpec/DescribeMethod:
   # We want to be able to split tests into subfolders, where several cases are grouped together.
   Description: 'Checks that the second argument to the top level describe is the tested method name.'

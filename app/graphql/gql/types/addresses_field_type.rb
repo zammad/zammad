@@ -12,7 +12,10 @@ module Gql::Types
     end
 
     def parsed
-      Mail::AddressList.new(object).addresses
+      Mail::AddressList
+        .new(object)
+        .addresses
+        .map { |elem| { name: elem.name, email_address: elem.address } }
     rescue Mail::Field::ParseError
       nil
     end

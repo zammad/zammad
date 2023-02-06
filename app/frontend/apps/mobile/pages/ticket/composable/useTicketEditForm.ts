@@ -13,6 +13,8 @@ import type {
   ChangedField,
   ReactiveFormSchemData,
 } from '@shared/components/Form/types'
+import type { FieldEditorContext } from '@shared/components/Form/fields/FieldEditor/types'
+import type { FormKitNode } from '@formkit/core'
 
 export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
   const ticketArticleTypes = computed(() => {
@@ -65,6 +67,11 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       {
         type: 'hidden',
         name: 'inReplyTo',
+      },
+      {
+        if: '$fns.includes($currentArticleType.attributes, "subtype")',
+        type: 'hidden',
+        name: 'subtype',
       },
       {
         name: 'articleType',
@@ -132,7 +139,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         triggerFormUpdater: false,
       },
       {
-        if: '$fns.includes($currentArticleType.attributes, "security")',
+        if: '$smimeIntegration === true && $fns.includes($currentArticleType.attributes, "security")',
         name: 'security',
         label: __('Security'),
         type: 'security',
@@ -189,7 +196,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
     },
   ]
 
-  const articleTypeHandler = () => {
+  const articleTypeChangeHandler = () => {
     const executeHandler = (
       execution: FormHandlerExecution,
       schemaData: ReactiveFormSchemData,
@@ -215,11 +222,19 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       schemaData,
       changedField,
     ) => {
-      if (!executeHandler(execution, schemaData, changedField) || !ticket.value)
+      if (
+        !executeHandler(execution, schemaData, changedField) ||
+        !ticket.value ||
+        !formNode
+      )
         return
+      const body = formNode.find('body', 'name')
+      const context = {
+        body: body?.context as unknown as FieldEditorContext,
+      }
 
       if (changedField?.newValue !== changedField?.oldValue) {
-        currentArticleType.value?.onDeselected?.(ticket.value)
+        currentArticleType.value?.onDeselected?.(ticket.value, context)
       }
 
       const newType = ticketArticleTypes.value.find(
@@ -228,10 +243,12 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
 
       if (!newType) return
 
-      newType.onSelected?.(ticket.value)
+      if (!formNode.context?._open) {
+        newType.onSelected?.(ticket.value, context)
+      }
       currentArticleType.value = newType
 
-      formNode?.find('internal')?.input(newType.internal, false)
+      formNode.find('internal')?.input(newType.internal, false)
     }
 
     return {
@@ -243,9 +260,27 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
     }
   }
 
+  const articleTypeSelectHandler = (formNode: FormKitNode) => {
+    // this is called only when user replied to an article, but the type inside form did not change
+    // (because dialog was opened before, and type was changed then, but we still need to trigger select, because visually it's what happens)
+    formNode.on('article-reply-open', ({ payload }) => {
+      if (!payload || !ticket.value) return
+      const articleType = ticketArticleTypes.value.find(
+        (type) => type.value === payload,
+      )
+      if (!articleType) return
+      const body = formNode.find('body', 'name') as FormKitNode
+      const context = {
+        body: body.context as unknown as FieldEditorContext,
+      }
+      articleType.onOpened?.(ticket.value, context)
+    })
+  }
+
   return {
     ticketEditSchema,
     currentArticleType,
-    articleTypeHandler,
+    articleTypeHandler: articleTypeChangeHandler,
+    articleTypeSelectHandler,
   }
 }

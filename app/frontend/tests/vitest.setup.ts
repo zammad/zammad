@@ -18,6 +18,21 @@ configure({
   asyncUtilTimeout: 5000,
 })
 
+class DOMRectList {
+  length = 0
+
+  // eslint-disable-next-line class-methods-use-this
+  item = () => null;
+
+  // eslint-disable-next-line class-methods-use-this
+  [Symbol.iterator] = () => {
+    //
+  }
+}
+
+Object.defineProperty(Node.prototype, 'getClientRects', {
+  value: new DOMRectList(),
+})
 Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
@@ -59,6 +74,30 @@ vi.mock('@shared/components/CommonNotifications/composable', async () => {
     default: useNotifications,
   }
 })
+
+// don't rely on tiptap, because it's not supported in JSDOM
+vi.mock(
+  '@shared/components/Form/fields/FieldEditor/FieldEditorInput.vue',
+  async () => {
+    const { computed, defineComponent } = await import('vue')
+    const component = defineComponent({
+      name: 'FieldEditorInput',
+      props: { context: { type: Object, required: true } },
+      setup(props) {
+        const value = computed({
+          get: () => props.context._value,
+          set: (value) => {
+            props.context.node.input(value)
+          },
+        })
+
+        return { value, name: props.context.name }
+      },
+      template: `<textarea :name="name" v-model="value" />`,
+    })
+    return { __esModule: true, default: component }
+  },
+)
 
 // mock vueuse because of CommonDialog, it uses usePointerSwipe
 // that is not supported in JSDOM

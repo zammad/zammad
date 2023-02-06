@@ -17,6 +17,11 @@ export class I18N {
     return this.translator.translate(source, ...args)
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  locale() {
+    return document.documentElement.getAttribute('lang') || 'en-US'
+  }
+
   date(dateString: string): string {
     const template = dates.getDateFormat(this.translator)
     return dates.absoluteDateTime(dateString, template)

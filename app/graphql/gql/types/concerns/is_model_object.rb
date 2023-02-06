@@ -44,7 +44,7 @@ module Gql::Types::Concerns::IsModelObject
       field(association, *args, **kwargs, is_dependent_field: true, &)
     end
 
-    def has_one(association, *args, **kwargs, &) # rubocop:disable Naming/PredicateName
+    def has_one(association, *args, **kwargs, &)
       kwargs[:resolver_method] = association_resolver(association) do
         definition = object.class.reflections[association.to_s]
         Gql::RecordLoader.for(definition.klass, column: definition.foreign_key).load(object.id)

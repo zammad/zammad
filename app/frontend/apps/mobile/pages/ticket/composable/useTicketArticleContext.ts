@@ -6,13 +6,19 @@ import { computed, nextTick, ref, shallowRef } from 'vue'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { createArticleActions } from '@shared/entities/ticket-article/action/plugins'
 import type { TicketArticlePerformOptions } from '@shared/entities/ticket-article/action/plugins/types'
-import type { EditorContentType } from '@shared/components/Form/fields/FieldEditor/types'
+import type {
+  EditorContentType,
+  FieldEditorContext,
+} from '@shared/components/Form/fields/FieldEditor/types'
+import { getArticleSelection } from '@shared/entities/ticket-article/composables/getArticleSelection'
+import type { SelectionData } from '@shared/utils/selection'
+import type { FormKitNode } from '@formkit/core'
 import { useTicketInformation } from './useTicketInformation'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
   const ticketForContext = shallowRef<TicketById>()
-  const selectionRange = ref<Range>()
+  const selectionData = ref<SelectionData>()
   const metadataDialog = useDialog({
     name: 'article-metadata',
     component: () =>
@@ -34,14 +40,18 @@ export const useTicketArticleContext = () => {
 
   const openReplyDialog: TicketArticlePerformOptions['openReplyDialog'] =
     async (values = {}) => {
-      const formNode = form.value?.formNode
-      if (!formNode) return
+      const formNode = form.value?.formNode as FormKitNode
 
       await showArticleReplyDialog()
 
       const { articleType, ...otherOptions } = values
 
-      formNode.find('articleType')?.input(articleType, false)
+      const typeNode = formNode.find('articleType', 'name')
+      if (formNode.context) {
+        Object.assign(formNode.context, { _open: true })
+      }
+
+      typeNode?.input(articleType, false)
       // trigger new fields that depend on the articleType
       await nextTick()
 
@@ -56,6 +66,20 @@ export const useTicketArticleContext = () => {
           node.emit('prop:options', options)
         }
       }
+
+      formNode.emit('article-reply-open', articleType)
+
+      const context = formNode.find('body', 'name')?.context as
+        | FieldEditorContext
+        | undefined
+
+      context?.focus()
+
+      nextTick(() => {
+        if (formNode.context) {
+          Object.assign(formNode.context, { _open: false })
+        }
+      })
     }
 
   const getNewArticleBody = (type: EditorContentType): string => {
@@ -87,7 +111,7 @@ export const useTicketArticleContext = () => {
         link,
         onAction: () =>
           perform(ticket, article, {
-            selection: selectionRange.value,
+            selection: selectionData.value,
             openReplyDialog,
             getNewArticleBody,
           }),
@@ -129,11 +153,10 @@ export const useTicketArticleContext = () => {
     articleForContext.value = article
     ticketForContext.value = ticket
     try {
-      // TODO: only put range, if it's inside the article
       // can throw RangeError
-      selectionRange.value = window.getSelection()?.getRangeAt(0)
+      selectionData.value = getArticleSelection(article.internalId)
     } catch {
-      selectionRange.value = undefined
+      selectionData.value = undefined
     }
   }
 

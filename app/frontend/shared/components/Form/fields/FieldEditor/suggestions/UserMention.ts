@@ -27,6 +27,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     }),
   )
 
+  // TODO: possible race condition
   const getUserMentions = async (query: string, group: string) => {
     const result = await queryMentionsHandler.trigger({
       query,

@@ -6,6 +6,10 @@
     outline: none;
   }
 
+  blockquote {
+    @apply border-l-4 border-l-gray-200 px-3 py-2;
+  }
+
   ol {
     list-style: decimal;
   }

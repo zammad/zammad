@@ -13,7 +13,7 @@ const resolveContext = () => {
     const max = start + 1000
     const interval = setInterval(() => {
       const context = getContext()
-      if (context && context.addSignature) {
+      if (context && '_loaded' in context) {
         resolve(context as any)
         clearInterval(interval)
       }
@@ -52,9 +52,9 @@ describe('correctly adds signature', () => {
       cy.findByRole('textbox')
         .should(
           'have.html',
-          `${BREAK_HTML}${WRAPPED_SIGNATURE(
+          `${BREAK_HTML}${BREAK_HTML}${WRAPPED_SIGNATURE(
             '1',
-            `${BREAK_HTML}${PARSED_SIGNATURE}`,
+            PARSED_SIGNATURE,
           )}`,
         )
         .then(() => {
@@ -77,9 +77,9 @@ describe('correctly adds signature', () => {
         cy.findByRole('textbox')
           .should(
             'have.html',
-            `<p>${ORIGINAL_TEXT}</p>${WRAPPED_SIGNATURE(
+            `<p>${ORIGINAL_TEXT}</p>${BREAK_HTML}${WRAPPED_SIGNATURE(
               '2',
-              `${BREAK_HTML}${PARSED_SIGNATURE}`,
+              `${PARSED_SIGNATURE}`,
             )}`,
           )
           .type('new')
@@ -93,34 +93,34 @@ describe('correctly adds signature', () => {
           })
       })
   })
-  it('add top signature when content is already there', () => {
-    mountEditor()
+  it('add signature when there is a full quote there', () => {
+    const quote = '<blockquote data-full="true"><p>Some Quote</p></blockquote>'
+    mountEditor({
+      value: `<p></p>${quote}`,
+    })
 
     cy.findByRole('textbox')
-      .type(ORIGINAL_TEXT)
       .then(resolveContext)
       .then((context) => {
         context.addSignature({
           body: SIGNATURE,
           id: 3,
-          position: 'top',
         })
         cy.findByRole('textbox')
           .should(
             'have.html',
-            `${WRAPPED_SIGNATURE(
+            `${BREAK_HTML}${WRAPPED_SIGNATURE(
               '3',
               `${PARSED_SIGNATURE}${BREAK_HTML}`,
-            )}<p>${ORIGINAL_TEXT}</p>`,
+            )}${quote}`,
           )
           .type('new')
-          .should('include.html', `<p>${ORIGINAL_TEXT}new</p>`) // cursor didn't move
+          .should('include.html', `<p>new</p><div data-signature`) // cursor didn't move
           .then(() => {
             context.removeSignature()
-            cy.findByRole('textbox').should(
-              'have.html',
-              `<p>${ORIGINAL_TEXT}new</p>`,
-            )
+            cy.findByRole('textbox')
+              .should('include.html', `<p>new</p>`)
+              .and('include.html', quote)
           })
       })
   })

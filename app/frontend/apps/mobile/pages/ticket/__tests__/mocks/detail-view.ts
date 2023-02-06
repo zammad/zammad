@@ -85,6 +85,11 @@ export const defaultTicket = () =>
         __typename: 'Group',
         id: convertToGraphQLId('Group', 1),
         name: 'Users',
+        emailAddress: {
+          __typename: 'EmailAddress',
+          name: 'zammad',
+          emailAddress: 'zammad@example.com',
+        },
       },
       priority: {
         __typename: 'TicketPriority',

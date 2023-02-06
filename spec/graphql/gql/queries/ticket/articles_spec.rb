@@ -31,6 +31,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   parsed {
                     name
                     emailAddress
+                    isSystemAddress
                   }
                 }
                 to {
@@ -38,6 +39,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   parsed {
                     name
                     emailAddress
+                    isSystemAddress
                   }
                 }
                 cc {
@@ -45,6 +47,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   parsed {
                     name
                     emailAddress
+                    isSystemAddress
                   }
                 }
                 subject
@@ -53,6 +56,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                   parsed {
                     name
                     emailAddress
+                    isSystemAddress
                   }
                 }
                 messageId
@@ -156,8 +160,9 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
             'cc'                       => {
               'parsed' => [
                 {
-                  'emailAddress' => 'ci@zammad.org',
-                  'name'         => 'Zammad CI',
+                  'emailAddress'    => 'ci@zammad.org',
+                  'name'            => 'Zammad CI',
+                  'isSystemAddress' => false,
                 },
               ],
               'raw'    => cc,

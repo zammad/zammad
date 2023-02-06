@@ -4,6 +4,7 @@ import Underline from '@tiptap/extension-underline'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 import Link from '@tiptap/extension-link'
+import Blockquote from '@tiptap/extension-blockquote'
 import StarterKit from '@tiptap/starter-kit'
 import CharacterCount from '@tiptap/extension-character-count'
 
@@ -42,11 +43,25 @@ export const getHtmlExtensions = (): Extensions => [
   StarterKit.configure({
     orderedList: false,
     listItem: false,
+    blockquote: false,
   }),
   CharacterCount,
   Underline,
   OrderedList,
   ListItem,
+  Blockquote.extend({
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        type: {
+          default: null,
+        },
+        'data-full': {
+          default: null,
+        },
+      }
+    },
+  }),
   Link.configure({
     openOnClick: false,
     autolink: false,

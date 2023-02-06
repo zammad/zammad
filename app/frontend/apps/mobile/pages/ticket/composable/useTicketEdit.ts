@@ -20,6 +20,7 @@ interface ArticleFormValues {
   body: string
   internal: boolean
   cc?: string[]
+  subtype?: string
   inReplyTo?: string
   to?: string[]
   subject?: string
@@ -81,6 +82,7 @@ export const useTicketEdit = (
       cc: article.cc,
       to: article.to,
       subject: article.subject,
+      subtype: article.subtype,
       inReplyTo: article.inReplyTo,
       contentType,
       attachments: attachments.length ? { files, formId } : null,

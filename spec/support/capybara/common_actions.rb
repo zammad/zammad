@@ -202,7 +202,7 @@ module CommonActions
   #  expect(page).to have_current_route('login')
   # => checks for SPA route '/#login'
   #
-  def have_current_route(route, app: self.class.metadata[:app], **options)
+  def have_current_route(route, app: self.class.metadata[:app], **options) # rubocop:disable Naming/PredicateName
     if route.is_a?(String)
       case app
       when :mobile

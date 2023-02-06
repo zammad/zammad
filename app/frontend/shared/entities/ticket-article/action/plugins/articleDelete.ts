@@ -83,11 +83,7 @@ const secondsToDelete = (article: TicketArticle, deleteTimeframe: number) => {
   return deleteTimeframe - secondsSinceCreated
 }
 
-const isDeletable = (
-  ticket: TicketById,
-  article: TicketArticle,
-  deleteTimeframe: number,
-) => {
+const isDeletable = (article: TicketArticle, deleteTimeframe: number) => {
   const session = useSessionStore()
 
   if (article.createdBy?.id !== session.userId) return false
@@ -110,7 +106,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     const deleteTimeframe =
       config.ui_ticket_zoom_article_delete_timeframe as number
 
-    if (!isDeletable(ticket, article, deleteTimeframe)) return []
+    if (!isDeletable(article, deleteTimeframe)) return []
 
     const seconds = secondsToDelete(article, deleteTimeframe)
 

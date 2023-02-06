@@ -14,12 +14,29 @@ import { useTicketSignatureLazyQuery } from '@shared/graphql/queries/ticketSigna
 import { convertToGraphQLId, getIdFromGraphQLId } from '@shared/graphql/utils'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
+import type {
+  TicketSignatureQuery,
+  TicketSignatureQueryVariables,
+} from '@shared/graphql/types'
+
+let signatureQuery: QueryHandler<
+  TicketSignatureQuery,
+  TicketSignatureQueryVariables
+>
+
+export const getTicketSignatureQuery = () => {
+  if (signatureQuery) return signatureQuery
+
+  signatureQuery = new QueryHandler(
+    useTicketSignatureLazyQuery({ groupId: '' }),
+  )
+
+  return signatureQuery
+}
 
 // TODO: can maybe be moved inside ticket entity?
 export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
-  const signatureQuery = new QueryHandler(
-    useTicketSignatureLazyQuery({ groupId: '' }),
-  )
+  const signatureQuery = getTicketSignatureQuery()
 
   const getValue = (
     values: FormValues,
@@ -67,13 +84,13 @@ export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
           ticketId: ticket?.value?.id,
         })
         .then((signature) => {
-          const body = signature.ticketSignature?.renderedBody
-          const id = signature.ticketSignature?.id
+          const body = signature?.ticketSignature?.renderedBody
+          const id = signature?.ticketSignature?.id
           if (!body || !id) {
-            editorContext.removeSignature?.()
+            editorContext.removeSignature()
             return
           }
-          editorContext.addSignature?.({ body, id: getIdFromGraphQLId(id) })
+          editorContext.addSignature({ body, id: getIdFromGraphQLId(id) })
         })
     }
 

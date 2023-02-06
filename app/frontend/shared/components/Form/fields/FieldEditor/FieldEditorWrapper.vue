@@ -3,7 +3,11 @@
 import { computed, defineAsyncComponent } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import FieldEditorFooter from './FieldEditorFooter.vue'
-import type { FieldEditorProps } from './types'
+import type {
+  FieldEditorContext,
+  FieldEditorProps,
+  PossibleSignature,
+} from './types'
 
 const FieldEditor = defineAsyncComponent(() => import('./FieldEditorInput.vue'))
 
@@ -18,6 +22,22 @@ const editorRerenderKey = computed(() => {
   const type = props.context.contentType === 'text/plain' ? 'plain' : 'html'
   return `${type}-${props.context.id}`
 })
+
+const onLoad: ((context: FieldEditorContext) => void)[] = []
+const queueAction = (fn: (context: FieldEditorContext) => void) => {
+  onLoad.push(fn)
+}
+
+const preContext = {
+  onLoad,
+  getEditorValue: () => '',
+  addSignature: (signature: PossibleSignature) =>
+    queueAction((context) => context.addSignature(signature)),
+  removeSignature: () => queueAction((context) => context.removeSignature()),
+  focus: () => queueAction((context) => context.focus()),
+}
+
+Object.assign(props.context, preContext)
 </script>
 
 <template>

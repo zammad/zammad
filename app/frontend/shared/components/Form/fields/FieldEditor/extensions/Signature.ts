@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mergeAttributes, Node, type Range } from '@tiptap/core'
-import { DOMParser } from 'prosemirror-model'
+import { mergeAttributes, Node } from '@tiptap/core'
+import type { Range } from '@tiptap/core'
+import { DOMParser, type Node as ProseNode } from 'prosemirror-model'
 
 export default Node.create({
   name: 'signature',
@@ -16,17 +17,15 @@ export default Node.create({
           const slice = DOMParser.fromSchema(editor.state.schema)
             .parseSlice(element)
             .toJSON()
-          const lastPosition = editor.state.doc.content.size
-          const signaturePostion =
-            signature.position === 'top' ? 0 : lastPosition
+          if (!slice) return false
           return chain()
-            .insertContentAt(signaturePostion, [
+            .insertContentAt(signature.from, [
+              ...(signature.position === 'bottom'
+                ? [{ type: 'paragraph' }]
+                : []),
               {
                 type: 'signature',
                 content: [
-                  ...(!signature.position || signature.position === 'bottom'
-                    ? [{ type: 'paragraph' }]
-                    : []),
                   ...slice.content,
                   ...(signature.position === 'top'
                     ? [{ type: 'paragraph' }]
@@ -43,10 +42,37 @@ export default Node.create({
         () =>
         ({ editor, chain }) => {
           const ranges: Range[] = []
+          let prev: [ProseNode | null, number] = [null, 0]
           editor.state.doc.descendants((node, pos) => {
-            if (node.type.name === 'signature') {
+            if (node.type.name !== 'signature') {
+              prev = [node, pos]
+              return
+            }
+
+            // we remove previous empty line that we add in "addSignature"
+            // in earlier signature implementations it was part of the signature, but this introduces a problem
+            // when new user text becomes part of the signature, because of the empty line
+            // so instead if having it part of the signature, we remove it and add it back
+            const [prevNode, prevPos] = prev
+            let prevRange: null | Range = null
+            if (
+              prevNode &&
+              prevNode.type.name === 'paragraph' &&
+              !prevNode.content.size &&
+              !prevNode.marks.length
+            ) {
+              prevRange = { from: prevPos, to: prevPos + prevNode.nodeSize }
+            }
+
+            // if this is part of the same range, merge ranges
+            const to = pos + node.nodeSize
+            if (prevRange && prevRange.to >= pos && prevRange.to <= to) {
+              ranges.push({ from: prevRange.from, to })
+            } else {
               ranges.push({ from: pos, to: pos + node.nodeSize })
             }
+
+            prev = [node, pos]
           })
           const c = chain()
           ranges.forEach((r) => {
