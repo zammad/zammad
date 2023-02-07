@@ -21,14 +21,14 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   before do
     next if saml_initialized
 
-    # Get auth token
+    # Get auth token.
     response = UserAgent.post(saml_auth_endpoint, saml_auth_payload)
     raise 'Authentication failed' if !response.success?
 
     saml_access_token = JSON.parse(response.body)['access_token']
     raise 'No access_token found' if saml_access_token.blank?
 
-    # Import zammad client
+    # Import zammad client.
     response = UserAgent.post(saml_client_import_endpoint, JSON.parse(saml_client_json), { headers: saml_auth_headers, json: true, jsonParseDisable: true })
     raise 'Authentication failed' if !response.success?
 
@@ -36,7 +36,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   end
 
   def set_saml_config(name_identifier_format: nil, uid_attribute: nil)
-    # setup Zammad SAML authentication
+    # Setup Zammad SAML authentication.
     response = UserAgent.get(saml_realm_zammad_descriptor)
     raise 'No Zammad realm descriptor found' if !response.success?
 
@@ -57,7 +57,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     Setting.set('fqdn', zammad_base_url.gsub(%r{^https?://}, ''))
   end
 
-  # shared_examples does not work.
+  # Shared_examples does not work.
   def login_saml
     visit '/#login'
     find('.auth-provider--saml').click
@@ -79,8 +79,8 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
 
   def logout_saml
     visit '/#logout'
-    find_by_id('app')
     expect(page).to have_current_route('login')
+    find_by_id('app')
   end
 
   describe 'SP login and SP logout' do
@@ -92,14 +92,14 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       login_saml
 
       visit saml_realm_zammad_accounts
-      find_by_id('landingWelcomeMessage')
       expect(page).to have_css('#landingSignOutButton')
+      find_by_id('landingWelcomeMessage')
 
       logout_saml
 
       visit saml_realm_zammad_accounts
-      find_by_id('landingWelcomeMessage')
       expect(page).to have_no_css('#landingSignOutButton')
+      find_by_id('landingWelcomeMessage')
     end
   end
 
@@ -117,8 +117,8 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       find('#landingSignOutButton').click
 
       visit '/'
-      find_by_id('app')
       expect(page).to have_current_route('login')
+      find_by_id('app')
     end
   end
 

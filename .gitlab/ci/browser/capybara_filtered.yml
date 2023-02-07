@@ -5,6 +5,7 @@
     - when: never
   variables:
     BROWSER_TEST_FILTER_LOOP_COUNT: 50
+    FF_NETWORK_PER_BUILD: 1  # https://docs.gitlab.com/runner/configuration/feature-flags.html
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
     - |
