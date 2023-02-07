@@ -1,8 +1,10 @@
 .job_rules_default:
   rules:
-    - if: '$SINGLETESTNAME && $SINGLETESTNAME == $CI_JOB_NAME'
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER && $JOB_FILTER == $CI_JOB_NAME
       when: always
-    - if: '$SINGLETESTNAME && $SINGLETESTNAME != $CI_JOB_NAME'
+    - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
       when: never
     - when: on_success
 
