@@ -947,7 +947,7 @@ register a new webhooks at twitter
       response = Twitter::REST::Request.new(@client, :post, "/1.1/account_activity/all/#{env_name}/webhooks.json", options).perform
     rescue => e
       message = "Unable to register webhook: #{e.message}"
-      if %r{http://}.match?(webhook_url)
+      if webhook_url.include?('http://')
         message += ' Only https webhooks possible to register.'
       elsif webhooks.count.positive?
         message += " Already #{webhooks.count} webhooks registered. Maybe you need to delete one first."
