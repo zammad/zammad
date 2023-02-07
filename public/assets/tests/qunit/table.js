@@ -850,6 +850,30 @@ QUnit.test('table test 8 - double escaping for translatables', assert => {
   assert.equal(el.find('tbody > tr:nth-child(2) > td:first-child').text().trim(), 'some "name" 2', 'check translated name with quotes')
 });
 
+QUnit.test('Overview grouping does not work with multi_tree_select #4408', assert => {
+  $('#qunit').append('<hr><h1>Overview grouping does not work with multi_tree_select #4408</h1><div id="table-data9"></div>')
+  var el = $('#table-data9')
+
+  data = [
+    { name: 'some name 1', data: ['some data 1'] },
+    { name: 'some "name" 2', data: ['some data 2', 'some data 3'] },
+    { name: 'some name 3', data: ['some data 3', 'some data 2'] },
+  ]
+  new App.ControllerTable({
+    el:       el,
+    overview: ['name', 'data', 'active'],
+    attribute_list: [
+      { name: 'name', display: 'Name', type: 'text', tag: 'input', translate: true },
+      { name: 'data', display: 'Data', type: 'multi_tree_select' },
+    ],
+    groupBy: 'data',
+    objects: data
+  });
+
+  assert.equal(el.find('tbody > tr > td[colspan=1]').length, 2, '#4408 - element count')
+  assert.deepEqual(el.find('tbody > tr > td[colspan=1]').map(function() { return $(this).text() }).get(), ['some data 1', 'some data 2, some data 3'], '#4408 - correct group descriptions')
+});
+
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)

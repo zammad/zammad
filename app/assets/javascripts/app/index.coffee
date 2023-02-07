@@ -66,7 +66,7 @@ class App extends Spine.Controller
       items = items.slice(0, attributeConfig.display_limit)
 
     # lookup relation
-    for item in items
+    for item in items.sort()
       resultLocal = item
       if attributeConfig.relation || valueRef
         if valueRef
