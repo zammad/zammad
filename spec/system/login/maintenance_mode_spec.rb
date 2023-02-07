@@ -71,6 +71,8 @@ RSpec.describe 'Login Maintenance Mode', authenticated_as: false, type: :system 
 
         Setting.set 'maintenance_mode', true
 
+        await_empty_ajax_queue
+
         expect(page).to have_css('.js-maintenanceMode', wait: 30)
       end
     end

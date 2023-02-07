@@ -293,6 +293,9 @@ class _webSocketSingleton extends App.Controller
     @ws.onerror = (e) =>
       @log 'debug', 'ws:onerror', e
 
+      if @connectionEstablished
+        @connectionEstablished = false
+
   _receiveMessage: (data = []) =>
 
     # go through all blocks
