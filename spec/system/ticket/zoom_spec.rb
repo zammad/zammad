@@ -2055,7 +2055,8 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'does not show the ticket as changed after the upload removal' do
-        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        await_empty_ajax_queue
         expect(page.find('.article-new')).to have_text('mail001.box')
         wait_for_upload_present
         begin
@@ -2254,7 +2255,7 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
 
     it 'does open automatically when attachment is given from sidebar' do
-      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
       wait.until { Taskbar.find_by(key: "Ticket-#{ticket.id}").attributes_with_association_ids['attachments'].present? }
       refresh
       expect(page).to have_selector('form.article-add.is-open')

@@ -688,11 +688,8 @@ RSpec.describe 'Ticket Create', type: :system do
       visit 'ticket/create'
 
       within :active_content do
-        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
-
-        # Wait for the uploaded attachment delete button to show up.
-        page.find('.js-delete', visible: :all)
-
+        page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        await_empty_ajax_queue
         find('.js-cancel').click
       end
 
@@ -708,7 +705,8 @@ RSpec.describe 'Ticket Create', type: :system do
       visit 'ticket/create'
 
       within :active_content do
-        page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+        await_empty_ajax_queue
       end
 
       in_modal do
@@ -1011,8 +1009,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
     it 'does not loose attachments on rerender of the ui' do
       # upload two files
-      await_empty_ajax_queue
-      page.find('input#fileUpload_1', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
+      page.find('input#fileUpload_1[data-initialized="true"]', visible: :all).set(Rails.root.join('test/data/mail/mail001.box'))
       await_empty_ajax_queue
       wait.until { page.all('div.attachment-delete.js-delete', visible: :all).count == 1 }
       expect(page).to have_text('mail001.box')

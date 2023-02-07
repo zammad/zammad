@@ -27,6 +27,7 @@ class App.Html5Upload extends App.Controller
       data:                   @data
       onFileAdded:            @onFileAdded
     )
+    @inputField.attr('data-initialized', true)
 
   onFileAdded: (file) =>
     file.on(
