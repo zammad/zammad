@@ -133,7 +133,7 @@ RSpec.describe 'Form', type: :request do
 
     end
 
-    it 'does limits' do
+    it 'does limits', :rack_attack do
       Setting.set('form_ticket_create_by_ip_per_hour', 2)
       Setting.set('form_ticket_create', true)
       fingerprint = SecureRandom.hex(40)
@@ -145,8 +145,8 @@ RSpec.describe 'Form', type: :request do
 
       post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test', body: 'hello' }, as: :json
       expect(response).to have_http_status(:ok)
-      # Trigger rate limiting with a few more requests to be reliable in slow CI
-      5.times do |count|
+
+      3.times do |count|
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: "test#{count}", body: 'hello' }, as: :json
       end
       expect(response).to have_http_status(:too_many_requests)
@@ -155,7 +155,7 @@ RSpec.describe 'Form', type: :request do
       post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test-2', body: 'hello' }, as: :json
       expect(response).to have_http_status(:ok)
 
-      5.times do |count|
+      3.times do |count|
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: "test-2-#{count}", body: 'hello' }, as: :json
       end
       expect(response).to have_http_status(:too_many_requests)
@@ -163,7 +163,7 @@ RSpec.describe 'Form', type: :request do
       @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json', 'REMOTE_ADDR' => '::1' }
       post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test-3', body: 'hello' }, as: :json
 
-      5.times do |count|
+      3.times do |count|
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: "test-3-#{count}", body: 'hello' }, as: :json
       end
       expect(response).to have_http_status(:too_many_requests)

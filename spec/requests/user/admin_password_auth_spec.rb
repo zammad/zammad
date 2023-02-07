@@ -48,14 +48,13 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
     end
 
     # For the throttling, see config/initializers/rack_attack.rb.
-    context 'when user requests admin auth more than throttle allows' do
+    context 'when user requests admin auth more than throttle allows', :rack_attack do
 
       let(:static_username) { create(:admin).login }
       let(:static_ipv4)     { Faker::Internet.ip_v4_address }
 
       it 'blocks due to username throttling (multiple IPs)' do
-        # Throttle should happen after 5 requests, but that is not reliable enough due to CI slowness.
-        15.times do
+        4.times do
           post api_v1_users_admin_password_auth_path, params: { username: static_username }, headers: { 'X-Forwarded-For': Faker::Internet.ip_v4_address }
         end
 
@@ -63,7 +62,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
       end
 
       it 'blocks due to source IP address throttling (multiple usernames)' do
-        15.times do
+        4.times do
           # Ensure throttling even on modified path.
           post "#{api_v1_users_admin_password_auth_path}.json", params: { username: create(:admin).login }, headers: { 'X-Forwarded-For': static_ipv4 }
         end
