@@ -74,21 +74,30 @@
     - head -c300 tmp/chat.js; echo # Insert newline after chat content
     - cmp public/assets/chat/chat.js tmp/chat.js
 
-'lint: js & css':
+'lint: coffee & css':
   extends:
     - .template_lint
   cache: !reference [.cache, read_only_nodejs]
-  before_script: []
+  before_script:
+    - !reference [.scripts, yarn_install]
   script:
     - echo "Coffeelint check..."
     - coffeelint --rules ./.coffeelint/rules/* app/
     - echo "Stylelint check..."
-    - !reference [.scripts, yarn_install]
     - yarn lint:css
+
+'lint: js':
+  extends:
+    - .template_lint
+  cache: !reference [.cache, read_only_nodejs]
+  before_script:
+    - !reference [.scripts, yarn_install]
+  script:
     - echo "ESLint check..."
     - yarn lint
-    - echo "Histoire test build..."
-    - yarn story:build
+    # Currently unused, skip to save time...
+    # - echo "Histoire test build..."
+    # - yarn story:build
 
 # Must be a separate job because it may fail and is only executed manually.
 'lint: orphaned ruby gems':
