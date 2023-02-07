@@ -169,6 +169,7 @@ class App.FirstStepsClues extends App.Controller
       options:
         duration: 300
         easing: [0.34,1.61,0.7,1]
+        complete: => @el.addClass('modal--clue-ready')
 
   hideWindow: (callback) =>
     @modalWindow.velocity

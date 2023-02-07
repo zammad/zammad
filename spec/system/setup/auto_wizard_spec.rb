@@ -45,10 +45,7 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
     it 'automatically setup and login with token params' do
       visit 'getting_started/auto_wizard/secret_token'
 
-      # close clues
-      within '.js-modal--clue.modal--clue' do
-        find('.modal-close.js-close').click
-      end
+      close_clues_modal
 
       expect(current_login).to eq('hans.atila@zammad.org')
     end
@@ -56,10 +53,7 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
     it 'allows user to login and logout' do
       visit 'getting_started/auto_wizard/secret_token'
 
-      # close clues
-      within '.js-modal--clue.modal--clue' do
-        find('.modal-close.js-close').click
-      end
+      close_clues_modal
 
       visit 'logout'
 
@@ -83,10 +77,7 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
 
         searchindex_model_reload([::User, ::Organization])
 
-        # close clues
-        within '.js-modal--clue.modal--clue' do
-          find('.modal-close.js-close').click
-        end
+        close_clues_modal
       end
 
       it 'shows the organization from the auto wizard' do
@@ -103,6 +94,12 @@ RSpec.describe 'Auto wizard', set_up: false, type: :system do
           expect(page).to have_content 'Atila'
         end
       end
+    end
+  end
+
+  def close_clues_modal
+    within '.js-modal--clue.modal--clue-ready' do
+      find('.modal-close.js-close').click
     end
   end
 end
