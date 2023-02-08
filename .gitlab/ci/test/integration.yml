@@ -4,7 +4,7 @@ include:
 .template_integration:
   extends:
     - .job_rules_default
-    - .job_rules_integration_manual_start
+    - .job_rules_integration
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]

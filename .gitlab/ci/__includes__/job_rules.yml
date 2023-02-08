@@ -8,9 +8,8 @@
       when: never
     - when: on_success
 
-.job_rules_integration_manual_start:
+.job_rules_integration:
   rules:
-    - if: $CI_COMMIT_REF_NAME =~ /^private/ && $INTEGRATION_TESTS == null
-      when: manual
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
       allow_failure: true
     - when: on_success

@@ -18,7 +18,7 @@ rspec:integration:
   stage: test
   extends:
     - .job_rules_default
-    - .job_rules_integration_manual_start
+    - .job_rules_integration
     - .variables_proxy
   allow_failure: true
   services:
