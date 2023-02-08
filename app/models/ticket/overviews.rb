@@ -75,14 +75,21 @@ returns
     )
     return [] if overviews.blank?
 
+    user_scopes = {
+      read:     TicketPolicy::ReadScope.new(user).resolve,
+      overview: TicketPolicy::OverviewScope.new(user).resolve,
+    }
+
     overviews.map do |overview|
       db_query_params = _db_query_params(overview, user)
 
-      scope = TicketPolicy::OverviewScope
-      if overview.condition['ticket.mention_user_ids'].present?
-        scope = TicketPolicy::ReadScope
-      end
-      ticket_result = scope.new(user).resolve
+      scope = if overview.condition['ticket.mention_user_ids'].present?
+                user_scopes[:read]
+              else
+                user_scopes[:overview]
+              end
+
+      ticket_result = scope
         .distinct
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
         .joins(db_query_params.tables)
@@ -97,7 +104,7 @@ returns
         }
       end
 
-      count = scope.new(user).resolve
+      count = scope
         .distinct
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
         .joins(db_query_params.tables)
