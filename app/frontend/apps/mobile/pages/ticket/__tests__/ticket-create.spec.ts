@@ -87,6 +87,7 @@ const visitTicketCreate = async () => {
   const view = await visitView('/tickets/create')
 
   await flushPromises()
+  await getNode('ticket-create')?.settled
 
   return { mockFormUpdater, mockObjectAttributes, view }
 }
@@ -140,6 +141,13 @@ const mockCustomerQueryResult = () => {
 const nextStep = async (view: ExtendedRenderResult) => {
   await view.events.click(view.getByRole('button', { name: 'Continue' }))
 }
+
+beforeAll(async () => {
+  // So we don't need to wait until it loads inside test.
+  await import(
+    '@shared/components/Form/fields/FieldEditor/FieldEditorInput.vue'
+  )
+})
 
 describe('Creating new ticket as agent', () => {
   beforeEach(() => {
@@ -250,6 +258,7 @@ describe('Creating new ticket as agent', () => {
 
     await view.events.type(view.getByLabelText('Title'), 'Foobar')
 
+    // Wait on the changes
     await getNode('ticket-create')?.settled
 
     await view.events.click(view.getByRole('button', { name: 'Go back' }))

@@ -98,6 +98,8 @@ describe('updating ticket information', () => {
   it('shows confirm popup, when leaving', async () => {
     const { view } = await visitTicketInformation()
 
+    await getNode('form-ticket-edit')?.settled
+
     await view.events.type(view.getByLabelText('Ticket title'), '55')
 
     await getNode('form-ticket-edit')?.settled
