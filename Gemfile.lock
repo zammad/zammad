@@ -151,7 +151,7 @@ GEM
     delayed_job_active_record (4.1.7)
       activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
-    deprecation_toolkit (2.0.1)
+    deprecation_toolkit (2.0.2)
       activesupport (>= 5.2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
