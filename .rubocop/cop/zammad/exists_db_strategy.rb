@@ -5,7 +5,7 @@ module RuboCop
     module Zammad
       class ExistsDbStrategy < Base
         def_node_matcher :migration_execute?, <<-PATTERN
-          $(send (const (const _ :ObjectManager ) :Attribute) :migration_execute)
+          $(send {(const (const _ :ObjectManager ) :Attribute) (... :described_class)} :migration_execute)
         PATTERN
 
         def_node_matcher :create_attribute?, <<-PATTERN
