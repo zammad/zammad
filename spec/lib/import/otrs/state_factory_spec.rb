@@ -4,6 +4,16 @@ require 'rails_helper'
 require 'lib/import/transaction_factory_examples'
 
 RSpec.describe Import::OTRS::StateFactory do
+  let(:state_backend_param) do
+    states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful removed]
+
+    state_backend_param = []
+    states.each do |state|
+      state_backend_param.push(load_state_json(state))
+    end
+    state_backend_param
+  end
+
   it_behaves_like 'Import::TransactionFactory'
 
   it 'creates a state backup in the pre_import_hook' do
@@ -16,14 +26,6 @@ RSpec.describe Import::OTRS::StateFactory do
   end
 
   it 'updates ObjectManager Ticket state_id and pending_time filter' do
-
-    states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed]
-
-    state_backend_param = []
-    states.each do |state|
-      state_backend_param.push(load_state_json(state))
-    end
-
     ticket_state_id = ObjectManager::Attribute.get(
       object: 'Ticket',
       name:   'state_id',
@@ -107,18 +109,17 @@ RSpec.describe Import::OTRS::StateFactory do
     expect(state.default_follow_up).to be false
   end
 
+  it 'sets next state for pending auto states' do
+    described_class.import(state_backend_param)
+
+    state_pending_auto_close_n = Ticket::State.find_by(name: 'pending auto close-')
+    state_pending_auto_close_p = Ticket::State.find_by(name: 'pending auto close+')
+
+    expect(state_pending_auto_close_n.next_state_id).to eq(Ticket::State.find_by(name: 'closed unsuccessful').id)
+    expect(state_pending_auto_close_p.next_state_id).to eq(Ticket::State.find_by(name: 'closed successful').id)
+  end
+
   context 'changing Ticket::State IDs' do
-
-    let(:state_backend_param) do
-      states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed]
-
-      state_backend_param = []
-      states.each do |state|
-        state_backend_param.push(load_state_json(state))
-      end
-      state_backend_param
-    end
-
     it 'updates Overviews' do
       name     = 'My Pending Reached Tickets'
       overview = Overview.find_by(name: name)
