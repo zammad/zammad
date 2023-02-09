@@ -158,6 +158,24 @@ RSpec.describe Channel::EmailParser, type: :model do
             .and(be_exist(email: 'jane.doe@äcme.corp'))
         end
       end
+
+      context 'with existing system email address' do
+        let!(:email_address) { create(:email_address, email: 'baz@qux.net', channel: nil) }
+        let!(:group)         { create(:group, name: 'baz headquarter', email_address: email_address) }
+        let!(:channel) do
+          channel = create(:email_channel, group: group)
+          email_address.update(channel: channel)
+          channel
+        end
+
+        it 'creates no new user for system mail adress in cc' do
+          expect { described_class.new.process({}, <<~RAW) }.to change(User, :count).by(1)
+            From: nicole.braun@zammad.org
+            To: #{email_address.email}
+            Cc: #{email_address.email}, #{Faker::Internet.unique.email}
+          RAW
+        end
+      end
     end
 
     describe 'auto-updating existing users' do

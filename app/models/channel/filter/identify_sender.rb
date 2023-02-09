@@ -102,6 +102,9 @@ module Channel::Filter::IdentifySender
           email_address = sanitize_email(address_data.address)
           next if email_address.blank?
 
+          # Skip the creation for system email addresses.
+          next if EmailAddress.exists?(email: email_address)
+
           email_address_validation = EmailAddressValidation.new(email_address)
           next if !email_address_validation.valid?
 
