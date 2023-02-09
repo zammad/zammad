@@ -7,7 +7,6 @@ module Gql::Types::Input::Ticket
     argument :body, String, required: false, description: 'The article body.'
     argument :subject, String, required: false, description: 'The article subject.'
     argument :internal, Boolean, required: false, description: 'Whether the article is internal.'
-    argument :ticket_id, GraphQL::Types::ID, required: false, description: 'The ticket the article belongs to.', loads: Gql::Types::TicketType
     argument :type, String, required: false, description: 'The article type.'
     argument :sender, String, required: false, description: 'The article sender.'
     argument :from, String, required: false, description: 'The article sender address.'

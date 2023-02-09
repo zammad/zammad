@@ -4,8 +4,15 @@ module Gql::Types::Input::Ticket
   class BaseInputType < Gql::Types::BaseInputObject
     include Gql::Types::Input::Concerns::ProvidesObjectAttributeValues
 
+    # Class that behaves like NilClass to filter out filtered arguments reliably.
+    class ArgumentFilteredOut
+      def nil?
+        true
+      end
+    end
+
     only_for_ticket_agents = lambda do |payload, context|
-      return context.current_user.permissions?('ticket.agent') ? payload : nil
+      return context.current_user.permissions?('ticket.agent') ? payload : ArgumentFilteredOut.new
     end
 
     argument :owner_id, GraphQL::Types::ID, required: false, description: 'The owner of the ticket.', loads: Gql::Types::UserType, prepare: only_for_ticket_agents
@@ -17,10 +24,10 @@ module Gql::Types::Input::Ticket
 
     argument :article, Gql::Types::Input::Ticket::ArticleInputType, required: false, description: 'The article data.'
 
-    transform :remove_nil_fields
+    transform :remove_filtered_arguments
 
-    def remove_nil_fields(payload)
-      payload.to_h.compact
+    def remove_filtered_arguments(payload)
+      payload.to_h.reject { |_k, v| v.is_a? ArgumentFilteredOut }
     end
   end
 end

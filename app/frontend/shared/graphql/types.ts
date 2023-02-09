@@ -1856,8 +1856,6 @@ export type TicketArticleInput = {
   subject?: InputMaybe<Scalars['String']>;
   /** The article subtype. */
   subtype?: InputMaybe<Scalars['String']>;
-  /** The ticket the article belongs to. */
-  ticketId?: InputMaybe<Scalars['ID']>;
   /** The article accounted time. */
   timeUnit?: InputMaybe<Scalars['Float']>;
   /** The article recipient address. */
