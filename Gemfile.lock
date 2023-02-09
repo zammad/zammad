@@ -559,7 +559,7 @@ GEM
     time (0.2.1)
       date
     timeout (0.3.1)
-    twilio-ruby (5.74.2)
+    twilio-ruby (5.74.3)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, <= 2.6)
       nokogiri (>= 1.6, < 2.0)
