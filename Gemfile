@@ -19,7 +19,7 @@ gem 'unicorn', group: :unicorn
 
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
-gem 'mysql2', group: :mysql
+gem 'mysql2', '0.5.4', group: :mysql # 0.5.5 produced segfaults in CI.
 gem 'pg', '~> 1.2.0', group: :postgres
 
 # core - asynchrous task execution
