@@ -3338,6 +3338,10 @@ msgid "Defines pretty date format."
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid "Defines processing timeout for the html sanitizer."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines searchable models."
 msgstr ""
 
@@ -5230,6 +5234,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
