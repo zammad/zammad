@@ -4790,6 +4790,16 @@ Setting.create_if_not_exists(
   },
   frontend:    false
 )
+Setting.create_if_not_exists(
+  title:       __('HTML Sanitizer Processing Timeout'),
+  name:        'html_sanitizer_processing_timeout',
+  area:        'Core',
+  description: __('Defines processing timeout for the html sanitizer.'),
+  options:     {},
+  state:       20,
+  preferences: {},
+  frontend:    false
+)
 
 # add the dashboard stats backend for 'Stats::TicketWaitingTime'
 Setting.create_if_not_exists(

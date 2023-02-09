@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
-  PROCESSING_TIMEOUT     = 20.seconds
+  PROCESSING_TIMEOUT     = Setting.get('html_sanitizer_processing_timeout').to_i.seconds
   UNPROCESSABLE_HTML_MSG = __('This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
 
 =begin
