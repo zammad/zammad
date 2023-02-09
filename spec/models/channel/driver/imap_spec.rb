@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_SERVER MAIL_ADDRESS_ASCII MAIL_PASS_ASCII] do
+RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_SERVER MAIL_ADDRESS MAIL_PASS MAIL_ADDRESS_ASCII MAIL_PASS_ASCII] do
   # https://github.com/zammad/zammad/issues/2964
   context 'when connecting with a ASCII 8-Bit password' do
     it 'succeeds' do
@@ -63,6 +63,166 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
 
     it 'does not raise error when given nil' do
       expect { described_class.extract_rfc822_headers(nil) }.not_to raise_error
+    end
+  end
+
+  describe 'handling of oversized incoming emails' do
+    let(:folder) { "postmaster_to_sender_#{SecureRandom.uuid}" }
+
+    let(:server_address) { ENV['MAIL_SERVER'] }
+    let(:server_login)    { ENV['MAIL_ADDRESS'] }
+    let(:server_password) { ENV['MAIL_PASS'] }
+    let(:email_address)   { create(:email_address, realname: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
+    let(:group)           { create(:group, name: 'PostmasterToSenderTest', email_address: email_address) }
+    let(:inbound_options) do
+      {
+        adapter: 'imap',
+        options: {
+          host:           ENV['MAIL_SERVER'],
+          user:           ENV['MAIL_ADDRESS'],
+          password:       server_password,
+          ssl:            true,
+          folder:         folder,
+          keep_on_server: false,
+        }
+      }
+    end
+    let(:outbound_options) do
+      {
+        adapter: 'smtp',
+        options: {
+          host:      server_address,
+          port:      25,
+          start_tls: true,
+          user:      server_login,
+          password:  server_password,
+          email:     email_address.email
+        },
+      }
+    end
+    let(:channel) do
+      create(:email_channel, group: group, inbound: inbound_options, outbound: outbound_options).tap do |channel|
+        email_address.channel = channel
+        email_address.save!
+      end
+    end
+
+    let(:imap) { Net::IMAP.new(server_address, 993, true, nil, false).tap { |imap| imap.login(server_login, server_password) } }
+    let(:sender_email_address) { ENV['MAIL_ADDRESS'] }
+    let(:cid)                  { SecureRandom.uuid.tr('-', '.') }
+    let(:oversized_email) do
+      <<~OVERSIZED_EMAIL.gsub(%r{\n}, "\r\n")
+        Subject: Oversized Email Message
+        From: Max Mustermann <#{sender_email_address}>
+        To: shugo@example.com
+        Message-ID: <#{cid}@zammad.test.com>
+
+        Oversized Email Message Body #{'#' * 120_000}
+      OVERSIZED_EMAIL
+    end
+    let(:oversized_email_md5) { Digest::MD5.hexdigest(oversized_email) }
+    let(:oversized_email_size) { format('%<MB>.2f', MB: oversized_email.size.to_f / 1024 / 1024) }
+    let(:oversized_eml_folder) { Rails.root.join('tmp/oversized_mail') }
+    let(:oversized_eml_file) do
+      Dir.entries(oversized_eml_folder).grep(%r{^#{oversized_email_md5}\.eml$}).map { |path| oversized_eml_folder.join(path) }.last
+    end
+
+    let(:purge_inbox) do
+      imap.select('inbox')
+      imap.sort(['DATE'], ['ALL'], 'US-ASCII').each do |msg|
+        imap.store(msg, '+FLAGS', [:Deleted])
+      end
+      imap.expunge
+    end
+
+    let(:fetch_oversized_email) do
+      imap.create(folder)
+      imap.select(folder)
+      imap.append(folder, oversized_email, [], Time.zone.now)
+      channel.fetch(true)
+    end
+
+    context 'with email reply', :aggregate_failures do
+      before do
+        Setting.set('postmaster_max_size', 0.1)
+        purge_inbox
+        fetch_oversized_email
+      end
+
+      after do
+        imap.delete(folder)
+      end
+
+      let(:oversized_email_reply) do
+        imap.select('inbox')
+        5.times do |i|
+          sleep i
+          msg = imap.sort(['DATE'], ['ALL'], 'US-ASCII').first
+          if msg
+            return imap.fetch(msg, 'RFC822')[0].attr['RFC822']
+          end
+        end
+        nil
+      end
+
+      let(:parsed_oversized_email_reply) do
+        Channel::EmailParser.new.parse(oversized_email_reply)
+      end
+
+      it 'creates email reply correctly' do
+        # 1. verify that the oversized email has been saved locally to:
+        # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
+        expect(oversized_eml_file).to be_present
+
+        # verify that the file is byte for byte identical to the sent message
+        expect(File.read(oversized_eml_file)).to eq(oversized_email)
+
+        # 2. verify that a postmaster response email has been sent to the sender
+        expect(oversized_email_reply).to be_present
+
+        # parse the reply mail and verify the various headers
+        expect(parsed_oversized_email_reply).to include({
+                                                          from_email: email_address.email,
+          subject: '[undeliverable] Message too large',
+          'references' => "<#{cid}@zammad.test.com>",
+          'in-reply-to' => "<#{cid}@zammad.test.com>",
+                                                        })
+
+        # verify the reply mail body content
+        expect(parsed_oversized_email_reply[:body]).to match(%r{^Dear Max Mustermann.*Oversized Email Message.*#{oversized_email_size} MB.*0.1 MB.*#{Setting.get('fqdn')}}sm)
+
+        # 3. check if original mail got removed
+        imap.select(folder)
+        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII')).to be_empty
+      end
+    end
+
+    context 'without email reply' do
+      before do
+        Setting.set('postmaster_max_size', 0.1)
+        Setting.set('postmaster_send_reject_if_mail_too_large', false)
+        purge_inbox
+        fetch_oversized_email
+      end
+
+      after do
+        imap.delete(folder)
+      end
+
+      it 'does not create email reply', :aggregate_failures do
+
+        # 1. verify that email was not locally processed
+        expect(oversized_eml_file).to be_nil
+
+        # 2. verify that no postmaster response email has been sent
+        imap.select('inbox')
+        sleep 1
+        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be_zero
+
+        # 3. check that original mail is still there
+        imap.select(folder)
+        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be(1)
+      end
     end
   end
 end
