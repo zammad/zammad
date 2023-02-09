@@ -13,7 +13,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::FormJs do
 
   context 'with strings to be found' do
     let(:string) do
-      <<~'CODE'
+      <<~CODE
         var value = {
           display: 'My display',
           placeholder: "My placeholder",

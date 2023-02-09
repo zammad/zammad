@@ -13,7 +13,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Frontend do
 
   context 'with strings to be found' do
     let(:string) do
-      <<~'CODE'
+      <<~CODE
         __('__ String')
         App.i18n.translateContent('String')
         App.i18n.translateInline('Inline string')

@@ -3,7 +3,7 @@
 class GitHub
   class Credentials
 
-    QUERY = <<-'GRAPHQL'.freeze
+    QUERY = <<-GRAPHQL.freeze
       query {
         viewer {
           login

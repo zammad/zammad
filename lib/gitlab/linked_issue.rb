@@ -7,7 +7,7 @@ class GitLab
       'opened' => 'open'
     }.freeze
 
-    QUERY = <<-'GRAPHQL'.freeze
+    QUERY = <<-GRAPHQL.freeze
       query($fullpath: ID!, $issue_id: String) {
         project(fullPath: $fullpath) {
           issue(iid: $issue_id) {

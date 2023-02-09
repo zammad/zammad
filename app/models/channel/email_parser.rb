@@ -128,8 +128,8 @@ returns
 
     message = "Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
 
-    p "ERROR: #{message}" # rubocop:disable Rails/Output
-    p "ERROR: #{e.inspect}" # rubocop:disable Rails/Output
+    p "ERROR: #{message}" # rubocop:disable Rails/Output, Lint/Debugger
+    p "ERROR: #{e.inspect}" # rubocop:disable Rails/Output, Lint/Debugger
     Rails.logger.error message
     Rails.logger.error e
 

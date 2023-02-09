@@ -13,7 +13,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Chat do
 
   context 'with strings to be found' do
     let(:string) do
-      <<~'CODE'
+      <<~CODE
         var value = {
           title: 'My title',
           scrollHint: "My scroll hint",

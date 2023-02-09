@@ -3,7 +3,7 @@
 class GitLab
   class Credentials
 
-    QUERY = <<-'GRAPHQL'.freeze
+    QUERY = <<-GRAPHQL.freeze
       query {
         currentUser {
           username

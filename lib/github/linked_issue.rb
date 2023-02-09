@@ -8,7 +8,7 @@ class GitHub
       'CLOSED' => 'closed'
     }.freeze
 
-    QUERY = <<-'GRAPHQL'.freeze
+    QUERY = <<-GRAPHQL.freeze
       query($repositor_owner: String!, $repository_name: String!, $issue_id: Int!) {
        repository(owner: $repositor_owner, name: $repository_name) {
          issue(number: $issue_id) {
