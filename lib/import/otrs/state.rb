@@ -9,8 +9,6 @@ module Import
       MAPPING = {
         ChangeTime: :updated_at,
         CreateTime: :created_at,
-        CreateBy:   :created_by_id,
-        ChangeBy:   :updated_by_id,
         Name:       :name,
         ID:         :id,
         ValidID:    :active,

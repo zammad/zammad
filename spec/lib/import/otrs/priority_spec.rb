@@ -33,8 +33,8 @@ RSpec.describe Import::OTRS::Priority do
     let(:object_structure) { load_priority_json('default') }
     let(:zammad_structure) do
       {
-        created_by_id: '1',
-        updated_by_id: '1',
+        created_by_id: 1,
+        updated_by_id: 1,
         active:        true,
         updated_at:    '2014-04-28 10:53:18',
         created_at:    '2014-04-28 10:53:18',
@@ -59,8 +59,8 @@ RSpec.describe Import::OTRS::Priority do
     let(:object_structure) { load_priority_json('normal') }
     let(:zammad_structure) do
       {
-        created_by_id: '1',
-        updated_by_id: '1',
+        created_by_id: 1,
+        updated_by_id: 1,
         active:        true,
         updated_at:    '2014-04-28 10:53:18',
         created_at:    '2014-04-28 10:53:18',
@@ -81,8 +81,8 @@ RSpec.describe Import::OTRS::Priority do
     let(:object_structure) { load_priority_json('low') }
     let(:zammad_structure) do
       {
-        created_by_id: '1',
-        updated_by_id: '1',
+        created_by_id: 1,
+        updated_by_id: 1,
         active:        true,
         updated_at:    '2014-04-28 10:53:18',
         created_at:    '2014-04-28 10:53:18',
