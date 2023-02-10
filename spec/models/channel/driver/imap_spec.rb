@@ -66,14 +66,14 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     end
   end
 
-  describe 'handling of oversized incoming emails' do
-    let(:folder) { "postmaster_to_sender_#{SecureRandom.uuid}" }
+  describe '.fetch', :aggregate_failures do
+    let(:folder) { "imap_spec-#{SecureRandom.uuid}" }
 
     let(:server_address) { ENV['MAIL_SERVER'] }
     let(:server_login)    { ENV['MAIL_ADDRESS'] }
     let(:server_password) { ENV['MAIL_PASS'] }
     let(:email_address)   { create(:email_address, realname: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
-    let(:group)           { create(:group, name: 'PostmasterToSenderTest', email_address: email_address) }
+    let(:group)           { create(:group, email_address: email_address) }
     let(:inbound_options) do
       {
         adapter: 'imap',
@@ -108,24 +108,6 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     end
 
     let(:imap) { Net::IMAP.new(server_address, 993, true, nil, false).tap { |imap| imap.login(server_login, server_password) } }
-    let(:sender_email_address) { ENV['MAIL_ADDRESS'] }
-    let(:cid)                  { SecureRandom.uuid.tr('-', '.') }
-    let(:oversized_email) do
-      <<~OVERSIZED_EMAIL.gsub(%r{\n}, "\r\n")
-        Subject: Oversized Email Message
-        From: Max Mustermann <#{sender_email_address}>
-        To: shugo@example.com
-        Message-ID: <#{cid}@zammad.test.com>
-
-        Oversized Email Message Body #{'#' * 120_000}
-      OVERSIZED_EMAIL
-    end
-    let(:oversized_email_md5) { Digest::MD5.hexdigest(oversized_email) }
-    let(:oversized_email_size) { format('%<MB>.2f', MB: oversized_email.size.to_f / 1024 / 1024) }
-    let(:oversized_eml_folder) { Rails.root.join('tmp/oversized_mail') }
-    let(:oversized_eml_file) do
-      Dir.entries(oversized_eml_folder).grep(%r{^#{oversized_email_md5}\.eml$}).map { |path| oversized_eml_folder.join(path) }.last
-    end
 
     let(:purge_inbox) do
       imap.select('inbox')
@@ -135,93 +117,253 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       imap.expunge
     end
 
-    let(:fetch_oversized_email) do
+    before do
+      purge_inbox
       imap.create(folder)
       imap.select(folder)
-      imap.append(folder, oversized_email, [], Time.zone.now)
-      channel.fetch(true)
     end
 
-    context 'with email reply', :aggregate_failures do
-      before do
-        Setting.set('postmaster_max_size', 0.1)
-        purge_inbox
-        fetch_oversized_email
+    after do
+      imap.delete(folder)
+    end
+
+    context 'when fetching regular emails' do
+      let(:email1) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello1
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some1@example_keep_on_server>
+
+          hello world
+        EMAIL
+      end
+      let(:email2) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello2
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some2@example_keep_on_server>
+
+          hello world
+        EMAIL
       end
 
-      after do
-        imap.delete(folder)
-      end
-
-      let(:oversized_email_reply) do
-        imap.select('inbox')
-        5.times do |i|
-          sleep i
-          msg = imap.sort(['DATE'], ['ALL'], 'US-ASCII').first
-          if msg
-            return imap.fetch(msg, 'RFC822')[0].attr['RFC822']
-          end
+      context 'with keep_on_server flag' do
+        let(:inbound_options) do
+          {
+            adapter: 'imap',
+            options: {
+              host:           ENV['MAIL_SERVER'],
+              user:           ENV['MAIL_ADDRESS'],
+              password:       server_password,
+              ssl:            true,
+              folder:         folder,
+              keep_on_server: true,
+            }
+          }
         end
-        nil
+
+        it 'handles messages correctly' do # rubocop:disable RSpec/ExampleLength
+
+          imap.append(folder, email1, [], Time.zone.now)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).not_to include(:Seen)
+
+          # fetch messages - will import
+          expect { channel.fetch(true) }.to change(Ticket::Article, :count)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          # message now has :seen flag
+          message_meta = imap.fetch(1, ['RFC822.HEADER', 'FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+
+          # fetch messages - will not import
+          expect { channel.fetch(true) }.not_to change(Ticket::Article, :count)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          # put unseen message in it
+          imap.append(folder, email2, [], Time.zone.now)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+          message_meta = imap.fetch(2, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).not_to include(:Seen)
+
+          # fetch messages - will import new
+          expect { channel.fetch(true) }.to change(Ticket::Article, :count)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(2)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+          message_meta = imap.fetch(2, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+
+          # set messages to not seen
+          imap.store(1, '-FLAGS', [:Seen])
+          imap.store(2, '-FLAGS', [:Seen])
+
+          # fetch messages - will still not import
+          expect { channel.fetch(true) }.not_to change(Ticket::Article, :count)
+        end
       end
 
-      let(:parsed_oversized_email_reply) do
-        Channel::EmailParser.new.parse(oversized_email_reply)
-      end
+      context 'without keep_on_server flag' do
 
-      it 'creates email reply correctly' do
-        # 1. verify that the oversized email has been saved locally to:
-        # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
-        expect(oversized_eml_file).to be_present
+        it 'handles messages correctly' do
 
-        # verify that the file is byte for byte identical to the sent message
-        expect(File.read(oversized_eml_file)).to eq(oversized_email)
+          imap.append(folder, email1, [], Time.zone.now)
 
-        # 2. verify that a postmaster response email has been sent to the sender
-        expect(oversized_email_reply).to be_present
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
 
-        # parse the reply mail and verify the various headers
-        expect(parsed_oversized_email_reply).to include({
-                                                          from_email: email_address.email,
-          subject: '[undeliverable] Message too large',
-          'references' => "<#{cid}@zammad.test.com>",
-          'in-reply-to' => "<#{cid}@zammad.test.com>",
-                                                        })
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).not_to include(:Seen)
 
-        # verify the reply mail body content
-        expect(parsed_oversized_email_reply[:body]).to match(%r{^Dear Max Mustermann.*Oversized Email Message.*#{oversized_email_size} MB.*0.1 MB.*#{Setting.get('fqdn')}}sm)
+          # fetch messages - will import
+          expect { channel.fetch(true) }.to change(Ticket::Article, :count)
 
-        # 3. check if original mail got removed
-        imap.select(folder)
-        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII')).to be_empty
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen, :Deleted)
+
+          # put unseen message in it
+          imap.append(folder, email2, [], Time.zone.now)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).not_to include(:Seen)
+
+          # fetch messages - will import
+          expect { channel.fetch(true) }.to change(Ticket::Article, :count)
+
+          # verify if message is still on server
+          message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+          expect(message_ids.count).to be(1)
+
+          message_meta = imap.fetch(1, ['FLAGS'])[0].attr
+          expect(message_meta['FLAGS']).to include(:Seen)
+        end
       end
     end
 
-    context 'without email reply' do
-      before do
-        Setting.set('postmaster_max_size', 0.1)
-        Setting.set('postmaster_send_reject_if_mail_too_large', false)
-        purge_inbox
-        fetch_oversized_email
+    context 'when fetching oversized emails' do
+      let(:sender_email_address) { ENV['MAIL_ADDRESS'] }
+      let(:cid)                  { SecureRandom.uuid.tr('-', '.') }
+      let(:oversized_email) do
+        <<~OVERSIZED_EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: Oversized Email Message
+          From: Max Mustermann <#{sender_email_address}>
+          To: shugo@example.com
+          Message-ID: <#{cid}@zammad.test.com>
+
+          Oversized Email Message Body #{'#' * 120_000}
+        OVERSIZED_EMAIL
+      end
+      let(:oversized_email_md5) { Digest::MD5.hexdigest(oversized_email) }
+      let(:oversized_email_size) { format('%<MB>.2f', MB: oversized_email.size.to_f / 1024 / 1024) }
+      let(:oversized_eml_folder) { Rails.root.join('tmp/oversized_mail') }
+      let(:oversized_eml_file) do
+        Dir.entries(oversized_eml_folder).grep(%r{^#{oversized_email_md5}\.eml$}).map { |path| oversized_eml_folder.join(path) }.last
       end
 
-      after do
-        imap.delete(folder)
+      let(:fetch_oversized_email) do
+        imap.append(folder, oversized_email, [], Time.zone.now)
+        channel.fetch(true)
       end
 
-      it 'does not create email reply', :aggregate_failures do
+      context 'with email reply' do
+        before do
+          Setting.set('postmaster_max_size', 0.1)
+          fetch_oversized_email
+        end
 
-        # 1. verify that email was not locally processed
-        expect(oversized_eml_file).to be_nil
+        let(:oversized_email_reply) do
+          imap.select('inbox')
+          5.times do |i|
+            sleep i
+            msg = imap.sort(['DATE'], ['ALL'], 'US-ASCII').first
+            if msg
+              return imap.fetch(msg, 'RFC822')[0].attr['RFC822']
+            end
+          end
+          nil
+        end
 
-        # 2. verify that no postmaster response email has been sent
-        imap.select('inbox')
-        sleep 1
-        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be_zero
+        let(:parsed_oversized_email_reply) do
+          Channel::EmailParser.new.parse(oversized_email_reply)
+        end
 
-        # 3. check that original mail is still there
-        imap.select(folder)
-        expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be(1)
+        it 'creates email reply correctly' do
+          # 1. verify that the oversized email has been saved locally to:
+          # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
+          expect(oversized_eml_file).to be_present
+
+          # verify that the file is byte for byte identical to the sent message
+          expect(File.read(oversized_eml_file)).to eq(oversized_email)
+
+          # 2. verify that a postmaster response email has been sent to the sender
+          expect(oversized_email_reply).to be_present
+
+          # parse the reply mail and verify the various headers
+          expect(parsed_oversized_email_reply).to include({
+                                                            from_email: email_address.email,
+            subject: '[undeliverable] Message too large',
+            'references' => "<#{cid}@zammad.test.com>",
+            'in-reply-to' => "<#{cid}@zammad.test.com>",
+                                                          })
+
+          # verify the reply mail body content
+          expect(parsed_oversized_email_reply[:body]).to match(%r{^Dear Max Mustermann.*Oversized Email Message.*#{oversized_email_size} MB.*0.1 MB.*#{Setting.get('fqdn')}}sm)
+
+          # 3. check if original mail got removed
+          imap.select(folder)
+          expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII')).to be_empty
+        end
+      end
+
+      context 'without email reply' do
+        before do
+          Setting.set('postmaster_max_size', 0.1)
+          Setting.set('postmaster_send_reject_if_mail_too_large', false)
+          fetch_oversized_email
+        end
+
+        it 'does not create email reply' do
+
+          # 1. verify that email was not locally processed
+          expect(oversized_eml_file).to be_nil
+
+          # 2. verify that no postmaster response email has been sent
+          imap.select('inbox')
+          sleep 1
+          expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be_zero
+
+          # 3. check that original mail is still there
+          imap.select(folder)
+          expect(imap.sort(['DATE'], ['ALL'], 'US-ASCII').count).to be(1)
+        end
       end
     end
   end
