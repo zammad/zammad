@@ -444,7 +444,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rchardet (1.8.0)
-    redis (4.8.0)
+    redis (4.8.1)
     regexp_parser (2.7.0)
     rexml (3.2.5)
     rspec-core (3.12.0)
