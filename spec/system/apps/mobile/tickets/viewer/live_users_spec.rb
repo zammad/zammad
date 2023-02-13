@@ -66,6 +66,8 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
       another_taskbar_item = create(:taskbar, user_id: third_agent.id, key: "Ticket-#{ticket.id}", app: 'mobile')
       update_taskbar_item(another_taskbar_item, { editing: true }, third_agent.id, 4)
 
+      wait_for_viewers_subscription(number: 5)
+
       expect(page)
         .to have_text('Opened in tabs')
         .and have_text('Viewing ticket')
