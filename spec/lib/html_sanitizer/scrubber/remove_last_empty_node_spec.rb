@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe HtmlSanitizer::Scrubber::RemoveLastEmptyNode do
-  let(:scrubber) { described_class.new('all') }
+  let(:scrubber) { described_class.new }
 
   describe('#scrubber') do
     subject(:actual) do

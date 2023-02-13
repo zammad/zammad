@@ -30,7 +30,7 @@ class HtmlSanitizer
 
       wipe_scrubber = HtmlSanitizer::Scrubber::Wipe.new
 
-      string = loop(fragment.to_html, wipe_scrubber)
+      string = loop_string(fragment.to_html, wipe_scrubber)
 
       link_scrubber = HtmlSanitizer::Scrubber::Link.new(web_app_url_prefix: web_app_url_prefix, external: external)
       Loofah.fragment(string).scrub!(link_scrubber).to_html

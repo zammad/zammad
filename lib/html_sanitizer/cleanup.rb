@@ -15,8 +15,6 @@ class HtmlSanitizer
     def run_sanitization(string)
       string = clean_string(string)
 
-      string = cleanup_structure(string, 'pre')
-
       cleanup_structure(string)
     end
 
@@ -30,10 +28,9 @@ class HtmlSanitizer
         .gsub(%r{\n\n\n+}, "\n\n")
     end
 
-    def cleanup_structure(string, type = 'all')
-      empty_node_scrubber = HtmlSanitizer::Scrubber::RemoveLastEmptyNode.new(type)
-
-      string = loop(string, empty_node_scrubber)
+    def cleanup_structure(string)
+      empty_node_scrubber = HtmlSanitizer::Scrubber::RemoveLastEmptyNode.new
+      string = loop_string(string, empty_node_scrubber)
 
       Loofah.fragment(string).scrub!(HtmlSanitizer::Scrubber::Cleanup.new).to_html
     end

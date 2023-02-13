@@ -9,13 +9,15 @@ class HtmlSanitizer
       UNPROCESSABLE_HTML_MSG
     end
 
-    def loop(string, scrubber)
-      old_string = nil
+    def loop_string(string, scrubber)
+      string = Loofah.fragment(string).scrub!(scrubber).to_html
+      old_string = string
 
-      while string != old_string
-        old_string = string
-
+      loop do
         string = Loofah.fragment(string).scrub!(scrubber).to_html
+        break if string == old_string
+
+        old_string = string
       end
 
       string

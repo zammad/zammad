@@ -5,14 +5,10 @@ class HtmlSanitizer
     class RemoveLastEmptyNode < Base
       attr_reader :remove_empty_nodes, :remove_empty_last_nodes
 
-      def initialize(type) # rubocop:disable Lint/MissingSuper
-        @direction = :top_down
+      def initialize # rubocop:disable Lint/MissingSuper
+        @direction = :bottom_up
 
-        @remove_empty_nodes = if type == 'pre'
-                                %w[span]
-                              else
-                                %w[p div span small table]
-                              end
+        @remove_empty_nodes      = %w[p div span small table]
         @remove_empty_last_nodes = %w[b i u small table]
       end
 
