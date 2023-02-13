@@ -69,11 +69,11 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
     end
 
     context 'when host is not reachable' do
-      let(:host)          { '192.168.254.254' }
+      let(:host)          { nil }
       let(:message_human) { [ 'This host cannot be reached.', 'There is no route to this host.' ] }
 
       before do
-        stub_const('Channel::Driver::Imap::CHECK_ONLY_TIMEOUT', 1.second)
+        allow(Socket).to receive(:tcp).and_raise(Errno::EHOSTUNREACH)
       end
 
       include_examples 'probe tests with invalid result'
@@ -140,12 +140,11 @@ RSpec.describe EmailHelper::Probe, integration: true, required_envs: %w[MAIL_SER
     end
 
     context 'when host is not reachable' do
-      let(:host)          { '192.168.254.254' }
+      let(:host)          { nil }
       let(:message_human) { [ 'This host cannot be reached.', 'There is no route to this host.' ] }
 
       before do
-        stub_const('Channel::Driver::Smtp::DEFAULT_OPEN_TIMEOUT', 2.seconds)
-        stub_const('Channel::Driver::Smtp::DEFAULT_READ_TIMEOUT', 4.seconds)
+        allow(Socket).to receive(:tcp).and_raise(Errno::EHOSTUNREACH)
       end
 
       include_examples 'probe tests with invalid result'
