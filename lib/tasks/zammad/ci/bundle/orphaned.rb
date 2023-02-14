@@ -97,9 +97,6 @@ module Tasks
             #
             'rails-dom-testing', # Rails core stuff
             # widely used and/or small language extensions, seem to be safe
-            'axiom-types',
-            'coercible',
-            'descendants_tracker',
             'ffi-compiler',
             'htmlentities',
             'ice_nine',
@@ -108,7 +105,6 @@ module Tasks
             'promise.rb',
             'thread_safe',
             'unf',
-            'virtus',
           ].freeze
 
           def self.find_orphaned_gems(age)
