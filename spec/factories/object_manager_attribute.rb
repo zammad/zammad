@@ -41,13 +41,17 @@ FactoryBot.define do
   end
 
   factory :object_manager_attribute_text, parent: :object_manager_attribute do
+    transient do
+      data_option_maxlength { 200 }
+    end
+
     default { '' }
 
     data_type { 'input' }
     data_option do
       {
         'type'      => 'text',
-        'maxlength' => 200,
+        'maxlength' => data_option_maxlength,
         'null'      => true,
         'translate' => false,
         'default'   => default,
