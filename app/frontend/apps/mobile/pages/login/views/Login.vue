@@ -165,6 +165,12 @@ const login = (formData: FormData<LoginFormData>) => {
       }
     })
 }
+
+const showPasswordLogin = computed(
+  () =>
+    application.config.user_show_password_login ||
+    !application.hasAuthProviders,
+)
 </script>
 
 <template>
@@ -197,6 +203,7 @@ const login = (formData: FormData<LoginFormData>) => {
             ></div>
           </template>
           <Form
+            v-if="showPasswordLogin"
             id="signin"
             ref="form"
             class="text-left"
@@ -229,6 +236,18 @@ const login = (formData: FormData<LoginFormData>) => {
         </div>
       </div>
     </main>
+    <section v-if="!showPasswordLogin" class="mb-6 w-full max-w-md text-center">
+      <p>
+        {{
+          $t(
+            'If you have problems with the third-party login you can request a one-time password login as an admin.',
+          )
+        }}
+      </p>
+      <CommonLink link="/#admin_password_auth" class="font-semibold text-gray">
+        {{ $t('Request the password login here.') }}
+      </CommonLink>
+    </section>
     <CommonLink link="/#login" class="font-medium leading-4 text-gray">
       {{ $t('Continue to desktop app') }}
     </CommonLink>
@@ -270,7 +289,7 @@ const login = (formData: FormData<LoginFormData>) => {
         open-in-new-tab
         class="font-semibold"
       >
-        Zammad
+        {{ $t('Zammad') }}
       </CommonLink>
     </footer>
   </div>
