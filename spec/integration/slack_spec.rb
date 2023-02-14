@@ -3,8 +3,11 @@
 require 'rails_helper'
 require 'slack-ruby-client' # Only load this gem when it is really used.
 
-RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, required_envs: %w[SLACK_CI_CHANNEL SLACK_CI_WEBHOOK SLACK_CI_CHECKER_TOKEN], time_zone: 'Europe/London', use_vcr: true do # rubocop:disable RSpec/DescribeClass
-  let(:channel_name) { ENV['SLACK_CI_CHANNEL'] }
+CHANNEL_NAME = ENV['SLACK_CI_CHANNEL_NAME']
+OAUTH_TOKEN = ENV['SLACK_CI_OAUTH_TOKEN']
+WEBHOOK_URL = ENV['SLACK_CI_WEBHOOK_URL']
+
+RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, required_envs: %w[SLACK_CI_CHANNEL_NAME SLACK_CI_OAUTH_TOKEN SLACK_CI_WEBHOOK_URL], time_zone: 'Europe/London', use_vcr: true do # rubocop:disable RSpec/DescribeClass
   let(:slack_group)  { create(:group) }
   let(:types)        { %w[create update reminder_reached] }
   let(:items) do
@@ -12,9 +15,9 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
       {
         group_ids: [slack_group.id],
         types:     types,
-        webhook:   ENV['SLACK_CI_WEBHOOK'],
-        channel:   channel_name,
-        username:  'zammad bot',
+        webhook:   WEBHOOK_URL,
+        channel:   CHANNEL_NAME,
+        username:  'zammad_agent',
         expand:    false,
       }
     ]
@@ -24,6 +27,10 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
   let(:state_name) { 'new' }
   let(:ticket)     { create(:ticket, customer: customer, group: group, title: message, state_name: state_name) }
   let(:article)    { create(:ticket_article, :outbound_note, ticket: ticket, body: message, sender_name: 'Customer', from: customer.fullname) }
+
+  before :all do # rubocop:disable RSpec/BeforeAfterAll
+    delete_all_test_chat_messages if live_mode?
+  end
 
   before do
     Setting.set('slack_integration', true)
@@ -35,7 +42,7 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
   end
 
   context 'with default group' do
-    let(:message) { generate_message('dog... 6081e055b777510463bf') }
+    let(:message) { 'foo' }
     let(:group) { Group.first }
 
     it 'publishes no ticket updates', :aggregate_failures do
@@ -50,7 +57,7 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
 
     context 'with create event only' do
       let(:types) { 'create' }
-      let(:message) { generate_message('home... ce2601a9924d302fc6ad') }
+      let(:message) { 'bar' }
 
       it 'publishes no ticket updates', :aggregate_failures do
         expect(message).to have_message_count(0)
@@ -65,12 +72,12 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
   end
 
   context 'with slack group' do
-    let(:message) { generate_message('cat... 53d106ed8a69abcff434') }
+    let(:message) { 'baz' }
 
     it 'publishes ticket updates', :aggregate_failures do
       expect(message).to have_message_count(1)
 
-      new_message = generate_message('house... 09d0e102bdade3968ef8')
+      new_message = 'qux'
 
       ticket.update!(title: new_message)
 
@@ -97,12 +104,12 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
 
     context 'with create event only' do
       let(:types)   { 'create' }
-      let(:message) { generate_message('yesterday... 6afc704a41534c69755b') }
+      let(:message) { 'corge' }
 
       it 'publishes no ticket updates', :aggregate_failures do
         expect(message).to have_message_count(1)
 
-        new_message = generate_message('tomorrow... 1a411280022ea922703a')
+        new_message = 'grault'
 
         ticket.update!(title: new_message)
 
@@ -117,41 +124,63 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
     %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
   end
 
-  def generate_message(default_message)
-    return random_message if live_mode?
+  def delete_all_test_chat_messages
+    client = slack_client
+    channel_id = slack_channel_id(client)
+    channel_history = slack_channel_history(client, channel_id)
 
-    default_message
+    message_count = 0
+
+    channel_history['messages'].each do |message|
+      next if message['subtype'] != 'bot_message'
+      next if !message['ts']
+
+      client.chat_delete channel: channel_id, ts: message['ts'], as_user: true
+      message_count += 1
+    end
+
+    Rails.logger.debug { "Deleted #{message_count} existing bot message(s)..." } if message_count > 0
   end
 
-  def random_message
-    "#{rand_word}... #{hash_gen}"
+  def slack_client
+    Slack.configure do |config|
+      config.token = OAUTH_TOKEN
+    end
+
+    client = Slack::Web::Client.new
+    client.auth_test
+
+    client
   end
 
-  def hash_gen
-    SecureRandom.hex(10)
+  def slack_channel_id(client)
+    channels = client.conversations_list['channels']
+    channel_id = nil
+    channels.each do |channel|
+      next if channel['name'] != CHANNEL_NAME
+
+      channel_id = channel['id']
+    end
+
+    if !channel_id
+      raise "ERROR: No such channel '#{CHANNEL_NAME}'"
+    end
+
+    channel_id
   end
 
-  def rand_word
-    words = [
-      'dog',
-      'cat',
-      'house',
-      'home',
-      'yesterday',
-      'tomorrow',
-      'new york',
-      'berlin',
-      'coffee script',
-      'java script',
-      'bob smith',
-      'be open',
-      'really nice',
-      'stay tuned',
-      'be a good boy',
-      'invent new things',
-    ]
+  def slack_channel_history(client, channel_id)
+    channel_history = client.conversations_history(channel: channel_id)
 
-    words.sample
+    if !channel_history
+      raise "ERROR: No history for channel #{CHANNEL_NAME}/#{channel_id}"
+    end
+
+    if !channel_history['messages']
+      raise "ERROR: No history messages for channel #{CHANNEL_NAME}/#{channel_id}"
+    end
+
+    channel_history
   end
 
   define :have_message_count do
@@ -160,43 +189,12 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
     end
 
     def check_message_count
-      channel_history = fetch_channel_history
+      client = slack_client
+      channel_id = slack_channel_id(client)
+      channel_history = slack_channel_history(client, channel_id)
       message_count = get_message_count(channel_history)
 
       expect(message_count).to eq(expected)
-    end
-
-    def fetch_channel_history
-      Slack.configure do |config|
-        config.token = ENV['SLACK_CI_CHECKER_TOKEN']
-      end
-
-      client = Slack::Web::Client.new
-      client.auth_test
-
-      channels = client.conversations_list['channels']
-      channel_id = nil
-      channels.each do |channel|
-        next if channel['name'] != channel_name
-
-        channel_id = channel['id']
-      end
-
-      if !channel_id
-        raise "ERROR: No such channel '#{channel_name}'"
-      end
-
-      channel_history = client.conversations_history(channel: channel_id)
-
-      if !channel_history
-        raise "ERROR: No history for channel #{channel_name}/#{channel_id}"
-      end
-
-      if !channel_history['messages']
-        raise "ERROR: No history messages for channel #{channel_name}/#{channel_id}"
-      end
-
-      channel_history
     end
 
     def get_message_count(channel_history)
