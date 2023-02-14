@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-17 03:30+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo.milesi@yetopen.com>\n"
+"PO-Revision-Date: 2023-02-14 03:30+0000\n"
+"Last-Translator: Marco Badan <info@marcobadan.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -403,7 +403,7 @@ msgstr "%s ha creato l'organizzazione |%s|"
 #: app/assets/javascripts/app/models/role.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "%s created role |%s|"
-msgstr "%s ha created il ruolo |%s|"
+msgstr "%s ha creato il ruolo |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
@@ -2392,7 +2392,7 @@ msgstr "Certificati e chiavi private"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
 msgid "Change"
-msgstr "Cambia"
+msgstr "Modifica"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
@@ -2430,7 +2430,6 @@ msgstr "Modificato:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -2665,6 +2664,12 @@ msgstr "Pulisci sessioni abbandonate."
 #: db/seeds/schedulers.rb
 msgid "Clean up expired sessions."
 msgstr "Pulisci sessioni scadute."
+
+#: db/seeds/schedulers.rb
+#, fuzzy
+#| msgid "Clean up ActiveJob locks."
+msgid "Clean up mobile taskbars."
+msgstr "Pulizia lock ActiveJob."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Clear"
@@ -3120,11 +3125,11 @@ msgstr "Crea"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "Create Admin"
-msgstr "Crea Ammnistratore"
+msgstr "Crea Amministratore"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Create Channel"
-msgstr "Crea canale"
+msgstr "Crea Canale"
 
 #: app/assets/javascripts/app/views/knowledge_base/new_controller.coffee
 msgid "Create Knowledge Base"
@@ -3361,7 +3366,7 @@ msgstr "Crea un nuovo ticket per questo utente"
 
 #: app/models/report.rb
 msgid "Creation Channels"
-msgstr "Creazione canali"
+msgstr "Creazione Canali"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
@@ -3489,7 +3494,7 @@ msgstr "Modalità scura"
 #: app/assets/javascripts/app/controllers/dashboard.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 msgid "Dashboard"
-msgstr "Cruscotto"
+msgstr "Dashboard"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
@@ -4137,6 +4142,10 @@ msgid "Defines pretty date format."
 msgstr "Definizione formato data."
 
 #: db/seeds/settings.rb
+msgid "Defines processing timeout for the html sanitizer."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines searchable models."
 msgstr "Definisce i modelli ricercabili."
 
@@ -4581,6 +4590,7 @@ msgid "Designer"
 msgstr "Designer"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
 msgid "Desktop"
 msgstr "Scrivania"
 
@@ -4692,10 +4702,6 @@ msgstr "Annulla le modifiche non salvate."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
 msgstr "Mostra"
-
-#: app/assets/javascripts/app/models/public_link.coffee
-msgid "Display in new tab"
-msgstr "Visualizza in nuova scheda"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -4859,7 +4865,7 @@ msgstr "Modifica Cliente"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue
 msgid "Edit Organization"
-msgstr "Modifica Società"
+msgstr "Modifica Organizzazione"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
@@ -4872,8 +4878,16 @@ msgstr "Modifica maschera"
 msgid "Edit reply"
 msgstr "Aggiungi risposta"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
-msgid "Editing ticket"
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
+#, fuzzy
+#| msgid "Edit"
+msgid "Editing"
+msgstr "Modifica"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
+#, fuzzy
+#| msgid "Editing ticket"
+msgid "Editing on Desktop"
 msgstr "Modifica ticket"
 
 #: db/seeds/settings.rb
@@ -5634,7 +5648,9 @@ msgstr "Estrarre le informazioni degli allegati zammad dagli array"
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
-#: app/controllers/first_steps_controller.rb db/seeds/settings.rb
+#: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
+#: db/seeds/settings.rb
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -5947,6 +5963,10 @@ msgstr "Formatta come |grassetto|"
 msgid "Format as ||italic||"
 msgstr "Formatta come |corsivo|"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+msgid "Forward"
+msgstr "Avanti"
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
 msgstr "Frequenza"
@@ -6202,7 +6222,6 @@ msgstr "Saluti"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6256,11 +6275,11 @@ msgstr "E' richiesto un gruppo per definire il canale!"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco db/seeds/settings.rb
 msgid "Group selection for Ticket creation"
-msgstr "Selezione del gruppo per la creazione dei Tickets"
+msgstr "Selezione del gruppo per la creazione dei ticket"
 
 #: db/seeds/settings.rb
 msgid "Group selection for ticket creation"
-msgstr "Selezione del gruppo per la creazione del ticket"
+msgstr "Selezione del gruppo per la creazione ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -6293,6 +6312,10 @@ msgstr "HMAC SHA1 Signature Token"
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
 msgstr "HTML Email CSS Font"
+
+#: db/seeds/settings.rb
+msgid "HTML Sanitizer Processing Timeout"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6421,6 +6444,14 @@ msgstr "Qui puoi trovare le ultime attività del tuo sistema."
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Hi! Which one of our products?"
 msgstr "Ciao! Quale dei nostri prodotti?"
+
+#: db/seeds/settings.rb
+msgid "Highlights if the note a user is writing is public or private"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Hint for adding an article to an existing ticket."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 #: app/assets/javascripts/app/controllers/organization_profile.coffee
@@ -6882,31 +6913,26 @@ msgid "Info: %s"
 msgstr "Info: %s"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -8052,7 +8078,7 @@ msgstr "Ticket assegnati a me"
 
 #: db/seeds/overviews.rb
 msgid "My Organization Tickets"
-msgstr "Ticket della mia Società"
+msgstr "Ticket della mia Organizzazione"
 
 #: db/seeds/overviews.rb
 msgid "My Pending Reached Tickets"
@@ -8247,7 +8273,7 @@ msgstr "Nuova Macro"
 
 #: app/assets/javascripts/app/controllers/organization.coffee
 msgid "New Organization"
-msgstr "Nuova Società"
+msgstr "Nuova Organizzazione"
 
 #: app/assets/javascripts/app/controllers/overview.coffee
 msgid "New Overview"
@@ -8825,6 +8851,7 @@ msgid "Ok"
 msgstr "Ok"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts
 msgid "On %s, %s wrote:"
 msgstr "Su %s, %s ha scritto:"
 
@@ -8918,6 +8945,12 @@ msgstr "Ticket aperto# %s"
 msgid "Open Tickets"
 msgstr "Ticket Aperti"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Opened in tabs"
+msgid "Open in new tab"
+msgstr "Aperto in schede"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
 msgstr "Apri selezione macro"
@@ -8976,20 +9009,20 @@ msgstr "Ordinamento panoramiche"
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb lib/excel_sheet/ticket.rb
 msgid "Organization"
-msgstr "Società"
+msgstr "Organizzazione"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 msgid "Organization & Department Name"
-msgstr "Società e Dipartimento"
+msgstr "Organizzazione e nome reparto"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Organization Name"
-msgstr "Nome della Società"
+msgstr "Nome Organizzazione"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Organization Support"
-msgstr "Supporto della Società"
+msgstr "Supporto dell'organizzazione"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts
 msgid "Organization could not be updated."
@@ -9054,7 +9087,8 @@ msgstr "Assenza dall'ufficio"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr "Di tutti i ticket (a livello di società), quanti sono assegnati a te?"
+msgstr ""
+"Di tutti i ticket (a livello di organizzazione), quanti sono assegnati a te?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "Out of office replacement"
@@ -9117,7 +9151,6 @@ msgstr "Sovrascrivi bozza"
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9682,7 +9715,7 @@ msgstr "Originale"
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Read"
-msgstr "Letto"
+msgstr "Lettura"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco
 msgid "Real-time"
@@ -9842,11 +9875,19 @@ msgstr "Tempo di riapertura in giorni"
 msgid "Replacement"
 msgstr "Sostituzione"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 msgid "Reply"
 msgstr "Rispondi"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts
+#, fuzzy
+#| msgid "reply all"
+msgid "Reply All"
+msgstr "rispondi a tutti"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Reply to last article"
@@ -10370,6 +10411,12 @@ msgstr "Cerca per…"
 
 #: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
 msgid "Search or enter email address…"
+msgstr "Cerca o inserisci indirizzo email…"
+
+#: app/frontend/shared/components/Form/fields/FieldRecipient/index.ts
+#, fuzzy
+#| msgid "Search or enter email address…"
+msgid "Search or enter phone number…"
 msgstr "Cerca o inserisci indirizzo email…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee
@@ -11150,7 +11197,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13873,29 +13919,24 @@ msgid "View from user's perspective"
 msgstr "Vista dalla prospettiva utente"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -15651,6 +15692,7 @@ msgstr "imposta opzionale"
 msgid "set readonly"
 msgstr "imposta sola lettura"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "set to internal"
 msgstr "imposta come interno"
@@ -15889,13 +15931,13 @@ msgstr "…dell'intera area di testo"
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
 
+#~ msgid "Display in new tab"
+#~ msgstr "Visualizza in nuova scheda"
+
 #, fuzzy
 #~| msgid "Authentication via %s"
 #~ msgid "Authentication via"
 #~ msgstr "Autenticazione tramite %s"
-
-#~ msgid "Forward"
-#~ msgstr "Avanti"
 
 #~ msgid "Make internal"
 #~ msgstr "Modifica in interno"
