@@ -292,6 +292,18 @@ RSpec.describe SearchIndexBackend do
       described_class.refresh
     end
 
+    context 'when limit is used' do
+      it 'finds 1 record' do
+        result = described_class.selectors('Ticket', { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }, { limit: 1 }, { field: 'created_at' })
+        expect(result[:ticket_ids].count).to eq(1)
+      end
+
+      it 'finds 3 records' do
+        result = described_class.selectors('Ticket', { 'ticket.created_at'=>{ 'operator' => 'till (relative)', 'value' => '30', 'range' => 'minute' } }, { limit: 3 }, { field: 'created_at' })
+        expect(result[:ticket_ids].count).to eq(3)
+      end
+    end
+
     context 'query with contains' do
       it 'finds records with till (relative)' do
         result = described_class.selectors('Ticket',

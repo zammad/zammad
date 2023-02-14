@@ -3,7 +3,7 @@
 class Ticket::Selector::SearchIndex < Ticket::Selector::Base
   def get
     result = {
-      size: SearchIndexBackend::DEFAULT_QUERY_OPTIONS[:limit],
+      size: options[:limit] || SearchIndexBackend::DEFAULT_QUERY_OPTIONS[:limit],
     }
 
     query = run(selector, 0)
