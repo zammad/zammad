@@ -26,8 +26,9 @@ class Integrations extends App.ControllerSubContent
         config = value
         break
 
-    new config.controller(
-      el: @el
+    @configController.releaseController() if @configController
+    @configController = new config.controller(
+      el: @el.find('.js-integration')
     )
 
   render: =>
