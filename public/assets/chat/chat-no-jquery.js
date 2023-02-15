@@ -405,6 +405,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     ZammadChat.prototype.initialQueueDelay = 10000;
 
     ZammadChat.prototype.translations = {
+      'cs': {
+        '<strong>Chat</strong> with us!': '<strong>Chatujte</strong> s námi!',
+        'All colleagues are busy.': 'Všichni kolegové jsou vytíženi.',
+        'Chat closed by %s': '%s ukončil konverzaci',
+        'Compose your message…': 'Napište svou zprávu…',
+        'Connecting': 'Připojování',
+        'Connection lost': 'Připojení ztraceno',
+        'Connection re-established': 'Připojení obnoveno',
+        'Offline': 'Offline',
+        'Online': 'Online',
+        'Scroll down to see new messages': 'Srolujte dolů pro zobrazení nových zpráv',
+        'Send': 'Odeslat',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '',
+        'Start new conversation': 'Zahájit novou konverzaci',
+        'Today': 'Dnes',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
+        'You are on waiting list position <strong>%s</strong>.': 'Jste <strong>%s</strong>. v pořadí na čekací listině.'
+      },
       'de': {
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!',
         'All colleagues are busy.': 'Alle Kollegen sind beschäftigt.',

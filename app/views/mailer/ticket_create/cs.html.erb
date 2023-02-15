@@ -5,14 +5,14 @@ Nový ticket (#{ticket.title})
 <div>byl vytvořen nový ticket (#{ticket.title}) uživatelem "<b>#{current_user.longname}</b>".</div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+Skupina: #{ticket.group.name}<br>
+Vlastník: #{ticket.owner.fullname}<br>
+Stav: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informace:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -20,5 +20,4 @@ Nový ticket (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
-</div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobrazit v aplikaci #{config.product_name}</a></div>
