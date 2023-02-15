@@ -78,9 +78,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket"
-".updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket."
+"updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Proprietário: #{ticket.owner.fullname}\n"
 "* Estado: #{t(ticket.state.name)}\n"
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" está escalado "
 "desde \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -128,8 +128,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Lembrete alcançado!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Lembrete alcançado!_\n"
 "Um ticket necessita de atenção: lembrete alcançado para (#{ticket.title}) do "
 "cliente \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -156,8 +156,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Atualizado por #{current_user.longname} at "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Atualizado por #{current_user.longname} at "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -184,8 +184,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" vai ser "
 "escalado em \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -238,8 +238,8 @@ msgstr ""
 "<div>O país foi adicionado à sua lista de dispositivos conhecidos, que pode "
 "ver aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, por favor remova o dispositivo, altere a sua password, "
 "e contacte o administrador do sistema. Alguém poderá ter obtido acesso não "
@@ -280,8 +280,8 @@ msgstr ""
 "\n"
 "<div>Olá #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Parece que acedeu à sua conta <b>usando um novo dispositivo</b> em \""
-"#{user_device.created_at}\":</div>\n"
+"<div>Parece que acedeu à sua conta <b>usando um novo dispositivo</b> em "
+"\"#{user_device.created_at}\":</div>\n"
 "<br>\n"
 "<div>\n"
 "O seu dispositivo: #{user_device.name}<br>\n"
@@ -292,8 +292,8 @@ msgstr ""
 "<div>O seu dispositivo foi adicionado à sua lista de dispositivos "
 "conhecidos, que pode ver aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, por favor remova o dispositivo, altere a sua password, "
 "e contacte o administrador do sistema. Alguém poderá ter obtido acesso não "
@@ -355,8 +355,8 @@ msgstr "%s ficheiros anexos"
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
-"%s terminada tarefa de privacidade de dados para eliminar ID de utilizador "
-"|%s|"
+"%s terminada tarefa de privacidade de dados para eliminar ID de utilizador |"
+"%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -612,8 +612,8 @@ msgstr ""
 "dentro de oito horas. Se estiver em risco de falhar este objetivo, o Zammad "
 "irá alertá-lo.\n"
 "\n"
-"Pode definir objetivos para 3 métricas diferentes: ** tempo de resposta ** ("
-"tempo entre a criação de um ticket e a primeira reação de um agente), ** "
+"Pode definir objetivos para 3 métricas diferentes: ** tempo de resposta ** "
+"(tempo entre a criação de um ticket e a primeira reação de um agente), ** "
 "tempo de atualização ** (tempo entre um pedido de um cliente e a reação de "
 "um agente), e ** tempo de resolução ** (tempo entre a criação e o fecho de "
 "um ticket).\n"
@@ -1175,12 +1175,12 @@ msgstr ""
 "<div>Recebemos um pedido para um login de administração para a sua conta "
 "#{config.product_name} <b>#{user.login}</b>.</div>\n"
 "<br>\n"
-"<div>Por favor clique no link abaixo (ou corte e cole o URL no seu navegador)"
-" para avançar:</div>\n"
+"<div>Por favor clique no link abaixo (ou corte e cole o URL no seu "
+"navegador) para avançar:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
+"div>\n"
 "<br>\n"
 "<div>Este link leva-o a uma página onde pode efetuar o login.</div>\n"
 "<br>\n"
@@ -2283,7 +2283,6 @@ msgstr "Alterado"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -3858,6 +3857,10 @@ msgid "Defines pretty date format."
 msgstr "Define um formato de data agradável"
 
 #: db/seeds/settings.rb
+msgid "Defines processing timeout for the html sanitizer."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines searchable models."
 msgstr ""
 
@@ -4413,12 +4416,6 @@ msgstr "Descartar mudanças não salvas."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
 msgstr "Exibição"
-
-#: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Display name"
-msgid "Display in new tab"
-msgstr "Nome"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -5886,7 +5883,6 @@ msgstr "Saudações"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -5982,6 +5978,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
@@ -6621,30 +6621,25 @@ msgid "Info: %s"
 msgstr ""
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -8639,6 +8634,12 @@ msgstr "Abrir Ticket"
 msgid "Open Tickets"
 msgstr "Open Tickets"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Next in tab"
+msgid "Open in new tab"
+msgstr "Próximo na tela"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
 msgstr ""
@@ -8857,7 +8858,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -10854,7 +10854,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13444,28 +13443,23 @@ msgid "View from user's perspective"
 msgstr "Vista da perspectiva do usuário"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -15484,6 +15478,11 @@ msgstr "... de toda a area de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Tempo de Espera Hoje"
+
+#, fuzzy
+#~| msgid "Display name"
+#~ msgid "Display in new tab"
+#~ msgstr "Nome"
 
 #, fuzzy
 #~| msgid "Last sync"

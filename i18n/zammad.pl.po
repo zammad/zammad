@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-01-24 03:30+0000\n"
+"PO-Revision-Date: 2023-02-11 15:26+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -2261,7 +2261,6 @@ msgstr "Zmieniono:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -3883,6 +3882,10 @@ msgid "Defines pretty date format."
 msgstr "Określa ładny format daty."
 
 #: db/seeds/settings.rb
+msgid "Defines processing timeout for the html sanitizer."
+msgstr "Definiuje limit czasu przetwarzania dla sanitizera HTML."
+
+#: db/seeds/settings.rb
 msgid "Defines searchable models."
 msgstr "Definiuje szukane modele."
 
@@ -4420,10 +4423,6 @@ msgstr "Odrzuć niezapisane zmiany."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
 msgstr "Wyświetl"
-
-#: app/assets/javascripts/app/models/public_link.coffee
-msgid "Display in new tab"
-msgstr "Wyświetl w nowej karcie"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -5849,7 +5848,6 @@ msgstr "Pozdrowienie"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -5940,6 +5938,10 @@ msgstr "Token podpisu HMAC SHA1"
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
 msgstr "Czcionka CSS wiadomości e-mail w formacie HTML"
+
+#: db/seeds/settings.rb
+msgid "HTML Sanitizer Processing Timeout"
+msgstr "Upłynął limit czasu przetwarzania narzędzia do czyszczenia kodu HTML"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6531,30 +6533,25 @@ msgid "Info: %s"
 msgstr "Informacje: %s"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -6775,8 +6772,8 @@ msgstr ""
 "<div>(#{current_user.firstname} #{current_user.lastname}) zaprasza Cię do "
 "#{config.product_name} - naszej platformy obsługi Klienta.</div>\n"
 "<br>\n"
-"<div>Kliknij <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">tutaj</a> i ustaw swoje hasło.</div>\n"
+"<div>Kliknij <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">tutaj</a> i ustaw swoje hasło.</div>\n"
 "<br>\n"
 "<div>Pozdrawiamy,</div>\n"
 "<br>\n"
@@ -8486,6 +8483,10 @@ msgstr "Otwarte zgłoszenia# %s"
 msgid "Open Tickets"
 msgstr "Otwarte zgłoszenia"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+msgid "Open in new tab"
+msgstr "Otwórz w nowej karcie"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
 msgstr "Otwórz wybór makr"
@@ -8684,7 +8685,6 @@ msgstr "Zastąp wersję roboczą"
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -10596,7 +10596,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -13153,28 +13152,23 @@ msgid "View from user's perspective"
 msgstr "Wyświetl jako użytkownik"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -15081,6 +15075,9 @@ msgstr "...całego pola tekstowego"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ dzisiejszy czas oczekiwania"
+
+#~ msgid "Display in new tab"
+#~ msgstr "Wyświetl w nowej karcie"
 
 #~ msgid "Defines if the search index is using excluded attributes."
 #~ msgstr "Określa, czy indeks wyszukiwania używa wykluczonych atrybutów."

@@ -239,8 +239,8 @@ msgstr ""
 "<div>El nuevo país se ha agregado a la lista de dispositivos conocidos, que "
 "puede ver aquí:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si no ha sido usted, elimine la nueva ubicación de la lista, cambie la "
 "contraseña de la cuenta y contacte con su administrador. Alguien puede haber "
@@ -293,8 +293,8 @@ msgstr ""
 "<div>El dispositivo se ha agregado a la lista de dispositivos conocidos, que "
 "puede ver aquí:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices"
+"\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si no ha sido usted, elimine el dispositivo de la lista, cambie la "
 "contraseña de la cuenta y contacte con su administrador. Alguien podría "
@@ -1176,8 +1176,8 @@ msgstr ""
 "para continuar:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
+"div>\n"
 "<br>\n"
 "<div>Este enlace abre una página donde podrá iniciar sesión.</div>\n"
 "<br>\n"
@@ -2263,7 +2263,6 @@ msgstr "Modificado:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -2708,8 +2707,8 @@ msgstr ""
 "siguiente:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
 "<br>\n"
 "<div>El equipo de #{config.product_name} </div>\n"
 
@@ -3605,7 +3604,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr "Define si el botón de navegación Base de Conocimientos está habilitado."
+msgstr ""
+"Define si el botón de navegación Base de Conocimientos está habilitado."
 
 #: db/seeds/settings.rb
 msgid "Defines if LDAP is enabled or not."
@@ -3783,8 +3783,8 @@ msgstr ""
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
-"Define el filtro de postmaster para identificar mensajes de seguimiento ("
-"basado en configuración administrativa)."
+"Define el filtro de postmaster para identificar mensajes de seguimiento "
+"(basado en configuración administrativa)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3837,8 +3837,8 @@ msgstr ""
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
-"Define el filtro de postmaster para gestionar mensajes de Monit "
-"(https://mmonit.com/monit/)."
+"Define el filtro de postmaster para gestionar mensajes de Monit (https://"
+"mmonit.com/monit/)."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -3887,6 +3887,10 @@ msgstr "Define un filtro de postmaster."
 #: db/seeds/settings.rb
 msgid "Defines pretty date format."
 msgstr "Define un formato de fecha estético."
+
+#: db/seeds/settings.rb
+msgid "Defines processing timeout for the html sanitizer."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines searchable models."
@@ -3970,7 +3974,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the default calendar tickets subscription settings."
-msgstr "Define los ajustes de suscripción por defecto de tickets de calendario."
+msgstr ""
+"Define los ajustes de suscripción por defecto de tickets de calendario."
 
 #: db/seeds/settings.rb
 msgid "Defines the default screen."
@@ -4027,7 +4032,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr "Define el logotipo de la aplicación, que se muestra en la interfaz web."
+msgstr ""
+"Define el logotipo de la aplicación, que se muestra en la interfaz web."
 
 #: db/seeds/settings.rb
 msgid "Defines the maximum accepted email size in MB."
@@ -4438,10 +4444,6 @@ msgstr "Descartar los cambios no guardados."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Display"
 msgstr "Display"
-
-#: app/assets/javascripts/app/models/public_link.coffee
-msgid "Display in new tab"
-msgstr "Mostrar en nueva pestaña"
 
 #: app/assets/javascripts/app/models/email_address.coffee db/seeds/settings.rb
 msgid "Display name"
@@ -5882,7 +5884,6 @@ msgstr "Saludo"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -5973,6 +5974,10 @@ msgstr "Token de firma HMAC SHA1"
 #: db/seeds/settings.rb
 msgid "HTML Email CSS Font"
 msgstr "Fuente CSS en mensaje de correo en formato HTML"
+
+#: db/seeds/settings.rb
+msgid "HTML Sanitizer Processing Timeout"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6574,30 +6579,25 @@ msgid "Info: %s"
 msgstr "Información: %s"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -6820,11 +6820,11 @@ msgstr ""
 "<div>Buenos días, #{user.firstname}:</div>\n"
 "<br>\n"
 "<div>Mi nombre es (#{current_user.firstname} #{current_user.lastname}) y me "
-"gustaría invitarle a #{config.product_name}, nuestra plataforma de "
-"soporte.</div>\n"
+"gustaría invitarle a #{config.product_name}, nuestra plataforma de soporte.</"
+"div>\n"
 "<br>\n"
-"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.name}\">este enlace</a> y establezca su "
+"<div>Pulse en <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.name}\">este enlace</a> y establezca su "
 "contraseña.</div>\n"
 "<br>\n"
 "<div>Gracias,</div>\n"
@@ -8537,6 +8537,12 @@ msgstr "Abrir Ticket# %s"
 msgid "Open Tickets"
 msgstr "Tickets abiertos"
 
+#: app/assets/javascripts/app/models/public_link.coffee
+#, fuzzy
+#| msgid "Opened in tabs"
+msgid "Open in new tab"
+msgstr "Abierto en pestañas"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
 msgstr "Abrir selector de macros"
@@ -8635,8 +8641,8 @@ msgid ""
 "Organizations are for any person in the system: agents (owners, "
 "responsibles, …) and customers."
 msgstr ""
-"Las organizaciones son para cualquier persona del sistema: agentes ("
-"propietarios, responsables, ...) y clientes."
+"Las organizaciones son para cualquier persona del sistema: agentes "
+"(propietarios, responsables, ...) y clientes."
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
@@ -8736,7 +8742,6 @@ msgstr "Sobreescribir borrador"
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -8968,7 +8973,8 @@ msgstr "Agregue categorías y/o respuestas"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Please click on the button below to create your first one."
-msgstr "Por favor, haga click en el botón inferior para crear su primer ticket."
+msgstr ""
+"Por favor, haga click en el botón inferior para crear su primer ticket."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Please click on the link in the verification email."
@@ -9612,8 +9618,8 @@ msgstr ""
 "#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.name}</a></div>\n"
 "<br>\n"
-"<div>Este enlace le llevará a una página donde podrá cambiar la "
-"contraseña.</div>\n"
+"<div>Este enlace le llevará a una página donde podrá cambiar la contraseña.</"
+"div>\n"
 "<br>\n"
 "<div>Si no desea cambiar su contraseña, ignore este mensaje. Su contraseña "
 "no será restablecida.</div>\n"
@@ -10650,7 +10656,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -10944,8 +10949,8 @@ msgstr ""
 "\n"
 "<div>Buenos días, #{agent.firstname}:</div>\n"
 "<br>\n"
-"<div>Este es un <b>ticket de prueba </b>. ¡Soy un cliente y necesito ayuda! "
-":)</div>\n"
+"<div>Este es un <b>ticket de prueba </b>. ¡Soy un cliente y necesito "
+"ayuda! :)</div>\n"
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
@@ -11142,7 +11147,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
-msgstr "La configuración de Zammad ha cambiado, rogamos refrescar su navegador."
+msgstr ""
+"La configuración de Zammad ha cambiado, rogamos refrescar su navegador."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts
 msgid ""
@@ -11538,8 +11544,8 @@ msgid ""
 "The required value 'external_credential[:consumer_secret]' could not be "
 "found in the cache."
 msgstr ""
-"No se pudo localizar en caché el valor requerido "
-"'external_credential[:consumer_secret]'."
+"No se pudo localizar en caché el valor requerido 'external_credential[:"
+"consumer_secret]'."
 
 #: app/policies/ticket_policy.rb
 msgid "The required value 'group_id' is missing."
@@ -12043,8 +12049,8 @@ msgstr ""
 "<div>Hola, #{recipient.firstname}:</div>\n"
 "<br>\n"
 "<div>\n"
-"El ticket (#{ticket.title}) ha sido fusionado con otro ticket por \""
-"<b>#{current_user.longname}</b>\".\n"
+"El ticket (#{ticket.title}) ha sido fusionado con otro ticket por "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -13237,28 +13243,23 @@ msgid "View from user's perspective"
 msgstr "Vista desde la perspectiva del usuario"
 
 #: app/views/mailer/ticket_create/cs.html.erb
-#: app/views/mailer/ticket_create/es.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation/cs.html.erb
-#: app/views/mailer/ticket_escalation/es.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
 #: app/views/mailer/ticket_escalation_warning/cs.html.erb
-#: app/views/mailer/ticket_escalation_warning/es.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
 #: app/views/mailer/ticket_reminder_reached/cs.html.erb
-#: app/views/mailer/ticket_reminder_reached/es.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
 #: app/views/mailer/ticket_update/cs.html.erb
-#: app/views/mailer/ticket_update/es.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
@@ -13623,7 +13624,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco
 msgid "With templates you can pre-fill ticket attributes."
-msgstr "Con las plantillas puede rellenar automáticamente atributos del ticket."
+msgstr ""
+"Con las plantillas puede rellenar automáticamente atributos del ticket."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
@@ -13990,8 +13992,8 @@ msgstr "Tu URL de devolución de llamada"
 msgid ""
 "Your changes may override someone else's changes. Do you really want to save?"
 msgstr ""
-"Sus cambios podrían sobrescribir los cambios realizados por otra persona ¿"
-"Está seguro de que desea guardar?"
+"Sus cambios podrían sobrescribir los cambios realizados por otra persona "
+"¿Está seguro de que desea guardar?"
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco
 msgid "Your connection is not private"
@@ -15178,6 +15180,9 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#~ msgid "Display in new tab"
+#~ msgstr "Mostrar en nueva pestaña"
 
 #, fuzzy
 #~| msgid "Last sync"
