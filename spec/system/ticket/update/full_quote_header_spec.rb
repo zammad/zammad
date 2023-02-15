@@ -310,6 +310,45 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
       @style = style
     end
 
+    failure_message do
+      if !confirm_style
+        string = "expected\n```\n#{citation_text}\n```\nto match "
+
+        case style
+        when :reply
+          string += '`On...wrote:`'
+        when :forward
+          string += '`Subject \n Date`'
+        end
+
+        return string
+      end
+
+      string = "expected\n```\n#{citation_text}\n```\nto "
+
+      case style
+      when :reply
+        string += "have name `#{name}` and timestamp `#{timestamp_reply}`"
+
+        string += ' but has no name' if citation_text.exclude?(name)
+        string += ' but has no timestamp' if !includes_timestamp?(citation_text, timestamp_reply)
+      when :forward
+        string += "have name `#{name}` and timestamp `#{timestamp_forward}`"
+
+        string += ensure_privacy? ? ' with no email' : " with email `#{email}`"
+
+        string += ' but has no name' if citation_text.exclude?(name)
+        string += ' but has no timestamp' if !includes_timestamp?(citation_text, timestamp_forward)
+        string += ' but has no email' if !ensure_privacy? && citation_text.include?(email)
+      end
+
+      string
+    end
+
+    failure_message_when_negated do
+      "expected\n```\n#{citation_text}\n```\nto not contain name/email/timestamp"
+    end
+
     def style
       @style || :reply # rubocop:disable RSpec/InstanceVariable
     end
@@ -334,33 +373,38 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     end
 
     def confirm_content_reply
-      citation.has_text?(name) && citation.has_no_text?(email) && citation.has_text?(timestamp_reply)
+      citation_text.include?(name) &&
+        citation_text.exclude?(email) &&
+        includes_timestamp?(citation_text, timestamp_reply)
     end
 
     def confirm_content_forward
-      if ensure_privacy?
-        citation.has_text?(name) && citation.has_no_text?(email) && citation.has_text?(timestamp_forward)
-      else
-        citation.has_text?(name) && citation.has_text?(email) && citation.has_text?(timestamp_forward)
-      end
+      citation_text.include?(name) &&
+        includes_timestamp?(citation_text, timestamp_forward) &&
+        (ensure_privacy? ? citation_text.exclude?(email) : citation_text.include?(email))
     end
 
     def confirm_no_content
-      citation.has_no_text?(name) && citation.has_no_text?(email) && citation.has_no_text?(timestamp_reply) && citation.has_no_text?(timestamp_forward)
+      citation_text.exclude?(name) &&
+        citation_text.exclude?(email) &&
+        citation_text.exclude?(timestamp_reply) &&
+        citation_text.exclude?(timestamp_forward)
     end
 
     def confirm_style
       case style
       when :forward
-        citation.text.match?(%r{Subject(.+)\nDate(.+)})
+        citation_text.match?(%r{Subject(.+)\nDate(.+)})
       when :reply
-        citation.text.match?(%r{^On(.+)wrote:$})
+        citation_text.match?(%r{^On(.+)wrote:$})
       end
     end
 
     def citation
       actual.first('blockquote[type=cite]')
     end
+
+    delegate :text, to: :citation, prefix: true
 
     def name
       (expected.origin_by || expected.created_by).fullname
@@ -382,6 +426,15 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         .created_at
         .in_time_zone('Europe/London')
         .strftime('%m/%d/%Y %1I:%M %P')
+    end
+
+    # Chrome started to use non-breaking-space before AM/PM
+    # While Firefox still has regular space
+    # Using regexp with :space: to match either
+    def includes_timestamp?(string, timestamp)
+      regexp = Regexp.new timestamp.gsub(' ', '[[:space:]]{1}')
+
+      string.match? regexp
     end
   end
 end

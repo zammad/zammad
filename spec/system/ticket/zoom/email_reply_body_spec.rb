@@ -132,11 +132,11 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate
     end
 
     def contain_citation_header
-      citation.has_text?(expected)
+      citation.text.match? expected_regexp
     end
 
     def contain_no_citation_header
-      citation.has_no_text?(expected)
+      !citation.text.match? expected_regexp
     end
 
     def citation
@@ -149,6 +149,10 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate
 
     def expected_block
       "> #{expected}"
+    end
+
+    def expected_regexp
+      Regexp.new expected.gsub(' ', '([[:space:]]{1})')
     end
   end
 end
