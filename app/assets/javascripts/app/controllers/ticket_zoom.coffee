@@ -746,9 +746,21 @@ class App.TicketZoom extends App.Controller
     if currentParams.ticket
       @formDiffSimplifyEmptyValues(currentParams)
 
+    articleDiff = @forRemoveMeta(App.Utils.formDiff(currentParams.article, currentStore.article))
+
+    if articleDiff.type
+      articleDiff.internal = currentParams.article.internal
+
+    articleDiffKeys = _.keys(articleDiff)
+    contentKeys     = _.difference(articleDiffKeys, ['type', 'internal'])
+
+    if _.isEmpty(contentKeys)
+      delete articleDiff.type
+      delete articleDiff.internal
+
     {
       ticket:  @forRemoveMeta(App.Utils.formDiff(currentParams.ticket, currentStore.ticket))
-      article: @forRemoveMeta(App.Utils.formDiff(currentParams.article, currentStore.article))
+      article: articleDiff
     }
 
   formDiffSimplifyEmptyValues: (params) ->
