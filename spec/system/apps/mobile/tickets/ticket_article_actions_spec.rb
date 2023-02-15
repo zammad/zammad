@@ -94,9 +94,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
             select_text('.Content')
           }
         end
-        let(:current_text) { %r{On [\w\s\d,:]+, #{article.created_by.fullname} wrote:\s+#{article.body}\s+#{agent.firstname}\nSignature!} }
+        let(:current_text) { %r{On .+, #{article.created_by.fullname} wrote:\s+#{article.body}\s+#{agent.firstname}\nSignature!} }
         let(:result_text)  do
-          a_string_matching(%r{<p>This is a note<br></p><blockquote type="cite"><p>On [\w\s\d,:]+, #{article.created_by.fullname} wrote:<br><br>#{article.body}</p></blockquote><p></p><div data-signature="true" data-signature-id="#{signature.id}"><p>#{agent.firstname}<br>Signature!</p></div>})
+          a_string_matching(%r{<p>This is a note<br></p><blockquote type="cite"><p>On .+, #{article.created_by.fullname} wrote:<br><br>#{article.body}</p></blockquote><p></p><div data-signature="true" data-signature-id="#{signature.id}"><p>#{agent.firstname}<br>Signature!</p></div>})
         end
       end
     end
@@ -166,9 +166,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     context 'when article has multiple email addresses, can reply all' do
       include_examples 'reply article', 'Email', attachments: true do
         let(:trigger_label) { 'Reply All' }
-        let(:to)      { ['e1@example.com', 'e2@example.com'] }
-        let(:cc)      { ['e3@example.com'] }
-        let(:article) { create(:ticket_article, :outbound_email, ticket: ticket, to: to.join(', '), cc: cc.join(', ')) }
+        let(:to)            { ['e1@example.com', 'e2@example.com'] }
+        let(:cc)            { ['e3@example.com'] }
+        let(:article)       { create(:ticket_article, :outbound_email, ticket: ticket, to: to.join(', '), cc: cc.join(', ')) }
       end
     end
 

@@ -10,6 +10,8 @@
 
 .job_rules_integration:
   rules:
+    - if: $BROWSER_TEST_FILTER
+      when: never
     - if: $CI_COMMIT_REF_NAME =~ /^private/
       allow_failure: true
     - when: on_success
