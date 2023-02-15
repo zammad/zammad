@@ -185,6 +185,9 @@ class App.TicketZoomArticleNew extends App.Controller
     @setArticleTypePre(@type)
     @setArticleTypePost(@type)
 
+    if @defaults.internal != undefined
+      @setArticleInternal(@defaults.internal)
+
     new App.WidgetAvatar(
       el:        @$('.js-avatar')
       object_id: App.Session.get('id')
@@ -346,6 +349,8 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       else
         @setArticleInternal(false)
+
+    @textarea.trigger('change.local')
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()
