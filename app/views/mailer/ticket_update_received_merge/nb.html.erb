@@ -1,0 +1,11 @@
+En annen sak ble slått sammen med sak (#{ticket.title})
+
+<div>Hei #{recipient.firstname},</div>
+<br>
+<div>
+En annen sak ble slått sammen med sak (#{ticket.title}) av "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Se dette i #{config.product_name}</a>
+</div>

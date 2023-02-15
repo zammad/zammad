@@ -106,6 +106,15 @@ $(function() {
     ],
     translations: {
     // ZAMMAD_TRANSLATIONS_START
+      'cs': {
+        'Attachments': 'Přílohy',
+        'Email': 'Email',
+        'Message': 'Zpráva',
+        'Name': 'Jméno',
+        'Your Email': 'Váš e-mail',
+        'Your Message…': '',
+        'Your Name': 'Vaše jméno',
+      },
       'de': {
         'Attachments': 'Anhänge',
         'Email': 'E-Mail',

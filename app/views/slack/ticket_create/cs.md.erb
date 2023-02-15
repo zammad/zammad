@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Vytvořil #{current_user.longname} #{ticket.updated_at}_
+* Skupina: #{ticket.group.name}
+* Vlastník: #{ticket.owner.fullname}
+* Stav: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

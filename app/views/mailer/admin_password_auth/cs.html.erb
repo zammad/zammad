@@ -1,0 +1,16 @@
+Obnovení Vašeho hesla na webu #{config.product_name}
+
+<div>Dobrý den, #{user.firstname},</div>
+<br>
+<div>Obdrželi jsme požadavek na změnu Vašeho hesla na webu #{config.product_name} k účtu <b>#{user.login}</b>.</div>
+<br>
+<div>Pokud opravdu chcete resetovat heslo, klikněte na odkaz níže (nebo zkopírujte a vložte URL odkazu do svého prohlížeče):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Tento odkaz Vás přesměruje na stránku, kde můžete nastavit nové heslo.</div>
+<br>
+<div>Pokud heslo nechcete změnit, tuto zprávu ignorujte (nevyužívejte výše zmíněného odkazu) a Vaše heslo bude zachováno.</div>
+<br>
+<div>S pozdravem,<br>
+Tým aplikace #{config.product_name}</div>

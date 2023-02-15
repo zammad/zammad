@@ -1,0 +1,15 @@
+Administrasjonspålogging til #{config.product_name}
+
+<div>Hei #{user.firstname},</div>
+<br>
+<div>Vi mottok en henvendelse om administrasjonspålogging for din #{config.product_name}-konto <b>#{user.login}</b>.</div>
+<br>
+<div>Klikk på linken nedenfor dersom dette stemmer (eller kopier og lim inn URL-en i din nettleser) for å fortsette:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/{token.name}</a></div>
+<br>
+<div>Lenken peker til en påloggingsside.</div>
+<br>
+<div>Hvis du ikke ønsker å logge inn, kan du ignorere denne beskjeden.</div>
+<br>
+<div>Dine #{config.product_name}-administratorer</div>

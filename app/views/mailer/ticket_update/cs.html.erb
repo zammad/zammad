@@ -1,6 +1,6 @@
 Aktualizován ticket (#{ticket.title})
 
-<div>Dobrý den,</div>
+<div>Dobrý den, #{recipient.firstname},</div>
 <br>
 <div>
 Ticket (#{ticket.title}) byl aktualizován uživatelem "<b>#{current_user.longname}</b>".
@@ -8,7 +8,7 @@ Ticket (#{ticket.title}) byl aktualizován uživatelem "<b>#{current_user.longna
 <br>
 <% if @objects[:changes].present? %>
   <div>
-  #{t('Changes')}:<br>
+  Změny:
   <% @objects[:changes].each do |key, value| %>
     <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
   <% end %>
@@ -17,7 +17,7 @@ Ticket (#{ticket.title}) byl aktualizován uživatelem "<b>#{current_user.longna
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informace:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -25,5 +25,5 @@ Ticket (#{ticket.title}) byl aktualizován uživatelem "<b>#{current_user.longna
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Zobrazit v aplikaci #{config.product_name}</a>
 </div>

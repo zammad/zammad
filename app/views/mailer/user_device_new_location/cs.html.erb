@@ -1,8 +1,8 @@
 #{config.product_name} - detekováno přihlášení z jiného státu
 
-<div>Dobrý den,</div>
+<div>Dobrý den, #{user.firstname},</div>
 <br>
-<div>Vypadá to, že používáte Váš účet se systému  <b>známým zařízením, ale z jiného státu</b> od "#{user_device.created_at}":</div>
+<div>Vypadá to, že používáte Váš účet se systému <b>známým zařízením, ale z jiného státu</b> od "#{user_device.created_at}":</div>
 <br>
 <div>
 Vaše zařízení: #{user_device.name}<br>
@@ -14,8 +14,7 @@ Vaše IP: #{user_device.ip}<br>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>Pokud se nejedná o Vás, respektive o tom nic nevíte, odstraňte toto zařízení ze seznamu, změňte své heslo, případně smažte osobní přístupové tokeny a co ne$
+<div>Pokud jste to nebyli Vy, odstraňte toto zařízení ze seznamu, změňte své heslo, případně smažte osobní přístupové tokeny a kontaktujte správce. Někdo mohl získat neoprávněný přístup k Vašemu účtu.
 <br>
-<div>S pozdravem,</div>
-<br>
-<div>Team webu #{config.product_name}</div>
+<div>S pozdravem,<br>
+Team webu #{config.product_name}</div>
