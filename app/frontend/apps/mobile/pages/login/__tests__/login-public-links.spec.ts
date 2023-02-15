@@ -11,7 +11,7 @@ import { visitView } from '@tests/support/components/visitView'
 import { waitUntilApisResolved } from '@tests/support/utils'
 
 describe('testing login public links', () => {
-  it('renders a single link to desktop app, when no public links are available', async () => {
+  it('always renders a single link to desktop app', async () => {
     const publicLinkQuery = mockPublicLinks([])
     mockPublicLinksSubscription()
 
@@ -19,12 +19,10 @@ describe('testing login public links', () => {
 
     await waitUntilApisResolved(publicLinkQuery)
 
-    const navigation = view.getByRole('navigation')
-    const links = getAllByRole(navigation, 'link')
+    const link = view.getByText('Continue to desktop app')
 
-    expect(links).toHaveLength(1)
-    expect(links[0]).toHaveAttribute('href', '/#login')
-    expect(links[0]).not.toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('href', '/#login')
+    expect(link).not.toHaveAttribute('target', '_blank')
   })
 
   it('renders all public links correctly', async () => {
@@ -56,17 +54,16 @@ describe('testing login public links', () => {
     const navigation = view.getByRole('navigation')
     const links = getAllByRole(navigation, 'link')
 
-    expect(links).toHaveLength(publicLinks.length + 1)
-    expect(links[0]).toHaveAttribute('href', '/#login')
+    expect(links).toHaveLength(publicLinks.length)
 
-    expect(links[1]).toHaveAttribute('href', publicLinks[0].link)
-    expect(links[1]).toHaveAttribute('title', publicLinks[0].description)
-    expect(links[1]).toHaveTextContent(publicLinks[0].title)
-    expect(links[1]).not.toHaveAttribute('target', '_blank')
+    expect(links[0]).toHaveAttribute('href', publicLinks[0].link)
+    expect(links[0]).toHaveAttribute('title', publicLinks[0].description)
+    expect(links[0]).toHaveTextContent(publicLinks[0].title)
+    expect(links[0]).not.toHaveAttribute('target', '_blank')
 
-    expect(links[2]).toHaveAttribute('href', publicLinks[1].link)
-    expect(links[2]).toHaveTextContent(publicLinks[1].title)
-    expect(links[2]).toHaveAttribute('target', '_blank')
+    expect(links[1]).toHaveAttribute('href', publicLinks[1].link)
+    expect(links[1]).toHaveTextContent(publicLinks[1].title)
+    expect(links[1]).toHaveAttribute('target', '_blank')
   })
 
   it('rerenders links, when subscription is triggered', async () => {
@@ -76,9 +73,7 @@ describe('testing login public links', () => {
     const view = await visitView('/login')
     await waitUntilApisResolved(publicLinkQuery)
 
-    const navigation = view.getByRole('navigation')
-
-    expect(getAllByRole(navigation, 'link')).toHaveLength(1)
+    expect(view.queryByRole('navigation')).not.toBeInTheDocument()
 
     await subcription.next({
       data: {
@@ -98,10 +93,39 @@ describe('testing login public links', () => {
       },
     })
 
-    const newLinks = getAllByRole(navigation, 'link')
+    const navigation = view.getByRole('navigation')
+    const links = getAllByRole(navigation, 'link')
 
-    expect(newLinks).toHaveLength(2)
-    expect(newLinks[0]).toHaveAttribute('href', '/#login')
-    expect(newLinks[1]).toHaveAttribute('href', 'https://localhost/link-1')
+    expect(links).toHaveLength(1)
+    expect(links[0]).toHaveAttribute('href', 'https://localhost/link-1')
+  })
+
+  it('always renders a powered by link', async () => {
+    const publicLinkQuery = mockPublicLinks([])
+    mockPublicLinksSubscription()
+
+    const view = await visitView('/login')
+
+    await waitUntilApisResolved(publicLinkQuery)
+
+    const link = view.getByText('Zammad')
+
+    expect(link).toHaveAttribute('href', 'https://zammad.org')
+    expect(link).toHaveAttribute('target', '_blank')
+
+    const text = link.previousElementSibling
+
+    expect(text).toHaveTextContent('Powered by')
+  })
+
+  it('does not render a footer logo by default', async () => {
+    const publicLinkQuery = mockPublicLinks([])
+    mockPublicLinksSubscription()
+
+    const view = await visitView('/login')
+
+    await waitUntilApisResolved(publicLinkQuery)
+
+    expect(view.queryByAltText('Logo')).not.toBeInTheDocument()
   })
 })

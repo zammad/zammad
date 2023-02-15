@@ -475,7 +475,7 @@ export default {
       </h1>
       <div class="flex cursor-pointer items-center justify-self-end text-base">
         <FormKit
-          input-class="flex justify-center items-center w-9 h-9 rounded-full text-black text-center formkit-variant-primary:bg-yellow"
+          input-class="flex justify-center items-center w-9 h-9 rounded-full !text-black text-center formkit-variant-primary:bg-yellow"
           type="button"
           :disabled="submitButtonDisabled"
           :title="$t('Create ticket')"

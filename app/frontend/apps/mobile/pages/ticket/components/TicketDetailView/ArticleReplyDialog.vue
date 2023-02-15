@@ -124,7 +124,7 @@ const close = () => {
       <FormKit
         v-if="newTicketArticlePresent"
         wrapper-class="mt-4 flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 text-base text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
+        input-class="py-2 px-4 w-full h-14 text-base !text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
         type="button"
         name="discardArticle"
         @click="discardDialog"

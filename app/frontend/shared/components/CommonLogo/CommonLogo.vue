@@ -8,11 +8,8 @@ const assetsPath = '/assets/images'
 const application = useApplicationStore()
 
 const logoUrl = computed(() => {
-  const productLogo = application.config.product_logo as string
-  if (!productLogo) {
-    return `${assetsPath}/logo.svg`
-  }
-  return `${assetsPath}/${productLogo}`
+  if (!application.hasCustomProductBranding) return `${assetsPath}/logo.svg`
+  return `${assetsPath}/${application.config.product_logo}`
 })
 </script>
 

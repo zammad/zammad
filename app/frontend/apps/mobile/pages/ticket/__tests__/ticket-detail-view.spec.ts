@@ -19,7 +19,7 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { nullableMock, waitForTimeout, waitUntil } from '@tests/support/utils'
+import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'

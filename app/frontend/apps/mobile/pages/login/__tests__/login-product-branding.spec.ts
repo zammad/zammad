@@ -36,4 +36,18 @@ describe('testing login product branding', () => {
       `/assets/images/${applicationConfig.product_logo}`,
     )
   })
+
+  it('check that expected footer logo is present', async () => {
+    const view = await visitView('/login')
+
+    const logo = view.getByAltText('Logo')
+
+    expect(logo).toBeInTheDocument()
+    expect(logo).toHaveAttribute('src', '/assets/images/icons/logo.svg')
+
+    const link = logo.parentElement
+
+    expect(link).toHaveAttribute('href', 'https://zammad.org')
+    expect(link).toHaveAttribute('target', '_blank')
+  })
 })

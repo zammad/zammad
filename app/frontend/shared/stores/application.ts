@@ -138,6 +138,12 @@ export const useApplicationStore = defineStore(
       await getConfig()
     }
 
+    const hasCustomProductBranding = computed(() =>
+      Boolean(
+        config.value.product_logo && config.value.product_logo !== 'logo.svg',
+      ),
+    )
+
     return {
       loaded,
       loading,
@@ -149,6 +155,7 @@ export const useApplicationStore = defineStore(
       initializeConfigUpdateSubscription,
       getConfig,
       resetAndGetConfig,
+      hasCustomProductBranding,
     }
   },
   {

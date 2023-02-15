@@ -12,7 +12,7 @@ import { getByIconName } from '@tests/support/components/iconQueries'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import type { FieldTagsProps } from '../types'
-import { waitForTimeout, waitForNextTick, waitUntil } from '../../../../../../tests/support/utils'
+import { waitUntil } from '../../../../../../tests/support/utils'
 
 const defaultTags = [
   { label: 'test', value: 'test' },

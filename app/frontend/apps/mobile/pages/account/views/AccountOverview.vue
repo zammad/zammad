@@ -191,7 +191,7 @@ const installZammadPWA = () => {
     <div class="mb-4">
       <FormKit
         wrapper-class="mt-4 text-base flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
+        input-class="py-2 px-4 w-full h-14 !text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
         type="submit"
         name="signout"
         @click="logout"

@@ -133,15 +133,7 @@ publicLinksQuery.subscribeToMore<
 const links = computed(() => {
   const publicLinks = publicLinksQuery.result()
 
-  return [
-    {
-      id: '-1',
-      link: '/#login',
-      title: __('Continue to desktop app'),
-      newTab: false,
-    },
-    ...(publicLinks.value?.publicLinks || []),
-  ]
+  return publicLinks.value?.publicLinks || []
 })
 
 // TODO: workaround for disabled button state, will be changed in formkit.
@@ -226,7 +218,7 @@ const login = (formData: FormData<LoginFormData>) => {
               </div>
               <FormKit
                 wrapper-class="mt-6 flex grow justify-center items-center"
-                input-class="py-2 px-4 w-full h-14 text-xl font-semibold text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
+                input-class="py-2 px-4 w-full h-14 text-xl font-semibold !text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
                 type="submit"
                 :disabled="isDisabled"
               >
@@ -237,21 +229,29 @@ const login = (formData: FormData<LoginFormData>) => {
         </div>
       </div>
     </main>
-    <nav class="mb-6 flex flex-wrap items-center justify-center gap-1">
-      <template v-for="(link, idx) of links" :key="link.id">
+    <CommonLink link="/#login" class="font-medium leading-4 text-gray">
+      {{ $t('Continue to desktop app') }}
+    </CommonLink>
+    <nav
+      v-if="links.length"
+      class="mt-4 flex w-full max-w-md flex-wrap items-center justify-center gap-1"
+    >
+      <template v-for="link in links" :key="link.id">
         <CommonLink
           :link="link.link"
           :title="link.description"
           :open-in-new-tab="link.newTab"
-          class="!text-gray underline"
+          class="font-semibold leading-4 tracking-wide text-gray after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
         >
           {{ $t(link.title) }}
         </CommonLink>
-        <span v-if="idx !== links.length - 1" aria-hidden="true">|</span>
       </template>
     </nav>
-    <footer class="flex items-center justify-center align-middle text-gray">
+    <footer
+      class="mt-8 mb-14 flex w-full max-w-md items-center justify-center border-t border-gray-600 pt-2.5 align-middle font-medium leading-4 text-gray"
+    >
       <CommonLink
+        v-if="application.hasCustomProductBranding"
         link="https://zammad.org"
         external
         open-in-new-tab
@@ -268,7 +268,7 @@ const login = (formData: FormData<LoginFormData>) => {
         link="https://zammad.org"
         external
         open-in-new-tab
-        class="font-semibold !text-gray"
+        class="font-semibold"
       >
         Zammad
       </CommonLink>
