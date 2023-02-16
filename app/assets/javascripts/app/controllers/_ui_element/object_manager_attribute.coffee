@@ -538,7 +538,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       @buildRow(item, {}, level, addRow)
     )
 
-    item.on('click', '.js-remove', (e) ->
+    item.on('click', '.js-remove', (e) =>
       e.stopPropagation()
       e.preventDefault()
       e.stopPro
@@ -557,6 +557,8 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       return if subElements isnt 0 && !confirm("Delete #{subElements} sub elements?")
       for element in elementsToDelete
         element.remove()
+
+      @ensureOneOption(item)
     )
 
     if item.find('.js-addChild').length > 0
@@ -696,3 +698,8 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     return mappedOptions if customsort? && customsort is 'on'
 
     mappedOptions.sort( (a, b) -> a[1].localeCompare(b[1]) )
+
+  @ensureOneOption: (item) ->
+    return if $(item).find('tbody tr').length > 1
+    @buildRow(item, {})
+

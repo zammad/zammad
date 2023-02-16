@@ -761,4 +761,17 @@ RSpec.describe 'System > Objects', mariadb: true, type: :system do
       it_behaves_like 'having a custom sort option'
     end
   end
+
+  describe 'Adding tree selection attribute form may get stuck with no options #4466' do
+    before do
+      visit '#system/object_manager'
+    end
+
+    it 'does always show rows to configure select options' do
+      click '.js-new'
+      select 'Multiple tree selection field', from: 'data_type'
+      click '.js-remove'
+      expect(page).to have_css('.js-dataMap table tbody tr')
+    end
+  end
 end
