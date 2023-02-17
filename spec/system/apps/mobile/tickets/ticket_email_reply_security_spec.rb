@@ -2,75 +2,56 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, authenticated_as: :authenticate, type: :system do
-  let(:group)     { Group.find_by(name: 'Users') }
-  let(:agent)     { create(:agent, groups: [group]) }
-  let!(:customer) { create(:customer) }
+RSpec.describe 'Mobile > Ticket > Email reply with security options', app: :mobile, authenticated_as: :authenticate, type: :system do
+  let(:group)    { Group.find_by(name: 'Users') }
+  let(:agent)    { create(:agent, groups: [group]) }
+  let(:customer) { create(:customer) }
+  let(:ticket)   { create(:ticket, group: group, customer: customer) }
+  let(:article)  { create(:ticket_article, ticket: ticket, from: customer.email, to: group.email_address.email) }
 
   def authenticate
     Setting.set('smime_integration', true)
     Setting.set('smime_config', smime_config) if defined?(smime_config)
 
+    article
     agent
   end
 
-  def prepare_phone_ticket
+  def prepare_phone_reply
+    find_button('Article actions').click
+    find_button('Reply').click
+
     within_form(form_updater_gql_number: 1) do
-      # Step 1.
-      find_input('Title').type(Faker::Name.name_with_middle)
-      next_step
-
-      # Step 2.
-      next_step
-
-      # Step 3.
-      find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
-      next_step
+      find_select('Article Type', visible: :all).select_option('Phone')
     end
   end
 
-  def prepare_email_ticket(with_body: false)
-    within_form(form_updater_gql_number: 1) do
-      # Step 1.
-      find_input('Title').type(Faker::Name.name_with_middle)
-      next_step
+  def prepare_email_reply(with_body: false)
+    find_button('Article actions').click
+    find_button('Reply').click
 
-      # Step 2.
-      find_radio('articleSenderType').select_choice('Send Email')
-      next_step
+    return if !with_body
 
-      # Step 3.
-      find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
-      next_step
-
-      # Step 4.
-      if with_body
-        find_editor('Text').type(Faker::Hacker.say_something_smart)
-      end
-    end
+    find_editor('Text').type(Faker::Hacker.say_something_smart)
   end
 
-  def next_step
-    find_button('Continue').click
-  end
+  def save_ticket
+    find_button('Done').click
+    find_button('Save ticket').click
 
-  def go_to_step(step)
-    find("button[order=\"#{step}\"]").click
-  end
-
-  def submit_form
-    find_button('Create ticket', match: :first).click
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/create.graphql')
+    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end
 
   before do
-    visit '/tickets/create'
-    wait_for_form_to_settle('ticket-create')
+    visit "/tickets/#{ticket.id}"
+
+    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+    wait_for_form_to_settle('form-ticket-edit')
   end
 
   shared_examples 'having available security options' do |encrypt:, sign:|
     it "available security options - encrypt: #{encrypt}, sign: #{sign}" do
-      prepare_email_ticket
+      prepare_email_reply
 
       expect { find_outer('Security') }.not_to raise_error
       expect(find_button('Encrypt', disabled: !encrypt).disabled?).to be(!encrypt)
@@ -78,12 +59,12 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
     end
   end
 
-  shared_examples 'creating a ticket' do |encrypt:, sign:|
-    it "can create a ticket - encrypt: #{encrypt}, sign: #{sign}" do
-      prepare_email_ticket with_body: true
-      submit_form
+  shared_examples 'replying via email' do |encrypt:, sign:|
+    it "can reply via email - encrypt: #{encrypt}, sign: #{sign}" do
+      prepare_email_reply with_body: true
+      save_ticket
 
-      find('[role=alert]', text: 'Ticket has been created successfully.')
+      find('[role=alert]', text: 'Ticket updated successfully.')
 
       expect(Ticket.last.articles.last.preferences['security']['encryption']['success']).to be(encrypt)
       expect(Ticket.last.articles.last.preferences['security']['sign']['success']).to be(sign)
@@ -92,7 +73,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
 
   context 'without certificates present' do
     it_behaves_like 'having available security options', encrypt: false, sign: false
-    it_behaves_like 'creating a ticket', encrypt: false, sign: false
+    it_behaves_like 'replying via email', encrypt: false, sign: false
   end
 
   context 'with sender certificate present' do
@@ -105,7 +86,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
     end
 
     it_behaves_like 'having available security options', encrypt: false, sign: true
-    it_behaves_like 'creating a ticket', encrypt: false, sign: true
+    it_behaves_like 'replying via email', encrypt: false, sign: true
 
     context 'with recipient certificate present' do
       let(:recipient_email_address) { 'smime2@example.com' }
@@ -116,10 +97,10 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
       end
 
       it_behaves_like 'having available security options', encrypt: true, sign: true
-      it_behaves_like 'creating a ticket', encrypt: true, sign: true
+      it_behaves_like 'replying via email', encrypt: true, sign: true
 
-      it 'hides the security field for phone tickets' do
-        prepare_phone_ticket
+      it 'hides the security field for phone articles' do
+        prepare_phone_reply
 
         expect(page).to have_no_css('label', text: 'Security')
       end
@@ -147,7 +128,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
 
         shared_examples 'having default security options' do |encrypt:, sign:|
           it "default security options - encrypt: #{encrypt}, sign: #{sign}" do
-            prepare_email_ticket
+            prepare_email_reply
 
             expect(find_button('Encrypt')['aria-selected']).to eq(encrypt.to_s)
             expect(find_button('Sign')['aria-selected']).to eq(sign.to_s)
@@ -186,6 +167,6 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
     end
 
     it_behaves_like 'having available security options', encrypt: true, sign: false
-    it_behaves_like 'creating a ticket', encrypt: true, sign: false
+    it_behaves_like 'replying via email', encrypt: true, sign: false
   end
 end

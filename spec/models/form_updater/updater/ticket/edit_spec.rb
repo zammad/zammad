@@ -5,7 +5,7 @@ require 'rails_helper'
 require 'models/form_updater/concerns/checks_core_workflow_examples'
 require 'models/form_updater/concerns/has_security_options_examples'
 
-RSpec.describe(FormUpdater::Updater::Ticket::Create) do
+RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
   subject(:resolved_result) do
     described_class.new(
       context:         context,
@@ -45,7 +45,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         options: [ { value: group.id, label: group.name } ],
       },
       'state_id'    => {
-        options: Ticket::State.by_category(:viewable_agent_new).order(name: :asc).map { |state| { value: state.id, label: state.name } },
+        options: Ticket::State.by_category(:viewable_agent_edit).order(name: :asc).map { |state| { value: state.id, label: state.name } },
       },
       'priority_id' => {
         options: Ticket::Priority.where(active: true).order(id: :asc).map { |priority| { value: priority.id, label: priority.name } },
@@ -64,5 +64,5 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   end
 
   include_examples 'ChecksCoreWorkflow', object_name: 'Ticket'
-  include_examples 'HasSecurityOptions', type: 'create'
+  include_examples 'HasSecurityOptions', type: 'edit'
 end

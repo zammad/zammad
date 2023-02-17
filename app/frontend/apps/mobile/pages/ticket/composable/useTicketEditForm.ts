@@ -82,7 +82,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         props: {
           options: ticketArticleTypes,
         },
-        triggerFormUpdater: false,
       },
       {
         name: 'internal',
@@ -115,7 +114,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
           contact: recipientContact,
           multiple: true,
         },
-        triggerFormUpdater: false,
       },
       {
         if: '$fns.includes($currentArticleType.attributes, "cc")',
@@ -126,7 +124,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
           contact: recipientContact,
           multiple: true,
         },
-        triggerFormUpdater: false,
       },
       {
         if: '$fns.includes($currentArticleType.attributes, "subject")',
@@ -143,9 +140,6 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'security',
         label: __('Security'),
         type: 'security',
-        props: {
-          // TODO ...
-        },
         triggerFormUpdater: false,
       },
       {

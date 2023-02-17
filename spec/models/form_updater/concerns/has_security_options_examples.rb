@@ -1,11 +1,20 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'HasSecurityOptions' do
+RSpec.shared_examples 'HasSecurityOptions' do |type:|
   context 'with security options' do
     let(:base_data) do
-      {
-        'articleSenderType' => 'email-out',
-      }
+      case type
+      when 'create'
+        {
+          'articleSenderType' => 'email-out',
+        }
+      when 'edit'
+        {
+          'article' => {
+            'articleType' => 'email',
+          },
+        }
+      end
     end
     let(:data) { base_data }
 
@@ -40,14 +49,32 @@ RSpec.shared_examples 'HasSecurityOptions' do
       it_behaves_like 'not resolving security field'
     end
 
-    context 'without articleSenderType present' do
-      let(:data) { base_data.tap { |data| data.delete('articleSenderType') } }
+    context 'without article type present' do
+      let(:data) do
+        base_data.tap do |data|
+          case type
+          when 'create'
+            data.delete('articleSenderType')
+          when 'edit'
+            data['article'].delete('articleType')
+          end
+        end
+      end
 
       it_behaves_like 'not resolving security field'
     end
 
-    context 'with phone articleSenderType present' do
-      let(:data) { base_data.tap { |data| data['articleSenderType'] = 'phone-out' } }
+    context 'with phone article type present' do
+      let(:data) do
+        base_data.tap do |data|
+          case type
+          when 'create'
+            data['articleSenderType'] = 'phone-out'
+          when 'edit'
+            data['article']['articleType'] = 'phone'
+          end
+        end
+      end
 
       it_behaves_like 'not resolving security field'
     end
@@ -58,10 +85,19 @@ RSpec.shared_examples 'HasSecurityOptions' do
       it_behaves_like 'not resolving security field'
     end
 
-    context 'with customer_id present' do
+    context 'with recipient present' do
       let(:recipient_email_address) { 'smime2@example.com' }
       let(:customer)                { create(:customer, email: recipient_email_address) }
-      let(:data)                    { base_data.tap { |data| data['customer_id'] = customer.id.to_s } }
+      let(:data)                    do
+        base_data.tap do |data|
+          case type
+          when 'create'
+            data['customer_id'] = customer.id.to_s
+          when 'edit'
+            data['article']['to'] = [customer.email]
+          end
+        end
+      end
 
       it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
 
@@ -74,9 +110,18 @@ RSpec.shared_examples 'HasSecurityOptions' do
       end
     end
 
-    context 'with cc present' do
+    context 'with additional recipient present' do
       let(:recipient_email_address) { 'smime3@example.com' }
-      let(:data) { base_data.tap { |data| data['cc'] = recipient_email_address } }
+      let(:data) do
+        base_data.tap do |data|
+          case type
+          when 'create'
+            data['cc'] = [recipient_email_address]
+          when 'edit'
+            data['article']['cc'] = [recipient_email_address]
+          end
+        end
+      end
 
       it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
 
@@ -95,14 +140,20 @@ RSpec.shared_examples 'HasSecurityOptions' do
       end
     end
 
-    context 'with both customer_id and cc present' do
+    context 'with both recipient and additional recipient present' do
       let(:recipient_email_address1) { 'smime2@example.com' }
       let(:recipient_email_address2) { 'smime3@example.com' }
       let(:customer)                 { create(:customer, email: recipient_email_address1) }
       let(:data) do
         base_data.tap do |data|
-          data['customer_id'] = customer.id.to_s
-          data['cc'] = recipient_email_address2
+          case type
+          when 'create'
+            data['customer_id'] = customer.id.to_s
+            data['cc'] = [recipient_email_address2]
+          when 'edit'
+            data['article']['to'] = [customer.email]
+            data['article']['cc'] = [recipient_email_address2]
+          end
         end
       end
 
@@ -126,7 +177,7 @@ RSpec.shared_examples 'HasSecurityOptions' do
       end
     end
 
-    context 'with group_id present' do
+    context 'with group present' do
       let(:data) { base_data.tap { |data| data['group_id'] = group.id } }
 
       it_behaves_like 'resolving security field', expected_result: { allowed: [], value: [] }
@@ -148,7 +199,7 @@ RSpec.shared_examples 'HasSecurityOptions' do
       end
     end
 
-    context 'with customer_id and group_id present' do
+    context 'with recipient and group present' do
       let(:recipient_email_address) { 'smime2@example.com' }
       let(:system_email_address)    { 'smime1@example.com' }
       let(:customer)                { create(:customer, email: recipient_email_address) }
@@ -156,8 +207,14 @@ RSpec.shared_examples 'HasSecurityOptions' do
       let(:group)                   { create(:group, email_address: email_address) }
       let(:data) do
         base_data.tap do |data|
-          data['customer_id'] = customer.id.to_s
-          data['group_id'] = group.id
+          case type
+          when 'create'
+            data['customer_id'] = customer.id.to_s
+            data['group_id'] = group.id
+          when 'edit'
+            data['article']['to'] = [customer.email]
+            data['group_id'] = group.id
+          end
         end
       end
 

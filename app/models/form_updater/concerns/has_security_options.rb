@@ -21,7 +21,7 @@ module FormUpdater::Concerns::HasSecurityOptions
   end
 
   def email_channel?
-    data['articleSenderType'] == 'email-out'
+    data['articleSenderType'] == 'email-out' || data.dig('article', 'articleType') == 'email'
   end
 
   def agent?
@@ -61,7 +61,7 @@ module FormUpdater::Concerns::HasSecurityOptions
   end
 
   def smime_encryption?
-    return false if !data['customer_id'] && !data['cc']
+    return false if !data['customer_id'] && !data['cc'] && !data.dig('article', 'to') && !data.dig('article', 'cc')
 
     recipients = verified_recipient_addresses
     return false if recipients.blank?
@@ -70,32 +70,37 @@ module FormUpdater::Concerns::HasSecurityOptions
   end
 
   def recipient_addresses
+    customer_recipient + target_recipients + additional_recipients
+  end
+
+  def customer_recipient
+    return [] if data['customer_id'].nil?
+
+    customer = ::User.find_by(id: data['customer_id'])
+
+    return [] if !customer || customer.email.empty?
+
+    [customer.email]
+  end
+
+  def target_recipients
+    return [] if data.dig('article', 'to').nil?
+
+    data['article']['to']
+  end
+
+  def additional_recipients
     result = []
 
-    if data['customer_id'].present?
-      customer = ::User.find_by(id: data['customer_id'])
-
-      if customer && customer.email.present?
-        result.push(customer.email)
-      end
-    end
-
-    if data['cc'].present?
-      result.push(data['cc'])
-    end
+    result.concat data['cc'] if data['cc'].present?
+    result.concat data['article']['cc'] if data.dig('article', 'cc').present?
 
     result
   end
 
   def verified_recipient_addresses
-    result = []
-
     list = Mail::AddressList.new(recipient_addresses.compact.join(',').to_s)
-    list.addresses.each do |address|
-      result.push address.address
-    end
-
-    result
+    list.addresses.map(&:address)
   end
 
   def recipients_have_valid_certificate?(recipients)
@@ -104,9 +109,7 @@ module FormUpdater::Concerns::HasSecurityOptions
     begin
       certs = SMIMECertificate.for_recipipent_email_addresses!(recipients)
 
-      if certs
-        result = certs.none?(&:expired?)
-      end
+      result = certs.none?(&:expired?) if certs
     rescue
       result = false
     end
@@ -131,9 +134,7 @@ module FormUpdater::Concerns::HasSecurityOptions
       from = list.addresses.first.to_s
       cert = SMIMECertificate.for_sender_email_address(from)
 
-      if cert
-        result = !cert.expired?
-      end
+      result = !cert.expired? if cert
     rescue
       result = false
     end

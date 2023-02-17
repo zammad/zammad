@@ -2,6 +2,7 @@
 
 class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   include FormUpdater::Concerns::ChecksCoreWorkflow
+  include FormUpdater::Concerns::HasSecurityOptions
 
   core_workflow_screen 'edit'
 
