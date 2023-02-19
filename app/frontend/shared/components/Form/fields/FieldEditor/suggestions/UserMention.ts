@@ -11,6 +11,7 @@ import {
 } from '@shared/components/CommonNotifications'
 import { getNode } from '@formkit/core'
 import { ensureGraphqlId } from '@shared/graphql/utils'
+import { debouncedQuery } from '@shared/utils/helpers'
 import buildMentionSuggestion from './suggestions'
 import type { FieldEditorProps, MentionUserItem } from '../types'
 import { useMentionSuggestionsLazyQuery } from '../graphql/queries/mention/mentionSuggestions.api'
@@ -27,13 +28,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     }),
   )
 
-  // TODO: possible race condition
   const getUserMentions = async (query: string, group: string) => {
-    const result = await queryMentionsHandler.trigger({
+    const { data } = await queryMentionsHandler.query({
       query,
       group: ensureGraphqlId('Group', group),
     })
-    return result?.mentionSuggestions || []
+    return data?.mentionSuggestions || []
   }
 
   return Mention.extend({
@@ -67,7 +67,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           },
         ]
       },
-      async items({ query }) {
+      items: debouncedQuery(async ({ query }) => {
         if (!query) {
           return []
         }
@@ -91,7 +91,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           return []
         }
         return getUserMentions(query, group)
-      },
+      }, []),
     }),
   })
 }

@@ -10,8 +10,8 @@ import type {
 } from '@shared/types/server/apollo/handler'
 
 export default function usePagination<
-  TQueryResult = OperationQueryResult,
-  TQueryVariables = OperationVariables,
+  TQueryResult extends OperationQueryResult = OperationQueryResult,
+  TQueryVariables extends OperationVariables = OperationVariables,
 >(query: QueryHandler<TQueryResult, TQueryVariables>, resultKey: string) {
   const pageInfo = computed(() => {
     const result: OperationQueryResult = query.result().value || {}

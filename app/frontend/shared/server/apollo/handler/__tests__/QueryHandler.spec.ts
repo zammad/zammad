@@ -193,17 +193,33 @@ describe('QueryHandler', () => {
     it('receive value immediately in non-reactive way', async () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      await expect(queryHandlerObject.trigger()).resolves.toEqual(
-        querySampleResult,
+      await expect(queryHandlerObject.query()).resolves.toEqual(
+        expect.objectContaining({ data: querySampleResult }),
       )
+    })
 
-      expect(handlerCallSpy).toHaveBeenCalledOnce()
+    it('cancels previous attempt, if the new one started', async () => {
+      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      await expect(queryHandlerObject.trigger()).resolves.toEqual(
-        querySampleResult,
+      const cancelSpy = vi.spyOn(queryHandlerObject, 'cancel')
+
+      expect(cancelSpy).not.toHaveBeenCalled()
+
+      const result1 = queryHandlerObject.query()
+
+      expect(cancelSpy).toHaveBeenCalledTimes(1)
+
+      const result2 = queryHandlerObject.query()
+
+      expect(cancelSpy).toHaveBeenCalledTimes(2)
+
+      // both resolve, because signal is not actually aborted in node
+      await expect(result1).resolves.toEqual(
+        expect.objectContaining({ data: querySampleResult }),
       )
-
-      expect(handlerCallSpy).toHaveBeenCalledOnce()
+      await expect(result2).resolves.toEqual(
+        expect.objectContaining({ data: querySampleResult }),
+      )
     })
   })
 

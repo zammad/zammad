@@ -2,12 +2,8 @@
 
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import {
-  useNotifications,
-  NotificationTypes,
-} from '@shared/components/CommonNotifications'
+import { useNotifications } from '@shared/components/CommonNotifications'
 import type { ConfigList } from '@shared/types/store'
-import log from '@shared/utils/log'
 import type {
   ApplicationConfigQuery,
   ApplicationConfigQueryVariables,
@@ -37,8 +33,6 @@ const getApplicationConfigQuery = () => {
   return applicationConfigQuery
 }
 
-let connectionNotificationId: string
-
 // TODO: consider switching from notification to a modal dialog, and improving the message
 const notifications = useNotifications()
 
@@ -67,32 +61,6 @@ export const useApplicationStore = defineStore(
       }
 
       testFlags.set('applicationLoaded.loaded')
-    }
-
-    const connected = ref(false)
-
-    const bringConnectionUp = (): void => {
-      if (connected.value) return
-
-      log.debug('Application connection just came up.')
-
-      if (connectionNotificationId) {
-        notifications.removeNotification(connectionNotificationId)
-      }
-      connected.value = true
-    }
-
-    const takeConnectionDown = (): void => {
-      if (!connected.value) return
-
-      log.debug('Application connection just went down.')
-
-      connectionNotificationId = notifications.notify({
-        message: __('The connection to the server was lost.'),
-        type: NotificationTypes.Error,
-        persistent: true,
-      })
-      connected.value = false
     }
 
     const config = ref<ConfigList>({})
@@ -164,9 +132,6 @@ export const useApplicationStore = defineStore(
       loaded,
       loading,
       setLoaded,
-      connected,
-      bringConnectionUp,
-      takeConnectionDown,
       config,
       initializeConfigUpdateSubscription,
       getConfig,

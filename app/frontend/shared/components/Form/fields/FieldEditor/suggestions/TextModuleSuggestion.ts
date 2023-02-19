@@ -7,6 +7,7 @@ import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { getNode } from '@formkit/core'
 import { ensureGraphqlId } from '@shared/graphql/utils'
+import { debouncedQuery } from '@shared/utils/helpers'
 import type { FieldEditorProps, MentionTextItem } from '../types'
 import buildMentionSuggestion from './suggestions'
 import { useTextModuleSuggestionsLazyQuery } from '../graphql/queries/textModule/textModuleSuggestions.api'
@@ -21,7 +22,6 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     useTextModuleSuggestionsLazyQuery({ query: '' }),
   )
 
-  // TODO: possible race condition
   const getTextModules = async (query: string) => {
     const { meta: editorMeta = {} } = context.value
     const meta = editorMeta[PLUGIN_NAME] || {}
@@ -37,13 +37,13 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       customerId = node?.value as string
     }
 
-    const result = await queryHandler.trigger({
+    const { data } = await queryHandler.query({
       query,
       customerId: customerId && ensureGraphqlId('User', customerId),
       ticketId: ticketId && ensureGraphqlId('Ticket', ticketId),
       limit: LIMIT_QUERY_MODULES,
     })
-    return result?.textModuleSuggestions || []
+    return data?.textModuleSuggestions || []
   }
 
   return Mention.extend({
@@ -61,12 +61,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       insert(item: MentionTextItem) {
         return item.renderedContent || ''
       },
-      async items({ query }) {
+      items: debouncedQuery(async ({ query }) => {
         if (!query) {
           return []
         }
         return getTextModules(query)
-      },
+      }, []),
     }),
   })
 }

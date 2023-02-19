@@ -79,11 +79,11 @@ export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
       }
 
       signatureQuery
-        .trigger({
+        .query({
           groupId: convertToGraphQLId('Group', String(groupId)),
           ticketId: ticket?.value?.id,
         })
-        .then((signature) => {
+        .then(({ data: signature }) => {
           const body = signature?.ticketSignature?.renderedBody
           const id = signature?.ticketSignature?.id
           if (!body || !id) {

@@ -17,11 +17,12 @@ import type {
 } from '@shared/types/server/apollo/handler'
 import type { ReactiveFunction } from '@shared/types/utils'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
+import { useApolloClient } from '@vue/apollo-composable'
 import BaseHandler from './BaseHandler'
 
 export default class QueryHandler<
   TResult = OperationQueryResult,
-  TVariables = OperationVariables,
+  TVariables extends OperationVariables = OperationVariables,
 > extends BaseHandler<
   TResult,
   TVariables,
@@ -29,19 +30,32 @@ export default class QueryHandler<
 > {
   private firstResultLoaded = false
 
-  public async trigger(variables?: TVariables) {
-    this.load(variables)
-    // load triggers "forceDisable", which triggers a watcher,
-    // so we need to wait for the query to be created before we can refetch
-    // we can't use nextTick, because queries variables are not updated yet
-    // and it will call the server with the first variables and the new ones
-    await new Promise((r) => setTimeout(r, 0))
-    const query = this.operationResult.query.value
-    if (!query) return null
-    // this will take result from cache, respecting variables
-    // if it's not in cache, it will fetch result from server
-    const result = await query.result()
-    return result.data
+  private lastCancel: (() => void) | null = null
+
+  public cancel() {
+    this.lastCancel?.()
+  }
+
+  public async query(variables?: TVariables) {
+    this.cancel()
+    const node = this.operationResult.document.value
+    const { client } = useApolloClient()
+    const aborter =
+      typeof AbortController !== 'undefined' ? new AbortController() : null
+    this.lastCancel = () => aborter?.abort()
+    try {
+      return await client.query<TResult, TVariables>({
+        query: node,
+        variables,
+        context: {
+          fetchOptions: {
+            signal: aborter?.signal,
+          },
+        },
+      })
+    } finally {
+      this.lastCancel = null
+    }
   }
 
   public options(): OperationQueryOptionsReturn<TResult, TVariables> {

@@ -29,8 +29,8 @@ const addSignature = async (
   { body }: TicketArticleSelectionOptions,
   position?: number,
 ) => {
-  const query = getTicketSignatureQuery()
-  const signature = await query.trigger({
+  const ticketSignature = getTicketSignatureQuery()
+  const { data: signature } = await ticketSignature.query({
     groupId: ticket.group.id,
     ticketId: ticket.id,
   })
@@ -118,13 +118,13 @@ const actionPlugin: TicketArticleActionPlugin = {
       attributes: Array.from(attributes),
       view: { agent: ['change'] },
       onDeselected(_, { body }) {
+        getTicketSignatureQuery().cancel()
         body.removeSignature()
       },
       onOpened(_, { body }) {
         // always reset position if reply is added as a new article
         return addSignature(ticket, { body }, 1)
       },
-      // TODO: possible race condition
       onSelected(_, { body }) {
         // try to dynamically set cursor position, dependeing on where it was before signature was added
         return addSignature(ticket, { body })

@@ -65,3 +65,28 @@ export const humanizeFileSize = (size: number) => {
   }
   return `${size} Bytes`
 }
+
+export const debouncedQuery = <A extends unknown[], R>(
+  fn: (...args: A) => Promise<R>,
+  defaultValue: R,
+  delay = 200,
+) => {
+  let timeout: number | undefined
+  let lastResolve: (() => void) | null = null
+  let lastResult = defaultValue
+  return (...args: A): Promise<R> => {
+    if (timeout) {
+      lastResolve?.()
+      clearTimeout(timeout)
+    }
+    return new Promise<R>((resolve, reject) => {
+      lastResolve = () => resolve(lastResult)
+      timeout = window.setTimeout(() => {
+        fn(...args).then((result) => {
+          lastResult = result
+          resolve(result)
+        }, reject)
+      }, delay)
+    })
+  }
+}

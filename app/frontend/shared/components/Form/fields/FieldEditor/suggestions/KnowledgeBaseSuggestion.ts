@@ -5,6 +5,7 @@ import Mention from '@tiptap/extension-mention'
 import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
+import { debouncedQuery } from '@shared/utils/helpers'
 import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api'
 import buildMentionSuggestion from './suggestions'
 import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api'
@@ -21,8 +22,8 @@ export default (context: Ref<FormFieldContext>) => {
   )
 
   const getKnowledgeBaseMentions = async (query: string) => {
-    const result = await queryHandler.trigger({ query })
-    return result?.knowledgeBaseAnswerSuggestions || []
+    const { data } = await queryHandler.query({ query })
+    return data?.knowledgeBaseAnswerSuggestions || []
   }
 
   const translateHandler = new MutationHandler(
@@ -42,7 +43,6 @@ export default (context: Ref<FormFieldContext>) => {
       activator: ACTIVATOR,
       allowSpaces: true,
       type: 'knowledge-base',
-      // TODO: possible race condition
       async insert(props: MentionKnowledgeBaseItem) {
         const result = await translateHandler.send({
           translationId: props.id,
@@ -51,12 +51,12 @@ export default (context: Ref<FormFieldContext>) => {
         // TODO process attachments, use meta[PLUGIN_NAME].attachmentsNodeId
         return result?.knowledgeBaseAnswerSuggestionContentTransform?.body || ''
       },
-      async items({ query }) {
+      items: debouncedQuery(async ({ query }) => {
         if (!query) {
           return []
         }
         return getKnowledgeBaseMentions(query)
-      },
+      }, []),
     }),
   })
 }
