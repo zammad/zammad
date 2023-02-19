@@ -18,19 +18,15 @@ export default Node.create({
             .parseSlice(element)
             .toJSON()
           if (!slice) return false
+          const needBr =
+            signature.position === 'before' ||
+            slice.content[0]?.content?.[0].type !== 'hardBreak'
           return chain()
             .insertContentAt(signature.from, [
-              ...(signature.position === 'bottom'
-                ? [{ type: 'paragraph' }]
-                : []),
+              ...(needBr ? [{ type: 'paragraph' }] : []),
               {
                 type: 'signature',
-                content: [
-                  ...slice.content,
-                  ...(signature.position === 'top'
-                    ? [{ type: 'paragraph' }]
-                    : []),
-                ],
+                content: slice.content,
                 attrs: {
                   signatureId: signature.id,
                 },

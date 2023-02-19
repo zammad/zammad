@@ -43,6 +43,7 @@ import { errorOptions } from '@mobile/router/error'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { useTicketSignature } from '@shared/composables/useTicketSignature'
 import { TicketFormData } from '@shared/entities/ticket/types'
+import { convertFilesToAttachmentInput } from '@shared/utils/files'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 
 const router = useRouter()
@@ -320,13 +321,10 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
   } as TicketCreateInput
 
   if (formData.attachments && input.article) {
-    input.article.attachments = {
-      files: formData.attachments?.map((file) => ({
-        name: file.name,
-        type: file.type,
-      })),
-      formId: formData.formId,
-    }
+    input.article.attachments = convertFilesToAttachmentInput(
+      formData.formId,
+      formData.attachments,
+    )
   }
 
   return ticketCreateMutation

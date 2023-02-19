@@ -1,13 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
 import type { FormFieldValue } from '@shared/components/Form/types'
 import type {
   TicketQuery,
   TicketArticlesQuery,
-  UploadFileInput,
   TicketLiveUser,
   EnumTaskbarApp,
+  EnumSecurityOption,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 
@@ -52,7 +53,7 @@ export interface TicketFormData {
   customer_id?: number
   cc?: string[]
   body: string
-  attachments?: UploadFileInput[]
+  attachments?: FileUploaded[]
   group_id: number
   owner_id?: number
   state_id?: number
@@ -60,5 +61,6 @@ export interface TicketFormData {
   priority_id?: number
   articleSenderType: TicketCreateArticleType
   tags: string[]
+  security?: EnumSecurityOption[]
   [index: string]: FormFieldValue
 }

@@ -506,6 +506,7 @@ const resetForm = (
 
 defineExpose({
   formNode,
+  formId,
   resetForm,
 })
 

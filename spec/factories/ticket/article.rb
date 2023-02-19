@@ -443,5 +443,21 @@ FactoryBot.define do
         end
       end
     end
+
+    trait :with_attachment do
+      transient do
+        attachment { File.open('spec/fixtures/files/upload/hello_world.txt') }
+      end
+
+      after(:create) do |article, context|
+        create(:store,
+               object:      article.class.name,
+               o_id:        article.id,
+               data:        context.attachment.read,
+               filename:    File.basename(context.attachment.path),
+               preferences: {})
+      end
+    end
+
   end
 end

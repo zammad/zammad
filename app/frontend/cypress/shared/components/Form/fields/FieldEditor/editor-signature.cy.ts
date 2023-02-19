@@ -4,6 +4,8 @@ import { getNode } from '@formkit/core'
 import type { FieldEditorContext } from '@shared/components/Form/fields/FieldEditor/types'
 import { mountEditor } from './utils'
 
+const html = String.raw
+
 const getContext = () =>
   getNode('editor')?.context as FieldEditorContext | undefined
 
@@ -93,10 +95,14 @@ describe('correctly adds signature', () => {
           })
       })
   })
-  it('add signature when there is a full quote there', () => {
-    const quote = '<blockquote data-full="true"><p>Some Quote</p></blockquote>'
+  it('add signature before marker', () => {
+    const originalBody = html`<p data-marker="signature-before"></p>
+      <blockquote type="cite">
+        <p>Subject: Welcome to Zammad!</p>
+      </blockquote>`
+
     mountEditor({
-      value: `<p></p>${quote}`,
+      value: originalBody,
     })
 
     cy.findByRole('textbox')
@@ -106,22 +112,24 @@ describe('correctly adds signature', () => {
           body: SIGNATURE,
           id: 3,
         })
-        cy.findByRole('textbox')
-          .should(
-            'have.html',
-            `${BREAK_HTML}${WRAPPED_SIGNATURE(
-              '3',
-              `${PARSED_SIGNATURE}${BREAK_HTML}`,
-            )}${quote}`,
-          )
-          .type('new')
-          .should('include.html', `<p>new</p><div data-signature`) // cursor didn't move
-          .then(() => {
-            context.removeSignature()
-            cy.findByRole('textbox')
-              .should('include.html', `<p>new</p>`)
-              .and('include.html', quote)
-          })
       })
+
+    cy.findByRole('textbox')
+      .should('contain.html', `${BREAK_HTML}<div data-signature=`)
+      .should(
+        'contain.html',
+        '<p data-marker="signature-before"><br class="ProseMirror-trailingBreak"></p><blockquote ',
+      )
+      .type('text')
+      .should('contain.html', '<p>text</p><div data-signature')
+      .then(resolveContext)
+      .then((context) => {
+        context.removeSignature()
+      })
+
+    cy.findByRole('textbox').should(
+      'contain.html',
+      `<p>text</p><p data-marker=`,
+    )
   })
 })

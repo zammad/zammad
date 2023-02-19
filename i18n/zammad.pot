@@ -1568,6 +1568,7 @@ msgid "Before you mention a user, please select a group."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Begin forwarded message"
 msgstr ""
 
@@ -1678,6 +1679,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr ""
@@ -2889,6 +2891,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr ""
 
@@ -4932,6 +4935,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "From"
 msgstr ""
 
@@ -9725,6 +9729,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Subject"
 msgstr ""
 
@@ -11194,6 +11199,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr ""

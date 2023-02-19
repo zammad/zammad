@@ -39,12 +39,13 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   # we test article creation mostly on the backend because Node.js doesn't support prose-mirror
   context 'when article was created as email' do
     let(:signature) { create(:signature, active: true, body: "\#{user.firstname}<br>Signature!") }
-    let(:group)        { create(:group, signature: signature) }
-    let(:to)           { [Mail::AddressList.new(article.to).addresses.first.address] }
-    let(:article)      { create(:ticket_article, :outbound_email, ticket: ticket) }
-    let(:current_text) { "#{agent.firstname}\nSignature!" }
-    let(:result_text)  { "<p>This is a note</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>" }
-    let(:after_click)  do
+    let(:group)          { create(:group, signature: signature) }
+    let(:to)             { [Mail::AddressList.new(article.to).addresses.first.address] }
+    let(:article)        { create(:ticket_article, :outbound_email, ticket: ticket) }
+    let(:current_text)   { "#{agent.firstname}\nSignature!" }
+    let(:signature_html) { "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>" }
+    let(:result_text)    { "<p>This is a note</p><p><br></p>#{signature_html}" }
+    let(:after_click) do
       lambda {
         # wait for signature to be added
         wait_for_test_flag('editor.signatureAdd')
@@ -96,7 +97,13 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { %r{On .+, #{article.created_by.fullname} wrote:\s+#{article.body}\s+#{agent.firstname}\nSignature!} }
         let(:result_text)  do
-          a_string_matching(%r{<p>This is a note<br></p><blockquote type="cite"><p>On .+, #{article.created_by.fullname} wrote:<br><br>#{article.body}</p></blockquote><p></p><div data-signature="true" data-signature-id="#{signature.id}"><p>#{agent.firstname}<br>Signature!</p></div>})
+          msg = '<p>This is a note<br><br></p>'
+          msg += '<blockquote type="cite">\n'
+          msg += "<p>On .+, #{article.created_by.fullname} wrote:</p>\n<p><br></p>\n"
+          msg += "<p>#{article.body}</p>\n"
+          msg += '</blockquote><p><br></p>'
+          msg += signature_html
+          a_string_matching(Regexp.new(msg))
         end
       end
     end
@@ -114,7 +121,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { "#{article.body}\n\n#{agent.firstname}\nSignature!" }
         let(:result_text)  do
-          "<p>This is a note<br></p><blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>"
+          "<p>This is a note<br><br></p><blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p><br></p>#{signature_html}"
         end
       end
     end
@@ -136,11 +143,12 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { "#{article.body}\n\nText before replying\n\n#{agent.firstname}\nSignature!" }
         let(:result_text)  do
-          "<p>This is a note<br></p><blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p></p><p>Text before replying</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>"
+          "<p>This is a note<br><br></p><blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p><br></p><p>Text before replying</p><p><br></p>#{signature_html}"
         end
       end
     end
 
+    # TODO: should not have so many break lines: https://github.com/zammad/coordination-feature-mobile-view/issues/396
     context 'when full quote is enabled and new article is already written' do
       before do
         Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
@@ -156,9 +164,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
             wait_for_test_flag('ticket-article-reply.closed')
           }
         end
-        let(:current_text) { "#{agent.firstname}\nSignature!\n\n#{article.body}\n\nText before replying" }
+        let(:current_text) { "#{agent.firstname}\nSignature!\n#{article.body}\n\nText before replying" }
         let(:result_text)  do
-          "<p>This is a note<br></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\">\n<p>#{agent.firstname}<br>Signature!</p>\n<p></p>\n</div><blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p></p><p>Text before replying</p>"
+          "<p>This is a note<br><br></p><p><br></p>#{signature_html}<blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p><br></p><p>Text before replying</p>"
         end
       end
     end
@@ -220,6 +228,94 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         wait_for_test_flag('ticket-article-reply.opened')
 
         expect(find_editor('Text')).to have_text_value("#{agent.firstname}\nSignature!")
+      end
+    end
+
+    context 'when forwarding email' do
+      let(:trigger_label) { 'Forward' }
+      let(:to)              { [] }
+      let(:article)         { create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject') }
+      let(:article_subject) { article.subject }
+      let(:text_to)         { article.to }
+      let(:current_text) do
+        msg = "#{agent.firstname}\nSignature!"
+        msg += '\n\n---Begin forwarded message:---\n\n'
+        msg += "Subject: #{article_subject}\n"
+        msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)\n'
+        msg += "To: #{text_to}\n\n"
+        msg += article.body
+        Regexp.new(msg)
+      end
+      let(:in_reply_to) { nil }
+      let(:result_text) do
+        msg = '<p>This is a note</p>' # new message
+        msg += "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>" # signature is before forwarded message
+        msg += '<p><br></p><p>---Begin forwarded message:---</p><p><br></p>' # new lines and "before" message
+        # blockquote with original message and header with subject, date and "to"
+        msg += "<blockquote type=\"cite\">\n"
+        msg += "<p>Subject: #{article_subject}<br>"
+        msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)<br>'
+        msg += "To: #{CGI.escapeHTML(text_to)}<br><br></p>\n"
+        msg += "<p>#{article.body}</p>\n"
+        msg += '</blockquote>'
+        a_string_matching(Regexp.new(msg))
+      end
+
+      before do
+        Setting.set('ui_ticket_zoom_article_email_subject', true)
+        Setting.set('ui_ticket_zoom_article_email_full_quote_header', true)
+      end
+
+      context 'with attachments' do
+        let(:result_attachments) { Store.last(2) }
+        let(:article) do
+          article = create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject')
+          create(
+            :store,
+            object:   'Ticket::Article',
+            o_id:     article.id,
+            data:     Rails.root.join('spec/fixtures/files/image/small.png').binread,
+            filename: 'small-original.png'
+          )
+          article
+        end
+
+        include_examples 'reply article', 'Email', attachments: true
+      end
+
+      context 'without attachments' do
+        include_examples 'reply article', 'Email', attachments: true
+      end
+
+      context 'when forwarding phone article' do
+        let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
+        let(:text_to) { "#{ticket.customer.fullname} <#{ticket.customer.email}>" }
+        let(:type_id) { Ticket::Article::Type.find_by(name: 'email').id }
+
+        include_examples 'reply article', 'Email', attachments: true
+      end
+
+      context 'without a header' do
+        let(:current_text) do
+          msg = "#{agent.firstname}\nSignature!"
+          msg += "\n\n---Begin forwarded message:---\n\n"
+          msg += article.body
+          Regexp.new(msg)
+        end
+        let(:result_text) do
+          msg = '<p>This is a note</p>' # new message
+          msg += "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>" # signature is before forwarded message
+          msg += '<p><br></p><p>---Begin forwarded message:---</p><p><br></p>' # new lines and "before" message
+          # blockquote with original message and no header
+          msg += "<blockquote type=\"cite\"><p>#{article.body}</p></blockquote>"
+          a_string_matching(Regexp.new(msg))
+        end
+
+        before do
+          Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
+        end
+
+        include_examples 'reply article', 'Email', attachments: true
       end
     end
   end

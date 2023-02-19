@@ -209,7 +209,33 @@ describe('Fields - FieldFile', () => {
 
     expect(
       view.queryByRole('button', { name: 'foo.png' }),
-      'file removed',
+      'file is removed',
+    ).not.toBeInTheDocument()
+  })
+
+  test("can delete file that doesn' have an id", async () => {
+    const file = new File([], 'foo.png', { type: 'image/png' })
+    const mockRemove = mockGraphQLApi(FormUploadCacheRemoveDocument)
+    const view = renderFileInput({
+      multiple: true,
+      value: [
+        {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        },
+      ],
+    })
+
+    await view.events.click(view.getByLabelText(`Remove ${file.name}`))
+
+    await view.events.click(view.getByText('Delete'))
+
+    expect(mockRemove.calls.resolve).toBe(0)
+
+    expect(
+      view.queryByRole('button', { name: 'foo.png' }),
+      'file is removed',
     ).not.toBeInTheDocument()
   })
 })

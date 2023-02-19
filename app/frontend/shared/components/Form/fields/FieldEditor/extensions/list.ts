@@ -6,6 +6,7 @@ import ListItem from '@tiptap/extension-list-item'
 import Link from '@tiptap/extension-link'
 import Blockquote from '@tiptap/extension-blockquote'
 import StarterKit from '@tiptap/starter-kit'
+import Paragraph from '@tiptap/extension-paragraph'
 import CharacterCount from '@tiptap/extension-character-count'
 
 import type { Extensions } from '@tiptap/core'
@@ -44,6 +45,17 @@ export const getHtmlExtensions = (): Extensions => [
     orderedList: false,
     listItem: false,
     blockquote: false,
+    paragraph: false,
+  }),
+  Paragraph.extend({
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        'data-marker': {
+          default: null,
+        },
+      }
+    },
   }),
   CharacterCount,
   Underline,
@@ -56,7 +68,7 @@ export const getHtmlExtensions = (): Extensions => [
         type: {
           default: null,
         },
-        'data-full': {
+        'data-marker': {
           default: null,
         },
       }

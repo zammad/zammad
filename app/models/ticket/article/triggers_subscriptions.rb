@@ -5,9 +5,9 @@ module Ticket::Article::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    after_create  :trigger_create_subscriptions
-    after_update  :trigger_update_subscriptions
-    after_destroy :trigger_destroy_subscriptions
+    after_create_commit  :trigger_create_subscriptions
+    after_update_commit  :trigger_update_subscriptions
+    after_destroy_commit :trigger_destroy_subscriptions
   end
 
   private

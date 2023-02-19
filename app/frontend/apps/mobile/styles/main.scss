@@ -2,6 +2,10 @@
 
 .Content,
 .ProseMirror {
+  div[data-signature-marker] {
+    display: none;
+  }
+
   &:focus-visible {
     outline: none;
   }

@@ -96,5 +96,4 @@ check and if channel not exists reset configured channels for email addresses
     group.updated_by_id = updated_by_id
     group.save!
   end
-
 end

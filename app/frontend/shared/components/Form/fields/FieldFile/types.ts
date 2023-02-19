@@ -9,6 +9,8 @@ export interface FieldFileProps {
   multiple?: InputHTMLAttributes['multiple']
 }
 
-export type FileUploaded = Pick<StoredFile, 'id' | 'name' | 'size' | 'type'> & {
+export type FileUploaded = Pick<StoredFile, 'name' | 'size' | 'type'> & {
+  id?: Maybe<string>
   content?: string
+  preview?: string
 }

@@ -2,7 +2,6 @@
 
 import type { ComputedRef, ShallowRef } from 'vue'
 import { computed, reactive, watch } from 'vue'
-import { pick } from 'lodash-es'
 import type { FormValues, FormRef, FormData } from '@shared/components/Form'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
@@ -10,24 +9,17 @@ import type { TicketUpdateInput } from '@shared/graphql/types'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { TicketById } from '@shared/entities/ticket/types'
-import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
-import type { SecurityValue } from '@shared/components/Form/fields/FieldSecurity/types'
+import type { TicketArticleFormValues } from '@shared/entities/ticket-article/action/plugins/types'
 import { getNode } from '@formkit/core'
+import type { PartialRequired } from '@shared/types/utils'
+import { convertFilesToAttachmentInput } from '@shared/utils/files'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
-interface ArticleFormValues {
-  articleType: string
-  body: string
-  internal: boolean
-  cc?: string[]
-  subtype?: string
-  inReplyTo?: string
-  to?: string[]
-  subject?: string
-  attachments?: FileUploaded[]
-  contentType?: string
-  security?: SecurityValue
-}
+type TicketArticleReceivedFormValues = PartialRequired<
+  TicketArticleFormValues,
+  // form always has these values
+  'articleType' | 'body' | 'internal'
+>
 
 export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,
@@ -64,16 +56,30 @@ export const useTicketEdit = (
 
   const processArticle = (
     formId: string,
-    article: ArticleFormValues | undefined,
+    article: TicketArticleReceivedFormValues | undefined,
   ) => {
     if (!article) return null
 
-    const attachments = article.attachments || []
-    const files = attachments.map((file) =>
-      pick(file, ['content', 'name', 'type']),
-    )
-
     const contentType = getNode('body')?.context?.contentType || 'text/html'
+
+    if (contentType === 'text/html') {
+      const body = document.createElement('div')
+      body.innerHTML = article.body
+      // TODO: https://github.com/zammad/coordination-feature-mobile-view/issues/396
+      // prosemirror always adds a visible linebreak inside an empty paragraph,
+      // but it doesn't return it inside a schema, so we need to add it manually
+      body.querySelectorAll('p').forEach((p) => {
+        p.removeAttribute('data-marker')
+        if (
+          p.childNodes.length === 0 ||
+          p.lastChild?.nodeType !== Node.TEXT_NODE ||
+          p.textContent?.endsWith('\n')
+        ) {
+          p.appendChild(document.createElement('br'))
+        }
+      })
+      article.body = body.innerHTML
+    }
 
     return {
       type: article.articleType,
@@ -85,7 +91,7 @@ export const useTicketEdit = (
       subtype: article.subtype,
       inReplyTo: article.inReplyTo,
       contentType,
-      attachments: attachments.length ? { files, formId } : null,
+      attachments: convertFilesToAttachmentInput(formId, article.attachments),
       security: article.security,
     }
   }
@@ -100,7 +106,9 @@ export const useTicketEdit = (
     const { internalObjectAttributeValues, additionalObjectAttributeValues } =
       useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
 
-    const formArticle = formData.article as ArticleFormValues | undefined
+    const formArticle = formData.article as
+      | TicketArticleReceivedFormValues
+      | undefined
     const article = processArticle(formData.formId, formArticle)
 
     return mutationUpdate.send({

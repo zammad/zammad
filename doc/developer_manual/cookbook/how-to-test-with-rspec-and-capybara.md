@@ -282,7 +282,7 @@ expect(find_select('Multi Select')).to have_selected_options(['Option 1', 'Optio
 expect(find_treeselect('Tree Select')).to have_selected_option_with_parent('Parent 1::Option A')
 expect(find_editor('Text')).to have_text_value('foo bar')
 expect(find_editor('Text')).to have_text_value('', exact: true)
-expect(find_editor('Text')).to have_html_value('<p>foo bar</p>')
+expect(find_editor('Text')).to have_data_value('<p>foo bar</p>')
 expect(find_datepicker('Date')).to have_date(Date.today)
 expect(find_datepicker('Date Time')).to have_datetime(DateTime.now)
 expect(find_toggle('Boolean')).to be_toggled_on

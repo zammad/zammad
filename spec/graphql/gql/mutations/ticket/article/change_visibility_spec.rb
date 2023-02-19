@@ -44,7 +44,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::ChangeVisibility, :aggregate_fai
     end
   end
 
-  context 'with GQL query' do
+  context 'when not logged in' do
     before do
       gql.execute(query, variables: variables)
     end

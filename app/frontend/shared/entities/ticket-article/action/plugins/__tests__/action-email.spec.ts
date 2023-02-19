@@ -9,9 +9,9 @@ import {
 } from './utils'
 
 describe('email permissions', () => {
-  const types = ['email-reply', 'email-all' /* 'email-forward' */]
+  const types = ['email-reply', 'email-all', 'email-forward']
 
-  it.each(['email-reply' /* 'email-forward' */])(
+  it.each(['email-reply', 'email-forward'])(
     '%s reply is available for agent and email article',
     (type) => {
       setupView('agent')
@@ -27,7 +27,7 @@ describe('email permissions', () => {
     },
   )
 
-  it.each(['email-reply' /* 'email-forward' */])(
+  it.each(['email-reply', 'email-forward'])(
     '%s reply is available for agent and phone article sent by Customer',
     (type) => {
       setupView('agent')
@@ -47,7 +47,7 @@ describe('email permissions', () => {
     },
   )
 
-  it.each(['email-reply' /* 'email-forward' */])(
+  it.each(['email-reply', 'email-forward'])(
     '%s reply is available for agent and phone article sent by Agent',
     (type) => {
       setupView('agent')

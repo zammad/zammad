@@ -111,6 +111,7 @@ export const useTicketArticleContext = () => {
         link,
         onAction: () =>
           perform(ticket, article, {
+            formId: form.value?.formId || '',
             selection: selectionData.value,
             openReplyDialog,
             getNewArticleBody,

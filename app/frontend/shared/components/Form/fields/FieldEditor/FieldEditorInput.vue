@@ -61,6 +61,8 @@ getCustomExtensions(reactiveContext).forEach((extension) => {
 })
 
 const showActionBar = ref(false)
+const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
+
 const editor = useEditor({
   extensions: editorExtensions,
   editorProps: {
@@ -69,6 +71,7 @@ const editor = useEditor({
       name: props.context.node.name,
       id: props.context.id,
       class: 'min-h-[80px]',
+      'data-value': editorValue.value,
     },
     // add inlined files
     handlePaste(view, event) {
@@ -104,6 +107,9 @@ const editor = useEditor({
       contentType.value === 'text/plain' ? editor.getText() : editor.getHTML()
     const value = content === '<p></p>' ? '' : content
     props.context.node.input(value)
+
+    if (!VITE_TEST_MODE) return
+    editorValue.value = value
   },
   onFocus() {
     showActionBar.value = true
@@ -114,8 +120,8 @@ const editor = useEditor({
 })
 
 watch(
-  () => props.context.id,
-  (id) => {
+  () => [props.context.id, editorValue.value],
+  ([id, value]) => {
     editor.value?.setOptions({
       editorProps: {
         attributes: {
@@ -123,6 +129,7 @@ watch(
           name: props.context.node.name,
           id,
           class: 'min-h-[80px]',
+          'data-value': value,
         },
       },
     })
@@ -169,15 +176,18 @@ useEventListener('click', (e) => {
 const resolveSignaturePosition = (editor: Editor) => {
   let blockquotePosition: number | null = null
   editor.state.doc.descendants((node, pos) => {
-    if (node.type.name === 'blockquote' && node.attrs['data-full']) {
+    if (
+      (node.type.name === 'paragraph' || node.type.name === 'blockquote') &&
+      node.attrs['data-marker'] === 'signature-before'
+    ) {
       blockquotePosition = pos
       return false
     }
   })
   if (blockquotePosition !== null) {
-    return { position: 'top', from: blockquotePosition }
+    return { position: 'before', from: blockquotePosition }
   }
-  return { position: 'bottom', from: editor.state.doc.content.size || 0 }
+  return { position: 'after', from: editor.state.doc.content.size || 0 }
 }
 
 const addSignature = (signature: PossibleSignature) => {
@@ -190,13 +200,20 @@ const addSignature = (signature: PossibleSignature) => {
   editor.value.commands.removeSignature()
   const { position, from } = resolveSignaturePosition(editor.value)
   editor.value.commands.addSignature({ ...signature, position, from })
+  const getNewPosition = (editor: Editor) => {
+    if (signature.position != null) {
+      return signature.position
+    }
+    if (currentPosition < from) {
+      return currentPosition
+    }
+    if (from === 0 && currentPosition <= 1) {
+      return 1
+    }
+    return editor.state.doc.content.size - positionFromEnd
+  }
   // calculate new position from the end of the signature otherwise
-  editor.value.commands.focus(
-    signature.position ??
-      (currentPosition < from
-        ? currentPosition
-        : editor.value.state.doc.content.size - positionFromEnd),
-  )
+  editor.value.commands.focus(getNewPosition(editor.value))
   requestAnimationFrame(() => {
     testFlags.set('editor.signatureAdd')
   })

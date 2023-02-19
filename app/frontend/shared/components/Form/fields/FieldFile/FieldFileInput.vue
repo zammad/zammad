@@ -4,7 +4,6 @@ import { toRef, computed, ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import useImageViewer from '@shared/composables/useImageViewer'
-import type { Scalars } from '@shared/graphql/types'
 import { convertFileList } from '@shared/utils/files'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
@@ -71,13 +70,20 @@ const onFileChanged = async ($event: Event) => {
 
 const { waitForConfirmation } = useConfirmation()
 
-const removeFile = async (fileId: Scalars['ID']) => {
+const removeFile = async (file: FileUploaded) => {
+  const fileId = file.id
+
   const confirmed = await waitForConfirmation(__('Are you sure?'), {
     buttonTitle: 'Delete',
     buttonTextColorClass: 'text-red-bright',
   })
 
   if (!confirmed) return
+
+  if (!fileId) {
+    uploadFiles.value = uploadFiles.value.filter((elem) => elem !== file)
+    return
+  }
 
   removeFileMutation
     .send({ formId: props.context.formId, fileIds: [fileId] })
@@ -129,12 +135,12 @@ const { showImage } = useImageViewer(uploadFiles)
     @scroll.passive="onFilesScroll"
   >
     <CommonFilePreview
-      v-for="uploadFile of uploadFiles"
-      :key="uploadFile.id"
+      v-for="(uploadFile, idx) of uploadFiles"
+      :key="uploadFile.id || `${uploadFile.name}${idx}`"
       :file="uploadFile"
-      :preview-url="uploadFile.content"
+      :preview-url="uploadFile.preview || uploadFile.content"
       @preview="canInteract && showImage(uploadFile)"
-      @remove="canInteract && removeFile(uploadFile.id)"
+      @remove="canInteract && removeFile(uploadFile)"
     />
   </div>
   <div v-if="uploadFiles.length > 2" class="relative w-full">

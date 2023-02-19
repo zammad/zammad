@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormData, FormValues } from '@shared/components/Form'
+import type { FormData } from '@shared/components/Form'
 import type { FieldRecipientContact } from '@shared/components/Form/fields/FieldRecipient'
 import type {
   EditorContentType,
@@ -12,14 +12,32 @@ import type { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
 import type { AppName, AppSpecificRecord } from '@shared/types/app'
 import type { ConfigList } from '@shared/types/store'
 import type { SelectionData } from '@shared/utils/selection'
+import type { SecurityValue } from '@shared/components/Form/fields/FieldSecurity/types'
+import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
+import type { MaybeRecord } from '@shared/types/utils'
 
 export interface TicketArticleSelectionOptions {
   body: FieldEditorContext
 }
 
+export interface TicketArticleFormValues {
+  articleType?: string
+  body?: string
+  internal?: boolean
+  cc?: string[]
+  subtype?: string
+  inReplyTo?: string
+  to?: string[]
+  subject?: string
+  attachments?: FileUploaded[]
+  contentType?: string
+  security?: SecurityValue
+}
+
 export interface TicketArticlePerformOptions {
   selection?: SelectionData
-  openReplyDialog(values?: FormValues): Promise<void>
+  formId: string
+  openReplyDialog(values?: MaybeRecord<TicketArticleFormValues>): Promise<void>
   getNewArticleBody(type: EditorContentType): string
 }
 

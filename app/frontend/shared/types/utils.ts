@@ -37,5 +37,12 @@ export type EventHandlers<E> = {
   [K in keyof E]?: E[K] extends Function ? E[K] : (payload: E[K]) => void
 }
 
+export type PartialRequired<T, K extends keyof T> = Omit<T, K> &
+  Required<Pick<T, K>>
+
+export type MaybeRecord<K> = {
+  [P in keyof K]?: Maybe<K[P]>
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ObjectLike = Record<string, any>

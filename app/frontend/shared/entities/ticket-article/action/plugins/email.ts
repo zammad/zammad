@@ -3,7 +3,9 @@
 import { getTicketSignatureQuery } from '@shared/composables/useTicketSignature'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import { getIdFromGraphQLId } from '@shared/graphql/utils'
+import { textCleanup } from '@shared/utils/helpers'
 import { uniq } from 'lodash-es'
+import { forwardEmail } from './email/forward'
 import { replyToEmail } from './email/reply'
 import type {
   TicketArticleAction,
@@ -41,7 +43,7 @@ const addSignature = async (
     return
   }
   body.addSignature({
-    body: text,
+    body: textCleanup(text),
     id: getIdFromGraphQLId(id),
     position,
   })
@@ -71,13 +73,14 @@ const actionPlugin: TicketArticleActionPlugin = {
           icon: { mobile: 'mobile-reply' },
           perform: (t, a, o) => replyToEmail(t, a, o, config),
         },
-        // {
-        //   apps: ['mobile'],
-        //   name: 'email-forward',
-        //   view: { agent: ['change'] },
-        //   label: __('Forward'),
-        //   icon: { mobile: 'mobile-forward' },
-        // },
+        {
+          apps: ['mobile'],
+          name: 'email-forward',
+          view: { agent: ['change'] },
+          label: __('Forward'),
+          icon: { mobile: 'mobile-forward' },
+          perform: (t, a, o) => forwardEmail(t, a, o, config),
+        },
       )
     }
 

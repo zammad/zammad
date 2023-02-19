@@ -193,7 +193,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           :key="attachment.internalId"
           :file="attachment"
           :download-url="attachment.downloadUrl"
-          :preview-url="attachment.previewUrl"
+          :preview-url="attachment.preview"
           :no-preview="!$c.ui_ticket_zoom_attachments_preview"
           :wrapper-class="colorsClasses.file"
           :icon-class="colorsClasses.icon"

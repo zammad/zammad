@@ -110,7 +110,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
           cc:           'zammad_test_cc@zammad.com',
           internal:     false,
           content_type: 'text/html',
-          body:         "<p>This is a note!</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+          body:         "<p>This is a note!</p><p><br></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
         )
       end
 
@@ -138,7 +138,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
           type_id:      Ticket::Article::Type.lookup(name: 'email').id,
           internal:     true,
           content_type: 'text/html',
-          body:         "<p>This is a note!</p><p></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+          body:         "<p>This is a note!</p><p><br></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
         )
       end
     end

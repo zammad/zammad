@@ -22,6 +22,7 @@ const getArticleActionData = (
   const actions = createTestArticleActions(ticket, article)
   const action = actions.find((action) => action.name === name)!
   const options = {
+    formId: '',
     openReplyDialog: vi.fn(),
     getNewArticleBody: vi.fn(() => ''),
   }

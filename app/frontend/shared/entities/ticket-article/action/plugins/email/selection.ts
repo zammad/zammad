@@ -29,7 +29,7 @@ export const getReplyQuoteHeader = (
   const date = formatDate(article.createdAt)
   const name = article.originBy?.fullname || article.createdBy.fullname || ''
 
-  return `${i18n.t('On %s, %s wrote:', date, name)}<br><br>`
+  return `${i18n.t('On %s, %s wrote:', date, name)}<p>\n</p>`
 }
 
 export const getArticleSelection = (

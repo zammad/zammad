@@ -35,21 +35,21 @@ module FormMatchers
 
   RSpec::Matchers.define_negated_matcher :have_no_text_value, :have_text_value
 
-  matcher :have_html_value do
+  matcher :have_data_value do
     match do
-      actual.input_element.native.attribute('innerHTML').include? expected
+      actual.input_element['data-value'].include? expected
     end
 
     failure_message do
-      %(expected #{actual.field_id} to have HTML value "#{expected}"\n\n#{actual.field_id}: "#{actual.input_element.native.attribute('innerHTML')}")
+      %(expected #{actual.field_id} to have data value "#{expected}"\n\n#{actual.field_id}: "#{actual.input_element['data-value']}")
     end
 
     failure_message_when_negated do
-      %(expected #{actual.field_id} not to have HTML value "#{expected}"\n\n#{actual.field_id}: "#{actual.input_element.native.attribute('innerHTML')}")
+      %(expected #{actual.field_id} not to have data value "#{expected}"\n\n#{actual.field_id}: "#{actual.input_element['data-value']}")
     end
   end
 
-  RSpec::Matchers.define_negated_matcher :have_no_html_value, :have_html_value
+  RSpec::Matchers.define_negated_matcher :have_no_data_value, :have_data_value
 end
 
 RSpec.configure do |config|

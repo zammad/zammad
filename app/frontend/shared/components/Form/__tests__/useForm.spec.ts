@@ -48,6 +48,7 @@ describe('useForm', () => {
     const { form, node } = useForm()
 
     form.value = {
+      formId: 'test-form',
       formNode: getNode('test-form') as FormKitNode,
       resetForm: vi.fn(),
     }
@@ -67,6 +68,7 @@ describe('useForm', () => {
       useForm()
 
     form.value = {
+      formId: 'test-form',
       formNode: getNode('test-form') as FormKitNode,
       resetForm: vi.fn(),
     }
@@ -85,6 +87,7 @@ describe('useForm', () => {
     const formNode = getNode('test-form') as FormKitNode
 
     form.value = {
+      formId: 'test-form',
       formNode,
       resetForm: vi.fn(),
     }
@@ -106,6 +109,7 @@ describe('useForm', () => {
     const { form, values } = useForm()
 
     form.value = {
+      formId: 'test-form',
       formNode: getNode('test-form') as FormKitNode,
       resetForm: vi.fn(),
     }
@@ -121,6 +125,7 @@ describe('useForm', () => {
     const { form, formSubmit } = useForm()
 
     form.value = {
+      formId: 'test-form',
       formNode: getNode('test-form') as FormKitNode,
       resetForm: vi.fn(),
     }

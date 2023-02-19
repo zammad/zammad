@@ -246,9 +246,9 @@ RSpec.describe 'Form helpers', app: :mobile, authenticated_as: :agent, db_strate
       within_form(form_updater_gql_number: 1) do
         el = find_editor('Text')
         el.type(body)
-        expect(el).to have_text_value(body)
+        expect(el).to have_data_value(body)
         el.clear
-        expect(el).to have_no_text_value(body)
+        expect(el).to have_no_data_value(body)
       end
     end
   end
