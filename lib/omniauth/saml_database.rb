@@ -47,9 +47,11 @@ class SamlDatabase < OmniAuth::Strategies::SAML
     logout_response.soft = false
     logout_response.validate
 
+    redirect_path = session['omniauth.origin']&.include?('/mobile') ? '/mobile' : '/'
+
     self.class.destroy_session(env, session)
 
-    redirect "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/"
+    redirect "#{Setting.get('http_type')}://#{Setting.get('fqdn')}#{redirect_path}"
   end
 
 end

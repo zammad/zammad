@@ -3,7 +3,7 @@
 class SessionsController < ApplicationController
   prepend_before_action -> { authentication_check && authorize! }, only: %i[switch_to_user list delete]
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth saml_destroy]
-  skip_before_action :user_device_log, only: %i[create_sso]
+  skip_before_action :user_device_log, only: %i[create_sso create_omniauth]
 
   def show
     user = authentication_check_only
@@ -84,11 +84,14 @@ class SessionsController < ApplicationController
 
     auth = request.env['omniauth.auth']
 
+    redirect_url = request.env['omniauth.origin']&.include?('/mobile') ? '/mobile' : '/#'
+
     if !auth
       logger.info('AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT')
 
       # redirect to app
-      redirect_to '/'
+      redirect_to redirect_url
+      return
     end
 
     # Create a new user or add an auth to existing user, depending on
@@ -99,7 +102,7 @@ class SessionsController < ApplicationController
     end
 
     if in_maintenance_mode?(authorization.user)
-      redirect_to '/#'
+      redirect_to redirect_url
       return
     end
 
@@ -112,8 +115,14 @@ class SessionsController < ApplicationController
     # remember last login date
     authorization.user.update_last_login
 
+    # Set needed fingerprint parameter.
+    if request.env['omniauth.params']['fingerprint'].present?
+      params[:fingerprint] = request.env['omniauth.params']['fingerprint']
+      user_device_log(authorization.user, 'session')
+    end
+
     # redirect to app
-    redirect_to '/'
+    redirect_to redirect_url
   end
 
   def failure_omniauth

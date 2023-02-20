@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 import { MutationHandler } from '@shared/server/apollo/handler'
@@ -16,6 +17,7 @@ export const useAuthenticationStore = defineStore(
   'authentication',
   () => {
     const authenticated = useLocalStorage<boolean>('authenticated', false)
+    const externalLogout = ref(false)
     const { fingerprint } = useFingerprint()
 
     const clearAuthentication = async (): Promise<void> => {
@@ -24,7 +26,6 @@ export const useAuthenticationStore = defineStore(
       const session = useSessionStore()
       session.resetCurrentSession()
       authenticated.value = false
-
       resetAndDisposeStores(true)
 
       // Refresh the config after logout, to have only the non authenticated version.
@@ -45,6 +46,13 @@ export const useAuthenticationStore = defineStore(
 
       const result = await logoutMutation.send()
       if (result?.logout?.success) {
+        if (result.logout.externalLogoutUrl) {
+          externalLogout.value = true
+          authenticated.value = false
+          window.location.href = result.logout.externalLogoutUrl
+          return
+        }
+
         await clearAuthentication()
 
         testFlags.set('logout.success')
@@ -63,7 +71,11 @@ export const useAuthenticationStore = defineStore(
               login,
               password,
               rememberMe,
-              fingerprint: fingerprint.value,
+            },
+          },
+          context: {
+            headers: {
+              'X-Browser-Fingerprint': fingerprint.value,
             },
           },
         }),
@@ -90,6 +102,7 @@ export const useAuthenticationStore = defineStore(
 
     return {
       authenticated,
+      externalLogout,
       clearAuthentication,
       logout,
       login,

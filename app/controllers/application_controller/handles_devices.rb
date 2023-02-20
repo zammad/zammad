@@ -9,7 +9,7 @@ module ApplicationController::HandlesDevices
 
   def user_device_log(user = current_user, type = 'session')
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
-    return true if params[:controller] == 'init' # do no device logging on static initial page
+    return true if %w[init mobile].include?(params[:controller]) # do no device logging on static initial page
     return true if switched_from_user_id
     return true if current_user_on_behalf # do no device logging for the user on behalf feature
     return true if !user
@@ -44,13 +44,15 @@ module ApplicationController::HandlesDevices
 
     # for sessions we need the fingperprint
     if type == 'session'
-      if !session[:user_device_updated_at] && !params[:fingerprint] && !session[:user_device_fingerprint]
+      fingerprint = params[:fingerprint] || request.headers['X-Browser-Fingerprint']
+
+      if !session[:user_device_updated_at] && !fingerprint && !session[:user_device_fingerprint]
         raise Exceptions::UnprocessableEntity, __('Need fingerprint param!')
       end
 
-      if params[:fingerprint]
-        UserDevice.fingerprint_validation(params[:fingerprint])
-        session[:user_device_fingerprint] = params[:fingerprint]
+      if fingerprint
+        UserDevice.fingerprint_validation(fingerprint)
+        session[:user_device_fingerprint] = fingerprint
       end
     end
 

@@ -17,7 +17,10 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
       QUERY
     end
 
+    let(:setting) { nil }
+
     before do
+      setting
       gql.execute(query)
     end
 
@@ -40,6 +43,24 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
       it 'hides non-frontend data' do
         expect(gql.result.data.select { |s| s['key'].eql?('storage_provider') }).to be_empty
       end
+
+      it 'returns no display_name for auth_saml_credentials' do
+        expect(gql.result.data).to include({
+                                             'key'   => 'auth_saml_credentials.display_name',
+                                             'value' => nil,
+                                           })
+      end
+
+      context 'when display_name for auth_saml_credentials is changed' do
+        let(:setting) { Setting.set('auth_saml_credentials', Setting.get('auth_saml_credentials').merge(display_name: 'Zammad SAML')) }
+
+        it 'returns changed display_name' do
+          expect(gql.result.data).to include({
+                                               'key'   => 'auth_saml_credentials.display_name',
+                                               'value' => 'Zammad SAML',
+                                             })
+        end
+      end
     end
 
     context 'without authenticated session', authenticated_as: false do
@@ -58,6 +79,24 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
 
       it 'hides non-frontend data' do
         expect(gql.result.data.select { |s| s['key'].eql?('storage_provider') }).to be_empty
+      end
+
+      it 'returns no custom data if no changes are made' do
+        expect(gql.result.data).not_to include({
+                                                 'key'   => 'auth_saml_credentials.display_name',
+                                                 'value' => nil,
+                                               })
+      end
+
+      context 'when display_name for auth_saml_credentials is changed' do
+        let(:setting) { Setting.set('auth_saml_credentials', Setting.get('auth_saml_credentials').merge(display_name: 'Zammad SAML')) }
+
+        it 'returns custom data if changes are made' do
+          expect(gql.result.data).to include({
+                                               'key'   => 'auth_saml_credentials.display_name',
+                                               'value' => 'Zammad SAML',
+                                             })
+        end
       end
     end
   end

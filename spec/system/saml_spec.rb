@@ -58,10 +58,22 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   end
 
   # Shared_examples does not work.
-  def login_saml
-    visit '/#login'
-    find('.auth-provider--saml').click
+  def login_saml(app: 'desktop')
+    case app
+    when 'desktop'
+      visit '/#login'
+      find('.auth-provider--saml').click
+    when 'mobile'
+      visit '/login', app: :mobile
+      find('.icon-mobile-saml').click
+    end
 
+    login_saml_keycloak
+
+    check_logged_in(app: app)
+  end
+
+  def login_saml_keycloak
     find_by_id('kc-form')
     expect(page).to have_current_path(%r{/realms/zammad/protocol/saml\?SAMLRequest=.+})
     expect(page).to have_css('#kc-form-login')
@@ -72,9 +84,19 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
 
       click_button
     end
+  end
 
+  def check_logged_in(app: 'desktop')
     find_by_id('app')
-    expect(page).to have_current_route('ticket/view/my_tickets')
+
+    case app
+    when 'desktop'
+      expect(page).to have_current_route('ticket/view/my_tickets')
+    when 'mobile'
+      # FIXME: Workaround because the redirect to the mobile app is not working due to a not set HTTP Referer in Capybara.
+      visit '/', app: :mobile
+      expect(page).to have_text('Home')
+    end
   end
 
   def logout_saml
@@ -149,6 +171,61 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       expect(user.login).to eq('john.doe')
 
       logout_saml
+    end
+  end
+
+  describe 'Mobile View', app: :mobile do
+    context 'when login is tested' do
+      before do
+        set_saml_config
+      end
+
+      it 'is successful' do
+        login_saml(app: 'mobile')
+
+        visit saml_realm_zammad_accounts
+        find('#landingMobileKebabButton').click
+        expect(page).to have_css('#landingSignOutLink')
+      end
+    end
+
+    context 'when logout is tested' do
+      before do
+        set_saml_config
+      end
+
+      it 'is successful' do
+        login_saml(app: 'mobile')
+
+        visit '/account', app: :mobile
+        click_button('Sign out')
+
+        wait.until do
+          expect(page).to have_button('Sign in')
+        end
+
+        visit saml_realm_zammad_accounts
+        find('#landingMobileKebabButton').click
+        expect(page).to have_no_css('#landingSignOutLink')
+        find_by_id('landingWelcomeMessage')
+      end
+    end
+
+    context 'when saml user already exists with agent role' do
+      before do
+        Setting.set('auth_third_party_auto_link_at_inital_login', true)
+        create(:agent, email: 'john.doe@saml.example.com', login: 'john.doe', firstname: 'John', lastname: 'Doe')
+
+        set_saml_config
+      end
+
+      it 'is successful' do
+        login_saml(app: 'mobile')
+
+        visit saml_realm_zammad_accounts
+        find('#landingMobileKebabButton').click
+        expect(page).to have_css('#landingSignOutLink')
+      end
     end
   end
 end

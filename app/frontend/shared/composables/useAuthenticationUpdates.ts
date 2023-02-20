@@ -26,7 +26,7 @@ const useAuthenticationChanges = () => {
           router.replace('/')
         }
       })
-    } else if (!state.authenticated && session.id) {
+    } else if (!state.authenticated && session.id && !state.externalLogout) {
       await authentication.clearAuthentication()
       router.replace('/login')
     }

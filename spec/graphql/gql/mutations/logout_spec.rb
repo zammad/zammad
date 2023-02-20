@@ -18,6 +18,7 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
         mutation logout {
           logout {
             success
+            externalLogoutUrl
           }
         }
       QUERY
@@ -29,7 +30,7 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'logs out' do
-        expect(graphql_response['data']['logout']).to eq('success' => true)
+        expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)
       end
     end
 
@@ -39,19 +40,19 @@ RSpec.describe Gql::Mutations::Logout, type: :request do
       end
 
       it 'logs out' do
-        expect(graphql_response['data']['logout']).to eq('success' => true)
+        expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)
       end
     end
 
     context 'without authenticated session', authenticated_as: false do
       it 'logs out' do
-        expect(graphql_response['data']['logout']).to eq('success' => true)
+        expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)
       end
     end
 
     context 'without authenticated session and missing CSRF token', allow_forgery_protection: true do
       it 'logs out, does not fail not with CSRF validation failed' do
-        expect(graphql_response['data']['logout']).to eq('success' => true)
+        expect(graphql_response['data']['logout']).to eq('success' => true, 'externalLogoutUrl' => nil)
       end
     end
   end

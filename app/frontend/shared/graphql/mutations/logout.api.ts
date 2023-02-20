@@ -9,6 +9,7 @@ export const LogoutDocument = gql`
     mutation logout {
   logout {
     success
+    externalLogoutUrl
   }
 }
     `;

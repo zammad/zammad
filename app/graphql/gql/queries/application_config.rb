@@ -13,35 +13,48 @@ module Gql::Queries
 
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)
-      frontend_settings + rails_application_config
+      frontend_settings + rails_application_config + custom_settings
     end
 
     private
 
+    def unauthenticated?
+      context.current_user?.nil?
+    end
+
     def frontend_settings
-      result = []
-      unauthenticated = context.current_user?.nil?
-      Setting.select('name, preferences').where(frontend: true).each do |setting|
-        next if setting.preferences[:authentication] && unauthenticated
+      Setting.select('name, preferences').where(frontend: true).each_with_object([]) do |setting, result|
+        next if setting.preferences[:authentication] && unauthenticated?
 
         value = Setting.get(setting.name)
-        next if unauthenticated && !value
+        next if unauthenticated? && !value
 
         result << { key: setting.name, value: value }
       end
-      result
     end
 
     def rails_application_config
-      relevant_configs = [
+      [
         'active_storage.web_image_content_types',
-      ]
-
-      relevant_configs.map do |config_name|
+      ].map do |config_name|
         (method, key) = config_name.split('.')
 
         value = Rails.application.config.send(method)
         value = value[key.to_sym] if key.present?
+
+        { key: config_name, value: value }
+      end
+    end
+
+    def custom_settings
+      [
+        'auth_saml_credentials.display_name',
+      ].filter_map do |config_name|
+        (setting, key) = config_name.split('.')
+
+        value = Setting.get(setting)
+        value = value[key.to_sym] if key.present?
+        next if unauthenticated? && !value
 
         { key: config_name, value: value }
       end

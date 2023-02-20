@@ -65,6 +65,9 @@ module.exports = {
       orange: '#F39804',
     },
     extend: {},
+    minWidth: {
+      '1/2-2': 'calc(100% / 2 - theme(spacing.2))',
+    },
   },
   plugins: [
     lineClampPlugin,

@@ -7,7 +7,6 @@ module Gql::Types::Input
 
     argument :login, String, description: 'User name'
     argument :password, String, description: 'Password'
-    argument :fingerprint, String, description: 'Device fingerprint - a string identifying the device used for the login'
     argument :remember_me, Boolean, required: false, description: 'Remember me - Session expire date will be set to one year'
   end
 end

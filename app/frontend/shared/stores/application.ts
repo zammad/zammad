@@ -119,22 +119,6 @@ export const useApplicationStore = defineStore(
       await getConfig()
     }
 
-    // TODO: Refactor this once the third-party authentication configuration is available in another form.
-    const hasAuthProviders = computed(() =>
-      [
-        'facebook',
-        'twitter',
-        'linkedin',
-        'github',
-        'gitlab',
-        'microsoft_office365',
-        'google_oauth2',
-        'weibo',
-        'saml',
-        'sso',
-      ].some((provider) => config.value[`auth_${provider}`]),
-    )
-
     const hasCustomProductBranding = computed(() =>
       Boolean(
         config.value.product_logo && config.value.product_logo !== 'logo.svg',
@@ -149,7 +133,6 @@ export const useApplicationStore = defineStore(
       initializeConfigUpdateSubscription,
       getConfig,
       resetAndGetConfig,
-      hasAuthProviders,
       hasCustomProductBranding,
     }
   },

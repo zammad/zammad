@@ -112,7 +112,7 @@ module CommonActions
     ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
     ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
-    visit('logout')
+    visit('logout', app: app)
 
     case app
     when :mobile

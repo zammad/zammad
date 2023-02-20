@@ -116,6 +116,7 @@ describe('testing login maintenance mode', () => {
       logout: {
         success: true,
         errors: null,
+        externalLogoutUrl: null,
       },
     })
 

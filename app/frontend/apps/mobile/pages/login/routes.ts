@@ -31,6 +31,8 @@ const route: RouteRecordRaw[] = [
         clearAllNotifications()
         await authentication.logout()
 
+        if (authentication.externalLogout) return false
+
         return '/login'
       },
     },

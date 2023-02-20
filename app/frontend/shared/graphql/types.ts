@@ -621,8 +621,6 @@ export type LocatorUserInput = {
 
 /** The user login fields. */
 export type LoginInput = {
-  /** Device fingerprint - a string identifying the device used for the login */
-  fingerprint: Scalars['String'];
   /** User name */
   login: Scalars['String'];
   /** Password */
@@ -645,6 +643,8 @@ export type LogoutPayload = {
   __typename?: 'LogoutPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
+  /** External logout URL (e.g. for SAML)? */
+  externalLogoutUrl?: Maybe<Scalars['String']>;
   /** Was the logout successful? */
   success: Scalars['Boolean'];
 };
@@ -2776,7 +2776,7 @@ export type LoginMutation = { __typename?: 'Mutations', login?: { __typename?: '
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?: 'LogoutPayload', success: boolean } | null };
+export type LogoutMutation = { __typename?: 'Mutations', logout?: { __typename?: 'LogoutPayload', success: boolean, externalLogoutUrl?: string | null } | null };
 
 export type ProductAboutQueryVariables = Exact<{ [key: string]: never; }>;
 

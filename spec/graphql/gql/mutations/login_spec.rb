@@ -32,10 +32,14 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     let(:variables) do
       {
         input: {
-          login:       agent.login,
-          password:    password,
-          fingerprint: fingerprint,
+          login:    agent.login,
+          password: password,
         }
+      }
+    end
+    let(:headers) do
+      {
+        'X-Browser-Fingerprint' => fingerprint,
       }
     end
 
@@ -45,7 +49,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
     end
 
     def execute_graphql_query
-      post '/graphql', params: { query: query, variables: variables }, as: :json
+      post '/graphql', params: { query: query, variables: variables }, headers: headers, as: :json
     end
 
     context 'with correct credentials' do
@@ -70,10 +74,9 @@ RSpec.describe Gql::Mutations::Login, type: :request do
         let(:variables) do
           {
             input: {
-              login:       agent.login,
-              password:    password,
-              fingerprint: fingerprint,
-              rememberMe:  remember_me,
+              login:      agent.login,
+              password:   password,
+              rememberMe: remember_me,
             }
           }
         end
@@ -119,7 +122,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       let(:fingerprint) { nil }
 
       it 'fails with error message' do
-        expect(graphql_response['errors'][0]).to include('message' => 'Variable $input of type LoginInput! was provided invalid value for fingerprint (Expected value to not be null)')
+        expect(graphql_response['errors'][0]).to include('message' => 'Need fingerprint param!')
       end
 
       # No error type available for GraphQL::ExecutionErrors.

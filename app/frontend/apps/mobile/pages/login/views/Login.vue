@@ -22,8 +22,11 @@ import { EnumPublicLinksScreen } from '@shared/graphql/types'
 import { computed } from 'vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { PublicLinkUpdatesDocument } from '@shared/entities/public-links/graphql/subscriptions/currentLinks.api'
+import { useThirdPartyAuthentication } from '@shared/composables/useThirdPartyAuthentication'
+import LoginThirdParty from '../components/LoginThirdParty.vue'
 
 const route = useRoute()
+const router = useRouter()
 
 // Output a hint when the session is no longer valid.
 // This could happen because the session was deleted on the server.
@@ -35,12 +38,10 @@ if (route.query.invalidatedSession === '1') {
     type: NotificationTypes.Warn,
   })
 
-  // TODO: After showing this we should remove the query parameter from the URL.
+  router.replace({ name: 'Login' })
 }
 
 const authentication = useAuthenticationStore()
-
-const router = useRouter()
 
 const application = useApplicationStore()
 
@@ -166,10 +167,10 @@ const login = (formData: FormData<LoginFormData>) => {
     })
 }
 
+const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
+
 const showPasswordLogin = computed(
-  () =>
-    application.config.user_show_password_login ||
-    !application.hasAuthProviders,
+  () => application.config.user_show_password_login || !hasEnabledProviders,
 )
 </script>
 
@@ -236,6 +237,7 @@ const showPasswordLogin = computed(
         </div>
       </div>
     </main>
+    <LoginThirdParty v-if="hasEnabledProviders" :providers="enabledProviders" />
     <section v-if="!showPasswordLogin" class="mb-6 w-full max-w-md text-center">
       <p>
         {{

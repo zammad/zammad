@@ -25,7 +25,7 @@ module Gql::Mutations
 
     private
 
-    def authenticate(login:, password:, fingerprint:, remember_me: false) # rubocop:disable Metrics/AbcSize
+    def authenticate(login:, password:, remember_me: false)
       auth = Auth.new(login, password)
       if !auth.valid?
         return
@@ -34,8 +34,6 @@ module Gql::Mutations
       user = auth&.user
       context[:controller].session.delete(:switched_from_user_id)
 
-      # Fingerprint param is expected for session logins.
-      context[:controller].params[:fingerprint] = fingerprint
       # authentication_check_prerequesits is private
       context[:controller].send(:authentication_check_prerequesits, user, 'session', {})
       context[:current_user] = user

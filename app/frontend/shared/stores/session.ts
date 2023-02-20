@@ -21,6 +21,7 @@ import type {
   SessionIdQuery,
   SessionIdQueryVariables,
 } from '@shared/graphql/types'
+import useFingerprint from '@shared/composables/useFingerprint'
 import testFlags from '@shared/utils/testFlags'
 import log from '@shared/utils/log'
 import { useLocaleStore } from './locale'
@@ -30,12 +31,17 @@ let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
 const getSessionIdQuery = () => {
   if (sessionIdQuery) return sessionIdQuery
 
+  const { fingerprint } = useFingerprint()
+
   sessionIdQuery = new QueryHandler(
     useSessionIdQuery({
       fetchPolicy: 'no-cache',
       context: {
         error: {
           logLevel: 'silent',
+        },
+        headers: {
+          'X-Browser-Fingerprint': fingerprint.value,
         },
       },
     }),
