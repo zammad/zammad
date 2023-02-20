@@ -27,8 +27,12 @@ class TestsController < ApplicationController
 
   # GET /tests/raised_exception
   def error_raised_exception
-    exception = params.fetch(:exception, 'StandardError')
-    message   = params.fetch(:message, 'no message provided')
+    origin     = params.fetch(:origin)
+    exception  = params.fetch(:exception, 'StandardError')
+    message    = params.fetch(:message, 'no message provided')
+
+    # Emulate the originating controller.
+    params[:controller] = origin if origin
 
     raise exception.safe_constantize, message
   end

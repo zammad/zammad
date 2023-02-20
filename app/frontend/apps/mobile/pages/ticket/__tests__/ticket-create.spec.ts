@@ -261,7 +261,7 @@ describe('Creating new ticket as agent', () => {
     // Wait on the changes
     await getNode('ticket-create')?.settled
 
-    await view.events.click(view.getByRole('button', { name: 'Go back' }))
+    await view.events.click(view.getByRole('button', { name: 'Go home' }))
 
     expect(view.queryByTestId('popupWindow')).toBeInTheDocument()
 

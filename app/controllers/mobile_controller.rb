@@ -2,7 +2,7 @@
 
 class MobileController < ApplicationController
   def index
-    render(layout: 'layouts/mobile')
+    render(layout: 'layouts/mobile', locals: { locale: current_user&.preferences&.dig(:locale) })
   end
 
   def service_worker

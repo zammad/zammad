@@ -1,7 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import { useWalker } from '@shared/router/walker'
 
 interface Props {
   fallback: RouteLocationRaw
@@ -12,17 +14,27 @@ interface Props {
   ignore?: string[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const walker = useWalker()
+
+const isHomeButton = computed(() => {
+  if (props.fallback !== '/' || walker.hasBackUrl) return false
+  return true
+})
 </script>
 
 <template>
   <button
     class="flex cursor-pointer items-center"
-    :aria-label="$t('Go back')"
+    :aria-label="isHomeButton ? $t('Go home') : $t('Go back')"
     :class="{ 'gap-2': label }"
     @click="$walker.back(fallback, ignore)"
   >
-    <CommonIcon decorative name="mobile-chevron-left" />
-    <span v-if="label">{{ $t(label) }}</span>
+    <CommonIcon
+      :name="isHomeButton ? 'mobile-home' : 'mobile-chevron-left'"
+      decorative
+    />
+    <span v-if="label">{{ isHomeButton ? $t('Home') : $t(label) }}</span>
   </button>
 </template>

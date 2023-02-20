@@ -80,7 +80,7 @@ module ApplicationController::HandlesErrors
         @exception = e
         @message = errors[:error_human] || errors[:error] || param[:message]
         @traceback = !Rails.env.production?
-        file = Rails.public_path.join("#{status_code}.html").open('r')
+        file = Rails.public_path.join("#{status_code}#{params[:controller] == 'mobile' ? '-mobile' : ''}.html").open('r')
         render inline: file.read, status: status, content_type: 'text/html' # rubocop:disable Rails/RenderInline
       end
     end

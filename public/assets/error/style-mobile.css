@@ -1,0 +1,266 @@
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('/assets/fonts/FiraSans-Bold.eot');
+  src: url('/assets/fonts/FiraSans-Bold.woff2') format('woff2'),
+    url('/assets/fonts/FiraSans-Bold.woff') format('woff'),
+    url('/assets/fonts/FiraSans-Bold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('/assets/fonts/FiraSans-Regular.eot');
+  src: url('/assets/fonts/FiraSans-Regular.woff2') format('woff2'),
+    url('/assets/fonts/FiraSans-Regular.woff') format('woff'),
+    url('/assets/fonts/FiraSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('/assets/fonts/FiraSans-Medium.eot');
+  src: url('/assets/fonts/FiraSans-Medium.woff2') format('woff2'),
+    url('/assets/fonts/FiraSans-Medium.woff') format('woff'),
+    url('/assets/fonts/FiraSans-Medium.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('/assets/fonts/FiraSans-Light.eot');
+  src: url('/assets/fonts/FiraSans-Light.woff2') format('woff2'),
+    url('/assets/fonts/FiraSans-Light.woff') format('woff'),
+    url('/assets/fonts/FiraSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #656567;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-feature-settings: normal;
+}
+
+body {
+  background-color: #191919;
+  margin: 0;
+  line-height: inherit;
+}
+
+body.error-message {
+  height: auto;
+}
+
+pre.traceback {
+  padding: 1em;
+  overflow: scroll;
+  width: 100%;
+}
+
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-white {
+  color: #FFF;
+}
+
+.text-sm {
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.font-sans {
+  font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.bg-black {
+  background-color: #191919;
+}
+
+.min-w-full {
+  min-width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3,minmax(0,1fr));
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.grid {
+  display: grid;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.justify-self-start {
+  justify-self: start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+button, [role="button"] {
+  cursor: pointer;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+  background-color: #191919;
+  background-image: none;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.fill-current {
+  fill: currentColor;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+.text-8xl {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.mb-9 {
+  margin-bottom: 2.25rem;
+}
+
+blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.min-h-\[4rem\] {
+  min-height: 4rem;
+}
+
+.max-w-prose {
+  max-width: 65ch;
+}
+
+.mt-9 {
+  margin-top: 2.25rem;
+}
+
+.text-gray {
+  color: #999;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.max-w-prose {
+  max-width: 65ch;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}

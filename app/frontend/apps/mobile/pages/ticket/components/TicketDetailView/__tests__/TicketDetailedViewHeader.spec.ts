@@ -24,11 +24,12 @@ describe('tickets zoom header', () => {
         ticket,
         users: [],
       },
+      router: true,
     })
 
     expect(
-      view.getByIconName('mobile-chevron-left'),
-      'has back icon',
+      view.getByIconName('mobile-home'),
+      'has home icon',
     ).toBeInTheDocument()
     expect(
       view.getByText(`#${ticket.number}`),
@@ -53,6 +54,7 @@ describe('tickets zoom header', () => {
           },
         ],
       },
+      router: true,
       dialog: true,
     })
 

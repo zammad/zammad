@@ -4441,11 +4441,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
-msgid "Error"
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/error/views/Error.vue
-msgid "Error - %s"
+msgid "Error"
 msgstr ""
 
 #: app/controllers/getting_started_controller.rb
@@ -4819,7 +4816,9 @@ msgstr ""
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
@@ -5093,6 +5092,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go back"
+msgstr ""
+
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go home"
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
@@ -5372,6 +5375,7 @@ msgstr ""
 msgid "Holidays iCalendar Feed"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
@@ -6315,6 +6319,10 @@ msgstr ""
 msgid "Loading content"
 msgstr ""
 
+#: app/views/mobile/index.html.erb
+msgid "Loading failed, please try again later."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -6328,6 +6336,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
 #: app/frontend/shared/form/i18n/locales.ts
+#: app/views/mobile/index.html.erb
 msgid "Loading…"
 msgstr ""
 

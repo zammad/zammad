@@ -42,7 +42,7 @@ describe('mobile app header', () => {
   it('renders back button, if specified', async () => {
     const view = renderComponent(LayoutHeader, {
       props: {
-        backUrl: '/',
+        backUrl: '/foo',
         backTitle: 'Back',
       },
       router: true,
@@ -54,7 +54,7 @@ describe('mobile app header', () => {
 
     i18n.setTranslationMap(new Map([['Test2', 'Translated']]))
 
-    await view.rerender({ backTitle: 'Test2', backUrl: '/' })
+    await view.rerender({ backTitle: 'Test2', backUrl: '/bar' })
 
     expect(view.getByText('Translated')).toBeInTheDocument()
   })

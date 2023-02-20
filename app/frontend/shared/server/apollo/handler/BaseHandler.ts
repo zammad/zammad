@@ -95,7 +95,7 @@ export default abstract class BaseHandler<
       }
     } else {
       errorHandler = {
-        type: GraphQLErrorTypes.UnkownError,
+        type: GraphQLErrorTypes.UnknownError,
       }
     }
 

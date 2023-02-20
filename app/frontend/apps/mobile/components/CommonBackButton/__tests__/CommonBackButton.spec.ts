@@ -30,5 +30,48 @@ describe('rendering common back button', () => {
     expect(view.container).toHaveTextContent('Zurück')
 
     expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+
+    i18n.setTranslationMap(new Map([]))
+  })
+
+  it('renders home button, if no history is present', async () => {
+    window.history.replaceState({}, '')
+
+    const view = renderComponent(CommonBackButton, {
+      router: true,
+      props: {
+        fallback: '/',
+      },
+    })
+
+    expect(view.getByRole('button', { name: 'Go home' })).toBeInTheDocument()
+
+    await view.rerender({
+      label: 'Back',
+    })
+
+    expect(view.container).toHaveTextContent('Home')
+  })
+
+  it('renders back button, if history is present', async () => {
+    window.history.replaceState(
+      { back: '/tickets/1/information/customer' },
+      '/tickets/1/information/organization',
+    )
+
+    const view = renderComponent(CommonBackButton, {
+      router: true,
+      props: {
+        fallback: '/',
+      },
+    })
+
+    expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+
+    await view.rerender({
+      label: 'Back',
+    })
+
+    expect(view.container).toHaveTextContent('Back')
   })
 })

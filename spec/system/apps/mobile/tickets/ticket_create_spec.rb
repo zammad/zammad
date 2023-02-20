@@ -30,7 +30,8 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
   end
 
   before do
-    visit '/tickets/create'
+    visit '/'
+    find_link('Create new ticket').click
     wait_for_form_to_settle('ticket-create')
   end
 

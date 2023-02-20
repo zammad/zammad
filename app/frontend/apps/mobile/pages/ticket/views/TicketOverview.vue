@@ -163,8 +163,11 @@ const orderDirection = computed({
         <div
           class="flex cursor-pointer items-center justify-self-end text-base"
         >
-          <CommonLink link="/tickets/create" :title="__('Create new ticket')">
-            <CommonIcon name="mobile-add" size="small" />
+          <CommonLink
+            link="/tickets/create"
+            :aria-label="$t('Create new ticket')"
+          >
+            <CommonIcon name="mobile-add" size="small" decorative />
           </CommonLink>
         </div>
       </div>

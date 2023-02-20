@@ -72,6 +72,7 @@ const router = useRouter()
 ticketQuery.onError(() => {
   return redirectToError(router, {
     statusCode: ErrorStatusCodes.Forbidden,
+    title: __('Forbidden'),
     message: __('Sorry, but you have insufficient rights to open this page.'),
   })
 })

@@ -5,7 +5,7 @@ import type { Except } from 'type-fest'
 import type { UserError } from '@shared/graphql/types'
 
 export enum GraphQLErrorTypes {
-  UnkownError = 'Exceptions::UnkownError',
+  UnknownError = 'Exceptions::UnknownError',
   NetworkError = 'Exceptions::NetworkError',
 
   // This exception actually means 'NotAuthenticated'
@@ -31,6 +31,7 @@ export interface GraphQLHandlerError {
 export enum ErrorStatusCodes {
   'Forbidden' = 403,
   'NotFound' = 404,
+  'InternalError' = 500,
 }
 
 export type UserErrors = Except<UserError, '__typename'>[]

@@ -48,9 +48,22 @@ export const useApplicationStore = defineStore(
 
       if (notifications.hasErrors()) {
         loadingAppElement
+          ?.getElementsByClassName('loading-animation')
+          .item(0)
+          ?.classList.add('error')
+
+        loadingAppElement
+          ?.getElementsByClassName('loading-sr-text')
+          .item(0)
+          ?.setAttribute('aria-hidden', 'true')
+
+        const loadingFailedElement = loadingAppElement
           ?.getElementsByClassName('loading-failed')
           .item(0)
-          ?.classList.add('active')
+
+        loadingFailedElement?.classList.add('active')
+        loadingFailedElement?.setAttribute('aria-hidden', 'false')
+
         return
       }
 

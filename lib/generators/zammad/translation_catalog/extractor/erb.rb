@@ -9,7 +9,11 @@ class Zammad::TranslationCatalog::Extractor::Erb < Zammad::TranslationCatalog::E
     literal_string_regex = %r{(['"])(.+?)(?<!\\)\1}
     t_regex = %r{(?:#\{|\s)z?t\(?\s*#{literal_string_regex}}
 
-    [t_regex].each do |r|
+    # Translation.translate
+    locale_regex = %r{['"a-z_0-9.&@:\[\]-]+}
+    translate_regex = %r{Translation\.translate\(?\s*#{locale_regex},\s*#{literal_string_regex}}
+
+    [t_regex, translate_regex].each do |r|
       string.scan(r) do |match|
         result = match[1].gsub(%r{\\'}, "'")
         next if match[0].eql?('"') && result.include?('#{')
