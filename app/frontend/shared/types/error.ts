@@ -7,6 +7,8 @@ import type { UserError } from '@shared/graphql/types'
 export enum GraphQLErrorTypes {
   UnknownError = 'Exceptions::UnknownError',
   NetworkError = 'Exceptions::NetworkError',
+  Forbidden = 'Exceptions::Forbidden',
+  RecordNotFound = 'ActiveRecord::RecordNotFound',
 
   // This exception actually means 'NotAuthenticated'
   NotAuthorized = 'Exceptions::NotAuthorized',

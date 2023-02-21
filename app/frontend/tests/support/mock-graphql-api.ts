@@ -4,6 +4,7 @@
 import { NetworkStatus } from '@apollo/client/core'
 import type { UserError } from '@shared/graphql/types'
 import type { GraphQLErrorReport } from '@shared/types/error'
+import { GraphQLErrorTypes } from '@shared/types/error'
 import type { DocumentNode } from 'graphql'
 import {
   createMockSubscription,
@@ -34,6 +35,8 @@ export interface MockGraphQLInstance {
   willFailWithUserError(
     result: OperationResultWithUserError,
   ): MockGraphQLInstance
+  willFailWithForbiddenError(message?: string): MockGraphQLInstance
+  willFailWithNotFoundError(message?: string): MockGraphQLInstance
   willFailWithNetworkError(error: Error): MockGraphQLInstance
   spies: {
     behave: SpyInstance
@@ -105,6 +108,48 @@ export const mockGraphQLApi = (
     return instance
   }
 
+  const willFailWithNotFoundError = (message = 'Not Found') => {
+    errorSpy.mockResolvedValue({
+      networkStatus: NetworkStatus.error,
+      errors: [
+        {
+          extensions: {
+            type: GraphQLErrorTypes.RecordNotFound,
+          },
+          message,
+        },
+      ],
+    })
+    createMockClient([
+      {
+        operationDocument,
+        handler: errorSpy,
+      },
+    ])
+    return instance
+  }
+
+  const willFailWithForbiddenError = (message = 'Forbidden') => {
+    errorSpy.mockResolvedValue({
+      networkStatus: NetworkStatus.error,
+      errors: [
+        {
+          extensions: {
+            type: GraphQLErrorTypes.Forbidden,
+          },
+          message,
+        },
+      ],
+    })
+    createMockClient([
+      {
+        operationDocument,
+        handler: errorSpy,
+      },
+    ])
+    return instance
+  }
+
   const willFailWithUserError = (result: OperationResultWithUserError) => {
     userErrorSpy.mockResolvedValue({ data: result })
     createMockClient([
@@ -130,6 +175,8 @@ export const mockGraphQLApi = (
   const instance = {
     willFailWithError,
     willFailWithUserError,
+    willFailWithNotFoundError,
+    willFailWithForbiddenError,
     willFailWithNetworkError,
     willResolve,
     willBehave,

@@ -13,6 +13,7 @@ import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 
 describe('static organization', () => {
   it('shows organization', async () => {
@@ -127,5 +128,39 @@ describe('static organization', () => {
     await waitUntil(() => mockApi.calls.resolve > 1)
 
     expect(view.container).toHaveTextContent('Jane Hunter')
+  })
+
+  it('redirects to error page if organization is not found', async () => {
+    mockPermissions(['admin.organization'])
+
+    const mockApi =
+      mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
+    mockOrganizationObjectAttributes()
+
+    const view = await visitView('/organizations/123')
+
+    await waitUntil(() => mockApi.calls.error)
+
+    expect(getTestRouter().currentRoute.value).toMatchObject({
+      path: '/error',
+    })
+    expect(view.getByText('Not found')).toBeInTheDocument()
+  })
+
+  it('redirects to error page if access to organization is forbidden', async () => {
+    mockPermissions(['admin.organization'])
+
+    const mockApi =
+      mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()
+    mockOrganizationObjectAttributes()
+
+    const view = await visitView('/organizations/123')
+
+    await waitUntil(() => mockApi.calls.error)
+
+    expect(getTestRouter().currentRoute.value).toMatchObject({
+      path: '/error',
+    })
+    expect(view.getByText('Forbidden')).toBeInTheDocument()
   })
 })

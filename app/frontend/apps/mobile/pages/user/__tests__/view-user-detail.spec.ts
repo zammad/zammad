@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { UserDocument } from '@mobile/entities/user/graphql/queries/user.api'
 import {
   defaultUser,
   mockUserDetailsApis,
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
-import { waitUntilApisResolved } from '@tests/support/utils'
+import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import { setupView } from '@tests/support/mock-user'
+import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
 
 describe('visiting user page', () => {
   test('view static content', async () => {
@@ -175,5 +179,34 @@ describe('visiting user page', () => {
       'Department of Health and Safety',
     )
     expect(getRegion('Address')).toHaveTextContent('Berlin')
+  })
+
+  it('redirects to error page if user is not found', async () => {
+    setupView('agent')
+
+    const mockApi = mockGraphQLApi(UserDocument).willFailWithNotFoundError()
+
+    const view = await visitView('/users/123')
+
+    await waitUntil(() => mockApi.calls.error)
+
+    expect(getTestRouter().currentRoute.value).toMatchObject({
+      path: '/error',
+    })
+    expect(view.getByText('Not found')).toBeInTheDocument()
+  })
+
+  it('redirects to error page if access to organization is forbidden', async () => {
+    setupView('agent')
+
+    const mockApi = mockGraphQLApi(UserDocument).willFailWithForbiddenError()
+    const view = await visitView('/users/123')
+
+    await waitUntil(() => mockApi.calls.error)
+
+    expect(getTestRouter().currentRoute.value).toMatchObject({
+      path: '/error',
+    })
+    expect(view.getByText('Forbidden')).toBeInTheDocument()
   })
 })

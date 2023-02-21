@@ -8,12 +8,14 @@ interface ErrorOptions {
   title: string
   message: string
   statusCode: ErrorStatusCodes
+  messagePlaceholder?: string[]
   route?: string
 }
 
-const defaultOptions = {
+const defaultOptions: ErrorOptions = {
   title: __('Not Found'),
   message: __("We're sorry, but this page doesn't exist."),
+  messagePlaceholder: [],
   statusCode: ErrorStatusCodes.NotFound,
 }
 

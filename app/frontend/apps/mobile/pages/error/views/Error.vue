@@ -39,7 +39,9 @@ const errorImage = computed(() => {
         {{ $t(errorOptions.title) }}
       </h2>
       <p class="mt-4 min-h-[4rem] max-w-prose text-center text-gray">
-        {{ $t(errorOptions.message) }}
+        {{
+          $t(errorOptions.message, ...(errorOptions.messagePlaceholder || []))
+        }}
       </p>
       <p v-if="errorOptions.route" class="max-w-prose text-center text-gray">
         {{ errorOptions.route }}

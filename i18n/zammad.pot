@@ -4817,9 +4817,8 @@ msgstr ""
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/shared/errors/useErrorHandler.ts
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr ""
@@ -5821,6 +5820,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
+msgstr ""
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Internal Error"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
@@ -7377,6 +7380,10 @@ msgstr ""
 msgid "Not configured"
 msgstr ""
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "Not found"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -7707,6 +7714,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
+msgstr ""
+
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+msgid "Organization with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
@@ -9564,11 +9575,6 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-msgid "Sorry, but you have insufficient rights to open this page."
-msgstr ""
-
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr ""
@@ -11059,6 +11065,10 @@ msgstr ""
 msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "Ticket with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
@@ -11819,6 +11829,10 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr ""
 
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+msgid "User with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr ""
@@ -12037,6 +12051,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support:"
+msgstr ""
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "We're sorry, but something went wrong."
+msgstr ""
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "We're sorry, but something went wrong. Received message: %s"
 msgstr ""
 
 #: app/frontend/apps/mobile/router/error.ts
@@ -12412,6 +12434,18 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue
 msgid "You have exceeded the character limit by %s"
+msgstr ""
+
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+msgid "You have insufficient rights to view this organization."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "You have insufficient rights to view this ticket."
+msgstr ""
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+msgid "You have insufficient rights to view this user."
 msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco

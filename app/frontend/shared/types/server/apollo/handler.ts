@@ -76,7 +76,7 @@ export interface BaseHandlerOptions {
   errorShowNotification: boolean
   errorNotificationMessage: string
   errorNotificationType: NotificationTypes
-  errorCallback?: (error: GraphQLHandlerError) => void
+  errorCallback?: (error: GraphQLHandlerError) => void | boolean
 }
 
 export type CommonHandlerOptions<TOptions> = BaseHandlerOptions & TOptions

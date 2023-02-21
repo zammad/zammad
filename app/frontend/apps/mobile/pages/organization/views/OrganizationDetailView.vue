@@ -1,15 +1,11 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable zammad/zammad-detect-translatable-string */
-import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import { redirectToError } from '@mobile/router/error'
-import { ErrorStatusCodes } from '@shared/types/error'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
 import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
@@ -25,7 +21,6 @@ const props = defineProps<Props>()
 
 const {
   organization,
-  organizationQuery,
   loading,
   objectAttributes,
   loadAllMembers,
@@ -33,16 +28,6 @@ const {
 } = useOrganizationDetail()
 
 loadOrganization(props.internalId)
-
-const router = useRouter()
-
-organizationQuery.onError(() => {
-  return redirectToError(router, {
-    statusCode: ErrorStatusCodes.Forbidden,
-    title: __('Forbidden'),
-    message: __('Sorry, but you have insufficient rights to open this page.'),
-  })
-})
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
 

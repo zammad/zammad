@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
+import { useErrorHandler } from '@shared/errors/useErrorHandler'
 import type {
   OrganizationUpdatesSubscriptionVariables,
   OrganizationUpdatesSubscription,
@@ -13,6 +14,7 @@ import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizati
 
 export const useOrganizationDetail = () => {
   const internalId = ref(0)
+  const { createQueryErrorHandler } = useErrorHandler()
 
   const organizationQuery = new QueryHandler(
     useOrganizationLazyQuery(
@@ -22,6 +24,16 @@ export const useOrganizationDetail = () => {
       }),
       () => ({ enabled: internalId.value > 0 }),
     ),
+    {
+      errorCallback: createQueryErrorHandler({
+        notFound: __(
+          'Organization with specified ID was not found. Try checking the URL for errors.',
+        ),
+        forbidden: __(
+          'You have insufficient rights to view this organization.',
+        ),
+      }),
+    },
   )
 
   const loadOrganization = (id: number) => {

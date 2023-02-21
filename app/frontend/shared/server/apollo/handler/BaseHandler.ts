@@ -82,13 +82,9 @@ export default abstract class BaseHandler<
         GraphQLErrorTypes.NetworkError
 
       errorHandler = {
-        type:
-          (extensions?.type as GraphQLErrorTypes) ||
-          GraphQLErrorTypes.NetworkError,
+        type,
         message,
       }
-
-      triggerNotification = type !== GraphQLErrorTypes.NotAuthorized
     } else if (networkError) {
       errorHandler = {
         type: GraphQLErrorTypes.NetworkError,
@@ -99,8 +95,16 @@ export default abstract class BaseHandler<
       }
     }
 
+    if (errorHandler.type === GraphQLErrorTypes.NotAuthorized) {
+      triggerNotification = false
+    }
+
     if (options.errorCallback) {
-      options.errorCallback(errorHandler)
+      const trigger = options.errorCallback(errorHandler)
+
+      if (typeof trigger === 'boolean') {
+        triggerNotification = trigger
+      }
     }
 
     if (triggerNotification) {

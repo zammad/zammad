@@ -11,7 +11,6 @@ import type {
 import { EnumFormUpdaterId } from '@shared/graphql/types'
 import UserError from '@shared/errors/UserError'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { ErrorStatusCodes } from '@shared/types/error'
 import Form from '@shared/components/Form/Form.vue'
 import { useForm, FormData } from '@shared/components/Form'
 import {
@@ -22,10 +21,10 @@ import { convertToGraphQLId } from '@shared/graphql/utils'
 import { useApplicationStore } from '@shared/stores/application'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import type { TicketInformation } from '@mobile/entities/ticket/types'
-import { redirectToError } from '@mobile/router/error'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { isDialogOpened } from '@shared/composables/useDialog'
+import { useErrorHandler } from '@shared/errors/useErrorHandler'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -43,12 +42,21 @@ const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
 const MENTIONS_LIMIT = 5
 
+const { createQueryErrorHandler } = useErrorHandler()
+
 const ticketQuery = new QueryHandler(
   useTicketQuery(() => ({
     ticketId: ticketId.value,
     mentionsCount: MENTIONS_LIMIT,
   })),
-  { errorShowNotification: false },
+  {
+    errorCallback: createQueryErrorHandler({
+      notFound: __(
+        'Ticket with specified ID was not found. Try checking the URL for errors.',
+      ),
+      forbidden: __('You have insufficient rights to view this ticket.'),
+    }),
+  },
 )
 
 const ticketResult = ticketQuery.result()
@@ -67,17 +75,6 @@ ticketQuery.subscribeToMore<
 
 const formLocation = ref('body')
 const formVisible = computed(() => formLocation.value !== 'body')
-
-const router = useRouter()
-const route = useRoute()
-
-ticketQuery.onError(() => {
-  return redirectToError(router, {
-    statusCode: ErrorStatusCodes.Forbidden,
-    title: __('Forbidden'),
-    message: __('Sorry, but you have insufficient rights to open this page.'),
-  })
-})
 
 const { form, canSubmit, isDirty } = useForm()
 
@@ -181,6 +178,9 @@ onBeforeRouteLeave(async () => {
 
   return confirmed
 })
+
+const router = useRouter()
+const route = useRoute()
 
 const openErrorsForm = () => {
   if (!isTicketFormGroupValid.value && route.name !== 'Edit') {

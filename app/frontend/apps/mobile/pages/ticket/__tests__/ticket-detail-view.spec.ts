@@ -141,12 +141,12 @@ test('can refresh data by pulling up', async () => {
 })
 
 test("redirects to error page, if can't find ticket", async () => {
-  const { calls } = mockGraphQLApi(TicketDocument).willFailWithError([
-    { message: 'The ticket 9866 could not be found', extensions: {} },
-  ])
-  mockGraphQLApi(TicketArticlesDocument).willFailWithError([
-    { message: 'The ticket 9866 could not be found', extensions: {} },
-  ])
+  const { calls } = mockGraphQLApi(TicketDocument).willFailWithNotFoundError(
+    'The ticket 9866 could not be found',
+  )
+  mockGraphQLApi(TicketArticlesDocument).willFailWithNotFoundError(
+    'The ticket 9866 could not be found',
+  )
   mockGraphQLSubscription(TicketUpdatesDocument).error(
     new ApolloError({ errorMessage: "Couldn't find Ticket with 'id'=9866" }),
   )

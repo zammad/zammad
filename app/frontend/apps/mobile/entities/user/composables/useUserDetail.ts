@@ -8,10 +8,12 @@ import type {
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useUserObjectAttributesStore } from '@shared/entities/user/stores/objectAttributes'
+import { useErrorHandler } from '@shared/errors/useErrorHandler'
 import { useUserLazyQuery } from '../graphql/queries/user.api'
 
 export const useUserDetail = () => {
   const internalId = ref(0)
+  const { createQueryErrorHandler } = useErrorHandler()
 
   const userQuery = new QueryHandler(
     useUserLazyQuery(
@@ -21,6 +23,14 @@ export const useUserDetail = () => {
       }),
       () => ({ enabled: internalId.value > 0 }),
     ),
+    {
+      errorCallback: createQueryErrorHandler({
+        notFound: __(
+          'User with specified ID was not found. Try checking the URL for errors.',
+        ),
+        forbidden: __('You have insufficient rights to view this user.'),
+      }),
+    },
   )
 
   const loadUser = (id: number) => {
@@ -69,6 +79,7 @@ export const useUserDetail = () => {
   return {
     loading,
     user,
+    userQuery,
     objectAttributes,
     loadAllSecondaryOrganizations,
     loadUser,
