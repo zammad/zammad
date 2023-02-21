@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import CommonBackButton from '../CommonBackButton/CommonBackButton.vue'
 
@@ -14,13 +15,20 @@ export interface Props {
   onAction?(): void
 }
 
+const headerElement = ref()
+
+defineExpose({
+  headerElement,
+})
+
 defineProps<Props>()
 </script>
 
 <template>
   <header
     v-if="title || backUrl || (onAction && actionTitle)"
-    class="grid h-[64px] grid-cols-3 border-b-[0.5px] border-white/10 px-4"
+    ref="headerElement"
+    class="grid h-[64px] grid-cols-3 border-b-[0.5px] border-white/10 bg-black px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">

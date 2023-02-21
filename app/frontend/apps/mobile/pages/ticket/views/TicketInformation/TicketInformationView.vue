@@ -8,6 +8,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { useSessionStore } from '@shared/stores/session'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useDialog } from '@shared/composables/useDialog'
+import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import { ticketInformationPlugins } from './plugins'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 import TicketDetailViewUpdateButton from '../../components/TicketDetailView/TicketDetailViewUpdateButton.vue'
@@ -68,11 +69,15 @@ const submitForm = () => {
     showArticleReplyDialog()
   }
 }
+
+const { stickyStyles, headerElement } = useStickyHeader()
 </script>
 
 <template>
   <header
-    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 px-4"
+    ref="headerElement"
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
+    :style="stickyStyles.header"
   >
     <CommonBackButton
       class="justify-self-start"
@@ -95,7 +100,7 @@ const submitForm = () => {
       </button>
     </div>
   </header>
-  <div class="flex p-4">
+  <div class="flex p-4" :style="stickyStyles.body">
     <h1
       class="flex flex-1 items-center break-words text-xl font-bold leading-7 line-clamp-3"
     >

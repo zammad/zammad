@@ -13,6 +13,7 @@ import { useSessionStore } from '@shared/stores/session'
 import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import { useRouteQuery } from '@vueuse/router'
 import { storeToRefs } from 'pinia'
+import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
@@ -144,11 +145,17 @@ const orderDirection = computed({
         : undefined
   },
 })
+
+const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
 </script>
 
 <template>
   <div>
-    <header class="border-b-[0.5px] border-white/10 px-4">
+    <header
+      ref="headerElement"
+      class="border-b-[0.5px] border-white/10 bg-black px-4"
+      :style="stickyStyles.header"
+    >
       <div class="grid h-16 grid-cols-3">
         <div
           class="flex cursor-pointer items-center justify-self-start text-base"
@@ -197,22 +204,29 @@ const orderDirection = computed({
         />
       </div>
     </header>
-    <CommonLoader
-      v-if="loadingOverviews || overviews.length"
-      :loading="loadingOverviews"
-    >
-      <TicketList
-        v-if="selectedOverview && orderBy && orderDirection"
-        :overview-id="selectedOverview.id"
-        :order-by="orderBy"
-        :order-direction="orderDirection"
-        :max-count="Number(application.config.ui_ticket_overview_ticket_limit)"
-        :hidden-columns="hiddenColumns"
-      />
-    </CommonLoader>
-    <div v-else class="flex items-center justify-center gap-2 p-4 text-center">
-      <CommonIcon class="text-red" name="mobile-close-small" />
-      {{ $t('Currently no overview is assigned to your roles.') }}
+    <div :style="stickyStyles.body">
+      <CommonLoader
+        v-if="loadingOverviews || overviews.length"
+        :loading="loadingOverviews"
+      >
+        <TicketList
+          v-if="selectedOverview && orderBy && orderDirection"
+          :overview-id="selectedOverview.id"
+          :order-by="orderBy"
+          :order-direction="orderDirection"
+          :max-count="
+            Number(application.config.ui_ticket_overview_ticket_limit)
+          "
+          :hidden-columns="hiddenColumns"
+        />
+      </CommonLoader>
+      <div
+        v-else
+        class="flex items-center justify-center gap-2 p-4 text-center"
+      >
+        <CommonIcon class="text-red" name="mobile-close-small" />
+        {{ $t('Currently no overview is assigned to your roles.') }}
+      </div>
     </div>
   </div>
 </template>

@@ -44,6 +44,7 @@ import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { useTicketSignature } from '@shared/composables/useTicketSignature'
 import { TicketFormData } from '@shared/entities/ticket/types'
 import { convertFilesToAttachmentInput } from '@shared/utils/files'
+import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api'
 
 const router = useRouter()
@@ -427,6 +428,8 @@ onBeforeRouteLeave(async () => {
 })
 
 const { signatureHandling } = useTicketSignature()
+
+const { stickyStyles, headerElement } = useStickyHeader()
 </script>
 
 <script lang="ts">
@@ -459,7 +462,11 @@ export default {
 </script>
 
 <template>
-  <header class="border-b-[0.5px] border-white/10 px-4">
+  <header
+    ref="headerElement"
+    :style="stickyStyles.header"
+    class="border-b-[0.5px] border-white/10 bg-black px-4"
+  >
     <div class="grid h-16 grid-cols-3">
       <div
         class="flex cursor-pointer items-center justify-self-start text-base"
@@ -483,7 +490,7 @@ export default {
       </div>
     </div>
   </header>
-  <div class="flex h-full flex-col px-4 pb-36">
+  <div :style="stickyStyles.body" class="flex h-full flex-col px-4 pb-36">
     <Form
       id="ticket-create"
       ref="form"

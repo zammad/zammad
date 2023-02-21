@@ -68,7 +68,7 @@ const isTabs = computed(() => props.as === 'tabs')
       :data-value="option.value"
       :class="{
         'bg-gray-600/50 text-white/30': option.disabled,
-        'bg-gray-200':
+        '!bg-gray-200':
           option.selected ||
           (option.value != null && modelValue === option.value),
         'flex-1 py-2': mode === 'full',

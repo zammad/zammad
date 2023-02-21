@@ -5,6 +5,11 @@ import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 
 import './commands'
 
+// @testing-library/cypress uses env to display errors
+globalThis.process.env = {
+  DEBUG_PRINT_LIMIT: 5000,
+}
+
 // eslint-disable-next-line no-underscore-dangle
 window.__ = (str) => str
 

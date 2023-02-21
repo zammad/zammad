@@ -41,7 +41,7 @@ describe('buttons group', () => {
     const button = view.getByRole('button', { name: 'button' })
 
     expect(button).toBeEnabled()
-    expect(button, 'selected button has a class').toHaveClass('bg-gray-200')
+    expect(button, 'selected button has a class').toHaveClass('!bg-gray-200')
 
     await view.events.click(button)
 

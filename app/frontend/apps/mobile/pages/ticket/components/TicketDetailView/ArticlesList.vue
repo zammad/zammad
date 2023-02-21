@@ -90,7 +90,6 @@ const filterAttachments = (article: TicketArticle) => {
   <CommonSectionPopup
     v-model:state="articleContextShown"
     :items="contextOptions"
-    :z-index="9"
   />
   <ArticlesPullDown
     ref="loaderElement"

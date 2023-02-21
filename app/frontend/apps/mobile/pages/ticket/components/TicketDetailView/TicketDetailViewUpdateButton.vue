@@ -9,7 +9,7 @@ const { canUpdateTicket, canSubmitForm, isFormValid } = useTicketInformation()
 <template>
   <button
     v-if="canUpdateTicket"
-    class="relative z-10 h-10 w-10 rounded-full bg-yellow p-1 text-black disabled:bg-yellow-inactive"
+    class="relative h-10 w-10 rounded-full bg-yellow p-1 text-black disabled:bg-yellow-inactive"
     form="form-ticket-edit"
     :disabled="!canSubmitForm"
     :aria-label="$t('Save ticket')"

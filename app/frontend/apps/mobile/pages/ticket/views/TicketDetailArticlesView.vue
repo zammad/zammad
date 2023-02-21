@@ -14,6 +14,7 @@ import type {
   TicketArticleUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
 import { noop } from 'lodash-es'
+import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
@@ -133,10 +134,20 @@ const loadPreviousArticles = async () => {
     },
   })
 }
+
+const { stickyStyles, headerElement } = useStickyHeader([
+  isLoadingTicket,
+  ticket,
+])
 </script>
 
 <template>
-  <div class="flex min-h-[calc(100vh_-_5rem)] flex-col pb-20">
+  <div
+    id="ticket-header"
+    ref="headerElement"
+    class="relative backdrop-blur-lg"
+    :style="stickyStyles.header"
+  >
     <TicketHeader
       :ticket="ticket"
       :live-user-list="liveUserList"
@@ -149,6 +160,16 @@ const loadPreviousArticles = async () => {
     >
       <TicketTitle v-if="ticket" :ticket="ticket" />
     </CommonLoader>
+  </div>
+  <div
+    class="flex flex-col pb-16"
+    :style="[
+      stickyStyles.body || {},
+      {
+        minHeight: `calc(100vh - ${stickyStyles.body?.marginTop || '0px'})`,
+      },
+    ]"
+  >
     <CommonLoader
       data-test-id="loader-list"
       :loading="isLoadingTicket"
@@ -163,5 +184,5 @@ const loadPreviousArticles = async () => {
       />
     </CommonLoader>
   </div>
-  <TicketReplyButton v-if="isTicketEditable" />
+  <TicketReplyButton v-if="isTicketEditable" class="z-10" />
 </template>

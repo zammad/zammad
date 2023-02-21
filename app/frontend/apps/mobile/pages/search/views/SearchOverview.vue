@@ -15,6 +15,7 @@ import { debounce } from 'lodash-es'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useSessionStore } from '@shared/stores/session'
+import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
 import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api'
@@ -169,6 +170,11 @@ const canShowLastSearches = computed(() => {
 
   return (props.type && !found[props.type]?.length) || !canSearch.value
 })
+
+const { headerElement, stickyStyles } = useStickyHeader([
+  loading,
+  () => !!props.type,
+])
 </script>
 
 <script lang="ts">
@@ -199,81 +205,86 @@ export default {
 
 <template>
   <div>
-    <div class="flex p-4">
-      <CommonInputSearch
-        ref="searchInput"
-        v-model="search"
-        wrapper-class="flex-1"
-        :aria-label="$t('Enter search and select a type to search for')"
-      />
-      <CommonLink
-        link="/"
-        class="flex items-center justify-center text-lg text-blue ltr:pl-3 rtl:pr-3"
-      >
-        {{ $t('Cancel') }}
-      </CommonLink>
-    </div>
-    <h1 class="sr-only">{{ $t('Search') }}</h1>
-    <CommonButtonGroup
-      v-if="type"
-      class="border-b border-white/10 px-4 pb-4"
-      as="tabs"
-      :options="searchPills"
-      :model-value="type"
-      @update:model-value="selectType($event as string)"
-    />
-    <div
-      v-else-if="canSearch"
-      class="mt-8 px-4"
-      data-test-id="selectTypesSection"
-    >
-      <CommonSectionMenu
-        :header-label="__('Search for…')"
-        :items="menuSearchTypes"
-      />
-    </div>
-    <div v-if="loading" class="flex h-14 w-full items-center justify-center">
-      <CommonIcon name="mobile-loading" animation="spin" />
-    </div>
-    <div
-      v-else-if="canSearch && type && found[type]?.length"
-      id="search-results"
-      aria-live="polite"
-      role="tabpanel"
-      :aria-busy="loading"
-    >
-      <SearchResults :data="found[type]" :type="type" />
-    </div>
-    <div v-else-if="canSearch && type" class="mt-4 px-4">
-      {{ $t('No entries') }}
-    </div>
-    <div
-      v-if="canShowLastSearches"
-      class="mt-8 px-4"
-      data-test-id="lastSearches"
-    >
-      <div class="text-white/50">{{ $t('Last searches') }}</div>
-      <ul class="pt-3">
-        <li
-          v-for="searchItem in [...lastSearches].reverse()"
-          :key="searchItem"
-          class="pb-4"
-          @click="selectLastSearch(searchItem)"
+    <header ref="headerElement" class="bg-black" :style="stickyStyles.header">
+      <div class="flex p-4">
+        <CommonInputSearch
+          ref="searchInput"
+          v-model="search"
+          wrapper-class="flex-1"
+          class="!h-10"
+          :aria-label="$t('Enter search and select a type to search for')"
+        />
+        <CommonLink
+          link="/"
+          class="flex items-center justify-center text-base text-blue ltr:pl-3 rtl:pr-3"
         >
-          <button class="flex items-center">
-            <div>
-              <CommonIcon
-                name="mobile-clock"
-                size="small"
-                class="mx-2 text-white/50"
-                decorative
-              />
-            </div>
-            <span class="text-left text-base">{{ searchItem }}</span>
-          </button>
-        </li>
-        <li v-if="!lastSearches.length">{{ $t('No previous searches') }}</li>
-      </ul>
+          {{ $t('Cancel') }}
+        </CommonLink>
+      </div>
+      <h1 class="sr-only">{{ $t('Search') }}</h1>
+      <CommonButtonGroup
+        v-if="type"
+        class="border-b border-white/10 px-4 pb-4"
+        as="tabs"
+        :options="searchPills"
+        :model-value="type"
+        @update:model-value="selectType($event as string)"
+      />
+      <div
+        v-else-if="canSearch"
+        class="mt-8 px-4"
+        data-test-id="selectTypesSection"
+      >
+        <CommonSectionMenu
+          :header-label="__('Search for…')"
+          :items="menuSearchTypes"
+        />
+      </div>
+    </header>
+    <div :style="stickyStyles.body">
+      <div v-if="loading" class="flex h-14 w-full items-center justify-center">
+        <CommonIcon name="mobile-loading" animation="spin" />
+      </div>
+      <div
+        v-else-if="canSearch && type && found[type]?.length"
+        id="search-results"
+        aria-live="polite"
+        role="tabpanel"
+        :aria-busy="loading"
+      >
+        <SearchResults :data="found[type]" :type="type" />
+      </div>
+      <div v-else-if="canSearch && type" class="px-4 pt-4">
+        {{ $t('No entries') }}
+      </div>
+      <div
+        v-if="canShowLastSearches"
+        class="px-4 pt-8"
+        data-test-id="lastSearches"
+      >
+        <div class="text-white/50">{{ $t('Last searches') }}</div>
+        <ul class="pt-3">
+          <li
+            v-for="searchItem in [...lastSearches].reverse()"
+            :key="searchItem"
+            class="pb-4"
+            @click="selectLastSearch(searchItem)"
+          >
+            <button class="flex items-center">
+              <div>
+                <CommonIcon
+                  name="mobile-clock"
+                  size="small"
+                  class="mx-2 text-white/50"
+                  decorative
+                />
+              </div>
+              <span class="text-left text-base">{{ searchItem }}</span>
+            </button>
+          </li>
+          <li v-if="!lastSearches.length">{{ $t('No previous searches') }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
