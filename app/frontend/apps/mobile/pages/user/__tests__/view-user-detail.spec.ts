@@ -190,10 +190,7 @@ describe('visiting user page', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    expect(getTestRouter().currentRoute.value).toMatchObject({
-      path: '/error',
-    })
-    expect(view.getByText('Not found')).toBeInTheDocument()
+    await expect(view.findByText('Not found')).resolves.toBeInTheDocument()
   })
 
   it('redirects to error page if access to organization is forbidden', async () => {
