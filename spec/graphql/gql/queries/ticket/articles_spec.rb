@@ -12,7 +12,6 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           $ticketId: ID
           $ticketInternalId: Int
           $ticketNumber: String
-          $isAgent: Boolean!
         ) {
           ticketArticles(
             ticket: {
@@ -82,10 +81,17 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 bodyWithUrls
                 internal
                 createdAt
-                createdBy @include(if: $isAgent) {
+                originBy {
+                  id
+                  fullname
+                  firstname
+                  lastname
+                }
+                createdBy {
                   id
                   firstname
                   lastname
+                  fullname
                 }
                 type {
                   name
@@ -104,7 +110,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         }
       QUERY
     end
-    let(:variables)            { { ticketId: gql.id(ticket), isAgent: true } }
+    let(:variables)            { { ticketId: gql.id(ticket) } }
     let(:customer)             { create(:customer) }
     let(:ticket)               { create(:ticket, customer: customer) }
     let(:cc)                   { 'Zammad CI <ci@zammad.org>' }
@@ -195,7 +201,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         end
 
         context 'with ticketInternalId' do
-          let(:variables) { { ticketInternalId: ticket.id, isAgent: true } }
+          let(:variables) { { ticketInternalId: ticket.id } }
 
           it 'finds articles' do
             expect(response_total_count).to eq(articles.count + 1)
@@ -203,7 +209,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         end
 
         context 'with ticketNumber' do
-          let(:variables) { { ticketNumber: ticket.number, isAgent: true } }
+          let(:variables) { { ticketNumber: ticket.number } }
 
           it 'finds articles' do
             expect(response_total_count).to eq(articles.count + 1)
@@ -233,6 +239,18 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
             expect(response_articles.first).to include({ 'securityState' => expected_security_state })
           end
         end
+
+        context 'when has originBy' do
+          let(:articles) { [create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: agent, created_by: create(:agent))] }
+
+          it 'loads originBy' do
+            expect(response_articles.first)
+              .to include(
+                'originBy'  => include('fullname' => agent.fullname),
+                'createdBy' => be_present
+              )
+          end
+        end
       end
 
       context 'without permission' do
@@ -242,7 +260,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       end
 
       context 'without ticket' do
-        let(:ticket)   { create(:ticket).tap(&:destroy) }
+        let(:ticket)           { create(:ticket).tap(&:destroy) }
         let(:articles)         { [] }
         let(:internal_article) { [] }
 
@@ -253,7 +271,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     end
 
     context 'with a customer', authenticated_as: :customer do
-      let(:variables) { { ticketId: gql.id(ticket), isAgent: false } }
+      let(:variables) { { ticketId: gql.id(ticket) } }
 
       it 'finds only public articles' do
         expect(response_total_count).to eq(articles.count)
@@ -261,6 +279,27 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
       it 'does not find internal articles' do
         expect(response_articles.pluck(:id)).to not_include(internal_article.id)
+      end
+
+      context 'when has originBy' do
+        let(:origin_by) { create(:agent) }
+
+        let(:articles) do
+          [
+            create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: origin_by, created_by: create(:agent))
+          ]
+        end
+
+        it 'loads originBy' do
+          expect(response_articles.first)
+            .to include(
+              'originBy'  => include(
+                'fullname'  => nil, # fullname is filtered out for customers
+                'firstname' => origin_by.firstname
+              ),
+              'createdBy' => be_present
+            )
+        end
       end
     end
 

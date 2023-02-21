@@ -58,6 +58,8 @@ export const TicketArticleAttributesFragmentDoc = gql`
   originBy {
     id
     fullname
+    firstname
+    lastname
   }
   createdBy {
     id

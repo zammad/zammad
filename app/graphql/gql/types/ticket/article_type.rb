@@ -24,7 +24,6 @@ module Gql::Types::Ticket
     field :body, String, null: false, description: 'Raw body as saved in the database.'
     field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
     field :internal, Boolean, null: false
-    field :origin_by, Gql::Types::UserType
 
     field :preferences, ::GraphQL::Types::JSON
     field :security_state, Gql::Types::Ticket::Article::SecurityStateType
@@ -33,6 +32,7 @@ module Gql::Types::Ticket
     field :attachments_without_inline, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'Attachments for display, with inline images filtered out.'
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
+    belongs_to :origin_by, Gql::Types::UserType
 
     def body_with_urls
       display_article['body']

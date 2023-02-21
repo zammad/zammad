@@ -54,6 +54,8 @@ fragment ticketArticleAttributes on TicketArticle {
   originBy {
     id
     fullname
+    firstname
+    lastname
   }
   createdBy {
     id
