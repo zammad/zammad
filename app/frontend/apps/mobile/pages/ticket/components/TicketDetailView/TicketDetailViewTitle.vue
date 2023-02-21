@@ -2,30 +2,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 import CommonTicketPriorityIndicator from '@shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '@shared/entities/ticket/types'
-import TicketDetailViewUpdateButton from './TicketDetailViewUpdateButton.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
-const {
-  ticket,
-  newTicketArticlePresent,
-  isTicketFormGroupValid,
-  isArticleFormGroupValid,
-  formSubmit,
-  showArticleReplyDialog,
-} = useTicketInformation()
+const { ticket } = useTicketInformation()
 
 interface Props {
   ticket: TicketById
 }
 
 const props = defineProps<Props>()
-
-const router = useRouter()
 
 const customer = computed(() => {
   const { customer } = props.ticket
@@ -34,16 +23,6 @@ const customer = computed(() => {
   if (fullname === '-') return ''
   return fullname
 })
-
-const submitForm = () => {
-  if (!isTicketFormGroupValid.value) {
-    router.push(`/tickets/${props.ticket.internalId}/information`)
-  } else if (newTicketArticlePresent.value && !isArticleFormGroupValid.value) {
-    showArticleReplyDialog()
-  }
-
-  formSubmit()
-}
 </script>
 
 <template>
@@ -95,9 +74,5 @@ const submitForm = () => {
         decorative
       />
     </CommonLink>
-    <TicketDetailViewUpdateButton
-      class="!absolute right-4 -bottom-5"
-      @click.prevent="submitForm"
-    />
   </div>
 </template>

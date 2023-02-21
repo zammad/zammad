@@ -8864,6 +8864,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
 msgstr ""
 
@@ -8879,10 +8880,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
-msgid "Save ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
@@ -11882,7 +11879,7 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Validation failed"
 msgstr ""
 
@@ -12435,6 +12432,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
+msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid "You have unsaved changes."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco

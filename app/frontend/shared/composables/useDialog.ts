@@ -35,6 +35,9 @@ const dialogsOptions = new Map<string, DialogOptions>()
 const dialogsOpened = ref(new Set<string>())
 const lastFocusedElements: Record<string, HTMLElement> = {}
 
+export const isDialogOpened = (name?: string) =>
+  name ? dialogsOpened.value.has(name) : dialogsOpened.value.size > 0
+
 export const getDialogMeta = () => {
   return {
     dialogsOptions,

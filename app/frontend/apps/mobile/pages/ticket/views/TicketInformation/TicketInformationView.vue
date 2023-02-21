@@ -11,20 +11,12 @@ import { useDialog } from '@shared/composables/useDialog'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import { ticketInformationPlugins } from './plugins'
 import { useTicketInformation } from '../../composable/useTicketInformation'
-import TicketDetailViewUpdateButton from '../../components/TicketDetailView/TicketDetailViewUpdateButton.vue'
 
 defineProps<{
   internalId: string
 }>()
 
-const {
-  ticket,
-  ticketQuery,
-  newTicketArticlePresent,
-  isTicketFormGroupValid,
-  isArticleFormGroupValid,
-  showArticleReplyDialog,
-} = useTicketInformation()
+const { ticket, ticketQuery } = useTicketInformation()
 
 const loadingTicket = ticketQuery.loading()
 
@@ -59,16 +51,6 @@ const types = computed<CommonButtonOption[]>(() => {
       }
     })
 })
-
-const submitForm = () => {
-  if (
-    isTicketFormGroupValid.value &&
-    newTicketArticlePresent.value &&
-    !isArticleFormGroupValid.value
-  ) {
-    showArticleReplyDialog()
-  }
-}
 
 const { stickyStyles, headerElement } = useStickyHeader()
 </script>
@@ -108,10 +90,6 @@ const { stickyStyles, headerElement } = useStickyHeader()
         {{ ticket?.title }}
       </CommonLoader>
     </h1>
-    <TicketDetailViewUpdateButton
-      class="rtl-mr-3 ltr:ml-3"
-      @click="submitForm"
-    />
   </div>
   <CommonButtonGroup
     v-if="types.length > 1"

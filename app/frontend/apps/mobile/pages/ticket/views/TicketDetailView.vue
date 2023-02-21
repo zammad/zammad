@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed, provide, ref, reactive } from 'vue'
-import { onBeforeRouteLeave, RouterView, useRouter } from 'vue-router'
+import { onBeforeRouteLeave, RouterView, useRoute, useRouter } from 'vue-router'
 import { noop } from 'lodash-es'
 import type {
   TicketUpdatesSubscription,
@@ -25,6 +25,7 @@ import type { TicketInformation } from '@mobile/entities/ticket/types'
 import { redirectToError } from '@mobile/router/error'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import { isDialogOpened } from '@shared/composables/useDialog'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -68,6 +69,7 @@ const formLocation = ref('body')
 const formVisible = computed(() => formLocation.value !== 'body')
 
 const router = useRouter()
+const route = useRoute()
 
 ticketQuery.onError(() => {
   return redirectToError(router, {
@@ -77,17 +79,25 @@ ticketQuery.onError(() => {
   })
 })
 
-const { form, canSubmit, isDirty, formSubmit } = useForm()
+const { form, canSubmit, isDirty } = useForm()
 
 const { initialTicketValue, isTicketFormGroupValid, editTicket } =
   useTicketEdit(ticket, form)
 
+const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
+
+const needSpaceForSaveBanner = computed(() => {
+  return canUpdateTicket.value && isDirty.value
+})
+
 const {
+  articleReplyDialog,
   newTicketArticleRequested,
   newTicketArticlePresent,
   isArticleFormGroupValid,
   openArticleReplyDialog,
-} = useTicketArticleReply(ticket, form)
+  closeArticleReplyDialog,
+} = useTicketArticleReply(ticket, form, needSpaceForSaveBanner)
 
 const {
   currentArticleType,
@@ -119,6 +129,7 @@ const submitForm = async (formData: FormData) => {
       // Reset article form after ticket update and reseted form.
       return () => {
         newTicketArticlePresent.value = false
+        closeArticleReplyDialog()
       }
     }
   } catch (errors) {
@@ -130,8 +141,6 @@ const submitForm = async (formData: FormData) => {
     }
   }
 }
-
-const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
 
 const updateFormLocation = (newLocation: string) => {
   formLocation.value = newLocation
@@ -156,12 +165,7 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   newTicketArticleRequested,
   newTicketArticlePresent,
   updateFormLocation,
-  canSubmitForm: canSubmit,
   canUpdateTicket,
-  isFormValid,
-  isTicketFormGroupValid,
-  isArticleFormGroupValid,
-  formSubmit,
   showArticleReplyDialog,
   liveUserList,
 })
@@ -178,6 +182,19 @@ onBeforeRouteLeave(async () => {
   return confirmed
 })
 
+const openErrorsForm = () => {
+  if (!isTicketFormGroupValid.value && route.name !== 'Edit') {
+    return router.push(`/tickets/${ticket.value?.internalId}/information`)
+  }
+  if (
+    newTicketArticlePresent.value &&
+    !isArticleFormGroupValid.value &&
+    !articleReplyDialog.isOpened.value
+  ) {
+    return showArticleReplyDialog()
+  }
+}
+
 const application = useApplicationStore()
 
 const smimeIntegration = computed(
@@ -191,10 +208,22 @@ const ticketEditSchemaData = reactive({
   newTicketArticlePresent,
   currentArticleType,
 })
+
+const bannerClasses = computed(() => {
+  if (isDialogOpened() && !articleReplyDialog.isOpened.value) return 'hidden'
+
+  if (route.name !== 'TicketDetailArticlesView') return null
+
+  return articleReplyDialog.isOpened.value ? null : '-translate-y-12'
+})
 </script>
 
 <template>
   <RouterView />
+  <div
+    class="transition-all"
+    :class="{ 'pb-12': needSpaceForSaveBanner }"
+  ></div>
   <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
   <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
   <Teleport v-if="canUpdateTicket" :to="formLocation">
@@ -221,5 +250,50 @@ const ticketEditSchemaData = reactive({
         @submit="submitForm($event as FormData)"
       />
     </CommonLoader>
+  </Teleport>
+  <Teleport to="body">
+    <Transition
+      enter-from-class="translate-y-full"
+      enter-active-class="translate-y-0"
+      enter-to-class="-translate-y-1/3"
+      leave-from-class="-translate-y-1/3"
+      leave-active-class="translate-y-full"
+      leave-to-class="translate-y-full"
+    >
+      <div
+        v-if="canUpdateTicket && isDirty"
+        class="fixed bottom-2 left-2 right-2 z-10 flex rounded-lg bg-gray-300 text-white transition"
+        :class="bannerClasses"
+      >
+        <div class="relative flex flex-1 items-center gap-2 p-1.5">
+          <div class="flex-1 text-sm ltr:pl-1 rtl:pr-1">
+            {{ $t('You have unsaved changes.') }}
+          </div>
+          <FormKit
+            input-class="font-semibold text-base px-4 py-1 !text-black formkit-variant-primary:bg-yellow rounded select-none"
+            wrapper-class="flex justify-center items-center"
+            type="submit"
+            form="form-ticket-edit"
+            :disabled="!isFormValid"
+          >
+            {{ $t('Save') }}
+          </FormKit>
+          <div
+            v-if="canSubmit && !isFormValid"
+            role="status"
+            :aria-label="$t('Validation failed')"
+            class="absolute bottom-7 h-5 w-5 cursor-pointer rounded-full bg-red text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
+            @click="openErrorsForm"
+          >
+            <CommonIcon
+              class="mx-auto h-5"
+              name="mobile-close"
+              size="tiny"
+              decorative
+            />
+          </div>
+        </div>
+      </div>
+    </Transition>
   </Teleport>
 </template>

@@ -14,6 +14,7 @@ interface ReplyDialogOptions {
 export const useTicketArticleReply = (
   ticket: Ref<TicketById | undefined>,
   form: ShallowRef<FormRef | undefined>,
+  needSpaceForSaveBanner: Ref<boolean>,
 ) => {
   const newTicketArticleRequested = ref(false)
   const newTicketArticlePresent = ref(false)
@@ -54,6 +55,7 @@ export const useTicketArticleReply = (
       name: articleReplyDialog.name,
       ticket,
       form,
+      needSpaceForSaveBanner,
       newTicketArticlePresent,
       articleFormGroupNode,
       updateFormLocation,
@@ -77,6 +79,10 @@ export const useTicketArticleReply = (
     })
   }
 
+  const closeArticleReplyDialog = () => {
+    return articleReplyDialog.close()
+  }
+
   return {
     articleReplyDialog,
     newTicketArticleRequested,
@@ -84,5 +90,6 @@ export const useTicketArticleReply = (
     articleFormGroupNode,
     isArticleFormGroupValid,
     openArticleReplyDialog,
+    closeArticleReplyDialog,
   }
 }

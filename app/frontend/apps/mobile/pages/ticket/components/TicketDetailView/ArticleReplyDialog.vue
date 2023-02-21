@@ -16,6 +16,7 @@ interface Props {
   ticket: TicketById
   articleFormGroupNode?: FormKitNode
   newTicketArticlePresent: boolean
+  needSpaceForSaveBanner: boolean
   form: ShallowRef<FormRef | undefined>
 }
 
@@ -100,7 +101,7 @@ const close = () => {
 </script>
 
 <template>
-  <CommonDialog class="w-full" no-autofocus :name="name" :label="label">
+  <CommonDialog class="w-full" :name="name" :label="label">
     <template #before-label>
       <button class="text-white" @click="cancelDialog">
         {{ $t('Cancel') }}
@@ -131,6 +132,10 @@ const close = () => {
       >
         {{ $t('Discard your unsaved changes') }}
       </FormKit>
+      <div
+        class="transition-all"
+        :class="{ 'pb-12': needSpaceForSaveBanner }"
+      ></div>
     </div>
   </CommonDialog>
 </template>

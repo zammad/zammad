@@ -9,7 +9,7 @@ const { newTicketArticlePresent, showArticleReplyDialog } =
 
 <template>
   <button
-    class="fixed bottom-0 flex h-12 w-screen items-center justify-center rounded-t-lg bg-gray-600 pb-1"
+    class="fixed bottom-0 flex h-12 w-screen items-center justify-center bg-gray-600 pb-1"
     @click="showArticleReplyDialog"
   >
     <template v-if="newTicketArticlePresent">

@@ -25,7 +25,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
   end
 
   def submit_form
-    find_button('Save ticket').click
+    find_button('Save').click
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end
 
@@ -58,7 +58,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
     it 'does not show "save" button, but shows form as menu with sections' do
       visit "/tickets/#{ticket.id}/information"
 
-      expect(page).to have_no_button('Save ticket')
+      expect(page).to have_no_button('Save')
       expect(page).to have_no_css('output', text: 'Tags')
       expect(find('section', text: %r{Tags})).to have_text('foo, bar')
       expect(find('section', text: %r{Group})).to have_text(ticket.group.name)
@@ -73,7 +73,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         wait_for_form_to_settle('form-ticket-edit')
 
-        expect(page.find_button('Save ticket', disabled: true).disabled?).to be(true)
+        expect(page).to have_no_selector(:button, 'Save')
 
         within_form(form_updater_gql_number: 1) do
           title = find_input('Ticket title')
@@ -141,7 +141,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
           date_input = find_datepicker('Pending till')
           expect(date_input.input_element.value).to eq('')
 
-          expect(find_button('Save ticket')).to have_css('[role="status"][aria-label="Validation failed"]')
+          expect(page).to have_css('[role="status"][aria-label="Validation failed"]')
 
           date_input.type_datetime(date)
         end
@@ -224,11 +224,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
           attribute_field.clear
 
-          expect(find_button('Save ticket')).to have_css('[role="status"][aria-label="Validation failed"]')
+          expect(page).to have_css('[role="status"][aria-label="Validation failed"]')
 
           attribute_field.type('New Text')
 
-          expect(find_button('Save ticket')).to have_no_css('[role="status"][aria-label="Validation failed"]')
+          expect(page).to have_no_css('[role="status"][aria-label="Validation failed"]')
           expect(ticket[attribute.name]).to eq('Attribute Text')
         end
 

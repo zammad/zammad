@@ -20,7 +20,7 @@ RSpec.shared_examples 'create article' do |type_label, internal: false, attachme
 
   def save_article
     find_button('Done').click
-    find_button('Save ticket').click
+    find_button('Save').click
 
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end

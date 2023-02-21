@@ -17,12 +17,7 @@ export interface TicketInformation {
   newTicketArticlePresent: Ref<boolean>
   form: ShallowRef<FormRef | undefined>
   updateFormLocation: (newLocation: string) => void
-  canSubmitForm: ComputedRef<boolean>
   canUpdateTicket: ComputedRef<boolean>
-  isFormValid: ComputedRef<boolean>
-  isTicketFormGroupValid: ComputedRef<boolean>
-  isArticleFormGroupValid: ComputedRef<boolean>
-  formSubmit: () => void
   showArticleReplyDialog: () => void
   liveUserList?: Ref<TicketLiveAppUser[]>
 }

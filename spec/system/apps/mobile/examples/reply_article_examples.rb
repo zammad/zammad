@@ -66,7 +66,7 @@ RSpec.shared_examples 'reply article' do |type_label, note, internal: false, att
     end
 
     find_button('Done').click
-    find_button('Save ticket').click
+    find_button('Save').click
 
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
 

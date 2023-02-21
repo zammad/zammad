@@ -37,7 +37,7 @@ RSpec.describe 'Mobile > Ticket > Email reply with security options', app: :mobi
 
   def save_ticket
     find_button('Done').click
-    find_button('Save ticket').click
+    find_button('Save').click
 
     wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
   end

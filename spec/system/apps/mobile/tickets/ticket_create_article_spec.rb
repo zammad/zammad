@@ -15,7 +15,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
   def save_article
     find_button('Done').click
-    find_button('Save ticket').click
+    find_button('Save').click
 
     wait_for_ticket_edit
   end
@@ -99,8 +99,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
         find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
         find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
 
-        find_button('Done').click
-        find_button('Save ticket').click
+        find_button('Save').click
 
         wait_for_ticket_edit
 
@@ -129,8 +128,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
         visibility.select_option('Internal')
 
-        find_button('Done').click
-        find_button('Save ticket').click
+        find_button('Save').click
 
         wait_for_ticket_edit
 
@@ -155,7 +153,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       find_link(ticket.title).click
 
       find_input('Ticket title').type('New title')
-      find_button('Save ticket').click
+      find_button('Save').click
 
       wait_for_ticket_edit
 
