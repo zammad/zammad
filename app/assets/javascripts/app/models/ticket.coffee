@@ -389,4 +389,4 @@ class App.Ticket extends App.Model
     attrs
 
   displayName: ->
-    return @title || '???'
+    return @title || '-'

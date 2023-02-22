@@ -8,6 +8,6 @@ export const userDisplayName = (user: Partial<User>): string => {
 
   return (
     [fullname, email, phone, login].find((elem) => elem && !isEmpty(elem)) ||
-    '???'
+    '-'
   )
 }

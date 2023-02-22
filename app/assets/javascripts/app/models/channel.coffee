@@ -17,5 +17,5 @@ class App.Channel extends App.Model
           else
             name += " (#{@options.outbound.adapter})"
     if name == ''
-      name = '???'
+      name = '-'
     name

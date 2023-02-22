@@ -14,7 +14,7 @@ class App.Model extends Spine.Model
     @constructor.className
 
   displayName: ->
-    return @name || '???'
+    return @name || '-'
 
   # shows the icon representing the object itself (e. g. the organization icon in organization profile or ticket sidebar)
   icon: (user) ->

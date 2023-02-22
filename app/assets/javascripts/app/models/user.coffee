@@ -416,10 +416,6 @@ class App.User extends App.Model
   @current: App.Session.get
 
   displayName: ->
-    if @realname
-      # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
-      #   quoting would confuse sorting in the GUI.
-      return "#{@realname} <#{@email}>"
     if !_.isEmpty(@firstname)
       name = @firstname
     if !_.isEmpty(@lastname)
@@ -435,7 +431,7 @@ class App.User extends App.Model
       return @phone
     if @login
       return @login
-    return '???'
+    return '-'
 
   displayNameLong: ->
     if !_.isEmpty(@firstname)
@@ -461,4 +457,4 @@ class App.User extends App.Model
       return @phone
     if @login
       return @login
-    return '???'
+    return '-'

@@ -83,7 +83,7 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     return user.phone if user.phone.present?
     return user.login if user.login.present?
 
-    '???'
+    '-'
   end
 
   def attachments(article, attachments_raw)

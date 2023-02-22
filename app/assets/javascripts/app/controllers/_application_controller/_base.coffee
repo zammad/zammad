@@ -345,7 +345,7 @@ class App.Controller extends Spine.Controller
 
   prepareForObjectListItem: (item) ->
     item.link  = ''
-    item.title = '???'
+    item.title = '-'
 
     # convert backend name space to local name space
     item.object = item.object.replace('::', '')
