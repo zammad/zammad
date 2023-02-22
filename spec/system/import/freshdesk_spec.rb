@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Import Freshdesk', authenticated_as: false, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY], set_up: false, type: :system do
+RSpec.describe 'Import from Freshdesk', authenticated_as: false, required_envs: %w[IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN IMPORT_FRESHDESK_ENDPOINT_KEY], set_up: false, type: :system do
   describe 'fields validation', :use_vcr do
     before do
       visit '#import'
