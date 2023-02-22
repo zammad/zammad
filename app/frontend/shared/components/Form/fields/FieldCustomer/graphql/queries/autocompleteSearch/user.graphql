@@ -9,6 +9,9 @@ query autocompleteSearchUser($input: AutocompleteSearchInput!) {
     icon
     user {
       ...userAttributes
+      vip
+      outOfOffice
+      active
     }
   }
 }

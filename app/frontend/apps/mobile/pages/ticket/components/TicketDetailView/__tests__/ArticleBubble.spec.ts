@@ -22,6 +22,8 @@ const renderArticleBubble = (props = {}) => {
         firstname: 'Max',
         lastname: 'Mustermann',
         fullname: 'Max Mustermann',
+        active: true,
+        image: null,
       },
       attachments: [],
       ...props,
@@ -52,13 +54,15 @@ describe('component for displaying text article', () => {
   it('renders basic stuff', async () => {
     const view = renderArticleBubble()
 
+    const avatar = view.getByRole('img', { name: 'Avatar (Max Mustermann)' })
+    expect(avatar).toBeAvatarElement({
+      active: true,
+      type: 'user',
+    })
+
     expect(view.getByRole('comment'), 'has content reversed').toHaveClass(
       'flex-row-reverse',
     )
-    expect(
-      view.getByRole('img', { name: 'Avatar (Max Mustermann)' }),
-      'shows avatar',
-    ).toBeInTheDocument()
     expect(
       view.queryByIconName('mobile-lock'),
       'doesnt have a lock icon',

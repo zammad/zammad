@@ -5,7 +5,6 @@ import {
   defaultUser,
   mockUserDetailsApis,
 } from '@mobile/entities/user/__tests__/mocks/user-mocks'
-import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { setupView } from '@tests/support/mock-user'
@@ -225,9 +224,6 @@ describe('visiting user page', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    expect(getTestRouter().currentRoute.value).toMatchObject({
-      path: '/error',
-    })
-    expect(view.getByText('Forbidden')).toBeInTheDocument()
+    await expect(view.findByText('Forbidden')).resolves.toBeInTheDocument()
   })
 })

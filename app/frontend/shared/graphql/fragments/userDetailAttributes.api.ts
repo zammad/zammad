@@ -14,6 +14,7 @@ export const UserDetailAttributesFragmentDoc = gql`
   web
   vip
   phone
+  outOfOffice
   mobile
   fax
   note

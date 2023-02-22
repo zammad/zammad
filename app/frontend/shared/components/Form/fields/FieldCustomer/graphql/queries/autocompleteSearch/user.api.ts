@@ -18,6 +18,9 @@ export const AutocompleteSearchUserDocument = gql`
     icon
     user {
       ...userAttributes
+      vip
+      outOfOffice
+      active
     }
   }
 }

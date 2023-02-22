@@ -1,10 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { waitUntil } from '@tests/support/utils'
+import { setupView } from '@tests/support/mock-user'
+import {
+  nullableMock,
+  waitUntil,
+  waitUntilApisResolved,
+} from '@tests/support/utils'
 import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview'
 
 describe('visiting search page', () => {
@@ -12,7 +17,7 @@ describe('visiting search page', () => {
 
   beforeEach(() => {
     mockSearchApi = mockSearchOverview([])
-    mockPermissions(['ticket.agent'])
+    setupView('agent')
   })
 
   it('doesnt search if no type is selected', async () => {
@@ -73,8 +78,57 @@ describe('visiting search page', () => {
 
   it('opens with type, if there is only single type', async () => {
     // customer can only search for tickets
-    mockPermissions(['ticket.customer'])
+    setupView('customer')
     await visitView('/search')
     expect(getTestRouter().currentRoute.value.fullPath).toBe('/search/ticket')
+  })
+})
+
+describe('avatars', () => {
+  it('renders user as inactive', async () => {
+    setupView('agent')
+    const mockSearch = mockSearchOverview([
+      nullableMock({
+        __typename: 'User',
+        id: convertToGraphQLId('User', 100),
+        internalId: 100,
+        updatedAt: new Date().toISOString(),
+        active: false,
+        vip: true,
+        firstname: 'Max',
+        lastname: 'Mustermann',
+      }),
+      nullableMock({
+        __typename: 'User',
+        id: convertToGraphQLId('User', 200),
+        internalId: 200,
+        updatedAt: new Date().toISOString(),
+        outOfOffice: true,
+        active: true,
+        image: 'jon.png',
+        firstname: 'Jon',
+        lastname: 'Doe',
+      }),
+    ])
+
+    const view = await visitView('/search/user?search=max')
+
+    await waitUntilApisResolved(mockSearch)
+
+    expect(
+      view.getByLabelText('Avatar (Max Mustermann) (VIP)'),
+    ).toBeAvatarElement({
+      active: false,
+      vip: true,
+      type: 'user',
+    })
+
+    expect(view.getByLabelText('Avatar (Jon Doe)')).toBeAvatarElement({
+      active: true,
+      vip: false,
+      outOfOffice: true,
+      image: 'jon.png',
+      type: 'user',
+    })
   })
 })

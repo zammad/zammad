@@ -6,6 +6,7 @@ import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '@shared/utils/testSw'
+import * as assertions from './support/assertions/index'
 
 global.__ = (source) => {
   return source
@@ -150,6 +151,7 @@ afterEach((context) => {
 
 // Import the matchers for accessibility testing with aXe.
 expect.extend(matchers)
+expect.extend(assertions)
 
 declare module 'vitest' {
   interface TestContext {

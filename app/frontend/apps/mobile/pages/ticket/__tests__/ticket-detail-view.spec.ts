@@ -7,7 +7,7 @@ import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
-import { getAllByTestId, getByLabelText } from '@testing-library/vue'
+import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
 import { getByIconName } from '@tests/support/components/iconQueries'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
@@ -91,6 +91,85 @@ test('statics inside ticket zoom view', async () => {
     view.queryByText('not-visible-attachment.png'),
     'filters original-format attachments',
   ).not.toBeInTheDocument()
+})
+
+describe('user avatars', () => {
+  it('renders customer avatar, when user is inactive', async () => {
+    const ticket = defaultTicket()
+    const image = Buffer.from('max.png').toString('base64')
+    const { customer } = ticket.ticket
+    customer.active = false
+    customer.image = image
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      ticket,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    const titleBlock = view.getByTestId('ticket-title')
+    const avatar = getByRole(titleBlock, 'img', {
+      name: `Avatar (${customer.fullname})`,
+    })
+
+    expect(avatar).toBeAvatarElement({
+      active: false,
+      image,
+      type: 'user',
+    })
+  })
+
+  it('renders article user image when he is inactive', async () => {
+    const articles = defaultArticles()
+    const { createdBy } = articles.description.edges[0].node
+    createdBy.active = false
+    createdBy.image = 'avatar.png'
+    createdBy.firstname = 'Max'
+    createdBy.lastname = 'Mustermann'
+    createdBy.fullname = 'Max Mustermann'
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      articles,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    expect(
+      view.getByRole('img', { name: `Avatar (${createdBy.fullname})` }),
+    ).toBeAvatarElement({
+      type: 'user',
+      image: 'avatar.png',
+      outOfOffice: false,
+      vip: false,
+      active: false,
+    })
+  })
+
+  it('renders article user when he is out of office', async () => {
+    const articles = defaultArticles()
+    const { createdBy } = articles.description.edges[0].node
+    createdBy.outOfOffice = true
+    createdBy.active = true
+    createdBy.vip = true
+    createdBy.firstname = 'Max'
+    createdBy.lastname = 'Mustermann'
+    createdBy.fullname = 'Max Mustermann'
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      articles,
+    })
+
+    const view = await visitView('/tickets/1')
+    await waitUntilTicketLoaded()
+
+    expect(
+      view.getByRole('img', { name: `Avatar (${createdBy.fullname}) (VIP)` }),
+    ).toBeAvatarElement({
+      type: 'user',
+      outOfOffice: true,
+      vip: true,
+      active: true,
+    })
+  })
 })
 
 test('can refresh data by pulling up', async () => {

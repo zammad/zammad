@@ -18,6 +18,8 @@ query organization(
           firstname
           lastname
           fullname
+          outOfOffice
+          active
           vip
         }
       }

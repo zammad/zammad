@@ -19,6 +19,9 @@ fragment ticketAttributes on Ticket {
     lastname
     fullname
     image
+    vip
+    active
+    outOfOffice
     email
     organization {
       id

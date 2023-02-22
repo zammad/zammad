@@ -26,7 +26,10 @@ const customer = computed(() => {
 </script>
 
 <template>
-  <div class="relative border-b-[0.5px] border-white/10 bg-gray-600/90">
+  <div
+    data-test-id="ticket-title"
+    class="relative border-b-[0.5px] border-white/10 bg-gray-600/90"
+  >
     <CommonLink
       class="flex py-5 px-4"
       data-test-id="title-content"

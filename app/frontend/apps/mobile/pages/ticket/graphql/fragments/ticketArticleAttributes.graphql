@@ -63,6 +63,10 @@ fragment ticketArticleAttributes on TicketArticle {
     firstname
     lastname
     email
+    active
+    image
+    vip
+    outOfOffice
     authorizations {
       provider
       uid

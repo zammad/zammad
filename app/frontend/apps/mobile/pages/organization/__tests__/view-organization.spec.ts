@@ -6,14 +6,14 @@ import {
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { waitUntil } from '@tests/support/utils'
+import { nullableMock, waitUntil } from '@tests/support/utils'
 import { OrganizationDocument } from '@mobile/entities/organization/graphql/queries/organization.api'
 import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { getTestRouter } from '@tests/support/components/renderComponent'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 
 describe('static organization', () => {
   it('shows organization', async () => {
@@ -97,28 +97,46 @@ describe('static organization', () => {
     expect(members).toHaveLength(1)
     expect(view.container).toHaveTextContent(members[0].node.fullname!)
 
+    const image = Buffer.from('jane.png').toString('base64')
     mockApi.spies.resolve.mockResolvedValue({
       data: {
         organization: {
           ...organization,
           members: {
             ...organization.members,
-            edges: [
+            edges: nullableMock([
               ...members,
               {
                 __typename: 'UserEdge',
                 node: {
                   __typename: 'User',
-                  id: 'dsa214dascxasdw',
-                  internalId: 2,
-                  vip: false,
+                  id: convertToGraphQLId('User', 300),
+                  internalId: 300,
+                  vip: true,
+                  outOfOffice: false,
                   firstname: 'Jane',
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
+                  image,
+                  active: false,
+                },
+              },
+              {
+                __typename: 'UserEdge',
+                node: {
+                  __typename: 'User',
+                  id: convertToGraphQLId('User', 400),
+                  internalId: 400,
+                  vip: true,
+                  outOfOffice: true,
+                  firstname: 'Max',
+                  lastname: 'Mustermann',
+                  fullname: 'Max Mustermann',
+                  active: true,
                   image: null,
                 },
               },
-            ],
+            ]),
           },
         },
       },
@@ -127,6 +145,27 @@ describe('static organization', () => {
     await view.events.click(view.getByRole('button', { name: 'Show 1 more' }))
     await waitUntil(() => mockApi.calls.resolve > 1)
 
+    const [, JD, JH, MM] = view.getAllByTestId('common-avatar')
+
+    expect(JD).toBeAvatarElement({
+      active: true,
+      type: 'user',
+    })
+
+    expect(JH).toBeAvatarElement({
+      active: false,
+      image,
+      vip: true,
+      type: 'user',
+    })
+
+    expect(MM).toBeAvatarElement({
+      vip: true,
+      outOfOffice: true,
+      type: 'user',
+    })
+
+    expect(view.container).toHaveTextContent(members[0].node.fullname!)
     expect(view.container).toHaveTextContent('Jane Hunter')
   })
 
@@ -173,10 +212,7 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    expect(getTestRouter().currentRoute.value).toMatchObject({
-      path: '/error',
-    })
-    expect(view.getByText('Not found')).toBeInTheDocument()
+    await expect(view.findByText('Not found')).resolves.toBeInTheDocument()
   })
 
   it('redirects to error page if access to organization is forbidden', async () => {
@@ -190,9 +226,6 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    expect(getTestRouter().currentRoute.value).toMatchObject({
-      path: '/error',
-    })
-    expect(view.getByText('Forbidden')).toBeInTheDocument()
+    await expect(view.findByText('Forbidden')).resolves.toBeInTheDocument()
   })
 })

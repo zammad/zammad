@@ -127,6 +127,8 @@ describe('static organization', () => {
                   vip: false,
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
+                  outOfOffice: false,
+                  active: true,
                   image: null,
                 },
               },

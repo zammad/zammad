@@ -38,6 +38,9 @@ export const SearchDocument = gql`
       firstname
       lastname
       image
+      active
+      outOfOffice
+      vip
       organization {
         id
         internalId

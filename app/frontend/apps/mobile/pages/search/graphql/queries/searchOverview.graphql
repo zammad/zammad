@@ -34,6 +34,9 @@ query search(
       firstname
       lastname
       image
+      active
+      outOfOffice
+      vip
       organization {
         id
         internalId

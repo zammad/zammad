@@ -20,6 +20,8 @@ export const OrganizationDocument = gql`
           firstname
           lastname
           fullname
+          outOfOffice
+          active
           vip
         }
       }

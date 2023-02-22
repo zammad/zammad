@@ -21,14 +21,15 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
 
   const user = nullableMock<ConfidentTake<UserQuery, 'user'>>({
     __typename: 'User',
-    id: convertToGraphQLId('User', 1),
-    internalId: 1,
+    id: convertToGraphQLId('User', 100),
+    internalId: 100,
     firstname: 'John',
     lastname: 'Doe',
     fullname: 'John Doe',
     active: true,
     vip: false,
     image: null,
+    outOfOffice: false,
     ticketsCount: {
       open: 4,
       closed: 2,

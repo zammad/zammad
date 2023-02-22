@@ -9,7 +9,7 @@ import { createMockClient } from 'mock-apollo-client'
 import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
 import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
-import { waitForNextTick } from '@tests/support/utils'
+import { nullableMock, waitForNextTick } from '@tests/support/utils'
 import type { ObjectLike } from '@shared/types/utils'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
 import type { SelectValue } from '../../FieldSelect'
@@ -19,28 +19,28 @@ const testOptions = [
     value: 0,
     label: 'Item A',
     heading: 'autocomplete sample 1',
-    user: {
+    user: nullableMock({
       id: 1,
       fullname: 'sample 1',
-    },
+    }),
   },
   {
     value: 1,
     label: 'Item B',
     heading: 'autocomplete sample 2',
-    user: {
+    user: nullableMock({
       id: 2,
       fullname: 'sample 2',
-    },
+    }),
   },
   {
     value: 2,
     label: 'Ítem C',
     heading: 'autocomplete sample 3',
-    user: {
+    user: nullableMock({
       id: 3,
       fullname: 'sample 3',
-    },
+    }),
   },
 ]
 
