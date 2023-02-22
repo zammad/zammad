@@ -11,7 +11,7 @@ export interface Props {
   backTitle?: string
   backUrl?: RouteLocationRaw
   actionTitle?: string
-  actionDisabled?: boolean
+  actionHidden?: boolean
   onAction?(): void
 }
 
@@ -44,9 +44,8 @@ defineProps<Props>()
     </h1>
     <div class="flex cursor-pointer items-center justify-self-end text-base">
       <button
-        v-if="onAction && actionTitle"
-        :class="actionDisabled ? 'text-blue/50' : 'text-blue'"
-        :disabled="actionDisabled"
+        v-if="onAction && actionTitle && !actionHidden"
+        class="text-blue"
         @click="onAction?.()"
       >
         {{ $t(actionTitle) }}

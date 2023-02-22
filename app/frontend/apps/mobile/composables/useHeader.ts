@@ -11,7 +11,7 @@ export interface HeaderOptions {
   backTitle?: string | ComputedRef<string>
   backUrl?: RouteLocationRaw | ComputedRef<RouteLocationRaw>
   actionTitle?: string | ComputedRef<string>
-  actionDisabled?: boolean | ComputedRef<boolean> | Ref<boolean>
+  actionHidden?: boolean | ComputedRef<boolean> | Ref<boolean>
   onAction?(): unknown
 }
 

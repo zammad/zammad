@@ -35,8 +35,11 @@ useHeader({
   title: __('Organization'),
   backUrl: '/',
   actionTitle: __('Edit'),
+  actionHidden: computed(
+    () => organization.value == null || !organization.value.policy.update,
+  ),
   onAction() {
-    if (!organization.value) return
+    if (!organization.value || !organization.value.policy.update) return
     openEditOrganizationDialog(organization.value)
   },
 })

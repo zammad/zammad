@@ -130,6 +130,38 @@ describe('static organization', () => {
     expect(view.container).toHaveTextContent('Jane Hunter')
   })
 
+  it('can edit organization with required update policy', async () => {
+    const organization = defaultOrganization()
+    const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
+      organization,
+    })
+    mockGraphQLSubscription(OrganizationUpdatesDocument)
+    mockOrganizationObjectAttributes()
+
+    const view = await visitView(`/organizations/${organization.internalId}`)
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    expect(view.getByRole('button', { name: 'Edit' })).toBeInTheDocument()
+  })
+
+  it('cannot edit organization without required update policy', async () => {
+    const organization = defaultOrganization()
+    organization.policy.update = false
+
+    const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
+      organization,
+    })
+    mockGraphQLSubscription(OrganizationUpdatesDocument)
+    mockOrganizationObjectAttributes()
+
+    const view = await visitView(`/organizations/${organization.internalId}`)
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    expect(view.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument()
+  })
+
   it('redirects to error page if organization is not found', async () => {
     mockPermissions(['admin.organization'])
 

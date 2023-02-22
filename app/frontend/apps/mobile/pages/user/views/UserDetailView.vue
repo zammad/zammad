@@ -38,9 +38,9 @@ useHeader({
   title: __('User'),
   backUrl: '/',
   actionTitle: __('Edit'),
-  actionDisabled: computed(() => user.value == null),
+  actionHidden: computed(() => user.value == null || !user.value.policy.update),
   onAction() {
-    if (!user.value) return
+    if (!user.value || !user.value.policy.update) return
     openEditUserDialog(user.value)
   },
 })

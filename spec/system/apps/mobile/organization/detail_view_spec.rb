@@ -56,6 +56,12 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
 
       expect(domain).to have_text('Updated Text')
     end
+
+    it 'allows editing organization' do
+      open_organization
+
+      expect(page).to have_button('Edit')
+    end
   end
 
   context 'when visiting as customer', authenticated_as: :user do

@@ -86,4 +86,20 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     expect(customer.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', text_attribute: 'foobar', address: 'München')
   end
+
+  context 'when viewing an admin user as an agent' do
+    let(:customer) { create(:admin) }
+
+    it 'disallows editing user data' do
+      expect(page).to have_no_button('Edit')
+    end
+  end
+
+  context 'when viewing an agent user as an agent' do
+    let(:customer) { create(:agent) }
+
+    it 'disallows editing user data' do
+      expect(page).to have_no_button('Edit')
+    end
+  end
 end

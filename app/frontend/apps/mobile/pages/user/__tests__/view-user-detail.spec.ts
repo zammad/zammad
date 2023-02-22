@@ -9,6 +9,7 @@ import { getTestRouter } from '@tests/support/components/renderComponent'
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { setupView } from '@tests/support/mock-user'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
 
 describe('visiting user page', () => {
@@ -179,6 +180,29 @@ describe('visiting user page', () => {
       'Department of Health and Safety',
     )
     expect(getRegion('Address')).toHaveTextContent('Berlin')
+  })
+
+  it('can edit user with required update policy', async () => {
+    const { mockUser, mockAttributes, user } = mockUserDetailsApis()
+
+    const view = await visitView(`/users/${user.internalId}`)
+
+    await waitUntilApisResolved(mockUser, mockAttributes)
+
+    expect(view.getByRole('button', { name: 'Edit' })).toBeInTheDocument()
+  })
+
+  it('cannot edit user without required update policy', async () => {
+    const user = defaultUser()
+    user.policy.update = false
+
+    const { mockUser, mockAttributes } = mockUserDetailsApis(user)
+
+    const view = await visitView(`/users/${user.internalId}`)
+
+    await waitUntilApisResolved(mockUser, mockAttributes)
+
+    expect(view.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument()
   })
 
   it('redirects to error page if user is not found', async () => {

@@ -84,4 +84,19 @@ describe('mobile app header', () => {
 
     expect(view.getByText('Translated')).toBeInTheDocument()
   })
+
+  it('hides action, if specified', async () => {
+    const onAction = vi.fn()
+
+    const view = renderComponent(LayoutHeader, {
+      props: {
+        onAction,
+        actionTitle: 'Action',
+        actionHidden: true,
+      },
+      router: true,
+    })
+
+    expect(view.queryByText('Action')).not.toBeInTheDocument()
+  })
 })
