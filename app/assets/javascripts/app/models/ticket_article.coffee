@@ -32,7 +32,7 @@ class App.TicketArticle extends App.Model
       ticket = App.Ticket.findNative(@ticket_id)
     if ticket
       return ticket.title
-    '???'
+    '-'
 
   iconActivity: (user) ->
     return if !user

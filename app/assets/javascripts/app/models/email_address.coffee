@@ -5,6 +5,8 @@ class App.EmailAddress extends App.Model
 
   displayName: ->
     if @realname
+      # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
+      #   quoting would confuse sorting in the GUI.
       return "#{@realname} <#{@email}>"
     @email
 
