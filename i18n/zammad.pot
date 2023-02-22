@@ -2625,8 +2625,7 @@ msgstr ""
 msgid "Create new records"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/Home.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
 msgid "Create new ticket"
 msgstr ""
 

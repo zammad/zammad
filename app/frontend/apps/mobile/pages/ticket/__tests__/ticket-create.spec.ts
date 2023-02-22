@@ -324,6 +324,7 @@ describe('Creating new ticket as customer', () => {
       organization: defaultOrganization(),
       hasSecondaryOrganizations: false,
     })
+    mockPermissions(['ticket.customer'])
 
     const { mockFormUpdater, view } = await visitTicketCreate()
 
@@ -343,6 +344,7 @@ describe('Creating new ticket as customer', () => {
       organization: defaultOrganization(),
       hasSecondaryOrganizations: true,
     })
+    mockPermissions(['ticket.customer'])
 
     const { mockFormUpdater, view } = await visitTicketCreate()
 

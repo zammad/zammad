@@ -2,12 +2,18 @@
 
 import { computed } from 'vue'
 import { useApplicationStore } from '@shared/stores/application'
+import { useSessionStore } from '@shared/stores/session'
 
 export const useTicketCreate = () => {
   const application = useApplicationStore()
+  const session = useSessionStore()
 
   const ticketCreateEnabled = computed(() => {
-    return application.config.customer_ticket_create as boolean
+    return (
+      session.hasPermission('ticket.agent') ||
+      (session.hasPermission('ticket.customer') &&
+        application.config.customer_ticket_create)
+    )
   })
 
   return { ticketCreateEnabled }

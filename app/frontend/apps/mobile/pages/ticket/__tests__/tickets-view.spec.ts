@@ -7,6 +7,7 @@ import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { waitForNextTick } from '@tests/support/utils'
 import { stringifyQuery } from 'vue-router'
+import { mockPermissions } from '@tests/support/mock-permissions'
 import { mockTicketsByOverview, ticketDefault } from './mocks/overview'
 
 beforeEach(() => {
@@ -14,6 +15,7 @@ beforeEach(() => {
 })
 
 it('see default list when opening page', async () => {
+  mockPermissions(['ticket.agent'])
   mockTicketsByOverview([])
 
   const view = await visitView('/tickets/view')

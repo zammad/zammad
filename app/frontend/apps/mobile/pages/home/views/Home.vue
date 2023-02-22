@@ -6,6 +6,7 @@ import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputS
 import { useSessionStore } from '@shared/stores/session'
 import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
 import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 
 const IS_DEV = import.meta.env.DEV
@@ -53,11 +54,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
 
 <template>
   <div class="p-4">
-    <div class="mt-1.5 mb-3 flex justify-end ltr:mr-1.5 rtl:ml-1.5">
-      <CommonLink link="/tickets/create" :aria-label="$t('Create new ticket')">
-        <CommonIcon name="mobile-add" size="small" decorative />
-      </CommonLink>
-    </div>
+    <CommonTicketCreateLink class="mt-1.5 mb-3 ltr:mr-1.5 rtl:ml-1.5" />
     <h1 class="mb-5 flex w-full items-center justify-center text-4xl font-bold">
       {{ $t('Home') }}
     </h1>

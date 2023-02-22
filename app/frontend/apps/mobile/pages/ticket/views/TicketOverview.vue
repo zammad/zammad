@@ -3,17 +3,18 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useRouteQuery } from '@vueuse/router'
 import { i18n } from '@shared/i18n'
-import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { EnumOrderDirection } from '@shared/graphql/types'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
-import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
-import { useRouteQuery } from '@vueuse/router'
-import { storeToRefs } from 'pinia'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
+import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
+import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
+import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
@@ -167,16 +168,7 @@ const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
         >
           {{ $t('Tickets') }}
         </h1>
-        <div
-          class="flex cursor-pointer items-center justify-self-end text-base"
-        >
-          <CommonLink
-            link="/tickets/create"
-            :aria-label="$t('Create new ticket')"
-          >
-            <CommonIcon name="mobile-add" size="small" decorative />
-          </CommonLink>
-        </div>
+        <CommonTicketCreateLink class="justify-self-end text-base" />
       </div>
       <div
         v-if="optionsOverviews.length"
