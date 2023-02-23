@@ -36,10 +36,6 @@ export const useOrganizationEdit = () => {
         screen: 'edit',
         object: EnumObjectManagerObjects.Organization,
       },
-      {
-        type: 'file',
-        name: 'attachments',
-      },
     ],
     { showDirtyMark: true },
   )
@@ -51,6 +47,21 @@ export const useOrganizationEdit = () => {
       {
         domain: {
           required: !!organization.domainAssignment,
+        },
+        note: {
+          props: {
+            meta: {
+              mentionText: {
+                disabled: true,
+              },
+              mentionKnowledgeBase: {
+                disabled: true,
+              },
+              mentionUser: {
+                disabled: true,
+              },
+            },
+          },
         },
       },
     )

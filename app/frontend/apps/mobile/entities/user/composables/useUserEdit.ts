@@ -3,6 +3,7 @@
 import { useDialogObjectForm } from '@mobile/components/CommonDialogObjectForm/useDialogObjectForm'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useUserUpdateMutation } from '@mobile/pages/user/graphql/mutations/update.api'
+import type { FormSchemaField } from '@shared/components/Form/types'
 import type { UserQuery } from '@shared/graphql/types'
 import {
   EnumFormUpdaterId,
@@ -29,11 +30,30 @@ export const useUserEdit = () => {
     { showDirtyMark: true },
   )
 
+  const formChangeFields: Record<string, Partial<FormSchemaField>> = {
+    note: {
+      props: {
+        meta: {
+          mentionText: {
+            disabled: true,
+          },
+          mentionKnowledgeBase: {
+            disabled: true,
+          },
+          mentionUser: {
+            disabled: true,
+          },
+        },
+      },
+    },
+  }
+
   const openEditUserDialog = async (user: ConfidentTake<UserQuery, 'user'>) => {
     dialog.openDialog({
       object: user,
       mutation: useUserUpdateMutation,
       schema,
+      formChangeFields,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,
       errorNotificationMessage: __('User could not be updated.'),
       keyMap: {
