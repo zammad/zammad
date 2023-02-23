@@ -50,8 +50,8 @@ const walker = useWalker()
 
 useHeader({
   title: __('Ticket Overview'),
-  backTitle: __('Home'),
   backUrl: '/',
+  backAvoidHomeButton: true,
   actionTitle: __('Done'),
   onAction() {
     if (!includedOverviews.value.length) {

@@ -220,7 +220,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_input('Title').type(Faker::Name.name_with_middle)
       end
 
-      find('button[aria-label="Go back"]').click
+      find_button('Go home').click
 
       within '[role=alert]' do
         expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')

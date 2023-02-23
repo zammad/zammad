@@ -10,6 +10,7 @@ export interface Props {
   titleClass?: string
   backTitle?: string
   backUrl?: RouteLocationRaw
+  backAvoidHomeButton?: boolean
   actionTitle?: string
   actionHidden?: boolean
   onAction?(): void
@@ -28,15 +29,20 @@ defineProps<Props>()
   <header
     v-if="title || backUrl || (onAction && actionTitle)"
     ref="headerElement"
-    class="grid h-[64px] grid-cols-3 border-b-[0.5px] border-white/10 bg-black px-4"
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">
-      <CommonBackButton v-if="backUrl" :fallback="backUrl" :label="backTitle" />
+      <CommonBackButton
+        v-if="backUrl"
+        :fallback="backUrl"
+        :label="backTitle"
+        :avoid-home-button="backAvoidHomeButton"
+      />
     </div>
     <h1
       :class="[
-        'flex flex-1 items-center justify-center text-center text-lg font-bold',
+        'flex items-center justify-center text-center text-lg font-bold',
         titleClass,
       ]"
     >

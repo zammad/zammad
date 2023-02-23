@@ -5379,7 +5379,6 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
 msgstr ""

@@ -161,7 +161,7 @@ const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
         <div
           class="flex cursor-pointer items-center justify-self-start text-base"
         >
-          <CommonBackButton fallback="/" />
+          <CommonBackButton fallback="/" avoid-home-button />
         </div>
         <h1
           class="flex flex-1 items-center justify-center text-center text-lg font-bold"

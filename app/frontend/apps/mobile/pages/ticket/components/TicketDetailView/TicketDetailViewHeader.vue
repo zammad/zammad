@@ -50,7 +50,7 @@ const showActions = () => {
 
 <template>
   <header
-    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-3"
+    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
     <CommonBackButton
       class="justify-self-start"

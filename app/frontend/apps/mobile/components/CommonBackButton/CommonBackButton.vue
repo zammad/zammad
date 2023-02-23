@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import { useLocaleStore } from '@shared/stores/locale'
 import { useWalker } from '@shared/router/walker'
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   // useful, if there is a possible infinite loop
   // ticket -> information -> ticket -> information -> ...
   ignore?: string[]
+  avoidHomeButton?: boolean
 }
 
 const props = defineProps<Props>()
@@ -19,8 +21,17 @@ const props = defineProps<Props>()
 const walker = useWalker()
 
 const isHomeButton = computed(() => {
-  if (props.fallback !== '/' || walker.hasBackUrl) return false
+  if (props.avoidHomeButton || walker.getBackUrl(props.fallback) !== '/')
+    return false
   return true
+})
+
+const { localeData } = useLocaleStore()
+
+const icon = computed(() => {
+  if (isHomeButton.value) return 'mobile-home'
+  if (localeData?.dir === 'rtl') return 'mobile-chevron-right'
+  return 'mobile-chevron-left'
 })
 </script>
 
@@ -31,10 +42,7 @@ const isHomeButton = computed(() => {
     :class="{ 'gap-2': label }"
     @click="$walker.back(fallback, ignore)"
   >
-    <CommonIcon
-      :name="isHomeButton ? 'mobile-home' : 'mobile-chevron-left'"
-      decorative
-    />
+    <CommonIcon :name="icon" decorative />
     <span v-if="label">{{ isHomeButton ? $t('Home') : $t(label) }}</span>
   </button>
 </template>

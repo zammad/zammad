@@ -8,6 +8,8 @@ import CommonBackButton from '../CommonBackButton.vue'
 // $walker.back not tested because there is a unit test for it
 describe('rendering common back button', () => {
   it('renders label', async () => {
+    window.history.replaceState({ back: '/back' }, '/back')
+
     const view = renderComponent(CommonBackButton, {
       router: true,
       props: {
@@ -45,6 +47,27 @@ describe('rendering common back button', () => {
     })
 
     expect(view.getByRole('button', { name: 'Go home' })).toBeInTheDocument()
+    expect(view.getByIconName('mobile-home')).toBeInTheDocument()
+
+    await view.rerender({
+      label: 'Back',
+    })
+
+    expect(view.container).toHaveTextContent('Home')
+  })
+
+  it('renders home button, if history is present and previous route is home', async () => {
+    window.history.replaceState({ back: '/' }, '/')
+
+    const view = renderComponent(CommonBackButton, {
+      router: true,
+      props: {
+        fallback: '/',
+      },
+    })
+
+    expect(view.getByRole('button', { name: 'Go home' })).toBeInTheDocument()
+    expect(view.getByIconName('mobile-home')).toBeInTheDocument()
 
     await view.rerender({
       label: 'Back',
@@ -56,7 +79,7 @@ describe('rendering common back button', () => {
   it('renders back button, if history is present', async () => {
     window.history.replaceState(
       { back: '/tickets/1/information/customer' },
-      '/tickets/1/information/organization',
+      '/tickets/1/information/customer',
     )
 
     const view = renderComponent(CommonBackButton, {
@@ -67,6 +90,7 @@ describe('rendering common back button', () => {
     })
 
     expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+    expect(view.getByIconName('mobile-chevron-left')).toBeInTheDocument()
 
     await view.rerender({
       label: 'Back',

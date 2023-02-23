@@ -16,6 +16,7 @@ import NotificationItem from '../components/NotificationItem.vue'
 
 useHeader({
   backUrl: '/',
+  backAvoidHomeButton: true,
 })
 
 const notificationsHandler = new QueryHandler(useOnlineNotificationsQuery())
