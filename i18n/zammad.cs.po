@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-14 03:30+0000\n"
-"Last-Translator: Petr Daniel Ambrož <paces@paces.cz>\n"
+"PO-Revision-Date: 2023-02-21 13:41+0000\n"
+"Last-Translator: Petr Prochazka <prochazkapetr2@gmail.com>\n"
 "Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
-"zammad-development/cs/>\n"
+"zammad-stable/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -214,8 +214,8 @@ msgstr ""
 "\n"
 "<div>Dobrý den, #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Zdá se, že jste svůj účet propojili <b>s aplikací třetí strany</b> \""
-"#{t(provider)}\".</div>\n"
+"<div>Zdá se, že jste svůj účet propojili <b>s aplikací třetí strany</b> "
+"\"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Pokud jste to nebyli Vy, odeberte propojený účet z Vašeho profilu a "
 "změňte své heslo v aplikaci třetí strany. Někdo zřejmě mohl získat k Vašemu "
@@ -1226,8 +1226,8 @@ msgstr ""
 "#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.name}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz Vás přesměruje na stránku, kde můžete nastavit nové "
-"heslo.</div>\n"
+"<div>Tento odkaz Vás přesměruje na stránku, kde můžete nastavit nové heslo.</"
+"div>\n"
 "<br>\n"
 "<div>Pokud heslo nechcete změnit, tuto zprávu ignorujte (nevyužívejte výše "
 "zmíněného odkazu) a Vaše heslo bude zachováno.</div>\n"
@@ -2376,7 +2376,6 @@ msgid "Changed:"
 msgstr "Změněno:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -2843,8 +2842,8 @@ msgstr ""
 "product_name} klikněte na odkaz níže.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}</a></div>\n"
+"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"a></div>\n"
 "<br>\n"
 "<div>S pozdravem,<br>\n"
 "Tým aplikace #{config.product_name}</div>\n"
@@ -3904,7 +3903,8 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines postmaster filter for filters managed via admin interface."
-msgstr "Definuje filtr správce pošty pro filtry řízené pomocí rozhraní správce."
+msgstr ""
+"Definuje filtr správce pošty pro filtry řízené pomocí rozhraní správce."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -6067,7 +6067,7 @@ msgstr "Jít Zpět"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go back"
-msgstr ""
+msgstr "Jít zpět"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6125,7 +6125,6 @@ msgstr "Pozdrav"
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6812,27 +6811,22 @@ msgstr "Přírůstek (SystemID.Counter)"
 msgid "Info: %s"
 msgstr "Info: %s"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -7882,7 +7876,7 @@ msgstr "Po"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Monday"
-msgstr "Pondelí"
+msgstr "Pondělí"
 
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 msgid "Monit"
@@ -9031,7 +9025,6 @@ msgstr "Přepsat koncept"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9902,8 +9895,8 @@ msgstr ""
 "#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.name}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz Vás přesměruje na stránku, kde si nastavíte své nové "
-"heslo.</div>\n"
+"<div>Tento odkaz Vás přesměruje na stránku, kde si nastavíte své nové heslo."
+"</div>\n"
 "<br>\n"
 "<div>Pokud heslo měnit nechcete, tuto zprávu ignorujte (nevyužívejte výše "
 "zmíněného odkazu) a Vaše heslo nebude změněno.</div>\n"
@@ -9951,8 +9944,8 @@ msgstr ""
 "#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
 "#{token.name}</a></div>\n"
 "<br>\n"
-"<div>Tento odkaz vede na stránku, kde si budete moci nastavit nové "
-"heslo.</div>\n"
+"<div>Tento odkaz vede na stránku, kde si budete moci nastavit nové heslo.</"
+"div>\n"
 "<br>\n"
 "<div>Pokud si heslo změnit nepřejete, ignorujte prosím tuto zprávu. Vaše "
 "heslo nebude obnoveno.</div>\n"
@@ -11051,7 +11044,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -12053,7 +12045,8 @@ msgstr "Nahraný obrázek se nepodařilo zpracovat."
 
 #: lib/external_credential/exchange.rb lib/external_credential/microsoft365.rb
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
-msgstr "Uživatelovo 'preferred_username' se nepodařilo z 'id_token' extrahovat."
+msgstr ""
+"Uživatelovo 'preferred_username' se nepodařilo z 'id_token' extrahovat."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -12336,7 +12329,8 @@ msgstr "Tato stránka je pro veřejnost neviditelná."
 msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
-msgstr "Toto oprávnění není k dispozici s ohledem na oprávnění současných rolí."
+msgstr ""
+"Toto oprávnění není k dispozici s ohledem na oprávnění současných rolí."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
@@ -12627,8 +12621,8 @@ msgstr ""
 "<div>Dobrý den, #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>ticket (#{ticket.title}) vytvořený zákazníkem \"<b>#{ticket.customer."
-"longname}</b>\" vyžaduje Vaši pozornost, neboť byl dosažen čas pro "
-"upomínku.</div>\n"
+"longname}</b>\" vyžaduje Vaši pozornost, neboť byl dosažen čas pro upomínku."
+"</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -13061,7 +13055,7 @@ msgstr "Út"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Tuesday"
-msgstr "Úterí"
+msgstr "Úterý"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_footer.jst.eco
 msgid "Turn chat into ticket"
@@ -13742,25 +13736,20 @@ msgstr "Zobrazit"
 msgid "View from user's perspective"
 msgstr "Prohlédnout z uživatelovy perspektivy"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -15420,7 +15409,8 @@ msgstr "relativní"
 
 #: db/seeds/settings.rb
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
-msgstr "relativní - např. \"před 2 hodinami\" nebo \"před 2 dny a 15 minutami\""
+msgstr ""
+"relativní - např. \"před 2 hodinami\" nebo \"před 2 dny a 15 minutami\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco
