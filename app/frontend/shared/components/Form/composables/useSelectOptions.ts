@@ -14,8 +14,10 @@ import type { FlatSelectOption } from '../fields/FieldTreeSelect'
 import type { AutoCompleteOption } from '../fields/FieldAutoComplete'
 import useValue from './useValue'
 
-const useSelectOptions = (
-  options: Ref<SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]>,
+const useSelectOptions = <
+  T extends SelectOption[] | FlatSelectOption[] | AutoCompleteOption[],
+>(
+  options: Ref<T>,
   context: Ref<
     FormFieldContext<{
       historicalOptions?: Record<string, string>
@@ -31,9 +33,7 @@ const useSelectOptions = (
   const { currentValue, hasValue, valueContainer, clearValue } =
     useValue(context)
 
-  const appendedOptions = ref<
-    SelectOption[] | FlatSelectOption[] | AutoCompleteOption[]
-  >([])
+  const appendedOptions = ref<T>([] as unknown as T) as Ref<T>
 
   const availableOptions = computed(() => [
     ...(options.value || []),
@@ -109,12 +109,10 @@ const useSelectOptions = (
     const option = getSelectedOption(selectedValue) as
       | SelectOption
       | FlatSelectOption
-    return option?.status as TicketState
+    return option?.status as TicketState | undefined
   }
 
-  const selectOption = (
-    option: SelectOption | FlatSelectOption | AutoCompleteOption,
-  ) => {
+  const selectOption = (option: T extends Array<infer V> ? V : never) => {
     if (!context.value.multiple) {
       context.value.node.input(option.value)
       return
@@ -224,6 +222,7 @@ const useSelectOptions = (
     selectOption,
     getDialogFocusTargets,
     setupMissingOptionHandling,
+    appendedOptions,
   }
 }
 

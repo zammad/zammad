@@ -10,6 +10,7 @@ import { renderComponent } from '@tests/support/components'
 import { i18n } from '@shared/i18n'
 import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
 import { nullableMock, waitForNextTick } from '@tests/support/utils'
+import { getByIconName } from '@tests/support/components/iconQueries'
 import type { ObjectLike } from '@shared/types/utils'
 import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
 import type { SelectValue } from '../../FieldSelect'
@@ -158,7 +159,7 @@ describe('Form - Field - AutoComplete - Dialog', () => {
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('renders selected option in semibold text with a check mark icon', async () => {
+  it('renders selected option with a check mark icon', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -281,6 +282,70 @@ describe('Form - Field - AutoComplete - Query', () => {
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
     expect(wrapper.getByIconName('mobile-check')).toBeInTheDocument()
+  })
+
+  it('restores selection on clearing search input (multiple)', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        value: [testOptions[2].value],
+        options: [testOptions[2]],
+        multiple: true,
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    let selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
+    expect(
+      getByIconName(selectOptions[0], 'mobile-check-box-yes'),
+    ).toBeInTheDocument()
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    await wrapper.events.type(filterElement, 'item')
+
+    selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(3)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
+    expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
+    expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
+    expect(
+      getByIconName(selectOptions[2], 'mobile-check-box-yes'),
+    ).toBeInTheDocument()
+
+    wrapper.events.click(selectOptions[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toStrictEqual([
+      testOptions[0].value,
+      testOptions[2].value,
+    ])
+
+    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+
+    selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(2)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
+    expect(
+      getByIconName(selectOptions[0], 'mobile-check-box-yes'),
+    ).toBeInTheDocument()
+    expect(selectOptions[1]).toHaveTextContent(testOptions[0].label)
+    expect(
+      getByIconName(selectOptions[1], 'mobile-check-box-yes'),
+    ).toBeInTheDocument()
   })
 })
 

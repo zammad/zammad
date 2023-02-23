@@ -38,10 +38,9 @@ const emit = defineEmits<{
   (e: 'action'): void
 }>()
 
-const { sortedOptions, selectOption } = useSelectOptions(
-  toRef(props, 'options'),
-  contextReactive,
-)
+const { sortedOptions, selectOption, appendedOptions } = useSelectOptions<
+  AutoCompleteOption[]
+>(toRef(props, 'options'), contextReactive)
 
 let areLocalOptionsReplaced = false
 
@@ -186,6 +185,14 @@ const select = (option: AutoCompleteOption) => {
     // Remove any extra options from the replacement list.
     replacementLocalOptions.value = replacementLocalOptions.value.filter(
       (replacementLocalOption) => isCurrentValue(replacementLocalOption.value),
+    )
+
+    if (!sortedOptions.value.some((elem) => elem.value === option.value)) {
+      appendedOptions.value.push(option)
+    }
+
+    appendedOptions.value = appendedOptions.value.filter((elem) =>
+      isCurrentValue(elem.value),
     )
 
     // Sort the replacement list according to the original order.
