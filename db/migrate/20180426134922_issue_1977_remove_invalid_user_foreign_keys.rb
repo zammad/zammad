@@ -7,7 +7,7 @@ class Issue1977RemoveInvalidUserForeignKeys < ActiveRecord::Migration[5.1]
     return if !Setting.exists?(name: 'system_init_done')
 
     # cleanup
-    OnlineNotification.without_callback :destroy, :after, :trigger_subscriptions do
+    OnlineNotification.without_callback :commit, :after, :trigger_subscriptions do
       OnlineNotification.joins('LEFT OUTER JOIN users ON online_notifications.user_id = users.id')
                         .where('users.id' => nil)
                         .destroy_all

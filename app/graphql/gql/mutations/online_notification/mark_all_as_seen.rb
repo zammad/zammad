@@ -17,7 +17,7 @@ module Gql::Mutations
       return {} if online_notifications.none?
 
       # Only trigger subscription once after all are updated.
-      ::OnlineNotification.without_callback(:save, :after, :trigger_subscriptions) do
+      ::OnlineNotification.without_callback(:commit, :after, :trigger_subscriptions) do
         online_notifications.each do |elem|
           elem.seen = true
           elem.save!

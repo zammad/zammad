@@ -5,7 +5,7 @@ module User::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    after_update :trigger_subscriptions
+    after_update_commit :trigger_subscriptions
   end
 
   private

@@ -5,9 +5,7 @@ module PublicLink::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    after_create  :trigger_subscriptions
-    after_update  :trigger_subscriptions
-    after_destroy :trigger_subscriptions
+    after_commit :trigger_subscriptions
   end
 
   private

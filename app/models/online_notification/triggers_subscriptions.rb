@@ -5,8 +5,7 @@ module OnlineNotification::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    after_save :trigger_subscriptions
-    after_destroy :trigger_subscriptions
+    after_commit :trigger_subscriptions
   end
 
   def trigger_subscriptions
