@@ -15,8 +15,8 @@ targets:
       - imlib2
       - shared-mime-info
     build_dependencies:
-      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.5-9.el7.x86_64.rpm
-      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.5-9.el7.x86_64.rpm
+      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.9-8.el7.x86_64.rpm
+      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.9-8.el7.x86_64.rpm
       - shared-mime-info
   centos-8:
     dependencies:
