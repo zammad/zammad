@@ -177,7 +177,7 @@ module ZammadSpecSupportGraphql
       private
 
       def assert(message)
-        raise "Assertion '#{message}' failed, graphql result:\n#{PP.pp(payload, '')}" if !yield # rubocop:disable Lint/Debugger
+        raise "Assertion '#{message}' failed, graphql result:\n#{PP.pp(payload, '')}" if !yield
       end
     end
 
