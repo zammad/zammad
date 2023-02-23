@@ -9,12 +9,22 @@
     RAILS_ENV: "production"
     APP_RESTART_CMD: 'bundle exec rake environment zammad:ci:app:restart'
   script:
-    - script/build/test_slice_tests.sh $TEST_SLICE
-    - RAILS_ENV=test bundle exec rake db:create
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
-    - bundle exec rake zammad:ci:test:start[with_elasticsearch]
-    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
-    - bundle exec rails test --fail-fast test/browser --profile
+    - |
+      script/build/test_slice_tests.sh $TEST_SLICE
+      # Tests in the first slice do not expect for the auto wizard to be run.
+      if [ $TEST_SLICE = 1 ]
+      then
+        echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_start[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:start"
+        bundle exec rake zammad:ci:test:start[with_elasticsearch]
+        echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_start\\r\\e[0K"
+      else
+        echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare zammad:setup:auto_wizard zammad:ci:app:start"
+        # Deconstruct zammad:ci:test:start command, so it starts the server only after the auto wizard has run.
+        #   This prevents instability due to `ZAMMAD_SETTING_TTL` not kicking in.
+        bundle exec rake zammad:ci:test:prepare[with_elasticsearch] zammad:setup:auto_wizard[contrib/auto_wizard_browser_test.json] zammad:ci:app:start
+        echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"
+      fi
+      bundle exec rails test --fail-fast test/browser --profile
 
 .template_browser-core_chrome:
   extends:

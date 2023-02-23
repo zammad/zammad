@@ -6,8 +6,6 @@ set -ex
 if [ "$LEVEL" == '1' ]; then
   echo "slicing level 1"
 
-  # no ticket action
-  rm test/browser/aaa_getting_started_test.rb
   cp contrib/auto_wizard_test.json auto_wizard.json
   cp test/integration/aaa_auto_wizard_base_setup_test.rb test/browser/aaa_auto_wizard_base_setup_test.rb
   rm test/browser/abb_one_group_test.rb
@@ -52,7 +50,6 @@ if [ "$LEVEL" == '1' ]; then
 elif [ "$LEVEL" == '2' ]; then
   echo "slicing level 2"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
@@ -94,7 +91,6 @@ elif [ "$LEVEL" == '2' ]; then
 elif [ "$LEVEL" == '3' ]; then
   echo "slicing level 3"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
@@ -136,7 +132,6 @@ elif [ "$LEVEL" == '3' ]; then
 elif [ "$LEVEL" == '4' ]; then
   echo "slicing level 4"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
@@ -219,7 +214,6 @@ elif [ "$LEVEL" == '5' ]; then
 elif [ "$LEVEL" == '6' ]; then
   echo "slicing level 6"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
@@ -262,7 +256,6 @@ elif [ "$LEVEL" == '6' ]; then
 elif [ "$LEVEL" == '7' ]; then
   echo "slicing level 7"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
@@ -305,7 +298,6 @@ elif [ "$LEVEL" == '7' ]; then
 elif [ "$LEVEL" == '8' ]; then
   echo "slicing level 8"
 
-  # test/browser/aaa_getting_started_test.rb
   # test/browser/abb_one_group_test.rb
   rm test/browser/admin_drag_drop_to_new_group_test.rb
   rm test/browser/admin_overview_test.rb
