@@ -89,7 +89,7 @@ export type Authorization = {
   username?: Maybe<Scalars['String']>;
 };
 
-/** Type that represents an autocomplete entry. */
+/** Type that represents an autocomplete entry with a string value. */
 export type AutocompleteSearchEntry = {
   __typename?: 'AutocompleteSearchEntry';
   disabled?: Maybe<Scalars['Boolean']>;
@@ -142,7 +142,7 @@ export type AutocompleteSearchOrganizationEntry = {
   label: Scalars['String'];
   labelPlaceholder?: Maybe<Array<Scalars['String']>>;
   organization: Organization;
-  value: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 /** The default fields for organization autocomplete searches. */
@@ -153,6 +153,19 @@ export type AutocompleteSearchOrganizationInput = {
   limit?: InputMaybe<Scalars['Int']>;
   /** Query from the autocomplete field */
   query: Scalars['String'];
+};
+
+/** Type that represents an autocomplete recipient entry. */
+export type AutocompleteSearchRecipientEntry = {
+  __typename?: 'AutocompleteSearchRecipientEntry';
+  disabled?: Maybe<Scalars['Boolean']>;
+  heading?: Maybe<Scalars['String']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']>>;
+  icon?: Maybe<Scalars['String']>;
+  label: Scalars['String'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']>>;
+  user: User;
+  value: Scalars['String'];
 };
 
 /** The default fields for recipient autocomplete searches. */
@@ -175,7 +188,7 @@ export type AutocompleteSearchUserEntry = {
   label: Scalars['String'];
   labelPlaceholder?: Maybe<Array<Scalars['String']>>;
   user: User;
-  value: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 /** Avatar for users */
@@ -1262,7 +1275,7 @@ export type Queries = {
   /** Search for organizations */
   autocompleteSearchOrganization: Array<AutocompleteSearchOrganizationEntry>;
   /** Search for recipients */
-  autocompleteSearchRecipient: Array<AutocompleteSearchUserEntry>;
+  autocompleteSearchRecipient: Array<AutocompleteSearchRecipientEntry>;
   /** Search for tags */
   autocompleteSearchTag: Array<AutocompleteSearchEntry>;
   /** Search for users */
@@ -2547,7 +2560,7 @@ export type AutocompleteSearchUserQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } }> };
+export type AutocompleteSearchUserQuery = { __typename?: 'Queries', autocompleteSearchUser: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: number, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } }> };
 
 export type KnowledgeBaseAnswerSuggestionContentTransformMutationVariables = Exact<{
   translationId: Scalars['ID'];
@@ -2603,14 +2616,14 @@ export type AutocompleteSearchOrganizationQueryVariables = Exact<{
 }>;
 
 
-export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteSearchOrganizationEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } }> };
+export type AutocompleteSearchOrganizationQuery = { __typename?: 'Queries', autocompleteSearchOrganization: Array<{ __typename?: 'AutocompleteSearchOrganizationEntry', value: number, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } }> };
 
 export type AutocompleteSearchRecipientQueryVariables = Exact<{
   input: AutocompleteSearchRecipientInput;
 }>;
 
 
-export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
+export type AutocompleteSearchRecipientQuery = { __typename?: 'Queries', autocompleteSearchRecipient: Array<{ __typename?: 'AutocompleteSearchRecipientEntry', value: string, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null }> };
 
 export type FormUpdaterQueryVariables = Exact<{
   formUpdaterId: EnumFormUpdaterId;

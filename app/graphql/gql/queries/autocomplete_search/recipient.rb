@@ -7,6 +7,8 @@ module Gql::Queries
 
     argument :input, Gql::Types::Input::AutocompleteSearch::RecipientInputType, required: true, description: 'The input object for the recipient autocomplete search'
 
+    type [Gql::Types::AutocompleteSearch::RecipientEntryType], null: false
+
     def post_process(results, input:)
       results.flat_map do |user|
         case input[:contact]

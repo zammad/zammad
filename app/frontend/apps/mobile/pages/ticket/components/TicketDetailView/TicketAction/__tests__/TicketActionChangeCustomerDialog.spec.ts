@@ -34,7 +34,7 @@ const defaultAutoCompleteSearchUserResult = (
 ): AutocompleteSearchUserQuery => ({
   autocompleteSearchUser: [
     nullableMock({
-      value: '2',
+      value: 2,
       label: 'Nicole Braun',
       labelPlaceholder: null,
       heading: 'Zammad Foundation',
@@ -158,7 +158,7 @@ describe('TicketAction - change customer dialog', () => {
       {
         autocompleteSearchUser: [
           nullableMock({
-            value: '200',
+            value: 200,
             label: 'John Doe',
             labelPlaceholder: null,
             heading: 'Example AG',

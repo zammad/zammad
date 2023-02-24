@@ -45,7 +45,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Organization, authenticated_as:
     context 'with exact search' do
       let(:first_organization_payload) do
         {
-          'value'              => organizations.first.id.to_s,
+          'value'              => organizations.first.id,
           'label'              => organizations.first.name,
           'labelPlaceholder'   => nil,
           'heading'            => nil,
@@ -84,7 +84,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Organization, authenticated_as:
 
         let(:primary_organization_payload) do
           {
-            'value'              => organizations.first.id.to_s,
+            'value'              => organizations.first.id,
             'label'              => organizations.first.name,
             'labelPlaceholder'   => nil,
             'heading'            => nil,
@@ -105,7 +105,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Organization, authenticated_as:
 
         let(:secondary_organization_payload) do
           {
-            'value'              => secondary_organization.id.to_s,
+            'value'              => secondary_organization.id,
             'label'              => secondary_organization.name,
             'labelPlaceholder'   => nil,
             'heading'            => nil,

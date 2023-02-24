@@ -47,7 +47,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::User, authenticated_as: :agent,
     context 'with exact search' do
       let(:first_user_payload) do
         {
-          'value'              => users.first.id.to_s,
+          'value'              => users.first.id,
           'label'              => users.first.fullname,
           'labelPlaceholder'   => nil,
           'heading'            => nil,

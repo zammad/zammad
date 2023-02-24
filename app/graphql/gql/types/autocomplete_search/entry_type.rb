@@ -3,7 +3,7 @@
 module Gql::Types::AutocompleteSearch
   class EntryType < Gql::Types::BaseObject
 
-    description 'Type that represents an autocomplete entry.'
+    description 'Type that represents an autocomplete entry with a string value.'
 
     field :value, String, null: false
     field :label, String, null: false
