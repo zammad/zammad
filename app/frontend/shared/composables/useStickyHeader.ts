@@ -8,7 +8,7 @@ export const useStickyHeader = (
   dependencies: WatchSource[] = [],
   headerElement = ref<HTMLElement>(),
 ) => {
-  const { y, directions } = useScroll(window, {
+  const { y, directions } = useScroll(window.document, {
     eventListenerOptions: { passive: true },
   })
 

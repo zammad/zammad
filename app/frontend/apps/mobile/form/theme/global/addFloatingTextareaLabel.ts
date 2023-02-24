@@ -27,10 +27,11 @@ export const addFloatingTextareaLabel = (classes: Classes = {}) => {
     `),
     wrapper: `${wrapper} relative`,
     inner,
+    // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
       ${input}
       w-full
-      text-sm
+      text-base
       bg-transparent
       border-none
       focus:outline-none

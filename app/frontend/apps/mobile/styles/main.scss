@@ -51,6 +51,16 @@
 }
 
 @layer base {
+  html {
+    --safe-bottom: env(safe-area-inset-bottom);
+  }
+
+  html,
+  body,
+  #app {
+    height: 100%;
+  }
+
   [type='text'],
   [type='password'],
   [type='email'],

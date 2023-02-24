@@ -78,11 +78,17 @@ const loadMore = async () => {
   lastLink?.focus({ preventScroll: true })
 }
 
-useInfiniteScroll(window, async () => {
-  if (canLoadMore.value) {
-    await pagination.fetchNextPage()
-  }
-})
+useInfiniteScroll(
+  window,
+  async () => {
+    if (canLoadMore.value) {
+      await pagination.fetchNextPage()
+    }
+  },
+  // distance is needed for iOS Safari, where infinite scroll is not triggered unless
+  // it's at the bery bottom of the page, which is hard to achieve with their "bouncy" scroll
+  { distance: 150 },
+)
 </script>
 
 <template>
@@ -104,7 +110,7 @@ useInfiniteScroll(window, async () => {
       <div v-if="canLoadMore" class="mb-4 px-3">
         <FormKit
           wrapper-class="mt-4 text-base flex grow justify-center items-center"
-          input-class="py-2 px-4 w-full h-14 text-black formkit-variant-primary:bg-blue rounded-xl select-none"
+          input-class="py-2 px-4 w-full h-14 text-white formkit-variant-primary:bg-gray-500 rounded-xl select-none"
           type="submit"
           name="load_more"
           @click="loadMore"

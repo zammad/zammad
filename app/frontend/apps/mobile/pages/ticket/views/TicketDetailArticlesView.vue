@@ -116,9 +116,13 @@ watch(
     if (!length) return
 
     requestAnimationFrame(() => {
+      const lastArticle = document.querySelector(
+        `#article-${articles.value[length - 1].internalId}`,
+      ) as HTMLElement | null
+      if (!lastArticle) return
       window.scrollTo({
         behavior: 'smooth',
-        top: window.innerHeight,
+        top: lastArticle.offsetTop,
       })
     })
   },
@@ -161,15 +165,7 @@ const { stickyStyles, headerElement } = useStickyHeader([
       <TicketTitle v-if="ticket" :ticket="ticket" />
     </CommonLoader>
   </div>
-  <div
-    class="flex flex-col pb-16"
-    :style="[
-      stickyStyles.body || {},
-      {
-        minHeight: `calc(100vh - ${stickyStyles.body?.marginTop || '0px'})`,
-      },
-    ]"
-  >
+  <div class="flex flex-1 flex-col pb-20" :style="stickyStyles.body">
     <CommonLoader
       data-test-id="loader-list"
       :loading="isLoadingTicket"

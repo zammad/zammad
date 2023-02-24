@@ -206,7 +206,7 @@ test('can refresh data by pulling up', async () => {
   await flushPromises()
 
   expect(view.getByIconName('mobile-arrow-down')).toHaveStyle({
-    transform: 'translateY(22px) rotate(180deg)',
+    transform: 'rotate(180deg)',
   })
 
   const touchEnd = new TouchEvent('touchend')

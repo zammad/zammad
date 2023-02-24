@@ -214,7 +214,7 @@ const bannerClasses = computed(() => {
 
   if (route.name !== 'TicketDetailArticlesView') return null
 
-  return articleReplyDialog.isOpened.value ? null : '-translate-y-12'
+  return articleReplyDialog.isOpened.value ? null : 'ReplyButtonPadding'
 })
 </script>
 
@@ -297,3 +297,11 @@ const bannerClasses = computed(() => {
     </Transition>
   </Teleport>
 </template>
+
+<style lang="scss" scoped>
+.ReplyButtonPadding {
+  --reply-size: calc(0px - theme('height.12') - var(--safe-bottom, 0px));
+
+  transform: translateY(var(--reply-size));
+}
+</style>

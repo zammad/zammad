@@ -28,11 +28,12 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
     wrapper: `${wrapper} relative flex-1`,
     inner: 'flex ltr:pr-2 rtl:pl-2',
     block: 'flex',
+    // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
         ${input}
         w-full
         h-14
-        text-sm
+        text-base
         bg-transparent
         border-none
         focus:outline-none

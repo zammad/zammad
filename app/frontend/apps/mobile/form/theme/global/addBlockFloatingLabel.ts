@@ -28,11 +28,12 @@ export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {
     wrapper: `${wrapper} relative py-1 flex-1 flex self-start justify-center flex-col`,
     inner: 'flex ltr:pr-2 rtl:pl-2 pb-1 relative',
     block: 'flex min-h-[3.5rem] cursor-pointer formkit-disabled:cursor-default',
+    // text-base ensures there is no zoom when you click on the input on iOS
     input: clean(`
       ${input}
       w-full
       ltr:pl-2 rtl:pr-2
-      text-sm
+      text-base
       bg-transparent
       border-none
       focus:outline-none

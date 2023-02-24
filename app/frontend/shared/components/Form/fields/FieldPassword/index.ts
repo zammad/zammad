@@ -23,7 +23,8 @@ const switchPasswordVisibility = (node: FormKitNode) => {
         props: {
           name: '$passwordVisibilityIcon',
           key: node.name,
-          class: 'absolute top-1/2 transform -translate-y-1/2 right-3',
+          class:
+            'absolute select-none cursor-pointer top-1/2 transform -translate-y-1/2 right-3',
           size: 'small',
           onClick: () => {
             props.type = props.type === 'password' ? 'text' : 'password'

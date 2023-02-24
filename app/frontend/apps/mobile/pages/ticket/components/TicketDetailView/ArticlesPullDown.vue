@@ -91,16 +91,14 @@ watchEffect(() => {
 
 <template>
   <div
-    class="flex h-0 items-center justify-center"
+    class="flex h-0 translate-y-10 items-center justify-center"
     :class="{ invisible: !arrowShown }"
   >
     <CommonIcon
       name="mobile-arrow-down"
       size="small"
       :style="{
-        transform: `translateY(22px)${
-          rotateDegree ? ` rotate(${rotateDegree}deg)` : ''
-        }`,
+        transform: `${rotateDegree ? `rotate(${rotateDegree}deg)` : ''}`,
         transition: !rotateDegree ? 'transform 0.2s' : '',
       }"
     />

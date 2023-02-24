@@ -92,12 +92,14 @@ const transition = VITE_TEST_MODE
 <template>
   <Teleport to="body">
     <Transition v-bind="transition">
+      <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
       <div
         v-if="localState"
         class="window fixed bottom-0 left-0 flex h-screen w-screen flex-col justify-end px-4 pb-4 text-white"
         :class="{ 'z-20': !zIndex }"
         :style="{ zIndex }"
         data-test-id="popupWindow"
+        @click="void 0"
         @keydown.esc="hidePopup()"
       >
         <div ref="wrapper" class="wrapper" role="alert" :aria-label="label">

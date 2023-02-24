@@ -32,7 +32,7 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
 </script>
 
 <template>
-  <div class="flex h-full flex-col overflow-hidden">
+  <div class="flex h-full flex-col">
     <LayoutHeader
       v-if="showHeader"
       ref="headerComponent"
@@ -41,7 +41,7 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
       :style="stickyStyles.header"
     />
     <main
-      :class="{ 'pb-14': showBottomNavigation }"
+      class="flex h-full flex-col"
       :style="showHeader ? stickyStyles.body : {}"
     >
       <!-- let's see how it feels without transition -->
@@ -52,7 +52,16 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
           <component :is="Component" />
         </TransitionViewNavigation>
       </router-view> -->
+      <div v-if="showBottomNavigation" class="BottomNavigationPadding"></div>
     </main>
     <LayoutBottomNavigation v-if="showBottomNavigation" />
   </div>
 </template>
+
+<style land="scss" scoped>
+.BottomNavigationPadding {
+  @apply w-full shrink-0;
+
+  height: calc(var(--safe-bottom, 0) + theme('height.14'));
+}
+</style>
