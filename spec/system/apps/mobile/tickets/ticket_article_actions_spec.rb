@@ -255,7 +255,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         msg += "<blockquote type=\"cite\">\n"
         msg += "<p>Subject: #{article_subject}<br>"
         msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)<br>'
-        msg += "To: #{CGI.escapeHTML(text_to)}<br><br></p>\n"
+        msg += "To: #{escape_html_wo_single_quotes(text_to)}<br><br></p>\n"
         msg += "<p>#{article.body}</p>\n"
         msg += '</blockquote>'
         a_string_matching(Regexp.new(msg))
