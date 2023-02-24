@@ -1,0 +1,29 @@
+Frissített jegy (#{ticket.title})
+
+<div>Üdvözöljük #{recipient.firstname},</div>
+<br>
+<div>
+A jegyet (#{ticket.title}) frissítette: "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<% if @objects[:changes].present? %>
+   <div>
+Változások:<br>
+   <% @objects[:changes].each do |key, value| %>
+     <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+   <% end %>
+   </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+   <div>
+   Információ:
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Tekintse meg ebben: #{config.product_name}</a>
+</div>

@@ -1,0 +1,15 @@
+Rendszergazdai bejelentkezés a következő rendszerbe: #{config.product_name}
+
+<div>Üdvözöljük #{user.firstname},</div>
+<br>
+<div>Egy rendszergazdai bejelentkezési kérelmet kaptunk az Ön #{config.product_name} fiókjához <b>#{user.login}</b>.</div>
+<br>
+<div>Kérjük, a folytatáshoz kattintson az alábbi hivatkozásra (vagy másolja be az URL címet a böngészőjébe):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Ez a hivatkozás egy olyan oldalra vezeti Önt, ahol bejelentkezhet.</div>
+<br>
+<div>Amennyiben nem szeretne bejelentkezni, kérjük, hagyja figyelmen kívül ezt az üzenetet.</div>
+<br>
+<div>Az Ön #{config.product_name} csapata</div>

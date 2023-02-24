@@ -1,0 +1,19 @@
+#{config.product_name} bejelentkezés új eszközről
+
+<div>Üdvözöljük #{user.firstname},</div>
+<br>
+<div>Úgy tűnik, hogy Ön <b>egy új eszközzel</b> jelentkezett be a fiókjába ekkor: "#{user_device.created_at}"</div>
+<br>
+<div>
+Az Ön eszköze: #{user_device.name}<br>
+Az Ön tartózkodási helye (relatív): #{user_device.location}<br>
+Az Ön IP-címe: #{user_device.ip}<br>
+</div>
+<br>
+<div>Az Ön eszköze felkerült az ismert eszközök listájára, amelyet itt tekinthet meg:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Amennyiben ez nem Ön volt, kérjük, távolítsa el az eszközt, változtassa meg fiókja jelszavát, és lépjen kapcsolatba a rendszergazdájával. Valaki jogosulatlanul hozzáférhetett a fiókjához.</div>
+<br>
+<div>Az Ön #{config.product_name} csapata</div>

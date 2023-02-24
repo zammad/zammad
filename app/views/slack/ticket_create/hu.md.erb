@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Létrehozta: #{current_user.longname} ekkor: #{ticket.updated_at}_
+* Csoport: #{ticket.group.name}
+* Tulajdonos: #{ticket.owner.fullname}
+* Állapot: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

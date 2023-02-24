@@ -130,7 +130,7 @@ $(function() {
         'Message': 'Mensaje',
         'Name': 'Nombre',
         'Your Email': 'Tu correo electrónico',
-        'Your Message…': '',
+        'Your Message…': 'Su mensaje…',
         'Your Name': 'tu Nombre',
       },
       'fr': {
@@ -139,7 +139,7 @@ $(function() {
         'Message': 'Message',
         'Name': 'Nom',
         'Your Email': 'Votre Email',
-        'Your Message…': '',
+        'Your Message…': 'Votre message…',
         'Your Name': 'Votre nom',
       },
       'hr': {
@@ -151,13 +151,22 @@ $(function() {
         'Your Message…': 'Vaša poruka…',
         'Your Name': 'Vaše ime',
       },
+      'hu': {
+        'Attachments': 'Csatolmányok',
+        'Email': 'E-mail',
+        'Message': 'Üzenet',
+        'Name': 'Név',
+        'Your Email': 'Az Ön e-mail címe',
+        'Your Message…': 'Az Ön üzenete…',
+        'Your Name': 'Az Ön neve',
+      },
       'it': {
         'Attachments': 'Allegati',
         'Email': 'Email',
         'Message': 'Messaggio',
         'Name': 'Nome',
         'Your Email': 'Il tuo indirizzo e-mail',
-        'Your Message…': '',
+        'Your Message…': 'Il tuo messaggio…',
         'Your Name': 'Il tuo nome',
       },
       'nl': {
