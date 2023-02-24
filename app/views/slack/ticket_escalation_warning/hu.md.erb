@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eszkalálódni fog ekkor: #{ticket.escalation_at}
+A "#{ticket.customer.longname}" ügyféltől származó jegy (#{ticket.title}) eszkalálódni fog ekkor: "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

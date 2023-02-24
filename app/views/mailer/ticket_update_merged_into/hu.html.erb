@@ -1,0 +1,11 @@
+A jegy (#{ticket.title}) egyesítve lett egy másik jegybe
+
+<div>Üdvözöljük #{recipient.firstname},</div>
+<br>
+<div>
+A jegy ("#{ticket.title}") egy másik jegybe lett egyesítve "<b>#{current_user.longname}" által.</b>".
+</div>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Tekintse meg itt: #{config.product_name}</a>
+</div>
