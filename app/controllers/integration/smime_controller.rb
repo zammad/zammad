@@ -26,7 +26,10 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def certificate_list
-    render json: SMIMECertificate.all
+    all = SMIMECertificate.all.map do |cert|
+      cert.attributes.merge({ 'subject_alternative_name' => cert.email_addresses })
+    end
+    render json: all
   end
 
   def certificate_delete

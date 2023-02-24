@@ -53,6 +53,22 @@ RSpec.describe 'Integration SMIME', type: :request do
         get endpoint, as: :json
         expect(response).to have_http_status(:ok)
 
+        expect(json_response.first.keys).to match_array %w[
+          id
+          subject
+          doc_hash
+          fingerprint
+          modulus
+          not_before_at
+          not_after_at
+          raw
+          private_key
+          private_key_secret
+          created_at
+          updated_at
+          subject_alternative_name
+        ]
+        expect(json_response.first['subject_alternative_name']).to include(email_address)
         expect(json_response.any? { |e| e['id'] == certificate.id }).to be true
       end
     end
