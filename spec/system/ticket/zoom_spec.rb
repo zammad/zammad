@@ -2381,10 +2381,18 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'Multiselect displaying and saving', authenticated_as: :authenticate, db_strategy: :reset, mariadb: true do
     let(:field_name) { SecureRandom.uuid }
-    let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[key_2 key_3]) }
+    let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => %w[value_2 value_3]) }
+    let(:options_hash) do
+      {
+        'value_1' => 'value_1',
+        'value_2' => 'value_2',
+        'value_3' => 'value_3',
+      }
+    end
+    let(:data_option) { { options: options_hash, default: [] } }
 
     def authenticate
-      create(:object_manager_attribute_multiselect, name: field_name, display: field_name, screens: {
+      create(:object_manager_attribute_multiselect, name: field_name, display: field_name, data_option: data_option, screens: {
                'edit' => {
                  'ticket.agent' => {
                    'shown'    => true,
@@ -2410,6 +2418,7 @@ RSpec.describe 'Ticket zoom', type: :system do
       values = Array(values)
       values.each do |value|
         page.find("select[name='#{field_name}']").select(value)
+        expect(page.find("select[name='#{field_name}']").value).to include(value)
       end
     end
 
@@ -2417,34 +2426,37 @@ RSpec.describe 'Ticket zoom', type: :system do
       values = page.all("select[name='#{field_name}'] option").map(&:text)
       values.each do |value|
         page.find("select[name='#{field_name}']").unselect(value)
+        expect(page.find("select[name='#{field_name}']").value).to not_include(value)
       end
     end
 
     it 'does show values properly and can save values also' do
 
       # check ticket state rendering
-      wait.until { multiselect_value == %w[key_2 key_3] }
-      expect(multiselect_value).to eq(%w[key_2 key_3])
+      expect(multiselect_value).to eq(%w[value_2 value_3])
 
       # save 2 values
       multiselect_set(%w[value_1 value_2])
       click '.js-submit'
-      wait.until { ticket.reload[field_name] == %w[key_1 key_2] && multiselect_value == %w[key_1 key_2] }
+
+      expect(ticket.reload[field_name]).to eq(%w[value_1 value_2])
 
       # save 1 value
-      multiselect_set(['value_1'])
+      multiselect_set(%w[value_1])
       click '.js-submit'
-      wait.until { ticket.reload[field_name] == ['key_1'] && multiselect_value == ['key_1'] }
+
+      expect(ticket.reload[field_name]).to eq(%w[value_1])
 
       # unset all values
       multiselect_unset_all
       click '.js-submit'
-      wait.until { ticket.reload[field_name] == [] && multiselect_value == [] }
+
+      expect(ticket.reload[field_name]).to be_empty
     end
   end
 
   describe 'Add confirmation dialog on visibility change of an article or in article creation #3924', authenticated_as: :authenticate do
-    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:ticket)  { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:article) { create(:ticket_article, ticket: ticket) }
 
     before do
