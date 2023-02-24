@@ -1999,6 +1999,7 @@ msgid "Before you mention a user, please select a group."
 msgstr "Prije nego što spomenete korisnika, molimo, odaberite grupu."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Begin forwarded message"
 msgstr "Početak proslijeđene poruke"
 
@@ -2127,6 +2128,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "CC"
@@ -2382,7 +2384,6 @@ msgid "Changed:"
 msgstr "Promijenjeno:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3173,8 +3174,7 @@ msgstr "Stvaranje novog objekta"
 msgid "Create new records"
 msgstr "Stvaranje novih zapisa"
 
-#: app/frontend/apps/mobile/pages/home/views/Home.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
 #, fuzzy
 #| msgid "Create new object"
 msgid "Create new ticket"
@@ -3459,6 +3459,7 @@ msgstr "Potrebno je ažuriranje baze podataka"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Datum"
 
@@ -5317,12 +5318,9 @@ msgstr "Unesite svoje korisničko ime ili e-mail adresu"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
+#: app/frontend/apps/mobile/pages/error/views/Error.vue
 msgid "Error"
 msgstr "Greška"
-
-#: app/frontend/apps/mobile/pages/error/views/Error.vue
-msgid "Error - %s"
-msgstr "Greška - %s"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Error during execution of auto wizard."
@@ -5552,6 +5550,7 @@ msgstr "Izdvoji informacije o Zammad privicima iz polja"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: db/seeds/settings.rb
 msgid "Facebook"
@@ -5782,6 +5781,7 @@ msgstr ""
 "spremiti negdje na sigurno prije nego što nastavite."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/shared/errors/useErrorHandler.ts
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr "Zabranjeno"
@@ -5897,6 +5897,7 @@ msgstr "Petak"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "From"
 msgstr "Od"
 
@@ -5983,6 +5984,7 @@ msgstr "Kreiranje pristupnog tokena"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
@@ -6011,6 +6013,7 @@ msgstr "GitHub zahtjev nije uspio! Detalje potražite u datoteci zapisnika"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitLab"
 msgstr "GitLab"
@@ -6064,6 +6067,10 @@ msgstr "Povratak"
 msgid "Go back"
 msgstr "Povratak"
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go home"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
@@ -6071,6 +6078,7 @@ msgstr "Odjavna poruka"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
@@ -6120,7 +6128,6 @@ msgstr "Pozdrav"
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6369,8 +6376,8 @@ msgstr "Blagdani"
 msgid "Holidays iCalendar Feed"
 msgstr "iCalendar feed blagdana"
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
 msgstr "Početna stranica"
@@ -6569,6 +6576,7 @@ msgstr ""
 "kao što su neželjena pošta, društvene mreže ili druge mape."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
 "password login as an admin."
@@ -6806,27 +6814,22 @@ msgstr "Povećanje (SystemID.brojač)"
 msgid "Info: %s"
 msgstr "Informacije: %s"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6901,6 +6904,12 @@ msgstr "Integracije"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
+msgstr "Interno"
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "Internal"
+msgid "Internal Error"
 msgstr "Interno"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
@@ -7413,6 +7422,7 @@ msgid "Linked Tickets"
 msgstr "Povezani ticketi"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -7447,6 +7457,10 @@ msgstr "Učitaj više"
 msgid "Loading content"
 msgstr "Učitavanje sadržaja"
 
+#: app/views/mobile/index.html.erb
+msgid "Loading failed, please try again later."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -7459,7 +7473,7 @@ msgstr "Učitavanje nije uspjelo."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
 msgid "Loading…"
 msgstr "Učitavanje…"
 
@@ -7787,6 +7801,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Metoda (AJAX putanja)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -8571,6 +8586,12 @@ msgstr "Nije dostupno u odabranom jeziku"
 msgid "Not configured"
 msgstr "Nije konfigurirano"
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "Not Found"
+msgid "Not found"
+msgstr "Nije pronađeno"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -8859,6 +8880,12 @@ msgstr "Opcije"
 msgid "Or migrate from another system."
 msgstr "Ili migrirajte sa drugog sustava."
 
+#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#, fuzzy
+#| msgid "or sign in using"
+msgid "Or sign in using"
+msgstr "ili se prijavi pomoću"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
 msgid "Order of Overviews"
@@ -8909,6 +8936,12 @@ msgstr "Organizaciju nije moguće ažurirati."
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
 msgstr "Ticketi organizacije"
+
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+msgid ""
+"Organization with specified ID was not found. Try checking the URL for "
+"errors."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -9027,7 +9060,6 @@ msgstr "Preinači skicu"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9807,6 +9839,7 @@ msgid "Request password login for admin?"
 msgstr "Zatražite prijavu lozinkom za administratora?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Request the password login here."
 msgstr "Ovdje zatražite prijavu privremenom lozinkom."
 
@@ -10073,6 +10106,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME integracija"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SAML"
 msgstr "SAML"
@@ -10143,6 +10177,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SSO"
 msgstr "SSO"
@@ -10180,6 +10215,7 @@ msgstr "subota"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
 msgstr "Spremi"
 
@@ -10196,12 +10232,6 @@ msgstr "Spremi kao"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "Spremi konfiguraciju"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
-msgid "Save ticket"
-msgstr "Otvorite testni ticket"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -10796,6 +10826,7 @@ msgid "Sign in"
 msgstr "Prijavi se"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
 msgid "Sign in using"
 msgstr "Prijavite se putem"
 
@@ -10942,11 +10973,6 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Nešto je pošlo po zlu. Molimo, obratite se administratoru."
 
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-msgid "Sorry, but you have insufficient rights to open this page."
-msgstr "Žao nam je, ali nemate dovoljno ovlasti za pristup ovoj stranici."
-
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr "Nažalost, neka polja nisu ispravno popunjena."
@@ -11048,7 +11074,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -11130,6 +11155,7 @@ msgstr "Ulica"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Subject"
 msgstr "Predmet"
 
@@ -11582,7 +11608,7 @@ msgstr ""
 "Konfiguracija Zammada se promijenila. Molimo, ponovno učitajte stranicu što "
 "prije je moguće."
 
-#: app/frontend/shared/stores/application.ts
+#: app/frontend/shared/stores/connection.ts
 msgid "The connection to the server was lost."
 msgstr "Veza sa serverom je izgubljena."
 
@@ -12722,6 +12748,11 @@ msgstr ""
 "target=\"zammad_app\">Pogledaj u #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid ""
+"Ticket with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
@@ -12879,6 +12910,7 @@ msgstr "Naziv obrasca"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "Za"
@@ -13073,6 +13105,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: db/seeds/settings.rb
 msgid "Twitter"
@@ -13589,6 +13622,10 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr "Korisnik je uspješno otključan!"
 
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+msgid "User with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr "Korisničko ime"
@@ -13664,7 +13701,7 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #, fuzzy
 #| msgid "Validation failed: %{errors}"
 msgid "Validation failed"
@@ -13734,25 +13771,20 @@ msgstr "Pregled"
 msgid "View from user's perspective"
 msgstr "Pogledaj kao korisnik"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -13852,6 +13884,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco
 msgid "We support:"
 msgstr "Podržavamo:"
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "We're sorry, but this page doesn't exist."
+msgid "We're sorry, but something went wrong."
+msgstr "Žao nam je, ali ova stranica ne postoji."
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "We're sorry, but something went wrong. Received message: %s"
+msgstr ""
 
 #: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
@@ -13968,6 +14010,7 @@ msgid "Week(s)"
 msgstr "Tjedan(a)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Weibo"
 msgstr "Weibo"
@@ -14345,6 +14388,24 @@ msgstr "Nemate potrebne dozvole za pristup ovoj stranici."
 msgid "You have exceeded the character limit by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this organization."
+msgstr "Žao nam je, ali nemate dovoljno ovlasti za pristup ovoj stranici."
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this ticket."
+msgstr "Žao nam je, ali nemate dovoljno ovlasti za pristup ovoj stranici."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this user."
+msgstr "Žao nam je, ali nemate dovoljno ovlasti za pristup ovoj stranici."
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "Trenutno nemate konfigurirani %s."
@@ -14364,6 +14425,12 @@ msgstr "Još niste kreirali ticket."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
 msgstr "Morate odobriti pristup svojoj web-kameri."
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Discard your unsaved changes."
+msgid "You have unsaved changes."
+msgstr "Odbacite svoje nespremljene promjene."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page:"
@@ -14518,6 +14585,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -15721,6 +15789,14 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#, fuzzy
+#~| msgid "Create a Test Ticket"
+#~ msgid "Save ticket"
+#~ msgstr "Otvorite testni ticket"
+
+#~ msgid "Error - %s"
+#~ msgstr "Greška - %s"
 
 #~ msgid "Display in new tab"
 #~ msgstr "Prikaži u novoj kartici"

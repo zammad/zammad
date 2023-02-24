@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 03:33+0000\n"
+"PO-Revision-Date: 2023-02-17 03:30+0000\n"
 "Last-Translator: Jeroen Baten <jbaten@i2rs.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
@@ -103,6 +103,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Geëscaleerd op #{ticket.escalation_at}_\n"
+"De ticket (#{ticket.title}) van \"#{ticket.customer.longname}\" is "
+"geëscaleerd sinds \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -118,6 +127,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Herinnering bereikt!_\n"
+"Een ticket heeft aandacht nodig: herinnering bereikt voor (#{ticket.title}) "
+"met klant \"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -137,6 +155,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Geupdated door #{current_user.longname} op "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -152,6 +183,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Zal escaleren op #{ticket.escalation_at}_\n"
+"De ticket (#{ticket.title}) van \"#{ticket.customer.longname}\" zal "
+"escaleren op \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1940,6 +1980,7 @@ msgid "Before you mention a user, please select a group."
 msgstr "Selecteer een groep, voordat de je een gebruiker selecteerd."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Begin forwarded message"
 msgstr "Start doorgestuurd bericht"
 
@@ -2071,6 +2112,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "CC"
 msgstr "CC"
@@ -2330,7 +2372,6 @@ msgid "Changed:"
 msgstr "Gewijzigd"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -3113,8 +3154,7 @@ msgstr "Maak nieuw object"
 msgid "Create new records"
 msgstr "Nieuw record maken"
 
-#: app/frontend/apps/mobile/pages/home/views/Home.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
+#: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
 #, fuzzy
 #| msgid "Create new object"
 msgid "Create new ticket"
@@ -3407,6 +3447,7 @@ msgstr "Database update nodig"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Date"
 msgstr "Datum"
 
@@ -5292,12 +5333,9 @@ msgstr "Voer uw gebruikersnaam of e-mailadres in"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
+#: app/frontend/apps/mobile/pages/error/views/Error.vue
 msgid "Error"
 msgstr "Error"
-
-#: app/frontend/apps/mobile/pages/error/views/Error.vue
-msgid "Error - %s"
-msgstr "Fout - %s"
 
 #: app/controllers/getting_started_controller.rb
 msgid "Error during execution of auto wizard."
@@ -5512,6 +5550,7 @@ msgstr "Extraheer zammad-bijlage-informatie uit arrays"
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/facebook/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts
 #: db/seeds/settings.rb
 msgid "Facebook"
@@ -5749,6 +5788,7 @@ msgstr ""
 "hem ergens veilig kopiëren voordat je verder gaat."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/shared/errors/useErrorHandler.ts
 #: app/frontend/shared/router/guards/before/permission.ts
 msgid "Forbidden"
 msgstr "Niet toegestaan"
@@ -5874,6 +5914,7 @@ msgstr "vrijdag"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "From"
 msgstr "Van"
 
@@ -5958,6 +5999,7 @@ msgstr "Toegangstoken krijgen"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitHub"
 msgstr "GitHub"
@@ -5986,6 +6028,7 @@ msgstr "GitHub-request is mislukt! Bekijk het logbestand voor details"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "GitLab"
 msgstr "GitLab"
@@ -6039,6 +6082,10 @@ msgstr "Terug"
 msgid "Go back"
 msgstr ""
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
+msgid "Go home"
+msgstr ""
+
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
 msgid "Goodbye message"
@@ -6046,6 +6093,7 @@ msgstr "Vaarwel bericht"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Google"
 msgstr "Google"
@@ -6099,7 +6147,6 @@ msgstr "Begroeting"
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -6357,8 +6404,8 @@ msgstr "Vakantie"
 msgid "Holidays iCalendar Feed"
 msgstr "Vakantie iKalender Feederen"
 
+#: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 #: app/frontend/apps/mobile/pages/home/routes.ts
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Home"
 msgstr "Home"
@@ -6563,6 +6610,7 @@ msgstr ""
 "ongewenste, spam-, sociale of andere mappen."
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
 "password login as an admin."
@@ -6806,27 +6854,22 @@ msgstr "Ticketnummer verhogen (SystemID.Counter)"
 msgid "Info: %s"
 msgstr "Info: %s"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/it.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/de.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -6903,6 +6946,12 @@ msgstr "Integraties"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Internal"
+msgstr "Intern"
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "Internal"
+msgid "Internal Error"
 msgstr "Intern"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
@@ -7413,6 +7462,7 @@ msgid "Linked Tickets"
 msgstr "Gekoppelde tickets"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -7451,6 +7501,10 @@ msgstr "%s meer laden"
 msgid "Loading content"
 msgstr "bevat niet een"
 
+#: app/views/mobile/index.html.erb
+msgid "Loading failed, please try again later."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
@@ -7463,7 +7517,7 @@ msgstr "Laden mislukt."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco
-#: app/frontend/shared/form/i18n/locales.ts
+#: app/frontend/shared/form/i18n/locales.ts app/views/mobile/index.html.erb
 msgid "Loading…"
 msgstr "Bezig met laden…"
 
@@ -7793,6 +7847,7 @@ msgid "Method (AJAX endpoint)"
 msgstr "Methode (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Microsoft"
 msgstr "Microsoft"
@@ -8561,6 +8616,12 @@ msgstr "Niet beschikbaar in de geselecteerde taal"
 msgid "Not configured"
 msgstr "Niet geconfigureerd"
 
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "Not Found"
+msgid "Not found"
+msgstr "Niet gevonden"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/models/chat.coffee
 #: app/assets/javascripts/app/models/email_address.coffee
@@ -8862,6 +8923,12 @@ msgstr "Opties"
 msgid "Or migrate from another system."
 msgstr "Of migreer van een ander systeem."
 
+#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
+#, fuzzy
+#| msgid "or sign in using"
+msgid "Or sign in using"
+msgstr "of login met"
+
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: db/seeds/permissions.rb
 msgid "Order of Overviews"
@@ -8914,6 +8981,12 @@ msgstr "De taal kon niet worden bijgewerkt."
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue
 msgid "Organization tickets"
 msgstr "Tickets organisatie"
+
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+msgid ""
+"Organization with specified ID was not found. Try checking the URL for "
+"errors."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -9036,7 +9109,6 @@ msgstr "Concept overschrijven"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -9826,6 +9898,7 @@ msgid "Request password login for admin?"
 msgstr "Wachtwoord login aanvragen voor admin?"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Request the password login here."
 msgstr "Vraag de wachtwoord login hier aan."
 
@@ -10056,6 +10129,7 @@ msgid "S/MIME integration"
 msgstr "S/MIME integratie"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SAML"
 msgstr "SAML"
@@ -10126,6 +10200,7 @@ msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "SSO"
 msgstr "SSO"
@@ -10163,6 +10238,7 @@ msgstr "zaterdag"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
 msgstr "Opslaan"
 
@@ -10179,12 +10255,6 @@ msgstr "Opslaan als"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Save configuration"
 msgstr "Configuratie opslaan"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
-msgid "Save ticket"
-msgstr "Creëer een test- ticket"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Saved conditions"
@@ -10791,6 +10861,7 @@ msgid "Sign in"
 msgstr "Inloggen"
 
 #: app/assets/javascripts/app/views/login.jst.eco
+#: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
 msgid "Sign in using"
 msgstr "Aanmelden met"
 
@@ -10947,11 +11018,6 @@ msgstr ""
 msgid "Something went wrong. Please contact your administrator."
 msgstr "Er is iets fout gegaan. Neem contact op met uw beheerder."
 
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-msgid "Sorry, but you have insufficient rights to open this page."
-msgstr "Sorry, je hebt niet genoeg rechten om deze pagina te bekijken."
-
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Sorry, not all fields are filled out correctly."
 msgstr "Sorry, niet alle velden zijn correct ingevuld."
@@ -11053,7 +11119,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/graphql/gql/types/overview_type.rb
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
@@ -11139,6 +11204,7 @@ msgstr "Straat"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 msgid "Subject"
 msgstr "Onderwerp"
 
@@ -11587,7 +11653,7 @@ msgstr ""
 "De configuratie van Zammad is gewijzigd, herlaad de pagina zo spoedig "
 "mogelijk."
 
-#: app/frontend/shared/stores/application.ts
+#: app/frontend/shared/stores/connection.ts
 msgid "The connection to the server was lost."
 msgstr "De verbinding met de server werd verbroken."
 
@@ -12726,6 +12792,11 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+msgid ""
+"Ticket with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| has escalated!"
@@ -12891,6 +12962,7 @@ msgstr "Titel van het formulier"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "To"
 msgstr "Aan"
@@ -13083,6 +13155,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/controllers/first_steps_controller.rb
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts
 #: db/seeds/settings.rb
 msgid "Twitter"
@@ -13590,6 +13663,10 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr "Gebruiker met succes ontgrendeld!"
 
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+msgid "User with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
 msgstr "Gebruikersnaam"
@@ -13667,7 +13744,7 @@ msgstr ""
 msgid "VIP"
 msgstr "VIP"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewUpdateButton.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #, fuzzy
 #| msgid "Bulk action failed"
 msgid "Validation failed"
@@ -13737,25 +13814,20 @@ msgstr "Weergave"
 msgid "View from user's perspective"
 msgstr "Bekijk als de gebruiker"
 
-#: app/views/mailer/ticket_create/cs.html.erb
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation/cs.html.erb
 #: app/views/mailer/ticket_escalation/fr.html.erb
 #: app/views/mailer/ticket_escalation/it.html.erb
 #: app/views/mailer/ticket_escalation/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb
-#: app/views/mailer/ticket_escalation_warning/cs.html.erb
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb
-#: app/views/mailer/ticket_reminder_reached/cs.html.erb
 #: app/views/mailer/ticket_reminder_reached/fr.html.erb
 #: app/views/mailer/ticket_reminder_reached/ru.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb
-#: app/views/mailer/ticket_update/cs.html.erb
 #: app/views/mailer/ticket_update/fr.html.erb
 #: app/views/mailer/ticket_update/ru.html.erb
 #: app/views/mailer/ticket_update/zh-cn.html.erb
@@ -13861,6 +13933,16 @@ msgstr ""
 #| msgid "We support"
 msgid "We support:"
 msgstr "Wij ondersteunen"
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+#, fuzzy
+#| msgid "We're sorry, but this page doesn't exist."
+msgid "We're sorry, but something went wrong."
+msgstr "Het spijt ons, maar deze pagina bestaat niet."
+
+#: app/frontend/shared/errors/useErrorHandler.ts
+msgid "We're sorry, but something went wrong. Received message: %s"
+msgstr ""
 
 #: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
@@ -13978,6 +14060,7 @@ msgid "Week(s)"
 msgstr "Week/Weken"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
+#: app/frontend/shared/composables/useThirdPartyAuthentication.ts
 #: db/seeds/settings.rb
 msgid "Weibo"
 msgstr "Weibo"
@@ -14371,6 +14454,24 @@ msgstr "U heeft niet de vereiste permissies om deze pagina te bekijken."
 msgid "You have exceeded the character limit by %s"
 msgstr ""
 
+#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this organization."
+msgstr "Sorry, je hebt niet genoeg rechten om deze pagina te bekijken."
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this ticket."
+msgstr "Sorry, je hebt niet genoeg rechten om deze pagina te bekijken."
+
+#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
+#, fuzzy
+#| msgid "Sorry, but you have insufficient rights to open this page."
+msgid "You have insufficient rights to view this user."
+msgstr "Sorry, je hebt niet genoeg rechten om deze pagina te bekijken."
+
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
 msgstr "U heeft %s geconfigureerd."
@@ -14390,6 +14491,12 @@ msgstr "Je hebt nog geen ticket gemaakt."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "You have to allow access to your webcam."
 msgstr "U moet toegang tot uw webcam toestaan."
+
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#, fuzzy
+#| msgid "Discard your unsaved changes."
+msgid "You have unsaved changes."
+msgstr "Annuleer niet opgeslagen wijzigingen."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
@@ -14546,6 +14653,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
+#: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Zammad"
 msgstr "Zammad"
 
@@ -15764,6 +15872,14 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Create a Test Ticket"
+#~ msgid "Save ticket"
+#~ msgstr "Creëer een test- ticket"
+
+#~ msgid "Error - %s"
+#~ msgstr "Fout - %s"
 
 #~ msgid "Display in new tab"
 #~ msgstr "Weergeven in nieuwe tab"
