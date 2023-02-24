@@ -52,7 +52,7 @@ const emit = defineEmits<{
 const updateMutation = new MutationHandler(props.mutation({}), {
   errorNotificationMessage: props.errorNotificationMessage,
 })
-const { form, isDirty, isDisabled, canSubmit } = useForm()
+const { form, isDirty, canSubmit } = useForm()
 
 const objectAtrributes: Record<string, string> =
   props.object?.objectAttributeValues?.reduce(
@@ -121,12 +121,7 @@ const saveObject = async (formData: FormData) => {
 <template>
   <CommonDialog class="w-full" no-autofocus :name="name">
     <template #before-label>
-      <button
-        class="text-white"
-        :disabled="isDisabled"
-        :class="{ 'opacity-50': isDisabled }"
-        @click="cancelDialog"
-      >
+      <button class="text-white" @click="cancelDialog">
         {{ $t('Cancel') }}
       </button>
     </template>

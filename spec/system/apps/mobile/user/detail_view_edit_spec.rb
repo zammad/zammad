@@ -87,6 +87,32 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
     expect(customer.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', text_attribute: 'foobar', address: 'München')
   end
 
+  it 'has an always enabled cancel button' do
+    click_button('Edit')
+
+    wait_for_form_to_settle('user-edit')
+
+    find_button('Cancel').click
+
+    expect(page).to have_no_css('[role=dialog]')
+  end
+
+  it 'shows a confirmation dialog when leaving the screen' do
+    click_button('Edit')
+
+    wait_for_form_to_settle('user-edit')
+
+    within_form(form_updater_gql_number: 1) do
+      find_input('Text Attribute').type('foobar')
+    end
+
+    find_button('Cancel').click
+
+    within '[role=alert]' do
+      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
+    end
+  end
+
   context 'when viewing an admin user as an agent' do
     let(:customer) { create(:admin) }
 
