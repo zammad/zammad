@@ -61,6 +61,23 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         'priority_id' => include(expected_result['priority_id']),
       )
     end
+
+    it 'returns group_id as integer' do
+      expect(resolved_result.resolve).to include(
+        'group_id' => include(value: Group.last.id)
+      )
+    end
+
+    context 'when group_id is given in data' do
+      let(:data) { { 'group_id' => Group.last.id } }
+
+      it 'returns no new value for group' do
+        expect(resolved_result.resolve).to not_include(
+          'group_id' => include(value: Group.last.id)
+        )
+      end
+    end
+
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'

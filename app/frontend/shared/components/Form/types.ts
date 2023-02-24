@@ -63,6 +63,7 @@ export interface FormSchemaField {
   name: string
   internal?: boolean
   value?: FormFieldValue
+  initialValue?: FormFieldValue
   label?: string
   labelSrOnly?: boolean
   labelPlaceholder?: string

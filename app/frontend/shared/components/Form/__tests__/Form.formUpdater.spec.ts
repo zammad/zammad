@@ -101,6 +101,20 @@ const checkFieldRequired = (
   }
 }
 
+const checkFieldDirty = (
+  wrapper: ExtendedRenderResult,
+  label: string,
+  dirty: boolean,
+) => {
+  const outer = getOuterFieldElement(wrapper, label)
+
+  if (dirty) {
+    expect(outer).toHaveAttribute('data-dirty')
+  } else {
+    expect(outer).not.toHaveAttribute('data-dirty')
+  }
+}
+
 const checkFieldDisabled = (
   wrapper: ExtendedRenderResult,
   label: string,
@@ -1202,5 +1216,47 @@ describe('Form.vue - Form Updater - special situtations', () => {
     await waitUntil(() => mockFormUpdaterApi.calls.resolve === 2)
 
     checkFieldRequired(wrapper, 'Example', true)
+  })
+
+  test('test dirty flag set for initialValues changes from form update', async () => {
+    const { wrapper } = await renderForm(
+      {
+        formUpdater: {
+          example: {
+            value: 'changed',
+          },
+        },
+      },
+      {
+        props: {
+          initialValues: {
+            example: 'test',
+          },
+        },
+      },
+    )
+
+    checkFieldDirty(wrapper, 'Example', true)
+  })
+
+  test('test dirty flag unset for initialValues changes from form update', async () => {
+    const { wrapper } = await renderForm(
+      {
+        formUpdater: {
+          example: {
+            value: 'test',
+          },
+        },
+      },
+      {
+        props: {
+          initialValues: {
+            example: 'test',
+          },
+        },
+      },
+    )
+
+    checkFieldDirty(wrapper, 'Example', false)
   })
 })

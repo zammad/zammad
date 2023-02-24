@@ -8,7 +8,6 @@ import {
 import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { setupView } from '@tests/support/mock-user'
-import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
 
 describe('visiting user page', () => {

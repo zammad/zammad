@@ -35,16 +35,16 @@ RSpec.describe(FormUpdater::Updater::User::Edit) do
 
       expect(resolved_result.resolve).to include(
         'organization_ids' => include({
-                                        value:   secondary_organizations.map(&:id),
-                                        options: secondary_organizations.each_with_object([]) do |organization, options|
-                                                   options << {
-                                                     value:        organization.id,
-                                                     label:        organization.name,
-                                                     organization: {
-                                                       active: organization.active,
-                                                     }
-                                                   }
-                                                 end
+                                        initialValue: secondary_organizations.map(&:id),
+                                        options:      secondary_organizations.each_with_object([]) do |organization, options|
+                                                        options << {
+                                                          value:        organization.id,
+                                                          label:        organization.name,
+                                                          organization: {
+                                                            active: organization.active,
+                                                          }
+                                                        }
+                                                      end
                                       }),
       )
     end

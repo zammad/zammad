@@ -65,7 +65,15 @@ class FormUpdater::Updater
       result_initialize_field(name)
 
       result[relation_field[:name]][:options] = relation_resolver.options
+
+      ensure_field_value_int(result[relation_field[:name]])
     end
+  end
+
+  def ensure_field_value_int(field)
+    return if field[:value].blank?
+
+    field[:value] = field[:value].to_i
   end
 
   RELATION_CLASS_PREFIX = 'FormUpdater::Relation::'.freeze

@@ -164,6 +164,7 @@ const formElement = ref<HTMLElement>()
 const changeFields = toRef(props, 'changeFields')
 
 const updaterChangedFields = new Set<string>()
+const changeInitialValue = new Map<string, FormFieldValue>()
 
 const autofocusFirstInput = () => {
   nextTick(() => {
@@ -184,16 +185,25 @@ const setFormNode = (node: FormKitNode) => {
 
   node.settled.then(() => {
     showInitialLoadingAnimation.value = false
-    formKitInitialNodesSettled.value = true
 
-    // Reset directly after the initial request.
-    updaterChangedFields.clear()
+    nextTick(() => {
+      changeInitialValue.forEach((value, fieldName) => {
+        getNode(fieldName)?.input(value, false)
+      })
 
-    const formName = node.context?.id || node.name
-    testFlags.set(`${formName}.settled`)
-    emit('settled')
+      changeInitialValue.clear()
 
-    if (props.autofocus) autofocusFirstInput()
+      formKitInitialNodesSettled.value = true
+
+      // Reset directly after the initial request.
+      updaterChangedFields.clear()
+
+      const formName = node.context?.id || node.name
+      testFlags.set(`${formName}.settled`)
+      emit('settled')
+
+      if (props.autofocus) autofocusFirstInput()
+    })
   })
 
   node.on('autofocus', autofocusFirstInput)
@@ -615,23 +625,44 @@ const updateSchemaDataField = (
 const updateChangedFields = (
   changedFields: Record<string, Partial<FormSchemaField>>,
 ) => {
+  const handleUpdatedInitialFieldValue = (
+    fieldName: string,
+    value: FormFieldValue,
+    directly: boolean,
+    field: Partial<FormSchemaField>,
+  ) => {
+    if (value === undefined) return
+
+    if (directly) {
+      field.value = value
+    } else if (!formKitInitialNodesSettled.value) {
+      changeInitialValue.set(fieldName, value)
+    }
+  }
+
   Object.keys(changedFields).forEach(async (fieldName) => {
     if (!schemaData.fields[fieldName]) return
 
-    const { value, ...changedFieldProps } = changedFields[fieldName]
+    const { initialValue, value, ...changedFieldProps } =
+      changedFields[fieldName]
 
     const field: SetRequired<Partial<FormSchemaField>, 'name'> = {
       ...changedFieldProps,
       name: fieldName,
     }
 
-    if (
-      value !== undefined &&
-      (!formKitInitialNodesSettled.value ||
-        (!schemaData.fields[fieldName].show && changedFieldProps.show))
-    ) {
-      field.value = value
-    }
+    const showField =
+      !schemaData.fields[fieldName].show && changedFieldProps.show
+
+    // This happens for the initial updater, when the form is not settled yet or the field was not rendered yet.
+    // In this ase we need to remember the changes and do it afterwards after the form is settled the first time.
+    // Sometimes the value from the server is the "real" initial value, for this the `initialValue` can be used.
+    handleUpdatedInitialFieldValue(
+      fieldName,
+      value ?? initialValue,
+      showField || initialValue !== undefined,
+      field,
+    )
 
     // When a field will be visible with the update call, we need to wait before on a settled form, before we
     // continue (so that we have all values present inside the form).
@@ -651,9 +682,9 @@ const updateChangedFields = (
     if (!formKitInitialNodesSettled.value) return
 
     if (
-      !('value' in field) &&
+      !showField &&
       value !== undefined &&
-      value !== values.value[fieldName]
+      !isEqual(value, values.value[fieldName])
     ) {
       updaterChangedFields.add(fieldName)
       getNode(fieldName)?.input(value, false)
