@@ -23,5 +23,5 @@ RSpec.describe(FormUpdater::Updater::Organization::Edit) do
     []
   end
 
-  include_examples 'ChecksCoreWorkflow', object_name: 'Organization'
+  include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Organization'
 end

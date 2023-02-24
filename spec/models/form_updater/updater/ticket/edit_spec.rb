@@ -63,6 +63,6 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
     end
   end
 
-  include_examples 'ChecksCoreWorkflow', object_name: 'Ticket'
+  include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
   include_examples 'HasSecurityOptions', type: 'edit'
 end

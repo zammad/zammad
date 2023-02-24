@@ -166,7 +166,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when creating a phone article' do
-      include_examples 'create article', 'Phone', attachments: true, conditional: false do
+      include_examples 'mobile app: create article', 'Phone', attachments: true, conditional: false do
         let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
         let(:type)         { Ticket::Article::Type.lookup(name: 'phone') }
         let(:content_type) { 'text/html' }
@@ -174,7 +174,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when creating sms article' do
-      include_examples 'create article', 'Sms', conditional: true do
+      include_examples 'mobile app: create article', 'Sms', conditional: true do
         let(:article) do
           create(
             :ticket_article,
@@ -188,7 +188,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when creating telegram article' do
-      include_examples 'create article', 'Telegram', attachments: true do
+      include_examples 'mobile app: create article', 'Telegram', attachments: true do
         let(:article) do
           create(
             :ticket_article,
@@ -202,7 +202,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when replying to twitter status ticket' do
-      include_examples 'create article', 'Twitter', attachments: false do
+      include_examples 'mobile app: create article', 'Twitter', attachments: false do
         let(:article) do
           create(
             :twitter_article,
@@ -217,7 +217,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when replying to twitter dm ticket' do
-      include_examples 'create article', 'Twitter', attachments: false do
+      include_examples 'mobile app: create article', 'Twitter', attachments: false do
         let(:article) do
           create(
             :twitter_dm_article,
@@ -233,7 +233,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
 
     context 'when replying to a facebook post' do
-      include_examples 'create article', 'Facebook', attachments: false do
+      include_examples 'mobile app: create article', 'Facebook', attachments: false do
         let(:article) do
           create(
             :ticket_article,

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'ChecksCoreWorkflow' do |object_name:|
+RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
   let(:field_name) { SecureRandom.uuid }
   let(:screens) do
     {

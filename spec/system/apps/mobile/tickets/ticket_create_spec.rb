@@ -273,7 +273,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
   end
 
   describe 'Core Workflow' do
-    include_examples 'core workflow' do
+    include_examples 'mobile app: core workflow' do
       let(:object_name) { 'Ticket' }
       let(:form_updater_gql_number) { 2 }
       let(:before_it) do

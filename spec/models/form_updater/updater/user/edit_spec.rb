@@ -50,5 +50,5 @@ RSpec.describe(FormUpdater::Updater::User::Edit) do
     end
   end
 
-  include_examples 'ChecksCoreWorkflow', object_name: 'User'
+  include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'User'
 end

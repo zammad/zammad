@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'reply article' do |type_label, note, internal: false, attachments: false|
+RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal: false, attachments: false|
   let(:attributes) do
     attributes = {
       type_id:     type_id,

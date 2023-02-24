@@ -53,14 +53,14 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     end
 
     context 'with default fields as outbound email' do
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:article) { create(:ticket_article, :outbound_email, ticket: ticket, from: 'from-email@example.com', to: 'to-email@example.com') }
         let(:to) { ['to-email@example.com'] }
       end
     end
 
     context 'with default fields as inbound email' do
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:article) { create(:ticket_article, :inbound_email, ticket: ticket, from: 'from-email@example.com', to: 'to-email@example.com') }
         let(:to) { ['from-email@example.com'] }
       end
@@ -70,14 +70,14 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       let(:type_id) { Ticket::Article::Type.find_by(name: 'email').id }
 
       context 'when agent sent article take article email' do
-        include_examples 'reply article', 'Email', attachments: true do
+        include_examples 'mobile app: reply article', 'Email', attachments: true do
           let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket, to: 'to-email@example.com') }
           let(:to)      { ['to-email@example.com'] }
         end
       end
 
       context 'when customer sent article from phone take customer email' do
-        include_examples 'reply article', 'Email', attachments: true do
+        include_examples 'mobile app: reply article', 'Email', attachments: true do
           let(:article) { create(:ticket_article, :inbound_phone, ticket: ticket, from: '+423424235533') }
           let(:to) { ['customer@example.com'] }
         end
@@ -89,7 +89,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         Setting.set('ui_ticket_zoom_article_email_full_quote_header', true)
       end
 
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:before_click) do
           lambda {
             select_text('.Content')
@@ -113,7 +113,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
       end
 
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:before_click) do
           lambda {
             select_text('.Content')
@@ -131,7 +131,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
       end
 
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:before_click) do
           lambda {
             find_button('Add reply').click
@@ -155,7 +155,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         Setting.set('ui_ticket_zoom_article_email_full_quote', true)
       end
 
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:before_click) do
           lambda {
             find_button('Add reply').click
@@ -172,7 +172,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     end
 
     context 'when article has multiple email addresses, can reply all' do
-      include_examples 'reply article', 'Email', attachments: true do
+      include_examples 'mobile app: reply article', 'Email', attachments: true do
         let(:trigger_label) { 'Reply All' }
         let(:to)            { ['e1@example.com', 'e2@example.com'] }
         let(:cc)            { ['e3@example.com'] }
@@ -186,14 +186,14 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
 
       context 'when article has a subject use subject' do
-        include_examples 'reply article', 'Email', attachments: true do
+        include_examples 'mobile app: reply article', 'Email', attachments: true do
           let(:article_subject) { 'Hello World' }
           let(:article) { create(:ticket_article, :outbound_email, ticket: ticket, subject: article_subject) }
         end
       end
 
       context 'when article doesn\'t have a subject use ticket title' do
-        include_examples 'reply article', 'Email', attachments: true do
+        include_examples 'mobile app: reply article', 'Email', attachments: true do
           let(:article) { create(:ticket_article, :outbound_email, ticket: ticket, subject: nil) }
           let(:article_subject) { ticket.title }
         end
@@ -280,11 +280,11 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
           article
         end
 
-        include_examples 'reply article', 'Email', attachments: true
+        include_examples 'mobile app: reply article', 'Email', attachments: true
       end
 
       context 'without attachments' do
-        include_examples 'reply article', 'Email', attachments: true
+        include_examples 'mobile app: reply article', 'Email', attachments: true
       end
 
       context 'when forwarding phone article' do
@@ -292,7 +292,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         let(:text_to) { "#{ticket.customer.fullname} <#{ticket.customer.email}>" }
         let(:type_id) { Ticket::Article::Type.find_by(name: 'email').id }
 
-        include_examples 'reply article', 'Email', attachments: true
+        include_examples 'mobile app: reply article', 'Email', attachments: true
       end
 
       context 'without a header' do
@@ -315,7 +315,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
           Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
         end
 
-        include_examples 'reply article', 'Email', attachments: true
+        include_examples 'mobile app: reply article', 'Email', attachments: true
       end
     end
   end
@@ -332,7 +332,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     end
 
     context 'with default fields' do
-      include_examples 'reply article', 'Sms', 'with default fields' do
+      include_examples 'mobile app: reply article', 'Sms', 'with default fields' do
         let(:to) { ['+41234567890'] }
       end
     end
@@ -340,7 +340,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     context 'with additional custom recipient' do
       let(:phone_number) { Faker::PhoneNumber.cell_phone_in_e164 }
 
-      include_examples 'reply article', 'Sms', 'to another recipient number' do
+      include_examples 'mobile app: reply article', 'Sms', 'to another recipient number' do
         let(:new_to)    { phone_number }
         let(:result_to) { [phone_number, '+41234567890'] }
       end
@@ -359,7 +359,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       )
     end
 
-    include_examples 'reply article', 'Telegram', attachments: true
+    include_examples 'mobile app: reply article', 'Telegram', attachments: true
   end
 
   context 'when article was created as a twitter status' do
@@ -371,7 +371,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       )
     end
 
-    include_examples 'reply article', 'Twitter', attachments: false do
+    include_examples 'mobile app: reply article', 'Twitter', attachments: false do
       let(:current_text) { "#{article.from} " }
       let(:new_text)     { '' }
       let(:result_text)  { "#{article.from}&nbsp\n/#{agent.firstname.first}#{agent.lastname.first}" }
@@ -379,7 +379,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
   end
 
   context 'when article was created as a twitter dm' do
-    include_examples 'reply article', 'Twitter', 'DM when sender is customer', attachments: false do
+    include_examples 'mobile app: reply article', 'Twitter', 'DM when sender is customer', attachments: false do
       let(:article) do
         create(
           :twitter_dm_article,
@@ -391,7 +391,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       let(:to) { [article.from] }
     end
 
-    include_examples 'reply article', 'Twitter', 'DM when sender is agent', attachments: false do
+    include_examples 'mobile app: reply article', 'Twitter', 'DM when sender is agent', attachments: false do
       let(:article) do
         create(
           :twitter_dm_article,
@@ -414,7 +414,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       )
     end
 
-    include_examples 'reply article', 'Facebook', attachments: false do
+    include_examples 'mobile app: reply article', 'Facebook', attachments: false do
       let(:type_id)     { Ticket::Article::Type.lookup(name: 'facebook feed comment').id }
       let(:in_reply_to) { nil }
     end
