@@ -2353,7 +2353,7 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_if_not_exists(
-  title:       __('Time Accounting Selector'),
+  title:       __('Auto Assignment Selector'),
   name:        'ticket_auto_assignment_selector',
   area:        'Web::Base',
   description: __('Enable auto assignment for following matching tickets.'),
@@ -2370,7 +2370,7 @@ Setting.create_if_not_exists(
   frontend:    true
 )
 Setting.create_or_update(
-  title:       __('Time Accounting Selector'),
+  title:       __('Auto Assignment Ignored Users'),
   name:        'ticket_auto_assignment_user_ids_ignore',
   area:        'Web::Base',
   description: __('Define an exception of "automatic assignment" for certain users (e.g. executives).'),

@@ -1426,6 +1426,14 @@ msgstr ""
 msgid "Auto Assignment"
 msgstr ""
 
+#: db/seeds/settings.rb
+msgid "Auto Assignment Ignored Users"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Selector"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
 msgstr ""
