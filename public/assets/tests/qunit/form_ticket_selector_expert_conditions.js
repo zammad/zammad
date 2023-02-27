@@ -1159,6 +1159,72 @@ QUnit.test('enables removal of multiple subclauses with nested conditions', (ass
   assert.notOk(el.find('.js-filterElement:nth-child(5) .filter-controls .js-remove').hasClass('is-disabled'), 'state condition supports removal')
 })
 
+QUnit.test('handles tags attribute without any errors #4507', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.tags',
+          operator: 'contains one',
+          value: 'tag 1',
+        },
+        {
+          name: 'ticket.tags',
+          operator: 'contains one not',
+          value: 'tag 2',
+        },
+      ],
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-operator select option:selected').text(), 'contains one', 'contains one operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-value input.form-control').val(), 'tag 1', 'tag 1 input value')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-attributeSelector select option:selected').text(), 'Tags', 'tags attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-operator select option:selected').text(), 'contains one not', 'contains one not operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-value input.form-control').val(), 'tag 2', 'tag 2 input value')
+
+  el.find('.js-filterElement:nth-child(2) .js-operator select').val('contains all').trigger('change')
+  el.find('.js-filterElement:nth-child(2) .js-value input.form-control').val('tag 3, tag 4').trigger('change')
+  el.find('.js-filterElement:nth-child(3) .js-operator select').val('contains all not').trigger('change')
+  el.find('.js-filterElement:nth-child(3) .js-value input.form-control').val('tag 5, tag 6').trigger('change')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.tags',
+          operator: 'contains all',
+          value: 'tag 3, tag 4',
+        },
+        {
+          name: 'ticket.tags',
+          operator: 'contains all not',
+          value: 'tag 5, tag 6',
+        },
+      ],
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
 /*
  * Examples in this group are with expert conditions turned off.
  */
