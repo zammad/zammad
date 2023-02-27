@@ -498,6 +498,10 @@ RSpec.describe 'Ticket Create', type: :system do
       ObjectManager::Attribute.where(name: %i[date_test datetime_test]).destroy_all
     end
 
+    around do |example|
+      Time.use_zone('Europe/London') { example.run }
+    end
+
     before do
       visit '/'
 
