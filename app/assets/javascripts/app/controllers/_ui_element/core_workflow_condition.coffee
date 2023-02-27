@@ -157,7 +157,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false
           config.default  = undefined
-          if config.type is 'email' || config.type is 'tel'
+          if config.type is 'email' || config.type is 'tel' || config.type is 'url'
             config.type = 'text'
           if config.tag.match(/^(tree_)?select$/)
             config.multiple = true
