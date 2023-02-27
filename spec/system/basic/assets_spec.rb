@@ -5,7 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Assets', db_strategy: :reset, type: :system do
   let(:organization) { create(:organization, note: 'hello') }
   let(:customer)     { create(:customer, organization: organization, note: 'hello', last_login: Time.zone.now, login_failed: 1) }
-  let(:agent)        { create(:agent, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
+  let(:agent) do
+    user = create(:agent, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1)
+    create(:twitter_authorization, user: user)
+    user
+  end
   let(:admin)        { create(:admin, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
   let(:ticket)       { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
 
@@ -106,6 +110,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       page.execute_script("return App.User.find(#{agent.id}).firstname")
     end
 
+    def owner_accounts
+      page.execute_script("return App.User.find(#{agent.id}).accounts")
+    end
+
     def owner_details
       [
         page.execute_script("return App.User.find(#{agent.id}).last_login"),
@@ -135,6 +143,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       it 'can access owner firstname' do
         expect(owner_firstname).not_to be_nil
       end
+
+      it 'can access not owner owner accounts' do
+        expect(owner_accounts).to be_nil
+      end
     end
 
     describe 'when agent', authenticated_as: :agent do
@@ -153,6 +165,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       it 'can access owner firstname' do
         expect(owner_firstname).not_to be_nil
       end
+
+      it 'can access owner owner accounts' do
+        expect(owner_accounts).not_to be_nil
+      end
     end
 
     describe 'when admin', authenticated_as: :admin do
@@ -170,6 +186,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
       it 'can access owner firstname' do
         expect(owner_firstname).not_to be_nil
+      end
+
+      it 'can access owner owner accounts' do
+        expect(owner_accounts).not_to be_nil
       end
     end
   end

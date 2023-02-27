@@ -42,16 +42,9 @@ returns
       data[ app_model ][ id ] = local_attributes
 
       # get linked accounts
-      local_attributes['accounts'] = Rails.cache.fetch("User/authorizations/#{cache_key_with_version}") do
-        local_accounts = {}
-        authorizations = self.authorizations
-        authorizations.each do |authorization|
-          local_accounts[authorization.provider] = {
-            uid:      authorization[:uid],
-            username: authorization[:username]
-          }
-        end
-        local_accounts
+      accounts = assets_accounts
+      if accounts.present?
+        local_attributes['accounts'] = accounts
       end
 
       # get roles
@@ -111,6 +104,22 @@ returns
       # customer assets for other user
       attributes = super
       attributes.slice('id', 'firstname', 'lastname', 'image', 'image_source', 'active')
+    end
+
+    def assets_accounts
+      return nil if UserInfo.assets.present? && !UserInfo.assets.agent? && UserInfo.current_user_id != id
+
+      Rails.cache.fetch("User/authorizations/#{cache_key_with_version}") do
+        local_accounts = {}
+        authorizations = self.authorizations
+        authorizations.each do |authorization|
+          local_accounts[authorization.provider] = {
+            uid:      authorization[:uid],
+            username: authorization[:username]
+          }
+        end
+        local_accounts
+      end
     end
   end
 end
