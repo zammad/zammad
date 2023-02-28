@@ -17,7 +17,7 @@ function detect_os () {
     OS="DEBIAN"
   elif [ "${ID}" == "centos" ] || [ "${ID}" == "fedora" ] || [ "${ID}" == "rhel" ]; then
     OS="REDHAT"
-  elif [ "${ID}" == "opensuse" ] || [ "${ID}" == "sles" ] || [ "${ID}" == "suse" ]; then
+  elif [[ "${ID}" =~ suse|sles ]]; then
     OS="SUSE"
   else
     OS="UNKNOWN"
