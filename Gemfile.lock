@@ -287,7 +287,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.3.0)
-    mysql2 (0.5.4)
+    mysql2 (0.5.5)
     naught (1.1.0)
     nestful (1.1.4)
     net-ftp (0.2.0)
@@ -669,7 +669,7 @@ DEPENDENCIES
   messagebird-rest
   mime-types
   minitest-profile
-  mysql2 (= 0.5.4)
+  mysql2
   net-ftp
   net-http
   net-imap
