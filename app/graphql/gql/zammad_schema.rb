@@ -13,9 +13,9 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   description 'This is the Zammad GraphQL API'
 
-  # Set maximum page size and depth to protect the system.
-  #   Values may need to be adjusted in future.
-  default_max_page_size 1000
+  # Set default limits to protect the system. Values may need to be adjusted in future.
+  default_max_page_size 100
+  max_complexity 10_000
 
   # The GraphQL introspection query has a depth of 13, so allow that in the development env.
   max_depth Rails.env.eql?('development') ? 13 : 10
@@ -107,7 +107,7 @@ end
 # Temporary Hack: only process trigger events if ActionCable is enabled.
 # TODO: Remove when this switch is not needed any more.
 module GraphQL
-  class Subscriptions # rubocop:disable GraphQL/ObjectDescription
+  class Subscriptions # rubocop:disable GraphQL/ObjectDescription, GraphQL/MaxComplexitySchema, GraphQL/MaxDepthSchema
     if !method_defined?(:orig_trigger)
       alias orig_trigger trigger
       def trigger(...)
