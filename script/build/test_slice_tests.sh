@@ -31,7 +31,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -73,7 +72,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   # test/browser/agent_ticket_time_accounting_test.rb
   # rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -114,7 +112,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -155,7 +152,6 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -196,7 +192,6 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -238,7 +233,6 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   # test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -280,7 +274,6 @@ elif [ "$LEVEL" == '7' ]; then
   rm test/browser/agent_ticket_overview_pending_til_test.rb
   rm test/browser/agent_ticket_overview_tab_test.rb
   # test/browser/agent_ticket_tag_test.rb
-  # test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb
@@ -322,7 +315,6 @@ elif [ "$LEVEL" == '8' ]; then
   # test/browser/agent_ticket_overview_pending_til_test.rb
   # test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
-  rm test/browser/agent_ticket_task_changed_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
   rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update_with_attachment_refresh_test.rb

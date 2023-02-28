@@ -2808,4 +2808,35 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
     end
   end
+
+  describe 'Incorrect notification when closing a tab after setting up an object #2042', db_strategy: :reset do
+    let(:ticket) { create(:ticket, group: Group.first) }
+
+    before do
+      # Create test ticket before adding the test object attribute.
+      ticket
+
+      create(:object_manager_attribute_text, name: 'text_test', display: 'text_test', screens: {
+               'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => true,
+                   'required' => true,
+                 }
+               }
+             })
+      ObjectManager::Attribute.migration_execute
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'does not show the discard button nor the confirmation dialog' do
+      within(:active_content) do
+        expect(page).to have_no_css('.js-reset')
+      end
+
+      taskbar_tab_close("Ticket-#{ticket.id}", discard_changes: false)
+
+      expect(page).to have_no_css('.modal')
+    end
+  end
 end
