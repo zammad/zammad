@@ -125,11 +125,33 @@ targets:
       - libImlib2-1
       - imlib2
     build_dependencies:
+      # Add packages required for build that are not in the official SLES repo.
+      # Direct URLs must be used since we cannot add repos on packager.io
+      #   (would require a paid SLES account and credential management on packager.io).
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-devel-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-filters-1.4.5-12.1.1.x86_64.rpm
       - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/libImlib2-1-1.4.5-12.1.1.x86_64.rpm
       - shared-mime-info
+  sles-15:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - libImlib2-1
+      - imlib2
+      - shared-mime-info
+    build_dependencies:
+      # Add packages required for build that are not in the official SLES repo.
+      # Direct URLs must be used since we cannot add repos on packager.io
+      #   (would require a paid SLES account and credential management on packager.io).
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
+      - shared-mime-info
+      - libmariadb-devel
 before:
   - contrib/packager.io/before.sh
 after:
