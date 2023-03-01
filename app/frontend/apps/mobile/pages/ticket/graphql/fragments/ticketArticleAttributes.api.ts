@@ -55,13 +55,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   bodyWithUrls
   internal
   createdAt
-  originBy {
-    id
-    fullname
-    firstname
-    lastname
-  }
-  createdBy {
+  author {
     id
     fullname
     firstname

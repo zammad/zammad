@@ -161,7 +161,7 @@ describe('twitter article action', () => {
           article.from = { raw: 'res-from' }
           article.to = { raw: 'res-to' }
           article.sender = null
-          article.createdBy.authorizations = [
+          article.author.authorizations = [
             { provider: 'twitter', username: 'name', uid: '123' },
           ]
         },
@@ -180,9 +180,7 @@ describe('twitter article action', () => {
           article.from = { raw: 'res-from' }
           article.to = { raw: 'res-to' }
           article.sender = null
-          article.createdBy.authorizations = [
-            { provider: 'twitter', uid: '123' },
-          ]
+          article.author.authorizations = [{ provider: 'twitter', uid: '123' }]
         },
       )
       action.perform!(ticket, article, options)

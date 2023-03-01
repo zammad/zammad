@@ -128,7 +128,7 @@ const getRecipientArticle = (
   const senderIsSystem = areAddressesSystem(article.from)
   const recipientIsSystem = areAddressesSystem(article.to)
 
-  const senderEmail = article.createdBy.email
+  const senderEmail = article.author.email
   const isSystem =
     !recipientIsSystem &&
     sender === 'Agent' &&

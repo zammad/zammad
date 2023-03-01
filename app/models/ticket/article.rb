@@ -161,6 +161,16 @@ returns
 
 =begin
 
+The originator (origin_by, if any) or the creator of an article.
+
+=end
+
+  def author
+    origin_by || created_by
+  end
+
+=begin
+
 get body as html
 
   article = Ticket::Article.find(123)

@@ -63,7 +63,7 @@ const filterAttachments = (article: TicketArticle) => {
       <ArticleBubble
         v-if="row.type === 'article-bubble'"
         :content="row.article.bodyWithUrls"
-        :user="row.article.createdBy"
+        :user="row.article.author"
         :internal="row.article.internal"
         :content-type="row.article.contentType"
         :position="row.article.sender?.name !== 'Customer' ? 'left' : 'right'"

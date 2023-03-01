@@ -86,7 +86,7 @@ const secondsToDelete = (article: TicketArticle, deleteTimeframe: number) => {
 const isDeletable = (article: TicketArticle, deleteTimeframe: number) => {
   const session = useSessionStore()
 
-  if (article.createdBy?.id !== session.userId) return false
+  if (article.author?.id !== session.userId) return false
 
   if (article.type?.communication && !article.internal) return false
 

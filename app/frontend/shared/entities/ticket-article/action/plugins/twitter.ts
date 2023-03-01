@@ -53,7 +53,7 @@ const replyToTwitterDm = ((ticket, article, { openReplyDialog }) => {
   else if (sender === 'Agent') to = article.to?.raw
 
   if (!to) {
-    const autorization = article.createdBy.authorizations?.find(
+    const autorization = article.author.authorizations?.find(
       (a) => a.provider === 'twitter',
     )
     to = autorization?.username || autorization?.uid

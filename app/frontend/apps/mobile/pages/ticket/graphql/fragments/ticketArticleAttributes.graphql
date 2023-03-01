@@ -51,13 +51,7 @@ fragment ticketArticleAttributes on TicketArticle {
   bodyWithUrls
   internal
   createdAt
-  originBy {
-    id
-    fullname
-    firstname
-    lastname
-  }
-  createdBy {
+  author {
     id
     fullname
     firstname

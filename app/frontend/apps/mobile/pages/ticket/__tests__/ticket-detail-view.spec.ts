@@ -121,12 +121,12 @@ describe('user avatars', () => {
 
   it('renders article user image when he is inactive', async () => {
     const articles = defaultArticles()
-    const { createdBy } = articles.description.edges[0].node
-    createdBy.active = false
-    createdBy.image = 'avatar.png'
-    createdBy.firstname = 'Max'
-    createdBy.lastname = 'Mustermann'
-    createdBy.fullname = 'Max Mustermann'
+    const { author } = articles.description.edges[0].node
+    author.active = false
+    author.image = 'avatar.png'
+    author.firstname = 'Max'
+    author.lastname = 'Mustermann'
+    author.fullname = 'Max Mustermann'
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
       articles,
     })
@@ -135,7 +135,7 @@ describe('user avatars', () => {
     await waitUntilTicketLoaded()
 
     expect(
-      view.getByRole('img', { name: `Avatar (${createdBy.fullname})` }),
+      view.getByRole('img', { name: `Avatar (${author.fullname})` }),
     ).toBeAvatarElement({
       type: 'user',
       image: 'avatar.png',
@@ -147,13 +147,13 @@ describe('user avatars', () => {
 
   it('renders article user when he is out of office', async () => {
     const articles = defaultArticles()
-    const { createdBy } = articles.description.edges[0].node
-    createdBy.outOfOffice = true
-    createdBy.active = true
-    createdBy.vip = true
-    createdBy.firstname = 'Max'
-    createdBy.lastname = 'Mustermann'
-    createdBy.fullname = 'Max Mustermann'
+    const { author } = articles.description.edges[0].node
+    author.outOfOffice = true
+    author.active = true
+    author.vip = true
+    author.firstname = 'Max'
+    author.lastname = 'Mustermann'
+    author.fullname = 'Max Mustermann'
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
       articles,
     })
@@ -162,7 +162,7 @@ describe('user avatars', () => {
     await waitUntilTicketLoaded()
 
     expect(
-      view.getByRole('img', { name: `Avatar (${createdBy.fullname}) (VIP)` }),
+      view.getByRole('img', { name: `Avatar (${author.fullname}) (VIP)` }),
     ).toBeAvatarElement({
       type: 'user',
       outOfOffice: true,

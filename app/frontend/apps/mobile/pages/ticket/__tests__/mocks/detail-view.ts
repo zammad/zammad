@@ -125,7 +125,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             replyTo: address,
             cc: address,
             from: address,
-            createdBy: {
+            author: {
               __typename: 'User',
               id: 'fdsf214fse12d',
               firstname: 'John',
@@ -179,7 +179,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             cc: address,
             from: address,
             createdAt: new Date(2022, 0, 30, 0, 0, 0, 0).toISOString(),
-            createdBy: {
+            author: {
               __typename: 'User',
               id: 'dsvvr32532fs',
               firstname: 'Albert',
@@ -216,7 +216,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
             cc: address,
             from: address,
             createdAt: new Date(2022, 0, 30, 10, 0, 0, 0).toISOString(),
-            createdBy: {
+            author: {
               __typename: 'User',
               id: 'fsfy345343f',
               firstname: 'Monkey',

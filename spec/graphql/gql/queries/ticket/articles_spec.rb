@@ -81,7 +81,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 bodyWithUrls
                 internal
                 createdAt
-                originBy {
+                author {
                   id
                   fullname
                   firstname
@@ -246,7 +246,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
           it 'loads originBy' do
             expect(response_articles.first)
               .to include(
-                'originBy'  => include('fullname' => agent.fullname),
+                'author'    => include('fullname' => agent.fullname),
                 'createdBy' => be_present
               )
           end
@@ -293,7 +293,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         it 'loads originBy' do
           expect(response_articles.first)
             .to include(
-              'originBy'  => include(
+              'author'    => include(
                 'fullname'  => nil, # fullname is filtered out for customers
                 'firstname' => origin_by.firstname
               ),

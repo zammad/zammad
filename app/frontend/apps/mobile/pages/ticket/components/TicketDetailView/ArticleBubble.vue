@@ -26,9 +26,7 @@ interface Props {
   position: 'left' | 'right'
   content: string
   internal: boolean
-  user?: Maybe<
-    ConfidentTake<TicketArticlesQuery, 'articles.edges.node.createdBy'>
-  >
+  user?: Maybe<ConfidentTake<TicketArticlesQuery, 'articles.edges.node.author'>>
   security?: Maybe<TicketArticleSecurityState>
   contentType: string
   ticketInternalId: number

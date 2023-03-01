@@ -12,6 +12,9 @@ module Gql::Types::Ticket
     belongs_to :sender, Gql::Types::Ticket::Article::SenderType
 
     field :subject, String
+
+    field :author, Gql::Types::UserType, null: false, is_dependent_field: true, description: 'The originator (originBy, if any) or the creator of an article.'
+
     field :from, Gql::Types::AddressesFieldType
     field :to, Gql::Types::AddressesFieldType
     field :cc, Gql::Types::AddressesFieldType
@@ -32,7 +35,7 @@ module Gql::Types::Ticket
     field :attachments_without_inline, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'Attachments for display, with inline images filtered out.'
 
     belongs_to :ticket, Gql::Types::TicketType, null: false
-    belongs_to :origin_by, Gql::Types::UserType
+    # belongs_to :origin_by, Gql::Types::UserType # see :author instead
 
     def body_with_urls
       display_article['body']

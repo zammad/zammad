@@ -27,7 +27,7 @@ export const getReplyQuoteHeader = (
   if (!config.ui_ticket_zoom_article_email_full_quote_header) return ''
 
   const date = formatDate(article.createdAt)
-  const name = article.originBy?.fullname || article.createdBy.fullname || ''
+  const name = article.author.fullname || ''
 
   return `${i18n.t('On %s, %s wrote:', date, name)}<p>\n</p>`
 }
