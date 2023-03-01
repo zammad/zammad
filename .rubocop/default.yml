@@ -249,7 +249,6 @@ Lint/BooleanSymbol:
   Exclude:
     - "db/seeds/object_manager_attributes.rb"
     - "spec/requests/integration/object_manager_attributes_spec.rb"
-    - "test/integration/object_manager_test.rb"
 
 Lint/InterpolationCheck:
   Description: 'Raise warning for interpolation in single q strs'

@@ -22,4 +22,3 @@ bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -
 echo "Running basic minitest tests..."
 bundle exec rake zammad:db:reset
 bundle exec rake test:units
-ruby -I test/ test/integration/object_manager_test.rb

@@ -166,6 +166,23 @@ RSpec.describe ObjectManager::Attribute, type: :model do
   end
 
   describe 'Class methods:' do
+    describe '.pending_migration?', db_strategy: :reset do
+      it 'returns false if there are no pending migrations' do
+        expect(described_class.pending_migration?).to be false
+      end
+
+      it 'returns true if there are pending migrations' do
+        create(:object_manager_attribute_text)
+        expect(described_class.pending_migration?).to be true
+      end
+
+      it 'returns false if migration was executed' do
+        create(:object_manager_attribute_text)
+        described_class.migration_execute
+        expect(described_class.pending_migration?).to be false
+      end
+    end
+
     describe '.attribute_to_references_hash_objects' do
       it 'returns classes with conditions' do
         expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
@@ -472,6 +489,98 @@ RSpec.describe ObjectManager::Attribute, type: :model do
         'c'     => 'c'
       }
       expect(select_field.reload.data_option[:historical_options]).to eq(expect_result)
+    end
+  end
+
+  describe '#add' do
+    context 'when data is valid' do
+      let(:attribute) do
+        {
+          object:        'Ticket',
+          name:          'test1',
+          display:       'Test 1',
+          data_type:     'input',
+          data_option:   {
+            maxlength: 200,
+            type:      'text',
+            null:      false,
+          },
+          active:        true,
+          screens:       {},
+          position:      20,
+          created_by_id: 1,
+          updated_by_id: 1,
+          editable:      false,
+          to_migrate:    false,
+        }
+      end
+
+      it 'is successful' do
+        expect { described_class.add(attribute) }.to change(described_class, :count)
+        expect(described_class.get(object: 'Ticket', name: 'test1')).to have_attributes(attribute)
+      end
+    end
+
+    context 'when data is invalid' do
+      let(:attribute) do
+        {
+          object:        'Ticket',
+          name:          'test2_id',
+          display:       'Test 2 with id',
+          data_type:     'input',
+          data_option:   {
+            maxlength: 200,
+            type:      'text',
+            null:      false,
+          },
+          active:        true,
+          screens:       {},
+          position:      20,
+          created_by_id: 1,
+          updated_by_id: 1,
+        }
+      end
+
+      it 'raises an error' do
+        expect { described_class.add(attribute) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
+
+  describe '#get' do
+    context 'when attribute exists' do
+      before do
+        create(:object_manager_attribute_text, name: 'test3')
+      end
+
+      it 'returns the attribute' do
+        expect(described_class.get(object: 'Ticket', name: 'test3')).to have_attributes(name: 'test3', editable: true)
+      end
+    end
+
+    context 'when attribute does not exist' do
+      it 'returns nil' do
+        expect(described_class.get(object: 'Ticket', name: 'test4')).to be_nil
+      end
+    end
+  end
+
+  describe '#remove' do
+    context 'when attribute exists' do
+      before do
+        create(:object_manager_attribute_text, name: 'test3')
+      end
+
+      it 'is successful' do
+        expect { described_class.remove(object: 'Ticket', name: 'test3') }.to change(described_class, :count)
+        expect(described_class.get(object: 'Ticket', name: 'test3')).to be_nil
+      end
+    end
+
+    context 'when attribute does not exist' do
+      it 'raises an error' do
+        expect { described_class.remove(object: 'Ticket', name: 'test4') }.to raise_error(RuntimeError)
+      end
     end
   end
 end

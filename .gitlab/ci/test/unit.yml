@@ -7,7 +7,6 @@
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rake test:units
-    - bundle exec rails test test/integration/object_manager_test.rb
 
 unit:mysql:
   stage: test
