@@ -283,6 +283,9 @@ class String
     # remove tailing empty spaces
     string.gsub!(/[[:blank:]]+$/, '')
 
+    # search for signature separator "--\n"
+    string.gsub!(/^\s{0,2}--\s{0,2}$/, '-- ')
+
     # remove double multiple empty lines
     string.gsub!(/\n\n\n+/, "\n\n")
 
