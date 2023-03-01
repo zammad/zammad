@@ -100,6 +100,40 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
         expect(described_class.find_by(name: object_name).condition).to eq(param_condition)
       end
 
+      it 'saves condition with ticket tags attribute without errors (#4507)' do
+        object_name = Faker::Name.unique.name
+        fill_in 'Name', with: object_name
+
+        # Select target roles, if the field is present, since this field is required.
+        if has_css?('div[data-attribute-name="role_ids"]')
+          find('div[data-attribute-name="role_ids"] div.js-pool div[data-value="1"]').click
+        end
+
+        scroll_into_view('.ticket_selector')
+
+        within '.ticket_selector' do
+          toggle_expert_mode(true)
+
+          set_condition(2, 'Tags', 'contains all', value_token_input: %w[tag1 tag2])
+        end
+
+        click '.js-submit'
+        await_empty_ajax_queue
+
+        param_condition = {
+          'operator'   => 'AND',
+          'conditions' => [
+            {
+              'name'     => 'ticket.tags',
+              'operator' => 'contains all',
+              'value'    => %w[tag1 tag2].join(', '),
+            },
+          ],
+        }
+
+        expect(described_class.find_by(name: object_name).condition).to eq(param_condition)
+      end
+
       context 'with drag and drop support' do
         it 'supports moving complete subclauses around' do
           scroll_into_view('.ticket_selector')
@@ -361,6 +395,61 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
 
           expect(object.reload.condition).to eq(param_condition)
         end
+
+        context 'when using ticket tags' do
+          let(:condition) do
+            {
+              'operator'   => 'OR',
+              'conditions' => [
+                {
+                  'name'     => 'ticket.tags',
+                  'operator' => 'contains one',
+                  'value'    => %w[tag1 tag2].join(', '),
+                },
+                {
+                  'name'     => 'ticket.tags',
+                  'operator' => 'contains one not',
+                  'value'    => %w[tag3 tag4].join(', '),
+                },
+              ],
+            }
+          end
+
+          it 'edits condition with ticket tags attribute without errors (#4507)' do
+            scroll_into_view('.ticket_selector')
+
+            within '.ticket_selector' do
+              check_expert_mode(true)
+              check_subclause_selector(1, 'Match any (OR)')
+              check_condition(2, 'Tags', 'contains one', value_token_input: %w[tag1 tag2])
+              check_condition(3, 'Tags', 'contains one not', value_token_input: %w[tag3 tag4])
+
+              set_condition(2, 'Tags', 'contains all', value_token_input: %w[tag5 tag6])
+              set_condition(3, 'Tags', 'contains all not', value_token_input: %w[tag7])
+            end
+
+            click '.js-submit'
+            await_empty_ajax_queue
+
+            param_condition = {
+              'operator'   => 'OR',
+              'conditions' => [
+                {
+                  'name'     => 'ticket.tags',
+                  'operator' => 'contains all',
+                  'value'    => %w[tag5 tag6].join(', '),
+                },
+                {
+                  'name'     => 'ticket.tags',
+                  'operator' => 'contains all not',
+                  'value'    => %w[tag7].join(', '),
+                },
+              ],
+            }
+
+            expect(object.reload.condition).to eq(param_condition)
+          end
+        end
       end
 
       context 'without expert conditions' do
@@ -581,12 +670,28 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
     expect(input.value).to eq(value)
   end
 
+  def check_value_token_input(row_number, value)
+    input = find(".js-filterElement:nth-child(#{row_number}) .js-value input.form-control", visible: :all)
+    expect(input.value).to eq(value.join(', '))
+  end
+
   def check_value_selector(row_number, value)
     value_selector = find(".js-filterElement:nth-child(#{row_number}) .js-value select")
     value_selector.value.each_with_index do |v, index|
       selected_option = value_selector.find("option[value='#{v}']")
       expect(selected_option).to have_text(value[index])
     end
+  end
+
+  def set_value_input(row_number, value)
+    value_input = find(".js-filterElement:nth-child(#{row_number}) .js-value input")
+    value_input.fill_in with: value.join
+  end
+
+  def set_value_token_input(row_number, value)
+    value_token_input = find(".js-filterElement:nth-child(#{row_number}) .js-value .token-input")
+    value_token_input.fill_in with: value.join(', ')
+    send_keys :tab
   end
 
   def set_value_selector(row_number, value)
@@ -597,7 +702,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
     end
   end
 
-  def check_condition(row_number, attribute, operator, pre_condition: nil, value: nil, value_input: nil, customer_fullname: nil)
+  def check_condition(row_number, attribute, operator, pre_condition: nil, value: nil, value_input: nil, value_token_input: nil, customer_fullname: nil)
     check_attribute_selector(row_number, attribute)
     check_operator_selector(row_number, operator)
 
@@ -611,6 +716,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
 
     if !value_input.nil?
       check_value_input(row_number, value_input)
+    elsif !value_token_input.nil?
+      check_value_token_input(row_number, value_token_input)
     end
 
     return if value.nil?
@@ -618,12 +725,18 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
     check_value_selector(row_number, value)
   end
 
-  def set_condition(row_number, attribute, operator, pre_condition: nil, value: nil)
+  def set_condition(row_number, attribute, operator, pre_condition: nil, value: nil, value_input: nil, value_token_input: nil)
     set_attribute_selector(row_number, attribute)
     set_operator_selector(row_number, operator)
 
     if !pre_condition.nil?
       set_precondition_selector(row_number, pre_condition)
+    end
+
+    if !value_input.nil?
+      set_value_input(row_number, value_input)
+    elsif !value_token_input.nil?
+      set_value_token_input(row_number, value_token_input)
     end
 
     return if value.nil?

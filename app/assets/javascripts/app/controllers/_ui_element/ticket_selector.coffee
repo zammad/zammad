@@ -765,6 +765,8 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       value.value = element.find('.js-value .js-objectId').val()
     else if element.find('.js-value .js-shadow')?.val()
       value.value = element.find('.js-value .js-shadow').val()
+    else if element.find('.js-value input.form-control')?.val()
+      value.value = element.find('.js-value input.form-control').val()
     else if element.find('.js-value .form-control')?.val()
       value.value = element.find('.js-value .form-control').val()
 
