@@ -2409,49 +2409,56 @@ RSpec.describe 'Ticket zoom', type: :system do
       visit "#ticket/zoom/#{ticket.id}"
     end
 
+    def multiselect_field
+      page.find("select[name='#{field_name}']")
+    end
+
     def multiselect_value
-      page.find("select[name='#{field_name}']").value
+      multiselect_field.value
     end
 
     def multiselect_set(values)
       multiselect_unset_all
       values = Array(values)
       values.each do |value|
-        page.find("select[name='#{field_name}']").select(value)
-        expect(page.find("select[name='#{field_name}']").value).to include(value)
+        multiselect_field.select(value)
+        expect(multiselect_value).to include(value)
       end
     end
 
     def multiselect_unset_all
-      values = page.all("select[name='#{field_name}'] option").map(&:text)
+      values = multiselect_value
       values.each do |value|
-        page.find("select[name='#{field_name}']").unselect(value)
-        expect(page.find("select[name='#{field_name}']").value).to not_include(value)
+        multiselect_field.unselect(value)
+        expect(multiselect_value).to not_include(value)
       end
     end
 
-    it 'does show values properly and can save values also' do
+    context 'when showing and saving values' do
+      it 'shows saved values properly' do
+        expect(multiselect_value).to eq(%w[value_2 value_3])
+      end
 
-      # check ticket state rendering
-      expect(multiselect_value).to eq(%w[value_2 value_3])
+      it 'saves multiple values properly' do
+        multiselect_set(%w[value_1 value_2])
+        click '.js-submit'
 
-      # save 2 values
-      multiselect_set(%w[value_1 value_2])
-      click '.js-submit'
+        expect(ticket.reload[field_name]).to eq(%w[value_1 value_2])
+      end
 
-      expect(ticket.reload[field_name]).to eq(%w[value_1 value_2])
+      it 'saves single value properly' do
+        multiselect_set(%w[value_1])
+        click '.js-submit'
 
-      # save 1 value
-      multiselect_set(%w[value_1])
-      click '.js-submit'
+        expect(ticket.reload[field_name]).to eq(%w[value_1])
+      end
 
-      expect(ticket.reload[field_name]).to eq(%w[value_1])
+      it 'removes saved values properly' do
+        multiselect_unset_all
+        click '.js-submit'
 
-      # unset all values
-      multiselect_unset_all
-      click '.js-submit'
-
-      expect(ticket.reload[field_name]).to be_empty
+        expect(ticket.reload[field_name]).to be_empty
+      end
     end
   end
 
