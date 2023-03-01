@@ -26,4 +26,16 @@ if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
     warn e.inspect
     exit! # rubocop:disable Rails/Exit
   end
+
+  if Rails.env.production?
+    Rails.application.reloader.to_prepare do
+      begin
+        request_origins = ['http://localhost:3000']
+        request_origins << "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
+        Rails.application.config.action_cable.allowed_request_origins = request_origins
+      rescue ActiveRecord::NoDatabaseError
+        Rails.logger.debug("Database doesn't exist. Skipping allowed_request_origins configuration.")
+      end
+    end
+  end
 end
