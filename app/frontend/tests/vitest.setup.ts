@@ -16,7 +16,7 @@ window.sw = new ServiceWorkerHelper()
 
 configure({
   testIdAttribute: 'data-test-id',
-  asyncUtilTimeout: 5000,
+  asyncUtilTimeout: process.env.CI ? 30_000 : 1_000,
 })
 
 class DOMRectList {
@@ -131,7 +131,7 @@ beforeEach((context) => {
 })
 
 afterEach((context) => {
-  // we don't import it from `renderComponent`, because it may renderComponent may not be called
+  // we don't import it from `renderComponent`, because renderComponent may not be called
   // and it doesn't make sense to import everything from it
   if ('cleanupComponents' in globalThis) {
     globalThis.cleanupComponents()

@@ -23,8 +23,11 @@ export const waitForNextTick = async (withTimeout = false) => {
 
 export const waitUntil = async (
   condition: () => unknown,
-  msThreshold = 1000,
+  msThreshold = process.env.CI ? 30_000 : 1_000,
 ) => {
+  // point stack trace to the place where "waitUntil" was called
+  const err = new Error('Timeout')
+  Error.captureStackTrace(err, waitUntil)
   return new Promise<void>((resolve, reject) => {
     const start = Date.now()
     const max = start + msThreshold
@@ -35,7 +38,7 @@ export const waitUntil = async (
       }
       if (max < Date.now()) {
         clearInterval(interval)
-        reject(new Error('Timeout'))
+        reject(err)
       }
     }, 30)
   })
