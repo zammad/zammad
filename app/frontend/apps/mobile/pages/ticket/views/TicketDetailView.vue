@@ -76,7 +76,7 @@ ticketQuery.subscribeToMore<
 const formLocation = ref('body')
 const formVisible = computed(() => formLocation.value !== 'body')
 
-const { form, canSubmit, isDirty } = useForm()
+const { form, canSubmit, isDirty, formSubmit } = useForm()
 
 const { initialTicketValue, isTicketFormGroupValid, editTicket } =
   useTicketEdit(ticket, form)
@@ -107,11 +107,10 @@ const { isTicketAgent } = useTicketView(ticket)
 
 const { notify } = useNotifications()
 
-const submitForm = async (formData: FormData) => {
-  const updateForm = currentArticleType.value?.updateForm
-
-  if (updateForm) {
-    formData = updateForm(formData)
+const saveTicketForm = async (formData: FormData) => {
+  const updateFormData = currentArticleType.value?.updateForm
+  if (updateFormData) {
+    formData = updateFormData(formData)
   }
 
   try {
@@ -182,17 +181,21 @@ onBeforeRouteLeave(async () => {
 const router = useRouter()
 const route = useRoute()
 
-const openErrorsForm = () => {
+const submitForm = () => {
   if (!isTicketFormGroupValid.value && route.name !== 'Edit') {
-    return router.push(`/tickets/${ticket.value?.internalId}/information`)
-  }
-  if (
+    if (articleReplyDialog.isOpened.value) {
+      closeArticleReplyDialog()
+    }
+    router.push(`/tickets/${ticket.value?.internalId}/information`)
+  } else if (
     newTicketArticlePresent.value &&
     !isArticleFormGroupValid.value &&
     !articleReplyDialog.isOpened.value
   ) {
-    return showArticleReplyDialog()
+    showArticleReplyDialog()
   }
+
+  formSubmit()
 }
 
 const application = useApplicationStore()
@@ -231,6 +234,7 @@ const bannerClasses = computed(() => {
       :class="formVisible ? 'visible' : 'hidden'"
       :loading="!ticket"
     >
+      <!-- TODO: Maybe we need not to initialize the form, when someone has only readonly access? -->
       <Form
         v-if="ticket?.id && initialTicketValue"
         id="form-ticket-edit"
@@ -247,7 +251,7 @@ const bannerClasses = computed(() => {
         use-object-attributes
         :aria-hidden="!formVisible"
         :class="formVisible ? 'visible' : 'hidden'"
-        @submit="submitForm($event as FormData)"
+        @submit="saveTicketForm($event as FormData)"
       />
     </CommonLoader>
   </Teleport>
@@ -272,9 +276,9 @@ const bannerClasses = computed(() => {
           <FormKit
             input-class="font-semibold text-base px-4 py-1 !text-black formkit-variant-primary:bg-yellow rounded select-none"
             wrapper-class="flex justify-center items-center"
-            type="submit"
+            type="button"
             form="form-ticket-edit"
-            :disabled="!isFormValid"
+            @click.prevent="submitForm"
           >
             {{ $t('Save') }}
           </FormKit>
@@ -283,7 +287,7 @@ const bannerClasses = computed(() => {
             role="status"
             :aria-label="$t('Validation failed')"
             class="absolute bottom-7 h-5 w-5 cursor-pointer rounded-full bg-red text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
-            @click="openErrorsForm"
+            @click="submitForm"
           >
             <CommonIcon
               class="mx-auto h-5"

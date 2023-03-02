@@ -44,6 +44,10 @@ export const useTicketArticleReply = (
     },
   })
 
+  const rememberArticleFormGroup = () => {
+    newTicketArticlePresent.value = true
+  }
+
   const route = useRoute()
 
   const openArticleReplyDialog = ({
@@ -60,7 +64,7 @@ export const useTicketArticleReply = (
       articleFormGroupNode,
       updateFormLocation,
       onDone() {
-        newTicketArticlePresent.value = true
+        rememberArticleFormGroup()
       },
       onDiscard() {
         newTicketArticlePresent.value = false
@@ -80,6 +84,7 @@ export const useTicketArticleReply = (
   }
 
   const closeArticleReplyDialog = () => {
+    rememberArticleFormGroup()
     return articleReplyDialog.close()
   }
 

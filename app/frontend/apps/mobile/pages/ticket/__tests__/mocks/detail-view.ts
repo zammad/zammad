@@ -8,17 +8,21 @@ import type {
   TicketQuery,
 } from '@shared/graphql/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
+import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
+import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
 import { nullableMock, waitUntil } from '@tests/support/utils'
+import {
+  ticketObjectAttributes,
+  ticketArticleObjectAttributes,
+} from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
 import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api'
 import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api'
-
 import { TicketDocument } from '../../graphql/queries/ticket.api'
-
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api'
 import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api'
 import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api'
@@ -254,6 +258,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
 
 interface MockOptions {
   mockSubscription?: boolean
+  mockFrontendObjectAttributes?: boolean
   ticket?: TicketQuery
   articles?: TicketArticlesQuery
 }
@@ -302,7 +307,32 @@ export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
 }
 
 export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
-  const { mockSubscription = true } = options
+  const { mockSubscription = true, mockFrontendObjectAttributes = false } =
+    options
+
+  if (mockFrontendObjectAttributes) {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
+      ({ object }) => {
+        if (object === 'Ticket') {
+          return {
+            data: { objectManagerFrontendAttributes: ticketObjectAttributes() },
+          }
+        }
+        return {
+          data: {
+            objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
+          },
+        }
+      },
+    )
+    mockGraphQLApi(FormUpdaterDocument).willResolve({
+      formUpdater: {
+        pending_time: {
+          show: false,
+        },
+      },
+    })
+  }
 
   const ticket = options.ticket || defaultTicket()
 
@@ -316,6 +346,7 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
   } else {
     mockTicketSubscription = {} as ExtendedIMockSubscription
   }
+
   const mockTicketArticleSubscription = mockGraphQLSubscription(
     TicketArticleUpdatesDocument,
   )

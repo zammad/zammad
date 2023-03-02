@@ -17,7 +17,7 @@ import {
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import type { TicketQuery } from '@shared/graphql/types'
-import { defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view'
+import { mockTicketDetailViewGql } from './mocks/detail-view'
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockPermissions(['ticket.agent'])
@@ -83,18 +83,6 @@ const visitTicketInformation = async (ticket?: TicketQuery) => {
 }
 
 describe('updating ticket information', () => {
-  it("doesn't show 'save' button, if user has no rights to update a ticket", async () => {
-    const ticketQuery = defaultTicket()
-    ticketQuery.ticket.policy = {
-      update: false,
-      __typename: 'Policy',
-    }
-    const { view } = await visitTicketInformation(ticketQuery)
-    expect(
-      view.queryByRole('button', { name: 'Save ticket' }),
-    ).not.toBeInTheDocument()
-  })
-
   it('shows confirm popup, when leaving', async () => {
     const { view } = await visitTicketInformation()
 
@@ -116,6 +104,38 @@ describe('updating ticket information', () => {
     await expect(
       view.findByRole('alert', { name: 'Confirm dialog' }),
     ).resolves.toBeInTheDocument()
+  })
+
+  it('show save banner when some field was changed', async () => {
+    const { view } = await visitTicketInformation()
+
+    await getNode('form-ticket-edit')?.settled
+
+    await view.events.type(view.getByLabelText('Ticket title'), 'New title')
+
+    await getNode('form-ticket-edit')?.settled
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+  })
+
+  it('show save banner with error indicator when one field is invalid (and error message after save click)', async () => {
+    const { view } = await visitTicketInformation()
+
+    await getNode('form-ticket-edit')?.settled
+
+    await view.events.clear(view.getByLabelText('Ticket title'))
+
+    await getNode('form-ticket-edit')?.settled
+
+    await expect(
+      view.findByLabelText('Validation failed'),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Save' }))
+
+    expect(view.getByText('This field is required.')).toBeInTheDocument()
   })
 
   // since most of it is core workflow + backend, it's tested in the backend

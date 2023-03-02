@@ -92,9 +92,9 @@ vi.mock(
           },
         })
 
-        return { value, name: props.context.name }
+        return { value, name: props.context.node.name, id: props.context.id }
       },
-      template: `<textarea :name="name" v-model="value" />`,
+      template: `<textarea :id="id" :name="name" v-model="value" />`,
     })
     return { __esModule: true, default: component }
   },

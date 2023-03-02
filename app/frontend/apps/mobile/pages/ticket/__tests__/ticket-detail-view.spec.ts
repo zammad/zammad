@@ -3,6 +3,7 @@
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
+import { getNode } from '@formkit/core'
 import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
@@ -808,5 +809,43 @@ describe('ticket viewers inside a ticket', () => {
     })
 
     expect(view.queryByTitle('Show ticket viewers')).not.toBeInTheDocument()
+  })
+})
+
+describe('ticket add/edit reply article', () => {
+  beforeEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('add reply (first time) should hold the form state after save button with an invalid state is used', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await getNode('form-ticket-edit')?.settled
+
+    getNode('title')?.input('')
+
+    await expect(
+      view.findByLabelText('Validation failed'),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    await getNode('form-ticket-edit')?.settled
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await view.events.click(view.getByRole('button', { name: 'Save' }))
+
+    expect(view.getByText('This field is required.')).toBeInTheDocument()
+
+    expect(getNode('body')?.value).toBe('Testing')
   })
 })
