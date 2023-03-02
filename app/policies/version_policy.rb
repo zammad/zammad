@@ -2,6 +2,6 @@
 
 class VersionPolicy < ApplicationPolicy
   def show?
-    user.permissions?('admin.version')
+    user.permissions?('admin')
   end
 end

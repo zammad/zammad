@@ -65,7 +65,7 @@ const currentLocale = computed({
   },
 })
 
-const hasVersionPermission = session.hasPermission('admin.version')
+const hasVersionPermission = session.hasPermission('admin')
 
 const productAboutQuery = new QueryHandler(
   useProductAboutQuery({ enabled: hasVersionPermission }),

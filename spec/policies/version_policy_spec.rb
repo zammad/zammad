@@ -7,7 +7,7 @@ describe VersionPolicy do
 
   let(:user) { create(:user, roles: [role]) }
 
-  context 'with "admin.version" privileges' do
+  context 'with "admin" privileges' do
     let(:role) do
       create(:role).tap { |role| role.permission_grant('admin') }
     end
@@ -15,7 +15,7 @@ describe VersionPolicy do
     it { is_expected.to permit_actions(%i[show]) }
   end
 
-  context 'without "admin.version" privileges' do
+  context 'without "admin" privileges' do
     let(:role) do
       create(:role).tap { |role| role.permission_grant('ticket.agent') }
     end

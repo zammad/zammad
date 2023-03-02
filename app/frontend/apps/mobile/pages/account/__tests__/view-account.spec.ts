@@ -44,7 +44,7 @@ describe('account page', () => {
     mockPermissions([
       'user_preferences.avatar',
       'user_preferences.language',
-      'admin.version',
+      'admin',
     ])
 
     const languageApi = mockGraphQLApi(ProductAboutDocument).willResolve({
