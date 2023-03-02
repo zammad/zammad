@@ -11,6 +11,7 @@ module Gql::Types::Input
     argument :email, String, description: 'The user email'
     argument :password, String, required: false, description: 'The user password'
     argument :organization_id, GraphQL::Types::ID, required: false, description: 'The organization the user belongs to', loads: Gql::Types::OrganizationType
+    argument :organization_ids, [GraphQL::Types::ID], required: false, description: 'The secondary organizations the user belongs to', loads: Gql::Types::OrganizationType
     argument :web, String, required: false, description: 'The user web'
     argument :phone, String, required: false, description: 'The user phone'
     argument :mobile, String, required: false, description: 'The user mobile'

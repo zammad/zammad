@@ -32,6 +32,17 @@ export const UserDetailAttributesFragmentDoc = gql`
       closed
     }
   }
+  secondaryOrganizations(first: $secondaryOrganizationsCount) {
+    edges {
+      node {
+        id
+        internalId
+        active
+        name
+      }
+    }
+    totalCount
+  }
   hasSecondaryOrganizations
   ticketsCount {
     open

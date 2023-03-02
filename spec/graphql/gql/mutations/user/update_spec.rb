@@ -3,9 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Mutations::User::Update, type: :graphql do
-  context 'when creating a new user', authenticated_as: :agent do
+  let(:variables) do
+    {
+      id:    gql.id(user),
+      input: input
+    }
+  end
+
+  let(:input) { { email: 'dummy@zammad.com' } }
+
+  context 'when updating a user', authenticated_as: :agent do
     let(:agent) { create(:agent) }
-    let(:user)  { create(:user) }
+    let(:user)  { create(:user, :with_org) }
 
     let(:query) do
       <<~QUERY
@@ -26,37 +35,73 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
       QUERY
     end
 
-    let(:variables) do
-      {
-        id:    gql.id(user),
-        input: {
+    context 'with basic fields' do
+      let(:input) do
+        {
           email:     'dummy@zammad.com',
           firstname: 'Bender',
           lastname:  'Rodríguez',
         }
-      }
-    end
+      end
 
-    let(:expected_response) do
-      {
-        'id'        => gql.id(user),
-        'firstname' => 'Bender',
-        'lastname'  => 'Rodríguez',
-        'fullname'  => 'Bender Rodríguez',
-      }
-    end
+      let(:expected_response) do
+        {
+          'id'        => gql.id(user),
+          'firstname' => 'Bender',
+          'lastname'  => 'Rodríguez',
+          'fullname'  => 'Bender Rodríguez',
+        }
+      end
 
-    it 'updates User record' do
-      gql.execute(query, variables: variables)
-      expect(gql.result.data['user']).to eq(expected_response)
-    end
-
-    context 'with not unique email', :aggregate_failures do
-      it 'returns a user error' do
-        create(:user, email: 'dummy@zammad.com')
-
+      it 'updates User record' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for other user." })
+        expect(gql.result.data['user']).to eq(expected_response)
+      end
+
+      context 'with not unique email', :aggregate_failures do
+        it 'returns a user error' do
+          create(:user, email: 'dummy@zammad.com')
+
+          gql.execute(query, variables: variables)
+          expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for other user." })
+        end
+      end
+    end
+
+    context 'with multiple secondary organizations' do
+      let(:organization_a) { create(:organization) }
+      let(:organization_b) { create(:organization) }
+
+      context 'when user has no secondary organizations' do
+        let(:input) do
+          {
+            email:           'dummy@zammad.com',
+            organizationIds: [organization_a, organization_b].map { |elem| gql.id(elem) }
+          }
+        end
+
+        it 'adds given organizations' do
+          gql.execute(query, variables: variables)
+
+          expect(user.reload).to have_attributes(organizations: [organization_a, organization_b])
+        end
+      end
+
+      context 'when user already has a secondary organization' do
+        let(:input) do
+          {
+            email:           'dummy@zammad.com',
+            organizationIds: [organization_b].map { |elem| gql.id(elem) }
+          }
+        end
+
+        it 'replaces secondary organization with a given one' do
+          user.update! organizations: [organization_a]
+
+          gql.execute(query, variables: variables)
+
+          expect(user.reload).to have_attributes(organizations: [organization_b])
+        end
       end
     end
 

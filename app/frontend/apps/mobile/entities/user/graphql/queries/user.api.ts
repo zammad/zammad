@@ -10,17 +10,6 @@ export const UserDocument = gql`
     query user($userId: ID, $userInternalId: Int, $secondaryOrganizationsCount: Int) {
   user(user: {userId: $userId, userInternalId: $userInternalId}) {
     ...userDetailAttributes
-    secondaryOrganizations(first: $secondaryOrganizationsCount) {
-      edges {
-        node {
-          id
-          internalId
-          active
-          name
-        }
-      }
-      totalCount
-    }
     policy {
       update
     }

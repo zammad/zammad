@@ -13,6 +13,7 @@ import { useUserLazyQuery } from '../graphql/queries/user.api'
 
 export const useUserDetail = () => {
   const internalId = ref(0)
+  const fetchSecondaryOrganizationsCount = ref<Maybe<number>>(3)
   const { createQueryErrorHandler } = useErrorHandler()
 
   const userQuery = new QueryHandler(
@@ -41,10 +42,14 @@ export const useUserDetail = () => {
   }
 
   const loadAllSecondaryOrganizations = () => {
-    userQuery.refetch({
-      userInternalId: internalId.value,
-      secondaryOrganizationsCount: null,
-    })
+    userQuery
+      .refetch({
+        userInternalId: internalId.value,
+        secondaryOrganizationsCount: null,
+      })
+      .then(() => {
+        fetchSecondaryOrganizationsCount.value = null
+      })
   }
 
   const userResult = userQuery.result()
@@ -66,12 +71,13 @@ export const useUserDetail = () => {
       userQuery.subscribeToMore<
         UserUpdatesSubscriptionVariables,
         UserUpdatesSubscription
-      >({
+      >(() => ({
         document: UserUpdatesDocument,
         variables: {
           userId,
+          secondaryOrganizationsCount: fetchSecondaryOrganizationsCount.value,
         },
-      })
+      }))
     },
     { immediate: true },
   )

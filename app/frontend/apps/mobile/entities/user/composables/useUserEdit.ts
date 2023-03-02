@@ -56,10 +56,6 @@ export const useUserEdit = () => {
       formChangeFields,
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserEdit,
       errorNotificationMessage: __('User could not be updated.'),
-      keyMap: {
-        // TODO save secondary organizations
-        organization_ids: false,
-      },
     })
   }
 

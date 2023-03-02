@@ -1,131 +1,186 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'system/apps/mobile/examples/core_workflow_examples'
 
-# TODO: Check why editing user's secondary organizations is not working.
-
-RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: :authenticate, db_strategy: :reset, type: :system do
-  let(:primary_organization)    { create(:organization) }
-  let(:secondary_organizations) { create_list(:organization, 4) }
-  let(:customer)                { create(:customer, organization: primary_organization, organizations: secondary_organizations, address: 'Berlin') }
-  let(:group)                   { create(:group) }
-  let(:ticket)                  { create(:ticket, customer: customer, group: group) }
-  let(:agent)                   { create(:agent, groups: [group]) }
-  let(:closed_tickets)          { create_list(:ticket, 2, customer: customer, group: group, state: Ticket::State.find_by(name: 'closed')) }
+RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: :authenticate, type: :system do
+  let(:user)   { create(:customer, :with_org, address: 'Berlin') }
+  let(:group)  { create(:group) }
+  let(:ticket) { create(:ticket, customer: user, group: group) }
+  let(:agent)  { create(:agent, groups: [group]) }
 
   def authenticate
-    ticket
-    closed_tickets
-    create(:object_manager_attribute_text, object_name: 'User', name: 'text_attribute', display: 'Text Attribute', screens: { edit: { '-all-' => { shown: true, required: false } }, view: { '-all-' => { shown: true, required: false } } })
-    ObjectManager::Attribute.migration_execute
     agent
   end
 
-  before do
-    visit '/search/user'
-
-    fill_in placeholder: 'Search…', with: customer.email
-
-    wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
-
-    click '[role="tabpanel"]', text: customer.fullname
+  def open_user
+    visit "/users/#{user.id}"
+    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
   end
 
-  it 'shows user data' do
-    expect(find("[role=\"img\"][aria-label=\"Avatar (#{customer.fullname})\"]")).to have_text(customer.firstname[0].upcase + customer.lastname[0].upcase)
-    expect(page).to have_text(customer.fullname)
-    expect(page).to have_css('a', text: primary_organization.name)
-    expect(find('section', text: 'Email')).to have_text(customer.email)
-    expect(find('section', text: 'Address')).to have_text(customer.address)
-    expect(page).to have_no_css('section', text: 'Text Attribute')
-
-    click_button('Show 1 more')
-
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
-
-    secondary_organizations.each do |organization|
-      expect(page).to have_text(organization.name)
-    end
-
-    expect(find_all('[data-test-id="section-menu-item"]')[0]).to have_text("open\n1")
-    expect(find_all('[data-test-id="section-menu-item"]')[1]).to have_text("closed\n2")
-  end
-
-  it 'supports editing user data' do
-    click_button('Edit')
-
+  def open_user_edit
+    open_user
+    click('button', text: 'Edit')
     wait_for_form_to_settle('user-edit')
-
-    within_form(form_updater_gql_number: 1) do
-      find_input('Text Attribute').type('foobar')
-      find_input('First name').type('Foo')
-      find_input('Last name').type('Bar')
-      find_input('Address').type('München')
-      find_autocomplete('Organization').search_for_option(secondary_organizations.first.name)
-
-      # # Despite the name of the action, the following DESELECTS all secondary organizations for the customer.
-      # #   This works because all these values are already selected in the field.
-      # find_autocomplete('Secondary organizations').select_options(secondary_organizations.map { |organization| organization.name })
-    end
-
-    click_button('Save')
-
-    wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
-
-    expect(find('[role="img"][aria-label="Avatar (Foo Bar)"]')).to have_text('FB')
-    expect(page).to have_text('Foo Bar')
-    expect(page).to have_css('a', text: secondary_organizations.first.name)
-    expect(find('section', text: 'Address')).to have_text('München')
-    expect(find('section', text: 'Text Attribute')).to have_text('foobar')
-
-    # expect(page).to have_no_text('Secondary organizations')
-
-    # secondary_organizations.each do |organization|
-    #   expect(page).to have_no_text(organization.name)
-    # end
-
-    expect(customer.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', text_attribute: 'foobar', address: 'München')
   end
 
-  it 'has an always enabled cancel button' do
-    click_button('Edit')
-
-    wait_for_form_to_settle('user-edit')
-
-    find_button('Cancel').click
-
-    expect(page).to have_no_css('[role=dialog]')
-  end
-
-  it 'shows a confirmation dialog when leaving the screen' do
-    click_button('Edit')
-
-    wait_for_form_to_settle('user-edit')
-
-    within_form(form_updater_gql_number: 1) do
-      find_input('Text Attribute').type('foobar')
+  context 'when opening via search' do
+    before do
+      visit '/search/user'
+      fill_in placeholder: 'Search…', with: user.email
+      wait_for_gql('apps/mobile/pages/search/graphql/queries/searchOverview.graphql')
+      click '[role="tabpanel"]', text: user.fullname
     end
 
-    find_button('Cancel').click
-
-    within '[role=alert]' do
-      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
+    it 'shows user details' do
+      expect(page).to have_current_path("/mobile/users/#{user.id}")
     end
   end
 
-  context 'when viewing an admin user as an agent' do
-    let(:customer) { create(:admin) }
+  context 'with custom attribute', db_strategy: :reset do
+    def authenticate
+      create(:object_manager_attribute_text, object_name: 'User', name: 'text_attribute', display: 'Text Attribute', screens: { edit: { '-all-' => { shown: true, required: false } }, view: { '-all-' => { shown: true, required: false } } })
+      ObjectManager::Attribute.migration_execute
+      agent
+    end
 
-    it 'disallows editing user data' do
-      expect(page).to have_no_button('Edit')
+    it 'show attribute only when value exists' do
+      open_user
+
+      expect(page).to have_no_css('section', text: 'Text Attribute')
+
+      click_button('Edit')
+
+      wait_for_form_to_settle('user-edit')
+
+      within_form(form_updater_gql_number: 1) do
+        find_input('Text Attribute').type('foobar')
+      end
+
+      click_button('Save')
+
+      wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
+
+      expect(find('section', text: 'Text Attribute')).to have_text('foobar')
     end
   end
 
-  context 'when viewing an agent user as an agent' do
-    let(:customer) { create(:agent) }
+  context 'with basic attributes' do
+    let(:closed_tickets) do
+      create_list(:ticket, 2, customer: user, group: group, state: Ticket::State.find_by(name: 'closed'))
+    end
 
-    it 'disallows editing user data' do
-      expect(page).to have_no_button('Edit')
+    before do
+      ticket
+      closed_tickets
+
+      open_user
+    end
+
+    it 'shows basic data' do
+      expect(find("[role=\"img\"][aria-label=\"Avatar (#{user.fullname})\"]")).to have_text(user.firstname[0].upcase + user.lastname[0].upcase)
+      expect(page).to have_text(user.fullname)
+      expect(page).to have_css('a', text: user.organization.name)
+      expect(find('section', text: 'Email')).to have_text(user.email)
+      expect(find('section', text: 'Address')).to have_text(user.address)
+    end
+
+    it 'shows links to open and closed issues' do
+      expect(find_all('[data-test-id="section-menu-item"]'))
+        .to match_array [have_text("open\n1"), have_text("closed\n2")]
+    end
+  end
+
+  context 'with secondary organizations' do
+    let(:organizations) { create_list(:organization, 4) }
+
+    it 'shows secondary organizations' do
+      user.update! organizations: organizations
+
+      open_user
+
+      expect(page)
+        .to have_multiple_texts(organizations[0..2].map(&:name))
+        .and(have_no_text(organizations.last.name))
+
+      click_button('Show 1 more')
+
+      wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+
+      expect(page).to have_multiple_texts(organizations.map(&:name))
+    end
+
+    it 'adds secondary organizations' do
+      open_user_edit
+
+      find_autocomplete('Secondary organizations')
+        .search_for_options(organizations[0..1].map(&:name))
+
+      click_on 'Save'
+
+      expect(page)
+        .to have_multiple_texts(organizations[0..1].map(&:name))
+    end
+  end
+
+  context 'when editing' do
+    before do
+      open_user_edit
+    end
+
+    let(:organization) { create(:organization) }
+
+    it 'supports editing user data' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('First name').type('Foo')
+        find_input('Last name').type('Bar')
+        find_input('Address').type('München')
+        find_autocomplete('Organization').search_for_option(organization.name)
+      end
+
+      click_button('Save')
+
+      wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
+
+      expect(find('[role="img"][aria-label="Avatar (Foo Bar)"]')).to have_text('FB')
+      expect(page).to have_text('Foo Bar')
+      expect(page).to have_css('a', text: organization.name)
+      expect(find('section', text: 'Address')).to have_text('München')
+
+      expect(user.reload).to have_attributes(firstname: 'Foo', lastname: 'Bar', address: 'München')
+    end
+
+    it 'has an always enabled cancel button' do
+      find_button('Cancel').click
+
+      expect(page).to have_no_css('[role=dialog]')
+    end
+
+    it 'shows a confirmation dialog when leaving the screen' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Address').type('foobar')
+      end
+
+      find_button('Cancel').click
+
+      within '[role=alert]' do
+        expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
+      end
+    end
+  end
+
+  describe 'Core Workflow' do
+    include_examples 'mobile app: core workflow' do
+      let(:object_name) { 'User' }
+      let(:form_updater_gql_number) { 1 }
+      let(:before_it) do
+        lambda {
+          open_user
+
+          click('button', text: 'Edit')
+          wait_for_form_to_settle('user-edit')
+        }
+      end
     end
   end
 end

@@ -646,7 +646,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       queries.each_with_index do |query, index|
         find('[role="searchbox"]').fill_in with: query
 
-        wait_for_autocomplete_gql(gql_filename, gql_number)
+        wait_for_autocomplete_gql(gql_filename, gql_number + index)
 
         raise 'Field does not support multiple selection' if !multi_select?
 

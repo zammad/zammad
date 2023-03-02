@@ -7,7 +7,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const UserUpdatesDocument = gql`
-    subscription userUpdates($userId: ID!) {
+    subscription userUpdates($userId: ID!, $secondaryOrganizationsCount: Int) {
   userUpdates(userId: $userId) {
     user {
       ...userDetailAttributes

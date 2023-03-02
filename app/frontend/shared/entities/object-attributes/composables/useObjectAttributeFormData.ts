@@ -7,11 +7,11 @@ import type {
 } from '@shared/graphql/types'
 import { convertToGraphQLId, isGraphQLId } from '@shared/graphql/utils'
 import { camelize, toClassName } from '@shared/utils/formatter'
+import type { Primitive } from 'type-fest'
 
 export const useObjectAttributeFormData = (
   objectAttributes: Map<string, ObjectManagerFrontendAttribute>,
   formData: FormValues,
-  keyMap: Record<string, string | false> = {},
 ) => {
   const internalObjectAttributeValues: Record<string, FormFieldValue> = {}
   const additionalObjectAttributeValues: ObjectAttributeValueInput[] = []
@@ -42,12 +42,18 @@ export const useObjectAttributeFormData = (
     if (!objectAttribute || value === undefined) return
 
     if (objectAttribute.isInternal) {
-      const name = keyMap[fieldName] ?? camelize(fieldName)
-      if (name === false) return
-      internalObjectAttributeValues[name] = ensureRelationId(
-        objectAttribute,
-        value,
-      )
+      const name = camelize(fieldName)
+
+      let newValue: FormFieldValue
+      if (Array.isArray(value)) {
+        newValue = value.map((elem) => {
+          return ensureRelationId(objectAttribute, elem) as Primitive
+        })
+      } else {
+        newValue = ensureRelationId(objectAttribute, value)
+      }
+
+      internalObjectAttributeValues[name] = newValue
     } else {
       additionalObjectAttributeValues.push({
         name: objectAttribute.name,
