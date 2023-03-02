@@ -7,7 +7,7 @@ class HtmlSanitizer
 
       attr_reader :external, :web_app_url_prefix
 
-      def initialize(web_app_url_prefix:, external: false) # rubocop:disable Lint/MissingSuper
+      def initialize(web_app_url_prefix:, external: false)
         @direction = :top_down
 
         @external = external

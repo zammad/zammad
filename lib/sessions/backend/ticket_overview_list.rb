@@ -6,7 +6,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     Rails.cache.write("TicketOverviewPull::#{user_id}", { needed: true })
   end
 
-  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 7) # rubocop:disable Lint/MissingSuper
+  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 7)
     @user                 = user
     @client               = client
     @client_id            = client_id

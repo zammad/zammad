@@ -8,6 +8,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-capybara
   - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 

@@ -5,7 +5,7 @@ class HtmlSanitizer
     class InlineImages < Base
       attr_reader :attachments_inline, :prefix
 
-      def initialize(prefix = SecureRandom.uuid) # rubocop:disable Lint/MissingSuper
+      def initialize(prefix = SecureRandom.uuid)
         @direction = :top_down
 
         @attachments_inline = []
