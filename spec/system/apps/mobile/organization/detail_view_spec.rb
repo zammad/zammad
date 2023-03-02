@@ -62,6 +62,32 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
 
       expect(page).to have_button('Edit')
     end
+
+    it 'updates member list' do
+      members = create_list(:customer, 5, organization: organization)
+
+      # Check initial member list.
+      open_organization
+
+      # We are checking for shown avatars because currently the members list is not sorted by the unique identifier.
+      expect(page).to have_css('a[href*="users"] span[data-test-id="common-avatar"]', count: 3)
+
+      expect(page).to have_button('Show 2 more')
+
+      # Check updated member list.
+      members << create(:customer, organization: organization)
+      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql')
+
+      expect(page).to have_button('Show 3 more')
+      click_button('Show 3 more')
+
+      expect(page).to have_text(members.first.fullname)
+        .and have_text(members.last.fullname)
+
+      members << create(:customer, organization: organization)
+      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql', number: 2)
+      expect(page).to have_text(members.last.fullname)
+    end
   end
 
   context 'when visiting as customer', authenticated_as: :user do

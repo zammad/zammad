@@ -14,6 +14,8 @@ import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizati
 
 export const useOrganizationDetail = () => {
   const internalId = ref(0)
+  const fetchMembersCount = ref<Maybe<number>>(3)
+
   const { createQueryErrorHandler } = useErrorHandler()
 
   const organizationQuery = new QueryHandler(
@@ -54,10 +56,14 @@ export const useOrganizationDetail = () => {
       return
     }
 
-    organizationQuery.refetch({
-      organizationInternalId,
-      membersCount: null,
-    })
+    organizationQuery
+      .refetch({
+        organizationInternalId,
+        membersCount: null,
+      })
+      .then(() => {
+        fetchMembersCount.value = null
+      })
   }
 
   const { attributes: objectAttributes } = useObjectAttributes(
@@ -74,12 +80,13 @@ export const useOrganizationDetail = () => {
       organizationQuery.subscribeToMore<
         OrganizationUpdatesSubscriptionVariables,
         OrganizationUpdatesSubscription
-      >({
+      >(() => ({
         document: OrganizationUpdatesDocument,
         variables: {
           organizationId,
+          membersCount: fetchMembersCount.value,
         },
-      })
+      }))
     },
     { immediate: true },
   )

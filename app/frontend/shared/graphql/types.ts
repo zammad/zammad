@@ -2368,6 +2368,8 @@ export type UserUpdatesPayload = {
 
 export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null };
 
+export type OrganizationMembersFragment = { __typename?: 'Organization', members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, active?: boolean | null, vip?: boolean | null } }> } | null };
+
 export type OrganizationUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
   input: OrganizationInput;
@@ -2383,14 +2385,15 @@ export type OrganizationQueryVariables = Exact<{
 }>;
 
 
-export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, active?: boolean | null, vip?: boolean | null } }> } | null, policy: { __typename?: 'Policy', update: boolean }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } };
+export type OrganizationQuery = { __typename?: 'Queries', organization: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, policy: { __typename?: 'Policy', update: boolean }, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, active?: boolean | null, vip?: boolean | null } }> } | null } };
 
 export type OrganizationUpdatesSubscriptionVariables = Exact<{
   organizationId: Scalars['ID'];
+  membersCount?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null } };
+export type OrganizationUpdatesSubscription = { __typename?: 'Subscriptions', organizationUpdates: { __typename?: 'OrganizationUpdatesPayload', organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, active?: boolean | null, vip?: boolean | null } }> } | null } | null } };
 
 export type UserQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']>;

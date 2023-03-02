@@ -2,6 +2,7 @@ import * as Types from '../../../../../../shared/graphql/types';
 
 import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
+import { OrganizationMembersFragmentDoc } from '../fragments/organizationMembers.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -11,29 +12,15 @@ export const OrganizationDocument = gql`
   organization(
     organization: {organizationId: $organizationId, organizationInternalId: $organizationInternalId}
   ) {
-    members(first: $membersCount) {
-      edges {
-        node {
-          id
-          internalId
-          image
-          firstname
-          lastname
-          fullname
-          outOfOffice
-          active
-          vip
-        }
-      }
-      totalCount
-    }
     policy {
       update
     }
     ...organizationAttributes
+    ...organizationMembers
   }
 }
-    ${OrganizationAttributesFragmentDoc}`;
+    ${OrganizationAttributesFragmentDoc}
+${OrganizationMembersFragmentDoc}`;
 export function useOrganizationQuery(variables: Types.OrganizationQueryVariables | VueCompositionApi.Ref<Types.OrganizationQueryVariables> | ReactiveFunction<Types.OrganizationQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, variables, options);
 }

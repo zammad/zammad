@@ -1,7 +1,8 @@
-subscription organizationUpdates($organizationId: ID!) {
+subscription organizationUpdates($organizationId: ID!, $membersCount: Int) {
   organizationUpdates(organizationId: $organizationId) {
     organization {
       ...organizationAttributes
+      ...organizationMembers
     }
   }
 }

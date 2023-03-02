@@ -9,25 +9,10 @@ query organization(
       organizationInternalId: $organizationInternalId
     }
   ) {
-    members(first: $membersCount) {
-      edges {
-        node {
-          id
-          internalId
-          image
-          firstname
-          lastname
-          fullname
-          outOfOffice
-          active
-          vip
-        }
-      }
-      totalCount
-    }
     policy {
       update
     }
     ...organizationAttributes
+    ...organizationMembers
   }
 }
