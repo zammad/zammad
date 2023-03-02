@@ -55,6 +55,7 @@ test('statics inside ticket zoom view', async () => {
   const titleElement = view.getByTestId('title-content')
 
   expect(titleElement).toHaveTextContent('Test Ticket View')
+  expect(titleElement).toHaveTextContent('escalation 2 days ago')
   expect(titleElement, 'has customer avatar').toHaveTextContent('JD')
 
   const articlesElement = view.getByRole('group', { name: 'Articles' })

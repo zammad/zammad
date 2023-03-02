@@ -4,6 +4,7 @@ fragment ticketAttributes on Ticket {
   number
   title
   createdAt
+  escalationAt
   updatedAt
   pendingTime
   owner {

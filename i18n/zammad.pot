@@ -12952,6 +12952,10 @@ msgstr ""
 msgid "escalation"
 msgstr ""
 
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+msgid "escalation %s"
+msgstr ""
+
 #: db/seeds/macros.rb
 msgid "example macro"
 msgstr ""

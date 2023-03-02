@@ -1,5 +1,4 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
-// Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
 import type { FormFieldValue } from '@shared/components/Form/types'
@@ -14,10 +13,9 @@ import type { ConfidentTake } from '@shared/types/utils'
 
 export enum TicketState {
   Closed = 'closed',
-  WaitingForClosure = 'waiting-for-closure',
-  WaitingForReminder = 'waiting-for-reminder',
+  WaitingForClosure = 'pending close',
+  WaitingForReminder = 'pending reminder',
   Open = 'open',
-  Escalated = 'escalated',
   New = 'new',
 }
 

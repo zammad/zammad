@@ -9,6 +9,7 @@ export const TicketAttributesFragmentDoc = gql`
   number
   title
   createdAt
+  escalationAt
   updatedAt
   pendingTime
   owner {

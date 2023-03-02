@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 import CommonTicketPriorityIndicator from '@shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonTicketEscalationIndicator from '@shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '@shared/entities/ticket/types'
 import { useTicketInformation } from '../../composable/useTicketInformation'
@@ -61,7 +62,11 @@ const customer = computed(() => {
         <h1 class="break-words text-xl font-bold leading-7 line-clamp-3">
           {{ ticket.title }}
         </h1>
-        <div class="mt-2 flex gap-2">
+        <div class="mt-2 flex flex-wrap gap-2">
+          <CommonTicketEscalationIndicator
+            v-if="ticket.escalationAt"
+            :escalation-at="ticket.escalationAt"
+          />
           <CommonTicketStateIndicator
             :status="ticket.state.stateType.name"
             :label="ticket.state.name"

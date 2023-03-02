@@ -24,8 +24,6 @@ const statusIndicator = computed(() => {
       return 'mobile-check-circle-outline-dashed'
     case TicketState.WaitingForReminder:
       return 'mobile-check-circle-outline-dashed'
-    case TicketState.Escalated:
-      return 'mobile-warning-triangle'
     case TicketState.New:
     case TicketState.Open:
     default:

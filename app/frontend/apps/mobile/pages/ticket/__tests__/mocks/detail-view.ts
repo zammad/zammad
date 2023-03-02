@@ -36,6 +36,7 @@ export const defaultTicket = () =>
       title: 'Test Ticket View',
       createdAt: ticketDate.toISOString(),
       updatedAt: ticketDate.toISOString(),
+      escalationAt: new Date(2022, 0, 29, 10, 0, 0, 0).toISOString(),
       pendingTime: null,
       subscribed: false,
       mentions: null,
