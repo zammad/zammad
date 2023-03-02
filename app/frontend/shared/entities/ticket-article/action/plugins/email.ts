@@ -120,6 +120,9 @@ const actionPlugin: TicketArticleActionPlugin = {
       icon: { mobile: 'mobile-mail' },
       attributes: Array.from(attributes),
       view: { agent: ['change'] },
+      validation: {
+        to: 'required',
+      },
       onDeselected(_, { body }) {
         getTicketSignatureQuery().cancel()
         body.removeSignature()

@@ -81,6 +81,10 @@ export interface AppSpecificTicketArticleType {
   attributes: string[]
   internal: boolean
   view: TicketViewPolicyMap
+  validation?: Record<
+    string,
+    string | Array<[rule: string, ...args: unknown[]]>
+  >
   recipientContact?: FieldRecipientContact
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']

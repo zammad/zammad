@@ -25,23 +25,7 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
     attributes
   end
 
-  before do
-    article
-
-    visit "/tickets/#{ticket.id}"
-
-    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
-    wait_for_form_to_settle('form-ticket-edit')
-    before_click.call
-
-    find_button('Article actions').click
-    find_button(trigger_label).click
-  end
-
-  # test only that reply works, because edge cases are covered by unit tests
-  it "can reply with #{type_label} #{note || ''}" do
-    after_click.call
-
+  def assert_fields(type_label, internal)
     expect(find_select('Article Type', visible: :all)).to have_selected_option(type_label)
     expect(find_select('Visibility', visible: :all)).to have_selected_option(internal ? 'Internal' : 'Public')
 
@@ -49,9 +33,18 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
     expect(find_autocomplete('CC')).to have_selected_options(cc) if cc.present?
     expect(find_select('Subject', visible: :all)).to have_value(article_subject) if article_subject.present?
 
-    text = find_editor('Text')
-    expect(text).to have_text_value(current_text, exact: text_exact)
-    text.type(new_text, click: false) if new_text
+    expect(find_editor('Text')).to have_text_value(current_text, exact: text_exact)
+  end
+
+  # test only that reply works, because edge cases are covered by unit tests
+  it "can reply with #{type_label} #{note || ''}" do
+    open_article_reply_dialog
+
+    after_click.call
+
+    assert_fields(type_label, internal)
+
+    find_editor('Text').type(new_text, click: false) if new_text
 
     find_autocomplete('To').search_for_option(new_to) if new_to.present?
     find_field('Subject', visible: :all).input(new_subject) if new_subject.present?

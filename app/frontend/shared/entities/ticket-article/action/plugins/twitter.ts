@@ -141,12 +141,19 @@ const actionPlugin: TicketArticleActionPlugin = {
     let footer: ConfidentTake<FieldEditorProps, 'meta.footer'>
 
     if (descriptionType === 'twitter status') {
+      type.validation = {
+        body: 'length:1,280',
+      }
       footer = {
         maxlength: 280,
         warningLength: 30,
       }
     } else {
       type.attributes = ['to']
+      type.validation = {
+        to: 'required',
+        body: 'length:1,10000',
+      }
       footer = {
         maxlength: 10000,
         warningLength: 500,

@@ -123,6 +123,8 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
         find_editor('Text').type('This is a note!', click: false)
 
+        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
+
         visibility = find_select('Visibility', visible: :all)
         expect(visibility).to have_selected_option('Public')
 

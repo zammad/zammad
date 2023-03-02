@@ -7,7 +7,7 @@ import type { AppSpecificTicketArticleType } from '@shared/entities/ticket-artic
 import type { TicketById } from '@shared/entities/ticket/types'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import { computed, shallowRef } from 'vue'
 import type {
   ChangedField,
@@ -34,9 +34,34 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       mentionUser: {
         groupNodeId: 'group_id',
       },
-      ...currentArticleType?.value?.editorMeta,
+      ...currentArticleType.value?.editorMeta,
     }
   })
+
+  const validationFields = [
+    'to',
+    'cc',
+    'subject',
+    'body',
+    'attachments',
+    'security',
+  ]
+
+  const validations = validationFields.reduce(
+    (
+      acc: Record<
+        string,
+        ComputedRef<
+          undefined | string | Array<[rule: string, ...args: unknown[]]>
+        >
+      >,
+      field,
+    ) => {
+      acc[field] = computed(() => currentArticleType.value?.validation?.[field])
+      return acc
+    },
+    {},
+  )
 
   const { isTicketCustomer } = useTicketView(ticket)
 
@@ -110,6 +135,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'to',
         label: __('To'),
         type: 'recipient',
+        validation: validations.to,
         props: {
           contact: recipientContact,
           multiple: true,
@@ -120,6 +146,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'cc',
         label: __('CC'),
         type: 'recipient',
+        validation: validations.сс,
         props: {
           contact: recipientContact,
           multiple: true,
@@ -130,6 +157,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'subject',
         label: __('Subject'),
         type: 'text',
+        validation: validations.subject,
         props: {
           maxlength: 200,
         },
@@ -140,23 +168,26 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         name: 'security',
         label: __('Security'),
         type: 'security',
+        validation: validations.security,
         triggerFormUpdater: false,
       },
       {
         name: 'body',
         screen: 'edit',
         object: EnumObjectManagerObjects.TicketArticle,
+        validation: validations.body,
         props: {
           contentType: editorType,
           meta: editorMeta,
         },
         triggerFormUpdater: false,
-        required: true, // debug
+        required: true,
       },
       {
         if: '$fns.includes($currentArticleType.attributes, "attachments")',
         type: 'file',
         name: 'attachments',
+        validation: validations.attachments,
         props: {
           multiple: true,
         },

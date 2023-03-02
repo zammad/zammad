@@ -53,6 +53,9 @@ const actionPlugin: TicketArticleActionPlugin = {
       attributes: ['attachments'],
       internal: false,
       contentType: 'text/plain',
+      validation: {
+        body: 'length:1,10000',
+      },
       editorMeta: {
         footer: {
           maxlength: 10000,

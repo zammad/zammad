@@ -53,6 +53,9 @@ const actionPlugin: TicketArticleActionPlugin = {
       internal: false,
       recipientContact: 'phone',
       contentType: 'text/plain',
+      validation: {
+        body: 'length:1,160',
+      },
       editorMeta: {
         footer: {
           maxlength: 160,

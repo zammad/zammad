@@ -36,6 +36,19 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     page.execute_script(js)
   end
 
+  def open_article_reply_dialog()
+    article
+
+    visit "/tickets/#{ticket.id}"
+
+    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+    wait_for_form_to_settle('form-ticket-edit')
+    before_click.call
+
+    find_button('Article actions').click
+    find_button(trigger_label).click
+  end
+
   # we test article creation mostly on the backend because Node.js doesn't support prose-mirror
   context 'when article was created as email' do
     let(:signature) { create(:signature, active: true, body: "\#{user.firstname}<br>Signature!") }
@@ -234,6 +247,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     context 'when forwarding email' do
       let(:trigger_label) { 'Forward' }
       let(:to)              { [] }
+      let(:new_to)          { 'test@example.com' }
       let(:article)         { create(:ticket_article, :outbound_email, ticket: ticket, subject: 'Article Subject') }
       let(:article_subject) { article.subject }
       let(:text_to)         { article.to }
@@ -346,6 +360,16 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
     end
 
+    it 'cannot create large article' do
+      open_article_reply_dialog
+
+      find_editor('Text').type(Faker::Lorem.characters(number: 161))
+
+      click_button('Save')
+
+      expect(find_editor('Text')).to have_text('This field must contain between 1 and 160 characters')
+    end
+
     # TODO: Check how we can test sending to customer numbers.
   end
 
@@ -376,6 +400,16 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       let(:new_text)     { '' }
       let(:result_text)  { "#{article.from}&nbsp\n/#{agent.firstname.first}#{agent.lastname.first}" }
     end
+
+    it 'cannot create large article' do
+      open_article_reply_dialog
+
+      find_editor('Text').type(Faker::Lorem.characters(number: 281))
+
+      click_button('Save')
+
+      expect(find_editor('Text')).to have_text('This field must contain between 1 and 280 characters')
+    end
   end
 
   context 'when article was created as a twitter dm' do
@@ -401,6 +435,17 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
       let(:result_text) { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
       let(:to) { [article.to] }
+    end
+
+    it 'cannot create large article, "to" is required' do
+      open_article_reply_dialog
+
+      # unselect preselected field
+      find_select('To').select_options([article.from])
+
+      click_button('Save')
+
+      expect(find_select('To')).to have_text('This field is required')
     end
   end
 
