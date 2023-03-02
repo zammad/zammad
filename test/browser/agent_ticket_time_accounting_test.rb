@@ -24,6 +24,9 @@ class AgentTicketTimeAccountingTest < TestCase
       type: 'on',
     )
 
+    # Check if there is no expert mode switch shown below the conditions field.
+    exists_not(css: '.ticket_selector .js-switch')
+
     ticket_create(
       data: {
         customer: 'nico',

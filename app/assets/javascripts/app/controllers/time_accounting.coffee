@@ -103,7 +103,7 @@ class TimeAccounting extends App.ControllerSubContent
     )
 
     configure_attributes = [
-      { name: 'condition',  display: __('Conditions for affected objects'), tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
+      { name: 'condition',  display: __('Conditions for affected objects'), tag: 'ticket_selector_simple', null: false, preview: false, action: false, hasChanged: false },
     ]
 
     filter_params = App.Setting.get('time_accounting_selector')
