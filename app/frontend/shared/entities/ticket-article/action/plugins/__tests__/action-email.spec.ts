@@ -15,13 +15,12 @@ describe('email permissions', () => {
     '%s reply is available for agent and email article',
     (type) => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: true })
       const article = createTicketArticle()
       article.type = {
         __typename: 'TicketArticleType',
         name: 'email',
       }
-      ticket.policy.update = true
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeDefined()
     },
@@ -31,7 +30,7 @@ describe('email permissions', () => {
     '%s reply is available for agent and phone article sent by Customer',
     (type) => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: true })
       const article = createTicketArticle()
       article.type = {
         __typename: 'TicketArticleType',
@@ -41,7 +40,6 @@ describe('email permissions', () => {
         __typename: 'TicketArticleSender',
         name: 'Customer',
       }
-      ticket.policy.update = true
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeDefined()
     },
@@ -51,7 +49,7 @@ describe('email permissions', () => {
     '%s reply is available for agent and phone article sent by Agent',
     (type) => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: true })
       const article = createTicketArticle()
       article.type = {
         __typename: 'TicketArticleType',
@@ -61,7 +59,6 @@ describe('email permissions', () => {
         __typename: 'TicketArticleSender',
         name: 'Agent',
       }
-      ticket.policy.update = true
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeDefined()
     },
@@ -70,7 +67,7 @@ describe('email permissions', () => {
   describe('reply-all action', () => {
     const setupAction = () => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: true })
       const article = createTicketArticle()
       article.type = {
         __typename: 'TicketArticleType',
@@ -80,7 +77,6 @@ describe('email permissions', () => {
         __typename: 'TicketArticleSender',
         name: 'Agent',
       }
-      ticket.policy.update = true
       return {
         ticket,
         article,
@@ -232,9 +228,8 @@ describe('email permissions', () => {
     `%s action is not available for agent without change permissions`,
     (type) => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: false })
       const article = createTicketArticle()
-      ticket.policy.update = false
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeUndefined()
     },
@@ -244,14 +239,13 @@ describe('email permissions', () => {
     `%s action is not available if there is no email address in the ticket group`,
     (type) => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: true })
       const article = createTicketArticle()
       ticket.group.emailAddress = null
       article.type = {
         __typename: 'TicketArticleType',
         name: 'email',
       }
-      ticket.policy.update = true
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeUndefined()
     },
@@ -266,24 +260,21 @@ describe('email permissions', () => {
   })
   it('email type is not available for customer', () => {
     setupView('customer')
-    const { ticket } = defaultTicket()
-    ticket.policy.update = true
+    const { ticket } = defaultTicket({ update: true })
     const types = createTestArticleTypes(ticket)
     expect(types.find((type) => type.value === 'email')).toBeUndefined()
   })
   it('email type is not available for agent without change permissions', () => {
     setupView('agent')
-    const { ticket } = defaultTicket()
-    ticket.policy.update = false
+    const { ticket } = defaultTicket({ update: false })
     const types = createTestArticleTypes(ticket)
     expect(types.find((type) => type.value === 'email')).toBeUndefined()
   })
 
   it('email type is not available if there is no email address in the ticket group', () => {
     setupView('agent')
-    const { ticket } = defaultTicket()
+    const { ticket } = defaultTicket({ update: true })
     ticket.group.emailAddress = null
-    ticket.policy.update = true
     const types = createTestArticleTypes(ticket)
     expect(types.find((type) => type.value === 'email')).toBeUndefined()
   })

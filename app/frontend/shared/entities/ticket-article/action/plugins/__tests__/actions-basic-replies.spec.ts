@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { PolicyTicket } from '@shared/graphql/types'
 import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import { setupView } from '@tests/support/mock-user'
 import {
@@ -23,7 +24,8 @@ describe.each([
 ])('%s action reply', (name, options) => {
   const { sender = ['Customer'], createArticleType } = options as any
 
-  const createEligibleData = () => createEligibleTicketArticleReplyData(name)
+  const createEligibleData = (policies?: Partial<PolicyTicket>) =>
+    createEligibleTicketArticleReplyData(name, policies)
 
   describe('seeing possible article actions', () => {
     it.skipIf(sender.includes('Customer'))(
@@ -47,8 +49,7 @@ describe.each([
 
     it(`cannot reply to ${name}, if ticket is not editable`, () => {
       setupView('agent')
-      const { ticket, article } = createEligibleData()
-      ticket.policy.update = false
+      const { ticket, article } = createEligibleData({ update: false })
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((a) => a.name === name)).toBeUndefined()
     })
@@ -88,7 +89,7 @@ describe.each([
 
     it(`cannot choose ${name}, if ticket is not editable`, () => {
       setupView('agent')
-      const { ticket } = defaultTicket()
+      const { ticket } = defaultTicket({ update: false })
       ticket.policy.update = false
       ticket.createArticleType!.name = createArticleType || name
       const actions = createTestArticleTypes(ticket)
@@ -98,7 +99,6 @@ describe.each([
     it(`agent can choose ${name} type, when ticket was created as ${name}`, () => {
       setupView('agent')
       const { ticket } = defaultTicket()
-      ticket.policy.update = true
       ticket.createArticleType!.name = createArticleType || name
       const actions = createTestArticleTypes(ticket)
       expect(actions.find((a) => a.value === name)).toBeDefined()

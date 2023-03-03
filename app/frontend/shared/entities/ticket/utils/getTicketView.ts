@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { useSessionStore } from '@shared/stores/session'
-import type { TicketById } from '../types'
+import type { TicketById, TicketView } from '../types'
 
 export const getTicketView = (ticket: TicketById) => {
   const session = useSessionStore()
@@ -9,12 +9,13 @@ export const getTicketView = (ticket: TicketById) => {
   const isTicketEditable = ticket?.policy.update ?? false
 
   const isTicketCustomer =
-    session.hasPermission('ticket.customer') &&
-    !session.hasPermission('ticket.agent')
+    session.hasPermission('ticket.customer') && !ticket?.policy.agentReadAccess
 
-  const isTicketAgent = session.hasPermission('ticket.agent')
+  const isTicketAgent = ticket?.policy.agentReadAccess
 
-  const ticketView = isTicketAgent ? ('agent' as const) : ('customer' as const)
+  const ticketView: TicketView = isTicketAgent
+    ? ('agent' as const)
+    : ('customer' as const)
 
   return {
     isTicketAgent,

@@ -337,11 +337,12 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
           message: __('Ticket has been created successfully.'),
         })
 
-        // TODO: Add correct handling if permission field is implemented.
-        // if (result.ticketCreate?.ticket?.internalId && result.ticketCreate?.ticket?.policy?.show) {
-        // we need to wait for form to reset
         return () => {
-          redirectAfterCreate(result.ticketCreate?.ticket?.internalId)
+          const ticket = result.ticketCreate?.ticket
+
+          redirectAfterCreate(
+            ticket?.policy.update ? ticket.internalId : undefined,
+          )
         }
       }
       return null

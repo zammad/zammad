@@ -148,7 +148,7 @@ describe('static organization', () => {
     const organization = defaultOrganization()
     organization.policy = {
       update: false,
-      __typename: 'Policy',
+      __typename: 'PolicyDefault',
     }
     const { view } = await visitTicketOrganization(organization)
 

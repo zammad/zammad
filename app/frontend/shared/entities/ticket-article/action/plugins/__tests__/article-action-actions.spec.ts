@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { mockPermissions } from '@tests/support/mock-permissions'
+import { setupView } from '@tests/support/mock-user'
 import { createTicketArticle, createTestArticleActions } from './utils'
 
 describe('article action plugins - actions', () => {
   it('successfully returns available actions for agent', () => {
-    mockPermissions(['ticket.agent'])
+    setupView('agent')
     const { ticket } = defaultTicket()
     const article = createTicketArticle()
     const actions = createTestArticleActions(ticket, article)

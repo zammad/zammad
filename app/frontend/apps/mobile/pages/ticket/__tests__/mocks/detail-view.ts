@@ -1,20 +1,25 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { TicketState } from '@shared/entities/ticket/types'
 import type {
   TicketArticlesQuery,
   TicketLiveUserDeletePayload,
   TicketLiveUserUpsertPayload,
   TicketQuery,
+  PolicyTicket,
 } from '@shared/graphql/types'
+import { TicketState } from '@shared/entities/ticket/types'
+import type { TicketView } from '@shared/entities/ticket/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
+import { useSessionStore } from '@shared/stores/session'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
+import { setupView } from '@tests/support/mock-user'
+import { initializeStore } from '@tests/support/components/initializeStore'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import {
   ticketObjectAttributes,
@@ -30,8 +35,10 @@ import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
-export const defaultTicket = () =>
-  nullableMock<TicketQuery>({
+export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
+  initializeStore()
+
+  return nullableMock<TicketQuery>({
     ticket: {
       __typename: 'Ticket',
       id: convertToGraphQLId('Ticket', 1),
@@ -46,6 +53,8 @@ export const defaultTicket = () =>
       mentions: null,
       policy: {
         update: true,
+        agentReadAccess: useSessionStore().hasPermission('ticket.agent'),
+        ...policies,
       },
       createArticleType: {
         id: convertToGraphQLId('TicketArticleType', 5),
@@ -68,7 +77,7 @@ export const defaultTicket = () =>
         fullname: 'John Doe',
         active: true,
         policy: {
-          __typename: 'Policy',
+          __typename: 'PolicyDefault',
           update: true,
         },
       },
@@ -107,6 +116,7 @@ export const defaultTicket = () =>
       objectAttributeValues: [],
     },
   })
+}
 
 const address = {
   __typename: 'AddressesField' as const,
@@ -261,6 +271,7 @@ interface MockOptions {
   mockFrontendObjectAttributes?: boolean
   ticket?: TicketQuery
   articles?: TicketArticlesQuery
+  ticketView?: TicketView
 }
 
 export const mockTicketLiveUsersGql = () => {
@@ -307,8 +318,13 @@ export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
 }
 
 export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
-  const { mockSubscription = true, mockFrontendObjectAttributes = false } =
-    options
+  const {
+    mockSubscription = true,
+    mockFrontendObjectAttributes = false,
+    ticketView = 'agent',
+  } = options
+
+  setupView(ticketView)
 
   if (mockFrontendObjectAttributes) {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(

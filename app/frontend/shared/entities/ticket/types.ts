@@ -25,6 +25,8 @@ export enum TicketCreateArticleType {
   EmailOut = 'email-out',
 }
 
+export type TicketView = 'agent' | 'customer'
+
 export interface TicketLiveAppUser {
   user: TicketLiveUser['user']
   editing: boolean

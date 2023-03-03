@@ -460,6 +460,9 @@ export const ticketPayload = (id = 1) =>
       uiColor: null,
       __typename: 'TicketPriority',
     },
+    policy: {
+      update: true,
+    },
     objectAttributeValues: [],
     tags: null,
     subscribed: false,

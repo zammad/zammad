@@ -45,6 +45,15 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
                 cursor
               }
             }
+            policy {
+              update
+              destroy
+              followUp
+              agentReadAccess
+              agentUpdateAccess
+              createMentions
+            }
+
           }
         }
       QUERY
@@ -76,7 +85,15 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
                 'firstname' => ticket.owner.firstname,
                 'email'     => ticket.owner.email,
               ),
-              'tags'       => %w[tag1 tag2]
+              'tags'       => %w[tag1 tag2],
+              'policy'     => {
+                'agentReadAccess'   => true,
+                'agentUpdateAccess' => true,
+                'createMentions'    => true,
+                'destroy'           => false,
+                'followUp'          => true,
+                'update'            => true
+              },
             }
           end
           it 'finds the ticket' do
@@ -158,7 +175,14 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
             'firstname' => customer.firstname,
             'email'     => customer.email,
           ),
-
+          'policy'     => {
+            'agentReadAccess'   => false,
+            'agentUpdateAccess' => false,
+            'createMentions'    => false,
+            'destroy'           => false,
+            'followUp'          => true,
+            'update'            => true
+          },
         }
       end
 

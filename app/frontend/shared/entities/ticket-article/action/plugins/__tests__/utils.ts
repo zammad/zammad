@@ -5,6 +5,7 @@ import {
   defaultTicket,
 } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
+import type { PolicyTicket } from '@shared/graphql/types'
 import type { AppName } from '@shared/types/app'
 import { initializeStore } from '@tests/support/components/initializeStore'
 import { createArticleActions, createArticleTypes } from '../index'
@@ -23,7 +24,10 @@ const defaultOptions: Pick<
   onDispose: vi.fn(),
 }
 
-export const createEligibleTicketArticleReplyData = (type: string) => {
+export const createEligibleTicketArticleReplyData = (
+  type: string,
+  policies: Partial<PolicyTicket> = {},
+) => {
   const article = createTicketArticle()
   article.sender = {
     name: 'Customer',
@@ -34,8 +38,7 @@ export const createEligibleTicketArticleReplyData = (type: string) => {
     communication: false,
     __typename: 'TicketArticleType',
   }
-  const { ticket } = defaultTicket()
-  ticket.policy.update = true
+  const { ticket } = defaultTicket({ update: true, ...policies })
   return {
     article,
     ticket,

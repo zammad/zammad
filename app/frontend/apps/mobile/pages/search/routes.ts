@@ -11,7 +11,6 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: __('Search'),
       requiresAuth: true,
-      // TODO 2022-06-02 Sheremet V.A. rights?
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       hasBottomNavigation: true,
       level: 3,

@@ -6,7 +6,6 @@ module Gql::Types
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
-    include Gql::Types::Concerns::HasPolicyField
 
     description 'Organizations that users can belong to'
 
@@ -21,5 +20,7 @@ module Gql::Types
       field :members, Gql::Types::UserType.connection_type
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
     end
+
+    field :policy, Gql::Types::Policy::DefaultType, null: false, method: :itself
   end
 end

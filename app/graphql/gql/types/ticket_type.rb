@@ -6,7 +6,6 @@ module Gql::Types
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
-    include Gql::Types::Concerns::HasPolicyField
 
     description 'Tickets'
 
@@ -29,6 +28,9 @@ module Gql::Types
     belongs_to :create_article_type, Gql::Types::Ticket::Article::TypeType
 
     field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
+
+    field :policy, Gql::Types::Policy::TicketType, null: false, method: :itself
+
     field :number, String, null: false
     field :title, String, null: false
 

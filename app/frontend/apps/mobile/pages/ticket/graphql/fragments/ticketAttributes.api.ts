@@ -74,6 +74,7 @@ export const TicketAttributesFragmentDoc = gql`
   }
   policy {
     update
+    agentReadAccess
   }
   tags
   subscribed

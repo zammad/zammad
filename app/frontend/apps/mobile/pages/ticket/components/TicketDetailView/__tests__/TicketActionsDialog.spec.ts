@@ -25,11 +25,10 @@ beforeAll(async () => {
   )
 })
 
-const { ticket: currentTicket } = defaultTicket()
-
 describe('actions that you can do with a ticket, when clicked on 3 dots', () => {
   it("don't see 'merge' tickets, if have no rights", async () => {
     mockPermissions([])
+    const { ticket: currentTicket } = defaultTicket()
 
     const view = renderComponent(TicketActionsDialog, {
       props: {
@@ -47,6 +46,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
   it("don't see 'subscribe' button, if have no rights", () => {
     mockPermissions([])
+    const { ticket: currentTicket } = defaultTicket()
 
     const view = renderComponent(TicketActionsDialog, {
       props: {
@@ -67,6 +67,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
   it('shows an error, if no ticket is selected and user is trying to merge', async () => {
     mockPermissions(['ticket.agent'])
+    const { ticket: currentTicket } = defaultTicket()
 
     const view = renderComponent(TicketActionsDialog, {
       props: {
@@ -93,6 +94,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
   it('can merge tickets, when have rights', async () => {
     mockPermissions(['ticket.agent'])
+    const { ticket: currentTicket } = defaultTicket()
 
     useDialog({
       name: 'ticket-actions',
@@ -169,6 +171,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
   it("don't see 'change customer', if have no rights", async () => {
     mockPermissions([])
+    const { ticket: currentTicket } = defaultTicket()
 
     const view = renderComponent(TicketActionsDialog, {
       props: {
@@ -187,6 +190,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
   it('can open change customer, when have rights (and close without confirmation)', async () => {
     mockPermissions(['ticket.agent'])
+    const { ticket: currentTicket } = defaultTicket()
 
     const view = renderComponent(TicketActionsDialog, {
       props: {

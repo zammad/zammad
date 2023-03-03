@@ -19,6 +19,7 @@ describe('useTicketView', () => {
     expect(isTicketCustomer.value).toBe(false)
 
     mockPermissions(['ticket.agent'])
+    ticket.value!.policy.agentReadAccess = true
 
     expect(isTicketAgent.value).toBe(true)
     expect(isTicketCustomer.value).toBe(false)
@@ -26,6 +27,7 @@ describe('useTicketView', () => {
 
   it('check customer permissions', () => {
     mockPermissions(['ticket.customer'])
+    ticket.value!.policy.agentReadAccess = false
 
     const { isTicketAgent, isTicketCustomer } = useTicketView(ticket)
 
@@ -41,8 +43,9 @@ describe('useTicketView', () => {
     ticket.value = {
       ...ticketDefault,
       policy: {
-        __typename: 'Policy',
+        __typename: 'PolicyTicket',
         update: false,
+        agentReadAccess: true,
       },
     }
 

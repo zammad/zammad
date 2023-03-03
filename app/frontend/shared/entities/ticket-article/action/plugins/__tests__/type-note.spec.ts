@@ -15,6 +15,7 @@ describe('note type', () => {
     'check article internal for "%s" when config is %s',
     (permission, config, internal) => {
       const { ticket } = defaultTicket()
+      ticket.policy.agentReadAccess = permission === 'ticket.agent'
       mockPermissions([permission])
       mockApplicationConfig({
         ui_ticket_zoom_article_note_new_internal: config,

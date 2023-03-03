@@ -754,19 +754,18 @@ describe('ticket viewers inside a ticket', () => {
   })
 
   it('customer should only add live user entry but not subscribe', async () => {
-    const {
-      waitUntilTicketLoaded,
-      mockTicketLiveUserUpsert,
-      mockTicketLiveUsersSubscription,
-    } = mockTicketDetailViewGql()
-
     mockAccount({
       lastname: 'Braun',
       firstname: 'Nicole',
       fullname: 'Nicole Braun',
       id: convertToGraphQLId('User', 3),
     })
-    mockPermissions(['ticket.customer'])
+
+    const {
+      waitUntilTicketLoaded,
+      mockTicketLiveUserUpsert,
+      mockTicketLiveUsersSubscription,
+    } = mockTicketDetailViewGql({ ticketView: 'customer' })
 
     const view = await visitView('/tickets/1')
 

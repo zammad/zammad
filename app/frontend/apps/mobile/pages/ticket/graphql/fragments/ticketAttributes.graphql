@@ -69,6 +69,7 @@ fragment ticketAttributes on Ticket {
   }
   policy {
     update
+    agentReadAccess
   }
   tags
   subscribed

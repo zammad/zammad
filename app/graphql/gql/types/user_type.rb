@@ -6,7 +6,6 @@ module Gql::Types
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
-    include Gql::Types::Concerns::HasPolicyField
 
     description 'Users (admins, agents and customers)'
 
@@ -49,6 +48,8 @@ module Gql::Types
       field :permissions, Gql::Types::User::PermissionType, method: :itself
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
     end
+
+    field :policy, Gql::Types::Policy::DefaultType, null: false, method: :itself
 
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
     # field :department, String
