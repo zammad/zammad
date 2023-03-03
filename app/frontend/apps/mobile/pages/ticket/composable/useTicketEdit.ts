@@ -10,9 +10,9 @@ import { EnumObjectManagerObjects } from '@shared/graphql/types'
 import { MutationHandler } from '@shared/server/apollo/handler'
 import type { TicketById } from '@shared/entities/ticket/types'
 import type { TicketArticleFormValues } from '@shared/entities/ticket-article/action/plugins/types'
-import { getNode } from '@formkit/core'
 import type { PartialRequired } from '@shared/types/utils'
 import { convertFilesToAttachmentInput } from '@shared/utils/files'
+import { getNodeByName } from '@shared/components/Form/utils'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
 type TicketArticleReceivedFormValues = PartialRequired<
@@ -60,7 +60,8 @@ export const useTicketEdit = (
   ) => {
     if (!article) return null
 
-    const contentType = getNode('body')?.context?.contentType || 'text/html'
+    const contentType =
+      getNodeByName(formId, 'body')?.context?.contentType || 'text/html'
 
     if (contentType === 'text/html') {
       const body = document.createElement('div')

@@ -39,8 +39,8 @@ const replyToTwitterComment = ((
     }),
   ).join(' ')
 
-  if (body) articleData.body = `${recipientsString} ${body}&nbsp`
-  else articleData.body = `${recipientsString}&nbsp`
+  if (body) articleData.body = `${recipientsString} ${body} `
+  else articleData.body = `${recipientsString} `
 
   openReplyDialog(articleData)
 }) satisfies TicketArticleAction['perform']

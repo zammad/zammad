@@ -820,8 +820,10 @@ describe('Form.vue - Reset', () => {
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('Some text')
     expect(example).toHaveValue('New example')
-    expect(getNode('title')?.context?.state.dirty).toBe(true)
-    expect(getNode('example')?.context?.state.dirty).toBe(true)
+    expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
+    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
+      true,
+    )
   })
 
   it('resets only specific group node', async () => {
@@ -836,12 +838,19 @@ describe('Form.vue - Reset', () => {
     await view.events.type(textarea, 'New text')
     await view.events.type(example, 'New example')
 
-    form.value.resetForm({}, undefined, undefined, getNode('example'))
+    form.value.resetForm(
+      {},
+      undefined,
+      undefined,
+      form.value.findNodeByName('example'),
+    )
     await waitForNextTick()
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('New text')
     expect(example).toHaveValue('Some example')
-    expect(getNode('title')?.context?.state.dirty).toBe(true)
-    expect(getNode('example')?.context?.state.dirty).toBe(false)
+    expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
+    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
+      false,
+    )
   })
 })

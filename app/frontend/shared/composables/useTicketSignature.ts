@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import type { TicketById } from '@shared/entities/ticket/types'
 import type {
   FormHandler,
@@ -62,7 +61,7 @@ export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
       )
         return
 
-      const editorContext = getNode(editorName)?.context as
+      const editorContext = formNode?.find(editorName, 'name')?.context as
         | FieldEditorContext
         | undefined
       if (!editorContext) return

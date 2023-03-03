@@ -224,6 +224,8 @@ export interface FormResetOptions {
 export interface FormRef {
   formId: string
   formNode: FormKitNode
+  getNodeByName(id: string): FormKitNode | undefined
+  findNodeByName(name: string): FormKitNode | undefined
   resetForm(
     initialValues?: FormValues,
     object?: ObjectLike,

@@ -226,7 +226,7 @@ describe('Creating new ticket as agent', () => {
       await nextStep(view)
 
       // Text input.
-      const editorNode = getNode('body')
+      const editorNode = getNode('ticket-create')?.find('body', 'name')
       await editorNode?.input('Article body', false)
 
       // there is button with "arrow up" and actual button

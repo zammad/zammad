@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { type FormKitPlugin, getNode } from '@formkit/core'
 import Form from '@shared/components/Form/Form.vue'
 import type { Props } from '@shared/components/Form/Form.vue'
@@ -15,7 +15,7 @@ import { waitFor } from '@testing-library/vue'
 const wrapperParameters = {
   form: true,
   attachTo: document.body,
-  unmount: false,
+  unmount: true,
 }
 
 const getSchema = (plugin: FormKitPlugin) => {
@@ -50,6 +50,8 @@ const getSchema = (plugin: FormKitPlugin) => {
   ]
 }
 
+const reactiveRef = ref(1)
+
 // Initialize a form component.
 const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
   const wrapper = renderComponent(Form, {
@@ -63,10 +65,14 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
 
   await waitUntil(() => wrapper.emitted().settled)
 
+  reactiveRef.value += 1
   return wrapper
 }
 
-const formNode = computed(() => getNode('test-form'))
+const formNode = computed(() => {
+  if (!reactiveRef.value) return
+  return getNode('test-form')
+})
 
 describe('useMultiStepForm', () => {
   it('check default active step', async () => {

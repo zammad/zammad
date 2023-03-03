@@ -396,9 +396,9 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     end
 
     include_examples 'mobile app: reply article', 'Twitter', attachments: false do
-      let(:current_text) { "#{article.from} " }
+      let(:current_text) { article.from.to_s }
       let(:new_text)     { '' }
-      let(:result_text)  { "#{article.from}&nbsp\n/#{agent.firstname.first}#{agent.lastname.first}" }
+      let(:result_text)  { "#{article.from} \n/#{agent.firstname.first}#{agent.lastname.first}" }
     end
 
     it 'cannot create large article' do

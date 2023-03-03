@@ -5,6 +5,7 @@ import { useForm } from '@shared/components/Form/composable'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 import { renderComponent } from '@tests/support/components'
 import { waitForNextTick } from '@tests/support/utils'
+import type { FormRef } from '../types'
 import { FormValidationVisibility } from '../types'
 
 const wrapperParameters = {
@@ -40,6 +41,16 @@ const renderForm = (options: any = {}) => {
   })
 }
 
+const getFormContext = (): FormRef => {
+  return {
+    formId: 'test-form',
+    formNode: getNode('test-form') as FormKitNode,
+    getNodeByName: vi.fn(),
+    findNodeByName: vi.fn(),
+    resetForm: vi.fn(),
+  }
+}
+
 describe('useForm', () => {
   // Initialize a form component.
 
@@ -47,11 +58,7 @@ describe('useForm', () => {
     renderForm()
     const { form, node } = useForm()
 
-    form.value = {
-      formId: 'test-form',
-      formNode: getNode('test-form') as FormKitNode,
-      resetForm: vi.fn(),
-    }
+    form.value = getFormContext()
 
     const currentNode = node.value as FormKitNode
 
@@ -67,11 +74,7 @@ describe('useForm', () => {
     const { form, isValid, isDirty, isComplete, isSubmitted, isDisabled } =
       useForm()
 
-    form.value = {
-      formId: 'test-form',
-      formNode: getNode('test-form') as FormKitNode,
-      resetForm: vi.fn(),
-    }
+    form.value = getFormContext()
 
     expect(isValid.value).toBe(true)
     expect(isDirty.value).toBe(false)
@@ -86,11 +89,7 @@ describe('useForm', () => {
 
     const formNode = getNode('test-form') as FormKitNode
 
-    form.value = {
-      formId: 'test-form',
-      formNode,
-      resetForm: vi.fn(),
-    }
+    form.value = getFormContext()
 
     formNode.store.set(
       createMessage({
@@ -108,11 +107,7 @@ describe('useForm', () => {
     renderForm()
     const { form, values } = useForm()
 
-    form.value = {
-      formId: 'test-form',
-      formNode: getNode('test-form') as FormKitNode,
-      resetForm: vi.fn(),
-    }
+    form.value = getFormContext()
 
     expect(values.value).toStrictEqual({
       title: undefined,
@@ -124,11 +119,7 @@ describe('useForm', () => {
     const wrapper = renderForm()
     const { form, formSubmit } = useForm()
 
-    form.value = {
-      formId: 'test-form',
-      formNode: getNode('test-form') as FormKitNode,
-      resetForm: vi.fn(),
-    }
+    form.value = getFormContext()
 
     formSubmit()
     await waitForNextTick()

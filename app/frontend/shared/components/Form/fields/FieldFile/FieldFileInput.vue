@@ -165,12 +165,12 @@ const { showImage } = useImageViewer(uploadFiles)
     ref="fileInput"
     data-test-id="fileInput"
     type="file"
-    :name="context.id"
+    :name="context.node.name"
     class="hidden"
     aria-hidden="true"
-    :accept="props.context.accept"
-    :capture="props.context.capture"
-    :multiple="props.context.multiple"
+    :accept="context.accept"
+    :capture="context.capture"
+    :multiple="context.multiple"
     @change="canInteract && onFileChanged($event)"
   />
 </template>

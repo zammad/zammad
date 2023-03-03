@@ -825,9 +825,11 @@ describe('ticket add/edit reply article', () => {
 
     await waitUntilTicketLoaded()
 
-    await getNode('form-ticket-edit')?.settled
+    const form = getNode('form-ticket-edit')
 
-    getNode('title')?.input('')
+    await form?.settled
+
+    form?.find('title', 'name')?.input('')
 
     await expect(
       view.findByLabelText('Validation failed'),
@@ -845,6 +847,6 @@ describe('ticket add/edit reply article', () => {
 
     expect(view.getByText('This field is required.')).toBeInTheDocument()
 
-    expect(getNode('body')?.value).toBe('Testing')
+    expect(form?.find('body', 'name')?.value).toBe('Testing')
   })
 })

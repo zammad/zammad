@@ -83,7 +83,7 @@ export const useTicketArticleContext = () => {
     }
 
   const getNewArticleBody = (type: EditorContentType): string => {
-    const bodyElement = form.value?.formNode.find('body', 'name')
+    const bodyElement = form.value?.getNodeByName('body')
     if (!bodyElement) return ''
     const getEditorValue = bodyElement.context?.getEditorValue
     return typeof getEditorValue === 'function' ? getEditorValue(type) : ''

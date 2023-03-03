@@ -67,7 +67,7 @@ describe('twitter article action', () => {
       action.perform!(ticket, article, options)
       expect(options.openReplyDialog).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: 'from&nbsp',
+          body: 'from ',
         }),
       )
     })
@@ -82,7 +82,7 @@ describe('twitter article action', () => {
       action.perform!(ticket, article, options)
       expect(options.openReplyDialog).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: 'from to&nbsp',
+          body: 'from to ',
         }),
       )
     })
@@ -100,7 +100,7 @@ describe('twitter article action', () => {
       action.perform!(ticket, article, options)
       expect(options.openReplyDialog).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: 'to&nbsp',
+          body: 'to ',
         }),
       )
     })
@@ -115,7 +115,7 @@ describe('twitter article action', () => {
       action.perform!(ticket, article, options)
       expect(options.openReplyDialog).toHaveBeenCalledWith(
         expect.objectContaining({
-          body: 'from already inserted body&nbsp',
+          body: 'from already inserted body ',
         }),
       )
     })

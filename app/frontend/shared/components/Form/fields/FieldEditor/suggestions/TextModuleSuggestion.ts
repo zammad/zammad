@@ -5,9 +5,9 @@ import Mention from '@tiptap/extension-mention'
 import type { Ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { QueryHandler } from '@shared/server/apollo/handler'
-import { getNode } from '@formkit/core'
 import { ensureGraphqlId } from '@shared/graphql/utils'
 import { debouncedQuery } from '@shared/utils/helpers'
+import { getNodeByName } from '@shared/components/Form/utils'
 import type { FieldEditorProps, MentionTextItem } from '../types'
 import buildMentionSuggestion from './suggestions'
 import { useTextModuleSuggestionsLazyQuery } from '../graphql/queries/textModule/textModuleSuggestions.api'
@@ -23,17 +23,17 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   )
 
   const getTextModules = async (query: string) => {
-    const { meta: editorMeta = {} } = context.value
+    const { meta: editorMeta = {}, formId } = context.value
     const meta = editorMeta[PLUGIN_NAME] || {}
     let { ticketId, customerId } = context.value
 
     if (!ticketId && meta.ticketNodeId) {
-      const node = getNode(meta.ticketNodeId)
+      const node = getNodeByName(formId, meta.ticketNodeId)
       ticketId = node?.value as string
     }
 
     if (!customerId && meta.customerNodeId) {
-      const node = getNode(meta.customerNodeId)
+      const node = getNodeByName(formId, meta.customerNodeId)
       customerId = node?.value as string
     }
 

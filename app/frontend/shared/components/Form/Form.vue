@@ -25,7 +25,7 @@ import type {
   FormKitSchemaComponent,
   FormKitMessageProps,
 } from '@formkit/core'
-import { createMessage, getNode, reset } from '@formkit/core'
+import { getNode, createMessage, reset } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
 import getUuid from '@shared/utils/getUuid'
@@ -51,6 +51,7 @@ import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { parseGraphqlId } from '@shared/graphql/utils'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
 import { FormHandlerExecution, FormValidationVisibility } from './types'
+import { getNodeByName as getFormkitFieldNode } from './utils'
 import type {
   ChangedField,
   FormData,
@@ -166,6 +167,14 @@ const changeFields = toRef(props, 'changeFields')
 const updaterChangedFields = new Set<string>()
 const changeInitialValue = new Map<string, FormFieldValue>()
 
+const getNodeByName = (id: string) => {
+  return getFormkitFieldNode(formId, id)
+}
+
+const findNodeByName = (name: string) => {
+  return formNode.value?.find(name, 'name')
+}
+
 const autofocusFirstInput = () => {
   nextTick(() => {
     const firstInput = getFirstFocusableElement(formElement.value)
@@ -188,7 +197,7 @@ const setFormNode = (node: FormKitNode) => {
 
     nextTick(() => {
       changeInitialValue.forEach((value, fieldName) => {
-        getNode(fieldName)?.input(value, false)
+        findNodeByName(fieldName)?.input(value, false)
       })
 
       changeInitialValue.clear()
@@ -437,7 +446,7 @@ const getResetFormValues = (
   }
 
   Object.entries(schemaData.fields).forEach(([field, { props }]) => {
-    const formElement = getNode(props.id || props.name)
+    const formElement = props.id ? getNode(props.id) : getNodeByName(props.name)
 
     let parentName = ''
     if (formElement?.parent && formElement?.parent.name !== rootNode.name) {
@@ -517,6 +526,8 @@ const resetForm = (
 defineExpose({
   formNode,
   formId,
+  getNodeByName,
+  findNodeByName,
   resetForm,
 })
 
@@ -687,7 +698,10 @@ const updateChangedFields = (
       !isEqual(value, values.value[fieldName])
     ) {
       updaterChangedFields.add(fieldName)
-      getNode(fieldName)?.input(value, false)
+      const node = changedFieldProps.id
+        ? getNode(changedFieldProps.id)
+        : getNodeByName(fieldName)
+      node?.input(value, false)
     }
   })
 
@@ -844,7 +858,7 @@ const buildStaticSchema = () => {
   const buildFormKitField = (
     field: FormSchemaField,
   ): FormKitSchemaComponent => {
-    const fieldId = field.id || field.name
+    const fieldId = field.id || `${field.name}-${formId}`
 
     return {
       $cmp: 'FormKit',

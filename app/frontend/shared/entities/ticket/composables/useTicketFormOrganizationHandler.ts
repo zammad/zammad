@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormHandlerExecution } from '@shared/components/Form'
 import type { FormHandlerFunction, FormHandler } from '@shared/components/Form'
 import { useSessionStore } from '@shared/stores/session'
@@ -56,10 +55,8 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
       if (session.hasPermission('ticket.agent')) {
         if (changedField?.newValue) {
           return (
-            getNode('customer_id')?.context?.optionValueLookup as Record<
-              number,
-              AutoCompleteCustomerOption
-            >
+            formNode?.find('customer_id', 'name')?.context
+              ?.optionValueLookup as Record<number, AutoCompleteCustomerOption>
           )[changedField.newValue as number].user as UserData
         }
 
