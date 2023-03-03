@@ -17,6 +17,7 @@ import {
 } from '@shared/components/CommonNotifications'
 import UserError from '@shared/errors/UserError'
 import { useTicketCustomerUpdateMutation } from '@shared/entities/ticket/graphql/mutations/customerUpdate.api'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import type { TicketById } from '@shared/entities/ticket/types'
@@ -31,7 +32,7 @@ export interface Props {
 
 const props = defineProps<Props>()
 
-const { form, isDirty, isDisabled, canSubmit } = useForm()
+const { form, isDirty, canSubmit } = useForm()
 
 const { waitForConfirmation } = useConfirmationDialog()
 
@@ -39,6 +40,10 @@ const cancelDialog = async () => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(
       __('Are you sure? You have unsaved changes that will get lost.'),
+      {
+        buttonTitle: __('Discard changes'),
+        buttonVariant: 'danger',
+      },
     )
 
     if (!confirmed) return
@@ -113,23 +118,20 @@ const changeCustomer = async (
     :label="__('Change customer')"
   >
     <template #before-label>
-      <button
-        class="text-white"
-        :class="{ 'opacity-50': isDisabled }"
-        @click="cancelDialog"
-      >
+      <CommonButton transparent-background @click="cancelDialog">
         {{ $t('Cancel') }}
-      </button>
+      </CommonButton>
     </template>
     <template #after-label>
-      <button
+      <CommonButton
         :form="name"
-        class="text-blue"
         :disabled="!canSubmit"
-        :class="{ 'opacity-50': !canSubmit }"
+        variant="primary"
+        type="submit"
+        transparent-background
       >
         {{ $t('Save') }}
-      </button>
+      </CommonButton>
     </template>
     <Form
       :id="name"

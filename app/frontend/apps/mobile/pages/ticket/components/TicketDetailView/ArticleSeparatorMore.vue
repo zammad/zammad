@@ -12,6 +12,7 @@ defineProps<Props>()
   <div class="relative text-center">
     <div class="line-more absolute top-1/2 z-0 w-full"></div>
     <button
+      type="button"
       class="relative select-none rounded-2xl border border-white/80 bg-black px-4 py-1 text-xs text-white/80"
     >
       {{ $t('load %s more', count) }}

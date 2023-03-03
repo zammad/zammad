@@ -106,6 +106,14 @@ module.exports = {
         '[data-variant="secondary"] &',
         '[data-variant="secondary"]&',
       ])
+      addVariant('formkit-variant-submit', [
+        '[data-variant="submit"] &',
+        '[data-variant="submit"]&',
+      ])
+      addVariant('formkit-variant-danger', [
+        '[data-variant="danger"] &',
+        '[data-variant="danger"]&',
+      ])
     }),
   ],
 }

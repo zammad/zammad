@@ -52,7 +52,7 @@ const isTabs = computed(() => props.as === 'tabs')
 
 <template>
   <div
-    class="flex max-w-[100vw] gap-2 overflow-x-auto"
+    class="flex max-w-[100vw] shrink-0 gap-2 overflow-x-auto"
     :class="{ 'w-full': mode === 'full' }"
     :role="isTabs ? 'tablist' : undefined"
   >
@@ -64,16 +64,19 @@ const isTabs = computed(() => props.as === 'tabs')
       :role="isTabs ? 'tab' : undefined"
       :disabled="option.disabled"
       :link="option.link"
-      class="flex flex-col items-center justify-center gap-1 rounded-xl bg-gray-500 px-3 text-sm text-white"
       :data-value="option.value"
-      :class="{
-        'bg-gray-600/50 text-white/30': option.disabled,
-        '!bg-gray-200':
-          option.selected ||
-          (option.value != null && modelValue === option.value),
-        'flex-1 py-2': mode === 'full',
-        'py-1': mode === 'compressed',
-      }"
+      :class="[
+        option.class,
+        {
+          'opacity-50': option.disabled,
+          '!bg-gray-200':
+            option.selected ||
+            (option.value != null && modelValue === option.value),
+          'flex-1 py-2': mode === 'full',
+          'py-1': mode === 'compressed',
+        },
+      ]"
+      class="flex flex-col items-center justify-center gap-1 rounded-xl bg-gray-500 px-3 text-sm text-white"
       :aria-controls="isTabs ? controls || option.controls : undefined"
       :aria-selected="isTabs ? modelValue === option.value : undefined"
       @click="onButtonClick(option)"

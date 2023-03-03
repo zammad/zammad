@@ -40,6 +40,7 @@ const icon = computed(() => {
     class="flex cursor-pointer items-center"
     :aria-label="isHomeButton ? $t('Go home') : $t('Go back')"
     :class="{ 'gap-2': label }"
+    type="button"
     @click="$walker.back(fallback, ignore)"
   >
     <CommonIcon :name="icon" decorative />

@@ -7,6 +7,7 @@ import { useUsersTicketsCount } from '@mobile/entities/user/composables/useUserT
 import { watchEffect, computed } from 'vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import CommonOrganizationsList from '@mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
@@ -71,13 +72,14 @@ const secondaryOrganizations = computed(() =>
       :skip-attributes="['firstname', 'lastname']"
     >
       <template v-if="user.policy.update" #after-fields>
-        <button
-          type="button"
-          class="p-4 text-blue"
+        <CommonButton
+          class="p-4"
+          variant="primary"
+          transparent-background
           @click="openEditUserDialog(user!)"
         >
           {{ $t('Edit Customer') }}
-        </button>
+        </CommonButton>
       </template>
     </ObjectAttributes>
     <CommonOrganizationsList

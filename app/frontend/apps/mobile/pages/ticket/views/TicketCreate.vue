@@ -21,7 +21,6 @@ import { useMultiStepForm, useForm } from '@shared/components/Form'
 import { useApplicationStore } from '@shared/stores/application'
 import { useTicketCreate } from '@shared/entities/ticket/composables/useTicketCreate'
 import { useTicketCreateArticleType } from '@shared/entities/ticket/composables/useTicketCreateArticleType'
-import { ButtonVariant } from '@shared/components/Form/fields/FieldButton/types'
 import { useTicketFormOganizationHandler } from '@shared/entities/ticket/composables/useTicketFormOrganizationHandler'
 import { FormData, type FormSchemaNode } from '@shared/components/Form/types'
 import { i18n } from '@shared/i18n'
@@ -37,6 +36,7 @@ import { ErrorStatusCodes } from '@shared/types/error'
 import type UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
 import { errorOptions } from '@mobile/router/error'
@@ -423,6 +423,10 @@ onBeforeRouteLeave(async () => {
 
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
+    {
+      buttonTitle: __('Discard changes'),
+      buttonVariant: 'danger',
+    },
   )
 
   return confirmed
@@ -468,7 +472,7 @@ export default {
     :style="stickyStyles.header"
     class="border-b-[0.5px] border-white/10 bg-black px-4"
   >
-    <div class="grid h-16 grid-cols-3">
+    <div class="grid h-16 grid-cols-[75px_auto_75px]">
       <div
         class="flex cursor-pointer items-center justify-self-start text-base"
       >
@@ -479,15 +483,15 @@ export default {
       >
         {{ $t('Create Ticket') }}
       </h1>
-      <div class="flex cursor-pointer items-center justify-self-end text-base">
-        <FormKit
-          input-class="flex justify-center items-center w-9 h-9 rounded-full !text-black text-center formkit-variant-primary:bg-yellow"
-          type="button"
+      <div class="flex items-center justify-self-end text-base">
+        <CommonButton
+          variant="submit"
           :disabled="submitButtonDisabled"
-          :title="$t('Create ticket')"
+          transparent-background
           @click="formSubmit"
-          ><CommonIcon name="mobile-arrow-up" size="base" decorative
-        /></FormKit>
+        >
+          {{ $t('Create') }}
+        </CommonButton>
       </div>
     </div>
   </header>
@@ -513,7 +517,7 @@ export default {
     class="bottom-navigation fixed bottom-0 z-10 h-32 w-full px-4 transition"
   >
     <FormKit
-      :variant="ButtonVariant.Primary"
+      :variant="lastStepName === activeStep ? 'submit' : 'primary'"
       type="button"
       outer-class="mt-4 mb-2"
       :disabled="lastStepName === activeStep && submitButtonDisabled"

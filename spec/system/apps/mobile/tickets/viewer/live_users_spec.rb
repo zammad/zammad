@@ -17,7 +17,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
   def open_viewers_dialog()
     visit "/tickets/#{ticket.id}"
     wait_for_viewers_subscription
-    find('[role="button"][title="Show ticket viewers"]').click
+    find_button('Show ticket viewers').click
   end
 
   def update_taskbar_item(taskbar_item, state, agent_id, number)

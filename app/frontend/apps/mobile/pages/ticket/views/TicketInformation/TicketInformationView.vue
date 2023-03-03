@@ -58,7 +58,7 @@ const { stickyStyles, headerElement } = useStickyHeader()
 <template>
   <header
     ref="headerElement"
-    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
+    class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
     :style="stickyStyles.header"
   >
     <CommonBackButton
@@ -75,7 +75,7 @@ const { stickyStyles, headerElement } = useStickyHeader()
       <button
         v-if="hasPermission('ticket.agent')"
         type="button"
-        :title="$t('Show ticket actions')"
+        :aria-label="$t('Show ticket actions')"
         @click="showActions()"
       >
         <CommonIcon name="mobile-more" size="base" decorative />

@@ -75,7 +75,7 @@ const removeFile = async (file: FileUploaded) => {
 
   const confirmed = await waitForConfirmation(__('Are you sure?'), {
     buttonTitle: 'Delete',
-    buttonTextColorClass: 'text-red-bright',
+    buttonVariant: 'danger',
   })
 
   if (!confirmed) return

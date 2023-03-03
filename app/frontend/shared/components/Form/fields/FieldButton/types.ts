@@ -1,6 +1,3 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-export enum ButtonVariant {
-  Primary = 'primary',
-  Secondary = 'secondary',
-}
+export type ButtonVariant = 'primary' | 'secondary' | 'submit' | 'danger'

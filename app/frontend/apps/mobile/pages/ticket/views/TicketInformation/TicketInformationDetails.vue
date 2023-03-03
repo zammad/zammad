@@ -42,6 +42,10 @@ const discardTicketEditDialog = async () => {
 
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
+    {
+      buttonTitle: __('Discard changes'),
+      buttonVariant: 'danger',
+    },
   )
 
   if (!confirmed) return

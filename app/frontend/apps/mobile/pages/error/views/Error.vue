@@ -22,7 +22,7 @@ const errorImage = computed(() => {
 <template>
   <div class="flex min-h-screen flex-col px-4">
     <header class="fixed">
-      <div class="grid h-16 grid-cols-3">
+      <div class="grid h-16 grid-cols-[75px_auto_75px]">
         <div
           class="flex cursor-pointer items-center justify-self-start text-base"
         >

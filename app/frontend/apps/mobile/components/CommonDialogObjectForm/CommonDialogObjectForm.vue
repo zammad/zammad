@@ -22,12 +22,14 @@ import { MutationHandler } from '@shared/server/apollo/handler'
 import Form from '@shared/components/Form/Form.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
 import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { useConfirmationDialog } from '../CommonConfirmation'
 
 export interface Props {
   name: string
   object?: ObjectLike
+  title?: string
   type: EnumObjectManagerObjects
   formUpdaterId?: EnumFormUpdaterId
   formChangeFields?: Record<string, Partial<FormSchemaField>>
@@ -76,6 +78,10 @@ const cancelDialog = async () => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(
       __('Are you sure? You have unsaved changes that will get lost.'),
+      {
+        buttonTitle: __('Discard changes'),
+        buttonVariant: 'danger',
+      },
     )
 
     if (!confirmed) return
@@ -116,19 +122,20 @@ const saveObject = async (formData: FormData) => {
 <template>
   <CommonDialog class="w-full" no-autofocus :name="name">
     <template #before-label>
-      <button class="text-white" @click="cancelDialog">
+      <CommonButton transparent-background @click="cancelDialog">
         {{ $t('Cancel') }}
-      </button>
+      </CommonButton>
     </template>
     <template #after-label>
-      <button
+      <CommonButton
         :form="name"
-        class="text-blue"
         :disabled="!canSubmit"
-        :class="{ 'opacity-50': !canSubmit }"
+        variant="primary"
+        type="submit"
+        transparent-background
       >
         {{ $t('Save') }}
-      </button>
+      </CommonButton>
     </template>
     <Form
       :id="name"

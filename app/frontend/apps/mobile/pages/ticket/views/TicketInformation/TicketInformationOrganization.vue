@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
@@ -63,12 +64,14 @@ const ticketsData = computed(() => getTicketData(organization.value))
       :skip-attributes="['name']"
     >
       <template v-if="organization.policy.update" #after-fields>
-        <button
-          class="p-4 text-blue"
+        <CommonButton
+          class="p-4"
+          variant="primary"
+          transparent-background
           @click="openEditOrganizationDialog(organization!)"
         >
           {{ $t('Edit Organization') }}
-        </button>
+        </CommonButton>
       </template>
     </ObjectAttributes>
 

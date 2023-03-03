@@ -6,6 +6,7 @@ import stopEvent from '@shared/utils/events'
 import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
 import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
 import { nextTick, type Ref, shallowRef, watch } from 'vue'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import type { PopupItem } from './types'
 
 export interface Props {
@@ -106,26 +107,26 @@ const transition = VITE_TEST_MODE
           <div class="flex w-full flex-col rounded-xl bg-black">
             <slot name="header" />
             <component
-              :is="item.link ? 'CommonLink' : 'button'"
+              :is="item.link ? 'CommonLink' : CommonButton"
               v-for="item in items"
               :key="item.label"
               :link="item.link"
               class="flex h-14 w-full cursor-pointer items-center justify-center border-b border-gray-300 text-center last:border-0"
               :class="item.class"
-              :type="!item.link && 'button'"
+              :variant="!item.link && item.buttonVariant"
+              :transparent-background="!item.link"
               v-bind="item.attributes"
               @click="onItemClick(item)"
             >
               {{ $t(item.label) }}
             </component>
           </div>
-          <button
-            type="button"
-            class="mt-3 flex h-14 w-full cursor-pointer items-center justify-center rounded-xl bg-black font-bold text-blue"
+          <CommonButton
+            class="mt-3 flex h-14 w-full items-center justify-center !bg-black"
             @click="hidePopup()"
           >
             {{ $t('Cancel') }}
-          </button>
+          </CommonButton>
         </div>
       </div>
     </Transition>

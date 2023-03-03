@@ -127,7 +127,7 @@ describe('Form - Field - Tags', () => {
     expect(options[0]).toHaveTextContent('paid')
 
     expect(
-      view.queryByTitle('Create tag'),
+      view.queryByRole('button', { name: 'Create tag' }),
       "can't create, because prop is false",
     ).not.toBeInTheDocument()
 
@@ -149,7 +149,7 @@ describe('Form - Field - Tags', () => {
 
     await view.events.type(filterInput, 'paid')
 
-    const createButton = view.getByTitle('Create tag')
+    const createButton = view.getByRole('button', { name: 'Create tag' })
 
     expect(createButton).toBeDisabled()
     await view.events.click(createButton)
@@ -245,7 +245,7 @@ describe('creating new tag', () => {
 
     await view.events.type(filterInput, 'pay')
 
-    const createButton = view.getByTitle('Create tag')
+    const createButton = view.getByRole('button', { name: 'Create tag' })
 
     expect(createButton).toBeEnabled()
     await view.events.click(createButton)

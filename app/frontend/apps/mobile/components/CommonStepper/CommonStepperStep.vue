@@ -25,6 +25,7 @@ const classes = computed(() => {
     class="flex h-6 w-6 grow-0 items-center justify-center rounded-full"
     :disabled="disabled"
     :class="classes"
+    type="button"
   >
     <div
       v-if="completed && errorCount"

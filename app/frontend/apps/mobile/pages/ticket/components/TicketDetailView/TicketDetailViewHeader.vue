@@ -50,7 +50,7 @@ const showActions = () => {
 
 <template>
   <header
-    class="grid h-[64px] grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
+    class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-gray-600/90 px-4"
   >
     <CommonBackButton
       class="justify-self-start"
@@ -74,8 +74,8 @@ const showActions = () => {
           v-if="liveUserList?.length"
           class="flex ltr:mr-0.5 rtl:ml-0.5"
           data-test-id="viewers-counter"
-          role="button"
-          :title="$t('Show ticket viewers')"
+          type="button"
+          :aria-label="$t('Show ticket viewers')"
           @click="showViewers()"
         >
           <CommonUserAvatar
@@ -96,7 +96,7 @@ const showActions = () => {
         <button
           v-if="session.hasPermission('ticket.agent')"
           type="button"
-          :title="$t('Show ticket actions')"
+          :aria-label="$t('Show ticket actions')"
           @click="showActions()"
         >
           <CommonIcon name="mobile-more" size="base" decorative />

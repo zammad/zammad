@@ -217,7 +217,7 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
           ]"
           type="button"
           data-name="article-context"
-          :title="$t('Article actions')"
+          :aria-label="$t('Article actions')"
           @click="emit('showContext')"
           @keydown.enter.prevent="emit('showContext')"
         >

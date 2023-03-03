@@ -172,7 +172,7 @@ describe('Creating new ticket as agent', () => {
   it('disables the submit button if required data is missing', async () => {
     const { view } = await visitTicketCreate()
 
-    expect(view.getByRole('button', { name: 'Create ticket' })).toBeDisabled()
+    expect(view.getByRole('button', { name: 'Create' })).toBeDisabled()
   })
 
   it('invalidates a single step if required data is missing', async () => {
@@ -192,11 +192,11 @@ describe('Creating new ticket as agent', () => {
   })
 
   it.each([
-    { index: 0, button: 'arrow submit button' },
-    { index: 1, button: 'text submit button' },
+    { name: 'Create', button: 'header submit button' },
+    { name: 'Create ticket', button: 'footer submit button' },
   ])(
     'redirects to detail view after successful ticket creation when clicked on $button',
-    async ({ index }) => {
+    async ({ name }) => {
       const mockCustomer = mockCustomerQueryResult()
       const mockTicket = mockTicketCreate()
 
@@ -229,10 +229,8 @@ describe('Creating new ticket as agent', () => {
       const editorNode = getNode('ticket-create')?.find('body', 'name')
       await editorNode?.input('Article body', false)
 
-      // there is button with "arrow up" and actual button
-      const submitButton = view.getAllByRole('button', {
-        name: 'Create ticket',
-      })[index]
+      // There is a button with "Create" in the header, and a "Create ticket" button in the footer.
+      const submitButton = view.getByRole('button', { name })
       await waitUntil(() => !submitButton.hasAttribute('disabled'))
 
       expect(submitButton).not.toBeDisabled()

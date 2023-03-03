@@ -5,7 +5,9 @@ import { computed, ref, toRef } from 'vue'
 import { watchIgnorable } from '@vueuse/shared'
 import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
+import { closeDialog } from '@shared/composables/useDialog'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import stopEvent from '@shared/utils/events'
 import {
@@ -149,11 +151,12 @@ const processSearchKeydown = (event: KeyboardEvent) => {
         <template v-if="context.canCreate" #controls>
           <button
             v-if="filter.length > 0"
-            :title="$t('Create tag')"
+            :aria-label="$t('Create tag')"
             class="rounded-3xl bg-green text-white"
             :class="{
               'bg-green/40 text-white/20': tagExists(filter),
             }"
+            type="button"
             :disabled="tagExists(filter)"
             @click="createTag()"
           >

@@ -8,6 +8,7 @@ import { onKeyUp, usePointerSwipe } from '@vueuse/core'
 import { nextTick, onMounted, ref, type Events } from 'vue'
 import { closeDialog } from '@shared/composables/useDialog'
 import stopEvent from '@shared/utils/events'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 
 const props = defineProps<{
   name: string
@@ -127,17 +128,17 @@ export default {
         </div>
         <div class="absolute top-0 right-0 bottom-0 flex items-center pr-4">
           <slot name="after-label">
-            <button
-              class="grow text-blue"
-              tabindex="0"
-              role="button"
+            <CommonButton
+              class="grow"
+              variant="primary"
+              transparent-background
               v-bind="listeners?.done"
               @pointerdown.stop
               @click="close()"
               @keypress.space.prevent="close()"
             >
               {{ $t('Done') }}
-            </button>
+            </CommonButton>
           </slot>
         </div>
       </div>

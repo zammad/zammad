@@ -46,14 +46,16 @@ describe('popup confirm behaviour', () => {
     showConfirmation({
       heading: 'Test heading',
       buttonTitle: 'Custom button title',
-      buttonTextColorClass: 'text-red',
+      buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
     })
 
     await waitForNextTick()
 
     expect(wrapper.getByText('Custom button title')).toBeInTheDocument()
-    expect(wrapper.getByText('Custom button title')).toHaveClass('text-red')
+    expect(wrapper.getByText('Custom button title')).toHaveClass(
+      'text-red-bright',
+    )
   })
 
   it('closes the confirmation dialog by using cancel', async () => {

@@ -21,7 +21,10 @@ import type { AccountAvatarActiveQuery } from '@shared/graphql/types'
 import { useRouter } from 'vue-router'
 import { useHeader } from '@mobile/composables/useHeader'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
+import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
+import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import { useAccountAvatarActiveQuery } from '../avatar/graphql/queries/active.api'
 import { useAccountAvatarAddMutation } from '../avatar/graphql/mutations/add.api'
 import { useAccountAvatarDeleteMutation } from '../avatar/graphql/mutations/delete.api'
@@ -143,7 +146,7 @@ const confirmRemoveAvatar = async () => {
   showConfirmation({
     heading: __('Do you really want to delete your current avatar?'),
     buttonTitle: __('Delete avatar'),
-    buttonTextColorClass: 'text-red-bright',
+    buttonVariant: 'danger',
     confirmCallback: removeAvatar,
   })
 }
@@ -156,7 +159,6 @@ const saveButtonActive = computed(() => {
 useHeader({
   title: __('Avatar'),
   backUrl: '/account',
-  backTitle: __('Account'),
   actionTitle: __('Done'),
   onAction() {
     router.push('/account')
@@ -190,6 +192,29 @@ const allowedImageTypes = computed(() => {
 
   return types.join(',')
 })
+
+const actions = computed<CommonButtonOption[]>(() => [
+  {
+    label: __('Library'),
+    icon: 'mobile-photos',
+    value: 'library',
+    onAction: () => fileGalleryInput.value?.click(),
+  },
+  {
+    label: __('Camera'),
+    icon: 'mobile-camera',
+    value: 'camera',
+    onAction: () => fileCameraInput.value?.click(),
+  },
+  {
+    label: __('Delete'),
+    icon: 'mobile-delete',
+    value: 'delete',
+    disabled: avatarDeleteDisabled.value,
+    class: 'bg-red-dark !text-red-bright',
+    onAction: confirmRemoveAvatar,
+  },
+])
 </script>
 
 <template>
@@ -198,32 +223,7 @@ const allowedImageTypes = computed(() => {
       <CommonLoader :loading="avatarLoading">
         <CommonAvatar v-if="state.image" :image="state.image" size="xl" />
         <CommonUserAvatar v-else :entity="user" size="xl" personal />
-
-        <div class="mt-4 flex w-full justify-center gap-2">
-          <button
-            class="w-full cursor-pointer rounded-xl bg-green py-2 px-3 text-base text-black"
-            @click="fileGalleryInput?.click()"
-          >
-            {{ $t('Library') }}
-          </button>
-          <button
-            class="w-full cursor-pointer rounded-xl bg-blue py-2 px-3 text-base text-black"
-            @click="fileCameraInput?.click()"
-          >
-            {{ $t('Camera') }}
-          </button>
-          <button
-            class="w-full rounded-xl bg-red-bright py-2 px-3 text-base text-black disabled:opacity-50"
-            :class="{
-              ['cursor-pointer']: !avatarDeleteDisabled,
-              ['cursor-not-allowed']: avatarDeleteDisabled,
-            }"
-            :disabled="avatarDeleteDisabled"
-            @click="confirmRemoveAvatar"
-          >
-            {{ $t('Delete') }}
-          </button>
-        </div>
+        <CommonButtonGroup class="mt-6" mode="full" :options="actions" />
       </CommonLoader>
 
       <input
@@ -252,7 +252,7 @@ const allowedImageTypes = computed(() => {
         class="flex w-full flex-col items-center justify-center"
       >
         <Cropper
-          class="cropper mb-4 mt-4"
+          class="mb-4 mt-4 !max-h-[250px] !max-w-[400px]"
           :src="avatarImage.content"
           :stencil-props="{
             aspectRatio: 1 / 1,
@@ -263,28 +263,19 @@ const allowedImageTypes = computed(() => {
           @change="imageCropped"
         />
         <div class="flex w-full gap-2">
-          <button
-            class="w-full cursor-pointer rounded-xl py-2 px-3 text-base"
-            @click="cancelCropping"
-          >
+          <CommonButton class="h-10 flex-1" @click="cancelCropping">
             {{ $t('Cancel') }}
-          </button>
-          <button
-            class="w-full cursor-pointer rounded-xl bg-yellow py-2 px-3 text-base text-black"
+          </CommonButton>
+          <CommonButton
+            variant="primary"
             :disabled="!saveButtonActive"
+            class="h-10 flex-1"
             @click="addAvatar"
           >
             {{ $t('Save') }}
-          </button>
+          </CommonButton>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.cropper {
-  max-height: 250px;
-  max-width: 400px;
-}
-</style>

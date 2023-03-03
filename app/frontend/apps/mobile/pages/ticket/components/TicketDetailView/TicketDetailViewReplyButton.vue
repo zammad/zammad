@@ -9,6 +9,7 @@ const { newTicketArticlePresent, showArticleReplyDialog } =
 
 <template>
   <button
+    type="button"
     class="Reply fixed bottom-0 flex w-screen items-center justify-center bg-gray-600 pt-3"
     @click="showArticleReplyDialog"
   >

@@ -158,7 +158,7 @@ it('doesnt call api, if dialog is closed', async () => {
   await view.events.type(view.getByLabelText('Name'), ' 2')
   await view.events.click(view.getByRole('button', { name: 'Cancel' }))
 
-  await view.events.click(await view.findByText('OK'))
+  await view.events.click(await view.findByText('Discard changes'))
 
   expect(sendMock).not.toHaveBeenCalledOnce()
   expect(closeDialog).toHaveBeenCalled()

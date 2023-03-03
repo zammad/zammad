@@ -144,6 +144,7 @@ const popupItems = computed(() =>
     v-bind="$attrs"
     :class="successClass"
     class="inline-flex h-6 grow items-center gap-1 rounded-lg px-2 py-1"
+    type="button"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >

@@ -69,7 +69,11 @@ describe('component for displaying text article', () => {
     ).not.toBeInTheDocument()
     expect(view.getByText('Me'), 'instead of name shows me').toBeInTheDocument()
 
-    await view.events.click(view.getByTitle('Article actions'))
+    await view.events.click(
+      view.getByRole('button', {
+        name: 'Article actions',
+      }),
+    )
 
     expect(view.emitted()).toHaveProperty('showContext')
 

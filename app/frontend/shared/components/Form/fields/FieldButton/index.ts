@@ -13,7 +13,6 @@ import type {
 import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
 import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
 import addIcon from '@shared/form/features/addIcon'
-import { ButtonVariant } from './types'
 
 // TODO: Build-In loading cycle funcitonality for the buttons or at least a disabled-state when loading is in progress?
 
@@ -32,7 +31,7 @@ const setVariantDefault = (node: FormKitNode) => {
 
   node.on('created', () => {
     if (!has(props, 'variant')) {
-      props.variant = ButtonVariant.Primary
+      props.variant = 'primary'
     }
   })
 }

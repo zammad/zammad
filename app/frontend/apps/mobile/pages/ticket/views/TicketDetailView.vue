@@ -173,6 +173,10 @@ onBeforeRouteLeave(async () => {
 
   const confirmed = await waitForConfirmation(
     __('Are you sure? You have unsaved changes that will get lost.'),
+    {
+      buttonTitle: __('Discard changes'),
+      buttonVariant: 'danger',
+    },
   )
 
   return confirmed
@@ -274,6 +278,7 @@ const bannerClasses = computed(() => {
             {{ $t('You have unsaved changes.') }}
           </div>
           <FormKit
+            variant="submit"
             input-class="font-semibold text-base px-4 py-1 !text-black formkit-variant-primary:bg-yellow rounded select-none"
             wrapper-class="flex justify-center items-center"
             type="button"

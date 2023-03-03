@@ -68,7 +68,6 @@ useTraverseOptions(optionsContainer, { direction: 'horizontal' })
       v-for="{ option, label, icon } of options"
       :key="option"
       role="option"
-      type="button"
       class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base"
       :class="{
         'bg-gray-600/50 text-white/30': isDisabled(option),

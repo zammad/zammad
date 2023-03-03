@@ -19,7 +19,7 @@ const localState = computed({
 const item = computed(() => {
   return {
     label: confirmationDialog.value?.buttonTitle || __('OK'),
-    class: confirmationDialog.value?.buttonTextColorClass || 'text-white',
+    buttonVariant: confirmationDialog.value?.buttonVariant,
     onAction: confirmationDialog.value?.confirmCallback,
   }
 })

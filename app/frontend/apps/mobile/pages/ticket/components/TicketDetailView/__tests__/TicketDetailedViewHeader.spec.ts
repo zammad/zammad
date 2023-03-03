@@ -95,7 +95,9 @@ describe('tickets zoom header', () => {
     expect(counter, 'has a counter').toBeInTheDocument()
     expect(counter).toHaveTextContent('+2')
 
-    await view.events.click(view.getByTitle('Show ticket viewers'))
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket viewers' }),
+    )
 
     expect(await view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()

@@ -14,4 +14,5 @@ export interface CommonButtonOption {
   hidden?: boolean
   permissions?: string | string[]
   icon?: string | IconProps
+  class?: string
 }

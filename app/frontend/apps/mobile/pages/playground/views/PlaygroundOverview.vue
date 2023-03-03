@@ -6,6 +6,7 @@
 import Form from '@shared/components/Form/Form.vue'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useDialog } from '@shared/composables/useDialog'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
 import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
@@ -387,6 +388,43 @@ const logSubmit = console.log
 
 <template>
   <div class="p-4">
+    <h2 class="text-xl font-bold">Buttons</h2>
+    <div class="mt-2 flex gap-3">
+      <CommonButton class="flex-1 py-2" variant="primary" />
+      <CommonButton class="flex-1 py-2" variant="secondary" />
+    </div>
+    <div class="my-4 flex gap-3">
+      <CommonButton class="flex-1 py-2" variant="submit" />
+      <CommonButton class="flex-1 py-2" variant="danger" />
+    </div>
+    <h3 class="mt-2 mb-2 text-lg font-semibold text-gray">
+      With transparent background
+    </h3>
+    <div class="flex gap-3">
+      <CommonButton
+        class="flex-1 py-2"
+        variant="primary"
+        transparent-background
+      />
+      <CommonButton
+        class="flex-1 py-2"
+        variant="secondary"
+        transparent-background
+      />
+    </div>
+    <div class="my-4 flex gap-3">
+      <CommonButton
+        class="flex-1 py-2"
+        variant="submit"
+        transparent-background
+      />
+      <CommonButton
+        class="flex-1 py-2"
+        variant="danger"
+        transparent-background
+      />
+    </div>
+
     <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
       Dialog
     </button>

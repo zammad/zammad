@@ -9,6 +9,7 @@ import { refDebounced, watchOnce } from '@vueuse/core'
 import { useLazyQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
+import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
@@ -236,15 +237,9 @@ useTraverseOptions(autocompleteList)
     @close="close"
   >
     <template v-if="context.action || context.onActionClick" #before-label>
-      <div
-        class="grow cursor-pointer text-white"
-        tabindex="0"
-        role="button"
-        @click="close"
-        @keypress.space="close"
-      >
-        {{ i18n.t('Cancel') }}
-      </div>
+      <CommonButton class="grow" transparent-background @click="close" @keypress.space="close">
+        {{ $t('Cancel') }}
+      </CommonButton>
     </template>
     <template #after-label>
       <CommonIcon
@@ -258,16 +253,16 @@ useTraverseOptions(autocompleteList)
         @click="executeAction"
         @keypress.space="executeAction"
       />
-      <div
+      <CommonButton
         v-else
-        class="grow cursor-pointer text-blue"
-        tabindex="0"
-        role="button"
+        class="grow"
+        variant="primary"
+        transparent-background
         @click="close()"
         @keypress.space="close()"
       >
-        {{ i18n.t('Done') }}
-      </div>
+        {{ $t('Done') }}
+      </CommonButton>
     </template>
     <div class="w-full p-4">
       <FormKit
@@ -381,14 +376,14 @@ useTraverseOptions(autocompleteList)
       class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
       role="alert"
     >
-      {{ i18n.t(context.dialogNotFoundMessage || __('No results found')) }}
+      {{ $t(context.dialogNotFoundMessage || __('No results found')) }}
     </div>
     <div
       v-else-if="!debouncedFilter && !options.length"
       class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
       role="alert"
     >
-      {{ i18n.t(context.dialogEmptyMessage || __('Start typing to search…')) }}
+      {{ $t(context.dialogEmptyMessage || __('Start typing to search…')) }}
     </div>
   </CommonDialog>
 </template>

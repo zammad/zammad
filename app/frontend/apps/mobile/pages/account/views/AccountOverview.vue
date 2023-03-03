@@ -18,6 +18,7 @@ import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectio
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import { useRawHTMLIcon } from '@shared/components/CommonIcon'
+import { useHeader } from '@mobile/composables/useHeader'
 import { i18n } from '@shared/i18n'
 import { useAccountLocaleMutation } from '../graphql/mutations/locale.api'
 
@@ -26,6 +27,12 @@ const router = useRouter()
 const logout = () => {
   router.push('/logout')
 }
+
+useHeader({
+  title: __('Account'),
+  backUrl: '/',
+  backAvoidHomeButton: true,
+})
 
 const session = useSessionStore()
 const { user } = storeToRefs(session)
@@ -190,8 +197,9 @@ const installZammadPWA = () => {
 
     <div class="mb-4">
       <FormKit
+        variant="danger"
         wrapper-class="mt-4 text-base flex grow justify-center items-center"
-        input-class="py-2 px-4 w-full h-14 !text-red-bright formkit-variant-primary:bg-red-dark rounded-xl select-none"
+        input-class="py-2 px-4 w-full h-14 rounded-xl select-none"
         type="submit"
         name="signout"
         @click="logout"

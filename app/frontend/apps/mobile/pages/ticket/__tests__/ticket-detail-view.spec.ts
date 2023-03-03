@@ -580,7 +580,10 @@ describe('ticket viewers inside a ticket', () => {
 
     expect(counter, 'has a counter').toBeInTheDocument()
     expect(counter).toHaveTextContent('+1')
-    await view.events.click(view.getByTitle('Show ticket viewers'))
+
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket viewers' }),
+    )
 
     await waitUntil(() =>
       view.queryByRole('dialog', { name: 'Ticket viewers' }),
@@ -679,7 +682,9 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    await view.events.click(view.getByTitle('Show ticket viewers'))
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket viewers' }),
+    )
 
     await waitUntil(() =>
       view.queryByRole('dialog', { name: 'Ticket viewers' }),
@@ -741,7 +746,9 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    await view.events.click(view.getByTitle('Show ticket viewers'))
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket viewers' }),
+    )
 
     await waitUntil(() =>
       view.queryByRole('dialog', { name: 'Ticket viewers' }),
@@ -807,7 +814,9 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    expect(view.queryByTitle('Show ticket viewers')).not.toBeInTheDocument()
+    expect(
+      view.queryByRole('button', { name: 'Show ticket viewers' }),
+    ).not.toBeInTheDocument()
   })
 })
 

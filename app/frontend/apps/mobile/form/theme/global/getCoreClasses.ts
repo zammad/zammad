@@ -20,7 +20,7 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
     wrapper: `${classes.wrapper || ''} relative`,
     input: `${
       classes.input || ''
-    } text-white formkit-variant-primary:bg-blue formkit-variant-secondary:bg-transparent`,
+    } bg-transparent text-white formkit-variant-primary:bg-blue formkit-variant-submit:text-black formkit-variant-submit:bg-yellow formkit-variant-submit:font-semibold formkit-variant-danger:bg-red-dark formkit-variant-danger:text-red-bright`,
   }
 }
 

@@ -103,7 +103,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
     <template #default="{ open }">
       <button
         ref="selectButton"
-        role="button"
+        type="button"
         :aria-label="accessibilityLabel"
         class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
         data-test-id="column"

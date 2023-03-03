@@ -270,7 +270,7 @@ export default {
             class="pb-4"
             @click="selectLastSearch(searchItem)"
           >
-            <button class="flex items-center">
+            <button type="button" class="flex items-center">
               <div>
                 <CommonIcon
                   name="mobile-clock"

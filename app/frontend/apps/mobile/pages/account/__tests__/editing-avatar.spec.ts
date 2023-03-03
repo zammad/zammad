@@ -137,7 +137,7 @@ describe('editing avatar', () => {
     const view = await visitView('/account/avatar')
 
     await view.findByTestId('common-avatar')
-    const deleteButton = await view.findByText('Delete')
+    const deleteButton = await view.findByRole('button', { name: 'Delete' })
 
     expect(deleteButton).toHaveAttribute('disabled')
   })

@@ -226,7 +226,8 @@ const showPasswordLogin = computed(
               </div>
               <FormKit
                 wrapper-class="mt-6 flex grow justify-center items-center"
-                input-class="py-2 px-4 w-full h-14 text-xl font-semibold !text-black formkit-variant-primary:bg-yellow rounded-xl select-none"
+                input-class="py-2 px-4 w-full h-14 text-xl rounded-xl select-none"
+                variant="submit"
                 type="submit"
                 :disabled="isDisabled"
               >
