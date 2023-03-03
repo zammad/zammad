@@ -83,8 +83,9 @@ export const useTicketArticleReply = (
     })
   }
 
-  const closeArticleReplyDialog = () => {
-    rememberArticleFormGroup()
+  const closeArticleReplyDialog = (rememberArticle = false) => {
+    if (rememberArticle) rememberArticleFormGroup()
+
     return articleReplyDialog.close()
   }
 

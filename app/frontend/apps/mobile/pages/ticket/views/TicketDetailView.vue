@@ -184,7 +184,7 @@ const route = useRoute()
 const submitForm = () => {
   if (!isTicketFormGroupValid.value && route.name !== 'Edit') {
     if (articleReplyDialog.isOpened.value) {
-      closeArticleReplyDialog()
+      closeArticleReplyDialog(true)
     }
     router.push(`/tickets/${ticket.value?.internalId}/information`)
   } else if (
