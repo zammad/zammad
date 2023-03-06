@@ -131,7 +131,7 @@
     "mitt": "^3.0.0",
     "pinia": "^2.0.32",
     "tippy.js": "^6.3.7",
-    "ua-parser-js": "^1.0.33",
+    "ua-parser-js": "^1.0.34",
     "uuid": "^9.0.0",
     "vue": "^3.2.47",
     "vue-advanced-cropper": "^2.8.8",
