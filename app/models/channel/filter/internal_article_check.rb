@@ -29,7 +29,7 @@ module Channel::Filter::InternalArticleCheck
 
     last_outgoing_mail = ticket.articles
       .where("ticket_articles.to #{Rails.application.config.db_like} ?", "%#{from_email}%")
-      .order(created_at: :desc).first
+      .reorder(created_at: :desc).first
 
     last_outgoing_mail&.internal.present?
   end

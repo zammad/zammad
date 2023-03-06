@@ -156,7 +156,7 @@ returns
 
   def self.last_customer_agent_article(ticket_id)
     sender = Ticket::Article::Sender.lookup(name: 'System')
-    Ticket::Article.where('ticket_id = ? AND sender_id NOT IN (?)', ticket_id, sender.id).order(created_at: :desc).first
+    Ticket::Article.where('ticket_id = ? AND sender_id NOT IN (?)', ticket_id, sender.id).reorder(created_at: :desc).first
   end
 
 =begin

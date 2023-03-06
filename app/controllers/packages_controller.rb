@@ -6,7 +6,7 @@ class PackagesController < ApplicationController
   # GET /api/v1/packages
   def index
     render json: {
-      packages:             Package.all.order('name'),
+      packages:             Package.all.reorder('name'),
       package_installation: File.exist?('/usr/bin/zammad'),
       local_gemfiles:       Dir['Gemfile.local.*'].present?
     }

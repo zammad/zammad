@@ -26,7 +26,7 @@ class RemoveDuplicateTranslations < ActiveRecord::Migration[6.1]
   end
 
   def cleanup_duplicates_of_unsynchronized(locale)
-    unsync_translations = Translation.where(locale: locale.locale, is_synchronized_from_codebase: false).order(:id).all
+    unsync_translations = Translation.where(locale: locale.locale, is_synchronized_from_codebase: false).reorder(:id).all
     unsync_translations.each do |t|
       next if t.destroyed?
 

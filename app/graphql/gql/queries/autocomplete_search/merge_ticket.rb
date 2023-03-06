@@ -26,7 +26,7 @@ module Gql::Queries
     end
 
     def search_db(limit:, source_ticket:)
-      TicketPolicy::ChangeScope.new(context.current_user).resolve.where.not(state_id: ignore_state_ids).where.not(id: source_ticket.id).order(created_at: :desc).limit(limit)
+      TicketPolicy::ChangeScope.new(context.current_user).resolve.where.not(state_id: ignore_state_ids).where.not(id: source_ticket.id).reorder(created_at: :desc).limit(limit)
     end
 
     def search_index(query:, limit:, source_ticket:)

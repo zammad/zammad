@@ -9,7 +9,7 @@ class ChannelsFacebookController < ApplicationController
       assets = external_credential.assets(assets)
     end
     channel_ids = []
-    Channel.where(area: 'Facebook::Account').order(:id).each do |channel|
+    Channel.where(area: 'Facebook::Account').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end

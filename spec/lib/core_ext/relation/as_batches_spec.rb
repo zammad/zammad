@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'AsBatches' do
   def priorities_asc(size)
     result = []
-    Ticket::Priority.order(name: :asc).as_batches(size: size) do |prio|
+    Ticket::Priority.reorder(name: :asc).as_batches(size: size) do |prio|
       result << prio
     end
     result
@@ -13,7 +13,7 @@ RSpec.describe 'AsBatches' do
 
   def priorities_desc(size)
     result = []
-    Ticket::Priority.order(name: :desc).as_batches(size: size) do |prio|
+    Ticket::Priority.reorder(name: :desc).as_batches(size: size) do |prio|
       result << prio
     end
     result

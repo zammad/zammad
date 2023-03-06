@@ -181,7 +181,7 @@ returns
         # Fixes #3755 - User with user_id 1 is show in admin interface (which should not)
         statement = statement.where('users.id != 1')
 
-        statement.order(Arel.sql(order_sql))
+        statement.reorder(Arel.sql(order_sql))
           .offset(offset)
           .limit(limit)
       end

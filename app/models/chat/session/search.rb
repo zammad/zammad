@@ -81,7 +81,7 @@ returns
         query.delete! '*'
         Chat::Session.where(
           'name LIKE ?', "%#{query}%"
-        ).order('name').offset(offset).limit(limit).to_a
+        ).reorder('name').offset(offset).limit(limit).to_a
 
       end
     end

@@ -11,7 +11,7 @@ class ChannelsEmailController < ApplicationController
     not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
-    Channel.order(:id).each do |channel|
+    Channel.reorder(:id).each do |channel|
       if system_online_service && channel.preferences && channel.preferences['online_service_disable']
         email_addresses = EmailAddress.where(channel_id: channel.id)
         email_addresses.each do |email_address|

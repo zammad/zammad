@@ -365,7 +365,7 @@ returns
   # check if min one is set to default true
   def min_one_check
     if !Calendar.exists?(default: true)
-      first = Calendar.order(:created_at, :id).limit(1).first
+      first = Calendar.reorder(:created_at, :id).limit(1).first
       return true if !first
 
       first.default = true

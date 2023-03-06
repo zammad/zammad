@@ -48,9 +48,9 @@ get list of translations
       }
       list = []
       translations = if admin
-                       Translation.where(locale: locale.downcase).order(:source)
+                       Translation.where(locale: locale.downcase).reorder(:source)
                      else
-                       Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
+                       Translation.where(locale: locale.downcase).where.not(target: '').reorder(:source)
                      end
       translations.each do |item|
         translation_item = if admin

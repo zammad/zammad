@@ -128,7 +128,7 @@ returns
       created_by_id:            user_id,
       create_article_type_id:   type.id,
       create_article_sender_id: sender.id
-    ).limit(5).order(id: :desc)
+    ).limit(5).reorder(id: :desc)
     article_bodies = []
     tickets.each do |ticket|
       article = ticket.articles.first
@@ -157,7 +157,7 @@ returns
 =end
 
   def self.rebuild_all_user
-    User.select('id').where(active: true).order(id: :desc).each do |local_user|
+    User.select('id').where(active: true).reorder(id: :desc).each do |local_user|
       rebuild_user(local_user.id)
     end
     true
@@ -204,7 +204,7 @@ returns
     article_type = Ticket::Article::Type.lookup(name: 'email')
 
     Ticket::Article.where(type_id: article_type.id)
-                   .order(id: :desc)
+                   .reorder(id: :desc)
                    .find_each(batch_size: 10) do |article|
       user = User.lookup(id: article.created_by_id)
       next if !user.preferences[:signature_detection]

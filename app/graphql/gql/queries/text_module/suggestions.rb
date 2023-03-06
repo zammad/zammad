@@ -25,7 +25,7 @@ module Gql::Queries
         .where(active: true)
         .where(where_agent_having_groups)
         .limit(limit)
-        .order(:name)
+        .reorder(:name)
     end
 
     private

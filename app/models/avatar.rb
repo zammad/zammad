@@ -339,7 +339,7 @@ return all avatars of an user
     avatars = Avatar.where(
       object_lookup_id: object_id,
       o_id:             o_id,
-    ).order(initial: :desc, deletable: :asc, created_at: :asc)
+    ).reorder(initial: :desc, deletable: :asc, created_at: :asc)
 
     # add initial avatar
     if no_init_add_as_boolean
@@ -404,7 +404,7 @@ returns:
     avatars = Avatar.where(
       object_lookup_id: object_id,
       o_id:             o_id,
-    ).order(created_at: :asc)
+    ).reorder(created_at: :asc)
     avatars.each do |avatar|
       next if avatar.id == avatar_id
 

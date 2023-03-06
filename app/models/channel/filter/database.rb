@@ -6,7 +6,7 @@ module Channel::Filter::Database
   def self.run(_channel, mail, _transaction_params)
 
     # process postmaster filter
-    filters = PostmasterFilter.where(active: true, channel: 'email').order(:name, :created_at)
+    filters = PostmasterFilter.where(active: true, channel: 'email').reorder(:name, :created_at)
     filters.each do |filter|
       Rails.logger.debug { " process filter #{filter.name} ..." }
       all_matches_ok = true

@@ -28,7 +28,7 @@ module MonitoringHelper
         ::Scheduler
           .where('active = ? AND period > 300', true)
           .where.not(last_run: nil)
-          .order(last_run: :asc, period: :asc)
+          .reorder(last_run: :asc, period: :asc)
       end
 
       def last_execution_deadline(scheduler)

@@ -118,7 +118,7 @@ module ApplicationController::RendersModels
     order_by   = sql_helper.get_order_by(params, 'ASC')
     order_sql  = sql_helper.get_order(sort_by, order_by)
 
-    generic_objects = object.order(Arel.sql(order_sql)).offset(pagination.offset).limit(pagination.limit)
+    generic_objects = object.reorder(Arel.sql(order_sql)).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
       list = []

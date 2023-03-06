@@ -4,7 +4,7 @@ class UserDevicesController < ApplicationController
   prepend_before_action { authentication_check && authorize! }
 
   def index
-    devices = UserDevice.where(user_id: current_user.id).order(updated_at: :desc, name: :asc)
+    devices = UserDevice.where(user_id: current_user.id).reorder(updated_at: :desc, name: :asc)
     devices_full = []
     devices.each do |device|
       attributes = device.attributes

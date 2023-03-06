@@ -114,7 +114,7 @@ returns
         # - stip out * we already search for *query* -
         query.delete! '*'
         organizations = Organization.where_or_cis(%i[name note], "%#{query}%")
-                                    .order(Arel.sql(order_sql))
+                                    .reorder(Arel.sql(order_sql))
                                     .offset(offset)
                                     .limit(limit)
 
@@ -133,7 +133,7 @@ returns
         organizations_by_user = Organization.select("DISTINCT(organizations.id), #{order_select_sql}")
                                             .joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id')
                                             .where(User.or_cis(%i[firstname lastname email], "%#{query}%"))
-                                            .order(Arel.sql(order_sql))
+                                            .reorder(Arel.sql(order_sql))
                                             .limit(limit)
 
         if params[:ids].present?

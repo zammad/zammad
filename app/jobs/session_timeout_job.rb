@@ -32,6 +32,6 @@ class SessionTimeoutJob < ApplicationJob
   end
 
   def sessions
-    @sessions ||= ActiveRecord::SessionStore::Session.order(updated_at: :desc).limit(10_000).map { |session| SessionTimeoutJob::Session.new(session) }
+    @sessions ||= ActiveRecord::SessionStore::Session.reorder(updated_at: :desc).limit(10_000).map { |session| SessionTimeoutJob::Session.new(session) }
   end
 end

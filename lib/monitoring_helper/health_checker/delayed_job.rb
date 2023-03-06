@@ -29,7 +29,7 @@ module MonitoringHelper
 
       def failed_with_attempts
         scope
-          .order(:created_at)
+          .reorder(:created_at)
           .limit(10)
           .each_with_object({}) { |elem, memo| map_single_failed_job(elem, memo) }
           .sort

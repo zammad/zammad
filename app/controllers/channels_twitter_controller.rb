@@ -68,7 +68,7 @@ class ChannelsTwitterController < ApplicationController
       external_credential_ids.push external_credential.id
     end
     channel_ids = []
-    Channel.where(area: 'Twitter::Account').order(:id).each do |channel|
+    Channel.where(area: 'Twitter::Account').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end

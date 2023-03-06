@@ -17,7 +17,7 @@ RSpec.describe Gql::Queries::Translations, type: :graphql do
       QUERY
     end
     let(:variables)          { { locale: locale, cacheKey: cache_key } }
-    let(:expected_cache_key) { Translation.where(locale: locale).order(updated_at: :desc).take.updated_at.to_s }
+    let(:expected_cache_key) { Translation.where(locale: locale).reorder(updated_at: :desc).take.updated_at.to_s }
 
     before do
       gql.execute(query, variables: variables)

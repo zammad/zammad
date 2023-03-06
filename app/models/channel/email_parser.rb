@@ -153,7 +153,7 @@ returns
     transaction_params = { interface_handle: "#{original_interface_handle}.postmaster", disable: [] }
 
     filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
+    Setting.where(area: 'Postmaster::PreFilter').reorder(:name).each do |setting|
       filters[setting.name] = Setting.get(setting.name).constantize
     end
     filters.each do |key, backend|
@@ -243,7 +243,7 @@ returns
           end
         end
         if group.blank? || group.active == false
-          group = Group.where(active: true).order(id: :asc).first
+          group = Group.where(active: true).reorder(id: :asc).first
         end
         if group.blank?
           group = Group.first
@@ -318,7 +318,7 @@ returns
 
     # run postmaster post filter
     filters = {}
-    Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
+    Setting.where(area: 'Postmaster::PostFilter').reorder(:name).each do |setting|
       filters[setting.name] = Setting.get(setting.name).constantize
     end
     filters.each_value do |backend|

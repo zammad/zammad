@@ -25,9 +25,9 @@ return is sent as message back to peer
     chat_user = User.lookup(id: @session['id'])
     chat_ids = Chat.agent_active_chat_ids(chat_user)
     chat_session = if @payload['chat_id']
-                     Chat::Session.where(state: 'waiting', chat_id: @payload['chat_id']).order(created_at: :asc).first
+                     Chat::Session.where(state: 'waiting', chat_id: @payload['chat_id']).reorder(created_at: :asc).first
                    else
-                     Chat::Session.where(state: 'waiting', chat_id: chat_ids).order(created_at: :asc).first
+                     Chat::Session.where(state: 'waiting', chat_id: chat_ids).reorder(created_at: :asc).first
                    end
     if !chat_session
       return {
@@ -45,7 +45,7 @@ return is sent as message back to peer
 
     session_attributes = chat_session.attributes
     session_attributes['messages'] = []
-    Chat::Message.where(chat_session_id: chat_session.id).order(created_at: :asc).each do |message|
+    Chat::Message.where(chat_session_id: chat_session.id).reorder(created_at: :asc).each do |message|
       session_attributes['messages'].push message.attributes
     end
 

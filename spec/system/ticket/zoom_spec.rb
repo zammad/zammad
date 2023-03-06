@@ -1695,7 +1695,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
       let(:customers) { create_list(:customer, 50, organization: organization) }
       let(:ticket)    { create(:ticket, group: Group.find_by(name: 'Users'), customer: customers.first) }
-      let(:members)   { organization.members.order(id: :asc) }
+      let(:members)   { organization.members.reorder(id: :asc) }
 
       before do
         visit "#ticket/zoom/#{ticket.id}"

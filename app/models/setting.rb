@@ -102,11 +102,11 @@ reload config settings
     return false if !force && @@current.present? && cache_valid?
 
     # read all or only changed since last read
-    latest = Setting.order(updated_at: :desc).limit(1).pluck(:updated_at)
+    latest = Setting.reorder(updated_at: :desc).limit(1).pluck(:updated_at)
     settings = if @@last_changed_at && @@current.present?
-                 Setting.where('updated_at >= ?', @@last_changed_at).order(:id).pluck(:name, :state_current)
+                 Setting.where('updated_at >= ?', @@last_changed_at).reorder(:id).pluck(:name, :state_current)
                else
-                 Setting.order(:id).pluck(:name, :state_current)
+                 Setting.reorder(:id).pluck(:name, :state_current)
                end
 
     Setting::Processed.process_settings! settings

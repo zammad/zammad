@@ -30,7 +30,7 @@ class TransactionDispatcher
 
     # get async backends
     sync_backends = []
-    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each do |setting|
+    Setting.where(area: 'Transaction::Backend::Sync').reorder(:name).each do |setting|
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 

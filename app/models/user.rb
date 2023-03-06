@@ -493,7 +493,7 @@ returns
       end
       condition += 'roles_users.role_id IN (?)'
     end
-    User.joins(:roles_users).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
+    User.joins(:roles_users).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.reorder(:id)
   end
 
 =begin
@@ -732,13 +732,13 @@ returns
   def self.of_role(role, group_ids = nil)
     roles_ids = Role.where(active: true, name: role).map(&:id)
     if !group_ids
-      return User.where(active: true).joins(:roles_users).where('roles_users.role_id' => roles_ids).order('users.updated_at DESC')
+      return User.where(active: true).joins(:roles_users).where('roles_users.role_id' => roles_ids).reorder('users.updated_at DESC')
     end
 
     User.where(active: true)
         .joins(:roles_users)
         .joins(:users_groups)
-        .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids).order('users.updated_at DESC')
+        .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids).reorder('users.updated_at DESC')
   end
 
 =begin

@@ -69,7 +69,7 @@ RSpec.describe Overview, type: :model do
 
       overview2.update!(prio: 3)
 
-      overviews = described_class.all.order(prio: :asc).pluck(:id)
+      overviews = described_class.all.reorder(prio: :asc).pluck(:id)
 
       expect(overviews.first).to eq(overview1.id)
       expect(overviews.second).to eq(overview3.id)
@@ -87,7 +87,7 @@ RSpec.describe Overview, type: :model do
       overview2 = create(:overview, prio: 200)
       overview3 = create(:overview, prio: nil)
 
-      overviews = described_class.all.order(prio: :asc).pluck(:id)
+      overviews = described_class.all.reorder(prio: :asc).pluck(:id)
 
       expect(overviews).to eq [overview1.id, overview2.id, overview3.id]
     end

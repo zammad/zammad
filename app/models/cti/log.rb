@@ -331,10 +331,10 @@ returns
     def self.log_records(current_user)
       cti_config = Setting.get('cti_config')
       if cti_config[:notify_map].present?
-        return Cti::Log.where(queue: queues_of_user(current_user, cti_config)).order(created_at: :desc).limit(view_limit)
+        return Cti::Log.where(queue: queues_of_user(current_user, cti_config)).reorder(created_at: :desc).limit(view_limit)
       end
 
-      Cti::Log.order(created_at: :desc).limit(view_limit)
+      Cti::Log.reorder(created_at: :desc).limit(view_limit)
     end
 
 =begin
@@ -452,7 +452,7 @@ Cti::Log.process(
     end
 
     def self.push_caller_list_update?(record)
-      list_ids = Cti::Log.order(created_at: :desc).limit(view_limit).pluck(:id)
+      list_ids = Cti::Log.reorder(created_at: :desc).limit(view_limit).pluck(:id)
       return true if list_ids.include?(record.id)
 
       false

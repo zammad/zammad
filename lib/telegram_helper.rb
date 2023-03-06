@@ -327,7 +327,7 @@ returns
 
     # find ticket or create one
     state_ids        = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
-    possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).order(:updated_at)
+    possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).reorder(:updated_at)
     ticket           = possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == channel.id }
 
     if ticket
@@ -733,7 +733,7 @@ returns
 
       # get the last ticket of customer which is not closed yet, and close it
       state_ids        = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
-      possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).order(:updated_at)
+      possible_tickets = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).reorder(:updated_at)
       ticket           = possible_tickets.find_each.find { |possible_ticket| possible_ticket.preferences[:channel_id] == channel.id }
 
       return if !ticket

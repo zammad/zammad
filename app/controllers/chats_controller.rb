@@ -6,7 +6,7 @@ class ChatsController < ApplicationController
   def index
     chat_ids = []
     assets = {}
-    Chat.order(:id).each do |chat|
+    Chat.reorder(:id).each do |chat|
       chat_ids.push chat.id
       assets = chat.assets(assets)
     end

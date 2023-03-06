@@ -53,7 +53,7 @@ class Stats::TicketWaitingTime
     last_ticket_id = nil
     count_time     = nil
 
-    Ticket::Article.joins(:type).joins(:sender).where('ticket_articles.ticket_id IN (?) AND ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', ticket_ids, start_time, false, true).order(:ticket_id, :created_at).pluck(:created_at, :sender_id, :ticket_id, :id).each do |article|
+    Ticket::Article.joins(:type).joins(:sender).where('ticket_articles.ticket_id IN (?) AND ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', ticket_ids, start_time, false, true).reorder(:ticket_id, :created_at).pluck(:created_at, :sender_id, :ticket_id, :id).each do |article|
       if last_ticket_id != article[2]
         last_ticket_id = article[2]
         count_time = 0

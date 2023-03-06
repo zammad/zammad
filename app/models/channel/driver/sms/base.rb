@@ -11,7 +11,7 @@ class Channel::Driver::Sms::Base
   end
 
   def user_by_mobile(mobile)
-    User.where(mobile: mobile).order(:updated_at).first || user_by_cti(mobile) || User.create!(
+    User.where(mobile: mobile).reorder(:updated_at).first || user_by_cti(mobile) || User.create!(
       firstname: mobile,
       mobile:    mobile,
     )
@@ -36,7 +36,7 @@ class Channel::Driver::Sms::Base
   end
 
   def find_open_sms_ticket(user)
-    ticket = Ticket.where(customer_id: user.id, create_article_type_id: article_type_sms.id).where.not(state_id: closed_ids).order(:updated_at).first
+    ticket = Ticket.where(customer_id: user.id, create_article_type_id: article_type_sms.id).where.not(state_id: closed_ids).reorder(:updated_at).first
     ensure_ticket_followup_state(ticket)
     ticket
   end

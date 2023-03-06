@@ -7,7 +7,7 @@ class ChannelsTelegramController < ApplicationController
   def index
     assets = {}
     channel_ids = []
-    Channel.where(area: 'Telegram::Bot').order(:id).each do |channel|
+    Channel.where(area: 'Telegram::Bot').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end

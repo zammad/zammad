@@ -4,7 +4,7 @@ class Issue3550SetPretty < ActiveRecord::Migration[5.2]
   def change
     return if !Setting.exists?(name: 'system_init_done')
 
-    Cti::Log.order(created_at: :desc).limit(300).find_each do |log|
+    Cti::Log.reorder(created_at: :desc).limit(300).find_each do |log|
       log.set_pretty
       log.save!
     rescue

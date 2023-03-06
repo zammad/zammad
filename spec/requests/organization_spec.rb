@@ -60,7 +60,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       get '/api/v1/organizations?limit=40&page=1&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      organizations = Organization.order(:id).limit(2)
+      organizations = Organization.reorder(:id).limit(2)
       expect(json_response[0]['id']).to eq(organizations[0].id)
       expect(json_response[0]['member_ids']).to eq(organizations[0].member_ids)
       expect(json_response[1]['id']).to eq(organizations[1].id)
@@ -70,7 +70,7 @@ RSpec.describe 'Organization', performs_jobs: true, searchindex: true, type: :re
       get '/api/v1/organizations?limit=40&page=2&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      organizations = Organization.order(:id).limit(4)
+      organizations = Organization.reorder(:id).limit(4)
       expect(json_response[0]['id']).to eq(organizations[2].id)
       expect(json_response[0]['member_ids']).to eq(organizations[2].member_ids)
       expect(json_response[1]['id']).to eq(organizations[3].id)

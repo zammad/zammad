@@ -6,7 +6,7 @@ class CalendarsController < ApplicationController
   def init
     assets = {}
     record_ids = []
-    Calendar.all.order(:name, :created_at).each do |calendar|
+    Calendar.all.reorder(:name, :created_at).each do |calendar|
       record_ids.push calendar.id
       assets = calendar.assets(assets)
     end

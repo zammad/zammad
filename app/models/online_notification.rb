@@ -108,7 +108,7 @@ return all online notifications of an user
 
   def self.list(user, limit)
     OnlineNotification.where(user_id: user.id)
-                      .order(created_at: :desc)
+                      .reorder(created_at: :desc)
                       .limit(limit)
   end
 
@@ -126,7 +126,7 @@ return all online notifications of an object
       object_lookup_id: object_id,
       o_id:             o_id,
     )
-                                      .order(created_at: :desc)
+                                      .reorder(created_at: :desc)
                                       .limit(10_000)
 
   end

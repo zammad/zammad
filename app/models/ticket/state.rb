@@ -83,7 +83,7 @@ returns:
       next if states_with_default.count == 1
 
       if states_with_default.count.zero?
-        state = Ticket::State.where(active: true).order(id: :asc).first
+        state = Ticket::State.where(active: true).reorder(id: :asc).first
         state[default_field] = true
         state.callback_loop = true
         state.save!

@@ -19,7 +19,7 @@ module MonitoringHelper
     def last_login
       User
         .where.not(last_login: nil)
-        .order(last_login: :desc)
+        .reorder(last_login: :desc)
         .first
         &.last_login
     end

@@ -60,7 +60,7 @@ add a new activity entry for an object
       permission_id:             permission_id,
       activity_stream_object_id: object_id,
       created_by_id:             data[:created_by_id]
-    ).order(created_at: :desc).first
+    ).reorder(created_at: :desc).first
 
     # return if old entry is really fresh
     if result
@@ -108,7 +108,7 @@ return all activity entries of an user
 
   def self.list(user, limit)
     ActivityStreamPolicy::Scope.new(user, self).resolve
-                               .order(created_at: :desc)
+                               .reorder(created_at: :desc)
                                .limit(limit)
   end
 

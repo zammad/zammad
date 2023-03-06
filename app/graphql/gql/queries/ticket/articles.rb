@@ -11,9 +11,9 @@ module Gql::Queries
 
     def resolve(ticket:)
       if TicketPolicy.new(context.current_user, ticket).agent_read_access?
-        ::Ticket::Article.where(ticket: ticket).order(:id)
+        ::Ticket::Article.where(ticket: ticket).reorder(:id)
       else
-        ::Ticket::Article.where(ticket: ticket, internal: false).order(:id)
+        ::Ticket::Article.where(ticket: ticket, internal: false).reorder(:id)
       end
     end
   end

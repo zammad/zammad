@@ -197,7 +197,7 @@ returns
   def self.tag_list(data)
     Tag.joins(:tag_item, :tag_object)
        .where(o_id: data[:o_id], tag_objects: { name: data[:object] })
-       .order(:id)
+       .reorder(:id)
        .pluck('tag_items.name')
   end
 

@@ -44,7 +44,7 @@ class SearchKnowledgeBaseBackend
       .constantize
       .search_fallback("%#{query}%", @cached_scope_ids, options: options)
       .where(kb_locale: kb_locales)
-      .order(**search_fallback_order)
+      .reorder(**search_fallback_order)
       .pluck(:id)
       .map { |id| { id: id, type: index } }
   end

@@ -7,7 +7,7 @@ class Issue2715FixBrokenTwitterUrlsJob < ApplicationJob
   def perform
     Ticket::Article.joins(:type)
                    .where(ticket_article_types: { name: ['twitter status', 'twitter direct-message'] })
-                   .order(created_at: :desc)
+                   .reorder(created_at: :desc)
                    .limit(10_000)
                    .find_each { |article| fix_broken_links(article) }
   end

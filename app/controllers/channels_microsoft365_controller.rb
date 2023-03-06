@@ -14,7 +14,7 @@ class ChannelsMicrosoft365Controller < ApplicationController
     end
 
     channel_ids = []
-    Channel.where(area: 'Microsoft365::Account').order(:id).each do |channel|
+    Channel.where(area: 'Microsoft365::Account').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end

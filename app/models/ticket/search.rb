@@ -192,7 +192,7 @@ returns
 
       order_sql   = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
       tickets_all = scope.new(current_user).resolve
-                                           .order(Arel.sql(order_sql))
+                                           .reorder(Arel.sql(order_sql))
                                            .offset(offset)
                                            .limit(limit)
 

@@ -50,7 +50,7 @@ class KnowledgeBase
 
         search_fallback("%#{query}%", options: options)
           .where(kb_locale: kb_locales)
-          .order(Arel.sql(order_sql))
+          .reorder(Arel.sql(order_sql))
           .offset(options[:from])
           .limit(options[:limit])
           .to_a

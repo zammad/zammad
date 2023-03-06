@@ -78,7 +78,7 @@ module Channel::Filter::FollowUpCheck
         message_ids = references.split(%r{\s+})
         message_ids.each do |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
-          article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
+          article = Ticket::Article.where(message_id_md5: message_id_md5).reorder('created_at DESC, id DESC').limit(1).first
           next if !article
 
           ticket = article.ticket
@@ -116,7 +116,7 @@ module Channel::Filter::FollowUpCheck
 
   def self.message_id_article(message_id)
     message_id_md5 = Digest::MD5.hexdigest(message_id)
-    Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
+    Ticket::Article.where(message_id_md5: message_id_md5).reorder('created_at DESC, id DESC').limit(1).first
   end
 
   def self.follow_up_by_md5(mail)

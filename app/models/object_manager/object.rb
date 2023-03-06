@@ -54,7 +54,7 @@ returns:
         active:           true,
         to_create:        false,
         to_delete:        false,
-      ).order('position ASC, name ASC')
+      ).reorder('position ASC, name ASC')
     end
   end
 

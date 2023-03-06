@@ -14,7 +14,7 @@ class CollectionUpdateJob < ApplicationJob
 
     assets = {}
     all = []
-    model.order(id: :asc).find_each do |record|
+    model.reorder(id: :asc).find_each do |record|
       assets = record.assets(assets)
       all.push record.attributes_with_association_ids
     end

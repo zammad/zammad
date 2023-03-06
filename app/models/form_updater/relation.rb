@@ -37,7 +37,7 @@ class FormUpdater::Relation
   def items
     @items ||= begin
       if filter_ids
-        relation_type.where(id: filter_ids).order(order)
+        relation_type.where(id: filter_ids).reorder(order)
       else
         # Currently the default is an empty array, later we need some good solution for the admin area.
         []

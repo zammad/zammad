@@ -45,10 +45,10 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         options: [ { value: group.id, label: group.name } ],
       },
       'state_id'    => {
-        options: Ticket::State.by_category(:viewable_agent_new).order(name: :asc).map { |state| { value: state.id, label: state.name } },
+        options: Ticket::State.by_category(:viewable_agent_new).reorder(name: :asc).map { |state| { value: state.id, label: state.name } },
       },
       'priority_id' => {
-        options: Ticket::Priority.where(active: true).order(id: :asc).map { |priority| { value: priority.id, label: priority.name } },
+        options: Ticket::Priority.where(active: true).reorder(id: :asc).map { |priority| { value: priority.id, label: priority.name } },
       },
     }
   end

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # @response_message 200 [Array<User>] List of matching User records.
   # @response_message 403               Forbidden / Invalid session.
   def index
-    users = policy_scope(User).order(id: :asc).offset(pagination.offset).limit(pagination.limit)
+    users = policy_scope(User).reorder(id: :asc).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
       list = []

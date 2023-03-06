@@ -140,7 +140,7 @@ returns
                                         .joins(state: :state_type)
                                         .where(customer_id: data[:customer_id])
                                         .limit(data[:limit] || 15)
-                                        .order(created_at: :desc)
+                                        .reorder(created_at: :desc)
 
     open_tickets   = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:open] })
     closed_tickets = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:closed] })

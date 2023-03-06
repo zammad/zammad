@@ -25,7 +25,7 @@ class Sla < ApplicationModel
 
   def self.for_ticket(ticket)
     fallback = nil
-    all.order(:name, :created_at).as_batches(size: 10) do |record|
+    all.reorder(:name, :created_at).as_batches(size: 10) do |record|
       if record.condition.present?
         return record if record.condition_matches?(ticket)
       else

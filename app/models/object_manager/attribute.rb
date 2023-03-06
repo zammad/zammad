@@ -71,7 +71,7 @@ list of all attributes
 =end
 
   def self.list_full
-    result = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    result = ObjectManager::Attribute.all.reorder('position ASC, name ASC')
     references = ObjectManager::Attribute.attribute_to_references_hash
     attributes = []
     result.each do |item|

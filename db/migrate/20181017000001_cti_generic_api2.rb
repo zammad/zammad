@@ -20,7 +20,7 @@ class CtiGenericApi2 < ActiveRecord::Migration[5.1]
     Cti::Log.reset_column_information
 
     # clenaup table records
-    Cti::Log.order(created_at: :desc).limit(2000).each do |log|
+    Cti::Log.reorder(created_at: :desc).limit(2000).each do |log|
       if log.initialized_at
         begin
           initialized_at = Time.zone.parse(log.initialized_at)

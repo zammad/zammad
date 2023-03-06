@@ -274,7 +274,7 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
 
   context 'Organization members', authenticated_as: :authenticate do
     let(:organization) { create(:organization) }
-    let(:members)      { organization.members.order(id: :asc) }
+    let(:members)      { organization.members.reorder(id: :asc) }
 
     def authenticate
       create_list(:customer, 50, organization: organization)

@@ -15,7 +15,7 @@ class TicketsController < ApplicationController
     paginate_with(max: 100)
 
     tickets = TicketPolicy::ReadScope.new(current_user).resolve
-                                     .order(id: :asc)
+                                     .reorder(id: :asc)
                                      .offset(pagination.offset)
                                      .limit(pagination.limit)
 
@@ -342,7 +342,7 @@ class TicketsController < ApplicationController
                                        state_id:    Ticket::State.by_category(:open).select(:id),
                                      )
                                      .where.not(id: ticket.id)
-                                     .order(created_at: :desc)
+                                     .reorder(created_at: :desc)
                                      .limit(6)
 
     # if we do not have open related tickets, search for any tickets
@@ -350,7 +350,7 @@ class TicketsController < ApplicationController
                                        .where(customer_id: ticket.customer_id)
                                        .where.not(state_id: Ticket::State.by_category(:merged).pluck(:id))
                                        .where.not(id: ticket.id)
-                                       .order(created_at: :desc)
+                                       .reorder(created_at: :desc)
                                        .limit(6)
 
     # get related assets
@@ -714,7 +714,7 @@ class TicketsController < ApplicationController
     tags = ticket.tag_list
 
     # get mentions
-    mentions = Mention.where(mentionable: ticket).order(created_at: :desc)
+    mentions = Mention.where(mentionable: ticket).reorder(created_at: :desc)
     mentions.each do |mention|
       assets = mention.assets(assets)
     end

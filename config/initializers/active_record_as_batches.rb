@@ -3,7 +3,7 @@
 # https://github.com/telent/ar-as-batches
 # TODO: Should be reconsidered with rails 6.1 because then
 # find_each might be able to handle order as well
-# e.g. Ticket::Priority.order(updated: :desc).find_each... is not possbile atm with find_each
+# e.g. Ticket::Priority.reorder(updated: :desc).find_each... is not possbile atm with find_each
 module ActiveRecord
   module AsBatches
     class Batch

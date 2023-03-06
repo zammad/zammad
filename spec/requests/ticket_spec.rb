@@ -1115,7 +1115,7 @@ RSpec.describe 'Ticket', type: :request do
       get '/api/v1/tickets?limit=40&page=1&per_page=5', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      tickets = Ticket.order(:id).limit(5)
+      tickets = Ticket.reorder(:id).limit(5)
       expect(json_response[0]['id']).to eq(tickets[0].id)
       expect(json_response[4]['id']).to eq(tickets[4].id)
       expect(json_response.count).to eq(5)
@@ -1123,7 +1123,7 @@ RSpec.describe 'Ticket', type: :request do
       get '/api/v1/tickets?limit=40&page=2&per_page=5', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      tickets = Ticket.order(:id).limit(10)
+      tickets = Ticket.reorder(:id).limit(10)
       expect(json_response[0]['id']).to eq(tickets[5].id)
       expect(json_response[4]['id']).to eq(tickets[9].id)
       expect(json_response.count).to eq(5)

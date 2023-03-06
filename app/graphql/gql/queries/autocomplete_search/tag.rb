@@ -20,10 +20,10 @@ module Gql::Queries
     def search_tags(query:, limit:)
       # Show some tags even without a query.
       if query.strip.empty?
-        return Tag::Item.left_outer_joins(:tags).group(:id).order('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
+        return Tag::Item.left_outer_joins(:tags).group(:id).reorder('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
       end
 
-      Tag::Item.where('name_downcase LIKE ?', "%#{query.strip.downcase}%").order(name: :asc).limit(limit)
+      Tag::Item.where('name_downcase LIKE ?', "%#{query.strip.downcase}%").reorder(name: :asc).limit(limit)
     end
 
     def coerce_to_result(tag)

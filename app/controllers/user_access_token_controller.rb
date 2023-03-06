@@ -29,9 +29,9 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
   def index
     tokens = Token.select(Token.column_names - %w[persistent name])
                   .where(action: 'api', persistent: true, user_id: current_user.id)
-                  .order(updated_at: :desc, label: :asc)
+                  .reorder(updated_at: :desc, label: :asc)
 
-    base_query       = Permission.order(:name).where(active: true)
+    base_query       = Permission.reorder(:name).where(active: true)
     permission_names = current_user.permissions.pluck(:name)
     ancestor_names   = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq -
                        permission_names

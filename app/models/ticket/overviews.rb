@@ -22,7 +22,7 @@ returns
     Ticket::OverviewsPolicy::Scope.new(data[:current_user], Overview).resolve
       .where({ link: data[:links] }.compact)
       .distinct
-      .order(:prio, :name)
+      .reorder(:prio, :name)
   end
 
 =begin
@@ -93,7 +93,7 @@ returns
         .distinct
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
         .joins(db_query_params.tables)
-        .order(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
+        .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
         .limit(limit_per_overview)
         .pluck(:id, :updated_at, Arel.sql(db_query_params.order_by))
 
@@ -134,7 +134,7 @@ returns
       .distinct
       .where(db_query_params.query_condition, *db_query_params.bind_condition)
       .joins(db_query_params.tables)
-      .order(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
+      .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
       .limit(limit_per_overview)
   end
 

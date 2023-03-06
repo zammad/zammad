@@ -45,7 +45,7 @@ class RecentView < ApplicationModel
                                      'MAX(id) as id')
                              .group(:o_id, :recent_view_object_id, :created_by_id)
                              .where(created_by_id: user.id)
-                             .order(Arel.sql('MAX(created_at) DESC, MAX(id) DESC'))
+                             .reorder(Arel.sql('MAX(created_at) DESC, MAX(id) DESC'))
                              .limit(limit)
 
     if object_name.present?

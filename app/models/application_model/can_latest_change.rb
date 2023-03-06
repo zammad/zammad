@@ -19,7 +19,7 @@ returns
 =end
 
     def latest_change
-      data = order('updated_at DESC, id DESC').limit(1).pick(:id, :updated_at)
+      data = reorder('updated_at DESC, id DESC').limit(1).pick(:id, :updated_at)
       return if data.blank?
 
       "#{data[0]},#{data[1]&.to_s(:nsec)}"

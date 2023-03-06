@@ -357,7 +357,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       get '/api/v1/users?limit=40&page=1&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      users = User.order(:id).limit(2)
+      users = User.reorder(:id).limit(2)
       expect(json_response[0]['id']).to eq(users[0].id)
       expect(json_response[1]['id']).to eq(users[1].id)
       expect(json_response.count).to eq(2)
@@ -365,7 +365,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       get '/api/v1/users?limit=40&page=2&per_page=2', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
-      users = User.order(:id).limit(4)
+      users = User.reorder(:id).limit(4)
       expect(json_response[0]['id']).to eq(users[2].id)
       expect(json_response[1]['id']).to eq(users[3].id)
       expect(json_response.count).to eq(2)

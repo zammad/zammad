@@ -179,7 +179,7 @@ reload search index with full data
     def search_index_reload(silent: false)
       tolerance       = 10
       tolerance_count = 0
-      query           = order(created_at: :desc)
+      query           = reorder(created_at: :desc)
       total           = query.count
       record_count    = 0
       batch_size      = 100

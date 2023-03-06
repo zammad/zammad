@@ -38,7 +38,7 @@ module CanPriorization
   end
 
   def rearrangement_previous_ordered_ids
-    self.class.all.order(
+    self.class.all.reorder(
       prio:       :asc,
       updated_at: :desc
     ).pluck(:id)

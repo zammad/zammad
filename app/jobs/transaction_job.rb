@@ -18,7 +18,7 @@ class TransactionJob < ApplicationJob
 =end
 
   def perform(item, params = {})
-    Setting.where(area: 'Transaction::Backend::Async').order(:name).each do |setting|
+    Setting.where(area: 'Transaction::Backend::Async').reorder(:name).each do |setting|
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 

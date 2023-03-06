@@ -14,7 +14,7 @@ class ChannelsGoogleController < ApplicationController
     end
 
     channel_ids = []
-    Channel.where(area: 'Google::Account').order(:id).each do |channel|
+    Channel.where(area: 'Google::Account').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end

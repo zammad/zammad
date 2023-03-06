@@ -66,7 +66,7 @@ module Integration::ImportJobBase
       job = ImportJob.where(
         name:    backend,
         dry_run: dry_run
-      ).order(created_at: :desc).limit(1).first
+      ).reorder(created_at: :desc).limit(1).first
     end
 
     if job

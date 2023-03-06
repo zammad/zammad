@@ -20,7 +20,7 @@ module Gql::Queries
     def resolve(locale:, cache_key: nil)
 
       base_query = Translation.where(locale: locale).where('target != source').where.not(target: '')
-      new_cache_key = base_query.order(updated_at: :desc).take&.updated_at.to_s
+      new_cache_key = base_query.reorder(updated_at: :desc).take&.updated_at.to_s
 
       if new_cache_key.empty?
         raise ActiveRecord::RecordNotFound, "No translations found for locale #{locale}."

@@ -805,9 +805,9 @@ perform active triggers on ticket
     end
 
     triggers = if Rails.configuration.db_case_sensitive
-                 ::Trigger.where(active: true).order(Arel.sql('LOWER(name)'))
+                 ::Trigger.where(active: true).reorder(Arel.sql('LOWER(name)'))
                else
-                 ::Trigger.where(active: true).order(:name)
+                 ::Trigger.where(active: true).reorder(:name)
                end
     return [true, __('No triggers active')] if triggers.blank?
 
@@ -921,7 +921,7 @@ result
 =end
 
   def articles
-    Ticket::Article.where(ticket_id: id).order(:created_at, :id)
+    Ticket::Article.where(ticket_id: id).reorder(:created_at, :id)
   end
 
   # Get whichever #last_contact_* was later

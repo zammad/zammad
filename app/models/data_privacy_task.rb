@@ -81,8 +81,8 @@ class DataPrivacyTask < ApplicationModel
   end
 
   def prepare_deletion_preview_tickets
-    preferences[:owner_tickets]    = deletable.owner_tickets.order(id: 'DESC').map(&:number)
-    preferences[:customer_tickets] = deletable.customer_tickets.order(id: 'DESC').map(&:number)
+    preferences[:owner_tickets]    = deletable.owner_tickets.reorder(id: 'DESC').map(&:number)
+    preferences[:customer_tickets] = deletable.customer_tickets.reorder(id: 'DESC').map(&:number)
   end
 
   def prepare_deletion_preview_user

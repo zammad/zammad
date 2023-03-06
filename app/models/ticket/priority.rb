@@ -25,7 +25,7 @@ class Ticket::Priority < ApplicationModel
     return true if priorities_with_default.count == 1
 
     if priorities_with_default.count.zero?
-      priority = Ticket::Priority.where(active: true).order(id: :asc).first
+      priority = Ticket::Priority.where(active: true).reorder(id: :asc).first
       priority.default_create = true
       priority.callback_loop = true
       priority.save!

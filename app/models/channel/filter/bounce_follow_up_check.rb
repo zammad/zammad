@@ -18,7 +18,7 @@ module Channel::Filter::BounceFollowUpCheck
       next if !result[:message_id]
 
       message_id_md5 = Digest::MD5.hexdigest(result[:message_id])
-      article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
+      article = Ticket::Article.where(message_id_md5: message_id_md5).reorder('created_at DESC, id DESC').limit(1).first
       next if !article
 
       Rails.logger.debug { "Follow-up for '##{article.ticket.number}' in bounce email." }
