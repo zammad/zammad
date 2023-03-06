@@ -128,3 +128,21 @@
     - when: on_success
   script:
     - bundle exec rake zammad:ci:refresh_envs
+
+'lint: secret_detection':
+  extends: .template_lint
+  image:
+    name: "zricethezav/gitleaks:latest"
+    entrypoint: [""]
+  cache: []
+  before_script: []
+  script:
+    # Since we clone with GIT_DEPTH=1, the commit has the entire codebase as a diff.
+    # Otherwise, we'd need to use --no-git to scan the entire codebase, but that is slower
+    #   as it also traverses directories not scanned by git.
+    - gitleaks detect --report-path secret-detection-report.json --verbose
+  after_script: []
+  # # GitLab can show this in a security widget, but that seems to be useless at this point (offers empty file for download).
+  # artifacts:
+  #   reports:
+  #     secret_detection: secret-detection-report.json

@@ -21,7 +21,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
         area:     'Sms::Account',
         options:  {
           adapter:       'sms/twilio',
-          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          webhook_token: 'secret_webhook_token',
           account_id:    '111',
           token:         '223',
           sender:        '333',
@@ -36,14 +36,14 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/not_existing', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:not_found)
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>').to eq(json_response['error'])
 
       channel.group_id = Group.first.id
       channel.save!
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
@@ -66,7 +66,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('sms')
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
@@ -86,7 +86,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       expect(article.created_by_id).to eq(customer.id)
 
       # check duplicate callbacks
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
@@ -100,7 +100,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       ticket.state = Ticket::State.find_by(name: 'closed')
       ticket.save!
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms3'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms3'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
@@ -185,14 +185,14 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
         area:    'Sms::Account',
         options: {
           adapter:       'sms/twilio',
-          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          webhook_token: 'secret_webhook_token',
           account_id:    '111',
           token:         '223',
           sender:        '333',
         },
       )
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
       expect(1).to eq(xml_response.elements.count)
@@ -210,7 +210,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
         area:     'Sms::Account',
         options:  {
           adapter:       'sms/twilio',
-          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          webhook_token: 'secret_webhook_token',
           account_id:    '111',
           token:         '223',
           sender:        '333',
@@ -218,7 +218,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
         group_id: Group.first.id,
       )
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
     end
 

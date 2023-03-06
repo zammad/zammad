@@ -1386,9 +1386,9 @@ RSpec.describe String do
 
       it 'handles sample input 9' do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
-          <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" rel="nofollow" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805</a></div>
+          <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=secret_key" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key" rel="nofollow" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key</a></div>
         HTML
-          <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805</a></div>
+          <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=secret_key" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key</a></div>
         TEXT
       end
 

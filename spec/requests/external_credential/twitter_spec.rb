@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'External Credentials > Twitter', required_envs: %w[TWITTER_CONSUMER_KEY TWITTER_CONSUMER_SECRET TWITTER_OAUTH_TOKEN TWITTER_OAUTH_TOKEN_SECRET TWITTER_DEV_ENVIRONMENT], type: :request do
+RSpec.describe 'External Credentials > Twitter', type: :request do
   let(:admin) { create(:admin) }
 
   let(:valid_credentials)   { attributes_for(:twitter_credential)[:credentials] }
@@ -28,7 +28,7 @@ RSpec.describe 'External Credentials > Twitter', required_envs: %w[TWITTER_CONSU
   def oauth_request_token
     stub_post('https://api.twitter.com/oauth/request_token').to_return(
       status: 200,
-      body:   'oauth_token=DY8E9gAAAAABCFc9AAABcP4JGzI&oauth_token_secret=gAR1aD2RGw3klpbxNtMuwvALohChdLDR&oauth_callback_confirmed=true',
+      body:   'oauth_token=oauth_token&oauth_token_secret=oauth_token_secret&oauth_callback_confirmed=true',
     )
   end
 
@@ -48,7 +48,7 @@ RSpec.describe 'External Credentials > Twitter', required_envs: %w[TWITTER_CONSU
 
   def oauth_access_token
     stub_post('https://api.twitter.com/oauth/access_token').to_return(
-      body: 'oauth_token=DY8E9gAAAAABCFc9AAABcP4JGzI&oauth_token_secret=15DOeRkjP4JkOSVqULkTKA1SCuIPP105&user_id=1408314039470538752&screen_name=APITesting001'
+      body: 'oauth_token=oauth_token&oauth_token_secret=oauth_verifier&user_id=1408314039470538752&screen_name=APITesting001'
     )
   end
 
@@ -229,7 +229,7 @@ RSpec.describe 'External Credentials > Twitter', required_envs: %w[TWITTER_CONSU
         post '/api/v1/external_credentials/twitter/app_verify', params: valid_credentials.merge(env: 'foo'), as: :json
 
         expect(response).to have_http_status(:ok)
-        expect(json_response).to include('error' => "Dev Environment Label invalid. Please use an existing one [\"#{ENV.fetch('TWITTER_DEV_ENVIRONMENT', 'Integration')}\"], or create a new one.")
+        expect(json_response).to include('error' => 'Dev Environment Label invalid. Please use an existing one ["Integration"], or create a new one.')
       end
     end
 
@@ -428,7 +428,7 @@ RSpec.describe 'External Credentials > Twitter', required_envs: %w[TWITTER_CONSU
 
     context 'with valid Twitter app, request token, and matching OAuth token (via params)' do
       let(:twitter_credential) { create(:twitter_credential) }
-      let(:params)             { { oauth_token: 'DY8E9gAAAAABCFc9AAABcP4JGzI', oauth_verifier: '15DOeRkjP4JkOSVqULkTKA1SCuIPP105' } }
+      let(:params)             { { oauth_token: 'oauth_token', oauth_verifier: 'oauth_verifier' } }
 
       before do
         twitter_credential

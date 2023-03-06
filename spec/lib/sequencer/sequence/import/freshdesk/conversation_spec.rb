@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: :sequence do
 
   context 'when importing conversations from Freshdesk' do
-    let(:inline_image_url) { 'https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc' }
+    let(:inline_image_url) { 'https://eucattachment.freshdesk.com/inline/attachment?token=secret_token' }
     let(:resource) do
       {
         'body' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Let's see if inline images work in a subsequent article:</div>\n<div dir=\"ltr\"><img src=\"#{inline_image_url}\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226853\"></div>\n</div>", 'body_text' => "Let's see if inline images work in a subsequent article:",
@@ -32,8 +32,8 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
             'size'           => 11_447,
             'created_at'     => '2021-05-14T12:30:16Z',
             'updated_at'     => '2021-05-14T12:30:19Z',
-            'attachment_url' => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
-            'thumb_url'      => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/thumb/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=40b5fe1d7d418bcbd1e639b273a1038c7a73781c16d9881c2f31a11c6bebfdf9'
+            'attachment_url' => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret-amz-credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
+            'thumb_url'      => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/thumb/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret-amz-credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=40b5fe1d7d418bcbd1e639b273a1038c7a73781c16d9881c2f31a11c6bebfdf9'
           }
         ],
         'auto_response' => false,
@@ -43,8 +43,8 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
     end
     let(:used_urls) do
       [
-        'https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc',
-        'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
+        'https://eucattachment.freshdesk.com/inline/attachment?token=secret_token',
+        'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret-amz-credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
       ]
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
 
     context 'when handling special inline images' do
       context 'when inline image source contains special urls (e.g. "cid:https://...")' do
-        let(:inline_image_url) { 'cid:https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY4NTMsImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.705lNehzm--aO36CGFg0SW73j0NG3UWcRcN1_DXgtwc' }
+        let(:inline_image_url) { 'cid:https://eucattachment.freshdesk.com/inline/attachment?token=secret_token' }
 
         include_examples 'import article'
       end

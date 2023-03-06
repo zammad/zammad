@@ -44,7 +44,7 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :res
         'updated_at' => '2021-05-14T12:30:19Z',
         'associated_tickets_count' => nil,
         'tags' => %w[example test],
-        'description' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Inline images in the first article might not be working, see following:</div>\n<div dir=\"ltr\"><img src=\"https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY0NzksImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.cdYIOOSi7ckCFIZlQ9eynELMzJp1ECVeTLlQMCDgKo4\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226479\"></div>\n</div>", 'description_text' => 'Inline images in the first article might not be working, see following:'
+        'description' => "<div style=\"font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px\">\n<div dir=\"ltr\">Inline images in the first article might not be working, see following:</div>\n<div dir=\"ltr\"><img src=\"https://eucattachment.freshdesk.com/inline/attachment?token=secret_token\" style=\"width: auto\" class=\"fr-fil fr-dib\" data-id=\"80012226479\"></div>\n</div>", 'description_text' => 'Inline images in the first article might not be working, see following:'
       }
 
     end
@@ -90,8 +90,8 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :res
             'size'           => 11_447,
             'created_at'     => '2021-05-14T12:30:16Z',
             'updated_at'     => '2021-05-14T12:30:19Z',
-            'attachment_url' => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
-            'thumb_url'      => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/thumb/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=40b5fe1d7d418bcbd1e639b273a1038c7a73781c16d9881c2f31a11c6bebfdf9'
+            'attachment_url' => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret_amz_credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
+            'thumb_url'      => 'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/thumb/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret_amz_credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=40b5fe1d7d418bcbd1e639b273a1038c7a73781c16d9881c2f31a11c6bebfdf9'
           }
         ],
       }
@@ -100,8 +100,8 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Ticket, db_strategy: :res
 
     let(:used_urls) do
       [
-        'https://eucattachment.freshdesk.com/inline/attachment?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODAwMTIyMjY0NzksImRvbWFpbiI6InphbW1hZC5mcmVzaGRlc2suY29tIiwiYWNjb3VudF9pZCI6MTg5MDU2MH0.cdYIOOSi7ckCFIZlQ9eynELMzJp1ECVeTLlQMCDgKo4',
-        'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS6FNSMY2RG7BSUFP%2F20210514%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
+        'https://eucattachment.freshdesk.com/inline/attachment?token=secret_token',
+        'https://s3.eu-central-1.amazonaws.com/euc-cdn.freshdesk.com/data/helpdesk/attachments/production/80012226885/original/standalone_attachment.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret_amz_credential&X-Amz-Date=20210514T123300Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=750988d37a6f2f43830bfd19c895517aa051aa13b4ab26a1333369d414fef0be',
       ]
     end
 

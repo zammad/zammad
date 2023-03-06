@@ -327,7 +327,7 @@
   "CustomerCompanyValidID": "1",
   "CustomerCompanyZIP": "test712259",
   "UserCountry": null,
-  "UserPassword": "f8be19af2f25837a31eff9131b0e47a5173290652c04a48b49b86474d48825ee",
+  "UserPassword": "secret_password",
   "ValidID": "1",
   "UserRefreshTime": "0",
   "UserEmail": "QA100@t-Online.de",

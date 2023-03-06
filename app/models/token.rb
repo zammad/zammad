@@ -28,7 +28,7 @@ create new persistent token
     }
   )
 
-in case if you use it via an controller, e. g. you can verify via "curl -H "Authorization: Token token=33562a00d7eda2a7c2fb639b91c6bcb8422067b6" http://...
+in case if you use it via an controller, e. g. you can verify via "curl -H "Authorization: Token token=my_token" http://...
 
 returns
 

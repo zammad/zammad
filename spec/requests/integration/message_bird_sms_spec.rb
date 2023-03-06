@@ -21,7 +21,7 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
         area:     'Sms::Account',
         options:  {
           adapter:       'sms/message_bird',
-          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          webhook_token: 'secret_webhook_token',
           token:         '223',
           sender:        '333',
         },
@@ -35,14 +35,14 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
       post '/api/v1/sms_webhook/not_existing', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:not_found)
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::MessageBird: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
 
       channel.group_id = Group.first.id
       channel.save!
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
 
       ticket = Ticket.last
@@ -63,7 +63,7 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
       expect(article.sender.name).to eq('Customer')
       expect(article.type.name).to eq('sms')
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
 
       ticket.reload
@@ -81,7 +81,7 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
       expect(article.created_by_id).to eq(customer.id)
 
       # check duplicate callbacks
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms2'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms2'), as: :json
       expect(response).to have_http_status(:ok)
 
       ticket.reload
@@ -93,7 +93,7 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
       ticket.state = Ticket::State.find_by(name: 'closed')
       ticket.save!
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms3'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms3'), as: :json
       expect(response).to have_http_status(:ok)
 
       ticket.reload
@@ -163,14 +163,14 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
         area:    'Sms::Account',
         options: {
           adapter:       'sms/twilio',
-          webhook_token: 'f409460e50f76d331fdac8ba7b7963b6',
+          webhook_token: 'secret_webhook_token',
           account_id:    '111',
           token:         '223',
           sender:        '333',
         },
       )
 
-      post '/api/v1/sms_webhook/f409460e50f76d331fdac8ba7b7963b6', params: read_message('inbound_sms1'), as: :json
+      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
 
       expect(customer.id).to eq(User.last.id)
