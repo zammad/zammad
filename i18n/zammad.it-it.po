@@ -633,8 +633,8 @@ msgstr ""
 "**Service Level Agreements**, abbreviati **SLA**, ti aiutano a raggiungere "
 "tempi di risposta prefissati alle richieste dei tuoi clienti. In questo modo "
 "puoi determinare dei traguardi come ad esempio rispondere a ogni richiesta "
-"entro otto ore. Se rischi di non raggiungere un obiettivo, Zammad ti avvisa."
-"\n"
+"entro otto ore. Se rischi di non raggiungere un obiettivo, Zammad ti "
+"avvisa.\n"
 "\n"
 "Puoi definire obiettivi per tre parametri: **tempo di risposta** (tempo tra "
 "la creazione del ticket e la prima reazione da parte di un agente), **tempo "
@@ -642,9 +642,9 @@ msgstr ""
 "parte di un agente), e il **tempo di risoluzione** (tempo tra la creazione e "
 "la chiusura del ticket).\n"
 "\n"
-"Ogni ticket scalato (ad esempio quelli che non hanno rispettato un obiettivo)"
-" sono visualizzati in una vista diversa delle tue panoramiche. Puoi anche "
-"configurare delle **notifiche via email**."
+"Ogni ticket scalato (ad esempio quelli che non hanno rispettato un "
+"obiettivo) sono visualizzati in una vista diversa delle tue panoramiche. "
+"Puoi anche configurare delle **notifiche via email**."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "1 attached file"
@@ -13744,7 +13744,6 @@ msgstr "Vista dalla prospettiva utente"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Vedi su Zammad"
 

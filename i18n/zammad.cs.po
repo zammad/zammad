@@ -4,8 +4,8 @@ msgstr ""
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-02-21 13:41+0000\n"
 "Last-Translator: Petr Prochazka <prochazkapetr2@gmail.com>\n"
-"Language-Team: Czech <https://translations.zammad.org/projects/zammad/"
-"zammad-stable/cs/>\n"
+"Language-Team: Czech <https://translations.zammad.org/projects/zammad/zammad-"
+"stable/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13756,7 +13756,6 @@ msgstr "Prohlédnout z uživatelovy perspektivy"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Prohlédnout v Zammadu"
 

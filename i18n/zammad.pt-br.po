@@ -214,8 +214,8 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Parece que você vinculou sua conta <b>a uma aplicativo externo</b> \""
-"#{t(provider)}\".</div>\n"
+"<div>Parece que você vinculou sua conta <b>a uma aplicativo externo</b> "
+"\"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Se não foi você, por favor, remova a conta vinculada do seu perfil e "
 "modifique a senha do aplicativo externo. Alguém pode ter acessado de forma "
@@ -13885,7 +13885,6 @@ msgstr "Visualizar da perspectiva do usuário"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Veja isso no Zammad"
 
