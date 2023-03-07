@@ -25,6 +25,7 @@ const props = defineProps<Props>()
 
 const {
   user,
+  userQuery,
   loading,
   objectAttributes,
   loadUser,
@@ -42,6 +43,7 @@ useHeader({
   backUrl: '/',
   actionTitle: __('Edit'),
   actionHidden: computed(() => user.value == null || !user.value.policy.update),
+  refetch: computed(() => user.value != null && userQuery.loading().value),
   onAction() {
     if (!user.value || !user.value.policy.update) return
     openEditUserDialog(user.value)

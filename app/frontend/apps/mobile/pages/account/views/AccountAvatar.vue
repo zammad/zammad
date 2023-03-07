@@ -160,6 +160,10 @@ useHeader({
   title: __('Avatar'),
   backUrl: '/account',
   actionTitle: __('Done'),
+  backIgnore: ['/account/avatar'],
+  refetch: computed(
+    () => avatarLoading.value && !!activeAvatarQuery.result().value,
+  ),
   onAction() {
     router.push('/account')
   },
@@ -220,7 +224,9 @@ const actions = computed<CommonButtonOption[]>(() => [
 <template>
   <div v-if="user" class="px-4">
     <div class="flex flex-col items-center py-6">
-      <CommonLoader :loading="avatarLoading">
+      <CommonLoader
+        :loading="avatarLoading && !activeAvatarQuery.result().value"
+      >
         <CommonAvatar v-if="state.image" :image="state.image" size="xl" />
         <CommonUserAvatar v-else :entity="user" size="xl" personal />
         <CommonButtonGroup class="mt-6" mode="full" :options="actions" />

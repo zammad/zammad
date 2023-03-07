@@ -15,6 +15,7 @@ import { defineFormSchema } from '@mobile/form/defineFormSchema'
 import { useApplicationStore } from '@shared/stores/application'
 import { usePublicLinksQuery } from '@shared/entities/public-links/graphql/queries/links.api'
 import type {
+  PublicLinksQuery,
   PublicLinkUpdatesSubscription,
   PublicLinkUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
@@ -123,10 +124,15 @@ publicLinksQuery.subscribeToMore<
   variables: {
     screen: EnumPublicLinksScreen.Login,
   },
-  updateQuery(existing, { subscriptionData }) {
+  updateQuery(_, { subscriptionData }) {
     const publicLinks = subscriptionData.data.publicLinkUpdates?.publicLinks
+    // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
+    // if we return existing value, it will throw an error, because "publicLinks" doesn't exist yet on the query result
+    if (!publicLinks) {
+      return null as unknown as PublicLinksQuery
+    }
     return {
-      publicLinks: publicLinks || existing.publicLinks || [],
+      publicLinks,
     }
   },
 })

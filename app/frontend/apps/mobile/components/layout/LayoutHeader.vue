@@ -1,17 +1,20 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import CommonButton from '../CommonButton/CommonButton.vue'
 import CommonBackButton from '../CommonBackButton/CommonBackButton.vue'
+import CommonRefetch from '../CommonRefetch/CommonRefetch.vue'
 
 export interface Props {
   title?: string
   titleClass?: string
   backTitle?: string
+  backIgnore?: string[]
   backUrl?: RouteLocationRaw
   backAvoidHomeButton?: boolean
+  refetch?: boolean
   actionTitle?: string
   actionHidden?: boolean
   onAction?(): void
@@ -23,7 +26,16 @@ defineExpose({
   headerElement,
 })
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  refetch: false,
+})
+
+const headerClass = computed(() => {
+  return [
+    'flex items-center justify-center text-center text-lg font-bold',
+    props.titleClass,
+  ]
+})
 </script>
 
 <template>
@@ -38,17 +50,17 @@ defineProps<Props>()
         v-if="backUrl"
         :fallback="backUrl"
         :label="backTitle"
+        :ignore="backIgnore"
         :avoid-home-button="backAvoidHomeButton"
       />
     </div>
-    <h1
-      :class="[
-        'flex items-center justify-center text-center text-lg font-bold',
-        titleClass,
-      ]"
-    >
-      {{ $t(title) }}
-    </h1>
+    <div class="flex flex-1 items-center justify-center">
+      <CommonRefetch :refetch="refetch">
+        <h1 :class="headerClass">
+          {{ $t(title) }}
+        </h1>
+      </CommonRefetch>
+    </div>
     <div class="flex cursor-pointer items-center justify-self-end text-base">
       <CommonButton
         v-if="onAction && actionTitle && !actionHidden"

@@ -9,6 +9,7 @@ import { useSessionStore } from '@shared/stores/session'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useDialog } from '@shared/composables/useDialog'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import CommonRefetch from '@mobile/components/CommonRefetch/CommonRefetch.vue'
 import { ticketInformationPlugins } from './plugins'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
@@ -16,7 +17,7 @@ defineProps<{
   internalId: string
 }>()
 
-const { ticket, ticketQuery } = useTicketInformation()
+const { ticket, ticketQuery, refetchingStatus } = useTicketInformation()
 
 const loadingTicket = ticketQuery.loading()
 
@@ -66,10 +67,14 @@ const { stickyStyles, headerElement } = useStickyHeader()
       :label="`#${internalId}`"
       :fallback="`/tickets/${internalId}`"
     />
-    <div
-      class="flex flex-1 items-center justify-center text-center text-lg font-bold"
-    >
-      {{ $t('Ticket information') }}
+    <div class="flex flex-1 items-center justify-center">
+      <CommonRefetch :refetch="refetchingStatus">
+        <h1
+          class="flex items-center justify-center text-center text-lg font-bold"
+        >
+          {{ $t('Ticket information') }}
+        </h1>
+      </CommonRefetch>
     </div>
     <div class="flex items-center justify-end">
       <button

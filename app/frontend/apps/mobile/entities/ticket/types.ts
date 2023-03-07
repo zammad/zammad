@@ -20,4 +20,6 @@ export interface TicketInformation {
   canUpdateTicket: ComputedRef<boolean>
   showArticleReplyDialog: () => void
   liveUserList?: Ref<TicketLiveAppUser[]>
+  refetchingStatus: Ref<boolean>
+  updateRefetchingStatus: (newStatus: boolean) => void
 }

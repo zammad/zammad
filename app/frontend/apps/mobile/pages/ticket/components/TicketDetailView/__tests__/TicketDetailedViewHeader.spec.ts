@@ -23,6 +23,7 @@ describe('tickets zoom header', () => {
       props: {
         ticket,
         users: [],
+        refetchingTicket: false,
       },
       router: true,
     })
@@ -45,6 +46,7 @@ describe('tickets zoom header', () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
         ticket,
+        refetchingTicket: false,
         liveUserList: [
           {
             user: { id: '654321', firstname: 'John', lastname: 'Doe' },
@@ -99,7 +101,7 @@ describe('tickets zoom header', () => {
       view.getByRole('button', { name: 'Show ticket viewers' }),
     )
 
-    expect(await view.getByText('Viewing ticket')).toBeInTheDocument()
+    expect(view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
   })
 })

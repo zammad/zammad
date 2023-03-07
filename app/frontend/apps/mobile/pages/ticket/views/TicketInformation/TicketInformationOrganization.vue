@@ -9,12 +9,11 @@ import CommonTicketStateList from '@mobile/components/CommonTicketStateList/Comm
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
 import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
 import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
 import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
-const { ticket } = useTicketInformation()
+const { ticket, updateRefetchingStatus } = useTicketInformation()
 
 const {
   organization,
@@ -39,6 +38,12 @@ watchEffect(() => {
   loadOrganization(organizationId)
 })
 
+watchEffect(() => {
+  updateRefetchingStatus(
+    organizationLoading.value && organization.value != null,
+  )
+})
+
 const { openEditOrganizationDialog } = useOrganizationEdit()
 const { getTicketData } = useOrganizationTicketsCount()
 
@@ -48,10 +53,7 @@ const ticketsData = computed(() => getTicketData(organization.value))
 <template>
   <CommonLoader :loading="!organization && organizationLoading" :error="error">
     <div v-if="organization" class="mb-3 flex items-center gap-3">
-      <CommonOrganizationAvatar
-        size="normal"
-        :entity="(organization as AvatarOrganization)"
-      />
+      <CommonOrganizationAvatar size="normal" :entity="organization" />
       <h2 class="text-lg font-semibold">
         {{ organization.name }}
       </h2>

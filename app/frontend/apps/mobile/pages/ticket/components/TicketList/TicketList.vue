@@ -1,18 +1,15 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type {
-  EnumOrderDirection,
-  TicketsByOverviewQuery,
-} from '@shared/graphql/types'
+import type { EnumOrderDirection } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import usePagination from '@mobile/composables/usePagination'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import TicketItem from '@mobile/components/Ticket/TicketItem.vue'
 import { useInfiniteScroll } from '@vueuse/core'
-import { computed, ref } from 'vue'
-import type { ConfidentTake } from '@shared/types/utils'
+import { computed, ref, watchEffect } from 'vue'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
+import { edgesToArray } from '@shared/utils/helpers'
 import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOverview.api'
 
 interface Props {
@@ -24,6 +21,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<{
+  (event: 'refetch', status: boolean): void
+}>()
 const TICKETS_COUNT = 10
 
 const ticketsQuery = new QueryHandler(
@@ -42,16 +42,12 @@ const ticketsQuery = new QueryHandler(
 const ticketsResult = ticketsQuery.result()
 const loading = ticketsQuery.loading()
 
-type TicketResultItem = ConfidentTake<
-  TicketsByOverviewQuery,
-  'ticketsByOverview.edges.node'
->
+watchEffect(() => {
+  emit('refetch', loading.value && !!ticketsResult.value)
+})
 
-const tickets = computed(
-  () =>
-    (ticketsResult.value?.ticketsByOverview.edges
-      ?.map((n) => n?.node)
-      .filter(Boolean) as TicketResultItem[]) || [],
+const tickets = computed(() =>
+  edgesToArray(ticketsResult.value?.ticketsByOverview),
 )
 
 const totalCount = computed(

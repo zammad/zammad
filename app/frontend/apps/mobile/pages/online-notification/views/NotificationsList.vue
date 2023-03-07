@@ -14,16 +14,17 @@ import { useOnlineNotificationCount } from '@shared/entities/online-notification
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import NotificationItem from '../components/NotificationItem.vue'
 
-useHeader({
-  backUrl: '/',
-  backAvoidHomeButton: true,
-})
-
 const notificationsHandler = new QueryHandler(useOnlineNotificationsQuery())
 
 const loading = notificationsHandler.loading()
 const notificationsResult = notificationsHandler.result()
 let mutationTriggered = false
+
+useHeader({
+  backUrl: '/',
+  backAvoidHomeButton: true,
+  refetch: computed(() => loading.value && notificationsResult.value != null),
+})
 
 const notifications = computed(
   () =>

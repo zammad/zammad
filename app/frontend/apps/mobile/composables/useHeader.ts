@@ -11,6 +11,8 @@ export interface HeaderOptions {
   backTitle?: string | ComputedRef<string>
   backUrl?: RouteLocationRaw | ComputedRef<RouteLocationRaw>
   backAvoidHomeButton?: boolean
+  backIgnore?: string[]
+  refetch?: ComputedRef<boolean>
   actionTitle?: string | ComputedRef<string>
   actionHidden?: boolean | ComputedRef<boolean> | Ref<boolean>
   onAction?(): unknown

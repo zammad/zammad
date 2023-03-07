@@ -20,7 +20,7 @@ interface Props {
 
 defineProps<Props>()
 
-const { ticket } = useTicketInformation()
+const { ticket, updateRefetchingStatus } = useTicketInformation()
 
 const {
   user,
@@ -36,6 +36,10 @@ watchEffect(() => {
   }
 })
 
+watchEffect(() => {
+  updateRefetchingStatus(loading.value && user.value != null)
+})
+
 const { openEditUserDialog } = useUserEdit()
 
 const { getTicketData } = useUsersTicketsCount()
@@ -47,7 +51,7 @@ const secondaryOrganizations = computed(() =>
 </script>
 
 <template>
-  <CommonLoader :loading="loading">
+  <CommonLoader :loading="loading && !user">
     <div v-if="user" class="mb-3 flex items-center gap-3">
       <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
       <div>

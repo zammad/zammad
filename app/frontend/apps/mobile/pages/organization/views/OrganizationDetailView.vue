@@ -24,6 +24,7 @@ const {
   organization,
   loading,
   objectAttributes,
+  organizationQuery,
   loadAllMembers,
   loadOrganization,
 } = useOrganizationDetail()
@@ -40,6 +41,9 @@ useHeader({
   actionTitle: __('Edit'),
   actionHidden: computed(
     () => organization.value == null || !organization.value.policy.update,
+  ),
+  refetch: computed(
+    () => organization.value != null && organizationQuery.loading().value,
   ),
   onAction() {
     if (!organization.value || !organization.value.policy.update) return

@@ -6,16 +6,14 @@ import type { TicketById, TicketView } from '../types'
 export const getTicketView = (ticket: TicketById) => {
   const session = useSessionStore()
 
-  const isTicketEditable = ticket?.policy.update ?? false
+  const isTicketEditable = ticket.policy.update
 
   const isTicketCustomer =
-    session.hasPermission('ticket.customer') && !ticket?.policy.agentReadAccess
+    session.hasPermission('ticket.customer') && !ticket.policy.agentReadAccess
 
-  const isTicketAgent = ticket?.policy.agentReadAccess
+  const isTicketAgent = ticket.policy.agentReadAccess
 
-  const ticketView: TicketView = isTicketAgent
-    ? ('agent' as const)
-    : ('customer' as const)
+  const ticketView: TicketView = isTicketAgent ? 'agent' : 'customer'
 
   return {
     isTicketAgent,

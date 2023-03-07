@@ -18,6 +18,14 @@ export const createApolloClient = (
     link,
     cache,
     queryDeduplication: true,
+    defaultOptions: {
+      // always refresh query results from the server
+      // https://www.apollographql.com/docs/react/data/queries/#setting-a-fetch-policy
+      watchQuery: {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-and-network',
+      },
+    },
   })
 
   return apolloClient

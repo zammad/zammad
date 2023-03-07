@@ -7,6 +7,7 @@ import { useDialog } from '@shared/composables/useDialog'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
 import { useSessionStore } from '@shared/stores/session'
+import CommonRefetch from '@mobile/components/CommonRefetch/CommonRefetch.vue'
 import type {
   TicketById,
   TicketLiveAppUser,
@@ -16,6 +17,7 @@ interface Props {
   ticket?: TicketById
   liveUserList?: TicketLiveAppUser[]
   loadingTicket?: boolean
+  refetchingTicket: boolean
 }
 
 const props = defineProps<Props>()
@@ -62,12 +64,15 @@ const showActions = () => {
         class="flex flex-1 flex-col items-center justify-center text-center text-sm leading-4"
         data-test-id="header-content"
       >
-        <div class="font-bold">{{ ticket && `#${ticket.number}` }}</div>
-        <div class="text-gray">
-          {{
-            ticket && $t('created %s', i18n.relativeDateTime(ticket.createdAt))
-          }}
-        </div>
+        <CommonRefetch :refetch="refetchingTicket">
+          <div class="font-bold">{{ ticket && `#${ticket.number}` }}</div>
+          <div class="text-gray">
+            {{
+              ticket &&
+              $t('created %s', i18n.relativeDateTime(ticket.createdAt))
+            }}
+          </div>
+        </CommonRefetch>
       </div>
       <div class="flex items-center justify-self-end">
         <button

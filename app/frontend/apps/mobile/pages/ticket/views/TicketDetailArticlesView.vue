@@ -44,7 +44,7 @@ const result = articlesQuery.result()
 articlesQuery.subscribeToMore<
   TicketArticleUpdatesSubscriptionVariables,
   TicketArticleUpdatesSubscription
->({
+>(() => ({
   document: TicketArticleUpdatesDocument,
   variables: {
     ticketId: convertToGraphQLId('Ticket', props.internalId),
@@ -76,12 +76,18 @@ articlesQuery.subscribeToMore<
     }
     return previous
   },
-})
+}))
 
 const { ticket, liveUserList, ticketQuery } = useTicketInformation()
 const { isTicketEditable } = useTicketView(ticket)
 
-const isLoadingTicket = ticketQuery.loading()
+const isLoadingTicket = computed(() => {
+  return ticketQuery.loading().value && !ticket.value
+})
+
+const isRefetchingTicket = computed(
+  () => ticketQuery.loading().value && !!ticket.value,
+)
 
 const totalCount = computed(() => result.value?.articles.totalCount || 0)
 
@@ -156,6 +162,7 @@ const { stickyStyles, headerElement } = useStickyHeader([
       :ticket="ticket"
       :live-user-list="liveUserList"
       :loading-ticket="isLoadingTicket"
+      :refetching-ticket="isRefetchingTicket"
     />
     <CommonLoader
       :loading="isLoadingTicket"

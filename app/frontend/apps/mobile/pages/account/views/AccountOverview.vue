@@ -75,7 +75,10 @@ const currentLocale = computed({
 const hasVersionPermission = session.hasPermission('admin')
 
 const productAboutQuery = new QueryHandler(
-  useProductAboutQuery({ enabled: hasVersionPermission }),
+  useProductAboutQuery({
+    enabled: hasVersionPermission,
+    fetchPolicy: 'cache-first',
+  }),
   { errorNotificationMessage: __('The product version could not be fetched.') },
 )
 

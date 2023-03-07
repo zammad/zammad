@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useRouteQuery } from '@vueuse/router'
@@ -15,6 +15,7 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
 import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
+import CommonRefetch from '@mobile/components/CommonRefetch/CommonRefetch.vue'
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
@@ -148,6 +149,8 @@ const orderDirection = computed({
 })
 
 const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
+
+const showRefetch = ref(false)
 </script>
 
 <template>
@@ -157,17 +160,21 @@ const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
       class="border-b-[0.5px] border-white/10 bg-black px-4"
       :style="stickyStyles.header"
     >
-      <div class="grid h-16 grid-cols-3">
+      <div class="grid h-16 grid-cols-[75px_auto_75px]">
         <div
           class="flex cursor-pointer items-center justify-self-start text-base"
         >
           <CommonBackButton fallback="/" avoid-home-button />
         </div>
-        <h1
-          class="flex flex-1 items-center justify-center text-center text-lg font-bold"
-        >
-          {{ $t('Tickets') }}
-        </h1>
+        <div class="flex flex-1 items-center justify-center">
+          <CommonRefetch :refetch="showRefetch">
+            <h1
+              class="flex items-center justify-center text-center text-lg font-bold"
+            >
+              {{ $t('Tickets') }}
+            </h1>
+          </CommonRefetch>
+        </div>
         <CommonTicketCreateLink class="justify-self-end text-base" />
       </div>
       <div
@@ -210,6 +217,7 @@ const { stickyStyles, headerElement } = useStickyHeader([loadingOverviews])
             Number(application.config.ui_ticket_overview_ticket_limit)
           "
           :hidden-columns="hiddenColumns"
+          @refetch="showRefetch = $event"
         />
       </CommonLoader>
       <div

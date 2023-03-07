@@ -154,6 +154,11 @@ const showArticleReplyDialog = () => {
 
 const { liveUserList } = useTicketLiveUser(ticket, isTicketAgent, isDirty)
 
+const refetchingStatus = ref(false)
+const updateRefetchingStatus = (status: boolean) => {
+  refetchingStatus.value = status
+}
+
 provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   initialFormTicketValue: initialTicketValue,
@@ -165,6 +170,8 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   canUpdateTicket,
   showArticleReplyDialog,
   liveUserList,
+  refetchingStatus,
+  updateRefetchingStatus,
 })
 
 useOnlineNotificationSeen(ticket)
