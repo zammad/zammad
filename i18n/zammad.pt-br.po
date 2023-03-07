@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-01-12 03:30+0000\n"
-"Last-Translator: Girrese <girrese@gmail.com>\n"
+"PO-Revision-Date: 2023-03-07 08:23+0000\n"
+"Last-Translator: Diogo Dantas <diogomelo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
-"zammad/zammad-development/pt_BR/>\n"
+"zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -210,6 +210,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} conta vinculada a um aplicativo externo\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Parece que você vinculou sua conta <b>a uma aplicativo externo</b> \""
+"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Se não foi você, por favor, remova a conta vinculada do seu perfil e "
+"modifique a senha do aplicativo externo. Alguém pode ter acessado de forma "
+"não autorizada sua conta no serviço externo.</div>\n"
+"<br>\n"
+"<div>Seu Time #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -526,10 +538,8 @@ msgid "%s tickets"
 msgstr "%s tickets"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
-#, fuzzy
-#| msgid "%s tickets"
 msgid "%s tickets found"
-msgstr "%s tickets"
+msgstr "%s chamados encontrados"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
@@ -845,10 +855,8 @@ msgstr ""
 "%l."
 
 #: app/models/ticket.rb
-#, fuzzy
-#| msgid "this ticket was merged into ticket %s"
 msgid "A ticket cannot be merged into itself."
-msgstr "este ticket foi mesclado com o ticket %s"
+msgstr "Um ticket não poder ser agrupado com ele mesmo."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
@@ -1115,10 +1123,8 @@ msgid "Add a Personal Access Token"
 msgstr "Adicionar um token de acesso pessoal"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Add image"
 msgid "Add a message"
-msgstr "Adicionar imagem"
+msgstr "Adicionar uma mensagem"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
@@ -1138,10 +1144,8 @@ msgstr "Adicionar marcadores"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Add condition"
-msgstr "Condições salvas"
+msgstr "Adicionar condições"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
@@ -1175,7 +1179,7 @@ msgstr "Add sender initials to end of a tweet."
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
 msgid "Add subclause"
-msgstr ""
+msgstr "Adicionar subcláusula"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1194,10 +1198,8 @@ msgid "Additional follow-up detection"
 msgstr "Detecção de acompanhamento adicional"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Additional information"
-msgstr "Informações do Ticket"
+msgstr "Informações adicionais"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1281,10 +1283,8 @@ msgid "Advance to next ticket from overview"
 msgstr "Avance para o próximo ticket da Visão Geral"
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
-#, fuzzy
-#| msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgid "After approval, please re-connect your Exchange account."
-msgstr "Após a aprovação, reconecte sua conta de correio do Microsoft 365."
+msgstr "Após a aprovação, reconecte sua conta de e-mail do Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1578,14 +1578,12 @@ msgid "Archived at"
 msgstr "Arquivado em"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Are you sure to remove this article?"
-msgstr "Tem certeza que deseja apagar este objeto?"
+msgstr "Tem certeza que deseja remover este artigo?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
-msgstr ""
+msgstr "Você tem certeza que deseja agrupar este ticket (#%s) neste #%s?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -1612,16 +1610,12 @@ msgid "Are you sure?"
 msgstr "Are you sure?"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Are you sure? You have unsaved changes that will get lost."
 msgid "Are you sure? The prepared article will be removed."
-msgstr "Tem certeza? Você tem alterações não salvas que serão perdidas."
+msgstr "Tem certeza? O artigo preparado será removido."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Are you sure? You have unsaved changes that will get lost."
 msgid "Are you sure? You have changes that will get lost."
-msgstr "Tem certeza? Você tem alterações não salvas que serão perdidas."
+msgstr "Tem certeza? Você tem alterações que serão perdidas."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -1645,10 +1639,8 @@ msgid "Article Count"
 msgstr "Contagem de artigos"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
-#, fuzzy
-#| msgid "Article"
 msgid "Article Type"
-msgstr "Artigo"
+msgstr "Tipo de Artigo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
@@ -1668,7 +1660,7 @@ msgstr "Artigo não pode ser deletado."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "Artigo usa um mecanismo de segurança diferente."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -1820,6 +1812,8 @@ msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
+"Atributo que identifica o usuário de forma única. Se não definido, o "
+"identificador de nome fornecido pelo IDP é usado."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -1900,10 +1894,8 @@ msgid "Automatic account link on initial logon"
 msgstr "Link automático da conta no logon inicial"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Automatic account link on initial logon"
 msgid "Automatic account linking notification"
-msgstr "Link automático da conta no logon inicial"
+msgstr "Notificação automática de vínculo de contas"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -1979,10 +1971,8 @@ msgid "Back to overview"
 msgstr "Voltar à visão geral"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
-#, fuzzy
-#| msgid "Back to overview"
 msgid "Back to previous page"
-msgstr "Voltar à visão geral"
+msgstr "Voltar à página anterior"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -2024,10 +2014,8 @@ msgid "Base Objects"
 msgstr "Objetos Base"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Basic Authentication"
-msgstr "Autenticação"
+msgstr "Autenticação Básica"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2369,10 +2357,8 @@ msgid "Category page layout"
 msgstr "Layout da página de categoria"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
-#, fuzzy
-#| msgid "Duration"
 msgid "Caution!"
-msgstr "Duração"
+msgstr "Cuidado!"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
@@ -3949,6 +3935,8 @@ msgstr ""
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
+"Define se as condições do editor do chamado suporta expressões lógicas "
+"complexas."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4122,7 +4110,7 @@ msgstr "Define formato amigável de data."
 
 #: db/seeds/settings.rb
 msgid "Defines processing timeout for the html sanitizer."
-msgstr ""
+msgstr "Define o tempo máximo para o html sanitizer."
 
 #: db/seeds/settings.rb
 msgid "Defines searchable models."
@@ -5171,6 +5159,8 @@ msgid ""
 "Enables sending of an email notification to a user when they link their "
 "account with a third-party application."
 msgstr ""
+"Habilita o envio de uma notificação de email para o usuário quando vinculam "
+"suas contas a um aplicativo externo."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5325,7 +5315,7 @@ msgstr "Insira o URL do link"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
-msgstr ""
+msgstr "Digite a busca e selecione um tipo para ser localizado"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -6141,7 +6131,7 @@ msgstr "Voltar"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go back"
-msgstr ""
+msgstr "Voltar"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco

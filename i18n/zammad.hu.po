@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-23 06:21+0000\n"
+"PO-Revision-Date: 2023-03-07 08:23+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -442,7 +442,7 @@ msgstr "%s nappal ezelőtt"
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "%s ended switch to |%s|!"
-msgstr ""
+msgstr "%s befejezte az átváltást erre: |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco
@@ -475,7 +475,7 @@ msgstr "%s hónappal ezelőtt"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been created."
-msgstr "%s objektum lett létrehozva."
+msgstr "%s objektum létre lett hozva."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco
 msgid "%s object(s) have been updated."
@@ -487,7 +487,7 @@ msgstr "%s objektum törlésre került."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be created."
-msgstr "%s objektum lesz létrehozva."
+msgstr "%s objektum létre lesz hozva."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco
 msgid "%s object(s) will be deleted."
@@ -1088,7 +1088,7 @@ msgstr "Telegram bot hozzáadása"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 msgid "Add a Note"
-msgstr "Jegyzet hozzáadása"
+msgstr "Megjegyzés hozzáadása"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -2364,7 +2364,7 @@ msgstr "Változtatás"
 
 #: db/seeds/permissions.rb
 msgid "Change %s"
-msgstr ""
+msgstr "%s változtatás"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
@@ -2469,7 +2469,7 @@ msgstr "Csatorna - Web"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
-msgstr "Csatorna terjesztés"
+msgstr "Csatorna forgalmazás"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
@@ -3043,7 +3043,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
-msgstr "Számlálás"
+msgstr "Mennyiség"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -3251,7 +3251,7 @@ msgstr "Létrehozott cikk"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Created At"
-msgstr "Létrehozva"
+msgstr "Létrehozva ekkor"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Created External Article"
@@ -3270,11 +3270,11 @@ msgstr "Létrehozott belső cikk"
 #: app/controllers/time_accountings_controller.rb
 #: app/graphql/gql/types/overview_type.rb
 msgid "Created at"
-msgstr "Létrehozva"
+msgstr "Létrehozva ekkor"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco
 msgid "Created at:"
-msgstr "Létrehozva:"
+msgstr "Létrehozva ekkor:"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -4206,7 +4206,7 @@ msgstr "Meghatározza a rendszer alapértelmezett időzónáját."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
-msgstr "Meghatározza az új jegyzetek alapértelmezett láthatóságát."
+msgstr "Meghatározza az új megjegyzések alapértelmezett láthatóságát."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4342,7 +4342,7 @@ msgstr "Meghatározza a lap viselkedését egy jegykezelési művelet után."
 #: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
-"Meghatározza azt az időkeretet, amely alatt egy saját készítésű jegyzet "
+"Meghatározza azt az időkeretet, amely alatt egy saját készítésű megjegyzés "
 "törölhető."
 
 #: db/seeds/settings.rb
@@ -5056,7 +5056,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Enable debugging for implementation."
-msgstr "Engedélyezze a hibakeresést a implementációhoz."
+msgstr "Engedélyezze a hibakeresést az implementációhoz."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5095,8 +5095,8 @@ msgid ""
 "session."
 msgstr ""
 "A Zammad karbantartási üzemmódjának engedélyezése vagy letiltása. Amennyiben "
-"engedélyezve van, minden nem rendszergazda ki lesz jelentkeztetve, és csak a "
-"rendszergazdák indíthatnak új munkamenetet."
+"engedélyezve van, mindenki, aki nem rendszergazda, ki lesz jelentkeztetve, "
+"és csak a rendszergazdák indíthatnak új munkamenetet."
 
 #: db/seeds/settings.rb
 msgid "Enable ticket auto assignment."
@@ -5112,7 +5112,7 @@ msgstr "Engedélyezze ezeknek a jegyeknek az időelszámolását."
 
 #: db/seeds/settings.rb
 msgid "Enable time accounting."
-msgstr "Időszámítás engedélyezése."
+msgstr "Időelszámolás engedélyezése."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Enable/disable inline translations"
@@ -5310,11 +5310,11 @@ msgstr "Adja meg a hitelesítő adatokat"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
-msgstr "Adja meg a kapcsolat URL-címét"
+msgstr "Adja meg a kapcsolat URL címét"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
-msgstr "Írja be a keresést, és válassza ki a keresendő típust"
+msgstr "Írja be a keresést, és válasszon ki egy típust a kereséshez"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -7181,7 +7181,7 @@ msgstr "John Smith"
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 msgid "Join %s"
-msgstr "Csatlakozzon a %s-hoz"
+msgstr "Csatlakozzon a következőhöz: %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -8009,7 +8009,7 @@ msgstr "Többszörös kiválasztási mező"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Multiple tree selection field"
-msgstr "Több fa kiválasztási mező"
+msgstr "Többszörös fa kiválasztási mező"
 
 #: db/seeds/overviews.rb
 msgid "My Assigned Tickets"
@@ -8039,7 +8039,7 @@ msgstr "Feliratkozott jegyeim"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
-msgstr "Jegyeim"
+msgstr "Saját jegyek"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "My handling time: %s minutes"
@@ -8662,7 +8662,7 @@ msgstr "Megjegyzés:"
 #: db/seeds/object_manager_attributes.rb
 msgid "Notes are visible to agents only, never to customers."
 msgstr ""
-"A jegyzetek csak az ügynökök számára láthatók, az ügyfelek számára soha."
+"A megjegyzések csak az ügynökök számára láthatók, az ügyfelek számára soha."
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco
 msgid "Nothing selected"
@@ -9222,7 +9222,7 @@ msgstr "Függőben lévő emlékeztető a |%s| jegyhez"
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb db/seeds/object_manager_attributes.rb
 msgid "Pending till"
-msgstr "Függőben, amíg"
+msgstr "Függőben a következő időpontig"
 
 #: db/seeds/roles.rb
 msgid "People who create Tickets ask for help."
@@ -10622,12 +10622,12 @@ msgstr "A kimenő hívások hívószámának beállítása a cél hívószám al
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types by selecting type."
 msgstr ""
-"Jegyzetek beállítása a jegy létrehozásának típusaihoz a típus "
+"Megjegyzések beállítása a jegy létrehozásának típusaihoz a típus "
 "kiválasztásával."
 
 #: db/seeds/settings.rb
 msgid "Set notes for ticket create types."
-msgstr "Jegyzetek beállítása a jegy létrehozásának típusaihoz."
+msgstr "Megjegyzések beállítása a jegy létrehozásának típusaihoz."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10641,7 +10641,7 @@ msgid ""
 "limits"
 msgstr ""
 "Időkeret beállítása másodpercekben. Amennyiben 0-ra van állítva, akkor a "
-"jegyzeteket időkorlátozás nélkül törölheti"
+"megjegyzéseket időkorlátozás nélkül törölheti"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts
 msgid "Set to internal"
@@ -11646,7 +11646,7 @@ msgid ""
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
 "A tudásbázisa alapértelmezett URL címe például example.com vagy example.com/"
-"help. Ha helyette egy egyéni URL-címről szeretné kiszolgálni, adja meg az "
+"help. Ha helyette egy egyéni URL címről szeretné kiszolgálni, adja meg az "
 "alábbi célállomást (pl. \"/support\", \"example.com\" vagy \"example.com/"
 "support\"). Ezután a folyamat befejezéséhez kövesse a \"Webkiszolgáló "
 "konfigurálása\" című fejezetben található utasításokat."
@@ -12835,7 +12835,7 @@ msgstr "Időelszámolás"
 
 #: db/seeds/settings.rb
 msgid "Time Accounting Selector"
-msgstr "Időelszámolási választó"
+msgstr "Időelszámolás választó"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco
@@ -13114,7 +13114,7 @@ msgstr "Twitter (kimenő)"
 
 #: db/seeds/settings.rb
 msgid "Twitter - tweet initials"
-msgstr "Twitter - tweet kezdőbetűk"
+msgstr "Twitter - tweet monogram"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Access Token"
@@ -13620,12 +13620,12 @@ msgstr "Felhasználónév"
 
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
 msgid "Username / Email"
-msgstr "Felhasználónév / E-mail"
+msgstr "Felhasználónév / E-mail cím"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Username / email"
-msgstr "Felhasználónév / E-mail"
+msgstr "Felhasználónév / E-mail cím"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco
 msgid "Username for proxy connection"
@@ -14462,7 +14462,7 @@ msgstr "Email beállítások konfigurálása"
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 msgid "Your Logo"
-msgstr "Saját logo"
+msgstr "Az Ön logója"
 
 #: public/assets/form/form.js
 msgid "Your Message…"
@@ -14808,7 +14808,7 @@ msgstr "létrehozva"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue
 msgid "created %s"
-msgstr "létrehozva %s"
+msgstr "%s létrehozva"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -15295,7 +15295,7 @@ msgstr "léteznie kell"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "my own note"
-msgstr "saját jegyzetem"
+msgstr "saját megjegyzésem"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
