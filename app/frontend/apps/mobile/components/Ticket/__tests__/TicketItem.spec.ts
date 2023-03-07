@@ -5,6 +5,7 @@ vi.setSystemTime(now)
 
 import { renderComponent } from '@tests/support/components'
 import { TicketState } from '@shared/entities/ticket/types'
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import type { TicketItemData } from '../types'
 import TicketItem from '../TicketItem.vue'
 
@@ -29,10 +30,11 @@ describe('ticket item display', () => {
         fullname: 'Jane Doe',
       },
       priority: {
-        name: 'high',
+        name: '3 high',
         uiColor: 'high-priority',
         defaultCreate: false,
       },
+      stateColorCode: EnumTicketStateColorCode.Open,
     }
 
     const view = renderComponent(TicketItem, {
@@ -43,21 +45,22 @@ describe('ticket item display', () => {
       router: true,
     })
 
-    // TODO alt removed from img, maybe return? remove if error
-    // expect(view.getByAltText(TicketState.Open)).toBeInTheDocument()
+    expect(view.getByRole('group')).toHaveClass('text-yellow')
+    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+      '(state: open)',
+    )
+
     expect(view.getByText('#12345 · John Doe')).toBeInTheDocument()
-    // expect(view.getByText('·')).toBeInTheDocument()
-    // expect(view.getByText('John Doe')).toBeInTheDocument()
     expect(view.getByText('test ticket')).toBeInTheDocument()
 
     expect(
       view.getByText('edited 10 hours ago by Jane Doe'),
     ).toBeInTheDocument()
 
-    const priority = view.getByText('HIGH')
+    const priority = view.getByText('3 high')
 
     expect(priority).toBeInTheDocument()
-    expect(priority).toHaveClass('u-high-priority-color')
+    expect(priority).toHaveClasses(['bg-red-dark', 'text-red-bright'])
   })
 
   it('renders when something is missing', () => {
@@ -67,6 +70,7 @@ describe('ticket item display', () => {
       internalId: 1,
       state: { name: TicketState.Open },
       title: 'test ticket',
+      stateColorCode: EnumTicketStateColorCode.Open,
     }
 
     const view = renderComponent(TicketItem, {
@@ -77,12 +81,16 @@ describe('ticket item display', () => {
       router: true,
     })
 
+    expect(view.getByRole('group')).toHaveClass('text-yellow')
+    expect(view.getByIconName('mobile-check-circle-no')).toHaveAccessibleName(
+      '(state: open)',
+    )
+
     expect(view.getByText('#12345')).toBeInTheDocument()
     expect(view.queryByText(/·/)).not.toBeInTheDocument()
     expect(view.getByText('test ticket')).toBeInTheDocument()
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
-
-    expect(view.queryByText('HIGH')).not.toBeInTheDocument()
+    expect(view.queryByText('3 high')).not.toBeInTheDocument()
   })
 })

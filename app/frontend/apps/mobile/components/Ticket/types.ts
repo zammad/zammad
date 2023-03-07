@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketState } from '@shared/entities/ticket/types'
+import type { EnumTicketStateColorCode } from '@shared/graphql/types'
 
 export interface TicketItemData {
   id: string
@@ -23,4 +24,5 @@ export interface TicketItemData {
     id: string
     fullname?: Maybe<string>
   }
+  stateColorCode: EnumTicketStateColorCode
 }

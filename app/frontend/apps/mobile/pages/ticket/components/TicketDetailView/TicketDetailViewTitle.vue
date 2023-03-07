@@ -68,7 +68,7 @@ const customer = computed(() => {
             :escalation-at="ticket.escalationAt"
           />
           <CommonTicketStateIndicator
-            :status="ticket.state.stateType.name"
+            :color-code="ticket.stateColorCode"
             :label="ticket.state.name"
             pill
           />

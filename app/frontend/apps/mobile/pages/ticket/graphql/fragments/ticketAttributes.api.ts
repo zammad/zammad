@@ -79,5 +79,6 @@ export const TicketAttributesFragmentDoc = gql`
   tags
   subscribed
   preferences
+  stateColorCode
 }
     ${ObjectAttributeValuesFragmentDoc}`;

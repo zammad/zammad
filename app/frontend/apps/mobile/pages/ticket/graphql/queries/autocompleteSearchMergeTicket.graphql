@@ -17,6 +17,7 @@ query autocompleteSearchMergeTicket(
         id
         name
       }
+      stateColorCode
     }
   }
 }

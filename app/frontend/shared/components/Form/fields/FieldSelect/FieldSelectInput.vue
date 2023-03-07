@@ -7,6 +7,7 @@ import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndi
 import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
 import type { CommonSelectInstance } from '@mobile/components/CommonSelect/types'
 import { useFormBlock } from '@mobile/form/useFormBlock'
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
@@ -87,7 +88,7 @@ setupMissingOptionHandling()
             <CommonTicketStateIndicator
               v-for="selectedValue in valueContainer"
               :key="selectedValue"
-              :status="getSelectedOptionStatus(selectedValue)"
+              :color-code="getSelectedOptionStatus(selectedValue) as EnumTicketStateColorCode"
               :label="
                 getSelectedOptionLabel(selectedValue) ||
                 i18n.t('%s (unknown)', selectedValue)

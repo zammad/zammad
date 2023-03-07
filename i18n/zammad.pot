@@ -358,6 +358,10 @@ msgstr ""
 msgid "%s% have been reopened"
 msgstr ""
 
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+msgid "(state: %s)"
+msgstr ""
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid "**Data Privacy** helps you to delete and verify the removal of existing data from the system.\n\nIt can be used to delete tickets, organizations, and users. The owner assignment will be unset in case the deleted user is an agent.\n\nData Privacy tasks will be executed every 10 minutes. The execution might take some additional time depending on the number of objects that will be deleted."
 msgstr ""

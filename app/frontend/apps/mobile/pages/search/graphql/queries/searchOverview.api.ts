@@ -31,6 +31,7 @@ export const SearchDocument = gql`
         id
         fullname
       }
+      stateColorCode
     }
     ... on User {
       id

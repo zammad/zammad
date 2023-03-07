@@ -8,6 +8,7 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import useSelectOptions from '../../composables/useSelectOptions'
 import type { TreeSelectContext } from './types'
 import { FlatSelectOption } from './types'
@@ -241,7 +242,7 @@ onMounted(() => {
         />
         <CommonTicketStateIndicator
           v-if="(option as FlatSelectOption).status"
-          :status="(option as FlatSelectOption).status"
+          :color-code="(option as FlatSelectOption).status as EnumTicketStateColorCode"
           :label="option.label || String(option.value)"
           :class="{
             'opacity-30': option.disabled,

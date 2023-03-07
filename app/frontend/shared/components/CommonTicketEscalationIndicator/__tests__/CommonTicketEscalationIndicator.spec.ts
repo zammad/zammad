@@ -27,7 +27,7 @@ describe('CommonTicketEscalationIndicator.vue', () => {
 
     const alert = view.getByRole('alert')
 
-    expect(alert).toHaveClass('bg-red-highlight text-red-bright')
+    expect(alert).toHaveClass('bg-red-dark text-red-bright')
     expect(alert).toHaveTextContent('escalation 1 hour ago')
   })
 

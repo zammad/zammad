@@ -42,7 +42,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </CommonSectionMenuLink>
     <CommonSectionMenuLink
       :icon="{
-        name: 'mobile-check-circle-outline',
+        name: 'mobile-check-circle-no',
         size: 'base',
         class: 'text-green',
         decorative: true,

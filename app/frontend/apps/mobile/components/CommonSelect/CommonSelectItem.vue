@@ -57,7 +57,7 @@ const label = computed(() => {
     />
     <CommonTicketStateIndicator
       v-if="option.status"
-      :status="option.status"
+      :color-code="option.status"
       :label="option.label || String(option.value)"
       :class="{
         'opacity-30': option.disabled,

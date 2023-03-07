@@ -23,6 +23,7 @@ export const AutocompleteSearchMergeTicketDocument = gql`
         id
         name
       }
+      stateColorCode
     }
   }
 }

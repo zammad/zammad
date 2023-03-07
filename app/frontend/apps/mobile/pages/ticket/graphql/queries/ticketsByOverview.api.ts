@@ -58,6 +58,7 @@ export const TicketsByOverviewDocument = gql`
         objectAttributeValues @include(if: $withObjectAttributes) {
           ...objectAttributeValues
         }
+        stateColorCode
       }
       cursor
     }

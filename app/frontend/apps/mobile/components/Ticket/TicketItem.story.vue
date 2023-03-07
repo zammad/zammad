@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { TicketState } from '@shared/entities/ticket/types'
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import TicketItem from './TicketItem.vue'
 
 const ticket = {
@@ -13,6 +14,7 @@ const ticket = {
   owner: {
     fullname: 'Jane Doe',
   },
+  stateColorCode: EnumTicketStateColorCode.Open,
 }
 </script>
 

@@ -3,7 +3,6 @@
 import { computed, ref, type Ref, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { cloneDeep, keyBy } from 'lodash-es'
-import type { TicketState } from '@shared/entities/ticket/types'
 import type {
   SelectOptionSorting,
   SelectOption,
@@ -109,7 +108,7 @@ const useSelectOptions = <
     const option = getSelectedOption(selectedValue) as
       | SelectOption
       | FlatSelectOption
-    return option?.status as TicketState | undefined
+    return option?.status
   }
 
   const selectOption = (option: T extends Array<infer V> ? V : never) => {

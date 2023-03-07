@@ -58,6 +58,8 @@ module Gql::Types
     field :time_unit, Float
     field :preferences, GraphQL::Types::JSON
 
+    field :state_color_code, Gql::Types::Enum::TicketStateColorCodeType, null: false, description: 'Ticket color indicator state.'
+
     internal_fields do
       field :subscribed, Boolean, null: true
       field :mentions, Gql::Types::MentionType.connection_type, null: true
@@ -65,6 +67,32 @@ module Gql::Types
 
     def subscribed
       ::Mention.subscribed?(@object, context.current_user)
+    end
+
+    def state_color_code
+      if %w[new open].include?(state_type_name)
+        return ticket_is_escalating? ? 'escalating' : 'open'
+      elsif state_type_name == 'pending reminder'
+        return ticket_is_over_pending_time? ? 'open' : 'pending'
+      elsif state_type_name == 'pending action'
+        return 'pending'
+      end
+
+      'closed'
+    end
+
+    private
+
+    def ticket_is_escalating?
+      @object.escalation_at && @object.escalation_at < Time.zone.now
+    end
+
+    def ticket_is_over_pending_time?
+      @object.pending_time && @object.pending_time < Time.zone.now
+    end
+
+    def state_type_name
+      @state_type_name ||= @object.state.state_type.name
     end
   end
 end

@@ -11,6 +11,9 @@ defineProps<{
 
 <template>
   <div class="ltr:pr-3 rtl:pl-3">
-    <CommonTicketStateIndicator :status="option.ticket.state.name" label="" />
+    <CommonTicketStateIndicator
+      :color-code="option.ticket.stateColorCode"
+      :label="option.ticket.state.name"
+    />
   </div>
 </template>

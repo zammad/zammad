@@ -6,6 +6,7 @@ import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { useFormBlock } from '@mobile/form/useFormBlock'
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
@@ -179,7 +180,7 @@ setupMissingOptionHandling()
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
             :key="selectedValue"
-            :status="getSelectedOptionStatus(selectedValue)"
+            :color-code="getSelectedOptionStatus(selectedValue) as EnumTicketStateColorCode"
             :label="getSelectedOptionFullPath(selectedValue)"
             :data-test-status="getSelectedOptionStatus(selectedValue)"
             role="listitem"

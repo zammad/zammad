@@ -39,7 +39,7 @@ const escalationState = computed(() => {
   <div
     v-if="escalationState !== EscalationState.None"
     :class="{
-      'bg-red-highlight text-red-bright':
+      'bg-red-dark text-red-bright':
         escalationState === EscalationState.Escalated,
       'bg-yellow-highlight text-yellow':
         escalationState === EscalationState.Warning,

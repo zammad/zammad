@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketsByOverviewQuery } from '@shared/graphql/types'
+import {
+  EnumTicketStateColorCode,
+  type TicketsByOverviewQuery,
+} from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { nullableMock } from '@tests/support/utils'
@@ -54,6 +57,7 @@ export const ticketDefault = () =>
       lastname: 'Doe',
       fullname: 'John Doe',
     },
+    stateColorCode: EnumTicketStateColorCode.Open,
   })
 
 export const mockTicketsByOverview = (

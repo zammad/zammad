@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  TicketArticlesQuery,
-  TicketLiveUserDeletePayload,
-  TicketLiveUserUpsertPayload,
-  TicketQuery,
-  PolicyTicket,
+import {
+  type TicketArticlesQuery,
+  type TicketLiveUserDeletePayload,
+  type TicketLiveUserUpsertPayload,
+  type TicketQuery,
+  type PolicyTicket,
+  EnumTicketStateColorCode,
 } from '@shared/graphql/types'
 import { TicketState } from '@shared/entities/ticket/types'
 import type { TicketView } from '@shared/entities/ticket/types'
@@ -115,6 +116,7 @@ export const defaultTicket = (policies: Partial<PolicyTicket> = {}) => {
         defaultCreate: false,
       },
       objectAttributeValues: [],
+      stateColorCode: EnumTicketStateColorCode.Open,
     },
   })
 }

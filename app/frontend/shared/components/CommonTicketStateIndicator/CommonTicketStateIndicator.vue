@@ -2,12 +2,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { TicketState } from '@shared/entities/ticket/types'
-
-// TODO: Add a test and story for this common component.
+import { EnumTicketStateColorCode } from '@shared/graphql/types'
 
 export interface Props {
-  status?: TicketState | string
+  colorCode: EnumTicketStateColorCode
   label: string
   pill?: boolean
 }
@@ -16,87 +14,60 @@ const props = withDefaults(defineProps<Props>(), {
   pill: false,
 })
 
-const statusIndicator = computed(() => {
-  switch (props.status) {
-    case TicketState.Closed:
-      return 'mobile-check-circle-outline'
-    case TicketState.WaitingForClosure:
-      return 'mobile-check-circle-outline-dashed'
-    case TicketState.WaitingForReminder:
-      return 'mobile-check-circle-outline-dashed'
-    case TicketState.New:
-    case TicketState.Open:
+const textClass = computed(() => {
+  switch (props.colorCode) {
+    case EnumTicketStateColorCode.Closed:
+      return 'text-green'
+    case EnumTicketStateColorCode.Pending:
+      return 'text-gray'
+    case EnumTicketStateColorCode.Escalating:
+      return 'text-red-bright'
+    case EnumTicketStateColorCode.Open:
     default:
-      return 'mobile-check-circle-no'
+      return 'text-yellow'
+  }
+})
+
+const backgroundClass = computed(() => {
+  if (!props.pill) return
+
+  switch (props.colorCode) {
+    case EnumTicketStateColorCode.Closed:
+      return 'bg-green-highlight'
+    case EnumTicketStateColorCode.Pending:
+      return 'bg-gray-highlight'
+    case EnumTicketStateColorCode.Escalating:
+      return 'bg-red-dark'
+    case EnumTicketStateColorCode.Open:
+    default:
+      return 'bg-yellow-highlight'
   }
 })
 </script>
 
 <template>
   <div
-    :class="{
-      'status-pill': pill,
-      [`status-${status}`]: true,
-    }"
-    class="status flex select-none items-center"
+    :class="[
+      textClass,
+      backgroundClass,
+      {
+        'rounded py-1 pr-1.5 pl-1': pill,
+      },
+    ]"
+    class="flex select-none items-center"
     role="group"
   >
     <CommonIcon
-      v-if="statusIndicator"
-      :name="statusIndicator"
       :size="pill ? 'tiny' : 'base'"
-      decorative
+      :label="$t('(state: %s)', $t(label))"
+      name="mobile-check-circle-no"
     />
-    <div v-if="pill" class="ml-[2px] text-xs uppercase leading-[14px]">
+    <div
+      v-if="pill"
+      class="ml-[2px] text-xs uppercase leading-[14px]"
+      aria-hidden="true"
+    >
       {{ label }}
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.status {
-  @apply text-gray;
-
-  &-pill {
-    @apply rounded bg-gray-100 py-1 pr-1.5 pl-1 text-black;
-
-    &.status-closed {
-      @apply bg-green-highlight;
-    }
-
-    &.status-merged,
-    &.status-removed,
-    &.status-waiting-for-closure,
-    &.status-waiting-for-reminder {
-      @apply bg-gray-highlight;
-    }
-
-    &.status-new,
-    &.status-open {
-      @apply bg-yellow-highlight;
-    }
-
-    &.status-escalated {
-      @apply bg-red-highlight;
-    }
-  }
-
-  &-closed {
-    @apply text-green;
-  }
-
-  &-waiting-for-closure,
-  &-waiting-for-reminder {
-    @apply text-gray;
-  }
-
-  &-new,
-  &-open {
-    @apply text-yellow;
-  }
-
-  &-escalated {
-    @apply text-red;
-  }
-}
-</style>

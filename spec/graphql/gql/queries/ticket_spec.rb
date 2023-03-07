@@ -53,7 +53,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               agentUpdateAccess
               createMentions
             }
-
+            stateColorCode
           }
         }
       QUERY
@@ -77,16 +77,16 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
         shared_examples 'finds the ticket' do
           let(:expected_result) do
             {
-              'id'         => gql.id(ticket),
-              'internalId' => ticket.id,
-              'number'     => ticket.number,
+              'id'             => gql.id(ticket),
+              'internalId'     => ticket.id,
+              'number'         => ticket.number,
               # Agent is allowed to see user data
-              'owner'      => include(
+              'owner'          => include(
                 'firstname' => ticket.owner.firstname,
                 'email'     => ticket.owner.email,
               ),
-              'tags'       => %w[tag1 tag2],
-              'policy'     => {
+              'tags'           => %w[tag1 tag2],
+              'policy'         => {
                 'agentReadAccess'   => true,
                 'agentUpdateAccess' => true,
                 'createMentions'    => true,
@@ -94,6 +94,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
                 'followUp'          => true,
                 'update'            => true
               },
+              'stateColorCode' => 'open',
             }
           end
           it 'finds the ticket' do

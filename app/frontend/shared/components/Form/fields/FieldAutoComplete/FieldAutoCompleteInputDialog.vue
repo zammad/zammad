@@ -237,7 +237,12 @@ useTraverseOptions(autocompleteList)
     @close="close"
   >
     <template v-if="context.action || context.onActionClick" #before-label>
-      <CommonButton class="grow" transparent-background @click="close" @keypress.space="close">
+      <CommonButton
+        class="grow"
+        transparent-background
+        @click="close"
+        @keypress.space="close"
+      >
         {{ $t('Cancel') }}
       </CommonButton>
     </template>

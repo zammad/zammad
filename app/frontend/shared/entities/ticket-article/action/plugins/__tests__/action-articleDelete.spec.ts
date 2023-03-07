@@ -2,7 +2,6 @@
 
 import type { TicketView } from '@shared/entities/ticket/types'
 import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { mockPermissions } from '@tests/support/mock-permissions'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { setupView } from '@tests/support/mock-user'
 import { createTicketArticle, createTestArticleActions } from './utils'

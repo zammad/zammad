@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketState } from '@shared/entities/ticket/types'
+import type { EnumTicketStateColorCode } from '@shared/graphql/types'
 import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
 import type { FormFieldContext } from '../../types/field'
 
@@ -11,7 +11,7 @@ export interface SelectOption {
   label?: string
   labelPlaceholder?: string[]
   disabled?: boolean
-  status?: TicketState
+  status?: EnumTicketStateColorCode
   icon?: string
   iconProps?: Omit<IconProps, 'name'>
 }

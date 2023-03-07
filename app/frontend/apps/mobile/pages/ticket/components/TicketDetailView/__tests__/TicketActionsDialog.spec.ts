@@ -152,7 +152,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       },
     })
 
-    const option = view.getByRole('option', { name: 'Ticket #1' })
+    const option = view.getByRole('option', { name: '(state: open) Ticket #1' })
     expect(option).toBeInTheDocument()
 
     await view.events.click(option)
