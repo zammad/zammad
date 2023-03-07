@@ -11,6 +11,7 @@ import { TicketState } from '@shared/entities/ticket/types'
 import type { TicketView } from '@shared/entities/ticket/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
 import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
+import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
 import { useSessionStore } from '@shared/stores/session'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
@@ -375,6 +376,8 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
 
   const mockTicketLiveUser = mockTicketLiveUsersGql()
 
+  const mockOnlineNotificationSeen = mockOnlineNotificationSeenGql()
+
   return {
     ticket: ticket.ticket,
     mockApiArticles,
@@ -383,5 +386,6 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     mockTicketArticleSubscription,
     waitUntilTicketLoaded,
     ...mockTicketLiveUser,
+    ...mockOnlineNotificationSeen,
   }
 }

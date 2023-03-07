@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Scalars } from '@shared/graphql/types'
+
 export type ReactiveFunction<TParam> = () => TParam
 
 export type ImportGlobEagerDefault<T> = Record<string, T>
@@ -46,3 +48,7 @@ export type MaybeRecord<K> = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ObjectLike = Record<string, any>
+
+export interface ObjectWithId {
+  id: Scalars['ID']
+}

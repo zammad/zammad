@@ -7,6 +7,7 @@ import { computed, ref } from 'vue'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
+import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
@@ -31,6 +32,8 @@ const {
 } = useUserDetail()
 
 loadUser(props.internalId)
+
+useOnlineNotificationSeen(user)
 
 const { openEditUserDialog } = useUserEdit()
 

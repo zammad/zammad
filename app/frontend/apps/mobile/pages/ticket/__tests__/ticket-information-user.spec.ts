@@ -16,7 +16,7 @@ const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {
   mockTicketDetailViewGql()
 
   const { mockUser, mockUserSubscription, mockAttributes } =
-    mockUserDetailsApis(user)
+    mockUserDetailsApis(user, { skipMockOnlineNotificationSeen: true })
 
   const view = await visitView('/tickets/1/information/customer')
 

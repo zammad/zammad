@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { defaultOrganization } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
+import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
 import type { UserQuery } from '@shared/graphql/types'
@@ -10,6 +11,7 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '@tests/support/mock-graphql-api'
+import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import { UserDocument } from '../../graphql/queries/user.api'
 import managerAttributes from './managerAttributes.json'
@@ -110,8 +112,13 @@ export const mockUserGql = (user?: ConfidentTake<UserQuery, 'user'>) => {
   }
 }
 
+interface MockOptions {
+  skipMockOnlineNotificationSeen?: boolean
+}
+
 export const mockUserDetailsApis = (
   user?: ConfidentTake<UserQuery, 'user'>,
+  options: MockOptions = {},
 ) => {
   const mockedUser = user ?? defaultUser()
 
@@ -119,10 +126,16 @@ export const mockUserDetailsApis = (
   const mockAttributes = mockUserManagerAttributes()
   const mockUserSubscription = mockGraphQLSubscription(UserUpdatesDocument)
 
+  let mockOnlineNotificationSeen: MockGraphQLInstance | undefined
+  if (!options.skipMockOnlineNotificationSeen) {
+    mockOnlineNotificationSeen = mockOnlineNotificationSeenGql()
+  }
+
   return {
     user: mockedUser,
     mockUser,
     mockAttributes,
     mockUserSubscription,
+    mockOnlineNotificationSeen,
   }
 }

@@ -8,6 +8,7 @@ import { ApolloError } from '@apollo/client/errors'
 import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
 import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
 import { convertToGraphQLId } from '@shared/graphql/utils'
+import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
 import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
 import { getByIconName } from '@tests/support/components/iconQueries'
 import { getTestRouter } from '@tests/support/components/renderComponent'
@@ -343,6 +344,7 @@ test('can load more articles', async () => {
   })
 
   mockTicketLiveUsersGql()
+  mockOnlineNotificationSeenGql()
 
   mockGraphQLApi(TicketDocument).willResolve(defaultTicket())
   mockGraphQLSubscription(TicketUpdatesDocument)

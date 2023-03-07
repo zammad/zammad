@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
+import { convertToGraphQLId } from '@shared/graphql/utils'
 import { visitView } from '@tests/support/components/visitView'
 import {
   mockGraphQLApi,
@@ -13,11 +15,11 @@ import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { convertToGraphQLId } from '@shared/graphql/utils'
 
 describe('static organization', () => {
   it('shows organization', async () => {
     mockPermissions(['admin.organization'])
+    mockOnlineNotificationSeenGql()
 
     const organization = defaultOrganization()
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
@@ -72,6 +74,7 @@ describe('static organization', () => {
 
   it('shows organization members', async () => {
     mockPermissions(['admin.organization'])
+    mockOnlineNotificationSeenGql()
 
     const organization = defaultOrganization()
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
@@ -170,6 +173,8 @@ describe('static organization', () => {
   })
 
   it('can edit organization with required update policy', async () => {
+    mockOnlineNotificationSeenGql()
+
     const organization = defaultOrganization()
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
       organization,
@@ -185,6 +190,8 @@ describe('static organization', () => {
   })
 
   it('cannot edit organization without required update policy', async () => {
+    mockOnlineNotificationSeenGql()
+
     const organization = defaultOrganization()
     organization.policy.update = false
 
@@ -203,6 +210,7 @@ describe('static organization', () => {
 
   it('redirects to error page if organization is not found', async () => {
     mockPermissions(['admin.organization'])
+    mockOnlineNotificationSeenGql()
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
@@ -217,6 +225,7 @@ describe('static organization', () => {
 
   it('redirects to error page if access to organization is forbidden', async () => {
     mockPermissions(['admin.organization'])
+    mockOnlineNotificationSeenGql()
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()

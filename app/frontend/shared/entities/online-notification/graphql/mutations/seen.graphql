@@ -1,0 +1,8 @@
+mutation onlineNotificationSeen($objectId: ID!) {
+  onlineNotificationSeen(objectId: $objectId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

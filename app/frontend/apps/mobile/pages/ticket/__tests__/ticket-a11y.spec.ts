@@ -69,7 +69,9 @@ describe('testing ticket a11y', () => {
   test('ticket user information has no accessibility violations', async () => {
     mockTicketDetailViewGql()
 
-    const { mockUser, mockAttributes } = mockUserDetailsApis(defaultUser())
+    const { mockUser, mockAttributes } = mockUserDetailsApis(defaultUser(), {
+      skipMockOnlineNotificationSeen: true,
+    })
 
     await visitView('/tickets/1/information/customer')
 

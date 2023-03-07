@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
+import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
 import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
@@ -28,6 +29,8 @@ const {
 } = useOrganizationDetail()
 
 loadOrganization(props.internalId)
+
+useOnlineNotificationSeen(organization)
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
 

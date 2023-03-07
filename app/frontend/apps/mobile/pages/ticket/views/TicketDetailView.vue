@@ -24,6 +24,7 @@ import type { TicketInformation } from '@mobile/entities/ticket/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import { isDialogOpened } from '@shared/composables/useDialog'
+import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
 import { useErrorHandler } from '@shared/errors/useErrorHandler'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
@@ -165,6 +166,8 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   showArticleReplyDialog,
   liveUserList,
 })
+
+useOnlineNotificationSeen(ticket)
 
 const { waitForConfirmation } = useConfirmation()
 
