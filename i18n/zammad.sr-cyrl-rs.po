@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-23 03:30+0000\n"
+"PO-Revision-Date: 2023-03-07 03:30+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -878,7 +878,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr "Налог"
 
@@ -1837,6 +1837,14 @@ msgstr "Неуспела ауторизација"
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
 msgstr "Аутоматска додела"
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Ignored Users"
+msgstr "Игнорисани корисници при аутоматској додели"
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Selector"
+msgstr "Бирач аутоматске доделе"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -3038,6 +3046,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Додавање"
 
@@ -4551,6 +4560,19 @@ msgstr "Откажи"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
+msgstr "Откажи промене"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Discard article"
+msgstr "Откажи чланак"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Discard changes"
 msgstr "Откажи промене"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -14840,6 +14862,10 @@ msgstr "ескалирано"
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
 msgstr "ескалација"
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+msgid "escalation %s"
+msgstr "ескалација %s"
 
 #: db/seeds/macros.rb
 msgid "example macro"

@@ -771,7 +771,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr ""
 
@@ -1741,6 +1741,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
+msgstr "Automatické priradenie"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Ignored Users"
+msgstr "Automatické priradenie"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Selector"
 msgstr "Automatické priradenie"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
@@ -3019,6 +3031,7 @@ msgstr "Krajina"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Vytvor"
 
@@ -4473,6 +4486,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "Discard article"
+msgstr "Vytvoriť testovací tiket"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Unable to save changes."
+msgid "Discard changes"
+msgstr "Nieje možné uložiť zmeny"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
@@ -14697,6 +14727,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
 msgstr ""
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+#, fuzzy
+#| msgid "Escalation at"
+msgid "escalation %s"
+msgstr "Eskalácia o"
 
 #: db/seeds/macros.rb
 msgid "example macro"

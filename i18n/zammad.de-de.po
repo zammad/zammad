@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-16 03:30+0000\n"
+"PO-Revision-Date: 2023-03-07 08:32+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -887,7 +887,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr "Konto"
 
@@ -1863,6 +1863,14 @@ msgstr "Autorisierung fehlgeschlagen"
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
 msgstr "Automatische Zuweisung"
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Ignored Users"
+msgstr "Automatische Zuweisung Benutzer-Ausnahmen"
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Selector"
+msgstr "Automatische Zuweisung Selektor"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -3074,6 +3082,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Erstellen"
 
@@ -4632,6 +4641,19 @@ msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+msgid "Discard article"
+msgstr "Artikel verwerfen"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+msgid "Discard changes"
+msgstr "Änderungen verwerfen"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Discard your unsaved changes"
 msgstr "Verwerfen der ungespeicherten Änderungen"
@@ -6108,7 +6130,7 @@ msgstr "Zurück"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
-msgstr ""
+msgstr "Zur Startseite"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco
@@ -6958,10 +6980,8 @@ msgid "Internal"
 msgstr "Intern"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "Internal"
 msgid "Internal Error"
-msgstr "Intern"
+msgstr "Interner Fehler"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco
 msgid "Internal Knowledge Base feed:"
@@ -7508,7 +7528,7 @@ msgstr "Inhalt wird geladen"
 
 #: app/views/mobile/index.html.erb
 msgid "Loading failed, please try again later."
-msgstr ""
+msgstr "Laden fehlgeschlagen, bitte versuchen Sie es später erneut."
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee
@@ -8632,8 +8652,6 @@ msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "Not Found"
 msgid "Not found"
 msgstr "Nicht gefunden"
 
@@ -8929,8 +8947,6 @@ msgid "Or migrate from another system."
 msgstr "Oder migrieren Sie von einem anderen System."
 
 #: app/frontend/apps/mobile/pages/login/components/LoginThirdParty.vue
-#, fuzzy
-#| msgid "or sign in using"
 msgid "Or sign in using"
 msgstr "oder Anmelden über"
 
@@ -8990,6 +9006,8 @@ msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
 msgstr ""
+"Die Organisation mit der angegebenen ID konnte nicht gefunden werden. Prüfen "
+"Sie die URL auf Fehler."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
@@ -12811,6 +12829,8 @@ msgstr ""
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
+"Das Ticket mit der angegebenen ID konnte nicht gefunden werden. Prüfen Sie "
+"die URL auf Fehler."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
@@ -13690,6 +13710,8 @@ msgstr "Benutzer erfolgreich entsperrt!"
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
 msgid "User with specified ID was not found. Try checking the URL for errors."
 msgstr ""
+"Der Benutzer mit der angegebenen ID konnte nicht gefunden werden. Prüfen Sie "
+"die URL auf Fehler."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Username"
@@ -13952,14 +13974,12 @@ msgid "We support:"
 msgstr "Wir unterstützen:"
 
 #: app/frontend/shared/errors/useErrorHandler.ts
-#, fuzzy
-#| msgid "We're sorry, but this page doesn't exist."
 msgid "We're sorry, but something went wrong."
-msgstr "Es tut uns Leid, diese Seite existiert nicht."
+msgstr "Es tut uns leid, etwas ist schiefgegangen."
 
 #: app/frontend/shared/errors/useErrorHandler.ts
 msgid "We're sorry, but something went wrong. Received message: %s"
-msgstr ""
+msgstr "Es tut uns leid, etwas ist schiefgegangen. Nachricht erhalten: %s"
 
 #: app/frontend/apps/mobile/router/error.ts
 msgid "We're sorry, but this page doesn't exist."
@@ -14467,25 +14487,16 @@ msgid "You have exceeded the character limit by %s"
 msgstr "Sie haben das zulässige Zeichenlimit von %s überschritten"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this organization."
-msgstr ""
-"Entschuldigung, aber Sie haben nicht genug Rechte um diese Seite zu öffnen."
+msgstr "Sie haben nicht genug Rechte um diese Organisation anzuzeigen."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this ticket."
-msgstr ""
-"Entschuldigung, aber Sie haben nicht genug Rechte um diese Seite zu öffnen."
+msgstr "Sie haben nicht genug Rechte um dieses Ticket anzuzeigen."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts
-#, fuzzy
-#| msgid "Sorry, but you have insufficient rights to open this page."
 msgid "You have insufficient rights to view this user."
-msgstr ""
-"Entschuldigung, aber Sie haben nicht genug Rechte um diese Seite zu öffnen."
+msgstr "Sie haben nicht genug Rechte um diesen Benutzer anzuzeigen."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "You have no configured %s right now."
@@ -14508,10 +14519,8 @@ msgid "You have to allow access to your webcam."
 msgstr "Sie müssen den Zugriff auf Ihre Webcam genehmigen."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
-#, fuzzy
-#| msgid "Discard your unsaved changes."
 msgid "You have unsaved changes."
-msgstr "Verwerfen der ungespeicherten Änderungen."
+msgstr "Sie haben ungespeicherte Änderungen."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "You need to add the following Javascript code snippet to your web page:"
@@ -15084,6 +15093,10 @@ msgstr "eskaliert"
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
 msgstr "Eskalation"
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+msgid "escalation %s"
+msgstr "Eskalation %s"
 
 #: db/seeds/macros.rb
 msgid "example macro"

@@ -777,7 +777,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr ""
 
@@ -1748,6 +1748,18 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
+msgstr "자동 할당"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Ignored Users"
+msgstr "자동 할당"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Selector"
 msgstr "자동 할당"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
@@ -3019,6 +3031,7 @@ msgstr "국가"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "생성"
 
@@ -4514,6 +4527,23 @@ msgstr "취소"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
+msgstr "변경 사항을 취소"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard article"
+msgstr "변경 사항을 취소"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard changes"
 msgstr "변경 사항을 취소"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -15108,6 +15138,12 @@ msgstr "에스컬레이션"
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
+msgstr "단계적 확대"
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+#, fuzzy
+#| msgid "escalation"
+msgid "escalation %s"
 msgstr "단계적 확대"
 
 #: db/seeds/macros.rb

@@ -862,7 +862,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr "Konto"
 
@@ -1830,6 +1830,18 @@ msgstr "Auktorisering misslyckades"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
+msgstr "Automatisk Tilldelning"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Ignored Users"
+msgstr "Automatisk Tilldelning"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Auto Assignment Selector"
 msgstr "Automatisk Tilldelning"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
@@ -3053,6 +3065,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Skapa"
 
@@ -4519,6 +4532,23 @@ msgstr "Avbryt"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
+msgstr "Avbryt ändringar"
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard article"
+msgstr "Avbryt ändringar"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Discard changes"
 msgstr "Avbryt ändringar"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -14668,6 +14698,12 @@ msgstr "eskalerad"
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
+msgstr "eskalering"
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+#, fuzzy
+#| msgid "escalation"
+msgid "escalation %s"
 msgstr "eskalering"
 
 #: db/seeds/macros.rb

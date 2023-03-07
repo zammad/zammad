@@ -795,7 +795,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
-#: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Account"
 msgstr ""
 
@@ -1739,6 +1739,16 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Auto Assignment"
 msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Auto Assignment Ignored Users"
+msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Auto Assignment Selector"
+msgstr "зачисли билет"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -2930,6 +2940,7 @@ msgstr "Държава"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create"
 msgstr "Създаване"
 
@@ -4340,6 +4351,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Discard Changes"
 msgstr ""
+
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#, fuzzy
+#| msgid "Create"
+msgid "Discard article"
+msgstr "Създаване"
+
+#: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
+#, fuzzy
+#| msgid "has changed"
+msgid "Discard changes"
+msgstr "се промени"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
@@ -14346,6 +14374,12 @@ msgstr "ескалиран"
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco
 msgid "escalation"
+msgstr "ескалиране"
+
+#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue
+#, fuzzy
+#| msgid "escalation"
+msgid "escalation %s"
 msgstr "ескалиране"
 
 #: db/seeds/macros.rb
