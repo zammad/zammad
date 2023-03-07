@@ -388,7 +388,7 @@ GEM
     pundit-matchers (1.8.4)
       rspec-rails (>= 3.0.0)
     racc (1.6.2)
-    rack (2.2.6.2)
+    rack (2.2.6.3)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
     rack-proxy (0.7.4)
