@@ -1311,6 +1311,10 @@ RSpec.describe 'Ticket Create', type: :system do
 
   describe 'Ticket templates are missing pending till option #4318', time_zone: 'Europe/London' do
 
+    around do |example|
+      Time.use_zone('Europe/London') { example.run }
+    end
+
     shared_examples 'check datetime field' do
 
       shared_examples 'calculated datetime value' do
