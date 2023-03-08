@@ -78,6 +78,17 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       end
     end
 
+    context 'with different default priority' do
+      before do
+        Ticket::Priority.find(1).update!(default_create: true)
+      end
+
+      it 'returns initial value for priority_id' do
+        expect(resolved_result.resolve).to include(
+          'priority_id' => include(initialValue: 1)
+        )
+      end
+    end
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
