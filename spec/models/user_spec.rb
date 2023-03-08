@@ -935,8 +935,7 @@ RSpec.describe User, type: :model do
 
         it 'marks object as invalid by adding error' do
           user.update(password: long_string)
-
-          expect(user.errors).to satisfy { |errors| errors.any? { |error| error.message.first.include?('Invalid password') } }
+          expect(user.errors.first.full_message).to eq('Password is too long')
         end
       end
     end

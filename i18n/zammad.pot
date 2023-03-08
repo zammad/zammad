@@ -13213,6 +13213,10 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
+#: app/models/user.rb
+msgid "is too long"
+msgstr ""
+
 msgid "is too long (maximum is %{count} characters)"
 msgstr ""
 

@@ -1296,7 +1296,7 @@ raise 'At least one user need to have admin permissions'
     return password if PasswordHash.crypted?(password)
 
     if !PasswordPolicy::MaxLength.valid? password
-      errors.add :base, PasswordPolicy::MaxLength.error
+      errors.add :password, __('is too long')
       return nil
     end
 
