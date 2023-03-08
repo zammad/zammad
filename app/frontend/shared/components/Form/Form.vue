@@ -335,10 +335,9 @@ const formConfig = computed(() => {
 })
 
 // Define the additional component library for the used components which are not form fields.
-// Because of a typescript error, we need to cased the type: https://github.com/formkit/formkit/issues/274
 const additionalComponentLibrary = {
-  FormLayout: markRaw(FormLayout) as unknown as ConcreteComponent,
-  FormGroup: markRaw(FormGroup) as unknown as ConcreteComponent,
+  FormLayout: markRaw(FormLayout) as ConcreteComponent,
+  FormGroup: markRaw(FormGroup) as ConcreteComponent,
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.
@@ -701,7 +700,11 @@ const updateChangedFields = (
       const node = changedFieldProps.id
         ? getNode(changedFieldProps.id)
         : getNodeByName(fieldName)
-      node?.input(value, false)
+
+      // Update the value in the next tick, so that all other props are already updated.
+      nextTick(() => {
+        node?.input(value, false)
+      })
     }
   })
 
@@ -812,6 +815,7 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       previousValues.set(node, cloneDeep(newValue))
       return
     }
+
     if (
       inputNode.props.triggerFormUpdater &&
       !updaterChangedFields.has(node.name)

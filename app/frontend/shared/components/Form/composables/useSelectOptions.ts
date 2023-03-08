@@ -173,6 +173,9 @@ const useSelectOptions = <
   const setupMissingOptionHandling = () => {
     const { historicalOptions } = context.value
 
+    // Remember current optionValueLookup in node context.
+    context.value.optionValueLookup = optionValueLookup
+
     // Append historical options to the list of available options, if:
     //   - non-existent values are not supposed to be rejected
     //   - we have a current value
@@ -192,6 +195,16 @@ const useSelectOptions = <
           ) {
             accumulator.push({ value, label })
           }
+          // TODO: Workaround, because currently the "nulloption" exists also for multiselect fields (#4513).
+          else if (
+            context.value.multiple &&
+            !label &&
+            value === '' &&
+            !options.value.some((option) => option.value === value)
+          ) {
+            accumulator.unshift({ value, label: '-' })
+          }
+
           return accumulator
         },
         [],

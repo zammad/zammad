@@ -440,6 +440,85 @@ describe('Form - Field - Select - Options', () => {
       expect(selectOption).toHaveTextContent(testOptions[index].label)
     })
   })
+
+  it('remove values for non existing option on value update (single)', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        id: 'select',
+        type: 'select',
+        value: 1,
+        options: testOptions,
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item B')
+
+    // Change values with one which not exists inside the options (e.g. coming from core workflow).
+    const node = getNode('select')
+    await node?.settled
+    node?.input(3)
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item B')
+  })
+
+  it('remove values for non existing option on value update (multiple)', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        id: 'select',
+        type: 'select',
+        value: [1, 2],
+        options: testOptions,
+        multiple: true,
+      },
+    })
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(2)
+
+    // Change values with one which not exists inside the options (e.g. coming from core workflow).
+    const node = getNode('select')
+    await node?.settled
+    node?.input([2, 3])
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(1)
+  })
+
+  it('preselect also on value change when init value no longer exists in options (and preselect mode is active)', async () => {
+    const optionsProp = cloneDeep(testOptions)
+
+    optionsProp.push({
+      value: 3,
+      label: 'Item D',
+    })
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        id: 'select',
+        type: 'select',
+        value: 1,
+        options: optionsProp,
+      },
+    })
+
+    await wrapper.rerender({
+      options: [optionsProp[0], optionsProp[2]],
+    })
+
+    // Change values with one which not exists inside the options (e.g. coming from core workflow).
+    const node = getNode('select')
+    await node?.settled
+    node?.input(3)
+
+    await waitForNextTick(true)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item A')
+  })
 })
 
 describe('Form - Field - Select - Features', () => {
@@ -450,6 +529,7 @@ describe('Form - Field - Select - Features', () => {
         id: 'select',
         type: 'select',
         options: testOptions,
+        clearable: false,
         value: testOptions[1].value,
       },
     })

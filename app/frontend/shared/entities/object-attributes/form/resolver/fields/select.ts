@@ -21,6 +21,7 @@ export class FieldResolverSelect extends FieldResolver {
       noOptionsLabelTranslation: !this.attributeConfig.translate,
       clearable: this.attributeConfig.nulloption || false,
       options: [],
+      historicalOptions: this.attributeConfig.historical_options,
     }
 
     if (this.attributeConfig.options) {

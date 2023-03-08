@@ -16,6 +16,12 @@ describe('FieldResolverMultiselect', () => {
           b: 'b',
           c: 'c',
         },
+        historical_options: {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: 'd',
+        },
       },
       isInternal: true,
     })
@@ -41,6 +47,12 @@ describe('FieldResolverMultiselect', () => {
             value: 'c',
           },
         ],
+        historicalOptions: {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: 'd',
+        },
         multiple: true,
       },
       type: 'select',

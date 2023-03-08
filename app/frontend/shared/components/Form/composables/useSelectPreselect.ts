@@ -17,6 +17,11 @@ const useSelectPreselect = (
 ) => {
   const { hasValue } = useValue(context)
 
+  const getPreselectValue = () => options.value[0]?.value
+
+  // Remember function to use it during the next value check.
+  context.value.getPreselectValue = getPreselectValue
+
   // Pre-select the first option of a single select when and only when the field is not clearable nor disabled.
   //   This mimics the behavior of the native select field.
   const preselectOption = () => {
@@ -28,7 +33,7 @@ const useSelectPreselect = (
       options.value &&
       options.value.length > 0
     ) {
-      context.value.node.input(options.value[0].value, false)
+      context.value.node.input(getPreselectValue(), false)
     }
   }
 

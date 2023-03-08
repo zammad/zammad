@@ -3,6 +3,7 @@
 import createInput from '@shared/form/core/createInput'
 import addLink from '@shared/form/features/addLink'
 import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
+import removeValuesForNonExistingOptions from '@shared/form/features/removeValuesForNonExistingOptions'
 import FieldTreeSelectInput from './FieldTreeSelectInput.vue'
 
 const fieldDefinition = createInput(
@@ -17,7 +18,13 @@ const fieldDefinition = createInput(
     'rejectNonExistentValues',
     'sorting',
   ],
-  { features: [addLink, formUpdaterTrigger()] },
+  {
+    features: [
+      addLink,
+      formUpdaterTrigger(),
+      removeValuesForNonExistingOptions,
+    ],
+  },
   { addArrow: true },
 )
 

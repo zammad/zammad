@@ -183,11 +183,9 @@ describe('Form.vue', () => {
   it('can change field information - show title again and change values', async () => {
     const wrapper = await renderForm()
 
-    // Currently changeFields-Prop is not working on initial form rendering.
     await wrapper.rerender({
       changeFields: {
         title: {
-          show: true,
           value: 'Changed title',
         },
         text: {
@@ -195,6 +193,8 @@ describe('Form.vue', () => {
         },
       },
     })
+
+    await waitForNextTick()
 
     const input = wrapper.getByLabelText('Title')
     expect(input).toHaveDisplayValue('Changed title')

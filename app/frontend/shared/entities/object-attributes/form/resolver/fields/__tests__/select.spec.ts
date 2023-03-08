@@ -15,6 +15,12 @@ describe('FieldResolverSelect', () => {
           b: 'b',
           c: 'c',
         },
+        historical_options: {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: 'd',
+        },
       },
       isInternal: true,
     })
@@ -40,6 +46,12 @@ describe('FieldResolverSelect', () => {
             value: 'c',
           },
         ],
+        historicalOptions: {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+          d: 'd',
+        },
       },
       type: 'select',
       internal: true,
