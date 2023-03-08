@@ -1658,7 +1658,7 @@ ObjectManager::Attribute.add(
     },
     view:   {
       'ticket.agent'    => {
-        shown: true,
+        shown: false,
       },
       'ticket.customer' => {
         shown: false,

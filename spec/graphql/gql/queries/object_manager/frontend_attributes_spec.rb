@@ -214,7 +214,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
             },
             {
               'name'       => 'view',
-              'attributes' => %w[name shared domain_assignment domain note active],
+              'attributes' => %w[name shared domain_assignment domain note],
             }
           ],
         }
