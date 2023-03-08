@@ -11,6 +11,17 @@ module SessionHelper
     }
   end
 
+  def self.json_hash_error(error)
+    {
+      error:       error.message,
+      models:      models,
+      collections: {
+        Locale.to_app_model     => Locale.where(active: true),
+        PublicLink.to_app_model => PublicLink.all,
+      }
+    }
+  end
+
   def self.default_collections(user)
 
     # auto population collections, store all here

@@ -12,15 +12,7 @@ class SessionsController < ApplicationController
     # return current session
     render json: SessionHelper.json_hash(user).merge(config: config_frontend)
   rescue Exceptions::NotAuthorized => e
-    render json: {
-      error:       e.message,
-      config:      config_frontend,
-      models:      SessionHelper.models,
-      collections: {
-        Locale.to_app_model     => Locale.where(active: true),
-        PublicLink.to_app_model => PublicLink.all,
-      }
-    }
+    render json: SessionHelper.json_hash_error(e).merge(config: config_frontend)
   end
 
   # "Create" a login, aka "log the user in"
