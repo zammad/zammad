@@ -28,14 +28,7 @@ watch(
 </script>
 
 <template>
-  <Transition
-    enter-active-class="transition-opacity duration-200"
-    leave-active-class="transition-opacity duration-200"
-    enter-from-class="opacity-0"
-    leave-to-class="opacity-0"
-  >
-    <CommonLoader :loading="refetching" class="absolute">
-      <slot />
-    </CommonLoader>
-  </Transition>
+  <CommonLoader :loading="refetching" class="absolute">
+    <slot />
+  </CommonLoader>
 </template>
