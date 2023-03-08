@@ -9,6 +9,7 @@ export interface Props {
   label?: string
   labelPlaceholder?: string[]
   link?: string
+  linkExternal?: boolean
   icon?: string | (IconProps & HTMLAttributes)
   iconBg?: string
   // TODO maybe change the name based on the usage
@@ -34,6 +35,7 @@ const iconProps = computed<IconProps | null>(() => {
   <component
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
+    :external="link && linkExternal"
     class="cursor-pointer border-b border-white/10 last:border-0"
     data-test-id="section-menu-link"
   >

@@ -2498,8 +2498,14 @@ msgstr ""
 msgid "Continue session"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
+msgid "Continue to desktop"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Continue to mobile"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -6746,6 +6752,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco

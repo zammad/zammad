@@ -24,6 +24,7 @@ import { computed } from 'vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { PublicLinkUpdatesDocument } from '@shared/entities/public-links/graphql/subscriptions/currentLinks.api'
 import { useThirdPartyAuthentication } from '@shared/composables/useThirdPartyAuthentication'
+import { useForceDesktop } from '@shared/composables/useForceDesktop'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
 
 const route = useRoute()
@@ -178,6 +179,8 @@ const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 const showPasswordLogin = computed(
   () => application.config.user_show_password_login || !hasEnabledProviders,
 )
+
+const { forceDesktop } = useForceDesktop()
 </script>
 
 <template>
@@ -257,8 +260,12 @@ const showPasswordLogin = computed(
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
-    <CommonLink link="/#login" class="font-medium leading-4 text-gray">
-      {{ $t('Continue to desktop app') }}
+    <CommonLink
+      link="/#login"
+      class="font-medium leading-4 text-gray"
+      @click="forceDesktop"
+    >
+      {{ $t('Continue to desktop') }}
     </CommonLink>
     <nav
       v-if="links.length"

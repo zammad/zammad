@@ -95,6 +95,9 @@ class Login extends App.ControllerFullPage
       logoUrl:        @logoUrl()
       auth_providers: auth_providers
       public_links:   public_links
+
+      # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
+      is_mobile: App.Config.get('mobile_frontend_enabled') && isMobile()
     )
 
     # set focus to username or password

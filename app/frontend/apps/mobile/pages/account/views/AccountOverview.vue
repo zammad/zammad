@@ -18,6 +18,7 @@ import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectio
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import { useRawHTMLIcon } from '@shared/components/CommonIcon'
+import { useForceDesktop } from '@shared/composables/useForceDesktop'
 import { useHeader } from '@mobile/composables/useHeader'
 import { i18n } from '@shared/i18n'
 import { useAccountLocaleMutation } from '../graphql/mutations/locale.api'
@@ -132,6 +133,8 @@ const installZammadPWA = () => {
     showInstallIOSPopup.value = true
   }
 }
+
+const { forceDesktop } = useForceDesktop()
 </script>
 
 <template>
@@ -179,7 +182,7 @@ const installZammadPWA = () => {
       </template>
     </FormGroup>
 
-    <CommonSectionMenu v-if="hasVersionPermission || showInstallButton">
+    <CommonSectionMenu>
       <CommonSectionMenuLink
         v-if="hasVersionPermission"
         :icon="{ name: 'mobile-info', size: 'base' }"
@@ -195,6 +198,15 @@ const installZammadPWA = () => {
         @click="installZammadPWA"
       >
         {{ $t('Install App') }}
+      </CommonSectionMenuLink>
+      <CommonSectionMenuLink
+        link="/"
+        link-external
+        :icon="{ name: 'mobile-desktop', size: 'base' }"
+        icon-bg="bg-orange"
+        @click="forceDesktop"
+      >
+        {{ $t('Continue to desktop') }}
       </CommonSectionMenuLink>
     </CommonSectionMenu>
 

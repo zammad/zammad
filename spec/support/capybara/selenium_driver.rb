@@ -5,6 +5,26 @@
 # configurations accordingly.
 
 Capybara.register_driver(:zammad_chrome) do |app|
+  build_chrome_driver(app)
+end
+
+Capybara.register_driver(:zammad_chrome_mobile) do |app|
+  # User agent for Chrome Beta on Pixel 7 (Android 13).
+  build_chrome_driver(app, user_agent: 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36')
+end
+
+Capybara.register_driver(:zammad_firefox) do |app|
+  build_firefox_driver(app)
+end
+
+Capybara.register_driver(:zammad_firefox_mobile) do |app|
+  # User agent for Firefox on Pixel 7 (Android 13).
+  build_firefox_driver(app, user_agent: 'Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/112.0 Firefox/112.0')
+end
+
+private
+
+def build_chrome_driver(app, user_agent: nil)
 
   # Turn on browser logs
   chrome_options = Selenium::WebDriver::Chrome::Options.new(
@@ -38,6 +58,10 @@ Capybara.register_driver(:zammad_chrome) do |app|
     driver_args[:options].add_argument '--headless=new' # native headless for v109+
   end
 
+  if user_agent.present?
+    driver_args[:options].add_argument "--user-agent=\"#{user_agent}\""
+  end
+
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil
   ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil
 
@@ -47,8 +71,7 @@ Capybara.register_driver(:zammad_chrome) do |app|
   end
 end
 
-Capybara.register_driver(:zammad_firefox) do |app|
-
+def build_firefox_driver(app, user_agent: nil)
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile['intl.locale.matchOS']      = false
   profile['intl.accept_languages']    = 'en-US'
@@ -71,6 +94,10 @@ Capybara.register_driver(:zammad_firefox) do |app|
 
   if ENV['BROWSER_HEADLESS'].present?
     driver_args[:options].add_argument '-headless'
+  end
+
+  if user_agent.present?
+    driver_args[:options].add_preference 'general.useragent.override', user_agent
   end
 
   ENV['FAKE_SELENIUM_LOGIN_USER_ID'] = nil

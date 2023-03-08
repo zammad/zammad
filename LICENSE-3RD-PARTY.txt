@@ -49,6 +49,11 @@ Source: https://highlightjs.org
 Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
 License: BSD License (BSD-3-Clause)
 -----------------------------------------------------------------------------
+is-mobile.js
+Source: https://github.com/juliangruber/is-mobile
+Copyright: 2013 Julian Gruber <julian@juliangruber.com>
+License: MIT license
+-----------------------------------------------------------------------------
 jquery.flot.js
 Source: https://github.com/dnschnur/flot
 Copyright: Ole Laursen, IOLA

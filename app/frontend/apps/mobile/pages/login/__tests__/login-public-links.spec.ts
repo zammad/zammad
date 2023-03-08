@@ -19,7 +19,7 @@ describe('testing login public links', () => {
 
     await waitUntilApisResolved(publicLinkQuery)
 
-    const link = view.getByText('Continue to desktop app')
+    const link = view.getByText('Continue to desktop')
 
     expect(link).toHaveAttribute('href', '/#login')
     expect(link).not.toHaveAttribute('target', '_blank')

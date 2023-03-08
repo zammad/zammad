@@ -7,6 +7,7 @@ app/assets/javascripts/app/lib/base/email-addresses.js linguist-vendored
 app/assets/javascripts/app/lib/base/exif.js linguist-vendored
 app/assets/javascripts/app/lib/base/highlight.pack.js linguist-vendored
 app/assets/javascripts/app/lib/base/html5Upload.js linguist-vendored
+app/assets/javascripts/app/lib/base/is-mobile.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery-scrollto.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.enableObjectResizingShim.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.fineuploader-3.0.js linguist-vendored

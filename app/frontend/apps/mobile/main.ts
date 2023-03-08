@@ -10,6 +10,13 @@ import { useLocaleStore } from '@shared/stores/locale'
 import initializeApolloClient from '@mobile/server/apollo'
 import initializeRouter from '@mobile/router'
 import { useAuthenticationStore } from '@shared/stores/authentication'
+import { useForceDesktop } from '@shared/composables/useForceDesktop'
+
+const { forceDesktopLocalStorage } = useForceDesktop()
+
+// If the user explicitly switched to the desktop app the last time around,
+//   redirect them automatically, before hoisting the app.
+if (forceDesktopLocalStorage.value) window.location.href = '/'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)

@@ -27,9 +27,22 @@ RSpec.configure do |config|
       Capybara.app_host = 'http://localhost'
     end
 
+    browser_name = ENV.fetch('BROWSER', 'firefox')
+
+    # If mobile user agent was requested by the example,
+    #   use an appropriate driver (e.g. zammad_chrome_mobile).
+    if example.metadata[:mobile_user_agent].present?
+      browser_name += '_mobile'
+
+      # End the Capybara browser session whenever the user agent is to be mocked,
+      #   in order to get a fresh session for subsequent examples.
+      Capybara.send(:session_pool).reverse_each do |_mode, session|
+        session.quit
+      end
+    end
+
     # set custom Zammad driver (e.g. zammad_chrome) for special
     # functionalities and CI requirements
-    browser_name = ENV.fetch('BROWSER', 'firefox')
     driven_by(:"zammad_#{browser_name}")
 
     screen_size = example.metadata[:screen_size] || case example.metadata[:app]
@@ -54,16 +67,18 @@ RSpec.configure do |config|
     page.driver.browser.manage.window.resize_to(browser_width, browser_height)
   end
 
-  config.after(:each, type: :system) do
+  config.after(:each, type: :system) do |example|
     capybara_examples_performed += 1
     # End the main capybara session only from time to time, to speed up tests and make
     #   sure memory consumption does not rise too much.
+    # Also end the session whenever the user agent was mocked, in order to get a fresh
+    #   session for subsequent examples.
     # Make sure additional sessions (from using_sessions) are always ended
     #   after every test and not kept alive. Selenium will automatically close
     #   idle sessions which can cause 404 errors later.
     #   (see https://github.com/teamcapybara/capybara/issues/2237)
     Capybara.send(:session_pool).reverse_each do |_mode, session|
-      if !session.eql?(Capybara.current_session) || (capybara_examples_performed % 100).zero?
+      if !session.eql?(Capybara.current_session) || (capybara_examples_performed % 100).zero? || example.metadata[:mobile_user_agent]
         session.quit
       end
     end
