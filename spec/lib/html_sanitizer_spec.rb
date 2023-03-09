@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe HtmlSanitizer do
+RSpec.describe HtmlSanitizer, :aggregate_failures do
   describe '.replace_inline_images' do
     let(:body)               { described_class.replace_inline_images(html).first }
     let(:inline_attachments) { described_class.replace_inline_images(html).last }
 
-    context 'for image at absolute path' do
+    context 'when called for image at absolute path' do
       let(:html) { '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">' }
 
       it 'keeps src attr as-is' do
@@ -19,7 +19,7 @@ RSpec.describe HtmlSanitizer do
       end
     end
 
-    context 'for base64-encoded inline images' do
+    context 'when called for base64-encoded inline images' do
       context 'with src attr last' do
         let(:html) { '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">' }
 
@@ -76,7 +76,7 @@ RSpec.describe HtmlSanitizer do
         end
       end
 
-      context 'followed by an incomplete/invalid HTML tag' do
+      context 'when followed by an incomplete/invalid HTML tag' do
         let(:html) { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever' }
 
         it 'converts embedded image to cid' do
@@ -104,7 +104,7 @@ RSpec.describe HtmlSanitizer do
         end
       end
 
-      context 'nested in a <div>, mixed with other HTML elements' do
+      context 'when nested in a <div>, mixed with other HTML elements' do
         let(:html) { '<div><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."><p>123</p><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."></div>' }
 
         it 'converts embedded image to cid' do
@@ -137,7 +137,7 @@ RSpec.describe HtmlSanitizer do
       end
     end
 
-    context 'correctly processing of pre elements' do
+    context 'when processing pre elements' do
       let(:html) do
         '<pre><code>apt-get update
 Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
@@ -152,7 +152,7 @@ Building dependency tree...</code></pre>'
   end
 
   describe '.dynamic_image_size' do
-    context 'for image at absolute path' do
+    context 'when called for image at absolute path' do
       context 'with src attr last' do
         it 'add max-width: 100% rule to style attr' do
           expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
@@ -174,7 +174,7 @@ Building dependency tree...</code></pre>'
       end
     end
 
-    context 'for base64-encoded inline images' do
+    context 'when called for base64-encoded inline images' do
       context 'with src attr last' do
         it 'add max-width: 100% rule to style attr' do
           expect(described_class.dynamic_image_size(<<~HTML.chomp)).to match(Regexp.new(<<~REGEX.chomp))
