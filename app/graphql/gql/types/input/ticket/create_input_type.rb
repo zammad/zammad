@@ -14,18 +14,5 @@ module Gql::Types::Input::Ticket
 
     # Arguments specific to create.
     argument :tags, [String], required: false, description: 'The tags that should be assigned to the new ticket.', prepare: only_for_ticket_agents
-
-    transform :lazy_default_values
-
-    def lazy_default_values(payload)
-      payload.to_h.tap do |result|
-
-        result[:state] ||= Ticket::State.find_by(default_create: true)
-
-        if context.current_user.permissions?('ticket.customer')
-          result[:customer_id] ||= context.current_user.id
-        end
-      end
-    end
   end
 end

@@ -5,19 +5,19 @@ import type { TicketArticleActionPlugin, TicketArticleType } from './types'
 const actionPlugin: TicketArticleActionPlugin = {
   order: 100,
 
-  addTypes(ticket, { config }) {
+  addTypes() {
     const type: TicketArticleType = {
       apps: ['mobile'],
-      value: 'note',
-      label: __('Note'),
+      value: 'web',
+      label: __('Web'),
       icon: {
-        mobile: 'mobile-note',
+        mobile: 'mobile-web',
       },
       view: {
-        agent: ['change'],
+        customer: ['change'],
       },
       attributes: ['attachments'],
-      internal: !!config.ui_ticket_zoom_article_note_new_internal,
+      internal: false,
     }
     return [type]
   },

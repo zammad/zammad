@@ -14,7 +14,11 @@ module Gql::Mutations
     end
 
     def resolve(ticket:, input:)
-      { ticket: Service::Ticket::Update.new(current_user: context.current_user).execute(ticket: ticket, ticket_data: input.to_h) }
+      {
+        ticket: Service::Ticket::Update
+          .new(current_user: context.current_user)
+          .execute(ticket: ticket, ticket_data: input)
+      }
     end
   end
 end

@@ -4,15 +4,22 @@ import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { createTestArticleTypes } from './utils'
 
-describe('article action plugins - types', () => {
-  it('successfully returns available types', () => {
+describe('web type', () => {
+  it('customer does get web type', () => {
     mockPermissions(['ticket.customer'])
     const { ticket } = defaultTicket()
+
     const types = createTestArticleTypes(ticket)
-    expect(types).toHaveLength(1)
-    expect(types[0]).toMatchObject({
-      value: 'web',
-      attributes: ['attachments'],
-    })
+
+    expect(types).toContainEqual(expect.objectContaining({ value: 'web' }))
+  })
+
+  it('agent does not get web type', () => {
+    mockPermissions(['ticket.agent'])
+    const { ticket } = defaultTicket()
+
+    const types = createTestArticleTypes(ticket)
+
+    expect(types).not.toContainEqual(expect.objectContaining({ value: 'web' }))
   })
 })

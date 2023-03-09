@@ -5,6 +5,15 @@
 module Ticket::Article::AddsMetadataGeneral
   extend ActiveSupport::Concern
 
+  TYPE_NO_METADATA = [
+    'email',
+    'twitter status',
+    'twitter direct-message',
+    'facebook feed post',
+    'facebook feed comment',
+    'sms'
+  ].freeze
+
   included do
     before_create :ticket_article_add_metadata_general
   end
@@ -12,55 +21,52 @@ module Ticket::Article::AddsMetadataGeneral
   private
 
   def ticket_article_add_metadata_general
+    return if !neither_importing_nor_postmaster?
 
-    # return if we run import mode
-    return true if Setting.get('import_mode')
+    return if !type_uses_metadata_general?
 
-    # only do fill of from if article got created via application_server (e. g. not
-    # if article and sender type is set via *.postmaster)
-    return true if ApplicationHandleInfo.postmaster?
+    metadata_general_process_origin_by
 
-    # set from on all article types excluding email|twitter status|twitter direct-message|facebook feed post|facebook feed comment
-    return true if type_id.blank?
+    return if author.blank?
+
+    metadata_general_process_from
+  end
+
+  def type_uses_metadata_general?
+    return if type_id.blank?
 
     type = Ticket::Article::Type.lookup(id: type_id)
 
-    # from will be set by channel backend
-    return true if type.nil?
-    return true if type.name == 'email'
-    return true if type.name == 'twitter status'
-    return true if type.name == 'twitter direct-message'
-    return true if type.name == 'facebook feed post'
-    return true if type.name == 'facebook feed comment'
-    return true if type.name == 'sms'
+    return if TYPE_NO_METADATA.include? type.name
 
-    user_id = created_by_id
+    true
+  end
 
-    if origin_by_id.present?
+  def metadata_general_process_origin_by
+    return if origin_by_id.blank?
 
-      # in case the customer is using origin_by_id, force it to current session user
-      # and set sender to Customer
-      if !created_by.permissions?('ticket.agent')
-        self.origin_by_id = created_by_id
-        self.sender_id = Ticket::Article::Sender.lookup(name: 'Customer').id
-      end
-
-      # in case origin_by is different than created_by, set sender to Customer
-      # Customer in context of this conversation, not as a permission
-      if origin_by != created_by_id
-        self.sender_id = Ticket::Article::Sender.lookup(name: 'Customer').id
-        user_id = origin_by_id
-      end
+    # in case the customer is using origin_by_id, force it to current session user
+    # and set sender to Customer
+    if !TicketPolicy.new(created_by, ticket).agent_read_access?
+      self.origin_by_id = created_by_id
+      self.sender = Ticket::Article::Sender.lookup(name: 'Customer')
     end
-    return true if user_id.blank?
 
-    user = User.find(user_id)
-    is_customer = !TicketPolicy.new(user, ticket).agent_read_access?
+    # in case origin_by is different than created_by, set sender to Customer
+    # Customer in context of this conversation, not as a permission
+    return if origin_by == created_by_id
 
-    if (type.name == 'web' || type.name == 'phone') && is_customer
-      self.from = Channel::EmailBuild.recipient_line "#{user.firstname} #{user.lastname}", user.email
-      return
-    end
-    self.from = "#{user.firstname} #{user.lastname}"
+    self.sender = Ticket::Article::Sender.lookup(name: 'Customer')
+  end
+
+  def metadata_general_process_from
+    type        = Ticket::Article::Type.lookup(id: type_id)
+    is_customer = !TicketPolicy.new(author, ticket).agent_read_access?
+
+    self.from = if %w[web phone].include?(type.name) && is_customer
+                  Channel::EmailBuild.recipient_line "#{author.firstname} #{author.lastname}", author.email
+                else
+                  "#{author.firstname} #{author.lastname}"
+                end
   end
 end

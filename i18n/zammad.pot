@@ -12111,6 +12111,7 @@ msgid "We've sent password reset instructions to your email address."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr ""

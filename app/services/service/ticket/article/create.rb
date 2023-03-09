@@ -1,124 +1,119 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
-  def execute(article_data:)
-    ticket_id = article_data.delete(:ticket_id)
+  def execute(article_data:, ticket:)
+    article_data.delete(:ticket_id)
 
-    if Ticket.find(ticket_id).nil?
-      raise ActiveRecord::RecordNotFound, "Ticket #{ticket_id} for new article could not be found."
+    attachments_raw = article_data.delete(:attachments) || {}
+    time_unit       = article_data.delete(:time_unit)
+    subtype         = article_data.delete(:subtype)
+
+    preprocess_article_data(article_data, ticket)
+
+    ticket.articles.new(article_data).tap do |article|
+      transform_article(article, attachments_raw, subtype)
+
+      article.save!
+
+      time_accounting(article, time_unit)
+      form_id_cleanup(attachments_raw)
     end
-
-    create_article(article_data, ticket_id)
   end
 
   private
 
-  def create_article(article_data, ticket_id)
-
-    attachments_raw = article_data.delete(:attachments) || {}
-    form_id         = attachments_raw[:form_id]
-
-    preprocess_article_data(article_data)
-
-    Ticket::Article.new(article_data).tap do |article|
-      transform_article(article, ticket_id, attachments_raw)
-
-      article.save!
-
-      if article_data[:time_unit].present?
-        time_accounting(article, article_data[:time_unit])
-      end
-
-      form_id_cleanup(form_id) if form_id.present?
-    end
+  def preprocess_article_data(article_data, ticket)
+    preprocess_type(article_data)
+    preprocess_to_cc(article_data)
+    preprocess_sender(article_data, ticket)
+    preprocess_for_customer(article_data, ticket)
   end
 
-  def preprocess_article_data(article_data)
-    # Coerce recipient lists.
+  def preprocess_type(article_data)
+    type_name = article_data[:type] || 'note'
+
+    article_data[:type] = Ticket::Article::Type.lookup(name: type_name)
+  end
+
+  def preprocess_to_cc(article_data)
     %i[to cc].each do |field|
-      if article_data[field].is_a? Array
-        article_data[field] = article_data[field].join(', ')
-      end
+      article_data[field] = article_data[field].join(', ') if article_data[field].is_a? Array
+      article_data[field] ||= ''
     end
   end
 
-  def transform_article(article, ticket_id, attachments_raw)
-    article.ticket_id = ticket_id
-    article.attachments = attachments(article, attachments_raw)
+  def preprocess_sender(article_data, ticket)
+    sender_name = if agent_on_ticket?(ticket)
+                    article_data[:sender].presence || 'Agent'
+                  else
+                    'Customer'
+                  end
 
-    transform_to_from(article)
+    article_data[:sender] = Ticket::Article::Sender.lookup(name: sender_name)
+  end
 
-    article
+  def preprocess_for_customer(article_data, ticket)
+    return if agent_on_ticket?(ticket)
+
+    if %w[note web].exclude? article_data[:type]&.name
+      article_data[:type] = Ticket::Article::Type.lookup(name: 'note')
+    end
+
+    article_data.delete :origin_by_id
+
+    article_data[:internal] = false
+  end
+
+  def transform_article(article, attachments_raw, subtype)
+    transform_attachments(article, attachments_raw)
+    # transform_to_from(article)
+    transform_subtype(article, subtype)
+  end
+
+  def transform_subtype(article, subtype)
+    article.preferences[:subtype] = subtype if subtype.present?
   end
 
   def transform_to_from(article)
-    ticket = Ticket.find(article.ticket_id)
-    customer_display_name = display_name(ticket.customer)
-    group_name = ticket.group.name
+    customer_display_name = display_name(article.ticket.customer)
+    group_name = article.ticket.group.name
 
     if article.sender.name.eql?('Customer')
       article.from = customer_display_name
-      article.to = group_name
+      article.to   = group_name
     else
-      article.to ||= customer_display_name
+      article.to   = customer_display_name if article.to.blank?
       article.from = group_name
     end
   end
 
-  def display_name(user)
-    if user.fullname.present? && user.email.present?
-      return Mail::Address.new.tap do |addr|
-               addr.display_name = user.fullname
-               addr.address = user.email
-             end.format
-    end
-
-    return user.fullname if user.fullname.present?
-
-    display_name_fallback(user)
-  end
-
-  def display_name_fallback(user)
-    return user.email if user.email.present?
-    return user.phone if user.phone.present?
-    return user.login if user.login.present?
-
-    '-'
-  end
-
-  def attachments(article, attachments_raw)
+  def transform_attachments(article, attachments_raw)
     inline_attachments = []
-    if article.body && article.content_type&.match?(%r{text/html}i)
+    if article.body && article.content_type&.include?('text/html')
       (article.body, inline_attachments) = HtmlSanitizer.replace_inline_images(article.body, article.ticket_id)
     end
 
-    form_id = attachments_raw[:form_id]
-
-    attachments = form_id ? UploadCache.new(form_id).attachments : []
-
-    # Limit attachments to the ones that were really sent.
-    attachments = limit_attachments(attachments, attachments_raw[:files])
-
-    # Do not forget inline attachments.
-    inline_attachments_map(inline_attachments, attachments)
-
-    attachments
+    article.attachments = attached_attachments(attachments_raw) + inline_attachments_map(inline_attachments)
   end
 
-  def inline_attachments_map(inline_attachments, attachments)
-    inline_attachments.each do |attachment_inline|
-      attachments.push({
-                         data:        attachment_inline[:data],
-                         filename:    attachment_inline[:filename],
-                         preferences: attachment_inline[:preferences],
-                       })
+  def inline_attachments_map(inline_attachments)
+    inline_attachments.map do |elem|
+      elem.slice(:data, :filename, :preferences)
     end
   end
 
-  def limit_attachments(attachments, file_meta)
-    return attachments if file_meta.blank?
+  def attached_attachments(attachments_raw)
+    form_id   = attachments_raw[:form_id]
+    file_meta = attachments_raw[:files]
 
-    attachments.reject { |attachment| file_meta.none? { |file| check_attachment_match(attachment, file) } }
+    return [] if form_id.blank?
+
+    UploadCache
+      .new(form_id)
+      .attachments
+      .select do |elem|
+        file_meta.any? { |file| check_attachment_match(elem, file) }
+      end
   end
 
   def check_attachment_match(attachment, file)
@@ -130,6 +125,8 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   end
 
   def time_accounting(article, time_unit)
+    return if time_unit.blank?
+
     Ticket::TimeAccounting.create!(
       ticket_id:         article.ticket_id,
       ticket_article_id: article.id,
@@ -137,13 +134,38 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     )
   end
 
-  def form_id_cleanup(form_id)
+  def form_id_cleanup(attachments_raw)
+    form_id = attachments_raw[:form_id]
+    return if form_id.blank?
+
     # clear in-progress state from taskbar
     Taskbar
       .where(user_id: current_user.id)
       .first { |taskbar| taskbar.persisted_form_id == form_id }&.update!(state: {})
 
     # remove temporary attachment cache
-    UploadCache.new(form_id).destroy
+    UploadCache
+      .new(form_id)
+      .destroy
+  end
+
+  def agent_on_ticket?(ticket)
+    TicketPolicy
+      .new(current_user, ticket)
+      .agent_read_access?
+  end
+
+  def display_name(user)
+    if user.fullname.present? && user.email.present?
+      return Channel::EmailBuild.recipient_line user.fullname, user.email
+    end
+
+    return user.fullname if user.fullname.present?
+
+    display_name_fallback(user)
+  end
+
+  def display_name_fallback(user)
+    user.email.presence || user.phone.presence || user.login.presence || '-'
   end
 end

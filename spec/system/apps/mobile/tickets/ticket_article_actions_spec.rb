@@ -260,7 +260,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         msg += article.body
         Regexp.new(msg)
       end
-      let(:in_reply_to) { nil }
+      let(:in_reply_to) { '' }
       let(:result_text) do
         msg = '<p>This is a note</p>' # new message
         msg += "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>" # signature is before forwarded message

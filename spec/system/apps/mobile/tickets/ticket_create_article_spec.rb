@@ -250,4 +250,25 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
     end
     # TODO: test security settings
   end
+
+  context 'when creating a new article as an customer', authenticated_as: :customer do
+    it 'creates an article with web type' do
+      open_article_dialog
+
+      text = find_editor('Text')
+      expect(text).to have_text_value('', exact: true)
+      text.type('This is a note')
+
+      save_article
+
+      expect(Ticket::Article.last).to have_attributes(
+        type_id:      Ticket::Article::Type.lookup(name: 'web').id,
+        internal:     false,
+        content_type: 'text/html',
+        sender:       Ticket::Article::Sender.lookup(name: 'Customer'),
+        body:         '<p>This is a note</p>',
+      )
+    end
+
+  end
 end

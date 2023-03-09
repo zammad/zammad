@@ -7,24 +7,31 @@ import { createTestArticleTypes } from './utils'
 
 describe('note type', () => {
   it.each([
-    ['ticket.customer', false, false],
-    ['ticket.customer', true, false],
     ['ticket.agent', false, false],
     ['ticket.agent', true, true],
   ])(
     'check article internal for "%s" when config is %s',
     (permission, config, internal) => {
-      const { ticket } = defaultTicket()
-      ticket.policy.agentReadAccess = permission === 'ticket.agent'
       mockPermissions([permission])
+      const { ticket } = defaultTicket()
       mockApplicationConfig({
         ui_ticket_zoom_article_note_new_internal: config,
       })
+
       const types = createTestArticleTypes(ticket)
-      expect(types[0]).toMatchObject({
-        value: 'note',
-        internal,
-      })
+
+      expect(types).toContainEqual(
+        expect.objectContaining({ value: 'note', internal }),
+      )
     },
   )
+
+  it('customer does not get note type', () => {
+    mockPermissions(['ticket.customer'])
+    const { ticket } = defaultTicket()
+
+    const types = createTestArticleTypes(ticket)
+
+    expect(types).not.toContainEqual(expect.objectContaining({ value: 'note' }))
+  })
 })

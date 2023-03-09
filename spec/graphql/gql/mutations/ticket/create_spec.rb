@@ -276,8 +276,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
           it 'sets correct "to" and "from" values', :aggregate_failures do
             it_creates_ticket(articles: 1)
-            expect(Ticket.last.articles.last.from).to eq(agent.fullname)
-            expect(Ticket.last.articles.last.to).to eq("#{customer.fullname} <#{customer.email}>")
+
+            expect(Ticket.last.articles.last)
+              .to have_attributes(
+                from: agent.fullname,
+                to:   "#{customer.fullname} <#{customer.email}>"
+              )
           end
         end
 
@@ -382,11 +386,11 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           end
         end
 
-        context 'with type "web"' do
+        context 'with type "phone"' do
           let(:article_payload) do
             {
               body: 'dummy',
-              type: 'web',
+              type: 'phone',
             }
           end
 
@@ -397,8 +401,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
           it 'sets correct "to" and "from" values', :aggregate_failures do
             it_creates_ticket(articles: 1)
-            expect(Ticket.last.articles.last.to).to eq(Ticket.last.group.name)
-            expect(Ticket.last.articles.last.from).to eq(customer.fullname)
+
+            expect(Ticket.last.articles.last)
+              .to have_attributes(
+                to:   Ticket.last.group.name,
+                from: customer.fullname
+              )
           end
         end
 

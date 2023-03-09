@@ -54,12 +54,17 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
             find_radio('articleSenderType').select_choice('Outbound Call')
           end
         end
+
+        find_select('Group').select_option('Users') if article_type == 'web'
+
         next_step
 
-        # Step 3.
-        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
-        find_autocomplete('CC') if article_type == 'email'
-        next_step
+        if article_type != 'web'
+          # Step 3.
+          find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+          find_autocomplete('CC') if article_type == 'email'
+          next_step
+        end
 
         # Step 4.
         find_editor('Text').type(Faker::Hacker.say_something_smart)
@@ -78,6 +83,10 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     it_behaves_like 'creating a ticket', article_type: 'phone'
     it_behaves_like 'creating a ticket', article_type: 'phone', direction: 'out'
     it_behaves_like 'creating a ticket', article_type: 'email'
+
+    context 'when a customer', authenticated_as: :customer do
+      it_behaves_like 'creating a ticket', article_type: 'web'
+    end
   end
 
   context 'with signatures' do

@@ -241,7 +241,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
         end
 
         context 'when has originBy' do
-          let(:articles) { [create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: agent, created_by: create(:agent))] }
+          let(:articles) { [create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: agent, created_by: create(:agent, groups: [ticket.group]))] }
 
           it 'loads originBy' do
             expect(response_articles.first)
@@ -286,7 +286,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
         let(:articles) do
           [
-            create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: origin_by, created_by: create(:agent))
+            create(:ticket_article, :inbound_phone, ticket: ticket, origin_by: origin_by, created_by: create(:agent, groups: [ticket.group]))
           ]
         end
 

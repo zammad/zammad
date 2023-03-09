@@ -110,6 +110,13 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
           expect(Ticket.last.articles.last.type.name).to eq('note')
         end
+
+        it 'adds a new article with a specific sender' do
+          expect { gql.execute(query, variables: variables) }
+            .to change(Ticket::Article, :count).by(1)
+
+          expect(Ticket.last.articles.last.sender.name).to eq('Agent')
+        end
       end
 
       context 'with custom object_attribute', db_strategy: :reset do
@@ -174,6 +181,29 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         it 'overrides the customerId' do
           gql.execute(query, variables: variables)
           expect(gql.result.data['ticket']).to eq(expected_response)
+        end
+      end
+
+      context 'with an article payload' do
+        let(:article_payload) do
+          {
+            body: 'dummy',
+            type: 'web',
+          }
+        end
+
+        it 'adds a new article with a specific type' do
+          expect { gql.execute(query, variables: variables) }
+            .to change(Ticket::Article, :count).by(1)
+
+          expect(Ticket.last.articles.last.type.name).to eq('web')
+        end
+
+        it 'adds a new article with a specific sender' do
+          expect { gql.execute(query, variables: variables) }
+            .to change(Ticket::Article, :count).by(1)
+
+          expect(Ticket.last.articles.last.sender.name).to eq('Customer')
         end
       end
     end
