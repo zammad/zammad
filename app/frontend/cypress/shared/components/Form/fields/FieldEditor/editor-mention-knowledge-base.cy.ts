@@ -3,7 +3,7 @@
 import { mockApolloClient } from '@cy/utils'
 import { KnowledgeBaseAnswerSuggestionContentTransformDocument } from '@shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.api'
 import { KnowledgeBaseAnswerSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.api'
-import { mountEditor } from './utils'
+import { mountEditorWithAttachments } from './utils'
 
 describe('Testing "knowledge base" popup: "??" command', { retries: 2 }, () => {
   it('inserts a text', () => {
@@ -36,15 +36,27 @@ describe('Testing "knowledge base" popup: "??" command', { retries: 2 }, () => {
           knowledgeBaseAnswerSuggestionContentTransform: {
             __typename: 'KnowledgeBaseAnswerSuggestionContentTransform',
             body: 'knowledge base answer body',
-            // TODO separate test, when added
-            attachments: [],
+            attachments: [
+              {
+                id: 'gid://zammad/Store/2062',
+                name: 'Zammad.png',
+                size: 945213,
+                type: 'image/png',
+                preferences: {
+                  'Content-Type': 'image/png',
+                  resizable: true,
+                  content_preview: true,
+                },
+                __typename: 'StoredFile',
+              },
+            ],
             errors: null,
           },
         },
       }),
     )
 
-    mountEditor()
+    mountEditorWithAttachments()
 
     cy.findByRole('textbox').type('??How to c') // supports space
 
@@ -58,5 +70,8 @@ describe('Testing "knowledge base" popup: "??" command', { retries: 2 }, () => {
       .should('have.text', 'knowledge base answer body')
       .type('{backspace}{backspace}r')
       .should('have.text', 'knowledge base answer bor')
+
+    cy.findByText('Zammad.png').should('exist')
+    cy.findByText('923 KB').should('exist')
   })
 })

@@ -34,6 +34,9 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
       mentionUser: {
         groupNodeId: 'group_id',
       },
+      mentionKnowledgeBase: {
+        attachmentsNodeId: 'attachments',
+      },
       ...currentArticleType.value?.editorMeta,
     }
   })

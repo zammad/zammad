@@ -4,17 +4,20 @@ import Mention from '@tiptap/extension-mention'
 
 import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { debouncedQuery } from '@shared/utils/helpers'
+import { getNodeByName } from '@shared/components/Form/utils'
+import type { FileUploaded } from '../../FieldFile/types'
 import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api'
 import buildMentionSuggestion from './suggestions'
 import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api'
-import type { MentionKnowledgeBaseItem } from '../types'
+import type { FieldEditorProps, MentionKnowledgeBaseItem } from '../types'
 
 export const PLUGIN_NAME = 'mentionKnowledgeBase'
 const ACTIVATOR = '??'
 
-export default (context: Ref<FormFieldContext>) => {
+export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const queryHandler = new QueryHandler(
     useKnowledgeBaseAnswerSuggestionsLazyQuery({
       query: '',
@@ -44,11 +47,31 @@ export default (context: Ref<FormFieldContext>) => {
       allowSpaces: true,
       type: 'knowledge-base',
       async insert(props: MentionKnowledgeBaseItem) {
+        const { meta: editorMeta = {}, formId } = context.value
+        const meta = editorMeta[PLUGIN_NAME] || {}
+
         const result = await translateHandler.send({
           translationId: props.id,
-          formId: context.value.formId,
+          formId,
         })
-        // TODO process attachments, use meta[PLUGIN_NAME].attachmentsNodeId
+
+        const attachmentsNodeId = meta?.attachmentsNodeId
+
+        if (attachmentsNodeId) {
+          const attachmentField = getNodeByName(
+            context.value.formId,
+            attachmentsNodeId,
+          )
+
+          const existingAttachments = (cloneDeep(attachmentField?.value) ||
+            []) as FileUploaded[]
+          const newAttachments =
+            result?.knowledgeBaseAnswerSuggestionContentTransform
+              ?.attachments || []
+
+          attachmentField?.input?.([...existingAttachments, ...newAttachments])
+        }
+
         return result?.knowledgeBaseAnswerSuggestionContentTransform?.body || ''
       },
       items: debouncedQuery(async ({ query }) => {

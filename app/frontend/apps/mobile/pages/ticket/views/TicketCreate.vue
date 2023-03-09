@@ -235,6 +235,9 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
               mentionUser: {
                 groupNodeId: 'group_id',
               },
+              mentionKnowledgeBase: {
+                attachmentsNodeId: 'attachments',
+              },
             },
           },
           triggerFormUpdater: false,

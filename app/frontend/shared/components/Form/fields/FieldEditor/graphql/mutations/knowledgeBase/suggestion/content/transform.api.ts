@@ -14,7 +14,7 @@ export const KnowledgeBaseAnswerSuggestionContentTransformDocument = gql`
   ) {
     body
     attachments {
-      internalId
+      id
       name
       size
       type

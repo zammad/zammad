@@ -8,7 +8,7 @@ mutation knowledgeBaseAnswerSuggestionContentTransform(
   ) {
     body
     attachments {
-      internalId
+      id
       name
       size
       type

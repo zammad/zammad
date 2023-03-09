@@ -22,7 +22,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
           ) {
             body
             attachments {
-              internalId
+              id
               name
               size
               type
@@ -53,7 +53,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       it 'contains attachments' do
         expect(gql.result.data['attachments']).to eq([
                                                        {
-                                                         'internalId'  => copied_attachments.first.id,
+                                                         'id'          => Gql::ZammadSchema.id_from_object(copied_attachments.first),
                                                          'name'        => copied_attachments.first.filename,
                                                          'size'        => copied_attachments.first.size.to_i,
                                                          'type'        => copied_attachments.first.preferences['Content-Type'],

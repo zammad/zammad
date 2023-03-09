@@ -2621,7 +2621,7 @@ export type KnowledgeBaseAnswerSuggestionContentTransformMutationVariables = Exa
 }>;
 
 
-export type KnowledgeBaseAnswerSuggestionContentTransformMutation = { __typename?: 'Mutations', knowledgeBaseAnswerSuggestionContentTransform?: { __typename?: 'KnowledgeBaseAnswerSuggestionContentTransformPayload', body?: string | null, attachments?: Array<{ __typename?: 'StoredFile', internalId: number, name: string, size?: number | null, type?: string | null, preferences?: any | null }> | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type KnowledgeBaseAnswerSuggestionContentTransformMutation = { __typename?: 'Mutations', knowledgeBaseAnswerSuggestionContentTransform?: { __typename?: 'KnowledgeBaseAnswerSuggestionContentTransformPayload', body?: string | null, attachments?: Array<{ __typename?: 'StoredFile', id: string, name: string, size?: number | null, type?: string | null, preferences?: any | null }> | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type KnowledgeBaseAnswerSuggestionsQueryVariables = Exact<{
   query: Scalars['String'];
