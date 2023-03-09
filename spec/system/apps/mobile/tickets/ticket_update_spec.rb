@@ -238,6 +238,79 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         expect(ticket[attribute.name]).to eq('New Text')
       end
     end
+
+    context 'with customer user', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+      let(:ticket)   { create(:ticket, title: 'Ticket Title', customer: customer, state_name: state_name) }
+
+      before do
+        visit "/tickets/#{ticket.id}/information"
+        wait_for_form_to_settle('form-ticket-edit')
+      end
+
+      context 'with the default create state (new)' do
+        let(:state_name) { 'new' }
+
+        it 'does not apply default follow-up state' do
+          expect(find_select('State')).to have_selected_option('new')
+
+          find_button('Go back').click
+          find_button('Add reply').click
+
+          within_form(form_updater_gql_number: 1) do
+            find_editor('Text').type('Foobar')
+          end
+
+          find_button('Done').click
+
+          wait_for_form_updater 3
+
+          find_link('Ticket Title').click
+
+          expect(find_select('State')).to have_selected_option('new')
+        end
+      end
+
+      context 'with a different state (pending reminder)' do
+        let(:state_name) { 'pending reminder' }
+
+        it 'applies default follow-up state' do
+          expect(find_select('State')).to have_selected_option('pending reminder')
+
+          find_button('Go back').click
+          find_button('Add reply').click
+
+          within_form(form_updater_gql_number: 1) do
+            find_editor('Text').type('Foobar')
+          end
+
+          find_button('Done').click
+
+          wait_for_form_updater 3
+
+          find_link('Ticket Title').click
+
+          expect(find_select('State')).to have_selected_option('open')
+
+          find_button('Go back').click
+          find_button('Edit reply').click
+
+          # Discard article body to trigger the reset of the state.
+          find_button('Discard your unsaved changes').click
+          find_button('Discard article').click
+
+          wait_for_form_updater 4
+
+          find_link('Ticket Title').click
+
+          state = find_select('State')
+
+          expect(state).to have_selected_option('pending reminder')
+          expect(state.has_css?('[data-dirty="true"]', wait: false)).to be(false)
+        end
+      end
+    end
+
   end
 
   describe 'Core Workflow' do

@@ -80,6 +80,10 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         required: true,
       },
       {
+        type: 'hidden',
+        name: 'isDefaultFollowUpStateSet',
+      },
+      {
         screen: 'edit',
         object: EnumObjectManagerObjects.Ticket,
       },
@@ -183,7 +187,7 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
           contentType: editorType,
           meta: editorMeta,
         },
-        triggerFormUpdater: false,
+        triggerFormUpdater: true,
         required: true,
       },
       {

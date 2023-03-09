@@ -50,6 +50,27 @@ export const useTicketArticleReply = (
 
   const route = useRoute()
 
+  const resetDirtyTicketState = () => {
+    const stateId = form.value?.getNodeByName('state_id')
+    const isDefaultFollowUpStateSet = form.value?.getNodeByName(
+      'isDefaultFollowUpStateSet',
+    )
+
+    if (
+      !stateId ||
+      !isDefaultFollowUpStateSet ||
+      !isDefaultFollowUpStateSet.value
+    )
+      return false
+
+    // If the default follow-up state was set, then we want to reset the state on article discard.
+    //   See `app/models/form_updater/updater/ticket/edit.rb` for more info.
+    stateId.reset()
+    isDefaultFollowUpStateSet.reset()
+
+    return true
+  }
+
   const openArticleReplyDialog = ({
     updateFormLocation,
   }: ReplyDialogOptions) => {
@@ -68,6 +89,8 @@ export const useTicketArticleReply = (
       },
       onDiscard() {
         newTicketArticlePresent.value = false
+
+        resetDirtyTicketState()
       },
       onShowArticleForm() {
         updateFormLocation('[data-ticket-article-reply-form]')

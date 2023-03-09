@@ -854,6 +854,9 @@ describe('ticket add/edit reply article', () => {
 
     await view.events.type(view.getByLabelText('Text'), 'Testing')
 
+    // Wait for form updater.
+    await getNode('form-ticket-edit')?.settled
+
     await view.events.click(view.getByRole('button', { name: 'Save' }))
 
     expect(view.getByText('This field is required.')).toBeInTheDocument()
