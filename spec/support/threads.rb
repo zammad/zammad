@@ -11,7 +11,10 @@ module ThreadsHelper
 
     # Keep going until no more changes are needed to catch threads spawned in between.
     3.times do
-      superfluous_threads.call.each(&:kill)
+      superfluous_threads.call.each do |t|
+        t.kill
+        t.join # From `Timeout.timeout`: make sure thread is dead.
+      end
       break if superfluous_threads.call.count.zero?
 
       sleep 1 # Wait a bit for stuff to settle before trying again.
