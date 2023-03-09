@@ -31,7 +31,6 @@ import {
   NotificationTypes,
   useNotifications,
 } from '@shared/components/CommonNotifications'
-import { useSessionStore } from '@shared/stores/session'
 import { ErrorStatusCodes } from '@shared/types/error'
 import type UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
@@ -72,11 +71,7 @@ const onSubmit = () => {
 const { ticketCreateArticleType, ticketArticleSenderTypeField } =
   useTicketCreateArticleType({ onSubmit })
 
-const session = useSessionStore()
-
-const isCustomer = computed(() => {
-  return session.hasPermission('ticket.customer')
-})
+const { isTicketCustomer } = useTicketCreate()
 
 const getFormSchemaGroupSection = (
   stepName: string,
@@ -276,7 +271,7 @@ const agentSchema = [
 ]
 
 const formSchema = defineFormSchema(
-  isCustomer.value ? customerSchema : agentSchema,
+  isTicketCustomer.value ? customerSchema : agentSchema,
 )
 
 const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
@@ -309,10 +304,10 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
     article: {
       cc: formData.cc,
       body: formData.body,
-      sender: isCustomer.value
+      sender: isTicketCustomer.value
         ? 'Customer'
         : ticketCreateArticleType[formData.articleSenderType].sender,
-      type: isCustomer.value
+      type: isTicketCustomer.value
         ? 'web'
         : ticketCreateArticleType[formData.articleSenderType].type,
       contentType: 'text/html',

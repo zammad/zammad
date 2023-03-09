@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'system/apps/mobile/examples/core_workflow_examples'
 
-RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agent, type: :system do
+RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }
-  let(:agent)     { create(:agent, groups: [group]) }
+  let(:user)      { create(:agent, groups: [group]) }
   let!(:customer) { create(:customer) }
 
   def next_step
@@ -94,7 +94,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
     let(:group1)     { create(:group, signature: signature1) }
     let(:group2)     { Group.find_by(name: 'Users') }
     let(:group3)     { create(:group) }
-    let(:agent)      { create(:agent, groups: [group1, group2, group3]) }
+    let(:user)       { create(:agent, groups: [group1, group2, group3]) }
 
     it 'adds signature' do
       within_form(form_updater_gql_number: 1) do
@@ -113,7 +113,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
 
         go_to_step(4)
-        expect(find_editor('Text')).to have_text_value(agent.fullname) # default signature is added
+        expect(find_editor('Text')).to have_text_value(user.fullname) # default signature is added
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text_value(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(user.fullname)
 
         go_to_step(3)
         find_select('Group').select_option(group1.name)
@@ -149,7 +149,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text_value(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(user.fullname)
 
         go_to_step(3)
         find_select('Group').select_option(group3.name)
@@ -170,7 +170,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
         find_select('Group').select_option('Users')
         next_step
 
-        expect(find_editor('Text')).to have_text_value(agent.fullname)
+        expect(find_editor('Text')).to have_text_value(user.fullname)
 
         go_to_step(2)
         find_radio('articleSenderType').select_choice('Outbound Call')
@@ -278,6 +278,29 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :agen
 
       find_radio('articleSenderType').find('label', text: 'Received Call').find('input').send_keys :enter
       check_is_step(3)
+    end
+  end
+
+  context 'when using ticket create as customer' do
+    let(:group1) { Group.find_by(name: 'Users') }
+    let(:user)   { create(:customer, :with_org, groups: [group1]) }
+
+    it 'can complete all steps' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_select('Group').select_option('Users')
+        next_step
+
+        find_editor('Text').type(Faker::Hacker.say_something_smart)
+      end
+
+      submit_form
+
+      find('[role=alert]', text: 'Ticket has been created successfully.')
+
+      expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
     end
   end
 

@@ -16,5 +16,15 @@ export const useTicketCreate = () => {
     )
   })
 
-  return { ticketCreateEnabled }
+  const isTicketCustomer = computed(() => {
+    return (
+      session.hasPermission('ticket.customer') &&
+      !session.hasPermission('ticket.agent')
+    )
+  })
+
+  return {
+    ticketCreateEnabled,
+    isTicketCustomer,
+  }
 }

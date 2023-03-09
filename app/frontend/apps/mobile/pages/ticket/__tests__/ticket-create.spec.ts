@@ -142,6 +142,15 @@ const nextStep = async (view: ExtendedRenderResult) => {
   await view.events.click(view.getByRole('button', { name: 'Continue' }))
 }
 
+const checkShownSteps = async (
+  view: ExtendedRenderResult,
+  steps: Array<string>,
+) => {
+  steps.forEach((step) => {
+    expect(view.getByRole('button', { name: step })).toBeInTheDocument()
+  })
+}
+
 beforeAll(async () => {
   // So we don't need to wait until it loads inside test.
   await import(
@@ -163,10 +172,7 @@ describe('Creating new ticket as agent', () => {
   it('shows 4 steps for agents', async () => {
     const { view } = await visitTicketCreate()
 
-    const steps = ['1', '2', '3', '4']
-    steps.forEach((step) => {
-      expect(view.getByRole('button', { name: step })).toBeInTheDocument()
-    })
+    checkShownSteps(view, ['1', '2', '3', '4'])
   })
 
   it('disables the submit button if required data is missing', async () => {
@@ -295,10 +301,7 @@ describe('Creating new ticket as customer', () => {
   it('shows 3 steps for customers', async () => {
     const { view } = await visitTicketCreate()
 
-    const steps = ['1', '2', '3']
-    steps.forEach((step) => {
-      expect(view.getByRole('button', { name: step })).toBeInTheDocument()
-    })
+    checkShownSteps(view, ['1', '2', '3'])
 
     expect(view.queryByRole('button', { name: '4' })).not.toBeInTheDocument()
   })
@@ -353,5 +356,23 @@ describe('Creating new ticket as customer', () => {
     await nextStep(view)
 
     expect(view.queryByLabelText('Organization')).toBeInTheDocument()
+  })
+})
+
+describe('Creating new ticket as user having customer & agent permissions', () => {
+  beforeEach(() => {
+    mockPermissions(['ticket.agent', 'ticket.customer'])
+
+    mockApplicationConfig({
+      customer_ticket_create: true,
+      ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
+      ui_ticket_create_default_type: 'phone-in',
+    })
+  })
+
+  it('does show the form for agents if having ticket.customer & ticket.agent permissions', async () => {
+    const { view } = await visitTicketCreate()
+
+    checkShownSteps(view, ['1', '2', '3', '4'])
   })
 })

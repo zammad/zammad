@@ -48,4 +48,28 @@ describe('useTicketCreate', () => {
 
     expect(ticketCreateEnabled.value).toBe(false)
   })
+
+  it('check for agent, but no customer permission', () => {
+    mockPermissions(['ticket.agent'])
+
+    const { isTicketCustomer } = useTicketCreate()
+
+    expect(isTicketCustomer.value).toBe(false)
+  })
+
+  it('check for agent + customer permission', () => {
+    mockPermissions(['ticket.agent', 'ticket.customer'])
+
+    const { isTicketCustomer } = useTicketCreate()
+
+    expect(isTicketCustomer.value).toBe(false)
+  })
+
+  it('check for no agent, but customer permission', () => {
+    mockPermissions(['ticket.customer'])
+
+    const { isTicketCustomer } = useTicketCreate()
+
+    expect(isTicketCustomer.value).toBe(true)
+  })
 })
