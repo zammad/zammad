@@ -20,7 +20,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     return if !record.deletable_type_changed?
     return if deletable_is_user?
 
-    invalid_because(:deletable, 'is not a User')
+    invalid_because(:deletable, __('is not a User'))
   end
 
   def check_for_system_user
@@ -28,7 +28,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     return if !deletable_is_user?
     return if deletable.id != 1
 
-    invalid_because(:deletable, 'is undeletable system User with ID 1')
+    invalid_because(:deletable, __('is undeletable system User with ID 1'))
   end
 
   def check_for_current_user
@@ -36,7 +36,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     return if !deletable_is_user?
     return if deletable.id != UserInfo.current_user_id
 
-    invalid_because(:deletable, 'is your current account')
+    invalid_because(:deletable, __('is your current account'))
   end
 
   def check_for_last_admin
@@ -44,7 +44,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     return if !deletable_is_user?
     return if !last_admin?
 
-    invalid_because(:deletable, 'is last account with admin permissions')
+    invalid_because(:deletable, __('is last account with admin permissions'))
   end
 
   def check_for_existing_task
@@ -52,7 +52,7 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     return if !deletable_is_user?
     return if !tasks_exists?
 
-    invalid_because(:deletable, 'has an existing DataPrivacyTask queued')
+    invalid_because(:deletable, __('has an existing DataPrivacyTask queued'))
   end
 
   def deletable_is_user?
@@ -63,8 +63,8 @@ class DataPrivacyTask::Validation < ActiveModel::Validator
     record.deletable
   end
 
-  def invalid_because(attribute, message)
-    record.errors.add attribute, message
+  def invalid_because(attribute, message, **options)
+    record.errors.add attribute, message, **options
   end
 
   def tasks_exists?

@@ -22,6 +22,6 @@ class ObjectManager::Attribute::Validation::MaxLength < ObjectManager::Attribute
   def validate_max_length
     return if value.length <= maxlength
 
-    invalid_because_attribute("is longer than the allowed length #{maxlength}")
+    invalid_because_attribute(__('is longer than the allowed length %{maxlength}'), maxlength: maxlength)
   end
 end

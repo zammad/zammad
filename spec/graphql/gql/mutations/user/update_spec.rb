@@ -63,7 +63,7 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
           create(:user, email: 'dummy@zammad.com')
 
           gql.execute(query, variables: variables)
-          expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for other user." })
+          expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for another user." })
         end
       end
     end

@@ -7,7 +7,7 @@ class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute:
     return if !value.nil?
     return if optional_for_user?
 
-    invalid_because_attribute('is required but missing.')
+    invalid_because_attribute(__('is required but missing'))
   end
 
   private

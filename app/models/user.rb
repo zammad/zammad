@@ -992,7 +992,7 @@ try to find correct name
 
     return if email_address_validation.valid?
 
-    errors.add :base, "Invalid email '#{email}'"
+    errors.add :base, __("Invalid email '%{email}'"), email: email
   end
 
   def check_login
@@ -1051,7 +1051,7 @@ try to find correct name
     return if !email_changed?
     return if !User.exists?(email: email.downcase.strip)
 
-    errors.add :base, "Email address '#{email.downcase.strip}' is already used for other user."
+    errors.add :base, __("Email address '%{email}' is already used for another user."), email: email.downcase.strip
   end
 
   def ensure_organizations

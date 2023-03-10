@@ -48,7 +48,7 @@ module HasGroupRelationDefinition
 
     return if !query.exists?
 
-    errors.add(:access, "#{group_relation_model_identifier.to_s.capitalize} can have full or granular access to group")
+    errors.add(:access, __('%{model} can have full or granular access to group'), model: group_relation_model_identifier.to_s.capitalize)
   end
 
   # methods defined here are going to extend the class, not the instance of it

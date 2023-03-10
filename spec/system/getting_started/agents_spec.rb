@@ -14,7 +14,7 @@ RSpec.describe 'Getting Started > Agents', type: :system do
 
     within '.js-danger' do
       expect(page)
-        .to have_text("Email address 'admin@example.com' is already used for other user.")
+        .to have_text("Email address 'admin@example.com' is already used for another user.")
     end
   end
 end

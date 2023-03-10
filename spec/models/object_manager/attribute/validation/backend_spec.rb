@@ -38,15 +38,48 @@ RSpec.describe ObjectManager::Attribute::Validation::Backend do
     describe '.invalid_because_attribute' do
 
       before do
-        subject.invalid_because_attribute('has value that is ... .')
+        subject.invalid_because_attribute(message, **options)
       end
 
-      it 'adds Rails validation error' do
-        expect(record.errors.count).to be(1)
+      shared_examples 'basic error handling' do
+        it 'adds Rails validation error' do
+          expect(record.errors.count).to be(1)
+          expect(record.errors.to_hash).to have_key(attribute.name.to_sym)
+        end
       end
 
-      it 'uses ObjectManager::Attribute#name as ActiveModel::Errors identifier' do
-        expect(record.errors.to_hash).to have_key(attribute.name.to_sym)
+      context 'with plain message without parameter interpolation' do
+        let(:message) { 'has value that is ...' }
+        let(:options) { {} }
+
+        include_examples 'basic error handling'
+
+        context 'when translating the error message' do
+          let(:custom_translations) { { 'has value that is ...' => 'hat einen Wert von ...', 'This field %s' => 'Dieses Feld %{message}' } }
+
+          it 'produces a translated error message' do
+            allow(Translation).to receive(:translate) { |_locale, string| custom_translations[string] || string }
+            expect(record.errors.first.message).to eq('has value that is ...')
+            expect(record.errors.first.localized_full_message(no_field_name: true, locale: 'de-de')).to eq('Dieses Feld hat einen Wert von ...')
+          end
+        end
+      end
+
+      context 'with message including parameter interpolation' do
+        let(:message) { 'has value that is other than %{expected}' }
+        let(:options) { { expected: 'my_value' } }
+
+        include_examples 'basic error handling'
+
+        context 'when translating the error message' do
+          let(:custom_translations) { { 'has value that is other than %{expected}' => 'hat einen Wert abweichend von %{expected}', 'This field %s' => 'Dieses Feld %{message}' } }
+
+          it 'produces a translated error message' do
+            allow(Translation).to receive(:translate) { |_locale, string| custom_translations[string] || string }
+            expect(record.errors.first.message).to eq('has value that is other than my_value')
+            expect(record.errors.first.localized_full_message(no_field_name: true, locale: 'de-de')).to eq('Dieses Feld hat einen Wert abweichend von my_value')
+          end
+        end
       end
     end
   end

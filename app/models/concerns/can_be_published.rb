@@ -99,19 +99,19 @@ module CanBePublished
   def archived_after_internal
     return if internal_at.nil? || archived_at.nil? || archived_at >= internal_at
 
-    errors.add(:archived_at, 'date must be no earlier than internal at date')
+    errors.add(:archived_at, __('date must be no earlier than internal date'))
   end
 
   def archived_after_published
     return if published_at.nil? || archived_at.nil? || archived_at >= published_at
 
-    errors.add(:archived_at, 'date must be no earlier than published at date')
+    errors.add(:archived_at, __('date must be no earlier than published date'))
   end
 
   def published_after_internal
     return if published_at.nil? || internal_at.nil? || published_at >= internal_at
 
-    errors.add(:published_at, 'date must be no earlier than internal at date')
+    errors.add(:published_at, __('date must be no earlier than internal date'))
   end
 
   def schedule_touch_for(attr)

@@ -31,7 +31,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       QUERY
     end
 
-    let(:custom_translations) { { "can't be blank" => 'darf nicht leer sein', 'This field %s' => 'Dieses Feld %{message}', 'This object already exists.' => 'Dieses Objekt existiert bereits.' } } # rubocop:disable Style/FormatStringToken
+    let(:custom_translations) { { "can't be blank" => 'darf nicht leer sein', 'This field %s' => 'Dieses Feld %{message}', 'This object already exists.' => 'Dieses Objekt existiert bereits.' } }
 
     before do
       allow(Translation).to receive(:translate) { |_locale, string| custom_translations[string] || string }

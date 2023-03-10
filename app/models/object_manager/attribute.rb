@@ -34,7 +34,7 @@ class ObjectManager::Attribute < ApplicationModel
   belongs_to :object_lookup, optional: true
 
   validates :name, presence: true
-  validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' } # rubocop:disable Style/FormatStringToken
+  validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
   validate :inactive_must_be_unused_by_references, unless: :active?
   validate :data_option_must_have_appropriate_values
   validate :data_type_must_not_change, on: :update
@@ -876,34 +876,34 @@ is certain attribute used by triggers, overviews or schedulers
     return if !name
 
     if name.match?(%r{.+?_(id|ids)$}i)
-      errors.add(:name, "can't get used because *_id and *_ids are not allowed")
+      errors.add(:name, __("can't be used because *_id and *_ids are not allowed"))
     end
     if name.match?(%r{\s})
-      errors.add(:name, 'spaces are not allowed')
+      errors.add(:name, __('spaces are not allowed'))
     end
     if !name.match?(%r{^[a-z0-9_]+$})
-      errors.add(:name, __("Only lowercase letters, numbers, and '_' are allowed"))
+      errors.add(:name, __("only lowercase letters, numbers, and '_' are allowed"))
     end
     if !name.match?(%r{[a-z]})
-      errors.add(:name, __('At least one letter is required'))
+      errors.add(:name, __('at least one letter is required'))
     end
 
     # do not allow model method names as attributes
     reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp url icon initials avatar permission validate subscribe unsubscribe translate search _type _doc _id id action]
     if name.match?(%r{^(#{reserved_words.join('|')})$})
-      errors.add(:name, "#{name} is a reserved word! (1)")
+      errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
     # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
     begin
       ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
     rescue ActiveRecord::DangerousAttributeError
-      errors.add(:name, "#{name} is a reserved word! (2)")
+      errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
     record = object_lookup.name.constantize.new
     if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
-      errors.add(:name, "#{name} already exists!")
+      errors.add(:name, __('%{name} already exists'), name: name)
     end
 
     if errors.present?
@@ -916,7 +916,7 @@ is certain attribute used by triggers, overviews or schedulers
   def check_editable
     return if editable
 
-    errors.add(:name, __('Attribute not editable!'))
+    errors.add(:name, __('attribute is not editable'))
     raise ActiveRecord::RecordInvalid, self
   end
 
@@ -956,8 +956,7 @@ is certain attribute used by triggers, overviews or schedulers
     return if !data_type_changed?
     return if (data_type_change - allowable_changes).empty?
 
-    errors.add(:data_type, "can't be altered after creation " \
-                           '(delete the attribute and create another with the desired value)')
+    errors.add(:data_type, __("can't be altered after creation (you can delete the attribute and create another with the desired value)"))
   end
 
   def local_data_option

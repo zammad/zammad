@@ -20,13 +20,13 @@ class ObjectManager::Attribute::Validation::FuturePast < ObjectManager::Attribut
     return if attribute.data_option[:past]
     return if !value.past?
 
-    invalid_because_attribute('does not allow past dates.')
+    invalid_because_attribute(__('does not allow past dates'))
   end
 
   def validate_future
     return if attribute.data_option[:future]
     return if !value.future?
 
-    invalid_because_attribute('does not allow future dates.')
+    invalid_because_attribute(__('does not allow future dates'))
   end
 end

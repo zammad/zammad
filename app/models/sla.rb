@@ -40,6 +40,6 @@ class Sla < ApplicationModel
   def cannot_have_response_and_update
     return if response_time.blank? || update_time.blank?
 
-    errors.add :base, 'cannot have both response time and update time'
+    errors.add :base, __('Cannot have both response time and update time.')
   end
 end

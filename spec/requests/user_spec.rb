@@ -304,7 +304,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       post '/api/v1/users', params: params, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to be_truthy
-      expect(json_response['error']).to eq("Email address 'new_agent_by_admin2@example.com' is already used for other user.")
+      expect(json_response['error']).to eq("Email address 'new_agent_by_admin2@example.com' is already used for another user.")
 
       # missing required attributes
       params = { note: 'some note' }

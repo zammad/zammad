@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-# rubocop:disable Style/FormatStringToken, Lint/MissingCopEnableDirective
+# rubocop:disable Lint/MissingCopEnableDirective
 class KnowledgeBase
   class ServerSnippetApache < ServerSnippet
     def template_path

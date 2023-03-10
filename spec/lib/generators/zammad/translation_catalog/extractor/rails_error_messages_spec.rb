@@ -14,6 +14,6 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::RailsErrorMessages do
   end
 
   it 'finds strings from activerecord' do
-    expect(result_strings).to include('Cannot delete record because dependent %{record} exist') # rubocop:disable Style/FormatStringToken
+    expect(result_strings).to include('Cannot delete record because dependent %{record} exist')
   end
 end

@@ -19,7 +19,7 @@ class KnowledgeBase
            .neighbours_of(self)
            .none?
 
-      errors.add(:title, 'is already used')
+      errors.add(:title, __('is already used'))
     end
   end
 end

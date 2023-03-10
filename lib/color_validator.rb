@@ -10,7 +10,7 @@ class ColorValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if color?(value)
 
-    record.errors.add attribute, (options[:message] || 'is not a color. Only Hex, RGB and HSL colors are supported.')
+    record.errors.add attribute, (options[:message] || __('is not a color. Only Hex, RGB and HSL colors are supported.'))
   end
 
   def color?(value)

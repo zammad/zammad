@@ -31,7 +31,7 @@ module RuboCop
           }
         PATTERN
 
-        MSG = 'Use `%<prefer>s` instead of `%<current>s`.'.freeze
+        MSG = 'Use `%{prefer}` instead of `%{current}`.'.freeze
 
         def on_if(node)
           check_for_find_by(node)

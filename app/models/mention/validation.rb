@@ -4,6 +4,6 @@ class Mention::Validation < ActiveModel::Validator
   def validate(record)
     return if Mention.mentionable? record.mentionable, record.user
 
-    record.errors.add :user, 'has no agent access to this ticket'
+    record.errors.add :user, __('has no agent access to this ticket')
   end
 end

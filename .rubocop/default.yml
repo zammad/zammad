@@ -93,6 +93,11 @@ Style/RescueStandardError:
   Enabled: true
   EnforcedStyle: implicit
 
+Style/FormatStringToken:
+  Description: Use a consistent style for named format string tokens.
+  EnforcedStyle: template
+  # Prefer %{...} over %<...>s to make it easier for translators.
+
 Layout/SpaceInsideReferenceBrackets:
   Description: 'Checks the spacing inside referential brackets.'
   Enabled: false

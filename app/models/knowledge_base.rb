@@ -210,19 +210,19 @@ class KnowledgeBase < ApplicationModel
 
     # not domain, but no leading slash
     if custom_address.exclude?('.') && custom_address[0] != '/'
-      errors.add(:custom_address, 'must begin with a slash ("/").')
+      errors.add(:custom_address, __('must begin with a slash ("/")'))
     end
 
     if custom_address.include?('://')
-      errors.add(:custom_address, 'must not include a protocol (e.g., "http://" or "https://").')
+      errors.add(:custom_address, __('must not include a protocol (e.g., "http://" or "https://")'))
     end
 
     if custom_address.last == '/'
-      errors.add(:custom_address, 'must not end with a slash ("/").')
+      errors.add(:custom_address, __('must not end with a slash ("/")'))
     end
 
     if custom_address == '/' # rubocop:disable Style/GuardClause
-      errors.add(:custom_address, __('Please enter valid path or domain'))
+      errors.add(:custom_address, __('must be a valid path or domain'))
     end
   end
 

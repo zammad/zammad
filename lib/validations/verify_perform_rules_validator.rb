@@ -59,6 +59,6 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
   end
 
   def add_error(record, attribute, key, inner)
-    record.errors.add :base, "The required '#{attribute}' value for #{key}, #{inner} is missing!"
+    record.errors.add :base, __("The required '%{attribute}' value for %{key}, %{inner} is missing!"), attribute: attribute, key: key, inner: inner
   end
 end
