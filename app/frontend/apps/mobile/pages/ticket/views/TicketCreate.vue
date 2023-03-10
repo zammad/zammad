@@ -1,16 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
-  computed,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-  watch,
-} from 'vue'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
+import { useEventListener } from '@vueuse/core'
 import Form from '@shared/components/Form/Form.vue'
 import {
   EnumFormUpdaterId,
@@ -387,12 +380,18 @@ const moveStep = () => {
   setMultiStep()
 }
 
+const { stickyStyles, headerElement } = useStickyHeader()
+
+const bodyElement = ref<HTMLElement>()
+
 const isScrolledToBottom = ref(true)
 
 const setIsScrolledToBottom = () => {
   isScrolledToBottom.value =
-    window.innerHeight + document.documentElement.scrollTop >=
-    document.body.offsetHeight
+    window.innerHeight +
+      document.documentElement.scrollTop -
+      (headerElement.value?.clientHeight || 0) >=
+    (bodyElement.value?.scrollHeight || 0)
 }
 
 watch(
@@ -404,15 +403,8 @@ watch(
   },
 )
 
-onMounted(() => {
-  window.addEventListener('scroll', setIsScrolledToBottom)
-  window.addEventListener('resize', setIsScrolledToBottom)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', setIsScrolledToBottom)
-  window.removeEventListener('resize', setIsScrolledToBottom)
-})
+useEventListener('scroll', setIsScrolledToBottom)
+useEventListener('resize', setIsScrolledToBottom)
 
 const { waitForConfirmation } = useConfirmation()
 
@@ -431,8 +423,6 @@ onBeforeRouteLeave(async () => {
 })
 
 const { signatureHandling } = useTicketSignature()
-
-const { stickyStyles, headerElement } = useStickyHeader()
 </script>
 
 <script lang="ts">
@@ -493,11 +483,15 @@ export default {
       </div>
     </div>
   </header>
-  <div :style="stickyStyles.body" class="flex h-full flex-col px-4 pb-36">
+  <div
+    ref="bodyElement"
+    :style="stickyStyles.body"
+    class="flex h-full flex-col px-4"
+  >
     <Form
       id="ticket-create"
       ref="form"
-      class="text-left"
+      class="pb-32 text-left"
       :schema="formSchema"
       :handlers="[useTicketFormOganizationHandler(), signatureHandling('body')]"
       :flatten-form-groups="Object.keys(allSteps)"

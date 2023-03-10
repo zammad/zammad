@@ -279,6 +279,46 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       find_radio('articleSenderType').find('label', text: 'Received Call').find('input').send_keys :enter
       check_is_step(3)
     end
+
+    context 'with many object attributes', authenticated_as: :authenticate, db_strategy: :reset do
+      let(:screens) do
+        {
+          create_middle: {
+            '-all-' => {
+              shown:    true,
+              required: false,
+            },
+          },
+        }
+      end
+
+      def authenticate
+        create(:object_manager_attribute_select, screens: screens)
+        create(:object_manager_attribute_text, screens: screens)
+        create(:object_manager_attribute_tree_select, screens: screens)
+        create(:object_manager_attribute_select, screens: screens)
+
+        ObjectManager::Attribute.migration_execute
+
+        true
+      end
+
+      it 'can interact with the fields at the bottom of the form without any obstructions' do
+
+        # Step 3.
+        next_step
+        next_step
+
+        # Footer is non-transparent while it's obscuring the fields.
+        expect(find('footer')[:class]).to include('bg-gray-light', 'backdrop-blur-lg')
+
+        # Tags is the last field in the form.
+        find_autocomplete('Tags').search_for_option('tag 1')
+
+        # Footer is transparent when the screen is scrolled to the bottom.
+        expect(find('footer')[:class]).not_to include('bg-gray-light', 'backdrop-blur-lg')
+      end
+    end
   end
 
   context 'when using ticket create as customer' do
