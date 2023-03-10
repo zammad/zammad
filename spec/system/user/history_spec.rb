@@ -16,7 +16,7 @@ RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
   before do
     freeze_time
 
-    travel_to DateTime.parse('2021-01-22 13:40:00 UTC')
+    travel_to Time.zone.parse('2021-01-22 13:40:00')
     current_time = Time.current
     customer.update! firstname: 'Customer'
     customer.update! email: 'test@example.com'
@@ -25,7 +25,7 @@ RSpec.describe 'Ticket history', time_zone: 'Europe/London', type: :system do
     customer.update! last_login: current_time
     customer.organizations << [org_1, org_2]
 
-    travel_to DateTime.parse('2021-04-06 23:30:00 UTC')
+    travel_to Time.zone.parse('2021-04-06 23:30:00')
     current_time = Time.current
     customer.update! lastname: 'Example'
     customer.update! mobile: '5757473827'

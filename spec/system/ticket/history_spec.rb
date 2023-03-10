@@ -8,32 +8,34 @@ RSpec.describe 'Ticket history', authenticated_as: :admin_de, time_zone: 'Europe
   let(:admin_de) { create(:admin, :groupable, preferences: { locale: 'de-de' }, group: group) }
 
   before do
-    freeze_time
+    Time.use_zone('UTC') do
+      freeze_time
 
-    travel_to DateTime.parse('2021-01-22 13:40:00 UTC')
-    current_time = Time.current
-    ticket.update(title: 'New Ticket Title')
-    ticket_article = create(:ticket_article, ticket: ticket, internal: true)
-    ticket.update! state: Ticket::State.lookup(name: 'open')
-    ticket.update! last_owner_update_at: current_time
-    ticket.update! priority: Ticket::Priority.lookup(name: '1 low')
-    ticket.update! last_contact_at: current_time
-    ticket.update! last_contact_customer_at: current_time
-    ticket.update! last_contact_agent_at: current_time
-    ticket_article.update! internal: false
+      travel_to DateTime.parse('2021-01-22 13:40:00 UTC')
+      current_time = Time.current
+      ticket.update(title: 'New Ticket Title')
+      ticket_article = create(:ticket_article, ticket: ticket, internal: true)
+      ticket.update! state: Ticket::State.lookup(name: 'open')
+      ticket.update! last_owner_update_at: current_time
+      ticket.update! priority: Ticket::Priority.lookup(name: '1 low')
+      ticket.update! last_contact_at: current_time
+      ticket.update! last_contact_customer_at: current_time
+      ticket.update! last_contact_agent_at: current_time
+      ticket_article.update! internal: false
 
-    travel_to DateTime.parse('2021-04-06 23:30:00 UTC')
-    current_time = Time.current
-    ticket.update! state: Ticket::State.lookup(name: 'pending close')
-    ticket.update! priority: Ticket::Priority.lookup(name: '3 high')
-    ticket_article.update! internal: true
-    ticket.update! last_contact_at: current_time
-    ticket.update! last_contact_customer_at: current_time
-    ticket.update! last_contact_agent_at: current_time
-    ticket.update! pending_time: current_time
-    ticket.update! first_response_escalation_at: current_time
+      travel_to DateTime.parse('2021-04-06 23:30:00 UTC')
+      current_time = Time.current
+      ticket.update! state: Ticket::State.lookup(name: 'pending close')
+      ticket.update! priority: Ticket::Priority.lookup(name: '3 high')
+      ticket_article.update! internal: true
+      ticket.update! last_contact_at: current_time
+      ticket.update! last_contact_customer_at: current_time
+      ticket.update! last_contact_agent_at: current_time
+      ticket.update! pending_time: current_time
+      ticket.update! first_response_escalation_at: current_time
 
-    travel_back
+      travel_back
+    end
 
     visit '/'
 

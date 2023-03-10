@@ -5,7 +5,7 @@ module HaveTimeTag
 
   matcher :have_time_tag do
     match do |actual|
-      actual.has_css?('time', **args) { |elem| elem[:datetime] == expected.iso8601 || elem[:datetime] == expected.iso8601(3) } # handle JS version with miliseconds too
+      actual.has_css?('time', **args) { |elem| elem[:datetime] == expected.utc.iso8601 || elem[:datetime] == expected.utc.iso8601(3) } # handle JS version with miliseconds too
     end
 
     def args
