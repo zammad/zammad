@@ -173,6 +173,15 @@ const useSelectOptions = <
   const setupMissingOptionHandling = () => {
     const { historicalOptions } = context.value
 
+    // When we are in a "create" form situation and no flag is given, it should be activated.
+    if (context.value.rejectNonExistentValues === undefined) {
+      const rootNode = context.value.node.at('$root')
+      context.value.rejectNonExistentValues =
+        rootNode &&
+        rootNode.name !== context.value.node.name &&
+        !rootNode.context?.initialEntityObject
+    }
+
     // Remember current optionValueLookup in node context.
     context.value.optionValueLookup = optionValueLookup
 

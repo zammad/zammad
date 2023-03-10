@@ -34,9 +34,7 @@ class CoreWorkflow::Result
       @result[group] = attributes.send(:"#{group}_default")
     end
 
-    if form_updater
-      @result[:all_options] = attributes.all_options_default
-    end
+    set_form_updater_default
 
     # restrict init defaults to make sure param values to removed if not allowed
     attributes.restrict_values_default.each do |field, values|
@@ -49,6 +47,13 @@ class CoreWorkflow::Result
     end
 
     set_default_only_shown_if_selectable
+  end
+
+  def set_form_updater_default
+    return if !form_updater
+
+    @result[:all_options] = attributes.all_options_default
+    @result[:historical_options] = attributes.historical_options_default
   end
 
   def set_default_only_shown_if_selectable

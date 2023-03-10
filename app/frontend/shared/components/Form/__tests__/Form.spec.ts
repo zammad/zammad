@@ -585,6 +585,60 @@ describe('Form.vue - with object attributes', () => {
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
   })
 
+  it('render object attributes with historical options (create situation)', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+      objectManagerFrontendAttributes: frontendObjectAttributes,
+    })
+
+    const wrapper = renderComponent(Form, {
+      ...wrapperParameters,
+      props: {
+        useObjectAttributes: true,
+        schema: [
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            screen: 'create_middle',
+          },
+        ],
+        initialValues: {
+          type: 'Other',
+        },
+      },
+    })
+
+    await waitUntil(() => wrapper.queryByLabelText('Type'))
+
+    expect(wrapper.getByLabelText('Type')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Type')).toHaveTextContent('')
+  })
+
+  it('render object attributes with historical options (edit situation)', async () => {
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
+      objectManagerFrontendAttributes: frontendObjectAttributes,
+    })
+
+    const wrapper = renderComponent(Form, {
+      ...wrapperParameters,
+      props: {
+        useObjectAttributes: true,
+        schema: [
+          {
+            object: EnumObjectManagerObjects.Ticket,
+            screen: 'edit',
+          },
+        ],
+        initialEntityObject: {
+          type: 'Other',
+        },
+      },
+    })
+
+    await waitUntil(() => wrapper.queryByLabelText('Type'))
+
+    expect(wrapper.getByLabelText('Type')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Type')).toHaveTextContent('Other')
+  })
+
   it('focuses the first focusable input, if autofocus is enabled', async () => {
     mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({
       objectManagerFrontendAttributes: frontendObjectAttributes,

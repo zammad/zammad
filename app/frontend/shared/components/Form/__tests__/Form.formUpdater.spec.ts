@@ -1132,7 +1132,20 @@ describe('Form.vue - Form Updater - special situtations', () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm(
       [
         {
-          formUpdater: {},
+          formUpdater: {
+            state_id: {
+              options: [
+                {
+                  label: 'new',
+                  value: 1,
+                },
+                {
+                  label: 'open',
+                  value: 2,
+                },
+              ],
+            },
+          },
         },
         {
           formUpdater: {
@@ -1303,55 +1316,41 @@ describe('Form.vue - Form Updater - special situtations', () => {
     await checkDisplayValue(wrapper, 'Multi Select', ['Key 1'])
   })
 
-  // TODO: align when historical option are aligned with desktopm view
-  // test.only('no endless loop (additional request) for activated preselect mode in single select', async () => {
-  //   const { wrapper, mockFormUpdaterApi } = await renderForm(
-  //     [
-  //       {
-  //         formUpdater: {
-  //           type: {
-  //             options: [
-  //               {
-  //                 label: 'Request for Change',
-  //                 value: 'Request for Change',
-  //               },
-  //             ],
-  //             value: 'Problem',
-  //             clearable: false,
-  //           },
-  //         },
-  //       },
-  //       {
-  //         formUpdater: {
-  //           type: {
-  //             options: [
-  //               {
-  //                 label: 'Request for Change',
-  //                 value: 'Request for Change',
-  //               },
-  //             ],
-  //             value: 'Problem',
-  //             clearable: false,
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     {
-  //       props: {
-  //         initialValues: {
-  //           type: 'Incident',
-  //         },
-  //       },
-  //     },
-  //   )
+  test('no endless loop (additional request) for activated preselect mode in single select', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm(
+      [
+        {
+          formUpdater: {
+            type: {
+              options: [
+                {
+                  label: 'Request for Change',
+                  value: 'Request for Change',
+                },
+              ],
+              value: 'Problem',
+              clearable: false,
+              rejectNonExistentValues: true,
+            },
+          },
+        },
+      ],
+      {
+        props: {
+          initialValues: {
+            type: 'Incident',
+          },
+        },
+      },
+    )
 
-  //   await waitUntil(() => {
-  //     return mockFormUpdaterApi.calls.resolve === 1
-  //   })
+    await waitUntil(() => {
+      return mockFormUpdaterApi.calls.resolve === 1
+    })
 
-  //   await waitForNextTick()
+    await waitForNextTick()
 
-  //   // Should show the initial value after the form is initialized.
-  //   await checkDisplayValue(wrapper, 'Type', 'Request for Change')
-  // })
+    // Should show the initial value after the form is initialized.
+    await checkDisplayValue(wrapper, 'Type', 'Request for Change')
+  })
 })

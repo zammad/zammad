@@ -83,7 +83,8 @@
         "historical_options": {
           "Incident": "Incident",
           "Problem": "Problem",
-          "Request for Change": "Request for Change"
+          "Request for Change": "Request for Change",
+          "Other": "Other"
         }
       },
       "screens": {

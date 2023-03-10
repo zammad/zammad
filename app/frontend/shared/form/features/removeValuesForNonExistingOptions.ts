@@ -38,8 +38,6 @@ const removeValuesForNonExistingOptions = (node: FormKitNode) => {
             const getPreselectValue =
               context.getPreselectValue as () => SelectValue
 
-            console.log('getPreselectValue', getPreselectValue())
-
             return next(
               context.clearable || getPreselectValue === undefined
                 ? undefined

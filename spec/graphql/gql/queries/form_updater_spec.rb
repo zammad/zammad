@@ -25,12 +25,13 @@ RSpec.describe Gql::Queries::FormUpdater, authenticated_as: :agent, type: :graph
     let(:expected) do
       {
         'state_id' => {
-          options:   Ticket::State.by_category(:viewable_agent_new).reorder(name: :asc).map { |state| { value: state.id, label: state.name } },
-          clearable: true,
-          disabled:  false,
-          hidden:    false,
-          required:  true,
-          show:      true,
+          options:                 Ticket::State.by_category(:viewable_agent_new).reorder(name: :asc).map { |state| { value: state.id, label: state.name } },
+          rejectNonExistentValues: true,
+          clearable:               true,
+          disabled:                false,
+          hidden:                  false,
+          required:                true,
+          show:                    true,
         },
         'title'    => {
           disabled: false,

@@ -268,6 +268,14 @@ class CoreWorkflow::Attributes
     end
   end
 
+  def historical_options_default
+    object_elements.each_with_object({}) do |attribute, result|
+      next if attribute[:historical_options].blank?
+
+      result[ attribute[:name] ] = attribute[:historical_options]
+    end
+  end
+
   def saved_attribute_value(attribute)
 
     # special case for owner_id

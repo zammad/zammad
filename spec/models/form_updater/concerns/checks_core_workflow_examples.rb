@@ -26,6 +26,9 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
   end
   let(:object_attribute_field_type) { :object_manager_attribute_text }
   let(:core_workflow_perform_field) { nil }
+  let(:object_attribute) do
+    create(object_attribute_field_type, object_name: object_name, name: field_name, display: field_name, screens: screens)
+  end
 
   shared_examples 'resolve fields' do |expected_result:|
     it 'checks that mapping was correct' do
@@ -37,8 +40,9 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
 
   context 'when core workflow validation will be mapped', db_strategy: :reset do
     before do
-      create(object_attribute_field_type, object_name: object_name, name: field_name, display: field_name, screens: screens)
+      object_attribute
       ObjectManager::Attribute.migration_execute
+      object_attribute.reload
 
       if core_workflow_perform_field
         create(:core_workflow,
@@ -179,7 +183,7 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
         end
 
         include_examples 'resolve fields', expected_result: {
-          options:   [
+          options:                 [
             {
               value: 'key_2',
               label: 'value_2',
@@ -189,7 +193,8 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
               label: 'value_3',
             }
           ],
-          clearable: false
+          clearable:               false,
+          rejectNonExistentValues: true
         }
       end
 
@@ -203,7 +208,7 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
         end
 
         include_examples 'resolve fields', expected_result: {
-          options: [
+          options:                 [
             {
               value: 'key_2',
               label: 'value_2',
@@ -212,7 +217,8 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
               value: 'key_3',
               label: 'value_3',
             }
-          ]
+          ],
+          rejectNonExistentValues: true
         }
       end
 
