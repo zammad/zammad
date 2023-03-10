@@ -13,6 +13,7 @@ import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
 import { useTicketArticleRows } from '../../composable/useTicketArticlesRows'
 import { useTicketArticleContext } from '../../composable/useTicketArticleContext'
 import ArticleSystem from './ArticleSystem.vue'
+import ArticleDeliveryMessage from './ArticleDeliveryMessage.vue'
 
 interface Props {
   articles: TicketArticle[]
@@ -72,6 +73,10 @@ const filterAttachments = (article: TicketArticle) => {
         :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
         @show-context="showArticleContext(row.article, ticket)"
+      />
+      <ArticleDeliveryMessage
+        v-if="row.type === 'delivery'"
+        :content="row.content"
       />
       <ArticleSystem
         v-if="row.type === 'system'"

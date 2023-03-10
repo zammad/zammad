@@ -10,6 +10,11 @@ interface ArticleRow {
   article: TicketArticle
 }
 
+interface ArticleDeliveryRow {
+  type: 'delivery'
+  content: string
+}
+
 interface MoreRow {
   type: 'more'
   count: number
@@ -36,6 +41,7 @@ type TicketArticleRow = (
   | MoreRow
   | NewRow
   | DateRow
+  | ArticleDeliveryRow
 ) & {
   key: string
 }
@@ -59,7 +65,16 @@ export const useTicketArticleRows = (
           key: date,
         })
       }
-      if (article.sender?.name === 'System' && article.type?.name !== 'note') {
+      if (article.preferences?.delivery_message) {
+        rows.push({
+          type: 'delivery',
+          content: article.bodyWithUrls,
+          key: article.id,
+        })
+      } else if (
+        article.sender?.name === 'System' &&
+        article.type?.name !== 'note'
+      ) {
         rows.push({
           type: 'system',
           subject: article.subject,

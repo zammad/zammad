@@ -90,6 +90,7 @@ interface MockedRouter extends Router {
 let routerInitialized = false
 let router: MockedRouter
 
+export const getTestPlugins = () => [...plugins]
 export const getTestRouter = () => router
 
 const initializeRouter = (routes?: RouteRecordRaw[]) => {
