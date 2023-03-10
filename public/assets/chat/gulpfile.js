@@ -8,6 +8,7 @@ var eco = require('gulp-eco');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
+var order = require("gulp-order");
 
 function css(cb) {
   gulp.src('chat.scss')
@@ -29,8 +30,12 @@ function js(cb) {
   var js = gulp.src('chat.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log));
 
-  merge(templates, js)
-    .add(purify)
+  merge(templates, purify, js)
+    .pipe(order([
+      "views/*.js",
+      "purify.min.js",
+      "chat.js",
+    ], {base: './'}))
     .pipe(concat('chat.js'))
     .pipe(gulp.dest('./'))
     .pipe(uglify())
@@ -50,8 +55,12 @@ function no_jquery(cb) {
   var js = gulp.src('chat-no-jquery.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log));
 
-  merge(templates, js)
-    .add(purify)
+  merge(templates, purify, js)
+    .pipe(order([
+      "views/*.js",
+      "purify.min.js",
+      "chat.js",
+    ], {base: './'}))
     .pipe(concat('chat-no-jquery.js'))
     .pipe(gulp.dest('./'))
     .pipe(uglify())
