@@ -17,7 +17,7 @@ class Mention < ApplicationModel
   association_attributes_ignored :created_by, :updated_by
   client_notification_events_ignored :update, :touch
 
-  validates_with Mention::Validation
+  validates_with Validations::MentionValidator
 
   def notify_clients_data_attributes
     super.merge(

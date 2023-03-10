@@ -16,7 +16,7 @@ class DataPrivacyTask < ApplicationModel
 
   before_create :prepare_deletion_preview
 
-  validates_with DataPrivacyTask::Validation
+  validates_with Validations::DataPrivacyTaskValidator
 
   def perform
     perform_deletable

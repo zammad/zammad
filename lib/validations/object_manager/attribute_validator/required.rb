@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class ObjectManager::Attribute::Validation::Required < ObjectManager::Attribute::Validation::Backend
+class Validations::ObjectManager::AttributeValidator::Required < Validations::ObjectManager::AttributeValidator::Backend
 
   def validate
     return if record.class.include?(ChecksCoreWorkflow)

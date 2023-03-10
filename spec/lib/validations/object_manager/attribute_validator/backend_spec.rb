@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe ObjectManager::Attribute::Validation::Backend do
+RSpec.describe Validations::ObjectManager::AttributeValidator::Backend, :aggregate_failures do
 
   describe 'backend interface' do
 
-    subject do
+    subject(:backend) do
       described_class.new(
         record:    record,
         attribute: attribute
@@ -17,28 +17,28 @@ RSpec.describe ObjectManager::Attribute::Validation::Backend do
     let(:attribute) { ObjectManager::Attribute.find_by(name: 'firstname') }
 
     it 'has attr_accessor for record' do
-      expect(subject.record).to eq(record)
+      expect(backend.record).to eq(record)
     end
 
     it 'has attr_accessor for attribute' do
-      expect(subject.attribute).to eq(attribute)
+      expect(backend.attribute).to eq(attribute)
     end
 
     it 'has attr_accessor for value' do
-      expect(subject.value).to eq(record[attribute.name])
+      expect(backend.value).to eq(record[attribute.name])
     end
 
     it 'has attr_accessor for previous_value' do
       record.save!
       previous_value         = record[attribute.name]
       record[attribute.name] = 'changed'
-      expect(subject.previous_value).to eq(previous_value)
+      expect(backend.previous_value).to eq(previous_value)
     end
 
     describe '.invalid_because_attribute' do
 
       before do
-        subject.invalid_because_attribute(message, **options)
+        backend.invalid_because_attribute(message, **options)
       end
 
       shared_examples 'basic error handling' do

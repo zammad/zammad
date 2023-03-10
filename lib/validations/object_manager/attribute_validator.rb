@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class ObjectManager::Attribute::Validation < ActiveModel::Validator
+class Validations::ObjectManager::AttributeValidator < ActiveModel::Validator
   include ::Mixin::HasBackends
 
   def validate(record)

@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/object_manager/attribute/validation/backend_examples'
+require 'lib/validations/object_manager/attribute_validator/backend_examples'
 
-RSpec.describe ObjectManager::Attribute::Validation::MaxLength do
+RSpec.describe Validations::ObjectManager::AttributeValidator::MaxLength do
 
   subject do
     described_class.new(

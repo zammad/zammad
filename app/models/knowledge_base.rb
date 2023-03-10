@@ -32,9 +32,9 @@ class KnowledgeBase < ApplicationModel
   validates :category_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
   validates :homepage_layout, inclusion: { in: KnowledgeBase::LAYOUTS }
 
-  validates :color_highlight,   presence: true, color: true
-  validates :color_header,      presence: true, color: true
-  validates :color_header_link, presence: true, color: true
+  validates :color_highlight,   presence: true, 'validations/color': true
+  validates :color_header,      presence: true, 'validations/color': true
+  validates :color_header_link, presence: true, 'validations/color': true
 
   validates :iconset, inclusion: { in: KnowledgeBase::ICONSETS }
 

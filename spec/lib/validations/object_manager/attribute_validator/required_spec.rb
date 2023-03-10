@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/object_manager/attribute/validation/backend_examples'
+require 'lib/validations/object_manager/attribute_validator/backend_examples'
 
-RSpec.describe ObjectManager::Attribute::Validation::Required do
+RSpec.describe Validations::ObjectManager::AttributeValidator::Required do
 
   subject do
     described_class.new(
@@ -72,7 +72,7 @@ RSpec.describe ObjectManager::Attribute::Validation::Required do
 
   context 'when validation should not be performed' do
 
-    context 'for present value' do
+    context 'with present value' do
 
       let(:value) { 'some_value' }
 
@@ -84,22 +84,22 @@ RSpec.describe ObjectManager::Attribute::Validation::Required do
       let(:value) { nil }
 
       context "when action wasn't performed by a user" do
-        context 'for blank UserInfo.current_user_id', current_user_id: nil do
+        context 'with blank UserInfo.current_user_id', current_user_id: nil do
           it_behaves_like 'a validation without errors'
         end
 
-        context 'for system UserInfo.current_user_id', current_user_id: 1 do
+        context 'with system UserInfo.current_user_id', current_user_id: 1 do
           it_behaves_like 'a validation without errors'
         end
       end
 
-      context 'for required => false' do
+      context 'with required => false' do
 
         let(:performing_user) { create(:agent) }
 
         before { UserInfo.current_user_id = performing_user.id }
 
-        context 'for applying permission' do
+        context 'with applying permission' do
 
           let(:permission) { 'ticket.agent' }
 
@@ -130,7 +130,7 @@ RSpec.describe ObjectManager::Attribute::Validation::Required do
         end
       end
 
-      context 'for not applying permission' do
+      context 'without applying permission' do
 
         let(:permission) { 'ticket.customer' }
 

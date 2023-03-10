@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'HasObjectManagerAttributes' do
   it 'validates ObjectManager::Attributes' do
-    expect(described_class.validators.map(&:class)).to include(ObjectManager::Attribute::Validation)
+    expect(described_class.validators.map(&:class)).to include(Validations::ObjectManager::AttributeValidator)
   end
 
   context "when object attribute with name 'type' is used", db_strategy: :reset do

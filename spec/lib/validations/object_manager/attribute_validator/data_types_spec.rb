@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'ObjectManager::Attribute::Validation::DataTypes', aggregate_failures: true do
+RSpec.describe 'Validations::ObjectManager::AttributeValidator::DataTypes', aggregate_failures: true do
 
   %w[
     input

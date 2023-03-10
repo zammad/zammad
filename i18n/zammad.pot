@@ -12949,11 +12949,11 @@ msgstr ""
 msgid "do not reopen ticket but create new ticket"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/future_past.rb
+#: lib/validations/object_manager/attribute_validator/future_past.rb
 msgid "does not allow future dates"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/future_past.rb
+#: lib/validations/object_manager/attribute_validator/future_past.rb
 msgid "does not allow past dates"
 msgstr ""
 
@@ -13094,7 +13094,7 @@ msgstr ""
 msgid "has already been taken"
 msgstr ""
 
-#: app/models/data_privacy_task/validation.rb
+#: lib/validations/data_privacy_task_validator.rb
 msgid "has an existing DataPrivacyTask queued"
 msgstr ""
 
@@ -13104,7 +13104,7 @@ msgstr ""
 msgid "has changed"
 msgstr ""
 
-#: app/models/mention/validation.rb
+#: lib/validations/mention_validator.rb
 msgid "has no agent access to this ticket"
 msgstr ""
 
@@ -13240,15 +13240,15 @@ msgstr ""
 msgid "is invalid"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/min_max.rb
+#: lib/validations/object_manager/attribute_validator/min_max.rb
 msgid "is larger than the allowed maximum value of %{max_value}"
 msgstr ""
 
-#: app/models/data_privacy_task/validation.rb
+#: lib/validations/data_privacy_task_validator.rb
 msgid "is last account with admin permissions"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/max_length.rb
+#: lib/validations/object_manager/attribute_validator/max_length.rb
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
 
@@ -13257,11 +13257,11 @@ msgstr ""
 msgid "is not"
 msgstr ""
 
-#: app/models/data_privacy_task/validation.rb
+#: lib/validations/data_privacy_task_validator.rb
 msgid "is not a User"
 msgstr ""
 
-#: lib/color_validator.rb
+#: lib/validations/color_validator.rb
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
@@ -13279,7 +13279,7 @@ msgstr ""
 msgid "is required"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/required.rb
+#: lib/validations/object_manager/attribute_validator/required.rb
 msgid "is required but missing"
 msgstr ""
 
@@ -13290,7 +13290,7 @@ msgstr ""
 msgid "is set"
 msgstr ""
 
-#: app/models/object_manager/attribute/validation/min_max.rb
+#: lib/validations/object_manager/attribute_validator/min_max.rb
 msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr ""
 
@@ -13320,11 +13320,11 @@ msgstr ""
 msgid "is too short (minimum is 1 character)"
 msgstr ""
 
-#: app/models/data_privacy_task/validation.rb
+#: lib/validations/data_privacy_task_validator.rb
 msgid "is undeletable system User with ID 1"
 msgstr ""
 
-#: app/models/data_privacy_task/validation.rb
+#: lib/validations/data_privacy_task_validator.rb
 msgid "is your current account"
 msgstr ""
 

@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/object_manager/attribute/validation/backend_examples'
+require 'lib/validations/object_manager/attribute_validator/backend_examples'
 
-RSpec.describe ObjectManager::Attribute::Validation::MinMax do
+RSpec.describe Validations::ObjectManager::AttributeValidator::MinMax do
 
   subject do
     described_class.new(
@@ -19,13 +19,13 @@ RSpec.describe ObjectManager::Attribute::Validation::MinMax do
 
   context 'when validation should not be performed' do
 
-    context 'for blank value' do
+    context 'with blank value' do
       let(:value) { nil }
 
       it_behaves_like 'a validation without errors'
     end
 
-    context 'for irrelevant attribute data_type' do
+    context 'with irrelevant attribute data_type' do
       let(:value) { 'some_value' }
 
       before { attribute.data_type = 'select' }

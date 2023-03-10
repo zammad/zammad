@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class DataPrivacyTask::Validation < ActiveModel::Validator
+class Validations::DataPrivacyTaskValidator < ActiveModel::Validator
 
   attr_reader :record
 

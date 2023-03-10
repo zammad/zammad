@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class ObjectManager::Attribute::Validation::MinMax < ObjectManager::Attribute::Validation::Backend
+class Validations::ObjectManager::AttributeValidator::MinMax < Validations::ObjectManager::AttributeValidator::Backend
 
   def validate
     return if value.blank?
