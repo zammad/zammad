@@ -6354,6 +6354,7 @@ msgid "Load more"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 msgid "Loading content"
 msgstr ""
 

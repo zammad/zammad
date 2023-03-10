@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import CommonLoader from '../CommonLoader/CommonLoader.vue'
 
 const props = defineProps<{
   refetch: boolean
@@ -28,7 +27,25 @@ watch(
 </script>
 
 <template>
-  <CommonLoader :loading="refetching" class="absolute">
-    <slot />
-  </CommonLoader>
+  <Transition
+    enter-active-class="transition-opacity duration-200"
+    leave-active-class="transition-opacity duration-200"
+    enter-from-class="opacity-0"
+    leave-to-class="opacity-0"
+  >
+    <div
+      v-if="refetching"
+      class="absolute items-center justify-center"
+      role="status"
+    >
+      <CommonIcon
+        :label="__('Loading content')"
+        name="mobile-loading"
+        animation="spin"
+      />
+    </div>
+    <div v-else v-bind="$attrs">
+      <slot />
+    </div>
+  </Transition>
 </template>
