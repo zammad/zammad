@@ -13,6 +13,11 @@
   <code>
   rails&gt; Store::File.move('DB', 'File')
   </code>
+    <p class="help-text"><%- @T('Move all from "%s" to "%s":', 'database', 's3') %></p>
+  </p>
+  <code>
+  rails&gt; Store::File.move('DB', 'S3')
+  </code>
   <br>
   <br>
   <div class="horizontal end">

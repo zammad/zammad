@@ -94,6 +94,22 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.4.13.0)
       execjs (~> 2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.717.0)
+    aws-sdk-core (3.170.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.62.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.119.1)
+      aws-sdk-core (~> 3, >= 3.165.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sigv4 (1.5.2)
+      aws-eventstream (~> 1, >= 1.0.2)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     biz (1.8.2)
@@ -245,6 +261,7 @@ GEM
     inflection (1.0.0)
     iniparse (1.5.0)
     interception (0.5)
+    jmespath (1.6.2)
     json (2.6.3)
     jwt (2.3.0)
     kgio (2.11.4)
@@ -629,6 +646,7 @@ DEPENDENCIES
   argon2
   autodiscover!
   autoprefixer-rails
+  aws-sdk-s3
   biz
   bootsnap
   brakeman

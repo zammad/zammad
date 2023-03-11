@@ -170,6 +170,9 @@ gem 'viewpoint', require: false
 # integrations - S/MIME
 gem 'openssl'
 
+# storage - S3 backend
+gem 'aws-sdk-s3'
+
 # Translation sync
 gem 'byk', require: false
 gem 'PoParser', require: false
