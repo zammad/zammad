@@ -455,11 +455,11 @@ describe('Form - Field - TreeSelect - Options', () => {
         disabled: true,
         children: [
           {
-            value: 2,
+            value: 3,
             label: 'Item 1',
           },
           {
-            value: 2,
+            value: 4,
             label: 'Item 2',
           },
         ],
@@ -932,6 +932,51 @@ describe('Form - Field - TreeSelect - Features', () => {
     })
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
+  })
+
+  it('considers only enabled options for preselection', async () => {
+    const disabledOptions = [
+      {
+        value: 0,
+        label: 'Item A',
+        disabled: true,
+      },
+      {
+        value: 1,
+        label: 'Item B',
+        disabled: true,
+        children: [
+          {
+            value: 3,
+            label: 'Item 1',
+          },
+          {
+            value: 4,
+            label: 'Item 2',
+          },
+        ],
+      },
+      {
+        value: 2,
+        label: 'Item C',
+      },
+    ]
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'treeselect',
+        id: 'treeselect',
+        type: 'treeselect',
+        options: disabledOptions,
+      },
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item 1')
   })
 
   it('supports option filtering', async () => {

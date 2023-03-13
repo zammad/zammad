@@ -900,6 +900,40 @@ describe('Form - Field - Select - Features', () => {
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
+
+  it('considers only enabled options for preselection', async () => {
+    const disabledOptions = [
+      {
+        value: 0,
+        label: 'Item A',
+        disabled: true,
+      },
+      {
+        value: 1,
+        label: 'Item B',
+      },
+      {
+        value: 2,
+        label: 'Item C',
+      },
+    ]
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        type: 'select',
+        name: 'select',
+        id: 'select',
+        options: disabledOptions,
+      },
+    })
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item B')
+  })
 })
 
 describe('Form - Field - Select - Accessibility', () => {
