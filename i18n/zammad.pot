@@ -1811,10 +1811,6 @@ msgstr ""
 msgid "Can't find User for Token"
 msgstr ""
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Can't update password, your entered passwords do not match. Please try again!"

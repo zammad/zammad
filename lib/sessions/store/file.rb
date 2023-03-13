@@ -34,8 +34,6 @@ class Sessions::Store::File
   def sessions
     path = "#{@path}/"
 
-    # just make sure that spool path exists
-
     FileUtils.mkdir_p path
 
     data = []
@@ -132,39 +130,6 @@ class Sessions::Store::File
 
     FileUtils.rm_rf @path
     true
-  end
-
-  def add_to_spool(data)
-    path = "#{@path}/spool/"
-    FileUtils.mkpath path
-
-    file_path = "#{path}/#{Time.now.utc.to_f}-#{SecureRandom.uuid}"
-    write_with_lock(file_path, data.to_json)
-  end
-
-  def each_spool()
-    path = "#{@path}/spool/"
-    FileUtils.mkpath path
-
-    files = []
-    Dir.foreach(path) do |entry|
-      next if entry == '.'
-      next if entry == '..'
-
-      files.push entry
-    end
-    files.sort.each do |entry|
-      filename = "#{path}/#{entry}"
-      next if !File.exist?(filename)
-
-      message = read_with_lock(filename)
-      yield message, entry
-    end
-  end
-
-  def remove_from_spool(_message, entry)
-    path = "#{@path}/spool/"
-    FileUtils.rm "#{path}/#{entry}"
   end
 
   def clear_spool

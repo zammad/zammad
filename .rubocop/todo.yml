@@ -331,7 +331,6 @@ Metrics/AbcSize:
     - 'lib/sessions/event/chat_session_update.rb'
     - 'lib/sessions/event/chat_status_customer.rb'
     - 'lib/sessions/event/login.rb'
-    - 'lib/sessions/event/spool.rb'
     - 'lib/sessions/node.rb'
     - 'lib/signature_detection.rb'
     - 'lib/static_assets.rb'

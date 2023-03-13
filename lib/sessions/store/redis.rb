@@ -80,20 +80,6 @@ class Sessions::Store::Redis
     true
   end
 
-  def add_to_spool(data)
-    @redis.rpush SPOOL_KEY, data.to_json
-  end
-
-  def each_spool()
-    @redis.lrange(SPOOL_KEY, 0, -1).each do |message|
-      yield message, nil
-    end
-  end
-
-  def remove_from_spool(message, _entry)
-    @redis.lrem SPOOL_KEY, 1, message
-  end
-
   def clear_spool
     @redis.del SPOOL_KEY
   end

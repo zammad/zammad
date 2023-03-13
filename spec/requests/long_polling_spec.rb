@@ -12,7 +12,6 @@ RSpec.describe 'LongPolling', type: :request do
     Sessions.sessions.each do |client_id|
       Sessions.destroy(client_id)
     end
-    Sessions.spool_delete
   end
 
   describe 'request handling' do
@@ -31,7 +30,7 @@ RSpec.describe 'LongPolling', type: :request do
       expect(json_response['client_id']).to be_a_uuid
 
       client_id = json_response['client_id']
-      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'spool' } }, as: :json
+      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'anything' } }, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response['client_id']).to be_a_uuid
@@ -73,65 +72,6 @@ RSpec.describe 'LongPolling', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response).to eq({})
-    end
-
-    it 'send event spool and receive data' do
-
-      # here we use a token for the authentication because the basic auth way with username and password
-      # will update the user by every request and return a different result for the test
-      authenticated_as(agent, token: create(:token, action: 'api', user_id: agent.id))
-      get '/api/v1/message_send', params: { data: { event: 'login' } }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response['client_id']).to be_a_uuid
-      client_id = json_response['client_id']
-
-      get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response).to eq([{ 'data' => { 'success' => true }, 'event' => 'ws:login' }])
-
-      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'spool' } }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).to eq({})
-
-      get '/api/v1/message_receive', params: { client_id: client_id, data: {} }, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Array)
-      expect(json_response[0]['event']).to eq('spool:sent')
-      expect(json_response[0]['event']).to eq('spool:sent')
-      expect(json_response.count).to eq(1)
-
-      spool_list = Sessions.spool_list(Time.now.utc.to_i, agent.id)
-      expect(spool_list).to eq([])
-
-      get '/api/v1/message_send', params: { client_id: client_id, data: { event: 'session_takeover', spool: true, data: { taskbar_id: 9_391_633 } } }, as: :json
-      expect(response).to have_http_status(:ok)
-
-      travel 2.seconds
-
-      spool_list = Sessions.spool_list(Time.now.utc.to_i, agent.id)
-      expect(spool_list).to eq([])
-
-      spool_list = Sessions.spool_list(nil, agent.id)
-      expect(spool_list).to eq([{ message: { 'data' => { 'taskbar_id'=>9_391_633 }, 'event' => 'session_takeover', 'spool' => true }, type: 'broadcast' }])
-    end
-
-    it 'automatically cleans-up old spool entries' do
-      authenticated_as(agent)
-      Sessions.spool_create({ data: 'my message', event: 'broadcast' })
-
-      # Message found
-      travel 2.seconds
-      expect(Sessions.spool_list(nil, agent.id)).to eq([{ message: 'my message', type: 'broadcast' }])
-
-      # Message expired. In this case spool_list needs to also delete it.
-      travel 4.days
-      expect(Sessions.spool_list(nil, agent.id)).to eq([])
-
-      # Verify that the message was correctly deleted
-      travel(-4.days)
-      expect(Sessions.spool_list(nil, agent.id)).to eq([])
     end
   end
 end

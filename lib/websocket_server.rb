@@ -92,11 +92,6 @@ class WebsocketServer
     Sessions.touch(client_id) # rubocop:disable Rails/SkipsModelValidations
     @clients[client_id][:last_ping] = Time.now.utc.to_i
 
-    # spool messages for new connects
-    if data['spool']
-      Sessions.spool_create(data)
-    end
-
     if data['event']
       log 'debug', "execute event '#{data['event']}'", client_id
       message = Sessions::Event.run(

@@ -69,11 +69,11 @@ class App.CTI extends App.Controller
     )
 
     # after a new websocket connection, load again
-    @controllerBind('spool:sent', =>
-      if @initSpoolSent
+    @controllerBind('ws:login', =>
+      if @initiallyLoaded
         @load()
         return
-      @initSpoolSent = true
+      @initiallyLoaded = true
     )
 
   ringingCalls: =>

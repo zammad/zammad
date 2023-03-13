@@ -25,11 +25,6 @@ class App.WebSocket
       _instance ?= new _webSocketSingleton
     _instance.channel()
 
-  @_spool: ->
-    if _instance == undefined
-      _instance ?= new _webSocketSingleton
-    _instance.spool()
-
   @support: ->
     if _instance == undefined
       _instance ?= new _webSocketSingleton
@@ -46,8 +41,6 @@ class _webSocketSingleton extends App.Controller
 
   queue:                    []
   supported:                true
-  lastSpoolMessage:         undefined
-  sentSpoolFinished:        true
   connectionKeepDown:       false
   connectionEstablished:    false
   connectionWasEstablished: false
@@ -75,28 +68,6 @@ class _webSocketSingleton extends App.Controller
       'ws:send'
       (data) =>
         @send(data)
-      'ws'
-    )
-
-    # get spool messages after successful ws login
-    App.Event.bind(
-      'ws:login', =>
-        @spool()
-      'ws'
-    )
-
-    # get spool:sent
-    App.Event.bind(
-      'spool:sent'
-      (data) =>
-
-        # set timestamp to get spool messages later
-        @lastSpoolMessage = data.timestamp
-
-        # set sentSpoolFinished
-        @sentSpoolFinished = true
-
-        App.Delay.clear 'reset-spool-sent-if-not-returned', 'ws'
       'ws'
     )
 
@@ -142,26 +113,6 @@ class _webSocketSingleton extends App.Controller
       event: 'login'
       session_id: App.Config.get('session_id')
       fingerprint: App.Browser.fingerprint()
-    @send(data)
-
-  spool: =>
-    return if !@sentSpoolFinished
-    @sentSpoolFinished = false
-
-    # build data to send to server
-    data =
-      event: 'spool'
-    if @lastSpoolMessage
-      data['timestamp'] = @lastSpoolMessage
-
-    @log 'debug', 'spool', data
-
-    # reset @sentSpoolFinished if spool:sent will not return
-    reset = =>
-      @sentSpoolFinished = true
-    App.Delay.set reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
-
-    # ask for spool messages
     @send(data)
 
   close: ( params = {} ) =>
@@ -301,10 +252,6 @@ class _webSocketSingleton extends App.Controller
     # go through all blocks
     for item in data
       @log 'debug', 'onmessage', item
-
-      # set timestamp to get spool messages later
-      if item['spool']
-        @lastSpoolMessage = Math.round( +new Date()/1000 )
 
       # reset reconnect loop
       if item['event'] is 'pong'

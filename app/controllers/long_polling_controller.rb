@@ -21,10 +21,6 @@ class LongPollingController < ApplicationController
       session_data = { 'id' => current_user.id }
     end
 
-    # spool messages for new connects
-    if data['spool']
-      Sessions.spool_create(data)
-    end
     if data['event'] == 'login'
       Sessions.create(client_id, session_data, { type: 'ajax' })
     elsif data['event']

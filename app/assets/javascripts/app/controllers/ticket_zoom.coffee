@@ -57,11 +57,11 @@ class App.TicketZoom extends App.Controller
     )
 
     # after a new websocket connection, check if ticket has changed
-    @controllerBind('spool:sent', =>
-      if @initSpoolSent
+    @controllerBind('ws:login', =>
+      if @initiallyFetched
         @fetch(true)
         return
-      @initSpoolSent = true
+      @initiallyFetched = true
     )
 
     # listen to rerender sidebars

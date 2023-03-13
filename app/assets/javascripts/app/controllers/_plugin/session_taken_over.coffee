@@ -2,12 +2,9 @@ class SessionTakeOver extends App.Controller
   constructor: ->
     super
 
-    # only do takeover check after spool messages are finished
     @controllerBind(
-      'spool:sent'
-      =>
-        @spoolSent = true
-
+      'ws:login'
+      ->
         App.WebSocket.send(
           event: 'session_takeover',
           data:
@@ -19,9 +16,6 @@ class SessionTakeOver extends App.Controller
     @controllerBind(
       'session_takeover'
       (data) =>
-        # only if spool messages are already sent
-        return if !@spoolSent
-
         # check if error message is already shown
         if !@error
 
