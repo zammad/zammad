@@ -59,6 +59,7 @@ export interface FormSchemaField {
   }
   updateFields?: boolean
   triggerFormUpdater?: boolean
+  pendingValueUpdate?: boolean
   type: string
   name: string
   internal?: boolean

@@ -173,6 +173,7 @@ const checkSelectOptions = async (
   const selectOptions = wrapper.getAllByRole('option')
 
   expect(selectOptions).toHaveLength(options.length)
+
   selectOptions.forEach((selectOption, index) => {
     expect(selectOption).toHaveTextContent(options[index])
   })
@@ -1306,6 +1307,10 @@ describe('Form.vue - Form Updater - special situtations', () => {
       },
     )
 
+    await waitUntil(() => {
+      return mockFormUpdaterApi.calls.resolve === 1
+    })
+
     await selectValue(wrapper, 'Type', 'Incident')
     await waitUntil(() => {
       return mockFormUpdaterApi.calls.resolve === 2
@@ -1352,5 +1357,53 @@ describe('Form.vue - Form Updater - special situtations', () => {
 
     // Should show the initial value after the form is initialized.
     await checkDisplayValue(wrapper, 'Type', 'Request for Change')
+  })
+
+  test('add empty value for multiselect, when present in the current returned values', async () => {
+    const { wrapper, mockFormUpdaterApi } = await renderForm(
+      [
+        {
+          formUpdater: {},
+        },
+        {
+          formUpdater: {
+            multiselect: {
+              options: [
+                {
+                  label: 'Key 1',
+                  value: 'Key 1',
+                },
+                {
+                  label: 'Key 4',
+                  value: 'Key 4',
+                },
+              ],
+              value: ['', 'Key 1', 'Key 4'],
+            },
+          },
+        },
+      ],
+      {
+        props: {
+          initialValues: {
+            multiselect: ['Key 1', 'Key 2'],
+          },
+        },
+      },
+    )
+
+    await waitUntil(() => {
+      return mockFormUpdaterApi.calls.resolve === 1
+    })
+
+    await selectValue(wrapper, 'Type', 'Incident')
+    await waitUntil(() => {
+      return mockFormUpdaterApi.calls.resolve === 2
+    })
+
+    await waitForNextTick()
+
+    await checkSelectOptions(wrapper, 'Multi Select', ['Key 1', 'Key 4', '-'])
+    await checkDisplayValue(wrapper, 'Multi Select', ['-', 'Key 1', 'Key 4'])
   })
 })

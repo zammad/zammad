@@ -10,7 +10,11 @@ const formUpdaterTrigger = (
   return (node: FormKitNode) => {
     const { props } = node
 
-    node.addProps(['triggerFormUpdater', 'formUpdaterTrigger'])
+    node.addProps([
+      'triggerFormUpdater',
+      'formUpdaterTrigger',
+      'pendingValueUpdate',
+    ])
 
     node.on('created', () => {
       if (!props.formUpdaterTrigger) {
@@ -24,6 +28,17 @@ const formUpdaterTrigger = (
       ) {
         props.delay = defaultTriggerDelay
       }
+
+      const { context } = node
+
+      if (!context) return
+
+      // Reset pending value update prop if needed.
+      node.hook.input((payload, next) => {
+        if (context.pendingValueUpdate) context.pendingValueUpdate = false
+
+        return next(payload)
+      })
     })
   }
 }

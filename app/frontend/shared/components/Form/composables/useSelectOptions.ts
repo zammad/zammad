@@ -148,7 +148,7 @@ const useSelectOptions = <
   }
 
   const handleValuesForNonExistingOptions = () => {
-    if (!hasValue.value) return
+    if (!hasValue.value || context.value.pendingValueUpdate) return
 
     if (context.value.multiple) {
       const availableValues = currentValue.value.filter(
@@ -173,7 +173,8 @@ const useSelectOptions = <
   const setupMissingOptionHandling = () => {
     const { historicalOptions } = context.value
 
-    // When we are in a "create" form situation and no flag is given, it should be activated.
+    // When we are in a "create" form situation and no 'rejectNonExistentValues' flag
+    // is given, it should be activated.
     if (context.value.rejectNonExistentValues === undefined) {
       const rootNode = context.value.node.at('$root')
       context.value.rejectNonExistentValues =
@@ -184,6 +185,25 @@ const useSelectOptions = <
 
     // Remember current optionValueLookup in node context.
     context.value.optionValueLookup = optionValueLookup
+
+    // TODO: Workaround, because currently the "nulloption" exists also for multiselect fields (#4513).
+    if (context.value.multiple) {
+      watch(
+        () =>
+          hasValue.value &&
+          valueContainer.value.includes('') &&
+          context.value.clearable &&
+          !options.value.some((option) => option.value === ''),
+        () => {
+          const emptyOption: SelectOption = {
+            value: '',
+            label: '-',
+          }
+
+          ;(appendedOptions.value as SelectOption[]).unshift(emptyOption)
+        },
+      )
+    }
 
     // Append historical options to the list of available options, if:
     //   - non-existent values are not supposed to be rejected

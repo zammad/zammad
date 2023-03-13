@@ -664,6 +664,15 @@ const updateChangedFields = (
     const showField =
       !schemaData.fields[fieldName].show && changedFieldProps.show
 
+    const pendingValueUpdate =
+      !showField &&
+      value !== undefined &&
+      !isEqual(value, values.value[fieldName])
+
+    if (pendingValueUpdate) {
+      field.pendingValueUpdate = true
+    }
+
     // This happens for the initial updater, when the form is not settled yet or the field was not rendered yet.
     // In this ase we need to remember the changes and do it afterwards after the form is settled the first time.
     // Sometimes the value from the server is the "real" initial value, for this the `initialValue` can be used.
@@ -691,12 +700,7 @@ const updateChangedFields = (
 
     if (!formKitInitialNodesSettled.value) return
 
-    if (
-      !showField &&
-      value !== undefined &&
-      !isEqual(value, values.value[fieldName])
-    ) {
-      updaterChangedFields.add(fieldName)
+    if (pendingValueUpdate) {
       const node = changedFieldProps.id
         ? getNode(changedFieldProps.id)
         : getNodeByName(fieldName)

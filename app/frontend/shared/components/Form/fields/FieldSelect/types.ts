@@ -26,5 +26,6 @@ export type SelectContext = FormFieldContext<{
   noOptionsLabelTranslation?: boolean
   options: SelectOption[]
   rejectNonExistentValues?: boolean
+  pendingValueUpdate?: boolean
   sorting?: SelectOptionSorting
 }>
