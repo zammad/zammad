@@ -6,7 +6,7 @@ RSpec.shared_examples 'CanCsvImport' do |unique_attributes: []|
       described_class.destroy_all
     end
 
-    context 'when no data avaiable' do
+    context 'when no data available' do
       it 'still returns the header for the csv example' do
         expect(described_class.csv_example).to include('id')
       end
