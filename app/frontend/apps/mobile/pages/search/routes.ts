@@ -8,6 +8,19 @@ const routes: RouteRecordRaw[] = [
     name: 'SearchOverview',
     props: true,
     component: () => import('./views/SearchOverview.vue'),
+    beforeEnter(to) {
+      const redirectedHash = to.redirectedFrom?.hash
+      // if redirected from hash-based route, get search from the hash
+      // or if already redirected form itself, do nothing
+      if (!redirectedHash || to.query.search || to.params.type) return
+      const search = redirectedHash.slice('#search/'.length)
+      return {
+        name: 'SearchOverview',
+        // probably a ticket, but can be anything
+        params: { type: 'ticket' },
+        query: { search },
+      }
+    },
     meta: {
       title: __('Search'),
       requiresAuth: true,

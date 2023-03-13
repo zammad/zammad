@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     name: 'AccountOverview',
     props: true,
     component: () => import('./views/AccountOverview.vue'),
+    alias: '/profile',
     meta: {
       title: __('Account'),
       requiresAuth: true,
@@ -22,6 +23,7 @@ const routes: RouteRecordRaw[] = [
     name: 'AccountAvatar',
     props: true,
     component: () => import('./views/AccountAvatar.vue'),
+    alias: '/profile/avatar',
     meta: {
       title: __('Avatar'),
       requiresAuth: true,

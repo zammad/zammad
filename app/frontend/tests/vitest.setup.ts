@@ -19,6 +19,14 @@ configure({
   asyncUtilTimeout: process.env.CI ? 30_000 : 1_000,
 })
 
+Object.defineProperty(window, 'fetch', {
+  value: (path: string) => {
+    throw new Error(`calling fetch on ${path}`)
+  },
+  writable: true,
+  configurable: true,
+})
+
 class DOMRectList {
   length = 0
 

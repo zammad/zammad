@@ -8,6 +8,15 @@ const route: RouteRecordRaw[] = [
     name: 'Home',
     props: true,
     component: () => import('./views/Home.vue'),
+    beforeEnter(to) {
+      const location = to.hash && to.hash.slice(1)
+      if (location) {
+        const route = Router.resolve(location)
+        if (route.name !== 'Error') {
+          return `/${location}`
+        }
+      }
+    },
     meta: {
       title: __('Home'),
       requiresAuth: true,

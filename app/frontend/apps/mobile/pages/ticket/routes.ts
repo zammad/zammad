@@ -10,6 +10,7 @@ const routes: RouteRecordRaw[] = [
     name: 'TicketDetailView',
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
+    alias: '/ticket/zoom/:internalId(\\d+)',
     children: [
       {
         path: '',
@@ -56,8 +57,9 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/tickets/create',
     name: 'TicketCreate',
-    props: true,
+    props: false,
     component: () => import('./views/TicketCreate.vue'),
+    alias: ['/ticket/create', '/ticket/create/:pathMatch(.*)*'],
     meta: {
       title: __('Create Ticket'),
       requiresAuth: true,

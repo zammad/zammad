@@ -15,20 +15,33 @@ import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
+import { getTestRouter } from '@tests/support/components/renderComponent'
+import { setupView } from '@tests/support/mock-user'
+
+const prepareMocks = () => {
+  const organization = defaultOrganization()
+  const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
+    organization,
+  })
+  const mockSubscription = mockGraphQLSubscription(OrganizationUpdatesDocument)
+  mockOrganizationObjectAttributes()
+
+  return {
+    organization,
+    mockApi,
+    mockSubscription,
+  }
+}
+
+beforeEach(() => {
+  mockOnlineNotificationSeenGql()
+})
 
 describe('static organization', () => {
   it('shows organization', async () => {
     mockPermissions(['admin.organization'])
-    mockOnlineNotificationSeenGql()
 
-    const organization = defaultOrganization()
-    const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
-      organization,
-    })
-    const mockSubscription = mockGraphQLSubscription(
-      OrganizationUpdatesDocument,
-    )
-    mockOrganizationObjectAttributes()
+    const { organization, mockApi, mockSubscription } = prepareMocks()
 
     const view = await visitView(`/organizations/${organization.internalId}`)
 
@@ -74,7 +87,6 @@ describe('static organization', () => {
 
   it('shows organization members', async () => {
     mockPermissions(['admin.organization'])
-    mockOnlineNotificationSeenGql()
 
     const organization = defaultOrganization()
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
@@ -173,8 +185,6 @@ describe('static organization', () => {
   })
 
   it('can edit organization with required update policy', async () => {
-    mockOnlineNotificationSeenGql()
-
     const organization = defaultOrganization()
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
       organization,
@@ -190,8 +200,6 @@ describe('static organization', () => {
   })
 
   it('cannot edit organization without required update policy', async () => {
-    mockOnlineNotificationSeenGql()
-
     const organization = defaultOrganization()
     organization.policy.update = false
 
@@ -210,7 +218,6 @@ describe('static organization', () => {
 
   it('redirects to error page if organization is not found', async () => {
     mockPermissions(['admin.organization'])
-    mockOnlineNotificationSeenGql()
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
@@ -225,7 +232,6 @@ describe('static organization', () => {
 
   it('redirects to error page if access to organization is forbidden', async () => {
     mockPermissions(['admin.organization'])
-    mockOnlineNotificationSeenGql()
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()
@@ -237,4 +243,14 @@ describe('static organization', () => {
 
     await expect(view.findByText('Forbidden')).resolves.toBeInTheDocument()
   })
+})
+
+test('correctly redirects from organization hash-based routes', async () => {
+  setupView('agent')
+  prepareMocks()
+  await visitView('/#organization/profile/1')
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('OrganizationDetailView')
+  expect(route.params).toEqual({ internalId: '1' })
 })

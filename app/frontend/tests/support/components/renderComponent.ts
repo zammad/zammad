@@ -129,6 +129,12 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
     history: createWebHistory(),
     routes: localRoutes,
   }) as MockedRouter
+
+  Object.defineProperty(globalThis, 'Router', {
+    value: router,
+    writable: true,
+    configurable: true,
+  })
   // cannot use "as const" here, because ESLint fails with obscure error :shrug:
   const methods = ['push', 'replace', 'back', 'go', 'forward'] as unknown as [
     'push',

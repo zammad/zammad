@@ -10,6 +10,8 @@ import { mockAccount } from '@tests/support/mock-account'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
+import { setupView } from '@tests/support/mock-user'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 import { AccountLocaleDocument } from '../graphql/mutations/locale.api'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
@@ -130,4 +132,20 @@ describe('account page', () => {
     expect(mainContent).not.toHaveTextContent('Version')
     expect(mainContent).not.toHaveTextContent('Avatar')
   })
+})
+
+test('correctly redirects from hash-based routes', async () => {
+  setupView('agent')
+  await visitView('/#profile')
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('AccountOverview')
+})
+
+test('correctly redirects from hash-based routes', async () => {
+  setupView('agent')
+  await visitView('/#profile/avatar')
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('AccountAvatar')
 })

@@ -7,6 +7,7 @@ const routes: RouteRecordRaw = {
   name: 'UserDetailView',
   props: (route) => ({ internalId: Number(route.params.internalId) }),
   component: () => import('./views/UserDetailView.vue'),
+  alias: '/user/profile/:internalId(\\d+)',
   meta: {
     title: __('User'),
     requiresAuth: true,

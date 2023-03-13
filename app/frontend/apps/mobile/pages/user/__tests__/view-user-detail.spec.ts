@@ -9,6 +9,7 @@ import { visitView } from '@tests/support/components/visitView'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
 import { setupView } from '@tests/support/mock-user'
 import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 
 describe('visiting user page', () => {
   test('view static content', async () => {
@@ -225,4 +226,13 @@ describe('visiting user page', () => {
 
     await expect(view.findByText('Forbidden')).resolves.toBeInTheDocument()
   })
+})
+
+test('correctly redirects from hash-based routes', async () => {
+  setupView('agent')
+  await visitView('/#user/profile/1')
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('UserDetailView')
+  expect(route.params).toEqual({ internalId: '1' })
 })

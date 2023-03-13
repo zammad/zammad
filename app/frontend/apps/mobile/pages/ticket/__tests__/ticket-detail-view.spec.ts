@@ -23,6 +23,7 @@ import {
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
+import { setupView } from '@tests/support/mock-user'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
@@ -863,4 +864,15 @@ describe('ticket add/edit reply article', () => {
 
     expect(form?.find('body', 'name')?.value).toBe('Testing')
   })
+})
+
+test('correctly redirects from ticket hash-based routes', async () => {
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
+  setupView('agent')
+  await visitView('/#ticket/zoom/1')
+  await waitUntilTicketLoaded()
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('TicketDetailArticlesView')
+  expect(route.params).toEqual({ internalId: '1' })
 })

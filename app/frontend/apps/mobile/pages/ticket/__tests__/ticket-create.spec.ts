@@ -19,9 +19,10 @@ import { nullableMock, waitUntil } from '@tests/support/utils'
 import { getTestRouter } from '@tests/support/components/renderComponent'
 import { getNode } from '@formkit/core'
 import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
+import { setupView } from '@tests/support/mock-user'
 import { TicketCreateDocument } from '../graphql/mutations/create.api'
 
-const visitTicketCreate = async () => {
+const visitTicketCreate = async (path = '/tickets/create') => {
   const mockObjectAttributes = mockGraphQLApi(
     ObjectManagerFrontendAttributesDocument,
   ).willBehave(({ object }) => {
@@ -84,7 +85,7 @@ const visitTicketCreate = async () => {
     },
   })
 
-  const view = await visitView('/tickets/create')
+  const view = await visitView(path)
 
   await flushPromises()
   await getNode('ticket-create')?.settled
@@ -374,5 +375,23 @@ describe('Creating new ticket as user having customer & agent permissions', () =
     const { view } = await visitTicketCreate()
 
     checkShownSteps(view, ['1', '2', '3', '4'])
+  })
+})
+
+describe('redirects', () => {
+  test('correctly redirects from ticket create hash-based routes', async () => {
+    setupView('agent')
+    await visitTicketCreate('/#ticket/create')
+    const router = getTestRouter()
+    const route = router.currentRoute.value
+    expect(route.name).toBe('TicketCreate')
+  })
+
+  test('correctly redirects from ticket create with id hash-based routes', async () => {
+    setupView('agent')
+    await visitTicketCreate('/#ticket/create/id/13214124')
+    const router = getTestRouter()
+    const route = router.currentRoute.value
+    expect(route.name).toBe('TicketCreate')
   })
 })

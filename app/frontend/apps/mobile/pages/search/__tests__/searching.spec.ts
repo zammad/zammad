@@ -132,3 +132,13 @@ describe('avatars', () => {
     })
   })
 })
+
+test('correctly redirects from hash-based routes', async () => {
+  setupView('agent')
+  await visitView('/#search/string')
+  const router = getTestRouter()
+  const route = router.currentRoute.value
+  expect(route.name).toBe('SearchOverview')
+  expect(route.params).toEqual({ type: 'ticket' })
+  expect(route.query).toEqual({ search: 'string' })
+})

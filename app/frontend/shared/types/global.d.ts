@@ -6,10 +6,12 @@ declare type Maybe<T> = T | null
 
 declare global {
   interface Window {
+    Router: import('vue-router').Router
     __(source: string): string
     setLogLevel(level: LogLevel, persistent: boolean): void
   }
 }
 
+declare const Router: import('vue-router').Router
 declare function __(source: string): string
 declare function setLogLevel(level: LogLevel, persistent: boolean): void

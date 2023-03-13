@@ -132,7 +132,7 @@ export default defineConfig(({ mode, command }) => {
       environment: 'jsdom',
       clearMocks: true,
       css: false,
-      testTimeout: 30_000,
+      testTimeout: process.env.CI ? 30_000 : 5_000,
       deps: {
         // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
         inline: ['@tiptap/extension-mention'],

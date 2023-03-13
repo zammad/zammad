@@ -21,8 +21,11 @@ if (forceDesktopLocalStorage.value) window.location.href = '/'
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
 
+  const router = initializeRouter(app)
+
+  Object.defineProperty(window, 'Router', { value: router, configurable: true })
+
   initializeApp(app)
-  initializeRouter(app)
   initializeApolloClient(app)
 
   initializeStoreSubscriptions()
