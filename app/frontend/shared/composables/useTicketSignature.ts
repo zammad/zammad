@@ -68,7 +68,10 @@ export const useTicketSignature = (ticket?: Ref<TicketById | undefined>) => {
 
       const groupId = getValue(values, changedField, 'group_id')
 
-      if (!groupId) return
+      if (!groupId) {
+        editorContext.removeSignature()
+        return
+      }
 
       const senderType = getValue(values, changedField, 'articleSenderType')
 

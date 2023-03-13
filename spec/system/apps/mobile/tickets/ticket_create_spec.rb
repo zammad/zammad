@@ -181,6 +181,29 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         expect(find_editor('Text')).to have_text_value('', exact: true)
       end
     end
+
+    it 'removes signature when group is deselected' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.name_with_middle)
+        next_step
+
+        find_radio('articleSenderType').select_choice('Send Email')
+        next_step
+
+        find_select('Group').select_option('Users')
+        next_step
+
+        expect(find_editor('Text')).to have_text_value(user.fullname)
+
+        go_to_step(3)
+        find_select('Group').clear_selection
+
+        go_to_step(4)
+
+        # only label is rendered as text
+        expect(find_editor('Text')).to have_text_value('', exact: true)
+      end
+    end
   end
 
   context 'with entered form fields' do
