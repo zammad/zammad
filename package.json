@@ -35,7 +35,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
-    "@testing-library/vue": "^6.6.1",
+    "@testing-library/vue": "^7.0.0",
     "@types/lodash-es": "^4.17.6",
     "@types/rails__actioncable": "^6.1.6",
     "@types/ua-parser-js": "^0.7.36",
