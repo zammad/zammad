@@ -37,12 +37,21 @@ const rotateDegree = computed(() => {
   return (differenceY.value / MAX_PULL_LENGTH) * 180
 })
 
-useEventListener(articlesElement, 'touchstart', (event: TouchEvent) => {
-  if (loaderShown.value) return
-  startPoint.value = event.touches[0].clientY
-  isMoving.value = true
-  differenceY.value = 0
-})
+useEventListener(
+  articlesElement,
+  'touchstart',
+  (event: TouchEvent) => {
+    if (loaderShown.value) return
+    startPoint.value = event.touches[0].clientY
+    isMoving.value = true
+    differenceY.value = 0
+  },
+  {
+    // Make sure that the event listener is marked as passive, since `touchstart` is a high-frequency event.
+    //   https://developer.chrome.com/en/docs/lighthouse/best-practices/uses-passive-event-listeners/
+    passive: true,
+  },
+)
 useEventListener(articlesElement, 'touchend', () => {
   if (differenceY.value === MAX_PULL_LENGTH) {
     loaderShown.value = true
@@ -60,19 +69,28 @@ useEventListener(articlesElement, 'touchend', () => {
   differenceY.value = 0
   startPoint.value = 0
 })
-useEventListener(articlesElement, 'touchmove', async (event: TouchEvent) => {
-  const page = document.documentElement
-  const isBottom = page.scrollHeight - page.scrollTop <= page.clientHeight
-  if (isBottom) {
-    arrowShown.value = true
-    const difference = event.touches[0].clientY - startPoint.value
-    if (difference >= -MIN_PULL_LENGTH) {
-      differenceY.value = 0
-      return
+useEventListener(
+  articlesElement,
+  'touchmove',
+  async (event: TouchEvent) => {
+    const page = document.documentElement
+    const isBottom = page.scrollHeight - page.scrollTop <= page.clientHeight
+    if (isBottom) {
+      arrowShown.value = true
+      const difference = event.touches[0].clientY - startPoint.value
+      if (difference >= -MIN_PULL_LENGTH) {
+        differenceY.value = 0
+        return
+      }
+      differenceY.value = Math.min(Math.abs(difference), MAX_PULL_LENGTH)
     }
-    differenceY.value = Math.min(Math.abs(difference), MAX_PULL_LENGTH)
-  }
-})
+  },
+  {
+    // Make sure that the event listener is marked as passive, since `touchmove` is a high-frequency event.
+    //   https://developer.chrome.com/en/docs/lighthouse/best-practices/uses-passive-event-listeners/
+    passive: true,
+  },
+)
 
 watchEffect(() => {
   const parent = articlesElement.value?.parentElement
