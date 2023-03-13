@@ -1,7 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, watch, nextTick } from 'vue'
+import { noop } from 'lodash-es'
 import { useHeader } from '@mobile/composables/useHeader'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
@@ -10,10 +11,11 @@ import { convertToGraphQLId } from '@shared/graphql/utils'
 import type { TicketArticle } from '@shared/entities/ticket/types'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import type {
+  PageInfo,
   TicketArticleUpdatesSubscription,
   TicketArticleUpdatesSubscriptionVariables,
 } from '@shared/graphql/types'
-import { noop } from 'lodash-es'
+import { getApolloClient } from '@shared/server/apollo/client'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
@@ -56,10 +58,39 @@ articlesQuery.subscribeToMore<
       const edges = previous.articles.edges.filter(
         (edge) => edge.node.id !== updates.deletedArticleId,
       )
+
+      // When the last article is deleted, cursor has to be adjusted
+      //  to show newly created articles in the list (if any).
+      // Cursor is offset-based, so the old cursor is pointing to an unavailable article,
+      //  thus using the cursor for the last article of the already filtered edges.
+      const nextEndCursorEdge =
+        previous.articles.edges[previous.articles.edges.length - 2]
+
+      const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}
+
+      if (nextEndCursorEdge) {
+        newPageInfo.endCursor = nextEndCursorEdge.cursor
+      } else {
+        newPageInfo.startCursor = null
+        newPageInfo.endCursor = null
+      }
+
+      const { pageInfo } = previous.articles
+
+      // Trigger cache garbage collection after the returned article deletion subscription
+      //  updated the article list.
+      nextTick(() => {
+        getApolloClient().cache.gc()
+      })
+
       return {
         ...previous,
         articles: {
           ...previous.articles,
+          pageInfo: {
+            ...pageInfo,
+            ...newPageInfo,
+          },
           edges,
           totalCount: previous.articles.totalCount - 1,
         },

@@ -3,21 +3,21 @@
 require 'rails_helper'
 require 'system/apps/mobile/examples/create_article_examples'
 
-RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_as: :agent, type: :system do
+RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated_as: :agent, type: :system do
   let(:group)     { Group.find_by(name: 'Users') }
   let(:agent)     { create(:agent, groups: [group]) }
   let(:customer)  { create(:customer) }
   let(:ticket)    { create(:ticket, customer: customer, group: group) }
 
-  def wait_for_ticket_edit
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
+  def wait_for_ticket_edit(number: 1)
+    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql', number: number)
   end
 
-  def save_article
+  def save_article(number: 1)
     find_button('Done').click
     find_button('Save').click
 
-    wait_for_ticket_edit
+    wait_for_ticket_edit(number: number)
   end
 
   def open_article_dialog
@@ -143,6 +143,63 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
       end
     end
 
+    context 'when an article was just deleted', current_user_id: -> { agent.id } do
+      def delete_article(article_body, number: 1)
+        within '[role="comment"]', text: article_body do
+          find('[data-name="article-context"]').click
+        end
+
+        click_on 'Delete Article'
+        click_on 'OK'
+
+        wait_for_gql('apps/mobile/pages/ticket/graphql/subscriptions/ticketArticlesUpdates.graphql', number: number)
+      end
+
+      def create_article(article_body, number: 1)
+        find_button('Add reply').click
+
+        text = find_editor('Text')
+        expect(text).to have_text_value('', exact: true)
+        text.type(article_body)
+
+        save_article(number: number)
+      end
+
+      context 'when deleting the first/last article' do
+        it 'shows the correct articles' do
+          visit "/tickets/#{ticket.id}"
+          wait_for_form_to_settle('form-ticket-edit')
+
+          create_article('Article 1')
+          delete_article('Article 1')
+          create_article('This is a new note', number: 2)
+
+          expect(page).to have_no_text('Article 1')
+            .and have_text('This is a new note')
+        end
+      end
+
+      context 'when deleting an article in the middle' do
+        it 'shows the correct articles' do
+          visit "/tickets/#{ticket.id}"
+          wait_for_form_to_settle('form-ticket-edit')
+
+          create_article('Article 1')
+          create_article('Article 2', number: 2)
+          create_article('Article 3', number: 3)
+
+          delete_article('Article 2')
+
+          create_article('This is a new note', number: 4)
+
+          expect(page).to have_text('Article 1')
+            .and have_no_text('Article 2')
+            .and have_text('This is a new note')
+            .and have_text('Article 3')
+        end
+      end
+    end
+
     it 'changes ticket data together with the article' do
       open_article_dialog
 
@@ -169,7 +226,7 @@ RSpec.describe 'Mobile > Ticket > Create article', app: :mobile, authenticated_a
 
     context 'when creating a phone article' do
       include_examples 'mobile app: create article', 'Phone', attachments: true, conditional: false do
-        let(:article) { create(:ticket_article, :outbound_phone, ticket: ticket) }
+        let(:article)      { create(:ticket_article, :outbound_phone, ticket: ticket) }
         let(:type)         { Ticket::Article::Type.lookup(name: 'phone') }
         let(:content_type) { 'text/html' }
       end

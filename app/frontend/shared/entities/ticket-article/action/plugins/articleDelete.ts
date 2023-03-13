@@ -1,50 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { MutationHandler } from '@shared/server/apollo/handler'
-import type { ApolloCache } from '@apollo/client/cache'
-import type { InMemoryCache } from '@apollo/client/core'
 import { useTicketArticleDeleteMutation } from '@shared/entities/ticket-article/graphql/mutations/delete.api'
-import { useApplicationStore } from '@shared/stores/application'
 import { useSessionStore } from '@shared/stores/session'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
-import { TicketArticlesDocument } from '@mobile/pages/ticket/graphql/queries/ticket/articles.api'
-import type { TicketArticleEdge } from '@shared/graphql/types'
 import type { TicketArticleActionPlugin, TicketArticleAction } from './types'
-
-const updateCacheAfterRemoving = (
-  cache: ApolloCache<InMemoryCache>,
-  ticket: TicketById,
-  article: TicketArticle,
-) => {
-  const application = useApplicationStore()
-
-  cache.updateQuery(
-    {
-      query: TicketArticlesDocument,
-      variables: {
-        ticketId: ticket.id,
-        pageSize: Number(application.config.ticket_articles_min ?? 5),
-      },
-    },
-    (data) => {
-      const edges = data.articles.edges.filter(
-        (elem: TicketArticleEdge) => elem.node.id !== article.id,
-      )
-
-      return {
-        ...data,
-        articles: {
-          ...data.articles,
-          edges,
-          totalCount: data.articles.totalCount - 1,
-        },
-      }
-    },
-  )
-
-  cache.gc()
-}
 
 const deleteAction = async (ticket: TicketById, article: TicketArticle) => {
   const { waitForConfirmation } = useConfirmation()
@@ -58,9 +19,6 @@ const deleteAction = async (ticket: TicketById, article: TicketArticle) => {
   const mutation = new MutationHandler(
     useTicketArticleDeleteMutation({
       variables: { articleId: article.id },
-      update(cache) {
-        updateCacheAfterRemoving(cache, ticket, article)
-      },
     }),
     { errorNotificationMessage: __('The article could not be deleted.') },
   )
