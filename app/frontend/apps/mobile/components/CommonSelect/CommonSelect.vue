@@ -163,9 +163,11 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
         :aria-label="$t('Dialog window with selections')"
         role="dialog"
       >
+        <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
         <div
           class="select-overlay fixed inset-0 flex h-full w-full bg-gray-500 opacity-60"
           data-test-id="dialog-overlay"
+          @click="void 0"
         ></div>
         <div class="select-dialog relative m-auto">
           <div
