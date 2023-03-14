@@ -24,7 +24,7 @@ const renderCheckbox = (options: ExtendedMountingOptions<unknown> = {}) =>
     ...options,
   })
 
-describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
+describe('Form - Field - Checkbox (FormKit built-in)', () => {
   it('can render a checkbox', () => {
     const view = renderCheckbox()
 
@@ -35,6 +35,34 @@ describe('Form - Field - Checkbox (Formkit-BuildIn)', () => {
 
     const node = getNode('checkbox')
     expect(node?.value).toBe(undefined)
+  })
+
+  it('renders a checkmark icon and `is-checked` data attribute', async () => {
+    const view = renderCheckbox()
+
+    const label = view.getByTestId('checkbox-label')
+
+    expect(label.querySelector('svg')).toMatchInlineSnapshot(`
+      <svg
+        class="fill-current"
+        height="16"
+        viewBox="0 0 24 24"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20.8087 5.58815L11.3542 18.5881C11.1771 18.8316 10.8998 18.9824 10.5992 18.9985C10.2986 19.0147 10.0067 18.8946 9.80449 18.6715L3.25903 11.4493L4.74097 10.1062L10.4603 16.4169L19.1913 4.4118L20.8087 5.58815Z"
+        />
+      </svg>
+    `)
+
+    expect(label).not.toHaveAttribute('data-is-checked')
+
+    const checkbox = view.getByLabelText('Checkbox')
+
+    await view.events.click(checkbox)
+
+    expect(label).toHaveAttribute('data-is-checked', 'true')
   })
 
   it('set some props', async () => {

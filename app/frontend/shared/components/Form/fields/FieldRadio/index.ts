@@ -17,6 +17,7 @@ const addOptionCheckedDataAttribute = (node: FormKitNode) => {
         then: 'true',
         else: undefined,
       },
+      'data-test-id': 'radio-label',
     },
   })
 }
@@ -71,6 +72,7 @@ const handleButtonMode = (node: FormKitNode) => {
       props.wrapperClass =
         'items-center justify-center py-2 px-4 w-full h-14 text-lg font-normal text-white bg-gray-600 rounded-xl select-none formkit-is-checked:bg-white formkit-is-checked:text-black formkit-is-checked:font-semibold'
       props.inputClass = '$reset sr-only'
+      props.decoratorClass = 'hidden'
     } else {
       props.inputClass =
         'h-4 w-4 border-[1.5px] border-white rounded-full bg-transparent focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue'
