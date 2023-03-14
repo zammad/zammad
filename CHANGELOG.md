@@ -5,6 +5,7 @@
 
 **Fixed bugs:**
 
+
 - Taskbar is not marked as having changes if one of multiselect selections is unselected [4441](https://github.com/zammad/zammad/issues/4441) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Ticket fields are readonly for users with secondary organizations on tickets created by another user [4426](https://github.com/zammad/zammad/issues/4426) [[bug](https://github.com/zammad/zammad/labels/bug)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
 - Freshdesk custom field types which can not be mapped will abort the complete import [4342](https://github.com/zammad/zammad/issues/4342) [[bug](https://github.com/zammad/zammad/labels/bug)] [[import](https://github.com/zammad/zammad/labels/import)]
