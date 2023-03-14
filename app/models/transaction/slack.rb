@@ -166,21 +166,21 @@ class Transaction::Slack
       )
       if local_config['expand']
         body = "#{result[:subject]}\n#{result[:body]}"
-        result = notifier.ping body
+        result_ping = notifier.ping body
       else
         attachment = {
           text:      result[:body],
           mrkdwn_in: ['text'],
           color:     ticket.current_state_color,
         }
-        result = notifier.ping result[:subject],
-                               attachments: [attachment]
+        result_ping = notifier.ping result[:subject],
+                                    attachments: [attachment]
       end
-      if !result.empty? && !result[0].success?
+      if !result_ping.empty? && !result_ping[0].success?
         if sent_value
           Rails.cache.delete(cache_key)
         end
-        Rails.logger.error "Unable to post webhook: #{local_config['webhook']}: #{result.inspect}"
+        Rails.logger.error "Unable to post webhook: #{local_config['webhook']}: #{result_ping.inspect}"
         next
       end
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
