@@ -3486,16 +3486,6 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.47.tgz#e597ef75086c6e896ff5478a6bfc0a7aa4bbd14c"
   integrity sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==
 
-"@vue/test-utils@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.3.0.tgz#0793a2bd94135c0374a720c38f76244997c4316b"
-  integrity sha512-S8/9Z+B4VSsTUNtZtzS7J1TfxJbf10n+gcH9X8cASbG0Tp7qD6vqs/sUNlmpzk6i7+pP00ptauJp9rygyW89Ww==
-  dependencies:
-    js-beautify "1.14.6"
-  optionalDependencies:
-    "@vue/compiler-dom" "^3.0.1"
-    "@vue/server-renderer" "^3.0.1"
-
 "@vue/test-utils@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.3.1.tgz#411883ea52091fa3e59d9b0b83f2934111c10776"
@@ -8290,10 +8280,10 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
-pinia@^2.0.32:
-  version "2.0.32"
-  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.32.tgz#93a12df4416566c1bb49225a078fe20b982350be"
-  integrity sha512-8Tw4OrpCSJ028UUyp0gYPP/wyjigLoEceuO/x1G+FlHVf73337e5vLm4uDmrRIoBG1hvaed/eSHnrCFjOc4nkA==
+pinia@^2.0.33:
+  version "2.0.33"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.33.tgz#b70065be697874d5824e9792f59bd5d87ddb5e7d"
+  integrity sha512-HOj1yVV2itw6rNIrR2f7+MirGNxhORjrULL8GWgRwXsGSvEqIQ+SE0MYt6cwtpegzCda3i+rVTZM+AM7CG+kRg==
   dependencies:
     "@vue/devtools-api" "^6.5.0"
     vue-demi "*"
