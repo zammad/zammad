@@ -65,12 +65,12 @@ const iconProps = computed<IconProps | null>(() => {
       </div>
 
       <div
-        class="mr-1 flex items-center"
+        class="flex items-center ltr:mr-1 rtl:ml-1"
         data-test-id="section-menu-information"
       >
         <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
-          class="text-gray ltr:ml-2 rtl:mr-2"
+          class="text-white ltr:ml-2 ltr:-mr-2 rtl:mr-2 rtl:-ml-2"
           :name="`mobile-chevron-${
             locale.localeData?.dir === 'rtl' ? 'left' : 'right'
           }`"

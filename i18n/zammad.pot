@@ -557,10 +557,6 @@ msgstr ""
 msgid "API token"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
@@ -10834,6 +10830,7 @@ msgid "This host cannot be reached."
 msgstr ""
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr ""
 
@@ -11990,6 +11987,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr ""
 

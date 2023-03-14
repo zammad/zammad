@@ -15,6 +15,7 @@ import FormGroup from '@shared/components/Form/FormGroup.vue'
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useProductAboutQuery } from '@shared/graphql/queries/about.api'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonSectionMenuItem from '@mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import { useRawHTMLIcon } from '@shared/components/CommonIcon'
@@ -149,14 +150,32 @@ const { forceDesktop } = useForceDesktop()
       <!-- TODO email -->
     </div>
 
-    <!-- TODO maybe instead of a different page we can use a Dialog? -->
-    <CommonSectionMenu v-if="session.hasPermission('user_preferences.avatar')">
+    <CommonSectionMenu>
+      <!-- TODO maybe instead of a different page we can use a Dialog? -->
       <CommonSectionMenuLink
+        v-if="session.hasPermission('user_preferences.avatar')"
         :icon="{ name: 'mobile-person', size: 'base' }"
         icon-bg="bg-pink"
         link="/account/avatar"
       >
         {{ $t('Avatar') }}
+      </CommonSectionMenuLink>
+      <CommonSectionMenuLink
+        v-if="showInstallButton"
+        :icon="{ name: 'mobile-install', size: 'small' }"
+        icon-bg="bg-blue"
+        @click="installZammadPWA"
+      >
+        {{ $t('Install App') }}
+      </CommonSectionMenuLink>
+      <CommonSectionMenuLink
+        link="/"
+        link-external
+        :icon="{ name: 'mobile-desktop', size: 'base' }"
+        icon-bg="bg-orange"
+        @click="forceDesktop"
+      >
+        {{ $t('Continue to desktop') }}
       </CommonSectionMenuLink>
     </CommonSectionMenu>
 
@@ -183,31 +202,11 @@ const { forceDesktop } = useForceDesktop()
     </FormGroup>
 
     <CommonSectionMenu>
-      <CommonSectionMenuLink
-        v-if="hasVersionPermission"
-        :icon="{ name: 'mobile-info', size: 'base' }"
-        :information="productAbout?.productAbout"
-        icon-bg="bg-gray"
-      >
-        {{ $t('About') }}
-      </CommonSectionMenuLink>
-      <CommonSectionMenuLink
-        v-if="showInstallButton"
-        :icon="{ name: 'mobile-install', size: 'small' }"
-        icon-bg="bg-blue"
-        @click="installZammadPWA"
-      >
-        {{ $t('Install App') }}
-      </CommonSectionMenuLink>
-      <CommonSectionMenuLink
-        link="/"
-        link-external
-        :icon="{ name: 'mobile-desktop', size: 'base' }"
-        icon-bg="bg-orange"
-        @click="forceDesktop"
-      >
-        {{ $t('Continue to desktop') }}
-      </CommonSectionMenuLink>
+      <CommonSectionMenuItem v-if="hasVersionPermission" :label="__('Version')">
+        {{
+          $t('This is Zammad version %s', productAbout?.productAbout as string)
+        }}
+      </CommonSectionMenuItem>
     </CommonSectionMenu>
 
     <div class="mb-4">

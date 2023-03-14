@@ -10,13 +10,9 @@ describe('article action plugins - actions', () => {
     const { ticket } = defaultTicket()
     const article = createTicketArticle()
     const actions = createTestArticleActions(ticket, article)
-    expect(actions).toHaveLength(2)
+    expect(actions).toHaveLength(1)
     expect(actions[0]).toMatchObject({
       name: 'changeVisibility',
-    })
-    expect(actions[1]).toMatchObject({
-      name: 'split',
-      link: `/tickets/create?ticket_id=${ticket.id}&article_id=${article.id}`,
     })
   })
 })

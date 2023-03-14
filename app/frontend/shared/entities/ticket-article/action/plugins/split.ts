@@ -6,6 +6,7 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 700,
 
   addActions(ticket, article) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const action: TicketArticleAction = {
       apps: ['mobile'],
       label: __('Split'),
@@ -16,7 +17,9 @@ const actionPlugin: TicketArticleActionPlugin = {
       },
       link: `/tickets/create?ticket_id=${ticket.id}&article_id=${article.id}`,
     }
-    return [action]
+
+    // TODO: Return an empty array until the support for splitting articles is implemented in the ticket create screen.
+    return []
   },
 }
 

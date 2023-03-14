@@ -269,10 +269,6 @@ test('show article context on click', async () => {
   await view.events.click(contextTriggers[0])
 
   expect(view.getByText('Set to internal')).toBeInTheDocument()
-  expect(view.getByText('Split')).toBeInTheDocument()
-  // expect(view.getByText('Reply')).toBeInTheDocument()
-
-  // TODO actions itself should be tested when reply will be implemented
 })
 
 test('change content on subscription', async () => {
