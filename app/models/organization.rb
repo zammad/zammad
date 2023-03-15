@@ -17,8 +17,6 @@ class Organization < ApplicationModel
 
   include HasTransactionDispatcher
 
-  default_scope { order(:id) }
-
   has_many :members, class_name: 'User'
   has_and_belongs_to_many :secondary_members, class_name: 'User'
   has_many :tickets, class_name: 'Ticket'
