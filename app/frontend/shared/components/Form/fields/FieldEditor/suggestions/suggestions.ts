@@ -100,7 +100,10 @@ export default function buildMentionExtension<T>(
         },
         onExit() {
           mounted = false
-          popup.destroy()
+
+          // Destroy tippy.js instance, but only if it has not been destroyed yet (i.e. it was left open).
+          if (!popup.state.isDestroyed) popup.destroy()
+
           component.destroy()
         },
       }
