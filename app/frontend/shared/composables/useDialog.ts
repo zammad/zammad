@@ -31,6 +31,7 @@ interface DialogOptions {
   afterClose?: () => Awaited<unknown>
 }
 
+const mounted = new Set<string>()
 const dialogsOptions = new Map<string, DialogOptions>()
 const dialogsOpened = ref(new Set<string>())
 const lastFocusedElements: Record<string, HTMLElement> = {}
@@ -127,12 +128,17 @@ export const useDialog = (options: DialogOptions) => {
     // so we need to add options again
     // this happens mainly in storybook stories
     onMounted(() => {
+      mounted.add(options.name)
       dialogsOptions.set(options.name, options as DialogOptions)
     })
 
     onUnmounted(async () => {
+      mounted.delete(options.name)
       await closeDialog(options.name)
-      dialogsOptions.delete(options.name)
+      // was mounted during hmr
+      if (!mounted.has(options.name)) {
+        dialogsOptions.delete(options.name)
+      }
     })
   }
 
