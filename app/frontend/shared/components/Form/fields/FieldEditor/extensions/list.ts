@@ -17,6 +17,8 @@ import UserMention, { UserLink } from '../suggestions/UserMention'
 import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion'
 import TextModuleSuggestion from '../suggestions/TextModuleSuggestion'
 import Image from './Image'
+import HardBreakSimple from './HardBreakSimple'
+import HardBreakParagraph from './HardBreakParagraph'
 import Signature from './Signature'
 import type { FieldEditorProps } from '../types'
 
@@ -34,9 +36,11 @@ export const getPlainExtensions = (): Extensions => [
     horizontalRule: false,
     italic: false,
     listItem: false,
+    hardBreak: false,
     orderedList: false,
     strike: false,
   }),
+  HardBreakSimple,
   CharacterCount,
 ]
 
@@ -46,6 +50,7 @@ export const getHtmlExtensions = (): Extensions => [
     listItem: false,
     blockquote: false,
     paragraph: false,
+    hardBreak: false,
   }),
   Paragraph.extend({
     addAttributes() {
@@ -61,6 +66,7 @@ export const getHtmlExtensions = (): Extensions => [
   Underline,
   OrderedList,
   ListItem,
+  HardBreakParagraph,
   Blockquote.extend({
     addAttributes() {
       return {

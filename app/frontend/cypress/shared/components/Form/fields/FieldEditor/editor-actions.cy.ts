@@ -2,24 +2,27 @@
 
 import { mountEditor } from './utils'
 
-const testAction = (action: string, expected: (text: string) => string) => {
+const testAction = (
+  action: string,
+  expected: (text: string) => string,
+  typeText = 'Something',
+  hint = ' ',
+) => {
   describe(`testing action - ${action}`, { retries: 2 }, () => {
-    it(`${action} - enabled, text after is affected`, () => {
+    it(`${action}${hint} - enabled, text after is affected`, () => {
       mountEditor()
       cy.findByRole('textbox').click()
       cy.findByTestId('action-bar').findByLabelText(action).click()
       cy.findByRole('textbox')
-        .type('Something')
-        .should('contain.html', expected('Something'))
+        .type(typeText)
+        .should('contain.html', expected(typeText))
     })
 
-    it(`${action} - toggle text`, () => {
+    it(`${action}${hint} - toggle text`, () => {
       mountEditor()
-      cy.findByRole('textbox')
-        .type('Something{selectall}')
-        .should('have.html', '<p>Something</p>')
+      cy.findByRole('textbox').type(`${typeText}{selectall}`)
       cy.findByTestId('action-bar').findByLabelText(action).click()
-      cy.findByRole('textbox').should('contain.html', expected('Something'))
+      cy.findByRole('textbox').should('contain.html', expected(typeText))
     })
   })
 }
@@ -34,6 +37,19 @@ describe('testing actions', () => {
   testAction('Add third level heading', (text) => `<h3>${text}</h3>`)
   testAction('Add ordered list', (text) => `<ol><li><p>${text}</p></li></ol>`)
   testAction('Add bullet list', (text) => `<ul><li><p>${text}</p></li></ul>`)
+
+  testAction(
+    'Add ordered list',
+    () => `<ol><li><p>Something1</p></li><li><p>Something2</p></li></ol>`,
+    'Something1{enter}Something2',
+    ' (multiline)',
+  )
+  testAction(
+    'Add bullet list',
+    () => `<ul><li><p>Something1</p></li><li><p>Something2</p></li></ul>`,
+    'Something1{enter}Something2',
+    ' (multiline)',
+  )
 
   describe('testing action - remove formatting', () => {
     it('removes formatting', () => {

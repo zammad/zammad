@@ -41,7 +41,7 @@ export default function useEditorActions(
     return editor.value?.isActive(type, attributes) ?? false
   }
 
-  // this is primarily used by cypress tests, where it requires actual input in dom
+  // this is primarily used by cypress tests, where it requires an actual input in the DOM tree
   let fileInput: HTMLInputElement | null = null
 
   const getInputForImage = () => {
@@ -51,7 +51,7 @@ export default function useEditorActions(
     fileInput.type = 'file'
     fileInput.multiple = true
     fileInput.accept = 'image/*'
-    fileInput.style.display = 'hidden'
+    fileInput.style.display = 'none'
     if (import.meta.env.DEV || VITE_TEST_MODE) {
       fileInput.dataset.testId = 'editor-image-input'
     }

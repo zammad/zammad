@@ -75,6 +75,9 @@ const editor = useEditor({
     },
     // add inlined files
     handlePaste(view, event) {
+      if (!editorExtensions.some((n) => n.name === 'image')) {
+        return
+      }
       const files = event.clipboardData?.files || null
       convertFileList(files).then((urls) => {
         editor.value?.commands.setImages(urls)
@@ -88,6 +91,9 @@ const editor = useEditor({
       return false
     },
     handleDrop(view, event) {
+      if (!editorExtensions.some((n) => n.name === 'image')) {
+        return
+      }
       const e = event as unknown as InputEvent
       const files = e.dataTransfer?.files || null
       convertFileList(files).then((urls) => {
@@ -230,6 +236,9 @@ const removeSignature = () => {
 }
 
 const characters = computed(() => {
+  if (contentType.value === 'text/plain') {
+    return currentValue.value?.length || 0
+  }
   if (!editor.value) return 0
   return editor.value.storage.characterCount.characters({
     node: editor.value.state.doc,

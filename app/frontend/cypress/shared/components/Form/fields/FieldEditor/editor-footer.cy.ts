@@ -11,6 +11,7 @@ describe('displays footer information', () => {
 
   it("doesn't display footer, if footer if disabled", () => {
     mountEditor({
+      contentType: 'text/plain',
       meta: {
         footer: {
           disabled: true,
@@ -32,6 +33,7 @@ describe('displays footer information', () => {
 
   it('displays footer, if footer text is provided', () => {
     mountEditor({
+      contentType: 'text/plain',
       meta: {
         footer: {
           text: '/AB',
@@ -52,6 +54,7 @@ describe('displays footer information', () => {
 
   it('renders counter that decrements', () => {
     mountEditor({
+      contentType: 'text/plain',
       meta: {
         footer: {
           text: '/AB',
@@ -79,7 +82,7 @@ describe('displays footer information', () => {
           .and('have.class', 'text-orange')
       })
     cy.findByRole('textbox')
-      .type('1234567')
+      .type('\n\n\n4567')
       .then(() => {
         cy.findByTitle('Available characters')
           .should('have.text', '-6')

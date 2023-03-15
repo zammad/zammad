@@ -18,7 +18,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const editorRerenderKey = computed(() => {
-  // when plain changes, we need to rerender the editor
+  // when content-type changes, we need to rerender the editor
   const type = props.context.contentType === 'text/plain' ? 'plain' : 'html'
   return `${type}-${props.context.id}`
 })
@@ -49,7 +49,7 @@ Object.assign(props.context, preContext)
         <FieldEditorFooter
           v-if="context.meta?.footer && !context.meta.footer.disabled"
           :footer="context.meta.footer"
-          :characters="0"
+          :characters="context._value?.length || 0"
         />
       </div>
     </template>

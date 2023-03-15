@@ -22,6 +22,7 @@ export default function useNavigateOptions(
       selectedIndex.value += 1
     }
     focus(selectedIndex.value)
+    return selectedIndex.value in items.value
   }
 
   const goPrevious = () => {
@@ -31,27 +32,27 @@ export default function useNavigateOptions(
       selectedIndex.value -= 1
     }
     focus(selectedIndex.value)
+    return selectedIndex.value in items.value
   }
 
   const selectItem = (index?: number) => {
     const item = items.value[index || selectedIndex.value]
     if (item) {
       onSelect(item)
+      return true
     }
+    return false
   }
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'ArrowDown') {
-      goNext()
-      return true
+      return goNext()
     }
     if (event.key === 'ArrowUp') {
-      goPrevious()
-      return true
+      return goPrevious()
     }
     if (event.key === 'Enter' || event.key === 'Tab') {
-      selectItem()
-      return true
+      return selectItem()
     }
     return false
   }
