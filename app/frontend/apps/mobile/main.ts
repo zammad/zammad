@@ -31,7 +31,12 @@ export default async function mountApp(): Promise<void> {
   initializeStoreSubscriptions()
 
   const session = useSessionStore()
-  await session.checkSession()
+  const authentication = useAuthenticationStore()
+
+  // If the session is invalid, clear the already set authentication flag from storage.
+  if (!(await session.checkSession()) && authentication.authenticated) {
+    authentication.authenticated = false
+  }
 
   const application = useApplicationStore()
 
@@ -40,9 +45,10 @@ export default async function mountApp(): Promise<void> {
   ]
 
   if (session.id) {
-    useAuthenticationStore().authenticated = true
+    authentication.authenticated = true
     initalizeAfterSessionCheck.push(session.getCurrentUser())
   }
+
   await Promise.all(initalizeAfterSessionCheck)
 
   const locale = useLocaleStore()

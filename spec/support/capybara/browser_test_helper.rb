@@ -47,6 +47,19 @@ module BrowserTestHelper
     cookies.find { |cookie| cookie[:name].match?(name) }
   end
 
+  # Delete a single cookie by the given name (regex possible)
+  #
+  # @example
+  #  delete_cookie('cookie-name')
+  #
+  def delete_cookie(name)
+    cookie = cookies.find { |c| c[:name].match?(name) }
+
+    return if !cookie
+
+    page.driver.browser.manage.delete_cookie(cookie[:name])
+  end
+
   # Finds an element and clicks it - wrapped in one method.
   #
   # @example
