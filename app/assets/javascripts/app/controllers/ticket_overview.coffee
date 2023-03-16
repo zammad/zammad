@@ -83,7 +83,7 @@ class App.TicketOverview extends App.Controller
     # redirect to last overview if we got called in first level
     @view = params['view']
     if !@view && @viewLast
-      @navigate "ticket/view/#{@viewLast}", { hideCurrentLocationFromHistory: true }
+      @navigate "#ticket/view/#{@viewLast}", { hideCurrentLocationFromHistory: true }
       return
 
     # build nav bar
@@ -345,7 +345,7 @@ class Navbar extends App.Controller
     # redirect to first view
     if @activeState && !@view && !@vertical
       view = data[0].link
-      @navigate "ticket/view/#{view}", { hideCurrentLocationFromHistory: true }
+      @navigate "#ticket/view/#{view}", { hideCurrentLocationFromHistory: true }
       return
 
     # add new views

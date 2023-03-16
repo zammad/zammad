@@ -201,8 +201,8 @@ const { forceDesktop } = useForceDesktop()
       </template>
     </FormGroup>
 
-    <CommonSectionMenu>
-      <CommonSectionMenuItem v-if="hasVersionPermission" :label="__('Version')">
+    <CommonSectionMenu v-if="hasVersionPermission">
+      <CommonSectionMenuItem :label="__('Version')">
         {{
           $t('This is Zammad version %s', productAbout?.productAbout as string)
         }}

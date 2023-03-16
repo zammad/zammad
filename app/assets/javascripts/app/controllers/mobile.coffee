@@ -10,18 +10,30 @@ class Mobile
       return
 
     @clearForceDesktopApp()
-
-    if window.history?
-      window.history.replaceState(null, null, '/mobile')
-
-    window.location.href = '/mobile'
+    @navigateToMobile()
 
   clearForceDesktopApp: ->
     if App.LocalStorage.get('forceDesktopApp', false)
       App.LocalStorage.delete('forceDesktopApp')
 
+  navigateToMobile: ->
+    target = '/mobile'
+
+    # Append the previous route to the target URL, if there is a history entry.
+    #   Mobile view will handle the internal redirection automatically.
+    if window.history?
+      history = App.Config.get('History')
+      oldLocation = history[history.length-2]
+
+      if oldLocation
+        target += "/#{oldLocation}"
+
+        window.history.replaceState(null, null, oldLocation)
+
+    window.location.href = target
+
 App.Config.set('mobile', Mobile, 'Routes')
 
-if isMobile()
+if isMobile() or App.LocalStorage.get('forceDesktopApp', false)
   # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
   App.Config.set('Mobile', { prio: 1500, parent: '#current_user', name: __('Continue to mobile'), translate: true, target: '#mobile', setting: ['mobile_frontend_enabled'] }, 'NavBarRight')

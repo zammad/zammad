@@ -46,6 +46,7 @@ const routes: RouteRecordRaw[] = [
     name: 'TicketOverview',
     props: true,
     component: () => import('./views/TicketOverview.vue'),
+    alias: '/ticket/view/:overviewLink?',
     meta: {
       title: __('Tickets'),
       requiresAuth: true,

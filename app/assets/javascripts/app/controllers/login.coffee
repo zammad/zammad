@@ -91,13 +91,11 @@ class Login extends App.ControllerFullPage
     )
 
     @replaceWith App.view('login')(
-      item:           data
-      logoUrl:        @logoUrl()
-      auth_providers: auth_providers
-      public_links:   public_links
-
-      # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
-      is_mobile: App.Config.get('mobile_frontend_enabled') && isMobile()
+      item:             data
+      logoUrl:          @logoUrl()
+      auth_providers:   auth_providers
+      public_links:     public_links
+      show_mobile_link: App.MobileDetection.isMobile() or App.MobileDetection.isForcingDesktopView()
     )
 
     # set focus to username or password

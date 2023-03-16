@@ -117,7 +117,7 @@
         <% end %>
       </p>
     <% end %>
-    <% if @is_mobile: %>
+    <% if @show_mobile_link: %>
       <p>
         <a class="align-center" href="#mobile"><%- @T('Continue to mobile') %></a>
       </p>
