@@ -7314,6 +7314,10 @@ msgstr ""
 msgid "No results were found."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "No security information available."
+msgstr ""
+
 #: lib/sessions/event/chat_session_start.rb
 #: lib/sessions/event/chat_transfer.rb
 msgid "No session available."

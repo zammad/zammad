@@ -145,6 +145,7 @@ const popupItems = computed(() =>
     :class="successClass"
     class="inline-flex h-6 grow items-center gap-1 rounded-lg px-2 py-1"
     type="button"
+    data-test-id="securityBadge"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
@@ -188,6 +189,9 @@ const popupItems = computed(() =>
           }"
         >
           {{ $t('Encryption') }}: {{ $t(security.encryptionMessage) }}
+        </div>
+        <div v-if="!security.encryptionMessage && !security.signingMessage">
+          {{ $t('No security information available.') }}
         </div>
       </div>
     </template>

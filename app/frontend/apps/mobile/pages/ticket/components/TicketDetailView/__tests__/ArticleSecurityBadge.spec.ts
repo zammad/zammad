@@ -165,4 +165,21 @@ describe('rendering security badge', () => {
       getByRole(popup, 'button', { name: 'Try again' }),
     ).toBeInTheDocument()
   })
+
+  it('renders no information available, if article is secure, but there are no messages', async () => {
+    const view = renderBadge({
+      articleId: convertToGraphQLId('Ticket::Article', 1),
+      security: {
+        signingMessage: '',
+        signingSuccess: true,
+        encryptionMessage: '',
+        encryptionSuccess: true,
+      },
+    })
+
+    await view.events.click(view.getByTestId('securityBadge'))
+    const popup = view.getByTestId('popupWindow')
+
+    expect(popup).toHaveTextContent('No security information available')
+  })
 })
