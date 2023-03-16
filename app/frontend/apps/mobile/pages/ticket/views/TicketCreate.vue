@@ -27,6 +27,7 @@ import {
 import { ErrorStatusCodes } from '@shared/types/error'
 import type UserError from '@shared/errors/UserError'
 import { defineFormSchema } from '@mobile/form/defineFormSchema'
+import { populateEditorNewLines } from '@shared/components/Form/fields/FieldEditor/utils'
 import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
@@ -299,7 +300,7 @@ const createTicket = async (formData: FormData<TicketFormData>) => {
     ...internalObjectAttributeValues,
     article: {
       cc: formData.cc,
-      body: formData.body,
+      body: populateEditorNewLines(formData.body),
       sender: isTicketCustomer.value
         ? 'Customer'
         : ticketCreateArticleType[formData.articleSenderType].sender,

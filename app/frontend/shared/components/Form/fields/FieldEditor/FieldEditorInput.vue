@@ -8,6 +8,7 @@ import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
 import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 import testFlags from '@shared/utils/testFlags'
+import { htmlCleanup } from '@shared/utils/htmlCleanup'
 import useValue from '../../composables/useValue'
 import {
   getCustomExtensions,
@@ -107,7 +108,10 @@ const editor = useEditor({
     },
   },
   editable: props.context.disabled !== true,
-  content: currentValue.value,
+  content:
+    currentValue.value && contentType.value === 'text/html'
+      ? htmlCleanup(currentValue.value)
+      : currentValue.value,
   onUpdate({ editor }) {
     const content =
       contentType.value === 'text/plain' ? editor.getText() : editor.getHTML()
@@ -159,7 +163,10 @@ const updateValueKey = props.context.node.on('input', ({ payload: value }) => {
       ? editor.value?.getText()
       : editor.value?.getHTML()
   if (editor.value && value !== currentValue) {
-    editor.value.commands.setContent(value, false)
+    editor.value.commands.setContent(
+      value && contentType.value === 'text/html' ? htmlCleanup(value) : value,
+      false,
+    )
   }
 })
 

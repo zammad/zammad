@@ -40,6 +40,8 @@ export const buildEmailForwardHeader = (
     return acc
   }, document.createElement('p'))
 
+  output.appendChild(document.createElement('br'))
+
   return output.outerHTML
 }
 

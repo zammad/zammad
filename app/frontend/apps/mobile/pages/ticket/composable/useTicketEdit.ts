@@ -13,6 +13,7 @@ import type { TicketArticleFormValues } from '@shared/entities/ticket-article/ac
 import type { PartialRequired } from '@shared/types/utils'
 import { convertFilesToAttachmentInput } from '@shared/utils/files'
 import { getNodeByName } from '@shared/components/Form/utils'
+import { populateEditorNewLines } from '@shared/components/Form/fields/FieldEditor/utils'
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
 
 type TicketArticleReceivedFormValues = PartialRequired<
@@ -64,22 +65,7 @@ export const useTicketEdit = (
       getNodeByName(formId, 'body')?.context?.contentType || 'text/html'
 
     if (contentType === 'text/html') {
-      const body = document.createElement('div')
-      body.innerHTML = article.body
-      // TODO: https://github.com/zammad/coordination-feature-mobile-view/issues/396
-      // prosemirror always adds a visible linebreak inside an empty paragraph,
-      // but it doesn't return it inside a schema, so we need to add it manually
-      body.querySelectorAll('p').forEach((p) => {
-        p.removeAttribute('data-marker')
-        if (
-          p.childNodes.length === 0 ||
-          p.lastChild?.nodeType !== Node.TEXT_NODE ||
-          p.textContent?.endsWith('\n')
-        ) {
-          p.appendChild(document.createElement('br'))
-        }
-      })
-      article.body = body.innerHTML
+      article.body = populateEditorNewLines(article.body)
     }
 
     return {

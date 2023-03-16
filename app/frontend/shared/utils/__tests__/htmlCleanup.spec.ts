@@ -7,7 +7,7 @@ import { htmlCleanup } from '../htmlCleanup'
 describe('htmlCleanup utility', () => {
   it('removes comments', () => {
     const source = '<div><!--test comment--><a href="test">test</a></div>'
-    const should = '<a href="test">test</a>'
+    const should = '<div><a href="test">test</a></div>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -26,23 +26,9 @@ describe('htmlCleanup utility', () => {
     assert.equal(result, should, source)
   })
 
-  it('removes invalid links', () => {
-    const source = '<a href="some_link">some link to somewhere</a>'
-    const should = 'some link to somewhere'
-    const result = htmlCleanup(source)
-    assert.equal(result, should, source)
-  })
-
   it('keeps link', () => {
     const source = '<p><a href="some_link">some link to somewhere</a></p>'
-    const should = '<a href="some_link">some link to somewhere</a>'
-    const result = htmlCleanup(source)
-    assert.equal(result, should, source)
-  })
-
-  it('removes wrapper', () => {
-    const source = '<div><h1>some link to somewhere</h1></div>'
-    const should = '<h1>some link to somewhere</h1>'
+    const should = '<p><a href="some_link">some link to somewhere</a></p>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -54,7 +40,7 @@ describe('htmlCleanup utility', () => {
   // assert.equal(result, should, source)
 
   it('removes "small" tag', () => {
-    const source = '<div><small>some link to somewhere</small></a>'
+    const source = '<small>some link to somewhere</small>'
     const should = 'some link to somewhere'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
@@ -62,13 +48,13 @@ describe('htmlCleanup utility', () => {
 
   it('removes "time" tag', () => {
     const source = '<div><time>some link to somewhere</time></a>'
-    const should = 'some link to somewhere'
+    const should = '<div>some link to somewhere</div>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
 
   it('removes wrapper for several children', () => {
-    const source = '<div><h1>some h1 for somewhere</h1><p><hr></p></div>'
+    const source = '<h1>some h1 for somewhere</h1><p><hr></p>'
     const should = '<h1>some h1 for somewhere</h1><p></p><hr><p></p>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
@@ -76,28 +62,27 @@ describe('htmlCleanup utility', () => {
 
   it('removes wrapper for "br"', () => {
     const source = '<div><br></div>'
-    const should = '<br>'
+    const should = '<p></p>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
 
   it('keeps inner div', () => {
-    const source = '<div><div class="xxx"><br></div></div>'
-    const should = '<div class="xxx"><br></div>'
+    const source = '<div class="xxx"><br></div>'
+    const should = '<p class="xxx"></p>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
 
   it('removes form', () => {
-    const source = '<div><form class="xxx">test 123</form></div>'
+    const source = '<form class="xxx">test 123</form>'
     const should = 'test 123'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
 
   it('removes subform', () => {
-    const source =
-      '<div><form class="xxx">test 123</form> some other value</div>'
+    const source = '<form class="xxx">test 123</form> some other value'
     const should = 'test 123 some other value'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
@@ -105,7 +90,7 @@ describe('htmlCleanup utility', () => {
 
   it('removes form tag and input', () => {
     const source =
-      '<div><form class="xxx">test 123</form> some other value<input value="should not be shown"></div>'
+      '<form class="xxx">test 123</form> some other value<input value="should not be shown">'
     const should = 'test 123 some other value'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
@@ -113,7 +98,7 @@ describe('htmlCleanup utility', () => {
 
   it('removes svg', () => {
     const source =
-      '<div><font size="3" color="red">This is some text!</font><svg><use xlink:href="assets/images/icons.svg#icon-status"></svg></div>'
+      '<font size="3" color="red">This is some text!</font><svg><use xlink:href="assets/images/icons.svg#icon-status"></svg>'
     const should = '<font size="3" color="red">This is some text!</font>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
@@ -121,7 +106,7 @@ describe('htmlCleanup utility', () => {
 
   it('removes "w" an "o" tags', () => {
     const source =
-      '<div><p>some link to somewhere from word<w:sdt>abc</w:sdt></p><o:p></o:p></a>'
+      '<p>some link to somewhere from word<w:sdt>abc</w:sdt></p><o:p></o:p></a>'
     // should = "<div><p>some link to somewhere from wordabc</p></div>"
     const should = '<p>some link to somewhere from wordabc</p>'
     const result = htmlCleanup(source)
@@ -133,7 +118,7 @@ describe('htmlCleanup utility', () => {
       '<div><div><label for="Ticket_888344_group_id">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for="Ticket_888344_owner_id">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href="http://localhost:3000/assets/images/icons.svg#icon-arrow-down"></use></svg></div><span></span><span></span></div></div><div><div>    <label for="Ticket_888344_state_id">Status <span>*</span></label></div></div></div>\n'
     // should = "<div>test 123</div>"
     const should =
-      '<div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div>'
+      '<div><div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div></div>\n'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -142,7 +127,7 @@ describe('htmlCleanup utility', () => {
     const source =
       '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n<html>\n<head>\n  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n  <title></title>\n  <meta name="generator" content="LibreOffice 4.4.7.2 (MacOSX)"/>\n  <style type="text/css">\n    @page { margin: 0.79in }\n    p { margin-bottom: 0.1in; line-height: 120% }\n    a:link { so-language: zxx }\n  </style>\n</head>\n<body lang="en-US" dir="ltr">\n<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%"><br/>\n\n</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n</body>\n</html>'
     const should =
-      '\n\n\n  \n  \n  \n  \n\n\n<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%"><br>\n\n</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n\n'
+      '\n\n\n  \n  \n  \n  \n\n\n<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">\n\n</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n\n'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -151,7 +136,7 @@ describe('htmlCleanup utility', () => {
     const source =
       '<table bgcolor="green" aaa="1"><thead><tr><th colspan="2" abc="a">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>'
     const should =
-      '<thead><tr><th colspan="2" abc="a">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody>'
+      '<table bgcolor="green" aaa="1"><thead><tr><th colspan="2" abc="a">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })

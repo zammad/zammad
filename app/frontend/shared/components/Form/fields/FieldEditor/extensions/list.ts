@@ -7,6 +7,7 @@ import Link from '@tiptap/extension-link'
 import Blockquote from '@tiptap/extension-blockquote'
 import StarterKit from '@tiptap/starter-kit'
 import Paragraph from '@tiptap/extension-paragraph'
+import HardBreak from '@tiptap/extension-hard-break'
 import CharacterCount from '@tiptap/extension-character-count'
 
 import type { Extensions } from '@tiptap/core'
@@ -17,8 +18,7 @@ import UserMention, { UserLink } from '../suggestions/UserMention'
 import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion'
 import TextModuleSuggestion from '../suggestions/TextModuleSuggestion'
 import Image from './Image'
-import HardBreakSimple from './HardBreakSimple'
-import HardBreakParagraph from './HardBreakParagraph'
+import HardBreakPlain from './HardBreakPlain'
 import Signature from './Signature'
 import type { FieldEditorProps } from '../types'
 
@@ -40,7 +40,7 @@ export const getPlainExtensions = (): Extensions => [
     orderedList: false,
     strike: false,
   }),
-  HardBreakSimple,
+  HardBreakPlain,
   CharacterCount,
 ]
 
@@ -66,7 +66,7 @@ export const getHtmlExtensions = (): Extensions => [
   Underline,
   OrderedList,
   ListItem,
-  HardBreakParagraph,
+  HardBreak,
   Blockquote.extend({
     addAttributes() {
       return {

@@ -3,7 +3,7 @@
 import type { TicketArticle } from '@shared/entities/ticket/types'
 import { i18n } from '@shared/i18n'
 import type { ConfigList } from '@shared/types/store'
-import { htmlCleanup, textToHtml, textCleanup } from '@shared/utils/helpers'
+import { textToHtml, textCleanup } from '@shared/utils/helpers'
 import type { SelectionData } from '@shared/utils/selection'
 
 const formatDate = (date: string) => {
@@ -38,7 +38,7 @@ export const getArticleSelection = (
   config: ConfigList,
 ) => {
   if (selection?.html) {
-    const clean = htmlCleanup(selection.html)
+    const clean = selection.html
     if (clean) return { content: clean, full: false }
   }
   if (selection?.text) {

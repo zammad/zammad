@@ -161,7 +161,6 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
     end
 
-    # TODO: should not have so many break lines: https://github.com/zammad/coordination-feature-mobile-view/issues/396
     context 'when full quote is enabled and new article is already written' do
       before do
         Setting.set('ui_ticket_zoom_article_email_full_quote_header', false)
@@ -179,7 +178,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { "#{agent.firstname}\nSignature!\n#{article.body}\n\nText before replying" }
         let(:result_text)  do
-          "<p>This is a note<br><br></p><p><br></p>#{signature_html}<blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p><br></p><p>Text before replying</p>"
+          "<p>This is a note</p>#{signature_html}<blockquote type=\"cite\"><p>#{article.body}</p></blockquote><p><br></p><p>Text before replying</p>"
         end
       end
     end

@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["DOM", "WebWorker"],
+    "lib": ["DOM", "WebWorker", "dom.iterable"],
     "types": [
       "vitest/globals",
       "vite/client",
