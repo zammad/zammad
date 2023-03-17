@@ -248,7 +248,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
 
   context 'apply' do
     before do
-      create(:store_image, o_id: draft.id, object: draft.class.name)
+      create(:store, :image, o_id: draft.id, object: draft.class.name)
 
       visit "ticket/zoom/#{ticket_with_draft.id}"
 

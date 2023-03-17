@@ -82,7 +82,7 @@ RSpec.describe MonitoringHelper::Status do
     case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
     when 'postgresql'
       it 'returns size of attached files' do
-        20.times { create(:store_image).update! size: 65_000_000 }
+        20.times { create(:store).update! size: 65_000_000 }
 
         expect(instance.send(:storage)).to include({ kB: 1_269_531, MB: 1239, GB: 1 })
       end

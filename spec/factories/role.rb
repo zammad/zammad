@@ -12,20 +12,20 @@ FactoryBot.define do
 
     permissions { Permission.where(name: permission_names) }
 
-    factory :agent_role do
-      permissions { Permission.where(name: 'ticket.agent') }
+    trait :agent do
+      permission_names { 'ticket.agent' }
     end
 
     trait :customer do
-      permissions { Permission.where(name: 'ticket.customer') }
+      permission_names { 'ticket.customer' }
     end
 
     trait :admin do
-      permissions { Permission.where(name: 'admin') }
+      permission_names { 'admin' }
     end
 
     trait :admin_core_workflow do
-      permissions { Permission.where(name: 'admin.core_workflow') }
+      permission_names { 'admin.core_workflow' }
     end
   end
 end

@@ -147,7 +147,7 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
     let(:trigger_values) { %w[a b c] }
 
     let!(:attribute) do
-      create_attribute :object_manager_attribute_multiselect,
+      create_attribute :object_manager_attribute_multiselect, :required_screen,
                        data_option: {
                          options:    options,
                          default:    '',
@@ -156,8 +156,7 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
                          maxlength:  255,
                          nulloption: true,
                        },
-                       name:        'multiselect',
-                       screens:     attributes_for(:required_screen)
+                       name:        'multiselect'
     end
 
     let(:group) { create(:group) }

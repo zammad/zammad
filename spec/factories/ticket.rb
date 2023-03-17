@@ -16,10 +16,22 @@ FactoryBot.define do
     updated_by_id { 1 }
     created_by_id { 1 }
 
-    factory :twitter_ticket do
+    trait :with_channel do
       transient do
-        channel { create(:twitter_channel) }
+        channel_name { nil }
+        channel { create(channel_name) }
       end
+
+      preferences do
+        {
+          channel_id: channel.id,
+        }
+      end
+    end
+
+    factory :twitter_ticket do
+      with_channel
+      channel_name { :twitter_channel }
 
       preferences do
         {
@@ -30,39 +42,18 @@ FactoryBot.define do
     end
 
     factory :sms_ticket do
-      transient do
-        channel { create(:sms_message_bird_channel) }
-      end
-
-      preferences do
-        {
-          channel_id: channel.id,
-        }
-      end
+      with_channel
+      channel_name { :sms_message_bird_channel }
     end
 
     factory :telegram_ticket do
-      transient do
-        channel { create(:telegram_channel) }
-      end
-
-      preferences do
-        {
-          channel_id: channel.id,
-        }
-      end
+      with_channel
+      channel_name { :telegram_channel }
     end
 
     factory :facebook_ticket do
-      transient do
-        channel { create(:facebook_channel) }
-      end
-
-      preferences do
-        {
-          channel_id: channel.id,
-        }
-      end
+      with_channel
+      channel_name { :facebook_channel }
     end
   end
 end

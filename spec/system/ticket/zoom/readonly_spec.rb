@@ -91,26 +91,26 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       end
 
       context 'with a select field' do
-        let(:attribute) { create(:object_manager_attribute_select, screens: attributes_for(:required_screen), data_option: data_option) }
+        let(:attribute) { create(:object_manager_attribute_select, :required_screen, data_option: data_option) }
 
         include_examples 'allow agents to select another value'
       end
 
       context 'with a multiselect field' do
-        let(:attribute) { create(:object_manager_attribute_multiselect, screens: attributes_for(:required_screen), data_option: multi_data_option) }
+        let(:attribute) { create(:object_manager_attribute_multiselect, :required_screen, data_option: multi_data_option) }
 
         include_examples 'allow agents to select another value'
       end
 
       context 'with a tree select field' do
-        let(:attribute)    { create(:object_manager_attribute_tree_select, screens: attributes_for(:required_screen), data_option: data_option) }
+        let(:attribute)    { create(:object_manager_attribute_tree_select, :required_screen, data_option: data_option) }
         let(:have_element) { have_field(name, with: value, visible: :all) }
 
         include_examples 'allows agents to select a treeselect/multi-treeselect value'
       end
 
       context 'with a multi tree select field' do
-        let(:attribute) { create(:object_manager_attribute_multi_tree_select, screens: attributes_for(:required_screen), data_option: multi_data_option) }
+        let(:attribute) { create(:object_manager_attribute_multi_tree_select, :required_screen, data_option: multi_data_option) }
         let(:have_element) { have_select(name, selected: value, visible: :all) }
 
         include_examples 'allows agents to select a treeselect/multi-treeselect value'
@@ -177,25 +177,25 @@ RSpec.describe 'Ticket Access Zoom', authenticated_as: :user, type: :system do
       end
 
       context 'with a select field' do
-        let(:attribute) { create(:object_manager_attribute_select, screens: attributes_for(:required_screen), data_option: data_option) }
+        let(:attribute) { create(:object_manager_attribute_select, :required_screen, data_option: data_option) }
 
         include_examples 'does not allow agents to select another value'
       end
 
       context 'with a multiselect field' do
-        let(:attribute) { create(:object_manager_attribute_multiselect, screens: attributes_for(:required_screen), data_option: multi_data_option) }
+        let(:attribute) { create(:object_manager_attribute_multiselect, :required_screen, data_option: multi_data_option) }
 
         include_examples 'does not allow agents to select another value'
       end
 
       context 'with a tree select field' do
-        let(:attribute) { create(:object_manager_attribute_tree_select, screens: attributes_for(:required_screen), data_option: data_option) }
+        let(:attribute) { create(:object_manager_attribute_tree_select, :required_screen, data_option: data_option) }
 
         include_examples 'does not allow agents to select another treeselect/multi-treeselect value'
       end
 
       context 'with a multi tree select field' do
-        let(:attribute) { create(:object_manager_attribute_multi_tree_select, screens: attributes_for(:required_screen), data_option: multi_data_option) }
+        let(:attribute) { create(:object_manager_attribute_multi_tree_select, :required_screen, data_option: multi_data_option) }
 
         include_examples 'does not allow agents to select another treeselect/multi-treeselect value'
       end

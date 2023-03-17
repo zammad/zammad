@@ -54,7 +54,7 @@ RSpec.describe Gql::Queries::Ticket::Overviews, type: :graphql do
 
       context 'with object attributes and unknown attributes', db_strategy: :reset do
         let(:oa) do
-          create(:object_manager_attribute_text, screens: attributes_for(:required_screen)).tap do
+          create(:object_manager_attribute_text, :required_screen).tap do
             ObjectManager::Attribute.migration_execute
           end
         end

@@ -65,7 +65,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
       end
 
       it 'creates draft with attachment if does not exist' do
-        create(:store_image, o_id: form_id)
+        create(:store, :image, o_id: form_id)
 
         put path, params: params, as: :json
 
@@ -84,7 +84,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
 
       it 'updates draft with attachment' do
         shared_draft = create(:ticket_shared_draft_zoom, ticket: ticket)
-        create(:store_image, o_id: form_id)
+        create(:store, :image, o_id: form_id)
 
         put path, params: params, as: :json
 
@@ -93,8 +93,8 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
 
       it 'updates draft to have no attachments' do
         shared_draft = create(:ticket_shared_draft_zoom, ticket: ticket)
-        create(:store_image, o_id: shared_draft.id, object: shared_draft.class.name)
-        create(:store_image, o_id: form_id)
+        create(:store, :image, o_id: shared_draft.id, object: shared_draft.class.name)
+        create(:store, :image, o_id: form_id)
 
         put path, params: params, as: :json
 
@@ -141,7 +141,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
 
       it 'imports attachments from draft to given form ID' do
         draft = create(:ticket_shared_draft_zoom, ticket: ticket)
-        create(:store_image, o_id: draft.id, object: draft.class.name)
+        create(:store, :image, o_id: draft.id, object: draft.class.name)
 
         expect { post import_path, params: params, as: :json }
           .to change { Store.list(object: 'UploadCache', o_id: form_id).count }
