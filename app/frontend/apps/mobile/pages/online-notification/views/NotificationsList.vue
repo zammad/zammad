@@ -60,6 +60,23 @@ const removeNotification = (id: Scalars['ID']) => {
   removeNotificationMutation.send()
 }
 
+const seenNotification = (id: Scalars['ID']) => {
+  const seenNotificationMutation = new MutationHandler(
+    useOnlineNotificationMarkAllAsSeenMutation({
+      variables: { onlineNotificationIds: [id] },
+    }),
+    {
+      errorNotificationMessage: __(
+        'The online notifcation could not be marked as seen.',
+      ),
+    },
+  )
+
+  mutationTriggered = true
+
+  seenNotificationMutation.send()
+}
+
 const markingAsSeen = ref(false)
 
 const markAllRead = async () => {
@@ -112,6 +129,7 @@ const haveUnread = computed(() => unseenCount.value > 0)
         :created-by="notification.createdBy"
         :meta-object="notification.metaObject"
         @remove="removeNotification"
+        @seen="seenNotification"
       />
 
       <div v-if="!notifications.length" class="px-4 py-3 text-center text-base">

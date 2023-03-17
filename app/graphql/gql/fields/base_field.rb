@@ -19,6 +19,9 @@ module Gql::Fields
     # Identify if this field is a nested member of an already authorized object.
     attr_reader :is_dependent_field
 
+    # relations extra attributes
+    attr_reader :foreign_key, :through_key
+
     def initialize(*args, **kwargs, &)
 
       kwargs[:extensions] ||= []
@@ -26,6 +29,10 @@ module Gql::Fields
 
       # Method 1: pass in the flag directly.
       @is_dependent_field = kwargs.delete(:is_dependent_field)
+
+      # extract relations extra attributes
+      @foreign_key  = kwargs.delete(:foreign_key)
+      @through_key  = kwargs.delete(:through_key)
 
       # Method 2: set the flag automatically for connection types.
       if kwargs[:type].respond_to?(:ancestors) && kwargs[:type] < Gql::Types::BaseConnection

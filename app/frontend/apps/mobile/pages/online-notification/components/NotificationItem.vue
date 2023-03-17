@@ -10,15 +10,16 @@ export interface Props {
   objectName: string
   typeName: string
   seen: boolean
-  metaObject: ActivityMessageMetaObject
+  metaObject?: Maybe<ActivityMessageMetaObject>
   createdAt: string
-  createdBy: AvatarUser
+  createdBy?: Maybe<AvatarUser>
 }
 
 defineProps<Props>()
 
 defineEmits<{
   (e: 'remove', id: Scalars['ID']): void
+  (e: 'seen', id: Scalars['ID']): void
 }>()
 </script>
 
@@ -46,6 +47,7 @@ defineEmits<{
       :created-at="createdAt"
       :created-by="createdBy"
       :meta-object="metaObject"
+      @seen="$emit('seen', itemId)"
     />
   </div>
 </template>

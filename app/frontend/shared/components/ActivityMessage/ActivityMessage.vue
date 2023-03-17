@@ -9,15 +9,16 @@ import type { ActivityMessageMetaObject } from '@shared/graphql/types'
 import { userDisplayName } from '@shared/entities/user/utils/getUserDisplayName'
 import { markup } from '@shared/utils/markup'
 import CommonUserAvatar from '../CommonUserAvatar/CommonUserAvatar.vue'
+import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 import type { AvatarUser } from '../CommonUserAvatar'
 import { activityMessageBuilder } from './builders'
 
 export interface Props {
   typeName: string
   objectName: string
-  metaObject: ActivityMessageMetaObject
+  metaObject?: Maybe<ActivityMessageMetaObject>
   createdAt: string
-  createdBy: AvatarUser
+  createdBy?: Maybe<AvatarUser>
 }
 
 const props = defineProps<Props>()
@@ -29,25 +30,40 @@ if (!builder.value) {
 
 const message = builder.value?.messageText(
   props.typeName,
-  userDisplayName(props.createdBy),
+  props.createdBy ? userDisplayName(props.createdBy) : '',
   props.metaObject,
 )
+
+const link = props.metaObject
+  ? builder.value?.path(props.metaObject)
+  : undefined
 
 if (builder.value && !message) {
   log.error(
     `Unknow action for (${props.objectName}/${props.typeName}), extend activityMessages() of model.`,
   )
 }
+
+defineEmits<{
+  (e: 'seen'): void
+}>()
 </script>
 
 <template>
-  <CommonLink
+  <component
+    :is="link ? 'CommonLink' : 'div'"
     v-if="builder"
     class="flex flex-1 border-b border-white/10 py-4"
-    :link="builder.path(metaObject)"
+    :link="link"
+    @click="!link ? $emit('seen') : undefined"
   >
     <div class="flex items-center ltr:mr-4 rtl:ml-4">
-      <CommonUserAvatar :entity="createdBy" />
+      <CommonUserAvatar v-if="createdBy" :entity="createdBy" />
+      <CommonAvatar
+        v-else
+        class="bg-red-bright text-white"
+        icon="mobile-lock"
+      />
     </div>
 
     <div class="flex flex-col">
@@ -56,5 +72,5 @@ if (builder.value && !message) {
         <CommonDateTime :date-time="createdAt" type="relative" />
       </div>
     </div>
-  </CommonLink>
+  </component>
 </template>

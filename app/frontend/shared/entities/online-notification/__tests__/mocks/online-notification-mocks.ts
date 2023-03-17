@@ -29,7 +29,6 @@ export const mockOnlineNotification = (
     },
     typeName: 'update',
     objectName: 'Ticket',
-    objectId: 111,
     metaObject: {
       __typename: 'Ticket',
       id: '111',

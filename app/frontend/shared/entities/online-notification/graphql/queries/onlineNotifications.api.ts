@@ -26,7 +26,6 @@ export const OnlineNotificationsDocument = gql`
         }
         typeName
         objectName
-        objectId
         metaObject {
           ... on Ticket {
             id

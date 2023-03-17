@@ -12,8 +12,12 @@ const path = (metaObject: DataPrivacyTask) => {
 const messageText = (
   type: string,
   authorName: string,
-  metaObject: DataPrivacyTask,
+  metaObject?: DataPrivacyTask,
 ): Maybe<string> => {
+  if (!metaObject) {
+    return i18n.t('You can no longer see the data privacy task.')
+  }
+
   const objectTitle = metaObject.deletableId || '-'
 
   switch (type) {

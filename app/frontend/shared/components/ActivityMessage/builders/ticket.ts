@@ -11,8 +11,12 @@ const path = (metaObject: Ticket) => {
 const messageText = (
   type: string,
   authorName: string,
-  metaObject: Ticket,
+  metaObject?: Ticket,
 ): Maybe<string> => {
+  if (!metaObject) {
+    return i18n.t('You can no longer see the ticket.')
+  }
+
   const objectTitle = metaObject.title || '-'
 
   switch (type) {

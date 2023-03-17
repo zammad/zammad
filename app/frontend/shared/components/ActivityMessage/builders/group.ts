@@ -12,8 +12,12 @@ const path = (metaObject: Group) => {
 const messageText = (
   messageType: string,
   authorName: string,
-  metaObject: Group,
+  metaObject?: Group,
 ): Maybe<string> => {
+  if (!metaObject) {
+    return i18n.t('You can no longer see the group.')
+  }
+
   const objectTitle = metaObject.name || '-'
 
   switch (messageType) {

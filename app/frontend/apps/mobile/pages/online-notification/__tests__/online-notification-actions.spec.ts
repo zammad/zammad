@@ -89,6 +89,50 @@ describe('selecting a online notification', () => {
     expect(view.container).not.toHaveTextContent('Mark all as read')
   })
 
+  it('can mark notification without relation behind (no longer permission) as read', async () => {
+    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
+      mockOnlineNotificationQuery([
+        {
+          seen: false,
+        },
+        {
+          seen: false,
+          metaObject: null,
+          createdBy: null,
+        },
+        {
+          seen: false,
+        },
+      ]),
+    )
+
+    const view = await visitView('/notifications')
+
+    await triggerNextOnlineNotificationCount(2)
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    mockGraphQLApi(OnlineNotificationMarkAllAsSeenDocument).willResolve({
+      onlineNotificationMarkAllAsSeen: {
+        errors: null,
+        onlineNotifications: [
+          {
+            id: '2',
+            seen: true,
+            __typename: 'OnlineNotification',
+          },
+        ],
+      },
+    })
+
+    const noRelationNotificationItem = view.getByText(
+      'You can no longer see the ticket.',
+    )
+    await view.events.click(noRelationNotificationItem)
+
+    expect(view.getAllByLabelText('Notification read')).toHaveLength(1)
+  })
+
   it('can delete online notification', async () => {
     const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve([
       mockOnlineNotificationQuery([

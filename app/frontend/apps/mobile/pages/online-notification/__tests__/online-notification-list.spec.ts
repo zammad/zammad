@@ -111,4 +111,47 @@ describe('selecting a online notification', () => {
       '/tickets/111',
     )
   })
+
+  it('shows a list of online notifications which includes also items without permission to the relation', async () => {
+    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
+      mockOnlineNotificationQuery([
+        {
+          metaObject: {
+            __typename: 'Ticket',
+            id: '111',
+            internalId: 111,
+            title: 'Ticket Title 1',
+          },
+        },
+        {
+          metaObject: null,
+          createdBy: null,
+        },
+        {
+          seen: true,
+          metaObject: {
+            __typename: 'Ticket',
+            id: '333',
+            internalId: 333,
+            title: 'Ticket Title 3',
+          },
+        },
+      ]),
+    )
+
+    const view = await visitView('/notifications')
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    const notificationItems = view.getAllByText('Ticket Title', {
+      exact: false,
+    })
+
+    expect(notificationItems).toHaveLength(2)
+
+    const noRelationNotificationItems = view.getAllByText(
+      'You can no longer see the ticket.',
+    )
+    expect(noRelationNotificationItems).toHaveLength(1)
+  })
 })

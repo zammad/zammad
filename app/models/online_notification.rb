@@ -35,6 +35,13 @@ add a new online notification for this user
 
 =end
 
+  def related_object
+    ObjectLookup
+      .by_id(object_lookup_id)
+      &.safe_constantize
+      &.find(o_id)
+  end
+
   def self.add(data)
 
     # lookups

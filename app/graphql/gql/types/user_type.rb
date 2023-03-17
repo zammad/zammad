@@ -2,7 +2,7 @@
 
 module Gql::Types
   class UserType < Gql::Types::BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields # Instead of IsModelObject to have custom #created_by and #updated_by
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
@@ -16,6 +16,10 @@ module Gql::Types
     def self.nested_access_pundit_method
       :nested_show?
     end
+
+    field :created_by, Gql::Types::UserType, null: false, description: 'User that created this record'
+    field :updated_by, Gql::Types::UserType, null: false, description: 'Last user that updated this record'
+    field :policy, Gql::Types::Policy::DefaultType, null: false, method: :itself
 
     scoped_fields do
       belongs_to :organization, Gql::Types::OrganizationType
@@ -49,8 +53,6 @@ module Gql::Types
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
     end
 
-    field :policy, Gql::Types::Policy::DefaultType, null: false, method: :itself
-
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
     # field :department, String
     # field :street, String
@@ -65,6 +67,14 @@ module Gql::Types
 
     def secondary_organizations?
       @object.organization_ids.present?
+    end
+
+    def created_by
+      ::User.find_by(id: @object.created_by_id)
+    end
+
+    def updated_by
+      ::User.find_by(id: @object.updated_by_id)
     end
   end
 end

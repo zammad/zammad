@@ -75,6 +75,31 @@ describe('NotificationItem.vue', () => {
     expect(view.getByText(/2 days ago/)).toBeInTheDocument()
   })
 
+  it('check that default message and avatar for no meta object is visible', () => {
+    const view = renderActivityMessage({
+      metaObject: undefined,
+      createdBy: undefined,
+    })
+
+    expect(view.container).toHaveTextContent(
+      'You can no longer see the ticket.',
+    )
+    expect(view.getByIconName('mobile-lock')).toBeInTheDocument()
+  })
+
+  it('should emit "seen" event on click for none linked notifications', async () => {
+    const view = renderActivityMessage({
+      metaObject: undefined,
+      createdBy: undefined,
+    })
+
+    const item = view.getByText('You can no longer see the ticket.')
+
+    await view.events.click(item)
+
+    expect(view.emitted().seen).toBeTruthy()
+  })
+
   it('no output for not existing builder', (context) => {
     context.skipConsole = true
 

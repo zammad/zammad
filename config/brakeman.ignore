@@ -191,29 +191,6 @@
     {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
-      "fingerprint": "54917e5a641a601c5cd3cfda112965b178326bb2c85b03051e518e9c515923a0",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/graphql/gql/types/concerns/is_model_object.rb",
-      "line": 89,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "ObjectLookup.by_id(object.send(through_key)).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Gql::Types::Concerns::IsModelObject",
-        "method": "load_belongs_to"
-      },
-      "user_input": "ObjectLookup.by_id(object.send(through_key))",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
       "fingerprint": "55248822583e32826f88a68e27568416fe1f101d83b02791c10296d2393b83a5",
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
@@ -605,6 +582,29 @@
       "note": "Setting.where(area: 'Postmaster::PreFilter').order(:name) returns defined postmaster backend class names"
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "d5d1526bf7a888d1965405d0e3dc5c63f11fe2de47f9704c0e1717ee0410dd6b",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `safe_constantize` called on model attribute",
+      "file": "app/models/online_notification.rb",
+      "line": 39,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "ObjectLookup.by_id(object_lookup_id).safe_constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "OnlineNotification",
+        "method": "related_object"
+      },
+      "user_input": "ObjectLookup.by_id(object_lookup_id)",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "ea2a3af842a48c9ef4dc8d142abd56978baa4823a598d2a76dc8f840799d6967",
@@ -646,6 +646,29 @@
         798
       ],
       "note": "Since Sessions are stored in the database and not in cookies, the session secret is not used / not relevant.\""
+    },
+    {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "fc299f57cedf226dc79a25c6bca84ceb85d5896a86820648d49c0e59d865575a",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on model attribute",
+      "file": "app/graphql/gql/resolvers/belongs_to_resolver.rb",
+      "line": 29,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "ObjectLookup.by_id(object.send(field.through_key)).constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Gql::Resolvers::BelongsToResolver",
+        "method": "target_object_klass"
+      },
+      "user_input": "ObjectLookup.by_id(object.send(field.through_key))",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
     },
     {
       "warning_type": "SQL Injection",
@@ -741,6 +764,6 @@
       "note": "Admin configured RegExp"
     }
   ],
-  "updated": "2022-12-14 13:16:26 +0100",
-  "brakeman_version": "5.4.0"
+  "updated": "2023-03-17 13:38:18 +0200",
+  "brakeman_version": "5.4.1"
 }

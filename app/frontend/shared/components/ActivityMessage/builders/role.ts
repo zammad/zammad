@@ -12,8 +12,12 @@ const path = (metaObject: Role) => {
 const messageText = (
   type: string,
   authorName: string,
-  metaObject: Role,
+  metaObject?: Role,
 ): Maybe<string> => {
+  if (!metaObject) {
+    return i18n.t('You can no longer see the role.')
+  }
+
   const objectTitle = metaObject.name || '-'
 
   switch (type) {

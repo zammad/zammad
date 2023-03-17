@@ -8,6 +8,6 @@ export interface ActivityMessageBuilder {
   messageText: (
     type: string,
     authorName: string,
-    metaObject: ActivityMessageMetaObject,
+    metaObject?: Maybe<ActivityMessageMetaObject>,
   ) => string
 }

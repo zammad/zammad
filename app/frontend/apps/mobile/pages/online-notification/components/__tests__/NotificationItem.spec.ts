@@ -66,4 +66,20 @@ describe('NotificationItem.vue', () => {
     const emittedRemove = view.emitted().remove as Array<Array<Scalars['ID']>>
     expect(emittedRemove[0][0]).toBe('111')
   })
+
+  it('should emit "seen" event on click for none linked notifications', async () => {
+    const view = renderNotificationItem({
+      metaObject: undefined,
+      createdBy: undefined,
+    })
+
+    const item = view.getByText('You can no longer see the ticket.')
+
+    await view.events.click(item)
+
+    expect(view.emitted().seen).toBeTruthy()
+
+    const emittedSeen = view.emitted().seen as Array<Array<Scalars['ID']>>
+    expect(emittedSeen[0][0]).toBe('111')
+  })
 })

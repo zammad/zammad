@@ -10,6 +10,7 @@ describe('activity message builder are available', () => {
 
     expect(models).toContain('Ticket')
     expect(models).toContain('User')
+    expect(models).toContain('Organization')
     expect(models).toContain('Group')
   })
 })

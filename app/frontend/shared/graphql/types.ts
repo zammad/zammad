@@ -479,7 +479,9 @@ export type KnowledgeBase = {
 export type KnowledgeBaseAnswer = {
   __typename?: 'KnowledgeBaseAnswer';
   archivedAt?: Maybe<Scalars['ISO8601DateTime']>;
+  /** resolver for Rails' belongs_to relationship */
   archivedBy?: Maybe<User>;
+  /** resolver for Rails' belongs_to relationship */
   category: KnowledgeBaseCategory;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
@@ -487,11 +489,13 @@ export type KnowledgeBaseAnswer = {
   createdBy: User;
   id: Scalars['ID'];
   internalAt?: Maybe<Scalars['ISO8601DateTime']>;
+  /** resolver for Rails' belongs_to relationship */
   internalBy?: Maybe<User>;
   internalNote?: Maybe<Scalars['String']>;
   position: Scalars['Int'];
   promoted?: Maybe<Scalars['Boolean']>;
   publishedAt?: Maybe<Scalars['ISO8601DateTime']>;
+  /** resolver for Rails' belongs_to relationship */
   publishedBy?: Maybe<User>;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
@@ -513,14 +517,17 @@ export type KnowledgeBaseAnswerSuggestionContentTransformPayload = {
 /** Knowledge Base Answer Translation */
 export type KnowledgeBaseAnswerTranslation = {
   __typename?: 'KnowledgeBaseAnswerTranslation';
+  /** resolver for Rails' belongs_to relationship */
   answer: KnowledgeBaseAnswer;
   categoryTreeTranslation: Array<KnowledgeBaseCategoryTranslation>;
+  /** resolver for Rails' belongs_to relationship */
   content: KnowledgeBaseAnswerTranslationContent;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** resolver for Rails' belongs_to relationship */
   kbLocale: KnowledgeBaseLocale;
   title: Scalars['String'];
   /** Last update date/time of the record */
@@ -555,7 +562,9 @@ export type KnowledgeBaseCategory = {
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** resolver for Rails' belongs_to relationship */
   knowledgeBase: KnowledgeBase;
+  /** resolver for Rails' belongs_to relationship */
   parent?: Maybe<KnowledgeBaseCategory>;
   position: Scalars['Int'];
   translations: Array<KnowledgeBaseCategoryTranslation>;
@@ -568,12 +577,14 @@ export type KnowledgeBaseCategory = {
 /** Knowledge Base Category Translation */
 export type KnowledgeBaseCategoryTranslation = {
   __typename?: 'KnowledgeBaseCategoryTranslation';
+  /** resolver for Rails' belongs_to relationship */
   category: KnowledgeBaseCategory;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** resolver for Rails' belongs_to relationship */
   kbLocale: KnowledgeBaseLocale;
   title: Scalars['String'];
   /** Last update date/time of the record */
@@ -590,8 +601,10 @@ export type KnowledgeBaseLocale = {
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** resolver for Rails' belongs_to relationship */
   knowledgeBase: KnowledgeBase;
   primary: Scalars['Boolean'];
+  /** resolver for Rails' belongs_to relationship */
   systemLocale: Locale;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
@@ -682,11 +695,13 @@ export type Mention = {
   /** User that created this record */
   createdBy: User;
   id: Scalars['ID'];
+  /** resolver for Rails' belongs_to relationship */
   mentionable: Ticket;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
   updatedBy: User;
+  /** resolver for Rails' belongs_to relationship */
   user: User;
 };
 
@@ -1032,17 +1047,19 @@ export type OnlineNotification = {
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
-  createdBy: User;
+  createdBy?: Maybe<User>;
   id: Scalars['ID'];
-  metaObject: ActivityMessageMetaObject;
-  objectId: Scalars['Int'];
+  /** resolver for Rails' belongs_to relationship */
+  metaObject?: Maybe<ActivityMessageMetaObject>;
+  /** resolver for Rails' has_one relationship */
   objectName: Scalars['String'];
   seen: Scalars['Boolean'];
+  /** resolver for Rails' has_one relationship */
   typeName: Scalars['String'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
   /** Last user that updated this record */
-  updatedBy: User;
+  updatedBy?: Maybe<User>;
 };
 
 /** The connection type for OnlineNotification. */
@@ -1757,17 +1774,20 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   closeDiffInMin?: Maybe<Scalars['Int']>;
   closeEscalationAt?: Maybe<Scalars['ISO8601DateTime']>;
   closeInMin?: Maybe<Scalars['Int']>;
+  /** resolver for Rails' belongs_to relationship */
   createArticleType?: Maybe<TicketArticleType>;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
   /** User that created this record */
   createdBy: User;
+  /** resolver for Rails' belongs_to relationship */
   customer: User;
   escalationAt?: Maybe<Scalars['ISO8601DateTime']>;
   firstResponseAt?: Maybe<Scalars['ISO8601DateTime']>;
   firstResponseDiffInMin?: Maybe<Scalars['Int']>;
   firstResponseEscalationAt?: Maybe<Scalars['ISO8601DateTime']>;
   firstResponseInMin?: Maybe<Scalars['Int']>;
+  /** resolver for Rails' belongs_to relationship */
   group: Group;
   id: Scalars['ID'];
   /** Internal database ID */
@@ -1781,12 +1801,16 @@ export type Ticket = ObjectAttributeValuesInterface & TagsInterface & {
   note?: Maybe<Scalars['String']>;
   number: Scalars['String'];
   objectAttributeValues?: Maybe<Array<ObjectAttributeValue>>;
+  /** resolver for Rails' belongs_to relationship */
   organization?: Maybe<Organization>;
+  /** resolver for Rails' belongs_to relationship */
   owner: User;
   pendingTime?: Maybe<Scalars['ISO8601DateTime']>;
   policy: PolicyTicket;
   preferences?: Maybe<Scalars['JSON']>;
+  /** resolver for Rails' belongs_to relationship */
   priority: TicketPriority;
+  /** resolver for Rails' belongs_to relationship */
   state: TicketState;
   /** Ticket color indicator state. */
   stateColorCode: EnumTicketStateColorCode;
@@ -1852,10 +1876,13 @@ export type TicketArticle = {
   references?: Maybe<Scalars['String']>;
   replyTo?: Maybe<AddressesField>;
   securityState?: Maybe<TicketArticleSecurityState>;
+  /** resolver for Rails' belongs_to relationship */
   sender?: Maybe<TicketArticleSender>;
   subject?: Maybe<Scalars['String']>;
+  /** resolver for Rails' belongs_to relationship */
   ticket: Ticket;
   to?: Maybe<AddressesField>;
+  /** resolver for Rails' belongs_to relationship */
   type?: Maybe<TicketArticleType>;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
@@ -2183,6 +2210,7 @@ export type TicketState = {
   nextStateId?: Maybe<Scalars['Int']>;
   /** Internal note */
   note?: Maybe<Scalars['String']>;
+  /** resolver for Rails' belongs_to relationship */
   stateType: TicketStateType;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
@@ -2293,6 +2321,7 @@ export type User = ObjectAttributeValuesInterface & {
   /** Internal note */
   note?: Maybe<Scalars['String']>;
   objectAttributeValues?: Maybe<Array<ObjectAttributeValue>>;
+  /** resolver for Rails' belongs_to relationship */
   organization?: Maybe<Organization>;
   outOfOffice?: Maybe<Scalars['Boolean']>;
   outOfOfficeEndAt?: Maybe<Scalars['ISO8601Date']>;
@@ -2720,7 +2749,7 @@ export type OnlineNotificationSeenMutation = { __typename?: 'Mutations', onlineN
 export type OnlineNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnlineNotificationsQuery = { __typename?: 'Queries', onlineNotifications: { __typename?: 'OnlineNotificationConnection', edges: Array<{ __typename?: 'OnlineNotificationEdge', cursor: string, node: { __typename?: 'OnlineNotification', id: string, seen: boolean, createdAt: string, typeName: string, objectName: string, objectId: number, createdBy: { __typename?: 'User', id: string, fullname?: string | null, lastname?: string | null, firstname?: string | null, email?: string | null, vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, image?: string | null }, metaObject: { __typename?: 'DataPrivacyTask' } | { __typename?: 'Group' } | { __typename?: 'Organization' } | { __typename?: 'Role' } | { __typename?: 'Ticket', id: string, internalId: number, title: string } | { __typename?: 'TicketArticle' } | { __typename?: 'User' } } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
+export type OnlineNotificationsQuery = { __typename?: 'Queries', onlineNotifications: { __typename?: 'OnlineNotificationConnection', edges: Array<{ __typename?: 'OnlineNotificationEdge', cursor: string, node: { __typename?: 'OnlineNotification', id: string, seen: boolean, createdAt: string, typeName: string, objectName: string, createdBy?: { __typename?: 'User', id: string, fullname?: string | null, lastname?: string | null, firstname?: string | null, email?: string | null, vip?: boolean | null, outOfOffice?: boolean | null, active?: boolean | null, image?: string | null } | null, metaObject?: { __typename?: 'DataPrivacyTask' } | { __typename?: 'Group' } | { __typename?: 'Organization' } | { __typename?: 'Role' } | { __typename?: 'Ticket', id: string, internalId: number, title: string } | { __typename?: 'TicketArticle' } | { __typename?: 'User' } | null } }>, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } };
 
 export type OnlineNotificationsCountSubscriptionVariables = Exact<{
   userId: Scalars['ID'];

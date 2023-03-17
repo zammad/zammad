@@ -18,7 +18,6 @@ query onlineNotifications {
         }
         typeName
         objectName
-        objectId
         metaObject {
           ... on Ticket {
             id
