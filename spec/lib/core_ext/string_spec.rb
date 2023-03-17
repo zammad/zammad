@@ -123,6 +123,10 @@ RSpec.describe String do
       expect("\n\n  test \n\n\n".html2text).to eq('test')
     end
 
+    it 'search/fixes signature separator' do
+      expect(' --  '.html2text).to eq('-- ')
+    end
+
     it 'strips HTML tags around text content' do
       expect('<div>test</div>'.html2text).to eq('test')
     end
