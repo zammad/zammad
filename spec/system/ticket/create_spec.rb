@@ -457,7 +457,7 @@ RSpec.describe 'Ticket Create', type: :system do
 
   describe 'object manager attributes maxlength', authenticated_as: :authenticate, db_strategy: :reset do
     def authenticate
-      create(:object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
+      create(:object_manager_attribute_text, :required_screen, name: 'maxtest', display: 'maxtest', data_option: {
                'type'      => 'text',
                'maxlength' => 3,
                'null'      => true,
@@ -1126,7 +1126,7 @@ RSpec.describe 'Ticket Create', type: :system do
   describe 'Tree select value cannot be set to "-" (empty) with Trigger/Scheduler/Core workflow #4024', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create(:object_manager_attribute_tree_select, name: field_name, display: field_name, screens: attributes_for(:required_screen))
+      create(:object_manager_attribute_tree_select, :required_screen, name: field_name, display: field_name)
       ObjectManager::Attribute.migration_execute
     end
     let(:workflow) do

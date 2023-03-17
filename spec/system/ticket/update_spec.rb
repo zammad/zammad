@@ -14,8 +14,7 @@ RSpec.describe 'Ticket Update', type: :system do
   context 'when updating a ticket without its required select attributes' do
     it 'frontend checks reject the update', db_strategy: :reset do
       # setup and migrate a required select attribute
-      attribute = create_attribute(:object_manager_attribute_select,
-                                   screens:     attributes_for(:required_screen),
+      attribute = create_attribute(:object_manager_attribute_select, :required_screen,
                                    data_option: {
                                      options:    {
                                        'name 1': 'name 1',
@@ -108,8 +107,7 @@ RSpec.describe 'Ticket Update', type: :system do
     context 'when required tree_select field is present' do
       it 'performs no validation (#2492)', db_strategy: :reset do
         # setup and migrate a required select attribute
-        attribute = create_attribute(:object_manager_attribute_tree_select,
-                                     screens:     attributes_for(:required_screen),
+        attribute = create_attribute(:object_manager_attribute_tree_select, :required_screen,
                                      data_option: {
                                        options:    [
                                          {

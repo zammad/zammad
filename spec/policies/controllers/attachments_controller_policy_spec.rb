@@ -60,7 +60,7 @@ describe Controllers::AttachmentsControllerPolicy do
     end
 
     context 'with object that does not have a policy' do
-      let(:file) { create(:store_image, object: 'NonExistingObject') }
+      let(:file) { create(:store, object: 'NonExistingObject') }
       let(:params) { { id: file.id } }
       let(:user)   { create(:admin) }
 

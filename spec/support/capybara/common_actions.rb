@@ -239,8 +239,7 @@ module CommonActions
   #
   # Create a required text attribute:
   # @example
-  #  attribute = setup_attribute :object_manager_attribute_text,
-  #                               screens: attributes_for(:required_screen)
+  #  attribute = setup_attribute :object_manager_attribute_text, :required_screen)
   #
   # Create a date attribute with custom parameters:
   # @example
@@ -253,8 +252,8 @@ module CommonActions
   #                              }
   #
   # return [attribute]
-  def create_attribute(attribute_name, attribute_parameters = {})
-    attribute = create(attribute_name, attribute_parameters)
+  def create_attribute(...)
+    attribute = create(...)
     ObjectManager::Attribute.migration_execute
     page.driver.browser.navigate.refresh
     attribute

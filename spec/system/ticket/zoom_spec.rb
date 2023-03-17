@@ -1500,7 +1500,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def authenticate
       ticket
-      create(:object_manager_attribute_text, name: 'maxtest', display: 'maxtest', screens: attributes_for(:required_screen), data_option: {
+      create(:object_manager_attribute_text, :required_screen, name: 'maxtest', display: 'maxtest', data_option: {
                'type'      => 'text',
                'maxlength' => 3,
                'null'      => true,
@@ -2115,7 +2115,7 @@ RSpec.describe 'Ticket zoom', type: :system do
 
     def authenticate
       workflow
-      create(:object_manager_attribute_boolean, name: field_name, display: field_name, screens: attributes_for(:required_screen))
+      create(:object_manager_attribute_boolean, :required_screen, name: field_name, display: field_name)
       ObjectManager::Attribute.migration_execute
       ticket
       true

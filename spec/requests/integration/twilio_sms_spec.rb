@@ -201,7 +201,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
     end
 
     it 'does basic call when ticket has a custom attribute', db_strategy: :reset do
-      create(:object_manager_attribute_text, screens: attributes_for(:required_screen))
+      create(:object_manager_attribute_text, :required_screen)
       ObjectManager::Attribute.migration_execute
 
       UserInfo.current_user_id = 1

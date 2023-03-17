@@ -95,7 +95,7 @@ RSpec.describe Channel::EmailParser, type: :model do
     describe 'inline attachment' do
       let(:cid)   { '485376C9-2486-4351-B932-E2010998F579@home' }
       let(:html)  { "test <img src='cid:#{cid}'>" }
-      let(:store) { create(:store_image, preferences: store_preferences) }
+      let(:store) { create(:store, :image, preferences: store_preferences) }
 
       let(:store_preferences) do
         {

@@ -112,7 +112,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'creates draft with attachment' do
-        create(:store_image, o_id: form_id)
+        create(:store, :image, o_id: form_id)
 
         post path, params: base_params, as: :json
 
@@ -154,7 +154,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'updates draft with attachment' do
-        create(:store_image, o_id: form_id)
+        create(:store, :image, o_id: form_id)
 
         expect { patch path_draft_a, params: base_params, as: :json }
           .to change { draft_a.attachments.count }
@@ -162,7 +162,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'updates draft to have no attachments' do
-        create(:store_image, o_id: draft_a.id, object: draft_a.class.name)
+        create(:store, :image, o_id: draft_a.id, object: draft_a.class.name)
 
         expect { patch path_draft_a, params: base_params, as: :json }
           .to change { draft_a.attachments.count }
@@ -250,7 +250,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'imports attachments from draft to given form ID' do
-        create(:store_image, o_id: draft_a.id, object: draft_a.class.name)
+        create(:store, :image, o_id: draft_a.id, object: draft_a.class.name)
 
         expect { post import_path_a, params: import_params, as: :json }
           .to change { Store.list(object: 'UploadCache', o_id: form_id).count }
@@ -258,7 +258,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'grants access via role groups' do
-        create(:store_image, o_id: draft_d.id, object: draft_d.class.name)
+        create(:store, :image, o_id: draft_d.id, object: draft_d.class.name)
 
         expect { post import_path_d, params: import_params, as: :json }
           .to change { Store.list(object: 'UploadCache', o_id: form_id).count }

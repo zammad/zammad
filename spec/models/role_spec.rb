@@ -126,7 +126,7 @@ RSpec.describe Role do
 
       describe '#validate_agent_limit_by_attributes' do
         context 'when reactivating a role adds new agents' do
-          subject(:role) { create(:agent_role, active: false) }
+          subject(:role) { create(:role, :agent, active: false) }
 
           before { create(:user, roles: [role]) }
 

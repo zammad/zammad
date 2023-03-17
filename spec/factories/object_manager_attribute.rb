@@ -38,6 +38,55 @@ FactoryBot.define do
       object.data_option ||= {}
       object.data_option.merge! context.additional_data_options
     end
+
+    trait :required_screen do
+      screens do
+        {
+          'create_middle' =>
+                             {
+                               'ticket.customer'    => {
+                                 shown:      true,
+                                 required:   true,
+                                 item_class: 'column'
+                               },
+                               'ticket.agent'       => {
+                                 shown:      true,
+                                 required:   true,
+                                 item_class: 'column'
+                               },
+                               'admin.organization' => {
+                                 shown:    true,
+                                 required: true,
+                               },
+                               'admin.group'        => {
+                                 shown:      true,
+                                 required:   true,
+                                 item_class: 'column'
+                               },
+                             },
+          'edit'          =>
+                             {
+                               'ticket.customer'    => {
+                                 shown:    true,
+                                 required: true
+                               },
+                               'ticket.agent'       => {
+                                 shown:    true,
+                                 required: true
+                               },
+                               'admin.organization' => {
+                                 shown:    true,
+                                 required: true,
+                               },
+                               'admin.group'        => {
+                                 shown:      true,
+                                 required:   true,
+                                 item_class: 'column'
+                               },
+                             }
+        }
+      end
+    end
   end
 
   factory :object_manager_attribute_text, parent: :object_manager_attribute do
@@ -407,54 +456,6 @@ FactoryBot.define do
         'maxlength'  => 255,
         'nulloption' => true,
         'multiple'   => true,
-      }
-    end
-  end
-
-  factory :required_screen, class: Hash do
-    create_middle do
-      {
-        'ticket.customer'    => {
-          shown:      true,
-          required:   true,
-          item_class: 'column'
-        },
-        'ticket.agent'       => {
-          shown:      true,
-          required:   true,
-          item_class: 'column'
-        },
-        'admin.organization' => {
-          shown:    true,
-          required: true,
-        },
-        'admin.group'        => {
-          shown:      true,
-          required:   true,
-          item_class: 'column'
-        },
-      }
-    end
-
-    edit do
-      {
-        'ticket.customer'    => {
-          shown:    true,
-          required: true
-        },
-        'ticket.agent'       => {
-          shown:    true,
-          required: true
-        },
-        'admin.organization' => {
-          shown:    true,
-          required: true,
-        },
-        'admin.group'        => {
-          shown:      true,
-          required:   true,
-          item_class: 'column'
-        },
       }
     end
   end

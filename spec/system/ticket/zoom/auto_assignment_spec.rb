@@ -125,7 +125,7 @@ RSpec.describe 'Ticket zoom > Auto Assignment', type: :system do
     let!(:ticket)    { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:field_name) { SecureRandom.uuid }
     let(:field) do
-      create(:object_manager_attribute_text, name: field_name, display: field_name, screens: attributes_for(:required_screen))
+      create(:object_manager_attribute_text, :required_screen, name: field_name, display: field_name)
       ObjectManager::Attribute.migration_execute
     end
 

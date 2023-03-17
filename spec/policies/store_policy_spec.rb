@@ -55,7 +55,7 @@ describe StorePolicy do
     end
 
     context 'with object that does not have a policy' do
-      let(:record) { create(:store_image, object: 'NonExistingObject') }
+      let(:record) { create(:store, object: 'NonExistingObject') }
       let(:user)   { create(:admin) }
 
       it { is_expected.to forbid_actions :show, :destroy }
