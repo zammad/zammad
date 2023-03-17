@@ -23,6 +23,6 @@ describe('testing home section menu', () => {
       name: 'Ticket Overviews',
     })
 
-    expect(ticketOverviewLink).toHaveAttribute('href', '/tickets/view')
+    expect(ticketOverviewLink).toHaveAttribute('href', '/mobile/tickets/view')
   })
 })

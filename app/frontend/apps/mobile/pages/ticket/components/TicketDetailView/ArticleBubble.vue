@@ -4,7 +4,7 @@
 /* eslint-disable vue/no-v-html */
 
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { computed } from 'vue'
+import { computed, nextTick, onMounted, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
@@ -18,6 +18,9 @@ import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePr
 import stopEvent from '@shared/utils/events'
 import { getIdFromGraphQLId } from '@shared/graphql/utils'
 import type { TicketArticleAttachment } from '@shared/entities/ticket/types'
+import { useRouter } from 'vue-router'
+import { useApplicationStore } from '@shared/stores/application'
+import { isStandalone } from '@shared/utils/pwa'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore'
 import { useArticleAttachments } from '../../composable/useArticleAttachments'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
@@ -110,6 +113,78 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   stopEvent(event)
   showImage(attachment)
 }
+
+const router = useRouter()
+const app = useApplicationStore()
+
+const getRedirectRoute = (url: URL): string | undefined => {
+  if (url.pathname.startsWith('/mobile')) {
+    return url.href.slice(`${url.origin}/mobile`.length)
+  }
+
+  const route = router.resolve(`/${url.hash.slice(1)}${url.search}`)
+  if (route.name !== 'Error') {
+    return route.fullPath
+  }
+}
+
+const openLink = (target: string, path: string) => {
+  // keep links inside PWA inside the app
+  if (!isStandalone() && target && target !== '_self') {
+    window.open(`/mobile${path}`, target)
+  } else {
+    router.push(path)
+  }
+}
+
+const handleLinkClick = (link: HTMLAnchorElement, event: Event) => {
+  const fqdnOrigin = `${window.location.protocol}//${app.config.fqdn}${
+    window.location.port ? `:${window.location.port}` : ''
+  }`
+  try {
+    const url = new URL(link.href)
+    if (url.origin === window.location.origin || url.origin === fqdnOrigin) {
+      const redirectRoute = getRedirectRoute(url)
+      if (redirectRoute) {
+        openLink(link.target, redirectRoute)
+        event.preventDefault()
+      }
+    }
+  } catch {
+    // skip
+  }
+}
+
+// user links has fqdn in its href, but if it changes the link becomes invalid
+// to bypass that we replace the href with the correct one
+const patchUserMentionLinks = (link: HTMLAnchorElement) => {
+  const userId = link.dataset.mentionUserId
+  if (userId) {
+    link.href = `${window.location.origin}/mobile/users/${userId}`
+  }
+}
+
+const setupLinksHandlers = (element: HTMLDivElement) => {
+  const links = element.querySelectorAll('a')
+  links.forEach((link) => {
+    if ('__handled' in link) return
+    Object.defineProperty(link, '__handled', { value: true })
+    patchUserMentionLinks(link)
+    link.addEventListener('click', (event) => handleLinkClick(link, event))
+  })
+}
+
+watch(
+  () => props.content,
+  async () => {
+    await nextTick()
+    if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+  },
+)
+
+onMounted(() => {
+  if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+})
 </script>
 
 <template>
@@ -233,9 +308,9 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   word-break: break-word;
 }
 
-.Article {
+.Article:not(.Internal) {
   &.Right .Content,
-  &.Internal .Content {
+  &.Left .Content {
     :deep(a) {
       @apply text-black underline;
     }

@@ -2,7 +2,7 @@
 
 import { computed, shallowRef } from 'vue'
 
-export const isStandalone: boolean =
+export const isStandalone = () =>
   (('standalone' in window.navigator &&
     window.navigator.standalone) as boolean) ||
   window.matchMedia('(display-mode: standalone)').matches

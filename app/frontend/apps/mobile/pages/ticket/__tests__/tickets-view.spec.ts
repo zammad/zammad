@@ -25,7 +25,7 @@ it('see default list when opening page', async () => {
   expect(plusSign, 'can create a new ticket from here').toBeInTheDocument()
   expect(view.getLinkFromElement(plusSign)).toHaveAttribute(
     'href',
-    '/tickets/create',
+    '/mobile/tickets/create',
   )
 
   await waitForNextTick(true)
@@ -50,7 +50,7 @@ it('see default list when opening page', async () => {
     'see a message when nothing is found',
   ).toBeInTheDocument()
 
-  expect(window.location.pathname).toBe('/tickets/view/overview_1')
+  expect(window.location.pathname).toBe('/mobile/tickets/view/overview_1')
 })
 
 it('can filter by overview type', async () => {
@@ -75,7 +75,7 @@ it('can filter by overview type', async () => {
   expect(ticketItem).toBeInTheDocument()
   expect(view.getLinkFromElement(ticketItem)).toHaveAttribute(
     'href',
-    '/tickets/1',
+    '/mobile/tickets/1',
   )
 })
 

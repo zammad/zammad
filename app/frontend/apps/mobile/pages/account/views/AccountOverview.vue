@@ -89,7 +89,7 @@ const productAbout = productAboutQuery.result()
 const isMobileIOS = browser.name?.includes('Safari') && os.name?.includes('iOS')
 const { canInstallPWA, installPWA } = usePWASupport()
 const showInstallButton = computed(
-  () => !isStandalone && (canInstallPWA.value || isMobileIOS),
+  () => !isStandalone() && (canInstallPWA.value || isMobileIOS),
 )
 
 const showInstallIOSPopup = ref(false)
@@ -119,7 +119,7 @@ const installPWAMessage = computed(() => {
 })
 
 const installZammadPWA = () => {
-  if (isStandalone) return
+  if (isStandalone()) return
 
   // on chromium this will show a chrome popup with native "install" button
   if (canInstallPWA.value) {

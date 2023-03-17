@@ -32,7 +32,7 @@ describe('visiting user page', () => {
     expect(organizationLink).toBeInTheDocument()
     expect(organizationLink).toHaveAttribute(
       'href',
-      `/organizations/${organization.internalId}`,
+      `/mobile/organizations/${organization.internalId}`,
     )
 
     expect(

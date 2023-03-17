@@ -27,13 +27,13 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     const meta = editorMeta[PLUGIN_NAME] || {}
     let { ticketId, customerId } = context.value
 
-    if (!ticketId && meta.ticketNodeId) {
-      const node = getNodeByName(formId, meta.ticketNodeId)
+    if (!ticketId && meta.ticketNodeName) {
+      const node = getNodeByName(formId, meta.ticketNodeName)
       ticketId = node?.value as string
     }
 
-    if (!customerId && meta.customerNodeId) {
-      const node = getNodeByName(formId, meta.customerNodeId)
+    if (!customerId && meta.customerNodeName) {
+      const node = getNodeByName(formId, meta.customerNodeName)
       customerId = node?.value as string
     }
 

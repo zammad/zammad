@@ -4,9 +4,14 @@ import { convertToGraphQLId } from '@shared/graphql/utils'
 import { waitForAnimationFrame } from '@shared/utils/helpers'
 import { getByAltText, queryByAltText } from '@testing-library/vue'
 import { renderComponent } from '@tests/support/components'
+import { getTestRouter } from '@tests/support/components/renderComponent'
 import { mockAccount } from '@tests/support/mock-account'
+import { routes } from '@mobile/router'
+import { isStandalone } from '@shared/utils/pwa'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import ArticleBubble from '../ArticleBubble.vue'
+
+const mainRoutes = routes.at(-1)?.children || []
 
 const renderArticleBubble = (props = {}) => {
   return renderComponent(ArticleBubble, {
@@ -30,6 +35,19 @@ const renderArticleBubble = (props = {}) => {
     },
     router: true,
     store: true,
+    routerRoutes: [
+      {
+        path: '/',
+        name: 'Main',
+        component: { template: '<div></div>' },
+        children: mainRoutes,
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'Error',
+        component: { template: '<div></div>' },
+      },
+    ],
   })
 }
 
@@ -251,5 +269,152 @@ describe('component for displaying text article', () => {
       queryByAltText(attachment2, 'Image of Zammad 2.pdf'),
       "pdf doesn't have preview",
     ).not.toBeInTheDocument()
+  })
+})
+
+vi.mock('@shared/utils/pwa')
+
+describe('links handling', () => {
+  // current location is `http://localhost:3000/mobile`
+  const mobile = {
+    link: '/tickets/1',
+    fullLink: 'http://localhost:3000/mobile/tickets/1',
+    pathname: '/mobile/tickets/1',
+  }
+  const desktop = {
+    link: '/ticket/zoom/1',
+    fullLink: 'http://localhost:3000/#ticket/zoom/1',
+    pathname: '/mobile/ticket/zoom/1',
+  }
+
+  const open = vi.fn()
+
+  beforeEach(() => {
+    vi.mocked(isStandalone).mockReturnValue(false)
+    window.open = open
+    Object.defineProperty(window, 'location', {
+      value: {
+        ...window.location,
+        pathname: '/mobile',
+      },
+    })
+  })
+
+  const clickLink = async (href: string, target = '') => {
+    const view = renderArticleBubble({
+      content: `<a href="${href}" ${target}>link</a>`,
+    })
+
+    const link = view.getByRole('link')
+
+    await view.events.click(link)
+  }
+
+  it('handles self mobile links', async () => {
+    await clickLink(mobile.fullLink)
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(mobile.link)
+  })
+
+  it('handles target=_blank mobile links', async () => {
+    await clickLink(mobile.fullLink, 'target="_blank"')
+    const router = getTestRouter()
+    expect(open).toHaveBeenCalledWith(mobile.pathname, '_blank')
+    expect(router.push).not.toHaveBeenCalledWith()
+  })
+
+  it('mobile links inside PWA with target=_blank are opened in the same tab', async () => {
+    vi.mocked(isStandalone).mockReturnValue(true)
+    await clickLink(mobile.fullLink, 'target="_blank"')
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(mobile.link)
+  })
+
+  it('handles self mobile links with fqdn', async () => {
+    mockApplicationConfig({ fqdn: 'example.com' })
+    await clickLink(`http://example.com:3000${mobile.pathname}`)
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(mobile.link)
+  })
+  it('handles target=_blank mobile links with fqdn', async () => {
+    mockApplicationConfig({ fqdn: 'example.com' })
+    await clickLink(
+      `http://example.com:3000${mobile.pathname}`,
+      'target="_blank"',
+    )
+    const router = getTestRouter()
+    expect(open).toHaveBeenCalledWith(mobile.pathname, '_blank')
+    expect(router.push).not.toHaveBeenCalledWith()
+  })
+
+  it('handles self desktop links', async () => {
+    await clickLink(desktop.fullLink)
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(desktop.link)
+  })
+
+  it('handles target=_blank desktop links', async () => {
+    await clickLink(desktop.fullLink, 'target="_blank"')
+    const router = getTestRouter()
+    expect(open).toHaveBeenCalledWith(desktop.pathname, '_blank')
+    expect(router.push).not.toHaveBeenCalledWith()
+  })
+
+  it('desktop links inside PWA with target=_blank are opened in the same tab', async () => {
+    vi.mocked(isStandalone).mockReturnValue(true)
+    await clickLink(desktop.fullLink, 'target="_blank"')
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(desktop.link)
+  })
+
+  it('handles self desktop links with fqdn', async () => {
+    mockApplicationConfig({ fqdn: 'example.com' })
+    await clickLink(`http://example.com:3000/#${desktop.link.slice(1)}`)
+    const router = getTestRouter()
+    expect(open).not.toHaveBeenCalled()
+    expect(router.push).toHaveBeenCalledWith(desktop.link)
+  })
+  it('handles target=_blank desktop links with fqdn', async () => {
+    mockApplicationConfig({ fqdn: 'example.com' })
+    await clickLink(
+      `http://example.com:3000/#${desktop.link.slice(1)}`,
+      'target="_blank"',
+    )
+    const router = getTestRouter()
+    expect(open).toHaveBeenCalledWith(desktop.pathname, '_blank')
+    expect(router.push).not.toHaveBeenCalledWith()
+  })
+
+  it('updates links, when content changes', async () => {
+    const view = renderArticleBubble({
+      content: `<a href="${mobile.fullLink}">link</a>`,
+    })
+    expect(view.getByRole('link')).toHaveAttribute('href', mobile.fullLink)
+    await view.rerender({
+      content: `<a href="${desktop.fullLink}">link</a>`,
+    })
+    const link = view.getByRole('link')
+    expect(link).toHaveAttribute('href', desktop.fullLink)
+    await view.events.click(link)
+    const router = getTestRouter()
+    expect(router.push).toHaveBeenCalledWith(desktop.link)
+  })
+
+  it('fixes invalid user mention links', () => {
+    mockApplicationConfig({ fqdn: 'example.com' })
+    const userId = '1'
+    const userLink = `http://example.com:3000/#user/profile/${userId}`
+    const view = renderArticleBubble({
+      content: `<a href="${userLink}" data-mention-user-id="${userId}">link</a>`,
+    })
+    expect(view.getByRole('link')).toHaveAttribute(
+      'href',
+      `http://localhost:3000/mobile/users/${userId}`,
+    )
   })
 })

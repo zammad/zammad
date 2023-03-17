@@ -227,10 +227,10 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
           props: {
             meta: {
               mentionUser: {
-                groupNodeId: 'group_id',
+                groupNodeName: 'group_id',
               },
               mentionKnowledgeBase: {
-                attachmentsNodeId: 'attachments',
+                attachmentsNodeName: 'attachments',
               },
             },
           },

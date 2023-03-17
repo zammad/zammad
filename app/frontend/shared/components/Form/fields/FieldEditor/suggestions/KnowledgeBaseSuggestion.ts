@@ -55,12 +55,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           formId,
         })
 
-        const attachmentsNodeId = meta?.attachmentsNodeId
+        const attachmentsNodeName = meta?.attachmentsNodeName
 
-        if (attachmentsNodeId) {
+        if (attachmentsNodeName) {
           const attachmentField = getNodeByName(
             context.value.formId,
-            attachmentsNodeId,
+            attachmentsNodeName,
           )
 
           const existingAttachments = (cloneDeep(attachmentField?.value) ||

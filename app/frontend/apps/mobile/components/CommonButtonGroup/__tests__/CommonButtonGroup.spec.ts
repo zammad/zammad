@@ -35,7 +35,7 @@ describe('buttons group', () => {
 
     expect(view.getByRole('link', { name: 'link text' })).toHaveAttribute(
       'href',
-      '/example',
+      '/mobile/example',
     )
 
     const button = view.getByRole('button', { name: 'button' })

@@ -108,7 +108,7 @@ describe('selecting a online notification', () => {
 
     expect(view.getLinkFromElement(notificationItem)).toHaveAttribute(
       'href',
-      '/tickets/111',
+      '/mobile/tickets/111',
     )
   })
 

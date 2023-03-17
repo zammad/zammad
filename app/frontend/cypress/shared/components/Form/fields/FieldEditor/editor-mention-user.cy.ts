@@ -4,6 +4,7 @@ import { mockApolloClient } from '@cy/utils'
 import { useNotifications } from '@shared/components/CommonNotifications'
 import { MentionSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api'
 import { convertToGraphQLId } from '@shared/graphql/utils'
+import { useApplicationStore } from '@shared/stores/application'
 
 import { mountEditor } from './utils'
 
@@ -23,6 +24,9 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
   })
 
   it('inserts found text', () => {
+    const app = useApplicationStore()
+    app.config.fqdn = 'example.zammad.com'
+    app.config.http_type = 'http'
     const client = mockApolloClient()
     const mock = cy.spy(async () => ({
       data: {
@@ -64,7 +68,7 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
         expect(link).to.have.attr('data-mention-user-id', '3')
         expect(link).to.have.attr(
           'href',
-          `${window.location.origin}/#user/profile/3`,
+          `http://example.zammad.com/#user/profile/3`,
         )
       })
 

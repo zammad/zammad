@@ -28,7 +28,7 @@ export const mountEditorWithAttachments = () => {
             props: {
               meta: {
                 mentionKnowledgeBase: {
-                  attachmentsNodeId: 'attachments',
+                  attachmentsNodeName: 'attachments',
                 },
               },
             },

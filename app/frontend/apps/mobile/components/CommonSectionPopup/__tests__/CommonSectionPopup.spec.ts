@@ -40,7 +40,7 @@ describe('popup behaviour', () => {
     expect(link).toBeInTheDocument()
     expect(action).toBeInTheDocument()
 
-    expect(view.getLinkFromElement(link)).toHaveAttribute('href', '/')
+    expect(view.getLinkFromElement(link)).toHaveAttribute('href', '/mobile/')
 
     await view.events.click(action)
 

@@ -86,19 +86,19 @@ export interface FieldEditorProps {
     mentionText?: {
       disabled?: boolean
       // where to get id for the current ticket
-      ticketNodeId?: string
+      ticketNodeName?: string
       // where to get id for the current customer
-      customerNodeId?: string
+      customerNodeName?: string
     }
     mentionKnowledgeBase?: {
       disabled?: boolean
       // where to put attachments from knowledge base, if any are available
-      attachmentsNodeId?: string
+      attachmentsNodeName?: string
     }
     mentionUser?: {
       disabled?: boolean
       // where to get groupId for user mention query
-      groupNodeId?: string
+      groupNodeName?: string
     }
   }
 }

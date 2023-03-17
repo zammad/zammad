@@ -32,10 +32,10 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
   const editorMeta = computed(() => {
     return {
       mentionUser: {
-        groupNodeId: 'group_id',
+        groupNodeName: 'group_id',
       },
       mentionKnowledgeBase: {
-        attachmentsNodeId: 'attachments',
+        attachmentsNodeName: 'attachments',
       },
       ...currentArticleType.value?.editorMeta,
     }

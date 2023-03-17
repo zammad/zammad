@@ -12,6 +12,7 @@ import {
 import { ensureGraphqlId } from '@shared/graphql/utils'
 import { debouncedQuery } from '@shared/utils/helpers'
 import { getNodeByName } from '@shared/components/Form/utils'
+import { useApplicationStore } from '@shared/stores/application'
 import buildMentionSuggestion from './suggestions'
 import type { FieldEditorProps, MentionUserItem } from '../types'
 import { useMentionSuggestionsLazyQuery } from '../graphql/queries/mention/mentionSuggestions.api'
@@ -21,6 +22,7 @@ export const PLUGIN_LINK_NAME = 'mentionUserLink'
 const ACTIVATOR = '@@'
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
+  const app = useApplicationStore()
   const queryMentionsHandler = new QueryHandler(
     useMentionSuggestionsLazyQuery({
       query: '',
@@ -49,7 +51,10 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       activator: ACTIVATOR,
       type: 'user',
       insert(props: MentionUserItem) {
-        const href = `${window.location.origin}/#user/profile/${props.internalId}`
+        const { fqdn, http_type: httpType } = app.config
+        // app/assets/javascripts/app/lib/base/jquery.textmodule.js:705
+        const origin = `${httpType}://${fqdn}`
+        const href = `${origin}/#user/profile/${props.internalId}`
         const text = props.fullname || props.email || ''
         return [
           {
@@ -60,6 +65,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
                 type: PLUGIN_LINK_NAME,
                 attrs: {
                   href,
+                  target: null,
                   'data-mention-user-id': props.internalId,
                 },
               },
@@ -74,9 +80,9 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
         let { groupId: group } = context.value
         if (!group) {
           const { meta, formId } = context.value
-          const groupNodeId = meta?.[PLUGIN_NAME]?.groupNodeId
-          if (groupNodeId) {
-            const groupNode = getNodeByName(formId, groupNodeId)
+          const groupNodeName = meta?.[PLUGIN_NAME]?.groupNodeName
+          if (groupNodeName) {
+            const groupNode = getNodeByName(formId, groupNodeName)
             group = groupNode?.value as string
           }
         }
@@ -100,17 +106,16 @@ export const UserLink = Link.extend({
   name: PLUGIN_LINK_NAME,
   addAttributes() {
     return {
+      ...this.parent?.(),
       href: {
         default: null,
       },
       'data-mention-user-id': {
         default: null,
-        parseHTML: (element) => element.getAttribute('data-mention-user-id'),
-        renderHTML: (attributes) => {
-          return {
-            'data-mention-user-id': attributes['data-mention-user-id'],
-          }
-        },
+        parseHTML: (element) => element.dataset.mentionUserId,
+        renderHTML: (attributes) => ({
+          'data-mention-user-id': attributes['data-mention-user-id'],
+        }),
       },
     }
   },

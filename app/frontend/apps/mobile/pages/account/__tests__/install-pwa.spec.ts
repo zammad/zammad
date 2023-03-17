@@ -25,7 +25,7 @@ const mockPWA = ({
     canInstallPWA: computed(() => canInstallPWA),
     installPWA,
   })
-  vi.spyOn(utilsPWA, 'isStandalone', 'get').mockReturnValue(isStandalone)
+  vi.spyOn(utilsPWA, 'isStandalone').mockReturnValue(isStandalone)
 }
 
 describe('Installing Zammad as PWA', () => {

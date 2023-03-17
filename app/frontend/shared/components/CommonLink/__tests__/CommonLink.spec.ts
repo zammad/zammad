@@ -102,7 +102,7 @@ describe('CommonLink.vue', () => {
       },
     })
 
-    expect(getLink()).toHaveAttribute('href', '/example')
+    expect(getLink()).toHaveAttribute('href', '/mobile/example')
 
     await wrapper.rerender({
       link: 'https://www.zammad.org',
@@ -129,7 +129,7 @@ describe('CommonLink.vue', () => {
     const link = getLink()
 
     expect(link).toHaveTextContent('A test link')
-    expect(link).toHaveAttribute('href', '/example')
+    expect(link).toHaveAttribute('href', '/mobile/example')
   })
 
   it('supports api urls', () => {

@@ -126,7 +126,7 @@ const initializeRouter = (routes?: RouteRecordRaw[]) => {
   }
 
   router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/mobile'),
     routes: localRoutes,
   }) as MockedRouter
 

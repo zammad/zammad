@@ -9,7 +9,7 @@ export const useArticleToggleMore = () => {
   let heightActual = 0
   let heightHidden = 0
 
-  const bubbleElement = ref<HTMLElement>()
+  const bubbleElement = ref<HTMLDivElement>()
   const hasShowMore = ref(true)
   const shownMore = ref(false)
 
