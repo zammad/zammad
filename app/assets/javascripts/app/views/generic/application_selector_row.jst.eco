@@ -1,0 +1,44 @@
+<div class="horizontal-filter js-filterElement" <% if @has_expert_conditions: %>data-level="<%= @level %>"<% end %>>
+<% if @has_expert_conditions: %>
+  <div class="draggable"><%- @Icon('draggable') %></div>
+<% end %>
+  <div class="horizontal-filter-body">
+    <div class="controls">
+      <div class="u-positionOrigin js-attributeSelector">
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="u-positionOrigin js-operator">
+        <select></select>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+    </div>
+  <% if @pre_condition: %>
+    <div class="controls">
+      <div class="u-positionOrigin js-preCondition">
+        <select></select>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+    </div>
+  <% end %>
+    <div class="controls form-group js-value horizontal horizontal-filter-value"></div>
+  </div>
+  <div class="filter-controls">
+    <div class="filter-control filter-control-remove js-remove" title="<%- @Ti('Remove') %>">
+      <%- @Icon('minus-small') %>
+    </div>
+  <% if @has_expert_conditions: %>
+    <div class="filter-control filter-control-add js-add" title="<%- @Ti('Add condition') %>">
+      <%- @Icon('plus-small') %>
+    </div>
+    <div class="filter-control filter-control-subclause js-subclause" title="<%- @Ti('Add subclause') %>">
+      <%- @Icon('subclause-small') %>
+    </div>
+  <% else: %>
+    <div class="filter-control filter-control-add js-add" title="<%- @Ti('Add') %>">
+      <%- @Icon('plus-small') %>
+    </div>
+  <% end %>
+  </div>
+</div>

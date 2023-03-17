@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="<%= system_locale_via_uri.locale %>"
+      dir="<%= system_locale_via_uri.dir %>"
+      adir="ltr"
+      data-id='<%= @knowledge_base.id %>'
+      data-iconset='<%= @knowledge_base.iconset %>'
+      data-available-locales='<%= all_locales.map(&:locale).join(',') %>'
+      data-base-path='<%= custom_path_if_needed help_root_path(locale: '{locale}'), @knowledge_base %>'
+      data-primary-locale="<%= (filter_primary_kb_locale || all_locales.first)&.locale %>">
+
+<meta charset="utf-8">
+<title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<%= render partial: 'knowledge_base/public/feeds_header' if @knowledge_base.show_feed_icon %>
+<%= stylesheet_link_tag "knowledge_base.css", :media => 'all' %>
+<%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
+<%= canonical_link_tag @knowledge_base, @category, @object %>
+
+<div class="wrapper js-wrapper">
+  <%= render_top_bar_if_needed @object, @knowledge_base %>
+
+  <header class="header js-header">
+    <div class="container">
+      <span class="logo">
+        <%= link_to custom_path_if_needed(help_root_path(locale: params[:locale]), @knowledge_base) do %>
+          <img src="/assets/images/<%= Setting.get('product_logo') %>">
+        <% end %>
+      </span>
+      <nav class="menu">
+        <% menu_items.location_header.each do |menu_item| %>
+          <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
+        <% end %>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="search">
+        <div class="search-field">
+          <%= icon 'magnifier' %>
+          <input class="js-search-input" type="search" placeholder="<%= zt('How can we help you? Search for an answer or a topic…') %>">
+        </div>
+        <ul class="search-results js-search-results" data-empty-placeholder="<%= zt('No results were found.') %>"></ul>
+      </div>
+    </div>
+  </header>
+
+  <%= render_breadcrumb_if_needed(@knowledge_base, @object, @alternative) %>
+
+  <%= yield %>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-menu">
+        <div class="copyright">
+          <%= @knowledge_base.translation.footer_note %>
+        </div>
+
+        <nav class="menu">
+          <% menu_items.location_footer.each do |menu_item| %>
+            <%= link_to menu_item.title, menu_item.url, class: 'menu-item', target: menu_item.new_tab ? '_blank' : nil %>
+          <% end %>
+        </nav>
+
+        <% if @knowledge_base.show_feed_icon %>
+          <div class="dropdown-picker feed-picker">
+            <a href="#" data-toggle="dropdown" aria-expanded="false">
+              <%= icon('rss') %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-<%= dropdown_menu_direction %> dropdown-menu-up" role="menu">
+              <% feeds_available(@knowledge_base, @category, @object).each do |feed| %>
+                <li>
+                  <%= link_to feed[:title], feed[:url] %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="dropdown-picker language-picker">
+          <a class="btn btn--action" href="#" data-toggle="dropdown" aria-expanded="false">
+            <%= system_locale_via_uri.name %>
+            <%= icon 'arrow-down' %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-<%= dropdown_menu_direction %> dropdown-menu-up" role="menu">
+            <% @object_locales&.each do |locale| %>
+              <li class="<%= 'is-selected' if locale.name == system_locale_via_uri.name %>">
+                <%= link_to custom_path_if_needed(url_for(locale: locale.locale), @knowledge_base), hreflang: locale.locale do %>
+                  <%= icon 'checkmark' %>
+                  <%= locale.name %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<%= javascript_tag nonce: true do -%>
+  if(window.fetch === undefined || window.Promise === undefined || Element.prototype.prepend === undefined){
+    var polyfillScriptTag = document.createElement('script');
+    polyfillScriptTag.setAttribute('src', '<%= path_to_javascript('knowledge_base_public_polyfills') %>');
+    polyfillScriptTag.setAttribute('nonce', '<%= content_security_policy_nonce %>');
+    document.body.appendChild(polyfillScriptTag);
+  }
+<% end -%>
+
+<%= javascript_include_tag 'knowledge_base_public', nonce: true %>

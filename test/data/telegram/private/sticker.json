@@ -1,0 +1,37 @@
+{
+  "update_id":4,
+  "channel_post":{
+    "from": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername"
+    },
+    "chat": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername",
+      "type": "private"
+    },
+    "message_id":273,
+    "date":1441645532,
+    "sticker": {
+      "width": 512,
+      "height": 512,
+      "emoji": "😄",
+      "set_name": "HotCherry",
+      "is_animated": true,
+      "file_id": "stickerfileid",
+      "file_size": 15455,
+      "thumb": {
+        "file_id": "stickerthumbfileid",
+        "file_size": 4622,
+        "width": 128,
+        "height": 128
+      }
+    },
+    "callback_token":"z5N_uxY_Fut81g",
+    "bid":"435791794"
+  }
+}

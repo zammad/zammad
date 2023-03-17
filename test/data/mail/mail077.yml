@@ -1,0 +1,15 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: John.Smith@example.com
+from_email: John.Smith@example.com
+from_display_name: ''
+to: metest@znuny.com
+subject: " Personaländerung"
+body: |
+  äöüß ad asd
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.
+content_type: text/plain
+attachments: []

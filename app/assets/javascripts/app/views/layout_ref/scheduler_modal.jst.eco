@@ -293,7 +293,7 @@
               <li role="presentation" class="js-option" data-value="18">Hans Bauer
               <li role="presentation" class="js-option is-hidden" data-value="11">Mail Delivery System
               <li role="presentation" class="js-option" data-value="2">Nicole Braun
-              <li role="presentation" class="js-option is-active" data-value="14">Nicole Oberzobel via Znuny Projects
+              <li role="presentation" class="js-option is-active" data-value="14">Nicole Oberzobel via Zammad Projects
             </ul>
           </div>
 
@@ -351,8 +351,8 @@
             Nicole Braun (Zammad Foundation)
           </span> </td>
         <td>
-          <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">
-              script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler
+          <a href="#ticket/zoom/6"> <span title="script/background-worker.rb start">
+              script/background-worker.rb start
             </span> </a>
         </td>
         <td> <span>

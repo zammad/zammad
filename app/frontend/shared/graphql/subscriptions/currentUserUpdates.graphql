@@ -1,0 +1,7 @@
+subscription currentUserUpdates($userId: ID!) {
+  userUpdates(userId: $userId) {
+    user {
+      ...currentUserAttributes
+    }
+  }
+}

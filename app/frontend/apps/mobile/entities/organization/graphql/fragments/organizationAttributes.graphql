@@ -1,0 +1,17 @@
+fragment organizationAttributes on Organization {
+  id
+  internalId
+  name
+  shared
+  domain
+  domainAssignment
+  active
+  note
+  ticketsCount {
+    open
+    closed
+  }
+  objectAttributeValues {
+    ...objectAttributeValues
+  }
+}

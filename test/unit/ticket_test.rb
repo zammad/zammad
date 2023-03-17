@@ -1,14 +1,20 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
 class TicketTest < ActiveSupport::TestCase
+
+  setup do
+    Ticket.destroy_all
+  end
+
   test 'ticket create' do
     ticket = Ticket.create!(
-      title: "some title\n äöüß",
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         "some title\n äöüß",
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -20,15 +26,15 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #1
     article_inbound1 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message article_inbound1 😍😍😍',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message article_inbound1 😍😍😍',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -45,15 +51,15 @@ class TicketTest < ActiveSupport::TestCase
     # create inbound article #2
     travel 2.seconds
     article_inbound2 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message article_inbound2 😍😍😍',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message article_inbound2 😍😍😍',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -69,13 +75,13 @@ class TicketTest < ActiveSupport::TestCase
 
     # create note article
     article_note = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some person',
-      subject: "some\nnote",
-      body: "some\n message",
-      internal: true,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'note'),
+      ticket_id:     ticket.id,
+      from:          'some person',
+      subject:       "some\nnote",
+      body:          "some\n message",
+      internal:      true,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'note'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -93,15 +99,15 @@ class TicketTest < ActiveSupport::TestCase
     # create outbound article
     travel 2.seconds
     article_outbound = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_recipient@example.com',
-      to: 'some_sender@example.com',
-      subject: 'some subject',
-      message_id: 'some@id2',
-      body: 'some message 2',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_recipient@example.com',
+      to:            'some_sender@example.com',
+      subject:       'some subject',
+      message_id:    'some@id2',
+      body:          'some message 2',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -116,15 +122,15 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #3
     article_inbound3 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message article_inbound3 😍😍😍',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message article_inbound3 😍😍😍',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -141,15 +147,15 @@ class TicketTest < ActiveSupport::TestCase
     # create inbound article #4
     travel 2.seconds
     article_inbound4 = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      body: 'some message article_inbound4 😍😍😍',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      body:          'some message article_inbound4 😍😍😍',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -193,13 +199,13 @@ class TicketTest < ActiveSupport::TestCase
 
     # delete article
     article_note = Ticket::Article.create!(
-      ticket_id: ticket.id,
-      from: 'some person',
-      subject: 'some note',
-      body: 'some message',
-      internal: true,
-      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
-      type: Ticket::Article::Type.find_by(name: 'note'),
+      ticket_id:     ticket.id,
+      from:          'some person',
+      subject:       'some note',
+      body:          'some message',
+      internal:      true,
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      type:          Ticket::Article::Type.find_by(name: 'note'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -217,63 +223,21 @@ class TicketTest < ActiveSupport::TestCase
     travel_back
   end
 
-  test 'ticket latest change' do
-    ticket1 = Ticket.create!(
-      title: 'latest change 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket2 = Ticket.create!(
-      title: 'latest change 2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    assert_equal(Ticket.latest_change.to_s, ticket2.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket1.title = 'latest change 1 - 1'
-    ticket1.save
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    travel 1.minute
-
-    ticket1.touch
-    assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
-
-    ticket1.destroy
-    assert_equal(Ticket.latest_change.to_s, ticket2.updated_at.to_s)
-    ticket2.destroy
-    travel_back
-  end
-
   test 'ticket process_pending' do
 
     # close all other pending close tickets first
-    Ticket.where('pending_time IS NOT NULL').each do |ticket|
+    Ticket.where.not(pending_time: nil).each do |ticket|
       ticket.state = Ticket::State.lookup(name: 'closed')
       ticket.save!
     end
 
     ticket = Ticket.create!(
-      title: 'pending close test',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'pending close'),
-      pending_time: Time.zone.now - 60,
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'pending close test',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'pending close'),
+      pending_time:  Time.zone.now - 60,
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -290,11 +254,11 @@ class TicketTest < ActiveSupport::TestCase
   test 'ticket subject' do
 
     ticket = Ticket.create!(
-      title: 'subject test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'subject test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -309,11 +273,11 @@ class TicketTest < ActiveSupport::TestCase
     Setting.set('ticket_hook_position', 'left')
 
     ticket = Ticket.create!(
-      title: 'subject test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'subject test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -328,11 +292,11 @@ class TicketTest < ActiveSupport::TestCase
     Setting.set('ticket_hook_position', 'none')
 
     ticket = Ticket.create!(
-      title: 'subject test 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'subject test 1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -352,11 +316,11 @@ class TicketTest < ActiveSupport::TestCase
     Setting.set('ticket_number', 'Ticket::Number::Increment')
 
     ticket1 = Ticket.create!(
-      title: 'subject test 1234-1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'subject test 1234-1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -366,11 +330,11 @@ class TicketTest < ActiveSupport::TestCase
 
     Setting.set('ticket_number', 'Ticket::Number::Date')
     ticket1 = Ticket.create!(
-      title: 'subject test 1234-2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'subject test 1234-2',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -384,11 +348,11 @@ class TicketTest < ActiveSupport::TestCase
   test 'article attachment helper 1' do
 
     ticket1 = Ticket.create!(
-      title: 'some article helper test1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some article helper test1',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -396,26 +360,26 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #1
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      content_type:  'text/html',
+      body:          'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
 
-    store1 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file1_normally_should_be_an_image',
-      filename: 'some_file1.jpg',
-      preferences: {
+    store1 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file1_normally_should_be_an_image',
+      filename:      'some_file1.jpg',
+      preferences:   {
         'Content-Type'        => 'image/jpeg',
         'Mime-Type'           => 'image/jpeg',
         'Content-ID'          => '15.274327094.140938@zammad.example.com',
@@ -423,12 +387,12 @@ class TicketTest < ActiveSupport::TestCase
       },
       created_by_id: 1,
     )
-    store2 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file2_normally_should_be_an_image',
-      filename: 'some_file2.jpg',
-      preferences: {
+    store2 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file2_normally_should_be_an_image',
+      filename:      'some_file2.jpg',
+      preferences:   {
         'Content-Type'        => 'image/jpeg',
         'Mime-Type'           => 'image/jpeg',
         'Content-ID'          => '15.274327094.140939@zammad.example.com',
@@ -436,12 +400,12 @@ class TicketTest < ActiveSupport::TestCase
       },
       created_by_id: 1,
     )
-    store3 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file3',
-      filename: 'some_file3.txt',
-      preferences: {
+    store3 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file3',
+      filename:      'some_file3.txt',
+      preferences:   {
         'Content-Type'        => 'text/stream',
         'Mime-Type'           => 'text/stream',
         'Content-ID'          => '15.274327094.99999@zammad.example.com',
@@ -470,11 +434,11 @@ class TicketTest < ActiveSupport::TestCase
   test 'article attachment helper 2' do
 
     ticket1 = Ticket.create!(
-      title: 'some article helper test2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: 2,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+      title:         'some article helper test2',
+      group:         Group.lookup(name: 'Users'),
+      customer_id:   2,
+      state:         Ticket::State.lookup(name: 'new'),
+      priority:      Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -482,26 +446,26 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #1
     article1 = Ticket::Article.create!(
-      ticket_id: ticket1.id,
-      from: 'some_sender@example.com',
-      to: 'some_recipient@example.com',
-      subject: 'some subject',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message article helper test2 <div><img src="cid:15.274327094.140938@zammad.example.com">asdasd<img border="0" width="60" height="19" src="cid:15.274327094.140939@zammad.example.com" alt="Beschreibung: Beschreibung: efqmLogo"><br>',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
+      ticket_id:     ticket1.id,
+      from:          'some_sender@example.com',
+      to:            'some_recipient@example.com',
+      subject:       'some subject',
+      message_id:    'some@id',
+      content_type:  'text/html',
+      body:          'some message article helper test2 <div><img src="cid:15.274327094.140938@zammad.example.com">asdasd<img border="0" width="60" height="19" src="cid:15.274327094.140939@zammad.example.com" alt="Beschreibung: Beschreibung: efqmLogo"><br>',
+      internal:      false,
+      sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+      type:          Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
 
-    store1 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file1_normally_should_be_an_image',
-      filename: 'some_file1.jpg',
-      preferences: {
+    store1 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file1_normally_should_be_an_image',
+      filename:      'some_file1.jpg',
+      preferences:   {
         'Content-Type'        => 'image/jpeg',
         'Mime-Type'           => 'image/jpeg',
         'Content-ID'          => '15.274327094.140938@zammad.example.com',
@@ -509,12 +473,12 @@ class TicketTest < ActiveSupport::TestCase
       },
       created_by_id: 1,
     )
-    store2 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file2_normally_should_be_an_image',
-      filename: 'some_file2.jpg',
-      preferences: {
+    store2 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file2_normally_should_be_an_image',
+      filename:      'some_file2.jpg',
+      preferences:   {
         'Content-Type'        => 'image/jpeg',
         'Mime-Type'           => 'image/jpeg',
         'Content-ID'          => '15.274327094.140939@zammad.example.com',
@@ -522,12 +486,12 @@ class TicketTest < ActiveSupport::TestCase
       },
       created_by_id: 1,
     )
-    store3 = Store.add(
-      object: 'Ticket::Article',
-      o_id: article1.id,
-      data: 'content_file3',
-      filename: 'some_file3.txt',
-      preferences: {
+    store3 = Store.create!(
+      object:        'Ticket::Article',
+      o_id:          article1.id,
+      data:          'content_file3',
+      filename:      'some_file3.txt',
+      preferences:   {
         'Content-Type'        => 'text/stream',
         'Mime-Type'           => 'text/stream',
         'Content-ID'          => '15.274327094.99999@zammad.example.com',

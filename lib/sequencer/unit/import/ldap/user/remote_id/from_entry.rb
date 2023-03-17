@@ -1,22 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Ldap
-        module User
-          module RemoteId
-            class FromEntry < Sequencer::Unit::Import::Common::Model::Attributes::RemoteId
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :ldap_config
+class Sequencer::Unit::Import::Ldap::User::RemoteId::FromEntry < Sequencer::Unit::Import::Common::Model::Attributes::RemoteId
 
-              private
+  uses :ldap_config
 
-              def attribute
-                ldap_config[:user_uid].to_sym
-              end
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def attribute
+    ldap_config[:user_uid].to_sym
   end
 end

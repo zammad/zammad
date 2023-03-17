@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Calendar extends App.ControllerSubContent
   requiredPermission: 'admin.calendar'
-  header: 'Calendars'
+  header: __('Calendars')
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
@@ -78,8 +78,8 @@ class Index extends App.ControllerSubContent
     new App.ControllerGenericNew(
       pageData:
         title: @header
-        object: 'Calendar'
-        objects: 'Calendars'
+        object: __('Calendar')
+        objects: __('Calendars')
       genericObject: 'Calendar'
       container:     @el.closest('.content')
       large:         true
@@ -91,8 +91,8 @@ class Index extends App.ControllerSubContent
       id: id
       pageData:
         title: @header
-        object: 'Calendar'
-        objects: 'Calendars'
+        object: __('Calendar')
+        objects: __('Calendars')
       genericObject: 'Calendar'
       container:     @el.closest('.content')
       large:         true
@@ -121,4 +121,4 @@ class Index extends App.ControllerSubContent
       container:   @el.closest('.content')
     )
 
-App.Config.set('Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, permission: ['admin.calendar'] }, 'NavBarAdmin')
+App.Config.set('Calendars', { prio: 2400, name: __('Calendars'), parent: '#manage', target: '#manage/calendars', controller: Calendar, permission: ['admin.calendar'] }, 'NavBarAdmin')

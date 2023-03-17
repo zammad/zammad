@@ -1,0 +1,32 @@
+{
+  "name": "eslint-plugin-zammad",
+  "version": "0.0.0",
+  "description": "Collection of Zammad rules for Eslint.",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "author": "Martin Gruner",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "mocha tests --recursive"
+  },
+  "dependencies": {
+    "requireindex": "^1.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-plugin-eslint-plugin": "^5.0.8",
+    "eslint-plugin-node": "^11.1.0",
+    "mocha": "^10.2.0"
+  },
+  "engines": {
+    "node": "12.x || 14.x || >= 16"
+  },
+  "peerDependencies": {
+    "eslint": ">=6"
+  },
+  "license": "ISC"
+}

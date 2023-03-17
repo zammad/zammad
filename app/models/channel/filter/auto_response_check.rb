@@ -1,38 +1,41 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::AutoResponseCheck
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
-    # if header is available, do not generate auto response
-    mail[ 'x-zammad-send-auto-response'.to_sym ] = false
-    mail[ 'x-zammad-is-auto-response'.to_sym ] = true
+    header_is_auto_response_exists = mail.key?(:'x-zammad-is-auto-response')
+    mail[ :'x-zammad-is-auto-response' ] = header_is_auto_response_exists ? ActiveModel::Type::Boolean.new.cast(mail[ :'x-zammad-is-auto-response' ]) : true
 
-    if !mail[ 'x-zammad-article-preferences'.to_sym ]
-      mail[ 'x-zammad-article-preferences'.to_sym ] = {}
-    end
-    mail[ 'x-zammad-article-preferences'.to_sym ]['send-auto-response'] = false
-    mail[ 'x-zammad-article-preferences'.to_sym ]['is-auto-response'] = true
+    header_send_auto_response_exists = mail.key?(:'x-zammad-send-auto-response')
+    mail[ :'x-zammad-send-auto-response' ] = header_send_auto_response_exists ? ActiveModel::Type::Boolean.new.cast(mail[ :'x-zammad-send-auto-response' ]) : !mail[ :'x-zammad-is-auto-response' ]
 
-    # do not send an auto respondse if one of the following headers exists
-    return if mail[ 'list-unsubscribe'.to_sym ] && mail[ 'list-unsubscribe'.to_sym ] =~ /.../
-    return if mail[ 'x-loop'.to_sym ] && mail[ 'x-loop'.to_sym ] =~ /(yes|true)/i
-    return if mail[ 'precedence'.to_sym ] && mail[ 'precedence'.to_sym ] =~ /(bulk|list|junk)/i
-    return if mail[ 'auto-submitted'.to_sym ] && mail[ 'auto-submitted'.to_sym ] =~ /auto-(generated|replied)/i
-    return if mail[ 'x-auto-response-suppress'.to_sym ] && mail[ 'x-auto-response-suppress'.to_sym ] =~ /all/i
+    mail[ :'x-zammad-article-preferences' ] ||= {}
+    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = mail[ :'x-zammad-send-auto-response' ]
+    mail[ :'x-zammad-article-preferences' ]['is-auto-response'] = mail[ :'x-zammad-is-auto-response' ]
 
-    # do not send an auto respondse if sender is system it self
-    message_id = mail[ 'message_id'.to_sym ]
+    # Skip the auto response checks, if the header already exists.
+    return if header_is_auto_response_exists
+
+    # do not send an auto response if one of the following headers exists
+    return if mail[ :'list-unsubscribe' ] && mail[ :'list-unsubscribe' ] =~ %r{...}
+    return if mail[ :'x-loop' ] && mail[ :'x-loop' ] =~ %r{(yes|true)}i
+    return if mail[ :precedence ] && mail[ :precedence ] =~ %r{(bulk|list|junk)}i
+    return if mail[ :'auto-submitted' ] && mail[ :'auto-submitted' ] =~ %r{auto-(generated|replied)}i
+    return if mail[ :'x-auto-response-suppress' ] && mail[ :'x-auto-response-suppress' ] =~ %r{all}i
+
+    # do not send an auto response if sender is system itself
+    message_id = mail[ :message_id ]
     if message_id
       fqdn = Setting.get('fqdn')
-      return if message_id.match?(/@#{Regexp.quote(fqdn)}/i)
+      return if message_id.match?(%r{@#{Regexp.quote(fqdn)}}i)
     end
 
-    mail[ 'x-zammad-send-auto-response'.to_sym ] = true
-    mail[ 'x-zammad-is-auto-response'.to_sym ] = false
+    mail[ :'x-zammad-send-auto-response' ] = true if !header_send_auto_response_exists
+    mail[ :'x-zammad-is-auto-response' ] = false
 
-    mail[ 'x-zammad-article-preferences'.to_sym ]['send-auto-response'] = true
-    mail[ 'x-zammad-article-preferences'.to_sym ]['is-auto-response'] = false
+    mail[ :'x-zammad-article-preferences' ]['send-auto-response'] = mail[ :'x-zammad-send-auto-response' ]
+    mail[ :'x-zammad-article-preferences' ]['is-auto-response'] = false
 
   end
 end

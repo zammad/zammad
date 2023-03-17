@@ -1,5 +1,7 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class ReportProfilesController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.report_profile') }
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 

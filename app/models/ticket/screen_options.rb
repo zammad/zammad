@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Ticket::ScreenOptions
 
 =begin
@@ -10,6 +11,7 @@ list attributes
 
     ticket: ticket_model,
     current_user: User.find(123),
+    screen: 'create_middle',
   )
 
   or only with user
@@ -29,16 +31,7 @@ returns
         :group_id => [12]
       },
     },
-    :dependencies => {
-      :group_id => {
-        "" => {
-          : owner_id => []
-        },
-        12 => {
-          : owner_id => [4, 5, 6, 7]
-        }
-      }
-    }
+  }
 
 =end
 
@@ -49,35 +42,8 @@ returns
       params[:ticket] = Ticket.find(params[:ticket_id])
     end
 
-    filter = {}
     assets = {}
-
-    # get ticket states
-    state_ids = []
-    if params[:ticket].present?
-      state_type = params[:ticket].state.state_type
-    end
-    state_types = ['open', 'closed', 'pending action', 'pending reminder']
-    if state_type && !state_types.include?(state_type.name)
-      state_ids.push params[:ticket].state_id
-    end
-    state_types.each do |type|
-      state_type = Ticket::StateType.find_by(name: type)
-      next if !state_type
-      state_type.states.each do |state|
-        assets = state.assets(assets)
-        state_ids.push state.id
-      end
-    end
-    filter[:state_id] = state_ids
-
-    # get priorities
-    priority_ids = []
-    Ticket::Priority.where(active: true).each do |priority|
-      assets = priority.assets(assets)
-      priority_ids.push priority.id
-    end
-    filter[:priority_id] = priority_ids
+    filter = {}
 
     type_ids = []
     if params[:ticket]
@@ -88,68 +54,70 @@ returns
       types.each do |type_name|
         type = Ticket::Article::Type.lookup(name: type_name)
         next if type.blank?
+
         type_ids.push type.id
       end
     end
     filter[:type_id] = type_ids
 
-    # get group / user relations
-    dependencies = { group_id: { '' => { owner_id: [] } } }
+    # get group / user relations (for bulk actions)
+    dependencies = nil
+    if params[:view] == 'ticket_overview'
+      dependencies   = { group_id: { '' => { owner_id: [] } } }
+      groups         = params[:current_user].groups_access(%w[create])
+      agents         = {}
+      agent_role_ids = Role.with_permissions('ticket.agent').pluck(:id)
+      agent_user_ids = User.joins(:roles).where(users: { active: true }).where('roles_users.role_id' => agent_role_ids).pluck(:id)
+      groups.each do |group|
+        assets = group.assets(assets)
+        dependencies[:group_id][group.id] = { owner_id: [] }
 
-    filter[:group_id] = []
-    groups = if params[:current_user].permissions?('ticket.agent')
-               params[:current_user].groups_access(%w[create change])
-             else
-               Group.where(active: true)
-             end
+        group_agent_user_ids = User.joins(', groups_users').where("users.id = groups_users.user_id AND groups_users.access = 'full' AND groups_users.group_id = ? AND users.id IN (?)", group.id, agent_user_ids).pluck(:id)
+        group_agent_roles_ids = Role.joins(', roles_groups').where("roles.id = roles_groups.role_id AND roles_groups.access = 'full' AND roles_groups.group_id = ? AND roles.id IN (?)", group.id, agent_role_ids).pluck(:id)
+        group_agent_role_user_ids = User.joins(:roles).where(roles: { id: group_agent_roles_ids }).pluck(:id)
 
-    agents = {}
-    agent_role_ids = Role.with_permissions('ticket.agent').pluck(:id)
-    agent_user_ids = User.joins(:roles).where(users: { active: true }).where('roles_users.role_id IN (?)', agent_role_ids).pluck(:id)
-    groups.each do |group|
-      filter[:group_id].push group.id
-      assets = group.assets(assets)
-      dependencies[:group_id][group.id] = { owner_id: [] }
+        User.where(id: group_agent_user_ids.concat(group_agent_role_user_ids).uniq, active: true).pluck(:id).each do |user_id|
+          dependencies[:group_id][group.id][:owner_id].push user_id
+          next if agents[user_id]
 
-      group_agent_user_ids = User.joins(', groups_users').where("users.id = groups_users.user_id AND groups_users.access = 'full' AND groups_users.group_id = ? AND users.id IN (?)", group.id, agent_user_ids).pluck(:id)
-      group_agent_roles_ids = Role.joins(', roles_groups').where("roles.id = roles_groups.role_id AND roles_groups.access = 'full' AND roles_groups.group_id = ? AND roles.id IN (?)", group.id, agent_role_ids).pluck(:id)
-      group_agent_role_user_ids = User.joins(:roles).where(roles: { id: group_agent_roles_ids }).pluck(:id)
+          agents[user_id] = true
+          next if assets[:User] && assets[:User][user_id]
 
-      User.where(id: group_agent_user_ids.concat(group_agent_role_user_ids).uniq, active: true).each do |user|
-        dependencies[:group_id][group.id][:owner_id].push user.id
-        next if agents[user.id]
-        agents[user.id] = true
-        assets = user.assets(assets)
-      end
+          user = User.lookup(id: user_id)
+          next if !user
 
-    end
-=begin
-    # for performance reasons we moved from api calls to optimized sql queries
-    groups.each do |group|
-      filter[:group_id].push group.id
-      assets = group.assets(assets)
-      dependencies[:group_id][group.id] = { owner_id: [] }
-
-      User.group_access(group.id, 'full').each do |user|
-        dependencies[:group_id][ group.id ][:owner_id].push user.id
-        next if agents[user.id]
-        agents[user.id] = true
-        assets = user.assets(assets)
+          assets = user.assets(assets)
+        end
       end
     end
-=end
+
+    configure_attributes = nil
+    if params[:ticket].present?
+      configure_attributes = ObjectManager::Object.new('Ticket').attributes(params[:current_user], params[:ticket])
+    end
+
+    core_workflow = CoreWorkflow.perform(payload: {
+                                           'event'      => 'core_workflow',
+                                           'request_id' => 'default',
+                                           'class_name' => 'Ticket',
+                                           'screen'     => params[:screen],
+                                           'params'     => Hash(params[:ticket]&.attributes)
+                                         }, user: params[:current_user], assets: assets, assets_in_result: false)
+
     {
       assets:    assets,
       form_meta: {
-        filter:       filter,
-        dependencies: dependencies,
+        filter:               filter,
+        dependencies:         dependencies,
+        configure_attributes: configure_attributes,
+        core_workflow:        core_workflow
       }
     }
   end
 
 =begin
 
-list tickets by customer groupd in state categroie open and closed
+list tickets by customer group in state categories open and closed
 
   result = Ticket::ScreenOptions.list_by_customer(
     customer_id: 123,
@@ -168,36 +136,19 @@ returns
 
   def self.list_by_customer(data)
 
-    # get closed/open states
-    state_list_open   = Ticket::State.by_category(:open)
-    state_list_closed = Ticket::State.by_category(:closed)
+    base_query = TicketPolicy::ReadScope.new(data[:current_user]).resolve
+                                        .joins(state: :state_type)
+                                        .where(customer_id: data[:customer_id])
+                                        .limit(data[:limit] || 15)
+                                        .reorder(created_at: :desc)
 
-    # get tickets
-    tickets_open = Ticket.where(
-      customer_id: data[:customer_id],
-      state_id: state_list_open
-    ).limit( data[:limit] || 15 ).order('created_at DESC')
-    assets = {}
-    ticket_ids_open = []
-    tickets_open.each do |ticket|
-      ticket_ids_open.push ticket.id
-      assets = ticket.assets(assets)
-    end
-
-    tickets_closed = Ticket.where(
-      customer_id: data[:customer_id],
-      state_id: state_list_closed
-    ).limit( data[:limit] || 15 ).order('created_at DESC')
-    ticket_ids_closed = []
-    tickets_closed.each do |ticket|
-      ticket_ids_closed.push ticket.id
-      assets = ticket.assets(assets)
-    end
+    open_tickets   = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:open] })
+    closed_tickets = base_query.where(ticket_state_types: { name: Ticket::State::TYPES[:closed] })
 
     {
-      ticket_ids_open: ticket_ids_open,
-      ticket_ids_closed: ticket_ids_closed,
-      assets: assets,
+      ticket_ids_open:   open_tickets.map(&:id),
+      ticket_ids_closed: closed_tickets.map(&:id),
+      assets:            (open_tickets | closed_tickets).reduce({}) { |hash, ticket| ticket.assets(hash) },
     }
   end
 end

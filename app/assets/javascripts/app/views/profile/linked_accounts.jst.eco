@@ -6,9 +6,13 @@
 <div class="page-content">
   <ul>
     <% for key, provider of @auth_providers: %>
-      <li> <%- @T( provider.name ) %>
-        <% if !@user['accounts'] || !@user['accounts'][key]: %><a href="<%= provider.url %>">
-          <%- @T('Add') %></a>
+      <li> <%- @C("#{provider.config}_display_name") || @T( provider.name ) %>
+        <% if !@user['accounts'] || !@user['accounts'][key]: %>
+          <form method="post" class="hidden js-addForm-<%= key %>" action="<%= provider.url %>">
+            <input type="hidden" name="authenticity_token" value="<%= Spine.Ajax.defaults.headers['X-CSRF-Token'] %>">
+          </form>
+
+          <a href="#" data-key="<%= key %>" class="js-add"><%- @T('Add') %></a>
         <% else: %>
           "<%= @user['accounts'][key]['username'] %>" <a href="#" data-uid="<%= @user['accounts'][key]['uid'] %>" data-provider="<%= key %>" class="js-remove"><%- @T('remove') %></a>
         <% end %>

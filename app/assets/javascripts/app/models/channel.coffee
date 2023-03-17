@@ -1,5 +1,5 @@
 class App.Channel extends App.Model
-  @configure 'Channel', 'adapter', 'area', 'options', 'group_id', 'active', 'updated_at'
+  @configure 'Channel', 'adapter', 'area', 'options', 'group_id', 'active'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/channels'
 
@@ -17,5 +17,5 @@ class App.Channel extends App.Model
           else
             name += " (#{@options.outbound.adapter})"
     if name == ''
-      name = '???'
+      name = '-'
     name

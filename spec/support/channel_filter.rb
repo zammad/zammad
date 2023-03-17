@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ChannelFilterHelper
 
   # Provides a helper method to run the current class Channel::Filter.
@@ -10,8 +12,8 @@ module ChannelFilterHelper
   #  filter({:'x-zammad-ticket-id' => 1234, ...})
   #
   # @return [nil]
-  def filter(mail_hash, channel: {})
-    described_class.run(channel, mail_hash)
+  def filter(mail_hash, channel: {}, transaction_params: {})
+    described_class.run(channel, mail_hash, transaction_params)
   end
 
   # Provides a helper method to parse a mail String and run the current class Channel::Filter.

@@ -2,8 +2,8 @@
 from: MAILER-DAEMON@mx1.example.com (Mail Delivery System)
 from_email: MAILER-DAEMON@mx1.example.com
 from_display_name: Mail Delivery System
+to: me@example.com
 subject: Undelivered Mail Returned to Sender
-content_type: text/plain
 body: |
   This is the mail system at host mx1.example.com.
 
@@ -18,3 +18,43 @@ body: |
                      The mail system
 
   <notextisting@example.com>: user unknown
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; mx1.example.com
+    X-Postfix-Queue-ID: D8A14202512E
+    X-Postfix-Sender: rfc822; me@example.com
+    Arrival-Date: Mon,  6 Nov 2017 03:24:29 +0100 (CET)
+
+    Final-Recipient: rfc822; notextisting@example.com
+    Original-Recipient: rfc822;notextisting@example.com
+    Action: failed
+    Status: 5.1.1
+    Diagnostic-Code: x-unix; user unknown
+  filename: Delivery report.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Content-Description: Delivery report
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "Return-Path: <me@example.com>\nReceived-SPF: Pass (mailfrom) identity=mailfrom;
+    client-ip=127.0.0.1; helo=arber.example.com; envelope-from=me@example.com; receiver=<UNKNOWN>
+    \nReceived: from arber.example.com (arber.example.com [127.0.0.1])\n  (using TLSv1.2
+    with cipher AECDH-AES256-SHA (256/256 bits))\n  (No client certificate requested)\n
+    \ by mx1.example.com (Postfix) with ESMTPS id D8A14202512E\n  for <notextisting@example.com>;
+    Mon,  6 Nov 2017 03:24:29 +0100 (CET)\nReceived: from [10.8.0.6] (kanzel.example.com
+    [5.9.62.170])\n  by arber.example.com (Postfix) with ESMTPSA id 498D75FEB6\n  for
+    <notextisting@example.com>; Mon,  6 Nov 2017 03:24:27 +0100 (CET)\nFrom: Martin
+    Edenhofer <me@example.com>\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding:
+    quoted-printable\nMime-Version: 1.0 (Mac OS X Mail 10.3 \\(3273\\))\nSubject:
+    =?utf-8?B?aGVsbG8gMTIzIMOkw7bDvMOf?=\nMessage-Id: <E8C3CD7C-8350-4E48-97C5-AE18EE900ECD@example.com>\nDate:
+    Mon, 6 Nov 2017 03:24:25 +0100\nTo: notextisting@example.com\nX-Mailer: Apple
+    Mail (2.3273)\n\nhello 123 =C3=A4=C3=B6=C3=BC=C3=9F=\n"
+  filename: hello 123 äöüß.eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Content-Description: Undelivered Message
+    Mime-Type: message/rfc822
+    Charset: UTF-8

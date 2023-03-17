@@ -1,6 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class MacrosController < ApplicationController
+  prepend_before_action :authorize!
   prepend_before_action :authentication_check
 
 =begin
@@ -50,7 +51,7 @@ curl http://localhost/api/v1/macros.json -v -u #{login}:#{password}
 =end
 
   def index
-    model_index_render(Macro, params)
+    model_index_render(policy_scope(Macro), params)
   end
 
 =begin
@@ -71,7 +72,7 @@ curl http://localhost/api/v1/macros/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    model_show_render(Macro, params)
+    model_show_render(policy_scope(Macro), params)
   end
 
 =begin

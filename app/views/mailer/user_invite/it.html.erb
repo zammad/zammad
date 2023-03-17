@@ -1,0 +1,15 @@
+Invito a #{config.product_name} su #{config.fqdn}
+
+<div>Buongiorno #{user.firstname},</div>
+<br>
+<div>io, #{current_user.firstname} #{current_user.lastname}, vorrei invitarti a collegarti a #{config.product_name} - la nostra piattaforma di supporto utenti.</div>
+<br>
+<div>Clicca <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">qui</a> e imposta la tua password.</div>
+<br>
+<div>Grazie,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Sempre cordiali saluti</div>
+<br>
+<div>Il team #{config.product_name} </div>

@@ -1,19 +1,24 @@
 class App.SearchableSelect extends Spine.Controller
 
   events:
-    'input .js-input':       'onInput'
-    'blur .js-input':        'onBlur'
-    'focus .js-input':       'onFocus'
-    'focus .js-shadow':      'onShadowFocus'
-    'click .js-option':      'selectItem'
-    'click .js-enter':       'navigateIn'
-    'click .js-back':        'navigateOut'
-    'mouseenter .js-option': 'highlightItem'
-    'mouseenter .js-enter':  'highlightItem'
-    'mouseenter .js-back':   'highlightItem'
-    'shown.bs.dropdown':     'onDropdownShown'
-    'hidden.bs.dropdown':    'onDropdownHidden'
-    'keyup .js-input':       'onKeyUp'
+    'input .js-input':                                'onInput'
+    'blur .js-input':                                 'onBlur'
+    'focus .js-input':                                'onFocus'
+    'focus .js-shadow':                               'onShadowFocus'
+    'change .js-shadow':                              'onShadowChange'
+    'click .js-option':                               'selectItem'
+    'click .js-option .searchableSelect-option-text': 'selectItem'
+    'click .js-enter .searchableSelect-option-text':  'navigateInOrSelectItem'
+    'click .searchableSelect-option-arrow':           'navigateIn'
+    'click .js-back':                                 'navigateOut'
+    'mouseenter .js-option':                          'highlightItem'
+    'mouseenter .js-enter':                           'highlightItem'
+    'mouseenter .js-back':                            'highlightItem'
+    'shown.bs.dropdown':                              'onDropdownShown'
+    'hidden.bs.dropdown':                             'onDropdownHidden'
+    'keyup .js-input':                                'onKeyUp'
+    'click .js-remove:not(.is-disabled)':             'removeThisToken'
+    'show.bs.dropdown':                               'onDropdownShow'
 
   elements:
     '.js-dropdown':               'dropdown'
@@ -35,7 +40,71 @@ class App.SearchableSelect extends Spine.Controller
     @render()
 
   render: ->
-    firstSelected = _.find @attribute.options, (option) -> option.selected
+    @updateAttributeValueName()
+
+    tokens = ''
+    if @attribute.multiple && @attribute.value
+      relation = @attribute.relation
+
+      # fallback for if the value is not an array
+      if typeof @attribute.value isnt 'object'
+        @attribute.value = [@attribute.value]
+
+      # create tokens and attribute values
+      values = []
+      disabled = @attribute.disabled
+      if relation
+        for dataId in @attribute.value
+          if App[relation] && App[relation].exists dataId
+            name = App[relation].find(dataId).displayName()
+            value = dataId
+            values.push({name: name, value: value})
+            tokens += App.view('generic/token')(
+              name: name
+              value: value
+              object: relation
+              disabled: disabled
+            )
+
+      else
+        for value in @attribute.value
+          values.push({name: value, value: value})
+          tokens += App.view('generic/token')(
+            name: value
+            value: value
+            disabled: disabled
+          )
+
+      @attribute.value = values
+
+    @html App.view('generic/searchable_select')
+      attribute: @attribute
+      options: @renderAllOptions('', @attribute.options, 0)
+      submenus: @renderSubmenus(@attribute.options)
+      tokens: tokens
+
+    @input.get(0).selectValue = @selectValue
+
+    # initial data
+    @currentMenu = @findMenuContainingValue(@attribute.value)
+    @level = @getIndex(@currentMenu)
+
+  renderSubmenus: (options) ->
+    html = ''
+    if options
+      for option in options
+        if option.children
+          html += App.view('generic/searchable_select_submenu')(
+            options: @renderOptions(option.children)
+            parentValue: option.value
+            title: option.name
+          )
+          if @hasSubmenu(option.children)
+            html += @renderSubmenus(option.children)
+    html
+
+  updateAttributeValueName: ->
+    firstSelected = _.find(@attribute.options, (option) -> option.selected)
 
     if firstSelected
       @attribute.valueName = firstSelected.name
@@ -43,30 +112,7 @@ class App.SearchableSelect extends Spine.Controller
     else if @attribute.unknown && @attribute.value
       @attribute.valueName = @attribute.value
     else if @hasSubmenu @attribute.options
-      @attribute.valueName = @getName @attribute.value, @attribute.options
-
-    @html App.view('generic/searchable_select')
-      attribute: @attribute
-      options: @renderAllOptions '', @attribute.options, 0
-      submenus: @renderSubmenus @attribute.options
-
-    # initial data
-    @currentMenu = @findMenuContainingValue @attribute.value
-    @level = @getIndex @currentMenu
-
-  renderSubmenus: (options) ->
-    html = ''
-    if options
-      for option in options
-        if option.children
-          html += App.view('generic/searchable_select_submenu')
-            options: @renderOptions(option.children)
-            parentValue: option.value
-            title: option.name
-
-          if @hasSubmenu(option.children)
-            html += @renderSubmenus option.children
-    html
+      @attribute.valueName = @getName(@attribute.value, @attribute.options)
 
   hasSubmenu: (options) ->
     return false if !options
@@ -79,16 +125,24 @@ class App.SearchableSelect extends Spine.Controller
       if option.value is value
         return option.name
       if option.children
-        name = @getName value, option.children
+        name = @getName(value, option.children)
         return name if name isnt undefined
     undefined
 
   renderOptions: (options) ->
     html = ''
     for option in options
+      classes = 'u-textTruncate'
+      if option.children
+        classes += ' js-enter'
+      else
+        classes += ' js-option'
+      if option.category
+        classes += ' with-category'
+
       html += App.view('generic/searchable_select_option')
         option: option
-        class: if option.children then 'js-enter' else 'js-option'
+        class: classes
     html
 
   renderAllOptions: (parentName, options, level) ->
@@ -99,31 +153,40 @@ class App.SearchableSelect extends Spine.Controller
         if level && level > 0
           className += ' is-hidden is-child'
 
-        html += App.view('generic/searchable_select_option')
+        html += App.view('generic/searchable_select_option')(
           option: option
           class: className
           detail: parentName
+        )
 
         if option.children
-          html += @renderAllOptions "#{parentName} — #{option.name}", option.children, level+1
+          html += @renderAllOptions("#{parentName} — #{option.name}", option.children, level+1)
     html
 
+  onDropdownShow: (event)  =>
+    if @attribute.disabled
+      event.preventDefault()
+
   onDropdownShown: =>
-    @input.on 'click', @stopPropagation
+    @input.on('click', @stopPropagation)
     @highlightFirst()
-    $(document).on 'keydown.searchable_select', @navigate
     if @level > 0
       @showSubmenu(@currentMenu)
     @isOpen = true
 
   onDropdownHidden: =>
-    @input.off 'click', @stopPropagation
+    @input.off('click', @stopPropagation)
     @unhighlightCurrentItem()
-    $(document).off 'keydown.searchable_select'
     @isOpen = false
 
+    if !@input.val() && !@attribute.multiple
+      @updateAttributeValueName()
+      @input.val(@attribute.valueName)
+    @input.trigger('change')
+    @shadowInput.trigger('change')
+
   onKeyUp: =>
-    return if @input.val().trim() isnt ''
+    return if @input.val().trim() isnt '' || @attribute.multiple
     @shadowInput.val('')
 
   toggle: =>
@@ -135,22 +198,29 @@ class App.SearchableSelect extends Spine.Controller
 
   navigate: (event) =>
     switch event.keyCode
-      when 40 then @nudge event, 1 # down
-      when 38 then @nudge event, -1 # up
-      when 39 then @autocompleteOrNavigateIn event # right
-      when 37 then @autocompleteOrNavigateOut event # left
-      when 13 then @onEnter event
-      when 27 then @onEscape()
-      when 9 then @onTab event
+      when 40 then @nudge(event, 1) # down
+      when 38 then @nudge(event, -1) # up
+      when 39 then @autocompleteOrNavigateIn(event) # right
+      when 37 then @autocompleteOrNavigateOut(event) # left
+      when 13 then @onEnter(event)
+      when 27 then @onEscape(event)
+      when 9 then @onTab(event)
+      when 8 # remove last token on backspace
+        if @input.val() is '' && @input.is(event.target) && @attribute.multiple
+          @removeToken('last')
 
   onEscape: ->
-    @toggle() if @isOpen
+    if @isOpen
+      event.stopPropagation()  # if the input is in a modal, prevent the modal from closing
+      @toggle()
 
   getCurrentOptions: ->
     @currentMenu.find('.js-option, .js-enter, .js-back')
 
   getOptionIndex: (menu, value) ->
-    menu.find('.js-option, .js-enter').filter("[data-value=\"#{value}\"]").index()
+    menu.find('.js-option, .js-enter')
+    .filter((i, el) -> $(el).attr('data-value') is value)
+    .index()
 
   nudge: (event, direction) ->
     return @toggle() if not @isOpen
@@ -165,7 +235,7 @@ class App.SearchableSelect extends Spine.Controller
     currentPosition += direction
 
     return if currentPosition < 0
-    return if currentPosition > visibleOptions.size() - 1
+    return if currentPosition > visibleOptions.length - 1
 
     @unhighlightCurrentItem()
     @currentItem = visibleOptions.eq(currentPosition)
@@ -173,7 +243,7 @@ class App.SearchableSelect extends Spine.Controller
     @clearAutocomplete()
 
   autocompleteOrNavigateIn: (event) ->
-    if @currentItem.hasClass('js-enter')
+    if @currentItem && @currentItem.hasClass('js-enter')
       @navigateIn(event)
     else
       @fillWithAutocompleteSuggestion(event)
@@ -196,8 +266,11 @@ class App.SearchableSelect extends Spine.Controller
       # current position
       caretPosition = @invisiblePart.text().length + 1
 
-    @input.val @suggestion
-    @shadowInput.val @suggestionValue
+    if @attribute.multiple
+      @addValueToShadowInput(@suggestion, @suggestionValue)
+    else
+      @input.val(@suggestion)
+      @shadowInput.val(@suggestionValue)
     @clearAutocomplete()
     @toggle()
 
@@ -220,16 +293,28 @@ class App.SearchableSelect extends Spine.Controller
     @visiblePart.text('')
     @invisiblePart.text('')
 
+  selectValue: (key, value) =>
+    @input.val value
+    @shadowInput.val key
+
+  navigateInOrSelectItem: (event) ->
+    return @selectItem(event) if @attribute.multiple
+    return @navigateIn(event)
+
   selectItem: (event) ->
-    return if !event.currentTarget.textContent
-    @input.val event.currentTarget.textContent.trim()
-    @input.trigger('change')
-    @shadowInput.val event.currentTarget.getAttribute('data-value')
-    @shadowInput.trigger('change')
+    currentText = $(event.target).text().trim()
+    return if !currentText
+
+    dataId = $(event.target).closest('li').data('value')
+    if @attribute.multiple
+      @addValueToShadowInput(currentText, dataId)
+    else
+      @selectValue(dataId, currentText)
 
   navigateIn: (event) ->
     event.stopPropagation()
-    @selectItem(event)
+    if !@attribute.multiple
+      @selectItem(event)
     @navigateDepth(1)
 
   navigateOut: (event) ->
@@ -240,9 +325,9 @@ class App.SearchableSelect extends Spine.Controller
     return if @animating
     if dir > 0
       target = @currentItem.attr('data-value')
-      target_menu = @optionsSubmenu.filter("[data-parent-value=\"#{target}\"]")
+      target_menu = @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is target)
     else
-      target_menu = @findMenuContainingValue @currentMenu.attr('data-parent-value')
+      target_menu = @findMenuContainingValue(@currentMenu.attr('data-parent-value'))
 
     @animateToSubmenu(target_menu, dir)
 
@@ -300,9 +385,11 @@ class App.SearchableSelect extends Spine.Controller
       return @optionsList
     else
       path.pop()
-      return @optionsSubmenu.filter("[data-parent-value=\"#{path.join('::')}\"]")
+      target = path.join('::')
+      return @optionsSubmenu.filter((i, el) -> $(el).attr('data-parent-value') is target)
 
   getIndex: (menu) ->
+    return 0 if !menu
     parentValue = menu.attr('data-parent-value')
     return 0 if !parentValue
     return parentValue.split('::').length
@@ -330,13 +417,16 @@ class App.SearchableSelect extends Spine.Controller
     event.preventDefault()
 
     if @currentItem || !@attribute.unknown
-      valueName = @currentItem.text().trim()
+      valueName = @currentItem.children('span.searchableSelect-option-text').text().trim()
       value     = @currentItem.attr('data-value')
-      @input.val valueName
-      @shadowInput.val value
+      if @attribute.multiple
+        @addValueToShadowInput(valueName, value)
+      else
+        @input.val valueName
+        @shadowInput.val value
+        @shadowInput.trigger('change')
 
     @input.trigger('change')
-    @shadowInput.trigger('change')
 
     if @currentItem
       if @currentItem.hasClass('js-enter')
@@ -349,15 +439,59 @@ class App.SearchableSelect extends Spine.Controller
 
   onBlur: ->
     @clearAutocomplete()
+    @input.off 'keydown.searchable_select'
 
   onFocus: ->
+    @input.on 'keydown.searchable_select', @navigate
     textEnd = @input.val().length
     @input.prop('selectionStart', textEnd)
     @input.prop('selectionEnd', textEnd)
 
   # propergate focus to our visible input
   onShadowFocus: ->
-    @input.focus()
+    @input.trigger('focus')
+
+  onShadowChange: ->
+    value = @shadowInput.val()
+
+    if @attribute.multiple and @currentData
+      # create token
+      @createToken(@currentData)
+      @currentData = null
+
+    if Array.isArray(@attribute.options)
+      for option in @attribute.options
+        option.selected = (option.value + '') == value # makes sure option value is always a string
+
+  createToken: ({name, value}) =>
+    content = {}
+    if @attribute.relation
+      content =
+        name: String(name)
+        value: value
+        object: @attribute.relation
+    else
+      content =
+        name: String(value)
+        value: value
+
+    @input.before App.view('generic/token')(content)
+
+  removeThisToken: (e) =>
+    @removeToken $(e.currentTarget).parents('.token')
+
+  removeToken: (which) =>
+    switch which
+      when 'last'
+        token = @$('.token').last()
+        return if not token.length
+      else
+        token = which
+
+    id = token.data('value')
+    @shadowInput.find("[value=\"#{id}\"]").remove()
+    @shadowInput.trigger('change')
+    token.remove()
 
   onInput: (event) =>
     @toggle() if not @isOpen
@@ -365,7 +499,7 @@ class App.SearchableSelect extends Spine.Controller
     @query = @input.val()
     @filterByQuery @query
 
-    if @attribute.unknown
+    if @attribute.unknown && !@attribute.multiple
       @shadowInput.val @query
 
   filterByQuery: (query) ->
@@ -391,13 +525,26 @@ class App.SearchableSelect extends Spine.Controller
     else
       @highlightFirst(true)
 
+  addValueToShadowInput: (currentText, dataId) ->
+    @input.val('')
+
+    if @attribute.multiple
+      return if @shadowInput.val().includes("#{dataId}") if @shadowInput.val() # cast dataId to string before check
+      @currentData = {name: currentText, value: dataId}
+    else
+      @currentData = {name: currentText, value: dataId}
+      return if @shadowInput.val().includes("#{dataId}") if @shadowInput.val() # cast dataId to string before check
+
+    @shadowInput.append($('<option/>').attr('selected', true).attr('value', @currentData.value).text(@currentData.name))
+    @onShadowChange()
+
   highlightFirst: (autocomplete) ->
     @unhighlightCurrentItem()
     @currentItem = @getCurrentOptions().not('.is-hidden').first()
     @currentItem.addClass 'is-active'
 
     if autocomplete
-      @autocomplete @currentItem.attr('data-value'), @currentItem.text().trim()
+      @autocomplete @currentItem.attr('data-value'), @currentItem.children('span.searchableSelect-option-text').text().trim()
 
   highlightItem: (event) =>
     @unhighlightCurrentItem()

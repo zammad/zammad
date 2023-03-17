@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::ClearbitEnrichment
 
@@ -39,7 +39,7 @@ class Transaction::ClearbitEnrichment
     user_enrichment = Enrichment::Clearbit::User.new(user)
     return if !user_enrichment.synced?
 
-    Observer::Transaction.commit
+    TransactionDispatcher.commit
     true
   end
 end

@@ -1,0 +1,37 @@
+.template_browser-core_capybara_integration:
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec -t integration --profile 10 spec/system
+  variables:
+    FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
+    IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
+
+capybara:integration:chrome:
+  extends:
+    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_integration
+    - .variables_auth
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, redis]
+    - !reference [.services, auth]
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
+      alias: zammad-ci-otrsimport-db
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
+      alias: zammad-ci-otrsimport-app
+
+capybara:integration:firefox:
+  extends:
+    - .template_browser-core_capybara_firefox
+    - .template_browser-core_capybara_integration
+    - .variables_auth
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, selenium-firefox]
+    - !reference [.services, redis]
+    - !reference [.services, auth]
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
+      alias: zammad-ci-otrsimport-db
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:otrs6
+      alias: zammad-ci-otrsimport-app

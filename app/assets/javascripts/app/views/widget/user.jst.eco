@@ -1,12 +1,24 @@
 <div class="sidebar-block">
-  <%- @user.avatar("50", "", "userInfo-avatar") %>
+  <a href="#user/profile/<%- @user.id %>">
+    <%- @user.avatar("50", "", "userInfo-avatar") %>
+  </a>
   <h3 title="<%- @Ti('Name') %>"><%= @user.displayName() %></h3>
+  <% if @user.organization_id: %>
+    <a href="#organization/profile/<%- @user.organization_id %>"><%- @P(@user, 'organization_id') %></a>
+  <% end %>
 </div>
 <% for row in @userData: %>
-  <% if @user[row.name] || row.name is 'note': %>
+  <% if @user[row.name]? || row.name is 'note': %>
+    <% continue if row.name is 'organization_ids' && @user[row.name].length is 0 %>
     <div class="sidebar-block">
     <label><%- @T(row.display) %></label>
-    <% if row.tag isnt 'richtext': %>
+    <% if row.name is 'organization_ids': %>
+      <% if @user[row.name] && @user[row.name].length > 0: %>
+        <ul class="js-organizationList">
+          <li class="hidden list-item-none js-showMoreOrganizations"><a href="#"><%- @T('show more') %></a></li>
+        </ul>
+      <% end %>
+    <% else if row.tag isnt 'richtext': %>
       <% if row.link: %><a href="<%- row.link %><%= @user[row.name] %>" target="_blank"><%- @P(@user, row.name) %></a>
     <% else: %>
       <%- @P(@user, row.name) %>

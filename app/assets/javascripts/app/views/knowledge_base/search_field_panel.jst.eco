@@ -1,0 +1,13 @@
+<div class="searchfield"></div>
+
+<div class="js-placeholderEmpty help-block help-block--center hide">
+  <%- @Icon('mood-ok') %>
+  <div class='help-block--inner'><%- @T('Empty') %></div>
+</div>
+
+<div class="js-placeholderError help-block help-block--center hide">
+  <%- @Icon('mood-superbad') %>
+  <div class='help-block--inner'></div>
+</div>
+
+<ul class="js-results sections sections--list"></ul>

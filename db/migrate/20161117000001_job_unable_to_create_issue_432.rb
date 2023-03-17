@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class JobUnableToCreateIssue432 < ActiveRecord::Migration[4.2]
   def up
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     ActiveRecord::Migration.change_table :jobs do |t|
       t.change :timeplan, :string, limit: 2500
@@ -38,7 +40,7 @@ class JobUnableToCreateIssue432 < ActiveRecord::Migration[4.2]
       t.change :data, :string, limit: 5000
     end
 
-    Cache.clear
+    Rails.cache.clear
 
   end
 end

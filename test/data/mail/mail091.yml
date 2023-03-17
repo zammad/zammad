@@ -1,0 +1,27 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"岡本和正" <mail@domain.jp>'
+from_email: mail@domain.jp
+from_display_name: 岡本和正
+to: '"support@ourdomain.com" <support@ourdomain.com>'
+subject: メルマガ解除
+body: "<div>このアドレスへのメルマガを解除してください。</div>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    <html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-2022-jp">
+    <style type="text/css" style="display:none;"> P {margin-top:0;margin-bottom:0;} </style>
+    </head>
+    <body dir="ltr">
+    <div style="font-family: Meiryo, メイリオ, &quot;Hiragino Sans&quot;, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+    このアドレスへのメルマガを解除してください。</div>
+    </body>
+    </html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: iso-2022-jp

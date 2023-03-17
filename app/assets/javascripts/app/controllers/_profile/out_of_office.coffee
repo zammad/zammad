@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class ProfileOutOfOffice extends App.ControllerSubContent
   requiredPermission: 'user_preferences.out_of_office+ticket.agent'
-  header: 'Out of Office'
+  header: __('Out of Office')
   events:
     'submit form': 'submit'
     'click .js-disabled': 'disable'
@@ -70,11 +70,18 @@ class Index extends App.ControllerSubContent
             multiple: false
             limit: 30
             minLengt: 2
-            placeholder: 'Enter Person or Organization/Company'
+            placeholder: __('Enter Person or Organization/Company')
             null: false
             translate: false
             disableCreateObject: true
             value: @localData
+            source: "#{@apiPath}/users/search?full=true"
+            sourceType: 'POST'
+            queryCallback: (query) ->
+              return JSON.stringify(
+                query: query
+                permissions: ['ticket.agent']
+              )
           ]
       noFieldset: true
       params: @localData
@@ -124,7 +131,7 @@ class Index extends App.ControllerSubContent
       @render()
       @notify(
         type: 'success'
-        msg:  App.i18n.translateContent('Successfully!')
+        msg:  App.i18n.translateContent('Update successful.')
         timeout: 1000
       )
     else
@@ -136,7 +143,7 @@ class Index extends App.ControllerSubContent
       else
         @notify
           type:      'error'
-          msg:       'Please contact your administrator.'
+          msg:       __('Please contact your administrator.')
           removeAll: true
       @formEnable( @$('form') )
 
@@ -148,8 +155,8 @@ class Index extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
 
     # show error message
-    if xhr.status is 401 || error is 'Unauthorized'
-      message     = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+    if xhr.status is 403 || error is 'Not authorized'
+      message     = '» ' + App.i18n.translateInline('Not authorized') + ' «'
     else if xhr.status is 404 || error is 'Not Found'
       message     = '» ' + App.i18n.translateInline('Not Found') + ' «'
     else if data.error
@@ -161,4 +168,4 @@ class Index extends App.ControllerSubContent
       msg:       App.i18n.translateContent(message)
       removeAll: true
 
-App.Config.set('OutOfOffice', { prio: 2800, name: 'Out of Office', parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: Index }, 'NavBarProfile')
+App.Config.set('OutOfOffice', { prio: 2800, name: __('Out of Office'), parent: '#profile', target: '#profile/out_of_office', permission: ['user_preferences.out_of_office+ticket.agent'], controller: ProfileOutOfOffice }, 'NavBarProfile')

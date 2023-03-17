@@ -1,0 +1,26 @@
+{
+  "update_id": 954691816,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "message_id": 10,
+    "date": 1566318707,
+    "document": {
+      "file_name": "document.pdf",
+      "mime_type": "application/pdf",
+      "thumb": {
+        "file_id": "documentthumbfileid",
+        "file_size": 123456,
+        "width": 200,
+        "height": 200
+      },
+      "file_id": "documentfileid",
+      "file_size": 123456
+    }
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}

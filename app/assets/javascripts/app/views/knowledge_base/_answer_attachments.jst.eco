@@ -1,0 +1,15 @@
+<% if @attachments: %>
+<div class="knowledge-base-article-attachments">
+	<h2><%- @Ti('Attachments') %></h2>
+	<ul class="knowledge-base-article-attachments-list">
+	<% for attachment in @attachments: %>
+	<li>
+		<a class="btn" href="<%= attachment.url %>" download>
+			<%- @Icon('download') %>
+			<span><%= attachment.filename %></span>
+		</a>
+	</li>
+	<% end %>
+	</ul>
+</div>
+<% end %>

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 worker_processes 4
 timeout 30
 stderr_path 'log/unicorn_error.log'

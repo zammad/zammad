@@ -15,10 +15,15 @@ class App.UserProfile extends App.Controller
 
     if App.User.exists(@user_id)
       user = App.User.find(@user_id)
+      icon = user.icon()
+
+      if user.active is false
+        icon = 'inactive-' + icon
 
       meta.head       = user.displayName()
       meta.title      = user.displayName()
-      meta.iconClass  = user.icon()
+      meta.iconClass  = icon
+      meta.active     = user.active
     meta
 
   url: =>
@@ -43,14 +48,8 @@ class App.UserProfile extends App.Controller
 
     new User(
       object_id: user.id
-      el: elLocal.find('.js-name')
+      el: elLocal.find('.js-profileName')
     )
-
-    if user.organization_id
-      new Organization(
-        object_id: user.organization_id
-        el: elLocal.find('.js-organization')
-      )
 
     new Object(
       el:        elLocal.find('.js-object-container')
@@ -80,9 +79,11 @@ class App.UserProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverActionRow
+class ActionRow extends App.ControllerObserverActionRow
   model: 'User'
   observe:
+    verified: true
+    source: true
     organization_id: true
 
   showHistory: (user) =>
@@ -92,46 +93,82 @@ class ActionRow extends App.ObserverActionRow
     )
 
   editUser: (user) =>
-    new App.ControllerGenericEdit(
-      id: user.id
-      genericObject: 'User'
-      screen: 'edit'
-      pageData:
-        title: 'Users'
-        object: 'User'
-        objects: 'Users'
-      container: @el.closest('.content')
+    user.secondaryOrganizations(0, 1000, =>
+      new App.ControllerGenericEdit(
+        id: user.id
+        genericObject: 'User'
+        screen: 'edit'
+        pageData:
+          title: __('Users')
+          object: __('User')
+          objects: __('Users')
+        container: @el.closest('.content')
+      )
     )
 
   newTicket: (user) =>
     @navigate("ticket/create/customer/#{user.id}")
 
-  actions: (user) =>
-    currentUser = App.User.find(App.Session.get('id'))
+  resendVerificationEmail: (user) =>
+    @ajax(
+      id:          'email_verify_send'
+      type:        'POST'
+      url:         @apiPath + '/users/email_verify_send'
+      data:        JSON.stringify(email: user.email)
+      processData: true
+      success: (data, status, xhr) =>
+        @notify
+          type:      'success'
+          msg:       App.i18n.translateContent('Email sent to "%s". Please let the user verify their email account.', user.email)
+          removeAll: true
+      error: (data, status, xhr) =>
+        @notify
+          type:      'error'
+          msg:       App.i18n.translateContent('Failed to send email to "%s". Please contact an administrator.', user.email)
+          removeAll: true
+    )
 
+  actions: (user) =>
     actions = [
       {
         name:     'history'
-        title:    'History'
+        title:    __('History')
         callback: @showHistory
       }
       {
         name:     'ticket'
-        title:    'New Ticket'
+        title:    __('New Ticket')
         callback: @newTicket
       }
     ]
 
-    if user.isAccessibleBy(currentUser, 'change')
+    if user.isAccessibleBy(App.User.current(), 'change')
       actions.unshift {
         name:     'edit'
-        title:    'Edit'
+        title:    __('Edit')
         callback: @editUser
+      }
+
+      if user.verified isnt true && user.source is 'signup'
+        actions.push({
+          name:     'resend_verification_email'
+          title:    __('Resend verification email')
+          callback: @resendVerificationEmail
+        })
+
+    if @permissionCheck('admin.data_privacy')
+      actions.push {
+        title:    __('Delete')
+        name:     'delete'
+        callback: =>
+          @navigate "#system/data_privacy/#{user.id}"
       }
 
     actions
 
-class Object extends App.ObserverController
+class Object extends App.ControllerObserver
+  organizationLimit: 3
+
   model: 'User'
   observeNot:
     cid: true
@@ -147,9 +184,12 @@ class Object extends App.ObserverController
     image_source: true
 
   events:
+    'click .js-showMoreOrganizations a': 'showMoreOrganizations'
     'focusout [contenteditable]': 'update'
 
   render: (user) =>
+    if user
+      @user = user
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
@@ -175,6 +215,7 @@ class Object extends App.ObserverController
       user:     user
       userData: userData
     )
+    @renderOrganizations()
 
     @$('[contenteditable]').ce({
       mode:      'textonly'
@@ -182,18 +223,44 @@ class Object extends App.ObserverController
       maxlength: 250
     })
 
+  showMoreOrganizations: (e) ->
+    @preventDefaultAndStopPropagation(e)
+    @organizationLimit = (parseInt(@organizationLimit / 100) + 1) * 100
+    @renderOrganizations()
+
+  renderOrganizations: ->
+    elLocal = @el
+    @user.secondaryOrganizations(0, @organizationLimit, (secondaryOrganizations) ->
+      organizations = []
+      for organization in secondaryOrganizations
+        el = $('<li></li>')
+        new Organization(
+          object_id: organization.id
+          el: el
+        )
+        organizations.push el
+
+      elLocal.find('.js-organizationList li').not('.js-showMoreOrganizations').remove()
+      elLocal.find('.js-organizationList').prepend(organizations)
+    )
+
+    if @user.organization_ids && @user.organization_ids.length < @organizationLimit
+      @el.find('.js-showMoreOrganizations').addClass('hidden')
+    else
+      @el.find('.js-showMoreOrganizations').removeClass('hidden')
+
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
     user  = App.User.find(@object_id)
     if user[name] isnt value
-      @lastAttributres[name] = value
+      @lastAttributes[name] = value
       data = {}
       data[name] = value
       user.updateAttributes(data)
       @log 'debug', 'update', name, value, user
 
-class Organization extends App.ObserverController
+class Organization extends App.ControllerObserver
   model: 'Organization'
   observe:
     name: true
@@ -203,14 +270,24 @@ class Organization extends App.ObserverController
       organization: organization
     )
 
-class User extends App.ObserverController
+class User extends App.ControllerObserver
   model: 'User'
   observe:
     firstname: true
     lastname: true
+    organization_id: true
+    image: true
 
   render: (user) =>
-    @html App.Utils.htmlEscape(user.displayName())
+    if user.organization_id
+      new Organization(
+        object_id: user.organization_id
+        el: @el.siblings('.js-organization')
+      )
+
+    @html App.view('user_profile/name')(
+      user: user
+    )
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'

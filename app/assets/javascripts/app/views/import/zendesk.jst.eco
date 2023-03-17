@@ -33,7 +33,7 @@
           <a class="js-zendeskUrlApiToken" href="#" target="_blank"><%- @T('Enter your email address and the %s API token gained from your admin interface.', 'Zendesk') %></a>
         </p>
         <p>
-          <%- @T('Attention: These will be your login password after the import is completed.') %>
+          <%- @T('Attention: These will be your login and password after the import is completed.') %>
         </p>
         <div class="form-group">
           <label for="zendesk-email"><%- @T('Email') %></label>
@@ -42,7 +42,7 @@
           </div>
           <label for="zendesk-api-token"><%- @T('API token') %></label>
           <div class="u-positionOrigin">
-            <input type="email" id="zendesk-api-token" class="form-control" placeholder="XYZ3133723421111" name="zendesk-api-token">
+            <input type="text" id="zendesk-api-token" class="form-control" placeholder="XYZ3133723421111" name="zendesk-api-token">
             <div class="input-feedback centered">
               <div class="small loading icon"></div>
               <%- @Icon('diagonal-cross', 'icon-error') %>

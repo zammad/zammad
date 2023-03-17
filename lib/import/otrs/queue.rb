@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class Queue
@@ -26,12 +28,14 @@ module Import
 
       def create_or_update(queue)
         return if updated?(queue)
+
         create(queue)
       end
 
       def updated?(queue)
         @local_queue = Group.find_by(id: queue[:id])
         return false if !@local_queue
+
         log "update Group.find_by(id: #{queue[:id]})"
         @local_queue.update!(queue)
         true

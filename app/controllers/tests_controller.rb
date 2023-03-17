@@ -1,37 +1,40 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TestsController < ApplicationController
 
-  # GET /test/wait
+  prepend_before_action -> { authentication_check_only }
+
+  layout 'tests', except: %i[wait raised_exception]
+
+  def show
+    @filename = params[:name]
+
+    if lookup_context.exists? @filename, 'tests'
+      render @filename
+    elsif @filename.starts_with? 'form'
+      render 'form'
+    else
+      render
+    end
+  end
+
+  # GET /tests/wait
   def wait
     sleep params[:sec].to_i
     result = { success: true }
     render json: result
   end
 
-  # GET /test/unprocessable_entity
-  def error_unprocessable_entity
-    raise Exceptions::UnprocessableEntity, 'some error message'
-  end
+  # GET /tests/raised_exception
+  def error_raised_exception
+    origin     = params.fetch(:origin)
+    exception  = params.fetch(:exception, 'StandardError')
+    message    = params.fetch(:message, 'no message provided')
 
-  # GET /test/not_authorized
-  def error_not_authorized
-    raise Exceptions::NotAuthorized, 'some error message'
-  end
+    # Emulate the originating controller.
+    params[:controller] = origin if origin
 
-  # GET /test/ar_not_found
-  def error_ar_not_found
-    raise ActiveRecord::RecordNotFound, 'some error message'
-  end
-
-  # GET /test/standard_error
-  def error_standard_error
-    raise StandardError, 'some error message'
-  end
-
-  # GET /test/argument_error
-  def error_argument_error
-    raise ArgumentError, 'some error message'
+    raise exception.safe_constantize, message
   end
 
 end

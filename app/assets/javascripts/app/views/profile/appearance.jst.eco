@@ -1,0 +1,38 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Appearance') %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <form class="settings-entry horizontal end">
+    <div class="form-item js-theme flex">
+      <div class="form-group">
+        <div class="formGroup-label">
+          <label for="appearance"><%- @T('Theme') %></label>
+        </div>
+        <div class="controls">
+          <div class="radio">
+            <label class="inline-label radio-replacement u-clickable">
+              <input type="radio" value="dark" name="theme"<%= ' checked' if @theme == 'dark' %>>
+              <%- @Icon('radio', 'icon-unchecked') %>
+              <%- @Icon('radio-checked', 'icon-checked') %>
+              <span class="label-text"><%- @T('Dark') %></span>
+            </label>
+            <label class="inline-label radio-replacement u-clickable">
+              <input type="radio" value="light" name="theme"<%= ' checked' if @theme == 'light' %>>
+              <%- @Icon('radio', 'icon-unchecked') %>
+              <%- @Icon('radio-checked', 'icon-checked') %>
+              <span class="label-text"><%- @T('Light') %></span>
+            </label>
+            <label class="inline-label radio-replacement u-clickable">
+              <input type="radio" value="auto" name="theme"<%= ' checked' if @theme == 'auto' %>>
+              <%- @Icon('radio', 'icon-unchecked') %>
+              <%- @Icon('radio-checked', 'icon-checked') %>
+              <span class="label-text"><%- @T('Sync with computer') %></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

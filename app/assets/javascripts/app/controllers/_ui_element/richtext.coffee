@@ -1,11 +1,21 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.richtext
-  @render: (attribute, params) ->
-    item = $( App.view('generic/richtext')(attribute: attribute) )
+  @render: (attributeConfig, params, form) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
+    if _.isObject(attribute.value)
+      attribute.attachments = attribute.value.attachments
+      attribute.value = attribute.value.text
+
+    item = $( App.view('generic/richtext')(attribute: attribute, toolButtons: @toolButtons) )
     item.find('[contenteditable]').ce(
       mode:      attribute.type
       maxlength: attribute.maxlength
+      buttons:   attribute.buttons
+      noImages:  attribute.no_images
     )
+
+    item.find('a.btn--action[data-action]').on 'click', (event) => @toolButtonClicked(event, form)
 
     if attribute.plugins
       for plugin in attribute.plugins
@@ -14,32 +24,50 @@ class App.UiElement.richtext
         new App[plugin.controller](params)
 
     if attribute.upload
-      @attachments = []
+      attachments = []
       item.append( $( App.view('generic/attachment')(attribute: attribute) ) )
 
-      renderFile = (file) =>
+      renderFile = (file) ->
         item.find('.attachments').append(App.view('generic/attachment_item')(file))
-        @attachments.push file
+        attachments.push file
+        if form.richTextUploadRenderCallback
+          form.richTextUploadRenderCallback(attribute, attachments)
 
       if params && params.attachments
         for file in params.attachments
           renderFile(file)
 
+      if attribute.attachments
+        for file in attribute.attachments
+          renderFile(file)
+
+      App.Event.bind('ui::ticket::addArticleAttachent', (data) ->
+        form_id = item.closest('form').find('[name=form_id]').val()
+
+        return if data.form_id isnt form_id
+        return if _.isEmpty(data.attachments)
+        for file in data.attachments
+          renderFile(file)
+      , form.form_id)
+
       # remove items
-      item.find('.attachments').on('click', '.js-delete', (e) =>
+      item.find('.attachments').on('click', '.js-delete', (e) ->
         id = $(e.currentTarget).data('id')
-        @attachments = _.filter(
-          @attachments,
+        attachments = _.filter(
+          attachments,
           (item) ->
             return if item.id.toString() is id.toString()
             item
         )
+        if form.richTextUploadDeleteCallback
+          form.richTextUploadDeleteCallback(attribute, attachments)
+
+        form_id = item.closest('form').find('[name=form_id]').val()
 
         # delete attachment from storage
         App.Ajax.request(
           type:        'DELETE'
-          url:         "#{App.Config.get('api_path')}/ticket_attachment_upload"
-          data:        JSON.stringify(id: id),
+          url:         "#{App.Config.get('api_path')}/upload_caches/#{form_id}/items/#{id}"
           processData: false
         )
 
@@ -50,66 +78,76 @@ class App.UiElement.richtext
           element.empty()
       )
 
-      @progressBar           = item.find('.attachmentUpload-progressBar')
-      @progressText          = item.find('.js-percentage')
-      @attachmentPlaceholder = item.find('.attachmentPlaceholder')
-      @attachmentUpload      = item.find('.attachmentUpload')
-      @attachmentsHolder     = item.find('.attachments')
-      @cancelContainer       = item.find('.js-cancel')
+      App.Delay.set( ->
+        uploader = new App.Html5Upload(
+          uploadUrl:              "#{App.Config.get('api_path')}/attachments"
+          dropContainer:          item.closest('form')
+          cancelContainer:        item.find('.js-cancel')
+          inputField:             item.find('input')
+          data:
+            form_id: item.closest('form').find('[name=form_id]').val()
 
-      u = => html5Upload.initialize(
-        uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload'
-        dropContainer:          item.closest('form').get(0)
-        cancelContainer:        @cancelContainer
-        inputField:             item.find('input').get(0)
-        maxSimultaneousUploads: 1,
-        key:                    'File'
-        data:
-          form_id: item.closest('form').find('[name=form_id]').val()
-        onFileAdded: (file) =>
+          onFileStartCallback: ->
+            item.find('[contenteditable]').trigger('fileUploadStart')
 
-          file.on(
-            onStart: =>
-              @attachmentPlaceholder.addClass('hide')
-              @attachmentUpload.removeClass('hide')
-              @cancelContainer.removeClass('hide')
-              item.find('[contenteditable]').trigger('fileUploadStart')
-              App.Log.debug 'UiElement.richtext', 'upload start'
+          onFileCompletedCallback: (response) ->
+            renderFile(response.data)
+            item.find('input').val('')
+            item.find('[contenteditable]').trigger('fileUploadStop', ['completed'])
 
-            onAborted: =>
-              @attachmentPlaceholder.removeClass('hide')
-              @attachmentUpload.addClass('hide')
-              item.find('input').val('')
-              item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
+          onFileAbortedCallback: ->
+            item.find('input').val('')
+            item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
 
-            # Called after received response from the server
-            onCompleted: (response) =>
-              response = JSON.parse(response)
+          attachmentPlaceholder: item.find('.attachmentPlaceholder')
+          attachmentUpload:      item.find('.attachmentUpload')
+          progressBar:           item.find('.attachmentUpload-progressBar')
+          progressText:          item.find('.js-percentage')
+        )
 
-              @attachmentPlaceholder.removeClass('hide')
-              @attachmentUpload.addClass('hide')
-
-              # reset progress bar
-              @progressBar.width(parseInt(0) + '%')
-              @progressText.text('')
-
-              renderFile(response.data)
-              item.find('input').val('')
-              item.find('[contenteditable]').trigger('fileUploadStop', ['completed'])
-              App.Log.debug 'UiElement.richtext', 'upload complete', response.data
-
-            # Called during upload progress, first parameter
-            # is decimal value from 0 to 100.
-            onProgress: (progress, fileSize, uploadedBytes) =>
-              @progressBar.width(parseInt(progress) + '%')
-              @progressText.text(parseInt(progress))
-              # hide cancel on 90%
-              if parseInt(progress) >= 90
-                @cancelContainer.addClass('hide')
-              App.Log.debug 'UiElement.richtext', 'uploadProgress ', parseInt(progress)
-
-          )
-      )
-      App.Delay.set(u, 100, undefined, 'form_upload')
+        uploader.render()
+      , 100, undefined, 'form_upload')
 
     item
+
+  @toolButtonClicked: (event, form) ->
+    action = $(event.currentTarget).data('action')
+    @toolButtons[action]?.onClick(event, form)
+
+  @toolButtons = {}
+  @additions   = {}
+
+  # 1 next, -1 previous
+  # jQuery's helper doesn't work because it doesn't include non-element nodes
+  @allDirectionalSiblings: (elem, direction, to = null) ->
+    if !elem?
+      return []
+
+    output = []
+    next = elem
+
+    while sibling = App.UiElement.richtext.directionalSibling(next, direction)
+      next = sibling
+      if to? and sibling is to
+        break
+
+      output.push sibling
+
+    output
+
+  # 1 next, -1 previous
+  @directionalSibling: (elem, direction) ->
+    if direction > 0
+      elem.nextSibling
+    else
+      elem.previousSibling
+
+  @buildParentsList: (elem, container) ->
+    $(elem)
+      .parentsUntil(container)
+      .toArray()
+
+  @buildParentsListWithSelf: (elem, container) ->
+    output = App.UiElement.richtext.buildParentsList(elem, container)
+    output.unshift(elem)
+    output

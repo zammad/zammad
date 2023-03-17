@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
-  let(:backend) { ::Import::Exchange }
+  let(:backend) { Import::Exchange }
 
   it 'removes :item_id from attributes' do
 
@@ -15,11 +17,11 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
     valid_config = ActiveSupport::HashWithIndifferentAccess.new(
       attributes: {
-        some:    'other',
+        some: 'other',
       }
     )
 
-    expect(backend).to receive(:config).and_return(invalid_config)
+    expect(backend).to receive(:config).and_return(invalid_config) # rubocop:disable RSpec/StubbedMock
     allow(backend).to receive(:config).and_call_original
 
     migrate
@@ -36,7 +38,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
     shared_examples 'irrelevant config' do
       it 'does not change the config' do
-        expect(backend).to receive(:config).and_return(config)
+        allow(backend).to receive(:config).and_return(config)
         expect(backend).not_to receive(:config=)
         migrate
       end
@@ -44,6 +46,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
 
     context 'blank config' do
       let(:config) { nil }
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -53,6 +56,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           some: 'config'
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -64,6 +68,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           }
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
 
@@ -76,6 +81,7 @@ RSpec.describe Issue1905ExchangeLoginFromRemoteId, type: :db_migration do
           }
         }
       end
+
       it_behaves_like 'irrelevant config'
     end
   end

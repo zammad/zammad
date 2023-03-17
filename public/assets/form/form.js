@@ -5,12 +5,12 @@
 *  provides feedback form for zammad
 *
 
-<button id="feedback-form">Feedback</button>
+<button id="zammad-feedback-form">Feedback</button>
 
 <script id="zammad_form_script" src="http://localhost:3000/assets/form/form.js"></script>
 <script>
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
     messageTitle: 'Feedback Form', // optional
     messageSubmit: 'Submit', // optional
     messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.', // optional
@@ -33,6 +33,7 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: function () {return User.email;},
       },
@@ -40,7 +41,8 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
-        placeholder: 'Your Message...',
+        required: true,
+        placeholder: 'Your Message…',
         defaultValue: '',
         rows: 7,
       },
@@ -76,6 +78,8 @@ $(function() {
         name: 'name',
         tag: 'input',
         type: 'text',
+        id: 'zammad-form-name',
+        required: true,
         placeholder: 'Your Name',
         defaultValue: '',
       },
@@ -84,6 +88,8 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        id: 'zammad-form-email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: '',
       },
@@ -91,84 +97,160 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
-        placeholder: 'Your Message...',
+        id: 'zammad-form-body',
+        required: true,
+        placeholder: 'Your Message…',
         defaultValue: '',
         rows: 7,
       },
     ],
     translations: {
+    // ZAMMAD_TRANSLATIONS_START
+      'cs': {
+        'Attachments': 'Přílohy',
+        'Email': 'Email',
+        'Message': 'Zpráva',
+        'Name': 'Jméno',
+        'Your Email': 'Váš e-mail',
+        'Your Message…': '',
+        'Your Name': 'Vaše jméno',
+      },
       'de': {
-        'Name': 'Name',
-        'Your Name': 'Ihr Name',
-        'Email': 'E-Mail',
-        'Your Email': 'Ihre E-Mail',
-        'Message': 'Nachricht',
         'Attachments': 'Anhänge',
-        'Your Message...': 'Ihre Nachricht...',
+        'Email': 'E-Mail',
+        'Message': 'Nachricht',
+        'Name': 'Name',
+        'Your Email': 'Ihre E-Mail',
+        'Your Message…': 'Ihre Nachricht…',
+        'Your Name': 'Ihr Name',
       },
       'es': {
-        'Name': 'Nombre',
-        'Your Name': 'tu Nombre',
-        'Email': 'correo electrónico',
-        'Your Email': 'Tu correo electrónico',
+        'Attachments': 'Adjuntos',
+        'Email': 'Correo electrónico',
         'Message': 'Mensaje',
-        'Attachments': 'archivos adjuntos',
-        'Your Message...': 'tu Mensaje...',
+        'Name': 'Nombre',
+        'Your Email': 'Tu correo electrónico',
+        'Your Message…': 'Su mensaje…',
+        'Your Name': 'tu Nombre',
       },
       'fr': {
-        'Name': 'Prénom',
-        'Your Name': 'Votre nom',
-        'Email': 'Email',
-        'Your Email': 'Votre Email',
-        'Message': 'Message',
         'Attachments': 'Pièces jointes',
-        'Your Message...': 'Votre message...',
+        'Email': 'E-mail',
+        'Message': 'Message',
+        'Name': 'Nom',
+        'Your Email': 'Votre Email',
+        'Your Message…': 'Votre message…',
+        'Your Name': 'Votre nom',
       },
-      'nl': {
-        'Name': 'Naam',
-        'Your Name': 'Uw naam',
-        'Email': 'Email adres',
-        'Your Email': 'Uw Email adres',
-        'Message': 'Bericht',
-        'Attachments': 'Bijlage',
-        'Your Message...': 'Uw bericht...',
+      'hr': {
+        'Attachments': 'Privitci',
+        'Email': 'E-pošta',
+        'Message': 'Poruka',
+        'Name': 'Ime',
+        'Your Email': 'Vaš e-mail',
+        'Your Message…': 'Vaša poruka…',
+        'Your Name': 'Vaše ime',
+      },
+      'hu': {
+        'Attachments': 'Csatolmányok',
+        'Email': 'E-mail',
+        'Message': 'Üzenet',
+        'Name': 'Név',
+        'Your Email': 'Az Ön e-mail címe',
+        'Your Message…': 'Az Ön üzenete…',
+        'Your Name': 'Az Ön neve',
       },
       'it': {
-        'Name': 'Nome',
-        'Your Name': 'Il tuo nome',
-        'Email': 'E-mail',
-        'Your Email': 'Il tuo indirizzo e-mail',
-        'Message': 'Messaggio',
         'Attachments': 'Allegati',
-        'Your Message...': 'Il tuo messaggio...',
+        'Email': 'Email',
+        'Message': 'Messaggio',
+        'Name': 'Nome',
+        'Your Email': 'Il tuo indirizzo e-mail',
+        'Your Message…': 'Il tuo messaggio…',
+        'Your Name': 'Il tuo nome',
+      },
+      'nl': {
+        'Attachments': 'Bijlagen',
+        'Email': 'E-mail',
+        'Message': 'Bericht',
+        'Name': 'Naam',
+        'Your Email': 'Uw Email adres',
+        'Your Message…': '',
+        'Your Name': 'Uw naam',
       },
       'pl': {
-        'Name': 'Nazwa',
-        'Your Name': 'Imię i nazwisko',
-        'Email': 'Email adres',
-        'Your Email': 'Adres e-mail',
-        'Message': 'Wiadomość',
         'Attachments': 'Załączniki',
-        'Your Message...': 'Twoja wiadomość...',
+        'Email': 'E-Mail',
+        'Message': 'Wiadomość',
+        'Name': 'Nazwa',
+        'Your Email': 'Adres e-mail',
+        'Your Message…': 'Twoja wiadomość…',
+        'Your Name': 'Imię i nazwisko',
+      },
+      'pt-br': {
+        'Attachments': 'Anexos',
+        'Email': 'Email',
+        'Message': 'Mensagem',
+        'Name': 'Nome',
+        'Your Email': 'Seu Email',
+        'Your Message…': '',
+        'Your Name': 'Seu nome',
+      },
+      'ru': {
+        'Attachments': 'Вложения',
+        'Email': 'Электронная почта',
+        'Message': 'Сообщение',
+        'Name': 'Имя',
+        'Your Email': 'Ваша почта',
+        'Your Message…': '',
+        'Your Name': 'Ваше имя',
+      },
+      'sr': {
+        'Attachments': 'Прилози',
+        'Email': 'Имејл',
+        'Message': 'Порука',
+        'Name': 'Име',
+        'Your Email': 'Ваш имејл',
+        'Your Message…': 'Ваша порука…',
+        'Your Name': 'Ваше име',
+      },
+      'sr-latn-rs': {
+        'Attachments': 'Prilozi',
+        'Email': 'Imejl',
+        'Message': 'Poruka',
+        'Name': 'Ime',
+        'Your Email': 'Vaš imejl',
+        'Your Message…': 'Vaša poruka…',
+        'Your Name': 'Vaše ime',
+      },
+      'sv': {
+        'Attachments': 'Bilagor',
+        'Email': 'E-post',
+        'Message': 'Meddelande',
+        'Name': 'Namn',
+        'Your Email': 'Din mejl',
+        'Your Message…': '',
+        'Your Name': 'Ditt namn',
       },
       'zh-cn': {
-        'Name': '联系人',
-        'Your Name': '您的尊姓大名',
-        'Email': '电子邮件',
-        'Your Email': '您的邮件地址',
-        'Message': '留言',
         'Attachments': '附件',
-        'Your Message...': '您的留言...',
+        'Email': '邮件地址',
+        'Message': '消息',
+        'Name': '名称',
+        'Your Email': '您的邮件地址',
+        'Your Message…': '',
+        'Your Name': '您的尊姓大名',
       },
       'zh-tw': {
-        'Name': '聯絡人',
-        'Your Name': '您的尊姓大名',
-        'Email': 'E-Mail',
+        'Attachments': '附件',
+        'Email': '電子郵件',
+        'Message': '訊息',
+        'Name': '名稱',
         'Your Email': '請留下您的電子郵件地址',
-        'Message': '留言',
-        'Attachments': '附檔',
-        'Your Message...': '請寫下您的留言...'
+        'Your Message…': '',
+        'Your Name': '您的尊姓大名',
       },
+    // ZAMMAD_TRANSLATIONS_END
     }
   };
 
@@ -189,7 +271,7 @@ $(function() {
     this.endpoint_config = this._src.replace(this._script_location, this._endpoint_config)
     this.endpoint_submit = this._src.replace(this._script_location, this._endpoint_submit)
 
-    this.options = $.extend({}, defaults, options)
+    this.options = $.extend(true, {}, defaults, options)
     if (!this.options.lang) {
       this.options.lang = $('html').attr('lang')
     }
@@ -213,12 +295,6 @@ $(function() {
     if (!_this.options.noCSS) {
       _this.loadCss(_this.css_location)
     }
-
-    $.each(_this.options.attributes, function(index, item) {
-      if (item.name == 'file[]') {
-        _this.options.attributes.splice(index, 1);
-      }
-    })
     if (_this.options.attachmentSupport === true || _this.options.attachmentSupport === 'true') {
       var attachment = {
         display: 'Attachments',
@@ -228,6 +304,18 @@ $(function() {
         repeat: 1,
       }
       _this.options.attributes.push(attachment)
+    }
+    if (_this.options.agreementMessage) {
+      var agreement = {
+        display: _this.options.agreementMessage,
+        name: 'agreement',
+        tag: 'input',
+        type: 'checkbox',
+        id: 'zammad-form-agreement',
+        required: true,
+        defaultValue: '',
+      }
+      _this.options.attributes.push(agreement)
     }
 
     _this.log('debug', 'endpoint_config: ' + _this.endpoint_config)
@@ -251,7 +339,10 @@ $(function() {
       _this._config = data
     }).fail(function(jqXHR, textStatus, errorThrown) {
       if (jqXHR.status == 401) {
-        _this.log('error', 'Faild to load form config, feature is disabled!')
+        _this.log('error', 'Faild to load form config, wrong authentication data!')
+      }
+      else if (jqXHR.status == 403) {
+        _this.log('error', 'Faild to load form config, feature is disabled or request is wrong!')
       }
       else {
         _this.log('error', 'Faild to load form config!')
@@ -296,7 +387,7 @@ $(function() {
       _this.log('debug', 'modalOpenTime', _this.modalOpenTime.getTime())
       _this.log('debug', 'diffTime', diff)
       if (diff < 1000*10) {
-        alert('Sorry, you look like an robot!')
+        alert('Sorry, you look like a robot!')
         return
       }
     }
@@ -313,12 +404,16 @@ $(function() {
       processData: false,
     }).done(function(data) {
 
-      // removed errors
+      // Remove the errors from the form.
+      _this.$form.find('.zammad-form-group--has-error').removeClass('zammad-form-group--has-error')
+      // Deprecated code, can be removed in future versions:
       _this.$form.find('.has-error').removeClass('has-error')
 
       // set errors
       if (data.errors) {
         $.each(data.errors, function( key, value ) {
+          _this.$form.find('[name=' + key + ']').closest('.'+ _this.options.prefixCSS +'group').addClass('zammad-form-group--has-error')
+          // Deprecated code, can be removed in future versions:
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
         if (data.errors.token) {
@@ -333,7 +428,7 @@ $(function() {
 
     }).fail(function() {
       _this.$form.find('button').prop('disabled', false)
-      alert('Faild to submit form!')
+      alert('The form could not be submitted!')
     });
   }
 
@@ -377,8 +472,8 @@ $(function() {
     _this.log('debug', 'modalOpenTime:', _this.modalOpenTime)
 
     var element = "<div class=\"" + _this.options.prefixCSS + "modal\">\
-      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-close\"></div>\
-      <div class=\"" + _this.options.prefixCSS + "modal-body\">\
+      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-zammad-form-modal-backdrop\"></div>\
+      <div class=\"" + _this.options.prefixCSS + "modal-body js-zammad-form-modal-body\">\
         <form class=\"zammad-form\"></form>\
       </div>\
     </div>"
@@ -393,14 +488,28 @@ $(function() {
       $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
     $.each(this.options.attributes, function(index, value) {
-      var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>');
+      var valueId = _this.options.modal ? value.id + '-modal' : value.id + '-inline'
+      var item
+      if (value.type == 'checkbox'){
+        item = $('<div class="form-group '+ _this.options.prefixCSS +'group"></div>');
+      } else {
+        // Deprecated class "form-group" can be removed in future versions.
+        item = $('<div class="form-group '+ _this.options.prefixCSS +'group"><label for="' + valueId +'"> ' + _this.T(value.display) + '</label></div>');
+      }
       var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
-        if (value.tag == 'input') {
-          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '">')
+        if (value.tag === 'input') {
+          if (value.type === 'checkbox'){
+            var label = $('<label for="' + valueId + '"><input type="' + value.type + '" name="' + value.name + '" id="' + valueId + '" class="' + _this.options.prefixCSS + 'checkbox" ' + (value.required === true ? ' required' : '') + '>' + _this.T(value.display) + '</label>')
+            item.append(label)
+          } else {
+            // Deprecated class "form-control" can be removed in future versions.
+            item.append('<input class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
+          }
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '">' + (defaultValue || '') + '</textarea>')
+          // Deprecated class "form-control" can be removed in future versions.
+          item.append('<textarea class="form-control '+ _this.options.prefixCSS +'control" id="' + valueId + '" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"' + (value.required === true ? ' required' : '') + '>' + (defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)
@@ -411,7 +520,7 @@ $(function() {
     this.$form  = $form
 
     // bind on close
-    $element.find('.js-close').off('click.zammad-form').on('click.zammad-form', function (e) {
+    $element.find('.js-zammad-form-modal-backdrop').off('click.zammad-form').on('click.zammad-form', function (e) {
       e.preventDefault()
       _this.closeModal()
       return true
@@ -442,7 +551,7 @@ $(function() {
     if (data.ticket && data.ticket.number) {
       thankYou = thankYou.replace('%s', data.ticket.number)
     }
-    var message = $('<div class="js-thankyou">' + thankYou + '</div>')
+    var message = $('<div class="js-thankyou zammad-form-thankyou">' + thankYou + '</div>')
     this.$form.html(message)
   }
 

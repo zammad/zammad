@@ -2,8 +2,10 @@
 class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
 
-    icalFeeds = App.Config.get('ical_feeds') || {}
-    icalFeedsSorted = App.Utils.sortByValue(icalFeeds)
+    icalFeeds           = App.Config.get('ical_feeds') || {}
+    icalFeedsTranslated = _.mapObject icalFeeds, (value, key) -> App.i18n.translateContent(value)
+    icalFeedsSorted     = App.Utils.sortByValue(icalFeedsTranslated)
+
     item = $( App.view('generic/ical_feed')( attribute: attribute, icalFeeds: icalFeedsSorted ) )
 
     updateCheckList = ->
@@ -25,23 +27,23 @@ class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
       else
         item.find('.js-shadow').val( item.find('.js-list').val() )
 
-    # set inital state
+    # set initial state
     if icalFeeds[attribute.value]
       updateCheckList()
     else
       updateCheckManual()
       item.find('.js-manual').val(attribute.value)
 
-    item.find('.js-check').bind('change', ->
+    item.find('.js-check').on('change', ->
       updateShadow()
     )
 
-    item.find('.js-list').bind('click change', ->
+    item.find('.js-list').on('click change', ->
       updateCheckList()
       updateShadow('list')
     )
 
-    item.find('.js-manual').bind('keyup focus blur', ->
+    item.find('.js-manual').on('keyup focus blur', ->
       updateCheckManual()
       updateShadow('manual')
     )

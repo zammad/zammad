@@ -1,36 +1,32 @@
-class Sequencer
-  class Unit
-    module Common
-      module Provider
-        class Attribute < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          def process
-            return if ignore?
-            state.provide(attribute, value)
-          end
+class Sequencer::Unit::Common::Provider::Attribute < Sequencer::Unit::Base
 
-          private
+  def process
+    return if ignore?
 
-          def attribute
-            @attribute ||= provides
-          end
+    state.provide(attribute, value)
+  end
 
-          def provides
-            provides_list = self.class.provides
-            raise "Only single provide attribute possible for class #{self.class.name}" if provides_list.size != 1
-            provides_list.first
-          end
+  private
 
-          def value
-            @value ||= send(attribute)
-          end
+  def attribute
+    @attribute ||= provides
+  end
 
-          def ignore?
-            # don't store nil values which are default anyway
-            value.nil?
-          end
-        end
-      end
-    end
+  def provides
+    provides_list = self.class.provides
+    raise "Only single provide attribute possible for class #{self.class.name}" if provides_list.size != 1
+
+    provides_list.first
+  end
+
+  def value
+    @value ||= send(attribute)
+  end
+
+  def ignore?
+    # don't store nil values which are default anyway
+    value.nil?
   end
 end

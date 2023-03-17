@@ -1,0 +1,9 @@
+<% if @tickets?.length: %>
+  <div class="attachments attachments--list">
+    <%- @Icon('overviews') %>
+    <div class="attachments-title">
+      <%- @T('Linked Tickets') %> <span class="badge"><%- @tickets.length %></span>
+    </div>
+    <%- @V('generic/ticket_list', show_max: 5, tickets: @tickets) %>
+  </div>
+<% end %>

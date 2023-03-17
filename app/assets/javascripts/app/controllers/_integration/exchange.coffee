@@ -1,27 +1,31 @@
-class Index extends App.ControllerIntegrationBase
+class Exchange extends App.ControllerIntegrationBase
   featureIntegration: 'exchange_integration'
-  featureName: 'Exchange'
+  featureName: __('Exchange')
   featureConfig: 'exchange_config'
   description: [
-    ['This service enables Zammad to connect with your Exchange server.']
+    [__('This service enables Zammad to connect with your Exchange server.')]
   ]
   events:
     'change .js-switch input': 'switch'
 
+  constructor: ->
+    super
+
+    if @success_code is '1'
+      @navigate '#system/integration/exchange'
+    else if @error_code is 'AADSTS65004'
+      new App.AdminConsentInfo(container: @container)
+
   render: =>
     super
+
     new Form(
       el: @$('.js-form')
     )
 
-    #new App.ImportJob(
-    #  el: @$('.js-importJob')
-    #  facility: 'exchange'
-    #)
-
     new App.HttpLog(
       el: @$('.js-log')
-      facility: 'exchange'
+      facility: 'EWS'
     )
 
   switch: =>
@@ -47,10 +51,16 @@ class Index extends App.ControllerIntegrationBase
 class Form extends App.Controller
   elements:
     '.js-lastImport': 'lastImport'
-    '.js-wizard': 'wizardButton'
+    '.js-wizard':     'wizardButton'
   events:
-    'click .js-wizard': 'startWizard'
-    'click .js-start-sync': 'startSync'
+    'click .js-wizard':                 'startWizard'
+    'click .js-start-sync':             'startSync'
+    'click .js-new-app':                'newApp'
+    'click .js-delete-app':             'deleteApp'
+    'click .js-reauthenticate-app':     'reauthenticateApp'
+    'click .js-config-app':             'configApp'
+    'click .js-admin-consent':          'adminConsent'
+    'change .js-authentication-method': 'changeAuthenticationMethod'
 
   constructor: ->
     super
@@ -64,6 +74,11 @@ class Form extends App.Controller
   setConfig: (value) =>
     App.Setting.set('exchange_config', value, {notify: true})
     @startSync()
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
 
   render: (top = false) =>
     @config = @currentConfig()
@@ -84,10 +99,90 @@ class Form extends App.Controller
       @$('.js-notConfigured').addClass('hide')
       @$('.js-summary').removeClass('hide')
 
+    @interval(@loadExchangeData, 30000)
+    @loadExchangeData(true)
+
     if top
       a = =>
         @scrollToIfNeeded($('.content.active .page-header'))
       @delay(a, 500)
+
+  loadExchangeData: (initial = false) =>
+    @startLoading()
+    @ajax(
+      id:   'exchange_index'
+      type: 'GET'
+      url:  "#{@apiPath}/integration/exchange/index"
+      processData: true
+      success: (data, status, xhr) =>
+        @stopLoading()
+        App.Collection.loadAssets(data.assets)
+        @callbackUrl = data.callback_url
+        @exchange_oauth = data.oauth
+
+        # if no exchange app is registered, show intro
+        external_credential = App.ExternalCredential.findByAttribute('name', 'exchange')
+        if !external_credential
+          @$('.js-oAuthContent').html($(App.view('exchange/oauth_intro')())).removeClass('hide')
+        else
+          @$('.js-oAuthContent').html($(App.view('exchange/token_information')(
+            oauth: data.oauth
+            external_credential: external_credential
+          ))).removeClass('hide')
+
+        @setAuthenticationMethod(initial)
+    )
+    true
+
+  setAuthenticationMethod: (initial) ->
+    method = @el.find('.js-authentication-method').val() || 'basic'
+    if initial
+      method = 'basic'
+      if !_.isEmpty(@exchange_oauth)
+        method = 'oauth'
+
+    @el.find('.js-authentication-method').val(method).trigger('change')
+
+  changeAuthenticationMethod: ->
+    method = @el.find('.js-authentication-method').val()
+    if method is 'basic'
+      @el.find('.js-oAuthContent').addClass('hide')
+    else
+      @el.find('.js-oAuthContent').removeClass('hide')
+
+    @currentAuthenticationMethod = method
+
+  configApp: =>
+    new AppConfig(
+      container: @el.parents('.content')
+      callbackUrl: @callbackUrl
+    )
+
+  newApp: (e) ->
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
+
+  adminConsent: (e) ->
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account?prompt=consent"
+
+  deleteApp: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    new App.ControllerConfirm(
+      message: __('Are you sure?')
+      callback: =>
+        @ajax(
+          id:   'exchange_delete'
+          type: 'DELETE'
+          url:  "#{@apiPath}/integration/exchange/oauth"
+          success: (data, status, xhr) =>
+            @render()
+        )
+      container: @el.closest('.content')
+    )
+
+  reauthenticateApp: (e) =>
+    e.preventDefault()
+    window.location.href = "#{@apiPath}/external_credentials/exchange/link_account"
 
   startSync: =>
     @ajax(
@@ -105,6 +200,7 @@ class Form extends App.Controller
     new ConnectionWizard(
       container: @el.closest('.content')
       config: @config
+      currentAuthenticationMethod: @currentAuthenticationMethod
       callback: (config) =>
         @setConfig(config)
     )
@@ -153,7 +249,7 @@ class Form extends App.Controller
         # show analyzing
         new ConnectionWizard(
           container: @el.closest('.content')
-          config: job.payload
+          config: job.payload.params
           start: 'tryLoop'
           callback: (config) =>
             @wizardButton.attr('disabled', false)
@@ -166,17 +262,14 @@ class State
   @current: ->
     App.Setting.get('exchange_integration')
 
-class ConnectionWizard extends App.WizardModal
-  wizardConfig: {}
+class ConnectionWizard extends App.ControllerWizardModal
   slideMethod:
     'js-folders': 'foldersShow'
     'js-mapping': 'mappingShow'
 
   events:
-    'submit form.js-discover':                 'discover'
-    'submit form.js-discoverCertificateIssue': 'discover'
-    'submit form.js-bind':                     'folders'
-    'submit form.js-bindCertificateIssue':     'folders'
+    'submit form.js-discover':                 'discoverParams'
+    'submit form.js-discoverCertificateIssue': 'discoverConfig'
     'submit form.js-folders':                  'mapping'
     'click .js-cancelSsl':                     'showSlideDiscover'
     'click .js-mapping .js-submitTry':         'mappingChange'
@@ -196,8 +289,10 @@ class ConnectionWizard extends App.WizardModal
   constructor: ->
     super
 
-    if !_.isEmpty(@config)
-      @wizardConfig = @config
+    @wizardConfig = $.extend(true, {}, @config)
+
+    if @currentAuthenticationMethod isnt undefined
+      @wizardConfig.auth_type = @currentAuthenticationMethod
 
     if @container
       @el.addClass('modal--local')
@@ -211,20 +306,34 @@ class ConnectionWizard extends App.WizardModal
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onShown
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
+        @onShown()
       'hidden.bs.modal': =>
         @el.remove()
 
     if @slide
       @showSlide(@slide)
-    else
-      @showDiscoverDetails()
-
-    if @start
-      @[@start]()
 
   render: =>
-    @html App.view('integration/exchange_wizard')()
+    @ajax(
+      id:   'exchange_index'
+      type: 'GET'
+      url:  "#{@apiPath}/integration/exchange/index"
+      processData: true
+      success: (data, status, xhr) =>
+        @exchange_oauth = data.oauth
+
+        @html App.view('integration/exchange_wizard')(
+          exchange_oauth: @exchange_oauth
+        )
+
+        @showDiscoverDetails()
+        @presetAuthenticationMethod()
+
+        if @start
+          @[@start]()
+    )
 
   save: (e) =>
     e.preventDefault()
@@ -238,21 +347,35 @@ class ConnectionWizard extends App.WizardModal
     super
 
   showDiscoverDetails: =>
-    @$('.js-discover input[name="user"]').val(@wizardConfig.user)
-    @$('.js-discover input[name="password"]').val(@wizardConfig.password)
+    @$('.js-discover input[name="endpoint"]').val(@wizardConfig.endpoint)
 
-  showBindDetails: =>
-    @$('.js-bind input[name="endpoint"]').val(@wizardConfig.endpoint)
-    @$('.js-bind input[name="user"]').val(@wizardConfig.user)
-    @$('.js-bind input[name="password"]').val(@wizardConfig.password)
+    if @wizardConfig.auth_type is 'basic'
+      @$('.js-discover input[name="user"]').val(@wizardConfig.user)
+      @$('.js-discover input[name="password"]').val(@wizardConfig.password)
 
   showSlideDiscover: =>
     @showSlide('js-discover')
 
-  discover: (e) =>
+  discoverParams: (e) ->
     e.preventDefault()
-    @showSlide('js-connect')
     params = @formParam(e.target)
+
+    @wizardConfig.endpoint           = params.endpoint
+    @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
+
+    if params.authentication_method is 'basic'
+      @wizardConfig.user      = params.user
+      @wizardConfig.password  = params.password
+
+    @discover(params)
+
+  discoverConfig: (e) ->
+    e.preventDefault()
+    @discover(@wizardConfig)
+
+  discover: (params) =>
+    @showSlide('js-connect')
+
     @ajax(
       id:   'exchange_discover'
       type: 'POST'
@@ -260,21 +383,14 @@ class ConnectionWizard extends App.WizardModal
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
-        if data.result isnt 'ok'
+        if data.result isnt 'ok' && @wizardConfig.auth_type isnt 'oauth'
           @handleCertificateIssue(
             message:     data.message
             wizardClass: 'js-discover'
-            user:        params.user
-            password:    params.password
           )
           return
 
-        @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
-        @wizardConfig.user               = params.user
-        @wizardConfig.password           = params.password
-
-        @showSlide('js-bind')
-        @showBindDetails()
+        @folders()
 
       error: (xhr, statusText, error) =>
         detailsRaw = xhr.responseText
@@ -282,38 +398,21 @@ class ConnectionWizard extends App.WizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-discover')
-        @showAlert('js-discover', details.error || 'Unable to perform backend.')
+        @showAlert('js-discover', details.error || __('Server operation failed.'))
     )
 
-  folders: (e) =>
-    e.preventDefault()
+  folders: =>
     @showSlide('js-analyze')
-    params = @formParam(e.target)
+
     @ajax(
       id:   'exchange_folders'
       type: 'POST'
       url:  "#{@apiPath}/integration/exchange/folders"
-      data: JSON.stringify(params)
+      data: JSON.stringify(@wizardConfig)
       processData: true
       success: (data, status, xhr) =>
-        if data.result isnt 'ok'
-          @handleCertificateIssue(
-            message:     data.message
-            wizardClass: 'js-bind'
-            endpoint:    params.endpoint
-            user:        params.user
-            password:    params.password
-          )
-          return
-
-        @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
-        @wizardConfig.endpoint           = params.endpoint
-        @wizardConfig.user               = params.user
-        @wizardConfig.password           = params.password
-
-        # update wizard data
         @wizardConfig.wizardData = {}
-        @wizardConfig.wizardData.backend_folders = data.folders
+        @wizardConfig.wizardData.backend_folders = data.folders || []
 
         @foldersShow()
 
@@ -322,13 +421,15 @@ class ConnectionWizard extends App.WizardModal
         details = {}
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
-        @showSlide('js-bind')
-        @showAlert('js-bind', details.error || 'Unable to perform backend.')
+        @showSlide('js-discover')
+        @showAlert('js-discover', details.error || __('Server operation failed.'))
     )
 
   foldersShow: (alreadyShown) =>
     @showSlide('js-folders') if !alreadyShown
     @foldersSelect.html(@createColumnSelection('folders', @wizardConfig.wizardData.backend_folders, @wizardConfig.folders))
+    if @wizardConfig.folders && @wizardConfig.folders.length > 0
+      @foldersSelectSubmit.removeClass('is-disabled')
 
   createColumnSelection: (name, options, selected) ->
     return App.UiElement.column_select.render(
@@ -338,13 +439,15 @@ class ConnectionWizard extends App.WizardModal
       options: options
       value: selected
       onChange: (val) =>
-        if val && val.length > 0
+        if _.isArray(val) && val.length > 0
           @foldersSelectSubmit.removeClass('is-disabled')
         else
           @foldersSelectSubmit.addClass('is-disabled')
     )
 
   handleCertificateIssue: (params) =>
+    @wizardConfig.disable_ssl_verify = 1
+
     if params.message.indexOf('certificate') is -1
       @showSlide(params.wizardClass)
       @showAlert(params.wizardClass, params.message)
@@ -353,14 +456,10 @@ class ConnectionWizard extends App.WizardModal
 
       domain = @domainFromMessageOrEmail(
         message: params.message
-        user:    params.user
       )
 
       wizardSlide = App.view('integration/exchange_certificate_issue')(
         wizardClass: wizardClass
-        endpoint:    params.endpoint
-        user:        params.user
-        password:    params.password
         domain:      domain
       )
 
@@ -376,34 +475,32 @@ class ConnectionWizard extends App.WizardModal
       return hostname[1]
 
     # try to extract it from the given user
-    emailDomain = params.user.match(/@(.*)$/)
+    emailDomain = @wizardConfig.user.match(/@(.*)$/)
     if emailDomain
       return emailDomain[1]
 
     # fallback to user - better than no value?!
-    return user
+    return @wizardConfig.user
 
   mapping: (e) =>
     e.preventDefault()
-    @showSlide('js-analyze')
+
     params = @formParam(e.target)
+    @wizardConfig.folders = params.folders
 
     # folders might be a single selection so we
     # have to ensure that is an Array so the
     # backend and frontend can handle it properly
-    if typeof params.folders is 'string'
-      params.folders = [ params.folders ]
+    if typeof @wizardConfig.folders is 'string'
+      @wizardConfig.folders = [ @wizardConfig.folders ]
 
-    # add login params
-    params.endpoint = @wizardConfig.endpoint
-    params.user     = @wizardConfig.user
-    params.password = @wizardConfig.password
+    @showSlide('js-analyze')
 
     @ajax(
       id:   'exchange_mapping'
       type: 'POST'
       url:  "#{@apiPath}/integration/exchange/mapping"
-      data: JSON.stringify(params)
+      data: JSON.stringify(@wizardConfig)
       processData: true
       success: (data, status, xhr) =>
         if data.result isnt 'ok'
@@ -418,7 +515,6 @@ class ConnectionWizard extends App.WizardModal
             attributes[key] = value.display || key
 
         @wizardConfig.wizardData.attributes         = attributes
-        @wizardConfig.folders                       = params.folders
         @wizardConfig.wizardData.backend_attributes = data.attributes
 
         @mappingShow()
@@ -429,7 +525,7 @@ class ConnectionWizard extends App.WizardModal
         if !_.isEmpty(detailsRaw)
           details = JSON.parse(detailsRaw)
         @showSlide('js-folders')
-        @showAlert('js-folders', details.error || 'Unable to perform backend.')
+        @showAlert('js-folders', details.error || __('Server operation failed.'))
     )
 
   mappingShow: (alreadyShown) =>
@@ -498,6 +594,19 @@ class ConnectionWizard extends App.WizardModal
     e.preventDefault()
     @userMappingForm.find('tbody tr').last().before(@buildRowUserAttribute())
 
+  presetAuthenticationMethod: ->
+    current_method = @wizardConfig.auth_type || 'basic'
+    required       = true
+    if current_method is 'basic'
+      @el.find('table.basic-auth, p.basic-auth').removeClass('hide')
+      @el.find('input[name="endpoint"]').val('')
+    else if current_method is 'oauth'
+      required = false
+      @el.find('table.basic-auth, p.basic-auth').addClass('hide')
+      @el.find('input[name="endpoint"]').val(@el.find('input[name="endpoint"]').prop('placeholder'))
+
+    @el.find('table.basic-auth input').prop('required', required)
+
   tryShow: (e) =>
     if e
       e.preventDefault()
@@ -551,13 +660,57 @@ class ConnectionWizard extends App.WizardModal
     el = $(App.view('integration/exchange_summary')(job: job))
     @el.find('.js-summary').html(el)
 
+class AppConfig extends App.ControllerModal
+  head: __('Connect Exchange App')
+  shown: true
+  button: 'Connect'
+  buttonCancel: true
+  small: true
+
+  content: ->
+    @external_credential = App.ExternalCredential.findByAttribute('name', 'exchange')
+    content = $(App.view('exchange/app_config')(
+      external_credential: @external_credential
+      callbackUrl: @callbackUrl
+    ))
+    content.find('.js-select').on('click', (e) =>
+      @selectAll(e)
+    )
+    content
+
+  onSubmit: (e) =>
+    @formDisable(e)
+
+    # verify app credentials
+    @ajax(
+      id:   'exchange_app_verify'
+      type: 'POST'
+      url:  "#{@apiPath}/external_credentials/exchange/app_verify"
+      data: JSON.stringify(@formParams())
+      processData: true
+      success: (data, status, xhr) =>
+        if data.attributes
+          if !@external_credential
+            @external_credential = new App.ExternalCredential
+          @external_credential.load(name: 'exchange', credentials: data.attributes)
+          @external_credential.save(
+            done: =>
+              @close()
+            fail: =>
+              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
+          )
+          return
+        @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
+    )
+
 App.Config.set(
   'IntegrationExchange'
   {
-    name: 'Exchange'
+    name: __('Exchange')
     target: '#system/integration/exchange'
-    description: 'Exchange integration for contacts management.'
-    controller: Index
+    description: __('Exchange integration for contacts management.')
+    controller: Exchange
     state: State
     permission: ['admin.integration.exchange']
   }

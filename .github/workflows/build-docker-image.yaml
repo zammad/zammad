@@ -1,0 +1,24 @@
+name: build-docker-image
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_GITHUB_REPOSITORY: "zammad-docker"
+      DOCKER_IMAGES: "zammad"
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_REPOSITORY: "zammad"
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    steps:
+      - name: Extract REPO_USER from GITHUB_REPOSITORY ENV
+        run: echo "REPO_USER=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')" >> $GITHUB_ENV
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
+      - name: Build docker image
+        run: .github/docker-image-build.sh

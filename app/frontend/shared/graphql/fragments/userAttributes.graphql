@@ -1,0 +1,22 @@
+fragment userAttributes on User {
+  id
+  internalId
+  firstname
+  lastname
+  fullname
+  image
+  preferences
+  objectAttributeValues {
+    ...objectAttributeValues
+  }
+  organization {
+    id
+    internalId
+    name
+    active
+    objectAttributeValues {
+      ...objectAttributeValues
+    }
+  }
+  hasSecondaryOrganizations
+}

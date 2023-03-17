@@ -1,0 +1,411 @@
+<nav class="breadcrumbs">
+  <a class="breadcrumb" href="#knowledge_base" data-target="1">
+    <%- @Icon('knowledge-base') %>
+  </a>
+  <a class="breadcrumb hidden" href="#knowledge_base" data-level="2 3 4" data-target="2">
+    Getting Started
+  </a>
+  <a class="breadcrumb hidden" href="#knowledge_base" data-level="3 4" data-target="3">
+    Migration
+  </a>
+  <a class="breadcrumb hidden" href="#knowledge_base" data-level="4" data-target="4">
+    Everything about the ticket
+  </a>
+
+  <div class="align-right horizontal">
+    <div class="btn btn--action js-open-search centered">
+      <%- @Icon('magnifier') %>
+    </div>
+    <div class="btn btn--action js-edit">Edit</div>
+    <div class="btn btn--action btn--split--first js-pickedLanguage">en</div>
+    <div class="dropdown dropdown--actions">
+      <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="false">
+        <%- @Icon('arrow-down') %>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-right dropdown-menu-full-height" role="menu">
+          <li role="presentation">
+            <a href="#" role="menuitem" tabindex="-1">
+              English (United States)
+              <span class="dropdown-selectedSpacer is-selected">
+                <%- @Icon('checkmark') %>
+              </span>
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#" role="menuitem" tabindex="-1">
+              Deutsch
+            </a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main flex hidden" data-level="1">
+  <div class="container">
+    <ul class="sections sections--grid" data-size="large">
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Getting Started</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Migration</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>General</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Everything about the ticket</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Search Cheat Sheet</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="2">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Glossary</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="main flex hidden" data-level="2">
+  <div class="container">
+    <ul class="sections sections--grid" data-size="medium">
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Getting Started</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Migration</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>General</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Everything about the ticket</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Search Cheat Sheet</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="3">
+          <span class="section-inner">
+            <i data-font="anticon"></i>
+            <span>Glossary</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+    <ul class="sections sections--list">
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Getting Started</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Migration</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>General</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Everything about the ticket</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Search Cheat Sheet</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Glossary</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="main flex hidden" data-level="3">
+  <div class="container">
+    <ul class="sections sections--list">
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Getting Started</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Migration</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>General</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Everything about the ticket</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Search Cheat Sheet</span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span>Glossary</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="main flex hidden" data-level="4">
+  <div class="container">
+    <div class="knowledge-base-article">
+      <h1 class="knowledge-base-article-header">Everything about the ticket</h1>
+      <small class="knowledge-base-article-meta">
+        created by Martin ﹒ 1/5/2018 ﹒ last updated 6/6/2018 by Thorsten ﹒ public
+      </small>
+      <div class="knowledge-base-article-body richtext-content">
+        <h2>Everything about the ticket</h2>
+        <p>A ticket is a container for a conversation with the customer about one dedicated topic/issue.</p>
+
+        <h2>Ticket states</h2>
+        <p>In default setup Zammad has the following ticket states:</p>
+
+        <ul>
+          <li>new
+            <ul>
+              <li>Ticket has been created by a customer, no agent has sent out a response to the customer yet
+              <li>If an agent replies to the customer, the ticket will change its state to “open” automatically
+            </ul>
+          <li>open
+            <ul>
+              <li>Ticket is open, an agent needs to work on it (e. g. close it or set a pending reminder state to let others know that somebody is working later on it)
+            </ul>
+          <li>pending reminder
+            <ul>
+              <li>Tickets which will “sleep” (no further action/attention needed right now) till pending date is reached
+              <li>Tickets will not escalate (in case of escalation, escalation is suspended)
+              <li>The time where the ticket is in pending reminder is not counted for escalation
+            </ul>
+          <li>pending close
+            <ul>
+              <li>Tickets which will “sleep” (no further action/attention needed right now) till pending date is reached
+              <li>Tickets will not escalate (in case of escalation, escalation is suspended)
+              <li>The time where the ticket is in pending close is not counted for escalation
+              <li>After pending time is reached, the ticket will be closed by Zammad automatically
+            </ul>
+          <li>closed
+            <ul>
+              <li>Ticket has been solved/finished, no further action/attention needed
+            </ul>
+        </ul>
+
+        <h2>Ticket colors</h2>
+        <p>Almost anywhere a ticket is being shown you will see a colored circle. The color tells you if the ticket needs attention:</p>
+
+        <ul>
+          <li>Orange
+            <ul>
+              <li>Ticket has been created, somebody needs to work on it
+              <li>Pending reminder of ticket has been reached, somebody needs to work on it
+            </ul>
+          <li>Red
+            <ul>
+              <li>Ticket is escalated, somebody needs to work immediately on this ticket to cancel escalaction state (e. g. needs to send out a customer response or set the ticket to pending reminder until somebody can solve the ticket)
+            </ul>
+          <li>Green
+            <ul>
+              <li>Ticket is closed, no further action/attention needed
+            </ul>
+          <li>Dark gray
+            <ul>
+              <li>Pending reminder or pending close has been set but not yet reached, no further action/attention needed right now
+            </ul>
+        </ul>
+      </div>
+      <div class="knowledge-base-article-nav">
+        <a class="knowledge-base-article-nav-link knowledge-base-article-nav-link--prev"><%- @Icon('arrow-left') %> Migration</a>
+        <a class="knowledge-base-article-nav-link knowledge-base-article-nav-link--next">Search Cheat Sheet <%- @Icon('arrow-right') %></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main flex hidden" data-level="search">
+  <div class="container">
+    <div class="searchfield">
+      <input class="js-search form-control" name="query" placeholder="<%- @Ti('Search Knowledge Base') %>" type="search" autocomplete="off" value="labore">
+      <%- @Icon('magnifier') %>
+      <div class="empty-search js-emptySearch">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </div>
+    <ul class="sections sections--list">
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title">Getting <em>Labore</em></span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Enim id nisi veniam laboris ea nisi ullamco officia proident nisi in incididunt duis consequat eiusmod aliqua deserunt. Dolor proident minim occaecat ut irure pariatur laborum anim tempor proident sint sint aliqua ad dolore laborum.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title"><em>Labore</em> et olem</span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Lorem ipsum ut culpa eiusmod laboris laborum adipisicing aliquip velit irure. Occaecat cupidatat officia mollit aute dolor nulla ullamco sunt nisi dolor nisi.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title">General</span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Duis incididunt eu do in in proident exercitation id <em>labore</em> et consectetur proident. Dolor proident esse laboris magna ad ut culpa consequat sunt amet.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title">Everything <em>labore</em> the ticket</span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Dolor amet excepteur in ullamco cillum duis exercitation aliquip voluptate. Pariatur ad est sed ea ea aliqua sit proident sit quis.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title">Search Cheat Sheet</span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Laborum quis <em>labore</em> tempor nulla eu ad laboris nulla in ullamco consequat deserunt in. Lorem ipsum velit sint officia ut qui duis laborum nulla nisi in incididunt ex ex mollit eu non nostrud ex sed.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+      <li class="section">
+        <a href="#" data-target="4">
+          <span class="section-inner">
+            <%- @Icon('knowledge-base-answer') %>
+            <span class="section-inner-text">
+              <span class="section-inner-title">Glossary</span>
+              <span class="section-inner-detail"><span class="section-inner-date">23/12/18</span> Lorem ipsum <em>labore</em> fugiat minim voluptate commodo proident ut cupidatat anim exercitation consectetur sit in. Aliqua id incididunt nostrud minim eu eu proident id occaecat do consequat laboris dolore enim quis do quis laborum.</span>
+            </span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

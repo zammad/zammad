@@ -5,18 +5,20 @@
     <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %> data-permission-name="<%= permission.name %>"/>
     <%- @Icon('checkbox', 'icon-unchecked') %>
     <%- @Icon('checkbox-checked', 'icon-checked') %>
-    <span class="label-text"><%= permission.displayName() %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
+    <span class="label-text"><%= permission.displayName() %></span>
+    <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
   </label>
   <% else: %>
-    <div style="padding-left: 20px;" class="js-subPermissionList">
+    <div class="checkbox-child js-subPermissionList">
       <label class="inline-label checkbox-replacement">
         <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %> data-permission-name="<%= permission.name %>"/>
         <%- @Icon('checkbox', 'icon-unchecked') %>
         <%- @Icon('checkbox-checked', 'icon-checked') %>
-        <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
+        <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %></span>
+        <span class="help-text"><%- @T(permission.note, @T(permission.preferences.translations)) %></span>
       </label>
   <%     if _.contains(permission.preferences.plugin, 'groups'): %>
-    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList">
       <table class="settings-list">
         <thead>
           <th><%- @T('Group') %>

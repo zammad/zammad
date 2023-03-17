@@ -3,7 +3,7 @@ class App.Twitter extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/twitter'
   @configure_attributes = [
-    { name: 'name', display: 'Name', tag: 'input', type: 'text', limit: 100, null: false }
+    { name: 'name', display: __('Name'), tag: 'input', type: 'text', limit: 100, null: false }
   ]
   @configure_delete = true
   @configure_overview = [

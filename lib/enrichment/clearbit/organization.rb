@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Enrichment
   module Clearbit
     class Organization
@@ -35,11 +37,12 @@ module Enrichment
       def mapping?
         @mapping = @config['organization_sync'].dup
         return false if @mapping.blank?
+
         # TODO: Refactoring:
         # Currently all target keys are prefixed with
         # organization.
         # which is not necessary since the target object
-        # is allways an organization
+        # is always an organization
         @mapping.transform_values! { |value| value.sub('organization.', '') }
         true
       end
@@ -54,11 +57,13 @@ module Enrichment
 
       def remote_id?
         return if !@payload['company']
+
         @remote_id = @payload['company']['id']
       end
 
       def external_found?
         return true if @external_organization
+
         @external_organization = ExternalSync.find_by(
           source:    @source,
           source_id: @remote_id,
@@ -94,6 +99,7 @@ module Enrichment
           object:          organization,
           current_changes: @current_changes,
         )
+
         organization.save!
 
         ExternalSync.create(
@@ -109,6 +115,7 @@ module Enrichment
       def load_previous_changes
         last_payload = @external_organization.last_payload
         return if !last_payload
+
         @previous_changes = ExternalSync.map(
           mapping: @mapping,
           source:  last_payload

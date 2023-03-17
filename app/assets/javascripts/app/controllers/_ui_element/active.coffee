@@ -1,6 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.active extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
     # set attributes
     attribute.null = false
@@ -8,8 +9,8 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
 
     # build options list
     attribute.options = [
-      { name: 'active', value: true }
-      { name: 'inactive', value: false }
+      { name: __('active'), value: true }
+      { name: __('inactive'), value: false }
     ]
 
     # build options list based on config
@@ -18,7 +19,7 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
     # sort attribute.options
     @sortOptions(attribute, params)
 
-    # finde selected/checked item of list
+    # find selected/checked item of list
     @selectedOptions(attribute, params)
 
     # return item

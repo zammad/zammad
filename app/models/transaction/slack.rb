@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Slack
 
@@ -37,7 +37,9 @@ class Transaction::Slack
     return if !config
     return if !config['items']
 
-    ticket = Ticket.find(@item[:object_id])
+    ticket = Ticket.find_by(id: @item[:object_id])
+    return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
 
@@ -45,6 +47,7 @@ class Transaction::Slack
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender&.name == 'System'
         return if @item[:changes].blank?
+
         article = nil
       end
     end
@@ -57,17 +60,18 @@ class Transaction::Slack
     # if create, send create message / block update messages
     template = nil
     sent_value = nil
-    if @item[:type] == 'create'
+    case @item[:type]
+    when 'create'
       template = 'ticket_create'
-    elsif @item[:type] == 'update'
+    when 'update'
       template = 'ticket_update'
-    elsif @item[:type] == 'reminder_reached'
+    when 'reminder_reached'
       template = 'ticket_reminder_reached'
       sent_value = ticket.pending_time
-    elsif @item[:type] == 'escalation'
+    when 'escalation'
       template = 'ticket_escalation'
       sent_value = ticket.escalation_at
-    elsif @item[:type] == 'escalation_warning'
+    when 'escalation_warning'
       template = 'ticket_escalation_warning'
       sent_value = ticket.escalation_at
     else
@@ -83,12 +87,13 @@ class Transaction::Slack
 
     result = NotificationFactory::Slack.template(
       template: template,
-      locale: user[:preferences][:locale],
-      objects: {
-        ticket: ticket,
-        article: article,
+      locale:   user.locale,
+      timezone: Setting.get('timezone_default_sanitized'),
+      objects:  {
+        ticket:       ticket,
+        article:      article,
         current_user: current_user,
-        changes: changes,
+        changes:      changes,
       },
     )
 
@@ -101,7 +106,7 @@ class Transaction::Slack
       if ticket.pending_time && ticket.pending_time < Time.zone.now
         color = '#faab00'
       end
-    elsif ticket_state_type.match?(/^(new|open)$/)
+    elsif ticket_state_type.match?(%r{^(new|open)$})
       color = '#faab00'
     elsif ticket_state_type == 'closed'
       color = '#38ad69'
@@ -114,12 +119,12 @@ class Transaction::Slack
       md5_webhook = Digest::MD5.hexdigest(local_config['webhook'])
       cache_key = "slack::backend::#{@item[:type]}::#{ticket.id}::#{md5_webhook}"
       if sent_value
-        value = Cache.get(cache_key)
+        value = Rails.cache.read(cache_key)
         if value == sent_value
           Rails.logger.debug { "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
           next
         end
-        Cache.write(
+        Rails.cache.write(
           cache_key,
           sent_value,
           {
@@ -129,10 +134,11 @@ class Transaction::Slack
       end
 
       # check action
-      if local_config['types'].class == Array
+      if local_config['types'].instance_of?(Array)
         hit = false
         local_config['types'].each do |type|
           next if type.to_s != @item[:type].to_s
+
           hit = true
           break
         end
@@ -142,10 +148,11 @@ class Transaction::Slack
       end
 
       # check group
-      if local_config['group_ids'].class == Array
+      if local_config['group_ids'].instance_of?(Array)
         hit = false
         local_config['group_ids'].each do |group_id|
           next if group_id.to_s != ticket.group_id.to_s
+
           hit = true
           break
         end
@@ -161,12 +168,13 @@ class Transaction::Slack
 
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
 
+      require 'slack-notifier' # Only load this gem when it is really used.
       notifier = Slack::Notifier.new(
         local_config['webhook'],
-        channel: local_config['channel'],
-        username: local_config['username'],
-        icon_url: logo_url,
-        mrkdwn: true,
+        channel:     local_config['channel'],
+        username:    local_config['username'],
+        icon_url:    logo_url,
+        mrkdwn:      true,
         http_client: Transaction::Slack::Client,
       )
       if local_config['expand']
@@ -174,16 +182,16 @@ class Transaction::Slack
         result = notifier.ping body
       else
         attachment = {
-          text: result[:body],
+          text:      result[:body],
           mrkdwn_in: ['text'],
-          color: color,
+          color:     color,
         }
         result = notifier.ping result[:subject],
                                attachments: [attachment]
       end
       if !result.empty? && !result[0].success?
         if sent_value
-          Cache.delete(cache_key)
+          Rails.cache.delete(cache_key)
         end
         Rails.logger.error "Unable to post webhook: #{local_config['webhook']}: #{result.inspect}"
         next
@@ -196,21 +204,19 @@ class Transaction::Slack
   def human_changes(record)
 
     return {} if !@item[:changes]
+
     user = User.find(1)
     locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 
     # only show allowed attributes
-    attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
-    #puts "AL #{attribute_list.inspect}"
+    attribute_list = ObjectManager::Object.new('Ticket').attributes(user).index_by { |item| item[:name] }
+    # puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
     @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
-      if attribute_list.blank?
-        user_related_changes[key] = value
-
-      # if config exists, just use existing attributes for user
-      elsif attribute_list[key.to_s]
+      # or if config exists, just use existing attributes for user
+      if attribute_list.blank? || attribute_list[key.to_s]
         user_related_changes[key] = value
       end
     end
@@ -230,7 +236,7 @@ class Transaction::Slack
         changes[attribute_name] = value
       end
 
-      # if changed item is an _id field/reference, do an lookup for the realy values
+      # if changed item is an _id field/reference, look up the real values
       value_id  = []
       value_str = [ value[0], value[1] ]
       if key.to_s[-3, 3] == '_id'
@@ -244,8 +250,8 @@ class Transaction::Slack
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -254,15 +260,15 @@ class Transaction::Slack
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
         end
       end
 
-      # check if we have an dedcated display name for it
+      # check if we have a dedicated display name for it
       display = attribute_name
       if object_manager_attribute && object_manager_attribute[:display]
 
@@ -289,12 +295,13 @@ class Transaction::Slack
         uri.to_s,
         params,
         {
-          open_timeout: 4,
-          read_timeout: 10,
+          open_timeout:  4,
+          read_timeout:  10,
           total_timeout: 20,
-          log: {
+          log:           {
             facility: 'slack_webhook',
-          }
+          },
+          verify_ssl:    true,
         },
       )
     end

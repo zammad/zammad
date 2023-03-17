@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module AutoWizard
 
 =begin
@@ -15,6 +17,7 @@ returns
   def self.enabled?
     auto_wizard_file_location = file_location
     return false if !File.file?(auto_wizard_file_location)
+
     true
   end
 
@@ -33,6 +36,7 @@ returns
   def self.data
     auto_wizard_file_location = file_location
     raise "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
+
     JSON.parse(File.read(auto_wizard_file_location))
   end
 
@@ -64,20 +68,16 @@ returns
     UserInfo.current_user_id = admin_user.id
 
     # set default calendar
-    if auto_wizard_hash['CalendarSetup']
-      if auto_wizard_hash['CalendarSetup']['Ip']
-        Calendar.init_setup(auto_wizard_hash['CalendarSetup']['Ip'])
-      end
+    if auto_wizard_hash['CalendarSetup'] && auto_wizard_hash['CalendarSetup']['Ip']
+      Calendar.init_setup(auto_wizard_hash['CalendarSetup']['Ip'])
     end
 
     # load text modules
-    if auto_wizard_hash['TextModuleLocale']
-      if auto_wizard_hash['TextModuleLocale']['Locale']
-        begin
-          TextModule.load(auto_wizard_hash['TextModuleLocale']['Locale'])
-        rescue => e
-          Rails.logger.error "Unable to load text modules #{auto_wizard_hash['TextModuleLocale']['Locale']}: #{e.message}"
-        end
+    if auto_wizard_hash['TextModuleLocale'] && auto_wizard_hash['TextModuleLocale']['Locale']
+      begin
+        TextModule.load(auto_wizard_hash['TextModuleLocale']['Locale'])
+      rescue => e
+        Rails.logger.error "Unable to load text modules #{auto_wizard_hash['TextModuleLocale']['Locale']}: #{e.message}"
       end
     end
 
@@ -88,15 +88,15 @@ returns
 
     # create Permissions/Organization
     model_map = {
-      'Permissions' => 'Permission',
+      'Permissions'   => 'Permission',
       'Organizations' => 'Organization',
     }
     model_map.each do |map_name, model|
       next if !auto_wizard_hash[map_name]
+
       auto_wizard_hash[map_name].each do |data|
-        generic_object = Kernel.const_get(model)
         data.symbolize_keys!
-        generic_object.create_or_update_with_ref(data)
+        model.constantize.create_or_update_with_ref(data)
       end
     end
 
@@ -136,10 +136,10 @@ returns
     }
     model_map.each do |map_name, model|
       next if !auto_wizard_hash[map_name]
+
       auto_wizard_hash[map_name].each do |data|
-        generic_object = Kernel.const_get(model)
         data.symbolize_keys!
-        generic_object.create_or_update_with_ref(data)
+        model.constantize.create_or_update_with_ref(data)
       end
     end
 
@@ -153,9 +153,9 @@ returns
   end
 
   def self.file_location
-    auto_wizard_file_name     = 'auto_wizard.json'
-    auto_wizard_file_location = Rails.root.join(auto_wizard_file_name)
-    auto_wizard_file_location
+    auto_wizard_file_name = 'auto_wizard.json'
+    Rails.root.join(auto_wizard_file_name)
+
   end
   private_class_method :file_location
 end

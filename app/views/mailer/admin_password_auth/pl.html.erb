@@ -1,0 +1,15 @@
+Logowanie administracyjne do #{config.product_name}
+
+<div>Cześć #{user.firstname},</div>
+<br>
+<div>Otrzymaliśmy prośbę o logowanie administracyjne dla Twojego konta <b>#{user.login}</b> w #{config.product_name}.</div>
+<br>
+<div>Kliknij poniższy link (lub skopiuj i wklej adres URL do przeglądarki), aby kontynuować:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Ten link prowadzi do strony, na której możesz się zalogować.</div>
+<br>
+<div>Jeśli nie chcesz się zalogować, zignoruj tę wiadomość.</div>
+<br>
+<div>Zespół #{config.product_name}</div>

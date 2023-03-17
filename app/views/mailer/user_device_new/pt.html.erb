@@ -1,0 +1,19 @@
+#{config.product_name} acesso a partir de um novo dispositivo
+
+<div>Olá #{user.firstname},</div>
+<br>
+<div>Parece que acedeu à sua conta <b>usando um novo dispositivo</b> em "#{user_device.created_at}":</div>
+<br>
+<div>
+O seu dispositivo: #{user_device.name}<br>
+A sua localização (relativa): #{user_device.location}<br>
+O seu IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>O seu dispositivo foi adicionado à sua lista de dispositivos conhecidos, que pode ver aqui:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Se não foi você, por favor remova o dispositivo, altere a sua password, e contacte o administrador do sistema. Alguém poderá ter obtido acesso não autorizado à sua conta.</div>
+<br>
+<div>A sua equipa #{config.product_name}</div>

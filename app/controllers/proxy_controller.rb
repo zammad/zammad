@@ -1,12 +1,14 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ProxyController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.system') }
+  prepend_before_action { authentication_check && authorize! }
 
   # POST /api/v1/proxy
   def test
     url = 'http://zammad.org'
     options = params
+      .permit(:proxy, :proxy_username, :proxy_password, :proxy_no)
+      .to_h
     options[:open_timeout] = 12
     options[:read_timeout] = 24
     begin
@@ -17,7 +19,7 @@ class ProxyController < ApplicationController
       )
     rescue => e
       render json: {
-        result: 'failed',
+        result:  'failed',
         message: e.inspect
       }
       return
@@ -29,7 +31,7 @@ class ProxyController < ApplicationController
       return
     end
     render json: {
-      result: 'failed',
+      result:  'failed',
       message: result.body || result.error || result.code
     }
   end

@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
-require 'cache'
+require 'minitest/profile'
 
 require 'test_support_helper'
 
@@ -11,11 +13,11 @@ class ActiveSupport::TestCase
   ActiveRecord::Base.logger.level = Logger::INFO
 
   # clear cache
-  Cache.clear
+  Rails.cache.clear
 
   # load seeds
-  load Rails.root.join('db', 'seeds.rb')
-  load Rails.root.join('test', 'fixtures', 'seeds.rb')
+  load Rails.root.join('db/seeds.rb')
+  load Rails.root.join('test/fixtures/seeds.rb')
 
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
@@ -25,12 +27,13 @@ class ActiveSupport::TestCase
     # exit all threads
     Thread.list.each do |thread|
       next if thread == Thread.current
+
       thread.exit
       thread.join
     end
 
     # clear cache
-    Cache.clear
+    Rails.cache.clear
 
     # reload settings
     Setting.reload
@@ -49,38 +52,25 @@ class ActiveSupport::TestCase
     travel_back
   end
 
+  teardown do
+    travel_back
+  end
+
   # Add more helper methods to be used by all tests here...
   def email_notification_count(type, recipient)
 
     # read config file and count type & recipients
     file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
-    IO.foreach(file) do |line|
+    File.foreach(file) do |line|
       lines.push line
     end
     count = 0
-    lines.reverse.each do |line|
-      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
-      next if line !~ /Send notification \(#{type}\)/
-      next if line !~ /to:\s#{recipient}/
-      count += 1
-    end
-    count
-  end
+    lines.reverse_each do |line|
+      break if line.include?('++++NEW++++TEST++++')
+      next if !line.match?(%r{Send notification \(#{type}\)})
+      next if !line.match?(%r{to:\s#{recipient}})
 
-  def email_count(recipient)
-
-    # read config file and count & recipients
-    file = Rails.root.join('log', "#{Rails.env}.log")
-    lines = []
-    IO.foreach(file) do |line|
-      lines.push line
-    end
-    count = 0
-    lines.reverse.each do |line|
-      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
-      next if line !~ /Send email to:/
-      next if line !~ /to:\s'#{recipient}'/
       count += 1
     end
     count

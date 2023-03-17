@@ -1,0 +1,13 @@
+Приглашение в #{config.product_name} на #{config.fqdn}
+
+<div>Здравствуйте #{user.firstname},</div>
+<br>
+<div>Я (#{current_user.firstname} #{current_user.lastname}) приглашаю вас в #{config.product_name} - нашу платформу поддержки клиентов.</div>
+<br>
+<div>Нажмите <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">сюда</a> и установите свой пароль.</div>
+<br>
+<div>Наслаждайтесь,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Ваша Команда #{config.product_name}</div>

@@ -1,0 +1,58 @@
+# Write CI cache once for faster runs
+'write runner cache: ruby':
+  stage: pre
+  cache: !reference [.cache, read_write_ruby]
+  before_script:
+    - !reference [.scripts, source_rvm]
+  script:
+    - !reference [.scripts, bundle_install]
+  after_script: []
+
+'write runner cache: nodejs':
+  stage: pre
+  cache: !reference [.cache, read_write_nodejs]
+  before_script: []
+  script:
+    - !reference [.scripts, yarn_install_all]
+    - yarn cypress:install
+    - yarn --cwd ./.eslint-plugin-zammad install
+  after_script: []
+
+'push to github':
+  stage: pre
+  cache: []
+  rules:
+    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|renovate|dependabot)/
+      when: never
+    - when: always
+  before_script:
+    - test -d $HOME/.ssh || mkdir $HOME/.ssh
+    - ssh-keyscan github.com >> $HOME/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$PUSH_TO_GITHUB_SSH_PRIVATE_KEY" | ssh-add -
+    - ssh-add -l
+  script:
+    - git fetch --unshallow
+    - script/build/sync_repo.sh git@github.com:zammad/zammad.git
+  after_script: []
+
+'publish source archives':
+  stage: pre
+  tags:
+    - push-to-ftp
+  cache: []
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: always
+    - if: $CI_COMMIT_BRANCH == "stable"
+      when: always
+    - when: never
+  before_script:
+    - test -d $HOME/.ssh || mkdir $HOME/.ssh
+    - ssh-keyscan ftp.zammad.com >> $HOME/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$FTP_ZAMMAD_COM_SSH_PRIVATE_KEY" | ssh-add -
+    - ssh-add -l
+  script:
+    - script/build/deploy_archives.sh
+  after_script: []

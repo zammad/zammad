@@ -1,0 +1,31 @@
+<div data-kb-locale-id="<%= @kb_locale_id %>" class="settings-entry">
+  <h2><%= @title %></h2>
+
+  <div class="js-alert alert alert--danger hidden"></div>
+
+  <div class="form-group">
+    <table class="settings-list settings-list--stretch">
+      <thead>
+        <tr>
+          <th style="width: 36px" class="table-draggable">
+          <th style="width: 200px">
+            <%- @T('Title') %>
+          <th>
+            <%- @T('URL') %>
+          <th>
+            <%- @T('Target') %>
+          <th style="width: 44px">
+            <%- @T('Delete') %>
+      <tbody>
+        <% for item in @rows: %>
+          <%- @V('knowledge_base/public_menu_form_item_row', item: item) %>
+        <% end %>
+        <tr>
+          <td>
+          <td class="settings-list-control-cell" colspan="4">
+            <a class="btn btn--text btn--create js-add">
+              <%- @Icon('plus-small') %> <%- @T('Add') %>
+            </a>
+    </table>
+  </div>
+</div>

@@ -1,32 +1,31 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AdminRoleTest < TestCase
   def test_role_device
-    name = "some role #{rand(99_999_999)}"
-
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
-    rand      = rand(99_999_999).to_s
-    login     = 'agent-role-' + rand
-    firstname = 'Role' + rand
-    lastname  = 'Module' + rand
-    email     = 'agent-role-' + rand + '@example.com'
+    rand      = SecureRandom.uuid
+    login     = "agent-role-#{rand}"
+    firstname = "Role#{rand}"
+    lastname  = "Module#{rand}"
+    email     = "agent-role-#{rand}@example.com"
     password  = 'agentpw'
 
     user_create(
       data: {
-        login: login,
+        login:     login,
         firstname: firstname,
-        lastname: lastname,
-        email: email,
-        password: password,
+        lastname:  lastname,
+        email:     email,
+        password:  password,
       },
     )
 
@@ -35,53 +34,54 @@ class AdminRoleTest < TestCase
       data: {
         name:              name,
         default_at_signup: false,
-        permission: [
+        permission:        [
           'admin.group',
           'user_preferences.device',
         ],
-        member: [login],
+        member:            [login],
       }
     )
 
-    logout()
+    logout
+    # flanky
     login(
       username: email,
       password: password,
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Password',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Language',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Notifications',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Calendar',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Token Access',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Devices',
     )
 
-    logout()
+    logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     role_edit(
       data: {
@@ -90,37 +90,37 @@ class AdminRoleTest < TestCase
       }
     )
 
-    logout()
+    logout
     login(
       username: email,
       password: password,
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
     click(css: 'a[href="#current_user"]')
     click(css: 'a[href="#profile"]')
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Password',
     )
     match(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Language',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Notifications',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Calendar',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Token Access',
     )
     match_not(
-      css: '.content .NavBarProfile',
+      css:   '.content .NavBarProfile',
       value: 'Devices',
     )
   end
@@ -132,50 +132,50 @@ class AdminRoleTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # check if admin exists
     exists_not(css: '[href="#manage"]')
-    logout()
+    logout
 
     # add admin.user to agent role
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     role_edit(
       data: {
-        name:   'Agent',
-        active: true,
+        name:       'Agent',
+        active:     true,
         permission: {
-          'admin.user' => true,
-          'chat.agent' => true,
-          'cti.agent' => true,
-          'ticket.agent' => true,
+          'admin.user'       => true,
+          'chat.agent'       => true,
+          'cti.agent'        => true,
+          'ticket.agent'     => true,
           'user_preferences' => true,
         },
       }
     )
-    logout()
+    logout
 
     # check if admin exists
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create user
-    random = rand(999_999_999)
-    user_email = "admin.user.#{rand}@example.com"
+    random = SecureRandom.uuid
+    user_email = "admin.user.#{random}@example.com"
     user_create(
       data: {
-        #login:    "some login #{random}",
+        # login:    "some login #{random}",
         firstname: "Admin.User Firstname #{random}",
         lastname:  "Admin.User Lastname #{random}",
         email:     user_email,
@@ -187,44 +187,78 @@ class AdminRoleTest < TestCase
     ticket_create(
       data: {
         customer: user_email,
-        group: 'Users',
-        title: 'some changes',
-        body: 'some body 123äöü - admin.user',
+        group:    'Users',
+        title:    'some changes',
+        body:     'some body 123äöü - admin.user',
       },
     )
 
     # revoke admin.user
-    logout()
+    logout
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     role_edit(
       data: {
-        name:   'Agent',
-        active: true,
+        name:       'Agent',
+        active:     true,
         permission: {
-          'admin.user' => false,
-          'chat.agent' => true,
-          'cti.agent' => true,
-          'ticket.agent' => true,
+          'admin.user'       => false,
+          'chat.agent'       => true,
+          'cti.agent'        => true,
+          'ticket.agent'     => true,
           'user_preferences' => true,
         },
       }
     )
-    logout()
+    logout
 
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # check if admin exists
     exists_not(css: '[href="#manage"]')
 
+  end
+
+  # regression test for issue #2332 - Role-Filter shows inactive Roles
+  def test_inactive_roles_do_not_show_in_role_filter
+    name = "some role #{SecureRandom.uuid}"
+
+    @browser = browser_instance
+    login(
+      username: 'admin@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all
+
+    role_create(
+      data: {
+        name:       name,
+        permission: [
+          'admin.group',
+          'user_preferences.device',
+        ],
+        active:     false
+      }
+    )
+
+    click(
+      css: '.content.active a[href="#manage/users"]',
+    )
+
+    # an inactive role should not appear in the role filter tabs
+    match_not(
+      css:   '.content.active .userSearch',
+      value: name,
+    )
   end
 end

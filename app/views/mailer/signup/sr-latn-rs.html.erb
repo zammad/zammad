@@ -1,0 +1,9 @@
+#{user.firstname} #{user.lastname}, potvrdite svoj #{config.product_name} nalog
+
+<div>Zdravo #{user.firstname},</div>
+<br>
+<div>Potvrdite svoju imejl adresu za otvaranje #{config.product_name} naloga. Vrlo je jednostavno, samo kliknite na link ispod.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

@@ -2,4 +2,5 @@
   <div class="js-inputDefault"></div>
   <div class="js-inputType"></div>
   <div class="js-inputMaxlength"></div>
+  <div class="js-inputLinkTemplate"></div>
 </div>

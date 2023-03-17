@@ -1,0 +1,24 @@
+Novi tiket (#{ticket.title})
+
+<div>Zdravo #{recipient.firstname},</div>
+<br>
+<div>Novi tiket (#{ticket.title}) je otvoren od strane „<b>#{current_user.longname}</b>”.</div>
+<br>
+<div>
+Grupa: #{ticket.group.name}<br>
+Vlasni/ca: #{ticket.owner.fullname}<br>
+Stanje: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informacije:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Pogledaj u #{config.product_name}</a>
+</div>

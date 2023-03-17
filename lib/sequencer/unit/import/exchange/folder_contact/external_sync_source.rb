@@ -1,16 +1,8 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContact
-          class ExternalSyncSource < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            def external_sync_source
-              'Exchange::FolderContact'
-            end
-          end
-        end
-      end
-    end
+class Sequencer::Unit::Import::Exchange::FolderContact::ExternalSyncSource < Sequencer::Unit::Common::Provider::Named
+
+  def external_sync_source
+    'Exchange::FolderContact'
   end
 end

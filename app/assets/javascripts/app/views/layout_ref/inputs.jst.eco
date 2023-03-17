@@ -11,7 +11,7 @@
         <input type="text" id="background-color" value="">
         <div class="controls-button">
           <div class="controls-button-inner u-clickable">
-            <%- @Icon('eyedropper') %>
+            <div class="color-field js-swatch" style="background-color: #febf01"></div>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
           <option>ChariTea</option>
           <option>fritz-kola</option>
           <option>Vitamin Water</option>
-          <option>Znuny</option>
+          <option>Zammad</option>
           <option>Max &amp; Moritz</option>
         </select>
         <%- @Icon('arrow-down', 'dropdown-arrow') %>
@@ -108,7 +108,7 @@
       <label for="b">User (searchable ajax)</label>
       <div class="searchableAjaxSelectPlaceholder"></div>
     </div>
-    
+
     <h2>User</h2>
     <div class="select form-group">
       <label for="b">User Select</label>

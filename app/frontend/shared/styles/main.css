@@ -1,0 +1,54 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer components {
+  .required::after {
+    content: '•';
+    @apply ml-1 inline-block font-extrabold text-yellow;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Fira Sans';
+    src: url('/assets/fonts/FiraSans-Bold.eot');
+    src: url('/assets/fonts/FiraSans-Bold.woff2') format('woff2'),
+      url('/assets/fonts/FiraSans-Bold.woff') format('woff'),
+      url('/assets/fonts/FiraSans-Bold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Fira Sans';
+    src: url('/assets/fonts/FiraSans-Regular.eot');
+    src: url('/assets/fonts/FiraSans-Regular.woff2') format('woff2'),
+      url('/assets/fonts/FiraSans-Regular.woff') format('woff'),
+      url('/assets/fonts/FiraSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Fira Sans';
+    src: url('/assets/fonts/FiraSans-Medium.eot');
+    src: url('/assets/fonts/FiraSans-Medium.woff2') format('woff2'),
+      url('/assets/fonts/FiraSans-Medium.woff') format('woff'),
+      url('/assets/fonts/FiraSans-Medium.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Fira Sans';
+    src: url('/assets/fonts/FiraSans-Light.eot');
+    src: url('/assets/fonts/FiraSans-Light.woff2') format('woff2'),
+      url('/assets/fonts/FiraSans-Light.woff') format('woff'),
+      url('/assets/fonts/FiraSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+  }
+}

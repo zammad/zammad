@@ -1,0 +1,3 @@
+<div class="flex horizontal js-result">
+  <input type="text" name="link" value="" autocomplete="off" placeholder="<%= @placeholder %>" class="form-control"/>
+</div>

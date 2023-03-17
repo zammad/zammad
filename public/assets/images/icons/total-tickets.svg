@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="48px" height="83px" viewBox="0 0 48 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>total-tickets</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="total-tickets">
-            <g id="total">
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 83 0 83 10 75 47.5 75"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 80 0 80 10 73 47.5 73"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 78 0 78 10 70 47.5 70"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 75 0 75 10 68 47.5 68"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 73 0 73 10 65 47.5 65"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 70 0 70 10 63 47.5 63"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 68 0 68 10 60 47.5 60"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 65 0 65 10 58 47.5 58"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 63 0 63 10 55 47.5 55"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 60 0 60 10 53 47.5 53"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 58 0 58 10 50 47.5 50"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 55 0 55 10 48 47.5 48"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 53 0 53 10 45 47.5 45"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 50 0 50 10 43 47.5 43"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 48 0 48 10 40 47.5 40"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 45 0 45 10 38 47.5 38"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 43 0 43 10 35 47.5 35"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 40 0 40 10 33 47.5 33"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 38 0 38 10 30 47.5 30"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 35 0 35 10 28 47.5 28"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 33 0 33 10 25 47.5 25"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 30 0 30 10 23 47.5 23"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 28 0 28 10 20 47.5 20"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 25 0 25 10 18 47.5 18"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 23 0 23 10 15 47.5 15"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 20 0 20 10 13 47.5 13"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 18 0 18 10 10 47.5 10"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 15 0 15 10 8 47.5 8"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 13 0 13 10 5 47.5 5"></polygon>
-                <polygon id="Shape" fill="#FFFFFF" points="37.5 10 0 10 10 3 47.5 3"></polygon>
-                <polygon id="Shape" fill="#DDE5E8" points="37.5 8 0 8 10 0 47.5 0"></polygon>
-            </g>
-        </g>
+    <g id="total-tickets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="ticket" fill="#50E3C2" points="0 83 10 75.999355 47.5 75.999355 37.5 83"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 81.000645 0 81.000645 10 74.000645 47.5 74.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 79.000645 10 72 47.5 72 37.5 79.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 77.000645 0 77.000645 10 70.000645 47.5 70.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 75.000645 10 68 47.5 68 37.5 75.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 73.000645 0 73.000645 10 66.000645 47.5 66.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 71.000645 10 64 47.5 64 37.5 71.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 69.000645 0 69.000645 10 62.000645 47.5 62.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 67.000645 10 60 47.5 60 37.5 67.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 65.000645 0 65.000645 10 58.000645 47.5 58.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 63.000645 10 56 47.5 56 37.5 63.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 61.000645 0 61.000645 10 54.000645 47.5 54.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 59.000645 10 52 47.5 52 37.5 59.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 57.000645 0 57.000645 10 50.000645 47.5 50.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 55.000645 10 48 47.5 48 37.5 55.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 53.000645 0 53.000645 10 46.000645 47.5 46.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 51.000645 10 44 47.5 44 37.5 51.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 49.000645 0 49.000645 10 42.000645 47.5 42.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 47.000645 10 40 47.5 40 37.5 47.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 45.000645 0 45.000645 10 38.000645 47.5 38.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 43.000645 10 36 47.5 36 37.5 43.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 45.000645 0 45.000645 10 38.000645 47.5 38.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 43.000645 10 36 47.5 36 37.5 43.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 41.000645 0 41.000645 10 34.000645 47.5 34.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 39.000645 10 32 47.5 32 37.5 39.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 37.000645 0 37.000645 10 30.000645 47.5 30.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 35.000645 10 28 47.5 28 37.5 35.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 33.000645 0 33.000645 10 26.000645 47.5 26.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 31.000645 10 24 47.5 24 37.5 31.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 29.000645 0 29.000645 10 22.000645 47.5 22.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 27.000645 10 20 47.5 20 37.5 27.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 25.000645 0 25.000645 10 18.000645 47.5 18.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 23.000645 10 16 47.5 16 37.5 23.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 21.000645 0 21.000645 10 14.000645 47.5 14.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 19.000645 10 12 47.5 12 37.5 19.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 17.000645 0 17.000645 10 10.000645 47.5 10.000645"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 15.000645 10 8 47.5 8 37.5 15.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 13.000645 0 13.000645 10 6.00064495 47.5 6.00064495"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 11.000645 10 4 47.5 4 37.5 11.000645"></polygon>
+        <polygon id="backdrop" fill="#BD10E0" points="37.5 9.00064495 0 9.00064495 10 2.00064495 47.5 2.00064495"></polygon>
+        <polygon id="ticket" fill="#50E3C2" points="0 7.00064495 10 -4.4408921e-16 47.5 -4.68377576e-16 37.5 7.00064495"></polygon>
     </g>
 </svg>

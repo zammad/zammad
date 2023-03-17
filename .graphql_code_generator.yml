@@ -1,0 +1,29 @@
+overwrite: true
+schema: tmp/graphql_introspection.json
+config:
+  vueCompositionApiImportFrom: vue
+  addDocBlocks: false
+documents:
+  ['app/frontend/shared/**/*.graphql', 'app/frontend/apps/**/*.graphql']
+generates:
+  ./app/frontend/shared/graphql/types.ts:
+    config:
+      scalars:
+        BinaryString: string
+        NonEmptyString: string
+        FormId: string
+        ISO8601Date: string
+        ISO8601DateTime: string
+    plugins:
+      - typescript
+      - typescript-operations
+  ./app/frontend/:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: 'shared/graphql/types.ts'
+      importTypesNamespace: ''
+      extension: .api.ts
+    plugins:
+      - typescript-vue-apollo
+    config:
+      importOperationTypesFrom: Types

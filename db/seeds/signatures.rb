@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 Signature.create_if_not_exists(
-  id: 1,
-  name: 'default',
-  body: '
+  id:            1,
+  name:          __('default'),
+  body:          '
   #{user.firstname} #{user.lastname}
 
 --

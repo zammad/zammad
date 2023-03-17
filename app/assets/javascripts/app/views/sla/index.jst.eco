@@ -34,15 +34,19 @@
       <div class="action-block action-block--flex">
         <div class="label"><%- @T('Escalation Times') %></div>
         <% if sla.first_response_time: %>
-          <%- sla.first_response_time_in_text %> <%- @T('hours') %> - <%- @T('First Response Time') %>
+          <%- @time_duration_hh_mm(sla.first_response_time) %> <%- @T('hours') %> - <%- @T('First Response Time') %>
+        <% end %>
+        <% if sla.response_time: %>
+          <br>
+          <%- @time_duration_hh_mm(sla.response_time) %> <%- @T('hours') %> - <%- @T('Update Time') %> (<%- @T('for an agent to respond') %>)
         <% end %>
         <% if sla.update_time: %>
           <br>
-          <%- sla.update_time_in_text %> <%- @T('hours') %> - <%- @T('Update Time') %>
+          <%- @time_duration_hh_mm(sla.update_time) %> <%- @T('hours') %> - <%- @T('Update Time') %> (<%- @T('between agent updates') %>)
         <% end %>
         <% if sla.solution_time: %>
           <br>
-          <%- sla.solution_time_in_text %> <%- @T('hours') %> - <%- @T('Solution Time') %>
+          <%- @time_duration_hh_mm(sla.solution_time) %> <%- @T('hours') %> - <%- @T('Solution Time') %>
         <% end %>
         <br>
       </div>

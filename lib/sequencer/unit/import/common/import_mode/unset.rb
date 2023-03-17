@@ -1,16 +1,8 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module ImportMode
-          class Unset < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            def process
-              Setting.set('import_mode', false)
-            end
-          end
-        end
-      end
-    end
+class Sequencer::Unit::Import::Common::ImportMode::Unset < Sequencer::Unit::Base
+
+  def process
+    Setting.set('import_mode', false)
   end
 end

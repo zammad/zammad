@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class LastOwnerUpdate2 < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     # reset assignment_timeout to prevent unwanted things happen
     Group.all.each do |group|
@@ -18,15 +20,15 @@ class LastOwnerUpdate2 < ActiveRecord::Migration[5.1]
     end
 
     Scheduler.create_if_not_exists(
-      name: 'Process auto unassign tickets',
-      method: 'Ticket.process_auto_unassign',
-      period: 10.minutes,
-      prio: 1,
-      active: true,
+      name:          'Process auto unassign tickets',
+      method:        'Ticket.process_auto_unassign',
+      period:        10.minutes,
+      prio:          1,
+      active:        true,
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Cache.clear
+    Rails.cache.clear
   end
 
 end

@@ -1,4 +1,21 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
+
+=begin
+
+a agent or customer is closing the chat session
+
+payload
+
+  {
+    event: 'chat_session_close',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
 
   def run
     return super if super
@@ -6,13 +23,18 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     return if !check_chat_session_exists
 
     realname = 'Anonymous'
-    if @session && @session['id']
-      realname = User.lookup(id: @session['id']).fullname
+
+    # if it is a agent session, use the realname if the agent for close message
+    chat_session = current_chat_session
+    if @session && @session['id'] && chat_session.user_id
+      agent_user = chat_session.agent_user
+      if agent_user[:name]
+        realname = agent_user[:name]
+      end
     end
 
     # check count of participents
     participents_count = 0
-    chat_session = current_chat_session
     if chat_session.preferences[:participents]
       participents_count = chat_session.preferences[:participents].count
     end
@@ -21,9 +43,9 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     if participents_count < 2 || (@session && chat_session.user_id == @session['id'])
       message = {
         event: 'chat_session_closed',
-        data: {
+        data:  {
           session_id: chat_session.session_id,
-          realname: realname,
+          realname:   realname,
         },
       }
 
@@ -32,18 +54,18 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       chat_session.save
 
       # set state update to all agents
-      Chat.broadcast_agent_state_update
+      Chat.broadcast_agent_state_update([chat_session.chat_id])
 
       # send position update to other waiting sessions
-      Chat.broadcast_customer_state_update
+      Chat.broadcast_customer_state_update(chat_session.chat_id)
 
     # notify about "leaving"
     else
       message = {
         event: 'chat_session_left',
-        data: {
+        data:  {
           session_id: chat_session.session_id,
-          realname: realname,
+          realname:   realname,
         },
       }
     end
@@ -52,8 +74,8 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
     # notifiy participients
     {
       event: 'chat_status_close',
-      data: {
-        state: 'ok',
+      data:  {
+        state:      'ok',
         session_id: chat_session.session_id,
       },
     }

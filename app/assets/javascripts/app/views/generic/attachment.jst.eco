@@ -1,18 +1,23 @@
 <div class="attachments"></div>
 <div class="article-attachment">
+  <% if !@attribute.disabled: %>
   <div class="attachmentPlaceholder">
     <span class="attachmentPlaceholder-inputHolder fileUpload">
-      <%- @T('select attachment...') %>
-      <input multiple="multiple" type="file" name="file" style="">
+      <% uid =  _.uniqueId('fileUpload_') %>
+      <input multiple="multiple" type="file" name="file" id="<%- uid %>">
+      <label class="attachmentPlaceholder-label" for="<%- uid %>">
+        <%- @T('select attachment…') %>
+      </label>
     </span>
   </div>
+  <% end %>
   <div class="attachmentUpload hide">
     <div class="horizontal">
       <div class="u-highlight">
         <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
       </div>
       <div class="attachmentUpload-cancel js-cancel">
-        <%- @Icon('diagonal-cross') %></div><%- @T('Cancel Upload') %>
+        <%- @Icon('diagonal-cross') %><%- @T('Cancel Upload') %>
       </div>
     </div>
     <div class="attachmentUpload-progressBar" style="width: 0%"></div>

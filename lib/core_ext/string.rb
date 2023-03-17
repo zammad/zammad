@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rchardet'
 
 class String
@@ -6,8 +8,8 @@ class String
 
   def strip!
     begin
-      sub!(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
-      sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+      sub!(%r{\A[[[:space:]]\u{200B}\u{FEFF}]+}, '')
+      sub!(%r{[[[:space:]]\u{200B}\u{FEFF}]+\Z}, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
     rescue Encoding::CompatibilityError
@@ -18,8 +20,8 @@ class String
 
   def strip
     begin
-      new_string = sub(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
-      new_string.sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+      new_string = sub(%r{\A[[[:space:]]\u{200B}\u{FEFF}]+}, '')
+      new_string.sub!(%r{[[[:space:]]\u{200B}\u{FEFF}]+\Z}, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
     rescue Encoding::CompatibilityError
@@ -32,7 +34,7 @@ class String
     quote = split("\n")
     body_quote = ''
     quote.each do |line|
-      body_quote = body_quote + '> ' + line + "\n"
+      body_quote = "#{body_quote}> #{line}\n"
     end
     body_quote
   end
@@ -46,7 +48,7 @@ class String
 
     lines = self
     lines.split("\n").collect do |line|
-      line.length > options[:line_width] ? line.gsub(/(.{1,#{options[:line_width]}})(\s+|$)/, "\\1\n").strip : line
+      line.length > options[:line_width] ? line.gsub(%r{(.{1,#{options[:line_width]}})(\s+|$)}, "\\1\n").strip : line
     end * "\n"
   end
 
@@ -60,10 +62,10 @@ class String
 =end
 
   def to_filename
-    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
-    camel_cased_word.gsub(/::/, '/')
-                    .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                    .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+    camel_cased_word = dup
+    camel_cased_word.gsub(%r{::}, '/')
+                    .gsub(%r{([A-Z]+)([A-Z][a-z])}, '\1_\2')
+                    .gsub(%r{([a-z\d])([A-Z])}, '\1_\2')
                     .tr('-', '_').downcase
   end
 
@@ -77,8 +79,8 @@ class String
 =end
 
   def to_classname
-    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
-    camel_cased_word.gsub!(/\.rb$/, '')
+    camel_cased_word = dup
+    camel_cased_word.delete_suffix!('.rb')
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
 
@@ -87,6 +89,7 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
+
     each_char.select do |c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
@@ -94,7 +97,7 @@ class String
       end
       c
     end
-             .join('')
+             .join
   end
 
 =begin
@@ -108,7 +111,7 @@ class String
 =end
 
   def html2text(string_only = false, strict = false)
-    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    string = dup
 
     # in case of invalid encoding, strip invalid chars
     # see also test/data/mail/mail021.box
@@ -118,23 +121,16 @@ class String
     end
 
     # remove html comments
-    string.gsub!(/<!--.+?-->/m, '')
+    string.gsub!(%r{<!--.+?-->}m, '')
 
     # find <a href=....> and replace it with [x]
     link_list = ''
     counter   = 0
-    if !string_only
-      string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) do
-        link = $2
-        counter = counter + 1
-        link_list += "[#{counter}] #{link}\n"
-        "[#{counter}] "
-      end
-    else
+    if string_only
       string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
         link = $3
         text = $6
-        text.gsub!(/\<.+?\>/, '')
+        text.gsub!(%r{<.+?>}, '')
 
         link_compare = link.dup
         if link_compare.present?
@@ -150,19 +146,25 @@ class String
           text_compare.downcase!
           text_compare.sub!(%r{/$}, '')
         end
-        placeholder = if link_compare.present? && text_compare.blank?
-                        link
-                      elsif link_compare.blank? && text_compare.present?
-                        text
-                      elsif link_compare && link_compare =~ /^mailto/i
-                        text
-                      elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
-                        "######LINKEXT:#{link}/TEXT:#{text}######"
-                      elsif text !~ /^http/
-                        "#{text} (######LINKRAW:#{link}######)"
-                      else
-                        "#{link} (######LINKRAW:#{text}######)"
-                      end
+
+        if link_compare.present? && text_compare.blank?
+          link
+        elsif (link_compare.blank? && text_compare.present?) || (link_compare && link_compare =~ %r{^mailto}i)
+          text
+        elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
+          "######LINKEXT:#{link}/TEXT:#{text}######"
+        elsif text !~ %r{^http}
+          "#{text} (######LINKRAW:#{link}######)"
+        else
+          "#{link} (######LINKRAW:#{text}######)"
+        end
+      end
+    elsif string.scan(%r{<a[[:space:]]}i).count < 5_000
+      string.gsub!(%r{<a[[:space:]].*?href=("|')(.+?)("|').*?>}ix) do
+        link = $2
+        counter += 1
+        link_list += "[#{counter}] #{link}\n"
+        "[#{counter}] "
       end
     end
 
@@ -170,35 +172,35 @@ class String
     string.gsub!(%r{<style(|[[:space:]].+?)>(.+?)</style>}im, '')
 
     # remove empty lines
-    string.gsub!(/^[[:space:]]*/m, '')
+    string.gsub!(%r{^[[:space:]]*}m, '')
     if strict
       string.gsub!(%r{< [[:space:]]* (/*) [[:space:]]* (b|i|ul|ol|li|u|h1|h2|h3|hr) ([[:space:]]*|[[:space:]]+[^>]*) >}mxi, '######\1\2######')
     end
 
     # pre/code handling 1/2
     string.gsub!(%r{<pre>(.+?)</pre>}m) do |placeholder|
-      placeholder = placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(%r{\n}, '###BR###')
     end
     string.gsub!(%r{<code>(.+?)</code>}m) do |placeholder|
-      placeholder = placeholder.gsub(/\n/, '###BR###')
+      placeholder.gsub(%r{\n}, '###BR###')
     end
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!(/([A-z])[[:space:]]([A-z])/m, '\1 \2')
+    string.gsub!(%r{([A-z])[[:space:]]([A-z])}m, '\1 \2')
 
     # remove all new lines
-    string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
+    string.gsub!(%r{(\n\r|\r\r\n|\r\n|\n)}, '')
 
     # blockquote handling
     string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) do
-      "\n" + $2.html2text(true).gsub(/^(.*)$/, '&gt; \1') + "\n"
+      "\n#{$2.html2text(true).gsub(%r{^(.*)$}, '&gt; \1')}\n"
     end
 
     # pre/code handling 2/2
-    string.gsub!(/###BR###/, "\n")
+    string.gsub!(%r{###BR###}, "\n")
 
     # add counting
-    string.gsub!(/<li(| [^>]*)>/i, "\n* ")
+    string.gsub!(%r{<li(| [^>]*)>}i, "\n* ")
 
     # add hr
     string.gsub!(%r{<hr(|/| [^>]*)>}i, "\n___\n")
@@ -214,10 +216,10 @@ class String
     string.gsub!(%r{</td>}i, ' ')
 
     # strip all other tags
-    string.gsub!(/\<.+?\>/, '')
+    string.gsub!(%r{<.+?>}, '')
 
     # replace multiple spaces with one
-    string.gsub!(/  /, ' ')
+    string.gsub!(%r{  }, ' ')
 
     # add hyperlinks
     if strict
@@ -225,14 +227,15 @@ class String
         pre = $1
         content = $2
         post = $5
-        if content.match?(/^www/i)
+        if content.match?(%r{^www}i)
           content = "http://#{content}"
         end
-        placeholder = if content =~ /^(http|https|ftp|tel)/i
-                        "#{pre}######LINKRAW:#{content}#######{post}"
-                      else
-                        "#{pre}#{content}#{post}"
-                      end
+
+        if content =~ %r{^(http|https|ftp|tel)}i
+          "#{pre}######LINKRAW:#{content}#######{post}"
+        else
+          "#{pre}#{content}#{post}"
+        end
       end
     end
 
@@ -249,12 +252,12 @@ class String
       string.gsub!('&nbsp;', ' ')
 
       # encode html entities like "&#8211;"
-      string.gsub!(/(&\#(\d+);?)/x) do
+      string.gsub!(%r{(&\#(\d+);?)}x) do
         $2.chr
       end
 
       # encode html entities like "&#3d;"
-      string.gsub!(/(&\#[xX]([0-9a-fA-F]+);?)/x) do
+      string.gsub!(%r{(&\#[xX]([0-9a-fA-F]+);?)}x) do
         chr_orig = $1
         hex      = $2.hex
         if hex
@@ -279,23 +282,24 @@ class String
         chr_orig
       end
     end
+    string = string.utf8_encode(fallback: :read_as_sanitized_binary)
 
     # remove tailing empty spaces
-    string.gsub!(/[[:blank:]]+$/, '')
+    string.gsub!(%r{[[:blank:]]+$}, '')
 
     # search for signature separator "--\n"
     string.gsub!(/^\s{0,2}--\s{0,2}$/, '-- ')
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n+/, "\n\n")
+    string.gsub!(%r{\n\n\n+}, "\n\n")
 
     # add extracted links
     if link_list != ''
-      string += "\n\n\n" + link_list
+      string += "\n\n\n#{link_list}"
     end
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n+/, "\n\n")
+    string.gsub!(%r{\n\n\n+}, "\n\n")
 
     string.strip
   end
@@ -308,7 +312,7 @@ class String
 
   def text2html
     text = CGI.escapeHTML(self)
-    text.gsub!(/\n/, '<br>')
+    text.gsub!(%r{\n}, '<br>')
     text.chomp
   end
 
@@ -319,8 +323,11 @@ class String
 =end
 
   def html2html_strict
-    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
-    string = HtmlSanitizer.cleanup_replace_tags(string)
+    string = dup
+
+    # https://github.com/zammad/zammad/issues/4112
+    string.gsub!(%r{<!\[if !supportLists\]>.+?<!\[endif\]>}mi, '• ')
+
     string = HtmlSanitizer.strict(string, true).strip
     string = HtmlSanitizer.cleanup(string).strip
 
@@ -329,8 +336,8 @@ class String
       string = html2text.text2html
       string.signature_identify('text')
       marker_template = '<span class="js-signatureMarker"></span>'
-      string.sub!(/######SIGNATURE_MARKER######/, marker_template)
-      string.gsub!(/######SIGNATURE_MARKER######/, '')
+      string.sub!(%r{######SIGNATURE_MARKER######}, marker_template)
+      string.gsub!(%r{######SIGNATURE_MARKER######}, '')
       return string.chomp
     end
     string.gsub!(%r{(<p>[[:space:]]*</p>([[:space:]]*)){2,}}im, '<p>&nbsp;</p>\2')
@@ -342,18 +349,18 @@ class String
     string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
     string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')
     string.gsub!(%r{<div>&nbsp;</div>[[:space:]]*(<div>&nbsp;</div>){1,}}im, '<div>&nbsp;</div>')
-    string.gsub!(/(<br>[[:space:]]*){3,}/im, '<br><br>')
+    string.gsub!(%r{(<br>[[:space:]]*){3,}}im, '<br><br>')
     string.gsub!(%r\(<br(|/)>[[:space:]]*){3,}\im, '<br/><br/>')
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
-    string.gsub!(%r{\A(<br(|\/)>[[:space:]]*)*}i, '')
-    string.gsub!(%r{[[:space:]]*(<br(|\/)>[[:space:]]*)*\Z}i, '')
+    string.gsub!(%r{\A(<br(|/)>[[:space:]]*)*}i, '')
+    string.gsub!(%r{[[:space:]]*(<br(|/)>[[:space:]]*)*\Z}i, '')
     string.gsub!(%r{(<p></p>){1,10}\Z}i, '')
 
     string.signature_identify('html')
 
     marker_template = '<span class="js-signatureMarker"></span>'
-    string.sub!(/######SIGNATURE_MARKER######/, marker_template)
-    string.gsub!(/######SIGNATURE_MARKER######/, '')
+    string.sub!(%r{######SIGNATURE_MARKER######}, marker_template)
+    string.gsub!(%r{######SIGNATURE_MARKER######}, '')
     string.chomp
   end
 
@@ -367,14 +374,14 @@ class String
         '<br(|\/)>[[:space:]]*(--|__)',
         '<\/div>[[:space:]]*(--|__)',
         '<p>[[:space:]]*(--|__)',
-        '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*</b>',
+        '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(|<span[[:space:]]lang=".{1,6}">)(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*(|</span>)</b>',
         '(<br>|<div>)[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
       ]
       map.each do |regexp|
-        string.sub!(/#{regexp}/m) do |placeholder|
-          placeholder = "#{marker}#{placeholder}"
+        string.sub!(%r{#{regexp}}m) do |placeholder|
+          "#{marker}#{placeholder}"
         end
       end
       return string
@@ -387,8 +394,8 @@ class String
     end
 
     # search for signature separator "--\n"
-    string.sub!(/^\s{0,2}--\s{0,2}$/) do |placeholder|
-      placeholder = "#{marker}#{placeholder}"
+    string.sub!(%r{^\s{0,2}--\s{0,2}$}) do |placeholder|
+      "#{marker}#{placeholder}"
     end
 
     map = {}
@@ -396,7 +403,7 @@ class String
     # On 01/04/15 10:55, Bob Smith wrote:
     map['apple-en'] = '^(On)[[:space:]].{6,20}[[:space:]].{3,10}[[:space:]].{1,250}[[:space:]](wrote):'
 
-    # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
+    # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@zammad.ink>:
     map['apple-de'] = '^(Am)[[:space:]].{6,20}[[:space:]](um)[[:space:]].{3,10}[[:space:]](schrieb)[[:space:]].{1,250}:'
 
     # Thunderbird
@@ -417,8 +424,7 @@ class String
     map['otrs-en-de'] = '^.{6,10}[[:space:]].{3,10}[[:space:]]-[[:space:]].{1,250}[[:space:]](wrote|schrieb):'
 
     # Ms
-    # rubocop:disable Style/AsciiComments
-    # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
+    # From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
     # Send: Donnerstag, 2. April 2015 10:00
     # To/Cc/Bcc: xxx
     # Subject: xxx
@@ -432,22 +438,18 @@ class String
     # À/?/?: xxx
     # Envoyé : mercredi 29 avril 2015 17:31
     # Objet : xxx
-    # rubocop:enable Style/AsciiComments
-
     # en/de/fr | sometimes ms adds a space to "xx : value"
     map['ms-en-de-fr_from'] = '^(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ)( ?):[[:space:]].+?'
-    map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######\/b######)[[:space:]].+?"
+    map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######/b######)[[:space:]].+?"
 
     # word 14
     # edv hotline wrote:
     # edv hotline schrieb:
-    #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
+    # map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each_value do |regexp|
-      begin
-        string.sub!(/#{regexp}/) do |placeholder|
-          placeholder = "#{marker}#{placeholder}"
-        end
+      string.sub!(%r{#{regexp}}) do |placeholder|
+        "#{marker}#{placeholder}"
       rescue
         # regexp was not possible because of some string encoding issue, use next
         Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
@@ -472,15 +474,34 @@ class String
   #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
   #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
   #       invalid byte sequences replaced with "?" characters.
-  def utf8_encode(**options)
-    dup.utf8_encode!(options)
+  def utf8_encode(...)
+    dup.utf8_encode!(...)
   end
 
   def utf8_encode!(**options)
-    return self if (encoding == Encoding::UTF_8) && valid_encoding?
+    return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
 
-    input_encoding = viable_encodings(try_first: options[:from]).first
-    return encode!('utf-8', input_encoding) if input_encoding.present?
+    # convert string to given charset, if valid_encoding? is true
+    if options[:from].present?
+      begin
+        encoding = Encoding.find(options[:from])
+        if encoding.present? && dup.force_encoding(encoding).valid_encoding?
+          force_encoding(encoding)
+          return encode!('utf-8', encoding)
+        end
+      rescue ArgumentError, EncodingError => e
+        Rails.logger.error { e.inspect }
+      end
+    end
+
+    # try to find valid encodings of string
+    viable_encodings.each do |enc|
+
+      return encode!('utf-8', enc)
+    rescue EncodingError => e
+      Rails.logger.error { e.inspect }
+
+    end
 
     case options[:fallback]
     when :output_to_binary
@@ -504,6 +525,7 @@ class String
     [provided, original, detected]
       .compact
       .reject { |e| Encoding.find(e) == Encoding::ASCII_8BIT }
+      .reject { |e| Encoding.find(e) == Encoding::UTF_8 }
       .select { |e| force_encoding(e).valid_encoding? }
       .tap { force_encoding(original) } # clean up changes from previous line
 

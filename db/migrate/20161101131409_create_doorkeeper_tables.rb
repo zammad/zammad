@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class CreateDoorkeeperTables < ActiveRecord::Migration[4.2]
   def change
     create_table :oauth_applications do |t|
@@ -6,7 +8,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[4.2]
       t.string  :secret,       null: false
       t.text    :redirect_uri, null: false
       t.string  :scopes,       null: false, default: ''
-      t.timestamps             null: false
+      t.timestamps             null: false # rubocop:disable Zammad/ExistsDateTimePrecision
     end
 
     add_index :oauth_applications, :uid, unique: true
@@ -17,8 +19,8 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[4.2]
       t.string   :token,             null: false
       t.integer  :expires_in,        null: false
       t.text     :redirect_uri,      null: false
-      t.datetime :created_at,        null: false
-      t.datetime :revoked_at
+      t.datetime :created_at,        null: false # rubocop:disable Zammad/ExistsDateTimePrecision
+      t.datetime :revoked_at # rubocop:disable Zammad/ExistsDateTimePrecision
       t.string   :scopes
     end
 
@@ -39,12 +41,12 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[4.2]
       # https://github.com/doorkeeper-gem/doorkeeper/tree/v3.0.0.rc1#custom-access-token-generator
       #
       # t.text     :token,             null: false
-      t.string   :token,                  null: false
+      t.string   :token, null: false
 
       t.string   :refresh_token
       t.integer  :expires_in
-      t.datetime :revoked_at
-      t.datetime :created_at,             null: false
+      t.datetime :revoked_at # rubocop:disable Zammad/ExistsDateTimePrecision
+      t.datetime :created_at, null: false # rubocop:disable Zammad/ExistsDateTimePrecision
       t.string   :scopes
 
       # If there is a previous_refresh_token column,

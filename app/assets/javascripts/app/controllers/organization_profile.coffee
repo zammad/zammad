@@ -14,10 +14,15 @@ class App.OrganizationProfile extends App.Controller
 
     if App.Organization.exists(@organization_id)
       organization = App.Organization.find(@organization_id)
+      icon = organization.icon()
+
+      if organization.active is false
+        icon = 'inactive-' + icon
 
       meta.head       = organization.displayName()
       meta.title      = organization.displayName()
-      meta.iconClass  = organization.icon()
+      meta.iconClass  = icon
+      meta.active     = organization.active
     meta
 
   url: =>
@@ -73,7 +78,7 @@ class App.OrganizationProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverActionRow
+class ActionRow extends App.ControllerObserverActionRow
   model: 'Organization'
   observe:
     member_ids: true
@@ -90,28 +95,35 @@ class ActionRow extends App.ObserverActionRow
       genericObject: 'Organization'
       screen: 'edit'
       pageData:
-        title: 'Organizations'
-        object: 'Organization'
-        objects: 'Organizations'
+        title: __('Organizations')
+        object: __('Organization')
+        objects: __('Organizations')
       container: @el.closest('.content')
     )
 
-  actions: =>
+  actions: (organization) =>
     actions = [
       {
-        name:     'edit'
-        title:    'Edit'
-        callback: @editOrganization
-      }
-      {
         name:     'history'
-        title:    'History'
+        title:    __('History')
         callback: @showHistory
       }
     ]
 
-class Object extends App.ObserverController
+    if organization.isAccessibleBy(App.User.current(), 'change')
+      actions.unshift {
+        name:     'edit'
+        title:    __('Edit')
+        callback: @editOrganization
+      }
+
+    actions
+
+class Object extends App.ControllerObserver
+  memberLimit: 10
   model: 'Organization'
+  observe:
+    member_ids: true
   observeNot:
     cid: true
     created_at: true
@@ -123,9 +135,36 @@ class Object extends App.ObserverController
     image_source: true
 
   events:
+    'click .js-showMoreMembers': 'showMoreMembers'
     'focusout [contenteditable]': 'update'
 
+  showMoreMembers: (e) ->
+    @preventDefaultAndStopPropagation(e)
+    @memberLimit = (parseInt(@memberLimit / 100) + 1) * 100
+    @renderMembers()
+
+  renderMembers: ->
+    elLocal = @el
+    @organization.members(0, @memberLimit, (users) ->
+      members = []
+      for user in users
+        el = $('<div></div>')
+        new Member(
+          object_id: user.id
+          el: el
+        )
+        members.push el
+      elLocal.find('.js-userList').html(members)
+    )
+
+    if @organization.member_ids.length <= @memberLimit
+      @el.find('.js-showMoreMembers').parent().addClass('hidden')
+    else
+      @el.find('.js-showMoreMembers').parent().removeClass('hidden')
+
   render: (organization) =>
+    if organization
+      @organization = organization
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
@@ -137,20 +176,24 @@ class Object extends App.ObserverController
       # check if value for _id exists
       name    = attributeName
       nameNew = name.substr(0, name.length - 3)
-      if nameNew of organization
+      if nameNew of @organization
         name = nameNew
 
       # add to show if value exists
-      if (organization[name] || attributeConfig.tag is 'richtext') && attributeConfig.shown
+      if (@organization[name] || attributeConfig.tag is 'richtext') && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
         if name isnt 'name'
           organizationData.push attributeConfig
 
-    @html App.view('organization_profile/object')(
-      organization:     organization
+    elLocal = $(App.view('organization_profile/object')(
+      organization:     @organization
       organizationData: organizationData
-    )
+    ))
+
+    @html elLocal
+
+    @renderMembers()
 
     @$('[contenteditable]').ce({
       mode:      'textonly'
@@ -158,29 +201,18 @@ class Object extends App.ObserverController
       maxlength: 250
     })
 
-    # show members
-    members = []
-    for userId in organization.member_ids
-      el = $('<div></div>')
-      new Member(
-        object_id: userId
-        el: el
-      )
-      members.push el
-    @$('.js-userList').html(members)
-
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
     org   = App.Organization.find(@object_id)
     if org[name] isnt value
-      @lastAttributres[name] = value
+      @lastAttributes[name] = value
       data = {}
       data[name] = value
       org.updateAttributes(data)
       @log 'debug', 'update', name, value, org
 
-class Organization extends App.ObserverController
+class Organization extends App.ControllerObserver
   model: 'Organization'
   observe:
     name: true
@@ -188,13 +220,15 @@ class Organization extends App.ObserverController
   render: (organization) =>
     @html App.Utils.htmlEscape(organization.displayName())
 
-class Member extends App.ObserverController
+class Member extends App.ControllerObserver
   model: 'User'
   observe:
     firstname: true
     lastname: true
     login: true
     email: true
+    active: true
+    image: true
   globalRerender: false
 
   render: (user) =>

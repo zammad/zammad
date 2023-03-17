@@ -1,10 +1,10 @@
 {
   "Users": [
     {
-      "login": "master@example.com",
-      "firstname": "Test Master",
+      "login": "admin@example.com",
+      "firstname": "Test Admin",
       "lastname": "Agent",
-      "email": "master@example.com",
+      "email": "admin@example.com",
       "password": "test"
     },
     {
@@ -19,11 +19,11 @@
   "Groups": [
     {
       "name": "some group1",
-      "users": ["master@example.com","agent1@example.com"]
+      "users": ["admin@example.com", "agent1@example.com"]
     },
     {
       "name": "Users",
-      "users": ["master@example.com","agent1@example.com"],
+      "users": ["admin@example.com", "agent1@example.com"],
       "signature": "default",
       "email_address_id": 1
     }
@@ -59,12 +59,12 @@
   ],
   "Settings": [
     {
-      "name": "developer_mode",
-      "value": true
-    },
-    {
       "name": "product_name",
       "value": "Zammad Test System"
+    },
+    {
+      "name": "developer_mode",
+      "value": true
     }
   ],
   "TextModuleLocale": {

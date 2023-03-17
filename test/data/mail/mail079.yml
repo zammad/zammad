@@ -1,0 +1,31 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Smith <me@example.com>
+from_email: me@example.com
+from_display_name: Martin Smith
+to: Martin Smith <me@example.net>
+subject: image resize test
+body: image resize test<div>&nbsp;</div><div><img src="cid:5EF92182-3261-44C7-9835-E8A922AB4976@openvpn"></div><div>&nbsp;</div><div>the
+  end</div>
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: '<html><head><meta http-equiv="Content-Type" content="text/html charset=us-ascii"></head><body
+    style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;"
+    class="">image resize test<div class=""><br class=""></div><div class=""><img
+    apple-inline="yes" id="C94B1FA1-618C-40E3-B731-892907FF8AB3" src="cid:5EF92182-3261-44C7-9835-E8A922AB4976@openvpn"
+    class=""></div><div class=""><br class=""></div><div class="">the end</div></body></html>'
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: us-ascii
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: !binary |-
+    /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/wAALCAABAlgBAREA/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oACAEBAAA/APZKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK//2Q==
+  filename: a.jpg
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: image/jpeg; name=a.jpg; x-unix-mode=0600
+    Content-ID: 5EF92182-3261-44C7-9835-E8A922AB4976@openvpn
+    Mime-Type: image/jpeg
+    Charset: UTF-8

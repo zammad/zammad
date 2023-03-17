@@ -21,13 +21,16 @@
  * ========================================================= */
 
  /*
-	Zammad Edits:
-		- fix todayBtn toggle of display none and block: toggleClass instead
-		- allow custom template as options parameter
-		- fix that place method doesn't think that the container is the window, but rather the real window is the window
-		- added rerender method to show correct today if task is longer open the 24 hours
-		- scroll into view
-		- fix vertical auto position
+  Zammad Edits:
+    - fix todayBtn toggle of display none and block: toggleClass instead
+    - allow custom template as options parameter
+    - fix that place method doesn't think that the container is the window, but rather the real window is the window
+    - added rerender method to show correct today if task is longer open the 24 hours
+    - scroll into view
+    - fix vertical auto position
+    - disableScroll flag to
+    - adjust all cells with colspan when the week number is visible
+    - shorten weekdays from three to two characters: Mon -> Mo
  */
 
 (function(factory){
@@ -83,7 +86,7 @@
 			replace: function(new_array){
 				if (!new_array)
 					return;
-				if (!$.isArray(new_array))
+				if (!Array.isArray(new_array))
 					new_array = [new_array];
 				this.clear();
 				this.push.apply(this, new_array);
@@ -142,7 +145,7 @@
 		this.viewMode = this.o.startView;
 
 		if (this.o.calendarWeeks)
-			this.picker.find('tfoot .today, tfoot .clear')
+			this.picker.find('[colspan]')
 						.attr('colspan', function(i, val){
 							return parseInt(val) + 1;
 						});
@@ -265,21 +268,21 @@
 			}
 
 			o.daysOfWeekDisabled = o.daysOfWeekDisabled||[];
-			if (!$.isArray(o.daysOfWeekDisabled))
+			if (!Array.isArray(o.daysOfWeekDisabled))
 				o.daysOfWeekDisabled = o.daysOfWeekDisabled.split(/[,\s]*/);
 			o.daysOfWeekDisabled = $.map(o.daysOfWeekDisabled, function(d){
 				return parseInt(d, 10);
 			});
 
 			o.daysOfWeekHighlighted = o.daysOfWeekHighlighted||[];
-			if (!$.isArray(o.daysOfWeekHighlighted))
+			if (!Array.isArray(o.daysOfWeekHighlighted))
 				o.daysOfWeekHighlighted = o.daysOfWeekHighlighted.split(/[,\s]*/);
 			o.daysOfWeekHighlighted = $.map(o.daysOfWeekHighlighted, function(d){
 				return parseInt(d, 10);
 			});
 
 			o.datesDisabled = o.datesDisabled||[];
-			if (!$.isArray(o.datesDisabled)) {
+			if (!Array.isArray(o.datesDisabled)) {
 				var datesDisabled = [];
 				datesDisabled.push(DPGlobal.parseDate(o.datesDisabled, format, o.language));
 				o.datesDisabled = datesDisabled;
@@ -493,7 +496,7 @@
 			this._attachSecondaryEvents();
 			this._trigger('show');
 			if ((window.navigator.msMaxTouchPoints || 'ontouchstart' in document) && this.o.disableTouchKeyboard) {
-				$(this.element).blur();
+				$(this.element).trigger('blur');
 			}
 			return this;
 		},
@@ -608,7 +611,7 @@
 			}
 		},
 		setDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, args);
 			this._trigger('changeDate');
 			this.setValue();
@@ -616,7 +619,7 @@
 		},
 
 		setUTCDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, $.map(args, this._utc_to_local));
 			this._trigger('changeDate');
 			this.setValue();
@@ -767,13 +770,15 @@
 				});
 			}
 
-			// adjust scroll of scrollParent
-			var scrollParent = this.picker.scrollParent();
-			var bottomEdge = offset.top + height + this.picker.outerHeight();
-			var scrollBottomEdge = scrollParent.scrollTop() + scrollParent.height();
+			if(!this.o.disableScroll) {
+				// adjust scroll of scrollParent
+				var scrollParent = this.picker.scrollParent();
+				var bottomEdge = offset.top + height + this.picker.outerHeight();
+				var scrollBottomEdge = scrollParent.scrollTop() + scrollParent.height();
 
-			if(bottomEdge > scrollBottomEdge){
-				scrollParent.scrollTop(scrollParent.scrollTop() + (bottomEdge - scrollBottomEdge) + 10);
+				if(bottomEdge > scrollBottomEdge){
+					scrollParent.scrollTop(scrollParent.scrollTop() + (bottomEdge - scrollBottomEdge) + 10);
+				}
 			}
 
 			return this;
@@ -782,7 +787,7 @@
 		_allow_update: true,
 		rerender: function(){
 			this.fill();
-			this.element.change();
+			this.element.trigger('change');
 			return this;
 		},
 		update: function(){
@@ -845,7 +850,7 @@
 				this._trigger('clearDate');
 
 			this.fill();
-			this.element.change();
+			this.element.trigger('change');
 			return this;
 		},
 
@@ -853,14 +858,10 @@
 			var dowCnt = this.o.weekStart,
 				html = '<tr>';
 			if (this.o.calendarWeeks){
-				this.picker.find('.datepicker-days .datepicker-switch')
-					.attr('colspan', function(i, val){
-						return parseInt(val) + 1;
-					});
 				html += '<th class="cw">&#160;</th>';
 			}
 			while (dowCnt < this.o.weekStart + 7){
-				html += '<th class="dow">'+dates[this.o.language].daysMin[(dowCnt++)%7]+'</th>';
+				html += '<th class="dow">'+dates[this.o.language].daysMin[(dowCnt++)%7].substr(0, 2)+'</th>';
 			}
 			html += '</tr>';
 			this.picker.find('.datepicker-days thead').append(html);
@@ -1014,7 +1015,7 @@
 						tooltip = before.tooltip;
 				}
 
-				clsName = $.unique(clsName);
+				clsName = $.uniqueSort(clsName);
 				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
 				tooltip = null;
 				if (prevMonth.getUTCDay() === this.o.weekEnd){
@@ -1147,7 +1148,7 @@
 		click: function(e){
 			e.preventDefault();
 			e.stopPropagation();
-			var target = $(e.target).closest('span, td, th'),
+			var target = $(e.target).closest('td > div.datepicker-footer-buttons > div, span, td, th'),
 				year, month, day;
 			if (target.length === 1){
 				switch (target[0].nodeName.toLowerCase()){
@@ -1173,6 +1174,21 @@
 								}
 								this.fill();
 								break;
+							case 'today':
+								var date = new Date();
+								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+
+								this.showMode(-2);
+								var which = this.o.todayBtn === 'linked' ? null : 'view';
+								this._setDate(date, which);
+								break;
+							case 'clear':
+								this.clearDates();
+								break;
+						}
+						break;
+					case 'div':
+						switch (target[0].className){
 							case 'today':
 								var date = new Date();
 								date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
@@ -1292,7 +1308,7 @@
 				element = this.element.find('input');
 			}
 			if (element){
-				element.change();
+				element.trigger('change');
 			}
 			if (this.o.autoclose && (!which || which === 'date')){
 				this.hide();
@@ -1484,7 +1500,7 @@
 					element = this.element.find('input');
 				}
 				if (element){
-					element.change();
+					element.trigger('change');
 				}
 			}
 		},

@@ -1,7 +1,8 @@
 class App.Chat extends App.Model
-  @configure 'Chat', 'name', 'active', 'public', 'max_queue', 'block_ip', 'block_country', 'note'
+  @configure 'Chat', 'name', 'active', 'public', 'max_queue', 'block_ip', 'allowed_websites', 'block_country', 'note'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/chats'
+  # coffeelint: disable=detect_translatable_string
   @countries:
     AF: 'Afghanistan'
     AL: 'Albania'
@@ -244,17 +245,18 @@ class App.Chat extends App.Model
     YE: 'Yemen'
     ZM: 'Zambia'
     ZW: 'Zimbabwe'
+  # coffeelint: enable=detect_translatable_string
 
   @configure_attributes = [
-    { name: 'name',           display: 'Name',            tag: 'input',       type: 'text', limit: 100, null: false },
-    { name: 'note',           display: 'Note',            tag: 'textarea',    limit: 250, null: true },
-    { name: 'max_queue',      display: 'Max. clients in waitlist', tag: 'input',   default: 2 },
-    { name: 'block_ip',       display: 'Blocked IPs (separated by ;)', tag: 'input', default: '', null: true },
-    { name: 'block_country',  display: 'Blocked countries', tag: 'column_select', multiple: true, null: true, default: '', options: @countries, seperator: ';' },
-    { name: 'active',         display: 'Active',          tag: 'active',      default: true },
-    { name: 'created_by_id',  display: 'Created by',      relation: 'User',   readonly: 1 },
-    { name: 'created_at',     display: 'Created',         tag: 'datetime',    readonly: 1 },
-    { name: 'updated_by_id',  display: 'Updated by',      relation: 'User',   readonly: 1 },
-    { name: 'updated_at',     display: 'Updated',         tag: 'datetime',    readonly: 1 },
+    { name: 'name',           display: __('Name'),            tag: 'input',       type: 'text', limit: 100, null: false },
+    { name: 'note',           display: __('Note'),            tag: 'textarea',    limit: 250, null: true },
+    { name: 'max_queue',      display: __('Max. clients on waitlist'), tag: 'input',   default: 2 },
+    { name: 'block_ip',       display: __('Blocked IPs (separated by ;)'), tag: 'input', default: '', null: true },
+    { name: 'allowed_websites', display: __('Allow websites (separated by ;)'), tag: 'input', default: '', null: true },
+    { name: 'block_country',  display: __('Blocked countries'), tag: 'column_select', multiple: true, null: true, default: '', options: @countries, seperator: ';' },
+    { name: 'active',         display: __('Active'),          tag: 'active',      default: true },
+    { name: 'created_by_id',  display: __('Created by'),      relation: 'User',   readonly: 1 },
+    { name: 'created_at',     display: __('Created'),         tag: 'datetime',    readonly: 1 },
+    { name: 'updated_by_id',  display: __('Updated by'),      relation: 'User',   readonly: 1 },
+    { name: 'updated_at',     display: __('Updated'),         tag: 'datetime',    readonly: 1 },
   ]
-

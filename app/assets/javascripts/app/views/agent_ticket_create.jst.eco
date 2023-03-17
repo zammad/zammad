@@ -26,11 +26,23 @@
 
           <form role="form" class="ticket-create">
             <input type="hidden" name="formSenderType"/>
+            <input type="hidden" name="shared_draft_id" value="<%= @shared_draft_id %>"/>
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
-
             <div class="ticket-form-top"></div>
+            <div class="form-group js-securityOptions hide">
+              <div class="formGroup-label">
+                <label for=""><%- @T('Security') %></label>
+              </div>
+              <div class="horizontal">
+                <span class="js-securityEncryptComment">
+                  <div class="btn btn--action js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>
+                </span>
+                <span class="js-securitySignComment" style="margin-left: 10px;">
+                  <div class="btn btn--action js-securitySign js-active-toggle" disabled><%- @Icon('not-signed', 'btn-inactive-icon') %><%- @Icon('signed', 'btn-active-icon') %><%- @T('Sign') %></div>
+                </span>
+              </div>
+            </div>
             <div class="article-form-top"></div>
-
             <div class="formset-inset">
               <div class="ticket-form-middle horizontal two-columns"></div>
               <div class="ticket-form-bottom"></div>
@@ -47,125 +59,3 @@
   </div>
   <div class="tabsSidebar vertical"></div>
 </div>
-<!--
-<div class="sidebar">
-  <div class="widgets">
-    <div class="customer_info">
-      <div class="drox"><!-- Customer Info -/->
-        <div class="drox-header">
-          <h2>Customer Info</h2>
-        </div>
-        <div class="drox-body">
-          <p>
-            <span class="customer-name">Benjamin Wahlers</span>
-            <span class="customer-email u-highlight">benjamin@wahlers.de</span>
-          </p>
-          <div class="form-group">
-            <label for="customer-info-note"><%- @T('Note') %></label>
-            <textarea class="form-control" id="customer-info-note" rows="5">Not assigned</textarea>
-          </div>
-          <label><%- @T('Tickets') %></label>
-          <ol class="tasks tasks--standalone"> <!-- vaguely based on task_widget_tasks.jst.eco -/->
-            <li class="task level-1">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="task-text">
-                <div class="name">Micro-SIM doesn't work</div>
-                <div class="time">23 minutes ago</div>
-              </div>
-            <li class="task level-3">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="task-text">
-                <div class="name">Superb Service!</div>
-                <div class="time">43 minutes ago</div>
-              </div>
-            <li class="task level-2">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="task-text">
-                <div class="name">Print sheets strip off</div>
-                <div class="time">1 hour ago</div>
-              </div>
-            <li class="task level-3">
-              <div class="icon-holder">
-                <div class="priority icon"></div>
-              </div>
-              <div class="task-text">
-                <div class="name">Block not properly wrought</div>
-                <div class="time">2 hour ago</div>
-              </div>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <div class="ticket_template">
-      <div class="drox hide"><!-- Template Wizard Step One -/->
-        <div class="drox-header">
-          <h2><%- @T('Choose Template') %></h2>
-        </div>
-        <div class="drox-body">
-          <p><%- @T('No template created yet.') %></p>
-          <p><%- @T('With templates you can pre-fill ticket attributes.') %></p>
-          <p><%- @T('Choose attributes and then save them as a new template.') %></p>
-          <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
-        </div>
-      </div>
-      <div class="drox hide"><!-- Template Wizard Step Two -/->
-        <div class="drox-header">
-          <h2><%- @T('Create Template') %></h2>
-        </div>
-        <div class="drox-body">
-          <form>
-            <div class="form-group">
-              <label for="template-title"><%- @T('Template Title') %>:</label>
-              <input class="form-control" id="template-title" placeholder="<%- @Ti('Enter Template Name') %>">
-            </div>
-            <p><%- @T('This template saves the following attributes') %>:</p>
-            <ul class="template-attributes">
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Owner') %></div> | <div class="value flex u-textTruncate">Web-Dev</div>
-                <div class="delete u-clickable">&times;</div>
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Type') %></div> | <div class="value flex u-textTruncate">Question</div>
-                <div class="delete u-clickable">&times;</div>
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Status') %></div> | <div class="value flex u-textTruncate">open</div>
-                <div class="delete u-clickable">&times;</div>
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Priority') %></div> | <div class="value flex u-textTruncate">high</div>
-                <div class="delete u-clickable">&times;</div>
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Tag') %></div> | <div class="value flex u-textTruncate">New Website</div>
-                <div class="delete u-clickable">&times;</div>
-              <li class="template-attribute horizontal">
-                <div class="key"><%- @T('Tag') %></div> | <div class="value flex u-textTruncate">Feedback</div>
-                <div class="delete u-clickable">&times;</div>
-            </ul>
-            <div class="horizontal">
-              <button class="btn btn-primary" type="submit"><%- @T('Save Template') %></button>
-              <a class="btn btn--text btn--secondary js-cancel align-right u-clickable"><%- @T('Cancel') %></a>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="drox hide"><!-- Template Chooser, shown instead of Template Wizard Step One when there are templates there -/->
-        <div class="drox-header">
-          <h2><%- @T('Choose Template') %></h2>
-        </div>
-        <div class="drox-body">
-          <ul class="templates">
-            <li class="u-clickable u-highlight">Feedback New Website
-          </ul>
-          <p><%- @T('Choose attributes and then save them as a new template.') %></p>
-          <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
-        </div>
-      </div>
-    </div>
-    <div class="text_module"></div>
-  </div>
-</div>
--->

@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class TicketStatePriorityDefaults < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     add_column :ticket_states, :default_create, :boolean, null: false, default: false
     add_index  :ticket_states, :default_create
@@ -40,7 +42,7 @@ class TicketStatePriorityDefaults < ActiveRecord::Migration[4.2]
       ticket_priority.save!
     end
 
-    Cache.clear
+    Rails.cache.clear
   end
 
   def down
@@ -52,6 +54,6 @@ class TicketStatePriorityDefaults < ActiveRecord::Migration[4.2]
     remove_index  :ticket_priorities, :default_create
     remove_column :ticket_priorities, :default_create, :boolean
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

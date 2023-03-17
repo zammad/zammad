@@ -1,0 +1,34 @@
+{
+  "update_id":6,
+  "message":{
+    "from": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername"
+    },
+    "chat": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername",
+      "type": "private"
+    },
+    "message_id":6,
+    "date":1487119496,
+    "video":{
+      "duration":1,
+      "width":360,
+      "height":640,
+      "mime_type":"video/mp4",
+      "file_id":"videofileid",
+      "file_size":123456,
+      "thumb": {
+        "file_id": "videothumbfileid",
+        "file_size": 123456,
+        "width": 180,
+        "height": 320
+      }
+    }
+  }
+}

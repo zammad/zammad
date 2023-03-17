@@ -1,20 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class OwnerID < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource, :user_map
+class Sequencer::Unit::Import::Zendesk::Ticket::OwnerId < Sequencer::Unit::Common::Provider::Named
 
-            private
+  uses :resource, :user_map
 
-            def owner_id
-              user_map.fetch(resource.assignee, 1)
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def owner_id
+    user_map.fetch(resource.assignee_id, 1)
   end
 end

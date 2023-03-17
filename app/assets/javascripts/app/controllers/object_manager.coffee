@@ -7,7 +7,7 @@ treeParams = (e, params) ->
   $(e.target).closest('.modal').find('.js-treeTable .js-key').each( ->
     $element = $(@)
     level = parseInt($element.attr('level'))
-    name = $element.val()
+    name = $element.val().trim()
     item =
       name: name
 
@@ -39,7 +39,42 @@ treeParams = (e, params) ->
     params.data_option.options = tree
   params
 
-class Index extends App.ControllerTabs
+multiselectParams = (params) ->
+  return params if !params.data_type || params.data_type isnt 'multiselect'
+
+  if typeof params.data_option.default is 'string'
+    params.data_option.default = new Array(params.data_option.default)
+  params
+
+setSelectDefaults = (el) ->
+  data_type = el.find('select[name=data_type]').val()
+  return if !/^((multi)?select|multi_tree_select)$/.test(data_type) && data_type isnt 'boolean'
+
+  el.find('.js-value, .js-valueTrue, .js-valueFalse').each(->
+    element = $(@)
+    return true if element.val()
+
+    if element.hasClass('js-valueTrue') || element.hasClass('js-valueFalse')
+      element.val(element.attr('placeholder'))
+    else
+      key_value = element.closest('tr').find('.js-key').val()
+      element.val(key_value)
+  )
+
+customsortDataOptions = ({target}, params) ->
+  return params if !params.data_option || params.data_option.customsort isnt 'on'
+
+  options = []
+  $(target).closest('.modal').find('table.js-Table tr.input-data-row').each( ->
+    $element = $(@)
+    name = $element.find('input.js-value').val().trim()
+    value = $element.find('input.js-key').val().trim()
+    options.push({name, value})
+  )
+  params.data_option.options = options
+  params
+
+class ObjectManager extends App.ControllerTabs
   requiredPermission: 'admin.object'
   constructor: ->
     super
@@ -57,20 +92,22 @@ class Index extends App.ControllerTabs
     )
 
   build: (objects) =>
-    @tabs = []
-    for object in objects
-      item =
-        name:       object
-        target:     "c-#{object}"
-        controller: Items
-        params:
-          object: object
-      @tabs.push item
+    App.ObjectManagerAttribute.fetchFull(=>
+      @tabs = []
+      for object in objects
+        item =
+          name:       object
+          target:     "c-#{object}"
+          controller: Items
+          params:
+            object: object
+        @tabs.push item
 
-    @render()
+      @render()
+    )
 
 class Items extends App.ControllerSubContent
-  header: 'Object Manager'
+  header: __('Object Manager')
   events:
     'click .js-delete':  'destroy'
     'click .js-new':     'new'
@@ -81,7 +118,7 @@ class Items extends App.ControllerSubContent
   constructor: ->
     super
     @subscribeId = App.ObjectManagerAttribute.subscribe(@render)
-    App.ObjectManagerAttribute.fetch()
+    @render()
 
   release: =>
     if @subscribeId
@@ -110,7 +147,7 @@ class Items extends App.ControllerSubContent
     new New(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
         object:    'ObjectManagerAttribute'
         objects:   'ObjectManagerAttributes'
@@ -127,7 +164,7 @@ class Items extends App.ControllerSubContent
     new Edit(
       pageData:
         head:      @object
-        title:     'Attribute'
+        title:     __('Attribute')
         home:      'object_manager'
         object:    'ObjectManagerAttribute'
         objects:   'ObjectManagerAttributes'
@@ -179,8 +216,12 @@ class Items extends App.ControllerSubContent
 class New extends App.ControllerGenericNew
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
+    params = multiselectParams(params)
+    params = customsortDataOptions(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle
@@ -213,7 +254,7 @@ class New extends App.ControllerGenericNew
       fail: (settings, details) ->
         ui.log 'errors', details
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be created.'))
     )
 
 class Edit extends App.ControllerGenericEdit
@@ -230,8 +271,6 @@ class Edit extends App.ControllerGenericEdit
       #if attribute.name is 'data_type'
       #  attribute.disabled = true
 
-    console.log('configure_attributes', configure_attributes)
-
     @controller = new App.ControllerForm(
       model:
         configure_attributes: configure_attributes
@@ -242,8 +281,12 @@ class Edit extends App.ControllerGenericEdit
     @controller.form
 
   onSubmit: (e) =>
+    setSelectDefaults(@el)
+
     params = @formParam(e.target)
     params = treeParams(e, params)
+    params = multiselectParams(params)
+    params = customsortDataOptions(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle
@@ -254,7 +297,9 @@ class Edit extends App.ControllerGenericEdit
     @item.load(params)
 
     # validate
-    errors = @item.validate()
+    errors = @item.validate(
+      controllerForm: @controller
+    )
     if errors
       @log 'error', errors
       @formValidate(form: e.target, errors: errors)
@@ -275,7 +320,7 @@ class Edit extends App.ControllerGenericEdit
       fail: (settings, details) ->
         ui.log 'errors'
         ui.formEnable(e)
-        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
+        ui.controller.showAlert(details.error_human || details.error || __('The object could not be updated.'))
     )
 
-App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, permission: ['admin.object'] }, 'NavBarAdmin')
+App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: __('Objects'), target: '#system/object_manager', controller: ObjectManager, permission: ['admin.object'] }, 'NavBarAdmin')

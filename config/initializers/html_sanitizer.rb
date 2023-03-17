@@ -1,16 +1,18 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # content of this tags will also be removed
 Rails.application.config.html_sanitizer_tags_remove_content = %w[
   style
-]
-
-# content of this tags will will be inserted html quoted
-Rails.application.config.html_sanitizer_tags_quote_content = %w[
+  comment
+  meta
   script
 ]
 
+# content of this tags will will be inserted html quoted
+Rails.application.config.html_sanitizer_tags_quote_content = %w[]
+
 # only this tags are allowed
-Rails.application.config.html_sanitizer_tags_whitelist = %w[
+Rails.application.config.html_sanitizer_tags_allowlist = %w[
   a abbr acronym address area article aside audio
   b bdi bdo big blockquote br
   canvas caption center cite code col colgroup command
@@ -23,9 +25,9 @@ Rails.application.config.html_sanitizer_tags_whitelist = %w[
 ]
 
 # attributes allowed for tags
-Rails.application.config.html_sanitizer_attributes_whitelist = {
+Rails.application.config.html_sanitizer_attributes_allowlist = {
   :all         => %w[class dir lang title translate data-signature data-signature-id],
-  'a'          => %w[href hreflang name rel],
+  'a'          => %w[href hreflang name rel data-target-id data-target-type data-mention-user-id],
   'abbr'       => %w[title],
   'blockquote' => %w[type cite],
   'col'        => %w[span width],
@@ -44,18 +46,26 @@ Rails.application.config.html_sanitizer_attributes_whitelist = {
   'ul'         => %w[type],
   'q'          => %w[cite],
   'span'       => %w[style],
+  'div'        => %w[style],
+  'p'          => %w[style],
   'time'       => %w[datetime pubdate],
 }
 
 # only this css properties are allowed
-Rails.application.config.html_sanitizer_css_properties_whitelist = {
-  'img' => %w[
+Rails.application.config.html_sanitizer_css_properties_allowlist = {
+  'img'   => %w[
     width height
     max-width min-width
     max-height min-height
   ],
-  'span' => %w[
+  'span'  => %w[
     color
+  ],
+  'div'   => %w[
+    color
+  ],
+  'p'     => %w[
+    white-space
   ],
   'table' => %w[
     background background-color color font-size vertical-align
@@ -68,7 +78,7 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
   ],
-  'th' => %w[
+  'th'    => %w[
     background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
@@ -79,7 +89,7 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
   ],
-  'tr' => %w[
+  'tr'    => %w[
     background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
@@ -90,7 +100,7 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-top-color border-right-color border-bottom-color border-left-color
     border-top-style border-right-style border-bottom-style border-left-style
   ],
-  'td' => %w[
+  'td'    => %w[
     background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
@@ -103,36 +113,122 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
   ],
 }
 
-Rails.application.config.html_sanitizer_css_values_backlist = {
+Rails.application.config.html_sanitizer_css_values_blocklist = {
+  'div'   => [
+    'color:white',
+    'color:black',
+    'color:#000',
+    'color:#000000',
+    'color:#fff',
+    'color:#ffffff',
+    'color:rgb(0,0,0)',
+  ],
+  'span'  => [
+    'color:white',
+    'color:black',
+    'color:#000',
+    'color:#000000',
+    'color:#fff',
+    'color:#ffffff',
+    'color:rgb(0,0,0)',
+  ],
+  'p'     => [
+    'white-space:nowrap',
+    'white-space:pre',
+  ],
   'table' => [
     'font-size:0',
     'font-size:0px',
+    'font-size:0pt',
     'font-size:0em',
     'font-size:0%',
+    'font-size:1',
+    'font-size:1px',
+    'font-size:1pt',
+    'font-size:1em',
+    'font-size:1%',
+    'font-size:2',
+    'font-size:2px',
+    'font-size:2pt',
+    'font-size:2em',
+    'font-size:2%',
+    'font-size:3',
+    'font-size:3px',
+    'font-size:3pt',
+    'font-size:3em',
+    'font-size:3%',
     'display:none',
     'visibility:hidden',
   ],
-  'th' => [
+  'th'    => [
     'font-size:0',
     'font-size:0px',
+    'font-size:0pt',
     'font-size:0em',
     'font-size:0%',
+    'font-size:1',
+    'font-size:1px',
+    'font-size:1pt',
+    'font-size:1em',
+    'font-size:1%',
+    'font-size:2',
+    'font-size:2px',
+    'font-size:2pt',
+    'font-size:2em',
+    'font-size:2%',
+    'font-size:3',
+    'font-size:3px',
+    'font-size:3pt',
+    'font-size:3em',
+    'font-size:3%',
     'display:none',
     'visibility:hidden',
   ],
-  'tr' => [
+  'tr'    => [
     'font-size:0',
     'font-size:0px',
+    'font-size:0pt',
     'font-size:0em',
     'font-size:0%',
+    'font-size:1',
+    'font-size:1px',
+    'font-size:1pt',
+    'font-size:1em',
+    'font-size:1%',
+    'font-size:2',
+    'font-size:2px',
+    'font-size:2pt',
+    'font-size:2em',
+    'font-size:2%',
+    'font-size:3',
+    'font-size:3px',
+    'font-size:3pt',
+    'font-size:3em',
+    'font-size:3%',
     'display:none',
     'visibility:hidden',
   ],
-  'td' => [
+  'td'    => [
     'font-size:0',
     'font-size:0px',
+    'font-size:0pt',
     'font-size:0em',
     'font-size:0%',
+    'font-size:1',
+    'font-size:1px',
+    'font-size:1pt',
+    'font-size:1em',
+    'font-size:1%',
+    'font-size:2',
+    'font-size:2px',
+    'font-size:2pt',
+    'font-size:2em',
+    'font-size:2%',
+    'font-size:3',
+    'font-size:3px',
+    'font-size:3pt',
+    'font-size:3em',
+    'font-size:3%',
     'display:none',
     'visibility:hidden',
   ],

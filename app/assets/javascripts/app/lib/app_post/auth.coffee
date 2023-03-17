@@ -43,7 +43,7 @@ class App.Auth
         @_loginError()
     )
 
-  @logout: ->
+  @logout: (rerender = true, callback) ->
     App.Log.debug 'Auth', 'logout'
 
     # abort all AJAX requests
@@ -63,10 +63,12 @@ class App.Auth
         id:   'logout'
         type: 'DELETE'
         url:  App.Config.get('api_path') + '/signout'
-        success: =>
+        success: (data, status, xhr) =>
+          if data && data.url
+            return location.replace(data.url)
 
           # set logout (config, session, ...)
-          @_logout()
+          @_logout(rerender, callback)
 
         error: (xhr, statusText, error) =>
           @_loginError()
@@ -98,9 +100,8 @@ class App.Auth
 
       # rebuild navbar with new navbar items
       App.Event.trigger('auth')
-      App.Event.trigger('auth:logout')
+      App.Event.trigger('auth:failed')
       App.Event.trigger('ui:rerender')
-      App.TaskManager.tasksInitial()
       return false
 
     # clear local store
@@ -123,8 +124,7 @@ class App.Auth
       App.Collection.loadAssets(data.assets)
 
     # store user data
-    sessionUser = App.User.fullLocal(data.session.id)
-    App.Session.set(sessionUser)
+    App.Session.set(data.session.id)
 
     # trigger auth ok with new session data
     App.Event.trigger('auth', data.session)
@@ -149,7 +149,7 @@ class App.Auth
         if _.isFunction(App[model].updateAttributes)
           App[model].updateAttributes(attributes)
 
-  @_logout: (rerender = true) ->
+  @_logout: (rerender = true, callback) ->
     App.Log.debug 'Auth', '_logout'
 
     App.TaskManager.reset()
@@ -163,10 +163,16 @@ class App.Auth
 
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
+
     if rerender
-      window.location.href = '#login'
-      App.Event.trigger('ui:rerender')
+      @loginCheck(->
+        window.location.href = '#login'
+        App.Event.trigger('ui:rerender')
+      )
     App.Event.trigger('clearStore')
+
+    if callback
+      callback()
 
   @_loginError: ->
     App.Log.debug 'Auth', '_loginError:error'
@@ -176,6 +182,6 @@ class App.Auth
 
     # rebuild navbar
     App.Event.trigger('auth')
-    App.Event.trigger('auth:logout')
+    App.Event.trigger('auth:failed')
     App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')

@@ -14,17 +14,17 @@ class App.LocalStorage
   @delete: (key, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.delete(key)
+    _instance.delete(key, user_id)
 
   @clear: ->
     if _instance == undefined
       _instance ?= new _storeSingleton
     _instance.clear()
 
-  @list: ->
+  @keys: (prefix, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.list()
+    _instance.keys(prefix, user_id)
 
   @usage: ->
     if _instance == undefined
@@ -63,8 +63,24 @@ class _storeSingleton
     localStorage.clear()
 
   # return list of all keys
-  list: ->
-    window.localStorage
+  keys: (prefix, user_id) ->
+    allKeys = Object.keys(window.localStorage)
+
+    if user_id is null and prefix is null
+      return allKeys
+
+    startingWith = ''
+
+    if user_id
+      startingWith = "personal::#{user_id}::"
+
+    if prefix
+      startingWith += prefix
+
+    regexp = new RegExp('^' + startingWith)
+
+    allKeys.filter (elem) -> elem.match(regexp)
+
 
   # get usage
   usage: ->

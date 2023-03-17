@@ -1,6 +1,8 @@
-class App.TicketCreateSidebar extends App.Controller
-  constructor: ->
-    super
+class App.TicketCreateSidebar
+  constructor: (options) ->
+    for key, value of options
+      @[key] = value
+
     @render()
 
   reload: (args) =>
@@ -12,6 +14,11 @@ class App.TicketCreateSidebar extends App.Controller
     for key, backend of @sidebarBackends
       if backend && backend.commit
         backend.commit(args)
+
+  postParams: (args) =>
+    for key, backend of @sidebarBackends
+      if backend && backend.postParams
+        backend.postParams(args)
 
   render: (params) =>
     if params
@@ -35,7 +42,10 @@ class App.TicketCreateSidebar extends App.Controller
         )
       @sidebarItems.push @sidebarBackends[key]
 
-    new App.Sidebar(
+    if @sidebar
+      @sidebar.releaseController()
+
+    @sidebar = new App.Sidebar(
       el:           @el
       sidebarState: @sidebarState
       items:        @sidebarItems

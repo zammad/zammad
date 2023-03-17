@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/api/v1/teams
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 30 Aug 2021 12:29:22 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '302'
+      Connection:
+      - keep-alive
+      Www-Authenticate:
+      - Basic realm="Zammad GmbH"
+      Cache-Control:
+      - private, max-age=0, must-revalidate
+      Expires:
+      - '0'
+      X-Api-Version:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+            "status": 401,
+            "errors": [
+                {
+                    "code": "AUTHORIZATION_REQUIRED",
+                    "message": "Performing this action on this resource requires authorization",
+                    "more_info": "https://developer.kayako.com/api/v1/reference/errors/AUTHORIZATION_REQUIRED"
+                }
+            ]
+        }
+  recorded_at: Mon, 30 Aug 2021 12:29:22 GMT
+recorded_with: VCR 6.0.0

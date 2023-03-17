@@ -1,4 +1,4 @@
-<%- @T('For security reasons, the API token is shown only once. You\'ll need to copy it somewhere safe before continuing.') %>
+<p><%- @T('For security reasons, the API token is shown only once. You\'ll need to save it somewhere secure before continuing.') %></p>
 
 <form>
   <div class="input form-group">

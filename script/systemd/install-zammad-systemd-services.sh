@@ -17,7 +17,11 @@ test -d ${SYSTEMD_SERVICE_DIR} || mkdir -p ${SYSTEMD_SERVICE_DIR}
 
 cp zammad.env ${ZAMMAD_ENV_DIR}
 
-cp zammad.service zammad-rails.service zammad-scheduler.service zammad-websocket.service ${SYSTEMD_SERVICE_DIR}
+cp zammad.service zammad-web.service zammad-worker.service zammad-websocket.service ${SYSTEMD_SERVICE_DIR}
+
+# Remove renamed services if they exist.
+rm -f "${SYSTEMD_SERVICE_DIR}/zammad-scheduler.service"
+rm -f "${SYSTEMD_SERVICE_DIR}/zammad-rails.service"
 
 systemctl daemon-reload
 

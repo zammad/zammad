@@ -2,6 +2,8 @@
 from: Bob Smith | deal <info@example.de>
 from_email: info@example.de
 from_display_name: Bob Smith | deal
+to: info@example.de
 subject: Testmail - Alias in info@example.de Gruppe
-content_type: text/plain
 body: no visible content
+content_type: text/plain
+attachments: []

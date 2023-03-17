@@ -1,0 +1,35 @@
+<style>
+  html {
+    direction: <%= locale.dir ;%>
+  }
+
+  @font-face {
+    font-family: '<%= knowledge_base.iconset %>';
+    src: url('/assets/icon-fonts/<%= knowledge_base.iconset %>.woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  [data-font="<%= knowledge_base.iconset %>"] {
+    font-family: '<%= knowledge_base.iconset %>';
+  }
+
+  a,
+  .section-inner [data-font],
+  .section-inner .icon,
+  .section > a:hover {
+    color: <%= knowledge_base.color_highlight %>;
+  }
+
+  .tag {
+    background: <%= knowledge_base.color_highlight %>;
+  }
+
+	.header {
+    background-color: <%= knowledge_base.color_header %>;
+	}
+
+  .header .menu-item {
+    color: <%= knowledge_base.color_header_link %>;
+  }
+</style>

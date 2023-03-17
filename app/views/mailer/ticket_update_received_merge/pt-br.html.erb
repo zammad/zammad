@@ -1,0 +1,11 @@
+Outro bilhete foi mesclado no ticket (#{ticket.title})
+
+<div>Oi #{recipient.firstname},</div>
+<br>
+<div>
+Outro ticket foi mesclado no ticket (#{ticket.title}) por "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Exibir isso em #{config.product_name}</a>
+</div>

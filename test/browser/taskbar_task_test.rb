@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -7,15 +8,15 @@ class TaskbarTaskTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # persistant task
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
-      css: '.active .newTicket input[name="title"]',
+      css:   '.active .newTicket input[name="title"]',
       value: 'some test AAA',
     )
     sleep 4
@@ -26,7 +27,7 @@ class TaskbarTaskTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     sleep 3
 
@@ -34,11 +35,11 @@ class TaskbarTaskTest < TestCase
     click(css: '.task', wait: 0.8)
 
     match(
-      css: '.active .newTicket input[name="title"]',
+      css:   '.active .newTicket input[name="title"]',
       value: 'some test AAA',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     exists_not(css: '.active .newTicket input[name="title"]')
   end
@@ -48,18 +49,18 @@ class TaskbarTaskTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
-      css: '.active .newTicket input[name="title"]',
+      css:   '.active .newTicket input[name="title"]',
       value: 'INBOUND TEST#1',
     )
     set(
-      css: '.active .newTicket [data-name="body"]',
+      css:   '.active .newTicket [data-name="body"]',
       value: 'INBOUND BODY TEST#1',
     )
     sleep 2
@@ -67,43 +68,43 @@ class TaskbarTaskTest < TestCase
     click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
-      css: '.active .newTicket input[name="title"]',
+      css:   '.active .newTicket input[name="title"]',
       value: 'OUTBOUND TEST#1',
     )
     set(
-      css: '.active .newTicket [data-name="body"]',
+      css:   '.active .newTicket [data-name="body"]',
       value: 'OUTBOUND BODY TEST#1',
     )
     sleep 3
 
-    logout()
+    logout
     sleep 4
 
     # relogin with master - task are not viewable
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     sleep 3
 
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'INBOUND TEST#1',
     )
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'OUTBOUND TEST#1',
     )
-    logout()
+    logout
     sleep 2
 
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'INBOUND TEST#1',
     )
     match_not(
-      css: 'body',
+      css:   'body',
       value: 'OUTBOUND TEST#1',
     )
 
@@ -111,16 +112,16 @@ class TaskbarTaskTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     sleep 3
 
     match(
-      css: 'body',
+      css:   'body',
       value: 'INBOUND TEST#1',
     )
     match(
-      css: 'body',
+      css:   'body',
       value: 'OUTBOUND TEST#1',
     )
   end

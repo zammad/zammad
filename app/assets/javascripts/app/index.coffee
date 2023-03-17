@@ -1,187 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 #= require_self
 #= require_tree ./lib/app_init
 #= require_tree ./lib/mixins
 #= require ./config.coffee
 #= require_tree ./models
+#= require_tree ./controllers/_application_controller
 #= require_tree ./controllers
 #= require_tree ./views
 #= require_tree ./lib/app_post
 
 class App extends Spine.Controller
-  helper =
-
-    # define print name helper
-    P: (object, attributeName, attributes, table = false) ->
-      App.viewPrint(object, attributeName, attributes, table)
-
-    # define date format helper
-    date: (time) ->
-      return '' if !time
-
-      timeObject = new Date(time)
-      d = App.Utils.formatTime(timeObject.getDate(), 2)
-      m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
-      y = timeObject.getFullYear()
-      "#{y}-#{m}-#{d}"
-
-    # define datetime format helper
-    datetime: (time) ->
-      return '' if !time
-
-      timeObject = new Date(time)
-      d = App.Utils.formatTime(timeObject.getDate(), 2)
-      m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
-      y = timeObject.getFullYear()
-      S = App.Utils.formatTime(timeObject.getSeconds(), 2)
-      M = App.Utils.formatTime(timeObject.getMinutes(), 2)
-      H = App.Utils.formatTime(timeObject.getHours(), 2)
-      "#{y}-#{m}-#{d} #{H}:#{M}:#{S}"
-
-    # define decimal format helper
-    decimal: (data, positions = 2) ->
-      App.Utils.decimal(data, positions)
-
-    # define mask helper
-    M: (item, start = 1, end = 2) ->
-      return '' if !item
-      string = ''
-      end = item.length - end - 1
-      for n in [0..item.length-1]
-        if start <= n && end >= n
-          string += '*'
-        else
-          string += item[n]
-      string
-
-    # define translation helper
-    T: (item, args...) ->
-      App.i18n.translateContent(item, args...)
-
-    # define translation inline helper
-    Ti: (item, args...) ->
-      App.i18n.translateInline(item, args...)
-
-    # define translation for date helper
-    Tdate: (item, args...) ->
-      App.i18n.translateDate(item, args...)
-
-    # define translation for timestamp helper
-    Ttimestamp: (item, args...) ->
-      App.i18n.translateTimestamp(item, args...)
-
-    # define linkify helper
-    L: (item) ->
-      if item && typeof item is 'string'
-        return App.Utils.linkify(item)
-      item
-
-    # define config helper
-    C: (key) ->
-      App.Config.get(key)
-
-    # define session helper
-    S: (key) ->
-      App.Session.get(key)
-
-    # define address line helper
-    AddressLine: (line) ->
-      return '' if !line
-      items = emailAddresses.parseAddressList(line)
-
-      # line was not parsable
-      return App.Utils.htmlEscape(line) if !items
-
-      # set markup
-      result = ''
-      for item in items
-        if result
-          result = result + ', '
-        if item.name
-          item.name = item.name
-            .replace(',', '')
-            .replace(';', '')
-            .replace('"', '')
-            .replace('\'', '')
-          if item.name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|\*/)
-            item.name = "\"#{item.name}\""
-          result = "#{result}#{App.Utils.htmlEscape(item.name)} "
-        if item.address
-          result = result + " <span class=\"text-muted\">&lt;#{App.Utils.htmlEscape(item.address)}&gt</span>"
-      result
-
-    # define file size helper
-    humanFileSize: (size) ->
-      App.Utils.humanFileSize(size)
-
-    # define pretty/human time helper
-    humanTime: (time, escalation = false, cssClass = '') ->
-      timestamp = App.i18n.translateTimestamp(time)
-      if escalation
-        cssClass += ' escalation'
-      humanTime = App.PrettyDate.humanTime(time, escalation)
-      "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
-
-    # define icon helper
-    Icon: (name, className = '') ->
-      App.Utils.icon(name, className)
-
-    # define richtext helper
-    RichText: (string) ->
-      return string if !string
-      if string.match(/@T\('/)
-        string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
-          App.i18n.translateContent(capture)
-        )
-        return marked(string)
-      App.i18n.translateContent(string)
-
-    ContentTypeIcon: (contentType) ->
-      contentType = App.Utils.contentTypeCleanup(contentType)
-      icons =
-        # image
-        'image/jpeg': 'file-image'
-        'image/jpg': 'file-image'
-        'image/png': 'file-image'
-        'image/svg': 'file-image'
-        'image/gif': 'file-image'
-        # documents
-        'application/pdf': 'file-pdf'
-        'application/msword': 'file-word' # .doc, .dot
-        'application/vnd.ms-word': 'file-word'
-        'application/vnd.oasis.opendocument.text': 'file-word'
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'file-word' # .docx
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'file-word' # .dotx
-        'application/vnd.ms-excel': 'file-excel' # .xls
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'file-excel' # .xlsx
-        'application/vnd.oasis.opendocument.spreadsheet': 'file-excel'
-        'application/vnd.ms-powerpoint': 'file-powerpoint' # .ppt
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'file-powerpoint' # .pptx
-        'application/vnd.oasis.opendocument.presentation': 'file-powerpoint'
-        'text/plain': 'file-text'
-        'text/html': 'file-code'
-        'application/json': 'file-code'
-        'message/rfc822': 'file-email'
-        # code
-        'application/json': 'file-code'
-        # text
-        'text/plain': 'file-text'
-        'text/rtf': 'file-text'
-        # archives
-        'application/gzip': 'file-archive'
-        'application/zip': 'file-archive'
-      return icons[contentType]
-
-    canDownload: (contentType) ->
-      contentType = App.Utils.contentTypeCleanup(contentType)
-      contentType != 'text/html'
-
-    canPreview: (contentType) ->
-      return false if _.isEmpty(contentType)
-      return true if contentType.match(/image\/(png|jpg|jpeg|gif)/i)
-      false
-
   @viewPrint: (object, attributeName, attributes, table) ->
     if !attributes
       attributes = {}
@@ -218,20 +47,26 @@ class App extends Spine.Controller
         if object[attributeNameWithoutRef]
           valueRef = object[attributeNameWithoutRef]
 
-    @viewPrintItem(value, attributeConfig, valueRef, table)
+    @viewPrintItem(value, attributeConfig, valueRef, table, object)
 
   # define print name helper
-  @viewPrintItem: (item, attributeConfig = {}, valueRef, table) ->
+  @viewPrintItem: (item, attributeConfig = {}, valueRef, table, object) ->
     return '-' if item is undefined
     return '-' if item is ''
-    return item if item is null
+    return '-' if item is null
     result = ''
     items = [item]
     if _.isArray(item)
       items = item
 
+    hasMoreItems = false
+    if attributeConfig.display_limit
+      if items.length > attributeConfig.display_limit
+        hasMoreItems = true
+      items = items.slice(0, attributeConfig.display_limit)
+
     # lookup relation
-    for item in items
+    for item in items.sort()
       resultLocal = item
       if attributeConfig.relation || valueRef
         if valueRef
@@ -266,7 +101,11 @@ class App extends Spine.Controller
 
       # fillup options
       if !_.isEmpty(attributeConfig.options)
-        if attributeConfig.options[resultLocal]
+        if Array.isArray(attributeConfig.options)
+          option = _.find(attributeConfig.options, (option) -> option.value == resultLocal)
+          if option && option.name
+            resultLocal = option.name
+        else if attributeConfig.options[resultLocal]
           resultLocal = attributeConfig.options[resultLocal]
 
       # transform boolean
@@ -279,20 +118,25 @@ class App extends Spine.Controller
       # translate content
       if attributeConfig.translate || (isObject && item.translate && item.translate())
         isHtmlEscape = true
-        resultLocal       = App.i18n.translateContent(resultLocal)
+        resultLocal  = App.i18n.translateContent(resultLocal)
 
       # transform date
       if attributeConfig.tag is 'date'
         isHtmlEscape = true
         resultLocal = App.i18n.translateDate(resultLocal)
 
+      linktemplate = @_placeholderReplacement(object, attributeConfig, resultLocal, isHtmlEscape)
+      if linktemplate
+        resultLocal = linktemplate
+        isHtmlEscape = true
+
       # transform input tel|url to make it clickable
-      if attributeConfig.tag is 'input'
+      if attributeConfig.tag is 'input' && !linktemplate
         if attributeConfig.type is 'tel'
           resultLocal = "<a href=\"#{App.Utils.phoneify(resultLocal)}\">#{App.Utils.htmlEscape(resultLocal)}</a>"
-        else if attributeConfig.type is 'url'
+        else if attributeConfig.type is 'url' && !linktemplate
           resultLocal = App.Utils.linkify(resultLocal)
-        else
+        else if !isHtmlEscape # escape only if it wasn't escaped previously
           resultLocal = App.Utils.htmlEscape(resultLocal)
         isHtmlEscape = true
 
@@ -300,14 +144,23 @@ class App extends Spine.Controller
       else if attributeConfig.tag is 'datetime'
         isHtmlEscape = true
         timestamp = App.i18n.translateTimestamp(resultLocal)
+
         escalation = false
         cssClass = attributeConfig.class || ''
         if cssClass.match 'escalation'
           escalation = true
+
         humanTime = ''
         if !table
           humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
-        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
+
+        title = timestamp
+        timezone = ''
+        if attributeConfig.include_timezone
+          timezone = " timezone=\"#{App.Config.get('timezone_default_sanitized')}\""
+          title += ' ' + App.Config.get('timezone_default_sanitized')
+
+        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" datetime=\"#{resultLocal}\" title=\"#{title}\"#{timezone}>#{humanTime}</time>"
 
       if !isHtmlEscape && typeof resultLocal is 'string'
         resultLocal = App.Utils.htmlEscape(resultLocal)
@@ -316,11 +169,30 @@ class App extends Spine.Controller
         result += ', '
       result += resultLocal
 
+    if hasMoreItems
+      result += ', …'
+
     result
+
+  @_placeholderReplacement: (object, attributeConfig, resultLocal, isHtmlEscape) ->
+    return if !object
+    return if !attributeConfig
+    return if _.isEmpty(attributeConfig.linktemplate)
+    return if !object.constructor
+    return if !object.constructor.className
+    return if _.isEmpty(object[attributeConfig.name])
+    placeholderObjects = { attribute: attributeConfig, session: App.Session.get(), config: App.Config.all() }
+    placeholderObjects[object.constructor.className.toLowerCase()] = object
+
+    value = resultLocal
+    if !isHtmlEscape
+      value = App.Utils.htmlEscape(value)
+
+    "<a href=\"#{App.Utils.replaceTags(attributeConfig.linktemplate, placeholderObjects, true)}\" target=\"blank\">#{value}</a>"
 
   @view: (name) ->
     template = (params = {}) ->
-      JST["app/views/#{name}"](_.extend(params, helper))
+      JST["app/views/#{name}"](_.extend(params, App.ViewHelpers))
     template
 
 class App.UiElement

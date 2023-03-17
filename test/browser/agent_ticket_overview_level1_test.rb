@@ -1,147 +1,148 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_i
-    name1 = 'name_low_' + rand(999_999).to_s
-    name2 = 'name_high_' + rand(999_999).to_s
+    name1 = "name_low_#{SecureRandom.uuid}"
+    name2 = "name_high_#{SecureRandom.uuid}"
 
     browser1 = browser_instance
     login(
-      browser: browser1,
-      username: 'master@example.com',
+      browser:  browser1,
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(browser: browser1)
 
     browser2 = browser_instance
     login(
-      browser: browser2,
+      browser:  browser2,
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all(browser: browser2)
 
     # create new overview
     overview_create(
       browser: browser1,
-      data: {
+      data:    {
         name: name1,
         roles: ['Agent'],
         selector: {
           'Priority' => '1 low',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
     overview_create(
       browser: browser1,
-      data: {
+      data:    {
         name: name2,
         roles: ['Agent'],
         selector: {
           'Priority' => '3 high',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
 
     # create tickets
     ticket1 = ticket_create(
       browser: browser1,
-      data: {
+      data:    {
         customer: 'nico',
         priority: '1 low',
-        group: 'Users',
-        title: 'overview #1',
-        body: 'overview #1',
+        group:    'Users',
+        title:    'overview #1',
+        body:     'overview #1',
       }
     )
 
     # keep connection alive
     click(
       browser: browser2,
-      css: '.search-holder',
+      css:     '.search-holder',
     )
 
     ticket2 = ticket_create(
       browser: browser1,
-      data: {
+      data:    {
         customer: 'nico',
         priority: '1 low',
-        group: 'Users',
-        title: 'overview #2',
-        body: 'overview #2',
+        group:    'Users',
+        title:    'overview #2',
+        body:     'overview #2',
       }
     )
 
     ticket3 = ticket_create(
       browser: browser1,
-      data: {
+      data:    {
         customer: 'nico',
         priority: '1 low',
-        group: 'Users',
-        title: 'overview #3',
-        body: 'overview #3',
+        group:    'Users',
+        title:    'overview #3',
+        body:     'overview #3',
       }
     )
 
     # click on #1 on overview
     ticket_open_by_overview(
       browser: browser2,
-      number: ticket3[:number],
-      link: "#ticket/view/#{name1}",
+      number:  ticket3[:number],
+      link:    "#ticket/view/#{name1}",
     )
 
     # use overview navigation to got to #2 & #3
     match(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '1',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value:   '1',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket3[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket3[:number],
     )
 
     click(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '2',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value:   '2',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket2[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket2[:number],
     )
 
     click(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '3',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value:   '3',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket1[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket1[:number],
     )
 
     # close ticket
     sleep 2 # needed to selenium cache issues
     ticket_update(
       browser: browser2,
-      data: {
+      data:    {
         state: 'closed',
       }
     )
@@ -149,55 +150,55 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     match(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '3',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value:   '3',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket1[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket1[:number],
     )
     click(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .previous',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--first',
     )
 
     match(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '2',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value:   '2',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket2[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket2[:number],
     )
     click(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .btn--split--last',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket1[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket1[:number],
     )
     sleep 2 # needed to selenium cache issues
     ticket_update(
       browser: browser2,
-      data: {
-        state: 'closed',
+      data:    {
+        state:    'closed',
         priority: '3 high',
       }
     )
 
     watch_for_disappear(
       browser: browser2,
-      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      css:     '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom-header .ticket-number',
-      value: ticket1[:number],
+      css:     '.active .ticketZoom-header .ticket-number',
+      value:   ticket1[:number],
     )
 
   end

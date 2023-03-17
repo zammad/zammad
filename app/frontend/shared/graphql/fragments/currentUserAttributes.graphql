@@ -1,0 +1,7 @@
+fragment currentUserAttributes on User {
+  ...userAttributes
+  email
+  permissions {
+    names
+  }
+}

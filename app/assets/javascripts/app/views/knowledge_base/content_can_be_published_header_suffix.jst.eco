@@ -1,0 +1,15 @@
+<span class="suffix js-published-header-suffix">
+  <span class="<%= @object.can_be_published_state_css() %>"><span class="label-text"><%- @T(@object.can_be_published_state()) %></span></span>
+
+  <% if @object.can_be_published_internal_in_future(): %>
+    <span class="label-warning"><span class="label-text"><%- @T('Will be internal') %> <%- @humanTime(@object.internal_at) %></span></span>
+  <% end %>
+
+  <% if @object.can_be_published_publish_in_future(): %>
+    <span class="label-warning"><span class="label-text"><%- @T('Will be published') %> <%- @humanTime(@object.published_at) %></span></span>
+  <% end %>
+
+  <% if @object.can_be_published_archive_in_future(): %>
+    <span class="label-warning"><span class="label-text"><%- @T('Will be archived') %> <%- @humanTime(@object.archived_at) %></span></span>
+  <% end %>
+</span>

@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class ChangeNoteCharLimitForUsersAndOrganizations < ActiveRecord::Migration[5.1]
   def up
     # return if it's a new setup to avoid running the migration
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     change_column :organizations, :note, :string, limit: 5000
     change_column :users, :note, :string, limit: 5000

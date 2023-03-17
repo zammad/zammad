@@ -3,5 +3,5 @@
   <div class="tab js-timeRange" data-type="month"><%- @T('Month') %></div>
   <div class="tab js-timeRange" data-type="week"><%- @T('Week') %></div>
   <div class="tab js-timeRange" data-type="day"><%- @T('Day') %></div>
-  <div class="tab js-timeRange" data-type="realtime"><%- @T('Realtime') %></div>
+  <div class="tab js-timeRange" data-type="realtime"><%- @T('Real-time') %></div>
 </div>

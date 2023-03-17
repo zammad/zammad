@@ -15,6 +15,7 @@
     mode:      'richtext',
     multiline: true,
     imageWidth: 'absolute',
+    noImages:  false,
     allowKey:  {
       8: true, // backspace
       9: true, // tab
@@ -114,11 +115,22 @@
       sel = window.getSelection()
       if (sel) {
         node = $(sel.anchorNode)
-        if (node && node.parent() && node.parent().is('blockquote')) {
-          e.preventDefault()
-          document.execCommand('Insertparagraph')
-          document.execCommand('Outdent')
-          return
+
+        if (node.closest('blockquote').length > 0) {
+
+          // Special handling when the line is not wrapped inside of a html element.
+          if (!node.is('div') && node.parent().is('blockquote') && node.text()) {
+            e.preventDefault()
+            document.execCommand('formatBlock', false, 'div')
+            document.execCommand('insertParagraph')
+            return
+          }
+          if (!e.shiftKey && node && (node.is('blockquote') || (node.parent() && node.parent().is('blockquote')) || !node.text())) {
+            e.preventDefault()
+            document.execCommand('insertParagraph')
+            document.execCommand('outdent')
+            return
+          }
         }
       }
 
@@ -199,7 +211,7 @@
       || e.keyCode == 75
       || e.keyCode == 76
       || e.keyCode == 85
-      || e.keyCode == 86
+      || e.keyCode == 83
       || e.keyCode == 88
       || e.keyCode == 90
       || e.keyCode == 89)) {
@@ -237,7 +249,7 @@
       if (e.keyCode == 85) {
         document.execCommand('underline')
       }
-      if (e.keyCode == 86) {
+      if (e.keyCode == 83) {
         document.execCommand('strikeThrough')
       }
       if (e.keyCode == 88) {
@@ -263,11 +275,32 @@
     }
   }
 
-  Plugin.prototype.onPaste = function (e) {
-    e.preventDefault()
-    this.log('paste')
+  Plugin.prototype.getHtmlFromClipboard = function(clipboardData) {
+    try {
+      return clipboardData.getData('text/html')
+    }
+    catch (e) {
+      console.log('Sorry, can\'t get html of clipboard because browser is not supporting it.')
+      return
+    }
+  }
 
-    // insert and in case, resize images
+  Plugin.prototype.getTextFromClipboard = function(clipboardData) {
+    var text
+    try {
+      text = clipboardData.getData('text/plain')
+      if (!text || text.length === 0) {
+        text = clipboardData.getData('text')
+      }
+      return text
+    }
+    catch (e) {
+      console.log('Sorry, can\'t get text of clipboard because browser is not supporting it.')
+      return
+    }
+  }
+
+  Plugin.prototype.getClipboardData = function(e) {
     var clipboardData
     if (e.clipboardData) { // ie
       clipboardData = e.clipboardData
@@ -281,22 +314,53 @@
     else {
       throw "No clipboardData support"
     }
+    return clipboardData
+  }
 
-    if (clipboardData && clipboardData.items && clipboardData.items[0]) {
-      var imageInserted = false
-      var item = clipboardData.items[0]
-      if (item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')) {
-        this.log('paste image', item)
-        console.log(item)
+  Plugin.prototype.getClipboardDataImage = function(clipboardData) {
+    if (!clipboardData.items || !clipboardData.items[0]) {
+      return
+    }
+    return $.grep(clipboardData.items, function(item){
+      return item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')
+    })[0]
+  }
 
-        var imageFile = item.getAsFile()
+  Plugin.prototype.onPaste = function (e) {
+    e.preventDefault()
+    var clipboardData, clipboardImage, text, htmlRaw, htmlString
+
+    this.log('paste')
+
+    clipboardData = this.getClipboardData(e)
+
+    // look for image only if no HTML with textual content is available.
+    // E.g. Excel provides images of the spreadsheet along with HTML.
+    // While some browsers make images available in clipboard as HTML,
+    // sometimes wrapped in multiple nodes.
+    htmlRaw = this.getHtmlFromClipboard(clipboardData)
+
+    if (!App.Utils.clipboardHtmlIsWithText(htmlRaw)) {
+      // stop processing if input form does not accept images
+      if(this.options.noImages) return;
+
+      // insert and in case, resize images
+      clipboardImage = this.getClipboardDataImage(clipboardData)
+      if (clipboardImage) {
+
+        this.log('paste image', clipboardImage)
+
+        var imageFile = clipboardImage.getAsFile()
         var reader = new FileReader()
 
         reader.onload = $.proxy(function (e) {
           var result = e.target.result
           var img = document.createElement('img')
           img.src = result
-          maxWidth = this.$element.width() || 500
+          maxWidth = 1000
+          if (this.$element.width() > 1000) {
+            maxWidth = this.$element.width()
+          }
           scaleFactor = 2
           //scaleFactor = 1
           //if (window.isRetina && window.isRetina()) {
@@ -309,7 +373,7 @@
             this.log('image inserted')
             result = dataUrl
             if (this.options.imageWidth == 'absolute') {
-              img = "<img tabindex=\"0\" style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+              img = "<img tabindex=\"0\" style=\"width: " + width + "px; max-width: 100%;\" src=\"" + result + "\">"
             }
             else {
               img = "<img tabindex=\"0\" style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
@@ -322,72 +386,36 @@
         }, this)
 
         reader.readAsDataURL(imageFile)
-        imageInserted = true
+        return true
       }
     }
-    if (imageInserted) {
+
+    // insert html
+    if (htmlRaw) {
+      htmlString = App.Utils.clipboardHtmlInsertPreperation(htmlRaw, this.options)
+      if (htmlString) {
+        this.log('insert html from clipboard', htmlString)
+        this.paste(htmlString)
+        App.Utils.htmlImage2DataUrlAsyncInline(this.$element)
+        return true
+      }
+    }
+
+    // insert text
+    text = this.getTextFromClipboard(clipboardData)
+    if (!text) {
+      return false
+    }
+    htmlString = App.Utils.text2html(text)
+
+    // check length limit
+    if (!this.maxLengthOk(htmlString.length)) {
       return
     }
 
-    // check existing + paste text for limit
-    var text, docType
-    try {
-      text = clipboardData.getData('text/html')
-      docType = 'html'
-      if (!text || text.length === 0) {
-          docType = 'text'
-          text = clipboardData.getData('text/plain')
-      }
-      if (!text || text.length === 0) {
-          docType = 'text2'
-          text = clipboardData.getData('text')
-      }
-    }
-    catch (e) {
-      console.log('Sorry, can\'t insert markup because browser is not supporting it.')
-      docType = 'text3'
-      text = clipboardData.getData('text')
-    }
-    this.log('paste', docType, text)
-
-    if (docType == 'html') {
-      if (this.options.mode === 'textonly') {
-        if (!this.options.multiline) {
-          text = App.Utils.htmlRemoveTags(text)
-          this.log('htmlRemoveTags', text)
-        }
-        else {
-          this.log('htmlRemoveRichtext', text)
-          text = App.Utils.htmlRemoveRichtext(text)
-        }
-      }
-      else {
-        this.log('htmlCleanup', text)
-        text = App.Utils.htmlCleanup(text)
-      }
-      text = text.html()
-      this.log('text.html()', text)
-
-      // as fallback, take text
-      if (!text) {
-        text = App.Utils.text2html(text.text())
-        this.log('text2html', text)
-      }
-    }
-    else {
-      text = App.Utils.text2html(text)
-      this.log('text2html', text)
-    }
-
-    if (!this.maxLengthOk(text.length)) {
-      return
-    }
-
-    // cleanup
-    text = App.Utils.removeEmptyLines(text)
-    this.log('insert', text)
-
-    this.paste(text)
+    htmlString = App.Utils.removeEmptyLines(htmlString)
+    this.log('insert text from clipboard', htmlString)
+    this.paste(htmlString)
     return true
   }
 
@@ -418,6 +446,8 @@
     y = e.clientY
     var file = dataTransfer.files[0]
 
+    if(!file) return;
+
     // look for images
     if (file.type.match('image.*')) {
       var reader = new FileReader()
@@ -440,12 +470,11 @@
           this.log('image inserted')
           result = dataUrl
           if (this.options.imageWidth == 'absolute') {
-            img = $("<img tabindex=\"0\" style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            img = "<img tabindex=\"0\" style=\"width: " + width + "px; max-width: 100%;\" src=\"" + result + "\">"
           }
           else {
-            img = $("<img tabindex=\"0\" style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
+            img = "<img tabindex=\"0\" style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
           }
-          img = img.get(0)
 
           if (document.caretPositionFromPoint) {
             var pos = document.caretPositionFromPoint(x, y)

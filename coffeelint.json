@@ -131,5 +131,8 @@
   },
   "transform_messes_up_line_numbers": {
     "level": "error"
+  },
+  "detect_translatable_string": {
+    "level": "error"
   }
 }

@@ -1,11 +1,13 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 # update settings for searchable models
-if ActiveRecord::Base.connection.tables.include?('settings')
-  if Setting.columns_hash.key?('state_current') # TODO: remove me later
-    models_current = Models.searchable.map(&:to_s)
-    models_config = Setting.get('models_searchable')
-    setting = Setting.find_by(name: 'models_searchable')
-    if setting && models_current != models_config
-      Setting.set('models_searchable', models_current)
-    end
+
+Rails.application.reloader.to_prepare do
+  begin
+    next if !Setting.exists?(name: 'models_searchable')
+
+    Setting.set('models_searchable', Models.searchable.map(&:to_s))
+  rescue ActiveRecord::StatementInvalid
+    nil
   end
 end

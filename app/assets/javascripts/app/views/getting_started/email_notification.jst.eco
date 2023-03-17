@@ -11,6 +11,7 @@
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary" href="#getting_started/base"><%- @T('Go Back') %></a>
+        <a class="btn align-right" href="#getting_started/channel"><%- @T( 'Skip' ) %></a>
         <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
       </div>
     </div>
@@ -21,7 +22,7 @@
       <h2><%- @T('Email Notification') %></h2>
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Verifying...') %>
+          <span class="loading icon"></span> <%- @T('Verifying…') %>
         </p>
       </div>
     </div>

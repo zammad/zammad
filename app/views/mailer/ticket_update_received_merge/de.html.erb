@@ -1,0 +1,11 @@
+Ein anderes Ticket wurde zusammengefasst zu Ticket (#{ticket.title})
+
+<div>Hallo #{recipient.fullname},</div>
+<br>
+<div>
+ein anderes Ticket wurde zusammengefasst zu Ticket (#{ticket.title}) von "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">In #{config.product_name} anzeigen</a>
+</div>

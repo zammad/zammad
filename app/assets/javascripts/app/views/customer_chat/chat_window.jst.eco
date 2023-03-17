@@ -24,8 +24,17 @@
   <div class="chat-body js-body"></div>
   <div class="chat-body js-meta hidden">
     <% if @session: %>
+    <%- @T('Transfer conversation to another chat:') %>
     <ul>
-      <li><%- @T('Created at') %>: <%- @Ttimestamp(@session.created_at) %></li>
+      <% for chat in @chats: %>
+        <% if @session.chat_id isnt chat.id: %>
+          <li><a data-chat-id="<%= chat.id %>" class="js-transferChat" href="#"><%- chat.name %></a>
+        <% end %>
+      <% end %>
+    </ul>
+    <hr>
+    <ul>
+      <li><%- @T('Created at:') %> <%- @Ttimestamp(@session.created_at) %></li>
       <% if @session && @session.preferences: %>
         <% if @session.preferences.geo_ip: %>
           <li>GeoIP: <%= @session.preferences.geo_ip.country_name %> <%= @session.preferences.geo_ip.city_name %></li>

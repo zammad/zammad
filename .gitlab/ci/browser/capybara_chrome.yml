@@ -1,0 +1,55 @@
+capybara:chrome:1:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 1
+
+capybara:chrome:2:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 2
+
+capybara:chrome:3:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 3
+
+capybara:chrome:4:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 4
+
+capybara:chrome:5:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 5
+
+capybara:chrome:6:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 6
+
+capybara:chrome:7:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 7
+
+capybara:chrome:8:
+  extends:
+    - .template_browser-core_capybara_chrome
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 8

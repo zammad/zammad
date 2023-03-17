@@ -2,40 +2,41 @@ class App.FirstStepsClues extends App.Controller
   clues: [
     {
       container: '.js-dashboardMenuItem'
-      headline: 'Dashboard'
-      text: 'Here you see a quick overview of your and other agents\' performance.'
+      headline: __('Dashboard')
+      text: __('Here you see a quick overview of your and other agents\' performance.')
       actions: [
         'hover'
       ]
     }
     {
       container: '.search-holder'
-      headline: 'Search'
-      text: 'Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
+      headline: __('Search')
+      text: __('Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §"some phrase"§.')
       actions: []
     }
     {
-      container: '.user-menu'
-      headline: 'Create'
-      text: 'Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.'
+      container: '.user-menu .add'
+      headline: __('Create')
+      text: __('Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations.')
       actions: [
-        'click .add .js-action',
-        'hover .add'
+        'hover .navigation',
+        'hover .user-menu .add'
       ]
     }
     {
-      container: '.user-menu'
-      headline: 'Personal Settings'
-      text: 'Here you can sign out, change the frontend language and see your last viewed items.'
+      container: '.user-menu .user .dropdown-menu'
+      headline: __('Personal Settings')
+      text: __('Here you can sign out, change the frontend language, and see your last viewed items.')
       actions: [
-        'click .user .js-action',
-        'hover .user'
+        'hover .navigation',
+        'click .user-menu .user .js-action',
+        'hover .user-menu .user'
       ]
     }
     {
       container: '.js-overviewsMenuItem'
-      headline: 'Overviews'
-      text: 'Here you find your ticket overviews for open, assigned and escalated tickets.'
+      headline: __('Overviews')
+      text: __('Here you find your ticket overviews for open, assigned, and escalated tickets.')
       actions: [
         'hover'
       ]
@@ -54,8 +55,9 @@ class App.FirstStepsClues extends App.Controller
 
   constructor: (params) ->
 
-    $('#app').append('<div class="js-modal--clue"></div>')
-    params.el = $('#app .js-modal--clue')
+    el = $('<div class="js-modal--clue"></div>')
+    params.appEl.append(el)
+    params.el = el
 
     super params
 
@@ -69,7 +71,7 @@ class App.FirstStepsClues extends App.Controller
     @position = 0
     @render()
 
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
       'clues'
     )
@@ -106,7 +108,7 @@ class App.FirstStepsClues extends App.Controller
   cleanUp: (callback) ->
     @hideWindow =>
       clue = @clues[@position]
-      container = $("#app #{clue.container}")
+      container = @appEl.find(clue.container)
       container.removeClass('selected-clue')
 
       # undo click perform by doing it again
@@ -128,7 +130,7 @@ class App.FirstStepsClues extends App.Controller
 
   showClue: =>
     clue = @clues[@position]
-    container = $("#app #{clue.container}")
+    container = @appEl.find(clue.container)
     container.addClass('selected-clue')
 
     if clue.actions
@@ -167,6 +169,7 @@ class App.FirstStepsClues extends App.Controller
       options:
         duration: 300
         easing: [0.34,1.61,0.7,1]
+        complete: => @el.addClass('modal--clue-ready')
 
   hideWindow: (callback) =>
     @modalWindow.velocity
@@ -190,7 +193,7 @@ class App.FirstStepsClues extends App.Controller
     maxHeight = $(window).height()
 
     # try to place it parallel to the larger side
-    if target.height > target.width
+    if target.height > target.width && window.matchMedia('(min-width: 768px)').matches
       # try to place it aside
       # prefer right
       if target.right + modal.width <= maxWidth
@@ -316,7 +319,7 @@ class App.FirstStepsClues extends App.Controller
       else
         # 'click .target'
         eventName = action.substr 0, action.indexOf(' ')
-        target = container.find( action.substr action.indexOf(' ') + 1 )
+        target = $( action.substr action.indexOf(' ') + 1 )
 
       switch eventName
         when 'click'
@@ -324,7 +327,7 @@ class App.FirstStepsClues extends App.Controller
         when 'hover'
 
           # disable active navbar elements
-          $('#app .navigation .is-active').removeClass('is-active')
+          @appEl.find('.navigation .is-active').removeClass('is-active')
 
           if type is 'show'
             target.addClass('is-hovered')

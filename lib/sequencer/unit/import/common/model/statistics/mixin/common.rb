@@ -1,33 +1,21 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          module Statistics
-            module Mixin
-              module Common
-                private
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-                def actions
-                  %i[skipped created updated unchanged failed deactivated]
-                end
+module Sequencer::Unit::Import::Common::Model::Statistics::Mixin::Common
+  private
 
-                def results
-                  %i[sum total]
-                end
+  def actions
+    %i[skipped created updated unchanged failed deactivated]
+  end
 
-                def empty_diff
-                  possible_actions.collect { |key| [key, 0] }.to_h
-                end
+  def results
+    %i[sum total]
+  end
 
-                def possible_actions
-                  @possible_actions ||= actions + results
-                end
-              end
-            end
-          end
-        end
-      end
-    end
+  def empty_diff
+    possible_actions.index_with { |_key| 0 }
+  end
+
+  def possible_actions
+    @possible_actions ||= actions + results
   end
 end

@@ -1,12 +1,12 @@
-Vyeskaloval ticket (#{ticket.title})
+Eskalovaný ticket (#{ticket.title})
 
-<div>Dobrý den,</div>
+<div>Dobrý den, #{recipient.firstname},</div>
 <br>
-<div>ticket (#{ticket.title}) od "<b>#{ticket.customer.longname}</b>" eskaloval "#{ticket.escalation_at}"!</div>
+<div>ticket (#{ticket.title}) zákazníka "<b>#{ticket.customer.longname}</b>" eskaloval "#{ticket.escalation_at}"!</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Informace:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Vyeskaloval ticket (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Zobrazit v aplikaci #{config.product_name}</a>
 </div>

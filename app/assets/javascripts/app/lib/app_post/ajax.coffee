@@ -67,9 +67,9 @@ class _ajaxSingleton
     @runNextInQueue()
 
     # bindings
-    $(document).bind('ajaxSend', =>
+    $(document).on('ajaxSend', =>
       @_show_spinner()
-    ).bind('ajaxComplete', (request, xhr, settings) =>
+    ).on('ajaxComplete', (request, xhr, settings) =>
       @_hide_spinner()
 
       # remeber XSRF-TOKEN for later
@@ -81,11 +81,14 @@ class _ajaxSingleton
     )
 
     # show error messages
-    $(document).bind('ajaxError', (e, jqxhr, settings, exception) ->
+    $(document).on('ajaxError', (e, jqxhr, settings, exception) ->
+      if settings.failResponseNoTrigger
+        return
+
       status = jqxhr.status
       detail = jqxhr.responseText
       if !status && !detail
-        detail = 'General communication error, maybe internet is not available!'
+        detail = __('General communication error, maybe internet is not available!')
 
       # do not show aborded requests
       return if status is 0
@@ -93,20 +96,31 @@ class _ajaxSingleton
       # 200, all is fine
       return if status is 200
 
-      # do not show any error message with code 401/404 (handled by controllers)
+      try
+        json = JSON.parse(detail)
+        error = json.error
+        error_human = json.error_human || error
+
+      error_human = detail if !error_human
+
+      if App.Session.get()?.id && (status is 401 || (status is 403 && error && error is 'Authentication required'))
+        App.Event.trigger('auth:session_invalid')
+
+      # do not show any error message for various 4** codes (handled by controllers)
       return if status is 401
+      return if status is 403
       return if status is 404
       return if status is 422
 
       # do not show any error message with code 502
       return if status is 502
 
+      escaped = App.Utils.htmlEscape(error_human)
+
       # show error message
-      new App.ControllerModal(
-        head:          "StatusCode: #{status}"
-        contentInline: "<pre>#{App.Utils.htmlEscape(detail)}</pre>"
-        buttonClose:   true
-        buttonSubmit:  false
+      new App.ControllerTechnicalErrorModal(
+        contentCode: escaped
+        head:        "StatusCode: #{status}"
       )
     )
 

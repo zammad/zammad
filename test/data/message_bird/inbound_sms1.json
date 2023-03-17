@@ -1,0 +1,20 @@
+{
+   "body":"Ldfhxhcuffufuf. Fifififig.  Fifififiif Fifififiif Fifififiif Fifififiif Fifififiif",
+   "createdDatetime":"",
+   "currentTime":"2021-07-22T10:06:00+02:00",
+   "date":"0",
+   "date_utc":"0",
+   "id":"",
+   "incomingMessage":"Ldfhxhcuffufuf. Fifififig.  Fifififiif Fifififiif Fifififiif Fifififiif Fifififiif",
+   "message":"",
+   "message_id":"",
+   "originator":"+491710000000",
+   "payload":"Ldfhxhcuffufuf. Fifififig.  Fifififiif Fifififiif Fifififiif Fifififiif Fifififiif",
+   "receiver":"",
+   "recipient":"+4915700000000",
+   "reference":"",
+   "sender":"",
+   "controller":"channels_sms",
+   "action":"webhook",
+   "token":"xxx"
+}

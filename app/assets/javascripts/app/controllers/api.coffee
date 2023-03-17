@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Api extends App.ControllerSubContent
   requiredPermission: 'admin.api'
-  header: 'API'
+  header: __('API')
   events:
     'click .action':  'action'
     'change .js-TokenAccess input': 'toggleTokenAccess'
@@ -20,7 +20,7 @@ class Index extends App.ControllerSubContent
 
   render: =>
 
-    # serach area settings
+    # search area settings
     settings = App.Setting.search(
       filter:
         area: 'API::Base'
@@ -38,11 +38,11 @@ class Index extends App.ControllerSubContent
       callbackHeader = (headers) ->
         attribute =
           name: 'view'
-          display: 'View'
+          display: __('View')
         headers.splice(3, 0, attribute)
         attribute =
           name: 'token'
-          display: 'Token'
+          display: __('Token')
         headers.splice(4, 0, attribute)
         headers
 
@@ -79,7 +79,6 @@ class Index extends App.ControllerSubContent
 
 
   release: =>
-    super
     if @subscribeApplicationId
       App.Application.unsubscribe(@subscribeApplicationId)
 
@@ -125,7 +124,7 @@ class Index extends App.ControllerSubContent
     e.preventDefault()
     new App.ControllerGenericNew(
       pageData:
-        object: 'Application'
+        object: __('Application')
       genericObject: 'Application'
       callback: =>
         @render()
@@ -139,7 +138,7 @@ class Index extends App.ControllerSubContent
     new App.ControllerGenericEdit(
       id:       item.id
       pageData:
-        object: 'Application'
+        object: __('Application')
       genericObject: 'Application'
       callback: =>
         @render()
@@ -165,8 +164,8 @@ class ViewAppModal extends App.ControllerModal
     Secret: <input class=\"js-select\" type=\"text\" value=\"#{@app.secret}\">"
 
 class ViewAppTokenModal extends App.ControllerModal
-  headPrefix: 'Generate Token'
-  buttonSubmit: 'Generate Token'
+  headPrefix: __('Generate Token')
+  buttonSubmit: __('Generate Token')
   buttonCancel: true
   shown: true
   small: true
@@ -193,4 +192,4 @@ class ViewAppTokenModal extends App.ControllerModal
         @$('.js-submit').remove()
     )
 
-App.Config.set('API', { prio: 1200, name: 'API', parent: '#system', target: '#system/api', controller: Index, permission: ['admin.api'] }, 'NavBarAdmin')
+App.Config.set('API', { prio: 1200, name: __('API'), parent: '#system', target: '#system/api', controller: Api, permission: ['admin.api'] }, 'NavBarAdmin')

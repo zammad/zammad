@@ -1,117 +1,58 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth
-  include ApplicationLib
 
-=begin
+  attr_reader :user, :password, :auth_user
 
-checks if a given user can login. Checks for
- - valid user
- - active state
- - max failed logins
+  delegate :user, to: :auth_user
 
-  result = Auth.can_login?(user)
+  attr_accessor :increase_login_failed_attempts
 
-returns
+  BRUTE_FORCE_SLEEP = 1.second
 
-  result = true | false
+  # Initializes a Auth object for the given user.
+  #
+  # @param username [String] the user name for the user object which needs an authentication.
+  #
+  # @example
+  #  auth = Auth.new('admin@example.com', 'some+password')
+  def initialize(username, password)
+    @auth_user = username.present? ? Auth::User.new(username) : nil
+    @password = password
+    @increase_login_failed_attempts = false
+  end
 
-=end
+  # Validates the given credentials for the user to the configured auth backends which should
+  # be performed.
+  #
+  # @return [Boolean] true if the user was authenticated, otherwise false.
+  def valid?
+    # Wrap in a lock to synchronize concurrent requests.
+    validated = auth_user&.user&.with_lock do
+      next false if !auth_user.can_login?
+      next true if backends.valid?
 
-  def self.can_login?(user)
-    return false if !user.is_a?(User)
-    return false if !user.active?
+      auth_user.increase_login_failed if increase_login_failed_attempts
+      false
+    end
 
-    return true if !user.max_login_failed?
-    Rails.logger.info "Max login failed reached for user #{user.login}."
+    if validated
+      auth_user.update_last_login
+      return true
+    end
 
+    avoid_brute_force_attack
     false
   end
 
-=begin
+  private
 
-checks if a given user and password match against multiple auth backends
- - valid user
- - active state
- - max failed logins
-
-  result = Auth.valid?(user, password)
-
-returns
-
-  result = true | false
-
-=end
-
-  def self.valid?(user, password)
-    # try to login against configure auth backends
-    backends.any? do |config|
-      next if !backend_validates?(
-        config:   config,
-        user:     user,
-        password: password,
-      )
-
-      Rails.logger.info "Authentication against #{config[:adapter]} for user #{user.login} ok."
-
-      # remember last login date
-      user.update_last_login
-
-      true
-    end
+  # Sleep for a second to avoid brute force attacks.
+  def avoid_brute_force_attack
+    sleep BRUTE_FORCE_SLEEP
   end
 
-=begin
-
-returns a list of all Auth backend configurations
-
-  result = Auth.backends
-
-returns
-
-  result = [
-    {
-      adapter: 'Auth::Internal',
-    },
-    {
-      adapter: 'Auth::Developer',
-    },
-    ...
-  ]
-
-=end
-
-  def self.backends
-
-    # use std. auth backends
-    config = [
-      {
-        adapter: 'Auth::Internal',
-      },
-      {
-        adapter: 'Auth::Developer',
-      },
-    ]
-
-    # added configured backends
-    Setting.where(area: 'Security::Authentication').each do |setting|
-      next if setting.state_current[:value].blank?
-      config.push setting.state_current[:value]
-    end
-
-    config
+  def backends
+    Auth::Backend.new(self)
   end
-
-  def self.backend_validates?(config:, user:, password:)
-    return false if !config[:adapter]
-
-    # load backend
-    backend = load_adapter(config[:adapter])
-    return false if !backend
-
-    instance = backend.new(config)
-
-    instance.valid?(user, password)
-  end
-  private_class_method :backend_validates?
 end

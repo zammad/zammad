@@ -1,0 +1,10 @@
+<table class="settings-list js-localeTable">
+  <thead>
+    <tr>
+      <th width="85%"><%- @T('Language') %>
+      <th width="5%"><%- @T('Default') %>
+      <th width="10%"><%- @T('Delete') %>
+  </thead>
+  <tbody>
+  </tbody>
+</table>

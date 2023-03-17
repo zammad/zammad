@@ -1,10 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
   extend ActiveSupport::Concern
 
   included do
 
-    # Builds a case insenstive WHERE ... OR ... SQL query.
+    # Builds a case-insensitive WHERE ... OR ... SQL query.
     #
     # @see .or_cis
     #
@@ -19,10 +20,10 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
-    # Builds a case insenstive OR SQL grouping. This comes in handy for join queries.
+    # Builds a case-insensitive OR SQL grouping. This comes in handy for join queries.
     # For direct WHERE queries prefer .where_or_cis scope.
     #
-    # @param [Array] attributes the attributes that should get queried case insensitive.
+    # @param [Array] attributes the attributes that should get queried case-insensitive. Strings or Arel attributes
     # @param [String] query the SQL query that should be used for each given attribute.
     #
     # @example
@@ -30,11 +31,15 @@ module ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
     #
     # @return [Arel::Nodes::Grouping] can be passed to ActiveRecord queries
     def or_cis(attributes, query)
-      # use Arel to create an Array of case insenstive
+      # use Arel to create an Array of case-insensitive
       # LIKE queries based on the current DB adapter
-      cis_matches = attributes.map do |attribute|
-        arel_table[attribute].matches(query)
-      end
+      cis_matches = attributes
+                    .map do |attribute|
+                      next attribute if attribute.is_a? Arel::Attributes::Attribute
+
+                      arel_table[attribute]
+
+                    end.map { |attribute| attribute.matches(query) }
 
       # return the by OR joined Arel queries
       cis_matches.inject(:or)

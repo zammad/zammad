@@ -2,6 +2,7 @@ class App.WidgetTag extends App.Controller
   editMode: false
   pendingRefresh: false
   possibleTags: {}
+  templateName:'widget/tag'
   elements:
     '.js-newTagLabel': 'newTagLabel'
     '.js-newTagInput': 'newTagInput'
@@ -50,8 +51,10 @@ class App.WidgetTag extends App.Controller
   render: =>
     return if @lastLocalTags && _.isEqual(@lastLocalTags, @localTags)
     @lastLocalTags = _.clone(@localTags)
-    @html App.view('widget/tag')(
+
+    @html App.view(@templateName)(
       tags: @localTags || [],
+      editable: @editable
     )
     source = "#{App.Config.get('api_path')}/tag_search"
     @$('.js-newTagInput').autocomplete(
@@ -67,7 +70,7 @@ class App.WidgetTag extends App.Controller
   showInput: (e) =>
     e.preventDefault()
     @newTagLabel.addClass('hide')
-    @newTagInput.removeClass('hide').focus()
+    @newTagInput.removeClass('hide').trigger('focus')
     @newTagInput.trigger(jQuery.Event('keydown'))
     @editMode = true
 

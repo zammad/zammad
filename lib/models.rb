@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Models
   include ApplicationLib
 
@@ -27,32 +29,35 @@ returns
   def self.all
     @all ||= begin
       all    = {}
-      dir    = Rails.root.join('app', 'models').to_s
+      dir    = Rails.root.join('app/models').to_s
       tables = ActiveRecord::Base.connection.tables
       Dir.glob("#{dir}/**/*.rb") do |entry|
-        next if entry.match?(/application_model/i)
+        next if entry.match?(%r{application_model}i)
         next if entry.match?(%r{channel/}i)
         next if entry.match?(%r{observer/}i)
         next if entry.match?(%r{store/provider/}i)
         next if entry.match?(%r{models/concerns/}i)
+        next if entry.match?(%r{models/object_manager/attribute/validation/}i)
 
         entry.gsub!(dir, '')
         entry = entry.to_classname
-        model_class = load_adapter(entry)
-        next if !model_class
+        model_class = entry.constantize
         next if !model_class.respond_to? :new
         next if !model_class.respond_to? :table_name
+
         table_name = model_class.table_name # handle models where not table exists, pending migrations
-        next if !tables.include?(table_name)
+        next if tables.exclude?(table_name)
+
         model_object = model_class.new
         next if !model_object.respond_to? :attributes
+
         all[model_class] = {}
         all[model_class][:attributes] = model_class.attribute_names
         all[model_class][:reflections] = model_class.reflections
         all[model_class][:table] = model_class.table_name
-        #puts model_class
-        #puts "rrrr #{all[model_class][:attributes]}"
-        #puts " #{model_class.attribute_names.inspect}"
+        # puts model_class
+        # puts "rrrr #{all[model_class][:attributes]}"
+        # puts " #{model_class.attribute_names.inspect}"
       end
       all
     end
@@ -60,7 +65,7 @@ returns
 
 =begin
 
-get list of searchable models
+get list of searchable models for UI
 
   result = Models.searchable
 
@@ -71,13 +76,23 @@ returns
 =end
 
   def self.searchable
-    models = []
-    all.each_key do |model_class|
-      next if !model_class
-      next if !model_class.respond_to? :search_preferences
-      models.push model_class
-    end
-    models
+    @searchable ||= Models.all.keys.select { |model| model.respond_to?(:search_preferences) }
+  end
+
+=begin
+
+get list of indexable models
+
+  result = Models.indexable
+
+returns
+
+  [Model1, Model2, Model3]
+
+=end
+
+  def self.indexable
+    @indexable ||= Models.all.keys.select { |model| model.method_defined?(:search_index_update_backend) }
   end
 
 =begin
@@ -101,12 +116,11 @@ returns
 
 =end
 
-  def self.references(object_name, object_id)
+  def self.references(object_name, object_id, include_zero = false)
     object_name = object_name.to_s
 
     # check if model exists
-    object_model = load_adapter(object_name)
-    object_model.find(object_id)
+    object_name.constantize.find(object_id)
 
     list       = all
     references = {}
@@ -119,6 +133,7 @@ returns
     if object_name == 'User'
       ref_attributes.push 'created_by_id'
       ref_attributes.push 'updated_by_id'
+      ref_attributes.push 'out_of_office_replacement_id'
     end
     list.each do |model_class, model_attributes|
       if !references[model_class.to_s]
@@ -126,11 +141,13 @@ returns
       end
 
       next if !model_attributes[:attributes]
-      ref_attributes.each do |item|
-        next if !model_attributes[:attributes].include?(item)
 
-        count = model_class.where("#{item} = ?", object_id).count
-        next if count.zero?
+      ref_attributes.each do |item|
+        next if model_attributes[:attributes].exclude?(item)
+
+        count = model_class.where(item => object_id).count
+        next if count.zero? && !include_zero
+
         if !references[model_class.to_s][item]
           references[model_class.to_s][item] = 0
         end
@@ -140,17 +157,20 @@ returns
     end
 
     # find relations via reflections
-    list.each do |model_class, model_attributes|
+    list.each do |model_class, model_attributes| # rubocop:disable Style/CombinableLoops
       next if !model_attributes[:reflections]
+
       model_attributes[:reflections].each_value do |reflection_value|
 
         next if reflection_value.macro != :belongs_to
+
         col_name = "#{reflection_value.name}_id"
         next if ref_attributes.include?(col_name)
 
         if reflection_value.options[:class_name] == object_name
-          count = model_class.where("#{col_name} = ?", object_id).count
-          next if count.zero?
+          count = model_class.where(col_name => object_id).count
+          next if count.zero? && !include_zero
+
           if !references[model_class.to_s][col_name]
             references[model_class.to_s][col_name] = 0
           end
@@ -161,8 +181,9 @@ returns
         next if reflection_value.options[:class_name]
         next if reflection_value.name != object_name.downcase.to_sym
 
-        count = model_class.where("#{col_name} = ?", object_id).count
-        next if count.zero?
+        count = model_class.where(col_name => object_id).count
+        next if count.zero? && !include_zero
+
         if !references[model_class.to_s][col_name]
           references[model_class.to_s][col_name] = 0
         end
@@ -174,6 +195,7 @@ returns
     # cleanup, remove models with empty references
     references.each do |k, v|
       next if v.present?
+
       references.delete(k)
     end
 
@@ -228,13 +250,13 @@ returns
     # update references
     references = references(object_name, object_id_to_merge)
     references.each do |model, attributes|
-      model_object = Object.const_get(model)
+      model_object = model.constantize
 
       # collect items and attributes to update
       items_to_update = {}
       attributes.each_key do |attribute|
         Rails.logger.debug { "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}" }
-        model_object.where("#{attribute} = ?", object_id_to_merge).each do |item|
+        model_object.where(attribute => object_id_to_merge).each do |item|
           if !items_to_update[item.id]
             items_to_update[item.id] = item
           end
@@ -247,6 +269,9 @@ returns
         items_to_update.each_value(&:save!)
       end
     end
+
+    ExternalSync.migrate(object_name, object_id_primary, object_id_to_merge)
+
     true
   end
 end

@@ -1,81 +1,125 @@
 <div class="login fullscreen">
   <div class="fullscreen-center">
     <div class="fullscreen-body">
-      <p><%- @T('Login with %s', @C('fqdn')) %></p>
+      <p><%- @T('Log in to %s', @C('fqdn')) %></p>
 
       <% if @C('maintenance_mode'): %>
-        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+        <div class="hero-unit alert alert--danger js-maintenanceMode"><%- @T('Zammad is currently in maintenance mode. Only administrators can log in. Please wait until the maintenance window is over.') %></div>
       <% end %>
       <% if @C('maintenance_login') && @C('maintenance_login_message'): %>
         <div class="hero-unit alert alert--success js-maintenanceLogin"><%- @C('maintenance_login_message') %></div>
       <% end %>
 
+      <% user_show_password_login = @C('user_show_password_login') || _.isEmpty(@auth_providers) %>
+
       <div class="hero-unit">
         <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C('product_name') %>">
-        <form id="login">
-          <div class="form-group">
-            <div class="formGroup-label">
-              <label for="username"><%- @Ti('Username / email') %></label>
-            </div>
-            <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
-          </div>
-
-          <div class="form-group">
-            <div class="formGroup-label">
-              <label for="password"><%- @Ti('Password') %></label>
-            </div>
-            <input id="password" name="password" type="password" class="form-control" autocomplete="off"/>
-          </div>
-
-          <div class="form-group">
-    <!--
-            <label for="remember_me"><%- @Ti('Remember me') %></label>
-            <input id="remember_me" name="remember_me" value="1" type="checkbox"/>
-    -->
-            <label class="inline-label checkbox-replacement">
-              <input name="remember_me" value="1" type="checkbox">
-              <%- @Icon('checkbox', 'icon-unchecked') %>
-              <%- @Icon('checkbox-checked', 'icon-checked') %>
-              <span class="label-text"><%- @T('Remember me') %></span>
-            </label>
-          </div>
-
-          <div class="form-controls">
-            <button class="btn btn--primary" type="submit"><%- @T('Sign in') %></button>
-
-            <% if @C('user_lost_password'): %>
-              <a href="#password_reset" class="btn btn--text btn--secondary align-right"><%- @T('Forgot password?') %></a>
+        <% if @item.showAdminPasswordLogin || user_show_password_login: %>
+          <form id="login">
+            <% if @item.errorMessage: %>
+              <div class="alert alert--danger" role="alert">
+                <%= @item.errorMessage %>
+              </div>
             <% end %>
-          </div>
 
-          <% if !_.isEmpty(@auth_providers): %>
+            <div class="form-group">
+              <div class="formGroup-label">
+                <label for="username"><%- @Ti('Username / email') %></label>
+              </div>
+              <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+            </div>
+
+            <div class="form-group">
+              <div class="formGroup-label">
+                <label for="password"><%- @Ti('Password') %></label>
+              </div>
+              <input id="password" name="password" type="password" class="form-control" autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+              <label class="inline-label checkbox-replacement">
+                <input name="remember_me" value="1" type="checkbox">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+                <span class="label-text"><%- @T('Remember me') %></span>
+              </label>
+            </div>
+
+            <div class="form-controls">
+              <button class="btn btn--primary" type="submit"><%- @T('Sign in') %></button>
+
+              <% if @C('user_lost_password'): %>
+                <a href="#password_reset" class="btn btn--text btn--secondary align-center"><%- @T('Forgot password?') %></a>
+              <% end %>
+            </div>
+
+          </form>
+        <% else if @item.showAdminPasswordLoginFailed: %>
+          <form id="login">
+            <div class="alert alert--danger" role="alert">
+              <%- @T('The token for the admin password login is invalid.') %>
+            </div>
+          </form>
+        <% end %>
+        <% if !_.isEmpty(@auth_providers): %>
           <div class="separator">
-            <span class="separator-text"><%- @T('or sign in using') %></span>
+            <span class="separator-text">
+              <% if @C('user_show_password_login'): %>
+                <%- @T('or sign in using') %>
+              <% else: %>
+                <%- @T('Sign in using') %>
+              <% end %>
+            </span>
           </div>
 
           <div class="auth-providers">
             <% for auth_provider in @auth_providers: %>
-              <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
-                <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
-                <span class="provider-name"><%- @T(auth_provider.name) %></span>
-              </a>
+              <form method="post" action="<%= auth_provider.url %>">
+                <input type="hidden" name="authenticity_token" value="<%= Spine.Ajax.defaults.headers['X-CSRF-Token'] %>">
+                <button type="submit" class="auth-provider auth-provider--<%= auth_provider.class %>">
+                  <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
+                  <span class="provider-name">
+                    <%- @C("#{auth_provider.config}_display_name") || @T(auth_provider.name) %>
+                  </span>
+                </button>
+              </form>
             <% end %>
           </div>
-          <% end %>
-        </form>
+        <% end %>
       </div>
 
+    <% if user_show_password_login: %>
       <p>
-        <%- @T("You're already registered with your email address if you've been in touch with our support team.") %><br>
+        <%- @T("You're already registered with your email address if you've been in touch with our Support team.") %><br>
         <% if @C('user_lost_password'): %>
           <%- @T('You can request your password') %> <a href="#password_reset"><%- @T('here') %></a>.
         <% end %>
       </p>
+    <% end %>
 
-    <% if @C('user_create_account'): %>
+    <% if !user_show_password_login: %>
+      <p>
+        <%- @T('If you have problems with the third-party login you can request a one-time password login as an admin.') %>
+        <a href="#admin_password_auth"><%- @T('Request the password login here.') %></a>
+      </p>
+    <% end %>
+
+    <% show_user_create_account = @C('user_create_account') && user_show_password_login %>
+    <% if show_user_create_account || !_.isEmpty(@public_links): %>
       <hr>
       <p>
-        <a href="#signup"><%- @T('Register as a new customer') %></a>
+        <% if show_user_create_account: %>
+          <a href="#signup"><%- @T('Register as a new customer') %></a>
+        <% end %>
+        <% for link, link_index in @public_links: %>
+          <% if link_index > 0 || show_user_create_account: %> | <% end %>
+          <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+        <% end %>
+      </p>
+    <% end %>
+    <% if @show_mobile_link: %>
+      <p>
+        <a class="align-center" href="#mobile"><%- @T('Continue to mobile') %></a>
       </p>
     <% end %>
     </div>

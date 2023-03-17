@@ -1,0 +1,32 @@
+{
+  "update_id": 2,
+  "message": {
+    "from": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername"
+    },
+    "chat": {
+      "last_name":"Test Lastname",
+      "id":111111,
+      "first_name":"Test Firstname",
+      "username":"Testusername",
+      "type": "private"
+    },
+    "message_id": 2,
+    "date": 1486036832,
+    "document": {
+      "file_name": "document.pdf",
+      "mime_type": "application/pdf",
+      "thumb": {
+        "file_id": "documentthumbfileid",
+        "file_size": 123456,
+        "width": 200,
+        "height": 200
+      },
+      "file_id": "documentfileid",
+      "file_size": 123456
+    }
+  }
+}

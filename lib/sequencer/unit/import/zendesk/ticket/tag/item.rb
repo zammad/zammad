@@ -1,20 +1,10 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          module Tag
-            class Item < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :resource
+class Sequencer::Unit::Import::Zendesk::Ticket::Tag::Item < Sequencer::Unit::Common::Provider::Named
 
-              def item
-                resource.id
-              end
-            end
-          end
-        end
-      end
-    end
+  uses :resource
+
+  def item
+    resource.id
   end
 end

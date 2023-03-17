@@ -1,0 +1,33 @@
+.template_integration_es:
+  extends:
+    - .job_rules_default
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - !reference [.services, elasticsearch]
+  stage: test
+  script:
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
+
+# Lowest supported version
+rspec:es:7.8:
+  extends:
+    - .template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '7.8.1'
+
+# Highest supported version (except for newer releases that are not yet in CI)
+rspec:es:7.16:
+  extends:
+    - .template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '7.16'
+
+rspec:es:8.1:
+  extends:
+    - .template_integration_es
+  variables:
+    ELASTICSEARCH_TAG: '8.1'

@@ -1,0 +1,19 @@
+<div class="request_admin_password_auth fullscreen">
+  <div class="fullscreen-center">
+    <div class="hero-unit fullscreen-body">
+      <h2><%- @T('Request password login for admin?') %><small></small></h2>
+      <form class="js-adminPasswordAuthForm">
+        <div class="js-adminPassword"></div>
+        <div class="form-controls">
+          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>
+          <button class="btn btn--primary js-submit align-right"><%- @T('Submit') %></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
+  </div>
+</div>

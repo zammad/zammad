@@ -1,0 +1,50 @@
+.template_rspec_postgresql:
+  extends:
+    - .template_rspec
+  services:
+  - !reference [.services, postgresql]
+  - !reference [.services, redis]
+  - !reference [.services, memcached]
+  - !reference [.services, proxy]
+
+rspec:postgresql:1:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 1
+  extends:
+    - .template_rspec_postgresql
+
+rspec:postgresql:2:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 2
+  extends:
+    - .template_rspec_postgresql
+
+rspec:postgresql:3:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 3
+  extends:
+    - .template_rspec_postgresql
+
+rspec:postgresql:4:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 4
+  extends:
+    - .template_rspec_postgresql
+
+rspec:postgresql:5:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 5
+  extends:
+    - .template_rspec_postgresql
+
+rspec:postgresql:6:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 6
+  extends:
+    - .template_rspec_postgresql

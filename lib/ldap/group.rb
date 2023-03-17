@@ -1,13 +1,8 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Ldap
 
   # Class for handling LDAP Groups.
-  #  ATTENTION: Make sure to add the following lines to your code if accessing this class.
-  #  Otherwise Rails will autoload the Group model or might throw parameter errors if crearing
-  #  an ::Ldap instance.
-  #
-  # @example
-  #  require_dependency 'ldap'
-  #  require_dependency 'ldap/group'
   class Group
     include Ldap::FilterLookup
 
@@ -29,8 +24,6 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require_dependency 'ldap'
-    #  require_dependency 'ldap/group'
     #  ldap_group = Ldap::Group.new
     #
     # @return [nil]
@@ -96,6 +89,7 @@ class Ldap
 
             result[user_dn_key] ||= []
             next if result[user_dn_key].include?(role)
+
             result[user_dn_key].push(role)
           end
         end
@@ -112,7 +106,7 @@ class Ldap
     #
     # @return [String, nil] The active or found filter or nil if none could be found.
     def filter
-      @filter ||= lookup_filter(['(objectClass=groupOfUniqueNames)', '(objectClass=group)', '(objectClass=posixgroup)', '(objectClass=organization)'])
+      @filter ||= lookup_filter(['(objectClass=groupOfUniqueNames)', '(objectClass=groupOfNames)', '(objectClass=group)', '(objectClass=posixgroup)', '(objectClass=organization)'])
     end
 
     # The active uid attribute of the instance. If none give on initialization an automatic lookup is performed.
@@ -130,6 +124,7 @@ class Ldap
 
     def handle_config(config)
       return if config.blank?
+
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
     end
@@ -141,13 +136,13 @@ class Ldap
     end
 
     def group_user_dns_memberuid(entry)
-      entry[:memberuid].collect do |uid|
+      entry[:memberuid].filter_map do |uid|
         dn = nil
         @ldap.search("(&(uid=#{uid})#{Import::Ldap.config[:user_filter]})", attributes: %w[dn]) do |user|
           dn = user.dn
         end
         dn
-      end.compact
+      end
     end
   end
 end

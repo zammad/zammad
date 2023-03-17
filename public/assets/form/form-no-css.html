@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Example Form (no CSS)</title>
+</head>
+<body>
+
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+<h1>Feedback as Modal (no CSS)</h1>
+<button id="feedback-form-modal">Feedback as Modal</button>
+
+<h1>Feedback Inline (no CSS)</h1>
+<div id="feedback-form-inline"></div>
+
+
+<div class="js-logDisplay" style="margin-top: 10px; overflow-x: hidden;"></div>
+
+<p style="margin-bottom: 10px">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script id="zammad_form_script" src="/assets/form/form.js"></script>
+
+<script>
+$('#feedback-form-modal').ZammadForm({
+  modal: true,
+  debug: true,
+  noCSS: true,
+});
+
+ $('#feedback-form-inline').ZammadForm({
+  modal: false,
+  debug: true,
+  noCSS: true,
+});
+</script>
+
+
+</body>
+</html>

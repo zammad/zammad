@@ -1,22 +1,15 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module User
-          class OrganizationID < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource, :organization_map
+class Sequencer::Unit::Import::Zendesk::User::OrganizationId < Sequencer::Unit::Common::Provider::Named
 
-            private
+  uses :resource, :organization_map
 
-            def organization_id
-              remote_id = resource.organization_id
-              return if remote_id.blank?
-              organization_map[remote_id]
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def organization_id
+    remote_id = resource.organization_id
+    return if remote_id.blank?
+
+    organization_map[remote_id]
   end
 end

@@ -1,0 +1,15 @@
+Login de administração para #{config.product_name}
+
+<div>Olá #{user.firstname},</div>
+<br>
+<div>Recebemos uma solicitação de login de administração para sua conta #{config.product_name} <b>#{user.login}</b>.</div>
+<br>
+<div>Por favor, clique no link abaixo (ou copie e cole o URL no seu navegador) para continuar:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Este link leva a uma página onde você pode fazer login.</div>
+<br>
+<div>Se você não quiser fazer login, ignore esta mensagem.</div>
+<br>
+<div>Equipe #{config.product_name}</div>

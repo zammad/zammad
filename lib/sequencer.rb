@@ -1,5 +1,4 @@
-require_dependency 'mixin/rails_logger'
-require_dependency 'mixin/start_finish_logger'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer
   include ::Mixin::RailsLogger
@@ -21,8 +20,8 @@ class Sequencer
   #  )
   #
   # @return [Hash{Symbol => Object}] the final result state attributes and values
-  def self.process(sequence, *args)
-    new(sequence, *args).process
+  def self.process(sequence, **args)
+    new(sequence, **args).process
   end
 
   # Provides the log level definition for the requested Sequencer component.
@@ -56,6 +55,7 @@ class Sequencer
     # fall back to sequence default expecting if no explicit
     # expecting was given for this sequence
     return if !@expecting.nil?
+
     @expecting = @sequence.expecting
   end
 

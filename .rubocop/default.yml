@@ -1,0 +1,467 @@
+# Default enabled cops
+# https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
+
+require:
+  - rubocop-faker
+  - rubocop-graphql
+  - rubocop-inflector
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-capybara
+  - ../config/initializers/inflections.rb
+  - ./rubocop_zammad.rb
+
+inherit_from:
+  - todo.yml
+  - todo.rspec.yml
+
+inherit_mode:
+  merge:
+    - Include
+
+AllCops:
+  NewCops: enable
+  DisplayCopNames: true
+  Include:
+    - '.gitlab/**/*.rb'
+    - '.github/**/*.rb'
+    - '.rubocop/**/*.rb'
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'public/assets/**/*'
+    - 'public/packs/**/*'
+
+RSpec:
+  Include:
+    - "**/*_spec.rb"
+    - "**/*_examples.rb"
+  Language:
+    Expectations:
+        - expect_no_offenses
+        - expect_offense
+        - adds_foreign_key
+        - sent
+        - not_sent
+
+Rails:
+  Enabled: true
+
+# Zammad StyleGuide
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/LineLength:
+  Description: 'Limit lines to 80 characters.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
+  Enabled: false
+
+Style/NegatedIf:
+  Description: >-
+                 Favor unless over if for negative conditions
+                 (or control flow or).
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#unless-for-negatives'
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Description: >-
+                 Favor modifier if/unless usage when you have a
+                 single-line body.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier'
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Description: 'Checks for trailing comma in array literals.'
+  StyleGuide: '#no-trailing-array-commas'
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Description: 'Checks for trailing comma in hash literals.'
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Description: 'Checks for trailing comma in argument lists.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  Enabled: false
+
+Style/RescueStandardError:
+  Description: 'Avoid rescuing without specifying an error class.'
+  Enabled: true
+  EnforcedStyle: implicit
+
+Style/FormatStringToken:
+  Description: Use a consistent style for named format string tokens.
+  EnforcedStyle: template
+  # Prefer %{...} over %<...>s to make it easier for translators.
+
+Layout/SpaceInsideReferenceBrackets:
+  Description: 'Checks the spacing inside referential brackets.'
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Description: 'Checks the spacing inside array literal brackets.'
+  Enabled: false
+
+Style/DefWithParentheses:
+  Description: 'Use def with parentheses when there are arguments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+Layout/HashAlignment:
+  Description: >-
+                 Align the elements of a hash literal if they span more than
+                 one line.
+  Enabled: true
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+  EnforcedLastArgumentHashStyle: always_inspect
+
+Layout/EmptyLinesAroundClassBody:
+  Description: "Keeps track of empty lines around class bodies."
+  Enabled: false
+
+Layout/EmptyLinesAroundMethodBody:
+  Description: "Keeps track of empty lines around method bodies."
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Description: "Keeps track of empty lines around block bodies."
+  Enabled: false
+
+Layout/EmptyLinesAroundModuleBody:
+  Description: "Keeps track of empty lines around module bodies."
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Description: 'Do not use unnecessary spacing.'
+  Enabled: true
+  Exclude:
+    - 'config/routes/**/*'
+    - 'db/migrate/20120101000001_create_base.rb'
+    - 'db/migrate/20120101000010_create_ticket.rb'
+
+Style/MultilineBlockChain:
+  Description: 'Avoid multi-line chains of blocks.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
+  Enabled: false
+
+Metrics/ClassLength:
+  Description: 'Avoid classes longer than 100 lines of code.'
+  Enabled: false
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 10 lines of code.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
+  Enabled: false
+
+Metrics/ParameterLists:
+  Description: 'Checks for methods with too many parameters.'
+  CountKeywordArgs: false
+
+Style/BlockComments:
+  Description: 'Do not use block comments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-block-comments'
+  Enabled: false
+
+Style/PerlBackrefs:
+  Description: 'Avoid Perl-style regex back references.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-perl-regexp-last-matchers'
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Exclude:
+    - 'app/models/application_model.rb'
+    - 'app/models/active_job_lock.rb'
+
+Rails/BulkChangeTable:
+  Description: 'Check whether alter queries are combinable.'
+  Enabled: false
+
+Rails/FindEach:
+  Description: 'Prefer all.find_each over all.find.'
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Description: 'Prefer has_many :through to has_and_belongs_to_many.'
+#  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
+  Enabled: false
+
+Rails/I18nLocaleTexts:
+  Description: 'Enforces use of I18n and locale files instead of locale specific strings.'
+  Enabled: false
+
+Rails/MatchRoute:
+  Description: >-
+                  Don't use `match` to define any routes unless there is a need to map multiple request types
+                  among [:get, :post, :patch, :put, :delete] to a single action using the `:via` option.
+  StyleGuide: 'https://rails.rubystyle.guide/#no-match-routes'
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Description: >-
+                 Use methods that skips model validations with caution.
+                 See reference for more information.
+  Reference: 'http://guides.rubyonrails.org/active_record_validations.html#skipping-validations'
+  Enabled: true
+  Exclude:
+    - test/**/*
+    - "**/*_spec.rb"
+    - "**/*_examples.rb"
+
+Rails/ReversibleMigration:
+  Description: This cop checks whether the change method of the migration file is reversible.
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  Enabled: true
+  EnforcedStyle: compact
+  # Avoids nesting of classes and modules in sequencer code and improves readability by decreasing whitespace.
+  #   This cop is excluded for the rest of the codebase, due to following problems:
+  #   - undefined constants in path components which are not autoloaded
+  #   - changes to the lexical scope which require reference to the complete namespace of external classes
+  #   - difficult backporting due to extensive whitespace changes on all lines
+  Include:
+    - 'lib/sequencer/**/*.rb'
+
+Naming/FileName:
+  Description: 'Use snake_case for source file names.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
+  Enabled: true
+  Exclude:
+    - 'script/websocket-server.rb'
+
+Naming/VariableNumber:
+  Description: 'Use the configured style when numbering variables.'
+  Enabled: false
+
+Naming/MethodParameterName:
+  Description: >-
+                Checks for method parameter names that contain capital letters,
+                end in numbers, or do not meet a minimal length.
+  Enabled: true
+  AllowedNames: e, id, _, ip, to
+
+Lint/BooleanSymbol:
+  Description: 'Check for `:true` and `:false` symbols.'
+  Enabled: true
+  Exclude:
+    - "db/seeds/object_manager_attributes.rb"
+    - "spec/requests/integration/object_manager_attributes_spec.rb"
+
+Lint/InterpolationCheck:
+  Description: 'Raise warning for interpolation in single q strs'
+  Enabled: true
+  Exclude:
+    - "test/unit/email_process_auto_response_test.rb"
+    - "test/unit/email_process_bounce_delivery_permanent_failed_test.rb"
+    - "test/unit/email_process_bounce_follow_test.rb"
+    - "test/unit/notification_factory_renderer_test.rb"
+    - "test/unit/notification_factory_template_test.rb"
+    - "test/unit/ticket_trigger_test.rb"
+    - "test/unit/ticket_trigger_recursive_disabled_test.rb"
+
+Style/StringConcatenation:
+  Description: 'Checks for places where string concatenation can be replaced with string interpolation.'
+  StyleGuide: '#string-interpolation'
+  Enabled: true
+  Exclude:
+    - "config/routes/**/*"
+
+Style/RegexpLiteral:
+  Description: 'This cop enforces using // or %r around regular expressions.'
+  EnforcedStyle: percent_r
+
+Style/RedundantBegin:
+  Description: 'This cop checks for redundant `begin` blocks.'
+  Enabled: false
+
+Style/FetchEnvVar:
+  Description: 'This cop suggests `ENV.fetch` for the replacement of `ENV[]`.'
+  Enabled: false
+
+Rails/EnvironmentVariableAccess:
+  Description: 'This cop looks for direct access to environment variables through the ENV variable within the application code.'
+  Enabled: true
+  AllowReads: true
+
+Rails/Output:
+  Exclude:
+    - "lib/tasks/**/*"
+  Include:
+    - "**/*_spec.rb"
+
+GraphQL/OrderedArguments:
+  Enabled: false
+
+GraphQL/OrderedFields:
+  Enabled: false
+
+# Our models can have many fields, and we should not enforce a different GraphQL structure just for the sake of it.
+GraphQL/ExtractType:
+  Enabled: false
+
+GraphQL/ExtractInputType:
+  MaxArguments: 3
+  # Run cop only for mutations: https://github.com/DmitryTsepelev/rubocop-graphql/issues/47
+  Include:
+    - 'app/graphql/gql/mutations/**/*.rb'
+
+# Enforcing field descriptions for all model fields will be too verbose/redundant.
+GraphQL/FieldDescription:
+  Exclude:
+    - "app/graphql/gql/types/**/*"
+
+GraphQL/ObjectDescription:
+  Exclude:
+    - "app/graphql/gql/fields/**/*" # false positive?
+    - "app/graphql/gql/types/**/base_*"
+
+# RSpec tests
+Style/NumericPredicate:
+  Description: >-
+                 Checks for the use of predicate- or comparison methods for
+                 numeric comparisons.
+  StyleGuide: '#predicate-methods'
+  # This will change to a new method call which isn't guaranteed to be on the
+  # object. Switching these methods has to be done with knowledge of the types
+  # of the variables which rubocop doesn't have.
+  AutoCorrect: false
+  Enabled: true
+  Exclude:
+    - "**/*_spec.rb"
+
+Lint/AmbiguousBlockAssociation:
+  Description: >-
+                 Checks for ambiguous block association with method when param
+                 passed without parentheses.
+  StyleGuide: '#syntax'
+  Enabled: true
+  Exclude:
+    - "spec/support/*.rb"
+    - "**/*_spec.rb"
+    - "**/*_examples.rb"
+
+Layout/MultilineMethodCallIndentation:
+  Description: >-
+                 Checks the indentation of the method name part in method calls
+                 that span more than one line.
+  EnforcedStyle: indented
+  Include:
+    - "**/*_spec.rb"
+
+Lint/UnusedMethodArgument:
+  AllowUnusedKeywordArguments: true
+
+Naming/PredicateName:
+  Exclude:
+    - "app/graphql/gql/types/**/*"
+
+RSpec/DescribeMethod:
+  # We want to be able to split tests into subfolders, where several cases are grouped together.
+  Description: 'Checks that the second argument to the top level describe is the tested method name.'
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 6
+
+RSpec/Rails/AvoidSetupHook:
+  Exclude:
+    - "test/**/*"
+
+RSpec/AlignLeftLetBrace:
+  Description: 'Checks that left braces for adjacent single line lets are aligned.'
+  Enabled: true
+
+RSpec/AnyInstance:
+  Description: 'Prefer instance doubles over stubbing any instance of a class.'
+  Enabled: false
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/Rails/InferredSpecType:
+  Description: 'Identifies redundant spec type.'
+  Enabled: false  # We use types to add DSL to rspec.
+
+Capybara/SpecificFinders:
+  Description: 'Checks if there is a more specific finder offered by Capybara.'
+  Enabled: false
+  # False positives, autocorrection makes weird suggestions.
+
+Capybara/SpecificActions:
+  Description: 'Checks for there is a more specific actions offered by Capybara.'
+  Enabled: false
+
+Capybara/NegationMatcher:
+  Description: Enforces use of have_no_* or not_to for negated expectations.
+  EnforcedStyle: have_no
+
+RSpec/ExampleLength:
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+  Max: 25
+
+Zammad/PreferNegatedIfOverUnless:
+  Exclude:
+    - 'bin/rspec'
+
+Zammad/ExistsDateTimePrecision:
+  Include:
+    - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"
+
+Zammad/ExistsResetColumnInformation:
+  Include:
+    - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"
+  Exclude:
+    - 'db/migrate/201*_*.rb'
+    - 'db/migrate/2020*_*.rb'
+
+Zammad/MigrationSchedulerLastRun:
+  Include:
+    - "db/migrate/*.rb"
+    - "**/db/addon/**/*.rb"
+  Exclude:
+    - 'db/migrate/201*_*.rb'
+    - 'db/migrate/2020*_*.rb'
+
+Zammad/DetectTranslatableString:
+  Enabled: true
+  Include:
+    - "app/**/*.rb"
+    - "db/**/*.rb"
+    - "lib/**/*.rb"
+  Exclude:
+    - "db/migrate/**/*.rb"
+    - "db/addon/**/*.rb"
+    - "lib/generators/**/*.rb"
+    - "lib/sequencer/**/*.rb"
+    - "lib/import/**/*.rb"
+    - "lib/tasks/**/*.rb"
+    - "lib/fill_db.rb"
+
+Zammad/ForbidTranslatableMarker:
+  Enabled: true
+  Include:
+    - "db/migrate/*.rb"
+
+Zammad/ExistsDbStrategy:
+  Include:
+    - "spec/**/*.rb"
+  Exclude:
+    - "spec/support/capybara/*.rb"
+
+Zammad/TimezoneDefault:
+  Exclude:
+    - "spec/**/*.rb"

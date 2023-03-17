@@ -1,0 +1,15 @@
+Inicio de sesión como administrador en #{config.product_name}
+
+<div>Buenos días, #{user.firstname}:</div>
+<br>
+<div>Hemos recibido una solicitud de inicio de sesión para #{config.product_name} en la cuenta <b>#{user.login}</b>.</div>
+<br>
+<div>Pulse sobre el enlace a continuación (o copie la URL en un navegador) para continuar:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Este enlace abre una página donde podrá iniciar sesión.</div>
+<br>
+<div>Si no desea iniciar sesión puede ignorar este mensaje.</div>
+<br>
+<div>El equipo de #{config.product_name} </div>

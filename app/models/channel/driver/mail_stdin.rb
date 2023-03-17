@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::MailStdin < Channel::EmailParser
 
@@ -16,9 +16,13 @@ e. g. if you want to trust on mail headers
 
   cat test/data/mail/mail001.box | rails r 'Channel::Driver::MailStdin.new(trusted: true)'
 
+e. g. if you want to process this mail by using a certain inbound channel
+
+  cat test/data/mail/mail001.box | rails r 'Channel::Driver::MailStdin.new(Channel.find(14))'
+
 =end
 
-  def initialize(params = {})
+  def initialize(params = {}) # rubocop:disable Lint/MissingSuper
     Rails.logger.info 'read main from STDIN'
 
     msg = ARGF.read

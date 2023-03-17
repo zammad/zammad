@@ -1,21 +1,22 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
+  include CalendarPreview
 
+  prepend_before_action -> { authorize! }, only: %i[index import_example import_start]
   prepend_before_action :authentication_check
 
   # GET /articles
   def index
-    permission_check('admin')
     model_index_render(Ticket::Article, params)
   end
 
   # GET /articles/1
   def show
     article = Ticket::Article.find(params[:id])
-    access!(article, 'read')
+    authorize!(article)
 
     if response_expand?
       result = article.attributes_with_association_names
@@ -35,15 +36,14 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_articles/by_ticket/1
   def index_by_ticket
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     articles = []
 
     if response_expand?
       ticket.articles.each do |article|
+        next if !authorized?(article, :show?)
 
-        # ignore internal article if customer is requesting
-        next if article.internal == true && current_user.permissions?('ticket.customer')
         result = article.attributes_with_association_names
         articles.push result
       end
@@ -56,24 +56,21 @@ class TicketArticlesController < ApplicationController
       assets = {}
       record_ids = []
       ticket.articles.each do |article|
-
-        # ignore internal article if customer is requesting
-        next if article.internal == true && current_user.permissions?('ticket.customer')
+        next if !authorized?(article, :show?)
 
         record_ids.push article.id
         assets = article.assets({})
       end
       render json: {
         record_ids: record_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
 
     ticket.articles.each do |article|
+      next if !authorized?(article, :show?)
 
-      # ignore internal article if customer is requesting
-      next if article.internal == true && current_user.permissions?('ticket.customer')
       articles.push article.attributes_with_association_names
     end
     render json: articles, status: :ok
@@ -82,7 +79,7 @@ class TicketArticlesController < ApplicationController
   # POST /articles
   def create
     ticket = Ticket.find(params[:ticket_id])
-    access!(ticket, 'create')
+    authorize!(ticket)
     article = article_create(ticket, params)
 
     if response_expand?
@@ -103,14 +100,20 @@ class TicketArticlesController < ApplicationController
   # PUT /articles/1
   def update
     article = Ticket::Article.find(params[:id])
-    access!(article, 'change')
+    authorize!(article)
 
-    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin')
-      raise Exceptions::NotAuthorized, 'Not authorized (ticket.agent or admin permission required)!'
+    # only update internal and highlight info
+    clean_params = {}
+    if !params[:internal].nil?
+      clean_params[:internal] = params[:internal]
     end
-
-    clean_params = Ticket::Article.association_name_to_id_convert(params)
-    clean_params = Ticket::Article.param_cleanup(clean_params, true)
+    if params.dig(:preferences, :highlight).present?
+      clean_params = article.param_preferences_merge(clean_params.merge(
+                                                       preferences: {
+                                                         highlight: params[:preferences][:highlight].to_s
+                                                       }
+                                                     ))
+    end
 
     article.update!(clean_params)
 
@@ -129,90 +132,18 @@ class TicketArticlesController < ApplicationController
     render json: article.attributes_with_association_names, status: :ok
   end
 
-  # DELETE /articles/1
+  # DELETE /api/v1/ticket_articles/:id
   def destroy
     article = Ticket::Article.find(params[:id])
-    access!(article, 'delete')
-
-    if current_user.permissions?('admin')
-      article.destroy!
-      head :ok
-      return
-    end
-
-    if current_user.permissions?('ticket.agent') && article.created_by_id == current_user.id && article.type.name == 'note'
-      article.destroy!
-      head :ok
-      return
-    end
-
-    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!'
-  end
-
-  # DELETE /ticket_attachment_upload
-  def ticket_attachment_upload_delete
-
-    if params[:id].present?
-      Store.remove_item(params[:id])
-      render json: {
-        success: true,
-      }
-      return
-    end
-
-    if params[:form_id].present?
-      Store.remove(
-        object: 'UploadCache',
-        o_id:   params[:form_id],
-      )
-      render json: {
-        success: true,
-      }
-      return
-    end
-
-    render json: { message: 'No such id or form_id!' }, status: :unprocessable_entity
-  end
-
-  # POST /ticket_attachment_upload
-  def ticket_attachment_upload_add
-
-    # store file
-    file = params[:File]
-    content_type = file.content_type
-    if !content_type || content_type == 'application/octet-stream'
-      content_type = if MIME::Types.type_for(file.original_filename).first
-                       MIME::Types.type_for(file.original_filename).first.content_type
-                     else
-                       'application/octet-stream'
-                     end
-    end
-    headers_store = {
-      'Content-Type' => content_type
-    }
-    store = Store.add(
-      object: 'UploadCache',
-      o_id: params[:form_id],
-      data: file.read,
-      filename: file.original_filename,
-      preferences: headers_store
-    )
-
-    # return result
-    render json: {
-      success: true,
-      data: {
-        id: store.id,
-        filename: file.original_filename,
-        size: store.size,
-      }
-    }
+    authorize!(article)
+    article.destroy!
+    render json: {}, status: :ok
   end
 
   # POST /ticket_attachment_upload_clone_by_article
   def ticket_attachment_upload_clone_by_article
     article = Ticket::Article.find(params[:article_id])
-    access!(article.ticket, 'read')
+    authorize!(article.ticket, :show?)
 
     render json: {
       attachments: article_attachments_clone(article),
@@ -222,18 +153,18 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
     ticket = Ticket.lookup(id: params[:ticket_id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
 
       # check if requested ticket got merged
       if ticket.state.state_type.name != 'merged'
-        raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+        raise Exceptions::Forbidden, __('The article does not belong to the specified ticket.')
       end
 
       ticket = article.ticket
-      access!(ticket, 'read')
+      authorize!(ticket, :show?)
     end
 
     list = article.attachments || []
@@ -243,25 +174,24 @@ class TicketArticlesController < ApplicationController
         access = true
       end
     end
-    raise Exceptions::NotAuthorized, 'Requested file id is not linked with article_id.' if !access
+    raise Exceptions::Forbidden, __('The file does not belong to the specified article.') if !access
 
-    # find file
-    file = Store.find(params[:id])
+    # preview calendar attachments
+    return render_calendar_preview if params[:view] == 'preview' && params[:type] == 'calendar'
 
-    disposition = sanitized_disposition
-
+    content = download_file.content(params[:view])
     send_data(
-      file.content,
-      filename: file.filename,
-      type: file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
-      disposition: disposition
+      content,
+      filename:    download_file.filename,
+      type:        download_file.content_type,
+      disposition: download_file.disposition
     )
   end
 
   # GET /ticket_article_plain/1
   def article_plain
     article = Ticket::Article.find(params[:id])
-    access!(article, 'read')
+    authorize!(article, :show?)
 
     file = article.as_raw
 
@@ -270,8 +200,8 @@ class TicketArticlesController < ApplicationController
 
     send_data(
       file.content,
-      filename: file.filename,
-      type: 'message/rfc822',
+      filename:    file.filename,
+      type:        'message/rfc822',
       disposition: 'inline'
     )
   end
@@ -283,16 +213,15 @@ class TicketArticlesController < ApplicationController
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/ticket_articles/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
-    permission_check('admin')
     csv_string = Ticket::Article.csv_example(
       col_sep: ',',
     )
     send_data(
       csv_string,
-      filename: 'example.csv',
-      type: 'text/csv',
+      filename:    'example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
 
@@ -306,28 +235,44 @@ class TicketArticlesController < ApplicationController
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/ticket_articles.csv' 'https://your.zammad/api/v1/ticket_articles/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
-    permission_check('admin')
     if Setting.get('import_mode') != true
-      raise 'Only can import tickets if system is in import mode.'
+      raise __('Tickets can only be imported if system is in import mode.')
     end
+
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+
     result = Ticket::Article.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string:       string,
       parse_params: {
         col_sep: ';',
       },
-      try: params[:try],
+      try:          params[:try],
     )
     render json: result, status: :ok
   end
 
+  def retry_security_process
+    article = Ticket::Article.find(params[:id])
+    authorize!(article, :update?)
+
+    result = SecureMailing.retry(article)
+
+    render json: result
+  end
+
   private
 
-  def sanitized_disposition
-    disposition = params.fetch(:disposition, 'inline')
-    valid_disposition = %w[inline attachment]
-    return disposition if valid_disposition.include?(disposition)
-    raise Exceptions::NotAuthorized, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
+  def render_calendar_preview
+    data = parse_calendar(download_file)
+    render json: data, status: :ok
+  rescue => e
+    logger.error e
+    render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_entity
   end
 end

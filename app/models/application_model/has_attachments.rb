@@ -1,10 +1,28 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::HasAttachments
   extend ActiveSupport::Concern
 
   included do
     after_create :attachments_buffer_check
     after_update :attachments_buffer_check
+    after_destroy :attachments_remove_all, if: :attachments_cleanup?
+
+    class_attribute :attachments_cleanup, default: false
+  end
+
+  class_methods do
+=begin
+  mark model for cleaning up after destroying
+=end
+
+    def attachments_cleanup!
+      self.attachments_cleanup = true
+    end
+  end
+
+  def attachments_remove_all
+    attachments.each { |attachment| Store.remove_item(attachment.id) }
   end
 
 =begin
@@ -26,10 +44,18 @@ returns
 
 =begin
 
-store attachments for this object
+store attachments for this object with store objects or hashes
 
   item = Model.find(123)
-  item.attachments = [ Store-Object1, Store-Object2 ]
+  item.attachments = [
+    Store-Object1,
+    Store-Object2,
+    {
+      filename: 'test.txt',
+      data: 'test',
+      preferences: {},
+    }
+  ]
 
 =end
 
@@ -37,9 +63,49 @@ store attachments for this object
     self.attachments_buffer = attachments
 
     # update if object already exists
-    return if !(id&.nonzero?)
+    return if !id&.nonzero?
 
     attachments_buffer_check
+  end
+
+=begin
+
+Returns attachments in ElasticSearch-compatible format
+For use in #search_index_attribute_lookup
+
+=end
+
+  def attachments_for_search_index_attribute_lookup
+    # list ignored file extensions
+    attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
+
+    # max attachment size
+    attachment_max_size_in_mb = (Setting.get('es_attachment_max_size_in_mb') || 10).megabytes
+    attachment_total_max_size_in_kb = 314_572.kilobytes
+    attachment_total_max_size_in_kb_current = 0.kilobytes
+
+    attachments.each_with_object([]) do |attachment, memo|
+      # check if attachment exists
+      next if !attachment.content
+
+      size_in_bytes = attachment.content.size.bytes
+
+      # check file size
+      next if size_in_bytes > attachment_max_size_in_mb
+
+      # check ignored files
+      next if !attachment.filename || attachments_ignore.include?(File.extname(attachment.filename).downcase)
+
+      # check if fits into total size limit
+      next if attachment_total_max_size_in_kb_current + size_in_bytes > attachment_total_max_size_in_kb
+
+      attachment_total_max_size_in_kb_current += size_in_bytes
+
+      memo << {
+        '_name'    => attachment.filename,
+        '_content' => Base64.encode64(attachment.content).delete("\n")
+      }
+    end
   end
 
   private
@@ -60,15 +126,22 @@ store attachments for this object
     # store attachments
     article_store = []
     attachments_buffer.each do |attachment|
-      article_store.push Store.add(
-        object: self.class.to_s,
-        o_id: id,
-        data: attachment.content,
-        filename: attachment.filename,
-        preferences: attachment.preferences,
+      data = {
+        object:        self.class.to_s,
+        o_id:          id,
         created_by_id: created_by_id,
-      )
+      }
+      if attachment.is_a?(Store)
+        data[:data]        = attachment.content
+        data[:filename]    = attachment.filename
+        data[:preferences] = attachment.preferences
+      else
+        data[:data]        = attachment[:data]
+        data[:filename]    = attachment[:filename]
+        data[:preferences] = attachment[:preferences]
+      end
+
+      article_store.push Store.create!(data)
     end
-    attachments_buffer = nil
   end
 end

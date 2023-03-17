@@ -1,27 +1,25 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require_dependency 'ldap'
-require_dependency 'ldap/user'
-require_dependency 'ldap/group'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::LdapController < ApplicationController
   include Integration::ImportJobBase
 
-  prepend_before_action { authentication_check(permission: 'admin.integration.ldap') }
+  prepend_before_action { authentication_check && authorize! }
 
   def discover
     answer_with do
-      begin
-        ldap = ::Ldap.new(params)
 
-        {
-          attributes: ldap.preferences
-        }
-      rescue => e
-        # workaround for issue #1114
-        raise if !e.message.end_with?(', 48, Inappropriate Authentication')
-        # return empty result
-        {}
-      end
+      ldap = ::Ldap.new(params)
+
+      {
+        attributes: ldap.preferences
+      }
+    rescue => e
+      # workaround for issue #1114
+      raise if !e.message.end_with?(', 48, Inappropriate Authentication')
+
+      # return empty result
+      {}
+
     end
   end
 
@@ -41,9 +39,9 @@ class Integration::LdapController < ApplicationController
         user_uid:        user.uid_attribute,
 
         # the order of these calls is relevant!
-        group_filter: group.filter,
-        groups:       group.list,
-        group_uid:    group.uid_attribute,
+        group_filter:    group.filter,
+        groups:          group.list,
+        group_uid:       group.uid_attribute,
       }
     end
   end

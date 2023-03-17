@@ -1,14 +1,6 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContacts
-          class DryRunPayload < Sequencer::Unit::Import::Common::ImportJob::Payload::ToAttribute
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            provides :ews_config, :ews_folder_ids
-          end
-        end
-      end
-    end
-  end
+class Sequencer::Unit::Import::Exchange::FolderContacts::DryRunPayload < Sequencer::Unit::Import::Common::ImportJob::Payload::ToAttribute
+
+  provides :ews_config, :ews_folder_ids
 end

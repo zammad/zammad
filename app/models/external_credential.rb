@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class ExternalCredential < ApplicationModel
   include ApplicationLib
 
@@ -9,9 +11,9 @@ class ExternalCredential < ApplicationModel
     backend.app_verify(params)
   end
 
-  def self.request_account_to_link(provider)
+  def self.request_account_to_link(provider, params = {})
     backend = load_backend(provider)
-    backend.request_account_to_link
+    backend.request_account_to_link(params)
   end
 
   def self.link_account(provider, request_token, params)
@@ -27,10 +29,13 @@ class ExternalCredential < ApplicationModel
     "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider}/#{channel_id}"
   end
 
+  def self.refresh_token(provider, params)
+    backend = ExternalCredential.load_backend(provider)
+    backend.refresh_token(params)
+  end
+
   def self.load_backend(provider)
-    adapter = "ExternalCredential::#{provider.camelcase}"
-    require adapter.to_filename.to_s
-    load_adapter(adapter)
+    "ExternalCredential::#{provider.camelcase}".constantize
   end
 
 end

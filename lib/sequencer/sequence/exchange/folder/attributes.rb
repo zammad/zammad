@@ -1,17 +1,11 @@
-class Sequencer
-  class Sequence
-    module Exchange
-      module Folder
-        class Attributes < Sequencer::Sequence::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          def self.sequence
-            [
-              'Exchange::Connection',
-              'Exchange::Folder::Attributes',
-            ]
-          end
-        end
-      end
-    end
+class Sequencer::Sequence::Exchange::Folder::Attributes < Sequencer::Sequence::Base
+
+  def self.sequence
+    [
+      'Exchange::Connection',
+      'Exchange::Folder::Attributes',
+    ]
   end
 end

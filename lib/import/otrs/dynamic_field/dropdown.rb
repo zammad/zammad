@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class DynamicField
@@ -14,6 +16,12 @@ module Import
               translate:  dynamic_field['Config']['TranslatableValues'] == '1',
             }
           )
+        end
+
+        private
+
+        def skip?(dynamic_field)
+          !dynamic_field['Config']['PossibleValues']
         end
       end
     end

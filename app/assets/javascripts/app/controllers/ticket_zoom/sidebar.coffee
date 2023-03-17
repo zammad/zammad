@@ -1,8 +1,11 @@
-class App.TicketZoomSidebar extends App.ObserverController
+class App.TicketZoomSidebar extends App.ControllerObserver
   model: 'Ticket'
   observe:
     customer_id: true
     organization_id: true
+
+  get: (key) ->
+    return @sidebarBackends[key]
 
   reload: (args) =>
     for key, backend of @sidebarBackends
@@ -13,6 +16,11 @@ class App.TicketZoomSidebar extends App.ObserverController
     for key, backend of @sidebarBackends
       if backend && backend.commit
         backend.commit(args)
+
+  postParams: (args) =>
+    for key, backend of @sidebarBackends
+      if backend && backend.postParams
+        backend.postParams(args)
 
   render: (ticket) =>
     @sidebarBackends ||= {}
@@ -29,6 +37,7 @@ class App.TicketZoomSidebar extends App.ObserverController
           formMeta: @formMeta
           markForm: @markForm
           tags:     @tags
+          mentions: @mentions
           links:    @links
         )
       else
@@ -38,12 +47,16 @@ class App.TicketZoomSidebar extends App.ObserverController
           formMeta: @formMeta
           markForm: @markForm
           tags:     @tags
+          mentions: @mentions
           links:    @links
         )
       @sidebarItems.push @sidebarBackends[key]
 
-    new App.Sidebar(
-      el:           @el.find('.tabsSidebar')
+    if @sidebar
+      @sidebar.releaseController()
+
+    @sidebar = new App.Sidebar(
+      el:           @$('.tabsSidebar')
       sidebarState: @sidebarState
       items:        @sidebarItems
     )

@@ -1,9 +1,11 @@
-<div class="<%= @attribute.class %>">
+<div class="<%= @attribute.class %> radio radio--list">
 <% for row in @attribute.options: %>
-    <label>
-      <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%- @T(row.note) %><% end %>
-      <%- @Icon('radio') %>
-      <%- @Icon('radio-checked') %>
-    </label>
+  <label class="inline-label radio-replacement<%= ' is-disabled' if row.disabled %>">
+    <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %> <%= row.disabled %> <% if @attribute.disabled: %> disabled<% end %>>
+    <%- @Icon('radio', 'icon-unchecked') %>
+    <%- @Icon('radio-checked', 'icon-checked') %>
+    <span class="label-text"><%- @T(row.name) %></span>
+    <% if row.note: %><span class="help-text"><%- @T(row.note) %></span><% end %>
+  </label>
 <% end %>
 </div>

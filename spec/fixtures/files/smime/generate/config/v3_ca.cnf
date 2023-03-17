@@ -1,0 +1,7 @@
+[v3_ca]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectKeyIdentifier = hash
+subjectAltName = email:copy
+extendedKeyUsage = emailProtection
+authorityKeyIdentifier = keyid,issuer

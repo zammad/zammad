@@ -1,6 +1,8 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
+  include ActiveModel::Validations
+
   include ApplicationModel::CanActivityStreamLog
   include ApplicationModel::HasCache
   include ApplicationModel::CanLookup
@@ -18,6 +20,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::ChecksImport
   include ApplicationModel::CanTouchReferences
   include ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
+  include ApplicationModel::HasExistsCheckByObjectAndId
 
   self.abstract_class = true
 end

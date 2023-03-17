@@ -1,14 +1,14 @@
-Ticket aktualisiert (#{ticket.title})
+Aktualisiertes Ticket (#{ticket.title})
 
-<div>Hi #{recipient.firstname},</div>
+<div>Hallo #{recipient.fullname},</div>
 <br>
 <div>
-Ticket (#{ticket.title}) wurde von "<b>#{current_user.longname}</b>" aktualisiert.
+das Ticket (#{ticket.title}) wurde von "<b>#{current_user.longname}</b>" aktualisiert.
 </div>
 <br>
 <% if @objects[:changes].present? %>
   <div>
-  #{t('Changes')}:<br>
+  Änderungen:<br>
   <% @objects[:changes].each do |key, value| %>
     <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
   <% end %>
@@ -17,7 +17,7 @@ Ticket (#{ticket.title}) wurde von "<b>#{current_user.longname}</b>" aktualisier
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Information:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -25,5 +25,5 @@ Ticket (#{ticket.title}) wurde von "<b>#{current_user.longname}</b>" aktualisier
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">In #{config.product_name} anzeigen</a>
 </div>

@@ -48,7 +48,7 @@ Some Text",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 1
 
 Some Textäöü",
         channel: {
@@ -58,7 +58,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 1',
           },
           1 => {
             body: 'Some Textäöü',
@@ -71,7 +71,7 @@ Some Textäöü",
       {
         data: "From: me@exampl'e.com
 To: customer@exampl'e.com
-Subject: äöü some subject
+Subject: äöü some subject 2
 
 Some Textäöü",
         channel: {
@@ -81,7 +81,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 2',
           },
           1 => {
             body: 'Some Textäöü',
@@ -95,14 +95,53 @@ Some Textäöü",
             {
               firstname: '',
               lastname: '',
-              fullname: 'me@exampl\'e.com',
-              email: 'me@exampl\'e.com',
+              fullname: 'me@example.com',
+              email: 'me@example.com',
             },
             {
               firstname: '',
               lastname: '',
-              fullname: 'customer@exampl\'e.com',
-              email: 'customer@exampl\'e.com',
+              fullname: 'customer@example.com',
+              email: 'customer@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: "Sender: me_sender@example.com
+To: customer@example.com
+Subject: äöü some subject 3
+
+Some Textäöü",
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'äöü some subject 3',
+          },
+          1 => {
+            body: 'Some Textäöü',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'me@example.com',
+              email: 'me@example.com',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'customer@example.com',
+              email: 'customer@example.com',
             },
           ],
         },
@@ -155,17 +194,17 @@ Some Textäöü without subject#2",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 3
 
 Some Textäöü".encode('ISO-8859-1'),
         success: true,
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: '??? some subject 3', # it's ok, because subject needs to be 7bit encoded
           },
           1 => {
-            body: 'Some Textäöü',
+            body: 'Some Text???', # it's ok, because no content-type is given
             sender: 'Customer',
             type: 'email',
             internal: false,
@@ -627,7 +666,7 @@ Some Text",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'Subject: 【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            title: "Subject: 【专业为您注册香港及海外公司（好处多多）】#{'　' * 220}",
           },
           1 => {
             body: 'Some Text',
@@ -646,9 +685,10 @@ Some Text",
           },
           1 => {
             content_type: 'text/html',
-            body: %{_________________________________________________________________________________Please beth saw his head <br>
+            body: %{<span style="color:#f9f8f7;">_________________________________________________________________________________Please beth saw his head</span>
+<br>
 <div>
-<table border="0" cellspacing="5" style="color:#e0e7e8; background-color:#e3efef; font-size:1px;">
+<table border="0" cellspacing="5" style="color:#e0e7e8; background-color:#e3efef;">
 <tr>
 <td colspan="2">9õh<span style="color:#f18246;">H</span>3ÿo<span style="color:#f18246;">I</span>Úõ´<span style="color:#f18246;">G</span>Ã¿i<span style="color:#f18246;">H</span>±6u<span style="color:#f18246;">-</span>û◊N<span style="color:#f18246;">Q</span>4ùä<span style="color:#f18246;">U</span>¹aw<span style="color:#f18246;">A</span>q¹J<span style="color:#f18246;">L</span>ZμÒ<span style="color:#f18246;">I</span>icg<span style="color:#f18246;">T</span>1ζ2<span style="color:#f18246;">Y</span>7⊆t<span style="color:#f18246;"> </span>63‘<span style="color:#f18246;">M</span>ñ36<span style="color:#f18246;">E</span>ßÝ→<span style="color:#f18246;">D</span>Aå†<span style="color:#f18246;">I</span>048<span style="color:#f18246;">C</span>vJ9<span style="color:#f18246;">A</span>↑3i<span style="color:#f18246;">T</span>c4É<span style="color:#f18246;">I</span>ΥvX<span style="color:#f18246;">O</span>50ñ<span style="color:#f18246;">N</span>ÁFJ<span style="color:#f18246;">S</span>ð­r<span style="color:#f18246;"> </span>154<span style="color:#f18246;">F</span>1HP<span style="color:#f18246;">O</span>À£C<span style="color:#f18246;">R</span>xZp<span style="color:#f18246;"> </span>tLî<span style="color:#f18246;">T</span>9öX<span style="color:#f18246;">H</span>1b3<span style="color:#f18246;">E</span>s±W<span style="color:#f18246;"> </span>mNà<span style="color:#f18246;">B</span>g3õ<span style="color:#f18246;">E</span>bPŒ<span style="color:#f18246;">S</span>úfτ<span style="color:#f18246;">T</span>óY4<span style="color:#f18246;"> </span>sUÖ<span style="color:#f18246;">P</span>ÒζΔ<span style="color:#f18246;">R</span>Fkc<span style="color:#f18246;">I</span>Õ1™<span style="color:#f18246;">C</span>ÓZ3<span style="color:#f18246;">E</span>ΛRq<span style="color:#f18246;">!</span>Cass is good to ask what that</td>
 </tr>
@@ -665,7 +705,9 @@ Some Text",
 </tr>
 <tr>
 <td>³7&lt;<span style="color:#18136c;">V</span>401<span style="color:#18136c;">i</span>4æÂ<span style="color:#18136c;">a</span>θÀT<span style="color:#18136c;">g</span>÷ÄG<span style="color:#18136c;">r</span>9Eû<span style="color:#18136c;">a</span>ΡBw<span style="color:#18136c;"> </span>→ÌÖ<span style="color:#18136c;">S</span>RSL<span style="color:#18136c;">u</span>72l<span style="color:#18136c;">p</span>L6V<span style="color:#18136c;">e</span>º9Æ<span style="color:#18136c;">r</span>¾HL<span style="color:#18136c;"> </span>FEp<span style="color:#18136c;">A</span>Õø9<span style="color:#18136c;">c</span>P¬l<span style="color:#18136c;">t</span>ÒcD<span style="color:#18136c;">i</span>bäX<span style="color:#18136c;">v</span>TtF<span style="color:#18136c;">e</span>l3®<span style="color:#18136c;">+</span>bVM<span style="color:#18136c;"> </span>ø5ô<span style="color:#18136c;">a</span>XWa<span style="color:#18136c;">s</span>4ºä<span style="color:#18136c;"> </span>μÕK<span style="color:#18136c;">l</span>∏7m<span style="color:#18136c;">o</span>√þ3<span style="color:#18136c;">w</span>Sg1<span style="color:#18136c;"> </span>ι£C<span style="color:#18136c;">a</span>´´X<span style="color:#18136c;">s</span>o18<span style="color:#18136c;"> </span>ÅL2<span style="color:#18136c;">$</span>…4¾<span style="color:#18136c;">2</span>Jo↑<span style="color:#18136c;">.</span>0Λa<span style="color:#18136c;">5</span>3iè<span style="color:#18136c;">5</span>5WÕ</td>
-<td>î3I<span style="color:#18136c;">V</span>4◊9<span style="color:#18136c;">i</span>FÊV<span style="color:#18136c;">a</span>ßÕó<span style="color:#18136c;">g</span>8³9<span style="color:#18136c;">r</span>℘bu<span style="color:#18136c;">a</span>f®2<span style="color:#18136c;"> </span>fc7<span style="color:#18136c;">P</span>g3⊆<span style="color:#18136c;">r</span>zç8<span style="color:#18136c;">o</span>Ü−⋅<span style="color:#18136c;">f</span>ÿ≥Z<span style="color:#18136c;">e</span>aPÑ<span style="color:#18136c;">s</span>5⇐T<span style="color:#18136c;">s</span>iΨ∋<span style="color:#18136c;">i</span>9Ìu<span style="color:#18136c;">o</span>U8R<span style="color:#18136c;">n</span>Ψ⌉•<span style="color:#18136c;">a</span>w1f<span style="color:#18136c;">l</span>fùë<span style="color:#18136c;"> </span>TQN<span style="color:#18136c;">a</span>U›é<span style="color:#18136c;">s</span>vDu<span style="color:#18136c;"> </span>BÇI<span style="color:#18136c;">l</span>6Θl<span style="color:#18136c;">o</span>∠Hf<span style="color:#18136c;">w</span>NX8<span style="color:#18136c;"> </span>36X<span style="color:#18136c;">a</span>∼α»<span style="color:#18136c;">s</span>T½d<span style="color:#18136c;"> </span>ŠHG<span style="color:#18136c;">$</span>Îõ¬<span style="color:#18136c;">3</span>QWÀ<span style="color:#18136c;">.</span>‰›Y<span style="color:#18136c;">5</span>Ôg8<span style="color:#18136c;">0</span>¦ao</td> </tr>
+<td>î3I<span style="color:#18136c;">V</span>4◊9<span style="color:#18136c;">i</span>FÊV<span style="color:#18136c;">a</span>ßÕó<span style="color:#18136c;">g</span>8³9<span style="color:#18136c;">r</span>℘bu<span style="color:#18136c;">a</span>f®2<span style="color:#18136c;"> </span>fc7<span style="color:#18136c;">P</span>g3⊆<span style="color:#18136c;">r</span>zç8<span style="color:#18136c;">o</span>Ü−⋅<span style="color:#18136c;">f</span>ÿ≥Z<span style="color:#18136c;">e</span>aPÑ<span style="color:#18136c;">s</span>5⇐T<span style="color:#18136c;">s</span>iΨ∋<span style="color:#18136c;">i</span>9Ìu<span style="color:#18136c;">o</span>U8R<span style="color:#18136c;">n</span>Ψ⌉•<span style="color:#18136c;">a</span>w1f<span style="color:#18136c;">l</span>fùë<span style="color:#18136c;"> </span>TQN<span style="color:#18136c;">a</span>U›é<span style="color:#18136c;">s</span>vDu<span style="color:#18136c;"> </span>BÇI<span style="color:#18136c;">l</span>6Θl<span style="color:#18136c;">o</span>∠Hf<span style="color:#18136c;">w</span>NX8<span style="color:#18136c;"> </span>36X<span style="color:#18136c;">a</span>∼α»<span style="color:#18136c;">s</span>T½d<span style="color:#18136c;"> </span>ŠHG<span style="color:#18136c;">$</span>Îõ¬<span style="color:#18136c;">3</span>QWÀ<span style="color:#18136c;">.</span>‰›Y<span style="color:#18136c;">5</span>Ôg8<span style="color:#18136c;">0</span>¦ao</td>
+
+</tr>
 <tr>
 <td>LKN<span style="color:#18136c;">V</span>0Äw<span style="color:#18136c;">i</span>M4x<span style="color:#18136c;">a</span>fsJ<span style="color:#18136c;">g</span>FJä<span style="color:#18136c;">r</span>27”<span style="color:#18136c;">a</span>⇐MÔ<span style="color:#18136c;"> </span>∠O5<span style="color:#18136c;">S</span>QØM<span style="color:#18136c;">u</span>té«<span style="color:#18136c;">p</span>÷ÅÃ<span style="color:#18136c;">e</span>¨ûH<span style="color:#18136c;">r</span>Z4Ä<span style="color:#18136c;"> </span>1UΛ<span style="color:#18136c;">F</span>¨Ts<span style="color:#18136c;">o</span>ûwX<span style="color:#18136c;">r</span>ú4I<span style="color:#18136c;">c</span>kyç<span style="color:#18136c;">e</span>½qY<span style="color:#18136c;"> </span>074<span style="color:#18136c;">a</span>Ùl⌊<span style="color:#18136c;">s</span>ÐH1<span style="color:#18136c;"> </span>4Ùp<span style="color:#18136c;">l</span>ø4X<span style="color:#18136c;">o</span>b0a<span style="color:#18136c;">w</span>4FÔ<span style="color:#18136c;"> </span>28∴<span style="color:#18136c;">a</span>70l<span style="color:#18136c;">s</span>A30<span style="color:#18136c;"> </span>ßWF<span style="color:#18136c;">$</span>Z¸v<span style="color:#18136c;">4</span>AEG<span style="color:#18136c;">.</span>Î6¨<span style="color:#18136c;">2</span>t9p<span style="color:#18136c;">5</span>¶¼Q</td>
 <td>M9¯<span style="color:#18136c;">C</span>ε92<span style="color:#18136c;">i</span>0qP<span style="color:#18136c;">a</span>¹Aö<span style="color:#18136c;">l</span>W5P<span style="color:#18136c;">i</span>5Vu<span style="color:#18136c;">s</span>i8ë<span style="color:#18136c;"> </span>ðO0<span style="color:#18136c;">S</span>E2E<span style="color:#18136c;">u</span>ù∈è<span style="color:#18136c;">p</span>òY3<span style="color:#18136c;">e</span>Ts6<span style="color:#18136c;">r</span>6ý2<span style="color:#18136c;"> </span>lªÌ<span style="color:#18136c;">A</span>yîj<span style="color:#18136c;">c</span>Qpe<span style="color:#18136c;">t</span>½3õ<span style="color:#18136c;">i</span>iqX<span style="color:#18136c;">v</span>PVO<span style="color:#18136c;">e</span>8­V<span style="color:#18136c;">+</span>«“G<span style="color:#18136c;"> </span>¤ó6<span style="color:#18136c;">a</span>®Π7<span style="color:#18136c;">s</span>JÕg<span style="color:#18136c;"> </span>¡JÈ<span style="color:#18136c;">l</span>♥Š¾<span style="color:#18136c;">o</span>Ðol<span style="color:#18136c;">w</span>BVà<span style="color:#18136c;"> </span>→Am<span style="color:#18136c;">a</span>ηÒ¯<span style="color:#18136c;">s</span>aÑÚ<span style="color:#18136c;"> </span>Häð<span style="color:#18136c;">$</span>2Ef<span style="color:#18136c;">2</span>∈n5<span style="color:#18136c;">.</span>Œ8H<span style="color:#18136c;">9</span>5¨1<span style="color:#18136c;">9</span>⊃ƒõ</td>
@@ -723,13 +765,18 @@ Some Text",
 </tr>
 <tr>
 <td colspan="2">¬Û…<span style="color:#18136c;">&gt;</span>J6Á<span style="color:#18136c;"> </span>¢〉8<span style="color:#18136c;">E</span>Ö22<span style="color:#18136c;">a</span>³41<span style="color:#18136c;">s</span>¬17<span style="color:#18136c;">y</span>3â8<span style="color:#18136c;"> </span>°f2<span style="color:#18136c;">R</span>6ol<span style="color:#18136c;">e</span>wtz<span style="color:#18136c;">f</span>w¹s<span style="color:#18136c;">u</span>ýoQ<span style="color:#18136c;">n</span>⇓³³<span style="color:#18136c;">d</span>×4G<span style="color:#18136c;">s</span>¢7«<span style="color:#18136c;"> </span>AlD<span style="color:#18136c;">a</span>°H¶<span style="color:#18136c;">n</span>9Ej<span style="color:#18136c;">d</span>tg›<span style="color:#18136c;"> </span>¯ôθ<span style="color:#18136c;">2</span>ε¥⊇<span style="color:#18136c;">4</span>¯″A<span style="color:#18136c;">/</span>4Øv<span style="color:#18136c;">7</span>2z→<span style="color:#18136c;"> </span>Ü3¥<span style="color:#18136c;">C</span>6ú2<span style="color:#18136c;">u</span>56X<span style="color:#18136c;">s</span>9⁄1<span style="color:#18136c;">t</span>∑Ιi<span style="color:#18136c;">o</span>xÉj<span style="color:#18136c;">m</span>ØRù<span style="color:#18136c;">e</span>1WÔ<span style="color:#18136c;">r</span>H25<span style="color:#18136c;"> </span>o¥ß<span style="color:#18136c;">S</span>≥gm<span style="color:#18136c;">u</span>X2g<span style="color:#18136c;">p</span>3yi<span style="color:#18136c;">p</span>·³2<span style="color:#18136c;">o</span>D£3<span style="color:#18136c;">r</span>c3μ<span style="color:#18136c;">t</span>ks∪<span style="color:#18136c;">!</span>sWK</td>
-</tr> </table>
-</div>When she were there you here. Lott to need for amy said.<br>Once more than ever since matt. Lott said turning oď ered. Tell you so matt kept going.<br>Homegrown dandelions by herself into her lips. Such an excuse to stop thinking about. Leave us and be right. <br><br>
+</tr>
+
+</table>
+</div><span style=\"color:#f7f0f5;\">When she were there you here. Lott to need for amy said.<br>Once more than ever since matt. Lott said turning oď ered. Tell you so matt kept going.<br>Homegrown dandelions by herself into her lips. Such an excuse to stop thinking about. Leave us and be right.</span>
+<br><br>
 <hr>
 <table style="border-collapse:collapse;border:none;">
 <tr>
 <td style="border:none;padding:0px 15px 0px 8px;">
-<a href="http://www.avast.com/" rel="nofollow noreferrer noopener" title="http://www.avast.com/" target="_blank"> </a>
+<a href="http://www.avast.com/" rel="nofollow noreferrer noopener" title="http://www.avast.com/" target="_blank">
+
+</a>
 </td>
 <td>
 <p> Đ­ŃĐž ŃĐžĐžĐąŃĐľĐ˝Đ¸Đľ ŃĐ˛ĐžĐąĐžĐ´Đ˝Đž ĐžŃ Đ˛Đ¸ŃŃŃĐžĐ˛ Đ¸ Đ˛ŃĐľĐ´ĐžĐ˝ĐžŃĐ˝ĐžĐłĐž ĐĐ ĐąĐťĐ°ĐłĐžĐ´Đ°ŃŃ <a href="http://www.avast.com/" rel="nofollow noreferrer noopener" title="http://www.avast.com/" target="_blank">avast! Antivirus</a> ĐˇĐ°ŃĐ¸ŃĐ° Đ°ĐşŃĐ¸Đ˛Đ˝Đ°. </p>
@@ -752,7 +799,7 @@ Some Text",
           },
           1 => {
             content_type: 'text/html',
-            body: 'Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.<div>I°0PQSHEJlÔNwf˜Ì1§3S¬73 Î1mEbb5N37¢LϖC7AlFnRº♦HG64BÉ4Ò¦Måâ4ÊzkΙN⌉7⌉TBNÐ T×xPIògIÎÃlLøÕML⊥ÞøSaΨRBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.</div>Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.<a href="http://%D0%B0%D0%BE%D1%81%D0%BA.%D1%80%D1%84?jmlfwnwe&amp;ucwkiyyc" rel="nofollow noreferrer noopener" title="http://аоск.рф?jmlfwnwe&amp;ucwkiyyc" target="_blank"><b>†p­C L I C K Ȟ E R EEOD !</b></a>Chuckled adam leaned forward and leî charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.',
+            body: '<span style="color:#fbfaf8;">Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.</span><div style="color:#f2e9b5;">I°0<span style="color:#17133c;">P</span>QSH<span style="color:#17133c;">E</span>JlÔ<span style="color:#17133c;">N</span>wf˜<span style="color:#17133c;">Ì</span>1§3<span style="color:#17133c;">S</span>¬73<span style="color:#17133c;"> </span>Î1m<span style="color:#17133c;">E</span>bb5<span style="color:#17133c;">N</span>37¢<span style="color:#17133c;">L</span>ϖC7<span style="color:#17133c;">A</span>lFn<span style="color:#17133c;">R</span>º♦H<span style="color:#17133c;">G</span>64B<span style="color:#17133c;">É</span>4Ò¦<span style="color:#17133c;">M</span>åâ4<span style="color:#17133c;">Ê</span>zkΙ<span style="color:#17133c;">N</span>⌉7⌉<span style="color:#17133c;">T</span>BNÐ<span style="color:#17133c;"> </span>T×x<span style="color:#17133c;">P</span>Iòg<span style="color:#17133c;">I</span>ÎÃl<span style="color:#17133c;">L</span>øÕM<span style="color:#17133c;">L</span>⊥Þø<span style="color:#17133c;">S</span>aΨRBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.</div><span style="color:#f7f3ff;">Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.</span><span style="color:#fcecbf;"><a href="http://%D0%B0%D0%BE%D1%81%D0%BA.%D1%80%D1%84?jmlfwnwe&amp;ucwkiyyc" rel="nofollow noreferrer noopener" title="http://%D0%B0%D0%BE%D1%81%D0%BA.%D1%80%D1%84?jmlfwnwe&amp;ucwkiyyc" target="_blank"><b><span style="color:#f5e1b9;">†p­</span>C L I C K Ȟ E R E<span style="color:#f1e9ba;">EOD</span> !</b></a></span><span style="color:#f6f9fc;">Chuckled adam leaned forward and leî charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.</span>',
             sender: 'Customer',
             type: 'email',
             internal: false,
@@ -2738,7 +2785,7 @@ Some Text',
               firstname: 'Clement.Si',
               lastname: '',
               fullname: 'Clement.Si',
-              email: 'claudia.shu@yahoo.com.',
+              email: 'claudia.shu@yahoo.com',
             },
             {
               firstname: '',
@@ -2758,7 +2805,7 @@ Some Text',
             title: '转发：整体提升企业服务水平',
           },
           1 => {
-            from: '"武兰成" <Glopelf7121@example.com>',
+            from: '"ÎäŔźłÉ" <Glopelf7121@example.com>',
             sender: 'Customer',
             type: 'email',
           },
@@ -2766,9 +2813,9 @@ Some Text',
         verify: {
           users: [
             {
-              firstname: '武兰成',
+              firstname: 'ÎäŔźłÉ',
               lastname: '',
-              fullname: '武兰成',
+              fullname: 'ÎäŔźłÉ',
               email: 'glopelf7121@example.com',
             },
           ],
@@ -2939,7 +2986,7 @@ Subject: =?iso-8859-1?Q?aa=E4=F6=FC=DFad_asd?=
 X-Universally-Unique-Identifier: d12c15d2-e6d6-4ccd-86c7-abc2c3d0a2a2
 Date: Fri, 4 May 2012 14:01:03 +0200
 Message-Id: <BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>
-To: metest@znuny.com
+To: metest@zammad.com
 Mime-Version: 1.0 (Apple Message framework v1257)
 
 =E4=F6=FC=DF ad asd
@@ -3008,18 +3055,16 @@ Some Text',
         },
       },
       {
-        data: <<~RAW_MAIL.chomp,
-          From: me@example.com
-          To: customer@example.com
-          Subject: some subject
-          Content-Type: text/html; charset=us-ascii; format=flowed
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+Content-Type: text/html; charset=us-ascii; format=flowed
 
-          <html>
-            <body>
-              <a href="mailto:testäöü@example.com">test</a>
-            </body>
-          </html>
-          RAW_MAIL
+<html>
+  <body>
+    <a href="mailto:testäöü@example.com">test</a>
+  </body>
+</html>',
         success: true,
         result: {
           0 => {
@@ -3028,11 +3073,45 @@ Some Text',
           },
           1 => {
             content_type: 'text/html',
-            body: 'testäöü@example.com',
+            body: '<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>',
             sender: 'Customer',
             type: 'email',
             internal: false,
           },
+        },
+      },
+      {
+        data: <<~RAW_MAIL.chomp,
+          From: me@example.com
+          To: Bob Smith <'customer_outlook_recipient_not_in_address_book@example.com'>
+          Subject: some subject for outlook recipient issue
+          Content-Type: text/html; charset=us-ascii;
+
+          test
+          RAW_MAIL
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject for outlook recipient issue',
+          },
+          1 => {
+            content_type: 'text/html',
+            body: 'test',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Bob',
+              lastname: 'Smith',
+              fullname: 'Bob Smith',
+              email: 'customer_outlook_recipient_not_in_address_book@example.com',
+            },
+          ],
         },
       },
       {
@@ -3062,11 +3141,164 @@ Some Text',
           ],
         },
       },
+      { # See https://github.com/zammad/zammad/issues/2199
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail070.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"http.abc" <http.abc@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'http.abc',
+              lastname: '',
+              fullname: 'http.abc',
+              email: 'http.abc@example.com',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2254
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail076.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"Millions Lottery Spain transfer"@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Millions',
+              lastname: 'Lottery Spain transfer@example.com>',
+              fullname: 'Millions Lottery Spain transfer@example.com>',
+              email: 'millionslotteryspaintransfer@example.com',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2704
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail083.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin083@example.de>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin083@example.de',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2704
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail084.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin084@example.de>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin084@example.de',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2971
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail088.box')),
+        success: true,
+        result: {
+          1 => {
+            from: 'Martin Smith <martin088@example.de>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'no visible content',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Smith',
+              fullname: 'Martin Smith',
+              email: 'martin088@example.de',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/3293
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail094.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"Jo B. USER1 - Noreply 131231 23123123 123 123 123 12" <noreply@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'no visible content',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Jo',
+              lastname: 'B. USER1 - Noreply 131231 23123123 123 123 123 12',
+              fullname: 'Jo B. USER1 - Noreply 131231 23123123 123 123 123 12',
+              email: 'noreply@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
 
   test 'process trusted' do
+    groups = Group.all
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create!(
+      login:         'agent1',
+      firstname:     'Firstname',
+      lastname:      'agent1',
+      email:         'agent1@example.com',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles  = Role.where(name: 'Customer')
+    customer1 = User.create!(
+      login:         'customer1',
+      firstname:     'Firstname',
+      lastname:      'customer1',
+      email:         'customer1@example.com',
+      active:        true,
+      roles:         roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     files = [
       {
         data: 'From: me@example.com
@@ -3086,6 +3318,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority: 3 high
+X-Zammad-Ticket-owner: agent1@example.com
 X-Zammad-Article-sender: System
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3100,6 +3333,7 @@ Some Text',
             state: 'new',
             priority: '3 high',
             title: 'some subject',
+            owner: agent1,
           },
           1 => {
             sender: 'System',
@@ -3114,6 +3348,7 @@ To: customer@example.com
 Subject: some subject
 X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority_id: 777777
+X-Zammad-Ticket-owner: not_existing@example.com
 X-Zammad-Article-sender_id: 999999
 x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
@@ -3128,11 +3363,87 @@ Some Text',
             state: 'new',
             priority: '2 normal',
             title: 'some subject',
+            owner: User.find(1),
           },
           1 => {
             sender: 'Customer',
             type: 'phone',
             internal: true,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with customer as agent - customer can not be owner
+X-Zammad-Ticket-owner: customer1@example.com
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with customer as agent - customer can not be owner',
+            owner: User.find(1),
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with agent login
+X-Zammad-Ticket-owner: agent1
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with agent login',
+            owner: agent1,
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject / with agent email
+X-Zammad-Ticket-owner: agent1@example.com
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject / with agent email',
+            owner: agent1,
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
           },
         },
       },

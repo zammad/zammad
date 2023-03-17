@@ -3,19 +3,20 @@ class App.TicketArticle extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/ticket_articles'
   @configure_attributes = [
-      { name: 'ticket_id',      display: 'TicketID',    null: false, readonly: 1, searchable: false },
-      { name: 'from',           display: 'From',        tag: 'input',    type: 'text', limit: 100, null: false },
-      { name: 'to',             display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'cc',             display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'subject',        display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
-      { name: 'type_id',        display: 'Type',        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
-      { name: 'sender_id',      display: 'Sender',      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
-      { name: 'internal',       display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },
-      { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
-      { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1, searchable: false },
-      { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1, searchable: false },
-      { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'ticket_id',      display: __('TicketID'),    null: false, readonly: 1, searchable: false },
+      { name: 'from',           display: __('From'),        tag: 'input',    type: 'text', limit: 100, null: false },
+      { name: 'to',             display: __('To'),          tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'cc',             display: __('CC'),          tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'subject',        display: __('Subject'),     tag: 'input',    type: 'text', limit: 100, null: true },
+      { name: 'body',           display: __('Text'),        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
+      { name: 'type_id',        display: __('Type'),        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
+      { name: 'sender_id',      display: __('Sender'),      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
+      { name: 'internal',       display: __('Visibility'),  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },
+      { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 },
+      { name: 'created_at',     display: __('Created'),     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'updated_by_id',  display: __('Updated by'),  relation: 'User', readonly: 1, searchable: false },
+      { name: 'updated_at',     display: __('Updated'),     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'origin_by_id',   display: __('Origin By'),   relation: 'User', readonly: 1 },
     ]
 
   uiUrl: ->
@@ -28,24 +29,26 @@ class App.TicketArticle extends App.Model
     if @subject
       return @subject
     if App.Ticket.exists(@ticket_id)
-      ticket = App.Ticket.find(@ticket_id)
+      ticket = App.Ticket.findNative(@ticket_id)
     if ticket
       return ticket.title
-    '???'
+    '-'
 
   iconActivity: (user) ->
     return if !user
-    ticket = App.Ticket.find(@ticket_id)
+    ticket = App.Ticket.findNative(@ticket_id)
     if ticket.owner_id == user.id
       return 'important'
     ''
 
   activityMessage: (item) ->
     return if !item
+    return if !item.created_by
+
     if item.type is 'create'
-      return App.i18n.translateContent('%s created Article for |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created article for |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated Article for |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated article for |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   @contentAttachments: (article) ->
@@ -56,3 +59,11 @@ class App.TicketArticle extends App.Model
       if attachment && (!attachment.preferences || attachment.preferences && attachment.preferences['original-format'] isnt true)
         attachments.push attachment
     attachments
+
+  attributes: ->
+    attrs = super
+
+    if @shared_draft_id
+      attrs.shared_draft_id = @shared_draft_id
+
+    attrs

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoLocation::Gmaps
 
@@ -8,9 +8,10 @@ class Service::GeoLocation::Gmaps
       url,
       {},
       {
-        open_timeout: 2,
-        read_timeout: 4,
+        open_timeout:  2,
+        read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?
@@ -23,7 +24,7 @@ class Service::GeoLocation::Gmaps
 
     lat = result['results'].first['geometry']['location']['lat']
     lng = result['results'].first['geometry']['location']['lng']
-    latlng = [lat, lng]
+    [lat, lng]
   end
 
   def self.reverse_geocode(lat, lng)
@@ -32,17 +33,18 @@ class Service::GeoLocation::Gmaps
       url,
       {},
       {
-        json: true,
-        open_timeout: 2,
-        read_timeout: 4,
+        json:          true,
+        open_timeout:  2,
+        read_timeout:  4,
         total_timeout: 4,
+        verify_ssl:    true,
       },
     )
     return if !response.success?
 
     result = JSON.parse(response.body)
 
-    address = result['results'].first['address_components'].first['long_name']
-    address
+    result['results'].first['address_components'].first['long_name']
+
   end
 end

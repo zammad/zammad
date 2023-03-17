@@ -1,5 +1,7 @@
-# load all core_ext extentions
-Dir.glob( Rails.root.join('lib', 'core_ext', '**', '*') ).each do |file|
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+# load all core_ext extensions
+Rails.root.glob('lib/core_ext/**/*.rb').each do |file|
   if File.file?(file)
     require file
   end

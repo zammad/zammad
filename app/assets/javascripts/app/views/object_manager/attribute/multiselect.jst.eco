@@ -1,0 +1,71 @@
+<div>
+  <table class="settings-list js-Table" style="width: 100%;">
+    <thead>
+      <tr>
+        <th style="width: 36px" class="table-draggable"></th>
+        <th><%- @T('Key') %>
+        <th><%- @T('Display') %>
+        <th style="width: 30px"><%- @T('Default') %>
+        <th style="width: 30px"><%- @T('Action') %>
+    </thead>
+    <tbody class="table-sortable">
+      <% if @params.data_option && @params.data_option.mapped: %>
+        <% for [key, display] in @params.data_option.mapped: %>
+          <tr class="input-data-row">
+            <td class="table-draggable"><%- @Icon('draggable') %></td>
+            <td class="settings-list-control-cell">
+              <input class="form-control form-control--small js-key" type="text" value="<%= key %>" required/>
+            </td>
+            <td class="settings-list-control-cell">
+              <input class="form-control form-control--small js-value" type="text" value="<%= display %>" name="data_option::options::<%= key %>" required/>
+            </td>
+            <td class="settings-list-row-control">
+              <input class="js-selected" type="checkbox" name="data_option::default" value="<%= key %>" <% if _.include(@params.data_option.default, key): %>checked<% end %>/>
+            </td>
+            <td class="settings-list-row-control">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </td>
+        <% end %>
+      <% end %>
+      <tr class="input-add-row">
+        <td class="settings-list-control-cell">
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-key" type="text" placeholder="<%- @T('Key') %>"/>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-value" type="text" placeholder="<%- @T('Display') %>"/>
+        <td class="settings-list-row-control">
+          <input class="js-selected" type="checkbox"/>
+        <td class="settings-list-row-control">
+          <div class="btn btn--text btn--create js-add">
+            <%- @Icon('plus-small') %> <%- @T('Add') %>
+          </div>
+    </tbody>
+  </table>
+  <table class="hidden">
+    <tbody>
+      <tr class="js-template input-data-row">
+        <td class="table-draggable"><%- @Icon('draggable') %></td>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-key" type="text" value="" required/>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-value" type="text" value="" required/>
+        <td class="settings-list-row-control">
+          <input class="js-selected" type="checkbox" name="data_option::default"/>
+        <td class="settings-list-row-control">
+          <div class="btn btn--text js-remove">
+            <%- @Icon('trash') %> <%- @T('Remove') %>
+          </div>
+  </table>
+  <div class="checkbox checkbox--list">
+    <label class="checkbox-replacement">
+      <input type="checkbox" name="data_option::customsort" <% if (@params.data_option && @params.data_option.customsort): %>checked<% end %>/>
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+      <span class="label-text"><%- @T('Use custom option sort') %></span>
+      <span class="help-text"><%- @T('Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order.') %></span>
+    </label>
+  </div>
+  <div class="js-inputLinkTemplate"></div>
+</div>

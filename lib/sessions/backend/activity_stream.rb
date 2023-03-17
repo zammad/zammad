@@ -1,8 +1,10 @@
-class Sessions::Backend::ActivityStream
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class Sessions::Backend::ActivityStream < Sessions::Backend::Base
 
   attr_writer :user
 
-  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 25)
+  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 25) # rubocop:disable Lint/MissingSuper
     @user         = user
     @client       = client
     @client_id    = client_id
@@ -42,22 +44,14 @@ class Sessions::Backend::ActivityStream
 
     {
       record_ids: item_ids,
-      assets: assets,
+      assets:     assets,
     }
   end
 
-  def client_key
-    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
-  end
-
   def push
+    return if !to_run?
 
-    # check timeout
-    timeout = Sessions::CacheIn.get(client_key)
-    return if timeout
-
-    # set new timeout
-    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+    @time_now = Time.zone.now.to_i
 
     data = load
 
@@ -65,17 +59,17 @@ class Sessions::Backend::ActivityStream
 
     if !@client
       return {
-        event: 'activity_stream_rebuild',
+        event:      'activity_stream_rebuild',
         collection: 'activity_stream',
-        data: data,
+        data:       data,
       }
     end
 
     @client.log "push activity_stream #{data.first.class} for user #{@user.id}"
     @client.send(
-      event: 'activity_stream_rebuild',
+      event:      'activity_stream_rebuild',
       collection: 'activity_stream',
-      data: data,
+      data:       data,
     )
   end
 

@@ -1,0 +1,24 @@
+Új jegy (#{ticket.title})
+
+<div>Üdvözöljük #{recipient.firstname},</div>
+<br>
+<div>Az új jegyet (#{ticket.title}) "<b>#{current_user.longname}</b>" létrehozta.</div>
+<br>
+<div>
+Csoport: #{ticket.group.name}<br>
+Tulajdonos: #{ticket.owner.fullname}<br>
+Állapot: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+Információ:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Tekintse meg itt: #{config.product_name}</a>
+</div>

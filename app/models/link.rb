@@ -1,11 +1,9 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Link < ApplicationModel
 
-  # rubocop:disable Rails/InverseOf
-  belongs_to :link_type,   class_name: 'Link::Type'
-  belongs_to :link_object, class_name: 'Link::Object'
-  # rubocop:enable Rails/InverseOf
+  belongs_to :link_type,   class_name: 'Link::Type', optional: true
+  belongs_to :link_object, class_name: 'Link::Object', optional: true
 
   after_destroy :touch_link_references
 
@@ -25,8 +23,9 @@ class Link < ApplicationModel
 =end
 
   def self.list(data)
-    linkobject = link_object_get( name: data[:link_object] )
+    linkobject = link_object_get(name: data[:link_object])
     return if !linkobject
+
     items = []
 
     # get links for one site
@@ -36,8 +35,8 @@ class Link < ApplicationModel
 
     list.each do |item|
       link = {}
-      link['link_type']         = @map[ Link::Type.find( item.link_type_id ).name ]
-      link['link_object']       = Link::Object.find( item.link_object_target_id ).name
+      link['link_type']         = @map[ Link::Type.find(item.link_type_id).name ]
+      link['link_object']       = Link::Object.find(item.link_object_target_id).name
       link['link_object_value'] = item.link_object_target_value
       items.push link
     end
@@ -48,13 +47,17 @@ class Link < ApplicationModel
     )
     list.each do |item|
       link = {}
-      link['link_type']         = Link::Type.find( item.link_type_id ).name
-      link['link_object']       = Link::Object.find( item.link_object_source_id ).name
+      link['link_type']         = Link::Type.find(item.link_type_id).name
+      link['link_object']       = Link::Object.find(item.link_object_source_id).name
       link['link_object_value'] = item.link_object_source_value
       items.push link
     end
 
-    items
+    return items if data[:user].blank?
+
+    items.select do |item|
+      authorized_item?(data[:user], item)
+    end
   end
 
 =begin
@@ -90,7 +93,7 @@ class Link < ApplicationModel
       data[:link_object_source_id] = linkobject.id
       touch_reference_by_params(
         object: data[:link_object_source],
-        o_id: data[:link_object_source_value],
+        o_id:   data[:link_object_source_value],
       )
       data.delete(:link_object_source)
     end
@@ -100,7 +103,7 @@ class Link < ApplicationModel
       data[:link_object_target_id] = linkobject.id
       touch_reference_by_params(
         object: data[:link_object_target],
-        o_id: data[:link_object_target_value],
+        o_id:   data[:link_object_target_value],
       )
       data.delete(:link_object_target)
     end
@@ -137,10 +140,10 @@ class Link < ApplicationModel
       data[:link_type_id] = linktype.id
     end
     Link.where(
-      link_type_id: data[:link_type_id],
-      link_object_source_id: data[:link_object_source_id],
+      link_type_id:             data[:link_type_id],
+      link_object_source_id:    data[:link_object_source_id],
       link_object_source_value: data[:link_object_source_value],
-      link_object_target_id: data[:link_object_target_id],
+      link_object_target_id:    data[:link_object_target_id],
       link_object_target_value: data[:link_object_target_value]
     ).destroy_all
 
@@ -151,10 +154,10 @@ class Link < ApplicationModel
     end
 
     Link.where(
-      link_type_id: data[:link_type_id],
-      link_object_target_id: data[:link_object_source_id],
+      link_type_id:             data[:link_type_id],
+      link_object_target_id:    data[:link_object_source_id],
       link_object_target_value: data[:link_object_source_value],
-      link_object_source_id: data[:link_object_target_id],
+      link_object_source_id:    data[:link_object_target_id],
       link_object_source_value: data[:link_object_target_value]
     ).destroy_all
   end
@@ -175,11 +178,11 @@ class Link < ApplicationModel
     end
 
     Link.where(
-      link_object_target_id: data[:link_object_id],
+      link_object_target_id:    data[:link_object_id],
       link_object_target_value: data[:link_object_value],
     ).destroy_all
     Link.where(
-      link_object_source_id: data[:link_object_id],
+      link_object_source_id:    data[:link_object_id],
       link_object_source_value: data[:link_object_value],
     ).destroy_all
 
@@ -189,11 +192,11 @@ class Link < ApplicationModel
   def touch_link_references
     Link.touch_reference_by_params(
       object: Link::Object.lookup(id: link_object_source_id).name,
-      o_id: link_object_source_value,
+      o_id:   link_object_source_value,
     )
     Link.touch_reference_by_params(
       object: Link::Object.lookup(id: link_object_target_id).name,
-      o_id: link_object_target_value,
+      o_id:   link_object_target_value,
     )
   end
 
@@ -213,12 +216,77 @@ class Link < ApplicationModel
     linkobject
   end
 
-end
+=begin
 
-class Link::Type < ApplicationModel
-  validates :name, presence: true
-end
+  Update assets according to given references list
 
-class Link::Object < ApplicationModel
-  validates :name, presence: true
+  @param assets [Hash] hash with assets
+  @param link_references [Array<Hash>] @see #list
+  @return [Hash] assets including linked items
+
+  @example Link.reduce_assets(assets, link_references)
+
+=end
+
+  def self.reduce_assets(assets, link_references)
+    link_items = link_references
+                 .filter_map { |elem| lookup_linked_object(elem) }
+
+    ApplicationModel::CanAssets.reduce(link_items, assets)
+  end
+
+  def self.lookup_linked_object(elem)
+    klass = elem['link_object'].safe_constantize
+    id    = elem['link_object_value']
+
+    case klass.to_s
+    when KnowledgeBase::Answer::Translation.to_s
+      Setting.get('kb_active') ? klass.lookup(id: id) : nil
+    else
+      klass&.lookup(id: id)
+    end
+  end
+
+  def self.duplicates(object1_id:, object1_value:, object2_value:, object2_id: nil)
+    if !object2_id
+      object2_id = object1_id
+    end
+
+    Link.joins(', links as linksb').where('
+       (
+         links.link_type_id = linksb.link_type_id
+         AND links.link_object_source_id = linksb.link_object_source_id
+         AND links.link_object_source_value = linksb.link_object_source_value
+         AND links.link_object_target_id = ?
+         AND linksb.link_object_target_id = ?
+         AND links.link_object_target_value = ?
+         AND linksb.link_object_target_value = ?
+       )
+       OR
+       (
+         links.link_type_id = linksb.link_type_id
+         AND links.link_object_target_id = linksb.link_object_target_id
+         AND links.link_object_target_value = linksb.link_object_target_value
+         AND links.link_object_source_id = ?
+         AND linksb.link_object_source_id = ?
+         AND links.link_object_source_value = ?
+         AND linksb.link_object_source_value = ?
+       )
+    ', object1_id, object2_id, object1_value, object2_value, object1_id, object2_id, object1_value, object2_value)
+  end
+
+  def self.authorized_item?(user, item)
+    record = item['link_object'].constantize.lookup(id: item['link_object_value'])
+
+    # non-ID records are not checked for authorization
+    return true if record.blank?
+
+    Pundit.authorize(user, record, :show?).present?
+  rescue Pundit::NotAuthorizedError
+    false
+  rescue NameError, Pundit::NotDefinedError
+    # NameError: no Model means no authorization check possible
+    # Pundit::NotDefinedError: no Policy means no authorization check necessary
+    true
+  end
 end

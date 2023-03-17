@@ -11,7 +11,7 @@
     <tr data-id="<%= item.id %>" class="js-edit u-clickable">
       <td class="js-name"><%= item.name %></td>
       <td class="js-search"><a href="#"><%= item.count %></a></td>
-      <td class="js-delete"><a href="#" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
+      <td class="js-delete no-padding"><a class="btn btn--table btn--text btn--secondary" href="#" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
     </tr>
     <% end %>
   </tbody>

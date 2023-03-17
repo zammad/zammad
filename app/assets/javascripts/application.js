@@ -5,7 +5,7 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-2.2.1.js
+//= require ./app/lib/core/jquery-3.6.0.js
 //= require ./app/lib/core/jquery-ui-1.11.4.js
 //= require ./app/lib/core/underscore-1.8.3.js
 
@@ -54,6 +54,11 @@ if (!console.log) {
   console.log = function(){}
 }
 
+// No-op to mark translatable strings.
+function __(str) {
+  return str
+}
+
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
@@ -64,10 +69,12 @@ Date.prototype.getWeek = function() {
 }
 
 function difference(object1, object2) {
+  object1 = object1 || {};
+  object2 = object2 || {};
   var changes = {};
-  for (var name in object1) {
-    if (name in object2) {
-      if (_.isObject(object2[name]) && !_.isArray(object2[name])) {
+  _.uniq(Object.keys(object1).concat(Object.keys(object2))).forEach(function(name) {
+    if (name in object1 && name in object2) {
+      if (_.isObject(object1[name]) && !_.isArray(object1[name]) && _.isObject(object2[name]) && !_.isArray(object2[name])) {
         var diff = difference(object1[name], object2[name]);
         if (!_.isEmpty(diff)) {
             changes[name] = diff;
@@ -75,8 +82,10 @@ function difference(object1, object2) {
       } else if (!_.isEqual(object1[name], object2[name])) {
         changes[name] = object2[name];
       }
+    } else {
+      changes[name] = object2[name]
     }
-  }
+  })
   return changes;
 }
 
@@ -220,6 +229,7 @@ jQuery.fn.removeAttrs = function(regex) {
 // changes
 // - set type based on data('field-type')
 // - also catch [disabled] params
+// - return multiple type to make sure that the data is always array
 jQuery.fn.extend( {
   serializeArrayWithType: function() {
     var r20 = /%20/g,
@@ -230,8 +240,9 @@ jQuery.fn.extend( {
     var rcheckableType = ( /^(?:checkbox|radio)$/i );
     return this.map( function() {
 
-      // Can add propHook for "elements" to filter or add form elements
-      var elements = jQuery.prop( this, "elements" );
+      // We dont use jQuery.prop( this, "elements" ); here anymore
+      // because it did not work out for IE 11
+      var elements = $(this).find('*').filter(':input');
       return elements ? jQuery.makeArray( elements ) : this;
     } )
     .filter( function() {
@@ -242,29 +253,34 @@ jQuery.fn.extend( {
         ( this.checked || !rcheckableType.test( type ) );
     } )
     .map( function( i, elem ) {
-      var $elem = jQuery( this );
-      var val = $elem.val();
-      var type = $elem.data('field-type');
+      var $elem       = jQuery( this );
+      var val         = $elem.val();
+      var type        = $elem.data('field-type');
+      var multiple    = $elem.prop('multiple');
+
+      // in jQuery 3,  select-multiple with nothing selected returns an empty array
+      // https://jquery.com/upgrade-guide/3.0/#breaking-change-select-multiple-with-nothing-selected-returns-an-empty-array
+      if (multiple === true && typeof val === 'object' && val.length == 0){
+        val = null;
+      }
 
       var result;
       if ( val == null ) {
-
-        // be sure that also null values are transfered
+        // be sure that also null values are transferred
         // https://github.com/zammad/zammad/issues/944
-        if ( $elem.prop('multiple') ) {
-          result = { name: elem.name, value: null, type: type };
-        }
-        else {
+        if ($elem.prop('multiple')) {
+          result = { name: elem.name, value: null, type: type, multiple: multiple }
+        } else {
           result = null
         }
       }
-      else if ( jQuery.isArray( val ) ) {
+      else if ( Array.isArray( val ) || multiple) {
         result = jQuery.map( val, function( val ) {
-          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiple: multiple };
         } );
       }
       else {
-        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type, multiple: multiple };
       }
       return result;
     } ).get();
@@ -272,6 +288,6 @@ jQuery.fn.extend( {
 } );
 
 // start application
-jQuery(function(){
+(function(){
   new App.Run();
-});
+})();

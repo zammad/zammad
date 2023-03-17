@@ -1,4 +1,4 @@
-class Index extends App.ControllerSubContent
+class ChannelTwitter extends App.ControllerSubContent
   requiredPermission: 'admin.channel_twitter'
   events:
     'click .js-new':       'new'
@@ -31,7 +31,8 @@ class Index extends App.ControllerSubContent
   render: (data) =>
 
     # if no twitter app is registered, show intro
-    if !App.ExternalCredential.findByAttribute('name', 'twitter')
+    external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')
+    if !external_credential
       @html App.view('twitter/index')()
       return
 
@@ -60,6 +61,7 @@ class Index extends App.ControllerSubContent
       channels.push channel
     @html App.view('twitter/list')(
       channels: channels
+      external_credential: external_credential
     )
 
     if @channel_id
@@ -100,7 +102,7 @@ class Index extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: =>
         @ajax(
           id:   'twitter_delete'
@@ -141,7 +143,7 @@ class Index extends App.ControllerSubContent
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Twitter App'
+  head: __('Connect Twitter App')
   shown: true
   button: 'Connect'
   buttonCancel: true
@@ -166,7 +168,7 @@ class AppConfig extends App.ControllerModal
   onSubmit: (e) =>
     @formDisable(e)
 
-    # verify app credentals
+    # verify app credentials
     @ajax(
       id:   'twitter_app_verify'
       type: 'POST'
@@ -177,21 +179,21 @@ class AppConfig extends App.ControllerModal
         if data.attributes
           if !@external_credential
             @external_credential = new App.ExternalCredential
-          @external_credential.load(name: 'twitter', credentials: @formParams())
+          @external_credential.load(name: 'twitter', credentials: data.attributes)
           @external_credential.save(
             done: =>
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
 class AccountEdit extends App.ControllerModal
-  head: 'Twitter Account'
+  head: __('Twitter Account')
   shown: true
   buttonCancel: true
 
@@ -217,7 +219,7 @@ class AccountEdit extends App.ControllerModal
         term: ''
         group_id: ''
       renderSearchTerms()
-      content.find('.js-searchTermList [name="search::term"]').last().focus()
+      content.find('.js-searchTermList [name="search::term"]').last().trigger('focus')
 
     removeSearchTerm = (event) =>
       index = $(event.currentTarget).attr('data-index')
@@ -246,7 +248,7 @@ class AccountEdit extends App.ControllerModal
 
     renderSearchTerms()
 
-    content.find('.js-searchTermAdd').click(addSearchTerm)
+    content.find('.js-searchTermAdd').on('click', addSearchTerm)
     content.find('.js-searchTermList').on('click', '.js-searchTermRemove', removeSearchTerm)
 
     content.find('.js-mentionsGroup').replaceWith createGroupSelection(@channel.options.sync.mentions.group_id, 'mentions')
@@ -294,7 +296,7 @@ class AccountEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
-App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')
+App.Config.set('Twitter', { prio: 5000, name: __('Twitter'), parent: '#channels', target: '#channels/twitter', controller: ChannelTwitter, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

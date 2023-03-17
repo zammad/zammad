@@ -2,7 +2,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'i-doit'
+  head: __('i-doit')
   lastSearchTermEmpty: false
 
   content: ->
@@ -22,16 +22,16 @@ class App.IdoitObjectSelector extends App.ControllerModal
 
         @contentInline.find('.js-typeSelect').html(@renderTypeSelector(result))
 
-        @contentInline.filter('.js-search').on('change', 'select, input', (e) =>
+        @contentInline.on('change', 'input.js-shadow', (e) =>
           params = @formParam(e.target)
           @search(params)
         )
-        @contentInline.filter('.js-search').on('keyup', 'input', (e) =>
+        @contentInline.on('keyup', 'input.js-searchField', (e) =>
           params = @formParam(e.target)
           @search(params)
         )
         @render()
-        @$('.js-input').focus()
+        @$('.js-input').trigger('focus')
 
       error: (xhr, status, error) =>
 
@@ -39,7 +39,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = 'Unable to load content'
+        @contentInline = __('Content could not be loaded.')
         @render()
     )
     ''
@@ -71,7 +71,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
         return if status is 'abort'
 
         # show error message
-        @contentInline = 'Unable to load content'
+        @contentInline = __('Content could not be loaded.')
         @render()
     )
 
@@ -106,4 +106,3 @@ class App.IdoitObjectSelector extends App.ControllerModal
 
     @formDisable(form)
     @callback(object_ids, @)
-

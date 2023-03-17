@@ -1,0 +1,220 @@
+.review_app_scripts:
+  assign_port:
+    # Assign an unprivileged port for the web server based on MR ID.
+    - |
+      APP_PORT=$(( $CI_MERGE_REQUEST_ID % 64000 + 1024 ))
+      echo "Assigned port number $APP_PORT."
+  build_docker_compose_files:
+    - !reference [.review_app_scripts, assign_port]
+    - |
+      echo "Creating docker compose files…"
+      curl https://raw.githubusercontent.com/zammad/zammad-docker-compose/master/docker-compose.yml > docker-compose.yml
+      curl https://raw.githubusercontent.com/zammad/zammad-docker-compose/master/.env > .env
+      cat - <<YML_FILE > docker-compose.review-app.yml
+      ---
+      version: '3'
+      services:
+        zammad-nginx:
+          ports:
+            - "127.0.0.1:${APP_PORT}:8080"
+        zammad-backup:
+          profiles:
+            - do-not-start
+      YML_FILE
+      cat - <<ENV_FILE >> .env
+      IMAGE_REPO=${CI_REGISTRY}/${CI_PROJECT_PATH}
+      VERSION=${APP_NAME}
+      ENV_FILE
+      # cat docker-compose* .env
+    # Check if containers were previously created, so that this is an update deployment
+    - |
+      APP_DEPLOYED_BEFORE=$(${DOCKER_COMPOSE_COMMAND} ps --all --quiet)
+      if [ "$APP_DEPLOYED_BEFORE" ]
+      then
+        echo "This review app was previously deployed."
+      else
+        echo "This review app was not deployed yet."
+      fi
+  build_and_push_docker_image:
+    # Build/update docker image and publish it to the GitLab container registry.
+    - |
+      echo "Build docker image…"
+      docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+      echo -e "\\e[0Ksection_start:`date +%s`:docker_build[collapsed=true]\\r\\e[0Kdocker build"
+      if [ ! "${SKIP_DOCKER_BUILD}" ]
+      then
+        docker build --pull --no-cache -t $IMAGE_URL .
+        docker push $IMAGE_URL
+      fi
+      echo -e "\\e[0Ksection_end:`date +%s`:docker_build\\r\\e[0K"
+  create_auto_wizard_json:
+    - |
+      cat - <<JSON_FILE > tmp/auto_wizard.json
+      {
+        "Token": "${CI_JOB_TOKEN}",
+        "Users": [
+          {
+            "login": "admin@example.com",
+            "firstname": "Test Admin",
+            "lastname": "Agent",
+            "email": "admin@example.com",
+            "password": "${CI_MERGE_REQUEST_ID}"
+          },
+          {
+            "login": "agent1@example.com",
+            "firstname": "Agent 1",
+            "lastname": "Test",
+            "email": "agent1@example.com",
+            "password": "${CI_MERGE_REQUEST_ID}",
+            "roles": ["Agent"]
+          }
+        ],
+        "Groups": [
+          {
+            "name": "some group1",
+            "users": ["admin@example.com", "agent1@example.com"]
+          },
+          {
+            "name": "Users",
+            "users": ["admin@example.com", "agent1@example.com"],
+            "signature": "default",
+            "email_address_id": 1
+          }
+        ],
+        "Channels": [
+          {
+            "id": 1,
+            "area": "Email::Account",
+            "group": "Users",
+            "options": {
+              "inbound": {
+                "adapter": "imap",
+                "options": {
+                  "host": "mx1.example.com",
+                  "user": "not_existing",
+                  "password": "not_existing",
+                  "ssl": true
+                }
+              },
+              "outbound": {
+                "adapter": "sendmail"
+              }
+            }
+          }
+        ],
+        "EmailAddresses": [
+          {
+            "id": 1,
+            "channel_id": 1,
+            "realname": "Zammad Helpdesk",
+            "email": "zammad@localhost"
+          }
+        ],
+        "Settings": [
+          {
+            "name": "product_name",
+            "value": "Zammad Review App ${APP_NAME}"
+          },
+          {
+            "name": "fqdn",
+            "value": "${APP_FQDN}"
+          },
+          {
+            "name": "developer_mode",
+            "value": true
+          }
+        ],
+        "TextModuleLocale": {
+          "Locale": "de-de"
+        }
+      }
+      JSON_FILE
+  create_vhost_config:
+    - |
+      cat - <<VHOST_CONFIG > /etc/nginx/conf.d/vhost-includes/${APP_NAME}.conf
+      server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name ${APP_SLUG}.${SERVER_NAME};
+
+        location / {
+            proxy_redirect off;
+            proxy_set_header Host \$host;
+            proxy_set_header X-Real-IP \$remote_addr;
+            proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+
+            proxy_pass http://127.0.0.1:${APP_PORT};
+        }
+      }
+      VHOST_CONFIG
+  delete_vhost_config:
+    - rm -f /etc/nginx/conf.d/vhost-includes/${APP_NAME}.conf
+  reload_nginx:
+    - sudo systemctl reload nginx.service
+
+.review-app:
+  tags:
+    - review-apps
+  stage: pre
+  cache: []
+  variables:
+    SERVER_NAME: review-apps.dc.zammad.com
+    APP_SLUG: $CI_COMMIT_REF_SLUG
+    APP_NAME: review-app-${APP_SLUG}
+    APP_FQDN: ${APP_SLUG}.${SERVER_NAME}
+    IMAGE_URL: ${CI_REGISTRY}/${CI_PROJECT_PATH}:${APP_NAME}
+    DOCKER_COMPOSE_COMMAND: docker compose -f docker-compose.yml -f docker-compose.review-app.yml -p ${APP_NAME}
+  environment:
+    name: ${APP_NAME}
+    url: https://${APP_FQDN}#getting_started/auto_wizard/${CI_JOB_TOKEN}
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: manual
+      allow_failure: true
+    - when: never
+  before_script:
+    - !reference [.review_app_scripts, build_docker_compose_files]
+  after_script:
+    - echo "Clean-up project build directory…"  # shell runners don't clean-up, see https://gitlab.com/gitlab-org/gitlab/-/issues/243716
+    - rm -rf $CI_PROJECT_DIR
+    - echo "Perform docker clean-up…"
+    - docker image prune -f
+    - docker volume prune -f
+
+review-app:deploy:
+  extends:
+    - .review-app
+  script:
+    - !reference [.review_app_scripts, build_and_push_docker_image]
+    # Spawn a new or update an existing docker compose application on the GitLab runner.
+    # If starting did not complete, bring down the container again to free up resources.
+    - |
+      echo "Deploy review app…"
+      ${DOCKER_COMPOSE_COMMAND} up -d || FAILED=true
+      if [ $FAILED ]
+      then
+        ${DOCKER_COMPOSE_COMMAND} down
+        echo "Failed to bring up container, exiting."
+        exit 1
+      fi
+    # Always provide auto_wizard.json, because we don't know when it will be activated.
+    - !reference [.review_app_scripts, create_auto_wizard_json]
+    - docker cp tmp/auto_wizard.json ${APP_NAME}-zammad-railsserver-1:/opt/zammad
+    - !reference [.review_app_scripts, create_vhost_config]
+    - !reference [.review_app_scripts, reload_nginx]
+  environment:
+    on_stop: review-app:stop
+    auto_stop_in: 1 month
+
+review-app:stop:
+  extends:
+    - .review-app
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo "Stop review app…"
+    - !reference [.review_app_scripts, delete_vhost_config]
+    - !reference [.review_app_scripts, reload_nginx]
+    - ${DOCKER_COMPOSE_COMMAND} down
+  environment:
+    action: stop

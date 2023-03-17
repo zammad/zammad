@@ -1,7 +1,6 @@
-class Index extends App.Controller
+class EmailVerify extends App.Controller
   constructor: ->
     super
-    @authenticateCheckRedirect()
     @verifyCall()
 
   verifyCall: =>
@@ -16,40 +15,42 @@ class Index extends App.Controller
     )
 
   success: =>
-    new Success(el: @el)
+    new Success(el: @el, appEl: @appEl)
 
   error: =>
-    new Fail(el: @el)
+    new Fail(el: @el, appEl: @appEl)
 
-class Success extends App.ControllerContent
+class Success extends App.ControllerAppContent
   constructor: ->
     super
     @render()
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
+    )
 
   render: =>
     @renderScreenSuccess(
-      detail: 'Woo hoo! Your email address has been verified!'
+      detail: __('Woo hoo! Your email address has been verified!')
     )
     delay = =>
       @navigate '#'
-    @delay(delay, 20500)
+    @delay(delay, 2000)
 
-class Fail extends App.ControllerContent
+class Fail extends App.ControllerAppContent
   constructor: ->
     super
     @render()
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
+    )
 
   render: =>
     @renderScreenError(
-      detail: 'Unable to verify email. Please contact your administrator.'
+      detail: __('Email could not be verified. Please contact your administrator.')
     )
 
-App.Config.set('email_verify/:token', Index, 'Routes')
+App.Config.set('email_verify/:token', EmailVerify, 'Routes')

@@ -1,0 +1,40 @@
+<div class="status-fields">
+  <% if @chats.length > 1: %>
+  <div class="buttonDropdown dropdown">
+    <div class="status-field status-field--spacer js-acceptChat">
+      <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %> 
+    </div>
+    <div class="status-field status-field--arrow" data-toggle="dropdown">
+      <%- @Icon('arrow-down') %>
+    </div>
+    <ul class="dropdown-menu" role="menu">
+      <% for chat in @chats: %>
+      <li class="js-waitingCustomers js-acceptChat" disabled data-chat-id="<%= chat.id %>" role="menuitem">
+        <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting in %s', chat.name) %> <span class="flex-spacer"></span>
+        <div class="status-badge js-info">
+          <div class="info-badge"><%- @Icon('info') %></div>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+  <% else: %>
+    <div class="status-field js-acceptChat js-waitingCustomers">
+      <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %> 
+      <div class="status-badge js-totalInfo">
+        <div class="info-badge"><%- @Icon('info') %></div>
+      </div>
+    </div>
+  <% end %>
+  <div class="status-field js-chattingCustomers">
+    <span class="badge js-badgeChattingCustomers"></span> <%- @T('Chatting Customers') %> 
+    <div class="status-badge js-info">
+      <div class="info-badge"><%- @Icon('info') %></div>
+    </div>
+  </div>
+  <div class="status-field js-activeAgents">
+    <span class="badge js-badgeActiveAgents"></span> <%- @T('Active Agents') %> 
+    <div class="status-badge js-info">
+      <div class="info-badge"><%- @Icon('info') %></div>
+    </div>
+  </div>
+</div>

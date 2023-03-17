@@ -1,0 +1,57 @@
+Return-Path: <me@example.com>
+X-Original-To: me@example.net
+Delivered-To: martin@example.de
+Received: from mx2.example.com (mx2.example.com [127.0.0.1])
+	by base.example.de (Postfix) with ESMTPS id 69D861E933
+	for <me@example.net>; Wed, 20 Feb 2019 19:49:59 +0100 (CET)
+From: Martin Smith <me@example.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_E3889AFD-C5DA-47A3-86E6-3E59CB07002D"
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: image resize test
+Message-Id: <3271C0D7-9FD0-4E93-925E-87B139DB6FBF@example.com>
+Date: Wed, 20 Feb 2019 19:50:00 +0100
+To: Martin Smith <me@example.net>
+
+
+--Apple-Mail=_E3889AFD-C5DA-47A3-86E6-3E59CB07002D
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
+
+image resize test
+
+
+
+the end
+--Apple-Mail=_E3889AFD-C5DA-47A3-86E6-3E59CB07002D
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="Apple-Mail=_113961F0-41B5-43D3-BF74-8B0DE1B757A4"
+
+
+--Apple-Mail=_113961F0-41B5-43D3-BF74-8B0DE1B757A4
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv="Content-Type" content="text/html charset=us-ascii"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" class="">image resize test<div class=""><br class=""></div><div class=""><img apple-inline="yes" id="C94B1FA1-618C-40E3-B731-892907FF8AB3" src="cid:5EF92182-3261-44C7-9835-E8A922AB4976@openvpn" class=""></div><div class=""><br class=""></div><div class="">the end</div></body></html>
+--Apple-Mail=_113961F0-41B5-43D3-BF74-8B0DE1B757A4
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+	filename=a.jpg
+Content-Type: image/jpeg;
+	x-unix-mode=0600;
+	name="a.jpg"
+Content-Id: <5EF92182-3261-44C7-9835-E8A922AB4976@openvpn>
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIf
+IiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/wAALCAABAlgBAREA/8QAHwAAAQUBAQEB
+AQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1Fh
+ByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZ
+WmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXG
+x8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/9oACAEBAAA/APZKKKKKKKKKKKKKKKKK
+KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK//2Q==
+--Apple-Mail=_113961F0-41B5-43D3-BF74-8B0DE1B757A4--
+
+--Apple-Mail=_E3889AFD-C5DA-47A3-86E6-3E59CB07002D--

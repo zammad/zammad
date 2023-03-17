@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AgentTicketZoomHideTest < TestCase
@@ -17,25 +19,25 @@ class AgentTicketZoomHideTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # create two tickets
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'Nico',
-        group: 'Users',
-        title: 'Ticket 1',
-        body: 'some body 123äöü - changes',
+        group:    'Users',
+        title:    'Ticket 1',
+        body:     'some body 123äöü - changes',
       }
     )
 
-    ticket2 = ticket_create(
+    ticket_create(
       data: {
         customer: 'Nico',
-        group: 'Users',
-        title: 'Ticket 2',
-        body: 'some body 123äöü - changes',
+        group:    'Users',
+        title:    'Ticket 2',
+        body:     'some body 123äöü - changes',
       }
     )
 
@@ -43,7 +45,7 @@ class AgentTicketZoomHideTest < TestCase
     ticket_update(
       data: {
         body:  'added image attachment',
-        files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+        files: [Rails.root.join('test/data/upload/upload2.jpg')],
       },
     )
 
@@ -52,18 +54,14 @@ class AgentTicketZoomHideTest < TestCase
       css: '.attachment-icon img',
     )
 
-    watch_for(
-      css: 'body > .modal',
-    )
+    modal_ready
 
     # Now go to a previous ticket and confirm that the modal disappears
     location(
-      url: browser_url + '/#ticket/zoom/1',
+      url: "#{browser_url}/#ticket/zoom/1",
     )
     sleep 2
-    exists_not(
-      css: 'body > .modal',
-    )
+    modal_disappear
   end
 
   def teardown

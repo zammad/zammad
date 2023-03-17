@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe PasswordHash do
@@ -57,12 +59,12 @@ RSpec.describe PasswordHash do
     let(:zammad_sha2) { '{sha2}dd9c764fa7ea18cd992c8600006d3dc3ac983d1ba22e9ba2d71f6207456be0ba' }
 
     it 'requires hash to be not blank' do
-      expect(described_class.legacy?(nil, pw_plain)).to be_falsy
-      expect(described_class.legacy?('', pw_plain)).to be_falsy
+      expect(described_class).not_to be_legacy(nil, pw_plain)
+      expect(described_class).not_to be_legacy('', pw_plain)
     end
 
     it 'requires password to be not nil' do
-      expect(described_class.legacy?(zammad_sha2, nil)).to be_falsy
+      expect(described_class).not_to be_legacy(zammad_sha2, nil)
     end
 
     it 'detects sha2 hashes' do

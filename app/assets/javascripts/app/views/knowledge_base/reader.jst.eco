@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="knowledge-base-article">
+    <% if @search_return_url: %>
+      <a href="<%= @search_return_url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--prev">
+        <%- @Icon('arrow-left') %>
+        <div class="spacer"></div>
+        <span class="knowledge-base-article-nav-link-title"><%- @T('Back to search results') %></span>
+      </a>
+    <% end %>
+
+    <h1 class="knowledge-base-article-header js-answer-title"></h1>
+
+    <small class="knowledge-base-article-meta js-answer-meta"></small>
+
+    <div class="knowledge-base-article-body">
+      <div class="knowledge-base-article-content richtext-content js-answer-body"></div>
+      <div class="knowledge-base-article-attachments js-answer-attachments"></div>
+      <div class="knowledge-base-article-linked-tickets js-answer-linked-tickets"></div>
+      <div class="knowledge-base-article-tags js-answer-tags"></div>
+    </div>
+
+    <div class="js-answer-pagination"></div>
+  </div>
+</div>

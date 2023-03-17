@@ -1,18 +1,19 @@
 class EmailReply extends App.Controller
   @action: (actions, ticket, article, ui) ->
-    return actions if !ui.permissionCheck('ticket.agent')
+    return actions if !ticket.editable()
+    return actions if ticket.currentView() is 'customer'
     group = ticket.group
     return actions if !group.email_address_id
 
     if article.type.name is 'email' || article.type.name is 'web'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
 
-      # check if reply all need to be shown
+      # check if reply all needs to be shown
       recipients = []
       if article.sender.name is 'Customer'
         if article.from
@@ -30,11 +31,12 @@ class EmailReply extends App.Controller
 
       # remove system addresses
       localAddresses = App.EmailAddress.all()
-      forgeinRecipients = []
+      foreignRecipients = []
       recipientUsed = {}
       for recipient in recipients
         if !_.isEmpty(recipient.address)
           localRecipientAddress = recipient.address.toString().toLowerCase()
+
           if !recipientUsed[localRecipientAddress]
             recipientUsed[localRecipientAddress] = true
             localAddress = false
@@ -43,12 +45,12 @@ class EmailReply extends App.Controller
                 recipientUsed[localRecipientAddress] = true
                 localAddress = true
             if !localAddress
-              forgeinRecipients.push recipient
+              foreignRecipients.push recipient
 
-      # check if reply all is neede
-      if forgeinRecipients.length > 1
+      # check if reply all is needed
+      if foreignRecipients.length > 1
         actions.push {
-          name: 'reply all'
+          name: __('reply all')
           type: 'emailReplyAll'
           icon: 'reply-all'
           href: '#'
@@ -56,7 +58,7 @@ class EmailReply extends App.Controller
 
       # always show forward
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
@@ -64,26 +66,26 @@ class EmailReply extends App.Controller
 
     if article.sender.name is 'Customer' && article.type.name is 'phone'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
       }
     if article.sender.name is 'Agent' && article.type.name is 'phone'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
       actions.push {
-        name: 'forward'
+        name: __('forward')
         type: 'emailForward'
         icon: 'forward'
         href: '#'
@@ -126,17 +128,14 @@ class EmailReply extends App.Controller
     # get current body
     body = ui.el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
-    # check if quote need to be added
+    # check if quote needs to be added via user selection of content
     signaturePosition = 'bottom'
-    selected = App.ClipBoard.getSelected('html')
-    if selected
-      selected = App.Utils.htmlCleanup(selected).html()
-      selected = App.Utils.htmlImage2DataUrl(selected)
-    if !selected
-      selected = App.ClipBoard.getSelected('text')
-      if selected
-        selected = App.Utils.textCleanup(selected)
-        selected = App.Utils.text2html(selected)
+
+    if !@hasUserSelectedContent(ui)
+      selected = ''
+    else
+      selected = @getSelectedContent(ui)
+      selected = @cleanUpHtmlSelection(selected)
 
     # full quote, if needed
     if !selected && article && App.Config.get('ui_ticket_zoom_article_email_full_quote')
@@ -148,7 +147,9 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      selected = "<div><br><br/></div><div><blockquote type=\"cite\">#{selected}</blockquote></div><div><br></div>"
+      quote_header = @replyQuoteHeader(article)
+
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
@@ -168,6 +169,80 @@ class EmailReply extends App.Controller
 
     true
 
+  @cleanUpHtmlSelection: (selected) ->
+    if selected
+      cleaned_up = App.Utils.htmlCleanup(selected).html()
+
+      return cleaned_up if cleaned_up
+
+    text = App.ClipBoard.getSelected('text')
+    return App.Utils.text2html(text) if text
+
+    false
+
+  # Fixes Issue #3539 - When replying quote article content only
+  @getSelectedContent: (ui) ->
+    range          = window.getSelection().getRangeAt(0)
+    parentSelector = ui.el.closest('.ticket-article-item').attr('id')
+
+    return if !parentSelector
+
+    lastSelElem = $('#' + parentSelector + ' .richtext-content')[0]
+
+    startInsideArticle = @isInsideSelectionBoundary(range.startContainer, parentSelector)
+    endInsideArticle   = @isInsideSelectionBoundary(range.endContainer, parentSelector)
+
+    if !startInsideArticle && endInsideArticle
+      range.setStart(lastSelElem, 0)
+    else if startInsideArticle && !endInsideArticle
+      range.setEnd(lastSelElem, lastSelElem.childNodes.length)
+    else if @containsNode(lastSelElem)
+      range.setStart(lastSelElem, 0)
+      range.setEnd(lastSelElem, lastSelElem.childNodes.length)
+
+    App.ClipBoard.manuallyUpdateSelection()
+    App.ClipBoard.getSelected('html')
+
+  # checks if user has made any text selection
+  # checks if that text selection is inside article-content only
+  @hasUserSelectedContent: (ui) ->
+    selObject = App.ClipBoard.getSelectedObject()
+
+    if selObject.rangeCount > 0
+      # item on which reply is clicked
+      parentTicketArticleContainer = ui.el.closest('.ticket-article-item')
+      if parentTicketArticleContainer
+        parentSelector = parentTicketArticleContainer.attr('id')
+        range = selObject.getRangeAt(0)
+        return @isInsideSelectionBoundary(range.startContainer, parentSelector) || @isInsideSelectionBoundary(range.endContainer, parentSelector) || @containsNode($('#' + parentSelector + ' .richtext-content')[0])
+    else
+      return false
+
+  @isInsideSelectionBoundary: (node, parentSelectorId) ->
+    hasParent = $(node).closest('#' + parentSelectorId + ' .richtext-content')
+    return hasParent && hasParent.attr('class') is 'richtext-content'
+
+  # Selection.containsNode is not supported in IE, hence check
+  @containsNode: (node) ->
+    selected = App.ClipBoard.getSelectedObject()
+    if typeof selected.containsNode == 'function'
+      return selected.containsNode(node, false)
+    else
+      return false
+
+  @date_format: (date_string) ->
+    options = {
+      weekday: 'long'
+      month: 'long'
+      day: 'numeric'
+      year: 'numeric'
+    }
+    locale = App.i18n.get() || 'en-US'
+    try
+      new Date(date_string).toLocaleTimeString(locale, options)
+    catch e
+      new Date(date_string).toLocaleTimeString('en-US', options)
+
   @emailForward: (ticket, article, ui) ->
 
     ui.scrollToCompose()
@@ -176,13 +251,14 @@ class EmailReply extends App.Controller
     body = ''
     if article.content_type.match('html')
       body = App.Utils.textCleanup(article.body)
-      body = App.Utils.htmlImage2DataUrl(article.body)
 
     if article.content_type.match('plain')
       body = App.Utils.textCleanup(article.body)
       body = App.Utils.text2html(body)
 
-    body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{body}</blockquote></div><div><br></div>"
+    quote_header = App.FullQuoteHeader.fullQuoteHeaderForward(article)
+
+    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
     articleNew = {}
     articleNew.body = body
@@ -225,7 +301,7 @@ class EmailReply extends App.Controller
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
     group = ticket.group
     return articleTypes if !group.email_address_id
 
@@ -237,7 +313,7 @@ class EmailReply extends App.Controller
       icon:       'email'
       attributes: attributes
       internal:   false,
-      features:   ['attachment']
+      features:   ['attachment', 'security']
     }
 
     articleTypes
@@ -264,7 +340,7 @@ class EmailReply extends App.Controller
       signature = App.Signature.find(group.signature_id)
 
     # add/replace signature
-    if signature && signature.body
+    if signature && signature.active && signature.body
 
       # if signature has changed, remove it
       signature_id = ui.$('[data-signature=true]').data('signature-id')
@@ -282,9 +358,13 @@ class EmailReply extends App.Controller
         App.Utils.htmlStrip(signature)
         if signaturePosition is 'top'
           body.prepend(signature)
+          body.prepend('<br>')
         else
           body.append(signature)
         ui.$('[data-name=body]').replaceWith(body)
+
+    # convert remote images into data urls
+    App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
 
   @validation: (type, params, ui) ->
     return true if type isnt 'email'
@@ -292,11 +372,11 @@ class EmailReply extends App.Controller
     # check if recipient exists
     if _.isEmpty(params.to) && _.isEmpty(params.cc)
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Need recipient in "To" or "Cc".'
+        message: __('Please provide a recipient in "TO" or "CC".')
         shown: true
         small: true
         container: ui.el.closest('.content')
@@ -306,11 +386,11 @@ class EmailReply extends App.Controller
     # check if message exists
     if _.isEmpty(params.body)
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Text needed'
+        message: __('Text needed')
         shown: true
         small: true
         container: ui.el.closest('.content')
@@ -318,5 +398,15 @@ class EmailReply extends App.Controller
       return false
 
     true
+
+  @replyQuoteHeader: (article) ->
+    if !App.Config.get('ui_ticket_zoom_article_email_full_quote_header')
+      return ''
+
+    date = @date_format(article.created_at)
+    name = (article.origin_by || article.created_by).displayName()
+
+    App.i18n.translateInline('On %s, %s wrote:', date, name) + '<br><br>'
+
 
 App.Config.set('200-EmailReply', EmailReply, 'TicketZoomArticleAction')

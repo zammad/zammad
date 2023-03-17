@@ -1,1 +1,9 @@
 **/*{.,-}min.js
+
+# Skip auto generated files.
+app/frontend/**/graphql/**/*.api.ts
+app/frontend/shared/graphql/types.ts
+
+# Skip legacy files
+public/assets/tests/**/*.js
+public/assets/form/**/*.js

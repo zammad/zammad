@@ -1,0 +1,13 @@
+Pozivnica za #{config.product_name} na #{config.fqdn}
+
+<div>Zdravo #{user.firstname},</div>
+<br>
+<div>Ja, (#{current_user.firstname} #{current_user.lastname}), pozivam vas na #{config.product_name} - našu platformu za korisničku podršku.</div>
+<br>
+<div>Kliknite <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">ovde</a> i podesite vašu lozinku.</div>
+<br>
+<div>Srdačno,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

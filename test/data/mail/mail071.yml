@@ -1,0 +1,9 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"your secret past" <power quadrant system@example.com>'
+from_email: power quadrant system@example.com
+from_display_name: your secret past
+to: user@example.com
+subject: how've things been?
+body: no visible content
+content_type: text/plain
+attachments: []

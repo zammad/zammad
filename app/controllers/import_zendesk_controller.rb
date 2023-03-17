@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class ImportZendeskController < ApplicationController
 
   def url_check
@@ -7,53 +8,54 @@ class ImportZendeskController < ApplicationController
     # validate
     if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
-        result: 'invalid',
-        message: 'Invalid URL!',
+        result:  'invalid',
+        message: __('The provided URL is invalid.'),
       }
       return
     end
 
     # connection test
     translation_map = {
-      'No such file'                                              => 'Hostname not found!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'No such file'                                              => __('The hostname could not be found.'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+      '503 Service Temporarily Unavailable'                       => __('The hostname could not be found.'),
+      'No route to host'                                          => __('There is no route to this host.'),
+      'Connection refused'                                        => __('The connection was refused.'),
     }
 
-    response = UserAgent.request(params[:url])
+    response = UserAgent.request(URI.join(params[:url], '/api/v2/users/me').to_s, verify_ssl: true)
 
     if !response.success?
       message_human = ''
       translation_map.each do |key, message|
-        if response.error.to_s.match?(/#{Regexp.escape(key)}/i)
+        if response.error.to_s.match?(%r{#{Regexp.escape(key)}}i)
           message_human = message
         end
       end
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: message_human,
-        message: response.error.to_s,
+        message:       response.error.to_s,
       }
       return
     end
 
-    # since 2016-10-15 a redirect to a marketing page has been implemented
-    if !response.body.match?(/#{params[:url]}/)
+    if response.header['x-zendesk-api-version'].blank?
       render json: {
-        result: 'invalid',
-        message_human: 'Hostname not found!',
+        result:        'invalid',
+        message_human: __('The hostname could not be found.'),
       }
       return
     end
 
     endpoint = "#{params[:url]}/api/v2"
     endpoint.gsub!(%r{([^:])//+}, '\\1/')
+
     Setting.set('import_zendesk_endpoint', endpoint)
 
     render json: {
       result: 'ok',
-      url: params[:url],
+      url:    params[:url],
     }
   end
 
@@ -63,8 +65,8 @@ class ImportZendeskController < ApplicationController
     if !params[:username] || !params[:token]
 
       render json: {
-        result: 'invalid',
-        message_human: 'Incomplete credentials',
+        result:        'invalid',
+        message_human: __('Incomplete credentials'),
       }
       return
     end
@@ -80,8 +82,8 @@ class ImportZendeskController < ApplicationController
       Setting.set('import_zendesk_endpoint_key', nil)
 
       render json: {
-        result: 'invalid',
-        message_human: 'Invalid credentials!',
+        result:        'invalid',
+        message_human: __('The provided credentials are invalid.'),
       }
       return
     end
@@ -93,11 +95,12 @@ class ImportZendeskController < ApplicationController
 
   def import_start
     return if setup_done_response
+
     Setting.set('import_mode', true)
     Setting.set('import_backend', 'zendesk')
 
     job = ImportJob.create(name: 'Import::Zendesk')
-    job.delay.start
+    AsyncImportJob.perform_later(job)
 
     render json: {
       result: 'ok',
@@ -117,7 +120,7 @@ class ImportZendeskController < ApplicationController
   private
 
   def setup_done
-    count = User.all.count()
+    count = User.all.count
     done = true
     if count <= 2
       done = false
@@ -129,6 +132,7 @@ class ImportZendeskController < ApplicationController
     if !setup_done
       return false
     end
+
     render json: {
       setup_done: true,
     }

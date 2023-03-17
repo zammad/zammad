@@ -1,25 +1,20 @@
-<% if @user['organization']: %>
-<div class="user-organization"><a href="<%- @user.organization.uiUrl() %>"><%= @user.organization.displayName() %></a></div>
+<% if @object['organization']: %>
+<div class="user-organization<% if @object.organization.active is false: %> is-inactive<% end %>"><a href="<%- @object.organization.uiUrl() %>"><%= @object.organization.displayName() %></a></div>
 <% end %>
-<hr>
-<% for row in @userData: %>
-  <% if @user[row.name]: %>
+
+<%- @V('popover/single_object_generic', object: @object, attributes: @attributes) %>
+<% if !_.isEmpty(@object['accounts']): %>
+  <hr>
   <div class="popover-block">
-    <label><%- @T(row.display) %></label>
-    <%- @P(@user, row.name) %>
+    <label><%- @T('Linked Accounts') %></label>
+    <% for account of @object['accounts']: %>
+      <a href="<%= @object['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
+    <% end %>
   </div>
-  <% end %>
 <% end %>
-<% if !_.isEmpty(@user['accounts']): %>
-    <div class="popover-block">
-      <label><%- @T('Linked Accounts') %></label>
-      <% for account of @user['accounts']: %>
-        <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
-      <% end %>
-    </div>
-<% end %>
-<% if !_.isEmpty(@user['links']): %>
-  <% for link in @user['links']: %>
+<% if !_.isEmpty(@object['links']): %>
+  <hr>
+  <% for link in @object['links']: %>
     <div class="popover-block">
       <label><%- @T(link['title']) %></label>
       <% for item in link['items']: %>

@@ -1,23 +1,87 @@
 <div class="main flex">
 
+  <a href="#layout_ref"><div class="btn btn--primary"><%- @T('Back') %></div></a>
+  <hr>
+
   <h1>Tiki</h1>
 
-  <% for state in ['supergood', 'good', 'ok', 'bad', 'super-bad']: %>
-    <%- @Icon("mood-#{state}", 'stat-icon mood-icon') %>
-  <% end %>
+  <table class="table table-hover">
+    <tr>
+      <th>Tiki</th>
+      <th>Name</th>
+    </tr>
+    <% for state in ['supergood', 'good', 'ok', 'bad', 'superbad']: %>
+      <tr>
+        <td>
+          <%- @Icon("mood-#{state}", 'stat-icon mood-icon') %>
+        </td>
+        <td>
+          mood-<%- state %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
   <hr>
 
   <h1>Ticket traffic light colors</h1>
 
-    <%- @Icon("task-state", 'open') %>
-    <%- @Icon("task-state", 'pending') %>
-    <%- @Icon("task-state", 'escalating') %>
-    <%- @Icon("task-state", 'closed') %>
+  <table class="table table-hover">
+    <tr>
+      <th>task-state</th>
+      <th>Name</th>
+    </tr>
 
+      <% for state in ['open', 'pending', 'escalating', 'closed']: %>
+       <tr>
+        <td>
+          <%- @Icon("task-state", "#{state}") %>
+        </td>
+        <td>
+          <%- state %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
   <hr>
 
-  <h1>Colors</h1>
+  <h1>Colors via css classes</h1>
+  <table class="table table-hover">
+    <tr>
+      <th>View</th>
+      <th>Class</th>
+    </tr>
 
+    <% for state in ['icon-checkbox', 'supergood-color', 'good-color', 'ok-color', 'bad-color', 'superbad-color', 'u-high-priority-color', 'u-low-priority-color',  'icon-error', 'icon-knowledge-base','icon-checkmark' ]: %>
+       <tr>
+        <td>
+          <%- @Icon("logotype", "#{state}") %>
+        </td>
+        <td>
+          <%- state %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  <hr>
 
+  <h1>Icons</h1>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Icon</th>
+      <th>Name</th>
+    </tr>
+      <% for icon in ['archived-modifier','arrow-down','arrow-left','arrow-right','arrow-up','bold','chain','chat','checkbox-checked','checkbox-indeterminate','checkbox','checkmark','clipboard','clock','cloud','cog','crown','danger','dashboard','diagonal-cross','document','download','draft-modifier','draggable','dropdown-list','email-button','email','external','eye','eyedropper','facebook-button','facebook','file-archive','file-code','file-email','file-excel','file-pdf','file-powerpoint','file-text','file-unknown','file-word','form','forward','full-logo','github-button','gitlab-button','google-button','group','help','horizontal-rule','important','in-process','inactive-organization','inactive-user','info','internal-modifier','italic','knowledge-base-answer','knowledge-base','line-left-arrow','line-right-arrow','linkedin-button','list','loading','lock-open','lock','logo','logotype','long-arrow-down','long-arrow-right','low-priority','magnifier','marker','message','minus-small','minus','mood-bad','mood-good','mood-ok','mood-sad','mood-superbad','mood-supergood','mute','note','oauth2-button','office365-button','one-ticket','organization','outbound-calls','overflow-button','overviews','package','paperclip','pen','person','phone','plus-small','plus','printer','radio-checked','radio','rearange','received-calls','reload','reopening','reply-all','reply','report','saml-button','searchdetail','signout','small-dot','sms','spinner-small','split','status-modified-outer-circle','status','stopwatch','strikethrough','switchView','task-state','team','telegram','templates','tools','total-tickets','trash','twitter-button','twitter','underline','unmute','unordered-list','user','web','saml-button','zoom-in','zoom-out']: %>
+        <tr>
+          <td>
+              <%- @Icon( "#{icon}") %>
+          </td>
+          <td>
+            <%- icon %>
+          </td>
+        </tr>
+      <% end %>
+  </table>
 
 </div>

@@ -1,0 +1,36 @@
+.template_capybara_filtered:
+  rules:
+    - if: $BROWSER_TEST_FILTER
+      when: always
+    - when: never
+  variables:
+    BROWSER_TEST_FILTER_LOOP_COUNT: 50
+    FF_NETWORK_PER_BUILD: 1  # https://docs.gitlab.com/runner/configuration/feature-flags.html
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - |
+      for i in $(seq $BROWSER_TEST_FILTER_LOOP_COUNT)
+      do
+        echo "> Run $i of $BROWSER_TEST_FILTER_LOOP_COUNT: $BROWSER_TEST_FILTER"
+        bundle exec rspec --fail-fast $BROWSER_TEST_FILTER || exit 1
+      done
+
+capybara:filtered:chrome:
+  extends:
+    - .template_browser-core_capybara_chrome
+    - .template_capybara_filtered
+    - .variables_auth
+  services:
+    - !reference [.template_browser-core_capybara_chrome, services]
+    # Also add containers for integration tests here.
+    - !reference [.services, auth]
+
+capybara:filtered:firefox:
+  extends:
+    - .template_browser-core_capybara_firefox
+    - .template_capybara_filtered
+    - .variables_auth
+  services:
+    - !reference [.template_browser-core_capybara_firefox, services]
+    # Also add containers for integration tests here.
+    - !reference [.services, auth]

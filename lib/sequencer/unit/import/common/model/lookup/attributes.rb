@@ -1,65 +1,56 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          module Lookup
-            class Attributes < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              skip_action :skipped, :failed
+class Sequencer::Unit::Import::Common::Model::Lookup::Attributes < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              uses :mapped, :model_class
-              provides :instance
+  skip_action :skipped, :failed
 
-              def process
-                return if state.provided?(:instance)
-                return if existing_instance.blank?
+  uses :mapped, :model_class
+  provides :instance
 
-                state.provide(:instance, existing_instance)
-              end
+  def process
+    return if state.provided?(:instance)
+    return if existing_instance.blank?
 
-              private
+    state.provide(:instance, existing_instance)
+  end
 
-              def attribute
-                raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
-              end
+  private
 
-              def attributes
-                # alias or alias_method won't work if attribute method
-                # is overwritten in inheriting sub-class
-                attribute
-              end
+  def attribute
+    raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
+  end
 
-              def existing_instance
-                @existing_instance ||= begin
-                  Array(attributes).find do |attribute|
+  def attributes
+    # alias or alias_method won't work if attribute method
+    # is overwritten in inheriting sub-class
+    attribute
+  end
 
-                    value = mapped[attribute]
-                    next if value.blank?
+  def existing_instance
+    @existing_instance ||= begin
+      Array(attributes).find do |attribute|
 
-                    existing_instance = lookup(
-                      attribute: attribute,
-                      value:     value
-                    )
+        value = mapped[attribute]
+        next if value.blank?
 
-                    next if existing_instance.blank?
+        existing_instance = lookup(
+          attribute: attribute,
+          value:     value
+        )
 
-                    # https://stackoverflow.com/a/24901650/7900866
-                    break existing_instance
-                  end
-                end
-              end
+        next if existing_instance.blank?
 
-              def lookup(attribute:, value:)
-                return model_class.identify(value) if model_class.respond_to?(:identify)
-                model_class.find_by(attribute => value)
-              end
-            end
-          end
-        end
+        # https://stackoverflow.com/a/24901650/7900866
+        break existing_instance
       end
     end
+  end
+
+  def lookup(attribute:, value:)
+    return model_class.identify(value) if model_class.respond_to?(:identify)
+
+    model_class.find_by(attribute => value)
   end
 end

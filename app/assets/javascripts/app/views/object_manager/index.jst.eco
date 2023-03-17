@@ -12,11 +12,11 @@
 <div class="page-content">
   <% if !_.isEmpty(@itemsToChange): %>
   <div class="box box--message">
-    <h2><%- @T('Database Update required') %></h2>
+    <h2><%- @T('Database Update Required') %></h2>
     <p>
       <%- @T('Changes were made that require a database update.') %>
-      <%- @T('This might take some time where the system can\'t be used.') %>
-      <%- @T('Please execute database changes only in a maintenance time-slot.') %>
+      <%- @T("This might take some time during which the system can't be used.") %>
+      <%- @T('Please execute database changes only in a maintenance window.') %>
     </p>
     <p>
       <%- @T('Changes') %>:
@@ -24,11 +24,11 @@
       <% for item in @itemsToChange: %>
         <li>
           <% if item.to_create is true: %>
-            <%- @T('Create') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Create:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% else if item.to_delete is true: %>
-            <%- @T('Delete') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Delete:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% else if item.to_migrate || item.to_config is true: %>
-            <%- @T('Changed') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Changed:') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% end %>
       <% end %>
       </ul>
@@ -55,6 +55,7 @@
         <th class=""><%- @T('Display') %></th>
         <th class=""><%- @T('Name') %></th>
         <th class="" style="width: 200px;"><%- @T('Type') %></th>
+        <th><%- @T('Position') %></th>
         <th class="" style="width: 140px;"><%- @T('Action') %></th>
       </tr>
     </thead>
@@ -64,6 +65,7 @@
         <td><%= item.display %></td>
         <td><%= item.name %></td>
         <td><%= item.data_type %></td>
+        <td><%= item.position %></td>
         <td>
           <% if item.to_create is true: %>
             <%- @T('will be created') %>

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
@@ -7,23 +9,23 @@ RSpec.describe Import::OTRS::DynamicField::Text do
   it 'imports an OTRS Text DynamicField' do
 
     zammad_structure = {
-      object: 'Ticket',
-      name: 'text_example',
-      display: 'Text Example',
-      screens: {
+      object:        'Ticket',
+      name:          'text_example',
+      display:       'Text Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true
           }
         }
       },
-      active: true,
-      editable: true,
-      position: '8',
+      active:        true,
+      editable:      true,
+      position:      '8',
       created_by_id: 1,
       updated_by_id: 1,
-      data_type: 'input',
-      data_option: {
+      data_type:     'input',
+      data_option:   {
         default:   '',
         type:      'text',
         maxlength: 255,

@@ -1,52 +1,46 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Common
-          class ArticleTypeID < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource
+class Sequencer::Unit::Import::Zendesk::Common::ArticleTypeId < Sequencer::Unit::Common::Provider::Named
 
-            private
+  uses :resource
 
-            def article_type_id
-              ::Ticket::Article::Type.select(:id).find_by(name: name).id
-            end
+  private
 
-            def name
-              known_channel || 'web'
-            end
+  def article_type_id
+    ::Ticket::Article::Type.select(:id).find_by(name: name).id
+  end
 
-            def known_channel
-              channel = resource.via.channel
-              direct_mapping.fetch(channel, indirect_map(channel))
-            end
+  def name
+    known_channel || 'web'
+  end
 
-            def indirect_map(channel)
-              method_name = "remote_name_#{channel}".to_sym
-              send(method_name) if respond_to?(method_name, true)
-            end
+  def known_channel
+    channel = resource.via.channel
+    direct_mapping.fetch(channel, indirect_map(channel))
+  end
 
-            def remote_name_facebook
-              return 'facebook feed post' if resource.via.source.rel == 'post'
-              'facebook feed comment'
-            end
+  def indirect_map(channel)
+    method_name = :"remote_name_#{channel}"
+    send(method_name) if respond_to?(method_name, true)
+  end
 
-            def remote_name_twitter
-              return 'twitter status' if resource.via.source.rel == 'mention'
-              'twitter direct message'
-            end
+  def remote_name_facebook
+    return 'facebook feed post' if resource.via.source.rel == 'post'
 
-            def direct_mapping
-              {
-                'web'           => 'web',
-                'email'         => 'email',
-                'sample_ticket' => 'note',
-              }.freeze
-            end
-          end
-        end
-      end
-    end
+    'facebook feed comment'
+  end
+
+  def remote_name_twitter
+    return 'twitter status' if resource.via.source.rel == 'mention'
+
+    'twitter direct-message'
+  end
+
+  def direct_mapping
+    {
+      'web'           => 'web',
+      'email'         => 'email',
+      'sample_ticket' => 'note',
+    }.freeze
   end
 end

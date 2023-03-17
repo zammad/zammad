@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class CalendarSubscriptions::Tickets
 
-  def initialize(user, preferences)
+  def initialize(user, preferences, time_zone)
     @user        = user
     @preferences = preferences
-    @tzid        = 'UTC'
+    @time_zone   = time_zone
   end
 
   def all
@@ -44,7 +44,7 @@ class CalendarSubscriptions::Tickets
       owner_ids = [ @user.id ]
     end
     if preferences[:not_assigned]
-      owner_ids.push( 1 )
+      owner_ids.push(1)
     end
 
     owner_ids
@@ -59,11 +59,11 @@ class CalendarSubscriptions::Tickets
     condition = {
       'ticket.owner_id' => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: Ticket::State.where(
+        value:    Ticket::State.where(
           state_type_id: Ticket::StateType.where(
             name: %w[new open],
           ),
@@ -73,10 +73,10 @@ class CalendarSubscriptions::Tickets
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
-    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale       = @user.locale
     translated_ticket = Translation.translate(user_locale, 'ticket')
 
     events_data = []
@@ -86,10 +86,11 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
+      event_data[:type]        = 'new_open'
 
       events_data.push event_data
     end
@@ -106,11 +107,11 @@ class CalendarSubscriptions::Tickets
     condition = {
       'ticket.owner_id' => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: Ticket::State.where(
+        value:    Ticket::State.where(
           state_type_id: Ticket::StateType.where(
             name: [
               'pending reminder',
@@ -123,10 +124,10 @@ class CalendarSubscriptions::Tickets
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
-    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale       = @user.locale
     translated_ticket = Translation.translate(user_locale, 'ticket')
     customer          = Translation.translate(user_locale, 'customer')
 
@@ -144,8 +145,8 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       if alarm?
@@ -154,6 +155,7 @@ class CalendarSubscriptions::Tickets
           trigger: '-PT1M',
         }
       end
+      event_data[:type] = 'pending'
 
       events_data.push event_data
     end
@@ -168,22 +170,22 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.blank?
 
     condition = {
-      'ticket.owner_id' => {
+      'ticket.owner_id'      => {
         operator: 'is',
-        value: owner_ids,
+        value:    owner_ids,
       },
       'ticket.escalation_at' => {
         operator: 'is not',
-        value: nil,
+        value:    nil,
       }
     }
 
     tickets = Ticket.search(
       current_user: @user,
-      condition: condition,
+      condition:    condition,
     )
 
-    user_locale                  = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
+    user_locale                  = @user.locale
     translated_ticket_escalation = Translation.translate(user_locale, 'ticket escalation')
     customer                     = Translation.translate(user_locale, 'customer')
 
@@ -198,8 +200,8 @@ class CalendarSubscriptions::Tickets
         escalation_at = Time.zone.today
       end
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @time_zone)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @time_zone)
       event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       if alarm?
@@ -208,6 +210,7 @@ class CalendarSubscriptions::Tickets
           trigger: '-PT1M',
         }
       end
+      event_data[:type] = 'escalated'
 
       events_data.push event_data
     end

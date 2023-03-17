@@ -1,13 +1,1 @@
-<ol class="tasks tasks--standalone">
-  <% for ticket in @tickets: %>
-  <li class="task">
-    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
-      <%- @Icon('task-state', ticket.iconClass()) %>
-    </div>
-    <div class="task-text">
-      <a class="name" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">#<%= ticket.number %> <%= ticket.title %></a>
-      <%- @humanTime(ticket.created_at, false, 'time') %>
-    </div>
-  </li>
-  <% end %>
-</ol>
+<%- @ticketList %>

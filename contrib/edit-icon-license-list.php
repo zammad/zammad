@@ -106,8 +106,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-      linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), 
+    background-image:
+      linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),
       linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
     background-size: 20px 20px;
     background-position: 10px 10px, 40px 40px;
@@ -131,7 +131,7 @@ $imageTypes = '{*.svg}';
 
 # Set to true if you prefer sorting images by name
 # If set to false, images will be sorted by date
-$sortByImageName = false;
+$sortByImageName = true;
 
 # Set to false if you want the oldest images to appear first
 # This is only used if images are sorted by date (see above)
@@ -196,7 +196,7 @@ if ($sortByImageName) {
 <? endforeach ?>
 </div>
 
-<script src="../app/assets/javascripts/app/lib/core/jquery-2.2.1.js"></script>
+<script src="../app/assets/javascripts/app/lib/core/jquery-3.6.0.js"></script>
 <script>
   var self = "<?= basename($_SERVER["SCRIPT_FILENAME"]) ?>"
   var filter = "off"
@@ -206,7 +206,7 @@ if ($sortByImageName) {
     filter = localStorage.getItem('icon-list-filter')
     applyFilter()
   }
-  
+
   $('[name="filter"][value="'+ filter +'"]').prop('checked', true)
 
   $('input').on('input', storeAuthors)
@@ -273,7 +273,7 @@ if ($sortByImageName) {
       else
         return previousValue + currentValue.luminance * currentValue.areaPercentage
     }, 0)
-    
+
     if(averageLuminance > 220){
       $(svg).parent().addClass('is-light')
     }

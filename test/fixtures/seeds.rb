@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # inital data set as extention to db/seeds.rb
 
@@ -12,9 +13,9 @@ if channel
 end
 
 email_address = EmailAddress.create_or_update(
-  realname: 'Zammad',
-  email: 'zammad@localhost',
-  channel_id: channel_id,
+  realname:      'Zammad',
+  email:         'zammad@localhost',
+  channel_id:    channel_id,
   updated_by_id: 1,
   created_by_id: 1
 )
@@ -24,13 +25,13 @@ Group.all.each do |group|
 end
 
 User.create_or_update(
-  login: 'admin@example.com',
-  firstname: 'Default',
-  lastname: 'Admin',
-  email: 'admin@example.com',
-  password: 'adminpw',
-  active: true,
-  roles: Role.where(name: %w[Admin]),
+  login:         'admin@example.com',
+  firstname:     'Default',
+  lastname:      'Admin',
+  email:         'admin@example.com',
+  password:      'adminpw',
+  active:        true,
+  roles:         Role.where(name: %w[Admin]),
   updated_by_id: 1,
   created_by_id: 1,
 )

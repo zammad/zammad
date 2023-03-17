@@ -1,12 +1,12 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChatsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.channel_chat') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     chat_ids = []
     assets = {}
-    Chat.order(:id).each do |chat|
+    Chat.reorder(:id).each do |chat|
       chat_ids.push chat.id
       assets = chat.assets(assets)
     end
@@ -14,7 +14,7 @@ class ChatsController < ApplicationController
     assets = setting.assets(assets)
     render json: {
       chat_ids: chat_ids,
-      assets: assets,
+      assets:   assets,
     }
   end
 

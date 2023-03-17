@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::HasResponseExtentions
   extend ActiveSupport::Concern
 
@@ -17,6 +19,7 @@ module ApplicationController::HasResponseExtentions
     return true if params[:full] == 'true'
     return true if params[:full] == 1
     return true if params[:full] == '1'
+
     false
   end
 
@@ -25,6 +28,7 @@ module ApplicationController::HasResponseExtentions
     return true if params[:all] == 'true'
     return true if params[:all] == 1
     return true if params[:all] == '1'
+
     false
   end
 

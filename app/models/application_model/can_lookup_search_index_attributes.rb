@@ -1,13 +1,34 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanLookupSearchIndexAttributes
   extend ActiveSupport::Concern
 
+  class RequestCache < ActiveSupport::CurrentAttributes
+    attribute :integer_attribute_names
+
+    def integer_fields(class_name)
+      self.integer_attribute_names ||= {}
+
+      updated_at = ObjectManager::Attribute.maximum('updated_at')
+      return self.integer_attribute_names[class_name][:data] if self.integer_attribute_names[class_name].present? && self.integer_attribute_names[class_name][:updated_at] == updated_at
+
+      self.integer_attribute_names[class_name] = {
+        updated_at: updated_at,
+        data:       ObjectManager::Attribute.where(object_lookup: ObjectLookup.find_by(name: class_name), data_type: 'integer', editable: true).pluck(:name),
+      }
+      self.integer_attribute_names[class_name][:data]
+    end
+  end
+
 =begin
 
-lookup name of ref. objects
+This function return the attributes for the elastic search with relation hash values.
+
+It can be run with parameter include_references: false to skip the relational hashes to prevent endless loops.
 
   ticket = Ticket.find(3)
   attributes = ticket.search_index_attribute_lookup
+  attributes = ticket.search_index_attribute_lookup(include_references: false)
 
 returns
 
@@ -15,52 +36,152 @@ returns
 
 =end
 
-  def search_index_attribute_lookup
-
+  def search_index_attribute_lookup(include_references: true)
     attributes = self.attributes
     self.attributes.each do |key, value|
+      break if !include_references
+
+      attribute_name = key.to_s
+
+      # ignore standard attribute if needed
+      if self.class.search_index_attribute_ignored?(attribute_name)
+        attributes.delete(attribute_name)
+        next
+      end
+
+      # need value for reference data
       next if !value
 
-      # get attribute name
-      attribute_name_with_id = key.to_s
-      attribute_name         = key.to_s
-      next if attribute_name[-3, 3] != '_id'
-      attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
+      # check if we have a referenced object which we could include here
+      next if !search_index_attribute_method(attribute_name)
 
-      # check if attribute method exists
-      next if !respond_to?(attribute_name)
+      # get referenced attribute name
+      attribute_ref_name = self.class.search_index_attribute_ref_name(attribute_name)
+      next if !attribute_ref_name
 
-      # check if method has own class
-      relation_class = send(attribute_name).class
-      next if !relation_class
+      # ignore referenced attributes if needed
+      next if self.class.search_index_attribute_ignored?(attribute_ref_name)
 
-      # lookup ref object
-      relation_model = relation_class.lookup(id: value)
-      next if !relation_model
-
-      # get name of ref object
-      value = nil
-      if relation_model.respond_to?('search_index_data')
-        value = relation_model.send('search_index_data')
-      end
-
-      if relation_model.respond_to?('name')
-        value = relation_model.send('name')
-      end
-
+      # get referenced attribute value
+      value = search_index_value_by_attribute(attribute_name)
       next if !value
 
       # save name of ref object
-      attributes[ attribute_name ] = value
+      attributes[ attribute_ref_name ] = value
     end
 
-    ignored_attributes = self.class.instance_variable_get(:@search_index_attributes_ignored) || []
-    return attributes if ignored_attributes.blank?
+    if is_a? HasObjectManagerAttributes
+      RequestCache.integer_fields(self.class.to_s).each do |field|
+        next if attributes[field].blank?
 
-    ignored_attributes.each do |attribute|
-      attributes.delete(attribute.to_s)
+        attributes["#{field}_text"] = attributes[field].to_s
+      end
     end
 
     attributes
+  end
+
+=begin
+
+This function returns the relational search index value based on the attribute name.
+
+  organization = Organization.find(1)
+  value = organization.search_index_value_by_attribute('organization_id')
+
+returns
+
+  value = {"name"=>"Zammad Foundation"}
+
+=end
+
+  def search_index_value_by_attribute(attribute_name = '')
+
+    # get attribute name
+    relation_class = search_index_attribute_method(attribute_name)
+    return if !relation_class
+
+    # lookup ref object
+    relation_model = relation_class.lookup(id: attributes[attribute_name])
+    return if !relation_model
+
+    relation_model.search_index_attribute_lookup(include_references: false)
+  end
+
+=begin
+
+This function returns the method for the relational search index attribute.
+
+  method = Ticket.new.search_index_attribute_method('organization_id')
+
+returns
+
+  method = Organization (class)
+
+=end
+
+  def search_index_attribute_method(attribute_name = '')
+    return if attribute_name[-3, 3] != '_id'
+
+    attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
+    return if !respond_to?(attribute_name)
+
+    send(attribute_name).class
+  end
+
+  class_methods do
+
+=begin
+
+This function returns the relational search index attribute name for the given class.
+
+  attribute_ref_name = Organization.search_index_attribute_ref_name('user_id')
+
+returns
+
+  attribute_ref_name = 'user'
+
+=end
+
+    def search_index_attribute_ref_name(attribute_name)
+      attribute_name[ 0, attribute_name.length - 3 ]
+    end
+
+=begin
+
+This function returns if a search index attribute should be ignored.
+
+  ignored = Ticket.search_index_attribute_ignored?('organization_id')
+
+returns
+
+  ignored = false
+
+=end
+
+    def search_index_attribute_ignored?(attribute_name = '')
+      ignored_attributes = instance_variable_get(:@search_index_attributes_ignored) || []
+      return if ignored_attributes.blank?
+
+      ignored_attributes.include?(attribute_name.to_sym)
+    end
+
+=begin
+
+This function returns if a search index attribute is relevant for creating/updating the search index for this object.
+
+relevant = Ticket.search_index_attribute_relevant?('organization_id')
+
+returns
+
+relevant = true
+
+=end
+
+    def search_index_attribute_relevant?(attribute_name = '')
+      relevant_attributes = instance_variable_get(:@search_index_attributes_relevant) || []
+      return true if relevant_attributes.blank?
+
+      relevant_attributes.include?(attribute_name.to_sym)
+    end
   end
 end

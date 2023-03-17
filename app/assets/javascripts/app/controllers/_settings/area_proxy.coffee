@@ -48,12 +48,11 @@ class App.SettingsAreaProxy extends App.Controller
           }
           return
         new App.ControllerConfirm(
-          head: 'Error'
+          head: __('Error')
           message: data.message
           buttonClass: 'btn--success'
           buttonCancel: false
-          buttonSubmit: 'Close'
+          buttonSubmit: __('Close')
           container: @el.closest('.content')
         )
     )
-

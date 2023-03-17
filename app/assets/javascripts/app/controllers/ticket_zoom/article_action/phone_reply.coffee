@@ -1,14 +1,15 @@
 class PhoneReply
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     actions
 
   @perform: (articleContainer, type, ticket, article, ui) ->
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
     articleTypes.push {
-      name:       'phone'
+      name:       __('phone')
       icon:       'phone'
       attributes: []
       internal:   false,

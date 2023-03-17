@@ -1,21 +1,23 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Issue2035RecursiveTicketTrigger < ActiveRecord::Migration[5.1]
   def change
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Recursive Ticket Triggers',
-      name: 'ticket_trigger_recursive',
-      area: 'Ticket::Core',
+      title:       'Recursive Ticket Triggers',
+      name:        'ticket_trigger_recursive',
+      area:        'Ticket::Core',
       description: 'Activate the recursive processing of ticket triggers.',
-      options: {
+      options:     {
         form: [
           {
             display: 'Recursive Ticket Triggers',
-            null: true,
-            name: 'ticket_trigger_recursive',
-            tag: 'boolean',
+            null:    true,
+            name:    'ticket_trigger_recursive',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,35 +25,35 @@ class Issue2035RecursiveTicketTrigger < ActiveRecord::Migration[5.1]
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
         permission: ['admin.ticket'],
-        hidden: true,
+        hidden:     true,
       },
-      frontend: false
+      frontend:    false
     )
     Setting.create_if_not_exists(
-      title: 'Recursive Ticket Triggers Loop Max.',
-      name: 'ticket_trigger_recursive_max_loop',
-      area: 'Ticket::Core',
+      title:       'Recursive Ticket Triggers Loop Max.',
+      name:        'ticket_trigger_recursive_max_loop',
+      area:        'Ticket::Core',
       description: 'Maximum number of recursively executed triggers.',
-      options: {
+      options:     {
         form: [
           {
             display: 'Recursive Ticket Triggers',
-            null: true,
-            name: 'ticket_trigger_recursive_max_loop',
-            tag: 'select',
+            null:    true,
+            name:    'ticket_trigger_recursive_max_loop',
+            tag:     'select',
             options: {
-              1 => ' 1',
-              2 => ' 2',
-              3 => ' 3',
-              4 => ' 4',
-              5 => ' 5',
-              6 => ' 6',
-              7 => ' 7',
-              8 => ' 8',
-              9 => ' 9',
+              1  => ' 1',
+              2  => ' 2',
+              3  => ' 3',
+              4  => ' 4',
+              5  => ' 5',
+              6  => ' 6',
+              7  => ' 7',
+              8  => ' 8',
+              9  => ' 9',
               10 => '10',
               11 => '11',
               12 => '12',
@@ -67,12 +69,12 @@ class Issue2035RecursiveTicketTrigger < ActiveRecord::Migration[5.1]
           },
         ],
       },
-      state: 10,
+      state:       10,
       preferences: {
         permission: ['admin.ticket'],
-        hidden: true,
+        hidden:     true,
       },
-      frontend: false
+      frontend:    false
     )
 
   end

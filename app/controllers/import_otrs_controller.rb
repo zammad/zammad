@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportOtrsController < ApplicationController
 
@@ -8,38 +8,38 @@ class ImportOtrsController < ApplicationController
     # validate
     if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
-        result: 'invalid',
-        message: 'Invalid URL!',
+        result:  'invalid',
+        message: __('The provided URL is invalid.'),
       }
       return
     end
 
     # connection test
     translation_map = {
-      'authentication failed'                                     => 'Authentication failed!',
-      'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-      'No route to host'                                          => 'No route to host!',
-      'Connection refused'                                        => 'Connection refused!',
+      'authentication failed'                                     => __('Authentication failed.'),
+      'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+      'No route to host'                                          => __('There is no route to this host.'),
+      'Connection refused'                                        => __('The connection was refused.'),
     }
 
     response = UserAgent.request(params[:url])
-    if !response.success? && response.code.to_s !~ /^40.$/
+    if !response.success? && response.code.to_s !~ %r{^40.$}
       message_human = ''
       translation_map.each do |key, message|
-        if response.error.to_s.match?(/#{Regexp.escape(key)}/i)
+        if response.error.to_s.match?(%r{#{Regexp.escape(key)}}i)
           message_human = message
         end
       end
       render json: {
-        result: 'invalid',
+        result:        'invalid',
         message_human: message_human,
-        message: response.error.to_s,
+        message:       response.error.to_s,
       }
       return
     end
 
     result = {}
-    if response.body.match?(/zammad migrator/)
+    if response.body.include?('zammad migrator')
 
       migrator_response = JSON.parse(response.body)
 
@@ -59,8 +59,8 @@ class ImportOtrsController < ApplicationController
 
           if !key_parts[1]
             render json: {
-              result: 'invalid',
-              message_human: 'Unable to get key from URL!'
+              result:        'invalid',
+              message_human: __('Import API key could not be extracted from URL.')
             }
             return
           end
@@ -78,23 +78,23 @@ class ImportOtrsController < ApplicationController
 
         result = {
           result: 'ok',
-          url: params[:url],
+          url:    params[:url],
         }
       else
         result = {
-          result: 'invalid',
+          result:        'invalid',
           message_human: migrator_response['Error']
         }
       end
-    elsif response.body.match?(/(otrs\sag|otrs\.com|otrs\.org)/i)
+    elsif response.body.match?(%r{(otrs\sag|otrs\.com|otrs\.org)}i)
       result = {
-        result: 'invalid',
-        message_human: 'Host found, but no OTRS migrator is installed!'
+        result:        'invalid',
+        message_human: __('Host found, but no OTRS migrator is installed!')
       }
     else
       result = {
-        result: 'invalid',
-        message_human: 'Host found, but it seems to be no OTRS installation!',
+        result:        'invalid',
+        message_human: __('Host found, but it seems to be no OTRS installation!'),
       }
     end
 
@@ -103,18 +103,19 @@ class ImportOtrsController < ApplicationController
 
   def import_start
     return if setup_done_response
+
     Setting.set('import_mode', true)
     welcome = Import::OTRS.connection_test
     if !welcome
       render json: {
-        message: 'Migrator can\'t read OTRS output!',
-        result: 'invalid',
+        message: __('Migrator can\'t read OTRS output!'),
+        result:  'invalid',
       }
       return
     end
 
     # start migration
-    Import::OTRS.delay.start_bg
+    AsyncOtrsImportJob.perform_later
 
     render json: {
       result: 'ok',
@@ -122,7 +123,7 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_check
-    statistic = Import::OTRS::Requester.list
+    Import::OTRS::Requester.list
     issues = []
 
     # check count of dynamic fields
@@ -130,6 +131,7 @@ class ImportOtrsController < ApplicationController
     dynamic_fields = Import::OTRS::Requester.load('DynamicField')
     dynamic_fields.each do |dynamic_field|
       next if dynamic_field['ValidID'].to_i != 1
+
       dynamic_field_count += 1
     end
     if dynamic_field_count > 20
@@ -140,6 +142,7 @@ class ImportOtrsController < ApplicationController
     sys_configs = Import::OTRS::Requester.load('SysConfig')
     sys_configs.each do |sys_config|
       next if sys_config['Key'] != 'Process'
+
       issues.push 'otrsProcesses'
     end
 
@@ -164,7 +167,7 @@ class ImportOtrsController < ApplicationController
   private
 
   def setup_done
-    count = User.all.count()
+    count = User.all.count
     done = true
     if count <= 2
       done = false
@@ -176,6 +179,7 @@ class ImportOtrsController < ApplicationController
     if !setup_done
       return false
     end
+
     render json: {
       setup_done: true,
     }

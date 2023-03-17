@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module HasLinks
   extend ActiveSupport::Concern
 
@@ -17,7 +18,7 @@ delete object link list, will be executed automatically
 
   def links_destroy
     Link.remove_all(
-      link_object: self.class.to_s,
+      link_object:       self.class.to_s,
       link_object_value: id,
     )
     true

@@ -1,0 +1,12 @@
+{
+  "chat": "mobile-chat",
+  "email": "mobile-mail",
+  "facebook": "mobile-facebook",
+  "fax": "mobile-printer",
+  "note": "mobile-note",
+  "phone": "mobile-phone",
+  "sms": "mobile-message",
+  "telegram": "mobile-telegram",
+  "twitter": "mobile-twitter",
+  "web": "mobile-web"
+}

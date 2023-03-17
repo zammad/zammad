@@ -1,16 +1,12 @@
-class Sequencer
-  class Unit
-    module Zendesk
-      class Connected < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-        uses :client
+class Sequencer::Unit::Zendesk::Connected < Sequencer::Unit::Common::Provider::Named
 
-        private
+  uses :client
 
-        def connected
-          client.current_user.id.present?
-        end
-      end
-    end
+  private
+
+  def connected
+    client.current_user.id.present?
   end
 end

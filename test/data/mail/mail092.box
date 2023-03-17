@@ -1,0 +1,62 @@
+Return-Path: <>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
+	mail.example.com
+X-Original-To: test@example.com
+Delivered-To: receiver@example.org
+X-policyd-weight:  NOT_IN_SPAMCOP=-1.5 NOT_IN_IX_MANITU=-1.5 CL_IP_EQ_HELO_IP=-2 (check from: .. - helo: .mail.example. - helo-domain: .example.)  FROM/MX_MATCHES_NOT_HELO(DOMAIN)=1; rate: -4
+Received: from mail.example.com (mail.example.com [127.0.0.1])
+	by mail.example.com (Postfix) with ESMTPS id 82CC2418018B
+	for <receiver@example.org>; Wed, 22 Jul 2020 13:43:07 +0200 (CEST)
+Received: from bouncer (unknown [127.0.0.1])
+	by mail.example.com (Postfix) with ESMTP id 39A27804391D
+	for <receiver@example.org>; Wed, 22 Jul 2020 13:43:06 +0200 (CEST)
+To: receiver@example.org
+Subject: Undelivered Mail Returned to Sender
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="5E5F521185D1.1207995974/gmmr"
+From: MAILER-DAEMON (Mail Delivery System) <postmaster@example.com>
+Message-Id: <20200722114311.82CC2418018B@mail.example.com>
+Date: Wed, 22 Jul 2020 13:43:07 +0200 (CEST)
+X-KasLoop: m0506075
+
+This is a MIME-encapsulated message.
+
+--5E5F521185D1.1207995974/gmmr
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at Centrum Holdings
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please contact your system administrator.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+--5E5F521185D1.1207995974/gmmr
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mail.example.com
+X-Postfix-Queue-ID: 242788039D8C
+X-Postfix-Sender: rfc822; receiver@example.org
+Arrival-Date: Wed, 22 Jul 2020 13:43:06 +0200 (CEST)
+
+Final-Recipient: rfc822; receiver@example.org
+Action: failed
+Status: 5.2.2
+Diagnostic-Code: X-Postfix; Mailbox is full
+
+--5E5F521185D1.1207995974/gmmr
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+Content-Transfer-Encoding: 8bit
+
+
+--5E5F521185D1.1207995974/gmmr--
+

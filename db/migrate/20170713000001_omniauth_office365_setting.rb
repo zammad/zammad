@@ -1,20 +1,23 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class OmniauthOffice365Setting < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
+
     Setting.create_if_not_exists(
-      title: 'Authentication via %s',
-      name: 'auth_microsoft_office365',
-      area: 'Security::ThirdPartyAuthentication',
+      title:       'Authentication via %s',
+      name:        'auth_microsoft_office365',
+      area:        'Security::ThirdPartyAuthentication',
       description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'auth_microsoft_office365',
-            tag: 'boolean',
+            null:    true,
+            name:    'auth_microsoft_office365',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,41 +26,41 @@ class OmniauthOffice365Setting < ActiveRecord::Migration[4.2]
         ],
       },
       preferences: {
-        controller: 'SettingsAreaSwitch',
-        sub: ['auth_microsoft_office365_credentials'],
-        title_i18n: ['Office 365'],
-        description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://apps.dev.microsoft.com'],
-        permission: ['admin.security'],
+        controller:       'SettingsAreaSwitch',
+        sub:              ['auth_microsoft_office365_credentials'],
+        title_i18n:       ['Office 365'],
+        description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://portal.azure.com'],
+        permission:       ['admin.security'],
       },
-      state: false,
-      frontend: true
+      state:       false,
+      frontend:    true
     )
     Setting.create_if_not_exists(
-      title: 'Office 365 App Credentials',
-      name: 'auth_microsoft_office365_credentials',
-      area: 'Security::ThirdPartyAuthentication::Office365',
+      title:       'Office 365 App Credentials',
+      name:        'auth_microsoft_office365_credentials',
+      area:        'Security::ThirdPartyAuthentication::Office365',
       description: 'Enables user authentication via Office 365.',
-      options: {
+      options:     {
         form: [
           {
             display: 'App ID',
-            null: true,
-            name: 'app_id',
-            tag: 'input',
+            null:    true,
+            name:    'app_id',
+            tag:     'input',
           },
           {
             display: 'App Secret',
-            null: true,
-            name: 'app_secret',
-            tag: 'input',
+            null:    true,
+            name:    'app_secret',
+            tag:     'input',
           },
         ],
       },
-      state: {},
+      state:       {},
       preferences: {
         permission: ['admin.security'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 end

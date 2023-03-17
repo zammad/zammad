@@ -1,0 +1,19 @@
+Received: from localhost by xx.xx.io
+	with SpamAssassin (version 3.4.1);
+	Tue, 21 Aug 2018 00:37:30 +0200
+From: "your secret past" <power quadrant system@example.com>
+To: <user@example.com>
+Subject: how've things been?
+Date: Mon, 20 Aug 2018 18:21:59 -0400
+Message-Id: <0.0.164306.jxtmxj281d2xtvlji447768.0@example.com>
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on xx.xx.io
+X-Spam-Flag: YES
+X-Spam-Level: ***************
+X-Spam-Status: Yes, score=15.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HTML_FONT_LOW_CONTRAST,HTML_IMAGE_RATIO_04,HTML_MESSAGE,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L5,RCVD_IN_RP_RNBL,
+	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_WEB,RDNS_NONE,SPF_PASS,URIBL_ABUSE_SURBL,
+	URIBL_BLACK,URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----------=_5B7B42AA.3193F6D3"

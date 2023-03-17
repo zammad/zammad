@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module HasHistory
   extend ActiveSupport::Concern
 
@@ -46,7 +47,7 @@ log object update history with all updated attributes, if configured - will be e
       end
     end
     self.history_changes_last_done = changes
-    #logger.info 'updated ' + self.changes.inspect
+    # logger.info 'updated ' + self.changes.inspect
 
     return if changes['id'] && !changes['id'][0]
 
@@ -76,8 +77,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -86,8 +87,8 @@ log object update history with all updated attributes, if configured - will be e
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
@@ -95,12 +96,12 @@ log object update history with all updated attributes, if configured - will be e
       end
       data = {
         history_attribute: attribute_name,
-        value_from: value_str[0].to_s,
-        value_to: value_str[1].to_s,
-        id_from: value_id[0],
-        id_to: value_id[1],
+        value_from:        value_str[0].to_s,
+        value_to:          value_str[1].to_s,
+        id_from:           value_id[0],
+        id_to:             value_id[1],
       }
-      #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
+      # logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       history_log('updated', updated_by_id, data)
     end
   end
@@ -159,7 +160,7 @@ returns
 get history log for this object
 
   organization = Organization.find(123)
-  result = organization.history_get()
+  result = organization.history_get
 
 returns
 
@@ -204,33 +205,43 @@ returns
 =end
 
   def history_get(fulldata = false)
+    relation_object = history_relation_object
+
     if !fulldata
-      return History.list(self.class.name, self['id'])
+      return History.list(self.class.name, self['id'], relation_object)
     end
 
     # get related objects
-    history = History.list(self.class.name, self['id'], nil, true)
+    history = History.list(self.class.name, self['id'], relation_object, true)
     history[:list].each do |item|
-      record = Kernel.const_get(item['object']).find(item['o_id'])
+      record = item['object'].constantize.lookup(id: item['o_id'])
 
-      history[:assets] = record.assets(history[:assets])
+      if record.present?
+        history[:assets] = record.assets(history[:assets])
+      end
 
-      if item['related_object']
-        record = Kernel.const_get(item['related_object']).find(item['related_o_id'])
+      next if !item['related_object']
+
+      record = item['related_object'].constantize.lookup(id: item['related_o_id'])
+      if record.present?
         history[:assets] = record.assets(history[:assets])
       end
     end
     {
       history: history[:list],
-      assets: history[:assets],
+      assets:  history[:assets],
     }
+  end
+
+  def history_relation_object
+    @history_relation_object ||= self.class.instance_variable_get(:@history_relation_object) || []
   end
 
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 =begin
 
-serve methode to ignore model attributes in historization
+serve method to ignore model attributes in historization
 
 class Model < ApplicationModel
   include HasHistory
@@ -242,5 +253,22 @@ end
     def history_attributes_ignored(*attributes)
       @history_attributes_ignored = attributes
     end
+
+=begin
+
+serve method to ignore model attributes in historization
+
+class Model < ApplicationModel
+  include HasHistory
+  history_relation_object 'Some::Relation::Object'
+end
+
+=end
+
+    def history_relation_object(*attributes)
+      @history_relation_object ||= []
+      @history_relation_object |= attributes
+    end
+
   end
 end

@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id=7886314590924986867&status=Soluta+commodi+sint+inventore.
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="e7dc4ee798a0adf954dca2c0a5704774",
+        oauth_signature="838Fr6pIxLTTPTUaFWFNiO6Dc%2BU%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1665139981", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 07 Oct 2022 10:53:01 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166513998175420537; Max-Age=34214400; Expires=Tue, 07 Nov 2023
+        10:53:01 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Fri, 07 Oct 2022 10:53:01 GMT
+      X-Transaction:
+      - 5a9c2fab08741cc1
+      Content-Length:
+      - '1971'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 5a9c2fab08741cc1
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '174'
+      X-Connection-Hash:
+      - 243be81ce2ff5772def230a8e2717be3635114477f931f2539da23c889855cfd
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"Fri Oct 07 10:53:01 +0000 2022","id":1578337596551438336,"id_str":"1578337596551438336","text":"Soluta
+        commodi sint inventore.","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]},"source":"\u003ca
+        href=\"https:\/\/zammad.com\" rel=\"nofollow\"\u003eZammad Integration Test\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":<TWITTER_USER_ID>,"id_str":"<TWITTER_USER_ID>","name":"Zammad
+        Integration Test Account","screen_name":"APITesting001","location":"","description":"Zammad
+        Integration Test Account","url":null,"entities":{"description":{"urls":[]}},"protected":false,"followers_count":1,"friends_count":1,"listed_count":0,"created_at":"Fri
+        Jun 25 07:21:40 +0000 2021","favourites_count":0,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":10,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1408343046731845632\/K56uhLP2_normal.png","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"it"}'
+  recorded_at: Fri, 07 Oct 2022 10:53:01 GMT
+recorded_with: VCR 6.1.0

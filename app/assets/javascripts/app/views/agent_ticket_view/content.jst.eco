@@ -6,18 +6,11 @@
     <% if @edit: %>
       <div class="btn btn--action" data-type="settings"><%- @T('Options') %></div>
     <% end %>
-    <!--
-    <ul class="pagination">
-    <% for item in @view_modes: %>
-      <li class="<%= item.class %>">
-        <a class="centered" href="#" data-type="viewmode" data-mode="<%= item.type %>"><%= item.name %></a>
-      </li>
-    <% end %>
-    </ul>
-    -->
   </div>
 </div>
 
 <div class="page-content">
   <div class="table-overview"></div>
 </div>
+
+<div class="bulkAction hide"></div>

@@ -1,0 +1,6 @@
+query applicationConfig {
+  applicationConfig {
+    key
+    value
+  }
+}

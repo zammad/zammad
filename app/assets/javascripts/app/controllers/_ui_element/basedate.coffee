@@ -4,10 +4,12 @@ class App.UiElement.basedate
   @templateName: ->
     throw 'Must override in a subclass'
 
-  @render: (attributeOrig) ->
-    attribute = _.clone(attributeOrig)
-    attribute.nameRaw = attribute.name
-    attribute.name = "{#{@templateName()}}#{attribute.name}"
+  @render: (attributeConfig) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
+    if attribute.name
+      attribute.nameRaw = attribute.name
+      attribute.name = "{#{@templateName()}}#{attribute.name}"
 
     item = $( App.view("generic/#{@templateName()}")(
       attribute: attribute
@@ -29,48 +31,57 @@ class App.UiElement.basedate
 
   @applyPickers: (item, attribute) ->
     item.find('.js-datepicker').datepicker(
+      clearBtn: attribute.null
       weekStart: 1
       autoclose: true
       todayBtn: 'linked'
       todayHighlight: true
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
+      orientation: attribute.orientation
+      disableScroll: attribute.disableScroll
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
 
     @setNewTimeInitial(item, attribute)
 
-  # observer changes / update needed to forece rerender to get correct today shown
+  # observer changes / update needed to force rerender to get correct today shown
   @bindEvents: (item, attribute) ->
     item
       .find('input')
-      .bind('focus', (e) ->
+      .on('focus', (e) ->
         item.find('.js-datepicker').datepicker('rerender')
-      ).bind('keyup blur change', (e) =>
+      ).on('keyup blur change', (e) =>
         @setNewTime(item, attribute, 0)
         @validation(item, attribute, true)
       )
 
-    item.bind('validate', (e) =>
+    item.on('validate', (e) =>
       @validation(item, attribute)
     )
+
+  @inputElement: (item, attribute) ->
+    if attribute.name
+      return item.find("[name=\"#{attribute.name}\"]")
+    return item.find('input[type="hidden"]')
 
   @setNewTime: (item, attribute, tolerant = false) ->
     currentInput = @currentInput(item, attribute)
     return if !currentInput
 
     if !@validateInput(currentInput)
-      item.find("[name=\"#{attribute.name}\"]").val('')
+      @inputElement(item, attribute).val('')
       return
 
-    item.find("[name=\"#{attribute.name}\"]").val(@buildTimestamp(currentInput))
+    @inputElement(item, attribute).val(@buildTimestamp(currentInput))
 
   # returns array with date or false if cannot get date
   @currentInput: (item, attribute) ->
     datetime = item.find('.js-datepicker').datepicker('getDate')
     if !datetime || datetime.toString() is 'Invalid Date'
-      item.find("[name=\"#{attribute.name}\"]").val('')
+      @inputElement(item, attribute).val('')
       return false
 
     @log 'setNewTime', datetime
@@ -91,7 +102,7 @@ class App.UiElement.basedate
     throw 'Must override in a subclass'
 
   @setNewTimeInitial: (item, attribute) ->
-    timestamp = item.find("[name=\"#{attribute.name}\"]").val()
+    timestamp = @inputElement(item, attribute).val()
     @log 'setNewTimeInitial', timestamp
     if !timestamp
       @setNoTimestamp(item)
@@ -119,7 +130,7 @@ class App.UiElement.basedate
       item.find('.help-inline').html('')
       item.closest('.form-group').find('.help-inline').html('')
 
-    timestamp = item.find("[name=\"#{attribute.name}\"]").val()
+    timestamp = @inputElement(item, attribute).val()
 
     # check required attributes
     errors = {}
@@ -143,14 +154,14 @@ class App.UiElement.basedate
 
   @buildCustomDates: ->
     data = {
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      daysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      months: ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      today: 'today',
-      clear: 'clear'
+      days: [__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday')],
+      daysMin: [__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat')],
+      daysShort: [__('Sun'), __('Mon'), __('Tue'), __('Wed'), __('Thu'), __('Fri'), __('Sat')],
+      months: [__('January'), __('February'), __('March'), __('April'), __('May'), __('June'),
+        __('July'), __('August'), __('September'), __('October'), __('November'), __('December')],
+      monthsShort: [__('Jan'), __('Feb'), __('Mar'), __('Apr'), __('May'), __('Jun'), __('Jul'), __('Aug'), __('Sep'), __('Oct'), __('Nov'), __('Dec')],
+      today: __('today'),
+      clear: __('clear')
     }
 
-    App.i18n.translateDeep(data)
+    App.i18n.translateDeepPlain(data)

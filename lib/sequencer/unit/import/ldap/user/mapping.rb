@@ -1,19 +1,11 @@
-class Sequencer
-  class Unit
-    module Import
-      module Ldap
-        module User
-          class Mapping < Sequencer::Unit::Import::Common::Mapping::FlatKeys
-            uses :ldap_config
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Ldap::User::Mapping < Sequencer::Unit::Import::Common::Mapping::FlatKeys
+  uses :ldap_config
 
-            def mapping
-              ldap_config[:user_attributes]
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def mapping
+    ldap_config[:user_attributes]
   end
 end

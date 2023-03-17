@@ -1,21 +1,13 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          class ResetPrimaryKeySequence < Sequencer::Unit::Base
-            extend Forwardable
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :model_class
+class Sequencer::Unit::Import::Common::Model::ResetPrimaryKeySequence < Sequencer::Unit::Base
+  extend Forwardable
 
-            delegate table_name: :model_class
+  uses :model_class
 
-            def process
-              DbHelper.import_post(table_name)
-            end
-          end
-        end
-      end
-    end
+  delegate table_name: :model_class
+
+  def process
+    DbHelper.import_post(table_name)
   end
 end

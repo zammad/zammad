@@ -1,0 +1,1 @@
+<input type="hidden" class="empty" name="<%= @attribute.name %>::" value="" />

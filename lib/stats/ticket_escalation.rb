@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketEscalation
 
@@ -20,7 +20,6 @@ class Stats::TicketEscalation
     ).count
 
     average = '-'
-    state = 'supergood'
     state = if own_escalated.zero?
               'supergood'
             elsif own_escalated <= 1
@@ -32,11 +31,11 @@ class Stats::TicketEscalation
             end
 
     {
-      used_for_average: own_escalated,
+      used_for_average:  own_escalated,
       average_per_agent: average,
-      state: state,
-      own: own_escalated,
-      total: all_escalated,
+      state:             state,
+      own:               own_escalated,
+      total:             all_escalated,
     }
   end
 

@@ -1,17 +1,14 @@
-require_dependency 'sequencer/mixin/prefixed_constantize'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Sequence
-    include ::Mixin::RequiredSubPaths
-    extend ::Sequencer::Mixin::PrefixedConstantize
+class Sequencer::Sequence
+  extend ::Sequencer::Mixin::PrefixedConstantize
 
-    PREFIX = 'Sequencer::Sequence::'.freeze
+  PREFIX = 'Sequencer::Sequence::'.freeze
 
-    attr_reader :units, :expecting
+  attr_reader :units, :expecting
 
-    def initialize(units:, expecting: [])
-      @units     = units
-      @expecting = expecting
-    end
+  def initialize(units:, expecting: [])
+    @units     = units
+    @expecting = expecting
   end
 end

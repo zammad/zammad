@@ -14,14 +14,14 @@
           <li class="divider"></li>
         <% end %>
         <% if item.navheader: %>
-          <li class="dropdown-header"><%- @T( item.navheader ) %></li>
+          <li class="dropdown-header"><%- @T(item.navheader) %></li>
         <% end %>
         <li><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
       <% end %>
     </ul>
   </div>
   <% else: %>
-  <a class="menu-item js-<%- item.class %>MenuItem <% if @activeTab[item.target]: %>is-active<% end %>" href="<%= item.target %>" data-key="<%- item.key %>">
+  <a class="menu-item js-<%- item.class %>MenuItem <% if @activeTab[item.target]: %>is-active<% end %> <% if item.onclick: %>js-onclick<% end %>" href="<%= item.target %>" data-key="<%- item.key %>">
     <%- @Icon(item.class, 'menu-item-icon') %>
     <span class="menu-item-name">
       <%- @T(item.name) %>
@@ -34,6 +34,10 @@
          <input type="checkbox" id="<%- item.class %>-switch" <% if item.switch: %>checked<% end %>>
          <label for="<%- item.class %>-switch"></label>
       </span>
+    <% end %>
+
+    <% if item.accessoryIcon: %>
+      <%- @Icon(item.accessoryIcon, 'accessory-icon') %>
     <% end %>
   </a>
   <% end %>

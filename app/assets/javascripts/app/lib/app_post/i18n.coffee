@@ -8,7 +8,12 @@ class App.i18n
   @translateDeep: (input, args...) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
-    _instance.translateDeep(input, args)
+    _instance.translateDeep(input, args, false)
+
+  @translateDeepPlain: (input, args...) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.translateDeep(input, args, true)
 
   @translateContent: (string, args...) ->
     if _instance == undefined
@@ -50,35 +55,15 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.set(args)
 
-  @setMap: (source, target, format) ->
+  @setMap: (source, target) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
-    _instance.setMap(source, target, format)
+    _instance.setMap(source, target)
 
-  @meta: (source, target, format) ->
+  @meta: (source, target) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
     _instance.meta()
-
-  @notTranslatedFeatureEnabled: (locale) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.notTranslatedFeatureEnabled(locale)
-
-  @getNotTranslated: (locale) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.getNotTranslated(locale)
-
-  @removeNotTranslated: (locale, key) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.removeNotTranslated(locale, key)
-
-  @setNotTranslated: (locale, key) ->
-    if _instance == undefined
-      _instance ?= new _i18nSingleton()
-    _instance.setNotTranslated(locale, key)
 
   @timeFormat: (locale, key) ->
     if _instance == undefined
@@ -86,22 +71,47 @@ class App.i18n
     _instance.mapTime
 
   @detectBrowserLocale: ->
-    return 'en-us' if !window.navigator.userLanguage && !window.navigator.language
-
     if window.navigator.languages
-      allLocales = App.Locale.all()
       for browserLocale in window.navigator.languages
-        for localAllLocale in allLocales
-          if browserLocale is localAllLocale.locale
-            return localAllLocale.locale
+        if local = @findLocalLocale(browserLocale)
+          return local
 
-      for browserLocale in window.navigator.languages
-        browserLocale = browserLocale.substr(0, 2)
-        for localAllLocale in allLocales
-          if browserLocale is localAllLocale.alias
-            return localAllLocale.locale
+    if window.navigator.language
+      if local = @findLocalLocale(window.navigator.language)
+        return local
 
-    window.navigator.userLanguage || window.navigator.language || 'en-us'
+    if window.navigator.userLanguage
+      if local = @findLocalLocale(window.navigator.userLanguage)
+        return local
+
+    return 'en-us'
+
+  @findLocalLocale: (given) ->
+    givenLower = given.toLowerCase()
+
+    for local in App.Locale.all()
+      if givenLower == local.locale.toLowerCase()
+        return local.locale.toLowerCase()
+
+    givenAlias = given.substr(0, 2).toLowerCase()
+
+    for local in App.Locale.all()
+      if givenAlias == local.alias.toLowerCase()
+        return local.locale.toLowerCase()
+
+  @detectBrowserTimezone: ->
+    return if !window.Intl
+    return if !window.Intl.DateTimeFormat
+    DateTimeFormat = Intl.DateTimeFormat()
+    return if !DateTimeFormat
+    return if !DateTimeFormat.resolvedOptions
+    resolvedOptions = DateTimeFormat.resolvedOptions()
+    return if !resolvedOptions
+    return if !resolvedOptions.timeZone
+    resolvedOptions.timeZone
+
+  @convert: (time, offset, format) ->
+    _instance.convert(time, offset, format)
 
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
@@ -112,8 +122,6 @@ class _i18nSingleton extends Spine.Module
     @mapMeta           =
       total: 0
       translated: 0
-    @_notTranslatedLog = false
-    @_notTranslated    = {}
     @dateFormat        = 'yyyy-mm-dd'
     @timestampFormat   = 'yyyy-mm-dd HH:MM'
     @dirToSet          = 'ltr'
@@ -158,14 +166,11 @@ class _i18nSingleton extends Spine.Module
           @dirToSet = locale.dir
           localeFound = true
 
-    # check if locale need to be changed
+    # check if locale needs to be changed
     return if localeToSet is @locale
 
     # set locale
     @locale = localeToSet
-
-    # set if not translated should be logged
-    @_notTranslatedLog = @notTranslatedFeatureEnabled(@locale)
 
     # set lang and dir attribute of html tag
     $('html').prop('lang', localeToSet.substr(0, 2))
@@ -187,7 +192,7 @@ class _i18nSingleton extends Spine.Module
         for object in data.list
 
           # set date/timestamp format
-          if object[3] is 'time'
+          if object[1] is 'FORMAT_DATE' or object[1] is 'FORMAT_DATETIME'
             @mapTime[ object[1] ] = object[2]
 
           else
@@ -208,24 +213,27 @@ class _i18nSingleton extends Spine.Module
     return string if !string
     @translate(string, args, true)
 
-  translateDeep: (input, args) =>
+  translateDeep: (input, args, plain) =>
     if _.isArray(input)
       _.map input, (item) =>
-        @translateDeep(item, args)
+        @translateDeep(item, args, plain)
     else if _.isObject(input)
       _.reduce _.keys(input), (memo, item) =>
-        memo[item] = @translateDeep(input[item])
+        memo[item] = @translateDeep(input[item], args, plain)
         memo
       , {}
     else
-      @translateInline(input, args)
+      if plain
+        @translatePlain(input, args)
+      else
+        @translateInline(input, args)
 
 
   translateContent: (string, args) =>
     return string if !string
 
     if App.Config.get('translation_inline')
-      return '<span class="translation" onkeydown="arguments[0].stopPropagation(); return true" onclick="arguments[0].stopPropagation(); return false" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
+      return '<span class="translation" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
 
     translated = @translate(string, args, true, true)
 
@@ -250,14 +258,6 @@ class _i18nSingleton extends Spine.Module
     else
       @_translated = false
       translated   = string
-
-      # log not translated strings in developer mode
-      if @_notTranslatedLog && App.Config.get('developer_mode') is true
-        if !@_notTranslated[@locale]
-          @_notTranslated[@locale] = {}
-        if !@_notTranslated[@locale][string]
-          @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
-        @_notTranslated[@locale][string] = true
 
     # apply html quote
     if quote
@@ -299,8 +299,8 @@ class _i18nSingleton extends Spine.Module
   meta: =>
     @mapMeta
 
-  setMap: (source, target, format = 'string') =>
-    if format is 'time'
+  setMap: (source, target) =>
+    if source is 'FORMAT_DATE' or source is 'FORMAT_DATETIME'
       if target is ''
         delete @mapTime[source]
       else
@@ -311,45 +311,34 @@ class _i18nSingleton extends Spine.Module
       else
         @mapString[source] = target
 
-  notTranslatedFeatureEnabled: (locale) ->
-    if locale.substr(0,2) is 'en'
-      return false
-    true
-
-  getNotTranslated: (locale) =>
-    notTranslated = @_notTranslated[locale || @locale]
-    return notTranslated if locale && locale isnt @locale
-
-    # remove already translated entries
-    for local_locale, translation_list of notTranslated
-      if @mapString[local_locale] && @mapString[local_locale] isnt ''
-        delete notTranslated[local_locale]
-    notTranslated
-
-  removeNotTranslated: (locale, key) =>
-    return if !@_notTranslated[locale]
-    delete @_notTranslated[locale][key]
-
-  setNotTranslated: (locale, key) =>
-    if !@_notTranslated[locale]
-      @_notTranslated[locale] = {}
-    @_notTranslated[locale][key] = true
-
   date: (time, offset) =>
     return time if !time
-    @convert(time, offset, @mapTime['date'] || @dateFormat)
+    @convert(time, offset, @mapTime['FORMAT_DATE'] || @dateFormat)
 
   timestamp: (time, offset) =>
     return time if !time
-    @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
+    @convert(time, offset, @mapTime['FORMAT_DATETIME'] || @timestampFormat)
+
+  convertUTC: (time) ->
+    timeArray = time.match(/\d+/g)
+    [y, m, d, H, M] = timeArray
+    new Date(Date.UTC(y, m - 1, d, H, M))
+
+  formatNumber: (num, digits) ->
+    while num.toString().length < digits
+      num = '0' + num
+    num
 
   convert: (time, offset, format) ->
-    s = (num, digits) ->
-      while num.toString().length < digits
-        num = '0' + num
-      num
 
     timeObject = new Date(time)
+
+    # On firefox the Date constructor does not recongise date format that
+    # ends with UTC, instead it returns a NaN (Invalid Date Format) this
+    # block serves as polyfill to support time format that ends UTC in firefox
+    if isNaN(timeObject)
+       # works for only time string with this format: 2021-02-08 09:13:20 UTC
+      timeObject = @convertUTC(time) if time.match(/ UTC/)
 
     # add timezone diff, needed for unit tests
     if offset
@@ -358,18 +347,23 @@ class _i18nSingleton extends Spine.Module
     d      = timeObject.getDate()
     m      = timeObject.getMonth() + 1
     yfull  = timeObject.getFullYear()
-    yshort = timeObject.getYear()-100
+    yshort = timeObject.getYear() % 100
     S      = timeObject.getSeconds()
     M      = timeObject.getMinutes()
     H      = timeObject.getHours()
+    l      = (H + 11) % 12 + 1
+    l      = ' ' + l if l < 10
+
     format = format
-      .replace(/dd/, s(d, 2))
+      .replace(/dd/, @formatNumber(d, 2))
       .replace(/d/, d)
-      .replace(/mm/, s(m, 2))
+      .replace(/mm/, @formatNumber(m, 2))
       .replace(/m/, m)
       .replace(/yyyy/, yfull)
       .replace(/yy/, yshort)
-      .replace(/SS/, s(S, 2))
-      .replace(/MM/, s(M, 2))
-      .replace(/HH/, s(H, 2))
+      .replace(/SS/, @formatNumber(S, 2))
+      .replace(/MM/, @formatNumber(M, 2))
+      .replace(/HH/, @formatNumber(H, 2))
+      .replace(/l/, l)
+      .replace(/P/, if H >= 12 then 'pm' else 'am')
     format

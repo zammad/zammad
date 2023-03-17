@@ -1,0 +1,126 @@
+Received: from PA4PR04MB7727.eurprd04.prod.example.com (0000:0000:00:00::12)
+ by AM6PR04MB4677.eurprd04.prod.example.com with HTTPS; Thu, 19 Nov 2020
+ 09:05:28 +0000
+Received: from AM6PR0202CA0052.eurprd02.prod.example.com
+ (0000:0000:000:00::29) by PA4PR04MB7727.eurprd04.prod.example.com
+ (0000:0000:000:00::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 11.11.1111.11; Thu, 19 Nov
+ 2020 09:05:27 +0000
+Received: from VE1EUR02FT028.eop-EUR02.prod.protection.example.com
+ (0000:0000:000:00:0000::2e) by AM6PR0202CA0052.outlook.office365.com
+ (0000:0000:000:00::29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 11.11.1111.11 via Frontend
+ Transport; Thu, 19 Nov 2020 09:05:27 +0000
+Authentication-Results: spf=softfail (sender IP is 11.11.11.111)
+ smtp.mailfrom=example.com; example.com; dkim=none (message not
+ signed) header.d=none;example.com; dmarc=none action=none
+ header.from=example.com;compauth=none reason=405
+Received-SPF: SoftFail (protection.example.com: domain of transitioning
+ example.com discourages use of 11.11.11.111 as permitted sender)
+Received: from mx-gate04.cloudservice.ag (11.11.11.111) by
+ VE1EUR02FT028.mail.protection.example.com (11.111.11.11) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 11.11.1111.11 via Frontend Transport; Thu, 19 Nov 2020 09:05:26 +0000
+Received: from opm.example.com (11.111.11.11) by mx-gate04.example.com;
+ Thu, 19 Nov 2020 10:05:26 +0100
+Received: from EDDES0005.ED.example.com (11.11.111.111) by
+ EDDES0004.ED.example.com (11.1.111.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 11.1.1111.1; Thu, 19 Nov 2020 10:05:17 +0100
+Received: from example.com ([11.1.111.111]) by EDDES0005.ED.example.com with Microsoft SMTPSVC(8.5.9600.16384);
+	 Thu, 19 Nov 2020 10:05:17 +0100
+Date: Thu, 19 Nov 2020 10:00:16 +0100
+From: "Jo B. USER1 - Noreply 131231 23123123 123 123 123 12" <noreply@example.com>
+Subject: Otto Example Bestellung 4500258840
+To: "Some long name, Some long name, Some long name" <vertrieb@example.com>
+Message-ID: <ADR4500000006414610000155D80992E1EDB8AC8CAAB8AA5A0FA@Example-GROUP.NET>
+X-Mailer: SAP NetWeaver 750
+Content-Type: application/pdf; name="Otto Example Bestellung 4500258840.pdf"
+Content-Transfer-Encoding: base64
+Content-Description: Otto Example Bestellung 4500258840
+Return-Path: noreply@example.com
+X-OriginalArrivalTime: 19 Nov 2020 09:05:17.0264 (UTC) FILETIME=[19748D00:01D6BE53]
+X-ClientProxiedBy: EDDES0004.ED.example.com (11.1.111.111) To
+ EDDES0004.ED.example.com (11.1.111.111)
+X-antispameurope-sender: noreply@example.com
+X-antispameurope-recipient: vertrieb@example.com
+X-antispameurope-MSGID: 774fd786d497390a7430b37a4460016c-4061b9c4f2a45184dc5ea8cd8a3bbcdf
+X-antispameurope-Mailarchiv: E-Mail archived by www.example.com for: vertrieb@example.com
+X-antispameurope-Mailarchivtype: inbound
+X-antispameurope-Virusscan: CLEAN
+X-antispameurope-SPFRESULT: PASS
+X-antispameurope-orig-ip: 11.111.11.11
+X-antispameurope-orig-host: opm.example.net
+X-antispameurope-orig: 4000e0b1369c326e53656562952a0fd2
+X-antispameurope-disclaimer: This E-Mail was scanned by www.example.com E-Mailservice on mx-gate04 with 7FC36FC029E
+X-antispameurope-date: 1605776721
+X-antispameurope: INCOMING:
+X-antispameurope-Connect: opm.example.com[11.111.11.11],TLS=1;EMIG=0
+X-antispameurope-WC: 4:275:1:79908:0:200:0:0:0:0:0:0:0:0:0:4:0:22:139:22:0:0:0:0:0:21:0:0:0:0:0:1:0:0::0:1:0:0:0:0:0
+X-antispameurope-Spamstatus: CLEAN
+X-antispameurope-REASON: NOREASON:HO-WL
+	* -1.5 BAYES_00 BODY: Bayes spam probability is 0 to 1%
+	*      [score: 0.0002]
+	*  0.0 TVD_SPACE_RATIO No description available.
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Nov 2020 09:05:26.9394
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 1a5d72cd-31d4-4e77-e917-08d88c6a41af
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 7957c22b-a551-4f7d-9caa-a30b278be4b8:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ VE1EUR02FT028.eop-EUR02.prod.protection.example.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Office365-Filtering-Correlation-Id: 1a5d72cd-31d4-4e77-e917-08d88c6a41af
+X-MS-TrafficTypeDiagnostic: PA4PR04MB7727:
+X-MS-Oob-TLC-OOBClassifiers: OLM:68;
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-Forefront-Antispam-Report:
+ CIP:81.20.94.240;CTRY:DE;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mx-gate04.cloudservice.ag;PTR:mx-gate04.cloudservice.ag;CAT:NONE;SFS:(8676002)(9686003)(1096003)(4270600006)(33656002)(356005)(621065003)(95266004)(55016002)(336012)(6916009)(86362001)(36756003)(73894004)(7116003)(7636003)(7696005)(7596003)(26005);DIR:INB;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2020 09:05:26.8025
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a5d72cd-31d4-4e77-e917-08d88c6a41af
+X-MS-Exchange-CrossTenant-Id: 7957c22b-a551-4f7d-9caa-a30b278be4b8
+X-MS-Exchange-CrossTenant-AuthSource:
+ VE1EUR02FT028.eop-EUR02.prod.protection.example.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7727
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.6475159
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.3564.029
+Keywords: Zammad
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:1;jmr:0;auth:0;dest:;OFR:CustomRules;ENG:(20160514016)(750128)(520011016)(944506458)(944626604);
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?SAf2XA4YlZqQQVkYG6KYgvh+v1IxZy+bUyO06TmzJaOL1zd1zU//JIq9V2?=
+ =?iso-8859-1?Q?GkXdDFk8S7WSIs2HWjYwc5ZuVFzje1KdTvRK6nCFpKGYy4fOCOQ0GYvCiV?=
+ =?iso-8859-1?Q?HxVdlXpxrLKfidcqXa6gvQTSk0Ez8gcl+MVs4M2VQKwjbY4XAq+xbHkJjc?=
+ =?iso-8859-1?Q?ePkCs/7Yvj9c7YnW3K9AItk3otvzNiZLbBzDwTxfFQb6uY4XJzHz1/rzv7?=
+ =?iso-8859-1?Q?aRCgzW3k0iOiYn0EVj+sMFJ1+GDOetBVJBkJfzHKmCyKtxM0A//Y2Cmny1?=
+ =?iso-8859-1?Q?0pLdr2SNsNMUeAEUqZVAdKRvJIViO/sqGXYNTYnJPSmeg3772a6FQqhlHg?=
+ =?iso-8859-1?Q?hohkJt8S2nIzH5tbl4LOWSQlOPSncHu2lwCkflVE7QEoswxQNDzgcHgfM6?=
+ =?iso-8859-1?Q?XDNTJwG3FzqAyrFuLuGTQ+OF3/DM/SBaFlOyQZtF8ei0UxhOmJvQbG4jLn?=
+ =?iso-8859-1?Q?WBtT4dU4O4oNZlhdBY/Stwv2im5Aupa71+46g1Ccaw+0ooZwd70xBSV+gU?=
+ =?iso-8859-1?Q?t6S1DBZKdAO4uoR+Fq0hEW2oHNccDpY4p7lA4E7g8HVpGIdMtJRsjFxjU4?=
+ =?iso-8859-1?Q?pzPN1h7U5I7N8KtB+RhiUAGdoMiR62TXMP+nCl9csCgZ5TRIa/BNze+Yte?=
+ =?iso-8859-1?Q?NkU5Y1TfRQ0NcoaJjZRycHNz/puhJ9PrWLJ5MqQlZSe1B4kSTNRVINOUgc?=
+ =?iso-8859-1?Q?h5Wgye75ieph6jX4YtGIaisLVqxEaIIbkT7GbW60pi2YIH93Xqmbmh1Z7W?=
+ =?iso-8859-1?Q?nj8cdVJq7gWMSzUC8FM0HscGiUss8GVuuWyHqj/gmEUUx9jLusFmngsewk?=
+ =?iso-8859-1?Q?zhAeD/UqiRK0Cok74ZrdgMHrVxl8Q/2VbA8fPXAziP0wF0QpkfW3q1Ya8O?=
+ =?iso-8859-1?Q?/Ai0thDxZHFOXZkwKEoHrSWliphlZVF27aC0fRCsG2p+HlmhEnGtNk0Ubf?=
+ =?iso-8859-1?Q?xKCzGRZ3aY9saEB+otnZdU1p5ng6q+tVEmpDWYiwROL8Ii9BfxzeP8IHPu?=
+ =?iso-8859-1?Q?YQiNdiMBXbc+si6HU3nJv0zdSqyTHISMnFEPA0iLdWQ7ddfzOYGBdKZ6IX?=
+ =?iso-8859-1?Q?c+p87wJ7AAbsHEYjVITMj2tX+MKZA82NrJr+s0EYw1I2jMK6SGfipegj1q?=
+ =?iso-8859-1?Q?CuMjKTIn5AjxVMf8qxxL08kGTor+7ZIM+KH8jNjFhGFRemq/V06KdpJiAt?=
+ =?iso-8859-1?Q?xf69J1/jbvOXs6OuOkng6WGNYDiPFlEyZIP0ygQToB8Od6VqJU1FiyzOdH?=
+ =?iso-8859-1?Q?Sn5Vrik1xPqcyc2OzU5JiLkCyQWNO+VuP6l/k+19nePc6XUGNa2AFuWFYK?=
+ =?iso-8859-1?Q?lY8s?=
+MIME-Version: 1.0
+
+eW91IGNhbiBzZWUgbWU=

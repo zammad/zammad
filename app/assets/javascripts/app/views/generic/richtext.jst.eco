@@ -1,3 +1,15 @@
-<div class="richtext form-control">
-  <div contenteditable="true" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="richtext-content <%= @attribute.class %>"><%- @attribute.value %></div>
+<div class="richtext form-control <% if @attribute.disabled: %>is-disabled<% end %>">
+	<% if @attribute.buttons: %>
+    <div class="richtext-controls btn-group">
+      <% for action in @attribute.buttons: %>
+        <a class="btn btn--action btn--small" data-action="<%= action %>">
+          <%- @Icon(@toolButtons[action].icon) %>
+          <% if @toolButtons[action].text: %>
+          <span><%= @toolButtons[action].text %></span>
+          <% end %>
+        </a>
+      <% end %>
+    </div>
+	<% end %>
+  <div contenteditable="<%= !@attribute.disabled %>" id="<%= @attribute.id %>" data-name="<%= @attribute.name %>" class="richtext-content <%= @attribute.class %>"><%- @attribute.value %></div>
 </div>

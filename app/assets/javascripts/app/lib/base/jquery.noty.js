@@ -86,7 +86,7 @@
                         .attr('title', button.title)
                         .appendTo(self.$bar.find('.noty_buttons'))
                         .on('click', function(event) {
-                            if($.isFunction(button.onClick)) {
+                            if((typeof button.onClick) === 'function') {
                                 button.onClick.call($button, self, event);
                             }
                         });

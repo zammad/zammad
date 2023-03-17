@@ -1,4 +1,4 @@
-class App.TicketZoomTitle extends App.ObserverController
+class App.TicketZoomTitle extends App.ControllerObserver
   model: 'Ticket'
   template: 'ticket_zoom/title'
   observe:
@@ -19,11 +19,11 @@ class App.TicketZoomTitle extends App.ObserverController
     title = $(e.target).ceg() || ''
 
     # update title
-    return if title is @lastAttributres.title
+    return if title is @lastAttributes.title
     ticket = App.Ticket.find(@object_id)
     ticket.title = title
 
-    # reset article - should not be resubmited on next ticket update
+    # reset article - should not be resubmitted on next ticket update
     ticket.article = undefined
 
     ticket.save()

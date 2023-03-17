@@ -1,6 +1,7 @@
-class Index extends App.ControllerContent
+class Login extends App.ControllerFullPage
   events:
     'submit #login': 'login'
+  className: 'login'
 
   constructor: ->
     super
@@ -15,27 +16,66 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
-    @navHide()
+    # show session timeout message on login screen
+    data = {}
+    if window.location.hash is '#session_timeout'
+      data = {
+        errorMessage: App.i18n.translateContent('Due to inactivity, you have been automatically logged out.')
+      }
+    if window.location.hash is '#session_invalid'
+      data = {
+        errorMessage: App.i18n.translateContent('The session is no longer valid. Please log in again.')
+      }
 
-    @title 'Sign in'
-    @render()
-    @navupdate '#login'
+    @title __('Sign in')
+
+    if !App.Config.get('user_show_password_login') && @password_auth_token
+      params =
+        token: @password_auth_token
+      @ajax(
+        id:          'admin_password_auth_verify'
+        type:        'POST'
+        url:         "#{@apiPath}/users/admin_password_auth_verify"
+        data:        JSON.stringify(params)
+        processData: true
+        success:     (verify_data, status, xhr) =>
+          if verify_data.message is 'ok'
+            data.showAdminPasswordLogin = true
+            data.username = verify_data.user_login
+          else
+            data.showAdminPasswordLoginFailed = true
+
+          @render(data)
+          @navupdate '#login'
+      )
+    else
+      @render(data)
+      @navupdate '#login'
 
     # observe config changes related to login page
-    @bind('config_update_local', (data) =>
+    @controllerBind('config_update_local', (data) =>
       return if !data.name.match(/^maintenance/) &&
         !data.name.match(/^auth/) &&
         data.name != 'user_lost_password' &&
         data.name != 'user_create_account' &&
         data.name != 'product_name' &&
         data.name != 'product_logo' &&
-        data.name != 'fqdn'
+        data.name != 'fqdn' &&
+        data.name != 'user_show_password_login'
       @render()
       'rerender'
     )
-    @bind('ui:rerender', =>
+
+    @controllerBind('ui:rerender', =>
       @render()
     )
+    @publicLinksSubscribeId = App.PublicLink.subscribe(=>
+      @render()
+    )
+
+  release: =>
+    if @publicLinksSubscribeId
+      App.PublicLink.unsubscribe(@publicLinksSubscribeId)
 
   render: (data = {}) ->
     auth_provider_all = App.Config.get('auth_provider_all')
@@ -44,17 +84,25 @@ class Index extends App.ControllerContent
       if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
         auth_providers.push provider
 
-    @html App.view('login')(
-      item:           data
-      logoUrl:        @logoUrl()
-      auth_providers: auth_providers
+    public_links = App.PublicLink.search(
+      filter:
+        screen: ['login']
+      sortBy: 'prio'
+    )
+
+    @replaceWith App.view('login')(
+      item:             data
+      logoUrl:          @logoUrl()
+      auth_providers:   auth_providers
+      public_links:     public_links
+      show_mobile_link: App.MobileDetection.isMobile() or App.MobileDetection.isForcingDesktopView()
     )
 
     # set focus to username or password
     if !@$('[name="username"]').val()
-      @$('[name="username"]').focus()
+      @$('[name="username"]').trigger('focus')
     else
-      @$('[name="password"]').focus()
+      @$('[name="password"]').trigger('focus')
 
     # scroll to top
     @scrollTo()
@@ -79,16 +127,8 @@ class Index extends App.ControllerContent
   success: (data, status, xhr) =>
 
     # redirect to #
-    requested_url = @Config.get('requested_url')
-    if requested_url && requested_url isnt '#login' && requested_url isnt '#logout'
-      @log 'notice', "REDIRECT to '#{requested_url}'"
-      @navigate requested_url
-
-      # reset
-      @Config.set('requested_url', '')
-    else
-      @log 'notice', 'REDIRECT to -#/-'
-      @navigate '#/'
+    @log 'notice', 'REDIRECT to -#/-'
+    @navigate '#/'
 
   error: (xhr, statusText, error) =>
     detailsRaw = xhr.responseText
@@ -96,15 +136,12 @@ class Index extends App.ControllerContent
     if !_.isEmpty(detailsRaw)
       details = JSON.parse(detailsRaw)
 
-    # add notify
-    @notify
-      type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Wrong Username or Password combination.')
-      removeAll: true
+    errorMessage = App.i18n.translateContent(details.error || 'Could not process your request')
 
     # rerender login page
     @render(
-      username: @username
+      username:     @username
+      errorMessage: errorMessage
     )
 
     # login shake
@@ -113,4 +150,7 @@ class Index extends App.ControllerContent
       600
     )
 
-App.Config.set('login', Index, 'Routes')
+App.Config.set('login', Login, 'Routes')
+App.Config.set('login/admin/:password_auth_token', Login, 'Routes')
+App.Config.set('session_timeout', Login, 'Routes')
+App.Config.set('session_invalid', Login, 'Routes')

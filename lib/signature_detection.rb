@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module SignatureDetection
 
 =begin
@@ -20,94 +22,39 @@ returns
 =end
 
   def self.find_signature(messages)
+    signature_candidates = Hash.new(0) # <potential_signature>: <score>
+    messages             = messages.map { |m| m[:content_type].match?(%r{text/html}i) ? m[:content].html2text(true) : m[:content] }
+    message_pairs        = messages.each_cons(2).to_a
+    diffs                = message_pairs.map { |msg_pair| Diffy::Diff.new(*msg_pair).to_s }
 
-    string_list = []
-    messages.each do |message|
-      if message[:content_type].match?(%r{text/html}i)
-        string_list.push message[:content].html2text(true)
-        next
-      end
-      string_list.push message[:content]
+    # Find the first 5- to 10-line common substring in each diff
+    diffs.map { |d| d.split("\n") }.each do |diff_lines|
+      # Get line numbers in diff representing changes (those starting with +, -, \)
+      delta_indices = diff_lines.map.with_index { |l, i| l.start_with?(' ') ? nil : i }.compact
+
+      # Add boundaries at start and end
+      delta_indices.unshift(-1).push(diff_lines.length)
+
+      # Find first gap of 5+ lines between deltas (i.e., the common substring's location)
+      sig_range = delta_indices.each_cons(2)
+                               .map { |head, tail| [head + 1, tail - 1] }
+                               .find { |head, tail| tail > head + 4 }
+
+      next if sig_range.nil?
+
+      # Take up to 10 lines from this "gap" (i.e., the common substring)
+      match_content = diff_lines[sig_range.first..sig_range.last]
+                        .map { |l| l.sub(%r{^.}, '') }
+                        .first(10).join("\n")
+
+      # Invalid html signature detection for exchange warning boxes #3571
+      next if match_content.include?('CAUTION:')
+
+      # Add this substring to the signature_candidates hash and increment its match score
+      signature_candidates[match_content] += 1
     end
 
-    # hash with possible signature and count of matches in string list
-    possible_signatures = {}
-
-    # loop all strings in array
-    string_list.each_with_index do |_main_string, main_string_index|
-      break if main_string_index + 1 > string_list.length - 1
-
-      # loop all all strings in array except of the previous index
-      ( main_string_index + 1..string_list.length - 1 ).each do |second_string_index|
-
-        # get content of string 1
-        string1_content = string_list[main_string_index]
-
-        # get content of string 2
-        string2_content = string_list[second_string_index]
-
-        # diff strings
-        diff_result = Diffy::Diff.new(string1_content, string2_content)
-
-        # split diff result by new line
-        diff_result_array = diff_result.to_s.split("\n")
-
-        # define start index for blocks with no difference
-        match_block = nil
-
-        # loop of lines of the diff result
-        ( 0..diff_result_array.length - 1 ).each do |diff_string_index|
-
-          # if no block with difference is defined then we try to find a string block without a difference
-          if !match_block
-            match_block = diff_string_index
-          end
-
-          # get line of diff result with current loop inde
-          line = diff_result_array[diff_string_index]
-
-          # check if the line starts with
-          # + = new content incoming
-          # - = removed content
-          # \ = end of file
-          # or if the current line is the last line of the diff result
-          next if line !~ /^(\\|\+|\-)/i && diff_string_index != diff_result_array.length - 1
-
-          # if the count of the lines without any difference is higher than 4 lines
-          if diff_string_index - match_block > 4
-
-            # define the block size without any difference
-            # except "-" because in this case 1 line is removed to much
-            match_block_total = diff_string_index + (line.match?(/^(\\|\+)/i) ? -1 : 0)
-
-            # get string of possible signature, use only the first 10 lines
-            match_max_content = 0
-            match_content = ''
-            ( match_block..match_block_total ).each do |match_block_index|
-              break if match_max_content == 10
-              match_max_content += 1
-              match_content += "#{diff_result_array[match_block_index][1..-1]}\n"
-            end
-
-            # count the match of the signature in string list to rank
-            # the signature
-            possible_signatures[match_content] ||= 0
-            possible_signatures[match_content] += 1
-
-            break
-          end
-
-          match_block = nil
-        end
-      end
-    end
-
-    # loop all possible signature by rating and return highest rating
-    possible_signatures.sort { |a1, a2| a2[1].to_i <=> a1[1].to_i }.map do |content, _score|
-      return content.chomp
-    end
-
-    nil
+    signature_candidates.max_by { |_, score| score }&.first
   end
 
 =begin
@@ -127,18 +74,13 @@ returns
 =end
 
   def self.find_signature_line(signature, string, content_type)
-
-    if content_type.match?(%r{text/html}i)
-      string = string.html2text(true)
-    end
+    string = string.html2text(true) if content_type.match?(%r{text/html}i)
 
     # try to find the char position of the signature
     search_position = string.index(signature)
 
-    return if search_position.nil?
-
     # count new lines up to signature
-    string[0..search_position].split("\n").length + 1
+    string[0..search_position].split("\n").length + 1 if search_position.present?
   end
 
 =begin
@@ -159,6 +101,7 @@ returns
 
   def self.find_signature_line_by_article(user, article)
     return if !user.preferences[:signature_detection]
+
     SignatureDetection.find_signature_line(
       user.preferences[:signature_detection],
       article.body,
@@ -182,16 +125,17 @@ returns
     type = Ticket::Article::Type.lookup(name: 'email')
     sender = Ticket::Article::Sender.lookup(name: 'Customer')
     tickets = Ticket.where(
-      created_by_id: user_id,
-      create_article_type_id: type.id,
+      created_by_id:            user_id,
+      create_article_type_id:   type.id,
       create_article_sender_id: sender.id
-    ).limit(5).order(id: :desc)
+    ).limit(5).reorder(id: :desc)
     article_bodies = []
     tickets.each do |ticket|
       article = ticket.articles.first
       next if !article
+
       data = {
-        content: article.body,
+        content:      article.body,
         content_type: article.content_type,
       }
       article_bodies.push data
@@ -213,7 +157,7 @@ returns
 =end
 
   def self.rebuild_all_user
-    User.select('id').where(active: true).order(id: :desc).each do |local_user|
+    User.select('id').where(active: true).reorder(id: :desc).each do |local_user|
       rebuild_user(local_user.id)
     end
     true
@@ -257,11 +201,12 @@ returns
 =end
 
   def self.rebuild_all_articles
-
     article_type = Ticket::Article::Type.lookup(name: 'email')
-    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each do |local_article|
-      article = Ticket::Article.find(local_article.id)
-      user = User.find(article.created_by_id)
+
+    Ticket::Article.where(type_id: article_type.id)
+                   .reorder(id: :desc)
+                   .find_each(batch_size: 10) do |article|
+      user = User.lookup(id: article.created_by_id)
       next if !user.preferences[:signature_detection]
 
       signature_line = find_signature_line(
@@ -270,10 +215,9 @@ returns
         article.content_type,
       )
       next if !signature_line
-      next if article.preferences[:signature_detection] == signature_line
 
       article.preferences[:signature_detection] = signature_line
-      article.save
+      article.save if article.changed?
     end
     true
   end

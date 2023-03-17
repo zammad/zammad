@@ -1,20 +1,27 @@
 <div class="reset_password fullscreen">
   <div class="fullscreen-center">
     <div class="hero-unit fullscreen-body">
-      <% if @sent: %>
-        <h2><%- @T('We\'ve sent password reset instructions to your email address.') %><small></small></h2>
-        <p><%- @T('If you don\'t receive instructions within a minute or two, check your email\'s spam and junk filters, or try resending your request.') %></p>
-        <a href="#" class="subtle retry">&raquo; <%- @T('again') %> &laquo;</a>
-      <% else: %>
-        <h2><%- @T( 'Forgot your password?' ) %><small></small></h2>
-        <form class="form-password">
-          <div class="form-password-item"></div>
-          <div class="form-controls">
-            <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
-            <button class="btn btn--primary js-submit align-right"><%- @T( 'Submit' ) %></button>
-          </div>
-        </form>
-      <% end %>
+      <h2><%- @T('Forgot your password?') %><small></small></h2>
+      <form class="js-passwordForm">
+        <div class="js-password"></div>
+        <div class="form-controls">
+          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>
+          <button class="btn btn--primary js-submit align-right"><%- @T('Submit') %></button>
+        </div>
+      </form>
     </div>
+  <% if !_.isEmpty(@public_links): %>
+    <p>
+      <% for link, link_index in @public_links: %>
+        <% if link_index > 0: %> | <% end %>
+        <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+      <% end %>
+    </p>
+  <% end %>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
   </div>
 </div>

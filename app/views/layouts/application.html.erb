@@ -2,21 +2,46 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=1024">
+  <meta name="viewport" content="width=device-width">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title><%= Setting.get('product_name') %></title>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <%= stylesheet_link_tag "application", :media => 'all' %>
   <%= stylesheet_link_tag "application-print", :media => 'print' %>
+  <%= javascript_tag nonce: true do -%>
+    if(window.MSInputMethodContext && document.documentMode){
+      var polyfillScriptTag = document.createElement('script');
+      polyfillScriptTag.setAttribute('src', '<%= path_to_javascript('ie11CustomProperties.min') %>');
+      polyfillScriptTag.setAttribute('nonce', '<%= content_security_policy_nonce %>');
+      document.head.appendChild(polyfillScriptTag);
+    }
+
+    try {
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('theme') != 'light' ){
+        document.documentElement.dataset.theme = 'dark';
+      }
+    } catch (e) { };
+  <% end -%>
   <% if Rails.configuration.assets.debug %>
-  <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "application", nonce: true %>
   <% else %>
-  <%= javascript_include_tag "application", :defer => 'defer' %>
+    <%= javascript_include_tag "application", nonce: true, :defer => 'defer' %>
   <% end %>
+
+  <%# Statically include external files with a nonce here to conform to CSP properly. %>
+  <%# Required by form channel configuration preview. %>
+  <%= javascript_include_tag "../assets/form/form.js", nonce: true, :defer => 'defer', :skip_pipeline => true, :id => "zammad_form_script"  %>
+
+  <%# Required for browser time mocking in tests. %>
+  <% if Rails.env.test? %>
+    <%= javascript_include_tag "../assets/tests/sinon-9.2.4.js", nonce: true, :skip_pipeline => true, :id => "zammad_form_script"  %>
+  <% end %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <%= content_for?(:content) ? yield(:content) : yield %>
 
 </body>
 </html>

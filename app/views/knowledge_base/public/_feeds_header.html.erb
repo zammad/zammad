@@ -1,0 +1,3 @@
+<% feeds_available(@knowledge_base, @category, @object).each do |feed| %>
+  <%= auto_discovery_link_tag :atom, feed[:url], title: feed[:title] %>
+<% end %>

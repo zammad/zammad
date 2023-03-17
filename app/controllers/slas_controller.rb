@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SlasController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.sla') }
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -52,7 +52,6 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
       # calendars
       assets = {}
-      calendar_ids = []
       Calendar.all.each do |calendar|
         assets = calendar.assets(assets)
       end
@@ -65,7 +64,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
       end
       render json: {
         record_ids: sla_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end

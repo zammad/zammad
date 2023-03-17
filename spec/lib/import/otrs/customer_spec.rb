@@ -1,15 +1,19 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Import::OTRS::Customer do
 
   def creates_with(zammad_structure)
-    expect(import_object).to receive(:create).with(zammad_structure).and_return(existing_object)
+    allow(import_object).to receive(:create).with(zammad_structure).and_return(existing_object)
+
     expect_any_instance_of(described_class).to receive(:reset_primary_key_sequence)
     start_import_test
   end
 
   def updates_with(zammad_structure)
-    expect(import_object).to receive(:find_by).and_return(existing_object)
+    allow(import_object).to receive(:find_by).and_return(existing_object)
+
     expect(existing_object).to receive(:update!).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
@@ -19,8 +23,8 @@ RSpec.describe Import::OTRS::Customer do
     json_fixture("import/otrs/customer/#{file}")
   end
 
-  let(:import_object) { Organization }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Organization }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
 
   context 'Organization' do
@@ -49,7 +53,7 @@ RSpec.describe Import::OTRS::Customer do
 
   context 'OTRS CustomerID' do
 
-    let(:customer_id) { 'test922896' }
+    let(:customer_id)      { 'test922896' }
     let(:object_structure) { load_customer_json('default') }
     let(:otrs_dummy_response) do
       [
@@ -62,8 +66,8 @@ RSpec.describe Import::OTRS::Customer do
     end
 
     it 'finds Organizations by OTRS CustomerID' do
-      expect(Import::OTRS::Requester).to receive(:load).and_return(otrs_dummy_response)
-      expect(import_object).to receive(:find_by).with(name: customer_id).and_return(existing_object)
+      allow(Import::OTRS::Requester).to receive(:load).and_return(otrs_dummy_response)
+      allow(import_object).to receive(:find_by).with(name: customer_id).and_return(existing_object)
 
       expect(described_class.by_customer_id(customer_id)).to be(existing_object)
     end

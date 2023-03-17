@@ -1,0 +1,241 @@
+---
+- locale: bg
+  alias: ''
+  name: Bulgarian (Български)
+  active: true
+  dir: ltr
+- locale: cs
+  alias: ''
+  name: Czech (Česky)
+  active: true
+  dir: ltr
+- locale: da
+  alias: ''
+  name: Dansk
+  active: true
+  dir: ltr
+- locale: el
+  alias: ''
+  name: Greek (Ελληνικά)
+  active: true
+  dir: ltr
+- locale: et
+  alias: ''
+  name: Eesti
+  active: true
+  dir: ltr
+- locale: en-us
+  alias: en
+  name: English (United States)
+  active: true
+  dir: ltr
+- locale: en-ca
+  alias: ''
+  name: English (Canada)
+  active: true
+  dir: ltr
+- locale: en-gb
+  alias: ''
+  name: English (Great Britain)
+  active: true
+  dir: ltr
+- locale: es-es
+  alias: es
+  name: Español
+  active: true
+  dir: ltr
+- locale: es-co
+  alias: ''
+  name: Español (Colombia)
+  active: true
+  dir: ltr
+- locale: es-mx
+  alias: ''
+  name: Español (México)
+  active: true
+  dir: ltr
+- locale: fi
+  alias: ''
+  name: Suomi
+  active: true
+  dir: ltr
+- locale: fr-fr
+  alias: fr
+  name: Français
+  active: true
+  dir: ltr
+- locale: fr-ca
+  alias: ''
+  name: Français (Canada)
+  active: true
+  dir: ltr
+- locale: hr
+  alias: ''
+  name: Hrvatski
+  active: true
+  dir: ltr
+- locale: hu
+  alias: ''
+  name: Magyar
+  active: true
+  dir: ltr
+- locale: it-it
+  alias: it
+  name: Italiano
+  active: true
+  dir: ltr
+- locale: ja
+  alias: ''
+  name: Japanese (日本語)
+  active: true
+  dir: ltr
+- locale: lt
+  alias: ''
+  name: Lietuvių kalba
+  active: true
+  dir: ltr
+- locale: lv
+  alias: ''
+  name: Latvijas
+  active: true
+  dir: ltr
+- locale: no-no
+  alias: nb
+  name: Norsk bokmål
+  active: true
+  dir: ltr
+- locale: nl-nl
+  alias: nl
+  name: Nederlands
+  active: true
+  dir: ltr
+- locale: pl
+  alias: ''
+  name: Polski
+  active: true
+  dir: ltr
+- locale: pt-pt
+  alias: pt
+  name: Português
+  active: true
+  dir: ltr
+- locale: pt-br
+  alias: ''
+  name: Português Brasileiro
+  active: true
+  dir: ltr
+- locale: ru
+  alias: ''
+  name: Russian (Русский)
+  active: true
+  dir: ltr
+- locale: sk
+  alias: ''
+  name: Slovak (Slovenčina)
+  active: true
+  dir: ltr
+- locale: sl
+  alias: ''
+  name: Slovenian (Slovenčina)
+  active: true
+  dir: ltr
+- locale: sv-se
+  alias: sv
+  name: Svenska
+  active: true
+  dir: ltr
+- locale: tr
+  alias: ''
+  name: Türkçe
+  active: true
+  dir: ltr
+- locale: uk
+  alias: ''
+  name: Ukrainian (Українська)
+  active: true
+  dir: ltr
+- locale: vi
+  alias: ''
+  name: Vietnam (ViɆt Nam)
+  active: true
+  dir: ltr
+- locale: zh-cn
+  alias: ''
+  name: Chinese (Sim.) (简体中文)
+  active: true
+  dir: ltr
+- locale: hi-in
+  alias: hi
+  name: Hindi (हिंदी)
+  active: true
+  dir: ltr
+- locale: de-de
+  alias: de
+  name: Deutsch
+  active: true
+  dir: ltr
+- locale: he-il
+  alias: ''
+  name: Hebrew (עִבְרִית)
+  active: true
+  dir: rtl
+- locale: fa-ir
+  alias: fa
+  name: Persian (فارسى)
+  active: true
+  dir: rtl
+- locale: ms-my
+  alias: ms
+  name: Malay (Bahasa Malaysia)
+  active: true
+  dir: ltr
+- locale: ro-ro
+  alias: ro
+  name: Romanian (Românesc)
+  active: true
+  dir: ltr
+- locale: ar
+  alias: ar
+  name: Arabic
+  active: true
+  dir: rtl
+- locale: sr-cyrl-rs
+  alias: sr
+  name: Serbian Cyrillic (српски)
+  active: true
+  dir: ltr
+- locale: sr-latn-rs # dummy locale, automatically transliterated from `sr-cyrl-rs`
+  alias: ''
+  name: Serbian Latin (srpski)
+  active: true
+  dir: ltr
+- locale: is
+  alias: ''
+  name: Icelandic (Íslenska)
+  active: true
+  dir: ltr
+- locale: rw
+  alias: ''
+  name: Ikinyarwanda
+  active: true
+  dir: ltr
+- locale: ko-kr
+  alias: ko
+  name: Korean (한국어)
+  active: true
+  dir: ltr
+- locale: es-ca
+  alias: ''
+  name: Català
+  active: true
+  dir: ltr
+- locale: zh-tw
+  alias: ''
+  name: Chinese (Trad.) (繁體中文)
+  active: true
+  dir: ltr
+- locale: th
+  alias: ''
+  name: Thai (ภาษาไทย)
+  active: true
+  dir: ltr

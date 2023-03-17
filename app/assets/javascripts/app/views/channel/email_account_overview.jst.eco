@@ -20,7 +20,7 @@
 <div class="action">
   <div class="action-flow">
     <div class="action-block">
-      <%- @T('Notice') %>: <%- @T('Unassigned email addresses, assign them to a channel or delete them.') %></h3>
+      <%- @T('Notice:') %> <%- @T('Unassigned email addresses, assign them to a channel or delete them.') %></h3>
       <ul class="list">
       <% for email_address in @not_used_email_addresses: %>
         <li class="list-item" data-id="<%= email_address.id %>">
@@ -38,22 +38,36 @@
 <% end %>
 
 <% if _.isEmpty(@account_channels): %>
-  <p><%- @T('You have no configured account right now.') %></p>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
 <% else: %>
   <% for channel in @account_channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
+     <% if channel.active is true && channel.options.inbound && channel.options.inbound.options && channel.options.inbound.options.host == 'imap.gmail.com' && channel.options.outbound && channel.options.outbound.options && channel.options.outbound.options.host == 'smtp.gmail.com': %>
+    <div class="action-alert alert alert--danger alert--square horizontal centered" role="alert">
+      <%- @T('%s recommends using OAuth. %s announced it\'s going to drop Basic Authentication support in the future.', 'G Suite', 'Google') %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateGoogleMail" type="button"><%- @T('Migrate now!') %></button>
+    </div>
+    <% end %>
+    <% if channel.active is true && channel.options.inbound && channel.options.inbound.options && channel.options.inbound.options.host == 'outlook.office365.com' && channel.options.outbound && channel.options.outbound.options && channel.options.outbound.options.host == 'smtp.office365.com': %>
+    <div class="action-alert alert alert--danger alert--square horizontal centered" role="alert">
+      <%- @T('%s recommends using OAuth. %s announced it\'s going to drop Basic Authentication support in the future.', 'Microsoft 365', 'Microsoft') %> <div class="flex-spacer"></div><div class="double-spacer"></div><button class="btn js-migrateMicrosoft365Mail" type="button"><%- @T('Migrate now!') %></button>
+    </div>
+    <% end %>
     <div class="action-flow" style="width: 100%;">
       <div class="action-block action-block--flex">
         <div class="horizontal">
           <h3><%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %></h3>
-          <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% if channel.preferences.editable isnt false: %>
+            <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% end %>
         </div>
         <table class="key-value">
           <tr>
             <td><%- @T('User') %>
             <td><%= channel.options.inbound.options.user %>
             <% if channel.options.inbound.options.folder: %>
-              (<%- @T('Folder') %>: <%= channel.options.inbound.options.folder %>)
+              (<%- @T('Folder:') %> <%= channel.options.inbound.options.folder %>)
             <% end %>
           <tr>
             <td><%- @T('Host') %>
@@ -80,7 +94,7 @@
             <% groupName = channel.group %>
           <% end %>
           <% if channel.group.active is false: %>
-            <%- @T('%s is inactive, please select a active one.', groupName) %>
+            <%- @T('%s is inactive, please select an active one.', groupName) %>
           <% else: %>
             <%= groupName %>
           <% end %>
@@ -89,7 +103,9 @@
       <div class="action-block action-block--flex">
         <div class="horizontal">
           <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
-          <div class="js-editOutbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% if channel.preferences.editable isnt false: %>
+            <div class="js-editOutbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% end %>
         </div>
         <table class="key-value">
         <% if channel.options.outbound && channel.options.outbound.options: %>
@@ -136,7 +152,7 @@
     </div>
     <div class="action-controls">
       <% if channel.active is true: %>
-        <div class="btn btn--secondary js-channelDisable"><%- @T('Disable') %></div>
+        <div class="btn js-channelDisable"><%- @T('Disable') %></div>
       <% else: %>
         <div class="btn btn--secondary js-channelEnable"><%- @T('Enable') %></div>
       <% end %>

@@ -1,12 +1,15 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketReopened < Report::Base
 
 =begin
 
   result = Report::TicketReopened.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -15,42 +18,33 @@ returns
 
 =end
 
-  def self.aggs(params)
+  def self.aggs(params_origin)
+    params = params_origin.dup
     ticket_state_ids = ticket_ids
 
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
-
     result = []
-    if params[:interval] == 'month'
-      start = Date.parse(params[:range_start])
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
-      start = Date.parse(params[:range_start])
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
-      start = Date.parse(params[:range_start])
+    when 'day'
       stop_interval = 31
-    elsif params[:interval] == 'hour'
-      start = Time.zone.parse(params[:range_start])
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
-      start = Time.zone.parse(params[:range_start])
+    when 'minute'
       stop_interval = 60
     end
     (1..stop_interval).each do |_counter|
-      if params[:interval] == 'month'
-        stop = start.next_month
-      elsif params[:interval] == 'week'
-        stop = start.next_day
-      elsif params[:interval] == 'day'
-        stop = start.next_day
-      elsif params[:interval] == 'hour'
-        stop = start + 1.hour
-      elsif params[:interval] == 'minute'
-        stop = start + 1.minute
+      case params[:interval]
+      when 'month'
+        params[:range_end] = params[:range_start].next_month
+      when 'week', 'day'
+        params[:range_end] = params[:range_start].next_day
+      when 'hour'
+        params[:range_end] = params[:range_start] + 1.hour
+      when 'minute'
+        params[:range_end] = params[:range_start] + 1.minute
       end
 
       without_merged_tickets = {
@@ -61,17 +55,17 @@ returns
       }
       params[:selector].merge!(without_merged_tickets) # do not show merged tickets in reports
       count = history_count(
-        object: 'Ticket',
-        type: 'updated',
+        object:    'Ticket',
+        type:      'updated',
         attribute: 'state',
-        id_from: ticket_state_ids,
+        id_from:   ticket_state_ids,
         id_not_to: ticket_state_ids,
-        start: start,
-        end: stop,
-        selector: params[:selector]
+        start:     params[:range_start],
+        end:       params[:range_end],
+        selector:  params[:selector]
       )
       result.push count
-      start = stop
+      params[:range_start] = params[:range_end]
     end
     result
   end
@@ -79,9 +73,10 @@ returns
 =begin
 
   result = Report::TicketReopened.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -97,16 +92,17 @@ returns
   def self.items(params)
     ticket_state_ids = ticket_ids
     result = history(
-      object: 'Ticket',
-      type: 'updated',
+      object:    'Ticket',
+      type:      'updated',
       attribute: 'state',
-      id_from: ticket_state_ids,
+      id_from:   ticket_state_ids,
       id_not_to: ticket_state_ids,
-      start: params[:range_start],
-      end: params[:range_end],
-      selector: params[:selector]
+      start:     params[:range_start],
+      end:       params[:range_end],
+      selector:  params[:selector]
     )
     return result if params[:sheet].present?
+
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
@@ -118,16 +114,17 @@ returns
 
   def self.ticket_ids
     key = 'Report::TicketReopened::StateList'
-    ticket_state_ids = Cache.get( key )
+    ticket_state_ids = Rails.cache.read(key)
     return ticket_state_ids if ticket_state_ids
-    ticket_state_types = Ticket::StateType.where( name: %w[closed merged removed] )
+
+    ticket_state_types = Ticket::StateType.where(name: %w[closed merged removed])
     ticket_state_ids = []
     ticket_state_types.each do |ticket_state_type|
       ticket_state_type.states.each do |ticket_state|
         ticket_state_ids.push ticket_state.id
       end
     end
-    Cache.write( key, ticket_state_ids, { expires_in: 2.days } )
+    Rails.cache.write(key, ticket_state_ids, { expires_in: 2.days })
     ticket_state_ids
   end
 end

@@ -1,0 +1,148 @@
+# Workaround to enable usage of mixed SSH and Docker GitLab CI runners
+.template_lint:
+  stage: lint
+  extends:
+    - .job_rules_default
+
+.template_lint_rails:
+  extends:
+    - .template_lint
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+  before_script:
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, configure_environment]
+    - !reference [.scripts, zammad_db_init]
+
+# Must be a separate job because it uses a custom image.
+'lint: shellcheck':
+  extends:
+    - .template_lint
+  image: koalaman/shellcheck-alpine:stable
+  cache: []
+  before_script: []
+  script:
+    - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
+    - shellcheck -S error script/init.d/*
+  after_script: []
+
+'lint: i18n & rails':
+  extends:
+    - .template_lint_rails
+  cache: !reference [.cache, read_only_full]
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - tmp/brakeman-report.html
+    when: on_failure
+  script:
+    - !reference [.scripts, yarn_install]
+    - echo "Checking .po file syntax..."
+    - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
+    - echo "Checking .pot catalog consistency..."
+    - bundle exec rails generate zammad:translation_catalog --check
+    - echo "Brakeman security check..."
+    - bundle exec brakeman -o /dev/stdout -o tmp/brakeman-report.html
+    - echo "Rails zeitwerk:check autoloader check..."
+    - bundle exec rails zeitwerk:check
+    - .gitlab/check_graphql_api_consistency.sh
+
+'lint: ruby & security':
+  extends:
+    - .template_lint
+  before_script:
+    - !reference [.scripts, source_rvm]
+    - !reference [.scripts, bundle_install]
+  script:
+    - echo "Rubocop check..."
+    - bundle exec .rubocop/validate_todos.rb
+    - bundle exec rubocop --parallel
+    - echo "bundler-audit security check..."
+    - gem install bundler-audit
+    - bundle-audit update
+    - bundle-audit --ignore CVE-2015-9284
+    - echo "Checking if chat assets need a rebuild..."
+    - echo "Please see public/assets/chat/README.md for build instructions."
+    - cp public/assets/chat/chat.js tmp/chat.js
+    - yarn install --cwd public/assets/chat
+    - (cd public/assets/chat && npx gulp build)
+    - echo "First characters of public/assets/chat/chat.js"
+    - head -c300 public/assets/chat/chat.js; echo # Insert newline after chat content
+    - echo "First characters of tmp/chat.js"
+    - head -c300 tmp/chat.js; echo # Insert newline after chat content
+    - cmp public/assets/chat/chat.js tmp/chat.js
+
+'lint: coffee & css':
+  extends:
+    - .template_lint
+  cache: !reference [.cache, read_only_nodejs]
+  before_script:
+    - !reference [.scripts, yarn_install]
+  script:
+    - echo "Coffeelint check..."
+    - coffeelint --rules ./.coffeelint/rules/* app/
+    - echo "Stylelint check..."
+    - yarn lint:css
+
+'lint: js':
+  extends:
+    - .template_lint
+  cache: !reference [.cache, read_only_nodejs]
+  before_script:
+    - !reference [.scripts, yarn_install]
+  script:
+    - echo "ESLint check..."
+    - yarn lint
+    # Currently unused, skip to save time...
+    # - echo "Histoire test build..."
+    # - yarn story:build
+
+# Must be a separate job because it may fail and is only executed manually.
+'lint: orphaned ruby gems':
+  extends:
+    - .template_lint_rails
+  allow_failure: true
+  rules:
+    - when: manual
+  script:
+    - bundle exec rake zammad:ci:bundle:orphaned 5
+
+'refresh global envs':
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+  stage: lint
+  # ensure that only one Job runs in the whole project (branches etc.)
+  resource_group: global_refresh_envs
+  # allow download via the web UI to restore ENVs in case global cache got deleted (see: `.gitlab-ci.yml`)
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - fresh.env
+  rules:
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
+      when: manual
+      allow_failure: true
+    - when: on_success
+  script:
+    - bundle exec rake zammad:ci:refresh_envs
+
+'lint: secret_detection':
+  extends: .template_lint
+  image:
+    name: "zricethezav/gitleaks:latest"
+    entrypoint: [""]
+  cache: []
+  before_script: []
+  script:
+    # Since we clone with GIT_DEPTH=1, the commit has the entire codebase as a diff.
+    # Otherwise, we'd need to use --no-git to scan the entire codebase, but that is slower
+    #   as it also traverses directories not scanned by git.
+    - gitleaks detect --report-path secret-detection-report.json --verbose
+  after_script: []
+  # # GitLab can show this in a security widget, but that seems to be useless at this point (offers empty file for download).
+  # artifacts:
+  #   reports:
+  #     secret_detection: secret-detection-report.json

@@ -1,21 +1,24 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::HandlesTransitions
   extend ActiveSupport::Concern
 
   included do
-    before_action :transaction_begin
-    after_action  :transaction_end
+    around_action :handle_transaction
   end
 
   private
 
-  def transaction_begin
+  def handle_transaction
     ApplicationHandleInfo.current = 'application_server'
     PushMessages.init
-  end
 
-  def transaction_end
-    Observer::Transaction.commit
+    yield
+
+    TransactionDispatcher.commit
     PushMessages.finish
     ActiveSupport::Dependencies::Reference.clear!
+  ensure
+    ApplicationHandleInfo.current = nil
   end
 end

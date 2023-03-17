@@ -1,0 +1,6 @@
+<input class="js-searchField form-control" name="query" placeholder="<%- @Ti('Search') %> <%= @placeholder_suffix %>" type="search" autocomplete="off">
+<%- @Icon('magnifier') %>
+<div class="search-loader"><%- @Icon('spinner-small') %></div>
+<a class="empty-search js-emptySearchButton">
+  <%- @Icon('diagonal-cross') %>
+</a>

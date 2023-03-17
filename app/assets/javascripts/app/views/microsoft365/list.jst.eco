@@ -1,0 +1,123 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Microsoft 365') %> <small><%- @T('Accounts') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn js-configApp"><%- @T('Configure App') %></a>
+    <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
+    <a class="btn btn--success js-admin-consent"><%- @T('Request Admin Consent') %></a>
+  </div>
+</div>
+
+<% if !_.isEmpty(@not_used_email_addresses): %>
+<div class="action">
+  <div class="action-flow">
+    <div class="action-block">
+      <%- @T('Notice:') %> <%- @T('Unassigned email addresses, assign them to a channel or delete them.') %></h3>
+      <ul class="list">
+      <% for email_address in @not_used_email_addresses: %>
+        <li class="list-item" data-id="<%= email_address.id %>">
+          <div class="list-item-name">
+            <a href="#" class="js-emailAddressEdit"><%= email_address.realname %> &lt;<%= email_address.email %>&gt;</a>
+          </div>
+          <div class="list-item-delete js-emailAddressDelete">
+            <%- @Icon('diagonal-cross') %>
+          </div>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="page-content">
+<% if _.isEmpty(@channels): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% end %>
+<% for channel in @channels: %>
+  <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
+    <div class="action-flow" style="width: 100%;">
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %></h3>
+          <% if channel.preferences.editable isnt false: %>
+            <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+          <% end %>
+        </div>
+
+        <% if !_.isEmpty(channel.last_log_in): %>
+        <div class="alert alert--danger">
+          <%= channel.last_log_in %>
+        </div>
+        <% end %>
+
+        <hr>
+
+        <h3><%- @T('Destination Group') %></h3>
+        <a href="#" class="js-channelGroupChange <% if channel.group.active is false: %>alert alert--danger<% end %>">
+          <% groupName = '' %>
+          <% if channel.group.displayName: %>
+            <% groupName = channel.group.displayName() %>
+          <% else: %>
+            <% groupName = channel.group %>
+          <% end %>
+          <% if channel.group.active is false: %>
+            <%- @T('%s is inactive, please select an active one.', groupName) %>
+          <% else: %>
+            <%= groupName %>
+          <% end %>
+        </a>
+      </div>
+
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+        </div>
+
+        <% if !_.isEmpty(channel.last_log_out): %>
+        <div class="alert alert--danger">
+          <%= channel.last_log_out %>
+        </div>
+        <% end %>
+
+        <hr>
+
+        <h3><%- @T('Email Address') %></h3>
+        <ul class="list">
+        <% if !_.isEmpty(channel.email_addresses): %>
+          <% for email_address in channel.email_addresses: %>
+            <li class="list-item" data-id="<%= email_address.id %>">
+              <div class="list-item-name"><%= email_address.email %></div>
+              <div class="btn btn--text js-emailAddressEdit space-left space-right"><%- @T('Edit') %></div>
+              <% if channel.email_addresses.length > 1: %>
+              <div class="list-item-delete js-emailAddressDelete">
+                <%- @Icon('diagonal-cross') %>
+              </div>
+              <% end %>
+          <% end %>
+        <% else: %>
+          <li class="list-item"><%- @T('none') %>
+        <% end %>
+        </ul>
+        <a class="text-muted js-emailAddressNew" href="#">+ <%- @T('Add') %></a>
+      </div>
+    </div>
+
+    <div class="action-controls">
+      <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <% if channel.options.backup_imap_classic: %>
+        <div class="btn btn--secondary js-rollbackMigration"><%- @T('Rollback migration') %></div>
+      <% end %>
+      <% if channel.active is true: %>
+        <div class="btn btn--secondary js-disable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
+      <% end %>
+      <div class="btn btn--secondary js-reauthenticate"><%- @T('Reauthenticate') %></div>
+    </div>
+  </div>
+<% end %>
+</div>

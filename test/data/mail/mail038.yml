@@ -2,6 +2,33 @@
 from: Martin Edenhofer <me@example.com>
 from_email: me@example.com
 from_display_name: Martin Edenhofer
-subject: 'test 1234 äöü sig test without attachment '
 to: Martin Edenhofer <me@example.net>
+subject: 'test 1234 äöü sig test without attachment '
 body: "test 1234 äöü sig test without attachment\n\n"
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    -----BEGIN PGP SIGNATURE-----
+    Comment: GPGTools - https://gpgtools.org
+
+    iQIcBAEBCgAGBQJXjhWXAAoJEDZIwfYs2Fy5FvYQAKkG0qRe6iEBusrNuu7FNGMw
+    bXhefZ6D4SDUgMGHywYmm3ssPY+a3SYiRRaN0m4FavVVtQ7JTcKm7I2e60czWUX7
+    jcgQEVmQZCyH2rQ4sWiMDyS8CMSzj1uDOiHIHGXD6CmHLzrSog2H275BGzd00V3F
+    FNmr1esSiMuf69t+WQthsi5FJEeeLvuJqDqGAHXJvsxCMRZJMxFLWJI+Ovqts1q5
+    fKO91RKXtIuXoEQJVmqOkiGdD7idsvC9Ul5Iv7PFHuk+0Jg/UjcuZRhnieGgcs1d
+    aK/DFmwIAd4IT4acYoljovvqG9rvDDG9q0j83MzmazjmIn7U3hwjR5v5u/fXRcgD
+    CR5jgvkL1gT2AJF0J8vul0RebySNKcCRSSVSLSBdM0t4FIqWGQ/Iyzq2fpVeOLnw
+    LIJZ9c7cywMqZ0jK6DZ+F7UxrDIvckkPVe6YnND3/pC1X8Fehj0tWWb/hkIKRvHg
+    JReLLldwxDYzYLzhdwsE/w8wRKCnqUWDWuA1zlG1uWcHqo2RXn/YCKPcAMiMImoK
+    ZvxKpVA0QB+wuUx6TVr2I5La1rgyqkwo2TokfWuUVB7Kn/ugwSxloudQCtxTaTKZ
+    JrBf2SCw3+UDFFvURcnLzNmyNmnQI/5OIVliJERrw5I7b/auR7Royk9k7+DPEl+c
+    Teozs8ZFAE985ycipXRQ
+    =HLIq
+    -----END PGP SIGNATURE-----
+  filename: signature.asc
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: application/pgp-signature; name=signature.asc
+    Content-Description: Message signed with OpenPGP using GPGMail
+    Mime-Type: application/pgp-signature
+    Charset: UTF-8

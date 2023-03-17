@@ -1,0 +1,18 @@
+<div class="dropdown-toggle" data-toggle="dropdown">
+  <input id="<%= @attribute.id %>" class="form-control icon_picker-shadow js-shadow" name="<%= @attribute.name %>" value="<%= @value %>" <%= @attribute.required %>>
+  <div class="form-control icon js-input" data-font="<%= @attribute.iconset %>" tabindex="0">
+    <%= if @value then String.fromCharCode("0x#{@value}") else '' %>
+  </div>
+  <%- @Icon('arrow-down', 'dropdown-arrow') %>
+</div>
+<div class="dropdown-menu dropdown-menu-left js-dropdown">
+  <input type="search" class="dropdown-filter js-filter-icons" placeholder="<%- @T('Search…') %>">
+  <ul class="js-iconGrid dropdown-grid" role="menu"></ul>
+  <div class="dropdown-filter-placeholder">
+    <span class="js-noMatch">¯\_(ツ)_/¯</span>
+    <span class="js-noMatch">(╯°□°）╯ ︵ ┻━┻</span>
+    <span class="js-noMatch">(\/) (;,,;) (\/)</span>
+    <span class="js-noMatch">(ಠ_ಠ)</span>
+    <span class="js-noMatch">ε(´סּ︵סּ`)з</span>
+  </div>
+</div>

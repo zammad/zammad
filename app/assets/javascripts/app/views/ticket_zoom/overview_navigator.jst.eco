@@ -1,21 +1,19 @@
 <div class="pagination-counter" title="<%- @Ti(@title) %>">
   <span class="pagination-item-current"><%= @current_position %></span>/<span class="pagination-total-items"><%= @total_count %></span>
 </div>
-<ul class="pagination">
-  <li <% if !@previous: %>class="disabled"<% end %> title="<%- @Ti( 'Previous in overview' ) %>">
-    <a class="centered previous" href="<% if @previous: %><%- @previous.uiUrl() %><% end %>" data-id="<% if @previous: %><%- @previous.id %><% end %>">
-      <% if @previous: %>
-        <%- @Icon('arrow-left') %>
-      <% else: %>
-        <%- @Icon('arrow-left', 'arrow--disabled') %>
-      <% end %>
-    </a>
-  <li <% if !@next: %>class="disabled"<% end %> title="<%- @Ti( 'Next in overview' ) %>">
-    <a class="centered next" href="<% if @next: %><%- @next.uiUrl() %><% end %>" data-id="<% if @next: %><%- @next.id %><% end %>">
-      <% if @next: %>
-        <%- @Icon('arrow-right') %>
-      <% else: %>
-        <%- @Icon('arrow-right', 'arrow--disabled') %>
-      <% end %>
-    </a>
-</ul>
+<div class="pagination horizontal">
+  <a class="btn btn--action btn--split--first<%= ' is-disabled' if !@previous %>" href="<% if @previous: %><%- @previous.uiUrl() %><% end %>"<% if @previous: %> data-id="<%- @previous.id %>"<% end %> title="<%- @Ti( 'Previous in overview' ) %>">
+    <% if @previous: %>
+      <%- @Icon('arrow-left') %>
+    <% else: %>
+      <%- @Icon('arrow-left', 'arrow--disabled') %>
+    <% end %>
+  </a>
+  <a class="btn btn--action btn--split--last<%= ' is-disabled' if !@next %>" href="<% if @next: %><%- @next.uiUrl() %><% end %>"<% if @next: %> data-id="<%- @next.id %>"<% end %> title="<%- @Ti( 'Next in overview' ) %>">
+    <% if @next: %>
+      <%- @Icon('arrow-right') %>
+    <% else: %>
+      <%- @Icon('arrow-right', 'arrow--disabled') %>
+    <% end %>
+  </a>
+</div>

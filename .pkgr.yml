@@ -8,38 +8,150 @@ targets:
       - curl
       - elasticsearch
       - nginx
-      - postgresql-server
+      # Only CentOS 7 has the old PostgreSQL 9.2, so explicitly require 9.3 here.
+      - "postgresql-server >= 9.3"
       - which
-  debian-8:
+      - epel-release
+      - imlib2
+      - shared-mime-info
+    build_dependencies:
+      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.9-8.el7.x86_64.rpm
+      - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.9-8.el7.x86_64.rpm
+      - shared-mime-info
+  centos-8:
     dependencies:
       - curl
       - elasticsearch
-      - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - nginx
+      - postgresql-server
+      - which
+      - epel-release
+      - imlib2
+      - shared-mime-info
+    build_dependencies:
+      - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
+      - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
+      - shared-mime-info
   debian-9:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mariadb-server|sqlite
+      - postgresql|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
+  debian-10:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
+  debian-11:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
   ubuntu-16.04:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - postgresql|mysql-server|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
   ubuntu-18.04:
     dependencies:
       - curl
-      - elasticsearch
+      - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server|sqlite
+      - postgresql|mysql-server|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
+  ubuntu-20.04:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
+  ubuntu-22.04:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server
+      - libimlib2
+      - shared-mime-info
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
   sles-12:
     dependencies:
       - curl
       - elasticsearch
       - nginx
       - postgresql-server
+      - libImlib2-1
+      - imlib2
+    build_dependencies:
+      # Add packages required for build that are not in the official SLES repo.
+      # Direct URLs must be used since we cannot add repos on packager.io
+      #   (would require a paid SLES account and credential management on packager.io).
+      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-1.4.5-12.1.1.x86_64.rpm
+      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-devel-1.4.5-12.1.1.x86_64.rpm
+      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/imlib2-filters-1.4.5-12.1.1.x86_64.rpm
+      - https://ftp.gwdg.de/pub/opensuse/discontinued/distribution/12.3/repo/oss/suse/x86_64/libImlib2-1-1.4.5-12.1.1.x86_64.rpm
+      - shared-mime-info
+  sles-15:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - libImlib2-1
+      - imlib2
+      - shared-mime-info
+    build_dependencies:
+      # Add packages required for build that are not in the official SLES repo.
+      # Direct URLs must be used since we cannot add repos on packager.io
+      #   (would require a paid SLES account and credential management on packager.io).
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
+      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
+      - shared-mime-info
+      - libmariadb-devel
 before:
   - contrib/packager.io/before.sh
 after:
@@ -50,5 +162,6 @@ env:
   - ZAMMAD_RAILS_PORT=3000
   - ZAMMAD_WEBSOCKET_PORT=6042
 services:
-  - postgres
+  - postgres:13
+before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh

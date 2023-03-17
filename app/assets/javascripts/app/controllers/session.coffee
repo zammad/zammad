@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Session extends App.ControllerSubContent
   requiredPermission: 'admin.session'
-  header: 'Sessions'
+  header: __('Sessions')
   events:
     'click .js-delete': 'destroy'
 
@@ -49,4 +49,4 @@ class Index extends App.ControllerSubContent
         @load()
     )
 
-App.Config.set('Session', { prio: 3800, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, permission: ['admin.session'] }, 'NavBarAdmin' )
+App.Config.set('Session', { prio: 3800, name: __('Sessions'), parent: '#system', target: '#system/sessions', controller: Session, permission: ['admin.session'] }, 'NavBarAdmin' )

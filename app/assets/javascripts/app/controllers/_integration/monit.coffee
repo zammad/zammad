@@ -1,10 +1,10 @@
-class Index extends App.ControllerIntegrationBase
+class Monit extends App.ControllerIntegrationBase
   featureIntegration: 'monit_integration'
-  featureName: 'Monit'
+  featureName: __('Monit')
   featureConfig: 'monit_config'
   description: [
-    ['This service receives emails from %s and creates tickets with host and service.', 'Monit']
-    ['If the host and service is recovered again, the ticket will be closed automatically.']
+    [__('This service receives emails from %s and creates tickets with host and service.'), 'Monit']
+    [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>
@@ -21,10 +21,10 @@ class State
 App.Config.set(
   'IntegrationMonit'
   {
-    name: 'Monit'
+    name: __('Monit')
     target: '#system/integration/monit'
-    description: 'An open source monitoring tool.'
-    controller: Index
+    description: __('An open-source monitoring tool.')
+    controller: Monit
     state: State
     permission: ['admin.integration.monit']
   }

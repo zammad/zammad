@@ -9,24 +9,27 @@ class DefaultRouter extends App.Controller
 
     # check if import is active
     if !@Config.get('system_init_done') && @Config.get('import_mode')
-      @navigate '#import', true
+      @navigate '#import', { hideCurrentLocationFromHistory: true }
       return
 
     # route to getting started screen
     if !@Config.get('system_init_done')
-      @navigate '#getting_started', true
+      @navigate '#getting_started', { hideCurrentLocationFromHistory: true }
       return
 
-    # check role
-    if @permissionCheck('ticket.customer')
-      @navigate '#ticket/view/my_tickets', true
+    # redirect to requested url
+    requested_url = @requestedUrlWas()
+    if requested_url
+      @requestedUrlRemember('')
+      @log 'notice', "REDIRECT to '#{requested_url}'"
+      @navigate requested_url, { hideCurrentLocationFromHistory: true }
       return
 
     if @Config.get('default_controller')
-      @navigate @Config.get('default_controller'), true
+      @navigate @Config.get('default_controller'), { hideCurrentLocationFromHistory: true }
       return
 
-    @navigate '#dashboard', true
+    @navigate '#dashboard', { hideCurrentLocationFromHistory: true }
 
 App.Config.set('', DefaultRouter, 'Routes')
 App.Config.set('/', DefaultRouter, 'Routes')

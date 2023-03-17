@@ -1,0 +1,47 @@
+minitest:firefox:1:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "1"
+
+minitest:firefox:2:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "2"
+
+minitest:firefox:3:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "3"
+
+minitest:firefox:4:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "4"
+
+minitest:firefox:5:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "5"
+
+minitest:firefox:6:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "6"
+
+minitest:firefox:7:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "7"
+
+minitest:firefox:8:
+  extends:
+    - .template_browser-core_firefox
+  variables:
+    TEST_SLICE: "8"

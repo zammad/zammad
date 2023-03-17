@@ -1,0 +1,36 @@
+# Cache gems in between jobs and pipelines
+.cache_ruby: &cache_ruby
+  key:
+    files:
+      - Gemfile.lock
+  paths:
+    - vendor/ruby
+    - fresh.env
+
+# Cache node_modules likewise
+.cache_nodejs: &cache_nodejs
+  key:
+    files:
+      - yarn.lock
+  paths:
+    - .yarn/cache
+
+.cache:
+  read_only_full:
+    - <<: *cache_ruby
+      policy: pull
+    - <<: *cache_nodejs
+      policy: pull
+  read_only_ruby:
+    - <<: *cache_ruby
+      policy: pull
+  read_only_nodejs:
+    - <<: *cache_nodejs
+      policy: pull
+  # Only write cache once, and just read it in all other pipeline jobs.
+  read_write_ruby:
+    - <<: *cache_ruby
+      policy: pull-push
+  read_write_nodejs:
+    - <<: *cache_nodejs
+      policy: pull-push

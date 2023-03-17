@@ -1,15 +1,39 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module SessionHelper
-  def self.default_collections(user, assets = {})
+  def self.json_hash(user)
+    collections, assets = default_collections(user)
+    {
+      session:     user.filter_unauthorized_attributes(user.filter_attributes(user.attributes)),
+      models:      models(user),
+      collections: collections,
+      assets:      assets,
+    }
+  end
+
+  def self.json_hash_error(error)
+    {
+      error:       error.message,
+      models:      models,
+      collections: {
+        Locale.to_app_model     => Locale.where(active: true),
+        PublicLink.to_app_model => PublicLink.all,
+      }
+    }
+  end
+
+  def self.default_collections(user)
 
     # auto population collections, store all here
     default_collection = {}
+    assets = user.assets({})
 
     # load collections to deliver from external files
     dir = File.expand_path('..', __dir__)
-    files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb")
+    files = Dir.glob("#{dir}/lib/session_helper/collection_*.rb")
     files.each do |file|
-      load file
-      (default_collection, assets) = ExtraCollection.session(default_collection, assets, user)
+      file =~ %r{/(session_helper/collection_.*)\.rb\z}
+      (default_collection, assets) = $1.camelize.constantize.session(default_collection, assets, user)
     end
 
     [default_collection, assets]
@@ -19,7 +43,7 @@ module SessionHelper
     models = {}
     objects = ObjectManager.list_objects
     objects.each do |object|
-      attributes = ObjectManager::Attribute.by_object(object, user)
+      attributes = ObjectManager::Object.new(object).attributes(user)
       models[object] = attributes
     end
     models
@@ -28,10 +52,10 @@ module SessionHelper
   def self.cleanup_expired
 
     # delete temp. sessions
-    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 2.hours).delete_all
+    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', 2.hours.ago).delete_all
 
     # web sessions not updated the last x days
-    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 60.days).delete_all
+    ActiveRecord::SessionStore::Session.where('updated_at < ?', 60.days.ago).delete_all
 
   end
 
@@ -40,12 +64,13 @@ module SessionHelper
   end
 
   def self.list(limit = 10_000)
-    ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(limit)
+    ActiveRecord::SessionStore::Session.reorder(updated_at: :desc).limit(limit)
   end
 
   def self.destroy(id)
     session = ActiveRecord::SessionStore::Session.find_by(id: id)
     return if !session
+
     session.destroy
   end
 end

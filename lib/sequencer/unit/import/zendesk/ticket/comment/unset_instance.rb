@@ -1,16 +1,6 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          module Comment
-            class UnsetInstance < Sequencer::Unit::Common::UnsetAttributes
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :instance
-            end
-          end
-        end
-      end
-    end
-  end
+class Sequencer::Unit::Import::Zendesk::Ticket::Comment::UnsetInstance < Sequencer::Unit::Common::UnsetAttributes
+
+  uses :instance
 end

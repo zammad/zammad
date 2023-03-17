@@ -1,0 +1,78 @@
+name: Report a Bug
+description: You found a bug within Zammad? Use this to let us know, please ensure to fill in the complete template!
+labels: ['needs verification']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hi there - thanks for filing an issue. Please ensure the following things before creating an issue - thank you! 🤓
+
+        🛑 Please post the following on our [community board](https://community.zammad.org/) rather than filing an issue:
+
+        👉 Feature Requests
+        👉 Development Questions
+        👉 Technical Questions (assistance for non paid / community)
+
+        If you think you hit a bug, please continue:
+
+        👉 Search existing issues and the CHANGELOG.md for your issue - there might be a solution already.
+        👉 Make sure to use the latest version of Zammad.
+        👉 Add the `log/production.log` file from your system. Attention: Make sure that it does not contain confidential data!
+        👉 Please describe the issue in English.
+
+        Note: We always do our best. Unfortunately, sometimes there are too many requests and we can't handle everything at once. If you want to prioritize/escalate your issue, you can do so by means of [a support contract](https://zammad.com/pricing#selfhosted).
+  - type: input
+    id: bug-used-zammad-version
+    attributes:
+      label: Used Zammad Version
+      placeholder: '5.3'
+    validations:
+      required: true
+  - type: textarea
+    id: bug-env-information
+    attributes:
+      label: Environment
+      value: |
+        - Installation method: [e.g. source, package]
+        - Operating system (if you're unsure: `cat /etc/os-release` ): [e.g. debian 10.4, ubuntu 20.04]
+        - Database + version:  [e.g. postgresql 9.3, mysql 5.7, mariadb 10.3]
+        - Elasticsearch version: [e.g. 7.17]
+        - Browser + version: [e.g. chrome 83, safari 14, firefox 105]
+    validations:
+      required: true
+  - type: textarea
+    id: bug-actual-behaviour
+    attributes:
+      label: Actual behaviour
+      description: Describe the actual behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: bug-expected-behaviour
+    attributes:
+      label: Expected behaviour
+      description: Describe the expected behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: bug-steps-reproduction
+    attributes:
+      label: Steps to reproduce the behaviour
+    validations:
+      required: true
+  - type: input
+    id: bug-support-ticket
+    attributes:
+      label: Support Ticket
+      placeholder: Ticket#12345678
+    validations:
+      required: false
+  - type: dropdown
+    id: bug-confirm
+    attributes:
+      label: I'm sure this is a bug and no feature request or a general question.
+      options:
+        - 'no'
+        - 'yes'
+    validations:
+      required: true

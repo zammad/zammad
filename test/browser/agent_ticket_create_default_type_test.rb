@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -10,9 +11,9 @@ class AgentTicketCreateDefaultTypeTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     click(
       css: 'a[href="#ticket/create"]'
@@ -36,9 +37,9 @@ class AgentTicketCreateDefaultTypeTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     @browser.execute_script("App.Config.set('ui_ticket_create_available_types', ['email-out', 'phone-out'])")
 
@@ -64,9 +65,9 @@ class AgentTicketCreateDefaultTypeTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     @browser.execute_script("App.Config.set('ui_ticket_create_available_types', ['email-out'])")
 

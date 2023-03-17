@@ -1,0 +1,50 @@
+<table class="settings-list settings-list--stretch">
+  <thead>
+    <tr>
+      <th width="55%"><%- @T('Subject') %>
+      <th width="10%"><%- @T('Hash') %>
+      <th width="10%"><%- @T('Fingerprint') %>
+      <th width="10%"><%- @T('Created') %>
+      <th width="10%"><%- @T('Expires') %>
+      <th width="5%"><%- @T('Actions') %>
+  </thead>
+  <tbody>
+  <% if _.isEmpty(@certs): %>
+  <tr>
+    <td colspan="6">
+      <%- @T('No Entries') %>
+    </td>
+  </tr>
+  <% else: %>
+    <% for cert in @certs: %>
+      <tr data-id="<%= cert.id %>">
+        <td><%= cert.subject %>
+          <% if cert.private_key: %><br><i><%- @T('Including private key.') %></i><% end %>
+        <td><%= cert.doc_hash %>
+        <td title="<%= cert.fingerprint %>"><%= cert.fingerprint.substr(1, 10) %>...
+        <td><%- @datetime(cert.not_before_at) %>
+        <td><%- @datetime(cert.not_after_at) %>
+        <td>
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">
+            <% if cert.private_key: %>
+              <li role="presentation" data-table-action="download-private">
+                <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/integration/smime/private_key_download/<%= cert.id %>" download><%- @Icon('download') %> <%- @T('Download Private Key') %></a>
+              </li>
+            <% end %>
+              <li role="presentation" data-table-action="download-public">
+                <a href="<%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/integration/smime/certificate_download/<%= cert.id %>" download><%- @Icon('download') %> <%- @T('Download Certificate') %></a>
+              </li>
+              <li role="presentation" class="danger js-remove" data-table-action="remove">
+                <%- @Icon('trash') %> <%- @T('Delete') %>
+              </li>
+            </ul>
+          </div>
+        </td>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

@@ -1,4 +1,4 @@
-class App.TicketCustomerAvatar extends App.ObserverController
+class App.TicketCustomerAvatar extends App.ControllerObserver
   model: 'Ticket'
   observe:
     customer_id: true

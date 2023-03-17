@@ -27,18 +27,18 @@ Events =
     true
 
   listenTo: (obj, ev, callback) ->
-    obj.bind(ev, callback)
+    obj.on(ev, callback)
     @listeningTo or= []
     @listeningTo.push {obj, ev, callback}
     this
 
   listenToOnce: (obj, ev, callback) ->
     listeningToOnce = @listeningToOnce or= []
-    obj.bind ev, handler = ->
+    obj.on ev, handler = ->
       idx = -1
       for lt, i in listeningToOnce when lt.obj is obj
         idx = i if lt.ev is ev and lt.callback is handler
-      obj.unbind(ev, handler)
+      obj.off(ev, handler)
       listeningToOnce.splice(idx, 1) unless idx is -1
       callback.apply(this, arguments)
     listeningToOnce.push {obj, ev, callback: handler}
@@ -49,7 +49,7 @@ Events =
       for listeningTo in [@listeningTo, @listeningToOnce]
         continue unless listeningTo?.length
         for lt in listeningTo
-          lt.obj.unbind(lt.ev, lt.callback)
+          lt.obj.off(lt.ev, lt.callback)
       @listeningTo = undefined
       @listeningToOnce = undefined
 
@@ -60,17 +60,23 @@ Events =
         for ev in events
           for idx in [listeningTo.length-1..0]
             lt = listeningTo[idx]
+            # 2019-05-20 (me): check if listeningTo has content
+            # in certain cases (e. g. http://localhost:3000/#knowledge_base/1/locale/en-us/edit just
+            # change the title and submit) a `Uncaught TypeError: Cannot read property 'obj' of undefined`
+            # is raised. The reason is that listeningToOnce is an empty array.
+            continue if !lt
+            # /2019-05-20 (me)
             continue unless lt.obj is obj
             continue if callback and lt.callback isnt callback
             if (not ev) or (ev is lt.ev)
-              lt.obj.unbind(lt.ev, lt.callback)
+              lt.obj.off(lt.ev, lt.callback)
               listeningTo.splice(idx, 1) unless idx is -1
             else if ev
               evts = lt.ev.split(' ')
               if ev in evts
                 evts = (e for e in evts when e isnt ev)
-                lt.ev = $.trim(evts.join(' '))
-                lt.obj.unbind(ev, lt.callback)
+                lt.ev = (evts.join(' ')).trim()
+                lt.obj.off(ev, lt.callback)
     this
 
   unbind: (ev, callback) ->
@@ -568,7 +574,7 @@ class Controller extends Module
       selector   = match[2]
 
       if selector is ''
-        @el.bind(eventName, method)
+        @el.on(eventName, method)
       else
         @el.on(eventName, selector, method)
 
@@ -605,7 +611,7 @@ class Controller extends Module
 
   replace: (element) ->
     element = element.el or element
-    element = $.trim(element) if typeof element is "string"
+    element = (element).trim() if typeof element is "string"
     # parseHTML is incompatible with Zepto
     [previous, @el] = [@el, $($.parseHTML(element)?[0] or element)]
     previous.replaceWith(@el)

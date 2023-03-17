@@ -1,8 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.business_hours
-  @render: (attributeOrig) ->
+  @render: (attributeConfig) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
-    attribute = _.clone(attributeOrig)
     attribute.nameRaw = attribute.name
     attribute.name = "{business_hours}#{attribute.name}"
 

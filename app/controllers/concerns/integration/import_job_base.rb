@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Integration::ImportJobBase
   extend ActiveSupport::Concern
 
@@ -22,7 +24,7 @@ module Integration::ImportJobBase
   def job_start_create
     if !ImportJob.exists?(name: backend, finished_at: nil)
       job = ImportJob.create(name: backend)
-      job.delay.start
+      AsyncImportJob.perform_later(job)
     end
     render json: {
       result: 'ok',
@@ -64,7 +66,7 @@ module Integration::ImportJobBase
       job = ImportJob.where(
         name:    backend,
         dry_run: dry_run
-      ).order(created_at: :desc).limit(1).first
+      ).reorder(created_at: :desc).limit(1).first
     end
 
     if job

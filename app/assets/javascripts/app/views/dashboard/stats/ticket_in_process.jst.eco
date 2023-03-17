@@ -1,0 +1,13 @@
+<div class="stat-widget vertical">
+  <div class="stat-title">
+    <%- @T('My tickets in process') %>
+    <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketInProcess.description) %>" data-placement="bottom">
+      <%- @Icon('help') %>
+    </div>
+  </div>
+  <div class="stat-graphic">
+    <%- @Icon('in-process', "in-process-icon #{@StatsTicketInProcess.state}-color") %>
+  </div>
+  <div class="stat-label" title="<%- @T('%s of my tickets are currently in process.', @StatsTicketInProcess.in_process) %>"><%- @T('%s% are currently in process', @StatsTicketInProcess.percent) %></div>
+  <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketInProcess.average_per_agent) %></div>
+</div>

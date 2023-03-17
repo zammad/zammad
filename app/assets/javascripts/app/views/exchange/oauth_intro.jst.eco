@@ -1,0 +1,10 @@
+<div class="page-header">
+  <h2><%- @T('OAuth Configuration') %></h2>
+</div>
+
+<div class="page-content">
+  <div class="page-description">
+    <p><%- @T('You can connect %s with Zammad. But first, you will have to connect your Zammad with %s.', 'Microsoft 365 Accounts', 'Microsoft 365') %></p>
+    <div class="btn btn--success js-config-app"><%- @T('Connect Exchange App') %></div>
+  </div>
+</div>

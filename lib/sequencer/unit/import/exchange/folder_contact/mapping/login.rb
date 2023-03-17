@@ -1,25 +1,15 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContact
-          module Mapping
-            class Login < Sequencer::Unit::Import::Common::Mapping::FlatKeys
-              include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :remote_id
+class Sequencer::Unit::Import::Exchange::FolderContact::Mapping::Login < Sequencer::Unit::Import::Common::Mapping::FlatKeys
+  include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
-              def process
-                provide_mapped do
-                  {
-                    login: remote_id
-                  }
-                end
-              end
-            end
-          end
-        end
-      end
+  uses :remote_id
+
+  def process
+    provide_mapped do
+      {
+        login: remote_id
+      }
     end
   end
 end

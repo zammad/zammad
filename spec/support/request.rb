@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ZammadSpecSupportRequest
 
   # This ruby meta programming action creates the methods to perform:
@@ -51,16 +53,40 @@ module ZammadSpecSupportRequest
   # @example
   #  authenticated_as(some_admin_user)
   #
+  # @example
+  #  authenticated_as(some_admin_user, on_behalf_of: customer_user)
+  #
+  # @example
+  #  authenticated_as(some_admin_user, password: 'wrongpw')
+  #
+  # @example
+  #  authenticated_as(some_admin_user, password: 'wrongpw', token: create(:token, action: 'api', user_id: some_admin_user.id) )
+  #
+  # @example
+  #  authenticated_as(nil, login: 'not_existing', password: 'wrongpw' )
+  #
   # @return nil
-  def authenticated_as(user)
-    # mock authentication otherwise login won't
-    # if user has no password (which is expensive to create)
-    if user.password.nil?
-      allow(User).to receive(:authenticate).with(user.login, '').and_return(user)
-    end
+  def authenticated_as(user, via: :api_client, **options)
+    password = options[:password] || user.try(:password_plain) || user.password.to_s
+    login    = options[:login] || user.login
 
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user.login, user.password)
-    add_headers('Authorization' => credentials)
+    case via
+    when :api_client
+      # ensure that always the correct header value is set
+      # otherwise previous header configurations will be re-used
+      add_headers('From' => options[:from])
+
+      # if we want to authenticate by token
+      credentials = if options[:token].present?
+                      "Token token=#{options[:token].name}"
+                    else
+                      ActionController::HttpAuthentication::Basic.encode_credentials(login, password)
+                    end
+
+      add_headers('Authorization' => credentials)
+    when :browser
+      post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.number(digits: 9) }
+    end
   end
 
   # Provides a Hash of attributes for the given FactoryBot
@@ -71,7 +97,7 @@ module ZammadSpecSupportRequest
   # @see FactoryBot#attributes_for
   #
   # @example
-  #  attributes_params_for(:admin_user, email: 'custom@example.com')
+  #  attributes_params_for(:admin, email: 'custom@example.com')
   #  # => {firstname: 'Nicole', email: 'custom@example.com', ...}
   #
   # @return [Hash{Symbol => <String, Array, Hash>}] request cleaned attributes
@@ -102,8 +128,60 @@ module ZammadSpecSupportRequest
     # let's get private
     ApplicationModel.send(:filter_unused_params, unfiltered)
   end
+
+  # The following methods are self explaining and are just shorter aliases.
+  def stub_get(path)
+    stub_request(:get, path)
+  end
+
+  def stub_post(path)
+    stub_request(:post, path)
+  end
+
+  def stub_delete(path)
+    stub_request(:delete, path)
+  end
+
+  def stub_put(path)
+    stub_request(:put, path)
+  end
+
+  def a_get(path)
+    a_request(:get, path)
+  end
+
+  def a_post(path)
+    a_request(:post, path)
+  end
+
+  def a_delete(path)
+    a_request(:delete, path)
+  end
+
+  def a_put(path)
+    a_request(:put, path)
+  end
 end
 
 RSpec.configure do |config|
   config.include ZammadSpecSupportRequest, type: :request
+
+  config.before(:each, type: :request) do
+    Setting.set('system_init_done', true)
+  end
+
+  # This helper allows you to authenticate as a given user in request specs
+  # via the example metadata, rather than directly:
+  #
+  #     it 'does something', authenticated_as: :user
+  #
+  # In order for this to work, you must define the user in a `let` block first:
+  #
+  #     let(:user) { create(:customer) }
+  #
+  config.before(:each, :authenticated_as, type: :request) do |example|
+    user = authenticated_as_get_user example.metadata[:authenticated_as], return_type: :user
+
+    authenticated_as user if user
+  end
 end

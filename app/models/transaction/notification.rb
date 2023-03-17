@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Notification
 
@@ -31,6 +31,7 @@ class Transaction::Notification
 
     ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
 
@@ -38,6 +39,7 @@ class Transaction::Notification
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender&.name == 'System'
         return if @item[:changes].blank? && article.preferences[:notification] != true
+
         if article.preferences[:notification] != true
           article = nil
         end
@@ -48,28 +50,42 @@ class Transaction::Notification
     recipients_and_channels = []
     recipients_reason = {}
 
-    # loop through all users
-    possible_recipients = User.group_access(ticket.group_id, 'full').sort_by(&:login)
+    # loop through all group users
+    possible_recipients = possible_recipients_of_group(ticket.group_id)
+
+    # loop through all mention users
+    mention_users = Mention.where(mentionable_type: @item[:object], mentionable_id: @item[:object_id]).map(&:user)
+    if mention_users.present?
+
+      # only notify if read permission on group are given
+      mention_users.each do |mention_user|
+        next if !mention_user.group_access?(ticket.group_id, 'read')
+
+        possible_recipients.push mention_user
+        recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
+      end
+    end
 
     # apply owner
     if ticket.owner_id != 1
       possible_recipients.push ticket.owner
-      recipients_reason[ticket.owner_id] = 'are assigned'
+      recipients_reason[ticket.owner_id] = __('You are receiving this because you are the owner of this ticket.')
     end
 
     # apply out of office agents
     possible_recipients_additions = Set.new
     possible_recipients.each do |user|
-      recursive_ooo_replacements(
+      ooo_replacements(
         user:         user,
         replacements: possible_recipients_additions,
         reasons:      recipients_reason,
+        ticket:       ticket,
       )
     end
 
     if possible_recipients_additions.present?
       # join unique entries
-      possible_recipients = possible_recipients | possible_recipients_additions.to_a
+      possible_recipients |= possible_recipients_additions.to_a
     end
 
     already_checked_recipient_ids = {}
@@ -77,14 +93,15 @@ class Transaction::Notification
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
       next if already_checked_recipient_ids[user.id]
+
       already_checked_recipient_ids[user.id] = true
       recipients_and_channels.push result
       next if recipients_reason[user.id]
-      recipients_reason[user.id] = 'are in group'
+
+      recipients_reason[user.id] = __('You are receiving this because you are a member of the group of this ticket.')
     end
 
     # send notifications
-    recipient_list = ''
     recipients_and_channels.each do |item|
       user = item[:user]
       channels = item[:channels]
@@ -108,14 +125,15 @@ class Transaction::Notification
         if !identifier || identifier == ''
           identifier = user.login
         end
-        already_notified = false
-        History.list('Ticket', ticket.id).each do |history|
-          next if history['type'] != 'notification'
-          next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
-          next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
-          next if !history['created_at'].today?
-          already_notified = true
-        end
+
+        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default_sanitized')) { Time.current.beginning_of_day }
+
+        already_notified = History.where(
+          history_type_id:   History.type_lookup('notification').id,
+          history_object_id: History.object_lookup('Ticket').id,
+          o_id:              ticket.id
+        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{identifier}(#{@item[:type]}:%"])
+
         next if already_notified
       end
 
@@ -146,18 +164,18 @@ class Transaction::Notification
         end
 
         OnlineNotification.add(
-          type: @item[:type],
-          object: 'Ticket',
-          o_id: ticket.id,
-          seen: seen,
+          type:          @item[:type],
+          object:        'Ticket',
+          o_id:          ticket.id,
+          seen:          seen,
           created_by_id: created_by_id,
-          user_id: user.id,
+          user_id:       user.id,
         )
         Rails.logger.debug { "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
       end
 
-      # ignore email channel notificaiton and empty emails
-      if !channels['email'] || !user.email || user.email == ''
+      # ignore email channel notification and empty emails
+      if !channels['email'] || user.email.blank?
         add_recipient_list(ticket, user, used_channels, @item[:type])
         next
       end
@@ -167,20 +185,24 @@ class Transaction::Notification
 
       # get user based notification template
       # if create, send create message / block update messages
-      template = nil
-      if @item[:type] == 'create'
-        template = 'ticket_create'
-      elsif @item[:type] == 'update'
-        template = 'ticket_update'
-      elsif @item[:type] == 'reminder_reached'
-        template = 'ticket_reminder_reached'
-      elsif @item[:type] == 'escalation'
-        template = 'ticket_escalation'
-      elsif @item[:type] == 'escalation_warning'
-        template = 'ticket_escalation_warning'
-      else
-        raise "unknown type for notification #{@item[:type]}"
-      end
+      template = case @item[:type]
+                 when 'create'
+                   'ticket_create'
+                 when 'update'
+                   'ticket_update'
+                 when 'reminder_reached'
+                   'ticket_reminder_reached'
+                 when 'escalation'
+                   'ticket_escalation'
+                 when 'escalation_warning'
+                   'ticket_escalation_warning'
+                 when 'update.merged_into'
+                   'ticket_update_merged_into'
+                 when 'update.received_merge'
+                   'ticket_update_received_merge'
+                 else
+                   raise "unknown type for notification #{@item[:type]}"
+                 end
 
       current_user = User.lookup(id: @item[:user_id])
       if !current_user
@@ -192,18 +214,18 @@ class Transaction::Notification
         attachments = article.attachments_inline
       end
       NotificationFactory::Mailer.notification(
-        template: template,
-        user: user,
-        objects: {
-          ticket: ticket,
-          article: article,
-          recipient: user,
+        template:    template,
+        user:        user,
+        objects:     {
+          ticket:       ticket,
+          article:      article,
+          recipient:    user,
           current_user: current_user,
-          changes: changes,
-          reason: recipients_reason[user.id],
+          changes:      changes,
+          reason:       recipients_reason[user.id],
         },
-        message_id: "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
-        references: ticket.get_references,
+        message_id:  "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
+        references:  ticket.get_references,
         main_object: ticket,
         attachments: attachments,
       )
@@ -214,37 +236,36 @@ class Transaction::Notification
 
   def add_recipient_list(ticket, user, channels, type)
     return if channels.blank?
+
     identifier = user.email
     if !identifier || identifier == ''
       identifier = user.login
     end
     recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
     History.add(
-      o_id: ticket.id,
-      history_type: 'notification',
+      o_id:           ticket.id,
+      history_type:   'notification',
       history_object: 'Ticket',
-      value_to: recipient_list,
-      created_by_id: @item[:user_id] || 1
+      value_to:       recipient_list,
+      created_by_id:  @item[:user_id] || 1
     )
   end
 
   def human_changes(user, record)
 
     return {} if !@item[:changes]
-    locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
+
+    locale = user.locale
 
     # only show allowed attributes
-    attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
-    #puts "AL #{attribute_list.inspect}"
+    attribute_list = ObjectManager::Object.new('Ticket').attributes(user).index_by { |item| item[:name] }
+
     user_related_changes = {}
     @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
-      if attribute_list.blank?
-        user_related_changes[key] = value
-
-      # if config exists, just use existing attributes for user
-      elsif attribute_list[key.to_s]
+      # or if config exists, just use existing attributes for user
+      if attribute_list.blank? || attribute_list[key.to_s]
         user_related_changes[key] = value
       end
     end
@@ -264,7 +285,7 @@ class Transaction::Notification
         changes[attribute_name] = value
       end
 
-      # if changed item is an _id field/reference, do an lookup for the realy values
+      # if changed item is an _id field/reference, look up the real values
       value_id  = []
       value_str = [ value[0], value[1] ]
       if key.to_s[-3, 3] == '_id'
@@ -278,8 +299,8 @@ class Transaction::Notification
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[0] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[0] = relation_model.send(:fullname)
               end
             end
           end
@@ -288,15 +309,15 @@ class Transaction::Notification
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?('fullname')
-                value_str[1] = relation_model.send('fullname')
+              elsif relation_model.respond_to?(:fullname)
+                value_str[1] = relation_model.send(:fullname)
               end
             end
           end
         end
       end
 
-      # check if we have an dedcated display name for it
+      # check if we have a dedicated display name for it
       display = attribute_name
       if object_manager_attribute && object_manager_attribute[:display]
 
@@ -319,25 +340,21 @@ class Transaction::Notification
 
   private
 
-  def recursive_ooo_replacements(user:, replacements:, reasons:, level: 0)
-    if level == 10
-      Rails.logger.warn("Found more than 10 replacement levels for agent #{user}.")
-      return
-    end
-
+  def ooo_replacements(user:, replacements:, ticket:, reasons:)
     replacement = user.out_of_office_agent
-    return if !replacement
-    # return for already found, added and checked users
-    # to prevent re-doing complete lookup paths
-    return if !replacements.add?(replacement)
-    reasons[replacement.id] = 'are the out-of-office replacement of the owner'
 
-    recursive_ooo_replacements(
-      user:         replacement,
-      replacements: replacements,
-      reasons:      reasons,
-      level:        level + 1
-    )
+    return if !replacement
+
+    return if !TicketPolicy.new(replacement, ticket).agent_read_access?
+
+    return if !replacements.add?(replacement)
+
+    reasons[replacement.id] = __('You are receiving this because you are out-of-office replacement for a participant of this ticket.')
   end
 
+  def possible_recipients_of_group(group_id)
+    Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}", expires_in: 20.seconds) do
+      User.group_access(group_id, 'full').sort_by(&:login)
+    end
+  end
 end

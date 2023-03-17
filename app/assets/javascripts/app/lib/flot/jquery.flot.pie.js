@@ -125,10 +125,10 @@ More detail and specific examples can be found in the included HTML file.
 			var options = plot.getOptions();
 			
 			if (options.series.pie.show && options.grid.hoverable)
-				eventHolder.unbind('mousemove').mousemove(onMouseMove);
+				eventHolder.off('mousemove').on('mousemove', onMouseMove);
 				
 			if (options.series.pie.show && options.grid.clickable)
-				eventHolder.unbind('click').click(onClick);
+				eventHolder.off('click').on('click', onClick);
 		}	
 		
 

@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class ProfileTokenAccess extends App.ControllerSubContent
   requiredPermission: 'user_preferences.access_token'
-  header: 'Token Access'
+  header: __('Token Access')
   events:
     'click .js-delete': 'delete'
     'click .js-create': 'create'
@@ -49,8 +49,9 @@ class Index extends App.ControllerSubContent
   delete: (e) =>
     e.preventDefault()
 
+    id = $(e.currentTarget).data('token-id')
+
     callback = =>
-      id = $(e.target).closest('a').data('token-id')
       @ajax(
         id:          'user_access_token_delete'
         type:        'DELETE'
@@ -62,7 +63,7 @@ class Index extends App.ControllerSubContent
       )
 
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: callback
       container: @el.closest('.content')
     )
@@ -75,8 +76,8 @@ class Index extends App.ControllerSubContent
     )
 
 class Create extends App.ControllerModal
-  head: 'Add a Personal Access Token'
-  buttonSubmit: 'Create'
+  head: __('Add a Personal Access Token')
+  buttonSubmit: __('Create')
   buttonCancel: true
   shown: true
 
@@ -96,7 +97,10 @@ class Create extends App.ControllerModal
 
     # check if min one permission exists
     if _.isEmpty(params['permission'])
-      alert('Min. one permission is needed!')
+      @notify(
+        type: 'error'
+        msg:  App.i18n.translateContent("The required parameter 'permission' is missing.")
+      )
       return
 
     if !_.isArray(params['permission'])
@@ -121,8 +125,8 @@ class Create extends App.ControllerModal
     return if !@newToken
     ui = @
     new App.ControllerModal(
-      head: 'Your New Personal Access Token'
-      buttonSubmit: 'OK, I\'ve copied my token'
+      head: __('Your New Personal Access Token')
+      buttonSubmit: __("OK, I've copied my token")
       content: ->
         App.view('profile/token_access_created')(
           name: ui.newToken.name
@@ -143,4 +147,13 @@ class Create extends App.ControllerModal
       msg:  App.i18n.translateContent(data.message || data.error)
     )
 
-App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, permission: ['user_preferences.access_token']  }, 'NavBarProfile')
+App.Config.set('Token Access', {
+  prio: 3200,
+  name: __('Token Access'),
+  parent: '#profile',
+  target: '#profile/token_access',
+  controller: ProfileTokenAccess,
+  permission: (controller) ->
+    return false if !App.Config.get('api_token_access')
+    return controller.permissionCheck('user_preferences.access_token')
+}, 'NavBarProfile')

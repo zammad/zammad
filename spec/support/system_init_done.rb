@@ -1,12 +1,14 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module SystemInitDoneHelper
   def system_init_done(state = true)
-    # generally allow all calls to Setting.find_by to avoid
+    # generally allow all calls to Setting.exists? to avoid
     # RSpec errors where a different Setting is accessed
-    allow(Setting).to receive(:find_by).and_call_original
+    allow(Setting).to receive(:exists?).and_call_original
 
     # just mock the Setting check for `system_init_done`
     # and return the given parameter value
-    expect(Setting).to receive(:find_by).with(name: 'system_init_done').and_return(state)
+    allow(Setting).to receive(:exists?).with(name: 'system_init_done').and_return(state)
   end
 end
 

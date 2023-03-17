@@ -1,10 +1,10 @@
-class Index extends App.ControllerIntegrationBase
+class Icinga extends App.ControllerIntegrationBase
   featureIntegration: 'icinga_integration'
-  featureName: 'Icinga'
+  featureName: __('Icinga')
   featureConfig: 'icinga_config'
   description: [
-    ['This service receives emails from %s and creates tickets with host and service.', 'Icinga']
-    ['If the host and service is recovered again, the ticket will be closed automatically.']
+    [__('This service receives emails from %s and creates tickets with host and service.'), 'Icinga']
+    [__('If the host and service have recovered, the ticket can be closed automatically.')]
   ]
 
   render: =>
@@ -21,10 +21,10 @@ class State
 App.Config.set(
   'IntegrationIcinga'
   {
-    name: 'Icinga'
+    name: __('Icinga')
     target: '#system/integration/icinga'
-    description: 'An open source monitoring tool.'
-    controller: Index
+    description: __('An open-source monitoring tool.')
+    controller: Icinga
     state: State
     permission: ['admin.integration.icinga']
   }

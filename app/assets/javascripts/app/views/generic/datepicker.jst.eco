@@ -13,12 +13,14 @@
             </thead>
         <tbody></tbody>
         <tfoot>
-        <tr>
-            <th colspan="7" class="today"></th>
-        </tr>
-        <tr>
-            <th colspan="7" class="clear"></th>
-        </tr>
+          <tr>
+            <td colspan="7">
+              <div class="datepicker-footer-buttons">
+                <div class="clear"></div>
+                <div class="today"></div>
+              </div>
+            </td>
+          </tr>
         </tfoot>
     </table>
   </div>
@@ -36,12 +38,14 @@
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>
           <tfoot>
-          <tr>
-              <th colspan="7" class="today"></th>
-          </tr>
-          <tr>
-              <th colspan="7" class="clear"></th>
-          </tr>
+            <tr>
+              <td colspan="7">
+                <div class="datepicker-footer-buttons">
+                  <div class="clear"></div>
+                  <div class="today"></div>
+                </div>
+              </td>
+            </tr>
           </tfoot>
       </table>
   </div>
@@ -59,12 +63,14 @@
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>
           <tfoot>
-          <tr>
-              <th colspan="7" class="today"></th>
-          </tr>
-          <tr>
-              <th colspan="7" class="clear"></th>
-          </tr>
+            <tr>
+              <td colspan="7">
+                <div class="datepicker-footer-buttons">
+                  <div class="clear"></div>
+                  <div class="today"></div>
+                </div>
+              </td>
+            </tr>
           </tfoot>
       </table>
   </div>

@@ -13,7 +13,7 @@
  *= require ./jquery.enableObjectResizingShim.css
  *= require ./zammad.scss
  *
+ *= require_tree ./addons/
  *= require_tree ./custom/
  *
 */
-

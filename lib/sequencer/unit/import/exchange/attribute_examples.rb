@@ -1,37 +1,37 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        class AttributeExamples < Sequencer::Unit::Base
-          include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          uses :ews_folder_ids
-          provides :ews_attributes_examples
+class Sequencer::Unit::Import::Exchange::AttributeExamples < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
-          def process
-            state.provide(:ews_attributes_examples) do
-              ::Import::Helper::AttributesExamples.new do |extractor|
+  uses :ews_folder_ids
+  provides :ews_attributes_examples
 
-                ews_folder_ids.collect do |folder_id|
+  def process
+    state.provide(:ews_attributes_examples) do
+      ::Import::Helper::AttributesExamples.new do |extractor|
 
-                  begin
-                    ews_folder.find(folder_id).items.each do |resource|
-                      attributes = ::Import::Exchange::ItemAttributes.extract(resource)
-                      extractor.extract(attributes)
-                      break if extractor.enough
-                    end
-                  rescue NoMethodError => e
-                    raise if e.message !~ /Viewpoint::EWS::/
+        ews_folder_ids.collect do |folder_id|
 
-                    logger.error e
-                    logger.error "Skipping folder_id '#{folder_id}' due to unsupported entries."
-                  end
-                end
-              end.examples
-            end
+          ews_folder.find(folder_id).items.each do |item|
+
+            attributes = ::Import::Exchange::ItemAttributes.extract(item)
+            extractor.extract(attributes)
+
+            break if extractor.enough
+          rescue => e
+            Rails.logger.error 'Unable to process Exchange folder item'
+            Rails.logger.debug { item.inspect }
+            Rails.logger.error e
+            nil
           end
+        rescue NoMethodError => e
+          raise if e.message.exclude?('Viewpoint::EWS::')
+
+          logger.error e
+          logger.error "Skipping folder_id '#{folder_id}' due to unsupported entries."
+
         end
-      end
+      end.examples
     end
   end
 end

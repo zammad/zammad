@@ -1,0 +1,223 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: MAILER-DAEMON@mx1.zammad.loc (Mail Delivery System)
+from_email: MAILER-DAEMON@mx1.zammad.loc
+from_display_name: Mail Delivery System
+to: example@zammad.com
+subject: Undelivered Mail Returned to Sender
+body: |
+  This is the mail system at host mx1.zammad.loc.
+
+  I'm sorry to have to inform you that your message could not
+  be delivered to one or more recipients. It's attached below.
+
+  For further assistance, please send mail to postmaster.
+
+  If you do so, please include this problem report. You can
+  delete your own text from the attached returned message.
+
+                     The mail system
+
+                     <ticket-bounce-trigger2@example.com>: host aspmx.l.example.com[108.177.96.26] said:
+      550-5.1.1 The email account that you tried to reach does not exist. Please
+      try 550-5.1.1 double-checking the recipient's email address for typos or
+      550-5.1.1 unnecessary spaces. Learn more at 550 5.1.1
+      https://support.example.com/mail/?p=NoSuchUser l59si1635011edl.281 - gsmtp
+      (in reply to RCPT TO command)
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; mx1.zammad.loc
+    X-Postfix-Queue-ID: 207FF20398ED
+    X-Postfix-Sender: rfc822; example@zammad.com
+    Arrival-Date: Fri, 26 May 2017 17:01:45 +0200 (CEST)
+
+    Final-Recipient: rfc822; ticket-bounce-trigger2@example.com
+    Original-Recipient: rfc822;ticket-bounce-trigger2@example.com
+    Action: failed
+    Status: 5.1.1
+    Remote-MTA: dns; aspmx.l.example.com
+    Diagnostic-Code: smtp; 550-5.1.1 The email account that you tried to reach does
+        not exist. Please try 550-5.1.1 double-checking the recipient's email
+        address for typos or 550-5.1.1 unnecessary spaces. Learn more at 550 5.1.1
+        https://support.example.com/mail/?p=NoSuchUser l59si1635011edl.281 - gsmtp
+  filename: Delivery report.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Content-Description: Delivery report
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Return-Path: <example@zammad.com>
+    Received: from apn0000.dc.zammad.com (apn0000.dc.zammad.com [88.0.0.0])
+      by mx1.zammad.loc (Postfix) with ESMTP id 207FF20398ED
+      for <ticket-bounce-trigger2@example.com>; Fri, 26 May 2017 17:01:45 +0200 (CEST)
+    Received: by apn0000.dc.zammad.com (Postfix, from userid 1050)
+      id 08443420973; Fri, 26 May 2017 17:01:45 +0200 (CEST)
+    Date: Fri, 26 May 2017 17:01:45 +0200
+    From: Twelve SaaS GmbH Helpdesk <example@zammad.com>
+    To: ticket-bounce-trigger2@example.com
+    Message-ID: <20170526150141.232.13312@example.zammad.loc>
+    In-Reply-To:
+    References: <20170526150142.232.819805@example.zammad.loc>
+     <20170526150119.6C5E520A13B2@mx1.zammad.loc>
+     <20170526150141.232.799457@example.zammad.loc>
+     <20170526150117.0560820A13B3@mx1.zammad.loc>
+     <20170526150115.232.175460@example.zammad.loc>
+     <20170526150108.232.482766@example.zammad.loc>
+     <20170526150041.F3D2C20A13B3@mx1.zammad.loc>
+     <20170526150036.232.513248@example.zammad.loc>
+     <20170526150008.6AE8A20A13B8@mx1.zammad.loc>
+     <20170526150004.232.103372@example.zammad.loc>
+     <20170526145940.D799220A13B3@mx1.zammad.loc>
+     <20170526145932.232.91897@example.zammad.loc>
+     <20170526145906.8FCA520A13B2@mx1.zammad.loc>
+     <20170526145901.232.269971@example.zammad.loc>
+     <lyHYjBDWwaU5KGbDrCyOfA@notifications.example.com>
+     Subject: =?UTF-8?Q?[Ticket#1705265400361]_RE:_Thanks_for_your_follow_up?=
+     =?UTF-8?Q?_=28G_Suite:_Benachrichtigung_=C3=BCber_Verl=C3=A4ngerung_in_30?=
+     =?UTF-8?Q?_Tagen=29?=
+     Mime-Version: 1.0
+    Content-Type: multipart/mixed;
+     boundary="--==_mimepart_5928435950b1_22d42086504355bc";
+     charset=UTF-8
+     Content-Transfer-Encoding: 7bit
+    Organization: Twelve SaaS GmbH
+    X-Loop: yes
+    Precedence: bulk
+    Auto-Submitted: auto-generated
+    X-Auto-Response-Suppress: All
+    X-Powered-By: Zammad - Helpdesk/Support (https://zammad.org/)
+    X-Mailer: Zammad Mail Service
+
+
+    ----==_mimepart_5928435950b1_22d42086504355bc
+    Content-Type: multipart/alternative;
+     boundary="--==_mimepart_592843594d35_22d4208650435394";
+     charset=UTF-8
+     Content-Transfer-Encoding: 7bit
+
+
+    ----==_mimepart_592843594d35_22d4208650435394
+    Content-Type: text/plain;
+     charset=UTF-8
+     Content-Transfer-Encoding: 7bit
+
+    Your follow-up for (Ticket#1705265400361) has been received and will be reviewed by our support staff.
+
+    To provide additional information, please reply to this email or click on the following link:[1] https://example.zammad.loc/#ticket/zoom/232
+
+    Your Twelve SaaS Helpdesk Team
+
+    [2] Zammad, your customer support system
+
+    [1] https://example.zammad.loc/#ticket/zoom/232
+    [2] https://zammad.com
+    ----==_mimepart_592843594d35_22d4208650435394
+    Content-Type: multipart/related;
+     boundary="--==_mimepart_592843594e47_22d4208650435484";
+     charset=UTF-8
+     Content-Transfer-Encoding: 7bit
+
+
+    ----==_mimepart_592843594e47_22d4208650435484
+    Content-Type: text/html;
+     charset=UTF-8
+     Content-Transfer-Encoding: 7bit
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style type="text/css">
+          body {
+            font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;;
+          }
+          img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+          }
+          a img {
+            border: none;
+          }
+          table td {
+            border-collapse: collapse;
+          }
+          table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+            border: none;
+            table-layout: auto;
+            display: block;
+            width: 100%;
+            overflow: auto;
+            word-break: keep-all;
+          }
+          table,
+          pre,
+          blockquote {
+            margin: 0 0 16px;
+          }
+          td, th {
+            padding: 7px 12px;
+            border: 1px solid hsl(0,0%,87%);
+          }
+          th {
+            font-weight: bold;
+            text-align: center;
+          }
+          tbody tr:nth-child(even) {
+            background: hsl(0,0%,97%);
+          }
+          col {
+            width: auto;
+          }
+          p {
+            margin: 0;
+          }
+          code {
+            border: none;
+            background: hsl(0,0%,97%);
+            white-space: pre-wrap;
+          }
+          blockquote {
+            padding: 8px 12px;
+            border-left: 5px solid #eee;
+          }
+          pre {
+            padding: 12px 15px;
+            font-size: 13px;
+            line-height: 1.45;
+            background: hsl(0,0%,97%);
+            white-space: pre-wrap;
+            border-radius: 3px;
+            border: none;
+            overflow: auto;
+          }
+        </style>
+      </head>
+      <body style="font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"><div>Your follow-up for <b>(Ticket#1705265400361)</b> has been received and will be reviewed by our support staff.</div>
+      <br>
+    <div>To provide additional information, please reply to this email or click on the following link:
+    <a href="https://example.zammad.loc/#ticket/zoom/232" rel="nofollow noreferrer noopener" target="_blank">https://example.zammad.loc/#ticket/zoom/232</a>
+    </div>
+    <br>
+    <div>Your Twelve SaaS Helpdesk Team</div>
+    <br>
+    <div><i><a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">Zammad</a>, your customer support system</i></div></body>
+    </html>
+
+    ----==_mimepart_592843594e47_22d4208650435484--
+
+    ----==_mimepart_592843594d35_22d4208650435394--
+
+    ----==_mimepart_5928435950b1_22d42086504355bc--
+  filename: Undelivered Message.eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Content-Description: Undelivered Message
+    Mime-Type: message/rfc822
+    Charset: UTF-8

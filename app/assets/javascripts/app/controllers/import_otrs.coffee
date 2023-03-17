@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class ImportOtrs extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
     '.input-feedback':     'urlStatus'
@@ -17,9 +17,9 @@ class Index extends App.ControllerContent
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -38,7 +38,7 @@ class Index extends App.ControllerContent
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'otrs'
-          @navigate "#import/#{data.import_backend}"
+          @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
         # render page
@@ -50,7 +50,7 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-    @html App.view('import/otrs')()
+    @replaceWith App.view('import/otrs')()
 
   startDownload: (e) =>
     @$('.js-otrs-link').removeClass('hide')
@@ -170,10 +170,10 @@ class Index extends App.ControllerContent
         @delay(@updateMigration, 6500)
     )
 
-App.Config.set('import/otrs', Index, 'Routes')
+App.Config.set('import/otrs', ImportOtrs, 'Routes')
 App.Config.set('otrs', {
-  title: 'OTRS'
-  name:  'OTRS'
+  title: __('OTRS')
+  name:  __('OTRS')
   class: 'js-otrs'
   url:   '#import/otrs'
 }, 'ImportPlugins')

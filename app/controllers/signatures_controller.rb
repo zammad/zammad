@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SignaturesController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -47,7 +47,6 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password}
 =end
 
   def index
-    permission_check(['admin.channel_email', 'ticket.agent'])
     model_index_render(Signature, params)
   end
 
@@ -69,7 +68,6 @@ curl http://localhost/api/v1/signatures/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    permission_check(['admin.channel_email', 'ticket.agent'])
     model_show_render(Signature, params)
   end
 
@@ -98,7 +96,6 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def create
-    permission_check(['admin.channel_email'])
     model_create_render(Signature, params)
   end
 
@@ -127,7 +124,6 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def update
-    permission_check(['admin.channel_email'])
     model_update_render(Signature, params)
   end
 
@@ -142,7 +138,6 @@ Test:
 =end
 
   def destroy
-    permission_check(['admin.channel_email'])
     model_destroy_render(Signature, params)
   end
 end

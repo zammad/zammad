@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Tiquete##{ticket.number}>: Recordatorio alcanzado!_
+Un tiquete necesita atencion: limite de recordatorio alcanzado (#{ticket.title}) con cliente "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

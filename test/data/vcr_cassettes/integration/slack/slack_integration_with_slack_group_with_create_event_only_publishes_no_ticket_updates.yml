@@ -1,0 +1,625 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<SLACK_CI_WEBHOOK_URL>"
+    body:
+      encoding: US-ASCII
+      string: payload=%7B%22channel%22%3A%22<SLACK_CI_CHANNEL_NAME>%22%2C%22username%22%3A%22zammad_agent%22%2C%22icon_url%22%3A%22https%3A%2F%2Fzammad.com%2Fassets%2Fimages%2Flogo-200x200.png%22%2C%22mrkdwn%22%3Atrue%2C%22text%22%3A%22%23+corge%22%2C%22attachments%22%3A%5B%7B%22text%22%3A%22_%5Cu003chttp%3A%2F%2Fzammad.example.com%2F%23ticket%2Fzoom%2F5%7CTicket%2346002%5Cu003e%3A+Created+by+-+at+02%2F14%2F2023++8%3A19+am+%28UTC%29_%5Cn*+Group%3A+Group+4%5Cn*+Owner%3A+-%5Cn*+State%3A+new%5Cn%5Cn%5Cncorge%22%2C%22mrkdwn_in%22%3A%5B%22text%22%5D%2C%22color%22%3A%22%23faab00%22%7D%5D%7D
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - hooks.slack.com
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:32 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFLbv6RZAsuJSmNGDpgAAsBg
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '2'
+      Content-Type:
+      - text/html
+      X-Envoy-Upstream-Service-Time:
+      - '117'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-bhvx
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-kyqz, envoy-edge-lhr-xevj
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: ok
+  recorded_at: Tue, 14 Feb 2023 08:19:32 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/auth.test
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:32 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFO8hFiTQsL1tVp4MPgAA8Bg
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 823f03157eb0357328c08facaa2370eb
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '186'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '94'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-lwqc
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-vasc, envoy-edge-lhr-oyvn
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"url":"https:\/\/zammaddevelopment.slack.com\/","team":"Zammad
+        Development","user":"development","team_id":"T04PAE1JDD1","user_id":"U04Q084V9QQ","is_enterprise_install":false}'
+  recorded_at: Tue, 14 Feb 2023 08:19:32 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.list
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:32 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFJgewmpP60NaQ-2VVAAAoBE
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:read,groups:read,mpim:read,im:read,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 0f99ec0d8c0e509b60f44436761f00c2
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1572'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '122'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-bpwy
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-vdjc, envoy-edge-lhr-ckrv
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channels":[{"id":"C04P7MS4WPP","name":"<SLACK_CI_CHANNEL_NAME>","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676287456,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"<SLACK_CI_CHANNEL_NAME>","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676289623188,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"Zammad
+        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676286228292,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
+        is the one channel that will always include everyone. It\u2019s a great spot
+        for announcements and team-wide conversations.","creator":"U04Q084V9QQ","last_set":1676286228},"previous_names":[],"num_members":1}],"response_metadata":{"next_cursor":""}}'
+  recorded_at: Tue, 14 Feb 2023 08:19:32 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.history
+    body:
+      encoding: UTF-8
+      string: channel=C04P7MS4WPP
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:32 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFHVSUzQtgK16psPgyAAAwD8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:history,groups:history,mpim:history,im:history,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - b58b23f9ebf799dc681a8e8e32fd32fc
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '3341'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '118'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ooyd
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-sarv, envoy-edge-lhr-yvod
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"messages":[{"type":"message","subtype":"bot_message","text":"#
+        corge","ts":"1676362772.573889","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"aSaT","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        corge"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/5|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 4\n* Owner: -\n*
+        State: new\n\n\ncorge","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/5|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 4\n* Owner: -\n*
+        State: new\n\n\ncorge","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362770.896899","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"s8G","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Reminder reached!_\nA ticket needs attention: reminder reached for (qux) with
+        customer \"*Carmella Doyle*\".\n\n\nbaz","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Reminder reached!_\nA ticket needs attention: reminder reached for (qux) with
+        customer \"*Carmella Doyle*\".\n\n\nbaz","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362770.284539","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"YBR","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * State: new -&gt; pending
+        reminder","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * State: new -&gt; pending
+        reminder","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362769.412439","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"mkd8","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * Title: baz -&gt; qux","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * Title: baz -&gt; qux","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        baz","ts":"1676362768.517869","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"hZ4IQ","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        baz"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 3\n* Owner: -\n*
+        State: new\n\n\nbaz","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 3\n* Owner: -\n*
+        State: new\n\n\nbaz","mrkdwn_in":["text"]}]}],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
+  recorded_at: Tue, 14 Feb 2023 08:19:32 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/auth.test
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:33 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFZFhL6I75nFJHa4xPQAAICo
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - c9f67722e3f030f2eae0c63ebe8532d2
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '186'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '93'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-hbfc
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-dwao, envoy-edge-lhr-hzue
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"url":"https:\/\/zammaddevelopment.slack.com\/","team":"Zammad
+        Development","user":"development","team_id":"T04PAE1JDD1","user_id":"U04Q084V9QQ","is_enterprise_install":false}'
+  recorded_at: Tue, 14 Feb 2023 08:19:33 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.list
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:33 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFesVbUKt3Lzud708lAABAAs
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:read,groups:read,mpim:read,im:read,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - d10cd341916815aa7a8b1cd2df59b163
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1572'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '112'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-rpsi
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-hjic, envoy-edge-lhr-meum
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channels":[{"id":"C04P7MS4WPP","name":"<SLACK_CI_CHANNEL_NAME>","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676287456,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"<SLACK_CI_CHANNEL_NAME>","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676289623188,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"Zammad
+        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676286228292,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
+        is the one channel that will always include everyone. It\u2019s a great spot
+        for announcements and team-wide conversations.","creator":"U04Q084V9QQ","last_set":1676286228},"previous_names":[],"num_members":1}],"response_metadata":{"next_cursor":""}}'
+  recorded_at: Tue, 14 Feb 2023 08:19:33 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.history
+    body:
+      encoding: UTF-8
+      string: channel=C04P7MS4WPP
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:33 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEFX43VrQjdlYti60_mAAAgAs
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:history,groups:history,mpim:history,im:history,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - ba614aca0e9d02a99f98b4ddef6b4257
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '3341'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '121'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-wnnx
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-neig, envoy-edge-lhr-ydem
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"messages":[{"type":"message","subtype":"bot_message","text":"#
+        corge","ts":"1676362772.573889","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"Agn","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        corge"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/5|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 4\n* Owner: -\n*
+        State: new\n\n\ncorge","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/5|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 4\n* Owner: -\n*
+        State: new\n\n\ncorge","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362770.896899","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"b6W","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Reminder reached!_\nA ticket needs attention: reminder reached for (qux) with
+        customer \"*Carmella Doyle*\".\n\n\nbaz","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Reminder reached!_\nA ticket needs attention: reminder reached for (qux) with
+        customer \"*Carmella Doyle*\".\n\n\nbaz","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362770.284539","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"Ozp9","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * State: new -&gt; pending
+        reminder","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * State: new -&gt; pending
+        reminder","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        qux","ts":"1676362769.412439","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"Dkip","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        qux"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * Title: baz -&gt; qux","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Updated by - at 02\/14\/2023  8:19 am (UTC)_\n\n  \n  * Title: baz -&gt; qux","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        baz","ts":"1676362768.517869","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"IA0Wr","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        baz"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 3\n* Owner: -\n*
+        State: new\n\n\nbaz","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/4|Ticket#46002>:
+        Created by - at 02\/14\/2023  8:19 am (UTC)_\n* Group: Group 3\n* Owner: -\n*
+        State: new\n\n\nbaz","mrkdwn_in":["text"]}]}],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
+  recorded_at: Tue, 14 Feb 2023 08:19:33 GMT
+recorded_with: VCR 6.1.0

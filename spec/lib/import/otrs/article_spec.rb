@@ -1,16 +1,20 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Import::OTRS::Article do
 
   def creates_with(zammad_structure)
-    expect(import_object).to receive(:new).with(zammad_structure).and_call_original
+    allow(import_object).to receive(:new).with(zammad_structure).and_call_original
+
     expect_any_instance_of(import_object).to receive(:save)
     expect_any_instance_of(described_class).to receive(:reset_primary_key_sequence)
     start_import_test
   end
 
   def updates_with(zammad_structure)
-    expect(import_object).to receive(:find_by).and_return(existing_object)
+    allow(import_object).to receive(:find_by).and_return(existing_object)
+
     expect(existing_object).to receive(:update!).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
@@ -20,9 +24,13 @@ RSpec.describe Import::OTRS::Article do
     json_fixture("import/otrs/article/#{file}")
   end
 
-  let(:import_object) { Ticket::Article }
-  let(:existing_object) { instance_double(import_object) }
+  let(:import_object)     { Ticket::Article }
+  let(:existing_object)   { instance_double(import_object) }
   let(:start_import_test) { described_class.new(object_structure) }
+
+  before do
+    Import::OTRS::ArticleCustomerFactory.import([object_structure])
+  end
 
   context 'customer phone' do
 
@@ -30,7 +38,7 @@ RSpec.describe Import::OTRS::Article do
     let(:zammad_structure) do
       {
         created_by_id: '3',
-        updated_by_id: 1,
+        updated_by_id: '3',
         ticket_id:     '730',
         id:            '3970',
         body:          'test #3',
@@ -67,7 +75,7 @@ RSpec.describe Import::OTRS::Article do
     let(:zammad_structure) do
       {
         created_by_id: '3',
-        updated_by_id: 1,
+        updated_by_id: '3',
         ticket_id:     '730',
         id:            '3970',
         body:          'test #3',
@@ -102,24 +110,26 @@ RSpec.describe Import::OTRS::Article do
 
     let(:object_structure) { load_article_json('no_content_type') }
     let(:zammad_structure) do
+      customer = User.find_by(email: 'feedback@otrs.org')
+
       {
-        created_by_id: '1',
-        updated_by_id: 1,
-        ticket_id: '999',
-        id: '999',
-        body: "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
-        from: 'OTRS Feedback <feedback@otrs.org>',
-        to: 'Your OTRS System <otrs@localhost>',
-        cc: nil,
-        subject: 'Welcome to OTRS!',
-        in_reply_to: nil,
-        message_id: '<007@localhost>',
-        references: nil,
-        updated_at: '2014-06-24 09:32:14',
-        created_at: '2010-08-02 14:00:00',
-        type_id: 1,
-        internal: false,
-        sender_id: 2
+        created_by_id: customer.id,
+        updated_by_id: customer.id,
+        ticket_id:     '999',
+        id:            '999',
+        body:          "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
+        from:          'OTRS Feedback <feedback@otrs.org>',
+        to:            'Your OTRS System <otrs@localhost>',
+        cc:            nil,
+        subject:       'Welcome to OTRS!',
+        in_reply_to:   nil,
+        message_id:    '<007@localhost>',
+        references:    nil,
+        updated_at:    '2014-06-24 09:32:14',
+        created_at:    '2010-08-02 14:00:00',
+        type_id:       1,
+        internal:      false,
+        sender_id:     2
       }
     end
 
@@ -152,6 +162,77 @@ RSpec.describe Import::OTRS::Article do
         references:    '',
         updated_at:    '2014-11-21 00:21:08',
         created_at:    '2014-11-21 00:17:41',
+        type_id:       5,
+        internal:      false,
+        sender_id:     2
+      }
+    end
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'with article created from customer' do
+    let(:object_structure) { load_article_json('customer_email') }
+    let(:zammad_structure) do
+      customer = User.find_by(email: 'kunde2@kunde.de')
+
+      {
+        created_by_id: customer.id,
+        updated_by_id: customer.id,
+        ticket_id:     '999',
+        id:            '999',
+        body:          "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
+        from:          '"Betreuter Kunde" <kunde2@kunde.de>',
+        to:            'Your OTRS System <otrs@localhost>',
+        cc:            nil,
+        content_type:  'text/plain',
+        subject:       'Welcome to OTRS!',
+        in_reply_to:   nil,
+        message_id:    '<007@localhost>',
+        references:    nil,
+        updated_at:    '2014-06-24 09:32:14',
+        created_at:    '2010-08-02 14:00:00',
+        type_id:       1,
+        internal:      false,
+        sender_id:     2
+      }
+    end
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'legacy article keys (lower then OTRS 6)' do
+
+    let(:object_structure) { load_article_json('legacy_article_keys') }
+    let(:zammad_structure) do
+      {
+        created_by_id: '3',
+        updated_by_id: '3',
+        ticket_id:     '730',
+        id:            '3970',
+        body:          'test #3',
+        from:          '"Betreuter Kunde" <kunde2@kunde.de>,',
+        to:            'Postmaster',
+        cc:            '',
+        content_type:  'text/plain',
+        subject:       'test #3',
+        in_reply_to:   '',
+        message_id:    '',
+        references:    '',
+        updated_at:    '2015-11-21 00:21:08',
+        created_at:    '2015-11-21 00:17:41',
         type_id:       5,
         internal:      false,
         sender_id:     2

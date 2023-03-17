@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TriggersController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.trigger') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     model_index_render(Trigger, params)

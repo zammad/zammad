@@ -13,6 +13,12 @@
 # database (copy from config/database/database.yml, or use `rails bs:init`)
 /config/database.yml
 
+# local backup config file
+/contrib/backup/config
+
+# Dynamic environment config for Gitlab
+/.gitlab/environment.env
+
 # Third-Party ------------------------------------------------------------------
 # The config files / dev tools listed below are optional
 # and may not be present on most users' machines
@@ -31,16 +37,17 @@
 /db/*.sqlite3
 /db/schema.rb
 
-# translation cache files
-/config/locales*.yml
-/config/translations/*.yml
+# dev ssl
+/config/ssl/*
 
-# NPM / Yarn
-/node_modules
+# legacy translation cache files
+/config/locales-*.yml
+/config/translations/*.yml
 
 # logfiles and tempfiles
 /log
 /public/assets/*.*
+/public/assets/addons
 /public/assets/app
 /public/assets/custom
 /public/assets/chat/node_modules
@@ -54,13 +61,9 @@
 /public/assets/doorkeeper
 
 # images
-/public/assets/images/*
-!/public/assets/images/icons/
-!/public/assets/images/avatar-bg.png
-!/public/assets/images/chat-demo-avatar.png
-!/public/assets/images/eyedropper.gif
-!/public/assets/images/icons.svg
-!/public/assets/images/logo.svg
+/public/assets/images/node_modules
+# Ignore generated hashed file names.
+/public/assets/images/????????????????????????????????.*
 
 # Third-Party ------------------------------------------------------------------
 
@@ -76,11 +79,36 @@
 # Eclipse
 /.project
 
+# VSCode
+/.vscode
+
 # Byebug
 /.byebug_history
 
-# SimpleCov
-/coverage
+# Backup files
+*~
 
-# RDoc / YARD
-/doc
+# Vite Ruby
+/public/vite
+/public/vite-dev
+
+# Vite PWA
+/app/frontend/dev-dist
+
+# Node
+**/node_modules
+yarn-error.log
+.yarn/cache
+
+# Generated Stories
+.histoire
+
+# Cypress
+.cypress/screenshots/*
+.cypress/videos/*
+.cypress/**/__diff_output__/**
+**/__image_snapshots__/**/*.diff.png
+**/__image_snapshots__/**/*.actual.png
+
+# Auto Generated
+schema.graphql

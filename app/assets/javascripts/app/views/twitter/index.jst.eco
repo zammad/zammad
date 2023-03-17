@@ -6,7 +6,7 @@
 
 <div class="page-content">
   <div class="page-description">
-    <p><%- @T('You can connect %s with Zammad. You need to connect your Zammad with %s first.', 'Twitter Accounts', 'Twitter') %></p>
+    <p><%- @T('You can connect %s with Zammad. But first, you will have to connect your Zammad with %s.', 'Twitter Accounts', 'Twitter') %></p>
     <div class="btn btn--success js-configApp"><%- @T('Connect Twitter App') %></div>
   </div>
 </div>

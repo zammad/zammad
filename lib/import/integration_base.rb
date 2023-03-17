@@ -1,16 +1,18 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
 
   # This base class handles regular integrations.
   # It provides generic interfaces for settings and active state.
   # It ensures that all requirements for a regular integration are met before a import can start.
-  # It handles the case of an Scheduler interruption.
+  # It handles the case of a background worker interruption.
   #
   # It's required to implement the +start_import+ method which only has to start the import.
   class IntegrationBase < Import::Base
 
     def self.inherited(subclass)
+      super
+
       subclass.extend(Forwardable)
 
       # delegate instance methods to the generic class implementations
@@ -53,19 +55,12 @@ module Import
 
     # Provides the integration configuration.
     #
-    # @example
-    #  Import::Ldap.config
-    #  #=> {"ssl_verify"=>true, "host_url"=>"ldaps://192...", ...}
-    #
     # return [Hash] the configuration
     def self.config
       Setting.get("#{identifier.downcase}_config") || {}
     end
 
     # Stores the integration configuration.
-    #
-    # @example
-    #  Import::Ldap.config = {"ssl_verify"=>true, "host_url"=>"ldaps://192...", ...}
     #
     # return [nil]
     def self.config=(value)
@@ -77,7 +72,7 @@ module Import
     # an error which is confusing and wrong.
     #
     # @example
-    #  Import::Ldap.queueable?
+    #  Import::Exchange.queueable?
     #  #=> true
     #
     # return [Boolean]
@@ -95,12 +90,13 @@ module Import
     # return [nil]
     def start
       return if !requirements_completed?
+
       start_import
     end
 
-    # Gets called when the Scheduler gets (re-)started and an ImportJob was still
+    # Gets called when the background worker gets (re-)started and an ImportJob was still
     # in the queue. The job will always get restarted to avoid the gap till the next
-    # run triggered by the Scheduler. The result will get updated to inform the user
+    # run triggered by the background worker. The result will get updated to inform the user
     # in the agent interface result view.
     #
     # @example
@@ -125,11 +121,10 @@ module Import
 
       if !active?
         message = "Sync cancelled. #{display_name} integration deactivated. Activate via the switch."
-      elsif config.blank? && @import_job.payload.blank?
-        message = "Sync cancelled. #{display_name} configration or ImportJob payload missing."
       end
 
       return true if !message
+
       inform(message)
       false
     end

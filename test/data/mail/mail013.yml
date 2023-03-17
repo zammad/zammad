@@ -2,7 +2,18 @@
 from: thomas.smith@example.com
 from_email: thomas.smith@example.com
 from_display_name: ''
-subject: 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]'
 to: q1@znuny.com
-content_type: text/html
+subject: 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]'
 body: "<p>JA</p>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |-
+    <html><body>
+    <p><font size="2" face="sans-serif">JA</font></body></html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: US-ASCII

@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "removeComments": true,
+    "noEmit": true,
+    "importHelpers": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mobile/*": ["app/frontend/apps/mobile/*"],
+      "@shared/*": ["app/frontend/shared/*"],
+      "@tests/*": ["app/frontend/tests/*"],
+      "@stories/*": ["app/frontend/stories/*"],
+      "@cy/*": [".cypress/*"],
+      "@/*": ["app/frontend/*"]
+    },
+    "types": [
+      "vite/client",
+      "vite-plugin-svg-icons/client",
+      "node",
+      "vite-plugin-pwa/client"
+    ],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  }
+}

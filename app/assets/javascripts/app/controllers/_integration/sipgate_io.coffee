@@ -1,10 +1,10 @@
-class Index extends App.ControllerIntegrationBase
+class SipgateIo extends App.ControllerIntegrationBase
   featureIntegration: 'sipgate_integration'
   featureName: 'sipgate.io'
   featureConfig: 'sipgate_config'
   description: [
-    ['This service shows you contacts of incoming calls and a caller list in realtime.']
-    ['Also caller id of outbound calls can be changed.']
+    [__('This service shows you contacts of incoming calls and a caller list in realtime.')]
+    [__('Caller ID of outbound calls can be changed as well.')]
   ]
   events:
     'click .js-select': 'selectAll'
@@ -28,6 +28,8 @@ class Form extends App.Controller
     'click .js-outboundRouting .js-add': 'addOutboundRouting'
     'click .js-inboundBlockCallerId .js-remove': 'removeInboundBlockCallerId'
     'click .js-outboundRouting .js-remove': 'removeOutboundRouting'
+    'click .js-userRemoteMap .js-add': 'addUserRemoteMap'
+    'click .js-userRemoteMap .js-remove': 'removeUserRemoteMap'
 
   constructor: ->
     super
@@ -43,6 +45,8 @@ class Form extends App.Controller
       config.inbound = {}
     if !config.inbound.block_caller_ids
       config.inbound.block_caller_ids = []
+    if !config.user_remote_map
+      config.user_remote_map = []
     config
 
   setConfig: (value) ->
@@ -53,6 +57,31 @@ class Form extends App.Controller
 
     @html App.view('integration/sipgate')(
       config: @config
+      sipgate_token: App.Setting.get('sipgate_token')
+    )
+
+    configure_attributes = [
+      {
+        name: 'view_limit',
+        display: '',
+        tag: 'select',
+        null: false,
+        options: [
+          { name: 60, value: 60 }
+          { name: 120, value: 120 }
+          { name: 180, value: 180 }
+          { name: 240, value: 240 }
+          { name: 300, value: 300 }
+        ]
+      },
+    ]
+    new App.ControllerForm(
+      el: @$('.js-viewLimit')
+      model:
+        configure_attributes: configure_attributes,
+      params:
+        view_limit: @config['view_limit']
+      autofocus: false
     )
 
   updateCurrentConfig: =>
@@ -62,6 +91,10 @@ class Form extends App.Controller
     # default caller_id
     default_caller_id = @$('input[name=default_caller_id]').val()
     config.outbound.default_caller_id = cleanupInput(default_caller_id)
+
+    # default view limit
+    view_limit = @$('select[name=view_limit]').val()
+    config.view_limit = parseInt(view_limit)
 
     # routing table
     config.outbound.routing_table = []
@@ -76,7 +109,7 @@ class Form extends App.Controller
       }
     )
 
-    # blocked caller ids
+    # blocked caller IDs
     config.inbound.block_caller_ids = []
     @$('.js-inboundBlockCallerId .js-row').each(->
       caller_id = $(@).find('input[name="caller_id"]').val()
@@ -84,6 +117,17 @@ class Form extends App.Controller
       config.inbound.block_caller_ids.push {
         caller_id: cleanupInput(caller_id)
         note: note
+      }
+    )
+
+    # user device map
+    config.user_remote_map = []
+    @$('.js-userRemoteMap .js-row').each(->
+      remote_user_id = $(@).find('input[name="remote_user_id"]').val()
+      user_id = $(@).find('input[name="user_id"]').val()
+      config.user_remote_map.push {
+        remote_user_id: remote_user_id
+        user_id: user_id
       }
     )
 
@@ -140,6 +184,26 @@ class Form extends App.Controller
     element.remove()
     @updateCurrentConfig()
 
+  addUserRemoteMap: (e) =>
+    e.preventDefault()
+    @updateCurrentConfig()
+    element = $(e.currentTarget).closest('tr')
+    user_id = @cleanupInput(element.find('input[name="user_id"]').val())
+    remote_user_id = @cleanupInput(element.find('input[name="remote_user_id"]').val())
+    return if _.isEmpty(user_id) || _.isEmpty(remote_user_id)
+    @config.user_remote_map.push {
+      user_id: user_id
+      remote_user_id: remote_user_id
+    }
+    @render()
+
+  removeUserRemoteMap: (e) =>
+    e.preventDefault()
+    @updateCurrentConfig()
+    element = $(e.currentTarget).closest('tr')
+    element.remove()
+    @updateCurrentConfig()
+
 class State
   @current: ->
     App.Setting.get('sipgate_integration')
@@ -149,8 +213,8 @@ App.Config.set(
   {
     name: 'sipgate.io'
     target: '#system/integration/sipgate'
-    description: 'VoIP service provider with realtime push.'
-    controller: Index
+    description: __('VoIP service provider with realtime push.')
+    controller: SipgateIo
     state: State
   }
   'NavBarIntegrations'

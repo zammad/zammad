@@ -1,17 +1,12 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Ldap
 
   # Class for handling LDAP Groups.
-  #  ATTENTION: Make sure to add the following lines to your code if accessing this class.
-  #  Otherwise Rails will autoload the Group model or might throw parameter errors if crearing
-  #  an ::Ldap instance.
-  #
-  # @example
-  #  require_dependency 'ldap'
-  #  require_dependency 'ldap/user'
   class User
     include Ldap::FilterLookup
 
-    BLACKLISTED = %i[
+    IGNORED_ATTRIBUTES = %i[
       admincount
       accountexpires
       badpasswordtime
@@ -62,6 +57,7 @@ class Ldap
       result = nil
       %i[objectguid entryuuid samaccountname userprincipalname uid dn].each do |attribute|
         next if attributes[attribute].blank?
+
         result = attribute.to_s
         break
       end
@@ -76,13 +72,11 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require_dependency 'ldap'
-    #  require_dependency 'ldap/user'
     #  ldap_user = Ldap::User.new
     #
     # @return [nil]
-    def initialize(config = nil, ldap: nil)
-      @config = config || Setting.get('ldap_config')
+    def initialize(config, ldap: nil)
+      @config = config
       @ldap   = ldap || ::Ldap.new(@config)
 
       handle_config
@@ -100,8 +94,8 @@ class Ldap
     # @return [Boolean] The valid state of the username and password combination.
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
-        base: @ldap.base_dn,
-        filter: "(#{login_attribute}=#{username})",
+        base:     @ldap.base_dn,
+        filter:   @user_filter ? "(&(#{login_attribute}=#{username})#{@user_filter})" : "(#{login_attribute}=#{username})",
         password: password
       )
 
@@ -120,38 +114,34 @@ class Ldap
     #  #=> {:dn=>"dn (e. g. CN=Administrator,CN=Users,DC=domain,DC=tld)", ...}
     #
     # @return [Hash{Symbol=>String}] The available User attributes as key and the name and an example as value.
-    def attributes(filter: nil, base_dn: nil)
-
-      filter ||= filter()
-
-      attributes       = {}
-      known_attributes = BLACKLISTED.dup
-      lookup_counter   = 1
-
-      @ldap.search(filter, base: base_dn) do |entry|
-        new_attributes = entry.attribute_names - known_attributes
-
-        if new_attributes.blank?
-          lookup_counter += 1
-          # check max 50 entries with
-          # the same attributes in a row
-          break if lookup_counter == 50
-          next
-        end
-
-        new_attributes.each do |attribute|
-          value = entry[attribute]
-          next if value.blank?
-          next if value[0].blank?
-
-          example_value         = value[0].force_encoding('UTF-8').utf8_encode(fallback: :read_as_sanitized_binary)
-          attributes[attribute] = "#{attribute} (e. g. #{example_value})"
-        end
-
-        known_attributes.concat(new_attributes)
+    def attributes(custom_filter: nil, base_dn: nil)
+      @attributes ||= begin
+        attributes     = {}.with_indifferent_access
         lookup_counter = 0
+
+        # collect sample attributes
+        @ldap.search(custom_filter || filter, base: base_dn) do |entry|
+          pre_merge_count = attributes.count
+
+          attributes.reverse_merge!(entry.to_h
+                                         .except(*IGNORED_ATTRIBUTES)
+                                         .transform_values(&:first)
+                                         .compact)
+
+          # check max 50 entries with the same attributes in a row
+          lookup_counter = (pre_merge_count < attributes.count ? 0 : lookup_counter.next)
+          break if lookup_counter >= 50
+        end
+
+        # format sample values for presentation
+        attributes.each do |name, value|
+          attributes[name] = if value.encoding == Encoding.find('ascii-8bit')
+                               "#{name} (binary data)"
+                             else
+                               "#{name} (e.g., #{value.utf8_encode})"
+                             end
+        end
       end
-      attributes
     end
 
     # The active filter of the instance. If none give on initialization an automatic lookup is performed.
@@ -186,8 +176,10 @@ class Ldap
 
     def handle_config
       return if config.blank?
+
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+      @user_filter   = config[:user_filter]
     end
   end
 end

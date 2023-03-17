@@ -1,12 +1,7 @@
-class Import extends App.ControllerContent
-  className: 'getstarted fit'
-
+class Import extends App.ControllerWizardFullScreen
   constructor: ->
     super
-
-    # set title
-    @title 'Import'
-
+    @title __('Import')
     @fetch()
 
   fetch: ->
@@ -19,13 +14,13 @@ class Import extends App.ControllerContent
       processData: true,
       success: (data, status, xhr) =>
 
-        # redirect to login if master user already exists
+        # redirect to login if admin user already exists
         if @Config.get('system_init_done')
           @navigate '#login'
           return
 
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate '#import/' + data.import_backend, { emptyEl: true }
           return
 
         # render page
@@ -36,7 +31,7 @@ class Import extends App.ControllerContent
 
     items = App.Config.get('ImportPlugins')
 
-    @html App.view('import/index')(
+    @replaceWith App.view('import/index')(
       items: items
     )
 

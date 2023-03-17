@@ -1,0 +1,17 @@
+<div class="horizontal-filters-alert alert alert--danger js-alert hidden" role="alert"></div>
+<div class="horizontal-filters js-filter <% if @has_expert_conditions: %>horizontal-filters--with-switch<% end %>"></div>
+<% if @has_expert_conditions: %>
+<div class="horizontal-filters-switch">
+  <label>
+    <%- @T('Expert mode') %>
+    <div class="zammad-switch zammad-switch--small js-switch">
+        <input type="checkbox" id="expert-mode-switch" <% if @is_expert_mode: %>checked<% end %>>
+        <label for="expert-mode-switch"></label>
+    </div>
+  </label>
+</div>
+<% end %>
+<div class="js-preview <% if @attribute.preview is false: %>hide<% end %>">
+  <h3><%- @T('Preview') %><span class="subtitle js-previewCounterContainer hide"> (<span class="js-previewCounter">?</span> <%- @T('matches found') %>)</span> <span class="tiny loading icon js-previewLoader hide" style="margin-left: 3px;"></span></h3>
+  <div class="js-previewTable"></div>
+</div>

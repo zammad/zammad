@@ -2,12 +2,12 @@
   <%- @Icon('marker', 'js-highlight-icon') %>
 </div>
 <div class="dropdown dropdown--actions">
-  <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="true">
+  <div class="btn btn--action btn--split--last btn--slim btn--icon-only centered" data-toggle="dropdown" aria-expanded="true">
     <%- @Icon('arrow-down') %>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
     <% for entry, i in @colors: %>
-    <li role="presentation">
+    <li role="presentation" class="dropdown-highlight-list">
       <a role="menuitem" tabindex="-1" class="js-highlightColor" data-key="<%= i %>">
         <span class="dropdown-iconSpacer">
           <span class="color-swatch icon" style="color: <%= entry.color %>"></span>

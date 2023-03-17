@@ -1,0 +1,15 @@
+Administratorska prijava na #{config.product_name}
+
+<div>Zdravo #{user.firstname},</div>
+<br>
+<div>Primili smo zahtev za administratorsku prijavu za vaš #{config.product_name} nalog <b>#{user.login}</b>.</div>
+<br>
+<div>Molimo kliknite na link ispod (ili iskopirajte URL u vaš pretraživač) za nastavak:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Ovaj link vas vodi na stranicu za prijavljivanje.</div>
+<br>
+<div>Ukoliko ne želite da se prijavite, molimo ignorišite ovu poruku.</div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

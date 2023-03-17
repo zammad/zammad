@@ -1,0 +1,19 @@
+.job_rules_default:
+  rules:
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER && $JOB_FILTER == $CI_JOB_NAME
+      when: always
+    - if: $JOB_FILTER && $JOB_FILTER != $CI_JOB_NAME
+      when: never
+    - when: on_success
+
+.job_rules_integration:
+  rules:
+    - if: $BROWSER_TEST_FILTER
+      when: never
+    - if: $JOB_FILTER && $JOB_FILTER !~ /^rspec:integration/
+      when: never
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
+      allow_failure: true
+    - when: on_success

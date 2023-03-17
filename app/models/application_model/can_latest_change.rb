@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanLatestChange
   extend ActiveSupport::Concern
 
@@ -9,7 +10,7 @@ module ApplicationModel::CanLatestChange
 
   get latest updated_at object timestamp
 
-  latest_change = Ticket.latest_change
+  latest_change = object.latest_change
 
 returns
 
@@ -18,28 +19,10 @@ returns
 =end
 
     def latest_change
-      key        = "#{new.class.name}_latest_change"
-      updated_at = Cache.get(key)
+      data = reorder('updated_at DESC, id DESC').limit(1).pick(:id, :updated_at)
+      return if data.blank?
 
-      return updated_at if updated_at
-
-      # if we do not have it cached, do lookup
-      updated_at = order(updated_at: :desc, id: :desc).limit(1).pluck(:updated_at).first
-
-      return if !updated_at
-      latest_change_set(updated_at)
-      updated_at
-    end
-
-    def latest_change_set(updated_at)
-      key        = "#{new.class.name}_latest_change"
-      expires_in = 86_400 # 1 day
-
-      if updated_at.nil?
-        Cache.delete(key)
-      else
-        Cache.write(key, updated_at, { expires_in: expires_in })
-      end
+      "#{data[0]},#{data[1]&.to_s(:nsec)}"
     end
   end
 end

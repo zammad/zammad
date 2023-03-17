@@ -3,6 +3,31 @@
 </div>
 
 <div class="page-content">
+  <p>
+    <%- @T('The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application.') %>
+    <br>
+    <%- @T('Only packages from known, trusted, and verified sources should be installed.') %>
+  </p>
+  <p>
+    <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
+    <ul>
+    <% if @package_installation: %>
+      <% if @local_gemfiles: %>
+      <li><code>root> zammad config:set BUNDLE_DEPLOYMENT=0</code></li>
+      <li><code>root> zammad run bundle install --no-deployment</code></li>
+      <% end %>
+      <li><code>root> zammad run rake zammad:package:migrate</code></strong></li>
+      <li><code>root> zammad run rake assets:precompile</code></strong></li>
+    <% else: %>
+      <% if @local_gemfiles: %>
+      <li><code>zammad> bundle install</code></li>
+      <% end %>
+      <li><code>zammad> rake zammad:package:migrate</code></strong></li>
+      <li><code>zammad> rake assets:precompile</code></strong></li>
+    <% end %>
+      <li><code>root> systemctl restart zammad</code></li>
+    </ul>
+  </p>
   <!--
   <ul class="nav nav-tabs nav-stacked">
     <li class=""><a data-type="" ><%- @T('Installed') %></a></li>
@@ -34,7 +59,7 @@
         <td><%= item.version %></td>
         <td><a href="<%- item.url %>" target="_blank"><%= item.vendor %></a></td>
         <td><%- @T(item.state) %></td>
-        <td><% for action in item.action: %><a href="#" class="action" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
+        <td><% for action in item.action: %><a href="#" class="package-action btn btn--action<%= ' btn--danger' if action == 'uninstall' %>" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
       </tr>
     <% end %>
     </tbody>

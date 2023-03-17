@@ -1,0 +1,78 @@
+.variables_selenium_firefox:
+  variables:
+    REMOTE_URL: 'http://selenium-firefox:4444/wd/hub'
+    BROWSER: 'firefox'
+    BROWSER_HEADLESS: 'true'
+    START_XVFB: 'false' # not needed for headless mode
+    SE_NODE_MAX_SESSIONS: '5'
+    SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+    SE_OPTS: '--log /builds/selenium.log'
+
+.variables_selenium_chrome:
+  variables:
+    REMOTE_URL: 'http://selenium-chrome:4444/wd/hub'
+    BROWSER: chrome
+    BROWSER_HEADLESS: 'true'
+    START_XVFB: 'false' # not needed for headless mode
+    SE_NODE_MAX_SESSIONS: '5'
+    SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
+    SE_OPTS: '--log /builds/selenium.log'
+    CHROME_LOG_FILE: '/builds/chrome.log'
+
+.variables_proxy:
+  variables:
+    CI_PROXY_URL: 'proxy:3128'
+    CI_PROXY_USER: 'zammad'
+    CI_PROXY_PASSWORD: 'zammad'
+
+.variables_auth:
+  variables:
+    KEYCLOAK_BASE_URL: http://auth:8080
+    KEYCLOAK_ADMIN: admin
+    KEYCLOAK_ADMIN_PASSWORD: admin
+
+.services:
+  mysql:
+    name: $CI_REGISTRY/docker/zammad-mysql:stable
+    alias: mysql
+
+  mariadb:
+    name: $CI_REGISTRY/docker/zammad-mariadb:stable
+    alias: mysql
+
+  postgresql:
+    name: $CI_REGISTRY/docker/zammad-postgresql:stable
+    alias: postgresql
+
+  elasticsearch:
+    name: $CI_REGISTRY/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
+    alias: elasticsearch
+
+  selenium-chrome:
+    name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
+    alias: selenium-chrome
+
+  selenium-firefox:
+    name: $CI_REGISTRY/docker/zammad-selenium-firefox:stable
+    alias: selenium-firefox
+
+  imap:
+    name: $CI_REGISTRY/docker/zammad-imap:stable
+    alias: mail
+
+  redis:
+    name: $CI_REGISTRY/docker/zammad-redis:stable
+    alias: redis
+
+  memcached:
+    name: $CI_REGISTRY/docker/zammad-memcached:stable
+    alias: memcached
+    command: ['memcached', '-m', '256M']
+
+  proxy:
+    name: $CI_REGISTRY/docker/zammad-proxies:stable
+    alias: proxy
+
+  auth:
+    name: $CI_REGISTRY/docker/zammad-auth:stable
+    alias: auth

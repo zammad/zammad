@@ -1,6 +1,9 @@
-<div class="<%= @attribute.tag %> form-group<%= " #{ @attribute.item_class }" if @attribute.item_class %>">
+<div data-attribute-name="<%= @attribute.name %>" class="<%= @attribute.tag %> form-group<%= " form-group--block" if @attribute.style == 'block' %><%= " #{ @attribute.item_class }" if @attribute.item_class %><%= " is-required" if !@attribute.null %><%= " is-hidden is-removed hide" if @attribute.shown == false %>"<%= " data-width=#{ @attribute.grid_width }" if @attribute.grid_width %>>
+  <% if @attribute.style == 'block': %>
+  <h2>
+  <% end %>
   <div class="formGroup-label">
-    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
     <%- @item %>
     <% if @bookmarkable: %>
     <div class="align-right js-bookmark formGroup-bookmark">
@@ -13,10 +16,19 @@
     </div>
     <% end %>
   </div>
-  <div class="controls">
-	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
-	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
+  <% if @attribute.style == 'block': %>
+  </h2>
+  <p class="help-text"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></p>
+  <% end %>
+  <div class="controls <% if ( @attribute.type is 'url' || !_.isEmpty(@attribute.linktemplate) ) && !_.isEmpty(@placeholderObjects): %>controls--button ignore-readonly<% end %>">
+    <% if ( @attribute.type is 'url' || !_.isEmpty(@attribute.linktemplate) ) && !_.isEmpty(@placeholderObjects): %>
+    <a href="<% if @attribute.type is 'url': %><%= @placeholderObjects[@className.toLowerCase()][@attribute.name] %><% else: %><%- @replacePlaceholder(@attribute.linktemplate, @placeholderObjects, true) %><% end %>" class="controls-button" target="_blank" rel="nofollow">
+      <span class="controls-button-inner"><%- @Icon('external') %></span>
+    </a>
+    <% end %>
     <span class="help-inline"></span>
+    <% if @attribute.style != 'block': %>
     <span class="help-block"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></span>
+    <% end %>
   </div>
 </div>

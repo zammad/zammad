@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>radio</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="radio">
-            <path d="M5.5,0 C2.46243342,0 0,2.46243342 0,5.5 C0,8.53756567 2.46243342,11 5.5,11 C8.53756567,11 11,8.53756567 11,5.5 C11,2.46243342 8.53756567,0 5.5,0 Z" fill="#BD0FE1"></path>
-            <path d="M1,5.5 C1,3.0147184 3.0147184,1 5.5,1 C7.9852816,1 10,3.0147184 10,5.5 C10,7.9852816 7.9852816,10 5.5,10 C3.0147184,10 1,7.9852816 1,5.5 L1,5.5 Z" id="radio-path" fill="#FFFFFF"></path>
-        </g>
+    <g id="radio" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M1,5.5 C1,3.0147184 3.0147184,1 5.5,1 C7.9852816,1 10,3.0147184 10,5.5 C10,7.9852816 7.9852816,10 5.5,10 C3.0147184,10 1,7.9852816 1,5.5 L1,5.5 Z" id="background" fill="#50E3C2"></path>
+        <path d="M5.5,0 C8.53756567,0 11,2.46243342 11,5.5 C11,8.53756567 8.53756567,11 5.5,11 C2.46243342,11 0,8.53756567 0,5.5 C0,2.46243342 2.46243342,0 5.5,0 Z M5.5,1 C3.0147184,1 1,3.0147184 1,5.5 C1,7.9852816 3.0147184,10 5.5,10 C7.9852816,10 10,7.9852816 10,5.5 C10,3.0147184 7.9852816,1 5.5,1 Z" id="border" fill="#BD10E0"></path>
     </g>
 </svg>

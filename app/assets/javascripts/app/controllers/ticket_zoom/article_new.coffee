@@ -1,9 +1,12 @@
 class App.TicketZoomArticleNew extends App.Controller
+  @include App.SecurityOptions
+
   elements:
     '.js-textarea':                       'textarea'
     '.attachmentPlaceholder':             'attachmentPlaceholder'
     '.attachmentPlaceholder-inputHolder': 'attachmentInputHolder'
     '.attachmentPlaceholder-hint':        'attachmentHint'
+    '.article-visibility-text-wrapper':   'visibilityTextWrapper'
     '.article-add':                       'articleNewEdit'
     '.attachments':                       'attachmentsHolder'
     '.attachmentUpload':                  'attachmentUpload'
@@ -24,51 +27,50 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .list-entry-type div':    'changeType'
     'focus .js-textarea':            'openTextarea'
     'input .js-textarea':            'updateLetterCount'
+    'click .js-active-toggle':       'toggleButton'
 
   constructor: ->
     super
 
-    @internalSelector = true
+    @internalSelector = false
     @type = @defaults['type'] || 'note'
     @setPossibleArticleTypes()
 
-    if @permissionCheck('ticket.customer')
-      @internalSelector = false
+    if @ticket.currentView() is 'agent'
+      @internalSelector = true
 
     @textareaHeight =
       open:   148
       closed: 20
 
     @dragEventCounter = 0
-    @attachments      = []
+    @attachments      = @defaults.attachments || []
 
     @render()
 
-    if @defaults.body or @isIE10()
-      @openTextarea(null, true)
-
-    if _.isArray(@defaults.attachments)
-      for attachment in @defaults.attachments
-        @renderAttachment(attachment)
-
     # set article type and expand text area
-    @bind('ui::ticket::setArticleType', (data) =>
+    @controllerBind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id.toString() isnt @ticket_id.toString()
 
       @setArticleTypePre(data.type.name, data.signaturePosition)
 
-      @openTextarea(null, true)
+      @openTextarea(null, true, !data.nofocus)
       for key, value of data.article
-        if key is 'body'
-          @$("[data-name=\"#{key}\"]").html(value)
-        else
-          @$("[name=\"#{key}\"]").val(value).trigger('change')
+        switch key
+          when 'body'
+            @$("[data-name=\"#{key}\"]").html(value)
+          when 'internal'
+            @setArticleInternal(value)
+          else
+            @$("[name=\"#{key}\"]").val(value).trigger('change')
+
+      @$('[name=shared_draft_id]').val(data.shared_draft_id)
 
       @setArticleTypePost(data.type.name, data.signaturePosition)
 
       # set focus into field
       if data.focus
-        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").focus().parent().find('.token-input').focus()
+        @$("[name=\"#{data.focus}\"], [data-name=\"#{data.focus}\"]").trigger('focus').parent().find('.token-input').trigger('focus')
         return
 
       # set focus at end of field
@@ -76,38 +78,59 @@ class App.TicketZoomArticleNew extends App.Controller
         @placeCaretAtEnd(@textarea.get(0))
         return
 
-      @textarea.focus()
+      # fixes email validation issue right after new ticket creation
+      @tokanice(data.type.name)
     )
 
+    @controllerBind('ui::ticket::import_draft_attachments', @importDraftAttachments)
+    @controllerBind('ui::ticket::shared_draft_saved',       @sharedDraftSaved)
+
     # add article attachment
-    @bind('ui::ticket::addArticleAttachent', (data) =>
-      return if data.ticket.id.toString() isnt @ticket_id.toString()
+    @controllerBind('ui::ticket::addArticleAttachent', (data) =>
+      return if data.ticket?.id?.toString() isnt @ticket_id.toString() && data.form_id isnt @form_id
       return if _.isEmpty(data.attachments)
       for file in data.attachments
         @renderAttachment(file)
     )
 
     # reset new article screen
-    @bind('ui::ticket::taskReset', (data) =>
+    @controllerBind('ui::ticket::taskReset', (data) =>
+      @releaseGlobalClickEvents()
       return if data.ticket_id.toString() isnt @ticket_id.toString()
-      @type     = 'note'
-      @defaults = {}
+      @type        = 'note'
+      @defaults    = {}
+      @attachments = []
       @render()
-    )
-
-    # set expand of text area only once
-    @bind('ui::ticket::shown', (data) =>
-      return if data.ticket_id.toString() isnt @ticket.id.toString()
-      @tokanice()
     )
 
     # rerender, e. g. on language change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
+      @adjustedTextarea = false
+      @defaults         = @ui.taskGet('article')
+      @attachments      = @defaults.attachments || []
       @render()
     )
 
-  tokanice: ->
-    App.Utils.tokaniceEmails('.content.active .js-to, .js-cc, js-bcc')
+    # update security options
+    @controllerBind('ui::ticket::updateSecurityOptions', (data) =>
+      return if data.taskKey isnt @taskKey
+      @updateSecurityOptions()
+    )
+
+  show: ->
+    @adjustTextarea()
+
+  adjustTextarea: ->
+    return if @adjustedTextarea
+    @adjustedTextarea = true
+
+    @tokanice(@type)
+
+    if @defaults.body or @attachments.length > 0 or @isIE10()
+      @openTextarea(null, true)
+
+  tokanice: (type = 'email') ->
+    App.Utils.tokanice('.content.active .js-to, .js-cc, js-bcc', type)
 
   setPossibleArticleTypes: =>
     @articleTypes = []
@@ -132,17 +155,23 @@ class App.TicketZoomArticleNew extends App.Controller
       textRange.select()
 
   isIE10: ->
-    Function('/*@cc_on return document.documentMode===10@*/')()
+    detected = App.Browser.detection()
+    return false if !detected.browser
+    return false if detected.browser.name != 'Explorer'
+    return detected.browser.major == 10
 
   release: =>
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
+    @releaseGlobalClickEvents()
+
+  releaseGlobalClickEvents: ->
     $(window).off 'click.ticket-zoom-select-type'
-    $(window).on 'click.ticket-zoom-textarea'
+    $(window).off 'click.ticket-zoom-textarea'
 
   render: ->
-
+    @releaseGlobalClickEvents()
     ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(
@@ -150,11 +179,14 @@ class App.TicketZoomArticleNew extends App.Controller
       articleTypes:     @articleTypes
       article:          @defaults
       form_id:          @form_id
-      isCustomer:       @permissionCheck('ticket.customer')
+      isCustomer:       ticket.currentView() is 'customer'
       internalSelector: @internalSelector
     )
     @setArticleTypePre(@type)
     @setArticleTypePost(@type)
+
+    if @defaults.internal != undefined
+      @setArticleInternal(@defaults.internal)
 
     new App.WidgetAvatar(
       el:        @$('.js-avatar')
@@ -163,83 +195,50 @@ class App.TicketZoomArticleNew extends App.Controller
       position:  'right'
     )
 
-    @tokanice()
+    @tokanice(@type)
 
     @$('[data-name="body"]').ce({
       mode:      'richtext'
       multiline: true
-      maxlength: 50000
+      maxlength: 150000
     })
 
-    html5Upload.initialize(
-      uploadUrl:       App.Config.get('api_path') + '/ticket_attachment_upload'
-      dropContainer:   @$('.article-add').get(0)
-      cancelContainer: @cancelContainer
-      inputField:      @$('.article-attachment input').get(0)
-      key:             'File'
-      data:
-        form_id: @form_id
-      maxSimultaneousUploads: 1
-      onFileAdded:            (file) =>
+    new App.Html5Upload(
+      uploadUrl:              "#{App.Config.get('api_path')}/upload_caches/#{@form_id}"
+      dropContainer:          @$('.article-add')
+      cancelContainer:        @cancelContainer
+      inputField:             @$('.article-attachment input')
 
-        file.on(
+      onFileStartCallback: =>
+        @richTextUploadStartCallback?()
 
-          onStart: =>
-            @attachmentPlaceholder.addClass('hide')
-            @attachmentUpload.removeClass('hide')
-            @cancelContainer.removeClass('hide')
+      onFileCompletedCallback: (response) =>
+        @attachments.push response.data
+        @renderAttachment(response.data)
+        @$('.article-attachment input').val('')
 
-            if @callbackFileUploadStart
-              @callbackFileUploadStart()
+        @richTextUploadRenderCallback?(@attachments)
 
-          onAborted: =>
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-            @$('.article-attachment input').val('')
+      onFileAbortedCallback: =>
+        @richTextUploadRenderCallback?(@attachments)
 
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called after received response from the server
-          onCompleted: (response) =>
-
-            response = JSON.parse(response)
-            @attachments.push response.data
-
-            @attachmentPlaceholder.removeClass('hide')
-            @attachmentUpload.addClass('hide')
-
-            # reset progress bar
-            @progressBar.width(parseInt(0) + '%')
-            @progressText.text('')
-
-            @renderAttachment(response.data)
-            @$('.article-attachment input').val('')
-
-            if @callbackFileUploadStop
-              @callbackFileUploadStop()
-
-          # Called during upload progress, first parameter
-          # is decimal value from 0 to 100.
-          onProgress: (progress, fileSize, uploadedBytes) =>
-            @progressBar.width(parseInt(progress) + '%')
-            @progressText.text(parseInt(progress))
-            # hide cancel on 90%
-            if parseInt(progress) >= 90
-              @cancelContainer.addClass('hide')
-        )
-    )
+      attachmentPlaceholder: @attachmentPlaceholder
+      attachmentUpload:      @attachmentUpload
+      progressBar:           @progressBar
+      progressText:          @progressText
+    ).render()
 
     @bindAttachmentDelete()
 
     # show text module UI
-    if !@permissionCheck('ticket.customer')
+    if ticket.currentView() is 'agent'
       textModule = new App.WidgetTextModule(
         el: @$('.js-textarea').parent()
         data:
           ticket: ticket
-          user: App.Session.get()
+          user:   App.Session.get()
           config: App.Config.all()
+        taskKey: @taskKey
       )
       callback = (ticket) ->
         textModule.reload(
@@ -248,6 +247,10 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       if !@subscribeIdTextModule
         @subscribeIdTextModule = ticket.subscribe(callback)
+
+    if _.isArray(@attachments)
+      for attachment in @attachments
+        @renderAttachment(attachment)
 
   params: =>
     params = @formParam( @$('.article-add') )
@@ -258,16 +261,18 @@ class App.TicketZoomArticleNew extends App.Controller
       params.form_id      = @form_id
       params.content_type = 'text/html'
 
-      if @permissionCheck('ticket.customer')
-        sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
-        type             = App.TicketArticleType.findByAttribute('name', 'web')
-        params.type_id   = type.id
-        params.sender_id = sender.id
-      else
+      ticket = App.Ticket.find(@ticket_id)
+
+      if ticket.currentView() is 'agent'
         sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
         type             = App.TicketArticleType.findByAttribute('name', params['type'])
         params.sender_id = sender.id
         params.type_id   = type.id
+      else
+        sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
+        type             = App.TicketArticleType.findByAttribute('name', 'web')
+        params.type_id   = type.id
+        params.sender_id = sender.id
 
     if params.internal
       params.internal = true
@@ -279,7 +284,7 @@ class App.TicketZoomArticleNew extends App.Controller
       if config && config.params
         params = config.params(params.type, params, @)
 
-    # add initals?
+    # add initials?
     for articleType in @articleTypes
       if articleType.name is @type
         if _.contains(articleType.features, 'body:initials')
@@ -288,6 +293,11 @@ class App.TicketZoomArticleNew extends App.Controller
           else
             params.body = "#{params.body}\n#{@signature.text()}"
           break
+
+    # add security params
+    if @securityOptionsShown()
+      params.preferences ||= {}
+      params.preferences.security = @paramsSecurity()
 
     params
 
@@ -298,11 +308,11 @@ class App.TicketZoomArticleNew extends App.Controller
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if !params.body && attachmentCount > 0
       new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
+        head: __('Text missing')
+        buttonCancel: __('Cancel')
         buttonCancelClass: 'btn--danger'
         buttonSubmit: false
-        message: 'Please fill also some text in!'
+        message: __('Please enter a text.')
         shown: true
         small: true
         container: @el.closest('.content')
@@ -313,7 +323,7 @@ class App.TicketZoomArticleNew extends App.Controller
     if params.body && attachmentCount < 1
       matchingWord = App.Utils.checkAttachmentReference(params.body)
       if matchingWord
-        if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
+        if !confirm(App.i18n.translateContent('You used %s in the text but no attachment could be found. Do you want to continue?', matchingWord))
           return false
 
     # backend based validation
@@ -331,7 +341,16 @@ class App.TicketZoomArticleNew extends App.Controller
     if @articleNewEdit.hasClass('is-public')
       @setArticleInternal(true)
     else
-      @setArticleInternal(false)
+      if App.Config.get('ui_ticket_zoom_article_visibility_confirmation_dialog')
+        new App.ControllerArticlePublicConfirm(
+          callback: =>
+            @setArticleInternal(false)
+          container: $(e.target).closest('.content')
+        )
+      else
+        @setArticleInternal(false)
+
+    @textarea.trigger('change.local')
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()
@@ -346,25 +365,28 @@ class App.TicketZoomArticleNew extends App.Controller
     @setArticleTypePost(articleTypeToSet)
 
     $(window).off('click.ticket-zoom-select-type')
-    @tokanice()
+    @tokanice(articleTypeToSet)
 
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleInternal: (internal) =>
-    if internal is true
-      @articleNewEdit
-        .removeClass('is-public')
-        .addClass('is-internal')
-
-      @$('[name=internal]').val('true')
-      return
-
     @articleNewEdit
-      .addClass('is-public')
-      .removeClass('is-internal')
+      .toggleClass('is-public', !internal)
+      .toggleClass('is-internal', internal)
 
-    @$('[name=internal]').val('')
+    visibilityTextType = "#{@type}-#{if internal then 'internal' else 'public'}"
+
+    @visibilityTextWrapper
+      .find('.article-visibility-text')
+      .addClass('is-hidden')
+      .attr('aria-hidden', true)
+      .filter("[data-type='#{visibilityTextType}']")
+      .removeClass('is-hidden')
+      .removeAttr('aria-hidden')
+
+    value = if internal then 'true' else ''
+    @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>
     wasScrolledToBottom = @isScrolledToBottom()
@@ -412,6 +434,15 @@ class App.TicketZoomArticleNew extends App.Controller
             @warningTextLength = articleType.warningTextLength
             @delay(@updateLetterCount, 600)
             @$('.js-textSizeLimit').removeClass('hide')
+          if name is 'security'
+            if @securityEnabled()
+              @securityOptionsShow()
+
+              # add observer to change options
+              @$('.js-to, .js-cc').on('change', =>
+                @updateSecurityOptions()
+              )
+              @updateSecurityOptions()
 
     # convert remote src images to data uri
     @$('[data-name=body] img').each( (i,image) ->
@@ -429,6 +460,9 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @scrollToBottom() if wasScrolledToBottom
 
+  updateSecurityOptions: =>
+    @updateSecurityOptionsRemote(@ticket.id, @ui.ticketParams(), @params(), @paramsSecurity())
+
   setArticleTypePost: (type, signaturePosition = 'bottom') =>
     for localConfig in @actions()
       if localConfig && localConfig.setArticleTypePost
@@ -442,7 +476,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   propagateOpenTextarea: (event) ->
     event.stopPropagation()
-    @textarea.focus()
+    @textarea.trigger('focus')
 
   updateLetterCount: =>
     return if !@maxTextLength
@@ -465,11 +499,13 @@ class App.TicketZoomArticleNew extends App.Controller
       value = "/#{App.User.find(@Session.get('id')).initials()}"
     @signature.text(value)
 
-  openTextarea: (event, withoutAnimation) =>
+  openTextarea: (event, withoutAnimation, focus) =>
     if event
       event.stopPropagation()
     if @articleNewEdit.hasClass('is-open')
       return
+
+    $(window).off('click.ticket-zoom-textarea')
 
     duration = 300
 
@@ -484,7 +520,9 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => $(window).on 'click.ticket-zoom-textarea', @closeTextarea
+        complete: =>
+          $(window).on('click.ticket-zoom-textarea', @closeTextarea)
+          @textarea.trigger('focus') if focus
 
     @textBubble.velocity
       properties:
@@ -512,6 +550,14 @@ class App.TicketZoomArticleNew extends App.Controller
           duration: 300
           stagger: 50
           drag: true
+
+    @visibilityTextWrapper.velocity
+      properties:
+        opacity: 1
+        height: '100%'
+      options:
+        duration: 300
+        easing: 'easeOutQuad'
 
     # move attachment text to the left bottom (bottom happens automatically)
     @attachmentPlaceholder.velocity
@@ -571,6 +617,14 @@ class App.TicketZoomArticleNew extends App.Controller
             drag: true
             complete: (elements) -> $(elements).addClass('is-hidden')
 
+      @visibilityTextWrapper.velocity
+        properties:
+          opacity: 0
+          height: 0
+        options:
+          duration: 300
+          easing: 'easeOutQuad'
+
   onDragenter: (event) =>
     # on the first event,
     # open textarea (it will only open if its closed)
@@ -599,9 +653,8 @@ class App.TicketZoomArticleNew extends App.Controller
 
       # delete attachment from storage
       App.Ajax.request(
-        type:  'DELETE'
-        url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-        data:  JSON.stringify(id: id)
+        type:        'DELETE'
+        url:         "#{App.Config.get('api_path')}/upload_caches/#{@form_id}/items/#{id}"
         processData: false
       )
 
@@ -610,7 +663,36 @@ class App.TicketZoomArticleNew extends App.Controller
       $(e.currentTarget).closest('.attachment').remove()
       if element.find('.attachment').length == 0
         element.empty()
+
+      @richTextUploadDeleteCallback?(@attachments)
     )
+
+  importDraftAttachments: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @ajax
+      id: 'import_attachments'
+      type: 'POST'
+      url: "#{@apiPath}/tickets/#{@ticket.id}/shared_draft/import_attachments"
+      data: JSON.stringify({ form_id: @form_id })
+      processData: true
+      success: (data, status, xhr) =>
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          ticket:      @ticket
+          attachments: data.attachments
+          form_id:     @form_id
+        })
+
+        App.Event.trigger(options.callbackName, { success: true })
+      error: ->
+        App.Event.trigger(options.callbackName, { success: false })
+
+  sharedDraftSaved: (options) =>
+    return if @ticket.id != options.ticket_id
+
+    @el
+      .find('input[name=shared_draft_id]')
+      .val(options.shared_draft_id)
 
   actions: ->
     actionConfig = App.Config.get('TicketZoomArticleAction')
@@ -621,3 +703,6 @@ class App.TicketZoomArticleNew extends App.Controller
       if localConfig
         actions.push localConfig
     actions
+
+  toggleButton: (event) ->
+    @$(event.currentTarget).toggleClass('btn--active')

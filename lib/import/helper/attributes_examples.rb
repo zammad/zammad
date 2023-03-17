@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module Helper
     class AttributesExamples
@@ -20,7 +22,8 @@ module Import
         #   Import::Helper::AttributesExamples.new do |extractor|
         #     extractor.extract(attributes)
         #   end
-        return if !block_given?
+        return if !block
+
         if block.arity.zero?
           instance_eval(&block)
         else
@@ -47,7 +50,7 @@ module Import
         @no_new_counter += 1
 
         # check max 50 entries with no or no new attributes in a row
-        @enough_examples = @no_new_counter != 50
+        @enough = @no_new_counter != 50
 
         false
       end
@@ -59,7 +62,7 @@ module Import
           next if value.nil?
 
           example = value.to_utf8(fallback: :read_as_sanitized_binary)
-          example.gsub!(/^(.{20,}?).*$/m, '\1...')
+          example.gsub!(%r{^(.{20,}?).*$}m, '\1...')
 
           @examples[attribute] = "#{attribute} (e. g. #{example})"
         end

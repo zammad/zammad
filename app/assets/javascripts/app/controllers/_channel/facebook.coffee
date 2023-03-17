@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class ChannelFacebook extends App.ControllerSubContent
   requiredPermission: 'admin.channel_facebook'
-  header: 'Facebook'
+  header: __('Facebook')
   events:
     'click .js-new':       'new'
     'click .js-edit':      'edit'
@@ -41,14 +41,8 @@ class Index extends App.ControllerSubContent
       channel = App.Channel.find(channel_id)
       if channel && channel.options && channel.options.sync
         displayName = '-'
-        if channel.options.sync.wall && channel.options.sync.wall.group_id
-          group = App.Group.find(channel.options.sync.wall.group_id)
-          displayName = group.displayName()
         if !channel.options.sync
           channel.options.sync = {}
-        if !channel.options.sync.wall
-          channel.options.sync.wall = {}
-        channel.options.sync.wall.groupName = displayName
         if channel.options && channel.options.pages
           for page in channel.options.pages
             displayName = '-'
@@ -101,7 +95,7 @@ class Index extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: =>
         @ajax(
           id:   'facebook_delete'
@@ -142,7 +136,7 @@ class Index extends App.ControllerSubContent
     )
 
 class AppConfig extends App.ControllerModal
-  head: 'Connect Facebook App'
+  head: __('Connect Facebook App')
   shown: true
   button: 'Connect'
   buttonCancel: true
@@ -167,7 +161,7 @@ class AppConfig extends App.ControllerModal
   onSubmit: (e) =>
     @formDisable(e)
 
-    # verify app credentals
+    # verify app credentials
     @ajax(
       id:   'facebook_app_verify'
       type: 'POST'
@@ -184,23 +178,21 @@ class AppConfig extends App.ControllerModal
               @isChanged = true
               @close()
             fail: =>
-              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+              @el.find('.alert').removeClass('hidden').text(__('The entry could not be created.'))
           )
           return
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('App could not be verified.'))
     )
 
 class AccountEdit extends App.ControllerModal
-  head: 'Facebook Account'
+  head: __('Facebook Account')
   shown: true
   buttonCancel: true
 
   content: ->
     if !@channel.options.sync
       @channel.options.sync = {}
-    if !@channel.options.sync.wall
-      @channel.options.sync.wall = {}
     if !@channel.options.sync.pages
       @channel.options.sync.pages = {}
     content = $( App.view('facebook/account_edit')(channel: @channel) )
@@ -218,7 +210,6 @@ class AccountEdit extends App.ControllerModal
       )
       el.html(selection)
 
-    groupSelection(@channel.options.sync.wall.group_id, content.find('.js-wall .js-groups'), 'wall')
     if @channel.options.pages
       for page in @channel.options.pages
         pageConfigured = false
@@ -251,7 +242,7 @@ class AccountEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        @el.find('.alert').removeClass('hidden').text(data.error || __('The changes could not be saved.'))
     )
 
-App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')
+App.Config.set('Facebook', { prio: 5100, name: __('Facebook'), parent: '#channels', target: '#channels/facebook', controller: ChannelFacebook, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

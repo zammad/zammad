@@ -1,0 +1,16 @@
+query objectManagerFrontendAttributes($object: EnumObjectManagerObjects!) {
+  objectManagerFrontendAttributes(object: $object) {
+    attributes {
+      name
+      display
+      dataType
+      dataOption
+      isInternal
+      screens
+    }
+    screens {
+      name
+      attributes
+    }
+  }
+}

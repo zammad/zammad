@@ -1,17 +1,18 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AdminOverviewTest < TestCase
   def test_account_add
-    name = "some overview #{rand(99_999_999)}"
+    name = "some overview #{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # add new overview
     overview_create(
@@ -21,7 +22,7 @@ class AdminOverviewTest < TestCase
         selector: {
           'Priority' => '1 low',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
       }
     )
 
@@ -33,29 +34,29 @@ class AdminOverviewTest < TestCase
         selector: {
           'State' => 'new',
         },
-        'order::direction' => 'up',
+        'order::direction' => 'ascending',
       }
     )
   end
 
   def test_overview_group_by_direction
-    name = "overview_#{rand(99_999_999)}"
+    name = "overview_#{SecureRandom.uuid}"
     ticket_titles = (1..3).map { |i| "Priority #{i} ticket" }
 
-    @browser = instance = browser_instance
+    @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 1 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 1 ticket',
+        body:     'some body 123äöü',
         priority: '1 low',
       },
     )
@@ -63,9 +64,9 @@ class AdminOverviewTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 2 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 2 ticket',
+        body:     'some body 123äöü',
         priority: '2 normal',
       },
     )
@@ -73,9 +74,9 @@ class AdminOverviewTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'Priority 3 ticket',
-        body: 'some body 123äöü',
+        group:    'Users',
+        title:    'Priority 3 ticket',
+        body:     'some body 123äöü',
         priority: '3 high',
       },
     )
@@ -88,56 +89,96 @@ class AdminOverviewTest < TestCase
         selector: {
           'State' => 'open',
         },
-        'order::direction' => 'down',
+        'order::direction' => 'descending',
         group_by: 'Priority',
-        group_direction: 'down',
+        group_direction: 'descending',
       }
     )
 
-    click(
-      browser: instance,
-      css:  'a[href="#ticket/view"]',
-      mute_log: true,
-    )
-    click(
-      browser: instance,
-      css:  "div.overview-header a[href='#ticket/view/#{name}']",
-      mute_log: true,
+    overview_open(
+      name: name
     )
 
-    # Sort the tickets according to their onscreen Y location
-    tickets_low_to_high = ticket_titles.map do |title|
-      [title,
-       get_location( css: "td[title='#{title}']").y]
-    end
-    tickets_low_to_high = tickets_low_to_high.sort_by { |x| -x[1] }.map { |x| x[0] }
-    assert_equal(ticket_titles, tickets_low_to_high)
+    assert_equal(ticket_titles.reverse, ordered_ticket_titles(ticket_titles))
 
     # Update overview to sort groups from low to high
     overview_update(
       data: {
-        name: name,
-        group_direction: 'up',
+        name:            name,
+        group_direction: 'ascending',
       }
     )
 
-    click(
-      browser: instance,
-      css:  'a[href="#ticket/view"]',
-      mute_log: true,
-    )
-    click(
-      browser: instance,
-      css:  "div.overview-header a[href='#ticket/view/#{name}']",
-      mute_log: true,
+    overview_open(
+      name: name
     )
 
-    # Sort the tickets according to their onscreen Y location
-    tickets_high_to_low = ticket_titles.map do |title|
+    # wait till the scheduler pushed
+    # the changes to the FE
+    sleep 5
+
+    assert_equal(ticket_titles, ordered_ticket_titles(ticket_titles))
+  end
+
+  def ordered_ticket_titles(ticket_titles)
+    ticket_titles.map do |title|
       [title,
-       get_location( css: "td[title='#{title}']").y]
-    end
-    tickets_high_to_low = tickets_high_to_low.sort_by { |x| x[1] }.map { |x| x[0] }
-    assert_equal(ticket_titles, tickets_high_to_low)
+       get_location(css: "td[title='#{title}']").y]
+    end.sort_by { |x| x[1] }.pluck(0)
+  end
+
+  # verify fix for issue #2235 - Overview setting isn't applied on submit
+  def test_overview_toggle_out_of_office_setting
+    @browser = browser_instance
+    login(
+      username: 'admin@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all
+
+    out_of_office_css = '.content.active .modal select[name="out_of_office"]'
+    first_overview_css = '.content.active tr[data-id="1"] td'
+
+    click(css: 'a[href="#manage"]')
+    click(css: '.content.active a[href="#manage/overviews"]')
+
+    # round 1, open the overview and set out_of_office to true
+    click(css: first_overview_css)
+    modal_ready
+    watch_for(
+      css:   out_of_office_css,
+      value: 'no',
+    )
+    select(
+      css:   out_of_office_css,
+      value: 'yes',
+    )
+    click(css: '.content.active .modal .js-submit')
+    modal_disappear
+
+    # round 2, open the overview and set out_of_office back to false
+    click(css: first_overview_css)
+    modal_ready
+    watch_for(
+      css:   out_of_office_css,
+      value: 'yes',
+    )
+    select(
+      css:   out_of_office_css,
+      value: 'no',
+    )
+    click(css: '.content.active .modal .js-submit')
+    modal_disappear
+
+    # round 3, open the overview and confirm that it's still false
+    click(css: first_overview_css)
+    modal_ready
+    watch_for(
+      css:   out_of_office_css,
+      value: 'no',
+    )
+    click(css: '.content.active .modal .js-submit')
+    modal_disappear
   end
 end

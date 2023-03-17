@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
@@ -27,8 +29,11 @@ Zammad::Application.routes.draw do
   match api_path + '/users/:id',                   to: 'users#update',                via: :put,    as: 'api_v1_update_user'
   match api_path + '/users/:id',                   to: 'users#destroy',               via: :delete, as: 'api_v1_delete_user'
   match api_path + '/users/image/:hash',           to: 'users#image',                 via: :get
+  match api_path + '/users/unlock/:id',            to: 'users#unlock',                via: :put
 
   match api_path + '/users/email_verify',          to: 'users#email_verify',          via: :post
   match api_path + '/users/email_verify_send',     to: 'users#email_verify_send',     via: :post
 
+  match api_path + '/users/admin_password_auth',            to: 'users#admin_password_auth_send',       via: :post
+  match api_path + '/users/admin_password_auth_verify',     to: 'users#admin_password_auth_verify',     via: :post
 end

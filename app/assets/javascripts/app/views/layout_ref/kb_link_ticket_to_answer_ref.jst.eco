@@ -1,0 +1,210 @@
+<fieldset>
+  <div class="searchfield">
+    <input class="js-search form-control" name="query" placeholder="<%- @Ti('Search Knowledge Base') %>" type="search" autocomplete="off">
+    <%- @Icon('magnifier') %>
+    <div class="empty-search js-emptySearch">
+      <%- @Icon('diagonal-cross') %>
+    </div>
+  </div>
+  <h3><%- @T('Recently Visited Answers') %></h3>
+  <div id="ticket-merge-customer-tickets">
+    <table class="table">
+      <colgroup>
+        <col span="1" style="width: 30px">
+        <col span="1">
+        <col span="1" style="width: 150px">
+      </colgroup>
+      <tbody>
+        <tr>
+          <td><%- @Icon('knowledge-base-answer', 'table-icon') %></td>
+          <td>Create a book in Pages</td>
+          <td class="table-buttons">
+            <div class="btn btn--action btn--primary btn--small js-link">
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><%- @Icon('knowledge-base-answer', 'table-icon') %></td>
+          <td>Publish your book with Pages</td>
+          <td class="table-buttons">
+            <div class="btn btn--action btn--primary btn--small js-link">
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><%- @Icon('knowledge-base-answer', 'table-icon') %></td>
+          <td>Record audio in Pages, Numbers, and Keynote for iOS and Mac</td>
+          <td class="table-buttons">
+            <div class="btn btn--action btn--primary btn--small is-disabled">
+              <%- @T('already linked') %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><%- @Icon('knowledge-base-answer', 'table-icon') %></td>
+          <td>Use advanced book creation options in Pages</td>
+          <td class="table-buttons">
+            <div class="btn btn--action btn--primary btn--small js-link">
+              <%- @Icon('plus-small') %> <span><%- @T('link') %></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h3><%- @T('Knowledge Base Browser') %></h3>
+  <div class="miller-columns">
+    <ul class="column">
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Getting Started</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children is-selected">
+        <i data-font="anticon"></i>
+        <span>Migration</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>General</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Everything about the ticket</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Search Cheat Sheet</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Glossary</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+    </ul>
+    <ul class="column">
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Getting Started</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Migration</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>General</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Everything about the ticket</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children is-selected">
+        <i data-font="anticon"></i>
+        <span>Search Cheat Sheet</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item column-item--has-children">
+        <i data-font="anticon"></i>
+        <span>Glossary</span>
+        <%- @Icon('arrow-right') %>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Getting Started</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Migration</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>General</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Everything about the ticket</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Search Cheat Sheet</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Glossary</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+    </ul>
+    <ul class="column">
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Getting Started</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Migration</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>General</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Everything about the ticket</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Search Cheat Sheet</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+      <li class="column-item">
+        <%- @Icon('knowledge-base-answer') %>
+        <span>Glossary</span>
+        <div class="btn btn--action btn--primary btn--small btn--slim js-link">
+          <%- @Icon('plus-small') %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</fieldset>

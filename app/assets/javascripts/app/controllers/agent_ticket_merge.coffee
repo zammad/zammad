@@ -1,8 +1,10 @@
 class App.TicketMerge extends App.ControllerModal
+  @include App.TicketNumberInput
+
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
-  head: 'Merge'
+  head: __('Merge')
   veryLarge: true
   shown: false
 
@@ -23,33 +25,35 @@ class App.TicketMerge extends App.ControllerModal
         @render()
     )
 
+  onShown: (e) =>
+    super
+    later = =>
+      if @tableCustomerTickets
+        @tableCustomerTickets.show()
+      if @tableRecentViewedTickets
+        @tableRecentViewedTickets.show()
+    @delay(later, 300)
+
   content: =>
     content = $( App.view('agent_ticket_merge')() )
 
-    new App.TicketList(
+    @tableCustomerTickets = new App.TicketList(
       tableId:    'ticket-merge-customer-tickets'
       el:         content.find('#ticket-merge-customer-tickets')
       ticket_ids: @ticket_ids_by_customer
       radio:      true
     )
 
-    new App.TicketList(
+    @tableRecentViewedTickets = new App.TicketList(
       tableId:    'ticket-merge-recent-tickets'
       el:         content.find('#ticket-merge-recent-tickets')
       ticket_ids: @ticket_ids_recent_viewed
       radio:      true
     )
 
-    content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
-      $(e.target).parents().find('[name="radio"]').prop('checked', false)
-    )
-
-    content.delegate('[name="radio"]', 'click', (e) ->
-      if $(e.target).prop('checked')
-        ticket_id = $(e.target).val()
-        ticket    = App.Ticket.fullLocal(ticket_id)
-        $(e.target).parents().find('[name="master_ticket_number"]').val(ticket.number)
-    )
+    @removeTicketSelectionOnFocus(content, 'target_ticket_number')
+    @stripTicketHookOnPaste(content, 'target_ticket_number')
+    @updateTicketNumberOnRadioClick(content, 'target_ticket_number')
 
     content
 
@@ -57,39 +61,39 @@ class App.TicketMerge extends App.ControllerModal
     @formDisable(e)
     params = @formParam(e.target)
 
-    if !params.master_ticket_number
-      alert(App.i18n.translateInline('%s required!', 'Ticket#'))
+    if !params.target_ticket_number
+      alert(App.i18n.translateInline('%s required!', App.Config.get('ticket_hook')))
       @formEnable(e)
       return
 
     # merge tickets
     @ajax(
       id:    'ticket_merge'
-      type:  'GET'
-      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.master_ticket_number}"
+      type:  'PUT'
+      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.target_ticket_number}"
       processData: true,
       success: (data, status, xhr) =>
 
         if data['result'] is 'success'
 
           # update collection
-          App.Collection.load(type: 'Ticket', data: [data.master_ticket])
-          App.Collection.load(type: 'Ticket', data: [data.slave_ticket])
+          App.Collection.load(type: 'Ticket', data: [data.target_ticket])
+          App.Collection.load(type: 'Ticket', data: [data.source_ticket])
 
           # hide dialog
           @close()
 
           # view ticket
-          @log 'notice', 'nav...', App.Ticket.find(data.master_ticket['id'])
-          @navigate '#ticket/zoom/' + data.master_ticket['id']
+          @log 'notice', 'nav...', App.Ticket.find(data.target_ticket['id'])
+          @navigate '#ticket/zoom/' + data.target_ticket['id']
 
           # notify UI
           @notify
             type:    'success'
-            msg:     App.i18n.translateContent('Ticket %s merged!', data.slave_ticket['number'])
+            msg:     App.i18n.translateContent('Ticket %s merged.', data.source_ticket['number'])
             timeout: 4000
 
-          App.TaskManager.remove("Ticket-#{data.slave_ticket['id']}")
+          App.TaskManager.remove("Ticket-#{data.source_ticket['id']}")
 
         else
 
@@ -104,7 +108,7 @@ class App.TicketMerge extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to merge!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('The tickets could not be merged.'))
           timeout: 6000
         @formEnable(e)
     )

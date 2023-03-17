@@ -2,12 +2,116 @@
 from: John.Smith@example.com
 from_email: John.Smith@example.com
 from_display_name: ''
+to: martin@example.com
 subject: 'CI Daten für PublicView '
-content_type: text/html
 body: |-
-  <div>
-  <div>Hallo Martin,</div><p>&nbsp;</p><div>wie besprochen hier noch die Daten für die Intranetseite:</div><p>&nbsp;</p><div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div><div>Schriftfarbe: Schwarz</div><div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div><p>&nbsp;</p><div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div><p>&nbsp;</p><div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co. </div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>
-  </div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472 </div><div>john.smith@example.com</div><div>
+  <div lang="DE">
+  <div>Hallo Martin,</div><div><p>&nbsp;</p></div><div>wie besprochen hier noch die Daten für die Intranetseite:</div><div><p>&nbsp;</p></div><div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div><div>Schriftfarbe: Schwarz</div><div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div><div><p>&nbsp;</p></div><div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div><div><p>&nbsp;</p></div><div><span>Mit freundlichem Gruß <br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</span></div><div>
+  <span>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span>
+  </div><div>
+  <span>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span>
+  </div><div>
+  <a href="mailto:john.smith@example.com">john.smith@example.com</a>
+  </div><div>
   <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a>
   </div><div>
-  <br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung: Tilman Test, Klaus Jürgen Test, </div><div>Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende geschäftsführende Gesellschafterin: </div><div>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin: </div><div>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test </div><p>&nbsp;</p></div>
+  <span><br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung: Tilman Test, Klaus Jürgen Test,</span>
+  </div><div>
+  <span>Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende geschäftsführende Gesellschafterin:</span>
+  </div><div>
+  <span>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin:</span>
+  </div><div>
+  <span>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test</span>
+  </div><div><p>&nbsp;</p></div></div>
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: '<html><head><base href="x-msg://2849/"></head><body style="word-wrap: break-word;
+    -webkit-nbsp-mode: space; -webkit-line-break: after-white-space; "><span class="Apple-style-span"
+    style="border-collapse: separate; font-family: Helvetica; font-style: normal;
+    font-variant: normal; font-weight: normal; letter-spacing: normal; line-height:
+    normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform:
+    none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-border-horizontal-spacing:
+    0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect:
+    none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-size:
+    medium; "><div lang="DE" link="blue" vlink="purple"><div class="Section1" style="page:
+    Section1; "><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm;
+    margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span
+    style="font-size: 10pt; font-family: Arial, sans-serif; ">Hallo Martin,<o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; "><o:p>&nbsp;</o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">wie besprochen hier noch die Daten für die Intranetseite:<o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; "><o:p>&nbsp;</o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt
+    oder nicht vorhanden wird Arial 11 Pt genommen<o:p></o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">Schriftfarbe: Schwarz<o:p></o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">Farbe für die Balken in der Grafik: D7DDE9 (Blau)<o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; "><o:p>&nbsp;</o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">Wenn noch was fehlt oder du was brauchst sag mir Bescheid.<o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; "><o:p>&nbsp;</o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; ">Mit freundlichem Gruß<span class="Apple-converted-space">&nbsp;</span><br><br>John
+    Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; ">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span
+    style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; ">Tel.: +49 001 7601 462<br>Fax: +49 001 7601
+    472</span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt;
+    font-family: Arial, sans-serif; "><a href="mailto:john.smith@example.com" style="color:
+    blue; text-decoration: underline; ">john.smith@example.com</a></span><span style="font-size:
+    10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top:
+    0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size:
+    11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; "><a href="http://www.example.com" style="color: blue; text-decoration:
+    underline; ">www.example.com</a></span><span style="font-size: 10pt; font-family:
+    Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right:
+    0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family:
+    Calibri, sans-serif; "><span style="font-size: 8pt; font-family: Arial, sans-serif;
+    "><br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung:
+    Tilman Test, Klaus Jürgen Test,</span><span style="font-size: 8pt; font-family:
+    Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right:
+    0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family:
+    Calibri, sans-serif; "><span style="font-size: 8pt; font-family: Arial, sans-serif;
+    ">Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende
+    geschäftsführende Gesellschafterin:</span><span style="font-size: 8pt; font-family:
+    Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right:
+    0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family:
+    Calibri, sans-serif; "><span style="font-size: 8pt; font-family: Arial, sans-serif;
+    ">Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich
+    haftende Gesellschafterin:</span><span style="font-size: 8pt; font-family: Arial,
+    sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right:
+    0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family:
+    Calibri, sans-serif; "><span style="font-size: 8pt; font-family: Arial, sans-serif;
+    ">Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test</span><span
+    style="font-size: 8pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div
+    style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt;
+    font-size: 11pt; font-family: Calibri, sans-serif; "><o:p>&nbsp;</o:p></div></div></div></span></body></html>'
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: iso-8859-1

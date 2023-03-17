@@ -1,8 +1,8 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
-require 'cache'
-
 require 'test_support_helper'
 
 class ActiveSupport::TestCase
@@ -14,11 +14,11 @@ class ActiveSupport::TestCase
   ActiveRecord::Base.logger.level = Logger::INFO
 
   # clear cache
-  Cache.clear
+  Rails.cache.clear
 
   # load seeds
-  load Rails.root.join('db', 'seeds.rb')
-  load Rails.root.join('test', 'fixtures', 'seeds.rb')
+  load Rails.root.join('db/seeds.rb')
+  load Rails.root.join('test/fixtures/seeds.rb')
 
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
@@ -26,7 +26,7 @@ class ActiveSupport::TestCase
   setup do
 
     # clear cache
-    Cache.clear
+    Rails.cache.clear
 
     # reload settings
     Setting.reload

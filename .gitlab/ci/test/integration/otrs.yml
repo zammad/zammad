@@ -1,0 +1,55 @@
+.template_integration_otrs:
+  extends:
+    - .template_integration
+  script:
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rspec spec/integration/otrs_spec.rb
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:$OTRS_CONTAINER_TAG
+      alias: zammad-ci-otrsimport-db
+    - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-app:$OTRS_CONTAINER_TAG
+      alias: zammad-ci-otrsimport-app
+  variables:
+    FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
+    IMPORT_OTRS_ENDPOINT: 'http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator'
+    TZ: 'Europe/Berlin' # Required for the zammad-ci-otrsimport-app containers
+
+rspec:integration:otrs:6:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs6'
+
+rspec:integration:otrs:5:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs5'
+
+rspec:integration:otrs:4:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs4'
+
+rspec:integration:otrs:33:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs33'
+
+rspec:integration:otrs:32:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs32'
+
+rspec:integration:otrs:31:
+  extends:
+    - .template_integration_otrs
+  variables:
+    OTRS_CONTAINER_TAG: 'otrs31'

@@ -2,8 +2,8 @@
 from: '"Yangzhou ABC Lighting Equipment " <>, "LTD" <ly@example.com>'
 from_email: ly@example.com
 from_display_name: LTD
+to: verkauf <verkauf@example.de>
 subject: new design solar street lights
-content_type: text/plain
 body: |-
   äöüß ad asd
 
@@ -11,3 +11,6 @@ body: |-
 
   --
   Old programmers never die. They just branch to a new address.
+content_type: text/plain
+reply-to: zsm@example.com
+attachments: []

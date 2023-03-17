@@ -1,12 +1,27 @@
 <div class="fullHeight vertical center justified reset_password fit">
-  <div class="hero-unit">
-    <h2><%- @T( 'Choose your new password.' ) %><small></small></h2>
-    <form>
-      <div class="form-password-change"></div>
-      <div class="form-controls">
-        <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-        <button class="btn btn--primary js-submit align-right"><%- @T( 'Submit' ) %></button>
-      </div>
-    </form>
+  <div class="fullscreen-center">
+    <div class="hero-unit">
+      <h2><%- @T('Choose your new password.') %></h2>
+      <form class="js-passwordForm">
+        <div class="js-password"></div>
+        <div class="form-controls">
+          <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
+          <button class="btn btn--primary js-submit align-right"><%- @T('Submit') %></button>
+        </div>
+      </form>
+    </div>
+  <% if !_.isEmpty(@public_links): %>
+    <p>
+      <% for link, link_index in @public_links: %>
+        <% if link_index > 0: %> | <% end %>
+        <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+      <% end %>
+    </p>
+  <% end %>
+  </div>
+  <div class="poweredBy">
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
   </div>
 </div>

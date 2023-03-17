@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
@@ -13,10 +15,10 @@ RSpec.describe Import::OTRS::DynamicField::Date do
   it 'imports an OTRS Date DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'date_example',
-      display: 'Date Example',
-      screens: {
+      object:        'Ticket',
+      name:          'date_example',
+      display:       'Date Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true

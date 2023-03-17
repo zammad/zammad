@@ -4,7 +4,7 @@
   <ul>
     <li><%- @T('|Right| means |Some Subject [Ticket#12345]|') %>
     <li><%- @T('|Left| means |[Ticket#12345] Some Subject|') %>
-    <li><%- @T('|None| means |Some Subject| (without ticket number). In the last case you should enable "postmaster___follow___up___search___in" to recognize followups based on email headers and/or body.') %>
+    <li><%- @T('|None| means |Some Subject| (without ticket number), in which case it recognizes follow-ups based on email headers.') %>
   </ul>
   <div class="horizontal end">
     <div class="js-form form-item flex"></div>

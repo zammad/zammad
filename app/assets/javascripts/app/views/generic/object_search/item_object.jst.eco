@@ -1,4 +1,4 @@
-<li class="recipientList-entry js-object" data-object-id="<%= @object.id %>">
+<li class="recipientList-entry js-object<% if @object.active is false: %> is-inactive<% end %>" data-object-id="<%= @object.id %>">
   <div class="recipientList-iconSpacer">
     <%- @Icon(@icon, 'recipientList-icon') %>
   </div>
@@ -9,10 +9,10 @@
       <%= @object.displayName() %>
     <% end %>
     <% if @object.organization: %>
-      <span class="recipientList-detail">- <%= @object.organization.displayName() %></span>
+      <span class="recipientList-detail<% if @object.organization.active is false: %> is-inactive<% end %>">- <%= @object.organization.displayName() %></span>
     <% end %>
   </div>
   <% if @object.active is false: %>
-    <div class="recipientList-status"><%= @Ti('inactive') %></div>
+    <div class="recipientList-status"><%- @Ti('inactive') %></div>
   <% end %>
 </li>

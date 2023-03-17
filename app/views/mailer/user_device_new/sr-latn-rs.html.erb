@@ -1,0 +1,19 @@
+#{config.product_name} logovanje sa novog uređaja
+
+<div>Zdravo #{user.firstname},</div>
+<br>
+<div>Izgleda da ste se prijavili u vaš nalog <b>sa novog uređaja</b> u „#{user_device.created_at}”:</div>
+<br>
+<div>
+Vaš uređaj: #{user_device.name}<br>
+Vaša lokacija (okvirna): #{user_device.location}<br>
+Vaš IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Uređaj je dodat na listu poznatih uređaja, koju možete pregledati ovde:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Ukoliko ovo niste bili vi, molimo uklonite uređaj, promenite vašu lozinku i kontaktirajte svog administratora. Postoji mogućnost da je neko neovlašćeno pristupio vašem nalogu.</div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

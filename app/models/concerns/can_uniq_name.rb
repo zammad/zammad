@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module CanUniqName
   extend ActiveSupport::Concern
 
@@ -21,6 +22,7 @@ returns
 
     def generate_uniq_name(name)
       return name if !exists?(name: name)
+
       (1..100).each do |counter|
         name = "#{name}_#{counter}"
         break if !exists?(name: name)

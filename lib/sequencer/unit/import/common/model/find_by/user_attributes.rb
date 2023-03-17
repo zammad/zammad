@@ -1,20 +1,10 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          module FindBy
-            class UserAttributes < Sequencer::Unit::Import::Common::Model::Lookup::Attributes
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              private
+class Sequencer::Unit::Import::Common::Model::FindBy::UserAttributes < Sequencer::Unit::Import::Common::Model::Lookup::Attributes
 
-              def attributes
-                %i[login email]
-              end
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def attributes
+    %i[login email]
   end
 end

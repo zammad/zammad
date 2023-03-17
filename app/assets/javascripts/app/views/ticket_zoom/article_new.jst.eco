@@ -1,26 +1,36 @@
+<% if !_.isEmpty(@C('ui_ticket_add_article_hint')): %>
+<div class="article-visibility-text-wrapper">
+<% for key, note of @C('ui_ticket_add_article_hint'): %>
+  <div class="article-visibility-text alert alert--warning is-hidden" role="alert" aria-hidden="true" data-type="<%= key %>"><%- @T(note) %></div>
+<% end %>
+</div>
+<% end %>
 <form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @form_id %>">
+  <input type="hidden" name="shared_draft_id" value="<%= @article.shared_draft_id %>">
   <input type="hidden" name="subtype" value="<%= @article.subtype %>">
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>
     <div class="editControls-item is-hidden pop-select">
-      <div class="editControls-iconHolder centered js-selectedArticleType">
-        <% for articleType in @articleTypes: %>
-        <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
-        <%- @Icon(articleType.icon) %>
+      <% if @articleTypes.length > 1: %>
+        <div class="editControls-iconHolder centered js-selectedArticleType">
+          <% for articleType in @articleTypes: %>
+          <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
+          <%- @Icon(articleType.icon) %>
+          </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
-      <div class="pop-selector is-hidden js-articleTypes">
-        <% for articleType in @articleTypes: %>
-        <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
-          <%- @Icon(articleType.icon, 'pop-selectable-icon') %>
+        <div class="pop-selector is-hidden js-articleTypes">
+          <% for articleType in @articleTypes: %>
+          <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
+            <%- @Icon(articleType.icon, 'pop-selectable-icon') %>
+          </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
     <% if @internalSelector: %>
     <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
@@ -37,7 +47,6 @@
   </div>
   <div class="article-content bubble-gap">
     <div class="internal-border">
-
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('To') %></label>
@@ -46,7 +55,7 @@
       </div>
       <div class="input form-group">
         <div class="formGroup-label">
-          <label for=""><%- @T('Cc') %></label>
+          <label for=""><%- @T('CC') %></label>
         </div>
         <div class="controls"><input type="text" name="cc" value="<%= @article.cc %>" class="form-control js-mail-inputs js-cc"></div>
       </div>
@@ -55,6 +64,19 @@
           <label for=""><%- @T('Subject') %></label>
         </div>
         <div class="controls"><input type="text" name="subject" value="<%= @article.subject %>" class="form-control js-mail-inputs2 js-subject"></div>
+      </div>
+      <div class="form-group js-securityOptions">
+        <div class="formGroup-label">
+          <label for=""><%- @T('Security') %></label>
+        </div>
+        <div class="horizontal">
+          <span class="js-securityEncryptComment">
+            <div class="btn btn--action js-securityEncrypt js-active-toggle" disabled><%- @Icon('lock-open', 'btn-inactive-icon') %><%- @Icon('lock', 'btn-active-icon') %><%- @T('Encrypt') %></div>
+          </span>
+          <span class="js-securitySignComment" style="margin-left: 10px;">
+            <div class="btn btn--action js-securitySign js-active-toggle" disabled><%- @Icon('not-signed', 'btn-inactive-icon') %><%- @Icon('signed', 'btn-active-icon') %><%- @T('Sign') %></div>
+          </span>
+        </div>
       </div>
 
       <div class="textBubble js-writeArea">
@@ -68,10 +90,13 @@
         <div class="attachments"></div>
         <div class="article-attachment">
           <div class="attachmentPlaceholder">
-            <span class="attachmentPlaceholder-hint"><%- @T('Enter Answer or') %></span>
-            <span class="attachmentPlaceholder-inputHolder">
-              <%- @T('select attachment...') %>
-              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+            <span class="attachmentPlaceholder-hint"><%- @T('Enter Note or') %></span>
+            <span class="attachmentPlaceholder-inputHolder fileUpload">
+              <% uid =  _.uniqueId('fileUpload_') %>
+              <input multiple="multiple" type="file" name="file" id="<%- uid %>">
+              <label class="attachmentPlaceholder-label" for="<%- uid %>">
+                <%- @T('select attachment…') %>
+              </label>
             </span>
           </div>
           <div class="attachmentUpload hide">

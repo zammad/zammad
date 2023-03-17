@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectLookup < ApplicationModel
 
@@ -6,6 +6,7 @@ class ObjectLookup < ApplicationModel
     # lookup
     lookup = self.lookup(id: id)
     return if !lookup
+
     lookup.name
   end
 

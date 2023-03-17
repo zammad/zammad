@@ -1,12 +1,14 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/factory_examples'
 require 'lib/import/otrs/dynamic_field_examples'
 
 RSpec.describe Import::OTRS::DynamicFieldFactory do
-  it_behaves_like 'Import::Factory'
-
+  let(:object_structure)  { [load_dynamic_field_json('text/default')] }
   let(:start_import_test) { described_class.import(object_structure) }
-  let(:object_structure) { [load_dynamic_field_json('text/default')] }
+
+  it_behaves_like 'Import::Factory'
 
   it 'responds to skip_field?' do
     expect(described_class).to respond_to('skip_field?')

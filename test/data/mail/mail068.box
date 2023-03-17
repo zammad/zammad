@@ -1,0 +1,40 @@
+---- Original email message ----
+Return-Path: xxxx@mail.xxxxx.cz
+X-Kerio-Anti-Spam: Build: [Engines: 2.15.8.1150, Stamp: 3], Multi: [Enabled, t: (0.000007,0.003682)], BW: [Enabled, t: (0.000008)], RTDA: [Enabled, t: (0.048902), Hit: No, Details: v2.7.13; Id: 15.1i6ap3s.1cjtibnrd.2nhht], total: 0(700)
+X-Spam-Status: No, hits=0.0 required=5.0
+tests=KERIO_ANTI_SPAM: -0.000, BAYES_00: -1.665, HTML_MESSAGE: 0.001,
+MIME_HEADER_CTYPE_ONLY: 0.717, MIME_HTML_ONLY: 0.723, TOTAL_SCORE: -0.224,autolearn=no
+X-Spam-Level:
+Received: from mail.xxxxx.cz ([xxx.168.xxx.xxx])
+by mail.xxxxxx.cz with ESMTP
+for helpdesk@xxxxxx.cz;
+Thu, 2 Aug 2018 16:58:16 +0200
+Received: by mail.xxxxx.cz (Postfix, from userid 500)
+id 58E7387959; Thu, 2 Aug 2018 16:58:28 +0200 (CEST)
+To: helpdek@xxxxx.cz
+Subject: Contact from Server
+X-PHP-Originating-Script: 500:kontact-info.inc.php
+From: xxxxx@xxxxx.cz
+Content-Type: text/html; charset="Windows-1250"
+Message-Id: 20180802145828.58E7387959@mail.xxxxxx.cz
+Date: Thu, 2 Aug 2018 16:58:28 +0200 (CEST)
+
+Contact form
+
+Odeslano dne: Ètvrtek 2. srpna 2018 16:58.28
+
+Uzivatel: 
+Jmeno: Peter
+E-mail: xxxxx@xxxxxx.cz
+Problem: jine
+
+<html>
+<body><center><span style="color: #C0C0C0; font-family: Arial; font-size: 15pt;">Contact form</span></center><br><br><span style="font-family: Arial; font-size: 10pt;">
+Odeslano dne:  Ètvrtek 2. srpna 2018 16:58.28<br><br>
+Uzivatel: <b></b><br>
+Jmeno: <b>Peter</b><br>
+E-mail: <b>xxxxx@xxxxx.cz</b><br>
+Problem: <b>jine</b><br><br>
+Text: <b>Po zavolání uvádí, že garáž není jeho, ale strýce. Dále již nezvedá telefon a na SMS zprávy neodpovídá. Když jsem dojel na místo a zazvonil. Jsem pøesvìdèen, že tato osoba vyvíjí èinnost v oblasti nemovitostí. Dále mlžení a zapírání své osoby coby statutárního orgánu spoleènosti, kterou zastupuje, nesvìdèí o seriozním jednání, ale spíše o protiprávním. Jeho jednáním mi mimo jiné vznikly zbyteèné finanèní náklady a èas</b>
+<br>
+</span></body></html>

@@ -1,10 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::ChecksUserColumnsFillup
   extend ActiveSupport::Concern
 
   included do
-    before_create :fill_up_user_create
-    before_update :fill_up_user_update
+    before_validation :fill_up_user_validate
+  end
+
+  def fill_up_user_validate
+    return fill_up_user_create if new_record?
+
+    fill_up_user_update
   end
 
 =begin
@@ -22,16 +28,14 @@ returns
 =end
 
   def fill_up_user_create
-    if self.class.column_names.include? 'updated_by_id'
-      if UserInfo.current_user_id
-        if updated_by_id && updated_by_id != UserInfo.current_user_id
-          logger.info "NOTICE create - self.updated_by_id is different: #{updated_by_id}/#{UserInfo.current_user_id}"
-        end
-        self.updated_by_id = UserInfo.current_user_id
+    if self.class.column_names.include?('updated_by_id') && UserInfo.current_user_id
+      if updated_by_id && updated_by_id != UserInfo.current_user_id
+        logger.info "NOTICE create - self.updated_by_id is different: #{updated_by_id}/#{UserInfo.current_user_id}"
       end
+      self.updated_by_id = UserInfo.current_user_id
     end
 
-    return true if !self.class.column_names.include? 'created_by_id'
+    return true if self.class.column_names.exclude?('created_by_id')
 
     return true if !UserInfo.current_user_id
 
@@ -57,7 +61,7 @@ returns
 =end
 
   def fill_up_user_update
-    return true if !self.class.column_names.include? 'updated_by_id'
+    return true if self.class.column_names.exclude?('updated_by_id')
     return true if !UserInfo.current_user_id
 
     self.updated_by_id = UserInfo.current_user_id

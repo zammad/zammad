@@ -1,24 +1,18 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          class SanitizedName < Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::SanitizedName < Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName
 
-            private
+  uses :resource
 
-            def unsanitized_name
-              # Model ID
-              # Model IDs
-              # Model / Name
-              # Model Name
-              resource['key']
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def unsanitized_name
+    # Model ID
+    # Model IDs
+    # Model / Name
+    # Model Name
+    # Model Name?
+    # Model::Name
+    resource['key']
   end
 end

@@ -1,0 +1,9 @@
+Confirme la cuenta de #{config.product_name}, #{user.firstname} #{user.lastname}
+
+<div>Buenos días, #{user.firstname}:</div>
+<br>
+<div>Confirme la dirección de correo electrónico para completar su registro en #{config.product_name}. Es sencillo, simplemente haga clic en el enlace siguiente:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>El equipo de #{config.product_name} </div>

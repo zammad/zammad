@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Version
 
@@ -15,7 +15,7 @@ returns
 =end
 
   def self.get
-    File.read(Rails.root.join('VERSION')).strip
+    Rails.root.join('VERSION').read.strip
   rescue => e
     Rails.logger.error "VERSION file could not be read: #{e}"
     ''

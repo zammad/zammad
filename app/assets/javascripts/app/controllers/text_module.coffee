@@ -1,13 +1,14 @@
-class Index extends App.ControllerSubContent
+class TextModule extends App.ControllerSubContent
   requiredPermission: 'admin.text_module'
-  header: 'Text modules'
+  header: __('Text modules')
   constructor: ->
     super
 
-    new App.ControllerGenericIndex(
+    @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
       genericObject: 'TextModule'
+      defaultSortBy: 'name'
       importCallback: ->
         new App.Import(
           baseUrl: '/api/v1/text_modules'
@@ -15,18 +16,29 @@ class Index extends App.ControllerSubContent
           deleteOption: true
         )
       pageData:
-        home: 'text_modules'
-        object: 'TextModule'
-        objects: 'Text modules'
+        home:      'text_modules'
+        object:    __('Text module')
+        objects:   __('Text modules')
+        pagerAjax: true
+        pagerBaseUrl: '#manage/text_modules/'
+        pagerSelected: ( @page || 1 )
+        pagerPerPage: 150
         navupdate: '#text_modules'
-        notes: [
-          'Text modules are ...'
+        notes:     [
+          __('Text modules are …')
         ]
         buttons: [
-          { name: 'Import', 'data-type': 'import', class: 'btn' }
-          { name: 'New text module', 'data-type': 'new', class: 'btn--success' }
+          { name: __('Import'),          'data-type': 'import', class: 'btn' }
+          { name: __('New text module'), 'data-type': 'new',    class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )
 
-App.Config.set('TextModule', { prio: 2300, name: 'Text modules', parent: '#manage', target: '#manage/text_modules', controller: Index, permission: ['admin.text_module'] }, 'NavBarAdmin')
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+
+    @genericController.paginate( @page || 1 )
+
+App.Config.set('TextModule', { prio: 2300, name: __('Text modules'), parent: '#manage', target: '#manage/text_modules', controller: TextModule, permission: ['admin.text_module'] }, 'NavBarAdmin')

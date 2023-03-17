@@ -3,7 +3,7 @@
   <div class="detail-search">
     <div class="detail-search-header">
       <div class="searchfield">
-        <input class="js-search form-control<%= if !@query then ' is-empty' %>" name="query" placeholder="<%- @Ti('Find what you search. E. g. "search phrase"') %>" value="<%= @query %>" type="search" autocomplete="off">
+        <input class="js-search form-control<%= if !@query then ' is-empty' %>" name="query" placeholder="<%- @Ti('Find what you\'re looking for, e.g. "search phrase"') %>" value="<%= @query %>" type="search" autocomplete="off">
         <%- @Icon('magnifier') %>
         <div class="empty-search js-emptySearch">
           <%- @Icon('diagonal-cross') %>
@@ -24,3 +24,6 @@
   </div>
 
 </div>
+
+<div class="bulkAction hide"></div>
+<div class="batch-overlay js-batch-overlay"></div>

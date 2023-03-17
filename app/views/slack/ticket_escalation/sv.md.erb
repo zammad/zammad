@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eskalerad vid #{ticket.escalation_at}_
+Ärendet (#{ticket.title}) från "#{ticket.customer.longname}" har eskalerats sedan "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

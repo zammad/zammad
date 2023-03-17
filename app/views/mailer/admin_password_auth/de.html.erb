@@ -1,0 +1,15 @@
+Administrations-Anmeldung bei #{config.product_name}
+
+<div>Hallo #{user.fullname},</div>
+<br>
+<div>Wir haben eine Anfrage für eine Administrations-Anmeldung für Ihr #{config.product_name}-Konto <b>#{user.login}</b> erhalten.</div>
+<br>
+<div>Bitte klicken Sie den unten stehenden Link (oder kopieren Sie die URL in Ihren Browser), um fortzufahren:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Dieser Link führt Sie auf eine Seite, auf welcher Sie sich anmelden können.</div>
+<br>
+<div>Wenn Sie keine Anmeldung wünschen, können Sie diese Nachricht ignorieren.</div>
+<br>
+<div>Ihr #{config.product_name}-Team</div>

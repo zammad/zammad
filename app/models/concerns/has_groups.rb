@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module HasGroups
   extend ActiveSupport::Concern
 
@@ -38,10 +39,10 @@ module HasGroups
       # @return [ActiveRecord::AssociationRelation<[<Group]>] List of Groups with :through attributes
       def access(*access)
         table_name = proxy_association.owner.class.group_through.table_name
-        query      = select("groups.*, #{table_name}.*")
+        query      = select("#{ActiveRecord::Base.connection.quote_table_name('groups')}.*, #{ActiveRecord::Base.connection.quote_table_name(table_name)}.*")
         return query if access.blank?
 
-        access.push('full') if !access.include?('full')
+        access.push('full') if access.exclude?('full')
 
         query.where("#{table_name}.access" => access)
       end
@@ -69,20 +70,21 @@ module HasGroups
     return false if !groups_access_permission?
 
     group_id = self.class.ensure_group_id_parameter(group_id)
-    access   = self.class.ensure_group_access_list_parameter(access)
+    access   = Array(access).map(&:to_sym) | [:full]
 
     # check direct access
-    return true if group_through.klass.includes(:group).exists?(
+    return true if group_through.klass.eager_load(:group).exists?(
       group_through.foreign_key => id,
       group_id: group_id,
-      access:   access,
-      groups:   {
+      access: access,
+      groups: {
         active: true
       }
     )
 
     # check indirect access through Roles if possible
     return false if !respond_to?(:role_access?)
+
     role_access?(group_id, access)
   end
 
@@ -102,18 +104,18 @@ module HasGroups
     return [] if !active?
     return [] if !groups_access_permission?
 
-    access      = self.class.ensure_group_access_list_parameter(access)
+    access      = Array(access).map(&:to_sym) | [:full]
     foreign_key = group_through.foreign_key
     klass       = group_through.klass
 
     # check direct access
-    ids   = klass.includes(:group).where(foreign_key => id, access: access, groups: { active: true }).pluck(:group_id)
+    ids   = klass.eager_load(:group).where(foreign_key => id, access: access, groups: { active: true }).pluck(:group_id)
     ids ||= []
 
     # check indirect access through roles if possible
     return ids if !respond_to?(:role_ids)
 
-    role_group_ids = RoleGroup.includes(:group).where(role_id: role_ids, access: access, groups: { active: true }).pluck(:group_id)
+    role_group_ids = RoleGroup.eager_load(:group).where(role_id: role_ids, access: access, groups: { active: true }).pluck(:group_id)
 
     # combines and removes duplicates
     # and returns them in one statement
@@ -157,7 +159,7 @@ module HasGroups
   # @return [Hash<String=>String,Array<String>>] The given map
   def group_names_access_map=(name_access_map)
     groups_access_map_store(name_access_map) do |group_name|
-      Group.where(name: group_name).pluck(:id).first
+      Group.where(name: group_name).pick(:id)
     end
   end
 
@@ -197,6 +199,7 @@ module HasGroups
   # @return [Boolean]
   def groups_access_permission?
     return true if !respond_to?(:permissions?)
+
     permissions?('ticket.agent')
   end
 
@@ -244,9 +247,9 @@ module HasGroups
     # if changes to the map were performed
     # otherwise it's just an update of other attributes
     return if group_access_buffer.nil?
+
     yield
-    group_access_buffer = nil
-    cache_delete
+    self.group_access_buffer = nil
   end
 
   def process_group_access_buffer
@@ -311,18 +314,11 @@ module HasGroups
     # @return [Array<Class>]
     def group_access(group_id, access)
       group_id = ensure_group_id_parameter(group_id)
-      access   = ensure_group_access_list_parameter(access)
+      access   = Array(access).map(&:to_sym) | [:full]
 
       # check direct access
-      instances = joins(group_through.name)
-                  .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
-
-      if method_defined?(:permissions?)
-        permissions = Permission.with_parents('ticket.agent')
-        instances = instances
-                    .joins(roles: :permissions)
-                    .where(roles: { active: true }, permissions: { name: permissions, active: true })
-      end
+      instances = Permission.join_with(self, 'ticket.agent').joins(group_through.name)
+                  .where(group_through.table_name => { group_id: group_id, access: access }, active: true)
 
       # check indirect access through roles if possible
       return instances if !respond_to?(:role_access)
@@ -351,18 +347,13 @@ module HasGroups
     #
     # @return [Symbol] The relation identifier
     def group_through_identifier
-      "#{name.downcase}_groups".to_sym
+      :"#{name.downcase}_groups"
     end
 
     def ensure_group_id_parameter(group_or_id)
       return group_or_id if group_or_id.is_a?(Integer)
-      group_or_id.id
-    end
 
-    def ensure_group_access_list_parameter(access)
-      access = [access] if access.is_a?(String)
-      access.push('full') if !access.include?('full')
-      access
+      group_or_id.id
     end
   end
 end

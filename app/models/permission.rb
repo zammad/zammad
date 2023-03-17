@@ -1,12 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Permission < ApplicationModel
   include ChecksClientNotification
-  include ChecksLatestChangeObserved
+  include ChecksHtmlSanitized
+  include HasCollectionUpdate
 
   has_and_belongs_to_many :roles
   validates               :name, presence: true
   store                   :preferences
+
+  validates :note, length: { maximum: 500 }
+  sanitized_html :note
 
 =begin
 
@@ -31,4 +35,16 @@ returns
     names
   end
 
+  def to_s
+    name
+  end
+
+  def self.join_with(object, permissions)
+    return object if !object.method_defined?(:permissions?)
+
+    permissions = with_parents(permissions)
+
+    object.joins(roles: :permissions)
+                .where(roles: { active: true }, permissions: { name: permissions, active: true })
+  end
 end

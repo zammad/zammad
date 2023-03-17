@@ -1,34 +1,36 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class SidebarCustomerOpenTicketColored < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Open ticket indicator',
-      name: 'ui_sidebar_open_ticket_indicator_colored',
-      area: 'UI::Sidebar',
+      title:       'Open ticket indicator',
+      name:        'ui_sidebar_open_ticket_indicator_colored',
+      area:        'UI::Sidebar',
       description: 'Color representation of the open ticket indicator in the sidebar.',
-      options: {
+      options:     {
         form: [
           {
-            display: '',
-            null: true,
-            name: 'ui_sidebar_open_ticket_indicator_colored',
-            tag: 'boolean',
+            display:   '',
+            null:      true,
+            name:      'ui_sidebar_open_ticket_indicator_colored',
+            tag:       'boolean',
             translate: true,
-            options: {
+            options:   {
               true  => 'yes',
               false => 'no',
             },
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
         permission: ['admin.ui'],
       },
-      frontend: true
+      frontend:    true
     )
   end
 end

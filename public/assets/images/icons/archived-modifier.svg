@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>archived-modifier</title>
+    <desc>Created with Sketch.</desc>
+    <g id="archived-modifier" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="backdrop" fill="#50E3C2" points="9 2 1 2 1 9 9 9"></polygon>
+        <path d="M2.25,3 L8.75,3 C8.88807119,3 9,3.11192881 9,3.25 L9,3.75 C9,3.88807119 8.88807119,4 8.75,4 L2.25,4 C2.11192881,4 2,3.88807119 2,3.75 L2,3.25 C2,3.11192881 2.11192881,3 2.25,3 Z M2.25,4.5 L8.75,4.5 L8.75,9 L2.25,9 L2.25,4.5 Z M5.5,6 C5.77614237,6 6,5.77614237 6,5.5 C6,5.22385763 5.77614237,5 5.5,5 C5.22385763,5 5,5.22385763 5,5.5 C5,5.77614237 5.22385763,6 5.5,6 Z" id="archive" fill="#BD10E0"></path>
+    </g>
+</svg>

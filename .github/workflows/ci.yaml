@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    container:
+      image: zammad/zammad-ci:latest
+    services:
+      postgresql:
+        image: postgres:10
+        env:
+          POSTGRES_USER: zammad
+          POSTGRES_PASSWORD: zammad
+    env:
+      RAILS_ENV: test
+      Z_LOCALES: "en-us:de-de"
+      # Temporary switch to enable the mobile front end for testing.
+      ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
+      # Compile assets only once.
+      CI_SKIP_ASSETS_PRECOMPILE: 'true'
+      # Avoid unnecessary DB resets.
+      CI_SKIP_DB_RESET: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-cache-npm-${{ hashFiles('yarn.lock') }}
+      - name: Cache Rubygems
+        id: cache-bundler
+        uses: actions/cache@v3
+        with:
+          path: vendor/ruby
+          key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
+      - name: Pre
+        run: .github/workflows/ci/pre.sh
+      - name: Lint
+        run: .github/workflows/ci/lint.sh
+      - name: Test
+        run: .github/workflows/ci/test.sh

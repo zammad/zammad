@@ -1,0 +1,5 @@
+stages:
+  - pre
+  - lint
+  - test
+  - browser

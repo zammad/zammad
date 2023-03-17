@@ -1,0 +1,11 @@
+[req]
+distinguished_name = subject
+prompt = no
+
+[subject]
+countryName            = DE
+stateOrProvinceName    = Berlin
+localityName           = Berlin
+organizationName       = Example Security
+organizationalUnitName = IT Department
+commonName             = example.com

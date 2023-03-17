@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
 
@@ -5,8 +7,6 @@ module Import
     #   @return [Number] the sleep time between the request retries
     module Requester
       extend Import::Helper
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       attr_accessor :retry_sleep
@@ -20,6 +20,9 @@ module Import
       # @option opts [Boolean] :diff request only changed/added entries since the last import
       #
       # @example
+      #   Import::OTRS::Requester.load('Ticket', offset: '208', limit: '1')
+      #   #=> [{'TicketNumber':'1234', ...}, ...]
+      #
       #   Import::OTRS::Requester.load('State', offset: '0', limit: '50')
       #   #=> [{'Name':'pending reminder', ...}, ...]
       #
@@ -34,12 +37,13 @@ module Import
         result = request_result(
           Subaction: 'Export',
           Object:    object,
-          Limit:     opts[:limit]  || '',
+          Limit:     opts[:limit] || '',
           Offset:    opts[:offset] || '',
           Diff:      opts[:diff] ? 1 : 0
         )
 
         return result if opts.present?
+
         @cache[object] = result
         @cache[object]
       end
@@ -67,6 +71,7 @@ module Import
       def connection_test
         result = request_json({})
         raise 'API key not valid!' if !result['Success']
+
         true
       end
 
@@ -90,11 +95,12 @@ module Import
         response = post(params)
         result   = handle_response(response)
         raise 'Invalid response' if !result
+
         result
       end
 
       def handle_response(response)
-        encoded_body = response.body.to_utf8
+        encoded_body = response.body.to_utf8(fallback: :read_as_sanitized_binary)
         # remove null bytes otherwise PostgreSQL will fail
         encoded_body.delete('\u0000')
         JSON.parse(encoded_body)
@@ -105,8 +111,8 @@ module Import
         params[:Action] = 'ZammadMigrator'
         params[:Key]    = Setting.get('import_otrs_endpoint_key')
 
-        log 'POST: ' + url
-        log 'PARAMS: ' + params.inspect
+        log "POST: #{url}"
+        log "PARAMS: #{params.inspect}"
 
         response = UserAgent.post(
           url,

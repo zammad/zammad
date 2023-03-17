@@ -1,0 +1,14 @@
+capybara:mariadb:
+  extends:
+    - .template_browser-core_capybara
+    - .variables_selenium_chrome
+  services:
+    - !reference [.services, mariadb]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, selenium-chrome]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+  script:
+    - !reference [.scripts, zammad_ci_test_prepare]
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t mariadb --profile 10 spec/system

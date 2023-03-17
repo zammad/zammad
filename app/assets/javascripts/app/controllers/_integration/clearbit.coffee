@@ -1,10 +1,9 @@
-class Index extends App.ControllerIntegrationBase
+class Clearbit extends App.ControllerIntegrationBase
   featureIntegration: 'clearbit_integration'
-  featureName: 'Clearbit'
+  featureName: __('Clearbit')
   featureConfig: 'clearbit_config'
   description: [
-    ['Automatically enrich your customers and organizations with fresh, up-to-date intel. Map data directly to object fields.
-']
+    [__('Automatically enrich your customers and organizations with fresh, up-to-date intel. Map data directly to object fields.')]
   ]
 
   render: =>
@@ -62,9 +61,9 @@ class Form extends App.Controller
     if !@config
       @config = @currentConfig()
     settings = [
-      { name: 'api_key', display: 'API Key', tag: 'input', type: 'text', limit: 100, null: false, placeholder: '...', note: 'Your api key.' },
-      { name: 'organization_autocreate', display: 'Auto create', tag: 'boolean', type: 'boolean', null: false, note: 'Create organizations automatically if record has one.' },
-      { name: 'organization_shared', display: 'Shared', tag: 'boolean', type: 'boolean', null: false, note: 'New organizations are shared.' },
+      { name: 'api_key', display: __('API Key'), tag: 'input', type: 'text', limit: 100, null: false, placeholder: '...', note: __('Your API key.') },
+      { name: 'organization_autocreate', display: __('Auto create'), tag: 'boolean', type: 'boolean', null: false, note: __('Create organizations automatically if record has one.') },
+      { name: 'organization_shared', display: __('Shared'), tag: 'boolean', type: 'boolean', null: false, note: __('New organizations are shared.') },
     ]
 
     @html App.view('integration/clearbit')(
@@ -152,10 +151,10 @@ class State
 App.Config.set(
   'IntegrationClearbit'
   {
-    name: 'Clearbit'
+    name: __('Clearbit')
     target: '#system/integration/clearbit'
-    description: 'A powerfull service to get more information about your customers.'
-    controller: Index
+    description: __('A powerful service to get more information about your customers.')
+    controller: Clearbit
     state: State
     permission: ['admin.integration.clearbit']
   }

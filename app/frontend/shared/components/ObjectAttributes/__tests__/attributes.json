@@ -1,0 +1,322 @@
+[
+  {
+    "name": "login",
+    "display": "Login",
+    "dataType": "input",
+    "dataOption": {
+      "type": "text",
+      "maxlength": 100,
+      "null": true,
+      "autocapitalize": false,
+      "item_class": "formGroup--halfSize"
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "address",
+    "display": "Address",
+    "dataType": "textarea",
+    "dataOption": {
+      "type": "text",
+      "maxlength": 500,
+      "rows": 4,
+      "null": true,
+      "item_class": "formGroup--halfSize"
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "vip",
+    "display": "VIP",
+    "dataType": "boolean",
+    "dataOption": {
+      "null": true,
+      "default": false,
+      "item_class": "formGroup--halfSize",
+      "options": {
+        "false": "no",
+        "true": "yes"
+      },
+      "translate": true,
+      "permission": ["admin.user", "ticket.agent"]
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "hiddenBoolean",
+    "display": "Hidden Boolean",
+    "dataType": "boolean",
+    "dataOption": {
+      "null": true,
+      "default": null,
+      "item_class": "formGroup--halfSize",
+      "options": {
+        "false": "no",
+        "true": "yes"
+      }
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "note",
+    "display": "Note",
+    "dataType": "richtext",
+    "dataOption": {
+      "type": "text",
+      "maxlength": 5000,
+      "null": true,
+      "note": "Notes are visible to agents only, never to customers.",
+      "no_images": true
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "date_attribute",
+    "display": "Date Attribute",
+    "dataType": "date",
+    "dataOption": {
+      "diff": 232323,
+      "default": null,
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "textarea_field",
+    "display": "Textarea Field",
+    "dataType": "textarea",
+    "dataOption": {
+      "default": "",
+      "maxlength": 500,
+      "rows": 4,
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "integer_field",
+    "display": "Integer Field",
+    "dataType": "integer",
+    "dataOption": {
+      "default": null,
+      "min": 0,
+      "max": 999999999,
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "date_time_field",
+    "display": "DateTime Field",
+    "dataType": "datetime",
+    "dataOption": {
+      "future": true,
+      "past": true,
+      "diff": null,
+      "default": null,
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "single_select",
+    "display": "Single Select Field",
+    "dataType": "select",
+    "dataOption": {
+      "options": {
+        "key1": "Display1",
+        "key2": "Display2"
+      },
+      "linktemplate": "",
+      "default": "",
+      "null": true,
+      "relation": "",
+      "nulloption": true,
+      "maxlength": 255,
+      "historical_options": {
+        "key1": "Display1",
+        "key2": "Display2"
+      }
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "multi_select_field",
+    "display": "Multi Select Field",
+    "dataType": "multiselect",
+    "dataOption": {
+      "options": {
+        "key1": "Display1",
+        "key2": "Display2"
+      },
+      "linktemplate": "",
+      "default": [],
+      "null": true,
+      "relation": "",
+      "nulloption": true,
+      "maxlength": 255,
+      "multiple": true,
+      "historical_options": {
+        "key1": "Display1",
+        "key2": "Display2"
+      }
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "single_tree_select",
+    "display": "Single Tree Select Field",
+    "dataType": "tree_select",
+    "dataOption": {
+      "options": [
+        {
+          "name": "key1",
+          "value": "key1",
+          "children": [
+            {
+              "name": "key1_child1",
+              "value": "key1::key1_child1"
+            },
+            {
+              "name": "key1_child2",
+              "value": "key1::key1_child2"
+            }
+          ]
+        },
+        {
+          "name": "key2",
+          "value": "key2"
+        }
+      ],
+      "default": "",
+      "null": true,
+      "relation": "",
+      "nulloption": true,
+      "maxlength": 255,
+      "historical_options": {
+        "key1": "key1",
+        "key1::key1_child1": "key1_child1",
+        "key1::key1_child2": "key1_child2",
+        "key2": "key2"
+      }
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "multi_tree_select",
+    "display": "Multi Tree Select Field",
+    "dataType": "multi_tree_select",
+    "dataOption": {
+      "options": [
+        {
+          "name": "key1",
+          "value": "key1"
+        },
+        {
+          "name": "key2",
+          "value": "key2",
+          "children": [
+            {
+              "name": "key2_child1",
+              "value": "key2::key2_child1"
+            },
+            {
+              "name": "key2_child2",
+              "value": "key2::key2_child2",
+              "children": [
+                {
+                  "name": "key2_child2_child1",
+                  "value": "key2::key2_child2::key2_child2_child1"
+                },
+                {
+                  "name": "key2_child2_child2",
+                  "value": "key2::key2_child2::key2_child2_child2"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "default": null,
+      "null": true,
+      "relation": "",
+      "multiple": true
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "active",
+    "display": "Active",
+    "dataType": "active",
+    "dataOption": {
+      "null": true,
+      "default": true,
+      "permission": ["admin.user", "ticket.agent"]
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "invisible",
+    "display": "Invisible",
+    "dataType": "input",
+    "dataOption": {
+      "null": false,
+      "item_class": "checkbox",
+      "permission": ["invisible.*"]
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "some_url",
+    "display": "Url",
+    "dataType": "input",
+    "dataOption": {
+      "default": "",
+      "type": "url",
+      "maxlength": 120,
+      "linktemplate": "",
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "phone",
+    "display": "Phone",
+    "dataType": "input",
+    "dataOption": {
+      "default": "",
+      "type": "tel",
+      "maxlength": 120,
+      "linktemplate": "",
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  },
+  {
+    "name": "some_email",
+    "display": "Email",
+    "dataType": "input",
+    "dataOption": {
+      "default": "",
+      "type": "email",
+      "maxlength": 120,
+      "linktemplate": "",
+      "null": true,
+      "options": {},
+      "relation": ""
+    },
+    "__typename": "ObjectManagerFrontendAttribute"
+  }
+]

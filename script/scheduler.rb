@@ -1,27 +1,16 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-$LOAD_PATH << './lib'
-require 'rubygems'
-
-# load rails env
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 Dir.chdir dir
-RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 
-require 'rails/all'
 require 'bundler'
-require File.join(dir, 'config', 'environment')
 require 'daemons'
 
+DEPRECATION_WARNING = "'script/scheduler.rb' is deprecated and will be removed with Zammad 6. Please use 'script/background-worker.rb' instead - note that this will not daemonize but always stay in the foreground.".freeze
+warn "DEPRECATION WARNING: #{DEPRECATION_WARNING}"
+
 def before_fork
-
-  # clear all connections before for, reconnect later ActiveRecord::Base.connection.reconnect!
-  # issue #1405 - Scheduler not running because of Bad file descriptor in PGConsumeInput()
-  # https://github.com/zammad/zammad/issues/1405
-  # see also https://bitbucket.org/ged/ruby-pg/issues/260/frequent-crashes-with-multithreading
-  ActiveRecord::Base.clear_all_connections!
-
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
@@ -45,29 +34,36 @@ end
 before_fork
 
 daemon_options = {
-  multiple: false,
-  dir_mode: :normal,
-  dir: File.join(dir, 'tmp', 'pids'),
+  multiple:  false,
+  dir_mode:  :normal,
+  dir:       File.join(dir, 'tmp', 'pids'),
   backtrace: true
 }
 
-name = 'scheduler'
-Daemons.run_proc(name, daemon_options) do
-
-  if ARGV.include?('--')
-    ARGV.slice! 0..ARGV.index('--')
-  else
-    ARGV.clear
-  end
+Daemons.run_proc('scheduler', daemon_options) do
 
   after_fork(dir)
 
-  Rails.logger.info 'Scheduler started.'
+  require File.join(dir, 'config', 'environment')
 
+  Rails.logger.info 'Scheduler started.'
+  ActiveSupport::Deprecation.warn DEPRECATION_WARNING
   at_exit do
-    Rails.logger.info 'Scheduler stopped.'
+
+    # use process title for stop log entry
+    # if differs from default process title
+    title = 'Scheduler'
+    if $PROGRAM_NAME != 'scheduler.rb'
+      title = $PROGRAM_NAME
+    end
+
+    Rails.logger.info "#{title} stopped."
   end
 
-  require 'scheduler'
-  Scheduler.threads
+  begin
+    config = BackgroundServices::ServiceConfig.configuration_from_env(ENV)
+    BackgroundServices.new(config).run
+  rescue Interrupt
+    nil
+  end
 end

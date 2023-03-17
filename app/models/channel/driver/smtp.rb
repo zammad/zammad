@@ -1,6 +1,12 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Smtp
+  include Channel::EmailHelper
+
+  # we're using the same timeouts like in Net::SMTP gem
+  #   but we would like to have the possibility to mock it for tests
+  DEFAULT_OPEN_TIMEOUT = 30.seconds
+  DEFAULT_READ_TIMEOUT = 60.seconds
 
 =begin
 
@@ -13,7 +19,7 @@ class Channel::Driver::Smtp
       openssl_verify_mode:  'none', # optional
       user:                 'someuser',
       password:             'somepass'
-      authentication:       nil, # nil, autodetection - to use certain schema use 'plain', 'login' or 'cram_md5'
+      authentication:       nil, # nil, autodetection - to use certain schema use 'plain', 'login', 'xoauth2' or 'cram_md5'
     },
     mail_attributes,
     notification
@@ -30,15 +36,13 @@ class Channel::Driver::Smtp
     if !options.key?(:port) || options[:port].blank?
       options[:port] = 25
     end
-    if !options.key?(:ssl)
-      if options[:port].to_i == 465
-        options[:ssl] = true
-      end
+    if !options.key?(:ssl) && options[:port].to_i == 465
+      options[:ssl] = true
     end
     if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender
       fqdn = Setting.get('fqdn')
-      if fqdn =~ /(localhost|\.local^|\.loc^)/i && (attr['from'] || attr[:from])
+      if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from])
         domain = Mail::Address.new(attr['from'] || attr[:from]).domain
         if domain
           fqdn = domain
@@ -52,13 +56,26 @@ class Channel::Driver::Smtp
     if !options.key?(:openssl_verify_mode)
       options[:openssl_verify_mode] = 'none'
     end
+
+    # set system_bcc of config if defined
+    system_bcc = Setting.get('system_bcc')
+    email_address_validation = EmailAddressValidation.new(system_bcc)
+    if system_bcc.present? && email_address_validation.valid?
+      attr[:bcc] ||= ''
+      attr[:bcc] += ', ' if attr[:bcc].present?
+      attr[:bcc] += system_bcc
+    end
+    attr = prepare_idn_outbound(attr)
+
     mail = Channel::EmailBuild.build(attr, notification)
     smtp_params = {
-      openssl_verify_mode: options[:openssl_verify_mode],
-      address: options[:host],
-      port: options[:port],
-      domain: options[:domain],
+      openssl_verify_mode:  options[:openssl_verify_mode],
+      address:              options[:host],
+      port:                 options[:port],
+      domain:               options[:domain],
       enable_starttls_auto: options[:enable_starttls_auto],
+      open_timeout:         DEFAULT_OPEN_TIMEOUT,
+      read_timeout:         DEFAULT_READ_TIMEOUT,
     }
 
     # set ssl if needed

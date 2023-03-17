@@ -1,0 +1,50 @@
+.template_rspec_mysql:
+  extends:
+    - .template_rspec
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - !reference [.services, proxy]
+
+rspec:mysql:1:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 1
+  extends:
+    - .template_rspec_mysql
+
+rspec:mysql:2:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 2
+  extends:
+    - .template_rspec_mysql
+
+rspec:mysql:3:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 3
+  extends:
+    - .template_rspec_mysql
+
+rspec:mysql:4:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 4
+  extends:
+    - .template_rspec_mysql
+
+rspec:mysql:5:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 5
+  extends:
+    - .template_rspec_mysql
+
+rspec:mysql:6:
+  variables:
+    RSPEC_SLICES: 6
+    RSPEC_CURRENT_SLICE: 6
+  extends:
+    - .template_rspec_mysql

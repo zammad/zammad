@@ -9,23 +9,23 @@ class App.TicketZoomHighlighter extends App.Controller
 
   colors: [
     {
-      name: 'Yellow'
+      name: __('Yellow')
       color: '#f7e7b2'
     },
     {
-      name: 'Green'
+      name: __('Green')
       color: '#bce7b6'
     },
     {
-      name: 'Blue'
+      name: __('Blue')
       color: '#b3ddf9'
     },
     {
-      name: 'Pink'
+      name: __('Pink')
       color: '#fea9c5'
     },
     {
-      name: 'Purple'
+      name: __('Purple')
       color: '#eac5ee'
     }
   ]
@@ -36,7 +36,7 @@ class App.TicketZoomHighlighter extends App.Controller
   constructor: ->
     super
 
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
 
     @currentHighlights = {}
 
@@ -91,9 +91,9 @@ class App.TicketZoomHighlighter extends App.Controller
     articles.off('mousedown', @onMouseDown)
     articles.on('mousedown', @onMouseDown) #future: touchend
 
-  # for testing purposes the highlights get stored in atrticle preferences
+  # for testing purposes the highlights get stored in article preferences
   loadHighlights: (ticket_article_id) ->
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
     article = App.TicketArticle.find(ticket_article_id)
     return if !article.preferences
     return if !article.preferences.highlight
@@ -103,7 +103,7 @@ class App.TicketZoomHighlighter extends App.Controller
     @currentHighlights[ticket_article_id] = article.preferences.highlight
     @highlighter.deserialize(article.preferences.highlight)
 
-  # the serialization creates one string for the entiery ticket
+  # the serialization creates one string for the entire ticket
   # containing the offsets and the highlight classes
   #
   # we have to check how it works with having open several tickets - it might break
@@ -212,13 +212,14 @@ class App.TicketZoomHighlighter extends App.Controller
   # - clears the selection
 
   toggleHighlightAtSelection: (article, article_id) =>
+    return if !article
+
     selection = rangy.getSelection()
 
     # activate selection background
     article.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
     if @highlighter.selectionOverlapsHighlight selection
-      console.log('SELECTION EXISTS, REMOVED IT')
       @highlighter.unhighlightSelection()
       selection.removeAllRanges()
       @highlightDisable()
@@ -226,7 +227,6 @@ class App.TicketZoomHighlighter extends App.Controller
       return
 
     if selection && selection.rangeCount > 0
-      console.log('NEW SELECTION', selection)
       @highlighter.highlightSelection @highlightClass,
         selection: selection
         containerElementId: article.get(0).id

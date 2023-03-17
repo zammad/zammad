@@ -1,19 +1,9 @@
-class Sequencer
-  class Unit
-    module Import
-      module Ldap
-        module User
-          module Skip
-            class Blank < Sequencer::Unit::Import::Common::Model::Skip::Blank::Mapped
-              private
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              def ignore
-                %i[login]
-              end
-            end
-          end
-        end
-      end
-    end
+class Sequencer::Unit::Import::Ldap::User::Skip::Blank < Sequencer::Unit::Import::Common::Model::Skip::Blank::Mapped
+  private
+
+  def ignore
+    %i[login]
   end
 end

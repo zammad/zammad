@@ -1,43 +1,36 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module TicketField
-          class CheckCustom < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource, :model_class
-            provides :action
+class Sequencer::Unit::Import::Zendesk::TicketField::CheckCustom < Sequencer::Unit::Base
 
-            def process
-              return if custom?
-              state.provide(:action, :skipped)
-            end
+  uses :resource, :model_class
+  provides :action
 
-            private
+  def process
+    return if custom?
 
-            def custom?
-              model_class.column_names.exclude?(attribute)
-            end
+    logger.info { "Skipping. Default field '#{attribute}' found for field '#{resource.type}'." }
+    state.provide(:action, :skipped)
+  end
 
-            def attribute
-              mapping.fetch(resource.type, resource.type)
-            end
+  private
 
-            def mapping
-              {
-                'subject'        => 'title',
-                'description'    => 'note',
-                'status'         => 'state_id',
-                'tickettype'     => 'type',
-                'priority'       => 'priority_id',
-                'basic_priority' => 'priority_id',
-                'group'          => 'group_id',
-                'assignee'       => 'owner_id',
-              }.freeze
-            end
-          end
-        end
-      end
-    end
+  def custom?
+    model_class.column_names.exclude?(attribute)
+  end
+
+  def attribute
+    @attribute ||= mapping.fetch(resource.type, resource.type)
+  end
+
+  def mapping
+    {
+      'subject'        => 'title',
+      'description'    => 'note',
+      'status'         => 'state_id',
+      'priority'       => 'priority_id',
+      'basic_priority' => 'priority_id',
+      'group'          => 'group_id',
+      'assignee'       => 'owner_id',
+    }.freeze
   end
 end

@@ -13,7 +13,9 @@
       <p><%- @T(item...) %></p>
     <% end %>
   <% end %>
+  <div class="js-state"></div>
+  <div class="js-list"></div>
   <div class="js-form"></div>
-  <div class="js-scriptSnipped"></div>
+  <div class="js-usage"></div>
   <div class="js-log"></div>
 </div>

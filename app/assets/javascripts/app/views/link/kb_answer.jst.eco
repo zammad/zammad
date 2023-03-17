@@ -1,0 +1,20 @@
+<label><%- @T('Related Answers') %></label>
+<ol class="tasks tasks--standalone">
+  <% for item in @list: %>
+    <li class="task">
+      <div class="icon-holder">
+      	<%- @Icon('knowledge-base') %>
+      </div>
+      <div class="task-text">
+        <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+      </div>
+      <% if @editable: %>
+        <a class="list-item-delete js-delete" data-object="KnowledgeBase::Answer::Translation" data-object-id="<%= item.id %>" data-link-type="normal">
+          <%- @Icon('diagonal-cross') %>
+        </a>
+      <% end %>
+  <% end %>
+</ol>
+<% if @editable: %>
+  <div class="text-muted js-add u-clickable">+ <%- @T('Link Related Answer') %></div>
+<% end %>

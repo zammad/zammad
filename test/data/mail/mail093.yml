@@ -1,0 +1,18 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: ツール EXAMPLE <bar@example.org>
+from_email: bar@example.org
+from_display_name: ツール EXAMPLE
+to: 駅北口  <foo@example.com>
+subject: ツール
+body: 今なら、先着100施設限定で<br> 無料バージョンを導入いただけます。
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<body>\n　今なら、<span>先着100施設限定</span>で<br>
+    \n　<span>無料バージョン</span>を導入いただけます。\n</body>\n</html>"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: iso-2022-jp

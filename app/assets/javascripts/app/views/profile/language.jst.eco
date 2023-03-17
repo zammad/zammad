@@ -4,9 +4,10 @@
   </div>
 </div>
 <div class="page-content">
-  <p><%- @T('Change your language.') %></p>
+  <p><%- @T('Choose your language.') %></p>
   <form class="settings-entry horizontal end">
-    <div class="form-item language_item flex"></div>
+    <div class="form-item js-language flex"></div>
     <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
   </form>
+  <p><%- @T('Did you know? You can help translating %s at:', 'Zammad') %> <a href="https://translations.zammad.org" target="_blank">translations.zammad.org</a></p>
 </div>

@@ -1,0 +1,113 @@
+<div class="main flex vertical centered darkBackground">
+  <%- @Icon('full-logo', 'wizard-logo') %>
+  <div class="import wizard">
+    <div class="wizard-slide vertical" data-slide="kayako-subdomain">
+      <h2><%- @T('%s URL', 'Kayako') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          <%- @T('Enter the Subdomain of your %s system', 'Kayako') %>:
+        </p>
+        <div class="form-group">
+          <label for="kayako-subdomain"><%- @T('%s subdomain', 'Kayako') %></label>
+          <div class="u-positionOrigin">
+            <div class="input-group">
+              <input type="text" id="kayako-subdomain" class="form-control" placeholder="example" name="kayako-subdomain" aria-describedby="kayako-subdomain-addon">
+              <span class="input-group-addon" id="kayako-subdomain-addon"><%- @kayakoDomain %></span>
+            </div>
+            <div class="input-feedback input-feedback--no-background centered">
+              <div class="small loading icon"></div>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
+              <%- @Icon('checkmark') %>
+            </div>
+          </div>
+          <div class="error kayako-subdomain-error"></div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <div class="btn btn--primary align-right hide js-kayako-credentials" data-target="kayako-credentials"><%- @T('Enter credentials') %></div>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="kayako-credentials">
+      <h2><%- @T('%s credentials', 'Kayako') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p>
+          <%- @T('Enter your email address and password from your %s account which should be used for the import.', 'Kayako') %>
+        </p>
+        <p>
+          <%- @T('Attention: These will also be your login and password after the import is completed.') %>
+        </p>
+        <div class="form-group">
+          <label for="kayako-email"><%- @T('Email') %></label>
+          <div class="u-positionOrigin">
+            <input type="email" id="kayako-email" class="form-control" placeholder="admin@example.com" name="kayako-email">
+          </div>
+          <label for="kayako-password"><%- @T('Password') %></label>
+          <div class="u-positionOrigin">
+            <input type="password" id="kayako-password" class="form-control" name="kayako-password">
+            <div class="input-feedback centered">
+              <div class="small loading icon"></div>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
+              <%- @Icon('checkmark') %>
+            </div>
+          </div>
+          <div class="error kayako-password-error"></div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <div class="btn btn--primary align-right hide js-migration-start" data-target="kayako-start-migration"><%- @T('Migrate %s Data', 'Kayako') %></div>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="kayako-import">
+      <h2><%- @T('%s Migration', 'Kayako') %></h2>
+      <div class="alert alert--danger hide js-error" role="alert"></div>
+      <div class="wizard-body flex vertical justified">
+        <table class="progressTable">
+          <tr class="js-groups">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Groups') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-organizations">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Organizations') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-users">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Users') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+          <tr class="js-tickets">
+            <td><span class="js-done">-</span>/<span class="js-total">-</span>
+            <td><span><%- @T('Tickets') %></span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <%- @Icon('checkmark') %>
+              </div>
+          </tr>
+        </table>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('done') %></a>
+      </div>
+    </div>
+
+  </div>
+</div>

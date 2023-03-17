@@ -1,0 +1,28 @@
+Return-Path: <bar@example.org>
+Received: by example.com (Postfix, from userid 0)
+	id 123; Wed,  31 Jul 2020 11:38:04 +0900 (JST)
+To: =?ISO-2022-JP?B?iXeWa4z7IA==?= <foo@example.com>
+Subject: ÉcÅ[Éã
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="--799140365efbe012d87669.81669397"
+Content-Transfer-Encoding: quoted-printable
+From: =?ISO-2022-JP?B?g2OBW4OLIEVYQU1QTEU=?= <bar@example.org>
+Message-Id: <123@example.org>
+Date: Wed,  31 Jul 2020 11:38:04 +0900 (JST)
+
+----799140365efbe012d87669.81669397
+Content-Type: text/html; charset=iso-2022-jp
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+<body>
+=1B$B!!:#$J$i!"=1B(B<span>=1B$B@hCe=1B(B100=1B$B;\@_8BDj=1B(B</span=
+>=1B$B$G=1B(B<br>=20
+=1B$B!!=1B(B<span>=1B$BL5NA%P!<%8%g%s=1B(B</span>=1B$B$rF3F~$$$?=
+$@$1$^$9!#=1B(B
+</body>
+</html>
+----799140365efbe012d87669.81669397--
+

@@ -1,0 +1,15 @@
+Accesso amministrativo a #{config.product_name}
+
+<div>Ciao #{user.firstname},</div>
+<br>
+<div>abbiamo ricevuto una richiesta di accesso per il tuo account <b>#{user.login}</b> su #{config.product_name}.</div>
+<br>
+<div>Per favore clicca sul link sotto (o fai copia/incolla nel browser) per procedere:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Questo collegamento porta a una pagina da cui potrai accedere.</div>
+<br>
+<div>Se non hai necessità di accedere, puoi ignorare questo messaggio.</div>
+<br>
+<div>Il team #{config.product_name}</div>

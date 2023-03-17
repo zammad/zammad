@@ -1,13 +1,13 @@
 class Branding extends App.ControllerTabs
   requiredPermission: 'admin.branding'
-  header: 'Branding'
+  header: __('Branding')
   constructor: ->
     super
 
-    @title 'Branding', true
+    @title __('Branding'), true
     @tabs = [
-      { name: 'Base', 'target': 'base', controller: App.SettingsArea, params: { area: 'System::Branding' } }
+      { name: __('Base'), 'target': 'base', controller: App.SettingsArea, params: { area: 'System::Branding' } }
     ]
     @render()
 
-App.Config.set('SettingBranding', { prio: 1200, parent: '#settings', name: 'Branding', target: '#settings/branding', controller: Branding, permission: ['admin.branding'] }, 'NavBarAdmin')
+App.Config.set('SettingBranding', { prio: 1200, parent: '#settings', name: __('Branding'), target: '#settings/branding', controller: Branding, permission: ['admin.branding'] }, 'NavBarAdmin')

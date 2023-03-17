@@ -1,0 +1,11 @@
+workflow:
+  rules:
+    # Allow duplicate pipelines for filtered pipelines as we cannot pass variables from the
+    #   git push commandline to merge request pipelines.
+    #   (see https://docs.gitlab.com/ee/user/project/push_options.html)
+    - if: $JOB_FILTER || $BROWSER_TEST_FILTER
+      when: always
+    # Avoid duplicate branch and MR pipelines for push events.
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - when: always

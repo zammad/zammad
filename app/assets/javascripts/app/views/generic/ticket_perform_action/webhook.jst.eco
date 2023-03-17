@@ -1,0 +1,6 @@
+<div class="form-group">
+  <div class="formGroup-label">
+    <label><%- @T('Webhooks') %></label>
+  </div>
+  <div class="controls js-webhooks"></div>
+</div>

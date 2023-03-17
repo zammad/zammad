@@ -1,0 +1,50 @@
+<% if !_.isEmpty(@events): %>
+  <% for event in @events: %>
+    <article class="calendar-events">
+      <h2 class="title"><%= event.title %></h2>
+      <% if !_.isEmpty(event.location): %>
+        <h4><%- @T('Location') %></h4>
+        <p><%- App.Utils.linkify(event.location) %></p>
+      <% end %>
+      <div class="event-row">
+        <div>
+          <h4><%- @T('From') %></h4>
+          <p><%- @datetime(event.start_date) %></p>
+        </div>
+        <div>
+          <h4><%- @T('Till') %></h4>
+          <p><%- @datetime(event.end_date) %></p>
+        </div>
+      </div>
+      <div class="event-row">
+        <% if !_.isEmpty(event.organizer): %>
+          <div>
+          <h4><%- @T('Organizer') %></h4>
+          <p><%= event.organizer %></p>
+          </div>
+        <% end %>
+        <% if !_.isEmpty(event.attendees): %>
+          <div>
+          <h4><%- @T('Attendees') %></h4>
+          <ul>
+            <% for attendee in event.attendees: %>
+              <li><%- attendee %></li>
+            <% end %>
+          </ul>
+          </div>
+        <% end %>
+      </div>
+      <% if !_.isEmpty(event.description): %>
+        <section class="description">
+          <h4>Description</h4>
+          <%- App.Utils.text2html(event.description) %>
+        </section>
+      <% end %>
+    </article>
+    <% if @events.length > 1: %>
+      <div class="divider"></div>
+    <% end %>
+  <% end %>
+<% else: %>
+  <div><%- @T('No Entries') %></div>
+<% end %>

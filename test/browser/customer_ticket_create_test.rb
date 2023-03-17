@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -7,7 +8,7 @@ class CustomerTicketCreateTest < TestCase
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # customer ticket create
@@ -16,16 +17,16 @@ class CustomerTicketCreateTest < TestCase
     sleep 2
 
     select(
-      css: '.newTicket select[name="group_id"]',
+      css:   '.newTicket select[name="group_id"]',
       value: 'Users',
     )
 
     set(
-      css: '.newTicket input[name="title"]',
+      css:   '.newTicket input[name="title"]',
       value: 'some subject 123äöü',
     )
     set(
-      css: '.newTicket [data-name="body"]',
+      css:   '.newTicket [data-name="body"]',
       value: 'some body 123äöü',
     )
     exists_not(
@@ -42,21 +43,21 @@ class CustomerTicketCreateTest < TestCase
     location_check(url: '#ticket/zoom/')
 
     match(
-      css: '.active div.ticket-article',
-      value: 'some body 123äöü',
+      css:      '.active div.ticket-article',
+      value:    'some body 123äöü',
       no_quote: true,
     )
 
     # verify if the state has changed to open
     match(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'new',
     )
 
     # update ticket
     set(
-      css: '.content.active [data-name="body"]',
-      value: 'some body 1234 äöüß',
+      css:      '.content.active [data-name="body"]',
+      value:    'some body 1234 äöüß',
       no_click: true,
     )
 
@@ -67,13 +68,13 @@ class CustomerTicketCreateTest < TestCase
     click(css: '.content.active .js-submit')
 
     watch_for(
-      css: '.content.active div.ticket-article',
+      css:   '.content.active div.ticket-article',
       value: 'some body 1234 äöüß',
     )
 
     # check if the ticket state is new after update by customer
     match(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'new',
     )
 
@@ -84,69 +85,69 @@ class CustomerTicketCreateTest < TestCase
 
     # close the ticket
     select(
-      css: '.content.active [name="state_id"]',
+      css:   '.content.active [name="state_id"]',
       value: 'closed',
     )
 
     set(
-      css: '.content.active [data-name="body"]',
-      value: 'close #1',
+      css:      '.content.active [data-name="body"]',
+      value:    'close #1',
       no_click: true,
     )
 
     click(css: '.content.active .js-submit')
     watch_for(
-      css: '.content.active div.ticket-article',
+      css:   '.content.active div.ticket-article',
       value: 'close #1',
     )
 
     # check if the ticket is closed
     match(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'closed',
     )
 
-    # type in new content into rte to trigger the default follow up state
+    # type in new content into rte to trigger the default follow-up state
     set(
-      css: '.content.active [data-name="body"]',
-      value: 'some body blublub default followup for reopen check',
+      css:      '.content.active [data-name="body"]',
+      value:    'some body blublub default followup for reopen check',
       no_click: true,
     )
 
     # verify if the state has changed to open
     watch_for(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'open',
     )
 
     # no we verify the reverse way:
     # if the body get changed to empty again then
-    # the default follow up state should get unset and
+    # the default follow-up state should get unset and
     # will change to the the default ticket state.
 
     # remove content from rte
     set(
-      css: '.content.active [data-name="body"]',
-      value: '',
+      css:      '.content.active [data-name="body"]',
+      value:    '',
       no_click: true,
     )
 
     # check if state changed to closed again
     watch_for(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'closed',
     )
 
-    # type in new content into rte to trigger the default follow up state
+    # type in new content into rte to trigger the default follow-up state
     set(
-      css: '.content.active [data-name="body"]',
-      value: 'some body blublub default followup for reopen check',
+      css:      '.content.active [data-name="body"]',
+      value:    'some body blublub default followup for reopen check',
       no_click: true,
     )
 
     # verify if the state has changed to open
     watch_for(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'open',
     )
 
@@ -154,13 +155,13 @@ class CustomerTicketCreateTest < TestCase
     click(css: '.content.active .js-submit')
 
     watch_for(
-      css: '.content.active div.ticket-article',
+      css:   '.content.active div.ticket-article',
       value: 'some body blublub default followup for reopen check',
     )
 
     # verify if the state has changed to open
     match(
-      css: '.content.active .sidebar [name="state_id"]',
+      css:   '.content.active .sidebar [name="state_id"]',
       value: 'open',
     )
   end
@@ -170,7 +171,7 @@ class CustomerTicketCreateTest < TestCase
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # customer ticket create
@@ -179,16 +180,16 @@ class CustomerTicketCreateTest < TestCase
     sleep 2
 
     select(
-      css: '.newTicket select[name="group_id"]',
+      css:   '.newTicket select[name="group_id"]',
       value: 'Users',
     )
 
     set(
-      css: '.newTicket input[name="title"]',
+      css:   '.newTicket input[name="title"]',
       value: 'relogin - customer - agent - test 1',
     )
     set(
-      css: '.newTicket [data-name="body"]',
+      css:   '.newTicket [data-name="body"]',
       value: 'relogin - customer - agent - test 1',
     )
 
@@ -199,28 +200,28 @@ class CustomerTicketCreateTest < TestCase
     location_check(url: '#ticket/zoom/')
 
     match(
-      css: '.active div.ticket-article',
-      value: 'relogin - customer - agent - test 1',
+      css:      '.active div.ticket-article',
+      value:    'relogin - customer - agent - test 1',
       no_quote: true,
     )
 
-    logout()
+    logout
 
     # verify if we still can create new tickets as agent
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'relogin - customer - agent - test 2',
-        body: 'relogin - customer - agent - test 2',
-        state: 'closed',
+        group:    'Users',
+        title:    'relogin - customer - agent - test 2',
+        body:     'relogin - customer - agent - test 2',
+        state:    'closed',
       },
     )
   end
@@ -230,9 +231,9 @@ class CustomerTicketCreateTest < TestCase
 
     # disable ticket creation
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -243,26 +244,26 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is not visible
 
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     assert(exists_not(css: 'a[href="#customer_ticket_new"]'))
 
-    logout()
+    logout
 
     # enable ticket creation
 
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     click(css: 'a[href="#manage"]')
@@ -273,14 +274,14 @@ class CustomerTicketCreateTest < TestCase
 
     sleep(1)
 
-    logout()
+    logout
 
     # check if new ticket button is visible
 
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     assert(exists(css: 'a[href="#customer_ticket_new"]'))

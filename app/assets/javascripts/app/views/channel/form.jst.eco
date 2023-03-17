@@ -111,47 +111,65 @@
               </span>
               <%- @T('Add attachment option to upload.') %>
             </label>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label class="inline-label">
+                <span class="checkbox-replacement checkbox-replacement--inline">
+                  <input type="checkbox" id="agreementSupport" value="true">
+                  <%- @Icon('checkbox', 'icon-unchecked') %>
+                  <%- @Icon('checkbox-checked', 'icon-checked') %>
+                </span>
+                <%- @T('Add agreement text before submit.') %>
+              </label>
+              <div class="controls">
+                <div class="hide agreement-support-text richtext form-group">
+                  <textarea type="text" id="form-message-agreement" name="agreementMessage" rows="3"><%- @Ti('Accept Data Privacy Policy & Acceptable Use Policy') %></textarea>
+                </div>
+              </div>
+            </div>
       </tbody>
     </table>
   </form>
 
   <label class="formGroup-label"><%- @T('Preview') %></label>
 
-  <div class="browser form-demo js-browser">
-    <div class="browser-body js-browserBody">
-      <div class="browser-website centered vertical fit">
-        <div class="btn js-formBtn"><%- @T('Feedback') %></div>
-        <div class="js-formInline" style="width: 300px;"></div>
-        <script id="zammad_form_script" src="/assets/form/form.js"></script>
+  <div class="browser js-browser">
+    <div class="browser-ratio">
+      <div class="browser-body js-browserBody">
+        <div class="browser-website centered vertical fit">
+          <div class="btn js-formBtn"><%- @T('Feedback') %></div>
+          <div class="js-formInline browser-inline-form"></div>
+        </div>
       </div>
     </div>
   </div>
   <h3><%- @T('Requirements') %></h3>
-  <p><%- @T("Zammad Forms requires jQuery. If you don't already use it on your website include it like this:") %></p>
-  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
+  <p><%- @T("Zammad Forms requires jQuery. If you don't already use it on your website, you can add it like this:") %></p>
+  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
 
-  <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
+  <p><%- @T('You need to add the following Javascript code snippet to your web page:') %></p>
 
-  <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+  <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="zammad-feedback-form"&gt;Feedback&lt;/button&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
 <span class="js-modal-params"></span>
   });
 });
 &lt;/script&gt;</code></pre>
 </div>
 
-  <pre class="js-inlineForm"><code class="language-html js-code js-paramsBlock">&lt;div id="feedback-form"&gt;form will be placed in here&lt;/div&gt;
+  <pre class="js-inlineForm"><code class="language-html js-code js-paramsBlock">&lt;div id="zammad-feedback-form"&gt;form will be placed in here&lt;/div&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
-  $('#feedback-form').ZammadForm({
+  $('#zammad-feedback-form').ZammadForm({
 <span class="js-modal-params"></span>
   });
 });

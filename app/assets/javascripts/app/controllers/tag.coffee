@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Tag extends App.ControllerSubContent
   requiredPermission: 'admin.tag'
-  header: 'Tags'
+  header: __('Tags')
   events:
     'change .js-newTagSetting input': 'setTagNew'
     'submit .js-create': 'create'
@@ -39,7 +39,7 @@ class Index extends App.ControllerSubContent
       url:   "#{@apiPath}/tag_list"
       data:  JSON.stringify(name: name)
       success: (data, status, xhr) =>
-        field.val('')
+        @html App.view('tag/index')()
         new Table(
           el: @$('.js-Table')
         )
@@ -100,8 +100,8 @@ class Table extends App.Controller
 class Edit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Submit'
-  head: 'Edit'
+  buttonSubmit: __('Submit')
+  head: __('Edit')
   small: true
 
   content: ->
@@ -130,13 +130,13 @@ class Edit extends App.ControllerModal
 class DestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'yes'
+  buttonSubmit: __('Yes')
   buttonClass: 'btn--danger'
-  head: 'Confirm'
+  head: __('Confirmation')
   small: true
 
   content: ->
-    App.i18n.translateContent('Sure to delete this object?')
+    App.i18n.translateContent('Do you really want to delete this object?')
 
   onSubmit: =>
     @ajax(
@@ -149,4 +149,4 @@ class DestroyConfirm extends App.ControllerModal
         @close()
     )
 
-App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Index, permission: ['admin.tag'] }, 'NavBarAdmin')
+App.Config.set('Tags', { prio: 2330, name: __('Tags'), parent: '#manage', target: '#manage/tags', controller: Tag, permission: ['admin.tag'] }, 'NavBarAdmin')

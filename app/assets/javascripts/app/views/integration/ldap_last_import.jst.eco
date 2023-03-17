@@ -6,7 +6,7 @@
     <% else if @job.result && @job.result.info: %>
         <div class="alert alert--info" role="alert"><%- @T('Info: %s', @job.result.info) %></div>
     <% else: %>
-      <p><%- @T('Job is waiting to get started...') %></p>
+      <p><%- @T('Job is waiting to get started…') %></p>
     <% end %>
   <% else: %>
     <% if @job.finished_at: %>
@@ -23,7 +23,7 @@
       <% else if !@job.result.sum: %>
         <p><%- @Ttimestamp(@job.started_at) %> - <%- @T('Counting entries. This may take a while.') %></p>
       <% else: %>
-        <p><%- @Ttimestamp(@job.started_at) %> - <%- @T('Running...') %></p>
+        <p><%- @Ttimestamp(@job.started_at) %> - <%- @T('Running…') %></p>
         <div class="flex">
           <progress max="<%= @job.result.total %>" value="<%= @job.result.sum %>"></progress>
         </div>
@@ -33,7 +33,7 @@
       <ul>
         <li><%- @T('%s user to %s user', 'LDAP', 'Zammad') %> (<%= @job.result.sum %>/<%= @job.result.total %>):
           <ul>
-            <li><%- @T('Users') %>: <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>, <%= @job.result.deactivated %> <%- @T('deactivated') %>
+            <li><%- @T('Users:') %> <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>, <%= @job.result.deactivated %> <%- @T('deactivated') %>
           </ul>
         <% if !_.isEmpty(@job.result.roles): %>
           <li><%- @T('%s groups to %s roles assignments', 'LDAP', 'Zammad') %>:

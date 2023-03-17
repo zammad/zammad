@@ -1,0 +1,217 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/contacts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Tue, 04 Jan 2022 12:44:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 401 Unauthorized
+      X-Request-Id:
+      - cd0481fb-175a-4720-a94b-eefe4f1bb918
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - no-cache
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '38'
+      X-Trace-Id:
+      - 00-149154c0cbc8583fee25c248dbcd2f43-be1120345e719f2d-00
+      Server:
+      - fwe
+    body:
+      encoding: UTF-8
+      string: '{"code":"invalid_credentials","message":"You have to be logged in to
+        perform this action."}'
+  recorded_at: Tue, 04 Jan 2022 12:44:17 GMT
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/agents/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+      Authorization:
+      - Basic <IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 04 Jan 2022 12:44:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Pragma:
+      - no-cache
+      X-Request-Id:
+      - e892def9-1834-47c8-aaf9-606eff0ba571
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - must-revalidate, no-cache, no-store, private, max-age=0
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Expires:
+      - Wed, 13 Oct 2010 00:00:00 UTC
+      Set-Cookie:
+      - _helpkit_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJWZhMDViYWNmYmExMzMzMGYxMzU4NjVkYzg0YzA5MTUyBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMUQzTnE0aXNoRk1ZUGYrNVZMSXczM2ZWcmxPTUszQ0RhQVpoSmJWWDJWcEk9BjsARg%3D%3D--4f8eb3b59a5fefdd94b8a93109853862eb53224c;
+        path=/; HttpOnly; secure
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '100'
+      X-Ratelimit-Remaining:
+      - '98'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '59'
+      X-Trace-Id:
+      - 00-85c6b8a2dac9fdeec2a484a02908bd44-002eab3aa99e9f1c-00
+      Server:
+      - fwe
+    body:
+      encoding: ASCII-8BIT
+      string: '{"available":false,"occasional":false,"id":80014400475,"ticket_scope":1,"signature":null,"group_ids":[],"role_ids":[80000198826],"skill_ids":[],"available_since":null,"contact":{"active":true,"email":"info@<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.org","job_title":null,"language":"en","mobile":null,"name":"Thorsten
+        Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z","last_login_at":"2021-10-07T17:33:11Z"},"created_at":"2021-04-09T13:23:58Z","updated_at":"2022-01-03T18:35:31Z","type":"support_agent"}'
+  recorded_at: Tue, 04 Jan 2022 12:44:18 GMT
+- request:
+    method: get
+    uri: https://<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com/api/v2/agents
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - "<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.freshdesk.com"
+      Authorization:
+      - Basic <IMPORT_FRESHDESK_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 04 Jan 2022 12:44:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Pragma:
+      - no-cache
+      X-Request-Id:
+      - db2c5bf7-1f2d-438e-bb4e-781d230ec791
+      X-Freshdesk-Api-Version:
+      - latest=v2; requested=v2
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - must-revalidate, no-cache, no-store, private, max-age=0
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      Expires:
+      - Wed, 13 Oct 2010 00:00:00 UTC
+      Set-Cookie:
+      - _x_w=5_2; path=/; HttpOnly; secure
+      X-Fw-Ratelimiting-Managed:
+      - 'true'
+      X-Ratelimit-Total:
+      - '100'
+      X-Ratelimit-Remaining:
+      - '97'
+      X-Ratelimit-Used-Currentrequest:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '57'
+      X-Trace-Id:
+      - 00-2cb68ae4553a54506e56d015a155cf40-f61758316b28b76d-00
+      Server:
+      - fwe
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"available":false,"occasional":true,"id":80014400480,"ticket_scope":1,"created_at":"2021-04-09T13:24:01Z","updated_at":"2021-04-09T13:24:01Z","last_active_at":null,"available_since":null,"type":"support_agent","contact":{"active":false,"email":"custserv@freshdesk.com","job_title":null,"language":"en","last_login_at":null,"mobile":null,"name":"Customer
+        Service","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:24:01Z","updated_at":"2021-04-09T13:24:01Z"},"signature":null},{"available":false,"occasional":false,"id":80014400475,"ticket_scope":1,"created_at":"2021-04-09T13:23:58Z","updated_at":"2022-01-03T18:35:31Z","last_active_at":"2022-01-03T18:35:31Z","available_since":null,"type":"support_agent","contact":{"active":true,"email":"info@<IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN>.org","job_title":null,"language":"en","last_login_at":"2021-10-07T17:33:11Z","mobile":null,"name":"Thorsten
+        Eckel","phone":null,"time_zone":"Eastern Time (US & Canada)","created_at":"2021-04-09T13:23:58Z","updated_at":"2021-04-09T13:31:00Z"},"signature":null}]'
+  recorded_at: Tue, 04 Jan 2022 12:44:19 GMT
+recorded_with: VCR 6.0.0

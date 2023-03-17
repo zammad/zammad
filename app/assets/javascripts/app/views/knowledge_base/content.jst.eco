@@ -1,0 +1,29 @@
+<% if @missingTranslation(): %>
+  <div class="js-alert alert alert--warning alert--square"><%- @T('No translation for this locale available') %></div>
+<% end %>
+
+<div class="main flex vertical end">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h2><%- @T(@object.objectActionName()) %></h2>
+      <% if @object.constructor.canBePublished?(): %>
+        <%- @V('knowledge_base/content_can_be_published_header_suffix', object: @object) %>
+      <% end %>
+    </div>
+  </div>
+  <form class="form--grid js-form"></form>
+
+  <div class="horizontal">
+    <a class="btn btn js-discard hide">
+      <%- @T('Discard your unsaved changes.') %>
+    </a>
+
+    <% if @object.constructor.canBePublished?(): %>
+      <div class="js-submitContainer"></div>
+    <% else: %>
+      <a class="btn btn--primary js-submit">
+        <%- @T('Update') %>
+      </a>
+    <% end %>
+  </div>
+</div>

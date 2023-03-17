@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Avatar < ApplicationModel
-  belongs_to :object_lookup
+  belongs_to :object_lookup, optional: true
 
 =begin
 
@@ -24,11 +24,11 @@ add an avatar based on auto detection (email address)
     return if data[:url].blank?
 
     Avatar.add(
-      object: data[:object],
-      o_id: data[:o_id],
-      url: data[:url],
-      source: 'zammad.com',
-      deletable: false,
+      object:        data[:object],
+      o_id:          data[:o_id],
+      url:           data[:url],
+      source:        'zammad.com',
+      deletable:     false,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -72,7 +72,6 @@ add avatar by url
 =end
 
   def self.add(data)
-
     # lookups
     if data[:object]
       object_id = ObjectLookup.by_name(data[:object])
@@ -82,15 +81,15 @@ add avatar by url
     _add_init_avatar(object_id, data[:o_id])
 
     record = {
-      o_id: data[:o_id],
+      o_id:             data[:o_id],
       object_lookup_id: object_id,
-      default: true,
-      deletable: data[:deletable],
-      initial: false,
-      source: data[:source],
-      source_url: data[:url],
-      updated_by_id: data[:updated_by_id],
-      created_by_id: data[:created_by_id],
+      default:          true,
+      deletable:        data[:deletable],
+      initial:          false,
+      source:           data[:source],
+      source_url:       data[:url],
+      updated_by_id:    data[:updated_by_id],
+      created_by_id:    data[:created_by_id],
     }
 
     # check if avatar with url already exists
@@ -98,24 +97,31 @@ add avatar by url
     if data[:source].present?
       avatar_already_exists = Avatar.find_by(
         object_lookup_id: object_id,
-        o_id: data[:o_id],
-        source: data[:source],
+        o_id:             data[:o_id],
+        source:           data[:source],
       )
     end
 
     # fetch image based on http url
     if data[:url].present?
-      if data[:url].class == Tempfile
+      if data[:url].instance_of?(Tempfile)
         logger.info "Reading image from tempfile '#{data[:url].inspect}'"
         content = data[:url].read
         filename = data[:url].path
         mime_type = 'image'
-        if filename.match?(/\.png/i)
+        if filename.match?(%r{\.png}i)
           mime_type = 'image/png'
         end
-        if filename.match?(/\.(jpg|jpeg)/i)
+        if filename.match?(%r{\.(jpg|jpeg)}i)
           mime_type = 'image/jpeg'
         end
+
+        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
+        if mime_type == 'image'
+          logger.info "Could not determine mime_type for image '#{data[:url].inspect}'"
+          return
+        end
+
         data[:resize] ||= {}
         data[:resize][:content] = content
         data[:resize][:mime_type] = mime_type
@@ -123,18 +129,16 @@ add avatar by url
         data[:full][:content] = content
         data[:full][:mime_type] = mime_type
 
-      elsif data[:url].to_s.match?(/^http/)
+      elsif data[:url].to_s.match?(%r{^https?://})
         url = data[:url].to_s
 
-        # check if source ist already updated within last 2 minutes
-        if avatar_already_exists&.source_url == url
-          return if avatar_already_exists.updated_at > 2.minutes.ago
-        end
+        # check if source was updated within last 2 minutes
+        return if avatar_already_exists&.source_url == url && avatar_already_exists.updated_at > 2.minutes.ago
 
         # twitter workaround to get bigger avatar images
         # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
         if url.match?(%r{//pbs.twimg.com/}i)
-          url.sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
+          url.sub!(%r{normal\.(png|jpg|gif)$}, 'bigger.\1')
         end
 
         # fetch image
@@ -142,8 +146,8 @@ add avatar by url
           url,
           {},
           {
-            open_timeout: 4,
-            read_timeout: 6,
+            open_timeout:  4,
+            read_timeout:  6,
             total_timeout: 6,
           },
         )
@@ -151,13 +155,27 @@ add avatar by url
           logger.info "Can't fetch '#{url}' (maybe no avatar available), http code: #{response.code}"
           return
         end
-        logger.info "Fetchd image '#{url}', http code: #{response.code}"
+        logger.info "Fetched image '#{url}', http code: #{response.code}"
         mime_type = 'image'
-        if url.match?(/\.png/i)
+        if url.match?(%r{\.png}i)
           mime_type = 'image/png'
         end
-        if url.match?(/\.(jpg|jpeg)/i)
+        if url.match?(%r{\.(jpg|jpeg)}i)
           mime_type = 'image/jpeg'
+        end
+
+        # fallback to content-type of the response if url does not end with png, jpg or jpeg
+        #   see https://github.com/zammad/zammad/issues/3829
+        if mime_type == 'image' &&
+           response.header['content-type'].present? &&
+           Rails.application.config.active_storage.web_image_content_types.include?(response.header['content-type'])
+          mime_type = response.header['content-type']
+        end
+
+        # forbid creation of avatars without a specified mime_type (image is not displayed in the UI)
+        if mime_type == 'image'
+          logger.info "Could not determine mime_type for image '#{url}'"
+          return
         end
 
         data[:resize] ||= {}
@@ -168,25 +186,22 @@ add avatar by url
         data[:full][:mime_type] = mime_type
 
       # try zammad backend to find image based on email
-      elsif data[:url].to_s.match?(/@/)
+      elsif data[:url].to_s.match?(URI::MailTo::EMAIL_REGEXP)
         url = data[:url].to_s
 
         # check if source ist already updated within last 3 minutes
-        if avatar_already_exists&.source_url == url
-          return if avatar_already_exists.updated_at > 2.minutes.ago
-        end
+        return if avatar_already_exists&.source_url == url && avatar_already_exists.updated_at > 2.minutes.ago
 
         # fetch image
         image = Service::Image.user(url)
         return if !image
-        data[:resize] ||= {}
+
         data[:resize] = image
-        data[:full] ||= {}
         data[:full] = image
       end
     end
 
-    # check if avatar need to be updated
+    # check if avatar needs to be updated
     if data[:resize].present? && data[:resize][:content].present?
       record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
       if avatar_already_exists&.store_hash == record[:store_hash]
@@ -198,12 +213,12 @@ add avatar by url
     # store images
     object_name = "Avatar::#{data[:object]}"
     if data[:full].present?
-      store_full = Store.add(
-        object: "#{object_name}::Full",
-        o_id: data[:o_id],
-        data: data[:full][:content],
-        filename: 'avatar_full',
-        preferences: {
+      store_full = Store.create!(
+        object:        "#{object_name}::Full",
+        o_id:          data[:o_id],
+        data:          data[:full][:content],
+        filename:      'avatar_full',
+        preferences:   {
           'Mime-Type' => data[:full][:mime_type]
         },
         created_by_id: data[:created_by_id],
@@ -212,12 +227,12 @@ add avatar by url
       record[:store_hash]    = Digest::MD5.hexdigest(data[:full][:content])
     end
     if data[:resize].present?
-      store_resize = Store.add(
-        object: "#{object_name}::Resize",
-        o_id: data[:o_id],
-        data: data[:resize][:content],
-        filename: 'avatar',
-        preferences: {
+      store_resize = Store.create!(
+        object:        "#{object_name}::Resize",
+        o_id:          data[:o_id],
+        data:          data[:resize][:content],
+        filename:      'avatar',
+        preferences:   {
           'Mime-Type' => data[:resize][:mime_type]
         },
         created_by_id: data[:created_by_id],
@@ -254,8 +269,8 @@ set avatars as default
     object_id = ObjectLookup.by_name(object_name)
     avatar = Avatar.find_by(
       object_lookup_id: object_id,
-      o_id: o_id,
-      id: avatar_id,
+      o_id:             o_id,
+      id:               avatar_id,
     )
     avatar.default = true
     avatar.save!
@@ -278,17 +293,17 @@ remove all avatars of an object
     object_id = ObjectLookup.by_name(object_name)
     Avatar.where(
       object_lookup_id: object_id,
-      o_id: o_id,
+      o_id:             o_id,
     ).destroy_all
 
     object_name_store = "Avatar::#{object_name}"
     Store.remove(
       object: "#{object_name_store}::Full",
-      o_id: o_id,
+      o_id:   o_id,
     )
     Store.remove(
       object: "#{object_name_store}::Resize",
-      o_id: o_id,
+      o_id:   o_id,
     )
   end
 
@@ -304,8 +319,8 @@ remove one avatars of an object
     object_id = ObjectLookup.by_name(object_name)
     Avatar.where(
       object_lookup_id: object_id,
-      o_id: o_id,
-      id: avatar_id,
+      o_id:             o_id,
+      id:               avatar_id,
     ).destroy_all
   end
 
@@ -323,8 +338,8 @@ return all avatars of an user
     object_id = ObjectLookup.by_name(object_name)
     avatars = Avatar.where(
       object_lookup_id: object_id,
-      o_id: o_id,
-    ).order('initial DESC, deletable ASC, created_at ASC, id DESC')
+      o_id:             o_id,
+    ).reorder(initial: :desc, deletable: :asc, created_at: :asc)
 
     # add initial avatar
     if no_init_add_as_boolean
@@ -360,6 +375,7 @@ returns:
       store_hash: hash,
     )
     return if !avatar
+
     Store.find(avatar.store_resize_id)
   end
 
@@ -379,18 +395,19 @@ returns:
     object_id = ObjectLookup.by_name(object_name)
     Avatar.find_by(
       object_lookup_id: object_id,
-      o_id: o_id,
-      default: true,
+      o_id:             o_id,
+      default:          true,
     )
   end
 
   def self.set_default_items(object_id, o_id, avatar_id)
     avatars = Avatar.where(
       object_lookup_id: object_id,
-      o_id: o_id,
-    ).order('created_at ASC, id DESC')
+      o_id:             o_id,
+    ).reorder(created_at: :asc)
     avatars.each do |avatar|
       next if avatar.id == avatar_id
+
       avatar.default = false
       avatar.save!
     end
@@ -400,7 +417,7 @@ returns:
 
     count = Avatar.where(
       object_lookup_id: object_id,
-      o_id: o_id,
+      o_id:             o_id,
     ).count
     return if count.positive?
 
@@ -408,14 +425,14 @@ returns:
     return if !object_name.constantize.exists?(id: o_id)
 
     Avatar.create!(
-      o_id: o_id,
+      o_id:             o_id,
       object_lookup_id: object_id,
-      default: true,
-      source: 'init',
-      initial: true,
-      deletable: false,
-      updated_by_id: 1,
-      created_by_id: 1,
+      default:          true,
+      source:           'init',
+      initial:          true,
+      deletable:        false,
+      updated_by_id:    1,
+      created_by_id:    1,
     )
   end
 end

@@ -3,12 +3,16 @@
   <% for tag in @tags: %>
   <li class="list-item">
     <a href="#" class="list-item-name js-tag"><%= tag %></a>
-    <div class="list-item-delete js-delete">
-      <%- @Icon('diagonal-cross') %>
-    </div>
+    <% if @editable: %>
+      <div class="list-item-delete js-delete">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    <% end %>
   <% end %>
 </ul>
-<div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
-<form>
-  <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
-</form>
+<% if @editable: %>
+ <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
+ <form class="ui-front">
+   <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
+ </form>
+<% end %>

@@ -1,0 +1,213 @@
+{
+  "attributes": [
+    {
+      "name": "firstname",
+      "display": "First name",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 150,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "lastname",
+      "display": "Last name",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 150,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "email",
+      "display": "Email",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "email",
+        "maxlength": 150,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "web",
+      "display": "Web",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "url",
+        "maxlength": 250,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "phone",
+      "display": "Phone",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "tel",
+        "maxlength": 100,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "mobile",
+      "display": "Mobile",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "tel",
+        "maxlength": 100,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "fax",
+      "display": "Fax",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "tel",
+        "maxlength": 100,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "organization_id",
+      "display": "Organization",
+      "dataType": "autocompletion_ajax",
+      "isInternal": true,
+      "dataOption": {
+        "multiple": false,
+        "nulloption": true,
+        "null": true,
+        "relation": "Organization",
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "organization_ids",
+      "display": "Secondary organizations",
+      "dataType": "autocompletion_ajax",
+      "isInternal": true,
+      "dataOption": {
+        "multiple": true,
+        "nulloption": true,
+        "null": true,
+        "relation": "Organization",
+        "item_class": "formGroup--halfSize",
+        "display_limit": 3
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "department",
+      "display": "Department",
+      "dataType": "input",
+      "isInternal": false,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 200,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "address",
+      "display": "Address",
+      "dataType": "textarea",
+      "isInternal": false,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 500,
+        "rows": 4,
+        "null": true,
+        "item_class": "formGroup--halfSize"
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    },
+    {
+      "name": "note",
+      "display": "Note",
+      "dataType": "richtext",
+      "isInternal": true,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 5000,
+        "null": true,
+        "note": "Notes are visible to agents only, never to customers.",
+        "no_images": true
+      },
+      "screens": {},
+      "__typename": "ObjectManagerFrontendAttribute"
+    }
+  ],
+  "screens": [
+    {
+      "name": "view",
+      "attributes": [
+        "firstname",
+        "lastname",
+        "email",
+        "web",
+        "phone",
+        "mobile",
+        "fax",
+        "organization_id",
+        "organization_ids",
+        "department",
+        "address",
+        "note"
+      ]
+    },
+    {
+      "name": "edit",
+      "attributes": [
+        "firstname",
+        "lastname",
+        "email",
+        "web",
+        "phone",
+        "mobile",
+        "fax",
+        "organization_id",
+        "organization_ids",
+        "department",
+        "address",
+        "note"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+query organization(
+  $organizationId: ID
+  $organizationInternalId: Int
+  $membersCount: Int
+) {
+  organization(
+    organization: {
+      organizationId: $organizationId
+      organizationInternalId: $organizationInternalId
+    }
+  ) {
+    policy {
+      update
+    }
+    ...organizationAttributes
+    ...organizationMembers
+  }
+}

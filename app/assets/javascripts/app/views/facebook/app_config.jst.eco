@@ -1,12 +1,12 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our [online documentation](https://zammad.org/documentation/channel/facebook).', 'Facebook App') %>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Facebook App', 'https://admin-docs.zammad.org/en/latest/channels/facebook.html') %>
 </p>
 <fieldset>
   <h2><%- @T('Enter your %s App Keys', 'Facebook') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="application_id">Facebook APP ID <span>*</span></label>
+      <label for="application_id"><%- @T('Facebook APP ID') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="application_id" type="text" name="application_id" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_id %><% end %>" class="form-control" required autocomplete="off">
@@ -14,7 +14,7 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="application_secret">Facebook App Secret <span>*</span></label>
+      <label for="application_secret"><%- @T('Facebook App Secret') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="application_secret" type="text" name="application_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_secret %><% end %>" class="form-control" required autocomplete="off">

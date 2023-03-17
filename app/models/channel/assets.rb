@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel
   module Assets
@@ -29,34 +29,37 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      if !data[ app_model ][ id ]
-        attributes = attributes_with_association_ids
+      return data if data[ app_model ][ id ]
 
-        # remove passwords if use is no admin
-        access = false
-        if UserInfo.current_user_id
-          user = User.lookup(id: UserInfo.current_user_id)
-          if user.permissions?('admin.channel')
-            access = true
+      attributes = attributes_with_association_ids
+
+      # remove passwords if use is no admin
+      access = false
+      if UserInfo.current_user_id
+        user = User.lookup(id: UserInfo.current_user_id)
+        if user.permissions?('admin.channel')
+          access = true
+        end
+      end
+      if !access
+        %w[inbound outbound].each do |key|
+          if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
+            attributes['options'][key]['options'].delete('password')
           end
         end
-        if !access
-          %w[inbound outbound].each do |key|
-            if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
-              attributes['options'][key]['options'].delete('password')
-            end
-          end
-        end
-
-        data[ self.class.to_app_model ][ id ] = attributes
       end
 
+      data[ self.class.to_app_model ][ id ] = attributes
+
       return data if !self['created_by_id'] && !self['updated_by_id']
+
       %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]
         next if data[ User.to_app_model ] && data[ User.to_app_model ][ self[ local_user_id ] ]
+
         user = User.lookup(id: self[ local_user_id ])
         next if !user
+
         data = user.assets(data)
       end
       data

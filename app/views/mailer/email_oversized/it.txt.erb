@@ -1,0 +1,12 @@
+[non consegnabile] Messaggio troppo grande
+Gentile #{mail.from_display_name},
+
+Purtroppo la tua email con oggetto "#{mail.subject}" non può essere inviata a uno o più destinatari.
+
+Il messaggio è di #{mail.msg_size} MB ma la dimensione massima accettata è di #{config.postmaster_max_size} MB.
+
+Per favore riduci la dimensione del messaggio e prova di nuovo. Grazie della comprensione.
+
+Cortesemente,
+
+Il postmaster di #{config.fqdn}

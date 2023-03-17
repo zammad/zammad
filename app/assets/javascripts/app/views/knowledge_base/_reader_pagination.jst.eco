@@ -1,0 +1,15 @@
+<% if @previousAnswer: %>
+  <a href="<%- @previousAnswer.url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--prev">
+    <%- @Icon('arrow-left') %>
+    <div class="spacer"></div>
+    <span class="knowledge-base-article-nav-link-title"><%= @previousAnswer.title %></span>
+  </a>
+<% end %>
+
+<% if @nextAnswer: %>
+  <a href="<%- @nextAnswer.url %>" class="knowledge-base-article-nav-link knowledge-base-article-nav-link--next">
+    <span class="knowledge-base-article-nav-link-title"><%= @nextAnswer.title %></span>
+    <div class="spacer"></div>
+    <%- @Icon('arrow-right') %>
+  </a>
+<% end %>

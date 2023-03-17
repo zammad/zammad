@@ -1,0 +1,19 @@
+Logowanie do #{config.product_name} z nowego urządzenia
+
+<div>Cześć #{user.firstname},</div>
+<br>
+<div>Wygląda na to, że zalogowałeś się na swoje konto <b>przy użyciu nowego urządzenia</b> w dniu "#{user_device.created_at}":</div>
+<br>
+<div>
+Twoje urządzenie: #{user_device.name}<br>
+Twoja lokalizacja (przybliżona): #{user_device.location}<br>
+Twój IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Twoje urządzenie zostało dodane do listy znanych urządzeń, którą możesz wyświetlić tutaj:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Jeśli to nie Ty, usuń urządzenie, zmień hasło do konta i skontaktuj się z administratorem. Ktoś mógł uzyskać nieautoryzowany dostęp do Twojego konta.</div>
+<br>
+<div>Zespół #{config.product_name}</div>

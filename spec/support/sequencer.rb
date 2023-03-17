@@ -1,7 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module SequencerUnit
 
-  def process(parameters = {}, &block)
-    Sequencer::Unit.process(described_class.name, parameters, &block)
+  def process(parameters = {}, &)
+    Sequencer::Unit.process(described_class.name, parameters, &)
   end
 end
 

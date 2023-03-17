@@ -1,4 +1,4 @@
 <div class="fullscreenMessage">
   <%- @Icon('diagonal-cross', 'icon-error') %>
-  <h2><%- @T('Status Code') %>: 1234. Check your internet connection...</h2>
+  <h2><%- @T('Status Code:') %> 1234. Check your internet connection...</h2>
 </div>

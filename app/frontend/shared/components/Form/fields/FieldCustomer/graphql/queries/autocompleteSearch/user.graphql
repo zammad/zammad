@@ -1,0 +1,17 @@
+query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+  autocompleteSearchUser(input: $input) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+    disabled
+    icon
+    user {
+      ...userAttributes
+      vip
+      outOfOffice
+      active
+    }
+  }
+}

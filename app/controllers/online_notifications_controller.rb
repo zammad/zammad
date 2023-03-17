@@ -1,6 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class OnlineNotificationsController < ApplicationController
+  prepend_before_action -> { authorize! }, only: %i[show update destroy]
   prepend_before_action :authentication_check
 
 =begin
@@ -10,14 +11,13 @@ JSON
 
 Example:
 {
-  "id":1,
-  "name":"some template",
-  "user_id": null,
-  "options":{"a":1,"b":2},
-  "updated_at":"2012-09-14T17:51:53Z",
-  "created_at":"2012-09-14T17:51:53Z",
-  "updated_by_id":2.
-  "created_by_id":2,
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 =end
@@ -25,24 +25,28 @@ Example:
 =begin
 
 Resource:
-GET /api/v1/templates.json
+GET /api/v1/online_notifications
 
 Response:
 [
   {
     "id": 1,
-    "name": "some_name1",
+    "object": "Ticket",
+    "type": "escalation",
+    "seen": true,
     ...
   },
   {
     "id": 2,
-    "name": "some_name2",
+    "object": "Ticket",
+    "type": "escalation",
+    "seen": false,
     ...
   }
 ]
 
 Test:
-curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password}
 
 =end
 
@@ -62,12 +66,12 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
       assets = {}
       item_ids = []
       online_notifications.each do |item|
-        item_ids.push item.id
+        item_ids.push item['id']
         assets = item.assets(assets)
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
@@ -82,18 +86,17 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
 =begin
 
 Resource:
-GET /api/v1/online_notifications/{id}
-
-Payload:
-{
-  "id": "123",
-}
+GET /api/v1/online_notifications/#{id}
 
 Response:
 {
-  "id": 1,
-  "name": "some_name",
-  ...
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Test:
@@ -102,7 +105,6 @@ curl http://localhost/api/v1/online_notifications/#{id} -v -u #{login}:#{passwor
 =end
 
   def show
-    return if !access?
     model_show_render(OnlineNotification, params)
   end
 
@@ -113,15 +115,24 @@ PUT /api/v1/online_notifications/{id}
 
 Payload:
 {
-  "name": "some name",
-  "options":{"a":1,"b":2},
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Response:
 {
-  "id": 1,
-  "name": "some_name",
-  ...
+  "id": 123,
+  "o_id": 628,
+  "object": "Ticket",
+  "type": "escalation",
+  "seen": true,
+  "updated_at": "2016-08-16T07:55:42.119Z",
+  "created_at": "2016-08-16T07:55:42.119Z"
 }
 
 Test:
@@ -130,7 +141,6 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
 =end
 
   def update
-    return if !access?
     model_update_render(OnlineNotification, params)
   end
 
@@ -148,7 +158,6 @@ curl http://localhost/api/v1/online_notifications/{id}.json -v -u #{login}:#{pas
 =end
 
   def destroy
-    return if !access?
     model_destroy_render(OnlineNotification, params)
   end
 
@@ -171,22 +180,10 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
   def mark_all_as_read
     notifications = OnlineNotification.list(current_user, 200)
     notifications.each do |notification|
-      if !notification['seen']
-        OnlineNotification.seen(id: notification['id'])
-      end
+      next if notification['seen']
+
+      OnlineNotification.find(notification['id']).update!(seen: true)
     end
     render json: {}, status: :ok
   end
-
-  private
-
-  def access?
-    notification = OnlineNotification.find(params[:id])
-    if notification.user_id != current_user.id
-      response_access_deny
-      return false
-    end
-    true
-  end
-
 end

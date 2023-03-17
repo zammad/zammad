@@ -1,0 +1,7 @@
+<div class="fullscreenMessage fullscreenMessage--placeholder">
+  <%- @icon %>
+  <h2><% if @status isnt undefined: %><%- @T('Status Code:') %> <%= @status %>. <% end %><%- @T(@detail) %></h2>
+  <% if @action: %>
+  <div class="btn btn--action js-action"><%- @T(@action) %></div>
+  <% end %>
+</div>

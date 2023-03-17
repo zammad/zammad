@@ -1,20 +1,23 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class WeiboOauth2 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
+
     Setting.create_if_not_exists(
-      title: 'Authentication via %s',
-      name: 'auth_weibo',
-      area: 'Security::ThirdPartyAuthentication',
+      title:       'Authentication via %s',
+      name:        'auth_weibo',
+      area:        'Security::ThirdPartyAuthentication',
       description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'auth_weibo',
-            tag: 'boolean',
+            null:    true,
+            name:    'auth_weibo',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,41 +26,41 @@ class WeiboOauth2 < ActiveRecord::Migration[4.2]
         ],
       },
       preferences: {
-        controller: 'SettingsAreaSwitch',
-        sub: ['auth_weibo_credentials'],
-        title_i18n: ['Weibo'],
+        controller:       'SettingsAreaSwitch',
+        sub:              ['auth_weibo_credentials'],
+        title_i18n:       ['Weibo'],
         description_i18n: ['Weibo', 'Sina Weibo Open Portal', 'http://open.weibo.com'],
-        permission: ['admin.security'],
+        permission:       ['admin.security'],
       },
-      state: false,
-      frontend: true
+      state:       false,
+      frontend:    true
     )
     Setting.create_if_not_exists(
-      title: 'Weibo App Credentials',
-      name: 'auth_weibo_credentials',
-      area: 'Security::ThirdPartyAuthentication::Weibo',
+      title:       'Weibo App Credentials',
+      name:        'auth_weibo_credentials',
+      area:        'Security::ThirdPartyAuthentication::Weibo',
       description: 'Enables user authentication via Sina Weibo.',
-      options: {
+      options:     {
         form: [
           {
             display: 'App ID',
-            null: true,
-            name: 'app_id',
-            tag: 'input',
+            null:    true,
+            name:    'app_id',
+            tag:     'input',
           },
           {
             display: 'App Secret',
-            null: true,
-            name: 'app_secret',
-            tag: 'input',
+            null:    true,
+            name:    'app_secret',
+            tag:     'input',
           },
         ],
       },
-      state: {},
+      state:       {},
       preferences: {
         permission: ['admin.security'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 end

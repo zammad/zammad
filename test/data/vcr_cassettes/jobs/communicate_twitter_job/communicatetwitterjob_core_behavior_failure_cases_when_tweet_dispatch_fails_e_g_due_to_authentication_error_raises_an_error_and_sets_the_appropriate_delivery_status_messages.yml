@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/statuses/update.json
+    body:
+      encoding: UTF-8
+      string: in_reply_to_status_id&status=Labore+et+ex+rerum.
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="q7K8GEkhyCHs9jHLtkmD9Kod4", oauth_nonce="cf0d29ab96642e22e99a37d932fbccab",
+        oauth_signature="G9ICfodL7ntAil45FmtVsvBOHf0%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1665143734", oauth_token="7783712304-H9s75r2d532diPmJYK6JrvUWxu9gTDZ6ocjfToL",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Fri, 07 Oct 2022 11:55:34 GMT
+      Perf:
+      - '7626143928'
+      Server:
+      - tsa_o
+      Set-Cookie:
+      - guest_id=v1%3A166514373499256864; Max-Age=34214400; Expires=Tue, 07 Nov 2023
+        11:55:34 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Length:
+      - '62'
+      X-Transaction-Id:
+      - 925eb170a6d0bfa1
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '107'
+      X-Connection-Hash:
+      - cc97f30f1b82fc4faae30dc19a1df87f37e2eaeb51891d5d35d8a879f5faca59
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":89,"message":"Invalid or expired token."}]}'
+  recorded_at: Fri, 07 Oct 2022 11:55:34 GMT
+recorded_with: VCR 6.1.0

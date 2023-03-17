@@ -1,19 +1,39 @@
-<div class="dropdown-toggle" data-toggle="dropdown">
-  <input
-    class="searchableSelect-shadow form-control js-shadow"
-    <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
-    name="<%= @attribute.name %>"
-    <%= @attribute.required %>
-    <%= @attribute.autofocus %>
-    value="<%= @attribute.value %>"
-  >
-  <input
-    class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
-    placeholder="<%= @attribute.placeholder %>"
-    value="<%= @attribute.valueName %>"
-    autocomplete="off"
-    <%= @attribute.required %>
-   >
+<div class="dropdown-toggle<%=" tokenfield form-control" if @attribute.multiple %> <% if @attribute.disabled: %> is-disabled<% end %>" data-toggle="dropdown">
+  <% if @attribute.multiple: %>
+    <select multiple class="js-shadow hide" name="<%- @attribute.name %>" tabindex="-1" <% if @attribute.disabled: %> disabled<% end %>>
+      <% if @attribute.value: %>
+        <% for option in @attribute.value: %>
+          <option value="<%= option.value %>" selected><%= option.name %></option>
+        <% end %>
+      <% end %>
+    </select>
+    <%- @tokens %>
+    <input
+      class="searchableSelect-main token-input form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
+      placeholder="<%= @attribute.placeholder %>"
+      value
+      name="<%- @attribute.name %>_completion"
+      autocomplete="off"
+      <% if @attribute.disabled: %> disabled<% end %>
+    >
+  <% else: %>
+    <input
+      class="searchableSelect-shadow form-control js-shadow"
+      <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
+      name="<%= @attribute.name %>"
+      <%= @attribute.autofocus %>
+      value="<%= @attribute.value %>"
+      tabindex="-1"
+      <% if @attribute.disabled: %> disabled<% end %>
+    >
+    <input
+      class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
+      placeholder="<%= @attribute.placeholder %>"
+      value="<%= @attribute.valueName %>"
+      autocomplete="off"
+      <% if @attribute.disabled: %> disabled<% end %>
+    >
+  <% end %>
   <div class="searchableSelect-autocomplete">
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>

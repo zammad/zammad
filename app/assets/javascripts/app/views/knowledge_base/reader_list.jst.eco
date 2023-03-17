@@ -1,0 +1,4 @@
+<div class="container">
+  <div class="js-searchFieldContainer"></div>
+  <div class="js-readerListContainer"></div>
+</div>

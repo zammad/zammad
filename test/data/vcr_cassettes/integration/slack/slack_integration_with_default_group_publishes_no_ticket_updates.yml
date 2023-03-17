@@ -1,0 +1,505 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/auth.test
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:24 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDDf46hpPVqw1wgt2owAA8Dk
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 1daea46ec9fa8e50d27bdb8a1422ab38
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '186'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '124'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-gmqq
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-kesg, envoy-edge-lhr-uhzn
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"url":"https:\/\/zammaddevelopment.slack.com\/","team":"Zammad
+        Development","user":"development","team_id":"T04PAE1JDD1","user_id":"U04Q084V9QQ","is_enterprise_install":false}'
+  recorded_at: Tue, 14 Feb 2023 08:19:24 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.list
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:24 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDKBZVD657yn_ZSdLVAAAsCI
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:read,groups:read,mpim:read,im:read,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 2723c5a75dcabf32e491221e14a08fab
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1572'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '127'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-qqaz
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-knqy, envoy-edge-lhr-gjkm
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channels":[{"id":"C04P7MS4WPP","name":"<SLACK_CI_CHANNEL_NAME>","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676287456,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"<SLACK_CI_CHANNEL_NAME>","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676289623188,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"Zammad
+        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676286228292,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
+        is the one channel that will always include everyone. It\u2019s a great spot
+        for announcements and team-wide conversations.","creator":"U04Q084V9QQ","last_set":1676286228},"previous_names":[],"num_members":1}],"response_metadata":{"next_cursor":""}}'
+  recorded_at: Tue, 14 Feb 2023 08:19:24 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.history
+    body:
+      encoding: UTF-8
+      string: channel=C04P7MS4WPP
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:25 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDalpLlI9iR3xDk1aUQAAcCo
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:history,groups:history,mpim:history,im:history,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 3624323837734f219f35ed6ded461614
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '108'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '115'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-vqvd
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-wrch, envoy-edge-lhr-rlwf
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"messages":[],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
+  recorded_at: Tue, 14 Feb 2023 08:19:25 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/auth.test
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:25 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDWBmvPaeznRiriTrPwAAoAg
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - '03835dc2a918956cfaf81b22f8ec5e25'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '186'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '95'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-kwuf
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-hwbq, envoy-edge-lhr-fweq
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"url":"https:\/\/zammaddevelopment.slack.com\/","team":"Zammad
+        Development","user":"development","team_id":"T04PAE1JDD1","user_id":"U04Q084V9QQ","is_enterprise_install":false}'
+  recorded_at: Tue, 14 Feb 2023 08:19:25 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.list
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:25 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDcchcWfp08XitIFbTgAA8Ak
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:read,groups:read,mpim:read,im:read,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 0e635b58cc8b89747a62abd098930f30
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1572'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '117'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-wmsm
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-tvxq, envoy-edge-lhr-ookj
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channels":[{"id":"C04P7MS4WPP","name":"<SLACK_CI_CHANNEL_NAME>","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676287456,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"<SLACK_CI_CHANNEL_NAME>","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676289623188,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"Zammad
+        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676286228292,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
+        is the one channel that will always include everyone. It\u2019s a great spot
+        for announcements and team-wide conversations.","creator":"U04Q084V9QQ","last_set":1676286228},"previous_names":[],"num_members":1}],"response_metadata":{"next_cursor":""}}'
+  recorded_at: Tue, 14 Feb 2023 08:19:25 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/conversations.history
+    body:
+      encoding: UTF-8
+      string: channel=C04P7MS4WPP
+    headers:
+      Accept:
+      - application/json; charset=utf-8
+      User-Agent:
+      - Slack Ruby Client/1.0.0
+      Authorization:
+      - Bearer <SLACK_CI_OAUTH_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Feb 2023 08:19:25 GMT
+      Server:
+      - Apache
+      X-Powered-By:
+      - HHVM/4.153.1
+      Access-Control-Allow-Origin:
+      - "*"
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Slack-Unique-Id:
+      - Y-tEDdWipKk39FOPR5068AABAA0
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      X-Oauth-Scopes:
+      - identify,channels:history,channels:read,chat:write
+      X-Accepted-Oauth-Scopes:
+      - channels:history,groups:history,mpim:history,im:history,read
+      Expires:
+      - Mon, 26 Jul 1997 05:00:00 GMT
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Slack-Req-Id:
+      - 6eba560a11b6469c7aa93e78dfa5fdc6
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '108'
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Envoy-Upstream-Service-Time:
+      - '134'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ipug
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      Via:
+      - envoy-www-iad-sarv, envoy-edge-lhr-wfhx
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"messages":[],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
+  recorded_at: Tue, 14 Feb 2023 08:19:25 GMT
+recorded_with: VCR 6.1.0

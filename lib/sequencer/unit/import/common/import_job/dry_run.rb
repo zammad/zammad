@@ -1,16 +1,8 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module ImportJob
-          class DryRun < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :import_job
+class Sequencer::Unit::Import::Common::ImportJob::DryRun < Sequencer::Unit::Common::Provider::Named
 
-            delegate dry_run: :import_job
-          end
-        end
-      end
-    end
-  end
+  uses :import_job
+
+  delegate dry_run: :import_job
 end

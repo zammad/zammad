@@ -17,7 +17,7 @@
     <div class="page-header-title">
       <h2><%- @T('Health Check') %></h2>
     </div>
-    <p><%- @T('Health information can be retrieved as JSON using') %>:</p>
+    <p><%- @T('Health information can be retrieved as JSON using:') %></p>
     <input class="js-select js-url" type="text" value="<%- @C('http_type') %>://<%- @C('fqdn') %>/<%- @C('api_path') %>/monitoring/health_check?token=<%= @data.token %>" readonly></p>
   </div>
 

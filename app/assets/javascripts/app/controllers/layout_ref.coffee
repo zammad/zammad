@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class LayoutRef extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -6,10 +6,10 @@ class Index extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/index')()
 
-App.Config.set( 'layout_ref', Index, 'Routes' )
+App.Config.set('layout_ref', LayoutRef, 'Routes')
 
-
-class Content extends App.ControllerContent
+# coffeelint: disable=detect_translatable_string
+class Content extends App.ControllerAppContent
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
     'click .js-organization':                 'showOrganizationMembers'
@@ -103,7 +103,7 @@ class Content extends App.ControllerContent
 App.Config.set( 'layout_ref/content', Content, 'Routes' )
 
 
-class CommunicationOverview extends App.ControllerContent
+class CommunicationOverview extends App.ControllerAppContent
   events:
     'click .js-unfold': 'unfold'
 
@@ -153,7 +153,7 @@ class CommunicationOverview extends App.ControllerContent
 App.Config.set( 'layout_ref/communication_overview', CommunicationOverview, 'Routes' )
 
 
-class LayoutRefCommunicationReply extends App.ControllerContent
+class LayoutRefCommunicationReply extends App.ControllerAppContent
   elements:
     '.js-textarea' :                'textarea'
     '.attachmentPlaceholder':       'attachmentPlaceholder'
@@ -389,7 +389,7 @@ App.Config.set( 'layout_ref/communication_reply/:content', LayoutRefCommunicatio
 
 
 
-class ContentSidebarRight extends App.ControllerContent
+class ContentSidebarRight extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -400,7 +400,7 @@ class ContentSidebarRight extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_right', ContentSidebarRight, 'Routes' )
 
 
-class ContentSidebarRightSidebarOptional extends App.ControllerContent
+class ContentSidebarRightSidebarOptional extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -442,7 +442,7 @@ class ModalText extends App.ControllerModal
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
 
 
-class ContentSidebarTabsRight extends App.ControllerContent
+class ContentSidebarTabsRight extends App.ControllerAppContent
   elements:
     '.tabsSidebar'  : 'sidebar'
 
@@ -510,7 +510,7 @@ class ContentSidebarTabsRight extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_tabs_right', ContentSidebarTabsRight, 'Routes' )
 
 
-class ContentSidebarLeft extends App.ControllerContent
+class ContentSidebarLeft extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -521,7 +521,7 @@ class ContentSidebarLeft extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_left', ContentSidebarLeft, 'Routes' )
 
 
-class App.ControllerWizard extends App.ControllerContent
+class App.ControllerWizard extends App.ControllerAppContent
   elements:
     '[data-slide]':   'slides'
 
@@ -593,7 +593,7 @@ class ImportWizard extends App.ControllerWizard
 
 App.Config.set( 'layout_ref/import_wizard', ImportWizard, 'Routes' )
 
-class ReferenceUserProfile extends App.ControllerContent
+class ReferenceUserProfile extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -604,7 +604,7 @@ class ReferenceUserProfile extends App.ControllerContent
 
 App.Config.set( 'layout_ref/user_profile', ReferenceUserProfile, 'Routes' )
 
-class ReferenceOrganizationProfile extends App.ControllerContent
+class ReferenceOrganizationProfile extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -652,11 +652,11 @@ class ReferenceSetupWizard extends App.ControllerWizard
     }
 
     @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
-    @agentFirstName.focus()
+    @agentFirstName.trigger('focus')
 
 App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
-class RichText extends App.ControllerContent
+class RichText extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -709,7 +709,7 @@ class RichText extends App.ControllerContent
         App.Utils.htmlCleanup(textarea)
 
         # remove marker for cursor
-        textarea.find('[data-cursor=1]').focus()
+        textarea.find('[data-cursor=1]').trigger('focus')
         textarea.find('[data-cursor=1]').remove()
       @delay( execute, 1)
 
@@ -724,7 +724,7 @@ class RichText extends App.ControllerContent
 
 App.Config.set( 'layout_ref/richtext', RichText, 'Routes' )
 
-class LocalModalRef extends App.ControllerContent
+class LocalModalRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -735,7 +735,7 @@ class LocalModalRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
 
-class LoadingPlaceholderRef extends App.ControllerContent
+class LoadingPlaceholderRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -746,7 +746,7 @@ class LoadingPlaceholderRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/loading_placeholder', LoadingPlaceholderRef, 'Routes' )
 
-class InsufficientRightsRef extends App.ControllerContent
+class InsufficientRightsRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -758,7 +758,7 @@ class InsufficientRightsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/insufficient_rights', InsufficientRightsRef, 'Routes' )
 
 
-class ErrorRef extends App.ControllerContent
+class ErrorRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -770,7 +770,7 @@ class ErrorRef extends App.ControllerContent
 App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class TicketZoomRef extends App.ControllerContent
+class TicketZoomRef extends App.ControllerAppContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -847,7 +847,7 @@ class TicketZoomRef extends App.ControllerContent
     if highlights = localStorage['highlights']
       @highlighter.deserialize localStorage['highlights']
 
-  # the serialization creates one string for the entiery ticket
+  # the serialization creates one string for the entire ticket
   # containing the offsets and the highlight classes
   #
   # we have to check how it works with having open several tickets – it might break
@@ -953,11 +953,11 @@ class TicketZoomRef extends App.ControllerContent
       @closeDropdown()
     else
       @buttonDropdown.addClass 'is-open'
-      $(document).bind 'click.buttonDropdown', @closeDropdown
+      $(document).on 'click.buttonDropdown', @closeDropdown
 
   closeDropdown: =>
     @buttonDropdown.removeClass 'is-open'
-    $(document).unbind 'click.buttonDropdown'
+    $(document).off 'click.buttonDropdown'
 
   performTicketMacro: (event) =>
     console.log 'perform action', @$(event.currentTarget).text()
@@ -980,7 +980,7 @@ class TicketZoomRef extends App.ControllerContent
 App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )
 
 
-class CluesRef extends App.ControllerContent
+class CluesRef extends App.ControllerAppContent
 
   clues: [
     {
@@ -1298,7 +1298,7 @@ class CluesRef extends App.ControllerContent
 App.Config.set( 'layout_ref/clues', CluesRef, 'Routes' )
 
 
-class AdminPlaceholderRef extends App.ControllerContent
+class AdminPlaceholderRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1309,7 +1309,7 @@ class AdminPlaceholderRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/admin_placeholder', AdminPlaceholderRef, 'Routes' )
 
-class UserListRef extends App.ControllerContent
+class UserListRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1321,7 +1321,7 @@ class UserListRef extends App.ControllerContent
 App.Config.set( 'layout_ref/user_list', UserListRef, 'Routes' )
 
 
-class SlaRef extends App.ControllerContent
+class SlaRef extends App.ControllerAppContent
 
   events:
     'click .js-activateColumn': 'activateColumn'
@@ -1377,7 +1377,7 @@ class SlaRef extends App.ControllerContent
 App.Config.set( 'layout_ref/sla', SlaRef, 'Routes' )
 
 
-class SchedulersRef extends App.ControllerContent
+class SchedulersRef extends App.ControllerAppContent
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
@@ -1414,7 +1414,7 @@ class SchedulersRef extends App.ControllerContent
 
     if target.hasClass('is-selected')
       # prevent zero selections
-      if target.siblings('.is-selected').size() > 0
+      if target.siblings('.is-selected').length > 0
         target.removeClass('is-selected')
     else
       target.addClass('is-selected')
@@ -1457,7 +1457,7 @@ class SchedulersRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/schedulers', SchedulersRef, 'Routes' )
 
-class InputsRef extends App.ControllerContent
+class InputsRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1474,7 +1474,25 @@ class InputsRef extends App.ControllerContent
         name:        'project-name'
         id:          'project-name-123'
         placeholder: 'Enter Project Name'
-        options:     [{value:0,name:'Apple',selected:true},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'}]
+        options:     [{value:0,name:'Apple',selected:true},
+        {value:1,name:'Microsoft',selected:true},
+        {value:2,name:'Google'},
+        {value:3,name:'Deutsche Bahn'},
+        {value:4,name:'Sparkasse'},
+        {value:5,name:'Deutsche Post'},
+        {value:6,name:'Mitfahrzentrale'},
+        {value:7,name:'Starbucks'},
+        {value:8,name:'Mac Donalds'},
+        {value:9,name:'Flixbus'},
+        {value:10,name:'Betahaus'},
+        {value:11,name:'Bruno Banani'},
+        {value:12,name:'Alpina'},
+        {value:13,name:'Samsung'},
+        {value:14,name:'ChariTea'},
+        {value:15,name:'fritz-kola'},
+        {value:16,name:'Vitamin Water'},
+        {value:17,name:'Zammad'},
+        {value:18,name:'Max & Moritz'}]
     @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
 
     # selectable search
@@ -1484,7 +1502,7 @@ class InputsRef extends App.ControllerContent
         id:          'user-123'
         placeholder: 'Enter User'
         limt:        10
-        object:      'User'
+        relation:    'User'
 
     @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
@@ -1515,18 +1533,20 @@ class InputsRef extends App.ControllerContent
     @$('.js-datepicker3').datepicker(
       todayHighlight: true
       startDate: new Date()
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker3').parent()
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
 
     # date time picker
     @$('.js-datepicker4').datepicker(
       todayHighlight: true
       startDate: new Date()
-      format: App.i18n.timeFormat().date
+      format: App.i18n.timeFormat()['FORMAT_DATE']
       rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker4').parent()
+      calendarWeeks: App.Config.get('datepicker_show_calendar_weeks')
     )
     @$('.js-timepicker4').timepicker()
 
@@ -1535,13 +1555,38 @@ class InputsRef extends App.ControllerContent
       attribute:
         name:        'company-name'
         id:          'company-name-12345'
-        options:     [{value:0,name:'Apple'},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'},{value:19,name:'Telefónica Deutschland Holding GmbH'}]
+        options:     [
+          {label:'Group A', group: [
+            {value:0,name:'Apple'},
+            {value:1,name:'Microsoft',selected:true},
+            {value:2,name:'Google'},
+            {value:3,name:'Deutsche Bahn'},
+            {value:4,name:'Sparkasse'},
+            {value:5,name:'Deutsche Post'},
+            {value:6,name:'Mitfahrzentrale'}
+          ]},
+          {label:'Group B', group: [
+            {value:7,name:'Starbucks'},
+            {value:8,name:'Mac Donalds'},
+            {value:9,name:'Flixbus'},
+            {value:10,name:'Betahaus'},
+            {value:11,name:'Bruno Banani'},
+            {value:12,name:'Alpina'},
+            {value:13,name:'Samsung'},
+            {value:14,name:'ChariTea'},
+            {value:15,name:'fritz-kola'},
+            {value:16,name:'Vitamin Water'},
+            {value:17,name:'Zammad'},
+            {value:18,name:'Max & Moritz'},
+            {value:19,name:'Telefónica Deutschland Holding GmbH'}
+          ]}
+        ]
     @$('.columnSelectPlaceholder').replaceWith( columnSelectObject.element() )
 
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 
 
-class CalendarSubscriptionsRef extends App.ControllerContent
+class CalendarSubscriptionsRef extends App.ControllerAppContent
 
   elements:
     'input[type=checkbox]': 'options'
@@ -1556,7 +1601,7 @@ class CalendarSubscriptionsRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/calendar_subscriptions')
+    @html App.view('layout_ref/calendar_subscriptions')()
 
   selectAll: (e) ->
     e.currentTarget.focus()
@@ -1617,7 +1662,15 @@ class CalendarSubscriptionsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/calendar_subscriptions', CalendarSubscriptionsRef, 'Routes' )
 
 
-class ButtonsRef extends App.ControllerContent
+class ButtonsRef extends App.ControllerAppContent
+
+  elements:
+    '.js-submitDropdown': 'buttonDropdown'
+
+  events:
+    'click .js-openDropdown':        'toggleMenu'
+    'mouseenter .js-dropdownAction': 'onActionMouseEnter'
+    'mouseleave .js-dropdownAction': 'onActionMouseLeave'
 
   constructor: ->
     super
@@ -1626,9 +1679,27 @@ class ButtonsRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/buttons')
 
+  toggleMenu: =>
+    if @buttonDropdown.hasClass('is-open')
+      @closeMenu()
+      return
+    @openMenu()
+
+  closeMenu: =>
+    @buttonDropdown.removeClass 'is-open'
+
+  openMenu: =>
+    @buttonDropdown.addClass 'is-open'
+
+  onActionMouseEnter: (e) =>
+    @$(e.currentTarget).addClass('is-active')
+
+  onActionMouseLeave: (e) =>
+    @$(e.currentTarget).removeClass('is-active')
+
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 
-class MergeCustomerRef extends App.ControllerContent
+class MergeCustomerRef extends App.ControllerAppContent
 
   mergeTarget:
     firstname: 'Nicole',
@@ -1678,7 +1749,7 @@ class MergeCustomerRef extends App.ControllerContent
 App.Config.set( 'layout_ref/merge_customer', MergeCustomerRef, 'Routes' )
 
 
-class PrimaryEmailRef extends App.ControllerContent
+class PrimaryEmailRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -1984,7 +2055,7 @@ class ChatWindowRef extends Spine.Controller
     switch event.keyCode
       when TABKEY
         allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
-        chatCount = allChatInputs.size()
+        chatCount = allChatInputs.length
         index = allChatInputs.index(@input)
 
         if chatCount > 1
@@ -2095,7 +2166,7 @@ class ChatWindowRef extends Spine.Controller
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
 
-class AdminLoadRef extends App.ControllerContent
+class AdminLoadRef extends App.ControllerAppContent
 
   constructor: ->
     super
@@ -2107,7 +2178,7 @@ class AdminLoadRef extends App.ControllerContent
 App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
 
 
-class TwitterConversationRef extends App.ControllerContent
+class TwitterConversationRef extends App.ControllerAppContent
   elements:
     '.js-textarea':                       'textarea'
     '.article-add':                       'articleNewEdit'
@@ -2195,7 +2266,7 @@ class TwitterConversationRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
-class UI extends App.ControllerContent
+class UI extends App.ControllerAppContent
   constructor: ->
     super
     @render()
@@ -2205,7 +2276,7 @@ class UI extends App.ControllerContent
 
 App.Config.set( 'layout_ref/ui', UI, 'Routes' )
 
-class ChatToTicketRef extends App.ControllerContent
+class ChatToTicketRef extends App.ControllerAppContent
 
   elements:
     '.js-scrollHolder': 'scrollHolder'
@@ -2239,4 +2310,137 @@ class ChatToTicketRef extends App.ControllerContent
       y2: y1 + @attachments.outerHeight()
 
 App.Config.set('layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes')
-App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ] }, 'NavBarRight')
+
+class KnowledgeBaseAgentReaderRef extends App.ControllerAppContent
+  className: 'flex knowledge-base vertical'
+
+  elements:
+    '.js-search': 'searchInput'
+
+  events:
+    'click [data-target]':   'onTargetClicked'
+    'click .js-open-search': 'toggleSearch'
+
+  constructor: ->
+    super
+    App.Utils.loadIconFont('anticon')
+    @render()
+    @level(1)
+
+  render: ->
+    @html App.view('layout_ref/kb_agent_reader_ref')()
+
+  toggleSearch: (event) ->
+    active = $(event.currentTarget).toggleClass('btn--primary')
+    if $(event.currentTarget).is('.btn--primary')
+      @el.find('.main[data-level]').addClass('hidden')
+      @el.find('[data-level~="search"]').removeClass('hidden')
+      @searchInput.trigger('focus')
+    else
+      @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
+      @el.find('[data-level~="search"]').addClass('hidden')
+
+  onTargetClicked: (event) ->
+    event.preventDefault()
+    @level(event.currentTarget.dataset.target)
+
+  level: (level) ->
+    @currentLevel = level
+    @el.find('[data-level]').addClass('hidden')
+    @el.find("[data-level~=\"#{@currentLevel}\"]").removeClass('hidden')
+
+App.Config.set('layout_ref/kb_agent_reader', KnowledgeBaseAgentReaderRef, 'Routes')
+
+class KnowledgeBaseLinkTicketToAnswerRef extends App.ControllerAppContent
+  constructor: ->
+    super
+    App.Utils.loadIconFont('anticon')
+    @render()
+
+  render: =>
+    new App.ControllerModal
+      head: 'Link Answer'
+      buttonSubmit: false
+      container: @el
+      content: App.view('layout_ref/kb_link_ticket_to_answer_ref')
+
+App.Config.set('layout_ref/kb_link_ticket_to_answer', KnowledgeBaseLinkTicketToAnswerRef, 'Routes')
+
+class KnowledgeBaseLinkAnswerToAnswerRef extends App.ControllerAppContent
+  elements:
+    '.js-form': 'form'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/kb_link_answer_to_answer_ref')()
+
+    new App.ControllerForm(
+      grid: true
+      params:
+        category_id: 2
+        translation_ids: [
+          1
+          2
+        ]
+        archived_at: null
+        internal_at: null
+        published_at: '2018-10-22T13:58:08.730Z'
+        attachments: []
+        id: 1
+        translation:
+          title: 'Lithium en-us'
+          content:
+            body:
+              text: 'Lithium (from Greek: λίθος, translit. lithos, lit. "stone") is a chemical element with symbol Li and atomic number 3. It is a soft, silvery-white alkali metal. Under standard conditions, it is the lightest metal and the lightest solid element. Like all alkali metals, lithium is highly reactive and flammable, and is stored in mineral oil.'
+              attachments: []
+            id: 1
+          answer_id: 1
+          id: 1
+      screen: 'agent'
+      autofocus: true
+      el: @form
+      model:
+        configure_attributes: [
+          {
+            name: 'translation::title'
+            model: 'translation'
+            display: 'Title'
+            tag: 'input'
+            grid_width: '1/2'
+          }
+          {
+            name: 'category_id'
+            model: 'answer'
+            display: 'Category'
+            tag: 'select'
+            null: true
+            options: [
+              {
+                value: 1
+                name: 'Metal'
+              }
+              {
+                value: 2
+                name: 'Alkali metal'
+              }
+            ]
+            grid_width: '1/2'
+          }
+          {
+            name: 'translation::content::body'
+            model: 'translation'
+            display: 'Content'
+            tag: 'richtext'
+            buttons: [
+              'link'
+              'link_answer'
+            ]
+          }
+        ]
+    )
+
+App.Config.set('layout_ref/kb_link_answer_to_answer', KnowledgeBaseLinkAnswerToAnswerRef, 'Routes')
+App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: __('Layout Reference'), translate: true, target: '#layout_ref', permission: [ 'admin' ], setting: ['developer_mode'] }, 'NavBarRight')

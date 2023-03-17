@@ -1,4 +1,7 @@
 class App.Search extends App.Controller
+  @extend App.PopoverProvidable
+  @extend App.TicketMassUpdatable
+
   elements:
     '.js-search': 'searchInput'
 
@@ -8,6 +11,8 @@ class App.Search extends App.Controller
     'keyup .js-search': 'listNavigate'
     'click .js-tab': 'showTab'
     'input .js-search': 'updateFilledClass'
+
+  @include App.ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -22,8 +27,6 @@ class App.Search extends App.Controller
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
 
-    @throttledSearch = _.throttle @search, 200
-
     @globalSearch = new App.GlobalSearch(
       render: @renderResult
       limit: 50
@@ -32,15 +35,18 @@ class App.Search extends App.Controller
     @render()
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       @render()
     )
 
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+    @bindId = App.TicketOverviewCollection.bind(load)
+
   meta: =>
-    if @query
-      title = App.Utils.htmlEscape(@query)
-    else
-      title = App.i18n.translateInline('Extended Search')
+    title = @query || App.i18n.translateInline('Extended Search')
+
     meta =
       url:   @url()
       id:    ''
@@ -53,14 +59,21 @@ class App.Search extends App.Controller
     '#search'
 
   show: (params) =>
+    if @table
+      @table.show()
     @navupdate(url: '#search', type: 'menu')
-    return if _.isEmpty(params.query)
-    @$('.js-search').val(params.query).trigger('change')
-    return if @shown
-    @throttledSearch(true)
+
+    if !_.isEmpty(params.query)
+      @$('.js-search').val(params.query).trigger('keyup')
+      return
+
+    if @query
+      @search(500, true)
 
   hide: ->
-    @shown = false
+    @saveOrderBy()
+    if @table
+      @table.hide()
 
   changed: ->
     # nothing
@@ -79,9 +92,9 @@ class App.Search extends App.Controller
 
     @tabs = []
     for model in App.Config.get('models_searchable')
-      model = model.replace(/::/, '')
+      model = model.replace(/::/g, '')
       tab =
-        name: model
+        name: App[model]?.display_name || model
         model: model
         count: 0
         active: false
@@ -90,13 +103,24 @@ class App.Search extends App.Controller
       @tabs.push tab
 
     # build view
-    @html App.view('search/index')(
+    elLocal = $(App.view('search/index')(
       query: @query
       tabs: @tabs
+    ))
+
+    @controllerTicketBatch.releaseController() if @controllerTicketBatch
+    @controllerTicketBatch = new App.TicketBatch(
+      el:       elLocal.filter('.js-batch-overlay')
+      parent:   @
+      parentEl: elLocal
+      appEl:    @appEl
+      batchSuccess: =>
+        @search(0, true)
     )
 
+    @html elLocal
     if @query
-      @throttledSearch(true)
+      @search(500, true)
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -104,7 +128,9 @@ class App.Search extends App.Controller
       return
 
     # on other keys, show result
-    @throttledSearch(200)
+    @navigate "#search/#{encodeURIComponent(@searchInput.val())}"
+    @savedOrderBy = null
+    @search(0)
 
   empty: =>
     @searchInput.val('')
@@ -112,10 +138,9 @@ class App.Search extends App.Controller
     @updateFilledClass()
     @updateTask()
 
-    # remove not needed popovers
-    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+    @delayedRemoveAnyPopover()
 
-  search: (force = false) =>
+  search: (delay, force = false) =>
     query = @searchInput.val().trim()
     if !force
       return if !query
@@ -123,7 +148,18 @@ class App.Search extends App.Controller
     @query = query
     @updateTask()
 
-    @globalSearch.search(query: @query)
+    if delay is 0
+      delay = 500
+      if query.length > 2
+        delay = 350
+      else if query.length > 4
+        delay = 200
+
+    @globalSearch.search(
+      delay: delay
+      query: @query
+      force: force
+    )
 
   renderResult: (result = []) =>
     @result = result
@@ -136,11 +172,12 @@ class App.Search extends App.Controller
       @$(".js-tab#{tab.model} .js-counter").text(count)
 
   showTab: (e) =>
+    @saveOrderBy()
     tabs = $(e.currentTarget).closest('.tabs')
     tabModel = $(e.currentTarget).data('tab-content')
     tabs.find('.js-tab').removeClass('active')
     $(e.currentTarget).addClass('active')
-    @renderTab(tabModel, @result[tabModel] || [])
+    @renderTab(tabModel, @result?[tabModel] || [])
 
   renderTab: (model, localList) =>
 
@@ -154,21 +191,122 @@ class App.Search extends App.Controller
       object = App[model].fullLocal(item.id)
       list.push object
     if model is 'Ticket'
+
+      openTicket = (id,e) =>
+        # open ticket via task manager to provide task with overview info
+        ticket = App.Ticket.findNative(id)
+        App.TaskManager.execute(
+          key:        "Ticket-#{ticket.id}"
+          controller: 'TicketZoom'
+          params:
+            ticket_id:   ticket.id
+            overview_id: @overview.id
+          show:       true
+        )
+        @navigate ticket.uiUrl()
+
+      checkbox = @permissionCheck('ticket.agent') ? true : false
+
+      callbackCheckbox = (id, checked, e) =>
+        if @shouldShowBulkForm()
+          @bulkForm.render()
+          @bulkForm.show()
+        else
+          @bulkForm.hide()
+
+        if @lastChecked && e.shiftKey
+          # check items in a row
+          currentItem = $(e.currentTarget).parents('.item')
+          lastCheckedItem = $(@lastChecked).parents('.item')
+          items = currentItem.parent().children()
+
+          if currentItem.index() > lastCheckedItem.index()
+            # current item is below last checked item
+            startId = lastCheckedItem.index()
+            endId = currentItem.index()
+          else
+            # current item is above last checked item
+            startId = currentItem.index()
+            endId = lastCheckedItem.index()
+
+          items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
+
+        @lastChecked = e.currentTarget
+        @bulkForm.updateTicketIdsBulkForm(e)
+
       ticket_ids = []
       for item in localList
         ticket_ids.push item.id
-      new App.TicketList(
-        tableId:   "find_#{model}"
-        el:         @$('.js-content')
+      localeEl = @$('.js-content')
+      @table = new App.TicketList(
+        tableId:    "find_#{model}"
+        el:         localeEl
         columns:    [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ]
         ticket_ids: ticket_ids
         radio:      false
+        checkbox:   checkbox
+        orderBy:        @getSavedOrderBy('Ticket')?.order
+        orderDirection: @getSavedOrderBy('Ticket')?.direction
+        bindRow:
+          events:
+            'click': openTicket
+        bindCheckbox:
+          events:
+            'click': callbackCheckbox
+          select_all: callbackCheckbox
+      )
+
+      updateSearch = =>
+        callback = =>
+          @search(0, true)
+        @delay(callback, 100)
+
+      @bulkForm.releaseController() if @bulkForm
+      @bulkForm = new App.TicketBulkForm(
+        el:           @el.find('.bulkAction')
+        holder:       localeEl
+        view:         @view
+        batchSuccess: updateSearch
+        noSidebar:    true
+      )
+
+      # start bulk action observ
+      localElement = @$('.js-content')
+      if localElement.find('input[name="bulk"]:checked').length isnt 0
+        @bulkForm.show()
+
+      # show/hide bulk action
+      localElement.on('change', 'input[name="bulk"], input[name="bulk_all"]', (e) =>
+        if @shouldShowBulkForm()
+          @bulkForm.show()
+        else
+          @bulkForm.hide()
+          @bulkForm.reset()
+      )
+
+      # deselect bulk_all if one item is uncheck observ
+      localElement.on('change', '[name="bulk"]', (e) ->
+        bulkAll = localElement.find('[name="bulk_all"]')
+        checkedCount = localElement.find('input[name="bulk"]:checked').length
+        checkboxCount = localElement.find('input[name="bulk"]').length
+        if checkedCount is 0
+          bulkAll.prop('indeterminate', false)
+          bulkAll.prop('checked', false)
+        else
+          if checkedCount is checkboxCount
+            bulkAll.prop('indeterminate', false)
+            bulkAll.prop('checked', true)
+          else
+            bulkAll.prop('checked', false)
+            bulkAll.prop('indeterminate', true)
       )
     else
       openObject = (id,e) =>
         object = App[@model].fullLocal(id)
         @navigate object.uiUrl()
-      new App.ControllerTable(
+      @table = new App.ControllerTable(
+        orderBy: @getSavedOrderBy(model)?.order
+        orderDirection: @getSavedOrderBy(model)?.direction
         tableId: "find_#{model}"
         el:      @$('.js-content')
         model:   App[model]
@@ -188,6 +326,30 @@ class App.Search extends App.Controller
 
   updateFilledClass: ->
     @searchInput.toggleClass 'is-empty', !@searchInput.val()
+
+  shouldShowBulkForm: =>
+    items = @$('table').find('input[name="bulk"]:checked')
+    return false if items.length == 0
+
+    ticket_ids        = _.map(items, (el) -> $(el).val() )
+    ticket_group_ids  = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
+    ticket_group_ids  = _.uniq(ticket_group_ids)
+    allowed_group_ids = App.User.find(@Session.get('id')).allGroupIds('change')
+    allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
+    _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
+
+  getSavedOrderBy: (model) =>
+    return if !@savedOrderBy
+
+    @savedOrderBy[model]
+
+  saveOrderBy: =>
+    return if !@table
+    table = @table.table || @table
+    model = table.model.name
+
+    @savedOrderBy ||= {}
+    @savedOrderBy[model] = { order: table.lastOrderBy, direction: table.lastOrderDirection }
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

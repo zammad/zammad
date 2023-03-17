@@ -1,44 +1,15 @@
 ---
-engines:
-  brakeman:
-    enabled: true
-  bundler-audit:
-    enabled: true
-  csslint:
-    enabled: true
-  coffeelint:
-    enabled: true
-  duplication:
-    enabled: true
-    config:
-      languages:
-      - ruby
-      - javascript
-  eslint:
-    enabled: true
-  fixme:
-    enabled: true
-  phpmd:
-    enabled: false
-  rubocop:
-    enabled: true
-ratings:
-  paths:
-  - Gemfile.lock
-  - "**.erb"
-  - "**.haml"
-  - "**.rb"
-  - "**.rhtml"
-  - "**.slim"
-  - "**.css"
-  - "**.coffee"
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
-exclude_paths:
-- config/
-- db/
-- script/
-- test/
-- vendor/
+version: "2"
+exclude_patterns:
+  # Bundled thirdparty asset files
+  - "app/assets/javascripts/app/lib/**/*.js"
+  - "config/"
+  - "db/"
+  - "**/node_modules/"
+  - "script/"
+  - "public/assets/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "**/vendor/"
+  - "**/*.d.ts"

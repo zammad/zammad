@@ -79,6 +79,11 @@ class App.SettingsAreaTicketNumber extends App.Controller
       el = $(App.view("settings/#{preferences_setting}")(
         setting: setting
       ))
+
+      for form_entry in setting.options['form']
+        if form_entry['tag'] is 'boolean'
+          form_entry['translate'] = true
+
       new App.ControllerForm(
         el: el.find('.js-formItem'),
         model: { configure_attributes: setting.options['form'], className: '' }
@@ -115,7 +120,7 @@ class App.SettingsAreaTicketNumber extends App.Controller
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'success'
-          msg:     App.i18n.translateContent('Update successful!')
+          msg:     App.i18n.translateContent('Update successful.')
           timeout: 2000
         }
 
@@ -126,7 +131,7 @@ class App.SettingsAreaTicketNumber extends App.Controller
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be updated.'))
           timeout: 2000
         }
     )

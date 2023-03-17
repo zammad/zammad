@@ -2,8 +2,8 @@
 from: Martin Smith <m.Smith@example.com>
 from_email: m.Smith@example.com
 from_display_name: Martin Smith
-subject: 'Fw: Zugangsdaten'
 to: Martin Edenhofer <me@example.com>
+subject: 'Fw: Zugangsdaten'
 body: |-
   <div>
   <div>&nbsp;</div><div>--<br> don't cry - work! (Rainald Goetz)</div><div> <div> <div>
@@ -19,3 +19,46 @@ body: |-
   <b>Von:</b> "Martin Edenhofer" &lt;me@example.com&gt;<br>
   <b>An:</b> m.Smith@example.com<br>
   <b>Betreff:</b> Zugangsdaten</div><div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>) mal ein wenig selber “spielen”. :)</div></div></div></div></div></div></div></div></div></div>
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    <html><head></head><body><div style="font-family: Verdana;font-size: 12.0px;"><div><br/>
+    &nbsp;</div>
+
+    <div class="signature">--&nbsp;<br/>
+    don&#39;t&nbsp;cry&nbsp;-&nbsp;work!&nbsp;(Rainald&nbsp;Goetz)</div>
+
+    <div>&nbsp;
+    <div>&nbsp;
+    <div name="quote" style="margin:10px 5px 5px 10px; padding: 10px 0 10px 10px; border-left:2px solid #C3D9E5; word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+    <div style="margin:0 0 10px 0;"><b>Gesendet:</b>&nbsp;Mittwoch, 03. Februar 2016 um 12:43 Uhr<br/>
+    <b>Von:</b>&nbsp;&quot;Martin Smith&quot; &lt;m.Smith@example.com&gt;<br/>
+    <b>An:</b>&nbsp;linuxhotel@example.com<br/>
+    <b>Betreff:</b>&nbsp;Fw: Zugangsdaten</div>
+
+    <div name="quoted-content">
+    <div style="font-family: Verdana;font-size: 12.0px;">
+    <div><br/>
+    &nbsp;</div>
+
+    <div class="signature">--&nbsp;<br/>
+    don&#39;t&nbsp;cry&nbsp;-&nbsp;work!&nbsp;(Rainald&nbsp;Goetz)</div>
+
+    <div>&nbsp;
+    <div>&nbsp;
+    <div style="margin: 10.0px 5.0px 5.0px 10.0px;padding: 10.0px 0 10.0px 10.0px;border-left: 2.0px solid rgb(195,217,229);">
+    <div style="margin: 0 0 10.0px 0;"><b>Gesendet:</b>&nbsp;Freitag, 22. Januar 2016 um 11:52 Uhr<br/>
+    <b>Von:</b>&nbsp;&quot;Martin Edenhofer&quot; &lt;me@example.com&gt;<br/>
+    <b>An:</b>&nbsp;m.Smith@example.com<br/>
+    <b>Betreff:</b>&nbsp;Zugangsdaten</div>
+
+    <div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href="http://web.de" target="_blank">web.de</a>) mal ein wenig selber &ldquo;spielen&rdquo;. :)</div>
+
+    </body></html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: UTF-8

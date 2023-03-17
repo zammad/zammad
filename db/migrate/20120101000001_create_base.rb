@@ -1,14 +1,16 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class CreateBase < ActiveRecord::Migration[4.2]
   def up
 
     # clear old caches to start from scratch
-    Cache.clear
+    Rails.cache.clear
 
     create_table :sessions do |t|
       t.string :session_id,  null: false
       t.boolean :persistent, null: true
       t.text :data
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
@@ -51,7 +53,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :users, [:login], unique: true
     add_index :users, [:email]
-    #add_index :users, [:email], unique: => true
+    # add_index :users, [:email], unique: => true
     add_index :users, [:organization_id]
     add_index :users, [:image]
     add_index :users, [:department]
@@ -65,6 +67,20 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :users, :users, column: :created_by_id
     add_foreign_key :users, :users, column: :updated_by_id
     add_foreign_key :users, :users, column: :out_of_office_replacement_id
+
+    create_table :user_overview_sortings do |t|
+      t.column :user_id, :integer, null: false
+      t.column :overview_id, :integer, null: false
+      t.column :prio, :integer, null: false
+      t.integer :updated_by_id, null: false
+      t.integer :created_by_id, null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :user_overview_sortings, :user_id
+    add_index :user_overview_sortings, :overview_id
+    add_foreign_key :user_overview_sortings, :users, column: :created_by_id
+    add_foreign_key :user_overview_sortings, :users, column: :updated_by_id
+    add_foreign_key :user_overview_sortings, :users, column: :user_id
 
     create_table :signatures do |t|
       t.string :name,                 limit: 100,  null: false
@@ -82,7 +98,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :email_addresses do |t|
       t.integer :channel_id,                        null: true
       t.string  :realname,             limit: 250,  null: false
-      t.string  :email,                limit: 250,  null: false
+      t.string  :email,                limit: 255,  null: false
       t.boolean :active,                            null: false, default: true
       t.string  :note,                 limit: 250,  null: true
       t.string  :preferences,          limit: 2000, null: true
@@ -100,8 +116,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :name,                   limit: 160, null: false
       t.integer :assignment_timeout,                null: true
       t.string :follow_up_possible,     limit: 100, null: false, default: 'yes'
+      t.integer :reopen_time_in_days,               null: true
       t.boolean :follow_up_assignment,              null: false, default: true
       t.boolean :active,                            null: false, default: true
+      t.boolean :shared_drafts,                     null: false, default: true
       t.string :note,                   limit: 250, null: true
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
@@ -128,11 +146,12 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :roles, :users, column: :updated_by_id
 
     create_table :permissions do |t|
-      t.string :name,                   limit: 255, null: false
-      t.string :note,                   limit: 500, null: true
-      t.string :preferences,            limit: 10_000, null: true
-      t.boolean :active,                               null: false, default: true
-      t.timestamps limit: 3, null: false
+      t.string :name,          limit: 255, null: false
+      t.string :note,          limit: 500, null: true
+      t.string :preferences,   limit: 10_000, null: true
+      t.boolean :active,       null: false, default: true
+      t.boolean :allow_signup, null: false, default: false
+      t.timestamps limit: 3,   null: false
     end
     add_index :permissions, [:name], unique: true
 
@@ -175,6 +194,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :groups_users, [:user_id]
     add_index :groups_users, [:group_id]
     add_index :groups_users, [:access]
+    add_index :groups_users, %i[user_id group_id access]
     add_foreign_key :groups_users, :users
     add_foreign_key :groups_users, :groups
 
@@ -207,7 +227,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.references :user, null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :authorizations, %i[uid provider]
+    add_index :authorizations, %i[uid provider], unique: true
     add_index :authorizations, [:user_id]
     add_index :authorizations, [:username]
     add_foreign_key :authorizations, :users
@@ -224,14 +244,15 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :locales, [:name], unique: true
 
     create_table :translations do |t|
-      t.string :locale,               limit: 10,   null: false
-      t.string :source,               limit: 500,  null: false
-      t.string :target,               limit: 500,  null: false
-      t.string :target_initial,       limit: 500,  null: false
-      t.string :format,               limit: 20,   null: false, default: 'string'
-      t.integer :updated_by_id,                    null: false
-      t.integer :created_by_id,                    null: false
-      t.timestamps limit: 3, null: false
+      t.string  :locale,               limit: 10,    null: false
+      t.string  :source,               limit: 3000,  null: false
+      t.string  :target,               limit: 3000,  null: false
+      t.string  :target_initial,       limit: 3000,  null: false
+      t.boolean :is_synchronized_from_codebase,      null: false, default: false
+      t.string  :synchronized_from_translation_file, limit: 255
+      t.integer :updated_by_id,                      null: false
+      t.integer :created_by_id,                      null: false
+      t.timestamps limit: 3,                         null: false
     end
     add_index :translations, [:source], length: 255
     add_index :translations, [:locale]
@@ -287,8 +308,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
     create_table :taskbars do |t|
       t.references :user,                           null: false
-      t.datetime :last_contact,                     null: false
-      t.string :client_id,                          null: false
+      t.datetime :last_contact,                     null: false, limit: 3
       t.string :key,                   limit: 100,  null: false
       t.string :callback,              limit: 100,  null: false
       t.text :state,                   limit: 20.megabytes + 1, null: true
@@ -297,10 +317,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :prio,                              null: false
       t.boolean :notify,                            null: false, default: false
       t.boolean :active,                            null: false, default: false
+      t.string :app,                                null: false, default: 'desktop'
       t.timestamps limit: 3, null: false
     end
     add_index :taskbars, [:user_id]
-    add_index :taskbars, [:client_id]
     add_index :taskbars, [:key]
     add_foreign_key :taskbars, :users
 
@@ -355,6 +375,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :activity_streams, [:o_id]
     add_index :activity_streams, [:created_by_id]
     add_index :activity_streams, [:permission_id]
+    add_index :activity_streams, %i[permission_id group_id]
+    add_index :activity_streams, %i[permission_id group_id created_at], name: 'index_activity_streams_on_permission_id_group_id_created_at'
     add_index :activity_streams, [:group_id]
     add_index :activity_streams, [:created_at]
     add_index :activity_streams, [:activity_stream_object_id]
@@ -408,6 +430,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :histories, [:id_from]
     add_index :histories, [:value_from], length: 255
     add_index :histories, [:value_to], length: 255
+    add_index :histories, [:related_o_id]
+    add_index :histories, [:related_history_object_id]
+    add_index :histories, %i[o_id history_object_id related_o_id]
     add_foreign_key :histories, :history_types
     add_foreign_key :histories, :history_objects
     add_foreign_key :histories, :history_attributes
@@ -418,7 +443,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :name,                   limit: 200,  null: false
       t.string :area,                   limit: 100,  null: false
       t.string :description,            limit: 2000, null: false
-      t.string :options,                limit: 2000, null: true
+      t.text :options, null: true
       t.text :state_current,            limit: 200.kilobytes + 1, null: true
       t.string :state_initial,          limit: 2000, null: true
       t.boolean :frontend,                           null: false
@@ -455,6 +480,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :stores, %i[store_object_id o_id]
+    add_index :stores, %i[store_file_id]
     add_foreign_key :stores, :store_objects
     add_foreign_key :stores, :store_files
     add_foreign_key :stores, :users, column: :created_by_id
@@ -518,6 +544,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :error_message,                          null: true
       t.string :status,                                 null: true
       t.boolean :active,                                null: false, default: false
+      t.string :timeplan,                 limit: 2500,  null: true
       t.integer :updated_by_id,                         null: false
       t.integer :created_by_id,                         null: false
       t.timestamps limit: 3, null: false
@@ -595,13 +622,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :object_manager_attributes, :users, column: :updated_by_id
 
     create_table :delayed_jobs, force: true do |t|
-      t.integer  :priority, default: 0      # Allows some jobs to jump to the front of the queue
-      t.integer  :attempts, default: 0      # Provides for retries, but still fail eventually.
+      t.integer  :priority, default: 0         # Allows some jobs to jump to the front of the queue
+      t.integer  :attempts, default: 0         # Provides for retries, but still fail eventually.
       t.text     :handler                      # YAML-encoded string of the object that will do work
       t.text     :last_error                   # reason for last failure (See Note below)
-      t.datetime :run_at                       # When to run. Could be Time.zone.now for immediately, or sometime in the future.
-      t.datetime :locked_at                    # Set when a client is working on this object
-      t.datetime :failed_at                    # Set when all retries have failed (actually, by default, the record is deleted instead)
+      t.datetime :run_at, limit: 3             # When to run. Could be Time.zone.now for immediately, or sometime in the future.
+      t.datetime :locked_at, limit: 3          # Set when a client is working on this object
+      t.datetime :failed_at, limit: 3          # Set when all retries have failed (actually, by default, the record is deleted instead)
       t.string   :locked_by                    # Who is working on this object (if locked)
       t.string   :queue                        # The name of the queue this job is in
       t.timestamps limit: 3, null: false
@@ -629,10 +656,10 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text :payload, limit: 80_000
       t.text :result, limit: 80_000
 
-      t.datetime :started_at
-      t.datetime :finished_at
+      t.datetime :started_at, limit: 3
+      t.datetime :finished_at, limit: 3
 
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
 
     create_table :cti_logs do |t|
@@ -642,10 +669,14 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string  :from_comment,           limit: 250,  null: true
       t.string  :to,                     limit: 100,  null: false
       t.string  :to_comment,             limit: 250,  null: true
+      t.string  :queue,                  limit: 250,  null: true
       t.string  :call_id,                limit: 250,  null: false
       t.string  :comment,                limit: 500,  null: true
-      t.timestamp :start,                limit: 3,    null: true
-      t.timestamp :end,                  limit: 3,    null: true
+      t.timestamp :initialized_at,       limit: 3,    null: true
+      t.timestamp :start_at,             limit: 3,    null: true
+      t.timestamp :end_at,               limit: 3,    null: true
+      t.integer   :duration_waiting_time,             null: true
+      t.integer   :duration_talking_time,             null: true
       t.boolean   :done,                              null: false, default: true
       t.text :preferences,            limit: 500.kilobytes + 1, null: true
       t.timestamps limit: 3, null: false
@@ -668,21 +699,17 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :cti_caller_ids, %i[caller_id level]
     add_index :cti_caller_ids, %i[caller_id user_id]
     add_index :cti_caller_ids, %i[object o_id]
+    add_index :cti_caller_ids, %i[object o_id level user_id caller_id], name: 'index_cti_caller_ids_on_object_o_id_level_user_id_caller_id'
     add_foreign_key :cti_caller_ids, :users
 
     create_table :stats_stores do |t|
-      t.references :stats_store_object,             null: false
-      t.integer :o_id,                              null: false
+      t.references :stats_storable, polymorphic: true, index: true
       t.string  :key,                   limit: 250, null: true
-      t.integer :related_o_id,                      null: true
-      t.integer :related_stats_store_object_id,     null: true
       t.string  :data,                 limit: 5000, null: true
       t.integer :created_by_id,                     null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :stats_stores, [:o_id]
     add_index :stats_stores, [:key]
-    add_index :stats_stores, [:stats_store_object_id]
     add_index :stats_stores, [:created_by_id]
     add_index :stats_stores, [:created_at]
     add_foreign_key :stats_stores, :users, column: :created_by_id
@@ -691,11 +718,11 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.column :direction,            :string, limit: 20,    null: false
       t.column :facility,             :string, limit: 100,   null: false
       t.column :method,               :string, limit: 100,   null: false
-      t.column :url,                  :string, limit: 255,   null: false
+      t.column :url,                  :text,                 null: false
       t.column :status,               :string, limit: 20,    null: true
       t.column :ip,                   :string, limit: 50,    null: true
-      t.column :request,              :string, limit: 10_000, null: false
-      t.column :response,             :string, limit: 10_000, null: false
+      t.column :request,              :text,                 null: false
+      t.column :response,             :text,                 null: false
       t.column :updated_by_id,        :integer,              null: true
       t.column :created_by_id,        :integer,              null: true
       t.timestamps limit: 3, null: false
@@ -705,5 +732,105 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :http_logs, [:created_at]
     add_foreign_key :http_logs, :users, column: :created_by_id
     add_foreign_key :http_logs, :users, column: :updated_by_id
+
+    create_table :active_job_locks do |t|
+      t.string :lock_key
+      t.string :active_job_id
+
+      t.timestamps limit: 3
+    end
+    add_index :active_job_locks, :lock_key, unique: true
+    add_index :active_job_locks, :active_job_id, unique: true
+
+    create_table :smime_certificates do |t|
+      t.string :subject,            limit: 500,  null: false
+      t.string :doc_hash,           limit: 250,  null: false
+      t.string :fingerprint,        limit: 250,  null: false
+      t.string :modulus,            limit: 1024, null: false
+      t.datetime :not_before_at,                 null: true, limit: 3
+      t.datetime :not_after_at,                  null: true, limit: 3
+      t.binary :raw,                limit: 10.megabytes,  null: false
+      t.binary :private_key,        limit: 10.megabytes,  null: true
+      t.string :private_key_secret, limit: 500,  null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :smime_certificates, [:fingerprint], unique: true
+    add_index :smime_certificates, [:modulus]
+    add_index :smime_certificates, [:subject]
+
+    create_table :data_privacy_tasks do |t|
+      t.column :state,                :string, limit: 150, default: 'in process', null: true
+      t.references :deletable,        polymorphic: true
+      t.text :preferences
+      t.column :updated_by_id,        :integer,                                   null: false
+      t.column :created_by_id,        :integer,                                   null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :data_privacy_tasks, [:state]
+
+    create_table :mentions do |t|
+      t.references :mentionable,      polymorphic: true, null: false
+      t.column :user_id,              :integer, null: false
+      t.column :updated_by_id,        :integer, null: false
+      t.column :created_by_id,        :integer, null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :mentions, %i[mentionable_id mentionable_type user_id], unique: true, name: 'index_mentions_mentionable_user'
+    add_foreign_key :mentions, :users, column: :created_by_id
+    add_foreign_key :mentions, :users, column: :updated_by_id
+    add_foreign_key :mentions, :users, column: :user_id
+
+    create_table :core_workflows do |t|
+      t.string :name,                     limit: 100, null: false
+      t.string :object,                   limit: 100, null: true
+      t.text   :preferences,              limit: 500.kilobytes + 1, null: true
+      t.text   :condition_saved,          limit: 500.kilobytes + 1, null: true
+      t.text   :condition_selected,       limit: 500.kilobytes + 1, null: true
+      t.text   :perform,                  limit: 500.kilobytes + 1, null: true
+      t.boolean :active,                  null: false, default: true
+      t.boolean :stop_after_match,        null: false, default: false
+      t.boolean :changeable,              null: false, default: true
+      t.integer :priority,                null: false, default: 0
+      t.integer :updated_by_id,           null: false
+      t.integer :created_by_id,           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :core_workflows, [:name], unique: true
+    add_foreign_key :core_workflows, :users, column: :created_by_id
+    add_foreign_key :core_workflows, :users, column: :updated_by_id
+
+    create_table :ldap_sources do |t|
+      t.string :name,                     limit: 100, null: false
+      t.text   :preferences,              limit: 5.megabytes + 1, null: true
+      t.integer :prio,                    null: false
+      t.boolean :active,                  null: false, default: true
+      t.integer :updated_by_id,           null: false
+      t.integer :created_by_id,           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :ldap_sources, [:name], unique: true
+    add_foreign_key :ldap_sources, :users, column: :created_by_id
+    add_foreign_key :ldap_sources, :users, column: :updated_by_id
+
+    create_table :public_links do |t|
+      t.string  :link, limit: 500,        null: false
+      t.string  :title, limit: 200,       null: false
+      t.string  :description, limit: 200, null: true
+
+      if Rails.application.config.db_column_array
+        t.string :screen, null: false, array: true
+      else
+        t.json :screen, null: false
+      end
+
+      t.boolean :new_tab,                 null: false, default: true
+      t.integer :prio,                    null: false
+      t.column  :updated_by_id, :integer, null: false
+      t.column  :created_by_id, :integer, null: false
+      t.timestamps limit: 3,              null: false
+    end
+    add_index :public_links, [:link], unique: true
+    add_foreign_key :public_links, :users, column: :created_by_id
+    add_foreign_key :public_links, :users, column: :updated_by_id
   end
 end

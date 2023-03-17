@@ -1,0 +1,33 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Data Privacy') %> <small><%- @T('Management') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn js-description"><%- @T('Description') %></a>
+    <a class="btn btn--success js-new"><%- @T('New Deletion Task') %></a>
+  </div>
+</div>
+
+<div class="page-content">
+<% if @taskCount < 1: %>
+  <div class="page-description">
+    <%- @description %>
+  </div>
+  <% else: %>
+  <% if @runningTaskCount: %>
+  <h2><%- @T('Running Tasks') %></h2>
+  <%- @runningTasksHTML %>
+  <% end %>
+  <% if @failedTaskCount: %>
+  <div class="spacer"></div>
+  <h2><%- @T('Failed Tasks') %></h2>
+  <%- @failedTasksHTML %>
+  <% end %>
+  <% if @completedTaskCount: %>
+  <div class="spacer"></div>
+  <h2><%- @T('Completed Tasks') %></h2>
+  <%- @completedTasksHTML %>
+  <% end %>
+<% end %>
+</div>

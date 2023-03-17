@@ -1,0 +1,8 @@
+mutation mentionUnsubscribe($ticketId: ID!) {
+  mentionUnsubscribe(objectId: $ticketId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

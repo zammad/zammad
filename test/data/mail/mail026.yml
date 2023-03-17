@@ -2,11 +2,50 @@
 from: gate <team@support.gate.de>
 from_email: team@support.gate.de
 from_display_name: gate
-subject: Ihre Rechnung als PDF-Dokument
 to: Martin Edenhofer <billing@znuny.inc>
+subject: Ihre Rechnung als PDF-Dokument
 body: |-
-  Ihre Rechnung als PDF-Dokument <table cellpadding="0" cellspacing="0" bgcolor="#d9e7f0" style="font-size: 12px;color: #000000;background-color: #d9e7f0;padding: 0px;margin: 0px;">
+  Ihre Rechnung als PDF-Dokument
+
+  <table cellpadding="0" cellspacing="0" bgcolor="#d9e7f0" style="font-size: 12px;color: #000000;background-color: #d9e7f0;padding: 0px;margin: 0px;">
   <tr>
-  <td valign="top"> <br><br> </td>
+  <td valign="top">
+  <center>
+  <br><br>
+  </center>
+  </td>
   </tr>
   </table>
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |-
+    <html>
+    <head>
+    <title>Ihre Rechnung als PDF-Dokument</title>
+    </head>
+    <body style="margin: 0px;padding: 0px;font-family: Arial, sans-serif;font-size: 12px;">
+    <table cellpadding="0" cellspacing="0" width="100%" height="100%" bgcolor="#d9e7f0" id="mailbg" style="empty-cells:show;font-size: 12px;line-height: 18px;color: #000000;font-family: Arial, sans-serif;width: 100%;height: 100%;background-color: #d9e7f0;padding: 0px;margin: 0px;">
+    <tr>
+    <td valign="top">
+    <center>
+    <br><br>
+    </center>
+    </td>
+    </tr>
+    </table>
+    </body>
+    </html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: utf-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: some text
+  filename: invoice_gatede_B181347.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: text/plain; name=invoice_gatede_B181347.txt
+    Mime-Type: text/plain
+    Charset: UTF-8

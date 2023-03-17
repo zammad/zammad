@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketInProcess
 
@@ -16,14 +16,14 @@ class Stats::TicketInProcess
     closed_state_ids = Ticket::State.by_category(:closed).pluck(:id)
     closed_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND close_at > ?',
-      user.id, closed_state_ids, Time.zone.now - 1.day
+      user.id, closed_state_ids, 1.day.ago
     ).limit(100).pluck(:id)
 
     # get all tickets which I changed to pending action
     pending_action_state_ids = Ticket::State.by_category(:pending_action).pluck(:id)
     pending_action_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND updated_at > ?',
-      user.id, pending_action_state_ids, Time.zone.now - 1.day
+      user.id, pending_action_state_ids, 1.day.ago
     ).limit(100).pluck(:id)
 
     all_ticket_ids = own_ticket_ids.concat(closed_ticket_ids).concat(pending_action_ticket_ids).uniq
@@ -31,7 +31,7 @@ class Stats::TicketInProcess
     # get count where user worked on
     history_object = History::Object.lookup(name: 'Ticket')
     count = History.select('DISTINCT(o_id)').where(
-      'histories.created_at >= ? AND histories.history_object_id = ? AND histories.created_by_id = ? AND histories.o_id IN (?)', Time.zone.now - 1.day, history_object.id, user.id, all_ticket_ids
+      'histories.created_at >= ? AND histories.history_object_id = ? AND histories.created_by_id = ? AND histories.o_id IN (?)', 1.day.ago, history_object.id, user.id, all_ticket_ids
     ).count
 
     total = all_ticket_ids.count
@@ -40,16 +40,16 @@ class Stats::TicketInProcess
     average_in_percent = '-'
 
     if total.nonzero?
-      in_process_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      in_process_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
 
     {
-      used_for_average: in_process_precent,
+      used_for_average:  in_process_precent,
       average_per_agent: average_in_percent,
-      state: state,
-      in_process: count,
-      percent: in_process_precent,
-      total: total,
+      state:             state,
+      in_process:        count,
+      percent:           in_process_precent,
+      total:             total,
     }
   end
 
@@ -62,7 +62,7 @@ class Stats::TicketInProcess
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    in_percent = (result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'supergood'
                      elsif in_percent >= 65

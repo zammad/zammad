@@ -1,8 +1,4 @@
 <form class="modal-content setup wizard hide <%= @wizardClass %>">
-  <input type="hidden" name="disable_ssl_verify" value="1">
-  <input type="hidden" name="endpoint" value="<%= @endpoint %>">
-  <input type="hidden" name="user" value="<%= @user %>">
-  <input type="hidden" name="password" value="<%= @password %>">
   <div class="modal-header">
     <div class="modal-close js-close">
       <%- @Icon('diagonal-cross') %>

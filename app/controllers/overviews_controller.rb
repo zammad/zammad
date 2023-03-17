@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class OverviewsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.overview') }
+  include CanPrioritize
+
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -157,43 +159,5 @@ curl http://localhost/api/v1/overviews/#{id} -v -u #{login}:#{password} -H "Cont
 
   def destroy
     model_destroy_render(Overview, params)
-  end
-
-=begin
-
-Resource:
-POST /api/v1/overviews_prio
-
-Payload:
-{
-  "prios": [
-    [overview_id, prio],
-    [overview_id, prio],
-    [overview_id, prio],
-    [overview_id, prio],
-    [overview_id, prio]
-  ]
-}
-
-Response:
-{
-  "success": true,
-}
-
-Test:
-curl http://localhost/api/v1/overviews_prio -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"prios": [ [1,1], [44,2] ]}'
-
-=end
-
-  def prio
-    Overview.without_callback(:update, :before, :rearrangement) do
-      params[:prios].each do |overview_prio|
-        overview = Overview.find(overview_prio[0])
-        next if overview.prio == overview_prio[1]
-        overview.prio = overview_prio[1]
-        overview.save!
-      end
-    end
-    render json: { success: true }, status: :ok
   end
 end

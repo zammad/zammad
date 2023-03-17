@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Integrations extends App.ControllerSubContent
   requiredPermission: 'admin.integration'
-  header: 'Integrations'
+  header: __('Integrations')
   constructor: ->
     super
 
@@ -26,14 +26,15 @@ class Index extends App.ControllerSubContent
         config = value
         break
 
-    new config.controller(
-      el: @el
+    @configController.releaseController() if @configController
+    @configController = new config.controller(
+      el:           @el.find('.js-integration')
+      success_code: params.success_code
+      error_code:   params.error_code
     )
 
   render: =>
     return if @initRender && @integration
-
-    @user = App.User.find(App.Session.get('id'))
 
     @initRender = true
     integrations = []
@@ -44,21 +45,23 @@ class Index extends App.ControllerSubContent
       else
         match = false
         for permissionName in value.permission
-          if !match && @user.permission(permissionName)
+          if !match && @permissionCheck(permissionName)
             match = true
             value.key = key
             integrations.push value
     integrations = _.sortBy(integrations, (item) -> return item.name)
     @html App.view('integration/index')(
-      head:         'Integrations'
+      head:         __('Integrations')
       integrations: integrations
     )
 
     return if !@requestedIntegration
     @show(
-      target: @target
-      integration: @integration
-      noRender: true
+      target:       @target
+      integration:  @integration
+      success_code: @success_code
+      error_code:   @error_code
+      noRender:     true
     )
     @requestedIntegration = undefined
 
@@ -66,4 +69,4 @@ class Index extends App.ControllerSubContent
     if @subscribeId
       App.Setting.unsubscribe(@subscribeId)
 
-App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Index, permission: ['admin.integration'] }, 'NavBarAdmin')
+App.Config.set('Integration', { prio: 1000, name: __('Integrations'), parent: '#system', target: '#system/integration', controller: Integrations, permission: ['admin.integration'] }, 'NavBarAdmin')

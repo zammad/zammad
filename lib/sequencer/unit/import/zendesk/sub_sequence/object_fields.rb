@@ -1,20 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module SubSequence
-          class ObjectFields < Sequencer::Unit::Base
-            include ::Sequencer::Unit::Import::Zendesk::SubSequence::Base
-            include ::Sequencer::Unit::Import::Zendesk::SubSequence::Mapped
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Zendesk::SubSequence::ObjectFields < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Zendesk::SubSequence::Base
+  include ::Sequencer::Unit::Import::Zendesk::SubSequence::Mapped
 
-            def expecting
-              :sanitized_name
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def expecting
+    :sanitized_name
   end
 end

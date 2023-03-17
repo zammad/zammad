@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 # file is based on Twitter::Streaming::Connection, needed to get custom_connection_handle
 # to close connection after config has changed
 class Twitter::Streaming::ConnectionCustom < Twitter::Streaming::Connection
@@ -9,7 +11,7 @@ class Twitter::Streaming::ConnectionCustom < Twitter::Streaming::Connection
 
     ssl_client.connect
     request.stream(ssl_client)
-    while body = ssl_client.readpartial(1024) # rubocop:disable AssignmentInCondition
+    while body = ssl_client.readpartial(1024) # rubocop:disable Lint/AssignmentInCondition
       response << body
     end
   end

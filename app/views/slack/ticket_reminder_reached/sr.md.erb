@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Достигнуто време чекања!_
+Тикет захтева пажњу: достигнуто је време чекања за (#{ticket.title}) са клијентом „*#{ticket.customer.longname}*”.
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

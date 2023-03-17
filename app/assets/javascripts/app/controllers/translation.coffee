@@ -1,22 +1,21 @@
-class Index extends App.ControllerSubContent
+class Translation extends App.ControllerSubContent
   requiredPermission: 'admin.translation'
-  header: 'Translations'
+  header: __('Translations')
   events:
-    'click .js-pushChanges': 'pushChanges'
     'click .js-resetChanges': 'resetChanges'
-    'click .js-syncChanges': 'syncChanges'
+  initialRenderingDone: false
 
   constructor: ->
     super
     @locale = App.i18n.get()
     @render()
-    @bind('i18n:translation_update_todo', =>
+    @controllerBind('i18n:translation_update_todo', =>
       @load('i18n:translation_update_todo')
     )
-    @bind('i18n:translation_update_list', =>
+    @controllerBind('i18n:translation_update_list', =>
       @load('i18n:translation_update_list')
     )
-    @bind('i18n:translation_update', =>
+    @controllerBind('i18n:translation_update', =>
       @load()
     )
 
@@ -28,6 +27,7 @@ class Index extends App.ControllerSubContent
         currentLanguage = locale.name
     @html App.view('translation/index')(
       currentLanguage: currentLanguage
+      inlineTranslationKey: App.Browser.hotkeys().split('+').reverse().join('+') + '+t'
     )
     @load('render')
 
@@ -38,11 +38,12 @@ class Index extends App.ControllerSubContent
       url:   "#{@apiPath}/translations/admin/lang/#{@locale}"
       processData: true
       success: (data, status, xhr) =>
+        @initialRenderingDone = true
         @times                = []
         @stringsNotTranslated = []
         @stringsTranslated    = []
         for item in data.list
-          if item[4] is 'time'
+          if item[1] is 'FORMAT_DATE' or item[1] is 'FORMAT_DATETIME'
             @times.push item
           else
             if item[2] is ''
@@ -79,6 +80,10 @@ class Index extends App.ControllerSubContent
         @toggleAction()
     )
 
+  show: =>
+    return if @initialRenderingDone is false
+    @render()
+
   hide: =>
     @rerender()
 
@@ -103,30 +108,10 @@ class Index extends App.ControllerSubContent
     else
       @hideAction()
 
-  pushChanges: =>
-    @loader = new App.ControllerModalLoading(
-      head:      'Push my changes'
-      message:   'Pushing translations to i18n.zammad.com'
-      container: @el.closest('.content')
-    )
-    @ajax(
-      id:          'translations'
-      type:        'PUT'
-      url:         "#{@apiPath}/translations/push"
-      data:        JSON.stringify(locale: @locale)
-      processData: false
-      success: (data, status, xhr) =>
-        @loader.update('Thanks for contributing!')
-        @loader.hideIcon()
-        @loader.hide(2)
-      error: =>
-        @loader.hide()
-    )
-
   resetChanges: =>
     @loader = new App.ControllerModalLoading(
-      head:      'Reset changes'
-      message:   'Reseting changes...'
+      head:      __('Reset changes')
+      message:   __('Resetting changes…')
       container: @el.closest('.content')
     )
     @ajax(
@@ -143,43 +128,11 @@ class Index extends App.ControllerSubContent
         @loader.hide()
     )
 
-  syncChanges: =>
-    @loader = new App.ControllerModalLoading(
-      head:      'Get latest translations'
-      message:   'Getting latest translations from i18n.zammad.com'
-      container: @el.closest('.content')
-    )
-    hide = =>
-      App.Event.trigger('i18n:translation_update')
-      @hideAction()
-      @loader.hide(1)
-
-    locales = App.Locale.all()
-    locale = locales.shift()
-    @_syncChanges(locale, locales, @loader, hide)
-
-  _syncChanges: (locale, locales, loader, hide) =>
-    @ajax(
-      id:          'translations'
-      type:        'GET'
-      url:         "#{@apiPath}/translations/sync/#{locale.locale}"
-      processData: false
-      success: =>
-        loader.update(locale.name, false)
-        locale = locales.shift()
-        if _.isEmpty(locales)
-          hide()
-          return
-        @_syncChanges(locale, locales, loader, hide)
-      error: ->
-        hide()
-    )
-
   updateOnServer: (params, event) =>
 
     # update runtime if same language is used
     if App.i18n.get() is params.locale
-      App.i18n.setMap(params.source, params.target, params.format)
+      App.i18n.setMap(params.source, params.target)
 
     # remove not needed attributes
     delete params.field
@@ -212,7 +165,6 @@ class Index extends App.ControllerSubContent
     params =
       id:      field.data('id')
       source:  field.data('source')
-      format:  field.data('format') || 'string'
       initial: field.data('initial') || ''
       target:  field.val()
       locale:  @locale
@@ -233,20 +185,9 @@ class TranslationToDo extends App.Controller
 
   render: =>
 
-    if !App.i18n.getNotTranslated(@locale) && _.isEmpty(@stringsNotTranslated)
+    if _.isEmpty(@stringsNotTranslated)
       @html ''
       return
-
-    # add not translated items from runtime
-    if App.i18n.getNotTranslated(@locale)
-      for key, value of App.i18n.getNotTranslated(@locale)
-        found = false
-        for notTranslatedItem in @stringsNotTranslated
-          if key is notTranslatedItem[1]
-            found = true
-        if !found
-          item = [ '', key, '', '']
-          @stringsNotTranslated.push item
 
     @html App.view('translation/todo')(
       list: @stringsNotTranslated
@@ -260,9 +201,6 @@ class TranslationToDo extends App.Controller
     # remove from not translated list
     $(e.target).closest('tr').remove()
 
-    # local update
-    App.i18n.removeNotTranslated(params.locale, params.source)
-
     # remote update
     params.target_initial = ''
     @updateOnServer(params, 'i18n:translation_update_list')
@@ -274,9 +212,6 @@ class TranslationToDo extends App.Controller
 
     # remove from not translated list
     $(e.target).closest('tr').remove()
-
-    # local update
-    App.i18n.removeNotTranslated(params.locale, params.source)
 
     # remote update
     params.target_initial = ''
@@ -302,7 +237,6 @@ class TranslationList extends App.Controller
     @html App.view('translation/list')(
       times:                @times
       strings:              @stringsTranslated
-      notSourceTranslation: App.i18n.notTranslatedFeatureEnabled(@locale)
     )
 
   changes: =>
@@ -342,4 +276,4 @@ class TranslationList extends App.Controller
       reset.addClass('hidden')
       reset.closest('tr').removeClass('warning')
 
-App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, permission: ['admin.translation'] }, 'NavBarAdmin' )
+App.Config.set('Translation', { prio: 1800, parent: '#system', name: __('Translations'), target: '#system/translation', controller: Translation, permission: ['admin.translation'] }, 'NavBarAdmin' )

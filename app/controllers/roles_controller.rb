@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class RolesController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.role') }
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 

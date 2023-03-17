@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 RSpec.shared_examples 'Import::Async' do
   it 'responds to start_bg' do
     expect(described_class).to respond_to('start_bg')

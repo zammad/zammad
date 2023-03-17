@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, sequencer: :unit do
@@ -14,7 +16,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
     let(:instance)     { create(:user) }
     let(:action)       { :created }
     let(:associations) do
-      alt_org = Organization.where('id <> ?', instance.organization_id.to_i).pluck(:id).sample
+      alt_org = Organization.where.not(id: instance.organization_id.to_i).pluck(:id).sample
       { organization_id: alt_org }
     end
 
@@ -32,7 +34,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
   context 'when given a `associations` hash that does NOT change the instance' do
     let(:instance)     { create(:user) }
     let(:associations) { { organization_id: instance.organization_id } }
-    let(:action) { :unchanged }
+    let(:action)       { :unchanged }
 
     it 'keeps `:action => :unchanged`' do
       expect(process(parameters)).to include(action: :unchanged)
@@ -55,6 +57,20 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
   context 'when given nil for `associations`' do
     let(:instance)     { create(:user) }
     let(:associations) { nil }
+
+    context 'and `action == :skipped`' do
+      let(:action) { :skipped }
+
+      it 'makes no changes' do
+        allow(Rails.logger).to receive(:error).and_call_original
+
+        provided = process(parameters)
+
+        expect(Rails.logger).not_to have_received(:error)
+        expect(provided).to include(action: action)
+        expect(instance.changed?).to be(false)
+      end
+    end
 
     context 'and `action == :failed`' do
       let(:action) { :failed }

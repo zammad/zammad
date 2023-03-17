@@ -2,5 +2,67 @@
 from: postmaster@example.com
 from_email: postmaster@example.com
 from_display_name: ''
-subject: "Benachrichtung  \tzum  \t=?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus  \t(Fehlgeschlagen)?="
 to: sales@znuny.org
+subject: "Benachrichtung  \tzum  \t+ANw-bermittlungsstatus  \t(Fehlgeschlagen)"
+body: |+
+  Dies ist eine automatisch erstellte Benachrichtigung +APw-ber den Zustellstatus.
+
+  +ANw-bermittlung an folgende Empf+AOQ-nger fehlgeschlagen.
+
+         m.smith@example.com
+
+
+
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |+
+    Reporting-MTA: dns;h2o-exchange.lan.h2o
+    Received-From-MTA: dns;mx.example.com
+    Arrival-Date: Fri, 15 Nov 2013 13:55:09 +0100
+
+    Original-Recipient: rfc822;m.smith@example.com
+    Final-Recipient: rfc822;m.smith@example.com
+    Action: failed
+    Status: 5.7.1
+    Diagnostic-Code: smtp;550 5.7.1 Unable to relay for m.smith@example.com
+    X-Display-Name: Smith, Matthias
+
+  filename: delivery-status.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "Received: from mx.example.com ([10.81.0.6]) by h2o-exchange.lan.h2o with
+    Microsoft SMTPSVC(6.0.3790.4675);\n\t Fri, 15 Nov 2013 13:55:09 +0100\nReceived-SPF:
+    none (znuny.com: No applicable sender policy available) receiver=unknown; identity=mailfrom;
+    envelope-from=\"sales@znuny.org\"; helo=arber.znuny.com; client-ip=88.198.51.81\nReceived:
+    from arber.znuny.com (arber.znuny.com [88.198.51.81])\n\tby mx.example.com (Postfix)
+    with ESMTP id 9495215FEB\n\tfor <m.smith@example.com>; Fri, 15 Nov 2013 13:55:09
+    +0100 (CET)\nReceived: from lusen.znuny.com (lusen.znuny.com [5.9.88.201])\n\tby
+    arber.znuny.com (Postfix) with ESMTP id 6733B60264\n\tfor <m.smith@example.com>;
+    Fri, 15 Nov 2013 13:55:11 +0100 (CET)\nReceived: by lusen.znuny.com (Postfix,
+    from userid 1000)\n\tid 876CF14C17AD; Fri, 15 Nov 2013 13:55:08 +0100 (CET)\nDate:
+    Fri, 15 Nov 2013 13:55:08 +0100\nFrom: Martin Edenhofer via Znuny Sales <sales@znuny.org>\nTo:
+    \"Smith, Matthias\" <m.smith@example.com>\nMessage-ID: <20131115125507.4636.975502@portal.znuny.com>\nIn-Reply-To:
+    <3712107A5728554CAECB416EA305D78C19040C2698@h2o-exchange2.lan.h2o>\nSubject: =?UTF-8?Q?Angebot_f=C3=BCr_OTRS-Anpassung_[Ticket#113588]?=\nMime-Version:
+    1.0\nContent-Type: multipart/mixed;\n boundary=\"--==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9\";\n
+    charset=UTF-8\nContent-Transfer-Encoding: 7bit\nOrganization: Znuny GmbH\nX-Powered-BY:
+    OTRS - Open Ticket Request System (http://otrs.org/)\nX-Mailer: OTRS Mail Service
+    (3.x)\nReturn-Path: sales@znuny.org\nX-OriginalArrivalTime: 15 Nov 2013 12:55:09.0879
+    (UTC) FILETIME=[EA94D470:01CEE201]\n\n\n----==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9\nContent-Type:
+    text/plain;\n charset=UTF-8\nContent-Transfer-Encoding: quoted-printable\n\nHallo
+    Herr Smith,\n\nleider konnte wir Herrn Hoht nicht erreichen (er ist wohl gesundheitlich
+    =\nverhindert).\n\nMelden Sie ich einfach am Montag/Dienstag wenn Sie vom Urlaub
+    wieder zur=C3=\n=BCck sind, um das weitere Vorgehen zu besprechen.\n\nSoweit viele
+    Gr=C3=BC=C3=9Fe!\n\n  Martin Edenhofer\n\n--\nEnterprise Services for OTRS\n\nZnuny
+    GmbH // Marienstra=C3=9Fe 11 // 10117 Berlin // Germany\n\nP: +49 (0) 30 60 98
+    54 18-0\nF: +49 (0) 30 60 98 54 18-8\nW: http://znuny.com =\n\n\nLocation: Berlin
+    - HRB 139852 B Amtsgericht Berlin-Charlottenburg\nManaging Director: Martin Edenhofer\n\n----==_mimepart_528619ac6f802_62be3fcebe9a32c0738b9--\n\n"
+  filename: Angebot für OTRS-Anpassung [Ticket#113588].eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822
+    Mime-Type: message/rfc822
+    Charset: UTF-8
+...

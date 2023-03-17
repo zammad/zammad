@@ -1,6 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.tag
-  @render: (attribute) ->
+  @render: (attributeConfig) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
     if !attribute.id
       attribute.id = 'tag-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
     item = $( App.view('generic/input')(attribute: attribute) )
@@ -11,7 +13,7 @@ class App.UiElement.tag
         createTokensOnBlur: true
         autocomplete: {
           source: source
-          minLength: 2
+          minLength: 1
           response: (e, ui) ->
             return if !ui
             return if !ui.content

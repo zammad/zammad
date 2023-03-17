@@ -1,13 +1,16 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketGenericTime
 
 =begin
 
   result = Report::TicketGenericTime.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # year, quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
     params:      { field: 'created_at', selector: selector_sub },
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -16,23 +19,25 @@ returns
 
 =end
 
-  def self.aggs(params)
+  def self.aggs(params_origin)
+    params = params_origin.dup
     interval_es = params[:interval]
     if params[:interval] == 'week'
       interval_es = 'day'
     end
 
     aggs_interval = {
-      from: params[:range_start],
-      to: params[:range_end],
+      from:     params[:range_start].iso8601,
+      to:       params[:range_end].iso8601,
       interval: interval_es, # year, quarter, month, week, day, hour, minute, second
-      field: params[:params][:field],
+      field:    params[:params][:field],
+      timezone: params[:timezone],
     }
 
     without_merged_tickets = {
-      'state' => {
+      'state.name' => {
         'operator' => 'is not',
-        'value' => 'merged'
+        'value'    => 'merged'
       }
     }
 
@@ -42,22 +47,17 @@ returns
     end
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
-    result_es = SearchIndexBackend.selectors(['Ticket'], selector, nil, nil, aggs_interval)
-
-    if params[:interval] == 'month'
-      start = Date.parse(params[:range_start])
+    result_es = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user] }, aggs_interval)
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
-      start = Date.parse(params[:range_start])
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
-      start = Date.parse(params[:range_start])
-      stop_interval = 31
-    elsif params[:interval] == 'hour'
-      start = Time.zone.parse(params[:range_start])
+    when 'day'
+      stop_interval = ((params[:range_end] - params[:range_start]) / 86_400).to_i + 1
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
-      start = Time.zone.parse(params[:range_start])
+    when 'minute'
       stop_interval = 60
     end
     result = []
@@ -75,42 +75,51 @@ returns
       if !result_es['aggregations']['time_buckets']['buckets']
         raise "Invalid es result, no buckets #{result_es.inspect}"
       end
+
       result_es['aggregations']['time_buckets']['buckets'].each do |item|
-        if params[:interval] == 'minute'
-          item['key_as_string'] = item['key_as_string'].sub(/:\d\d.\d\d\dZ$/, '')
-          start_string = start.iso8601.sub(/:\d\dZ$/, '')
-        else
-          start_string = start.iso8601.sub(/:\d\d:\d\d.+?$/, '')
-        end
+        key_as_string = Time.zone.parse(item['key_as_string'])
         next if !item['doc_count']
-        next if item['key_as_string'] !~ /#{start_string}/
+        next if item['doc_count'].zero?
+
+        # only compare date - in certain cases elasticsearch timezone offset will not match
+        replace = ':\d\dZ$'
+        case params[:interval]
+        when 'month'
+          replace = '\d\dT\d\d:\d\d:\d\dZ$'
+        when 'day', 'week'
+          replace = '\d\d:\d\d:\d\dZ$'
+        end
+
+        next if key_as_string.iso8601.sub(%r{#{replace}}, '') != params[:range_start].iso8601.sub(%r{#{replace}}, '')
         next if match
+
         match = true
         result.push item['doc_count']
-        if params[:interval] == 'month'
-          start = start.next_month
-        elsif params[:interval] == 'week'
-          start = start.next_day
-        elsif params[:interval] == 'day'
-          start = start.next_day
-        elsif params[:interval] == 'hour'
-          start = start + 1.hour
-        elsif params[:interval] == 'minute'
-          start = start + 1.minute
+        case params[:interval]
+        when 'month'
+          params[:range_start] = params[:range_start].next_month
+        when 'week', 'day'
+          params[:range_start] = params[:range_start].next_day
+        when 'hour'
+          params[:range_start] = params[:range_start] + 1.hour
+        when 'minute'
+          params[:range_start] = params[:range_start] + 1.minute
         end
       end
       next if match
+
       result.push 0
-      if params[:interval] == 'month'
-        start = start.next_month
-      elsif params[:interval] == 'week'
-        start = start.next_day
-      elsif params[:interval] == 'day'
-        start = start + 1.day
-      elsif params[:interval] == 'hour'
-        start = start + 1.hour
-      elsif params[:interval] == 'minute'
-        start = start + 1.minute
+      case params[:interval]
+      when 'month'
+        params[:range_start] = params[:range_start].next_month
+      when 'week'
+        params[:range_start] = params[:range_start].next_day
+      when 'day'
+        params[:range_start] = params[:range_start] + 1.day
+      when 'hour'
+        params[:range_start] = params[:range_start] + 1.hour
+      when 'minute'
+        params[:range_start] = params[:range_start] + 1.minute
       end
     end
     result
@@ -119,8 +128,8 @@ returns
 =begin
 
   result = Report::TicketGenericTime.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
     params:      { field: 'created_at' },
   )
@@ -138,8 +147,8 @@ returns
   def self.items(params)
 
     aggs_interval = {
-      from: params[:range_start],
-      to: params[:range_end],
+      from:  params[:range_start].iso8601,
+      to:    params[:range_end].iso8601,
       field: params[:params][:field],
     }
 
@@ -149,9 +158,9 @@ returns
     end
 
     without_merged_tickets = {
-      'state' => {
+      'state.name' => {
         'operator' => 'is not',
-        'value' => 'merged'
+        'value'    => 'merged'
       }
     }
 
@@ -161,12 +170,15 @@ returns
     end
     selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
-    result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
+    result = SearchIndexBackend.selectors('Ticket', selector, { current_user: params[:current_user], limit: limit }, aggs_interval)
     return result if params[:sheet].present?
+
     assets = {}
     result[:ticket_ids].each do |ticket_id|
-      ticket_full = Ticket.find(ticket_id)
-      assets = ticket_full.assets(assets)
+      suppress(ActiveRecord::RecordNotFound) do
+        ticket_full = Ticket.find(ticket_id)
+        assets = ticket_full.assets(assets)
+      end
     end
     result[:assets] = assets
     result

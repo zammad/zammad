@@ -1,0 +1,26 @@
+Sender: Martin von Wittich <redacted@redacted>
+Message-ID: <f43f065c222c18bd8adf2b6597e89024@redacted>
+Date: Tue, 29 Jan 2019 22:42:09 +0100
+Subject: UTF-8-Attachment-Test
+From: Martin von Wittich <redacted@redacted>
+To: zammad <redacted@redacted>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="_=_swift_1548798129_e1966f90b1db46de031aa1a8234266a8_=_"
+X-Mailer: IServ v3
+
+
+--_=_swift_1548798129_e1966f90b1db46de031aa1a8234266a8_=_
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Regression test case for issue #2458 - Zammad fails to parse filename* in Content-Disposition header of attachment
+
+--_=_swift_1548798129_e1966f90b1db46de031aa1a8234266a8_=_
+Content-Type: text/plain; name="=?utf-8?Q?Erkl=C3=A4rung=2Etxt?="
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename*=utf-8''Erkl%C3%A4rung.txt
+
+SGVsbG8gV29ybGQK
+
+--_=_swift_1548798129_e1966f90b1db46de031aa1a8234266a8_=_--

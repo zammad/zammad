@@ -1,37 +1,36 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          module Comment
-            module Attachment
-              class Add < Sequencer::Unit::Base
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
-                include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-                skip_action :skipped
+class Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Add < Sequencer::Unit::Base
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+  include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
 
-                uses :instance, :resource, :response, :model_class
+  skip_action :skipped
 
-                def process
-                  ::Store.add(
-                    object:      model_class.name,
-                    o_id:        instance.id,
-                    data:        response.body,
-                    filename:    resource.file_name,
-                    preferences: {
-                      'Content-Type' => resource.content_type
-                    },
-                    created_by_id: 1
-                  )
-                rescue => e
-                  handle_failure(e)
-                end
-              end
-            end
-          end
-        end
-      end
+  uses :instance, :resource, :response, :model_class
+
+  def process
+    ::Store.create!(
+      object:        model_class.name,
+      o_id:          instance.id,
+      data:          response.body,
+      filename:      resource.file_name,
+      preferences:   store_preferences,
+      created_by_id: 1
+    )
+  rescue => e
+    handle_failure(e)
+  end
+
+  private
+
+  def store_preferences
+    output = { 'Content-Type' => resource.content_type }
+
+    if Store.resizable_mime? resource.content_type
+      output[:resizable]       = true
+      output[:content_preview] = true
     end
+
+    output
   end
 end

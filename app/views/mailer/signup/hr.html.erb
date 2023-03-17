@@ -1,0 +1,9 @@
+#{user.firstname} #{user.lastname}, potvrdite svoj #{config.product_name} račun
+
+<div>Bok #{user.firstname},</div>
+<br>
+<div>potvrdite svoju mail adresu za otvaranje #{config.product_name}računa. Vrlo je jednostavno, samo kliknite na link ispod.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>Vaš #{config.product_name} tim</div>

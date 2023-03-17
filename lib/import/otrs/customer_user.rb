@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class CustomerUser
@@ -36,6 +38,7 @@ module Import
 
       def create_or_update(customer)
         return if updated?(customer)
+
         create(customer)
       end
 
@@ -92,8 +95,10 @@ module Import
 
       def organization_id(customer)
         return if !customer['UserCustomerID']
+
         organization = Import::OTRS::Customer.by_customer_id(customer['UserCustomerID'])
         return if !organization
+
         organization.id
       end
     end

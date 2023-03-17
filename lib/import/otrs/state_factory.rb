@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module StateFactory
@@ -13,14 +15,34 @@ module Import
       def backup
         # rename states to handle not uniq issues
         ::Ticket::State.all.each do |state|
-          state.name = state.name + '_tmp'
+          state.name = "#{state.name}_tmp"
           state.save
         end
       end
 
-      def import_loop(records, *_args, &import_block)
+      def import_loop(records, *_args, &)
         super
+
+        update_pending_auto_states
         update_attribute_settings
+      end
+
+      def update_pending_auto_states
+        ::Ticket::State.where(state_type_id: ::Ticket::StateType.where(name: 'pending action').map(&:id)).each do |state|
+          close_state_name = state.name == 'pending auto close-' ? 'closed unsuccessful' : 'closed successful'
+
+          update_state_with_next_state_id(state, close_state_name)
+        end
+      end
+
+      def update_state_with_next_state_id(state, close_state_name)
+        state.next_state_id = ::Ticket::State.find_by(name: close_state_name)&.id
+
+        if state.next_state_id.blank?
+          state.next_state_id = ::Ticket::StateType.find_by(name: 'closed')&.first&.id
+        end
+
+        state.save
       end
 
       def update_attribute_settings
@@ -59,26 +81,14 @@ module Import
 
       def update_ticket_attributes
         update_ticket_state
-        update_ticket_pending_time
         reseed_dependent_objects
       end
 
       def update_ticket_state
-        agent_new = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w[merged removed])
-        ).pluck(:id)
-
-        agent_edit = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w[new merged removed])
-        ).pluck(:id)
-
-        customer_new = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w[new closed])
-        ).pluck(:id)
-
-        customer_edit = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w[open closed])
-        ).pluck(:id)
+        agent_new = fetch_ticket_states(%w[merged removed])
+        agent_edit = fetch_ticket_states(%w[new merged removed])
+        customer_new = fetch_ticket_states(%w[ew closed])
+        customer_edit = fetch_ticket_states(%w[open closed])
 
         ticket_state_id = ::ObjectManager::Attribute.get(
           object: 'Ticket',
@@ -93,20 +103,10 @@ module Import
         update_ticket_attribute(ticket_state_id)
       end
 
-      def update_ticket_pending_time
-        pending_state_ids = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where(name: ['pending reminder', 'pending action'])
+      def fetch_ticket_states(ignore_state_names)
+        ::Ticket::State.where(
+          state_type_id: ::Ticket::StateType.where.not(name: ignore_state_names)
         ).pluck(:id)
-
-        ticket_pending_time = ::ObjectManager::Attribute.get(
-          object: 'Ticket',
-          name:   'pending_time',
-        )
-
-        ticket_pending_time[:data_option][:required_if][:state_id] = pending_state_ids
-        ticket_pending_time[:data_option][:required_if][:state_id] = pending_state_ids
-
-        update_ticket_attribute(ticket_pending_time)
       end
 
       def update_ticket_attribute(attribute)

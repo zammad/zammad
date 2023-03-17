@@ -6,7 +6,7 @@ class App.TicketZoomArticleActions extends App.Controller
     super
     @render()
 
-  render: ->
+  render: =>
     actions = @actionRow(@ticket, @article)
 
     if actions
@@ -18,9 +18,12 @@ class App.TicketZoomArticleActions extends App.Controller
       @html ''
 
   actionRow: (ticket, article) ->
+    ticket       = App.Ticket.fullLocal(ticket.id)
+    article      = App.TicketArticle.fullLocal(article.id)
     actionConfig = App.Config.get('TicketZoomArticleAction')
-    keys = _.keys(actionConfig).sort()
-    actions = []
+    keys         = _.keys(actionConfig).sort()
+    actions      = []
+
     for key in keys
       config = actionConfig[key]
       if config

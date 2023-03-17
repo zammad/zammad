@@ -1,18 +1,13 @@
-require_dependency 'import/ldap'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class Sequencer
-  class Unit
-    module Ldap
-      class Config < Sequencer::Unit::Common::Provider::Fallback
+class Sequencer::Unit::Ldap::Config < Sequencer::Unit::Common::Provider::Fallback
 
-        provides :ldap_config
+  uses :resource
+  provides :ldap_config
 
-        private
+  private
 
-        def ldap_config
-          ::Import::Ldap.config
-        end
-      end
-    end
+  def ldap_config
+    resource
   end
 end

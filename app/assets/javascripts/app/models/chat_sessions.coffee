@@ -4,12 +4,12 @@ class App.ChatSession extends App.Model
   @url: @apiPath + '/chat_sessions'
 
   @configure_attributes = [
-    { name: 'name',           display: 'Name',        tag: 'input',    type: 'text', limit: 100, 'null': false }
-    { name: 'state',          display: 'State',       readonly: 1 }
-    { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 }
-    { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 }
-    { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 }
-    { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 }
+    { name: 'name',           display: __('Name'),        tag: 'input',    type: 'text', limit: 100, 'null': false }
+    { name: 'state',          display: __('State'),       readonly: 1 }
+    { name: 'created_by_id',  display: __('Created by'),  relation: 'User', readonly: 1 }
+    { name: 'created_at',     display: __('Created'),     tag: 'datetime', readonly: 1 }
+    { name: 'updated_by_id',  display: __('Updated by'),  relation: 'User', readonly: 1 }
+    { name: 'updated_at',     display: __('Updated'),     tag: 'datetime', readonly: 1 }
   ]
 
   @configure_overview = [
@@ -17,6 +17,8 @@ class App.ChatSession extends App.Model
     'state',
     'created_at',
   ]
+
+  @display_name = __('Chat Session')
 
   uiUrl: ->
     "#customer_chat/session/#{@id}"

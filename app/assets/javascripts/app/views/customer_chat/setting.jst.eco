@@ -1,7 +1,10 @@
+<% if @errors.settings: %>
+  <div class="alert alert--danger"><%- @T(@errors.settings) %></div>
+<% end %>
 <div class="select form-group">
-  <label for="a"><%- @T('Max. concurrent chats') %></label>
+  <label for="chat_max_windows"><%- @T('Max. concurrent chats') %></label>
   <div class="u-positionOrigin">
-    <select id="a" class="form-control" name="chat::max_windows">
+    <select id="chat_max_windows" class="form-control" name="chat::max_windows">
       <% for count in [1..20]: %>
         <option value="<%- count %>" <% if parseInt(@preferences.chat.max_windows) is count: %>selected<% end %>><%- count %></option>
       <% end %>
@@ -9,17 +12,32 @@
     <%- @Icon('arrow-down', 'dropdown-arrow') %>
   </div>
 </div>
-<% if @errors.settings: %>
-<div class="alert alert--danger"><%- @T(@errors.settings) %></div>
-<% end %>
-<table class="settings-list">
+<div class="select form-group">
+  <label for="chat_alternative_name"><%- @T('Alternative name') %></label>
+  <div class="u-positionOrigin">
+    <input id="chat_alternative_name" class="form-control" name="chat::alternative_name" value="<%= @preferences.chat.alternative_name %>"/>
+  </div>
+</div>
+<div class="select form-group">
+  <label for="chat_avatar_state"><%- @T('Avatar') %></label>
+  <div class="u-positionOrigin">
+    <select id="chat_avatar_state" class="form-control" name="chat::avatar_state">
+      <% for type in ['enabled', 'disabled']: %>
+        <option value="<%- type %>" <% if @preferences.chat.avatar_state is type: %>selected<% end %>><%- @T(type) %></option>
+      <% end %>
+    </select>
+    <%- @Icon('arrow-down', 'dropdown-arrow') %>
+  </div>
+</div>
+<table class="settings-list settings-list--stretch">
   <thead>
     <tr>
       <th><%- @T('Topic') %>
-      <th width="100%"><%- @T('Greeting') %> (<%- @T('Separate multiple values by ;') %>)
+      <th><%- @T('Greeting') %> (<%- @T('Separate multiple values by ;') %>)
       <th><%- @T('Enabled') %>
     </th></tr>
   </thead>
+  <tbody>
 <% for chat in @chats: %>
     <tr>
       <td><%= chat.name %>

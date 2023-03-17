@@ -1,0 +1,61 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-vue",
+    "stylelint-prettier/recommended"
+  ],
+  "rules": {
+    "alpha-value-notation": null,
+    "block-no-empty": null,
+    "color-function-notation": "legacy",
+    "declaration-block-no-duplicate-properties": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-block-no-shorthand-property-overrides": null,
+    "declaration-block-single-line-max-declarations": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "function-calc-no-unspaced-operator": null,
+    "function-comma-space-after": null,
+    "hue-degree-notation": null,
+    "function-no-unknown": null,
+    "keyframes-name-pattern": null,
+    "max-empty-lines": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "number-max-precision": null,
+    "selector-class-pattern": null,
+    "selector-list-comma-newline-after": null,
+    "selector-no-vendor-prefix": null,
+    "selector-pseudo-element-no-unknown": null,
+    "scss/at-extend-no-missing-placeholder": null,
+    "scss/at-rule-no-unknown": null,
+    "scss/dollar-variable-pattern": null,
+    "scss/double-slash-comment-whitespace-inside": null,
+    "scss/no-global-function-names": null,
+    "value-no-vendor-prefix": null,
+    "property-no-unknown": [true, { "ignoreProperties": ["scroll-snap-mode"] }],
+    "property-no-vendor-prefix": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "camelCaseSvgKeywords": true
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "public/assets/*.css",
+    "public/assets/chat/chat.css",
+    "public/assets/doorkeeper/**",
+    "public/vite-dev/**",
+    "public/vite/**",
+    "**/reset*.css",
+    "**/bootstrap*.css",
+    "**/jquery*.css",
+    "**/cropper.css",
+    "**/fineuploader.css",
+    "**/qunit*.css",
+    "**/svg-dimensions.css",
+    "vendor/**",
+    "coverage/**"
+  ]
+}

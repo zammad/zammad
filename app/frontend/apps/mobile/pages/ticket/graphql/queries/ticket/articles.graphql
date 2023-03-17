@@ -1,0 +1,47 @@
+query ticketArticles(
+  $ticketId: ID
+  $ticketInternalId: Int
+  $ticketNumber: String
+  $beforeCursor: String
+  $afterCursor: String
+  $pageSize: Int
+  $loadDescription: Boolean = true
+) {
+  description: ticketArticles(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+    first: 1
+  ) @include(if: $loadDescription) {
+    edges {
+      node {
+        ...ticketArticleAttributes
+      }
+    }
+  }
+  articles: ticketArticles(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+    before: $beforeCursor
+    after: $afterCursor
+    last: $pageSize
+  ) {
+    totalCount
+    edges {
+      node {
+        ...ticketArticleAttributes
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      startCursor
+      hasPreviousPage
+    }
+  }
+}

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   class Base
@@ -14,7 +14,7 @@ module Import
       true
     end
 
-    # Checks if the backend is able to get queued by the Scheduler.
+    # Checks if the backend is able to get queued by the background worker.
     #
     # @example
     #  Import::ExampleBackend.queueable?
@@ -25,7 +25,7 @@ module Import
       true
     end
 
-    # Checks if the backend is able to get rescheduled in case the Scheduler
+    # Checks if the backend is able to get rescheduled in case the background worker
     # got (re-)started while this ImportJob was running. Defaults to false.
     #
     # @example
@@ -57,7 +57,7 @@ module Import
     #
     # return [nil]
     def start
-      raise "Missing implementation if the 'start' method."
+      raise "Missing implementation of the 'start' method."
     end
   end
 end

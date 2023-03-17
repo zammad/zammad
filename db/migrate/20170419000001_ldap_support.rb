@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class LdapSupport < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     if !ActiveRecord::Base.connection.table_exists? 'import_jobs'
       create_table :import_jobs do |t|
@@ -13,42 +15,42 @@ class LdapSupport < ActiveRecord::Migration[4.2]
         t.text :payload, limit: 80_000
         t.text :result, limit: 80_000
 
-        t.datetime :started_at
-        t.datetime :finished_at
+        t.datetime :started_at # rubocop:disable Zammad/ExistsDateTimePrecision
+        t.datetime :finished_at # rubocop:disable Zammad/ExistsDateTimePrecision
 
-        t.timestamps null: false
+        t.timestamps null: false # rubocop:disable Zammad/ExistsDateTimePrecision
       end
     end
 
     Setting.create_or_update(
-      title: 'Authentication via %s',
-      name: 'auth_ldap',
-      area: 'Security::Authentication',
+      title:       'Authentication via %s',
+      name:        'auth_ldap',
+      area:        'Security::Authentication',
       description: 'Enables user authentication via %s.',
       preferences: {
-        title_i18n: ['LDAP'],
+        title_i18n:       ['LDAP'],
         description_i18n: ['LDAP'],
-        permission: ['admin.security'],
+        permission:       ['admin.security'],
       },
-      state: {
+      state:       {
         adapter:          'Auth::Ldap',
         login_attributes: %w[login email],
       },
-      frontend: false
+      frontend:    false
     )
 
     Setting.create_if_not_exists(
-      title: 'LDAP integration',
-      name: 'ldap_integration',
-      area: 'Integration::Switch',
+      title:       'LDAP integration',
+      name:        'ldap_integration',
+      area:        'Integration::Switch',
       description: 'Defines if LDAP is enabled or not.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'ldap_integration',
-            tag: 'boolean',
+            null:    true,
+            name:    'ldap_integration',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -56,26 +58,26 @@ class LdapSupport < ActiveRecord::Migration[4.2]
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
-        prio: 1,
+        prio:           1,
         authentication: true,
-        permission: ['admin.integration'],
+        permission:     ['admin.integration'],
       },
-      frontend: true
+      frontend:    true
     )
     Setting.create_if_not_exists(
-      title: 'LDAP config',
-      name: 'ldap_config',
-      area: 'Integration::LDAP',
+      title:       'LDAP config',
+      name:        'ldap_config',
+      area:        'Integration::LDAP',
       description: 'Defines the LDAP config.',
-      options: {},
-      state: {},
+      options:     {},
+      state:       {},
       preferences: {
-        prio: 2,
+        prio:       2,
         permission: ['admin.integration'],
       },
-      frontend: false,
+      frontend:    false,
     )
 
     Scheduler.create_or_update(
@@ -98,7 +100,7 @@ class LdapSupport < ActiveRecord::Migration[4.2]
       preferences: {
         permission: ['admin'],
       },
-      frontend: false
+      frontend:    false
     )
 
   end

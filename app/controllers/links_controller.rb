@@ -1,46 +1,46 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class LinksController < ApplicationController
+  prepend_before_action -> { authorize! }, only: %i[add remove]
   prepend_before_action :authentication_check
 
   # GET /api/v1/links
   def index
     links = Link.list(
-      link_object: params[:link_object],
+      link_object:       params[:link_object],
       link_object_value: params[:link_object_value],
+      user:              current_user,
     )
 
-    assets = {}
-    link_list = []
-    links.each do |item|
-      link_list.push item
-      if item['link_object'] == 'Ticket'
-        ticket = Ticket.lookup(id: item['link_object_value'])
-        assets = ticket.assets(assets)
-      end
-    end
+    linked_objects = links
+                     .filter_map { |elem| elem['link_object']&.safe_constantize&.lookup(id: elem['link_object_value']) }
 
     # return result
     render json: {
-      links: link_list,
-      assets: assets,
+      links:  links,
+      assets: ApplicationModel::CanAssets.reduce(linked_objects),
     }
   end
 
   # POST /api/v1/links/add
   def add
+    object = case params[:link_object_source]
+             when 'Ticket'
+               Ticket.find_by(number: params[:link_object_source_number])
+             when 'KnowledgeBase::Answer::Translation'
+               KnowledgeBase::Answer::Translation.find_by(id: params[:link_object_source_number])
+             end
 
-    object = Ticket.find_by(number: params[:link_object_source_number])
     if !object
-      render json: { error: 'No such object!' }, status: :unprocessable_entity
+      render json: { error: __('The object could not be found.') }, status: :unprocessable_entity
       return
     end
 
     link = Link.add(
-      link_type: params[:link_type],
-      link_object_target: params[:link_object_target],
+      link_type:                params[:link_type],
+      link_object_target:       params[:link_object_target],
       link_object_target_value: params[:link_object_target_value],
-      link_object_source: params[:link_object_source],
+      link_object_source:       params[:link_object_source],
       link_object_source_value: object.id,
     )
 

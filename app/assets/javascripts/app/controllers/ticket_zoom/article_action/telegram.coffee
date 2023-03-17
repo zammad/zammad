@@ -1,10 +1,11 @@
 class TelegramReply
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if !ticket.editable()
+    return actions if ticket.currentView() is 'customer'
 
     if article.sender.name is 'Customer' && article.type.name is 'telegram personal-message'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'telegramPersonalMessageReply'
         icon: 'reply'
         href: '#'
@@ -43,7 +44,7 @@ class TelegramReply
     true
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
 
     return articleTypes if !ticket || !ticket.create_article_type_id
 

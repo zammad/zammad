@@ -1,12 +1,13 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class ActivityStream < ApplicationModel
   include ActivityStream::Assets
 
   self.table_name = 'activity_streams'
 
   # rubocop:disable Rails/InverseOf
-  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'activity_stream_object_id'
-  belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'activity_stream_type_id'
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'activity_stream_object_id', optional: true
+  belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'activity_stream_type_id', optional: true
   # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
@@ -45,33 +46,37 @@ add a new activity entry for an object
       if !permission
         raise "No such Permission #{data[:permission]}"
       end
+
       permission_id = permission.id
     end
 
+    # check if object for online notification exists
+    exists_by_object_and_id?(data[:object], data[:o_id])
+
     # check newest entry - is needed
     result = ActivityStream.where(
-      o_id: data[:o_id],
-      #:activity_stream_type_id  => type_id,
-      permission_id: permission_id,
+      o_id:                      data[:o_id],
+      # :activity_stream_type_id  => type_id,
+      permission_id:             permission_id,
       activity_stream_object_id: object_id,
-      created_by_id: data[:created_by_id]
-    ).order('created_at DESC, id DESC').first
+      created_by_id:             data[:created_by_id]
+    ).reorder(created_at: :desc).first
 
-    # resturn if old entry is really fresh
+    # return if old entry is really fresh
     if result
       activity_record_delay = 90.seconds
-      return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )
+      return result if result.created_at.to_i >= (data[:created_at].to_i - activity_record_delay)
     end
 
     # create history
     record = {
-      o_id: data[:o_id],
-      activity_stream_type_id: type_id,
+      o_id:                      data[:o_id],
+      activity_stream_type_id:   type_id,
       activity_stream_object_id: object_id,
-      permission_id: permission_id,
-      group_id: data[:group_id],
-      created_at: data[:created_at],
-      created_by_id: data[:created_by_id]
+      permission_id:             permission_id,
+      group_id:                  data[:group_id],
+      created_at:                data[:created_at],
+      created_by_id:             data[:created_by_id]
     }
 
     ActivityStream.create(record)
@@ -89,7 +94,7 @@ remove whole activity entries of an object
     object_id = ObjectLookup.by_name(object_name)
     ActivityStream.where(
       activity_stream_object_id: object_id,
-      o_id: o_id,
+      o_id:                      o_id,
     ).destroy_all
   end
 
@@ -102,22 +107,9 @@ return all activity entries of an user
 =end
 
   def self.list(user, limit)
-    # do not return an activity stream for customers
-    return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
-
-    permission_ids = user.permissions_with_child_ids
-    group_ids = user.group_ids_access('read')
-
-    stream = if group_ids.blank?
-               ActivityStream.where('(permission_id IN (?) AND group_id is NULL)', permission_ids)
-                             .order('created_at DESC, id DESC')
-                             .limit(limit)
-             else
-               ActivityStream.where('(permission_id IN (?) AND group_id is NULL) OR (permission_id IN (?) AND group_id IN (?)) OR (permission_id is NULL AND group_id IN (?))', permission_ids, permission_ids, group_ids, group_ids)
-                             .order('created_at DESC, id DESC')
-                             .limit(limit)
-             end
-    stream
+    ActivityStreamPolicy::Scope.new(user, self).resolve
+                               .reorder(created_at: :desc)
+                               .limit(limit)
   end
 
 =begin

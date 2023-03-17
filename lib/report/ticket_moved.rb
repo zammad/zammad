@@ -1,13 +1,16 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketMoved < Report::Base
 
 =begin
 
   result = Report::TicketMoved.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
     params:      { type: 'in' }, # in|out
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -16,7 +19,8 @@ returns
 
 =end
 
-  def self.aggs(params)
+  def self.aggs(params_origin)
+    params = params_origin.dup
 
     selector = params[:selector]['ticket.group_id']
 
@@ -24,39 +28,29 @@ returns
       return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     end
 
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
-
     result = []
-    if params[:interval] == 'month'
-      start = Date.parse(params[:range_start])
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
-      start = Date.parse(params[:range_start])
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
-      start = Date.parse(params[:range_start])
+    when 'day'
       stop_interval = 31
-    elsif params[:interval] == 'hour'
-      start = Time.zone.parse(params[:range_start])
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
-      start = Time.zone.parse(params[:range_start])
+    when 'minute'
       stop_interval = 60
     end
     (1..stop_interval).each do |_counter|
-      if params[:interval] == 'month'
-        stop = start.next_month
-      elsif params[:interval] == 'week'
-        stop = start.next_day
-      elsif params[:interval] == 'day'
-        stop = start.next_day
-      elsif params[:interval] == 'hour'
-        stop = start + 1.hour
-      elsif params[:interval] == 'minute'
-        stop = start + 1.minute
+      case params[:interval]
+      when 'month'
+        params[:range_end] = params[:range_start].next_month
+      when 'week', 'day'
+        params[:range_end] = params[:range_start].next_day
+      when 'hour'
+        params[:range_end] = params[:range_start] + 1.hour
+      when 'minute'
+        params[:range_end] = params[:range_start] + 1.minute
       end
       local_params = group_attributes(selector, params)
       local_selector = params[:selector].clone
@@ -71,17 +65,17 @@ returns
         local_selector.delete('ticket.group_id')
       end
       defaults = {
-        object: 'Ticket',
-        type: 'updated',
+        object:    'Ticket',
+        type:      'updated',
         attribute: 'group',
-        start: start,
-        end: stop,
-        selector: local_selector
+        start:     params[:range_start],
+        end:       params[:range_end],
+        selector:  local_selector
       }
       local_params = defaults.merge(local_params)
       count = history_count(local_params)
       result.push count
-      start = stop
+      params[:range_start] = params[:range_end]
     end
     result
   end
@@ -89,8 +83,8 @@ returns
 =begin
 
   result = Report::TicketMoved.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
     params:      { type: 'in' }, # in|out
   )
@@ -111,12 +105,11 @@ returns
 
     if !selector
       return {
-        count: 0,
+        count:      0,
         ticket_ids: [],
       }
     end
     local_params = group_attributes(selector, params)
-    local_selector = params[:selector].clone
     without_merged_tickets = {
       'ticket_state.name' => {
         'operator' => 'is not',
@@ -128,16 +121,17 @@ returns
       local_selector.delete('ticket.group_id')
     end
     defaults = {
-      object: 'Ticket',
-      type: 'updated',
+      object:    'Ticket',
+      type:      'updated',
       attribute: 'group',
-      start: params[:range_start],
-      end: params[:range_end],
-      selector: local_selector
+      start:     params[:range_start],
+      end:       params[:range_end],
+      selector:  local_selector
     }
     local_params = defaults.merge(local_params)
     result = history(local_params)
     return result if params[:sheet].present?
+
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
@@ -149,28 +143,29 @@ returns
 
   def self.group_attributes(selector, params)
     group_id = selector['value']
-    if selector['operator'] == 'is'
+    case selector['operator']
+    when 'is'
       if params[:params][:type] == 'in'
         return {
           id_not_from: group_id,
-          id_to: group_id,
+          id_to:       group_id,
         }
       else
         return {
-          id_from: group_id,
+          id_from:   group_id,
           id_not_to: group_id,
         }
       end
-    elsif selector['operator'] == 'is not'
+    when 'is not'
       if params[:params][:type] == 'in'
         return {
-          id_from: group_id,
+          id_from:   group_id,
           id_not_to: group_id,
         }
       else
         return {
           id_not_from: group_id,
-          id_to: group_id,
+          id_to:       group_id,
         }
       end
     end

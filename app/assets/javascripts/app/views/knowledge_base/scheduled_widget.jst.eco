@@ -1,0 +1,5 @@
+<%- @Icon('clock') %>
+<div class="scheduled-widget-label"><%- @T('Scheduled for') %> <%- @timestamp %></div>
+<a class="btn btn--action btn--small scheduled-widget-delete js-delete">
+  <%- @Icon('diagonal-cross') %><span><%- @T('Cancel') %>
+</a>

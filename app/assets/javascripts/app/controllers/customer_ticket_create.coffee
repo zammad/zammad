@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class CustomerTicketCreate extends App.ControllerAppContent
   requiredPermission: 'ticket.customer'
   events:
     'submit form':         'submit',
@@ -9,21 +9,16 @@ class Index extends App.ControllerContent
     super
 
     # set title
-    @title 'New Ticket'
+    @title __('New Ticket')
     @form_id = App.ControllerForm.formId()
 
     @navupdate '#customer_ticket_new'
-
-    load = (data) =>
-      App.Collection.loadAssets(data.assets)
-      @formMeta = data.form_meta
-      @render()
-    @bindId = App.TicketCreateCollection.one(load)
+    @render()
 
   render: (template = {}) ->
     if !@Config.get('customer_ticket_create')
       @renderScreenError(
-        detail:     'Your role cannot create new ticket. Please contact your administrator.'
+        detail:     __('Your user role is not allowed to create new tickets. Please contact your administrator.')
         objectName: 'Ticket'
       )
       return
@@ -32,30 +27,45 @@ class Index extends App.ControllerContent
     defaults = template['options'] || {}
     handlers = @Config.get('TicketCreateFormHandler')
 
-    groupFilter = App.Config.get('customer_ticket_create_group_ids')
-    if groupFilter
-      if !_.isArray(groupFilter)
-        groupFilter = [groupFilter]
-      @formMeta.filter.group_id = groupFilter
-
     @html App.view('customer_ticket_create')(
-      head: 'New Ticket'
+      head: __('New Ticket')
       form_id: @form_id
     )
 
-    new App.ControllerForm(
+    @controllerFormCreateMiddle = new App.ControllerForm(
+      el:                      @el.find('.ticket-form-middle')
+      form_id:                 @form_id
+      model:                   App.Ticket
+      screen:                  'create_middle'
+      params:                  defaults
+      noFieldset:              true
+      handlersConfig:          handlers
+      rejectNonExistentValues: true
+    )
+
+    # tunnel events to make sure core workflow does know
+    # about every change of all attributes (like subject)
+    tunnelController = @controllerFormCreateMiddle
+    class TicketCreateFormHandlerControllerFormCreateMiddle
+      @run: (params, attribute, attributes, classname, form, ui) ->
+        return if !ui.lastChangedAttribute
+        tunnelController.lastChangedAttribute = ui.lastChangedAttribute
+        params = App.ControllerForm.params(tunnelController.form)
+        App.FormHandlerCoreWorkflow.run(params, tunnelController.attributes[0], tunnelController.attributes, tunnelController.idPrefix, tunnelController.form, tunnelController)
+
+    handlersTunnel = _.clone(handlers)
+    handlersTunnel['000-TicketCreateFormHandlerControllerFormCreateMiddle'] = TicketCreateFormHandlerControllerFormCreateMiddle
+
+    @controllerFormCreateTop = new App.ControllerForm(
       el:             @el.find('.ticket-form-top')
       form_id:        @form_id
       model:          App.Ticket
       screen:         'create_top'
-      handlersConfig: handlers
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
+      handlersConfig: handlersTunnel
       autofocus:      true
       params:         defaults
     )
-
-    new App.ControllerForm(
+    @controllerFormCreateTopArticle = new App.ControllerForm(
       el:             @el.find('.article-form-top')
       form_id:        @form_id
       model:          App.TicketArticle
@@ -63,31 +73,16 @@ class Index extends App.ControllerContent
       events:
         'fileUploadStart .richtext': => @submitDisable()
         'fileUploadStop .richtext': => @submitEnable()
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
       params:         defaults
-      handlersConfig: handlers
-    )
-    new App.ControllerForm(
-      el:             @el.find('.ticket-form-middle')
-      form_id:        @form_id
-      model:          App.Ticket
-      screen:         'create_middle'
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      params:         defaults
-      noFieldset:     true
-      handlersConfig: handlers
+      handlersConfig: handlersTunnel
     )
     if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
-      new App.ControllerForm(
+      @controllerFormCreateBottom = new App.ControllerForm(
         el:             @el.find('.ticket-form-bottom')
         form_id:        @form_id
         model:          App.Ticket
         screen:         'create_bottom'
-        handlersConfig: handlers
-        filter:         @formMeta.filter
-        formMeta:       @formMeta
+        handlersConfig: handlersTunnel
         params:         defaults
       )
 
@@ -109,11 +104,6 @@ class Index extends App.ControllerContent
 
     # set customer id
     params.customer_id = @Session.get('id')
-
-    # set prio
-    if !params.priority_id
-      priority = App.TicketPriority.findByAttribute( 'default_create', true )
-      params.priority_id = priority.id
 
     # set state
     if !params.state_id
@@ -150,15 +140,18 @@ class Index extends App.ControllerContent
 
     # validate form
     ticketErrorsTop = ticket.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTop
+      target: e.target
     )
     ticketErrorsMiddle = ticket.validate(
-      screen: 'create_middle'
+      controllerForm: @controllerFormCreateMiddle
+      target: e.target
     )
     article = new App.TicketArticle
     article.load(params['article'])
     articleErrors = article.validate(
-      screen: 'create_top'
+      controllerForm: @controllerFormCreateTop
+      target: e.target
     )
 
     # collect whole validation
@@ -193,7 +186,7 @@ class Index extends App.ControllerContent
           ui.submitEnable(e)
           ui.notify(
             type:    'error'
-            msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
+            msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be created.'))
             timeout: 6000
           )
       )
@@ -210,5 +203,16 @@ class Index extends App.ControllerContent
       return
     @formEnable(@$('.js-submit'), 'button')
 
-App.Config.set('customer_ticket_new', Index, 'Routes')
-App.Config.set('CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', permission: ['ticket.customer'], setting: ['customer_ticket_create'], divider: true }, 'NavBarRight')
+App.Config.set('customer_ticket_new', CustomerTicketCreate, 'Routes')
+App.Config.set('CustomerTicketNew', {
+  prio: 8003,
+  parent: '#new',
+  name: __('New Ticket'),
+  translate: true,
+  target: '#customer_ticket_new',
+  permission: (navigation) ->
+    return false if navigation.permissionCheck('ticket.agent')
+    return navigation.permissionCheck('ticket.customer')
+  setting: ['customer_ticket_create'],
+  divider: true
+}, 'NavBarRight')

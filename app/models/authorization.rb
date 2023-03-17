@@ -1,12 +1,12 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Authorization < ApplicationModel
-  belongs_to    :user
-  after_create  :delete_user_cache
+  belongs_to    :user, optional: true
+  after_create  :delete_user_cache, :notification_send
   after_update  :delete_user_cache
   after_destroy :delete_user_cache
   validates     :user_id,  presence: true
-  validates     :uid,      presence: true, uniqueness: { scope: :provider }
+  validates     :uid,      presence: true, uniqueness: { case_sensitive: true, scope: :provider }
   validates     :provider, presence: true
 
   def self.find_from_hash(hash)
@@ -15,37 +15,46 @@ class Authorization < ApplicationModel
 
       # update auth tokens
       auth.update!(
-        token: hash['credentials']['token'],
+        token:  hash['credentials']['token'],
         secret: hash['credentials']['secret']
       )
 
       # update username of auth entry if empty
-      if !auth.username && hash['info']['nickname']
+      if !auth.username && hash['info']['nickname'].present?
         auth.update!(
           username: hash['info']['nickname'],
         )
       end
 
-      # update image if needed
-      if hash['info']['image']
-        user = User.find(auth.user_id)
+      # update firstname/lastname if needed
+      user = User.find(auth.user_id)
+      if user.firstname.blank? && user.lastname.blank?
+        if hash['info']['first_name'].present? && hash['info']['last_name'].present?
+          user.firstname = hash['info']['first_name']
+          user.lastname = hash['info']['last_name']
+        elsif hash['info']['display_name'].present?
+          user.firstname = hash['info']['display_name']
+        end
+      end
 
-        # save/update avatar
+      # update image if needed
+      if hash['info']['image'].present?
         avatar = Avatar.add(
-          object: 'User',
-          o_id: user.id,
-          url: hash['info']['image'],
-          source: hash['provider'],
-          deletable: true,
+          object:        'User',
+          o_id:          user.id,
+          url:           hash['info']['image'],
+          source:        hash['provider'],
+          deletable:     true,
           updated_by_id: user.id,
           created_by_id: user.id,
         )
-
-        # update user link
         if avatar && user.image != avatar.store_hash
           user.image = avatar.store_hash
-          user.save
         end
+      end
+
+      if user.changed?
+        user.save
       end
     end
     auth
@@ -53,10 +62,8 @@ class Authorization < ApplicationModel
 
   def self.create_from_hash(hash, user = nil)
 
-    if !user && Setting.get('auth_third_party_auto_link_at_inital_login')
-      if hash['info'] && hash['info']['email'].present?
-        user = User.find_by(email: hash['info']['email'].downcase)
-      end
+    if !user && Setting.get('auth_third_party_auto_link_at_inital_login') && hash['info'] && hash['info']['email'].present?
+      user = User.find_by(email: hash['info']['email'].downcase)
     end
 
     if !user
@@ -66,11 +73,11 @@ class Authorization < ApplicationModel
     # save/update avatar
     if hash['info'].present? && hash['info']['image'].present?
       avatar = Avatar.add(
-        object: 'User',
-        o_id: user.id,
-        url: hash['info']['image'],
-        source: hash['provider'],
-        deletable: true,
+        object:        'User',
+        o_id:          user.id,
+        url:           hash['info']['image'],
+        source:        hash['provider'],
+        deletable:     true,
         updated_by_id: user.id,
         created_by_id: user.id,
       )
@@ -83,12 +90,12 @@ class Authorization < ApplicationModel
     end
 
     Authorization.create!(
-      user: user,
-      uid: hash['uid'],
+      user:     user,
+      uid:      hash['uid'],
       username: hash['info']['nickname'] || hash['info']['username'] || hash['info']['name'] || hash['info']['email'] || hash['username'],
       provider: hash['provider'],
-      token: hash['credentials']['token'],
-      secret: hash['credentials']['secret']
+      token:    hash['credentials']['token'],
+      secret:   hash['credentials']['secret']
     )
   end
 
@@ -96,7 +103,60 @@ class Authorization < ApplicationModel
 
   def delete_user_cache
     return if !user
+
     user.touch # rubocop:disable Rails/SkipsModelValidations
+  end
+
+  # An account is considered linked if the user originates from a source other than the current authorization provider.
+  def linked_account?
+    user.source != provider
+  end
+
+  def notification_send
+
+    # Send a notification only if the feature is turned on and the account is linked.
+    return if !Setting.get('auth_third_party_linking_notification') || !user || !linked_account?
+
+    template = 'user_auth_provider'
+
+    if user.email.blank?
+      Rails.logger.info { "Unable to send a notification (#{template}) to user_id: #{user.id} be cause of missing email address." }
+      return
+    end
+
+    Rails.logger.debug { "Send notification (#{template}) to: #{user.email}" }
+
+    NotificationFactory::Mailer.notification(
+      template: template,
+      user:     user,
+      objects:  {
+        user:     user,
+        provider: provider_name(provider),
+      }
+    )
+  end
+
+  def provider_name(provider)
+    return saml_display_name(provider) if provider == 'saml'
+
+    provider_title(provider)
+  end
+
+  # In case of SAML authentication provider, there is a separate display name setting that may be defined.
+  def saml_display_name(provider)
+    begin
+      Setting.get('auth_saml_credentials')['display_name']
+    rescue
+      provider_title(provider)
+    end
+  end
+
+  def provider_title(provider)
+    begin
+      Setting.find_by(name: "auth_#{provider}").preferences['title_i18n'].shift
+    rescue
+      provider
+    end
   end
 
 end

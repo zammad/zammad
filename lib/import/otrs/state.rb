@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class State
@@ -7,8 +9,6 @@ module Import
       MAPPING = {
         ChangeTime: :updated_at,
         CreateTime: :created_at,
-        CreateBy:   :created_by_id,
-        ChangeBy:   :updated_by_id,
         Name:       :name,
         ID:         :id,
         ValidID:    :active,
@@ -27,12 +27,14 @@ module Import
 
       def create_or_update(state)
         return if updated?(state)
+
         create(state)
       end
 
       def updated?(state)
         @local_state = ::Ticket::State.find_by(id: state[:id])
         return false if !@local_state
+
         log "update Ticket::State.find_by(id: #{state[:id]})"
         @local_state.update!(state)
         true
@@ -63,6 +65,7 @@ module Import
 
       def map_type(state)
         return if state['TypeName'] != 'pending auto'
+
         state['TypeName'] = 'pending action'
       end
     end

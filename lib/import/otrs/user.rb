@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class User
@@ -30,6 +32,7 @@ module Import
       def create_or_update(user)
         ensure_unique_login(user)
         return if updated?(user)
+
         create(user)
       end
 
@@ -62,6 +65,7 @@ module Import
       def unique_login(user)
         login = user[:login]
         return login if ::User.where('login = ? AND id != ?', login.downcase, user[:id]).count.zero?
+
         "#{login}_#{user[:id]}"
       end
 
@@ -87,6 +91,7 @@ module Import
 
       def password(user)
         return if !user['UserPw']
+
         "{sha2}#{user['UserPw']}"
       end
 
@@ -99,7 +104,7 @@ module Import
           permissions ||= user['GroupIDs'][ queue['GroupID'].to_s ]
 
           next if !permissions
-          next if !permissions.include?('rw')
+          next if permissions.exclude?('rw')
 
           result.push queue['QueueID']
         end
@@ -118,6 +123,7 @@ module Import
         roles(user).each do |role|
           role_lookup = Role.lookup(name: role)
           next if !role_lookup
+
           local_role_ids.push role_lookup.id
         end
         local_role_ids
@@ -147,7 +153,9 @@ module Import
         result = []
         return result if role_object.blank?
         return result if role_object['GroupIDs'].blank?
+
         permissions = role_object['GroupIDs'][ group['ID'] ]
+        permissions ||= role_object['GroupIDs'][ group['ID'].to_s ]
 
         return result if !permissions
 
@@ -155,8 +163,8 @@ module Import
           result.push 'Admin'
         end
 
-        return result if group['Name'] !~ /^(stats|report)/
-        return result if !( permissions.include?('ro') || permissions.include?('rw') )
+        return result if !group['Name'].match?(%r{^(stats|report)})
+        return result if !(permissions.include?('ro') || permissions.include?('rw'))
 
         result.push 'Report'
         result
@@ -166,7 +174,8 @@ module Import
         result = []
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
-          next if !user['RoleIDs'].include?(role['ID'])
+          next if user['RoleIDs'].exclude?(role['ID'])
+
           result += groups_from_otrs_groups(role)
         end
         result

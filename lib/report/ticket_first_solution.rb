@@ -1,10 +1,12 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Report::TicketFirstSolution
 
 =begin
 
   result = Report::TicketFirstSolution.aggs(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     interval:    'month', # quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
   )
@@ -15,65 +17,50 @@ returns
 
 =end
 
-  def self.aggs(params)
-    interval = params[:interval]
-    if params[:interval] == 'week'
-      interval = 'day'
-    end
+  def self.aggs(params_origin)
+    params = params_origin.dup
 
     result = []
-    if params[:interval] == 'month'
-      start = Date.parse(params[:range_start])
+    case params[:interval]
+    when 'month'
       stop_interval = 12
-    elsif params[:interval] == 'week'
-      start = Date.parse(params[:range_start])
+    when 'week'
       stop_interval = 7
-    elsif params[:interval] == 'day'
-      start = Date.parse(params[:range_start])
+    when 'day'
       stop_interval = 31
-    elsif params[:interval] == 'hour'
-      start = Time.zone.parse(params[:range_start])
+    when 'hour'
       stop_interval = 24
-    elsif params[:interval] == 'minute'
-      start = Time.zone.parse(params[:range_start])
+    when 'minute'
       stop_interval = 60
     end
     (1..stop_interval).each do |_counter|
-      if params[:interval] == 'month'
-        stop = start.next_month
-      elsif params[:interval] == 'week'
-        stop = start.next_day
-      elsif params[:interval] == 'day'
-        stop = start.next_day
-      elsif params[:interval] == 'hour'
-        stop = start + 1.hour
-      elsif params[:interval] == 'minute'
-        stop = start + 1.minute
+      case params[:interval]
+      when 'month'
+        params[:range_end] = params[:range_start].next_month
+      when 'week', 'day'
+        params[:range_end] = params[:range_start].next_day
+      when 'hour'
+        params[:range_end] = params[:range_start] + 1.hour
+      when 'minute'
+        params[:range_end] = params[:range_start] + 1.minute
       end
 
-      without_merged_tickets = {
-        'ticket_state.name' => {
-          'operator' => 'is not',
-          'value'    => 'merged'
-        }
-      }
-      params[:selector].merge!(without_merged_tickets)
-      query, bind_params, tables = Ticket.selector2sql(params[:selector])
+      query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
       ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
         'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
-        start,
-        stop,
+        params[:range_start],
+        params[:range_end],
       ).where(query, *bind_params).joins(tables)
       count = 0
       ticket_list.each do |ticket|
         closed_at  = ticket.close_at
         created_at = ticket.created_at
-        if (closed_at - (60 * 15) ) < created_at
+        if (closed_at - (60 * 15)) < created_at
           count += 1
         end
       end
       result.push count
-      start = stop
+      params[:range_start] = params[:range_end]
     end
     result
   end
@@ -81,9 +68,10 @@ returns
 =begin
 
   result = Report::TicketFirstSolution.items(
-    range_start: '2015-01-01T00:00:00Z',
-    range_end:   '2015-12-31T23:59:59Z',
+    range_start: Time.zone.parse('2015-01-01T00:00:00Z'),
+    range_end:   Time.zone.parse('2015-12-31T23:59:59Z'),
     selector:    selector, # ticket selector to get only a collection of tickets
+    timezone:    'Europe/Berlin',
   )
 
 returns
@@ -97,27 +85,19 @@ returns
 =end
 
   def self.items(params)
-    without_merged_tickets = {
-      'ticket_state.name' => {
-        'operator' => 'is not',
-        'value'    => 'merged'
-      }
-    }
-
-    selector = params[:selector].merge!(without_merged_tickets)
-    query, bind_params, tables = Ticket.selector2sql(selector)
+    query, bind_params, tables = Ticket.selector2sql(params[:selector], { exclude_merged: true })
     ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
       'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
       params[:range_start],
       params[:range_end],
-    ).where(query, *bind_params).joins(tables).order(close_at: :asc)
+    ).where(query, *bind_params).joins(tables).reorder(close_at: :asc)
     count = 0
     assets = {}
     ticket_ids = []
     ticket_list.each do |ticket|
       closed_at  = ticket.close_at
       created_at = ticket.created_at
-      if (closed_at - (60 * 15) ) < created_at
+      if (closed_at - (60 * 15)) < created_at
         count += 1
         ticket_ids.push ticket.id
       end
@@ -125,9 +105,9 @@ returns
       assets = ticket_full.assets(assets)
     end
     {
-      count: count,
+      count:      count,
       ticket_ids: ticket_ids,
-      assets: assets,
+      assets:     assets,
     }
   end
 

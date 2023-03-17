@@ -1,0 +1,8 @@
+subscription configUpdates {
+  configUpdates {
+    setting {
+      key
+      value
+    }
+  }
+}

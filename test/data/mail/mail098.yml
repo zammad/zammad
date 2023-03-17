@@ -1,0 +1,13 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"事務局" <noreply@example.org>'
+from_email: noreply@example.org
+from_display_name: 事務局
+to: noreply@example.org
+cc: ''
+subject: 一覧」をアップします
+body: 'カテゴリ：全メンバー
+
+  '
+content_type: text/plain
+reply-to: info@example.org
+attachments: []

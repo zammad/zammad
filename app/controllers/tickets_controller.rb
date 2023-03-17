@@ -1,30 +1,23 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
   include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
+  include CanPaginate
 
+  prepend_before_action -> { authorize! }, only: %i[create selector import_example import_start ticket_customer ticket_history ticket_related ticket_recent ticket_merge ticket_split]
   prepend_before_action :authentication_check
-  before_action :follow_up_possible_check, only: :update
 
   # GET /api/v1/tickets
   def index
-    offset = 0
-    per_page = 100
+    paginate_with(max: 100)
 
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      per_page = params[:per_page].to_i
-    end
-
-    if per_page > 100
-      per_page = 100
-    end
-
-    access_condition = Ticket.access_condition(current_user, 'read')
-    tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
+    tickets = TicketPolicy::ReadScope.new(current_user).resolve
+                                     .reorder(id: :asc)
+                                     .offset(pagination.offset)
+                                     .limit(pagination.limit)
 
     if response_expand?
       list = []
@@ -44,7 +37,7 @@ class TicketsController < ApplicationController
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end
@@ -55,7 +48,9 @@ class TicketsController < ApplicationController
   # GET /api/v1/tickets/1
   def show
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket)
+
+    auto_assign_ticket(ticket)
 
     if response_expand?
       result = ticket.attributes_with_association_names
@@ -77,87 +72,111 @@ class TicketsController < ApplicationController
     render json: ticket
   end
 
+  def auto_assign_ticket(ticket)
+    return if params[:auto_assign].blank?
+
+    ticket.auto_assign(current_user)
+  end
+
   # POST /api/v1/tickets
   def create
-    customer = {}
-    if params[:customer].class == ActionController::Parameters
-      customer = params[:customer]
-      params.delete(:customer)
-    end
+    ticket = nil
 
-    clean_params = Ticket.association_name_to_id_convert(params)
+    Transaction.execute do # rubocop:disable Metrics/BlockLength
+      customer = {}
+      if params[:customer].instance_of?(ActionController::Parameters)
+        customer = params[:customer]
+        params.delete(:customer)
+      end
 
-    # overwrite params
-    if !current_user.permissions?('ticket.agent')
-      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
-        clean_params.delete(key)
-      end
-      clean_params[:customer_id] = current_user.id
-    end
+      if (shared_draft_id = params[:shared_draft_id])
+        shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
 
-    # try to create customer if needed
-    if clean_params[:customer_id].present? && clean_params[:customer_id] =~ /^guess:(.+?)$/
-      email = $1
-      if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
-        render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
-        return
-      end
-      local_customer = User.find_by(email: email.downcase)
-      if !local_customer
-        role_ids = Role.signup_role_ids
-        local_customer = User.create(
-          firstname: '',
-          lastname: '',
-          email: email,
-          password: '',
-          active: true,
-          role_ids: role_ids,
-        )
-      end
-      clean_params[:customer_id] = local_customer.id
-    end
+        if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
+          raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+        end
 
-    # try to create customer if needed
-    if clean_params[:customer_id].blank? && customer.present?
-      check_attributes_by_current_user_permission(customer)
-      clean_customer = User.association_name_to_id_convert(customer)
-      local_customer = nil
-      if !local_customer && clean_customer[:id].present?
-        local_customer = User.find_by(id: clean_customer[:id])
+        shared_draft&.destroy
       end
-      if !local_customer && clean_customer[:email].present?
-        local_customer = User.find_by(email: clean_customer[:email].downcase)
-      end
-      if !local_customer && clean_customer[:login].present?
-        local_customer = User.find_by(login: clean_customer[:login].downcase)
-      end
-      if !local_customer
-        role_ids = Role.signup_role_ids
-        local_customer = User.new(clean_customer)
-        local_customer.role_ids = role_ids
-        local_customer.save!
-      end
-      clean_params[:customer_id] = local_customer.id
-    end
 
-    clean_params = Ticket.param_cleanup(clean_params, true)
-    ticket = Ticket.new(clean_params)
+      clean_params = Ticket.association_name_to_id_convert(params)
 
-    # check if article is given
-    if !params[:article]
-      render json: { error: 'article hash is missing' }, status: :unprocessable_entity
-      return
-    end
+      # overwrite params
+      if !current_user.permissions?('ticket.agent')
+        %i[owner owner_id customer customer_id preferences].each do |key|
+          clean_params.delete(key)
+        end
+        clean_params[:customer_id] = current_user.id
+      end
 
-    # create ticket
-    ticket.save!
-    ticket.with_lock do
+      # The parameter :customer_id is 'abused' in cases where it is not an integer, but a string like
+      #   'guess:customers.email@domain.cm' which implies that the customer should be looked up.
+      if clean_params[:customer_id].is_a?(String) && clean_params[:customer_id] =~ %r{^guess:(.+?)$}
+        email_address = $1
+        email_address_validation = EmailAddressValidation.new(email_address)
+        if !email_address_validation.valid?
+          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
+          return
+        end
+        local_customer = User.find_by(email: email_address.downcase)
+        if !local_customer
+          role_ids = Role.signup_role_ids
+          local_customer = User.create(
+            firstname: '',
+            lastname:  '',
+            email:     email_address,
+            password:  '',
+            active:    true,
+            role_ids:  role_ids,
+          )
+        end
+        clean_params[:customer_id] = local_customer.id
+      end
+
+      # try to create customer if needed
+      if clean_params[:customer_id].blank? && customer.present?
+        check_attributes_by_current_user_permission(customer)
+        clean_customer = User.association_name_to_id_convert(customer)
+        local_customer = nil
+        if !local_customer && clean_customer[:id].present?
+          local_customer = User.find_by(id: clean_customer[:id])
+        end
+        if !local_customer && clean_customer[:email].present?
+          local_customer = User.find_by(email: clean_customer[:email].downcase)
+        end
+        if !local_customer && clean_customer[:login].present?
+          local_customer = User.find_by(login: clean_customer[:login].downcase)
+        end
+        if !local_customer
+          role_ids = Role.signup_role_ids
+          local_customer = User.new(clean_customer)
+          local_customer.role_ids = role_ids
+          local_customer.save!
+        end
+        clean_params[:customer_id] = local_customer.id
+      end
+
+      clean_params = Ticket.param_cleanup(clean_params, true)
+      clean_params[:screen] = 'create_middle'
+      ticket = Ticket.new(clean_params)
+      authorize!(ticket, :create?)
+
+      # create ticket
+      ticket.save!
 
       # create tags if given
       if params[:tags].present?
-        tags = params[:tags].split(/,/)
+        tags = params[:tags].split(',')
         tags.each do |tag|
           ticket.tag_add(tag)
+        end
+      end
+
+      # create mentions if given
+      if params[:mentions].present?
+        authorize!(ticket, :create_mentions?)
+        Array(params[:mentions]).each do |user_id|
+          Mention.where(mentionable: ticket, user_id: user_id).first_or_create(mentionable: ticket, user_id: user_id)
         end
       end
 
@@ -165,30 +184,34 @@ class TicketsController < ApplicationController
       if params[:article]
         article_create(ticket, params[:article])
       end
-    end
-    # create links (e. g. in case of ticket split)
-    # links: {
-    #   Ticket: {
-    #     parent: [ticket_id1, ticket_id2, ...]
-    #     normal: [ticket_id1, ticket_id2, ...]
-    #     child: [ticket_id1, ticket_id2, ...]
-    #   },
-    # }
-    if params[:links].present?
-      link = params[:links].permit!.to_h
-      raise Exceptions::UnprocessableEntity, 'Invalid link structure' if !link.is_a? Hash
-      link.each do |target_object, link_types_with_object_ids|
-        raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object)' if !link_types_with_object_ids.is_a? Hash
-        link_types_with_object_ids.each do |link_type, object_ids|
-          raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object->LinkType)' if !object_ids.is_a? Array
-          object_ids.each do |local_object_id|
-            link = Link.add(
-              link_type: link_type,
-              link_object_target: target_object,
-              link_object_target_value: local_object_id,
-              link_object_source: 'Ticket',
-              link_object_source_value: ticket.id,
-            )
+
+      # create links (e. g. in case of ticket split)
+      # links: {
+      #   Ticket: {
+      #     parent: [ticket_id1, ticket_id2, ...]
+      #     normal: [ticket_id1, ticket_id2, ...]
+      #     child: [ticket_id1, ticket_id2, ...]
+      #   },
+      # }
+      if params[:links].present?
+        link = params[:links].permit!.to_h
+        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !link.is_a? Hash
+
+        link.each do |target_object, link_types_with_object_ids|
+          raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
+
+          link_types_with_object_ids.each do |link_type, object_ids|
+            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
+
+            object_ids.each do |local_object_id|
+              link = Link.add(
+                link_type:                link_type,
+                link_object_target:       target_object,
+                link_object_target_value: local_object_id,
+                link_object_source:       'Ticket',
+                link_object_source_value: ticket.id,
+              )
+            end
           end
         end
       end
@@ -217,10 +240,17 @@ class TicketsController < ApplicationController
   # PUT /api/v1/tickets/1
   def update
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'change')
+    authorize!(ticket, :follow_up?)
 
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
+
+    # only apply preferences changes (keep not updated keys/values)
+    clean_params = ticket.param_preferences_merge(clean_params)
+    clean_params[:screen] = 'edit'
+
+    # disable changes on ticket number
+    clean_params.delete('number')
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
@@ -231,7 +261,17 @@ class TicketsController < ApplicationController
 
     ticket.with_lock do
       ticket.update!(clean_params)
-      if params[:article]
+      if params[:article].present?
+        if (shared_draft_id = params[:article][:shared_draft_id])
+          shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
+
+          if shared_draft && shared_draft.ticket != ticket
+            raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+          end
+
+          shared_draft&.destroy
+        end
+
         article_create(ticket, params[:article])
       end
     end
@@ -259,9 +299,7 @@ class TicketsController < ApplicationController
   # DELETE /api/v1/tickets/1
   def destroy
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'delete')
-
-    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !current_user.permissions?('admin')
+    authorize!(ticket)
 
     ticket.destroy!
 
@@ -274,8 +312,9 @@ class TicketsController < ApplicationController
 
     # return result
     result = Ticket::ScreenOptions.list_by_customer(
-      customer_id: params[:customer_id],
-      limit: 15,
+      current_user: current_user,
+      customer_id:  params[:customer_id],
+      limit:        15,
     )
     render json: result
   end
@@ -285,13 +324,10 @@ class TicketsController < ApplicationController
 
     # get ticket data
     ticket = Ticket.find(params[:id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
 
     # get history of ticket
-    history = ticket.history_get(true)
-
-    # return result
-    render json: history
+    render json: ticket.history_get(true)
   end
 
   # GET /api/v1/ticket_related/1
@@ -300,36 +336,26 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:ticket_id])
     assets = ticket.assets({})
 
-    # open tickets by customer
-    access_condition = Ticket.access_condition(current_user, 'read')
-
-    ticket_lists = Ticket
-                   .where(
-                     customer_id: ticket.customer_id,
-                     state_id: Ticket::State.by_category(:open)
-                   )
-                   .where(access_condition)
-                   .where('id != ?', [ ticket.id ])
-                   .order('created_at DESC')
-                   .limit(6)
+    tickets = TicketPolicy::ReadScope.new(current_user).resolve
+                                     .where(
+                                       customer_id: ticket.customer_id,
+                                       state_id:    Ticket::State.by_category(:open).select(:id),
+                                     )
+                                     .where.not(id: ticket.id)
+                                     .reorder(created_at: :desc)
+                                     .limit(6)
 
     # if we do not have open related tickets, search for any tickets
-    if ticket_lists.blank?
-      ticket_lists = Ticket
-                     .where(
-                       customer_id: ticket.customer_id,
-                     ).where.not(
-                       state_id: Ticket::State.by_category(:merged)
-                     )
-                     .where(access_condition)
-                     .where('id != ?', [ ticket.id ])
-                     .order('created_at DESC')
-                     .limit(6)
-    end
+    tickets ||= TicketPolicy::ReadScope.new(current_user).resolve
+                                       .where(customer_id: ticket.customer_id)
+                                       .where.not(state_id: Ticket::State.by_category(:merged).pluck(:id))
+                                       .where.not(id: ticket.id)
+                                       .reorder(created_at: :desc)
+                                       .limit(6)
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_lists.each do |ticket_list|
+    tickets.each do |ticket_list|
       ticket_ids_by_customer.push ticket_list.id
       assets = ticket_list.assets(assets)
     end
@@ -339,6 +365,7 @@ class TicketsController < ApplicationController
     recent_views.each do |recent_view|
       next if recent_view.object.name != 'Ticket'
       next if recent_view.o_id == ticket.id
+
       ticket_ids_recent_viewed.push recent_view.o_id
       recent_view_ticket = Ticket.find(recent_view.o_id)
       assets = recent_view_ticket.assets(assets)
@@ -346,63 +373,70 @@ class TicketsController < ApplicationController
 
     # return result
     render json: {
-      assets: assets,
-      ticket_ids_by_customer: ticket_ids_by_customer,
+      assets:                   assets,
+      ticket_ids_by_customer:   ticket_ids_by_customer,
       ticket_ids_recent_viewed: ticket_ids_recent_viewed,
     }
   end
 
-  # GET /api/v1/ticket_merge/1/1
+  # GET /api/v1/ticket_recent
+  def ticket_recent
+    ticket_ids = RecentView.list(current_user, 10, Ticket.name).map(&:o_id)
+    tickets    = ticket_ids.map { |elem| Ticket.lookup(id: elem) }
+    assets     = ApplicationModel::CanAssets.reduce(tickets)
+
+    render json: {
+      assets:                   assets,
+      ticket_ids_recent_viewed: ticket_ids
+    }
+  end
+
+  # PUT /api/v1/ticket_merge/1/1
   def ticket_merge
 
-    # check master ticket
-    ticket_master = Ticket.find_by(number: params[:master_ticket_number])
-    if !ticket_master
+    # check target ticket
+    target_ticket = Ticket.find_by(number: params[:target_ticket_number])
+    if !target_ticket
       render json: {
-        result: 'failed',
-        message: 'No such master ticket number!',
+        result:  'failed',
+        message: __('The target ticket number could not be found.'),
       }
       return
     end
-    access!(ticket_master, 'change')
 
-    # check slave ticket
-    ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
-    if !ticket_slave
+    # check source ticket
+    source_ticket = Ticket.find_by(id: params[:source_ticket_id])
+    if !source_ticket
       render json: {
-        result: 'failed',
-        message: 'No such slave ticket!',
+        result:  'failed',
+        message: __('The source ticket could not be found.'),
       }
       return
     end
-    access!(ticket_slave, 'change')
 
     # merge ticket
-    ticket_slave.merge_to(
-      ticket_id: ticket_master.id,
-      created_by_id: current_user.id,
-    )
+    Service::Ticket::Merge.new(current_user:).execute(source_ticket:, target_ticket:)
 
     # return result
     render json: {
-      result: 'success',
-      master_ticket: ticket_master.attributes,
-      slave_ticket: ticket_slave.attributes,
+      result:        'success',
+      target_ticket: target_ticket.attributes,
+      source_ticket: source_ticket.attributes,
     }
   end
 
   # GET /api/v1/ticket_split
   def ticket_split
     ticket = Ticket.find(params[:ticket_id])
-    access!(ticket, 'read')
+    authorize!(ticket, :show?)
     assets = ticket.assets({})
 
     article = Ticket::Article.find(params[:article_id])
-    access!(article.ticket, 'read')
+    authorize!(article.ticket, :show?)
     assets = article.assets(assets)
 
     render json: {
-      assets: assets,
+      assets:      assets,
       attachments: article_attachments_clone(article),
     }
   end
@@ -412,6 +446,8 @@ class TicketsController < ApplicationController
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
+      view:         'ticket_create',
+      screen:       'create_middle',
       current_user: current_user,
     )
     render json: attributes_to_change
@@ -425,14 +461,7 @@ class TicketsController < ApplicationController
       params.require(:condition).permit!
     end
 
-    per_page = params[:per_page] || params[:limit] || 50
-    per_page = per_page.to_i
-    if per_page > 200
-      per_page = 200
-    end
-    page = params[:page] || 1
-    page = page.to_i
-    offset = (page - 1) * per_page
+    paginate_with(max: 200, default: 50)
 
     query = params[:query]
     if query.respond_to?(:permit!)
@@ -441,12 +470,12 @@ class TicketsController < ApplicationController
 
     # build result list
     tickets = Ticket.search(
-      query: query,
-      condition: params[:condition].to_h,
-      limit: per_page,
-      offset: offset,
-      order_by: params[:order_by],
-      sort_by: params[:sort_by],
+      query:        query,
+      condition:    params[:condition].to_h,
+      limit:        pagination.limit,
+      offset:       pagination.offset,
+      order_by:     params[:order_by],
+      sort_by:      params[:sort_by],
       current_user: current_user,
     )
 
@@ -468,17 +497,15 @@ class TicketsController < ApplicationController
 
     # return result
     render json: {
-      tickets: ticket_result,
+      tickets:       ticket_result,
       tickets_count: tickets.count,
-      assets: assets,
+      assets:        assets,
     }
   end
 
   # GET /api/v1/tickets/selector
   def selector
-    permission_check('admin.*')
-
-    ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+    ticket_count, tickets = Ticket.selectors(params[:condition], limit: 6, execution_time: true)
 
     assets = {}
     ticket_ids = []
@@ -489,9 +516,9 @@ class TicketsController < ApplicationController
 
     # return result
     render json: {
-      ticket_ids: ticket_ids,
+      ticket_ids:   ticket_ids,
       ticket_count: ticket_count || 0,
-      assets: assets,
+      assets:       assets,
     }
   end
 
@@ -499,13 +526,12 @@ class TicketsController < ApplicationController
   def stats
 
     if !params[:user_id] && !params[:organization_id]
-      raise 'Need user_id or organization_id as param'
+      raise __('Need user_id or organization_id as param')
     end
 
     # lookup open user tickets
     limit            = 100
     assets           = {}
-    access_condition = Ticket.access_condition(current_user, 'read')
 
     user_tickets = {}
     if params[:user_id]
@@ -513,25 +539,26 @@ class TicketsController < ApplicationController
       if !user
         raise "No such user with id #{params[:user_id]}"
       end
+
       conditions = {
         closed_ids: {
-          'ticket.state_id' => {
+          'ticket.state_id'    => {
             operator: 'is',
-            value: Ticket::State.by_category(:closed).pluck(:id),
+            value:    Ticket::State.by_category(:closed).pluck(:id),
           },
           'ticket.customer_id' => {
             operator: 'is',
-            value: user.id,
+            value:    user.id,
           },
         },
-        open_ids: {
-          'ticket.state_id' => {
+        open_ids:   {
+          'ticket.state_id'    => {
             operator: 'is',
-            value: Ticket::State.by_category(:open).pluck(:id),
+            value:    Ticket::State.by_category(:open).pluck(:id),
           },
           'ticket.customer_id' => {
             operator: 'is',
-            value: user.id,
+            value:    user.id,
           },
         },
       }
@@ -543,36 +570,40 @@ class TicketsController < ApplicationController
       condition = {
         'tickets.customer_id' => user.id,
       }
-      user_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
+      user_tickets[:volume_by_year] = ticket_stats_last_year(condition)
 
     end
 
     # lookup open org tickets
     org_tickets = {}
-    if params[:organization_id].present?
-      organization = Organization.lookup(id: params[:organization_id])
-      if !organization
-        raise "No such organization with id #{params[:organization_id]}"
+    organization_ids = Array(params[:organization_id])
+    if organization_ids.present?
+      organization_ids.each do |organization_id|
+        organization = Organization.lookup(id: organization_id)
+        if !organization
+          raise "No such organization with id #{organization_id}"
+        end
       end
+
       conditions = {
         closed_ids: {
-          'ticket.state_id' => {
+          'ticket.state_id'        => {
             operator: 'is',
-            value: Ticket::State.by_category(:closed).pluck(:id),
+            value:    Ticket::State.by_category(:closed).pluck(:id),
           },
           'ticket.organization_id' => {
             operator: 'is',
-            value: organization.id,
+            value:    organization_ids,
           },
         },
-        open_ids: {
-          'ticket.state_id' => {
+        open_ids:   {
+          'ticket.state_id'        => {
             operator: 'is',
-            value: Ticket::State.by_category(:open).pluck(:id),
+            value:    Ticket::State.by_category(:open).pluck(:id),
           },
           'ticket.organization_id' => {
             operator: 'is',
-            value: organization.id,
+            value:    organization_ids,
           },
         },
       }
@@ -582,16 +613,16 @@ class TicketsController < ApplicationController
 
       # generate stats by org
       condition = {
-        'tickets.organization_id' => organization.id,
+        'tickets.organization_id' => organization_ids,
       }
-      org_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
+      org_tickets[:volume_by_year] = ticket_stats_last_year(condition)
     end
 
     # return result
     render json: {
-      user: user_tickets,
+      user:         user_tickets,
       organization: org_tickets,
-      assets: assets,
+      assets:       assets,
     }
   end
 
@@ -602,16 +633,15 @@ class TicketsController < ApplicationController
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/tickets/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
-    permission_check('admin')
     csv_string = Ticket.csv_example(
       col_sep: ',',
     )
     send_data(
       csv_string,
-      filename: 'example.csv',
-      type: 'text/csv',
+      filename:    'example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
 
@@ -625,39 +655,37 @@ class TicketsController < ApplicationController
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
-    permission_check('admin')
     if Setting.get('import_mode') != true
-      raise 'Only can import tickets if system is in import mode.'
+      raise __('Tickets can only be imported if system is in import mode.')
     end
-    string = params[:data] || params[:file].read.force_encoding('utf-8')
+
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+
     result = Ticket.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
+      try:          params[:try],
     )
     render json: result, status: :ok
   end
 
   private
 
-  def follow_up_possible_check
-    ticket = Ticket.find(params[:id])
-
-    return true if ticket.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
-    return true if ticket.state.name != 'closed' # check if the ticket state is already closed
-    raise Exceptions::UnprocessableEntity, 'Cannot follow up on a closed ticket. Please create a new ticket.'
-  end
-
   def ticket_all(ticket)
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       current_user: current_user,
-      ticket:       ticket
+      ticket:       ticket,
+      screen:       'edit',
     )
 
     # get related users
@@ -667,9 +695,7 @@ class TicketsController < ApplicationController
     # get related users
     article_ids = []
     ticket.articles.each do |article|
-
-      # ignore internal article if customer is requesting
-      next if article.internal == true && current_user.permissions?('ticket.customer')
+      next if !authorized?(article, :show?)
 
       article_ids.push article.id
       assets = article.assets(assets)
@@ -677,29 +703,35 @@ class TicketsController < ApplicationController
 
     # get links
     links = Link.list(
-      link_object: 'Ticket',
+      link_object:       'Ticket',
       link_object_value: ticket.id,
+      user:              current_user,
     )
-    link_list = []
-    links.each do |item|
-      link_list.push item
-      if item['link_object'] == 'Ticket'
-        linked_ticket = Ticket.lookup(id: item['link_object_value'])
-        assets = linked_ticket.assets(assets)
-      end
-    end
+
+    assets = Link.reduce_assets(assets, links)
 
     # get tags
     tags = ticket.tag_list
 
+    # get mentions
+    mentions = Mention.where(mentionable: ticket).reorder(created_at: :desc)
+    mentions.each do |mention|
+      assets = mention.assets(assets)
+    end
+
+    if (draft = ticket.shared_draft) && authorized?(draft, :show?)
+      assets = draft.assets(assets)
+    end
+
     # return result
     {
-      ticket_id: ticket.id,
+      ticket_id:          ticket.id,
       ticket_article_ids: article_ids,
-      assets: assets,
-      links: link_list,
-      tags: tags,
-      form_meta: attributes_to_change[:form_meta],
+      assets:             assets,
+      links:              links,
+      tags:               tags,
+      mentions:           mentions.pluck(:id),
+      form_meta:          attributes_to_change[:form_meta],
     }
   end
 

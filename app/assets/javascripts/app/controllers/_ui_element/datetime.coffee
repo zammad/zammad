@@ -37,6 +37,7 @@ class App.UiElement.datetime extends App.UiElement.basedate
   @buildTimestamp: (currentInput) ->
     timestamp = "#{currentInput[0]}T#{currentInput[1]}:00.000Z"
     time = new Date( Date.parse(timestamp) )
+    return '' if isNaN time
     time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
     @log 'setNewTime', time.toString()
     time.toISOString().replace(/\d\d\.\d\d\dZ$/, '00.000Z')

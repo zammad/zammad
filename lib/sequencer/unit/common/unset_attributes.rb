@@ -1,17 +1,13 @@
-class Sequencer
-  class Unit
-    module Common
-      class UnsetAttributes < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-        def process
-          uses = self.class.uses
-          return if uses.blank?
+class Sequencer::Unit::Common::UnsetAttributes < Sequencer::Unit::Base
 
-          uses.each do |attribute|
-            state.unset(attribute)
-          end
-        end
-      end
+  def process
+    uses = self.class.uses
+    return if uses.blank?
+
+    uses.each do |attribute|
+      state.unset(attribute)
     end
   end
 end

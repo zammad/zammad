@@ -1,11 +1,11 @@
 <form class="update-box bulkAction-form" role="form">
   <div class="bulkAction-firstStep js-action-step">
     <div id="form-ticket-bulk" class="form-inline form-inline--enclosed flex"></div>
-    <div class="btn btn--primary js-confirm"><%- @T('Confirm') %></div>
+    <div class="btn btn--primary js-confirm"><%- @T('Confirmation') %></div>
   </div>
   <div class="hide bulkAction-secondStep js-confirm-step">
     <div id="form-ticket-bulk-comment" class="form-inline"></div>
-    <div class="horizontal">
+    <div class="bulkAction-secondStep-bottom">
       <div id="form-ticket-bulk-typeVisibility" class="form-inline"></div>
       <div class="bulkAction-controls">
         <a class="btn btn--text btn--secondary js-cancel"><%- @T( 'Go Back' ) %></a>

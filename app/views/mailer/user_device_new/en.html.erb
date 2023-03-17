@@ -1,8 +1,8 @@
-#{config.product_name} signin detected from a new device
+#{config.product_name} login from a new device
 
 <div>Hi #{user.firstname},</div>
 <br>
-<div>It looks like you signed into your account <b>using a new device</b> on "#{user_device.created_at}":</div>
+<div>It looks like you logged into your account <b>using a new device</b> on "#{user_device.created_at}":</div>
 <br>
 <div>
 Your device: #{user_device.name}<br>
@@ -14,6 +14,6 @@ Your IP: #{user_device.ip}<br>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>
+<div>If this wasn't you, please remove the device, change your account password, and contact your administrator. Somebody might have gained unauthorized access to your account.</div>
 <br>
 <div>Your #{config.product_name} Team</div>

@@ -13,14 +13,14 @@
     <th><%- @T('Agent') %>
     <th><%- @T('Time Units') %>
     <th><%- @T('Time Units Total') %>
-    <th><%- @T('Created at') %>
-    <th><%- @T('Closed at') %>
+    <th><%- @T('Created At') %>
+    <th><%- @T('Closed At') %>
   </thead>
   <tbody>
   <% for row in @rows: %>
   <tr>
     <td><a href="#ticket/zoom/<%- row.ticket.id %>"><%= row.ticket.number %></a>
-    <td title="<%= row.ticket.title %>"><%= row.ticket.title %>
+    <td title="<%= row.ticket.title %>"><%= row.ticket.title || '-' %>
     <td><%= row.customer %>
     <td><%= row.organization %>
     <td><%= row.agent %>

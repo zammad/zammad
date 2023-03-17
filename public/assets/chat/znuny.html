@@ -125,7 +125,7 @@
   </table>
 </div>
 
-<script src="jquery-2.1.4.min.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
 <script src="chat.js"></script>
 <script>
   function getSearchParameters() {
@@ -157,13 +157,12 @@
     debug: true,
     background: '#494d52',
     flat: true,
-    shown: false,
-    idleTimeout: 1,
-    idleTimeoutIntervallCheck: 0.5,
-    inactiveTimeout: 2,
-    inactiveTimeoutIntervallCheck: 0.5,
-    waitingListTimeout: 1.2,
-    waitingListTimeoutIntervallCheck: 0.5,
+    idleTimeout: 0.2,
+    idleTimeoutIntervallCheck: 0.21,
+    inactiveTimeout: 0.3,
+    inactiveTimeoutIntervallCheck: 0.31,
+    waitingListTimeout: 0.1,
+    waitingListTimeoutIntervallCheck: 0.11,
   });
 
   $('.settings :input').on({

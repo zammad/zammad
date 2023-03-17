@@ -38,7 +38,7 @@ class App.DashboardFirstSteps extends App.Controller
     e.preventDefault()
     new App.InviteUser(
       #container: @el.closest('.content')
-      head: 'Invite Colleagues'
+      head: __('Invite Colleagues')
       screen: 'invite_agent'
     )
 
@@ -46,9 +46,9 @@ class App.DashboardFirstSteps extends App.Controller
     e.preventDefault()
     new App.InviteUser(
       #container: @el.closest('.content')
-      head: 'Invite Customer'
+      head: __('Invite Customer')
       screen: 'invite_customer'
-      role: 'Customer'
+      signup: true
     )
 
   testTicketLoading: =>
@@ -82,7 +82,7 @@ class App.DashboardFirstSteps extends App.Controller
     e.preventDefault()
 
     modal = new App.ControllerModal(
-      head: 'Test Ticket'
+      head: __('Test Ticket')
       #container: @el.parents('.content')
       content: @testTicketLoading
       shown: true

@@ -1,0 +1,18 @@
+Eszkalálódott jegy (#{ticket.title})
+
+<div>Üdvözöljük #{recipient.firstname},</div>
+<br>
+<div>A "<b>#{ticket.customer.longname}</b>" ügyféltől származó jegy (#{ticket.title}) "#{ticket.escalation_at}" óta eszkalálódott!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Információ:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Tekintse meg itt: #{config.product_name}</a>
+</div>

@@ -1,7 +1,4 @@
-# this require is required (hehe) because of Rails autoloading
-# which causes strange behavior not inheriting correctly
-# from Import::OTRS::DynamicField
-require_dependency 'import/otrs/dynamic_field'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS

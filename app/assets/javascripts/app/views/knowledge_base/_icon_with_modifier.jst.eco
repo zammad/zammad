@@ -1,0 +1,8 @@
+<span class="modified-icon <%= @className %>">
+  <% if @item.iconFont: %>
+    <%- @fontIcon(@item.icon, @iconset, 'section-inner-icon') %>
+  <% else: %>
+    <%- @Icon(@item.icon, 'section-inner-icon') %>
+  <% end %>
+  <%- @Icon("#{@item.state}-modifier", 'modified-icon-modifier') %>
+</span>

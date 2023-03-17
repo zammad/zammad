@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Monitoring extends App.ControllerSubContent
   requiredPermission: 'admin.monitoring'
-  header: 'Monitoring'
+  header: __('Monitoring')
   events:
     'click .js-resetToken': 'resetToken'
     'click .js-select': 'selectAll'
@@ -53,4 +53,4 @@ class Index extends App.ControllerSubContent
         @load()
     )
 
-App.Config.set('Monitoring', { prio: 3600, name: 'Monitoring', parent: '#system', target: '#system/monitoring', controller: Index, permission: ['admin.monitoring'] }, 'NavBarAdmin')
+App.Config.set('Monitoring', { prio: 3600, name: __('Monitoring'), parent: '#system', target: '#system/monitoring', controller: Monitoring, permission: ['admin.monitoring'] }, 'NavBarAdmin')

@@ -1,0 +1,33 @@
+include:
+  - '.gitlab/ci/test/rspec/*.yml'
+
+.template_rspec:
+  stage: test
+  extends:
+    - .job_rules_default
+    - .variables_proxy
+  script:
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration --profile 10
+
+# RSpec 3rd party integration tests are independent of the database
+# therefore we need only one job and choose a random database for each run
+# Optionally pass INTEGRATION_TESTS=enabled to run them in private- branch
+
+rspec:integration:
+  stage: test
+  extends:
+    - .job_rules_default
+    - .job_rules_integration
+    - .variables_proxy
+  allow_failure: true
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+    - !reference [.services, imap]
+    - !reference [.services, redis]
+    - !reference [.services, memcached]
+    - !reference [.services, proxy]
+  script:
+    - !reference [.scripts, zammad_db_init]
+    - bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t integration -t ~integration_standalone --profile 10

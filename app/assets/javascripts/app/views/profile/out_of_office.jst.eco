@@ -11,7 +11,7 @@
               <%- @Icon('status', 'ok inline') %>
             <% else: %>
               <%- @Icon('status', 'error inline') %>
-            <% end %></span> <input id="out_of_office_reason" name="out_of_office_text" class="form-control form-control--inline" type="text" placeholder="<%- @Ti('e. g.') %> <%- @Ti(@placeholder) %>" value="<% if !_.isEmpty(@localData.out_of_office_text): %><%= @localData.out_of_office_text %><% end %>"></h2>
+            <% end %></span> <input id="out_of_office_reason" name="out_of_office_text" class="form-control form-control--inline" type="text" placeholder="<%- @Ti('e.g.') %> <%- @Ti(@placeholder) %>" value="<% if !_.isEmpty(@localData.out_of_office_text): %><%= @localData.out_of_office_text %><% end %>"></h2>
       </div>
     </div>
     <div class="action-block action-block--flex">

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Ldap
   module FilterLookup
 
@@ -12,6 +14,7 @@ class Ldap
       result = nil
       possible_filters.each do |possible_filter|
         next if !@ldap.entries?(possible_filter)
+
         result = possible_filter
         break
       end

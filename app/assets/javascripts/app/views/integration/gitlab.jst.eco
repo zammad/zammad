@@ -1,0 +1,22 @@
+<form>
+  <h2><%- @T('Settings') %></h2>
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Name') %>
+          <th width="80%"><%- @T('Value') %>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Endpoint') %> *
+          <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.endpoint %>" placeholder="https://git.example.com/api/graphql" name="endpoint">
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API token') %> *
+          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
+</form>

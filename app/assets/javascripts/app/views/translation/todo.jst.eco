@@ -1,4 +1,4 @@
-<h2><%- @T('Words') %>: <%- @T('not translated') %></h2>
+<h2><%- @T('Words:') %> <%- @T('not translated') %></h2>
 <table class="translationOverview table table-striped table-hover">
   <thead>
     <tr>

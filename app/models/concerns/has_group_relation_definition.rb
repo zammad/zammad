@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module HasGroupRelationDefinition
   extend ActiveSupport::Concern
 
@@ -7,14 +8,13 @@ module HasGroupRelationDefinition
     self.table_name   = "groups_#{group_relation_model_identifier}s"
     self.primary_keys = ref_key, :group_id, :access
 
-    belongs_to group_relation_model_identifier
-    belongs_to :group
+    belongs_to group_relation_model_identifier, optional: true
+    belongs_to :group, optional: true
 
     validates :access, presence: true
     validate :validate_access
 
-    after_save :touch_related
-    after_destroy :touch_related
+    after_commit :touch_related
   end
 
   private
@@ -47,7 +47,8 @@ module HasGroupRelationDefinition
             end
 
     return if !query.exists?
-    errors.add(:access, "#{group_relation_model_identifier.to_s.capitalize} can have full or granular access to group")
+
+    errors.add(:access, __('%{model} can have full or granular access to group'), model: group_relation_model_identifier.to_s.capitalize)
   end
 
   # methods defined here are going to extend the class, not the instance of it
@@ -58,7 +59,7 @@ module HasGroupRelationDefinition
     end
 
     def ref_key
-      @ref_key ||= "#{group_relation_model_identifier}_id".to_sym
+      @ref_key ||= :"#{group_relation_model_identifier}_id"
     end
   end
 end

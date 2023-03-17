@@ -19,7 +19,7 @@ class App.TicketZoomArticleView extends App.Controller
           object_id:  ticket_article_id
           el:         el
           ui:         @ui
-          highligher: @highligher
+          highlighter: @highlighter
           form_id:    @form_id
         )
         if !@ticketArticleInsertByIndex(index, el)
@@ -60,8 +60,13 @@ class App.TicketZoomArticleView extends App.Controller
 
     false
 
+  updateFormId: (newFormId) ->
+    @form_id = newFormId
 
-class ArticleViewItem extends App.ObserverController
+    for id, viewItem of @articleController
+      viewItem.updateFormId(newFormId)
+
+class ArticleViewItem extends App.ControllerObserver
   model: 'TicketArticle'
   observe:
     from: true
@@ -78,18 +83,21 @@ class ArticleViewItem extends App.ObserverController
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .textBubble':           'toggleMetaWithDelay'
-    'click .textBubble a':         'stopPropagation'
-    'click .js-toggleFold':        'toggleFold'
-    'click .richtext-content img': 'imageView'
-    'click .attachments img':      'imageView'
+    'click .article-meta-permanent':  'toggleMetaWithDelay'
+    'click .textBubble':              'toggleMetaWithDelay'
+    'click .textBubble a':            'stopPropagation'
+    'click .js-toggleFold':           'toggleFold'
+    'click .richtext-content img':    'imageView'
+    'click .attachments img':         'imageView'
+    'click .file-calendar .js-preview':  'calendarView'
+    'click .js-securityRetryProcess': 'retrySecurityProcess'
 
   constructor: ->
     super
-    @seeMore = false
+    @seeMoreOpen = false
 
     # set expand of text area only once
-    @bind('ui::ticket::shown', (data) =>
+    @controllerBind('ui::ticket::shown', (data) =>
       return if data.ticket_id.toString() isnt @ticket.id.toString()
 
       # set highlighter
@@ -102,9 +110,10 @@ class ArticleViewItem extends App.ObserverController
   setHighlighter: =>
     return if @el.is(':hidden')
     # use delay do no ui blocking
-    #@highligher.loadHighlights(@object_id)
+    #@highlighter.loadHighlights(@object_id)
     d = =>
-      @highligher.loadHighlights(@object_id)
+      if @highlighter
+        @highlighter.loadHighlights(@object_id)
     @delay(d, 200)
 
   render: (article) =>
@@ -118,11 +127,11 @@ class ArticleViewItem extends App.ObserverController
     else
       @el.removeClass('is-internal')
 
-    # check if email link need to be updated
+    # check if email link needs to be updated
     links = clone(article.preferences.links) || []
     if article.type.name is 'email'
       link =
-        name: 'Raw'
+        name: __('Raw')
         url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
         target: '_blank'
       links.push link
@@ -131,10 +140,18 @@ class ArticleViewItem extends App.ObserverController
     attachments = App.TicketArticle.contentAttachments(article)
     if article.attachments
       for attachment in article.attachments
+
+        dispositionParams = ''
+        if attachment?.preferences['Content-Type'] isnt 'application/pdf' && attachment?.preferences['Content-Type'] isnt 'text/html'
+          dispositionParams = '?disposition=attachment'
+
+        attachment.url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}#{dispositionParams}"
+        attachment.preview_url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=preview"
+
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
           link =
               url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
-              name: 'Original Formatting'
+              name: __('Original Formatting')
               target: '_blank'
           links.push link
 
@@ -148,15 +165,15 @@ class ArticleViewItem extends App.ObserverController
         body.splice(article.preferences.signature_detection, 0, signatureDetected)
         body = body.join('<br>')
       else
-        body = App.Utils.signatureIdentify(body)
+        body = App.Utils.signatureIdentifyByHtml(body)
       article['html'] = body
     else
 
       # client signature detection
       bodyHtml = App.Utils.text2html(article.body)
-      article['html'] = App.Utils.signatureIdentify(bodyHtml)
+      article['html'] = App.Utils.signatureIdentifyByPlaintext(bodyHtml)
 
-      # if no signature detected or within frist 25 lines, check if signature got detected in backend
+      # if no signature detected or within first 25 lines, check if signature got detected in backend
       if article['html'] is bodyHtml || (article.preferences && article.preferences.signature_detection < 25)
         signatureDetected = false
         body = article.body
@@ -180,7 +197,7 @@ class ArticleViewItem extends App.ObserverController
         links:       links
       )
       return
-    if article.sender.name is 'System'
+    if article.sender.name is 'System' && article.type.name isnt 'note'
     #if article.sender.name is 'System' && article.preferences.perform_origin is 'trigger'
       @html App.view('ticket_zoom/article_view_system')(
         ticket:      @ticket
@@ -192,7 +209,7 @@ class ArticleViewItem extends App.ObserverController
     @html App.view('ticket_zoom/article_view')(
       ticket:      @ticket
       article:     article
-      attachments: attachments
+      attachments: App.view('generic/attachments')(attachments: attachments)
       links:       links
     )
 
@@ -202,12 +219,12 @@ class ArticleViewItem extends App.ObserverController
       size:      40
     )
 
-    new App.TicketZoomArticleActions(
-      el:              @$('.js-article-actions')
-      ticket:          @ticket
-      article:         article
-      lastAttributres: @lastAttributres
-      form_id:         @form_id
+    @articleActions = new App.TicketZoomArticleActions(
+      el:             @$('.js-article-actions')
+      ticket:         @ticket
+      article:        article
+      lastAttributes: @lastAttributes
+      form_id:        @form_id
     )
 
     # set see more
@@ -238,12 +255,11 @@ class ArticleViewItem extends App.ObserverController
     bubbleOverflowContainer = @textBubbleOverflowContainer
 
     # expand if see more is already clicked
-    if @seeMore
+    if @seeMoreOpen
       bubbleContent.css('height', 'auto')
-      return
-
-    # reset bubble heigth and "see more" opacity
-    bubbleContent.css('height', '')
+    else
+      # reset bubble height and "see more" opacity
+      bubbleContent.css('height', '')
     bubbleOverflowContainer.css('opacity', '')
 
     # remember offset of "see more"
@@ -253,37 +269,83 @@ class ArticleViewItem extends App.ObserverController
     offsetTop = signatureMarker.position()
 
     # safari - workaround
-    # in safari somethimes the marker is directly on top via .top and inspector but it isn't
+    # in safari sometimes the marker is directly on top via .top and inspector but it isn't
     # in this case use the next element
     if offsetTop && offsetTop.top is 0
       offsetTop = signatureMarker.next('div, p, br').position()
 
-    # remember bubble content heigth
-    bubbleContentHeigth = bubbleContent.height()
+    # remember bubble content height
+    bubbleContentHeight = bubbleContent.height()
 
-    # get marker heigth
+    # get marker height
     if offsetTop
       markerHeight = offsetTop.top
 
-    # if signature marker exists and heigth is within maxHeight
+    # if signature marker exists and height is within maxHeight
     if markerHeight && markerHeight < maxHeight
-      newHeigth = markerHeight + 30
-      if newHeigth < minHeight
-        newHeigth = minHeight
+      newHeight = markerHeight + 30
+      if newHeight < minHeight
+        newHeight = minHeight
 
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
-      bubbleContent.attr('data-height-origin', newHeigth)
-      bubbleContent.css('height', "#{newHeigth}px")
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
+      bubbleContent.attr('data-height-origin', newHeight)
+      bubbleContent.css('height', "#{newHeight}px")
       bubbleOverflowContainer.removeClass('hide')
 
-    # if heigth is higher then maxHeight
-    else if bubbleContentHeigth > maxHeight
-      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+    # if height is higher then maxHeight
+    else if bubbleContentHeight > maxHeight
+      bubbleContent.attr('data-height', bubbleContentHeight + 30)
       bubbleContent.attr('data-height-origin', maxHeight)
-      bubbleContent.css('height', "#{maxHeight}px")
+      newHeight = if @seeMoreOpen then 'auto' else "#{maxHeight}px"
+      bubbleContent.css('height', newHeight)
+      bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(@label)
       bubbleOverflowContainer.removeClass('hide')
     else
       bubbleOverflowContainer.addClass('hide')
+
+  retrySecurityProcess: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    article_id = $(e.target).closest('.ticket-article-item').data('id')
+    article    = App.TicketArticle.find(article_id)
+
+    @ajax(
+      id:   'retrySecurityProcess'
+      type: 'POST'
+      url:  "#{@apiPath}/ticket_articles/#{article_id}/retry_security_process"
+      processData: true
+      success: (encryption_data, status, xhr) =>
+        for data in encryption_data
+          continue if article.preferences.security.type isnt data.type
+
+          if data.sign.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('The signature was successfully verified.')
+          else if data.sign.comment
+            comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '')
+            @notify
+              type: 'error'
+              msg: comment
+              timeout: 2000
+
+          if data.encryption.success
+            @notify
+              type: 'success'
+              msg:  App.i18n.translateContent('Decryption was successful.')
+          else if data.encryption.comment
+            comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '')
+            @notify
+              type: 'error'
+              msg:  comment
+              timeout: 2000
+
+      error: (xhr) =>
+        @notify
+          type: 'error'
+          msg:  App.i18n.translateContent('The retried security process failed!')
+    )
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -291,7 +353,12 @@ class ArticleViewItem extends App.ObserverController
   toggleMetaWithDelay: (e) =>
     # allow double click select
     # by adding a delay to the toggle
-    delay = 120
+    delay = 300
+
+    article = $(e.target).closest('.ticket-article-item')
+    if @elementContainsSelection(article.get(0))
+      @stopPropagation(e)
+      return false
 
     if @lastClick and +new Date - @lastClick < delay
       clearTimeout(@toggleMetaTimeout)
@@ -383,15 +450,15 @@ class ArticleViewItem extends App.ObserverController
     bubbleOverflowContainer = @textBubbleOverflowContainer
 
     if @seeMoreOpen
-      label = App.i18n.translateContent('See more')
+      @label = App.i18n.translateContent('See more')
       height = bubbleContent.attr('data-height-origin')
       @seeMoreOpen = false
     else
-      label = App.i18n.translateContent('See less')
+      @label = App.i18n.translateContent('See less')
       height = bubbleContent.attr('data-height')
       @seeMoreOpen = true
 
-    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').text(label)
+    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').html(@label)
 
     bubbleContent.velocity
       properties:
@@ -419,6 +486,19 @@ class ArticleViewItem extends App.ObserverController
     @el.remove()
 
   imageView: (e) ->
+    # take care of images surrounded by a link
+    if e.target && e.target.parentNode && e.target.parentNode.nodeName.toLowerCase() == 'a'
+      return false
+
     e.preventDefault()
     e.stopPropagation()
-    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)
+    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML, parentElement: $(e.currentTarget))
+
+  calendarView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    parentElement = $(e.target).closest('.attachment.file-calendar')
+    new App.TicketZoomArticleCalendarView(calendar: parentElement.get(0).outerHTML)
+
+  updateFormId: (newFormId) ->
+    @articleActions?.form_id = newFormId

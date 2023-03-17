@@ -1,0 +1,37 @@
+<% if !_.isEmpty(@attachments): %>
+  <div class="attachments attachments--list">
+    <%- @Icon('paperclip') %>
+    <div class="attachments-title"><%- @attachments.length %> <%- @T('Attached Files') %></div>
+    <% for attachment in @attachments: %>
+      <% if !@C('ui_ticket_zoom_attachments_preview'): %>
+        <div class="attachment attachment--row">
+          <a class="attachment-name u-highlight" href="<%= attachment.url %>" data-type="attachment" <% if @canDownload(content_type): %>download<% else: %>target="_blank"<% end %>><%= attachment.filename %></a>
+          <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+        </div>
+      <% else: %>
+        <% content_type = @ContentOrMimeType(attachment) %>
+        <a class="attachment attachment--preview <%- @ContentTypeIcon(content_type) if @ContentTypeIcon(content_type) %>" href="<%= attachment.url %>" data-type="attachment" data-preview-url="<%= attachment.preview_url %>" data-id="<%= attachment.id %>" <% if @canDownload(content_type): %> download<% else: %>target="_blank"<% end %>>
+          <div class="attachment-icon js-preview">
+          <% if attachment.preferences && content_type && @ContentTypeIcon(content_type): %>
+            <% if @canPreview(content_type): %>
+              <img src="<%= attachment.preview_url %>">
+            <% else: %>
+              <%- @Icon( @ContentTypeIcon(content_type) ) %>
+            <% end %>
+          <% else: %>
+            <%- @Icon('file-unknown') %>
+          <% end %>
+          </div>
+          <div class="attachment-text">
+            <span class="attachment-name u-highlight"><%= attachment.filename %></span>
+            <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+          </div>
+          <% if @ContentTypeIcon(content_type) is 'file-calendar': %>
+            <div class="half-spacer"></div>
+            <button class="btn btn--action btn--small  js-preview" type="button"><%- @T('Preview') %></button>
+          <% end %>
+        </a>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

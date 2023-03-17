@@ -1,28 +1,18 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module SubSequence
-          module Mixin
-            module ImportJob
-              include ::Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              def self.included(base)
-                base.uses :import_job
-              end
+module Sequencer::Unit::Import::Common::SubSequence::Mixin::ImportJob
+  include ::Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
 
-              private
+  def self.included(base)
+    base.uses :import_job
+  end
 
-              def default_params
-                {
-                  dry_run:    import_job.dry_run,
-                  import_job: import_job,
-                }
-              end
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def default_params
+    {
+      dry_run:    import_job.dry_run,
+      import_job: import_job,
+    }
   end
 end

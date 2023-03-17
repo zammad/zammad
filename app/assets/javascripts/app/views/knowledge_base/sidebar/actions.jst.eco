@@ -1,0 +1,15 @@
+<div class="btn-list js-content-actions-container vertical start">
+  <% for button in @actions: %>
+    <a class="btn btn--text" data-action="<%= button.action %>" <%= if button.disabled then 'disabled' %>>
+      <% if button.iconName: %> <%- @Icon(button.iconName) %> <% end %>
+      <% if button.name instanceof Object: %>
+        <% for name in button.name: %>
+          <%- @T(name) %>
+        <% end %>
+      <% else: %>
+        <%- @T(button.name) %>
+      <% end %>
+    </a>
+  <% end %>
+</div>
+

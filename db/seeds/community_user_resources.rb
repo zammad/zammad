@@ -1,16 +1,18 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 org_community = Organization.create_if_not_exists(
-  id: 1,
-  name: 'Zammad Foundation',
+  id:   1,
+  name: __('Zammad Foundation'),
 )
 user_community = User.create_or_update(
-  id: 2,
-  login: 'nicole.braun@zammad.org',
-  firstname: 'Nicole',
-  lastname: 'Braun',
-  email: 'nicole.braun@zammad.org',
-  password: '',
-  active: true,
-  roles: [ Role.find_by(name: 'Customer') ],
+  id:              2,
+  login:           'nicole.braun@zammad.org',
+  firstname:       'Nicole',
+  lastname:        'Braun',
+  email:           'nicole.braun@zammad.org',
+  password:        '',
+  active:          true,
+  roles:           [ Role.find_by(name: 'Customer') ],
   organization_id: org_community.id,
 )
 
@@ -18,16 +20,16 @@ UserInfo.current_user_id = user_community.id
 
 if Ticket.count.zero?
   ticket = Ticket.create!(
-    group_id: Group.find_by(name: 'Users').id,
+    group_id:    Group.find_by(name: 'Users').id,
     customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
-    title: 'Welcome to Zammad!',
+    title:       __('Welcome to Zammad!'),
   )
   Ticket::Article.create!(
     ticket_id: ticket.id,
-    type_id: Ticket::Article::Type.find_by(name: 'phone').id,
+    type_id:   Ticket::Article::Type.find_by(name: 'phone').id,
     sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-    from: 'Zammad Feedback <feedback@zammad.org>',
-    body: 'Welcome!
+    from:      'Zammad Feedback <feedback@zammad.org>',
+    body:      'Welcome!
 
   Thank you for choosing Zammad.
 
@@ -39,7 +41,7 @@ if Ticket.count.zero?
 
   Your Zammad Team
   ',
-    internal: false,
+    internal:  false,
   )
 end
 

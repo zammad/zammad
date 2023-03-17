@@ -1,6 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require_dependency 'net/ldap'
-require_dependency 'net/ldap/entry'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 # Class for establishing LDAP connections. A wrapper around Net::LDAP needed for Auth and Sync.
 # ATTENTION: Loads custom 'net/ldap/entry' from 'lib/core_ext' which extends the Net::LDAP::Entry class.
@@ -15,7 +13,7 @@ class Ldap
 
   # Initializes a LDAP connection.
   #
-  # @param [Hash] config the configuration for establishing a LDAP connection. Default is Setting 'ldap_config'.
+  # @param [Hash] config the configuration for establishing a LDAP connection.
   # @option config [String] :host_url The LDAP host URL in the format '*protocol*://*host*:*port*'.
   # @option config [String] :host The LDAP explicit host. May contain the port. Gets overwritten by host_url if given.
   # @option config [Number] :port The LDAP port. Default is 389 LDAP or 636 for LDAPS. Gets overwritten by host_url if given.
@@ -28,12 +26,8 @@ class Ldap
   #  ldap = Ldap.new
   #
   # @return [nil]
-  def initialize(config = nil)
+  def initialize(config)
     @config = config
-
-    if @config.blank?
-      @config = Setting.get('ldap_config')
-    end
 
     # connect on initialization
     connection
@@ -64,9 +58,9 @@ class Ldap
   #  #=> <Net::LDAP::Entry...>
   #
   # @return [true] Returns always true
-  def search(filter, base: nil, scope: nil, attributes: nil)
+  def search(filter, base: nil, scope: nil, attributes: nil, &block)
 
-    base  ||= base_dn()
+    base  ||= base_dn
     scope ||= Net::LDAP::SearchScope_WholeSubtree
 
     connection.search(
@@ -75,9 +69,8 @@ class Ldap
       scope:         scope,
       attributes:    attributes,
       return_result: false, # improves performance
-    ) do |entry|
-      yield entry
-    end
+      &block
+    )
   end
 
   # Checks if there are any entries for the given search criteria.
@@ -183,25 +176,29 @@ class Ldap
     @host_url = @config[:host_url]
     return if @host_url.blank?
     raise "Invalid host url '#{@host_url}'" if @host_url !~ %r{\A([^:]+)://(.+?)/?\z}
+
     @protocol = $1.to_sym
     @host     = $2
     @ssl      = @protocol == :ldaps
   end
 
   def parse_host
-    return if @host !~ /\A([^:]+):(.+?)\z/
+    return if @host !~ %r{\A([^:]+):(.+?)\z}
+
     @host = $1
     @port = $2.to_i
   end
 
   def handle_ssl_config
     return if !@ssl
+
     @port       ||= @config.fetch(:port, 636)
     @encryption   = {
       method: :simple_tls,
     }
 
     return if @config[:ssl_verify]
+
     @encryption[:tls_options] = {
       verify_mode: OpenSSL::SSL::VERIFY_NONE
     }

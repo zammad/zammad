@@ -1,25 +1,25 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsTelegramController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.channel_telegram') }, except: [:webhook]
+  prepend_before_action -> { authentication_check && authorize! }, except: [:webhook]
   skip_before_action :verify_csrf_token, only: [:webhook]
 
   def index
     assets = {}
     channel_ids = []
-    Channel.where(area: 'Telegram::Bot').order(:id).each do |channel|
+    Channel.where(area: 'Telegram::Bot').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end
     render json: {
-      assets: assets,
+      assets:      assets,
       channel_ids: channel_ids
     }
   end
 
   def add
     begin
-      channel = Telegram.create_or_update_channel(params[:api_token], params)
+      channel = TelegramHelper.create_or_update_channel(params[:api_token], params)
     rescue => e
       raise Exceptions::UnprocessableEntity, e.message
     end
@@ -29,7 +29,7 @@ class ChannelsTelegramController < ApplicationController
   def update
     channel = Channel.find_by(id: params[:id], area: 'Telegram::Bot')
     begin
-      channel = Telegram.create_or_update_channel(params[:api_token], params, channel)
+      channel = TelegramHelper.create_or_update_channel(params[:api_token], params, channel)
     rescue => e
       raise Exceptions::UnprocessableEntity, e.message
     end
@@ -57,17 +57,21 @@ class ChannelsTelegramController < ApplicationController
   end
 
   def webhook
-    raise Exceptions::UnprocessableEntity, 'bot param missing' if params['bid'].blank?
+    raise Exceptions::UnprocessableEntity, 'bot id is missing' if params['bid'].blank?
 
-    channel = Telegram.bot_by_bot_id(params['bid'])
+    channel = TelegramHelper.bot_by_bot_id(params['bid'])
     raise Exceptions::UnprocessableEntity, 'bot not found' if !channel
 
     if channel.options[:callback_token] != params['callback_token']
       raise Exceptions::UnprocessableEntity, 'invalid callback token'
     end
 
-    telegram = Telegram.new(channel.options[:api_token])
-    telegram.to_group(params, channel.group_id, channel)
+    telegram = TelegramHelper.new(channel.options[:api_token])
+    begin
+      telegram.to_group(params, channel.group_id, channel)
+    rescue Exceptions::UnprocessableEntity => e
+      Rails.logger.error e.message
+    end
 
     render json: {}, status: :ok
   end

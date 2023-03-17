@@ -1,0 +1,8 @@
+mutation onlineNotificationDelete($onlineNotificationId: ID!) {
+  onlineNotificationDelete(onlineNotificationId: $onlineNotificationId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

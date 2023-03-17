@@ -1,51 +1,52 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          module Comment
-            module Attachment
-              class Request < Sequencer::Unit::Base
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-                skip_action :skipped
+class Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Request < Sequencer::Unit::Base
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                uses :resource
-                provides :response, :action
+  skip_action :skipped
 
-                def process
-                  if failed?
-                    state.provide(:action, :skipped)
-                  else
-                    state.provide(:response, response)
-                  end
-                end
+  uses :resource, :instance
+  provides :response, :action
 
-                private
-
-                def failed?
-                  return false if response.success?
-                  logger.error response.error
-                  true
-                end
-
-                def response
-                  @response ||= begin
-                    UserAgent.get(
-                      resource.content_url,
-                      {},
-                      {
-                        open_timeout: 10,
-                        read_timeout: 60,
-                      },
-                    )
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
+  def process
+    if response.success?
+      state.provide(:response, response)
+    else
+      skip_attachment
     end
+  end
+
+  private
+
+  def response
+    @response ||= fetch
+  end
+
+  def fetch
+    attachment_response = nil
+
+    5.times do |iteration|
+      attachment_response = UserAgent.get(
+        resource.content_url,
+        {},
+        {
+          open_timeout: 20,
+          read_timeout: 240,
+          verify_ssl:   true,
+        },
+      )
+
+      return attachment_response if attachment_response.success?
+
+      logger.info "Sleeping 10 seconds after attachment request error and retry (##{iteration + 1}/5)."
+      sleep 10
+    end
+
+    attachment_response
+  end
+
+  def skip_attachment
+    logger.error "Skipping. Error while downloading Attachment from '#{resource.content_url}': #{response.error} (ticket_id: #{instance.ticket_id}, article_id: #{instance.id})"
+    state.provide(:action, :skipped)
   end
 end

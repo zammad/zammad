@@ -1,7 +1,7 @@
 # coffeelint: disable=no_unnecessary_double_quotes
-class App.ChannelForm extends App.ControllerSubContent
+class ChannelForm extends App.ControllerSubContent
   requiredPermission: 'admin.channel_formular'
-  header: 'Form'
+  header: __('Form')
   events:
     'change form.js-paramsDesigner': 'updateParamsDesigner'
     'keyup form.js-paramsDesigner': 'updateParamsDesigner'
@@ -38,7 +38,17 @@ class App.ChannelForm extends App.ControllerSubContent
       value: group_id
       #class: 'form-control--small'
     )
+    agreementTextInput = App.UiElement.richtext.render(
+      name: "agreementMessage"
+      buttons: [ 'link']
+      null: false
+      noImages: true
+      id: 'form-message-agreement'
+      tag:     'richtext'
+      value: __('Accept Data Privacy Policy & Acceptable Use Policy')
+    )
     element.find('.js-groupSelector').html(selection)
+    element.find('.agreement-support-text').html(agreementTextInput)
 
     @html element
 
@@ -53,6 +63,13 @@ class App.ChannelForm extends App.ControllerSubContent
         .replace(/\</g, '&lt;')
         .replace(/\>/g, '&gt;')
     params = @formParam(@$('.js-paramsDesigner'))
+
+    if @$('#agreementSupport').prop('checked')
+      @$('.agreement-support-text').removeClass('hide')
+    else
+      @$('.agreement-support-text').addClass('hide')
+      delete params.agreementMessage
+
     paramString = ''
     for key, value of params
       if !_.isEmpty(value)
@@ -73,12 +90,14 @@ class App.ChannelForm extends App.ControllerSubContent
       @$('.js-formBtn').removeClass('hide')
       @$('.js-formBtn').ZammadForm(params)
       @$('.js-formBtn').text('Feedback')
+      @$('.js-formInline').toggleClass('no-css', params.noCSS)
     else
       @$('.js-modal').addClass('hide')
       @$('.js-inlineForm').removeClass('hide')
       @$('.js-formBtn').addClass('hide')
       @$('.js-formInline').removeClass('hide')
       @$('.js-formInline').ZammadForm(params)
+      @$('.js-formInline').toggleClass('no-css', params.noCSS)
 
   toggleFormSetting: =>
     value = @formSetting.prop('checked')
@@ -88,4 +107,4 @@ class App.ChannelForm extends App.ControllerSubContent
     value = @paramsSetting.find('[name=group_id]').val()
     App.Setting.set('form_ticket_create_group_id', value)
 
-App.Config.set('Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, permission: ['admin.formular'] }, 'NavBarAdmin')
+App.Config.set('Form', { prio: 2000, name: __('Form'), parent: '#channels', target: '#channels/form', controller: ChannelForm, permission: ['admin.channel_formular'] }, 'NavBarAdmin')

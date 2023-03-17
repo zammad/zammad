@@ -1,0 +1,31 @@
+<table class="settings-list settings-list--roles-permissions">
+  <thead>
+    <th><%- @T('Role') %>
+    <% for key, text of @accessLevels: %>
+      <th><%- @T(text) %>
+    <% end %>
+  <tbody>
+<% for role in @roles: %>
+  <tr>
+    <td>
+      <%= role.name %>
+
+    <% for key, text of @accessLevels: %>
+      <td class="settings-list-control-cell settings-list-radio-cell u-clickable">
+        <label class="inline-label radio-replacement">
+          <input
+            type="radio"
+            value="<%= key %>"
+            name="<%= role.id %>"
+            <% if @params[role.id] == key: %>checked<% end %>
+            <% if role.accessLevelIsDisabled[key]: %>
+              disabled
+              data-permanently-disabled
+            <% end %>
+            />
+          <%- @Icon('radio', 'icon-unchecked') %>
+          <%- @Icon('radio-checked', 'icon-checked') %>
+        </label>
+    <% end %>
+  </tr>
+<% end %>

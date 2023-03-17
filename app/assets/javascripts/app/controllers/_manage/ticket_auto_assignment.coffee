@@ -22,7 +22,7 @@ class App.SettingTicketAutoAssignment extends App.ControllerSubContent
     @html(App.view('settings/ticket_auto_assignment')())
 
     configure_attributes = [
-      { name: 'condition', display: 'Conditions for effected objects', tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
+      { name: 'condition', display: __('Conditions for affected objects'), tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false, article: false },
     ]
 
     ticket_auto_assignment_selector = App.Setting.get('ticket_auto_assignment_selector')
@@ -36,7 +36,7 @@ class App.SettingTicketAutoAssignment extends App.ControllerSubContent
     )
 
     configure_attributes = [
-      { name: 'user_ids', display: 'Exception users', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
+      { name: 'user_ids', display: __('Excepted users'), tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
     ]
 
     ticket_auto_assignment_user_ids_ignore = App.Setting.get('ticket_auto_assignment_user_ids_ignore')

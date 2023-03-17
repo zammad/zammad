@@ -1,0 +1,15 @@
+{
+  "update_id":10001,
+  "channel_post":{
+    "chat":{
+      "id": 123456789,
+      "title":"ZBotChannel",
+      "type":"channel"
+    },
+    "message_id":1365,
+    "date":1441645532,
+    "text":"Hello, I need your Help"
+  },
+  "bid":"12345678",
+  "callback_token":"AbcDefG"
+}

@@ -1,14 +1,10 @@
-FactoryBot.define do
-  sequence :test_group_name do |n|
-    "TestGroup#{n}"
-  end
-end
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
-
   factory :group do
-    name { generate(:test_group_name) }
-    created_by_id 1
-    updated_by_id 1
+    email_address
+    sequence(:name) { |n| "Group #{n}" }
+    created_by_id   { 1 }
+    updated_by_id   { 1 }
   end
 end

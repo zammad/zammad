@@ -1,51 +1,8 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
-
-  test 'b cache' do
-    Sessions::CacheIn.set('last_run_test', true, { expires_in: 1.second })
-    result = Sessions::CacheIn.get('last_run_test')
-    assert_equal(true, result, 'check 1')
-
-    # should not be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(false, result, 'check 1 - expired')
-
-    # should be expired
-    travel 2.seconds
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(true, result, 'check 1 - expired')
-
-    # renew expire
-    result = Sessions::CacheIn.get('last_run_test', re_expire: true)
-    assert_equal(true, result, 'check 1 - re_expire')
-
-    # should not be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(false, result, 'check 1 - expired')
-
-    # ignore expired
-    travel 2.seconds
-    result = Sessions::CacheIn.get('last_run_test', ignore_expire: true)
-    assert_equal(true, result, 'check 1 - ignore_expire')
-
-    # should be expired
-    result = Sessions::CacheIn.expired('last_run_test')
-    assert_equal(true, result, 'check 2')
-
-    result = Sessions::CacheIn.get('last_run_test')
-    assert_nil(result, 'check 2')
-
-    # check delete cache
-    Sessions::CacheIn.set('last_run_delete', true, { expires_in: 5.seconds })
-    result = Sessions::CacheIn.get('last_run_delete')
-    assert_equal(true, result, 'check 1')
-    Sessions::CacheIn.delete('last_run_delete')
-    result = Sessions::CacheIn.get('last_run_delete')
-    assert_nil(result, 'check delete')
-    travel_back
-  end
 
   test 'c session create / update' do
 
@@ -54,14 +11,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'session-agent-1',
-      firstname: 'Session',
-      lastname: 'Agent 1',
-      email: 'session-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'session-agent-1',
+      firstname:     'Session',
+      lastname:      'Agent 1',
+      email:         'session-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -95,109 +52,8 @@ class SessionBasicTest < ActiveSupport::TestCase
     Sessions.destroy(client_id1)
 
     # check if session exists
-    assert(!Sessions.session_exists?(client_id1), 'check if session exists')
+    assert_not(Sessions.session_exists?(client_id1), 'check if session exists')
 
-  end
-
-  test 'c collections group' do
-    require 'sessions/backend/collections/group.rb'
-
-    # create users
-    roles  = Role.where(name: ['Agent'])
-    groups = Group.all
-
-    agent1 = User.create_or_update(
-      login: 'session-collection-agent-1',
-      firstname: 'Session',
-      lastname: 'Agent 1',
-      email: 'session-collection-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    collection_client1 = Sessions::Backend::Collections::Group.new(agent1, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Group.new(agent1, {}, false, '234-2', 3)
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1.present?, 'check collections')
-    sleep 0.6
-    result2 = collection_client2.push
-    assert(result2.present?, 'check collections')
-    assert_equal(result1, result2, 'check collections')
-
-    # next check should be empty
-    result1 = collection_client1.push
-    assert(!result1, 'check collections - recall')
-    travel 1.second
-    result2 = collection_client2.push
-    assert(!result2, 'check collections - recall')
-
-    # change collection
-    group = Group.first
-    travel 4.seconds
-    group.touch
-    travel 4.seconds
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1.present?, 'check collections - after touch')
-
-    result2 = collection_client2.push
-    assert(result2.present?, 'check collections - after touch')
-    assert_equal(result1, result2, 'check collections')
-
-    # check again after touch
-    result1 = collection_client1.push
-    assert_nil(result1, 'check collections - after touch - recall')
-    result2 = collection_client2.push
-    assert_nil(result2, 'check collections - after touch - recall')
-
-    # change collection
-    group = Group.create!(
-      name: "SomeGroup::#{rand(999_999)}",
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    travel 4.seconds
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1.present?, 'check collections - after create')
-    result2 = collection_client2.push
-    assert(result2.present?, 'check collections - after create')
-    assert_equal(result1, result2, 'check collections')
-
-    # check again after create
-    travel 4.seconds
-    result1 = collection_client1.push
-    assert_nil(result1, 'check collections - after create - recall')
-    result2 = collection_client2.push
-    assert_nil(result2, 'check collections - after create - recall')
-
-    # change collection
-    group.destroy
-    travel 4.seconds
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1.present?, 'check collections - after destroy')
-    result2 = collection_client2.push
-    assert(result2.present?, 'check collections - after destroy')
-    assert_equal(result1, result2, 'check collections')
-
-    # check again after destroy
-    travel 4.seconds
-    result1 = collection_client1.push
-    assert_nil(result1, 'check collections - after destroy - recall')
-    result2 = collection_client2.push
-    assert_nil(result2, 'check collections - after destroy - recall')
-    travel_back
   end
 
   test 'c activity stream' do
@@ -207,22 +63,22 @@ class SessionBasicTest < ActiveSupport::TestCase
     groups = Group.all
 
     agent1 = User.create_or_update(
-      login: 'activity-stream-agent-1',
-      firstname: 'Session',
-      lastname: "activity stream #{rand(99_999)}",
-      email: 'activity-stream-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
+      login:         'activity-stream-agent-1',
+      firstname:     'Session',
+      lastname:      "activity stream #{SecureRandom.uuid}",
+      email:         'activity-stream-agent1@example.com',
+      password:      'agentpw',
+      active:        true,
+      roles:         roles,
+      groups:        groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
 
     # create min. on activity record
-    random_name = "Random:#{rand(9_999_999_999)}"
+    random_name = "Random:#{SecureRandom.uuid}"
     Group.create_or_update(
-      name: random_name,
+      name:          random_name,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -236,20 +92,20 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # next check should be empty
     result1 = as_client1.push
-    assert(!result1, 'check as agent1 - recall')
+    assert_not(result1, 'check as agent1 - recall')
 
     # next check should be empty
     travel 4.seconds
     result1 = as_client1.push
-    assert(!result1, 'check as agent1 - recall 2')
+    assert_not(result1, 'check as agent1 - recall 2')
 
     agent1.update!(email: 'activity-stream-agent11@example.com')
-    ticket = Ticket.create!(
-      title: '12323',
-      group_id: 1,
-      priority_id: 1,
-      state_id: 1,
-      customer_id: 1,
+    Ticket.create!(
+      title:         '12323',
+      group_id:      1,
+      priority_id:   1,
+      state_id:      1,
+      customer_id:   1,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -258,60 +114,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get as stream
     result1 = as_client1.push
-    assert( result1, 'check as agent1 - recall 3')
-    travel_back
-  end
-
-  test 'c ticket_create' do
-
-    # create users
-    roles  = Role.where(name: %w[Agent Admin])
-    groups = Group.all
-
-    agent1 = User.create_or_update(
-      login: 'ticket_create-agent-1',
-      firstname: 'Session',
-      lastname: "ticket_create #{rand(99_999)}",
-      email: 'ticket_create-agent1@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    ticket_create_client1 = Sessions::Backend::TicketCreate.new(agent1, {}, false, '123-1', 3)
-
-    # get as stream
-    result1 = ticket_create_client1.push
-    assert(result1, 'check ticket_create')
-    travel 1.second
-
-    # next check should be empty
-    result1 = ticket_create_client1.push
-    assert(!result1, 'check ticket_create - recall')
-
-    # next check should be empty
-    travel 1.second
-    result1 = ticket_create_client1.push
-    assert(!result1, 'check ticket_create - recall 2')
-
-    Group.create!(
-      name: "SomeTicketCreateGroup::#{rand(999_999)}",
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    groups = Group.all
-    agent1.groups = groups
-    agent1.save!
-
-    travel 4.seconds
-
-    # get as stream
-    result1 = ticket_create_client1.push
-    assert(result1, 'check ticket_create - recall 3')
+    assert(result1, 'check as agent1 - recall 3')
     travel_back
   end
 

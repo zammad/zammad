@@ -1,5 +1,11 @@
 <div class="page-header page-header--tabs">
   <div class="page-header-title">
+    <% if @headerSwitchName: %>
+      <div class="zammad-switch zammad-switch--small js-header-switch" data-name="<%= @headerSwitchName %>">
+         <input name="<%= @headerSwitchName %>" type="checkbox" id="setting-<%= @headerSwitchName %>" <% if @headerSwitchChecked: %>checked<% end %>>
+         <label for="setting-<%= @headerSwitchName %>"></label>
+      </div>
+    <% end %>
     <h1><%- @T( @header ) %> <small><%- @T( @subHeader ) %></small></h1>
   </div>
   <% if @addTab: %>

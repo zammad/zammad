@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="dark">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<title>422: Unprocessable Entity</title>
+<link rel="stylesheet" href="/assets/error/style-mobile.css">
+<body <% if @traceback %>class="error-message"<% end %>>
+  <div class="h-full min-w-full bg-black font-sans text-sm text-white antialiased">
+    <div class="flex min-h-screen flex-col px-4">
+      <header class="fixed">
+        <div class="grid h-16 grid-cols-3">
+          <div class="flex cursor-pointer items-center justify-self-start text-base">
+            <button class="flex cursor-pointer items-center" aria-label="Go home">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon fill-current icon-mobile-home" width="32" height="32" aria-hidden="true" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 14a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5v4.5h3V9.442L12 4.838 5.5 9.442V18.5h3V14Zm1.5 6H4V9.184a1 1 0 0 1 .422-.816l7-4.959a1 1 0 0 1 1.156 0l7 4.959a1 1 0 0 1 .422.816V20h-6v-6h-4v6Z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <main class="flex grow flex-col items-center justify-center">
+        <h1 class="mb-9 text-8xl font-extrabold">422</h1>
+        <% if !@traceback %>
+          <img alt="Error" src="/assets/error/error-mobile-403.svg">
+          <h2 class="mt-9 max-w-prose text-center text-xl font-semibold">The change you wanted was rejected</h2>
+          <p class="mt-4 min-h-[4rem] max-w-prose text-center text-gray">Maybe you tried to change something you didn't have access to.</p>
+          <% if @message.present? %>
+            <p class="max-w-prose text-center text-gray"><%= @message %></p>
+          <% end %>
+        <% else %>
+          <pre class="traceback">
+<%= @exception.message %>
+<% if @exception.backtrace %>
+<code>
+<% @exception.backtrace.each {|row| %>
+<%= row %>
+<% } %>
+</code>
+<% end %>
+</pre>
+<% end %>
+    </main>
+  </div>
+</div>
+</body>
+</html>

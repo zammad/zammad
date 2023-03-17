@@ -1,0 +1,11 @@
+Un autre ticket a été fusionné dans le ticket (#{ticket.title})
+
+<div>Bonjour #{recipient.firstname},</div>
+<br>
+<div>
+Un autre ticket a été fusionné dans le ticket (#{ticket.title}) par "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Voir l'événement dans  #{config.product_name}</a>
+</div>

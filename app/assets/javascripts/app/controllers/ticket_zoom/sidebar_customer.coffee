@@ -1,29 +1,41 @@
 class SidebarCustomer extends App.Controller
   sidebarItem: =>
-    return if !@permissionCheck('ticket.agent')
+    return if @ticket.currentView() isnt 'agent'
     @item = {
       name: 'customer'
       badgeCallback: @badgeRender
-      sidebarHead: 'Customer'
+      sidebarHead: __('Customer')
       sidebarCallback: @showCustomer
-      sidebarActions: [
-        {
-          title:    'Change Customer'
-          name:     'customer-change'
-          callback: @changeCustomer
-        },
-      ]
+      sidebarActions: []
     }
+
+    if @ticket.editable()
+      @item.sidebarActions.push(
+        title:    __('Change Customer')
+        name:     'customer-change'
+        callback: @changeCustomer
+      )
+
     return @item if @ticket && @ticket.customer_id == 1
-    currentUser = App.User.find(App.Session.get('id'))
+
+    # prevent exceptions if customer model is no available
     if @ticket.customer_id && App.User.exists(@ticket.customer_id)
       customer = App.User.find(@ticket.customer_id)
-      if customer.isAccessibleBy(currentUser, 'change')
+      if customer?.isAccessibleBy(App.User.current(), 'change')
         @item.sidebarActions.push {
-          title:    'Edit Customer'
+          title:    __('Edit Customer')
           name:     'customer-edit'
           callback: @editCustomer
         }
+
+    if @permissionCheck('admin.data_privacy')
+      @item.sidebarActions.push {
+        title:    __('Delete Customer')
+        name:     'customer-delete'
+        callback: =>
+          @navigate "#system/data_privacy/#{@ticket.customer_id}"
+      }
+
     @item
 
   metaBadge: (user) =>
@@ -34,7 +46,7 @@ class SidebarCustomer extends App.Controller
     if @Config.get('ui_sidebar_open_ticket_indicator_colored') is true
       if counter == 2
         cssClass = 'tabsSidebar-tab-count--warning'
-      if counter > 3
+      else if counter > 2
         cssClass = 'tabsSidebar-tab-count--danger'
 
     {
@@ -74,9 +86,9 @@ class SidebarCustomer extends App.Controller
       genericObject: 'User'
       screen: 'edit'
       pageData:
-        title:   'Users'
-        object:  'User'
-        objects: 'Users'
+        title:   __('Users')
+        object:  __('User')
+        objects: __('Users')
       container: @elSidebar.closest('.content')
     )
 

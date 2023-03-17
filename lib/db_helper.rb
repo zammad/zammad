@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class DbHelper
 
@@ -8,14 +8,14 @@ execute post database statements after import (e. g. reset primary key sequences
 
   DbHelper.import_post
 
-or only for certan tables
+or only for certain tables
 
   DbHelper.import_post(table_name)
 
 =end
 
   def self.import_post(table = nil)
-    return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
+    return if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] != 'postgresql'
 
     tables = if table
                [table]

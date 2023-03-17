@@ -1,0 +1,4 @@
+<div>
+  <div class='alert alert--danger hidden'></div>
+  <div class='js-table-container'></div>
+</div>

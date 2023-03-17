@@ -1,16 +1,17 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module ImportStats
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def current_state
         {
-          Base: {
+          Base:   {
             done:  base_done,
             total: base_total,
           },
-          User: {
+          User:   {
             done:  user_done,
             total: user_total,
           },
@@ -24,14 +25,14 @@ module Import
       def statistic
 
         # check cache
-        cache = Cache.get('import_otrs_stats')
+        cache = Rails.cache.read('import_otrs_stats')
         return cache if cache
 
-        # retrive statistic
+        # retrieve statistic
         statistic = Import::OTRS::Requester.list
         return statistic if !statistic
 
-        Cache.write('import_otrs_stats', statistic)
+        Rails.cache.write('import_otrs_stats', statistic)
         statistic
       end
 

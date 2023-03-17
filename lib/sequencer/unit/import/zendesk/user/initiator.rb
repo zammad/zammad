@@ -1,26 +1,19 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module User
-          class Initiator < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource
-            provides :initiator
+class Sequencer::Unit::Import::Zendesk::User::Initiator < Sequencer::Unit::Base
 
-            def process
-              state.provide(:initiator, initiator?)
-            end
+  uses :resource
+  provides :initiator
 
-            private
+  def process
+    state.provide(:initiator, initiator?)
+  end
 
-            def initiator?
-              return false if resource.email.blank?
-              resource.email == Setting.get('import_zendesk_endpoint_username')
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def initiator?
+    return false if resource.email.blank?
+
+    resource.email == Setting.get('import_zendesk_endpoint_username')
   end
 end

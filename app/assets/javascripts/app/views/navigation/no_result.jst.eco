@@ -1,0 +1,4 @@
+<li class="global-search-detail-no-result alert alert--warning horizontal" role="alert">
+  <%- @Icon('mood-sad') %>
+  <span><%- @T('There is no match for your search.') %></span>
+</li>

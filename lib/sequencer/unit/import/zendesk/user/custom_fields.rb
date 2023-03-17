@@ -1,18 +1,10 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module User
-          class CustomFields < Sequencer::Unit::Import::Zendesk::Common::CustomFields
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Zendesk::User::CustomFields < Sequencer::Unit::Import::Zendesk::Common::CustomFields
 
-            def remote_fields
-              resource.user_fields
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def remote_fields
+    resource.user_fields
   end
 end

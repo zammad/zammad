@@ -1,12 +1,8 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class User
   module Search
     extend ActiveSupport::Concern
-
-    included do
-      include HasSearchSortable
-    end
 
     # methods defined here are going to extend the class, not the instance of it
     class_methods do
@@ -32,8 +28,9 @@ returns if user has no permissions to search
 
       def search_preferences(current_user)
         return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
+
         {
-          prio: 2000,
+          prio:                2000,
           direct_search_index: true,
         }
       end
@@ -57,6 +54,7 @@ or with certain role_ids | permissions
     offset: 100,
     current_user: user_model,
     role_ids: [1,2,3],
+    group_ids: [1,2,3],
     permissions: ['ticket.agent']
 
     # sort single column
@@ -82,14 +80,18 @@ returns
         offset = params[:offset] || 0
         current_user = params[:current_user]
 
-        # check sort
-        sort_by = search_get_sort_by(params, 'updated_at')
+        sql_helper = ::SqlHelper.new(object: self)
 
-        # check order
-        order_by = search_get_order_by(params, 'desc')
+        # check sort - positions related to order by
+        sort_by = sql_helper.get_sort_by(params, %w[active updated_at])
+
+        # check order - positions related to sort by
+        order_by = sql_helper.get_order_by(params, %w[desc desc])
 
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
+
+        is_query = query.present? && query != '*'
 
         # lookup for roles of permission
         if params[:permissions].present?
@@ -99,44 +101,89 @@ returns
         end
 
         # try search index backend
-        if SearchIndexBackend.enabled?
-          query_extention = {}
+        if SearchIndexBackend.enabled? && is_query
+          query_extension = {}
           if params[:role_ids].present?
-            query_extention['bool'] = {}
-            query_extention['bool']['must'] = []
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
             if !params[:role_ids].is_a?(Array)
               params[:role_ids] = [params[:role_ids]]
             end
             access_condition = {
               'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
             }
-            query_extention['bool']['must'].push access_condition
+            query_extension['bool']['must'].push access_condition
           end
-          items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset, sort_by, order_by)
+
+          user_ids = []
+          if params[:group_ids].present?
+            params[:group_ids].each do |group_id, access|
+              user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
+            end
+            return [] if user_ids.blank?
+          end
+          if params[:ids].present?
+            user_ids |= params[:ids].map(&:to_i)
+          end
+          if user_ids.present?
+            query_extension['bool'] ||= {}
+            query_extension['bool']['must'] ||= []
+            query_extension['bool']['must'].push({ 'terms' => { '_id' => user_ids } })
+          end
+
+          items = SearchIndexBackend.search(query, 'User', limit:           limit,
+                                                           query_extension: query_extension,
+                                                           from:            offset,
+                                                           sort_by:         sort_by,
+                                                           order_by:        order_by)
           users = []
           items.each do |item|
             user = User.lookup(id: item[:id])
             next if !user
+
             users.push user
           end
           return users
         end
 
-        order_sql = search_get_order_sql(sort_by, order_by, 'users.updated_at DESC')
+        order_sql = sql_helper.get_order(sort_by, order_by, 'users.updated_at DESC')
 
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
-        users = if params[:role_ids]
-                  User.joins(:roles).where('roles.id' => params[:role_ids]).where(
-                    '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order(order_sql).offset(offset).limit(limit)
-                else
-                  User.where(
-                    '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order(order_sql).offset(offset).limit(limit)
-                end
-        users
+
+        statement = User
+        if params[:ids].present?
+          statement = statement.where(id: params[:ids])
+        end
+
+        if params[:role_ids]
+          statement = statement.joins(:roles).where('roles.id' => params[:role_ids])
+        end
+        if params[:group_ids]
+          user_ids = []
+          params[:group_ids].each do |group_id, access|
+            user_ids |= User.group_access(group_id.to_i, access).pluck(:id)
+          end
+          statement = if user_ids.present?
+                        statement.where(id: user_ids)
+                      else
+                        statement.none
+                      end
+        end
+
+        if is_query
+          statement = statement.where(
+            '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+          )
+        end
+
+        # Fixes #3755 - User with user_id 1 is show in admin interface (which should not)
+        statement = statement.where('users.id != 1')
+
+        statement.reorder(Arel.sql(order_sql))
+          .offset(offset)
+          .limit(limit)
       end
     end
   end

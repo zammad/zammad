@@ -1,0 +1,19 @@
+#{config.product_name}- inicio de sesión desde nuevo dispositivo
+
+<div>Buenos días, #{user.firstname}:</div>
+<br>
+<div>Parece haber accedido a su cuenta desde <b>un nuevo dispositivo</b> en la fecha "#{user_device.created_at}":</div>
+<br>
+<div>
+Su dispositivo: #{user_device.name}<br>
+Su posición (relativa): #{user_device.location}<br>
+Su dirección IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>El dispositivo se ha agregado a la lista de dispositivos conocidos, que puede ver aquí:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Si no ha sido usted, elimine el dispositivo de la lista, cambie la contraseña de la cuenta y contacte con su administrador. Alguien podría haber obtenido un acceso no autorizado a su cuenta.</div>
+<br>
+<div>El equipo de #{config.product_name}</div>

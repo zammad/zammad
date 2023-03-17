@@ -1,10 +1,10 @@
-class Index extends App.ControllerIntegrationBase
+class Slack extends App.ControllerIntegrationBase
   featureIntegration: 'slack_integration'
-  featureName: 'Slack'
+  featureName: __('Slack')
   featureConfig: 'slack_config'
   description: [
-    ['This service sends notifications to your %s channel.', 'Slack']
-    ['To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the web hook URL below.', 'Slack']
+    [__('This service sends notifications to your %s channel.'), 'Slack']
+    [__('To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel and enter the webhook URL below.'), 'Slack']
   ]
   events:
     'click .js-submit': 'update'
@@ -19,19 +19,19 @@ class Index extends App.ControllerIntegrationBase
       params = params.items[0] || {}
 
     options =
-      create: '1. Ticket Create'
-      update: '2. Ticket Update'
-      reminder_reached: '3. Ticket Reminder Reached'
-      escalation: '4. Ticket Escalation'
-      escalation_warning: '5. Ticket Escalation Warning'
+      create: __('1. Ticket Create')
+      update: __('2. Ticket Update')
+      reminder_reached: __('3. Ticket Reminder Reached')
+      escalation: __('4. Ticket Escalation')
+      escalation_warning: __('5. Ticket Escalation Warning')
 
     configureAttributes = [
-      { name: 'types',     display: 'Trigger',  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: 'When notification is being sent.' },
-      { name: 'group_ids', display: 'Group',    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: 'Only for these groups.' },
-      { name: 'webhook',   display: 'Webhook',  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
-      { name: 'username',  display: 'Username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
-      { name: 'channel',   display: 'Channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
-      { name: 'icon_url',  display: 'Icon Url', tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
+      { name: 'types',     display: __('Trigger'),  tag: 'checkbox', options: options, translate: true, 'null': false, class: 'vertical', note: __('When notification is being sent.') },
+      { name: 'group_ids', display: __('Group'),    tag: 'select', relation: 'Group', multiple: true, 'null': false, class: 'form-control--small', note: __('Only for these groups.') },
+      { name: 'webhook',   display: __('Webhook'),  tag: 'input', type: 'url',  limit: 200, 'null': false, class: 'form-control--small', placeholder: 'https://hooks.slack.com/services/...' },
+      { name: 'username',  display: __('Username'), tag: 'input', type: 'text', limit: 100, 'null': false, class: 'form-control--small', placeholder: 'username' },
+      { name: 'channel',   display: __('Channel'),  tag: 'input', type: 'text', limit: 100, 'null': true, class: 'form-control--small', placeholder: '#channel' },
+      { name: 'icon_url',  display: __('Icon URL'), tag: 'input', type: 'url',  limit: 200, 'null': true, class: 'form-control--small', placeholder: 'https://example.com/logo.png' },
     ]
 
     settings = []
@@ -81,10 +81,11 @@ class State
 App.Config.set(
   'IntegrationSlack'
   {
-    name: 'Slack'
+    name: __('Slack')
     target: '#system/integration/slack'
-    description: 'A team communication tool for the 21st century.'
-    controller: Index
+    description: __('A team communication tool for the 21st century. Compatible with tools like %s.')
+    descriptionSubstitute: __('Mattermost, RocketChat')
+    controller: Slack
     state: State
   }
   'NavBarIntegrations'

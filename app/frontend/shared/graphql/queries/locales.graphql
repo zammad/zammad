@@ -1,0 +1,9 @@
+query locales($onlyActive: Boolean = false) {
+  locales(onlyActive: $onlyActive) {
+    locale
+    alias
+    name
+    dir
+    active
+  }
+}

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Store
   module Provider
@@ -8,7 +8,7 @@ class Store
       def self.add(data, sha)
         Store::Provider::DB.create(
           data: data,
-          sha: sha,
+          sha:  sha,
         )
         true
       end
@@ -16,6 +16,7 @@ class Store
       def self.get(sha)
         file = Store::Provider::DB.find_by(sha: sha)
         return if !file
+
         file.data
       end
 

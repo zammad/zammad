@@ -1,0 +1,9 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <martin@example.com>
+from_email: martin@example.com
+from_display_name: Martin Edenhofer
+to: metest@znuny.com
+subject: abc
+body: "Here it goes - Ă¤ĂśĂź - ĺˇŽĺ\x87şäşşHere it goes - äöü - hi ­"
+content_type: text/plain
+attachments: []

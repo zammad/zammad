@@ -42,7 +42,7 @@ class App.HttpLog extends App.Controller
 class Show extends App.ControllerModal
   authenticateRequired: true
   large: true
-  head: 'HTTP Log'
+  head: __('HTTP Log')
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false
@@ -51,7 +51,6 @@ class Show extends App.ControllerModal
     super
 
   content: ->
-    console.log('cont')
     App.view('widget/http_log_show')(
       record: @record
     )

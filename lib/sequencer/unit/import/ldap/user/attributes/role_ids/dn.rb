@@ -1,46 +1,34 @@
-class Sequencer
-  class Unit
-    module Import
-      module Ldap
-        module User
-          module Attributes
-            module RoleIds
-              class Dn < Sequencer::Unit::Base
-                include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-                skip_any_action
+class Sequencer::Unit::Import::Ldap::User::Attributes::RoleIds::Dn < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                uses :resource, :remote_id, :dn_roles
+  skip_any_action
 
-                def process
-                  dn = resource[:dn]
-                  raise "Missing 'dn' attribute for remote id '#{remote_id}'" if dn.blank?
+  uses :resource, :remote_id, :dn_roles
 
-                  # use signup/Zammad default roles
-                  # if no mapping was provided
-                  return if dn_roles.blank?
+  def process
+    dn = resource[:dn]
+    raise "Missing 'dn' attribute for remote id '#{remote_id}'" if dn.blank?
 
-                  # check if roles are mapped for the found dn
-                  role_ids = dn_roles[ dn.downcase ]
+    # use signup/Zammad default roles
+    # if no mapping was provided
+    return if dn_roles.blank?
 
-                  # use signup/Zammad default roles
-                  # if no mapping entry was found
-                  return if role_ids.blank?
+    # check if roles are mapped for the found dn
+    role_ids = dn_roles[ dn.downcase ]
 
-                  # LDAP is the leading source if
-                  # a mapping entry is present
-                  provide_mapped do
-                    {
-                      role_ids: role_ids
-                    }
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
+    # use signup/Zammad default roles
+    # if no mapping entry was found
+    return if role_ids.blank?
+
+    # LDAP is the leading source if
+    # a mapping entry is present
+    provide_mapped do
+      {
+        role_ids: role_ids
+      }
     end
   end
 end

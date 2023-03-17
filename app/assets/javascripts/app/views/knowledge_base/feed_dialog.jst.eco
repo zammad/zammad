@@ -1,0 +1,17 @@
+<p>
+  <%- @T('Internal Knowledge Base feed:') %>
+  <br>
+  <a href="<%= @kb_url %>" target="_blank"><%= @kb_title %></a>
+
+  <%- @Icon('clipboard', 'u-clickable js-copy') %>
+</p>
+
+<% if @category_url: %>
+  <p>
+    <%- @T('This category including sub-categories feed:') %>
+    <br>
+    <a href="<%= @category_url %>" target="_blank"><%= @category_title %></a>
+
+    <%- @Icon('clipboard', 'u-clickable js-copy') %>
+  </p>
+<% end %>

@@ -1,7 +1,8 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module Helper
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       private
@@ -13,6 +14,7 @@ module Import
         self.class::MAPPING.each do |key_sym, value|
           key = key_sym.to_s
           next if !record.key?(key)
+
           result[value] = record[key]
         end
         result
@@ -20,13 +22,7 @@ module Import
 
       def active?(record)
         case record['ValidID'].to_s
-        when '3'
-          false
-        when '2'
-          false
-        when '1'
-          true
-        when '0'
+        when '3', '2', '0'
           false
         else
           true

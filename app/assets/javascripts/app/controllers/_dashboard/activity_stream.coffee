@@ -13,7 +13,7 @@ class App.DashboardActivityStream extends App.CollectionController
     @fetch()
 
     # bind to rebuild view event
-    @bind('activity_stream_rebuild', @load)
+    @controllerBind('activity_stream_rebuild', @load)
 
   fetch: =>
 
@@ -59,6 +59,8 @@ class App.DashboardActivityStream extends App.CollectionController
     @el.closest('.sidebar').find('.activity-description').addClass('hidden')
 
   onRenderItemEnd: (item, el) ->
+    return if App.Session.get() is undefined
+
     new App.WidgetAvatar(
       el:        el.find('.js-avatar')
       object_id: item.created_by_id

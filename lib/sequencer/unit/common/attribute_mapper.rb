@@ -1,27 +1,23 @@
-class Sequencer
-  class Unit
-    module Common
-      class AttributeMapper < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-        def self.map
-          raise "Missing implementation of '#{__method__}' method for '#{name}'"
-        end
+class Sequencer::Unit::Common::AttributeMapper < Sequencer::Unit::Base
 
-        def self.uses
-          map.keys
-        end
+  def self.map
+    raise "Missing implementation of '#{__method__}' method for '#{name}'"
+  end
 
-        def self.provides
-          map.values
-        end
+  def self.uses
+    map.keys
+  end
 
-        def process
-          self.class.map.each do |original, renamed|
-            state.provide(renamed) do
-              state.use(original)
-            end
-          end
-        end
+  def self.provides
+    map.values
+  end
+
+  def process
+    self.class.map.each do |original, renamed|
+      state.provide(renamed) do
+        state.use(original)
       end
     end
   end

@@ -1,8 +1,26 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
+
+=begin
+
+a agent or customer is typing a chat session message
+
+payload
+
+  {
+    event: 'chat_session_typing',
+    data: {},
+  }
+
+return is sent as message back to peer
+
+=end
 
   def run
     return super if super
     return if !check_chat_session_exists
+
     chat_session = current_chat_session
 
     user_id = nil
@@ -11,9 +29,9 @@ class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
     end
     message = {
       event: 'chat_session_typing',
-      data: {
+      data:  {
         session_id: chat_session.session_id,
-        user_id: user_id,
+        user_id:    user_id,
       },
     }
 
@@ -23,8 +41,8 @@ class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
     # send chat_session_init to agent
     {
       event: 'chat_session_typing',
-      data: {
-        session_id: chat_session.session_id,
+      data:  {
+        session_id:   chat_session.session_id,
         self_written: true,
       },
     }

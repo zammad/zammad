@@ -11,7 +11,7 @@
       <%- @Icon(@item.meta.iconClass) %>
     <% end %>
   </div>
-  <div class="nav-tab-name u-textTruncate flex"><%= @item.meta.head %></div>
+  <div class="nav-tab-name u-textTruncate flex<% if @item.meta.active is false: %> is-inactive<% end %>"><%= @item.meta.head %></div>
   <div class="nav-tab-close js-close" title="<%- @Ti('close') %>">
     <div class="nav-tab-close-inner">
       <%- @Icon('diagonal-cross') %>

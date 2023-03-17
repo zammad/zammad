@@ -1,0 +1,62 @@
+<nav class="breadcrumbs">
+  <% for item in @crumbs: %>
+    <a class="breadcrumb" <% if item.url: %>href="<%= item.url %><% end %>">
+      <% if item.icon: %>
+        <%- @iconWithModifier(item, iconset: @iconset) %>
+      <% end %>
+
+      <%= item.title %>
+    </a>
+  <% end %>
+</nav>
+
+<div class="breadcrumbs-menu">
+  <a href="<%= @search.url %>"
+     class="btn btn--action btn--only-icon js-search <% if @search.enabled: %>btn--active<% end %>"
+     >
+    <%- @Icon('magnifier') %>
+  </a>
+  <a href="<%= @externalUrl %>"
+     target=_blank
+     <% if !@externalUrl: %>disabled<% end %>
+     class="btn btn--action btn--only-icon"
+     >
+    <%- @Icon('external') %>
+  </a>
+  <% if @feed.available: %>
+  <div
+     class="btn btn--action btn--only-icon js-feed"
+     >
+    <%- @Icon('rss') %>
+  </div>
+  <% end %>
+  <% if @edit.available: %>
+    <a href="<%= @edit.url %>"
+      class="btn btn--action js-edit <% if @edit.enabled: %>btn--active<% end %>"
+      <% if @search.enabled: %>disabled<% end %>
+      >
+      <%- @T('Edit') %>
+    </a>
+  <% end %>
+  <div class="btn btn--action btn--split--first js-pickedLanguage"><%= @kbLocales.selected?.systemLocale().locale %></div>
+  <div class="dropdown dropdown--actions">
+    <div class="btn btn--action btn--split--last btn--slim btn--icon-only centered" data-toggle="dropdown" aria-expanded="false">
+      <%- @Icon('arrow-down') %>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-<%= @dir('right', 'left') %> dropdown-menu-full-height" role="menu">
+      <% for locale in @kbLocales.collection: %>
+        <li role="presentation">
+          <a href="<%= locale.url %>" role="menuitem" tabindex="-1">
+            <%= locale.title %>
+
+            <% if locale.id == @kbLocales.selected.id: %>
+              <span class="dropdown-selectedSpacer is-selected">
+                <%- @Icon('checkmark') %>
+              </span>
+            <% end %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"http.abc" <http.abc@example.com>'
+from_email: http.abc@example.com
+from_display_name: http.abc
+to: ''
+subject: test
+body: no visible content
+content_type: text/plain
+attachments: []

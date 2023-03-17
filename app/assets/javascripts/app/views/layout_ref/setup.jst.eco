@@ -8,10 +8,10 @@
   <div class="setup wizard">
     <div class="wizard-slide" data-slide="home">
       <div class="wizard-body vertical centered">
-        <a class="btn btn--primary" data-target="admin"><%- @T('Setup new System') %></a>
+        <a class="btn btn--primary" data-target="admin"><%- @T('Set up a new system') %></a>
       </div>
       <div class="wizard-aside">
-        Or <span class="u-clickable u-highlight" data-target="migrate"><%- @T('migrate from another system') %></a>.
+        <span class="u-clickable u-highlight" data-target="migrate"><%- @T('Or migrate from another system.') %></a>
       </div>
     </div>
     <div class="wizard-slide hide"  data-slide="admin">
@@ -74,7 +74,7 @@
     <div class="wizard-slide hide" data-slide="channels">
       <h2>Connect Channels</h2>
       <div class="wizard-body vertical center">
-        <p class="help-block help-block--center">Setup the communication channels you want to sync with your Zammad inbox</p>
+        <p class="text-center">Setup the communication channels you want to sync with your Zammad inbox</p>
         <div class="wizard-buttonList vertical">
           <div class="btn auth_provider auth_provider--wide email" data-target="emailStart">
             <div class="email provider_icon"></div>

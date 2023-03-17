@@ -1,9 +1,10 @@
 class Split
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if !ticket.editable()
+    return actions if ticket.currentView() is 'customer'
 
     actions.push {
-      name: 'split'
+      name: __('split')
       type: 'split'
       icon: 'split'
       href: "#ticket/create/#{article.ticket_id}/#{article.id}"

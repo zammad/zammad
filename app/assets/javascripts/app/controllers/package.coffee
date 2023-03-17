@@ -1,8 +1,8 @@
-class Index extends App.ControllerSubContent
+class Package extends App.ControllerSubContent
   requiredPermission: 'admin.package'
-  header: 'Packages'
+  header: __('Packages')
   events:
-    'click .action':  'action'
+    'click .package-action[data-type="uninstall"]':  'action'
 
   constructor: ->
     super
@@ -15,7 +15,9 @@ class Index extends App.ControllerSubContent
       url:   "#{@apiPath}/packages",
       processData: true,
       success: (data) =>
-        @packages = data.packages
+        @packages             = data.packages
+        @package_installation = data.package_installation
+        @local_gemfiles       = data.local_gemfiles
         @render()
       )
 
@@ -32,26 +34,30 @@ class Index extends App.ControllerSubContent
         item.action = ['uninstall', 'activate']
 
     @html App.view('package')(
-      head:     'Dashboard'
+      head:     __('Dashboard')
       packages: @packages
+      package_installation: @package_installation
+      local_gemfiles: @local_gemfiles
     )
 
   action: (e) ->
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    type = $(e.target).data('type')
-    if type is 'uninstall'
-      httpType = 'DELETE'
 
-    if httpType
-      @ajax(
-        id:    'packages'
-        type:  httpType
-        url:   "#{@apiPath}/packages",
-        data:  JSON.stringify(id: id)
-        processData: false
-        success: =>
-          @load()
+    new App.ControllerConfirmDelete(
+      fieldDisplay: App.i18n.translatePlain('There is no rollback of this deletion. If you are sure that you wish to proceed, please type "%s" into the input. All related data to this package will be lost.', App.i18n.translatePlain('Delete')),
+      callback: (modal) =>
+
+        @ajax(
+          id:    'packages'
+          type:  'DELETE'
+          url:   "#{@apiPath}/packages",
+          data:  JSON.stringify(id: id)
+          processData: false
+          success: =>
+            modal.close()
+            @load()
         )
+    )
 
-App.Config.set('Packages', { prio: 3700, name: 'Packages', parent: '#system', target: '#system/package', controller: Index, permission: ['admin.package'] }, 'NavBarAdmin')
+App.Config.set('Packages', { prio: 3700, name: __('Packages'), parent: '#system', target: '#system/package', controller: Package, permission: ['admin.package'] }, 'NavBarAdmin')

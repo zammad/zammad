@@ -1,0 +1,10 @@
+<div>
+<%- @T('Header') %>
+<pre>
+X-Zammad-Trigger:  Name of the Trigger
+X-Zammad-Delivery: 6d600811-06a3-40af-aebd-a2d8213e85aa
+X-Hub-Signature:   sha1=06007ef23c38e435f49091cdfa3c770b3d85d7be
+</pre>
+<%- @T('Body') %>
+<pre><%= @payload %></pre>
+</div>

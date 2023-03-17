@@ -1,0 +1,15 @@
+From: Martin Edenhofer <martin@example.de>
+Subject: Test with different content type file name options
+Date: Wed, 05 Sep 2018 29:24:05 +0700
+Message-Id: <4C4ECFBF-BA12-46D9-A407-8E873F20DEF3X@example.de>
+To: me@example.de
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+  charset=us-ascii
+
+Enjoy!
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.

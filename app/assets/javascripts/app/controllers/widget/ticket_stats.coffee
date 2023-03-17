@@ -18,10 +18,23 @@ class App.TicketStats extends App.Controller
     else if @organization
       @subscribeIdOrganization = App.Organization.full(@organization.id, @load, false, true)
 
-    # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
+    # rerender view, e.g. on language change
+    @controllerBind('ui:rerender', =>
       return if !@authenticateCheck()
       @render()
+    )
+
+    @controllerBind('Ticket:update', (updateData) =>
+      tickets = []
+      if @user
+        tickets = tickets.concat(@data?.user?.open_ids).concat(@data?.user?.closed_ids)
+      else if @organization
+        tickets = tickets.concat(@data?.organization?.open_ids).concat(@data?.organization?.closed_ids)
+
+      return if !_.contains(tickets, updateData.id)
+
+      @load()
+    )
 
   release: =>
     if @subscribeIdUser
@@ -29,7 +42,7 @@ class App.TicketStats extends App.Controller
     if @subscribeIdOrganization
       App.Organization.unsubscribe(@subscribeIdOrganization)
 
-  load: (object, type) =>
+  load: (object = undefined, type = undefined) =>
 
     # ignore rerender on local record changes
     return if type is 'change'
@@ -42,12 +55,12 @@ class App.TicketStats extends App.Controller
       ajaxKey = "user_#{@user.id}"
       data =
         user_id:         @user.id
-        organization_id: @user.organization_id
+        organization_id: @user.allOrganizationIds()
     @ajax(
       id:          "ticket_stats_#{ajaxKey}"
-      type:        'GET'
+      type:        'POST'
       url:         "#{@apiPath}/ticket_stats"
-      data:        data
+      data:        JSON.stringify(data)
       processData: true
       success:     (data) =>
         App.Collection.loadAssets(data.assets)
@@ -94,7 +107,7 @@ class App.TicketStats extends App.Controller
       new App.TicketStatsList(
         el:         @$('.js-user-open-tickets')
         user:       @user
-        head:       'Open Tickets'
+        head:       __('Open Tickets')
         iconClass:  iconClass
         ticket_ids: data.user.open_ids
         limit:      limit
@@ -102,7 +115,7 @@ class App.TicketStats extends App.Controller
       new App.TicketStatsList(
         el:         @$('.js-user-closed-tickets')
         user:       @user
-        head:       'Closed Tickets'
+        head:       __('Closed Tickets')
         ticket_ids: data.user.closed_ids
         limit:      limit
       )
@@ -119,7 +132,7 @@ class App.TicketStats extends App.Controller
       new App.TicketStatsList(
         el:         @$('.js-org-open-tickets')
         user:       @user
-        head:       'Open Tickets'
+        head:       __('Open Tickets')
         iconClass:  iconClass
         ticket_ids: data.organization.open_ids
         limit:      limit
@@ -127,7 +140,7 @@ class App.TicketStats extends App.Controller
       new App.TicketStatsList(
         el:         @$('.js-org-closed-tickets')
         user:       @user
-        head:       'Closed Tickets'
+        head:       __('Closed Tickets')
         ticket_ids: data.organization.closed_ids
         limit:      limit
       )
@@ -138,6 +151,9 @@ class App.TicketStats extends App.Controller
       )
 
 class App.TicketStatsList extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'Ticket'
+
   events:
     'click .js-showAll': 'showAll'
 
@@ -157,16 +173,21 @@ class App.TicketStatsList extends App.Controller
     else
       ticket_ids_show = @ticket_ids
 
+    tickets = (App.Ticket.fullLocal(id) for id in ticket_ids_show)
+
     @html App.view('widget/ticket_stats_list')(
       user:            @user
       head:            @head
       iconClass:       @iconClass
+      ticketList:      App.view('generic/ticket_list')(
+        tickets: tickets
+      )
       ticket_ids:      @ticket_ids
       ticket_ids_show: ticket_ids_show
       limit:           @limit
     )
 
-    @ticketPopups()
+    @renderPopovers()
 
   showAll: (e) =>
     e.preventDefault()

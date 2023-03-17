@@ -1,12 +1,16 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevice < ApplicationModel
   store     :device_details
   store     :location_details
   validates :name, presence: true
 
+  belongs_to :user
+
   before_create  :fingerprint_validation
   before_update  :fingerprint_validation
+
+  association_attributes_ignored :user
 
 =begin
 
@@ -40,7 +44,7 @@ store new device for user if device not already known
     if fingerprint.present?
       UserDevice.fingerprint_validation(fingerprint)
       user_devices = UserDevice.where(
-        user_id: user_id,
+        user_id:     user_id,
         fingerprint: fingerprint,
       )
       user_devices.each do |local_user_device|
@@ -54,7 +58,7 @@ store new device for user if device not already known
     device_exists_by_user_agent = false
     if %w[basic_auth token_auth].include?(type)
       user_devices = UserDevice.where(
-        user_id: user_id,
+        user_id:    user_id,
         user_agent: user_agent,
       )
       user_devices.each do |local_user_device|
@@ -69,19 +73,19 @@ store new device for user if device not already known
     if user_agent != 'unknown'
       browser = Browser.new(user_agent, accept_language: 'en-us')
       browser = {
-        plattform: browser.platform.to_s.camelize,
-        name: browser.name,
-        version: browser.version,
+        plattform:    browser.platform.to_s.camelize,
+        name:         browser.name,
+        version:      browser.version,
         full_version: browser.full_version,
       }
     end
 
     # generate device name
-    if browser[:name] == 'Generic Browser'
+    if browser[:name] == 'Unknown Browser'
       browser[:name] = user_agent
     end
     name = ''
-    if browser[:plattform].present? && browser[:plattform] != 'Other'
+    if browser[:plattform].present? && browser[:plattform] != 'UnknownPlatform'
       name = browser[:plattform]
     end
     if browser[:name].present? && browser[:name] != 'Other'
@@ -99,29 +103,27 @@ store new device for user if device not already known
 
     # check if exists
     user_device = find_by(
-      user_id: user_id,
-      os: browser[:plattform],
-      browser: browser[:name],
-      location: location,
+      user_id:     user_id,
+      os:          browser[:plattform],
+      browser:     browser[:name],
+      location:    location,
       fingerprint: fingerprint,
     )
 
-    if user_device
-      return action(user_device.id, user_agent, ip, user_id, type) if user_device
-    end
+    return action(user_device.id, user_agent, ip, user_id, type) if user_device
 
     # create new device
     user_device = create!(
-      user_id: user_id,
-      name: name,
-      os: browser[:plattform],
-      browser: browser[:name],
-      location: location,
-      device_details: browser,
+      user_id:          user_id,
+      name:             name,
+      os:               browser[:plattform],
+      browser:          browser[:name],
+      location:         location,
+      device_details:   browser,
       location_details: location_details,
-      user_agent: user_agent,
-      ip: ip,
-      fingerprint: fingerprint,
+      user_agent:       user_agent,
+      ip:               ip,
+      fingerprint:      fingerprint,
     )
 
     # send notification if needed
@@ -161,7 +163,7 @@ log user device action
       user_device.ip = ip
       location_details = Service::GeoIp.location(ip)
 
-      # if we do not have any data from backend (e. g. geo ip ist out of service), ignore log
+      # if we do not have any data from backend (e.g. geo ip is out of service), ignore log
       if location_details && location_details['country_name']
 
         user_device.location_details = location_details
@@ -202,16 +204,23 @@ send user notification about new device or new location for device
   def notification_send(template)
     user = User.find(user_id)
 
+    if user.email.blank?
+      Rails.logger.info { "Unable to notification (#{template}) to user_id: #{user.id} be cause of missing email address." }
+      return false
+    end
+
     Rails.logger.debug { "Send notification (#{template}) to: #{user.email}" }
 
     NotificationFactory::Mailer.notification(
       template: template,
-      user: user,
-      objects: {
+      user:     user,
+      objects:  {
         user_device: self,
-        user: user,
+        user:        user,
       }
     )
+
+    true
   end
 
 =begin
@@ -237,6 +246,7 @@ check fingerprint string
   def self.fingerprint_validation(fingerprint)
     return true if fingerprint.blank?
     raise Exceptions::UnprocessableEntity, "fingerprint is #{fingerprint.to_s.length} chars but can only be 160 chars!" if fingerprint.to_s.length > 160
+
     true
   end
 

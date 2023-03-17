@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class CustomLdapLoginAttribute < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
     return if no_change_needed?
 
     perform_changes
@@ -39,6 +41,7 @@ class CustomLdapLoginAttribute < ActiveRecord::Migration[5.1]
   def no_change_needed?
     return true if ldap_config.blank?
     return true if ldap_config[:user_attributes].blank?
+
     ldap_config[:user_attributes].values.count('login') < 2
   end
 

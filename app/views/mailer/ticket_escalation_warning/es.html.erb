@@ -1,0 +1,18 @@
+El ticket será escalado (#{ticket.title})
+
+<div>Buenos días, #{recipient.firstname}:</div>
+<br>
+<div>¡El ticket (#{ticket.title}) de "<b>#{ticket.customer.longname}</b>" se escalará a las "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Información:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Ver en #{config.product_name}</a>
+</div>

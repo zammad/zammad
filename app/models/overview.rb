@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Overview < ApplicationModel
   include ChecksClientNotification
-  include ChecksLatestChangeObserved
   include ChecksConditionValidation
   include CanSeed
+  include CanPriorization
 
   include Overview::Assets
 
@@ -16,55 +16,10 @@ class Overview < ApplicationModel
   validates :name, presence: true
   validates :roles, presence: true
 
-  before_create :fill_link_on_create, :fill_prio
-  before_update :fill_link_on_update, :rearrangement
+  before_create :fill_link_on_create
+  before_update :fill_link_on_update
 
   private
-
-  def rearrangement
-    # rearrange only in case of changed prio
-    return true if !changes['prio']
-
-    previous_ordered_ids = self.class.all.order(
-      prio:       :asc,
-      updated_at: :desc
-    ).pluck(:id)
-
-    rearranged_prio = 0
-    previous_ordered_ids.each do |overview_id|
-
-      # don't process currently updated overview
-      next if id == overview_id
-
-      rearranged_prio += 1
-
-      # increase rearranged prio by one to avoid a collition
-      # with the changed prio of current instance
-      if rearranged_prio == prio
-        rearranged_prio += 1
-      end
-
-      # don't start rearrange logic for overviews that alredy get rearranged
-      self.class.without_callback(:update, :before, :rearrangement) do
-        # fetch and update overview only if prio needs to change
-        overview = self.class.where(
-          id: overview_id
-        ).where.not(
-          prio: rearranged_prio
-        ).take
-
-        next if overview.blank?
-
-        overview.update!(prio: rearranged_prio)
-      end
-    end
-  end
-
-  def fill_prio
-    return true if prio.present?
-    self.prio = Overview.count + 1
-    true
-  end
 
   def fill_link_on_create
     self.link = if link.present?
@@ -77,6 +32,7 @@ class Overview < ApplicationModel
 
   def fill_link_on_update
     return true if !changes['name'] && !changes['link']
+
     self.link = if link.present?
                   link_name(link)
                 else
@@ -88,11 +44,11 @@ class Overview < ApplicationModel
   def link_name(name)
     local_link = name.downcase
     local_link = local_link.parameterize(separator: '_')
-    local_link.gsub!(/\s/, '_')
-    local_link.gsub!(/_+/, '_')
+    local_link.gsub!(%r{\s}, '_')
+    local_link.squeeze!('_')
     local_link = CGI.escape(local_link)
     if local_link.blank?
-      local_link = id || rand(999)
+      local_link = id || SecureRandom.uuid
     end
     check = true
     count = 0

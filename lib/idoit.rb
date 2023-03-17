@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Idoit
 
@@ -89,10 +89,9 @@ or with filter:
 
   def self.query(method, filter = {})
     setting = Setting.get('idoit_config')
-    raise 'Unable for find api_token in config' if setting[:api_token].blank?
-    raise 'Unable for find endpoint in config' if setting[:endpoint].blank?
+    raise __("The required field 'api_token' is missing from the config.") if setting[:api_token].blank?
+    raise __("The required field 'endpoint' is missing from the config.") if setting[:endpoint].blank?
 
-    #translator_key = Setting.get('translator_key')
     params = {
       apikey: setting[:api_token],
     }
@@ -106,27 +105,32 @@ or with filter:
     result = UserAgent.post(
       url,
       {
-        method: method,
-        params: params,
+        method:  method,
+        params:  params,
         version: '2.0',
+        # the id attribute is required by the JSON-RPC standard
+        # but i-doit doesn't actually use it so we send a hard coded id
+        # see issue #2412 and community topic for further information
+        id:      42,
       },
       {
-        json: true,
+        json:         true,
         open_timeout: 6,
         read_timeout: 16,
-        log: {
+        log:          {
           facility: 'idoit',
         },
       },
     )
 
-    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ /JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<\!DOCTYPE\s+html/i
+    raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
     raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
 
     # add link to idoit
-    if result.data['result'].class == Array
+    if result.data['result'].instance_of?(Array)
       result.data['result'].each do |item|
         next if !item['id']
+
         item['link'] = "#{_url_cleanup_baseurl(url)}/?objID=#{item['id']}"
         item['link'].gsub!(%r{([^:])//+}, '\\1/')
       end
@@ -136,7 +140,8 @@ or with filter:
 
   def self._url_cleanup(url)
     url.strip!
-    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
+    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^http(s|)://}i)
+
     url = _url_cleanup_baseurl(url)
     url = "#{url}/src/jsonrpc.php"
     url.gsub(%r{([^:])//+}, '\\1/')
@@ -144,7 +149,8 @@ or with filter:
 
   def self._url_cleanup_baseurl(url)
     url.strip!
-    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
+    raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^http(s|)://}i)
+
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')
   end

@@ -1,4 +1,6 @@
-module EmailHelper
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class EmailHelper
 
 =begin
 
@@ -24,23 +26,23 @@ returns
   def self.available_driver
     if Setting.get('system_online_service')
       return {
-        inbound: {
-          imap: 'IMAP',
-          pop3: 'POP3',
+        inbound:  {
+          imap: __('IMAP'),
+          pop3: __('POP3'),
         },
         outbound: {
-          smtp: 'SMTP - configure your own outgoing SMTP settings',
+          smtp: __('SMTP - configure your own outgoing SMTP settings'),
         },
       }
     end
     {
-      inbound: {
-        imap: 'IMAP',
-        pop3: 'POP3',
+      inbound:  {
+        imap: __('IMAP'),
+        pop3: __('POP3'),
       },
       outbound: {
-        smtp: 'SMTP - configure your own outgoing SMTP settings',
-        sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup',
+        smtp:     __('SMTP - configure your own outgoing SMTP settings'),
+        sendmail: __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
       },
     }
   end
@@ -60,7 +62,7 @@ returns
   def self.parse_email(email)
     user   = nil
     domain = nil
-    if email =~ /^(.+?)@(.+?)$/
+    if email =~ %r{^(.+?)@(.+?)$}
       user   = $1
       domain = $2
     end
@@ -106,78 +108,78 @@ returns
 
   def self.provider(email, password)
     # check domain based attributes
-    provider_map = {
+    {
       google_imap: {
-        domain: 'gmail|googlemail|google',
-        inbound: {
+        domain:   'gmail|googlemail|google',
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'imap.gmail.com',
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     'imap.gmail.com',
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp.gmail.com',
-            port: 25,
+            host:      'smtp.gmail.com',
+            port:      587,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
-      microsoft: {
-        domain: 'outlook.com|hotmail.com',
-        inbound: {
+      microsoft:   {
+        domain:   'outlook.com|hotmail.com',
+        inbound:  {
           adapter: 'imap',
           options: {
-            host: 'imap-mail.outlook.com',
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     'imap-mail.outlook.com',
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp-mail.outlook.com',
-            port: 25,
+            host:      'smtp-mail.outlook.com',
+            port:      587,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
       google_pop3: {
-        domain: 'gmail|googlemail|google',
-        inbound: {
+        domain:   'gmail|googlemail|google',
+        inbound:  {
           adapter: 'pop3',
           options: {
-            host: 'pop.gmail.com',
-            port: 995,
-            ssl: true,
-            user: email,
+            host:     'pop.gmail.com',
+            port:     995,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
         outbound: {
           adapter: 'smtp',
           options: {
-            host: 'smtp.gmail.com',
-            port: 25,
+            host:      'smtp.gmail.com',
+            port:      587,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           }
         },
       },
     }
-    provider_map
+
   end
 
 =begin
@@ -218,25 +220,25 @@ returns
         {
           adapter: 'imap',
           options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: user,
+            host:     domain,
+            port:     993,
+            ssl:      true,
+            user:     user,
             password: password,
           },
         },
         {
           adapter: 'imap',
           options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: email,
+            host:     domain,
+            port:     993,
+            ssl:      true,
+            user:     email,
             password: password,
           },
         },
       ]
-      inbounds = inbounds.concat(inbound)
+      inbounds.concat(inbound)
     end
     inbounds
   end
@@ -274,109 +276,109 @@ returns
 =end
 
   def self.provider_inbound_guess(user, email, password, domain)
-    inbound = [
+    [
       {
         adapter: 'imap',
         options: {
-          host: "mail.#{domain}",
-          port: 993,
-          ssl: true,
-          user: user,
-          password: password,
-        },
-      },
-      {
-        adapter: 'imap',
-        options: {
-          host: "mail.#{domain}",
-          port: 993,
-          ssl: true,
-          user: email,
+          host:     "mail.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'imap',
         options: {
-          host: "imap.#{domain}",
-          port: 993,
-          ssl: true,
-          user: user,
+          host:     "mail.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'imap',
         options: {
-          host: "imap.#{domain}",
-          port: 993,
-          ssl: true,
-          user: email,
+          host:     "imap.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     user,
+          password: password,
+        },
+      },
+      {
+        adapter: 'imap',
+        options: {
+          host:     "imap.#{domain}",
+          port:     993,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "mail.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "mail.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "mail.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "mail.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "pop.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "pop.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop3.#{domain}",
-          port: 995,
-          ssl: true,
-          user: user,
+          host:     "pop3.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     user,
           password: password,
         },
       },
       {
         adapter: 'pop3',
         options: {
-          host: "pop3.#{domain}",
-          port: 995,
-          ssl: true,
-          user: email,
+          host:     "pop3.#{domain}",
+          port:     995,
+          ssl:      true,
+          user:     email,
           password: password,
         },
       },
     ]
-    inbound
+
   end
 
 =begin
@@ -417,45 +419,63 @@ returns
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 25,
+            host:      domain,
+            port:      465,
             start_tls: true,
-            user: user,
+            user:      user,
+            password:  password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:      domain,
+            port:      465,
+            start_tls: true,
+            user:      email,
+            password:  password,
+          },
+        },
+        {
+          adapter: 'smtp',
+          options: {
+            host:     domain,
+            port:     587,
+            user:     user,
             password: password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 25,
-            start_tls: true,
-            user: email,
+            host:     domain,
+            port:     587,
+            user:     email,
             password: password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 465,
+            host:      domain,
+            port:      25,
             start_tls: true,
-            user: user,
-            password: password,
+            user:      user,
+            password:  password,
           },
         },
         {
           adapter: 'smtp',
           options: {
-            host: domain,
-            port: 465,
+            host:      domain,
+            port:      25,
             start_tls: true,
-            user: email,
-            password: password,
+            user:      email,
+            password:  password,
           },
         },
       ]
-      outbounds = outbounds.concat(outbound)
+      outbounds.concat(outbound)
     end
     outbounds
   end
@@ -493,89 +513,129 @@ returns
 =end
 
   def self.provider_outbound_guess(user, email, password, domain)
-    outbound = [
+    [
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      465,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      465,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      465,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "mail.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      465,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      587,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 25,
+          host:      "mail.#{domain}",
+          port:      587,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      587,
           start_tls: true,
-          user: user,
-          password: password,
+          user:      user,
+          password:  password,
         },
       },
       {
         adapter: 'smtp',
         options: {
-          host: "smtp.#{domain}",
-          port: 465,
+          host:      "smtp.#{domain}",
+          port:      587,
           start_tls: true,
-          user: email,
-          password: password,
+          user:      email,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
+          port:      25,
+          start_tls: true,
+          user:      user,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "mail.#{domain}",
+          port:      25,
+          start_tls: true,
+          user:      email,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "smtp.#{domain}",
+          port:      25,
+          start_tls: true,
+          user:      user,
+          password:  password,
+        },
+      },
+      {
+        adapter: 'smtp',
+        options: {
+          host:      "smtp.#{domain}",
+          port:      25,
+          start_tls: true,
+          user:      email,
+          password:  password,
         },
       },
     ]
-    outbound
+
   end
 
 =begin

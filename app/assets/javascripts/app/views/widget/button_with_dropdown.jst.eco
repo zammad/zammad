@@ -1,0 +1,15 @@
+<button class="btn btn--primary btn--split--first <%= @mainActionIdentifier %>"><%- @T(@mainActionLabel) %></button>
+<span class="dropdown-menu-accessories" tabindex="1">
+  <button class="btn btn--primary btn--slim btn--only-icon btn--split--last"><%- @Icon('arrow-up') %></button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
+    <% for action in @actions: %>
+      <li
+        class="<%= @accessoryActionsIdentifier %>"
+        role="menuitem"
+        data-id="<%= action.id %>"
+        <% if action.disabled: %>disabled<% end %>>
+
+        <%- @T(action.name) %>
+    <% end %>
+  </ul>
+</span>

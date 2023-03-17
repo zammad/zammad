@@ -1,22 +1,14 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class Comments < Sequencer::Unit::Import::Zendesk::SubSequence::TicketSubObject
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :user_map
+class Sequencer::Unit::Import::Zendesk::Ticket::Comments < Sequencer::Unit::Import::Zendesk::SubSequence::TicketSubObject
 
-            private
+  uses :user_map
 
-            def default_params
-              super.merge(
-                user_map: user_map,
-              )
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def default_params
+    super.merge(
+      user_map: user_map,
+    )
   end
 end

@@ -1,0 +1,24 @@
+<div class="color controls controls--button dropdown-toggle" data-toggle="dropdown">
+  <input id="<%= @attribute.id %>" name="<%= @attribute.name %>" type="text" value="<%= @attribute.value %>" class="<%= @attribute.class %> js-input" <% if @attribute.placeholder: %>placeholder="<%- @Ti(@attribute.placeholder) %>"<% end %> <%= @attribute.required %> <%= @attribute.autofocus %> <%- @attribute.autocapitalize %> <%- @attribute.autocomplete %> <% if @attribute.min isnt undefined: %> min="<%= @attribute.min %>"<% end %><% if @attribute.max isnt undefined: %> max="<%= @attribute.max %>"<% end %><% if @attribute.step: %> step="<%= @attribute.step %>"<% end %><% if @attribute.disabled: %> disabled<% end %>>
+  <div class="controls-button">
+   <div class="controls-button-inner">
+     <div class="color-field js-swatch" style="background-color: <%= @attribute.value %>"></div>
+   </div>
+  </div>
+</div>
+<div class="dropdown-menu dropdown-menu-left js-dropdown colorpicker">
+  <div class="colorpicker-hue-saturation js-colorpicker-hue-saturation">
+    <div class="colorpicker-saturation-gradient js-colorpicker-saturation-gradient" style="background-image: linear-gradient(transparent, hsl(0,0%,<%= @hsl[2]*100 %>%)"></div>
+    <div class="colorpicker-lightness-plane js-colorpicker-lightness-plane" style="background-color: hsla(0,0%,<%= if @hsl[2] > 0.5 then 100 else 0 %>%,<%= 2*Math.abs(@hsl[2]-0.5) %>)"></div>
+    <div class="colorpicker-circle js-colorpicker-circle" style="left: <%= @hsl[0]*100 %>%; top: <%= 100 - @hsl[1]*100 %>%; border-color: <%= if @hsl[2] > 0.5 then 'black' else 'white' %>"></div>
+  </div>
+  <div class="colorpicker-lightness js-colorpicker-lightness">
+    <div class="colorpicker-hue-plane js-colorpicker-hue-plane" style="background-color: hsl(<%= @hsl[0]*360 %>,100%,50%)">
+     <div class="colorpicker-hue-gradient"></div>
+    </div>
+    <div class="colorpicker-slider js-colorpicker-slider" style="top: <%= 100 - @hsl[2]*100 %>%">
+     <div class="colorpicker-slider-arrow colorpicker-slider-arrow--left"></div>
+     <div class="colorpicker-slider-arrow colorpicker-slider-arrow--right"></div>
+    </div>
+  </div>
+</div>

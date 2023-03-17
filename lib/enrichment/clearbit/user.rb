@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Enrichment
   module Clearbit
     class User
@@ -31,6 +33,7 @@ module Enrichment
         end
 
         return false if !attributes_changed && !organization_synced
+
         @local_user.save if attributes_changed || organization_synced
         true
       end
@@ -40,11 +43,12 @@ module Enrichment
       def mapping?
         @mapping = @config['user_sync'].dup
         return false if @mapping.blank?
+
         # TODO: Refactoring:
         # Currently all target keys are prefixed with
         # user.
         # which is not necessary since the target object
-        # is allways an user
+        # is always a user
         @mapping.transform_values! { |value| value.sub('user.', '') }
         true
       end
@@ -52,17 +56,20 @@ module Enrichment
       def load_remote(data)
         return if !remote_id?(data)
         return if !external_found?
+
         load_previous_changes
       end
 
       def remote_id?(data)
         return if !data
         return if !data['person']
+
         @remote_id = data['person']['id']
       end
 
       def external_found?
         return true if @external_user
+
         @external_user = ExternalSync.find_by(
           source:    @source,
           source_id: @remote_id,
@@ -75,6 +82,7 @@ module Enrichment
       def load_previous_changes
         last_payload = @external_user.last_payload
         return if !last_payload
+
         @previous_changes = ExternalSync.map(
           mapping: @mapping,
           source:  last_payload
@@ -130,16 +138,17 @@ module Enrichment
 
         record = {
           direction: 'out',
-          facility: 'clearbit',
-          url: "clearbit -> #{@local_user.email}",
-          status: 200,
-          ip: nil,
-          request: { content: @local_user.email },
-          response: {},
-          method: 'GET',
+          facility:  'clearbit',
+          url:       "clearbit -> #{@local_user.email}",
+          status:    200,
+          ip:        nil,
+          request:   { content: @local_user.email },
+          response:  {},
+          method:    'GET',
         }
 
         begin
+          require 'clearbit' # Only load this gem when it is really used.
           ::Clearbit.key = @config['api_key']
           result = ::Clearbit::Enrichment.find(email: @local_user.email, stream: true)
           record[:response] = { code: 200, content: result.to_s }

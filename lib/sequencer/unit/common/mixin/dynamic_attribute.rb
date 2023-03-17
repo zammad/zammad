@@ -1,36 +1,33 @@
-class Sequencer
-  class Unit
-    module Common
-      module Mixin
-        module DynamicAttribute
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          def self.included(base)
+module Sequencer::Unit::Common::Mixin::DynamicAttribute
 
-            class << base
+  def self.included(base)
 
-              def inherited(base)
-                base.extend(Forwardable)
-                base.instance_delegate [:attribute] => base
-              end
+    class << base
 
-              def attribute
-                @attribute ||= begin
-                  if uses.size != 1
-                    raise "DynamicAttribute classes can use exactly one attribute. Found #{uses.size}."
-                  end
-                  uses.first
-                end
-              end
-            end
+      def inherited(base)
+        super
+
+        base.extend(Forwardable)
+        base.instance_delegate [:attribute] => base
+      end
+
+      def attribute
+        @attribute ||= begin
+          if uses.size != 1
+            raise "DynamicAttribute classes can use exactly one attribute. Found #{uses.size}."
           end
 
-          private
-
-          def attribute_value
-            @attribute_value ||= state.use(attribute)
-          end
+          uses.first
         end
       end
     end
+  end
+
+  private
+
+  def attribute_value
+    @attribute_value ||= state.use(attribute)
   end
 end

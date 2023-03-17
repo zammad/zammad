@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Role
   module Assets
@@ -29,31 +29,31 @@ returns
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      if !data[ app_model ][ id ]
-        local_attributes = attributes_with_association_ids
+      return data if data[ app_model ][ id ]
 
-        # set temp. current attributes to assets pool to prevent
-        # loops, will be updated with lookup attributes later
-        data[ app_model ][ id ] = local_attributes
+      local_attributes = attributes_with_association_ids
 
-        local_attributes['group_ids'].each_key do |group_id|
-          next if data[:Group] && data[:Group][group_id]
-          group = Group.lookup(id: group_id)
-          next if !group
-          data = group.assets(data)
-        end
-      end
+      # set temp. current attributes to assets pool to prevent
+      # loops, will be updated with lookup attributes later
+      data[ app_model ][ id ] = local_attributes
 
-      return data if !self['created_by_id'] && !self['updated_by_id']
-      app_model_user = User.to_app_model
-      %w[created_by_id updated_by_id].each do |local_user_id|
-        next if !self[ local_user_id ]
-        next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
-        user = User.lookup(id: self[ local_user_id ])
-        next if !user
-        data = user.assets(data)
+      local_attributes['group_ids'].each_key do |group_id|
+        next if data[:Group] && data[:Group][group_id]
+
+        group = Group.lookup(id: group_id)
+        next if !group
+
+        data = group.assets(data)
       end
       data
+    end
+
+    def filter_unauthorized_attributes(attributes)
+      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+
+      attributes = super
+      attributes['name'] = "Role_#{id}"
+      attributes.slice('id', 'name', 'group_ids', 'permission_ids', 'active')
     end
   end
 end

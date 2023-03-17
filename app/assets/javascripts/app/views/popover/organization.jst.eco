@@ -1,19 +1,9 @@
-<hr>
-<% for row in @organizationData: %>
-  <% if @organization[row.name]: %>
-    <div class="popover-block">
-      <label><%- @T( row.display ) %></label>
-      <%- @P( @organization, row.name ) %>
-    </div>
-  <% end %>
-<% end %>
-</div>
-<% if  @organization.members: %>
+<%- @V('popover/single_object_generic', object: @object, attributes: @attributes) %>
+
+<% if  @object.member_ids: %>
   <hr>
   <div class="popover-block">
-    <label><%- @T('Members') %></label>
-    <% for user in @organization.members: %>
-      <div class="person"><%= user.displayName() %></div>
-    <% end %>
+    <label><%- @T('Members') %> (<%= @object.member_ids.length %>)</label>
+    <div class="userList js-userList"></div>
   </div>
 <% end %>

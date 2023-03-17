@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class Clues extends App.Controller
   constructor: ->
     super
     @navupdate '#', true
@@ -6,7 +6,7 @@ class Index extends App.Controller
 
   clues: =>
     new App.FirstStepsClues(
-      el: @el
+      appEl: @appEl
       onComplete: =>
         App.Ajax.request(
           id:          'preferences'
@@ -18,4 +18,4 @@ class Index extends App.Controller
         @navigate '#'
     )
 
-App.Config.set('clues', Index, 'Routes')
+App.Config.set('clues', Clues, 'Routes')

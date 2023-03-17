@@ -1,14 +1,16 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.timer
-  @render: (attribute) ->
+  @render: (attributeConfig) ->
+    attribute = $.extend(true, {}, attributeConfig)
+
     days =
-      Mon: 'Monday'
-      Tue: 'Tuesday'
-      Wed: 'Wednesday'
-      Thu: 'Thursday'
-      Fri: 'Friday'
-      Sat: 'Saturday'
-      Sun: 'Sunday'
+      Mon: __('Monday')
+      Tue: __('Tuesday')
+      Wed: __('Wednesday')
+      Thu: __('Thursday')
+      Fri: __('Friday')
+      Sat: __('Saturday')
+      Sun: __('Sunday')
     hours =
       0: '12 am'
       1: '1 am'
@@ -81,7 +83,7 @@ class App.UiElement.timer
 
     timer = $( App.view('generic/timer')( attribute: attribute, days: days, hours: hours, minutes: minutes ) )
     timer.find('.js-boolean').data('field-type', 'boolean')
-    timer.find('.select-value').bind('click', (e) =>
+    timer.find('.select-value').on('click', (e) =>
       @select(e)
     )
     @createOutputString(timer)
@@ -93,7 +95,7 @@ class App.UiElement.timer
 
     if target.hasClass('is-selected')
       # prevent zero selections
-      if target.siblings('.is-selected').size() > 0
+      if target.siblings('.is-selected').length > 0
         target.removeClass('is-selected')
         target.next().val('false')
     else
@@ -112,8 +114,9 @@ class App.UiElement.timer
 
     days = @joinItems days
     hours = @joinItems hours
+    timezone = App.Config.get('timezone_default_sanitized')
 
-    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s', days, hours))
+    formGroup.find('.js-timerResult').text(App.i18n.translateInline('Run every %s at %s in %s time', days, hours, timezone))
 
   @injectMinutes: (hours, minutes) ->
     newHours = [] # hours.length x minutes.length long

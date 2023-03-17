@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.channel_email') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     system_online_service = Setting.get('system_online_service')
@@ -11,7 +11,7 @@ class ChannelsEmailController < ApplicationController
     not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
-    Channel.order(:id).each do |channel|
+    Channel.reorder(:id).each do |channel|
       if system_online_service && channel.preferences && channel.preferences['online_service_disable']
         email_addresses = EmailAddress.where(channel_id: channel.id)
         email_addresses.each do |email_address|
@@ -19,33 +19,33 @@ class ChannelsEmailController < ApplicationController
         end
         next
       end
+      assets = channel.assets(assets)
       if channel.area == 'Email::Account'
         account_channel_ids.push channel.id
-        assets = channel.assets(assets)
       elsif channel.area == 'Email::Notification' && channel.active
         notification_channel_ids.push channel.id
-        assets = channel.assets(assets)
       end
     end
     EmailAddress.all.each do |email_address|
       next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
+
       email_address_ids.push email_address.id
       assets = email_address.assets(assets)
-      if !email_address.channel_id || !email_address.active || !Channel.find_by(id: email_address.channel_id)
+      if !email_address.channel_id || !email_address.active || !Channel.exists?(id: email_address.channel_id)
         not_used_email_address_ids.push email_address.id
       end
     end
     render json: {
-      accounts_fixed: accounts_fixed,
-      assets: assets,
-      account_channel_ids: account_channel_ids,
-      notification_channel_ids: notification_channel_ids,
-      email_address_ids: email_address_ids,
+      accounts_fixed:             accounts_fixed,
+      assets:                     assets,
+      account_channel_ids:        account_channel_ids,
+      notification_channel_ids:   notification_channel_ids,
+      email_address_ids:          email_address_ids,
       not_used_email_address_ids: not_used_email_address_ids,
-      channel_driver: {
+      channel_driver:             {
         email: EmailHelper.available_driver,
       },
-      config: {
+      config:                     {
         notification_sender: Setting.get('notification_sender'),
       }
     }
@@ -55,15 +55,13 @@ class ChannelsEmailController < ApplicationController
 
     # probe settings based on email and password
     result = EmailHelper::Probe.full(
-      email: params[:email],
+      email:    params[:email],
       password: params[:password],
-      folder: params[:folder],
+      folder:   params[:folder],
     )
 
     # verify if user+host already exists
-    if result[:result] == 'ok'
-      return if account_duplicate?(result)
-    end
+    return if result[:result] == 'ok' && account_duplicate?(result)
 
     render json: result
   end
@@ -103,12 +101,12 @@ class ChannelsEmailController < ApplicationController
     # check account duplicate
     return if account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
 
-    # check delivery for 30 sek.
+    # check delivery for 30 sec.
     result = EmailHelper::Verify.email(
       outbound: params[:outbound].to_h,
-      inbound: params[:inbound].to_h,
-      sender: email,
-      subject: params[:subject],
+      inbound:  params[:inbound].to_h,
+      sender:   email,
+      subject:  params[:subject],
     )
 
     if result[:result] != 'ok'
@@ -125,15 +123,15 @@ class ChannelsEmailController < ApplicationController
     if channel_id
       channel = Channel.find(channel_id)
       channel.update!(
-        options: {
-          inbound: params[:inbound].to_h,
+        options:      {
+          inbound:  params[:inbound].to_h,
           outbound: params[:outbound].to_h,
         },
-        group_id: params[:group_id],
-        last_log_in: nil,
+        group_id:     params[:group_id],
+        last_log_in:  nil,
         last_log_out: nil,
-        status_in: 'ok',
-        status_out: 'ok',
+        status_in:    'ok',
+        status_out:   'ok',
       )
       render json: result
       return
@@ -141,39 +139,39 @@ class ChannelsEmailController < ApplicationController
 
     # create new account
     channel = Channel.create(
-      area: 'Email::Account',
-      options: {
-        inbound: params[:inbound].to_h,
+      area:         'Email::Account',
+      options:      {
+        inbound:  params[:inbound].to_h,
         outbound: params[:outbound].to_h,
       },
-      group_id: params[:group_id],
-      last_log_in: nil,
+      group_id:     params[:group_id],
+      last_log_in:  nil,
       last_log_out: nil,
-      status_in: 'ok',
-      status_out: 'ok',
-      active: true,
+      status_in:    'ok',
+      status_out:   'ok',
+      active:       true,
     )
 
     # remember address && set channel for email address
     address = EmailAddress.find_by(email: email)
 
-    # if we are on initial setup, use already exisiting dummy email address
+    # on initial setup, use placeholder email address
     if Channel.count == 1
       address = EmailAddress.first
     end
 
     if address
       address.update!(
-        realname: params[:meta][:realname],
-        email: email,
-        active: true,
+        realname:   params[:meta][:realname],
+        email:      email,
+        active:     true,
         channel_id: channel.id,
       )
     else
-      address = EmailAddress.create(
-        realname: params[:meta][:realname],
-        email: email,
-        active: true,
+      EmailAddress.create(
+        realname:   params[:meta][:realname],
+        email:      email,
+        active:     true,
         channel_id: channel.id,
       )
     end
@@ -226,7 +224,7 @@ class ChannelsEmailController < ApplicationController
 
       Channel.where(area: 'Email::Notification').each do |channel|
         active = false
-        if adapter.match?(/^#{channel.options[:outbound][:adapter]}$/i)
+        if adapter.match?(%r{^#{channel.options[:outbound][:adapter]}$}i)
           active = true
           channel.options = {
             outbound: {
@@ -256,9 +254,10 @@ class ChannelsEmailController < ApplicationController
       next if channel.options[:inbound][:options][:user] != result[:setting][:inbound][:options][:user]
       next if channel.options[:inbound][:options][:folder].to_s != result[:setting][:inbound][:options][:folder].to_s
       next if channel.id.to_s == channel_id.to_s
+
       render json: {
-        result: 'duplicate',
-        message: 'Account already exists!',
+        result:  'duplicate',
+        message: __('Account already exists!'),
       }
       return true
     end
@@ -267,7 +266,8 @@ class ChannelsEmailController < ApplicationController
 
   def check_online_service
     return true if !Setting.get('system_online_service')
-    raise Exceptions::NotAuthorized
+
+    raise Exceptions::Forbidden
   end
 
   def check_access(id = nil)
@@ -279,6 +279,6 @@ class ChannelsEmailController < ApplicationController
     channel = Channel.find(id)
     return true if channel.preferences && !channel.preferences[:online_service_disable]
 
-    raise Exceptions::NotAuthorized
+    raise Exceptions::Forbidden
   end
 end

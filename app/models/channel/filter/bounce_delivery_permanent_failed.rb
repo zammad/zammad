@@ -1,14 +1,15 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::BounceDeliveryPermanentFailed
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
     return if !mail[:mail_instance]
     return if !mail[:mail_instance].bounced?
     return if !mail[:attachments]
 
     # remember, do not send notifications to certain recipients again if failed permanent
+    lines = %w[to cc]
     mail[:attachments].each do |attachment|
       next if !attachment[:preferences]
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
@@ -16,8 +17,9 @@ module Channel::Filter::BounceDeliveryPermanentFailed
 
       result = Channel::EmailParser.new.parse(attachment[:data])
       next if !result[:message_id]
+
       message_id_md5 = Digest::MD5.hexdigest(result[:message_id])
-      article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
+      article = Ticket::Article.where(message_id_md5: message_id_md5).reorder('created_at DESC, id DESC').limit(1).first
       next if !article
 
       # check user preferences
@@ -28,13 +30,15 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient of origin article, if only one - mark this user to not sent notifications anymore
       recipients = []
       if article.sender.name == 'System' || article.sender.name == 'Agent'
-        %w[to cc].each do |line|
+        lines.each do |line|
           next if article[line].blank?
+
           recipients = []
           begin
             list = Mail::AddressList.new(article[line])
             list.addresses.each do |address|
               next if address.address.blank?
+
               recipients.push address.address.downcase
             end
           rescue
@@ -49,7 +53,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient bounce mail, mark this user to not sent notifications anymore
       final_recipient = mail[:mail_instance].final_recipient
       if final_recipient.present?
-        final_recipient.sub!(/rfc822;\s{0,10}/, '')
+        final_recipient.sub!(%r{rfc822;\s{0,10}}, '')
         if final_recipient.present?
           recipients.push final_recipient.downcase
         end
@@ -60,6 +64,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
         users = User.where(email: recipient)
         users.each do |user|
           next if !user
+
           user.preferences[:mail_delivery_failed] = true
           user.preferences[:mail_delivery_failed_data] = Time.zone.now
           user.save!

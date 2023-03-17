@@ -1,0 +1,8 @@
+fragment objectAttributeValues on ObjectAttributeValue {
+  attribute {
+    name
+    display
+  }
+  value
+  renderedLink
+}

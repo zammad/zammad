@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 # rails autoloading issue
 require 'ldap'
@@ -5,7 +7,12 @@ require 'ldap/group'
 
 RSpec.describe Ldap::Group do
 
-  context '.uid_attribute' do
+  # required as 'let' to perform test based
+  # expectations and reuse it in 'let' instance
+  # as additional parameter
+  let(:mocked_ldap) { double }
+
+  describe '.uid_attribute' do
 
     it 'responds to .uid_attribute' do
       expect(described_class).to respond_to(:uid_attribute)
@@ -16,17 +23,12 @@ RSpec.describe Ldap::Group do
     end
   end
 
-  # required as 'let' to perform test based
-  # expectations and reuse it in 'let' instance
-  # as additional parameter
-  let(:mocked_ldap) { double() }
-
-  context 'initialization config parameters' do
+  describe 'initialization config parameters' do
 
     it 'reuses given Ldap instance if given' do
       config = {}
       expect(Ldap).not_to receive(:new).with(config)
-      instance = described_class.new(config, ldap: mocked_ldap)
+      described_class.new(config, ldap: mocked_ldap)
     end
 
     it 'takes optional filter' do
@@ -55,11 +57,12 @@ RSpec.describe Ldap::Group do
 
     it 'creates own Ldap instance if none given' do
       expect(Ldap).to receive(:new)
-      expect(described_class.new())
+
+      described_class.new
     end
   end
 
-  context 'instance methods' do
+  describe 'instance methods' do
 
     let(:initialization_config) do
       {
@@ -72,7 +75,7 @@ RSpec.describe Ldap::Group do
       described_class.new(initialization_config, ldap: mocked_ldap)
     end
 
-    context '#list' do
+    describe '#list' do
 
       it 'responds to #list' do
         expect(instance).to respond_to(:list)
@@ -80,12 +83,12 @@ RSpec.describe Ldap::Group do
 
       it 'returns a Hash of groups' do
         ldap_entry = build(:ldap_entry)
-        expect(mocked_ldap).to receive(:search).and_return(ldap_entry)
+        allow(mocked_ldap).to receive(:search).and_return(ldap_entry)
         expect(instance.list).to be_a(Hash)
       end
     end
 
-    context '#filter' do
+    describe '#filter' do
 
       let(:initialization_config) do
         {
@@ -98,17 +101,17 @@ RSpec.describe Ldap::Group do
       end
 
       it 'tries filters and returns first one with entries' do
-        expect(mocked_ldap).to receive(:entries?).and_return(true)
+        allow(mocked_ldap).to receive(:entries?).and_return(true)
         expect(instance.filter).to be_a(String)
       end
 
       it 'fails if no filter found entries' do
         allow(mocked_ldap).to receive(:entries?).and_return(false)
-        expect(instance.filter).to be nil
+        expect(instance.filter).to be_nil
       end
     end
 
-    context '#uid_attribute' do
+    describe '#uid_attribute' do
 
       it 'responds to #uid_attribute' do
         expect(instance).to respond_to(:uid_attribute)

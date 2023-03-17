@@ -43,7 +43,7 @@
       <% for stateType, options of @preferences: %>
         <% if _.isObject(options): %>
           <tr>
-            <td style="text-transform: capitalize">
+            <td>
               <%= @translationTable[stateType] %>
             <td>
               <label class="inline-label checkbox-replacement">
@@ -59,9 +59,9 @@
                 <%- @Icon('checkbox-checked', 'icon-checked') %>
                 <span class="label-text"><%- @T('Not Assigned') %></span>
               </label>
-            <td>
-              <div class="btn btn--table btn--text js-showLink"><%- @T('Show') %></div>
-              <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%- @baseurl %>/ical/tickets/<%= stateType %>">
+            <td class="settings-list-control-cell">
+              <div class="btn btn--text js-showLink"><%- @T('Show') %></div>
+              <input class="form-control form-control--small js-select is-hidden" readonly value="<%- @baseurl %>/ical/tickets/<%= stateType %>">
           </tr>
         <% end %>
       <% end %>

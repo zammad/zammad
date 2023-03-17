@@ -15,7 +15,7 @@ class App.SettingsForm extends App.Controller
 
   render: =>
 
-    # serach area settings
+    # search area settings
     settings = App.Setting.search(
       filter:
         area: @area
@@ -76,19 +76,19 @@ class App.SettingsForm extends App.Controller
             ui.formEnable(e)
             count -= 1
             if count == 0
-              App.Event.trigger 'notify', {
+              App.Event.trigger('notify', {
                 type:    'success'
-                msg:     App.i18n.translateContent('Update successful!')
+                msg:     App.i18n.translateContent('Update successful.')
                 timeout: 2000
-              }
+              })
 
             # rerender ui || get new collections and session data
             App.Setting.preferencesPost(@)
 
           fail: (settings, details) ->
-            App.Event.trigger 'notify', {
+            App.Event.trigger('notify', {
               type:    'error'
-              msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
+              msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be updated.'))
               timeout: 2000
-            }
+            })
         )

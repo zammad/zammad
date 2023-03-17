@@ -1,10 +1,10 @@
 <div class="controls controls--select">
-  <select id="<%= @attribute.id %>" class="form-control<%= " #{ @attribute.class }" if @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %> <%= @attribute.required %> <%= @attribute.autofocus %> <% if @attribute.disabled: %> disabled<% end %>>
-<% if @attribute.options: %>
-<% for row in @attribute.options: %>
-    <option value="<%= row.value %>" <%= row.selected %> <%= row.disabled %>><%= row.name %></option>
-<% end %>
-<% end %>
+  <select <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %> class="form-control<%= " #{ @attribute.class }" if @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %> <%= @attribute.required %> <%= @attribute.autofocus %> <% if @attribute.disabled: %> disabled<% end %>>
+    <% if @attribute.options: %>
+      <% for row in @attribute.options: %>
+        <option value="<%= row.value %>" <%= row.selected %> <%= row.disabled %>><%= row.name %></option>
+      <% end %>
+    <% end %>
   </select>
   <% if not @attribute.multiple: %>
     <%- @Icon('arrow-down') %>

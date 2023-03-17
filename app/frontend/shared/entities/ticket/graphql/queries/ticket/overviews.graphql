@@ -1,0 +1,29 @@
+query ticketOverviews($withTicketCount: Boolean!) {
+  ticketOverviews {
+    edges {
+      node {
+        id
+        name
+        link
+        prio
+        orderBy
+        orderDirection
+        viewColumns {
+          key
+          value
+        }
+        orderColumns {
+          key
+          value
+        }
+        active
+        ticketCount @include(if: $withTicketCount)
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

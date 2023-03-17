@@ -1,1670 +1,2021 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'title',
-  display: 'Title',
-  data_type: 'input',
+  force:       true,
+  object:      'Ticket',
+  name:        'number',
+  display:     '#',
+  data_type:   'input',
   data_option: {
-    type: 'text',
+    type:      'text',
+    readonly:  1,
+    null:      true,
+    maxlength: 60,
+    width:     '68px',
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_top: {},
+    edit:       {},
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    5,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'title',
+  display:     __('Title'),
+  data_type:   'input',
+  data_option: {
+    type:      'text',
     maxlength: 200,
-    null: false,
+    null:      false,
     translate: false,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_top: {
       '-all-' => {
         null: false,
       },
     },
-    edit: {},
+    edit:       {},
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 15,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    8,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'customer_id',
-  display: 'Customer',
-  data_type: 'user_autocompletion',
+  force:       true,
+  object:      'Ticket',
+  name:        'customer_id',
+  display:     __('Customer'),
+  data_type:   'user_autocompletion',
   data_option: {
-    relation: 'User',
+    relation:       'User',
     autocapitalize: false,
-    multiple: false,
-    guess: true,
-    null: false,
-    limit: 200,
-    placeholder: 'Enter Person or Organization/Company',
-    minLengt: 2,
-    translate: false,
-    permission: ['ticket.agent'],
+    multiple:       false,
+    guess:          true,
+    null:           false,
+    limit:          200,
+    placeholder:    __('Enter Person or Organization/Company'),
+    minLengt:       2,
+    translate:      false,
+    permission:     ['ticket.agent'],
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_top: {
       '-all-' => {
         null: false,
       },
     },
-    edit: {},
+    edit:       {},
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 10,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'type',
-  display: 'Type',
-  data_type: 'select',
-  data_option: {
-    default: '',
-    options: {
-      'Incident' => 'Incident',
-      'Problem'  => 'Problem',
-      'Request for Change' => 'Request for Change',
-    },
-    nulloption: true,
-    multiple: false,
-    null: true,
-    translate: true,
-  },
-  editable: true,
-  active: false,
-  screens: {
-    create_middle: {
-      '-all-' => {
-        null: false,
-        item_class: 'column',
-      },
-    },
-    edit: {
-      'ticket.agent' => {
-        null: false,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 20,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'group_id',
-  display: 'Group',
-  data_type: 'select',
-  data_option: {
-    default: '',
-    relation: 'Group',
-    relation_condition: { access: 'full' },
-    nulloption: true,
-    multiple: false,
-    null: false,
-    translate: false,
-    only_shown_if_selectable: true,
-    permission: ['ticket.agent', 'ticket.customer'],
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_middle: {
-      '-all-' => {
-        null: false,
-        item_class: 'column',
-      },
-    },
-    edit: {
-      'ticket.agent' => {
-        null: false,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 25,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'owner_id',
-  display: 'Owner',
-  data_type: 'select',
-  data_option: {
-    default: '',
-    relation: 'User',
-    relation_condition: { roles: 'Agent' },
-    nulloption: true,
-    multiple: false,
-    null: true,
-    translate: false,
-    permission: ['ticket.agent'],
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_middle: {
-      '-all-' => {
-        null: true,
-        item_class: 'column',
-      },
-    },
-    edit: {
-      '-all-' => {
-        null: true,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 30,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'state_id',
-  display: 'State',
-  data_type: 'select',
-  data_option: {
-    relation: 'TicketState',
-    nulloption: true,
-    multiple: false,
-    null: false,
-    default: Ticket::State.find_by(default_follow_up: true).id,
-    translate: true,
-    filter: Ticket::State.by_category(:viewable).pluck(:id),
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_middle: {
-      'ticket.agent' => {
-        null: false,
-        item_class: 'column',
-        filter: Ticket::State.by_category(:viewable_agent_new).pluck(:id),
-      },
-      'ticket.customer' => {
-        item_class: 'column',
-        nulloption: false,
-        null: true,
-        filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
-        default: Ticket::State.find_by(default_create: true).id,
-      },
-    },
-    edit: {
-      'ticket.agent' => {
-        nulloption: false,
-        null: false,
-        filter: Ticket::State.by_category(:viewable_agent_edit).pluck(:id),
-      },
-      'ticket.customer' => {
-        nulloption: false,
-        null: true,
-        filter: Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
-        default: Ticket::State.find_by(default_follow_up: true).id,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 40,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'pending_time',
-  display: 'Pending till',
-  data_type: 'datetime',
-  data_option: {
-    future: true,
-    past: false,
-    diff: 24,
-    null: true,
-    translate: true,
-    required_if: {
-      state_id: Ticket::State.by_category(:pending).pluck(:id),
-    },
-    shown_if: {
-      state_id: Ticket::State.by_category(:pending).pluck(:id),
-    },
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_middle: {
-      '-all-' => {
-        null: false,
-        item_class: 'column',
-      },
-    },
-    edit: {
-      '-all-' => {
-        null: false,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 41,
-)
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'priority_id',
-  display: 'Priority',
-  data_type: 'select',
-  data_option: {
-    relation: 'TicketPriority',
-    nulloption: false,
-    multiple: false,
-    null: false,
-    default: Ticket::Priority.find_by(default_create: true).id,
-    translate: true,
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_middle: {
-      'ticket.agent' => {
-        null: false,
-        item_class: 'column',
-      },
-    },
-    edit: {
-      'ticket.agent' => {
-        null: false,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 80,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    10,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Ticket',
-  name: 'tags',
-  display: 'Tags',
-  data_type: 'tag',
+  force:       true,
+  object:      'Ticket',
+  name:        'organization_id',
+  display:     'Organization',
+  data_type:   'autocompletion_ajax_customer_organization',
   data_option: {
-    type: 'text',
-    null: true,
+    relation:       'Organization',
+    autocapitalize: false,
+    multiple:       false,
+    null:           true,
+    translate:      false,
+    permission:     ['ticket.agent', 'ticket.customer'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_top: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit:       {},
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    12,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'type',
+  display:     __('Type'),
+  data_type:   'select',
+  data_option: {
+    default:    '',
+    options:    {
+      'Incident'           => __('Incident'),
+      'Problem'            => __('Problem'),
+      'Request for Change' => __('Request for Change'),
+    },
+    nulloption: true,
+    multiple:   false,
+    null:       true,
+    translate:  true,
+  },
+  editable:    true,
+  active:      false,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null:       false,
+        item_class: 'column',
+      },
+    },
+    edit:          {
+      'ticket.agent' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    20,
+)
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'group_id',
+  display:     __('Group'),
+  data_type:   'select',
+  data_option: {
+    default:                  '',
+    relation:                 'Group',
+    relation_condition:       { access: 'full' },
+    nulloption:               true,
+    multiple:                 false,
+    null:                     false,
+    translate:                false,
+    only_shown_if_selectable: true,
+    permission:               ['ticket.agent', 'ticket.customer'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null:       false,
+        item_class: 'column',
+      },
+    },
+    edit:          {
+      'ticket.agent' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    25,
+)
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'owner_id',
+  display:     __('Owner'),
+  data_type:   'select',
+  data_option: {
+    default:            '',
+    relation:           'User',
+    relation_condition: { roles: 'Agent' },
+    nulloption:         true,
+    multiple:           false,
+    null:               true,
+    translate:          false,
+    permission:         ['ticket.agent'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null:       true,
+        item_class: 'column',
+      },
+    },
+    edit:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    30,
+)
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'state_id',
+  display:     __('State'),
+  data_type:   'select',
+  data_option: {
+    relation:   'TicketState',
+    nulloption: true,
+    multiple:   false,
+    null:       false,
+    default:    Ticket::State.find_by(default_follow_up: true).id,
+    translate:  true,
+    filter:     Ticket::State.by_category(:viewable).pluck(:id),
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {
+      'ticket.agent'    => {
+        null:       false,
+        item_class: 'column',
+        filter:     Ticket::State.by_category(:viewable_agent_new).pluck(:id),
+      },
+      'ticket.customer' => {
+        item_class: 'column',
+        nulloption: false,
+        null:       true,
+        filter:     Ticket::State.by_category(:viewable_customer_new).pluck(:id),
+        default:    Ticket::State.find_by(default_create: true).id,
+      },
+    },
+    edit:          {
+      'ticket.agent'    => {
+        nulloption: false,
+        null:       false,
+        filter:     Ticket::State.by_category(:viewable_agent_edit).pluck(:id),
+      },
+      'ticket.customer' => {
+        nulloption: false,
+        null:       true,
+        filter:     Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
+        default:    Ticket::State.find_by(default_follow_up: true).id,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    40,
+)
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'pending_time',
+  display:     __('Pending till'),
+  data_type:   'datetime',
+  data_option: {
+    future:     true,
+    past:       false,
+    diff:       nil,
+    null:       true,
+    translate:  true,
+    permission: %w[ticket.agent],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null:       false,
+        item_class: 'column',
+      },
+    },
+    edit:          {
+      '-all-' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    41,
+)
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'priority_id',
+  display:     __('Priority'),
+  data_type:   'select',
+  data_option: {
+    relation:   'TicketPriority',
+    nulloption: false,
+    multiple:   false,
+    null:       false,
+    default:    Ticket::Priority.find_by(default_create: true).id,
+    translate:  true,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_middle: {
+      'ticket.agent' => {
+        null:       false,
+        item_class: 'column',
+      },
+    },
+    edit:          {
+      'ticket.agent' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    80,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'tags',
+  display:     __('Tags'),
+  data_type:   'tag',
+  data_option: {
+    type:      'text',
+    null:      true,
     translate: false,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_bottom: {
       'ticket.agent' => {
         null: true,
       },
     },
-    edit: {},
+    edit:          {},
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 900,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    900,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'TicketArticle',
-  name: 'type_id',
-  display: 'Type',
-  data_type: 'select',
+  force:       true,
+  object:      'TicketArticle',
+  name:        'type_id',
+  display:     __('Type'),
+  data_type:   'select',
   data_option: {
-    relation: 'TicketArticleType',
+    relation:   'TicketArticleType',
     nulloption: false,
-    multiple: false,
-    null: false,
-    default: Ticket::Article::Type.lookup(name: 'note').id,
-    translate: true,
+    multiple:   false,
+    null:       false,
+    default:    Ticket::Article::Type.lookup(name: 'note').id,
+    translate:  true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_middle: {},
-    edit: {
+    edit:          {
       'ticket.agent' => {
         null: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 100,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    100,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'TicketArticle',
-  name: 'internal',
-  display: 'Visibility',
-  data_type: 'select',
+  force:       true,
+  object:      'TicketArticle',
+  name:        'internal',
+  display:     __('Visibility'),
+  data_type:   'select',
   data_option: {
-    options: {
+    options:    {
       true:  'internal',
       false: 'public'
     },
     nulloption: false,
-    multiple: false,
-    null: true,
-    default: false,
-    translate: true,
+    multiple:   false,
+    null:       true,
+    default:    false,
+    translate:  true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_middle: {},
-    edit: {
+    edit:          {
       'ticket.agent' => {
         null: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 200,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    200,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'TicketArticle',
-  name: 'to',
-  display: 'To',
-  data_type: 'input',
+  force:       true,
+  object:      'TicketArticle',
+  name:        'to',
+  display:     __('To'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
+    type:      'text',
     maxlength: 1000,
-    null: true,
+    null:      true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_middle: {},
-    edit: {
+    edit:          {
       'ticket.agent' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 300,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    300,
 )
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'TicketArticle',
-  name: 'cc',
-  display: 'Cc',
-  data_type: 'input',
+  force:       true,
+  object:      'TicketArticle',
+  name:        'cc',
+  display:     __('CC'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
+    type:      'text',
     maxlength: 1000,
-    null: true,
+    null:      true,
   },
-  editable: false,
-  active: true,
-  screens: {
-    create_top: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    create_top:    {},
     create_middle: {},
-    edit: {
+    edit:          {
       'ticket.agent' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 400,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    400,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'TicketArticle',
-  name: 'body',
-  display: 'Text',
-  data_type: 'richtext',
+  force:       true,
+  object:      'TicketArticle',
+  name:        'body',
+  display:     __('Text'),
+  data_type:   'richtext',
   data_option: {
-    type: 'richtext',
-    maxlength: 20_000,
-    upload: true,
-    rows: 8,
-    null: true,
+    type:      'richtext',
+    maxlength: 150_000,
+    upload:    true,
+    rows:      8,
+    null:      true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create_top: {
       '-all-' => {
         null: false,
       },
     },
-    edit: {
+    edit:       {
       '-all-' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 600,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    600,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'login',
-  display: 'Login',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'login',
+  display:     __('Login'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 100,
-    null: true,
+    type:           'text',
+    maxlength:      100,
+    null:           true,
     autocapitalize: false,
-    item_class: 'formGroup--halfSize',
+    item_class:     'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {},
-    view: {
+    edit:            {},
+    view:            {
       '-all-' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 100,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    100,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'firstname',
-  display: 'Firstname',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'firstname',
+  display:     __('First name'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 150,
-    null: false,
+    type:       'text',
+    maxlength:  150,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    invite_agent: {
+    invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    edit: {
+    edit:            {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 200,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    200,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'lastname',
-  display: 'Lastname',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'lastname',
+  display:     __('Last name'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 150,
-    null: false,
+    type:       'text',
+    maxlength:  150,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    invite_agent: {
+    invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    edit: {
+    edit:            {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 300,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    300,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'email',
-  display: 'Email',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'email',
+  display:     __('Email'),
+  data_type:   'input',
   data_option: {
-    type: 'email',
-    maxlength: 150,
-    null: true,
+    type:       'email',
+    maxlength:  150,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    invite_agent: {
+    invite_agent:    {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     invite_customer: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 400,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    400,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'web',
-  display: 'Web',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'web',
+  display:     __('Web'),
+  data_type:   'input',
   data_option: {
-    type: 'url',
-    maxlength: 250,
-    null: true,
+    type:       'url',
+    maxlength:  250,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 500,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    500,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'phone',
-  display: 'Phone',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'phone',
+  display:     __('Phone'),
+  data_type:   'input',
   data_option: {
-    type: 'tel',
-    maxlength: 100,
-    null: true,
+    type:       'tel',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 600,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    600,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'mobile',
-  display: 'Mobile',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'mobile',
+  display:     __('Mobile'),
+  data_type:   'input',
   data_option: {
-    type: 'tel',
-    maxlength: 100,
-    null: true,
+    type:       'tel',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 700,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    700,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'fax',
-  display: 'Fax',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'fax',
+  display:     __('Fax'),
+  data_type:   'input',
   data_option: {
-    type: 'tel',
-    maxlength: 100,
-    null: true,
+    type:       'tel',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 800,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    800,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'organization_id',
-  display: 'Organization',
-  data_type: 'autocompletion_ajax',
+  force:       true,
+  object:      'User',
+  name:        'organization_id',
+  display:     __('Organization'),
+  data_type:   'autocompletion_ajax',
   data_option: {
-    multiple: false,
+    multiple:   false,
     nulloption: true,
-    null: true,
-    relation: 'Organization',
+    null:       true,
+    relation:   'Organization',
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 900,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    900,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'department',
-  display: 'Department',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'organization_ids',
+  display:     __('Secondary organizations'),
+  data_type:   'autocompletion_ajax',
   data_option: {
-    type: 'text',
-    maxlength: 200,
-    null: true,
+    multiple:      true,
+    nulloption:    true,
+    null:          true,
+    relation:      'Organization',
+    item_class:    'formGroup--halfSize',
+    display_limit: 3,
+    belongs_to:    'secondary_organizations',
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:            {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    901,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'User',
+  name:        'department',
+  display:     __('Department'),
+  data_type:   'input',
+  data_option: {
+    type:       'text',
+    maxlength:  200,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: true,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    true,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1000,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1000,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'street',
-  display: 'Street',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'street',
+  display:     __('Street'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
+    type:      'text',
     maxlength: 100,
-    null: true,
+    null:      true,
   },
-  editable: true,
-  active: false,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    true,
+  active:      false,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1100,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1100,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'zip',
-  display: 'Zip',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'zip',
+  display:     __('Zip'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 100,
-    null: true,
+    type:       'text',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: true,
-  active: false,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    true,
+  active:      false,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1200,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1200,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'city',
-  display: 'City',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'city',
+  display:     __('City'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 100,
-    null: true,
+    type:       'text',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: true,
-  active: false,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    true,
+  active:      false,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1300,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1300,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'address',
-  display: 'Address',
-  data_type: 'textarea',
+  force:       true,
+  object:      'User',
+  name:        'country',
+  display:     __('Country'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 500,
-    null: true,
+    type:       'text',
+    maxlength:  100,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: true,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    true,
+  active:      false,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1350,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1325,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'password',
-  display: 'Password',
-  data_type: 'input',
+  force:       true,
+  object:      'User',
+  name:        'address',
+  display:     __('Address'),
+  data_type:   'textarea',
   data_option: {
-    type: 'password',
-    maxlength: 100,
-    null: true,
+    type:       'text',
+    maxlength:  500,
+    rows:       4,
+    null:       true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
+    invite_customer: {},
+    edit:            {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1350,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'User',
+  name:        'password',
+  display:     __('Password'),
+  data_type:   'input',
+  data_option: {
+    type:         'password',
+    # password length is capped at 1000 in PasswordPolicy::MaxLength::MAX_LENGTH
+    # if user copy-pastes a very long string
+    # this ensures that max length check is triggered preventing saving of truncated password
+    maxlength:    1001,
+    null:         true,
     autocomplete: 'new-password',
-    item_class: 'formGroup--halfSize',
+    item_class:   'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {
       '-all-' => {
         null: false,
       },
     },
-    invite_agent: {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       'admin.user' => {
         null: true,
       },
     },
-    view: {}
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1400,
-)
-
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'vip',
-  display: 'VIP',
-  data_type: 'boolean',
-  data_option: {
-    null: true,
-    default: false,
-    item_class: 'formGroup--halfSize',
-    options: {
-      false: 'no',
-      true: 'yes',
-    },
-    translate: true,
-    permission: ['admin.user', 'ticket.agent'],
-  },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+    create:          {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    view:            {}
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1400,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'User',
+  name:        'vip',
+  display:     __('VIP'),
+  data_type:   'boolean',
+  data_option: {
+    null:       true,
+    default:    false,
+    item_class: 'formGroup--halfSize',
+    options:    {
+      false: 'no',
+      true:  'yes',
+    },
+    translate:  true,
+    permission: ['admin.user', 'ticket.agent'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
+      '-all-' => {
+        null: true,
+      },
+    },
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:   {
       '-all-' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1490,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1490,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'note',
-  display: 'Note',
-  data_type: 'richtext',
+  force:       true,
+  object:      'User',
+  name:        'note',
+  display:     __('Note'),
+  data_type:   'richtext',
   data_option: {
-    type: 'text',
+    type:      'text',
     maxlength: 5000,
-    null: true,
-    note: 'Notes are visible to agents only, never to customers.',
+    no_images: false,
+    null:      true,
+    note:      __('Notes are visible to agents only, never to customers.'),
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1500,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1500,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'role_ids',
-  display: 'Permissions',
-  data_type: 'user_permission',
+  force:       true,
+  object:      'User',
+  name:        'role_ids',
+  display:     __('Permissions'),
+  data_type:   'user_permission',
   data_option: {
-    null: false,
+    null:       false,
     item_class: 'checkbox',
     permission: ['admin.user'],
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {
       '-all-' => {
-        null: false,
+        null:    false,
         default: [Role.lookup(name: 'Agent').id],
       },
     },
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1600,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1600,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'User',
-  name: 'active',
-  display: 'Active',
-  data_type: 'active',
+  force:       true,
+  object:      'User',
+  name:        'active',
+  display:     __('Active'),
+  data_type:   'active',
   data_option: {
-    null: true,
-    default: true,
+    null:       true,
+    default:    true,
     permission: ['admin.user', 'ticket.agent'],
   },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
+  editable:    false,
+  active:      true,
+  screens:     {
+    signup:          {},
+    invite_agent:    {},
     invite_customer: {},
-    edit: {
+    edit:            {
       '-all-' => {
         null: false,
       },
     },
-    view: {
+    create:          {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view:            {
       '-all-' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1800,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1800,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'name',
-  display: 'Name',
-  data_type: 'input',
+  force:       true,
+  object:      'Organization',
+  name:        'name',
+  display:     __('Name'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 150,
-    null: false,
+    type:       'text',
+    maxlength:  150,
+    null:       false,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
       '-all-' => {
         null: false,
       },
     },
-    view: {
+    create: {
       '-all-' => {
+        null: false,
+      },
+    },
+    view:   {
+      'ticket.agent'    => {
+        shown: true,
+      },
+      'ticket.customer' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 200,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    200,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'shared',
-  display: 'Shared organization',
-  data_type: 'boolean',
+  force:       true,
+  object:      'Organization',
+  name:        'shared',
+  display:     __('Shared organization'),
+  data_type:   'boolean',
   data_option: {
-    null: true,
-    default: true,
-    note: 'Customers in the organization can view each other items.',
+    null:       true,
+    default:    true,
+    note:       __("Customers in the organization can view each other's items."),
     item_class: 'formGroup--halfSize',
-    options: {
-      true: 'yes',
+    options:    {
+      true:  'yes',
       false: 'no',
     },
-    translate: true,
+    translate:  true,
     permission: ['admin.organization'],
   },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
       '-all-' => {
         null: false,
       },
     },
-    view: {
+    create: {
       '-all-' => {
+        null: false,
+      },
+    },
+    view:   {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1400,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1400,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'domain_assignment',
-  display: 'Domain based assignment',
-  data_type: 'boolean',
+  force:       true,
+  object:      'Organization',
+  name:        'domain_assignment',
+  display:     __('Domain based assignment'),
+  data_type:   'boolean',
   data_option: {
-    null: true,
-    default: false,
-    note: 'Assign Users based on users domain.',
+    null:       true,
+    default:    false,
+    note:       __('Assign users based on user domain.'),
     item_class: 'formGroup--halfSize',
-    options: {
-      true: 'yes',
+    options:    {
+      true:  'yes',
       false: 'no',
     },
-    translate: true,
+    translate:  true,
     permission: ['admin.organization'],
   },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
       '-all-' => {
         null: false,
       },
     },
-    view: {
+    create: {
       '-all-' => {
+        null: false,
+      },
+    },
+    view:   {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1410,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1410,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'domain',
-  display: 'Domain',
-  data_type: 'input',
+  force:       true,
+  object:      'Organization',
+  name:        'domain',
+  display:     __('Domain'),
+  data_type:   'input',
   data_option: {
-    type: 'text',
-    maxlength: 150,
-    null: true,
+    type:       'text',
+    maxlength:  150,
+    null:       true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create: {
       '-all-' => {
+        null: true,
+      },
+    },
+    view:   {
+      'ticket.agent'    => {
         shown: true,
+      },
+      'ticket.customer' => {
+        shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1420,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1420,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'note',
-  display: 'Note',
-  data_type: 'richtext',
+  force:       true,
+  object:      'Organization',
+  name:        'note',
+  display:     __('Note'),
+  data_type:   'richtext',
   data_option: {
-    type: 'text',
+    type:      'text',
     maxlength: 5000,
-    null: true,
-    note: 'Notes are visible to agents only, never to customers.',
+    no_images: false,
+    null:      true,
+    note:      __('Notes are visible to agents only, never to customers.'),
   },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
       '-all-' => {
         null: true,
       },
     },
-    view: {
+    create: {
       '-all-' => {
+        null: true,
+      },
+    },
+    view:   {
+      'ticket.agent'    => {
         shown: true,
       },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1500,
-)
-
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Organization',
-  name: 'active',
-  display: 'Active',
-  data_type: 'active',
-  data_option: {
-    null: true,
-    default: true,
-    permission: ['admin.organization'],
-  },
-  editable: false,
-  active: true,
-  screens: {
-    edit: {
-      '-all-' => {
-        null: false,
-      },
-    },
-    view: {
-      '-all-' => {
+      'ticket.customer' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1800,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1500,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'name',
-  display: 'Name',
-  data_type: 'input',
+  force:       true,
+  object:      'Organization',
+  name:        'active',
+  display:     __('Active'),
+  data_type:   'active',
   data_option: {
-    type: 'text',
-    maxlength: 150,
-    null: false,
+    null:       true,
+    default:    true,
+    permission: ['admin.organization'],
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
+    edit:   {
+      '-all-' => {
+        null: false,
+      },
+    },
     create: {
       '-all-' => {
         null: false,
       },
     },
-    edit: {
+    view:   {
+      'ticket.agent'    => {
+        shown: false,
+      },
+      'ticket.customer' => {
+        shown: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1800,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'name',
+  display:     __('Name'),
+  data_type:   'input',
+  data_option: {
+    type:      'text',
+    maxlength: 150,
+    null:      false,
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create: {
       '-all-' => {
         null: false,
       },
     },
-    view: {
+    edit:   {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view:   {
       '-all-' => {
         shown: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 200,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    200,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'assignment_timeout',
-  display: 'Assignment Timeout',
-  data_type: 'integer',
+  force:       true,
+  object:      'Group',
+  name:        'assignment_timeout',
+  display:     __('Assignment Timeout'),
+  data_type:   'integer',
   data_option: {
     maxlength: 150,
-    null: true,
-    note: 'Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.',
-    min: 0,
-    max: 999_999,
+    null:      true,
+    note:      __('Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.'),
+    min:       0,
+    max:       999_999,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:   {
       '-all-' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 300,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    300,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'follow_up_possible',
-  display: 'Follow up possible',
-  data_type: 'select',
+  force:       true,
+  object:      'Group',
+  name:        'follow_up_possible',
+  display:     __('Follow-up possible'),
+  data_type:   'select',
   data_option: {
-    default: 'yes',
-    options: {
-      yes: 'yes',
-      new_ticket: 'do not reopen Ticket but create new Ticket'
+    default:   'yes',
+    options:   {
+      yes:                           __('yes'),
+      new_ticket:                    __('do not reopen ticket but create new ticket'),
+      new_ticket_after_certain_time: __('do not reopen ticket after certain time but create new ticket'),
     },
-    null: false,
-    note: 'Follow up for closed ticket possible or not.',
+    null:      false,
+    note:      __('Follow-up for closed ticket possible or not.'),
     translate: true
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
-    edit: {
+    edit:   {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 400,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    400,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'follow_up_assignment',
-  display: 'Assign Follow Ups',
-  data_type: 'select',
+  force:         true,
+  object:        'Group',
+  name:          'reopen_time_in_days',
+  display:       __('Reopening time in days'),
+  data_type:     'integer',
+  data_option:   {
+    default:   '',
+    min:       1,
+    max:       3650,
+    null:      true,
+    note:      __('Allow reopening of tickets within a certain time.'),
+    translate: true
+  },
+  editable:      false,
+  active:        true,
+  screens:       {
+    create: { 'admin.group': { shown: false, required: false } },
+    edit:   { 'admin.group': { shown: false, required: false } },
+    view:   { 'admin.group': { shown: false } }
+  },
+  to_create:     false,
+  to_migrate:    false,
+  to_delete:     false,
+  position:      410,
+  created_by_id: 1,
+  updated_by_id: 1,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'follow_up_assignment',
+  display:     __('Assign Follow-Ups'),
+  data_type:   'select',
   data_option: {
-    default: 'yes',
-    options: {
-      true: 'yes',
+    default:   'true',
+    options:   {
+      true:  'yes',
       false: 'no',
     },
-    null: false,
-    note: 'Assign follow up to latest agent again.',
+    null:      false,
+    note:      __('Assign follow-up to latest agent again.'),
     translate: true
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
-    edit: {
+    edit:   {
       '-all-' => {
-        null: true,
+        null: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 500,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    500,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'email_address_id',
-  display: 'Email',
-  data_type: 'select',
+  force:       true,
+  object:      'Group',
+  name:        'email_address_id',
+  display:     __('Email'),
+  data_type:   'select',
   data_option: {
-    default: '',
-    multiple: false,
-    null: true,
-    relation: 'EmailAddress',
+    default:    '',
+    multiple:   false,
+    null:       true,
+    relation:   'EmailAddress',
     nulloption: true,
     do_not_log: true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:   {
       '-all-' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 600,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    600,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'signature_id',
-  display: 'Signature',
-  data_type: 'select',
+  force:       true,
+  object:      'Group',
+  name:        'signature_id',
+  display:     __('Signature'),
+  data_type:   'select',
   data_option: {
-    default: '',
-    multiple: false,
-    null: true,
-    relation: 'Signature',
+    default:    '',
+    multiple:   false,
+    null:       true,
+    relation:   'Signature',
     nulloption: true,
     do_not_log: true,
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:   {
       '-all-' => {
         null: true,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 600,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    600,
 )
 
 ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'note',
-  display: 'Note',
-  data_type: 'richtext',
+  force:       true,
+  object:      'Group',
+  name:        'shared_drafts',
+  display:     __('Shared Drafts'),
+  data_type:   'active',
   data_option: {
-    type: 'text',
-    maxlength: 250,
-    null: true,
-    note: 'Notes are visible to agents only, never to customers.',
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create: {
-      '-all-' => {
-        null: true,
-      },
-    },
-    edit: {
-      '-all-' => {
-        null: true,
-      },
-    },
-    view: {
-      '-all-' => {
-        shown: true,
-      },
-    },
-  },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1500,
-)
-
-ObjectManager::Attribute.add(
-  force: true,
-  object: 'Group',
-  name: 'active',
-  display: 'Active',
-  data_type: 'active',
-  data_option: {
-    null: true,
-    default: true,
+    null:       false,
+    default:    true,
     permission: ['admin.group'],
   },
-  editable: false,
-  active: true,
-  screens: {
+  editable:    false,
+  active:      true,
+  screens:     {
     create: {
       '-all-' => {
         null: true,
       },
     },
-    edit: {
+    edit:   {
       '-all-': {
         null: false,
       },
     },
-    view: {
+    view:   {
       '-all-' => {
         shown: false,
       },
     },
   },
-  to_create: false,
-  to_migrate: false,
-  to_delete: false,
-  position: 1800,
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1400,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'note',
+  display:     __('Note'),
+  data_type:   'richtext',
+  data_option: {
+    type:      'text',
+    maxlength: 250,
+    no_images: false,
+    null:      true,
+    note:      __('Notes are visible to agents only, never to customers.'),
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:   {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view:   {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1500,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'active',
+  display:     __('Active'),
+  data_type:   'active',
+  data_option: {
+    null:       true,
+    default:    true,
+    permission: ['admin.group'],
+  },
+  editable:    false,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:   {
+      '-all-': {
+        null: false,
+      },
+    },
+    view:   {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1800,
 )

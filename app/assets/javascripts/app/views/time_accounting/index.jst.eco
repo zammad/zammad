@@ -19,9 +19,9 @@
     <button type="submit" class="btn btn--danger js-timeAccountingFilterReset"><%- @T('Reset') %></button>
   </div>
 
-  <div class="settings-entry">
+  <div class="settings-entry--stretched">
 
-    <h2><%- @T('Overviews') %></h2>
+    <h2><%- @T('Accounted Time') %></h2>
     <div class="well">
       <div class="btn-group btn-group--full" role="group" aria-label="">
         <% for item in @timeRangeYear: %>
@@ -31,10 +31,13 @@
 
       <div class="btn-group btn-group--full" role="group" aria-label="">
         <% for item in @timeRangeMonth: %>
-          <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+          <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= @T(item.display) %></div>
         <% end %>
       </div>
     </div>
+    <h3><%- @T('Activity') %> <a href="<%- @apiPath %>/time_accounting/log/by_activity/<%= @year %>/<%= @month %>?download=true" class="js-downloadByActivity" data-type="attachment"><%- @Icon('download') %></a></h3>
+    <div class="js-tableActivity"></div>
+    <br>
     <h3><%- @T('Ticket') %> <a href="<%- @apiPath %>/time_accounting/log/by_ticket/<%= @year %>/<%= @month %>?download=true" class="js-downloadByTicket" data-type="attachment"><%- @Icon('download') %></a></h3>
     <div class="js-tableTicket"></div>
     <br>

@@ -1,30 +1,33 @@
-<div class="search">
-  <form class="search-holder">
-    <input id="global-search" type="search" autocomplete="off">
-    <%- @Icon('magnifier') %>
-    <div class="empty-search js-emptySearch">
-      <%- @Icon('diagonal-cross') %>
+<div id="navigation" class="navigation vertical">
+  <div class="search">
+    <form class="search-holder">
+      <input id="global-search" type="search" autocomplete="off">
+      <%- @Icon('magnifier') %>
+      <div class="search-loader"><%- @Icon('spinner-small') %></div>
+      <div class="empty-search js-emptySearch">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </form>
+    <div class="logo js-toggleNotifications">
+      <%- @Icon('logo') %>
+      <div class="activity-counter js-notificationsCounter"></div>
     </div>
-  </form>
-  <div class="logo js-toggleNotifications">
-    <%- @Icon('logo') %>
-    <div class="activity-counter js-notificationsCounter"></div>
+    <div class="global-search-menu">
+      <a href="#search" class="global-search-detail-link nav-tab nav-tab--search js-details-link">
+        <div class="nav-tab-icon">
+          <%- @Icon('searchdetail') %>
+        </div>
+        <div class="nav-tab-name flex u-textTruncate">
+          <%- @T('Show Search Details') %>
+          <%- @Icon('long-arrow-right') %>
+        </div>
+      </a>
+      <ul class="global-search-result js-global-search-result" role="menu"></ul>
+    </div>
   </div>
-  <div class="global-search-menu">
-    <a href="#search" class="global-search-detail-link nav-tab nav-tab--search js-details-link">
-      <div class="nav-tab-icon">
-        <%- @Icon('searchdetail') %>
-      </div>
-      <div class="nav-tab-name flex u-textTruncate">
-        <%- @T('Show Search Details') %>
-        <%- @Icon('long-arrow-right') %>
-      </div>
-    </a>
-    <ul class="global-search-result js-global-search-result" role="menu"></ul>
-  </div>
+  <div class="menu js-menu"></div>
+  <div class="tasks tasks-navigation"></div>
+  <% if !_.isEmpty(@user): %>
+    <ul class="user-menu navbar-items-personal"></ul>
+  <% end %>
 </div>
-<div class="menu js-menu"></div>
-<div class="tasks tasks-navigation"></div>
-<% if !_.isEmpty(@user): %>
-  <ul class="user-menu navbar-items-personal"></ul>
-<% end %>

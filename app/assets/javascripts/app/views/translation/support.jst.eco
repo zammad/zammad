@@ -1,6 +1,8 @@
-<p <% if @better is false: %>class="hidden"<% end %>>
-<%- @T('Only %s% of this language is translated, help to improve Zammad and complete the translation.', @percent) %>
-</p>
-<p <% if @better is true: %>class="hidden"<% end %>>
-<%- @T('Up to %s% of this language is translated, help to make Zammad even better and complete the translation.', @percent) %>
+<p>
+  <% if @percent < 80: %>
+    <%- @T('Only %s% of this language is already translated. Please help to improve Zammad and complete the translation.', @percent) %>
+  <% end %>
+  <% if @percent >= 80: %>
+    <%- @T('Up to %s% of this language is already translated. Please help to make Zammad even better and complete the translation.', @percent) %>
+  <% end %>
 </p>

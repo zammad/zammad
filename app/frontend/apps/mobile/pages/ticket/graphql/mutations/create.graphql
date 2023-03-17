@@ -1,0 +1,10 @@
+mutation ticketCreate($input: TicketCreateInput!) {
+  ticketCreate(input: $input) {
+    ticket {
+      ...ticketAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

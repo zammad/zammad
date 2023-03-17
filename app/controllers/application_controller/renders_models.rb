@@ -1,5 +1,9 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::RendersModels
   extend ActiveSupport::Concern
+
+  include CanPaginate
 
   private
 
@@ -8,6 +12,9 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
+    if object.included_modules.include?(ChecksCoreWorkflow)
+      clean_params[:screen] = 'create'
+    end
 
     # create object
     generic_object = object.new(clean_params)
@@ -42,6 +49,9 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
+    if object.included_modules.include?(ChecksCoreWorkflow)
+      clean_params[:screen] = 'edit'
+    end
 
     generic_object.with_lock do
 
@@ -73,10 +83,10 @@ module ApplicationController::RendersModels
   def model_destroy_render(object, params)
     generic_object = object.find(params[:id])
     generic_object.destroy!
-    model_destroy_render_item()
+    model_destroy_render_item
   end
 
-  def model_destroy_render_item ()
+  def model_destroy_render_item()
     render json: {}, status: :ok
   end
 
@@ -101,22 +111,14 @@ module ApplicationController::RendersModels
   end
 
   def model_index_render(object, params)
-    offset = 0
-    per_page = 500
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      limit = params[:per_page].to_i
-    end
+    paginate_with(default: 500)
 
-    if per_page > 500
-      per_page = 500
-    end
+    sql_helper = ::SqlHelper.new(object: object)
+    sort_by    = sql_helper.get_sort_by(params, 'id')
+    order_by   = sql_helper.get_order_by(params, 'ASC')
+    order_sql  = sql_helper.get_order(sort_by, order_by)
 
-    generic_objects = if offset.positive?
-                        object.limit(params[:per_page]).order(id: 'ASC').offset(offset).limit(limit)
-                      else
-                        object.all.order(id: 'ASC').offset(offset).limit(limit)
-                      end
+    generic_objects = object.reorder(Arel.sql(order_sql)).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
       list = []
@@ -135,8 +137,9 @@ module ApplicationController::RendersModels
         assets = item.assets(assets)
       end
       render json: {
-        record_ids: item_ids,
-        assets: assets,
+        record_ids:  item_ids,
+        assets:      assets,
+        total_count: object.count
       }, status: :ok
       return
     end
@@ -156,7 +159,8 @@ module ApplicationController::RendersModels
     generic_object = object.find(params[:id])
     result = Models.references(object, generic_object.id)
     return false if result.blank?
-    raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
+
+    raise Exceptions::UnprocessableEntity, __('Can\'t delete, object has references.')
   rescue => e
     raise Exceptions::UnprocessableEntity, e
   end

@@ -1,0 +1,68 @@
+# Don't complain when changing branches with different overcommit configurations.
+verify_signatures: false
+
+CommitMsg:
+  ALL:
+    enabled: false
+  EmptyMessage:
+    enabled: true
+
+PreCommit:
+  ALL:
+    enabled: false
+  RuboCop:
+    enabled: true
+    on_warn: fail
+  CoffeeLint:
+    # .coffeelint/rules/* not supported in YAML, specify all rules separately.
+    flags:
+      [
+        '--reporter=csv',
+        '--rules',
+        './.coffeelint/rules/detect_translatable_string.coffee',
+      ]
+    enabled: true
+    on_warn: fail
+    exclude: 'public/assets/chat/**/*'
+  CustomScript:
+    enabled: true
+    description: 'Perform custom Zammad code checks'
+    required_executable: 'bash'
+    flags: ['.overcommit.sh']
+  Stylelint:
+    enabled: true
+  EsLint:
+    required_executable: 'yarn'
+    enabled: true
+    command: ['yarn', 'lint']
+    exclude:
+      - 'app/assets/**/*'
+      - 'public/assets/chat/**/*'
+
+PostCheckout:
+  ALL:
+    enabled: false
+
+PostCommit:
+  ALL:
+    enabled: false
+
+PostMerge:
+  ALL:
+    enabled: false
+
+PostRewrite:
+  ALL:
+    enabled: false
+
+PrePush:
+  ALL:
+    enabled: false
+
+PreRebase:
+  ALL:
+    enabled: false
+
+PrepareCommitMsg:
+  ALL:
+    enabled: false

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Trigger
 
@@ -23,7 +23,6 @@ class Transaction::Trigger
   end
 
   def perform
-
     # return if we run import mode
     return if Setting.get('import_mode')
 
@@ -31,6 +30,7 @@ class Transaction::Trigger
 
     ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find_by(id: @item[:article_id])
     end
@@ -38,7 +38,6 @@ class Transaction::Trigger
     original_user_id = UserInfo.current_user_id
 
     Ticket.perform_triggers(ticket, article, @item, @params)
-
     UserInfo.current_user_id = original_user_id
   end
 

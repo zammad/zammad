@@ -1,0 +1,3 @@
+From: Zammad Helpdesk <smime2@example.com>
+To: Nicole Braun <nicole.braun@zammad.org>
+Subject: S/MIME Test - Sender Is Not Signer (Sign)

@@ -15,9 +15,9 @@ class Spine.Manager extends Spine.Module
     @addOne(cont) for cont in controllers
 
   addOne: (controller) ->
-    controller.bind 'active', (args...) =>
+    controller.on 'active', (args...) =>
       @trigger('change', controller, args...)
-    controller.bind 'release', =>
+    controller.on 'release', =>
       @controllers = (c for c in @controllers when c isnt controller)
 
     @controllers.push(controller)

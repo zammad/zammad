@@ -1,12 +1,12 @@
-Warten auf Erinnerung erreicht! (#{ticket.title})
+Ticket-Erinnerung erreicht (#{ticket.title})
 
-<div>Hallo #{recipient.firstname},</div>
+<div>Hallo #{recipient.fullname},</div>
 <br>
-<div>dieses Ticket benötigt Deine Aufmerksamkeit, warten auf Erinnerung für (#{ticket.title}) mit dem Kunden "<b>#{ticket.customer.longname}</b>" ist erreicht.</div>
+<div>dieses Ticket benötigt Ihre Aufmerksamkeit: Warten auf Erinnerung für (#{ticket.title}) mit dem Kunden "<b>#{ticket.customer.longname}</b>" ist erreicht.</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Information:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@ Warten auf Erinnerung erreicht! (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">In #{config.product_name} anzeigen</a>
 </div>

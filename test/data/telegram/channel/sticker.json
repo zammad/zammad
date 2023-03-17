@@ -1,0 +1,29 @@
+{
+  "update_id": 954691817,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "message_id": 11,
+    "date": 1566318766,
+    "sticker": {
+      "width": 512,
+      "height": 512,
+      "emoji": "😄",
+      "set_name": "HotCherry",
+      "is_animated": true,
+      "file_id": "stickerfileid",
+      "file_size": 15455,
+      "thumb": {
+        "file_id": "stickerthumbfileid",
+        "file_size": 4622,
+        "width": 128,
+        "height": 128
+      }
+    }
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}

@@ -1,27 +1,18 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module TicketField
-          class SanitizedName < Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName
-            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            skip_action :skipped
+class Sequencer::Unit::Import::Zendesk::TicketField::SanitizedName < Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName
 
-            uses :resource, :action
+  uses :resource
 
-            private
+  private
 
-            def unsanitized_name
-              # Model ID
-              # Model IDs
-              # Model / Name
-              # Model Name
-              resource.title
-            end
-          end
-        end
-      end
-    end
+  def unsanitized_name
+    # Model ID
+    # Model IDs
+    # Model / Name
+    # Model Name
+    # Model Name?
+    # Model::Name
+    resource.title
   end
 end

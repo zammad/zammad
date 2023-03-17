@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Chat::Session
   module Search
     extend ActiveSupport::Concern
@@ -27,8 +28,9 @@ returns if user has no permissions to search
 
       def search_preferences(current_user)
         return false if Setting.get('chat') != true || !current_user.permissions?('chat.agent')
+
         {
-          prio: 900,
+          prio:                900,
           direct_search_index: true,
         }
       end
@@ -63,11 +65,12 @@ returns
 
         # try search index backend
         if SearchIndexBackend.enabled?
-          items = SearchIndexBackend.search(query, limit, 'Chat::Session', {}, offset)
+          items = SearchIndexBackend.search(query, 'Chat::Session', limit: limit, from: offset)
           chat_sessions = []
           items.each do |item|
             chat_session = Chat::Session.lookup(id: item[:id])
             next if !chat_session
+
             chat_sessions.push chat_session
           end
           return chat_sessions
@@ -76,10 +79,10 @@ returns
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
-        chat_sessions = Chat::Session.where(
+        Chat::Session.where(
           'name LIKE ?', "%#{query}%"
-        ).order('name').offset(offset).limit(limit).to_a
-        chat_sessions
+        ).reorder('name').offset(offset).limit(limit).to_a
+
       end
     end
   end

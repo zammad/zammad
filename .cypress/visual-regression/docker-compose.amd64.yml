@@ -1,0 +1,21 @@
+version: '3.6'
+
+volumes:
+  visual-regression-dependencies-amd64:
+
+services:
+  cypress:
+    environment:
+      CYPRESS_UPDATE_SNAPSHOTS: ${CYPRESS_UPDATE_SNAPSHOTS:-true}
+    platform: linux/amd64
+    image: cypress/base:16.17.1
+    ipc: host
+    volumes:
+      - ../..:/app
+      - visual-regression-dependencies-amd64:/app/node_modules
+      - ~/.cache/Cypress:/root/.cache/Cypress
+    working_dir: /app
+    ports:
+      - "8000:8000"
+      - "443:443"
+    command: bash ./.cypress/visual-regression/run.sh

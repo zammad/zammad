@@ -2,9 +2,37 @@
 from: Example Sales <sales@example.com>
 from_email: sales@example.com
 from_display_name: Example Sales
-subject: 'Example licensing information: No channel available'
 to: info@znuny.inc
+subject: 'Example licensing information: No channel available'
 body: |-
-  Dear Mr. Edenhofer, <p>We want to keep you updated on TeamViewer licensing shortages on a regular basis.</p><p><strong>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.</strong></p><p>Additional session channels can be added at any time. Please visit our <a href="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E" rel="nofollow noreferrer noopener" target="_blank" title="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E">TeamViewer Online Shop</a> for pricing information.</p><p>Thank you - and again all the best with TeamViewer!</p><p>Best regards,</p><p><i>Your TeamViewer Team</i></p><p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please click <a href="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14" rel="nofollow noreferrer noopener" target="_blank" title="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14">here</a> to unsubscribe from further e-mails.</p>-----------------------------<br>
+  <span> Dear Mr. Edenhofer, <p>We want to keep you updated on TeamViewer licensing shortages on a regular basis.</p><p><strong>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.</strong></p><p>Additional session channels can be added at any time. Please visit our <a href="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E" rel="nofollow noreferrer noopener" target="_blank" title="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E">TeamViewer Online Shop</a> for pricing information.</p><p>Thank you - and again all the best with TeamViewer!</p><p>Best regards,</p><p><i>Your TeamViewer Team</i></p><p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please click <a href="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14" rel="nofollow noreferrer noopener" target="_blank" title="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14">here</a> to unsubscribe from further e-mails.</p>-----------------------------<br>
   <a href="http://www.teamviewer.com" rel="nofollow noreferrer noopener" target="_blank">www.teamviewer.com</a><br>
-  <br> TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br> Tel. 07161 60692 50 * Fax 07161 60692 79<br> <br> Registration AG Ulm HRB 534075 * General Manager Holger Felgner
+  <br> TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br> Tel. 07161 60692 50 * Fax 07161 60692 79<br> <br> Registration AG Ulm HRB 534075 * General Manager Holger Felgner<br><br></span>
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n<html>\n<head>\n<style
+    type=\"text/css\">\n<!--\n.text,td,th {\n\tfont-size: 12px;\n\tfont-family: Arial,
+    Helvetica, sans-serif;\n}\n.unsubscribe {\n\tfont-size: 10px;\n}\nth{text-align:left;}\n.right{text-align:right;}\n-->\n</style>\n</head>\n<body>\n<span
+    class=\"text\">\nDear Mr. Edenhofer,\n<p>We want to keep you updated on TeamViewer
+    licensing shortages on a regular basis.</p>\n<p><strong>We would like to inform
+    you that since the last message on 25-Nov-2014 there have been temporary session
+    channel exceedances which make it impossible to establish more sessions. Since
+    the last e-mail this has occurred in a total of 1 cases.</strong></p>\n<p>Additional
+    session channels can be added at any time. Please visit our <a href=\"https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E\">TeamViewer
+    Online Shop</a> for pricing information.</p>\n<p>Thank you - and again all the
+    best with TeamViewer!</p>\n<p>Best regards,</p>\n<p><i>Your TeamViewer Team</i></p>\n<p>P.S.:
+    You receive this e-mail because you are listed in our database as person who ordered
+    a TeamViewer license. Please click <a href=\"http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&ident=E37682EAC65E8CA6FF36074907D8BC14\">here</a>
+    to unsubscribe from further e-mails.</p>\n-----------------------------\n<br />\n<a
+    href=\"http://www.teamviewer.com\">www.teamviewer.com</a><br />\n<br />\n   TeamViewer
+    GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br />\n  Tel. 07161 60692 50 *
+    Fax 07161 60692 79<br />\n  <br />\n  Registration AG Ulm HRB 534075 * General
+    Manager Holger Felgner<br />\n  <br />\n  <span class=\"unsubscribe\"></span>\n
+    \ <br />\n</span>\n</body>\n</html>"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: utf-8

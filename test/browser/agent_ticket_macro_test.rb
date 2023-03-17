@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -10,13 +11,13 @@ class AgentTicketMacroTest < TestCase
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ticket = ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    'some subject - macro "Close & Tag as Spam" default',
+        title:    'macro "Close & Tag as Spam" default',
         body:     'some body - macro "Close & Tag as Spam" default',
       },
     )
@@ -44,11 +45,11 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_stay_on_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Stay on tab'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -67,7 +68,7 @@ class AgentTicketMacroTest < TestCase
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    "some subject - macro #{macro_name}",
+        title:    "macro #{macro_name}",
         body:     "some body - macro #{macro_name}",
       },
     )
@@ -89,11 +90,11 @@ class AgentTicketMacroTest < TestCase
   def test_ux_flow_next_up_close_tab
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Close tab'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -102,28 +103,31 @@ class AgentTicketMacroTest < TestCase
       ux_flow_next_up: ux_flow_next_up,
     )
 
-    ticket = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
         group:    'Users',
-        title:    "some subject - macro #{macro_name}",
+        title:    "macro #{macro_name}",
         body:     "some body - macro #{macro_name}",
       },
     )
 
     perform_macro(name: macro_name)
 
-    exists_not(css: '.tasks > a')
+    watch_for_disappear(
+      css:     '.tasks > a',
+      timeout: 5,
+    )
   end
 
   def test_ux_flow_next_up_advance_to_next_ticket_from_overview
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
       url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     ux_flow_next_up = 'Advance to next ticket from overview'
     macro_name      = "Test #{ux_flow_next_up}"
@@ -132,7 +136,7 @@ class AgentTicketMacroTest < TestCase
       ux_flow_next_up: ux_flow_next_up,
     )
 
-    title_prefix = "some subject - macro #{macro_name}"
+    title_prefix = "macro #{macro_name}"
     ticket1      = ticket_create(
       data: {
         customer: 'nico',
@@ -154,7 +158,14 @@ class AgentTicketMacroTest < TestCase
     # we need to close all open ticket tasks because
     # otherwise the Zoom view won't change in "Overview"-mode
     # when we re-enter the Zoom view for a ticket via the overview
-    tasks_close_all()
+    tasks_close_all
+
+    overview_open(
+      link: '#ticket/view/all_unassigned',
+    )
+
+    await_text(text: ticket1[:title])
+    await_text(text: ticket2[:title])
 
     ticket_open_by_overview(
       title: ticket1[:title],

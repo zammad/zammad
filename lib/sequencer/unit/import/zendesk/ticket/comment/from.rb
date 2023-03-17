@@ -1,24 +1,14 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          module Comment
-            class From < Sequencer::Unit::Import::Zendesk::Ticket::Comment::SourceBased
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              private
+class Sequencer::Unit::Import::Zendesk::Ticket::Comment::From < Sequencer::Unit::Import::Zendesk::Ticket::Comment::SourceBased
 
-              def email
-                resource.via.source.from.address
-              end
+  private
 
-              def facebook
-                resource.via.source.from.facebook_id
-              end
-            end
-          end
-        end
-      end
-    end
+  def email
+    resource.via.source.from.address
+  end
+
+  def facebook
+    resource.via.source.from.facebook_id
   end
 end

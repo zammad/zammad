@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="de-de">
+<head>
+  <meta charset="utf-8">
+  <title>Zammad Chat</title>
+  <link rel="stylesheet" href="znuny.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    .mockup {
+      vertical-align: bottom;
+    }
+
+    .settings {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      background: white;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.3);
+      width: 500px;
+    }
+
+    .settings input {
+      vertical-align: middle;
+    }
+    .settings input + input {
+      margin-right: 3px;
+    }
+
+    table td:first-child {
+      text-align: right;
+      padding-right: 0;
+    }
+
+    table td.log {
+      text-align: left;
+      padding-right: 0;
+      word-break: break-all;
+    }
+
+    td {
+      padding: 5px;
+    }
+
+    h2 {
+      font-size: 1em;
+      margin: 0;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .settings {
+        display: none;
+      }
+    }
+
+    .Box {
+      background: hsl(0,0%,91%);
+      width: 26px;
+      height: 24px;
+      color: hsl(0,0%,47%);
+      float: left;
+    }
+    .Box.Active {
+      background: hsl(0,0%,36%);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+<img class="mockup" width="100%" src="znuny.png">
+
+<form class="settings" onsubmit="return false">
+  <table>
+    <tr>
+      <td><h2>Settings</h2>
+      <td>
+    <tr>
+      <td>
+        <input id="flat" type="checkbox" onchange="updateStyle(this.form)">
+      <td>
+        <label for="flat">Flat Design</label>
+    <tr>
+      <td>
+        <input type="color" id="color" value="#AE99D6" oninput="updateStyle(this.form)">
+      <td>
+        <label for="color">Color</label>
+    <tr>
+      <td>
+        <input type="range" id="fontSize" value="12" min="11" max="18" name="fontSize" oninput="updateStyle(this.form)">
+        <output for="fontSize" id="fontSizeOutput" style="width: 20px; display: inline-block">12</output>px
+      <td>
+        <label for="fontSize">Font Size</label>
+    <tr>
+      <td>
+      <td><button class="open-zammad-chat">Open Chat</button>
+    <tr>
+      <td class="log"><h2>Log</h2>
+      <td>
+    <tr>
+      <td colspan="2" class="log js-chatLogDisplay">
+  </table>
+</form>
+
+<script src="chat-no-jquery.min.js"></script>
+<script>
+  function getSearchParameters() {
+        var prmstr = window.location.search.substr(1);
+        return prmstr != null && prmstr != '' ? transformToAssocArray(prmstr) : {};
+  }
+  function transformToAssocArray( prmstr ) {
+      var params = {};
+      var prmarr = prmstr.split('&');
+      for ( var i = 0; i < prmarr.length; i++) {
+          var tmparr = prmarr[i].split('=');
+          params[tmparr[0]] = tmparr[1];
+      }
+      return params;
+  }
+  var hostname = window.location.hostname;
+  var port = window.location.port;
+  var params = getSearchParameters();
+  var host = 'ws://'+ (location.host || 'localhost').split(':')[0] +':6042'
+  if (params['port']) {
+    host = 'ws://' + hostname + ':' + params['port']
+  }
+  cssUrl = 'http://' + hostname + ':' + port + '/assets/chat/chat.css'
+
+  var chat = new ZammadChat({
+    chatId: 1,
+    host: host,
+    cssUrl: cssUrl,
+    debug: true,
+    background: '#494d52',
+    flat: true,
+    idleTimeout: 0.1,
+    idleTimeoutIntervallCheck: 0.11,
+    inactiveTimeout: 0.3,
+    inactiveTimeoutIntervallCheck: 0.31,
+    waitingListTimeout: 0.1,
+    waitingListTimeoutIntervallCheck: 0.11,
+  });
+
+  function updateStyle(form){
+    chat.el.classList.toggle('zammad-chat--flat', form.flat.checked);
+    var surfaces = document.querySelectorAll('.zammad-chat-header, .zammad-chat-message--customer .zammad-chat-message-body, .zammad-chat-button');
+    for(var i=0; i<surfaces.length; i++){
+      surfaces[i].style.background = form.color.value;
+    }
+    chat.options.background = form.color.value;
+    chat.el.style.fontSize = form.fontSize.value +'px';
+    form.fontSizeOutput.textContent = form.fontSize.value;
+  }
+</script>
+</body>
+</html>

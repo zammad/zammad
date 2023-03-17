@@ -5,15 +5,15 @@ class App.User extends App.Model
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
-    { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
-    { name: 'created_by_id',    display: 'Created by',    relation: 'User', readonly: 1 },
-    { name: 'created_at',       display: 'Created at',    tag: 'datetime',  readonly: 1 },
-    { name: 'updated_by_id',    display: 'Updated by',    relation: 'User', readonly: 1 },
-    { name: 'updated_at',       display: 'Updated at',    tag: 'datetime',  readonly: 1 },
+    { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
+    { name: 'firstname',        display: __('First name'),     tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'lastname',         display: __('Last name'),      tag: 'input',    type: 'text',     limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'email',            display: __('Email'),         tag: 'input',    type: 'email',    limit: 100, null: true, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'organization_id',  display: __('Organization'),  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
+    { name: 'created_by_id',    display: __('Created by'),    relation: 'User', readonly: 1 },
+    { name: 'created_at',       display: __('Created at'),    tag: 'datetime',  readonly: 1 },
+    { name: 'updated_by_id',    display: __('Updated by'),    relation: 'User', readonly: 1 },
+    { name: 'updated_at',       display: __('Updated at'),    tag: 'datetime',  readonly: 1 },
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
@@ -105,6 +105,7 @@ class App.User extends App.Model
       placement: placement
       vip: vip
       url: @imageUrl()
+      initials: @initials()
 
   isOutOfOffice: ->
     return false if @out_of_office isnt true
@@ -120,6 +121,9 @@ class App.User extends App.Model
       return true
     false
 
+  maxLoginFailedReached: ->
+    return @login_failed > (parseInt(App.Config.get('password_max_login_failed')))
+
   imageUrl: ->
     return if !@image
     # set image url
@@ -127,7 +131,7 @@ class App.User extends App.Model
 
   @_fillUp: (data) ->
 
-    # set socal media links
+    # set social media links
     if data['accounts']
       for account of data['accounts']
         if account == 'twitter'
@@ -155,17 +159,27 @@ class App.User extends App.Model
     data
 
   searchResultAttributes: ->
+    classList = ['user', 'user-popover']
+    icon = 'user'
+
+    if @active is false
+      classList.push 'is-inactive'
+      icon = 'inactive-' + icon
+
     display: "#{@displayName()}"
     id:      @id
-    class:   'user user-popover'
+    class:   classList.join(' ')
     url:     @uiUrl()
-    icon:    'user'
+    icon:    icon
 
   activityMessage: (item) ->
+    return if !item
+    return if !item.created_by
+
     if item.type is 'create'
-      return App.i18n.translateContent('%s created User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated User |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated user |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'session started'
       return App.i18n.translateContent('%s started a new session', item.created_by.displayName())
     else if item.type is 'switch to'
@@ -237,7 +251,7 @@ class App.User extends App.Model
               if permission_key.substr(0, length) is requiredPermission.substr(0, length)
                 localAccess = true
 
-        # verify name.explicite permissions
+        # verify name.explicit permissions
         if !localAccess
           for part in parts
             if partString isnt ''
@@ -254,19 +268,31 @@ class App.User extends App.Model
       return access if access
     false
 
-  all_group_ids: (permission = 'full') ->
+  ###
+
+    Returns a list of all groups for which the user is permitted to perform the given permission key
+
+    user = App.User.find(3)
+    result = user.allGroupIds('change') # access to a given permission key
+
+  returns
+
+    ["1", "2"]
+
+  ###
+  allGroupIds: (permission = 'full') ->
     group_ids = []
-    user_group_ids = App.Session.get('group_ids')
+    user_group_ids = @group_ids
     if user_group_ids
       for local_group_id, local_permission of user_group_ids
         if _.include(local_permission, permission) || _.include(local_permission, 'full')
           group_ids.push local_group_id
 
-    user_role_ids = App.Session.get('role_ids')
+    user_role_ids = @role_ids
     if user_role_ids
       for role_id in user_role_ids
         if App.Role.exists(role_id)
-          role = App.Role.find(role_id)
+          role = App.Role.findNative(role_id)
           if role.group_ids
             for local_group_id, local_permission of role.group_ids
               if _.include(local_permission, permission) || _.include(local_permission, 'full')
@@ -275,11 +301,11 @@ class App.User extends App.Model
 
   @outOfOfficeTextPlaceholder: ->
     today = new Date()
-    outOfOfficeText = 'Christmas holiday'
+    outOfOfficeText = App.i18n.translateContent('Christmas holiday')
     if today.getMonth() < 3
-      outOfOfficeText = 'Easter holiday'
+      outOfOfficeText = App.i18n.translateContent('Easter holiday')
     else if today.getMonth() < 9
-      outOfOfficeText = 'Summer holiday'
+      outOfOfficeText = App.i18n.translateContent('Summer holiday')
     outOfOfficeText
 
   outOfOfficeText: ->
@@ -290,7 +316,7 @@ class App.User extends App.Model
 
     Checks if requester has given access level on requested.
     Possible access levels are: read, update and delete
-    See backend method User#access?
+    See backend policy UserPolicy
 
     requester = App.User.find(1)
     requested = App.User.find(3)
@@ -318,9 +344,12 @@ class App.User extends App.Model
     @sameOrganization?(requester)
 
   isChangeableBy: (requester) ->
+    # full access for admins
     return true if requester.permission('admin.user')
-    # allow agents to change customers
+    # forbid non-agents to change users
     return false if !requester.permission('ticket.agent')
+    # allow agents to change customers only
+    return false if @permission(['admin.user', 'ticket.agent'])
     @permission('ticket.customer')
 
   isDeleteableBy: (requester) ->
@@ -332,4 +361,100 @@ class App.User extends App.Model
   sameOrganization: (requester) ->
     return false if @organization_id is null
     return false if requester.organization_id is null
-    @organization_id == requester.organization_id
+    @isInOrganization(requester.organization_id)
+
+  lifetimeCustomerTicketsCount: ->
+    (@preferences.tickets_closed || 0) + (@preferences.tickets_open || 0)
+
+  isInOrganization: (organization_id) ->
+    _.contains(@allOrganizationIds(), organization_id)
+
+  allOrganizationIds: ->
+    result = []
+    if @organization_id
+      result.push(@organization_id)
+    if _.isArray(@organization_ids)
+      result = result.concat(@organization_ids)
+    _.uniq(result)
+
+  secondaryOrganizations: (offset, limit, callback) ->
+    organization_ids = []
+    missing_organization_ids = []
+    if _.isArray(@organization_ids)
+      organization_ids         = @organization_ids.slice(offset, limit)
+      missing_organization_ids = _.filter(organization_ids, (id) -> !App.Organization.findNative(id))
+
+    organizationResult = ->
+      organizations = []
+      for organization_id in organization_ids
+        organization = App.Organization.fullLocal(organization_id)
+        continue if !organization
+        organizations.push(organization)
+      return organizations
+
+    return callback(organizationResult()) if missing_organization_ids.length < 1
+
+    App.Ajax.request(
+      type: 'POST'
+      url: "#{@constructor.apiPath}/organizations/search"
+      data: JSON.stringify(
+        query: '*'
+        ids: missing_organization_ids
+        limit: limit
+        full:  true
+      )
+      processData: true,
+      success: (data, status, xhr) ->
+        App.Collection.loadAssets(data.assets)
+        callback(organizationResult())
+      error: (data, status) ->
+        callback([])
+    )
+
+  # Do NOT modify the return value of this method!
+  # It is a direct reference to a value in the App.User.irecords object.
+  @current: App.Session.get
+
+  displayName: ->
+    if !_.isEmpty(@firstname)
+      name = @firstname
+    if !_.isEmpty(@lastname)
+      if _.isEmpty(name)
+        name = ''
+      else
+        name = name + ' '
+      name = name + @lastname
+    return name if !_.isEmpty(name)
+    if @email
+      return @email
+    if @phone
+      return @phone
+    if @login
+      return @login
+    return '-'
+
+  displayNameLong: ->
+    if !_.isEmpty(@firstname)
+      name = @firstname
+    if !_.isEmpty(@lastname)
+      if _.isEmpty(name)
+        name = ''
+      else
+        name = name + ' '
+      name = name + @lastname
+    if !_.isEmpty(name)
+      if !_.isEmpty(@organization)
+        if typeof @organization is 'object'
+          name = "#{name} (#{@organization.name})"
+        else
+          name = "#{name} (#{@organization})"
+      else if !_.isEmpty(@department)
+        name = "#{name} (#{@department})"
+    return name if !_.isEmpty(name)
+    if @email
+      return @email
+    if @phone
+      return @phone
+    if @login
+      return @login
+    return '-'

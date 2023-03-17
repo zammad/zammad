@@ -1,25 +1,31 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Event::Login < Sessions::Event::Base
+  database_connection_required
+
+=begin
+
+Event module to start websocket session for new client connections.
+
+To execute this manually, just paste the following into the browser console
+
+  App.WebSocket.send({event:'login', session_id: '123'})
+
+=end
 
   def run
 
     # get user_id
     session = nil
-    if @is_web_socket
-      ActiveRecord::Base.establish_connection
-    end
 
     app_version = AppVersion.event_data
 
     if @payload && @payload['session_id']
-      session = ActiveRecord::SessionStore::Session.find_by(session_id: @payload['session_id'])
-    end
-
-    if @is_web_socket
-      ActiveRecord::Base.remove_connection
+      private_session_id = Rack::Session::SessionId.new(@payload['session_id']).private_id
+      session = ActiveRecord::SessionStore::Session.find_by(session_id: private_session_id)
     end
 
     new_session_data = {}
-
     if session&.data && session.data['user_id']
       new_session_data = {
         'id' => session.data['user_id'],

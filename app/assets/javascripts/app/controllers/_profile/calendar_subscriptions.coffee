@@ -1,6 +1,6 @@
-class CalendarSubscriptions extends App.ControllerSubContent
+class ProfileCalendarSubscriptions extends App.ControllerSubContent
   requiredPermission: 'user_preferences.calendar+ticket.agent'
-  header: 'Calendar'
+  header: __('Calendar')
   elements:
     'input[type=checkbox]': 'options'
     'output': 'output'
@@ -77,7 +77,7 @@ class CalendarSubscriptions extends App.ControllerSubContent
       =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successful!')
+          msg:  App.i18n.translateContent('Update successful.')
         )
       true
     )
@@ -90,4 +90,4 @@ class CalendarSubscriptions extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: CalendarSubscriptions }, 'NavBarProfile')
+App.Config.set('CalendarSubscriptions', { prio: 3000, name: __('Calendar'), parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: ProfileCalendarSubscriptions }, 'NavBarProfile')

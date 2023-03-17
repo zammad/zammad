@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
@@ -7,10 +9,10 @@ RSpec.describe Import::OTRS::DynamicField::TextArea do
   it 'imports an OTRS TextArea DynamicField' do
 
     zammad_structure = {
-      object:  'Ticket',
-      name:    'text_area_example',
-      display: 'TextArea Example',
-      screens: {
+      object:        'Ticket',
+      name:          'text_area_example',
+      display:       'TextArea Example',
+      screens:       {
         view: {
           '-all-' => {
             shown: true
@@ -24,9 +26,10 @@ RSpec.describe Import::OTRS::DynamicField::TextArea do
       updated_by_id: 1,
       data_type:     'textarea',
       data_option:   {
-        default: '',
-        rows:    '20',
-        null:    true
+        default:   '',
+        rows:      '20',
+        null:      true,
+        maxlength: 3000,
       }
     }
 

@@ -1,0 +1,9 @@
+<div class="sidebar-block-header">
+  <h2><%- @T('Linked Tickets') %></h2>
+</div>
+
+<%- @V('generic/ticket_list', show_max: 5, tickets: @tickets, object: 'Ticket', editable: @editable) %>
+
+<a class="btn btn--action btn--small js-add" href="#">
+  <%- @Icon('plus-small') %> <span><%- @T('Add') %></span>
+</a>

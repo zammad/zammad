@@ -31,6 +31,14 @@ class App.PrettyDate
 
     if type is undefined && window.App && window.App.Config
       type = window.App.Config.get('pretty_date_format')
+
+    # YYYY-MM-DD HH::MM
+    if type is 'timestamp'
+      string = App.i18n.translateTimestamp(time)
+      if escalation
+        string = "<span #{style}>#{string}</span>"
+      return string
+
     if type is 'absolute' && (direction is 'past' || direction is 'future')
       weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       weekday = weekdays[created.getDay()]
@@ -51,7 +59,7 @@ class App.PrettyDate
       else
         string = "#{App.i18n.translateInline(weekday)} #{App.i18n.translateTimestamp(time)}"
       if escalation
-        string = "<span #{style}>#{string}</b>"
+        string = "<span #{style}>#{string}</span>"
       return string
 
     if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 7 )
@@ -78,7 +86,7 @@ class App.PrettyDate
         else
           string = App.i18n.translateInline('in %s', string)
         if escalation
-          string = "<span #{style}>#{string}</b>"
+          string = "<span #{style}>#{string}</span>"
         return string
 
     # hours
@@ -102,7 +110,7 @@ class App.PrettyDate
         else
           string = App.i18n.translateInline('in %s', string)
         if escalation
-          string = "<span #{style}>#{string}</b>"
+          string = "<span #{style}>#{string}</span>"
         return string
 
     # minutes
@@ -122,10 +130,22 @@ class App.PrettyDate
     else
       string = App.i18n.translateInline('in %s', string)
     if escalation
-      string = "<span #{style}>#{string}</b>"
+      string = "<span #{style}>#{string}</span>"
     return string
 
   @s: (num, digits) ->
     while num.toString().length < digits
       num = '0' + num
     num
+
+  @getISOWeeks: (year) ->
+    dayNumber   = new Date("#{year}-01-01").getDay()
+    isLeap      = new Date("#{year}-02-29").getMonth() == 1
+
+
+    # check for a Jan 1 that's a Thursday or a leap year that has a
+    # Wednesday jan 1. Otherwise it's 52
+    if dayNumber == 4 || isLeap && dayNumber == 3
+      53
+    else
+      52

@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Maintenance extends App.ControllerSubContent
   requiredPermission: 'admin.maintenance'
-  header: 'Maintenance'
+  header: __('Maintenance')
   events:
     'change .js-modeSetting input': 'setMode'
     'change .js-loginSetting input': 'setLogin'
@@ -52,7 +52,7 @@ class Index extends App.ControllerSubContent
       )
     if value
       new App.ControllerConfirm(
-        message: 'Sure?'
+        message: __('Are you sure?')
         callback: callback
         onCancel: =>
           @modeSetting.prop('checked', false)
@@ -71,7 +71,7 @@ class Index extends App.ControllerSubContent
     App.Setting.set('maintenance_login_message', params.message)
     @notify
       type:      'success'
-      msg:       App.i18n.translateContent('Update successful!')
+      msg:       App.i18n.translateContent('Update successful.')
       removeAll: true
 
   sendMessage: (e) ->
@@ -88,4 +88,4 @@ class Index extends App.ControllerSubContent
       removeAll: true
     @render()
 
-App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, permission: ['admin.maintenance'] }, 'NavBarAdmin')
+App.Config.set('Maintenance', { prio: 3600, name: __('Maintenance'), parent: '#system', target: '#system/maintenance', controller: Maintenance, permission: ['admin.maintenance'] }, 'NavBarAdmin')

@@ -1,0 +1,78 @@
+fragment ticketAttributes on Ticket {
+  id
+  internalId
+  number
+  title
+  createdAt
+  escalationAt
+  updatedAt
+  pendingTime
+  owner {
+    id
+    internalId
+    firstname
+    lastname
+  }
+  customer {
+    id
+    internalId
+    firstname
+    lastname
+    fullname
+    image
+    vip
+    active
+    outOfOffice
+    email
+    organization {
+      id
+      internalId
+      name
+      active
+      objectAttributeValues {
+        ...objectAttributeValues
+      }
+    }
+    hasSecondaryOrganizations
+    policy {
+      update
+    }
+  }
+  organization {
+    id
+    internalId
+    name
+  }
+  state {
+    id
+    name
+    stateType {
+      name
+    }
+  }
+  group {
+    id
+    name
+    emailAddress {
+      name
+      emailAddress
+    }
+  }
+  priority {
+    id
+    name
+    defaultCreate
+    uiColor
+  }
+  objectAttributeValues {
+    ...objectAttributeValues
+  }
+  policy {
+    update
+    agentReadAccess
+  }
+  tags
+  subscribed
+  preferences
+  stateColorCode
+}

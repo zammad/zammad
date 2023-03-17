@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Telegram
 
@@ -9,7 +9,7 @@ class Channel::Driver::Telegram
     {
       adapter: 'telegram',
       auth: {
-        api_key:       api_key
+        api_key: api_key
       },
     },
     telegram_attributes,
@@ -25,9 +25,9 @@ class Channel::Driver::Telegram
 
     options = check_external_credential(options)
 
-    @client = Telegram.new(options[:auth][:api_key])
-    message = @client.from_article(article)
-    message
+    @client = TelegramHelper.new(options[:auth][:api_key])
+    @client.from_article(article)
+
   end
 
 =begin
@@ -50,6 +50,7 @@ returns
     if options[:auth] && options[:auth][:external_credential_id]
       external_credential = ExternalCredential.find_by(id: options[:auth][:external_credential_id])
       raise "No such ExternalCredential.find(#{options[:auth][:external_credential_id]})" if !external_credential
+
       options[:auth][:api_key] = external_credential.credentials['api_key']
     end
     options

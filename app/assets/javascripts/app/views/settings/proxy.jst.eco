@@ -1,24 +1,24 @@
 <form class="settings-entry" id="<%= @setting.name %>">
   <h2><%- @T(@setting.title) %></h2>
-  <p class="help-text"><%- @T('Proxy address.') %></p>
+  <p class="help-text"><%- @T('Proxy address') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
       <input type="text" name="proxy" value="<%= @proxy %>" placeholder="proxy.example.com:3128" class="form-control">
     </div>
   </div>
-  <p class="help-text"><%- @T('Username for proxy connection.') %></p>
+  <p class="help-text"><%- @T('Username for proxy connection') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
       <input type="text" name="proxy_username" value="<%= @proxy_username %>" class="form-control">
     </div>
   </div>
-  <p class="help-text"><%- @T('Password for proxy connection.') %></p>
+  <p class="help-text"><%- @T('Password for proxy connection') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
-      <input type="text" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
+      <input type="password" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
     </div>
   </div>
-  <p class="help-text"><%- @T('No proxy for the following hosts.') %></p>
+  <p class="help-text"><%- @T('Do not use the proxy for the following hosts.') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
       <input type="text" name="proxy_no" value="<%= @proxy_no %>" placeholder="localhost,127.0.0.1" class="form-control">

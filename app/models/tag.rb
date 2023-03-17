@@ -1,16 +1,11 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag < ApplicationModel
+  include Tag::WritesToTicketHistory
+  include HasTransactionDispatcher
 
-  # rubocop:disable Rails/InverseOf
-  belongs_to :tag_object, class_name: 'Tag::Object'
-  belongs_to :tag_item,   class_name: 'Tag::Item'
-  # rubocop:enable Rails/InverseOf
-
-  # the noop is needed since Layout/EmptyLines detects
-  # the block commend below wrongly as the measurement of
-  # the wanted indentation of the rubocop re-enabling above
-  def noop; end
+  belongs_to :tag_object, class_name: 'Tag::Object', optional: true
+  belongs_to :tag_item,   class_name: 'Tag::Item', optional: true
 
 =begin
 
@@ -43,8 +38,8 @@ add tags for certain object
     # create history
     Tag.create(
       tag_object_id: tag_object_id,
-      tag_item_id: tag_item_id,
-      o_id: data[:o_id],
+      tag_item_id:   tag_item_id,
+      o_id:          data[:o_id],
       created_by_id: data[:created_by_id],
     )
 
@@ -91,8 +86,8 @@ or by ids
     # create history
     result = Tag.where(
       tag_object_id: data[:tag_object_id],
-      tag_item_id: data[:tag_item_id],
-      o_id: data[:o_id],
+      tag_item_id:   data[:tag_item_id],
+      o_id:          data[:o_id],
     )
     result.each(&:destroy)
 
@@ -125,9 +120,62 @@ remove all tags of certain object
     # create history
     result = Tag.where(
       tag_object_id: data[:tag_object_id],
-      o_id: data[:o_id],
+      o_id:          data[:o_id],
     )
     result.each(&:destroy)
+    true
+  end
+
+=begin
+
+update tags for certain object
+
+  Tag.tag_update(
+    object: 'Ticket',
+    o_id: ticket.id,
+    items: ['some tag', ['another tag']],
+    created_by_id: current_user.id,
+  )
+
+=end
+
+  def self.tag_update(object:, o_id:, items:, created_by_id: nil)
+    given_tags = items.map(&:strip!)
+    old_tags   = tag_list(object: object, o_id: o_id)
+
+    tag_object_id = Tag::Object.lookup_by_name_and_create(object).id
+
+    added_tags   = given_tags - old_tags
+    removed_tags = old_tags - given_tags
+
+    added_tags.each do |tag_name|
+      tag_item_id = Tag::Item.lookup_by_name_and_create(tag_name).id
+
+      Tag.create(
+        tag_object_id: tag_object_id,
+        tag_item_id:   tag_item_id,
+        o_id:          o_id,
+        created_by_id: created_by_id,
+      )
+    end
+
+    if removed_tags.any?
+      tag_item_ids = removed_tags.map { |tag_name| Tag::Item.lookup_by_name_and_create(tag_name).id }
+
+      Tag
+        .where(
+          tag_object_id: tag_object_id,
+          tag_item_id:   tag_item_ids,
+          o_id:          o_id,
+        )
+        .destroy_all
+    end
+
+    # touch reference
+    if added_tags.any? || removed_tags.any?
+      touch_reference_by_params(object: object, o_id: o_id)
+    end
+
     true
   end
 
@@ -147,162 +195,42 @@ returns
 =end
 
   def self.tag_list(data)
-    tag_object_id_requested = Tag::Object.lookup(name: data[:object])
-    return [] if !tag_object_id_requested
-
-    tag_search = Tag.where(
-      tag_object_id: tag_object_id_requested,
-      o_id: data[:o_id],
-    ).order(:id)
-
-    tag_search.each_with_object([]) do |tag, result|
-      tag_item = Tag::Item.lookup(id: tag.tag_item_id)
-      next if !tag_item
-      result.push tag_item.name
-    end
+    Tag.joins(:tag_item, :tag_object)
+       .where(o_id: data[:o_id], tag_objects: { name: data[:object] })
+       .reorder(:id)
+       .pluck('tag_items.name')
   end
 
-  class Object < ApplicationModel
-    validates :name, presence: true
-
 =begin
 
-lookup by name and create tag item
+Lists references to objects with certain tag. Optionally filter by type.
+Returns array containing object class name and ID.
 
-  tag_object = Tag::Object.lookup_by_name_and_create('some tag')
+@param tag [String] tag to lookup
+@param object [String] optional name of the class to search in
+
+@example
+
+references = Tag.tag_references(
+  tag: 'Tag',
+  object: 'Ticket'
+)
+
+references # [['Ticket', 1], ['Ticket', 4], ...]
+
+@return [Array<Array<String, Integer>>]
 
 =end
 
-    def self.lookup_by_name_and_create(name)
-      name.strip!
+  def self.tag_references(tag:, object: nil)
+    tag_item = Tag::Item.find_by name: tag
 
-      tag_object = Tag::Object.lookup(name: name)
-      return tag_object if tag_object
+    return [] if tag_item.nil?
 
-      Tag::Object.create(name: name)
-    end
+    output = Tag.where(tag_item: tag_item).joins(:tag_object)
 
+    output = output.where(tag_objects: { name: object }) if object.present?
+
+    output.pluck(:'tag_objects.name', :o_id)
   end
-
-  class Item < ApplicationModel
-    validates   :name, presence: true
-    before_save :fill_namedowncase
-
-=begin
-
-lookup by name and create tag item
-
-  tag_item = Tag::Item.lookup_by_name_and_create('some tag')
-
-=end
-
-    def self.lookup_by_name_and_create(name)
-      name.strip!
-
-      tag_item = Tag::Item.lookup(name: name)
-      return tag_item if tag_item
-
-      Tag::Item.create(name: name)
-    end
-
-=begin
-
-rename tag items
-
-  Tag::Item.rename(
-    id: existing_tag_item_to_rename,
-    name: 'new tag item name',
-    updated_by_id: current_user.id,
-  )
-
-=end
-
-    def self.rename(data)
-
-      new_tag_name         = data[:name].strip
-      old_tag_item         = Tag::Item.find(data[:id])
-      already_existing_tag = Tag::Item.lookup(name: new_tag_name)
-
-      # check if no remame is needed
-      return true if new_tag_name == old_tag_item.name
-
-      # merge old with new tag if already existing
-      if already_existing_tag
-
-        # re-assign old tag to already existing tag
-        Tag.where(tag_item_id: old_tag_item.id).each do |tag|
-
-          # check if tag already exists on object
-          if Tag.find_by(tag_object_id: tag.tag_object_id, o_id: tag.o_id, tag_item_id: already_existing_tag.id)
-            Tag.tag_remove(
-              tag_object_id: tag.tag_object_id,
-              o_id: tag.o_id,
-              tag_item_id: old_tag_item.id,
-            )
-            next
-          end
-
-          # re-assign
-          tag_object = Tag::Object.lookup(id: tag.tag_object_id)
-          tag.tag_item_id = already_existing_tag.id
-          tag.save
-
-          # touch reference objects
-          Tag.touch_reference_by_params(
-            object: tag_object.name,
-            o_id: tag.o_id,
-          )
-        end
-
-        # delete not longer used tag
-        old_tag_item.destroy
-        return true
-      end
-
-      # update new tag name
-      old_tag_item.name = new_tag_name
-      old_tag_item.save
-
-      # touch reference objects
-      Tag.where(tag_item_id: old_tag_item.id).each do |tag|
-        tag_object = Tag::Object.lookup(id: tag.tag_object_id)
-        Tag.touch_reference_by_params(
-          object: tag_object.name,
-          o_id: tag.o_id,
-        )
-      end
-
-      true
-    end
-
-=begin
-
-remove tag item (destroy with reverences)
-
-  Tag::Item.remove(id)
-
-=end
-
-    def self.remove(id)
-
-      # search for references, destroy and touch
-      Tag.where(tag_item_id: id).each do |tag|
-        tag_object = Tag::Object.lookup(id: tag.tag_object_id)
-        tag.destroy
-        Tag.touch_reference_by_params(
-          object: tag_object.name,
-          o_id: tag.o_id,
-        )
-      end
-      Tag::Item.find(id).destroy
-      true
-    end
-
-    def fill_namedowncase
-      self.name_downcase = name.downcase
-      true
-    end
-
-  end
-
 end

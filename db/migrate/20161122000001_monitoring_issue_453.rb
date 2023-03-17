@@ -1,33 +1,35 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class MonitoringIssue453 < ActiveRecord::Migration[4.2]
   def up
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Monitoring Token',
-      name: 'monitoring_token',
-      area: 'HealthCheck::Base',
+      title:       'Monitoring Token',
+      name:        'monitoring_token',
+      area:        'HealthCheck::Base',
       description: 'Token for Monitoring.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: false,
-            name: 'monitoring_token',
-            tag: 'input',
+            null:    false,
+            name:    'monitoring_token',
+            tag:     'input',
           },
         ],
       },
-      state: SecureRandom.urlsafe_base64(40),
+      state:       SecureRandom.urlsafe_base64(40),
       preferences: {
         permission: ['admin.monitoring'],
       },
-      frontend: false,
+      frontend:    false,
     )
 
     Permission.create_if_not_exists(
-      name: 'admin.monitoring',
-      note: 'Manage %s',
+      name:        'admin.monitoring',
+      note:        'Manage %s',
       preferences: {
         translations: ['Monitoring']
       },

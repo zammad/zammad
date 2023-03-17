@@ -1,11 +1,11 @@
-class Index extends App.ControllerSubContent
+class ChannelTelegram extends App.ControllerSubContent
   requiredPermission: 'admin.channel_telegram'
   events:
-    'click .js-new':       'new'
-    'click .js-edit':      'edit'
-    'click .js-delete':    'delete'
-    'click .js-disable':   'disable'
-    'click .js-enable':    'enable'
+    'click .js-new':     'new'
+    'click .js-edit':    'edit'
+    'click .js-delete':  'delete'
+    'click .js-disable': 'disable'
+    'click .js-enable':  'enable'
 
   constructor: ->
     super
@@ -63,7 +63,7 @@ class Index extends App.ControllerSubContent
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     new App.ControllerConfirm(
-      message: 'Sure?'
+      message: __('Are you sure?')
       callback: =>
         @ajax(
           id:   'telegram_delete'
@@ -104,7 +104,7 @@ class Index extends App.ControllerSubContent
     )
 
 class BotAdd extends App.ControllerModal
-  head: 'Add Telegram Bot'
+  head: __('Add Telegram Bot')
   shown: true
   button: 'Add'
   buttonCancel: true
@@ -114,14 +114,14 @@ class BotAdd extends App.ControllerModal
     content = $(App.view('telegram/bot_add')())
     createGroupSelection = (selected_id) ->
       return App.UiElement.select.render(
-        name: 'group_id'
-        multiple: false
-        limit: 100
-        null: false
-        relation: 'Group'
+        name:       'group_id'
+        multiple:   false
+        limit:      100
+        null:       false
+        relation:   'Group'
         nulloption: true
-        value: selected_id
-        class: 'form-control--small'
+        value:      selected_id
+        class:      'form-control--small'
       )
 
     content.find('.js-select').on('click', (e) =>
@@ -149,11 +149,12 @@ class BotAdd extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save Bot.')
+        error_message = App.i18n.translateContent(data.error || __('The Telegram bot could not be saved.'))
+        @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
 class BotEdit extends App.ControllerModal
-  head: 'Telegram Account'
+  head: __('Telegram Account')
   shown: true
   buttonCancel: true
 
@@ -162,14 +163,14 @@ class BotEdit extends App.ControllerModal
 
     createGroupSelection = (selected_id) ->
       return App.UiElement.select.render(
-        name: 'group_id'
-        multiple: false
-        limit: 100
-        null: false
-        relation: 'Group'
+        name:       'group_id'
+        multiple:   false
+        limit:      100
+        null:       false
+        relation:   'Group'
         nulloption: true
-        value: selected_id
-        class: 'form-control--small'
+        value:      selected_id
+        class:      'form-control--small'
       )
 
     content.find('.js-messagesGroup').replaceWith createGroupSelection(@channel.group_id)
@@ -196,7 +197,8 @@ class BotEdit extends App.ControllerModal
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @formEnable(e)
-        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
+        error_message = App.i18n.translateContent(data.error || __('The changes could not be saved.'))
+        @el.find('.alert').removeClass('hidden').text(error_message)
     )
 
-App.Config.set('Telegram', { prio: 5100, name: 'Telegram', parent: '#channels', target: '#channels/telegram', controller: Index, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')
+App.Config.set('Telegram', { prio: 5100, name: __('Telegram'), parent: '#channels', target: '#channels/telegram', controller: ChannelTelegram, permission: ['admin.channel_telegram'] }, 'NavBarAdmin')

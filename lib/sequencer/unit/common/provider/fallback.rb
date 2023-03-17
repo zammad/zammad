@@ -1,16 +1,10 @@
-class Sequencer
-  class Unit
-    module Common
-      module Provider
-        class Fallback < Sequencer::Unit::Common::Provider::Attribute
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          private
+class Sequencer::Unit::Common::Provider::Fallback < Sequencer::Unit::Common::Provider::Attribute
 
-          def ignore?
-            state.provided?(attribute) || super
-          end
-        end
-      end
-    end
+  private
+
+  def ignore?
+    state.provided?(attribute) || super
   end
 end

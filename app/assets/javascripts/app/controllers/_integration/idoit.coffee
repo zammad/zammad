@@ -1,9 +1,9 @@
-class Index extends App.ControllerIntegrationBase
+class Idoit extends App.ControllerIntegrationBase
   featureIntegration: 'idoit_integration'
   featureName: 'i-doit'
   featureConfig: 'idoit_config'
   description: [
-    ['This service allows you to connect %s with %s.', 'i-doit', 'Zammad']
+    [__('This service allows you to connect %s with %s.'), 'i-doit', 'Zammad']
   ]
   events:
     'change .js-switch input': 'switch'
@@ -58,7 +58,7 @@ class Form extends App.Controller
       )
       success: (data, status, xhr) =>
         if data.result is 'failed'
-          new App.ControllerErrorModal(
+          new App.ErrorModal(
             message: data.message
             container: @el.closest('.content')
           )
@@ -73,7 +73,7 @@ class Form extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || 'Unable to save!')
+          msg:  App.i18n.translateContent(details.error_human || details.error || __('Saving failed.'))
         )
     )
 
@@ -86,8 +86,8 @@ App.Config.set(
   {
     name: 'i-doit'
     target: '#system/integration/idoit'
-    description: 'CMDB to document complex relations of your network components.'
-    controller: Index
+    description: __('CMDB to document complex relations of your network components.')
+    controller: Idoit
     state: State
   }
   'NavBarIntegrations'

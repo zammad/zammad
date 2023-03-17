@@ -1,20 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContacts
-          class FolderIds < Sequencer::Unit::Common::Provider::Fallback
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            provides :ews_folder_ids
+class Sequencer::Unit::Import::Exchange::FolderContacts::FolderIds < Sequencer::Unit::Common::Provider::Fallback
 
-            private
+  provides :ews_folder_ids
 
-            def ews_folder_ids
-              ::Import::Exchange.config[:folders]
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def ews_folder_ids
+    ::Import::Exchange.config[:folders]
   end
 end

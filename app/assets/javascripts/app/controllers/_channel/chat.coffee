@@ -1,11 +1,11 @@
-class App.ChannelChat extends App.ControllerSubContent
+class ChannelChat extends App.ControllerSubContent
   requiredPermission: 'admin.channel_chat'
-  header: 'Chat'
+  header: __('Chat')
   events:
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
     'submit .js-demo-head': 'onUrlSubmit'
-    'click .js-selectBrowserWidth': 'selectBrowserWidth'
+    'click .js-selectBrowserSize': 'selectBrowserSize'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
     'change .js-chatSetting input': 'toggleChatSetting'
@@ -32,80 +32,79 @@ class App.ChannelChat extends App.ControllerSubContent
       name: 'chatId'
       default: '1'
       type: 'Number'
-      description: 'Identifier of the chat-topic.'
+      description: __('Identifier of the chat topic.')
     }
     {
       name: 'show'
       default: true
       type: 'Boolean'
-      description: 'Show the chat when ready.'
+      description: __('Show the chat when ready.')
     }
     {
       name: 'target'
       default: "$('body')"
       type: 'jQuery Object'
-      description: 'Where to append the chat to.'
+      description: __('Where to append the chat to.')
     }
     {
       name: 'host'
       default: '(Empty)'
       type: 'String'
-      description: "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
+      description: __("If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host.")
       descriptionSubstitute: window.location.origin
     }
     {
       name: 'debug'
       default: false
       type: 'Boolean'
-      description: 'Enables console logging.'
+      description: __('Enables console logging.')
     }
     {
       name: 'title'
       default: "'<strong>Chat</strong> with us!'"
       type: 'String'
-      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+      description: __('Welcome Title shown on the closed chat. Can contain HTML.')
     }
     {
       name: 'fontSize'
       default: 'undefined'
       type: 'String'
-      description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
+      description: __('CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits the font-size of the website.')
     }
     {
       name: 'flat'
       default: 'false'
       type: 'Boolean'
-      description: 'Removes the shadows for a flat look.'
+      description: __('Removes the shadows for a flat look.')
     }
     {
       name: 'buttonClass'
       default: "'open-zammad-chat'"
       type: 'String'
-      description: 'Add this class to a button on your page that should open the chat.'
+      description: __('Add this class to a button on your page that should open the chat.')
     }
     {
       name: 'inactiveClass'
       default: "'is-inactive'"
       type: 'String'
-      description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
+      description: __('This class gets added to the button on initialization and will be removed once the chat connection is established.')
     }
     {
       name: 'cssAutoload'
       default: 'true'
       type: 'Boolean'
-      description: 'Automatically loads the chat.css file. If you want to use your own css, just set it to false.'
+      description: __('Automatically loads the chat.css file. If you want to use your own css, just set it to false.')
     }
     {
       name: 'cssUrl'
       default: 'undefined'
       type: 'String'
-      description: 'Location of an external chat.css file.'
+      description: __('Location of an external chat.css file.')
     }
   ]
 
   isOpen: true
-  browserWidth: 1280
-  browserWidthMax: 1280
+  browserSize: 'desktop'
   previewUrl: ''
   previewScale: 1
 
@@ -167,45 +166,33 @@ class App.ChannelChat extends App.ControllerSubContent
     $(window).off 'resize.chat-designer'
     @website.off('click.eyedropper')
 
-  selectBrowserWidth: (event) =>
-    tab = $(event.target).closest('[data-value]')
+  selectBrowserSize: (event) =>
+    tab = $(event.target).closest('[data-size]')
 
     # select tab
-    tab.addClass('is-selected').siblings().removeClass('is-selected')
-    @browserWidth = tab.attr('data-value')
+    tab.addClass('active').siblings().removeClass('active')
+    @browserSize = tab.attr('data-size')
     @updatePreview()
 
   updatePreview: (animate =  true) =>
-    width = parseInt @browserWidth, 10
-
     # reset zoom
     @chat
       .removeClass('is-fullscreen')
       .toggleClass('no-transition', !animate)
       .css 'transform', "translateY(#{ @getChatOffset() }px)"
-    @browser.css('width', '')
-    @website.css
-      transform: ''
-      width: ''
-      height: ''
+    @browser.attr('data-size', @browserSize)
     @previewScale = 1
 
-    return if @browserWidth is 'fit'
-
-    if width < @el.width() && width == 375
-      @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
-      @browser.css('width', "#{ width }px")
-    else
-      if @el.width() > width && width == @browserWidthMax
-        @previewScale = 1
-      else
-        @previewScale = @el.width()/width
-
-      @chat.css 'transform', "translateY(#{ @getChatOffset() * @previewScale }px) scale(#{ @previewScale })"
-      @website.css
-        transform: "scale(#{ @previewScale })"
-        width: @el.width() / @previewScale
-        height: @browserBody.height() / @previewScale
+    switch @browserSize
+      when 'mobile'
+        @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
+      when '1:1'
+        @previewScale = Math.max(1, 1280/@el.width())
+        @website.css 'transform', "scale(#{ @previewScale })"
+      when 'desktop'
+        scale = Math.min(1, @el.width()/1280) # don't use it for the previewScale (used for the color picker)
+        @website.css 'transform', ''
+        @chat.css 'transform', "translateY(#{ @getChatOffset() * scale }px) scale(#{ scale })"
 
   getChatOffset: (fullscreen) ->
     return 0 if @isOpen
@@ -217,7 +204,7 @@ class App.ChannelChat extends App.ControllerSubContent
 
   onUrlSubmit: (event) ->
     event.preventDefault() if event
-    @urlInput.focus()
+    @urlInput.trigger('focus')
     @changeDemoWebsite()
 
   changeDemoWebsite: ->
@@ -296,8 +283,11 @@ class App.ChannelChat extends App.ControllerSubContent
       @eyedropper.addClass('is-active')
 
   onColorPicked: (event) =>
-    x = event.pageX - @website.offset().left
-    y = event.pageY - @website.offset().top
+    website_x = @website.position().left
+    website_y = @website.position().top
+
+    relative_x = event.pageX - @browserBody.offset().left
+    relative_y = event.pageY - @browserBody.offset().top
 
     image = new Image()
     image.src = @_screenshotSource
@@ -305,11 +295,11 @@ class App.ChannelChat extends App.ControllerSubContent
     canvas = document.createElement('canvas')
     ctx = canvas.getContext('2d')
 
-    canvas.width = image.width
-    canvas.height = image.height
+    canvas.width = @browserBody.width()
+    canvas.height = @browserBody.height()
 
-    ctx.drawImage(image, 0, 0, @previewScale * canvas.width, @previewScale * canvas.height)
-    pixels = ctx.getImageData(x, y, 1, 1).data
+    ctx.drawImage(image, website_x, website_y, @website.width() * @previewScale, @website.width() * @previewScale)
+    pixels = ctx.getImageData(relative_x, relative_y, 1, 1).data
 
     @colorField.val("rgb(#{pixels.slice(0,3).join(',')})").trigger('change')
 
@@ -363,7 +353,7 @@ class App.ChannelChat extends App.ControllerSubContent
     @code.each (i, block) ->
       hljs.highlightBlock block
 
-App.Config.set('Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
+App.Config.set('Chat', { prio: 4000, name: __('Chat'), parent: '#channels', target: '#channels/chat', controller: ChannelChat, permission: ['admin.channel_chat'] }, 'NavBarAdmin')
 
 class Topics extends App.Controller
   events:
@@ -383,9 +373,9 @@ class Topics extends App.Controller
   new: (e) =>
     new App.ControllerGenericNew(
       pageData:
-        title: 'Chats'
-        object: 'Chat'
-        objects: 'Chats'
+        title: __('Chats')
+        object: __('Chat')
+        objects: __('Chats')
       genericObject: 'Chat'
       callback:   @render
       container:  @el.closest('.content')
@@ -399,7 +389,7 @@ class Topics extends App.Controller
       id:        id
       genericObject: 'Chat'
       pageData:
-        object: 'Chat'
+        object: __('Chat')
       container: @el.closest('.content')
       callback:  @render
     )

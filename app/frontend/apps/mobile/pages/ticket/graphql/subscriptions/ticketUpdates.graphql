@@ -1,0 +1,17 @@
+subscription ticketUpdates($ticketId: ID!) {
+  ticketUpdates(ticketId: $ticketId) {
+    ticket {
+      ...ticketAttributes
+      articleCount
+      mentions {
+        totalCount
+        edges {
+          node {
+            ...ticketMention
+          }
+          cursor
+        }
+      }
+    }
+  }
+}

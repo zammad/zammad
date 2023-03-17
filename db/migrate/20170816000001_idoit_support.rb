@@ -1,21 +1,23 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class IdoitSupport < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'i-doit integration',
-      name: 'idoit_integration',
-      area: 'Integration::Switch',
+      title:       'i-doit integration',
+      name:        'idoit_integration',
+      area:        'Integration::Switch',
       description: 'Defines if i-doit (http://www.i-doit) is enabled or not.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'idoit_integration',
-            tag: 'boolean',
+            null:    true,
+            name:    'idoit_integration',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,26 +25,26 @@ class IdoitSupport < ActiveRecord::Migration[4.2]
           },
         ],
       },
-      state: false,
+      state:       false,
       preferences: {
-        prio: 1,
+        prio:           1,
         authentication: true,
-        permission: ['admin.integration'],
+        permission:     ['admin.integration'],
       },
-      frontend: true
+      frontend:    true
     )
     Setting.create_if_not_exists(
-      title: 'i-doit config',
-      name: 'idoit_config',
-      area: 'Integration::Idoit',
+      title:       'i-doit config',
+      name:        'idoit_config',
+      area:        'Integration::Idoit',
       description: 'Defines the i-doit config.',
-      options: {},
-      state: {},
+      options:     {},
+      state:       {},
       preferences: {
-        prio: 2,
+        prio:       2,
         permission: ['admin.integration'],
       },
-      frontend: false,
+      frontend:    false,
     )
   end
 

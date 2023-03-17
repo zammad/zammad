@@ -1,18 +1,10 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module SubSequence
-          class TicketSubObject < Sequencer::Unit::Import::Zendesk::SubSequence::SubObject
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Zendesk::SubSequence::TicketSubObject < Sequencer::Unit::Import::Zendesk::SubSequence::SubObject
 
-            def sequence_name
-              "Import::Zendesk::Ticket::#{resource_klass}"
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def sequence_name
+    "Import::Zendesk::Ticket::#{resource_klass}"
   end
 end

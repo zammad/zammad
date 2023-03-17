@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class Article
@@ -14,9 +16,15 @@ module Import
         Subject:     :subject,
         InReplyTo:   :in_reply_to,
         MessageID:   :message_id,
-        #ReplyTo:    :reply_to,
+        # ReplyTo:    :reply_to,
         References:  :references,
         ContentType: :content_type,
+        ChangeTime:  :updated_at,
+        CreateTime:  :created_at,
+        ChangeBy:    :updated_by_id,
+        CreateBy:    :created_by_id,
+
+        # Support also the legacy key names (lower then OTRS 6)
         Changed:     :updated_at,
         Created:     :created_at,
         ChangedBy:   :updated_by_id,
@@ -46,12 +54,14 @@ module Import
 
       def create_or_update(article)
         return if updated?(article)
+
         create(article)
       end
 
       def updated?(article)
         @local_article = ::Ticket::Article.find_by(id: article[:id])
         return false if !@local_article
+
         log "update Ticket::Article.find_by(id: #{article[:id]})"
         @local_article.update!(article)
         true
@@ -82,6 +92,7 @@ module Import
           .merge(from_mapping(article))
           .merge(article_type(article))
           .merge(article_sender_type(article))
+          .merge(article_created_and_updated_by_id(article))
       end
 
       def map_content_type(mapped)
@@ -89,7 +100,8 @@ module Import
         # so Zammad can set the default content type
         mapped.delete(:content_type) if mapped[:content_type].blank?
         return mapped if !mapped[:content_type]
-        mapped[:content_type].sub!(/[;,]\s?.+?$/, '')
+
+        mapped[:content_type].sub!(%r{[;,]\s?.+?$}, '')
         mapped
       end
 
@@ -101,6 +113,41 @@ module Import
         {
           sender_id: @sender_type_id[article['SenderType']] || @sender_type_id['note-internal']
         }
+      end
+
+      def article_created_and_updated_by_id(article)
+        return {} if article['SenderType'] != 'customer'
+
+        created_by_id = get_article_created_by_id(article)
+        return {} if get_article_created_by_id(article) != 1
+        return {} if article['From'].blank?
+
+        user = Import::OTRS::ArticleCustomer.find(article)
+        return {} if !user
+
+        mapping = {
+          created_by_id: user.id,
+        }
+
+        updated_by_id = get_article_updated_by_id(article)
+        if !updated_by_id || updated_by_id == created_by_id
+          mapping[:updated_by_id] = user.id
+        end
+
+        mapping
+      end
+
+      def get_article_created_by_id(article)
+        return article['CreatedBy'].to_i if article['CreatedBy'].present?
+
+        article['CreateBy'].to_i
+      end
+
+      def get_article_updated_by_id(article)
+        return article['UpdatedBy'].to_i if article['UpdatedBy'].present?
+        return article['UpdateBy'].to_i if article['UpdateBy'].present?
+
+        nil
       end
 
       def initialize_article_sender_types
@@ -125,19 +172,19 @@ module Import
             type_id:  article_type_id_lookup('email'),
             internal: true
           },
-          'note-external' => {
+          'note-external'  => {
             type_id:  article_type_id_lookup('note'),
             internal: false
           },
-          'note-internal' => {
+          'note-internal'  => {
             type_id:  article_type_id_lookup('note'),
             internal: true
           },
-          'phone' => {
+          'phone'          => {
             type_id:  article_type_id_lookup('phone'),
             internal: false
           },
-          'webrequest' => {
+          'webrequest'     => {
             type_id:  article_type_id_lookup('web'),
             internal: false
           },

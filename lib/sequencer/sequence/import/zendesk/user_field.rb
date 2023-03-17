@@ -1,18 +1,14 @@
-class Sequencer
-  class Sequence
-    module Import
-      module Zendesk
-        class UserField < Sequencer::Sequence::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          def self.sequence
-            [
-              'Common::ModelClass::User',
-              'Import::Zendesk::ObjectAttribute::SanitizedName',
-              'Import::Zendesk::ObjectAttribute::Add',
-            ]
-          end
-        end
-      end
-    end
+class Sequencer::Sequence::Import::Zendesk::UserField < Sequencer::Sequence::Base
+
+  def self.sequence
+    [
+      'Common::ModelClass::User',
+      'Import::Zendesk::ObjectAttribute::SanitizedType',
+      'Import::Zendesk::ObjectAttribute::SanitizedName',
+      'Import::Zendesk::ObjectAttribute::Add',
+      'Import::Zendesk::ObjectAttribute::FieldMap',
+    ]
   end
 end

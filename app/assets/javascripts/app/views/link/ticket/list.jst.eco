@@ -1,0 +1,10 @@
+<label><%- @T('Links') %></label>
+<% for type of @links: %>
+<div class="ticketLinks">
+  <div class="list-title"><%- @T(type) %></div>
+  <%- @links[type].ticketList %>
+</div>
+<% end %>
+<% if @editable: %>
+  <div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>
+<% end %>

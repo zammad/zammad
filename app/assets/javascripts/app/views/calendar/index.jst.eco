@@ -22,7 +22,7 @@
     <div class="action-flow action-flow--row">
       <div class="action-row">
         <div class="action-flow action-flow--noWrap">
-          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @Ti('Last sync at') %>: <%- @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
+          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @Ti('Last sync at:') %> <%- @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
             <% if calendar.last_log: %>
               <%- @Icon('status', 'error inline') %>
             <% else: %>
@@ -69,7 +69,7 @@
           <% if _.isEmpty(calendar.public_holidays_preview): %>-<% end %>
           <% for holiday, meta of calendar.public_holidays_preview: %>
             <tr <% if !meta.active: %>class="is-inactive"<% end %>>
-              <td style="width: 96px"><%- @Tdate(holiday) %>
+              <td style="width: 96px"><%- @Tdate(holiday, true) %>
               <td><%= meta.summary %>
           <% end %>
         </table>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Store < ApplicationModel
   class File < ApplicationModel
@@ -18,7 +18,7 @@ do also verify of written data
 =end
 
     def self.add(data, verify = true)
-      sha = Digest::SHA256.hexdigest(data)
+      sha = checksum(data)
 
       file = Store::File.find_by(sha: sha)
       if file.nil?
@@ -26,19 +26,20 @@ do also verify of written data
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'
         if !adapter_name
-          raise 'Missing storage_provider setting option'
+          raise __("The setting 'storage_provider' was not configured.")
         end
-        adapter = load_adapter("Store::Provider::#{adapter_name}")
+
+        adapter = "Store::Provider::#{adapter_name}".constantize
         adapter.add(data, sha)
         file = Store::File.create(
           provider: adapter_name,
-          sha: sha,
+          sha:      sha,
         )
 
         # verify
         if verify
           read_data = adapter.get(sha)
-          read_sha = Digest::SHA256.hexdigest(read_data)
+          read_sha = checksum(read_data)
           if sha != read_sha
             raise "Content not written correctly (provider #{adapter_name})."
           end
@@ -58,8 +59,7 @@ read content of a file
 =end
 
     def content
-      adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      adapter.get(sha)
+      "Store::Provider::#{provider}".constantize.get(sha)
     end
 
 =begin
@@ -68,7 +68,7 @@ file system check of store, check data and sha (in case fix it)
 
   Store::File.verify
 
-read each file which should be in backend and verify agsinst sha hash
+read each file which should be in backend and verify against sha hash
 
 in case of fixing sha hash use:
 
@@ -78,20 +78,16 @@ in case of fixing sha hash use:
 
     def self.verify(fix_it = nil)
       success = true
-      file_ids = Store::File.all.pluck(:id)
-      file_ids.each do |item_id|
-        item = Store::File.find(item_id)
-        content = item.content
-        sha = Digest::SHA256.hexdigest(content)
+      Store::File.find_each(batch_size: 10) do |item|
+        sha = checksum(item.content)
         logger.info "CHECK: Store::File.find(#{item.id})"
         next if sha == item.sha
+
         success = false
         logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
         store = Store.find_by(store_file_id: item.id)
         logger.error "STORE: #{store.inspect}"
-        if fix_it
-          item.update_attribute(:sha, sha) # rubocop:disable Rails/SkipsModelValidations
-        end
+        item.update_attribute(:sha, sha) if fix_it # rubocop:disable Rails/SkipsModelValidations
       end
       success
     end
@@ -115,36 +111,38 @@ nice move to keep system responsive
 =end
 
     def self.move(source, target, delay = nil)
-      adapter_source = load_adapter("Store::Provider::#{source}")
-      adapter_target = load_adapter("Store::Provider::#{target}")
+      adapter_source = "Store::Provider::#{source}".constantize
+      adapter_target = "Store::Provider::#{target}".constantize
 
-      file_ids = Store::File.all.pluck(:id)
-      file_ids.each do |item_id|
-        item = Store::File.find(item_id)
-        next if item.provider == target
-        content = item.content
-
-        # add to new provider
-        adapter_target.add(content, item.sha)
-
-        # update meta data
+      Store::File.where(provider: source).find_each(batch_size: 10) do |item|
+        adapter_target.add(item.content, item.sha)
         item.update_attribute(:provider, target) # rubocop:disable Rails/SkipsModelValidations
-
-        # remove from old provider
         adapter_source.delete(item.sha)
 
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
 
         sleep delay if delay
       end
+
       true
+    end
+
+=begin
+
+generate a checksum for the given content
+
+  Store::File.checksum(binary_data)
+
+=end
+
+    def self.checksum(content)
+      Digest::SHA256.hexdigest(content)
     end
 
     private
 
     def destroy_provider
-      adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      adapter.delete(sha)
+      "Store::Provider::#{provider}".constantize.delete(sha)
     end
   end
 end

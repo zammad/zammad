@@ -1,0 +1,23 @@
+<div class="stat-widget vertical">
+  <div class="stat-title">
+    <%- @T('Channel Distribution') %>
+    <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketChannelDistribution.description) %>" data-placement="left">
+      <%- @Icon('help') %>
+    </div>
+  </div>
+  <div class="stat-graphic" data-columns="<%- _.size(@StatsTicketChannelDistribution.channels) %>">
+    <% for id, channel of @StatsTicketChannelDistribution.channels: %>
+      <div class="stats-row">
+        <div title="<%- channel.sender %>">
+          <%- @Icon(channel.icon, 'stat-channel-icon') %>
+        </div>
+        <div class="stat-bars">
+          <div class="stat-bar stat-bar--inbound" style="height: <%- channel.inbound_in_percent %>%" title="<%- @Ti('Inbound:') %> <%- channel.inbound_in_percent %>% (<%- channel.inbound %>)"></div>
+          <div class="stat-bar stat-bar--outbound" style="height: <%- channel.outbound_in_percent %>%" title="<%- @Ti('Outbound:') %> <%- channel.outbound_in_percent %>% (<%- channel.outbound %>)"></div>
+        </div>
+        <div class="stat-detail"><%- channel.overal_percentage %>%</div>
+      </div>
+      <div class="stat-label"></div>
+    <% end %>
+  </div>
+</div>

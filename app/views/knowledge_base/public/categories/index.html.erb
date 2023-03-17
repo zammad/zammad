@@ -1,0 +1,43 @@
+<main class="main main--categories"
+  <% if @object %>
+    data-base-path='<%= custom_path_if_needed help_category_path(@object, locale: '{locale}'), @knowledge_base %>'
+    data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'
+  <% end %>>
+  <div class="container">
+
+    <% if @object %>
+      <h1>
+        <%= @object.translation.title %>
+      </h1>
+    <% end %>
+
+    <% if !@categories.present? && !@answers&.present? %>
+      <div class="sections-empty">
+        <%= zt('No content to show') %>
+        <br>
+        <%= zt('Please add categories and/or answers') %>
+      </div>
+    <% else %>
+      <% if @categories&.present? %>
+        <ul class="sections sections--<%= effective_layout_name(@knowledge_base, @object) %>" data-less-than-four="<%= @categories.length < 4 %>">
+          <% @categories.each do |category| %>
+            <%= render 'category', { category: category, knowledge_base: @knowledge_base } %>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if @categories&.present? && @answers&.present? %>
+        <hr>
+      <% end %>
+
+      <% if @answers&.present? %>
+        <ul class="sections sections--list" data-less-than-four="<%= @answers.length < 4 %>">
+          <% @answers.each do |translation| %>
+            <%= render 'answer', { answer: translation } %>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+</main>
+

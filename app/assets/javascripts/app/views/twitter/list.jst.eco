@@ -9,12 +9,21 @@
   </div>
 </div>
 
+<% if @external_credential && @external_credential.credentials && !@external_credential.credentials.webhook_id: %>
+  <div class="alert alert--warning" role="alert"><%- @T('Your Twitter app is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please refer to the documentation %l on how to update your account.', 'https://zammad-admin-documentation.readthedocs.io/en/latest/channels-twitter.html') %></div>
+<% end %>
+
 <div class="page-content">
 <% for channel in @channels: %>
   <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
     <div class="action-block action-row">
       <h2><%- @Icon('status', 'supergood-color inline') %> <%= channel.options.user.name %> <span class="text-muted">@<%= channel.options.user.screen_name %></span></h2>
     </div>
+
+    <% if @external_credential && @external_credential.credentials && @external_credential.credentials.webhook_id && channel.options && channel.options.subscribed_to_webhook_id isnt @external_credential.credentials.webhook_id: %>
+      <div class="alert alert--warning" role="alert"><%- @T('Your Twitter account is not using the Twitter Account Activity API yet and is therefore limited to search terms only. Please add/update the account again via "add account".') %></div>
+    <% end %>
+
     <div class="action-flow action-flow--row">
       <div class="action-block">
         <h3><%- @T('Search Terms') %></h3>
@@ -64,9 +73,9 @@
       <div class="action-block">
         <h3><%- @T('Retweets') %></h3>
         <% if channel.options.sync.track_retweets: %>
-          <%- @T('Retweets are converted to Tickets') %>.
+          <%- @T('Retweets are converted into tickets.') %>
+          <%- @T('Conversion of retweets into tickets is turned off.') %>
         <% else: %>
-          <%- @T('Conversion of retweets to tickets is turned off') %>.
         <% end %>
       </div>
     </div>

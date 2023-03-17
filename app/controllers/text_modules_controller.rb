@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TextModulesController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action { authentication_check && authorize! }
 
 =begin
 
@@ -49,7 +49,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 =end
 
   def index
-    permission_check('ticket.agent')
     model_index_render(TextModule, params)
   end
 
@@ -71,7 +70,6 @@ curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    permission_check('ticket.agent')
     model_show_render(TextModule, params)
   end
 
@@ -101,7 +99,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def create
-    permission_check('admin.text_module')
     model_create_render(TextModule, params)
   end
 
@@ -131,7 +128,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def update
-    permission_check('admin.text_module')
     model_update_render(TextModule, params)
   end
 
@@ -149,7 +145,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    permission_check('admin.text_module')
     model_destroy_render(TextModule, params)
   end
 
@@ -160,16 +155,15 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/text_modules/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
-    permission_check('admin.text_module')
     csv_string = TextModule.csv_example(
       col_sep: params[:col_sep] || ',',
     )
     send_data(
       csv_string,
-      filename: 'text_module-example.csv',
-      type: 'text/csv',
+      filename:    'text_module-example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
 
@@ -183,17 +177,21 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/Textbausteine_final2.csv' 'https://your.zammad/api/v1/text_modules/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
-    permission_check('admin.text_module')
-    string = params[:data] || params[:file].read.force_encoding('utf-8')
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+
     result = TextModule.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
-      delete: params[:delete],
+      try:          params[:try],
+      delete:       params[:delete],
     )
     render json: result, status: :ok
   end

@@ -1,10 +1,11 @@
-<div class="checkbox <%= @attribute.class %> checkbox">
+<div class="checkbox <%= @attribute.class %>">
 <% for role in @roles: %>
   <label class="inline-label checkbox-replacement">
     <input type="checkbox" value="<%= role.id %>" name="role_ids" <% if @rolesSelected[role.id]: %>checked<% end %>/>
     <%- @Icon('checkbox', 'icon-unchecked') %>
     <%- @Icon('checkbox-checked', 'icon-checked') %>
-    <span class="label-text"><%- @T(role.displayName()) %> <% if role.note: %>- <span class="help-text"><%- @T(role.note) %></span><% end %></span>
+    <span class="label-text"><%- @Ti(role.displayName()) %></span>
+    <% if role.note: %><span class="help-text"><%- @T(role.note) %></span><% end %>
   </label>
 <% end %>
   <div class="js-groups"></div>

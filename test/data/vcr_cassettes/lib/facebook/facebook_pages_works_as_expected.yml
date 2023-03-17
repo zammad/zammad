@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/accounts?access_token=<FACEBOOK_ADMIN_ACCESS_TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"9435151aaf63bd370abcac659993f9f7e2f469f1"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - Amy0PRdO9EWwJQR4byiW5iA
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - CEXDG38issb
+      X-Fb-Rev:
+      - '1003301623'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Pragma:
+      - no-cache
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      X-Fb-Rlafr:
+      - '0'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - YCL24zTtURiGEayTwDbA7+F8jX4dsX4R+fykT8iGveYsmL87FeE6e2gbsObdmR7F5CU9YjY90gro6yofmoB1aA==
+      Date:
+      - Fri, 12 Feb 2021 06:13:39 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '626'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"access_token":"<FACEBOOK_PAGE_1_ACCCESS_TOKEN>","category":"Bed
+        and Breakfast","category_list":[{"id":"110321355709642","name":"Bed and Breakfast"}],"name":"<FACEBOOK_PAGE_1_NAME>","id":"<FACEBOOK_PAGE_1_ID>","tasks":["ANALYZE","ADVERTISE","MESSAGING","MODERATE","CREATE_CONTENT","MANAGE"]},{"access_token":"<FACEBOOK_PAGE_2_ACCCESS_TOKEN>","category":"Just
+        For Fun","category_list":[{"id":"129417183848258","name":"Just For Fun"}],"name":"<FACEBOOK_PAGE_2_NAME>","id":"<FACEBOOK_PAGE_2_ID>","tasks":["ANALYZE","ADVERTISE","MESSAGING","MODERATE","CREATE_CONTENT","MANAGE"]}],"paging":{"cursors":{"before":"MTAwMTY3MDIyMTAyMjE3","after":"MTY4NDc1MjQ4MjY4Mjg5"}}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 06:13:39 GMT
+recorded_with: VCR 4.0.0

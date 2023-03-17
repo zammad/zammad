@@ -6,35 +6,52 @@
   font-size: 12px;
   width: 33em;
   height: 3.5em;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   border-radius: 5px 5px 0 0;
   will-change: bottom;
   display: none;
-  -webkit-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  z-index: 999; }
-  @media only screen and (max-width: 768px) {
-    .zammad-chat {
-      right: 0;
-      width: 100%;
-      border-radius: 0 !important;
-      font-size: 16px; } }
+  z-index: 999;
+}
+@media only screen and (max-width: 768px) {
+  .zammad-chat {
+    right: 0;
+    width: 100%;
+    border-radius: 0 !important;
+    font-size: 16px !important;
+  }
+}
+.zammad-chat--animate {
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  -o-transition: transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+}
 
 .zammad-chat.zammad-chat-is-loaded {
-  display: -webkit-flex;
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  opacity: 0; }
+  opacity: 0;
+}
 
 .zammad-chat.zammad-chat-is-shown {
-  opacity: 1; }
+  opacity: 1;
+}
 
 .zammad-chat.zammad-chat-is-open {
-  height: 30em; }
-  @media only screen and (max-width: 768px) {
-    .zammad-chat.zammad-chat-is-open {
-      height: 100%; } }
+  height: 30em;
+}
+@media only screen and (max-width: 768px) {
+  .zammad-chat.zammad-chat-is-open {
+    height: 100%;
+  }
+}
 
 .zammad-chat-icon {
   height: 2em;
@@ -42,27 +59,35 @@
   fill: currentColor;
   vertical-align: top;
   margin-right: 5px;
-  margin-top: 4px; }
+  margin-top: 4px;
+}
 
 .zammad-chat-header {
   padding: 0.5em 2.5em 0.5em 1em;
-  background: #379ad7;
+  background: hsl(203deg, 67%, 53%);
   color: white;
   line-height: 2.5em;
+  height: 3.5em;
+  -webkit-box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   position: relative;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
-  cursor: pointer; }
-  @media only screen and (max-width: 768px) {
-    .zammad-chat-header {
-      border-radius: 0 !important; } }
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  .zammad-chat-header {
+    border-radius: 0 !important;
+  }
+}
 
 .zammad-chat.zammad-chat-is-open .zammad-chat-header {
-  cursor: default; }
+  cursor: default;
+}
 
 .zammad-chat-welcome-text {
-  font-size: 1.2em; }
+  font-size: 1.2em;
+}
 
 .zammad-chat-header-icon {
   position: absolute;
@@ -72,55 +97,67 @@
   width: 3.4em;
   text-align: center;
   line-height: 3.4em;
-  cursor: pointer; }
-  .zammad-chat-header-icon:before {
-    content: "";
-    display: inline-block; }
+  cursor: pointer;
+}
+.zammad-chat-header-icon::before {
+  content: "";
+  display: inline-block;
+}
 
 .zammad-chat-header-icon-open,
 .zammad-chat-header-icon-close {
   fill: currentColor;
   width: 1.6em;
   height: auto;
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 .zammad-chat-header-icon-close {
-  width: 1.3em; }
+  width: 1.3em;
+}
 
 .zammad-chat-header-icon-close,
 .zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-open {
-  display: none; }
+  display: none;
+}
 
 .zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-close {
-  display: inline; }
+  display: inline;
+}
 
 .zammad-chat-agent {
-  float: left; }
+  float: left;
+}
 
 .zammad-chat-header-controls {
-  float: right; }
+  float: right;
+}
 
 .zammad-chat-agent-avatar {
   border-radius: 100%;
   margin-right: 0.6em;
   float: left;
-  width: 2.5em; }
+  width: 2.5em;
+}
 
 .zammad-chat-agent-name {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .zammad-chat-agent-status {
   margin: 0.25em 1em;
   display: inline-block;
   line-height: 2em;
-  padding: 0 .7em;
+  padding: 0 0.7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+}
 
-.zammad-chat-agent-status:before {
+.zammad-chat-agent-status::before {
   content: "";
-  background: #f35912;
+  background: hsl(19deg, 90%, 51%);
   display: inline-block;
   height: 0.9em;
   width: 0.9em;
@@ -128,36 +165,45 @@
   position: relative;
   margin-right: 0.3em;
   vertical-align: middle;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+}
 
-.zammad-chat-agent-status[data-status="online"]:before {
-  background: #52c782; }
+.zammad-chat-agent-status[data-status=online]::before {
+  background: hsl(145deg, 51%, 55%);
+}
 
-.zammad-chat-agent-status[data-status="connecting"]:before {
+.zammad-chat-agent-status[data-status=connecting]::before {
   -webkit-animation: linear connect-fade 600ms infinite alternate;
   animation: linear connect-fade 600ms infinite alternate;
-  background: #faab00; }
+  background: hsl(41deg, 100%, 49%);
+}
 
 @-webkit-keyframes connect-fade {
   from {
-    opacity: .5;
+    opacity: 0.5;
     -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
+    transform: scale(0.6);
+  }
   to {
     opacity: 1;
     -webkit-transform: scale(1);
-    transform: scale(1); } }
+    transform: scale(1);
+  }
+}
 
 @keyframes connect-fade {
   from {
-    opacity: .5;
+    opacity: 0.5;
     -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
+    transform: scale(0.6);
+  }
   to {
     opacity: 1;
     -webkit-transform: scale(1);
-    transform: scale(1); } }
-
+    transform: scale(1);
+  }
+}
 .zammad-chat-modal {
   position: absolute;
   left: 0;
@@ -169,175 +215,214 @@
   background: white;
   z-index: 1;
   padding: 20px;
-  display: -webkit-flex;
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
+  -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-justify-content: center;
+  -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center; }
-  .zammad-chat-modal:empty {
-    display: none; }
+  justify-content: center;
+}
+.zammad-chat-modal:empty {
+  display: none;
+}
 
 .zammad-chat-modal-text {
   font-size: 1.3em;
-  line-height: 1.45; }
-  .zammad-chat-modal-text .zammad-chat-loading-animation {
-    font-size: 0.7em; }
-  .zammad-chat-modal-text .zammad-chat-button {
-    margin-top: 1em;
-    font-size: 0.8em; }
+  line-height: 1.45;
+}
+.zammad-chat-modal-text .zammad-chat-loading-animation {
+  font-size: 0.7em;
+}
+.zammad-chat-modal-text .zammad-chat-button {
+  margin-top: 1em;
+  font-size: 0.8em;
+}
 
 .zammad-chat-modal .zammad-chat-loading-animation {
   margin-right: 8px;
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 .zammad-scroll-hint {
-  background: #f9fafa;
-  display: -webkit-flex;
+  background: hsl(210deg, 8%, 98%);
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
+  -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid hsl(0deg, 0%, 91%);
   padding: 7px 10px 6px;
-  color: #999999;
-  cursor: pointer; }
-  .zammad-scroll-hint.is-hidden {
-    display: none; }
+  color: hsl(0deg, 0%, 60%);
+  cursor: pointer;
+}
+.zammad-scroll-hint.is-hidden {
+  display: none;
+}
 
 .zammad-scroll-hint-icon {
-  fill: #c4c7ca;
-  margin-right: 8px; }
+  fill: hsl(210deg, 5%, 78%);
+  margin-right: 8px;
+}
 
 .zammad-chat-body {
   padding: 0.5em 1em;
   overflow: auto;
   background: white;
-  -webkit-flex: 1;
+  -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   display: none;
-  -webkit-overflow-scrolling: touch; }
-  @media only screen and (max-width: 768px) {
-    .zammad-chat-body {
-      height: auto;
-      -webkit-flex: 1;
-      -ms-flex: 1;
-      flex: 1; } }
+  -webkit-overflow-scrolling: touch;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: contain;
+}
+@media only screen and (max-width: 768px) {
+  .zammad-chat-body {
+    height: auto;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
 
 .zammad-chat-is-open .zammad-chat-body {
-  display: block; }
+  display: block;
+}
 
 .zammad-chat-timestamp {
   text-align: center;
-  color: #999999;
+  color: hsl(0deg, 0%, 60%);
   font-size: 0.9em;
-  margin: 1em 0; }
+  margin: 1em 0;
+}
 
 .zammad-chat-status {
   margin: 1em 0;
-  text-align: center; }
+  text-align: center;
+}
 
 .zammad-chat-message {
-  margin: 0.5em 0; }
+  margin: 0.5em 0;
+}
 
 .zammad-chat-message-body {
   white-space: pre-line;
   word-wrap: break-word;
-  border-radius: 1em; }
+  border-radius: 1em;
+}
 
 .zammad-chat-status-inner,
 .zammad-chat-message-body {
   padding: 0.5em 1em;
   line-height: 1.4;
-  background: #ededed;
+  background: hsl(0deg, 0%, 93%);
   display: inline-block;
   max-width: 70%;
-  box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02); }
+  -webkit-box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02);
+}
 
 .zammad-chat-status-inner {
   background: #eee;
-  border-radius: .5em; }
+  border-radius: 0.5em;
+}
 
 .zammad-chat-message--customer {
-  text-align: right; }
+  text-align: right;
+}
 
 .zammad-chat-message--customer + .zammad-chat-message--agent,
 .zammad-chat-message--agent + .zammad-chat-message--customer {
-  margin-top: 1em; }
+  margin-top: 1em;
+}
 
 .zammad-chat-message--customer .zammad-chat-message-body {
-  background: #379ad7;
-  color: white; }
+  background: hsl(203deg, 67%, 53%);
+  color: white;
+}
 
 .zammad-chat-message--unread {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .zammad-chat-message--typing .zammad-chat-message-body {
-  white-space: normal; }
+  white-space: normal;
+}
 
 .zammad-chat-loading-animation {
-  display: inline-block; }
+  display: inline-block;
+}
 
 .zammad-chat-loading-circle {
-  background: #d9d9d9;
+  background: hsl(0deg, 0%, 85%);
   border-radius: 100%;
   height: 0.55em;
   width: 0.55em;
   display: inline-block;
   -webkit-animation: ease-in-out load-fade 600ms infinite alternate;
-  animation: ease-in-out load-fade 600ms infinite alternate; }
+  animation: ease-in-out load-fade 600ms infinite alternate;
+}
 
 .zammad-chat-loading-circle + .zammad-chat-loading-circle {
-  -webkit-animation-delay: .13s;
-  animation-delay: .13s; }
+  -webkit-animation-delay: 0.13s;
+  animation-delay: 0.13s;
+}
 
 .zammad-chat-loading-circle + .zammad-chat-loading-circle + .zammad-chat-loading-circle {
-  -webkit-animation-delay: .26s;
-  animation-delay: .26s; }
+  -webkit-animation-delay: 0.26s;
+  animation-delay: 0.26s;
+}
 
 @-webkit-keyframes load-fade {
-  from {
-    opacity: .5;
+  0% {
+    opacity: 0.5;
     -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
+    transform: scale(0.6);
+  }
   67% {
     opacity: 1;
     -webkit-transform: scale(1);
-    transform: scale(1); } }
+    transform: scale(1);
+  }
+}
 
 @keyframes load-fade {
-  from {
-    opacity: .5;
+  0% {
+    opacity: 0.5;
     -webkit-transform: scale(0.6);
-    transform: scale(0.6); }
+    transform: scale(0.6);
+  }
   67% {
     opacity: 1;
     -webkit-transform: scale(1);
-    transform: scale(1); } }
-
+    transform: scale(1);
+  }
+}
 .zammad-chat-controls {
   overflow: hidden;
   display: none;
-  -webkit-align-items: flex-end;
+  -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: flex-end;
-  border-top: 1px solid #ededed;
+  border-top: 1px solid hsl(0deg, 0%, 93%);
   padding: 0;
   margin: 0;
   line-height: 1.4em;
+  -webkit-box-shadow: 0 1px rgba(0, 0, 0, 0.01), 0 -1px rgba(0, 0, 0, 0.02);
   box-shadow: 0 1px rgba(0, 0, 0, 0.01), 0 -1px rgba(0, 0, 0, 0.02);
   position: relative;
-  background: white; }
+  background: white;
+}
 
 .zammad-chat-is-open .zammad-chat-controls {
-  display: -webkit-flex;
+  display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+}
 
 .zammad-chat-input {
   margin: 0;
@@ -353,16 +438,20 @@
   appearance: none;
   border: none;
   background: none;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   outline: none;
-  -webkit-flex: 1;
+  -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  overflow: auto; }
+  overflow: auto;
+}
 
 .zammad-chat-input::-webkit-input-placeholder {
-  color: #d9d9d9; }
+  color: hsl(0deg, 0%, 85%);
+}
 
 .zammad-chat-button {
   -webkit-appearance: none;
@@ -371,41 +460,54 @@
   font-family: inherit;
   font-size: inherit;
   line-height: initial;
-  background: #379ad7;
+  background: hsl(203deg, 67%, 53%);
   color: white;
   padding: 0.5em 1.2em;
   margin: 0.63em 1em;
   cursor: pointer;
   border: none;
   border-radius: 1.5em;
+  -webkit-box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px rgba(0, 0, 0, 0.1);
   outline: none;
-  display: inline-block; }
+  display: inline-block;
+}
 
 .zammad-chat-send {
-  float: right; }
+  float: right;
+}
 
 .zammad-chat-button:disabled,
 .zammad-chat-input:disabled {
-  opacity: 0.3; }
+  cursor: not-allowed;
+  opacity: 0.3;
+}
 
 .zammad-chat-is-hidden {
-  display: none; }
+  display: none;
+}
 
 /*
   # Flat Design
 */
 .zammad-chat--flat .zammad-chat-header,
 .zammad-chat--flat .zammad-chat-body {
-  border: none; }
+  border: none;
+}
 
 .zammad-chat--flat .zammad-chat-header {
-  box-shadow: none; }
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 
 .zammad-chat--flat .zammad-chat-message-body {
-  box-shadow: none; }
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 
 .zammad-chat--flat .zammad-chat-agent-status,
 .zammad-chat--flat .zammad-chat-button,
 .zammad-chat--flat .zammad-chat-status {
-  box-shadow: none; }
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

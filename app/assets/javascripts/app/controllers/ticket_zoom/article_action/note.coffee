@@ -1,5 +1,6 @@
 class Note
   @action: (actions, ticket, article, ui) ->
+    return actions if !ticket.editable()
     actions
 
   @perform: (articleContainer, type, ticket, article, ui) ->
@@ -7,11 +8,11 @@ class Note
 
   @articleTypes: (articleTypes, ticket, ui) ->
     internal = false
-    if ui.permissionCheck('ticket.agent')
+    if ticket.currentView() is 'agent'
       internal = ui.Config.get('ui_ticket_zoom_article_note_new_internal')
 
     articleTypes.push {
-      name:       'note'
+      name:       __('note')
       icon:       'note'
       attributes: []
       internal:   internal,

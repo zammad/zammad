@@ -1,20 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class OrganizationID < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource, :organization_map
+class Sequencer::Unit::Import::Zendesk::Ticket::OrganizationId < Sequencer::Unit::Common::Provider::Named
 
-            private
+  uses :resource, :organization_map
 
-            def organization_id
-              organization_map[resource.organization_id]
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def organization_id
+    organization_map[resource.organization_id]
   end
 end

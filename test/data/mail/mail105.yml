@@ -1,0 +1,9 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <martin@example.com>
+from_email: martin@example.com
+from_display_name: Martin Edenhofer
+to: metest@znuny.com, "Günther John | Example GmbH" <k.günther@example.com>
+subject: aaäöüßad asd
+body: no visible content
+content_type: text/plain
+attachments: []

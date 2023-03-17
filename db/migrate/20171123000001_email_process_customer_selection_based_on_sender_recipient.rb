@@ -1,21 +1,23 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class EmailProcessCustomerSelectionBasedOnSenderRecipient < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     Setting.create_if_not_exists(
-      title: 'Customer selection based on sender and receiver list',
-      name: 'postmaster_sender_is_agent_search_for_customer',
-      area: 'Email::Base',
+      title:       'Customer selection based on sender and receiver list',
+      name:        'postmaster_sender_is_agent_search_for_customer',
+      area:        'Email::Base',
       description: 'If the sender is an agent, set the first user in the recipient list as a customer.',
-      options: {
+      options:     {
         form: [
           {
             display: '',
-            null: true,
-            name: 'postmaster_sender_is_agent_search_for_customer',
-            tag: 'boolean',
+            null:    true,
+            name:    'postmaster_sender_is_agent_search_for_customer',
+            tag:     'boolean',
             options: {
               true  => 'yes',
               false => 'no',
@@ -23,11 +25,11 @@ class EmailProcessCustomerSelectionBasedOnSenderRecipient < ActiveRecord::Migrat
           },
         ],
       },
-      state: true,
+      state:       true,
       preferences: {
         permission: ['admin.channel_email'],
       },
-      frontend: false
+      frontend:    false
     )
   end
 

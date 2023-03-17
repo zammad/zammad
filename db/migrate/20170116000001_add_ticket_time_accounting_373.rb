@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class AddTicketTimeAccounting373 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     drop_table :ticket_time_accounting
     create_table :ticket_time_accountings do |t|
@@ -20,6 +22,6 @@ class AddTicketTimeAccounting373 < ActiveRecord::Migration[4.2]
     add_column :tickets, :time_unit, :decimal, precision: 6, scale: 2, null: true
     add_index :tickets, [:time_unit]
 
-    Cache.clear
+    Rails.cache.clear
   end
 end

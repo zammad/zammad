@@ -1,6 +1,10 @@
-require 'rails_helper'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.describe Overview do
+require 'rails_helper'
+require 'models/application_model_examples'
+
+RSpec.describe Overview, type: :model do
+  it_behaves_like 'ApplicationModel', can_assets: { associations: :users, selectors: :condition }
 
   context 'link generation' do
 
@@ -45,7 +49,7 @@ RSpec.describe Overview do
 
       it 'handles special chars' do
         overview = create(:overview, name: 'Д дФ ф')
-        expect(overview.link).to match(/^\d{1,3}$/)
+        expect(overview.link).to match(%r{^[a-z0-9-]{36}$})
       end
 
       it 'removes special char fallback if possible' do
@@ -65,11 +69,47 @@ RSpec.describe Overview do
 
       overview2.update!(prio: 3)
 
-      overviews = described_class.all.order(prio: :asc).pluck(:id)
+      overviews = described_class.all.reorder(prio: :asc).pluck(:id)
 
       expect(overviews.first).to eq(overview1.id)
       expect(overviews.second).to eq(overview3.id)
       expect(overviews.third).to eq(overview2.id)
+    end
+  end
+
+  describe '#fill_prio' do
+    before do
+      described_class.destroy_all
+    end
+
+    it 'fill an empty prio with the maximum prio plus one' do
+      overview1 = create(:overview, prio: 1)
+      overview2 = create(:overview, prio: 200)
+      overview3 = create(:overview, prio: nil)
+
+      overviews = described_class.all.reorder(prio: :asc).pluck(:id)
+
+      expect(overviews).to eq [overview1.id, overview2.id, overview3.id]
+    end
+
+    it 'sets first Overview priority as 0' do
+      overview = create(:overview, prio: nil)
+
+      expect(overview.prio).to be 0
+    end
+
+    it 'sets new Overview priority as +1' do
+      create(:overview, prio: 123)
+
+      overview_next = create(:overview, prio: nil)
+
+      expect(overview_next.prio).to be 124
+    end
+  end
+
+  describe 'Make conditions AND/OR and thus enable several conditions of same type #2185' do
+    it 'does create overviews with the expert structure' do
+      expect { create(:overview, :condition_expert) }.not_to raise_error
     end
   end
 end

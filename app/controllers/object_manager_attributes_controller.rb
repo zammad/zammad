@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManagerAttributesController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.object') }
+  prepend_before_action { authentication_check && authorize! }
 
   # GET /object_manager_attributes_list
   def list
@@ -25,48 +25,24 @@ class ObjectManagerAttributesController < ApplicationController
     # check if attribute already exists
     exists = ObjectManager::Attribute.get(
       object: permitted_params[:object],
-      name: permitted_params[:name],
+      name:   permitted_params[:name],
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
-    begin
-      object_manager_attribute = ObjectManager::Attribute.add(
-        object: permitted_params[:object],
-        name: permitted_params[:name],
-        display: permitted_params[:display],
-        data_type: permitted_params[:data_type],
-        data_option: permitted_params[:data_option],
-        active: permitted_params[:active],
-        screens: permitted_params[:screens],
-        position: 1550,
-        editable: true,
-      )
-      render json: object_manager_attribute.attributes_with_association_ids, status: :created
-    rescue => e
-      logger.error e
-      raise Exceptions::UnprocessableEntity, e
-    end
+    add_attribute_using_params(permitted_params, status: :created)
   end
 
   # PUT /object_manager_attributes/1
   def update
-
-    object_manager_attribute = ObjectManager::Attribute.add(
+    # check if attribute already exists
+    exists = ObjectManager::Attribute.get(
       object: permitted_params[:object],
-      name: permitted_params[:name],
-      display: permitted_params[:display],
-      data_type: permitted_params[:data_type],
-      data_option: permitted_params[:data_option],
-      active: permitted_params[:active],
-      screens: permitted_params[:screens],
-      position: 1550,
-      editable: true,
+      name:   permitted_params[:name],
     )
-    render json: object_manager_attribute.attributes_with_association_ids, status: :ok
-  rescue => e
-    logger.error e
-    raise Exceptions::UnprocessableEntity, e
 
+    raise Exceptions::UnprocessableEntity, 'does not exist' if !exists
+
+    add_attribute_using_params(permitted_params, status: :ok)
   end
 
   # DELETE /object_manager_attributes/1
@@ -74,7 +50,7 @@ class ObjectManagerAttributesController < ApplicationController
     object_manager_attribute = ObjectManager::Attribute.find(params[:id])
     ObjectManager::Attribute.remove(
       object_lookup_id: object_manager_attribute.object_lookup_id,
-      name: object_manager_attribute.name,
+      name:             object_manager_attribute.name,
     )
     model_destroy_render_item
   rescue => e
@@ -100,28 +76,29 @@ class ObjectManagerAttributesController < ApplicationController
     @permitted_params ||= begin
       permitted = params.permit!.to_h
 
-      if permitted[:data_type].match?(/^(boolean)$/)
-        if permitted[:data_option][:options]
-          # rubocop:disable Lint/BooleanSymbol
-          if permitted[:data_option][:options][:false]
-            permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
-          end
-          if permitted[:data_option][:options][:true]
-            permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
-          end
-          if permitted[:data_option][:default] == 'true'
-            permitted[:data_option][:default] = true
-          elsif permitted[:data_option][:default] == 'false'
-            permitted[:data_option][:default] = false
-          end
-          # rubocop:enable Lint/BooleanSymbol
+      if permitted[:data_type].match?(%r{^(boolean)$}) && permitted[:data_option][:options]
+        # rubocop:disable Lint/BooleanSymbol
+        if permitted[:data_option][:options][:false]
+          permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
         end
+
+        if permitted[:data_option][:options][:true]
+          permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
+        end
+
+        case permitted[:data_option][:default]
+        when 'true'
+          permitted[:data_option][:default] = true
+        when 'false'
+          permitted[:data_option][:default] = false
+        end
+        # rubocop:enable Lint/BooleanSymbol
       end
 
       if permitted[:data_option]
 
         if !permitted[:data_option].key?(:default)
-          permitted[:data_option][:default] = if permitted[:data_type].match?(/^(input|select|tree_select)$/)
+          permitted[:data_option][:default] = if permitted[:data_type].match?(%r{^(input|select|multiselect|tree_select)$})
                                                 ''
                                               end
         end
@@ -149,5 +126,17 @@ class ObjectManagerAttributesController < ApplicationController
 
       permitted
     end
+  end
+
+  def add_attribute_using_params(given_params, status:)
+    attributes = given_params.slice(:object, :name, :display, :data_type, :data_option, :active, :screens, :position)
+    attributes[:editable] = true
+
+    object_manager_attribute = ObjectManager::Attribute.add(attributes)
+
+    render json: object_manager_attribute.attributes_with_association_ids, status: status
+  rescue => e
+    logger.error e
+    raise Exceptions::UnprocessableEntity, e
   end
 end

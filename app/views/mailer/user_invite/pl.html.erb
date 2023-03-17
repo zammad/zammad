@@ -1,0 +1,13 @@
+Zaproszenie do #{config.product_name} w #{config.fqdn}
+
+<div>Cześć #{user.firstname},</div>
+<br>
+<div>(#{current_user.firstname} #{current_user.lastname}) zaprasza Cię do #{config.product_name} - naszej platformy obsługi Klienta.</div>
+<br>
+<div>Kliknij <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">tutaj</a> i ustaw swoje hasło.</div>
+<br>
+<div>Pozdrawiamy,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Zespół #{config.product_name}</div>

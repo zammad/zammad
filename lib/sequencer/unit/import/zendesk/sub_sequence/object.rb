@@ -1,24 +1,16 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module SubSequence
-          class Object < Sequencer::Unit::Base
-            include ::Sequencer::Unit::Import::Zendesk::SubSequence::Base
-            include ::Sequencer::Unit::Import::Zendesk::SubSequence::Mapped
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Zendesk::SubSequence::Object < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Zendesk::SubSequence::Base
+  include ::Sequencer::Unit::Import::Zendesk::SubSequence::Mapped
 
-            def expecting
-              :instance
-            end
+  private
 
-            def mapping_value(expected_value)
-              expected_value.id
-            end
-          end
-        end
-      end
-    end
+  def expecting
+    :instance
+  end
+
+  def mapping_value(expected_value)
+    expected_value.id
   end
 end

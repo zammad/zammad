@@ -22,22 +22,42 @@ App.TicketNavigable =
       show:       true
     )
 
+  getNextTicketInOverview: ->
+    return if !@ticket
+    return if !@overview_id
+
+    App.Overview.find(@overview_id).nextTicket(@ticket)
+
+  openTicketInOverview: (nextTicket) ->
+    if nextTicket
+      @taskCloseTicket()
+      @taskLoadTicket(nextTicket.id)
+
+      @navigate "#ticket/zoom/#{nextTicket.id}"
+      return
+
+    @taskCloseTicket(true)
+
   taskOpenNextTicketInOverview: ->
     if !(@overview_id? && @ticket?)
       @taskCloseTicket(true)
       return
-    next_ticket = App.Overview.find(@overview_id).nextTicket(@ticket)
-    if next_ticket
+
+    nextTicket = @getNextTicketInOverview()
+    if nextTicket
       @taskCloseTicket()
-      @taskLoadTicket(next_ticket.id)
+      @taskLoadTicket(nextTicket.id)
       return
+
     @taskCloseTicket(true)
 
   taskCloseTicket: (openNext = false) ->
     App.TaskManager.remove(@taskKey)
     return if !openNext
+
     nextTaskUrl = App.TaskManager.nextTaskUrl()
     if nextTaskUrl
       @navigate nextTaskUrl
       return
+
     @navigate '#'

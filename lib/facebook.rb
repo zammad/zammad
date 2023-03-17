@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Facebook
 
@@ -36,6 +36,7 @@ disconnect client
 
   def disconnect
     return if !@client
+
     @client = nil
   end
 
@@ -104,16 +105,18 @@ result
   def user(item)
     return if !item['from']
     return if !item['from']['id']
+
     cache_key = "FB:User:Lookup:#{item['from']['id']}"
-    cache = Cache.get(cache_key)
+    cache = Rails.cache.read(cache_key)
     return cache if cache
+
     begin
       result = @client.get_object(item['from']['id'], fields: 'first_name,last_name,email')
     rescue
       result = @client.get_object(item['from']['id'], fields: 'name')
     end
     if result
-      Cache.write(cache_key, result, { expires_in: 15.minutes })
+      Rails.cache.write(cache_key, result, { expires_in: 15.minutes })
     end
     result
   end
@@ -134,17 +137,6 @@ result
     }
     if auth
       user = User.find(auth.user_id)
-      map = {
-        #note: 'description',
-      }
-
-      # ignore if value is already set
-      map.each do |target, source|
-        next if user[target].present?
-        new_value = tweet_user.send(source).to_s
-        next if new_value.blank?
-        user_data[target] = new_value
-      end
       user.update!(user_data)
     else
       user_data[:login] = item_user['id']
@@ -162,11 +154,11 @@ result
 
     if user_data[:image_source]
       avatar = Avatar.add(
-        object: 'User',
-        o_id: user.id,
-        url: user_data[:image_source],
-        source: 'facebook',
-        deletable: true,
+        object:        'User',
+        o_id:          user.id,
+        url:           user_data[:image_source],
+        source:        'facebook',
+        deletable:     true,
         updated_by_id: user.id,
         created_by_id: user.id,
       )
@@ -215,9 +207,9 @@ result
       state:       state,
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
-        channel_id: channel.id,
+        channel_id:           channel.id,
         channel_fb_object_id: page['id'],
-        facebook: {
+        facebook:             {
           permalink_url: post['permalink_url'],
         }
       },
@@ -236,10 +228,10 @@ result
     to = nil
     if post['to'] && post['to']['data']
       post['to']['data'].each do |to_entry|
-        if !to
-          to = ''
-        else
+        if to
           to += ', '
+        else
+          to = ''
         end
         to += to_entry['name']
       end
@@ -266,7 +258,7 @@ result
     end
 
     articles.each do |article|
-      next if Ticket::Article.find_by(message_id: article[:message_id])
+      next if Ticket::Article.exists?(message_id: article[:message_id])
 
       # set ticket state to open if not new
       ticket_state = get_state(page, post, ticket)
@@ -284,21 +276,21 @@ result
         end
         links = [
           {
-            url: url,
+            url:    url,
             target: '_blank',
-            name: 'on Facebook',
+            name:   'on Facebook',
           },
         ]
       end
 
       article = {
-        #to:        @account['name'],
-        ticket_id: ticket.id,
-        internal:  false,
-        sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
+        # to:        @account['name'],
+        ticket_id:     ticket.id,
+        internal:      false,
+        sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
         created_by_id: 1,
         updated_by_id: 1,
-        preferences: {
+        preferences:   {
           links: links,
         },
       }.merge(article)
@@ -309,10 +301,11 @@ result
   def to_group(post, group_id, channel, page)
     Rails.logger.debug { 'import post' }
     return if !post['message']
+
     ticket = nil
 
     # use transaction
-    Transaction.execute(reset_user_id: true) do
+    Transaction.execute(reset_user_id: true, context: 'facebook') do
       existing_article = Ticket::Article.find_by(message_id: post['id'])
       ticket = if existing_article
                  existing_article.ticket
@@ -330,6 +323,7 @@ result
     if article[:type] != 'facebook feed comment'
       raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end
+
     Rails.logger.debug { 'Create feed comment from article...' }
     post = @client.put_comment(article[:in_reply_to], article[:body])
     Rails.logger.debug { post.inspect }
@@ -340,11 +334,12 @@ result
 
   def get_state(page, post, ticket = nil)
 
-    # no changes in post is from page user it self
+    # no changes in post is from page user itself
     if post['from'] && post['from']['id'].to_s == page['id'].to_s
       if !ticket
-        return Ticket::State.find_by(name: 'closed') if !ticket
+        return Ticket::State.find_by(name: 'closed')
       end
+
       return ticket.state
     end
 
@@ -352,6 +347,7 @@ result
     return state if !ticket
 
     return ticket.state if ticket.state_id == state.id
+
     Ticket::State.find_by(default_follow_up: true)
   end
 
@@ -361,6 +357,7 @@ result
       next if !lookup[:page_id] && !lookup[:page]
       next if lookup[:page_id] && lookup[:page_id].to_s != page[:id]
       next if lookup[:page] && lookup[:page] != page[:name]
+
       access_token = page[:access_token]
       break
     end
@@ -378,6 +375,7 @@ result
     comments.each do |comment|
       user = to_user(comment)
       next if !user
+
       article_data = {
         from:        "#{user.firstname} #{user.lastname}",
         body:        comment['message'],

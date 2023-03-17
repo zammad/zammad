@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 # https://github.com/zammad/zammad/issues/1123
@@ -9,7 +11,7 @@ class AgentTicketUpdateWithAttachmentRefreshTest < TestCase
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     #
@@ -20,16 +22,16 @@ class AgentTicketUpdateWithAttachmentRefreshTest < TestCase
     ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test 6 - ticket 1',
-        body: 'test 6 - ticket 1 body',
+        group:    'Users',
+        title:    'test 6 - ticket 1',
+        body:     'test 6 - ticket 1 body',
       },
     )
     sleep 1
 
     # fill body
     ticket_update(
-      data: {
+      data:          {
         body: 'keep me',
       },
       do_not_submit: true,
@@ -49,7 +51,7 @@ class AgentTicketUpdateWithAttachmentRefreshTest < TestCase
 
     # check if attachment is shown
     match(
-      css: '.content.active .ticketZoom .attachments .attachment:nth-child(1) .attachment-name',
+      css:   '.content.active .ticketZoom .attachments .attachment:nth-child(1) .attachment-name',
       value: 'upload1.txt'
     )
 
@@ -59,7 +61,7 @@ class AgentTicketUpdateWithAttachmentRefreshTest < TestCase
 
     # check if attachment is shown
     match(
-      css: '.content.active .ticketZoom .attachments .attachment:nth-child(1) .attachment-name',
+      css:   '.content.active .ticketZoom .attachments .attachment:nth-child(1) .attachment-name',
       value: 'upload1.txt'
     )
   end

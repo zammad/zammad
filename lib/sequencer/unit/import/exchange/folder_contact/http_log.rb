@@ -1,18 +1,10 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContact
-          class HttpLog < Import::Common::Model::HttpLog
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            private
+class Sequencer::Unit::Import::Exchange::FolderContact::HttpLog < Sequencer::Unit::Import::Common::Model::HttpLog
 
-            def facility
-              'EWS'
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def facility
+    'EWS'
   end
 end

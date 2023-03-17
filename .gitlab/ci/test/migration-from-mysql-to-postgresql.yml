@@ -1,0 +1,44 @@
+#
+# Test the migration from mysql/mariadb to postgresql.
+#
+.template_migration_from_mysql_to_postgresql:
+  stage: test
+  rules:
+    - if: $CI_COMMIT_REF_NAME =~ /^private/
+      when: manual
+      allow_failure: true
+    - when: on_success
+  variables:
+    # Turn off not not require redis for MySQL/MariaDB.
+    ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: ''
+    ENFORCE_DB_SERVICE: mysql
+  script:
+    - !reference [.scripts, configure_environment]
+    - !reference [.scripts, zammad_db_init]
+    - 'bundle exec rails r "FillDb.load(object_manager_attributes: {user: {multiselect: 1, multi_tree_select: 1}, ticket: {multiselect: 1, multi_tree_select: 1}, organization: {multiselect: 1, multi_tree_select: 1}}, organization: 2, agents: 2, tickets: 10, public_links: 2, nice: 0)"'
+    - bundle exec rake zammad:db:pgloader > tmp/pgloader-command
+    - sed -i 's#pgsql://zammad:pgsql_password@localhost/zammad#pgsql://zammad:zammad@postgresql/zammad_test#' tmp/pgloader-command
+    - cat tmp/pgloader-command # for debugging
+    - bundle exec rails r 'pp Ticket.all.as_json; pp User.all.as_json; pp Organization.all.as_json; pp PublicLink.all.as_json' > tmp/before-migration-dump.json
+    - rm -f config/database.yml && export ENFORCE_DB_SERVICE=postgresql
+    - !reference [.scripts, configure_environment]
+    - bundle exec rake db:drop db:create # re-create an empty database
+    - pgloader --verbose tmp/pgloader-command
+    - bundle exec rails r 'Rails.cache.clear'
+    - bundle exec rails r 'pp Ticket.all.as_json; pp User.all.as_json; pp Organization.all.as_json; pp PublicLink.all.as_json' > tmp/after-migration-dump.json
+    - .gitlab/check_database_migration_consistency.sh
+    - .gitlab/check_postgres_array_columns.rb
+
+migration:database:mysql_to_postgresql:
+  extends:
+    - .template_migration_from_mysql_to_postgresql
+  services:
+    - !reference [.services, mysql]
+    - !reference [.services, postgresql]
+
+migration:database:mariadb_to_postgresql:
+  extends:
+    - .template_migration_from_mysql_to_postgresql
+  services:
+    - !reference [.services, mariadb]
+    - !reference [.services, postgresql]

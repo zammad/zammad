@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Ticket::Overviews
 
 =begin
@@ -7,6 +8,10 @@ all overviews by user
 
   result = Ticket::Overviews.all(current_user: User.find(3))
 
+certain overviews by user
+
+  result = Ticket::Overviews.all(current_user: User.find(3), links: ['all_unassigned', 'my_assigned'])
+
 returns
 
   result = [overview1, overview2]
@@ -14,32 +19,21 @@ returns
 =end
 
   def self.all(data)
-    current_user = data[:current_user]
-
-    # get customer overviews
-    role_ids = User.joins(:roles).where(users: { id: current_user.id, active: true }, roles: { active: true }).pluck('roles.id')
-    if current_user.permissions?('ticket.customer')
-      overview_filter = { active: true, organization_shared: false }
-      if current_user.organization_id && current_user.organization.shared
-        overview_filter.delete(:organization_shared)
-      end
-      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio, :name)
-      return overviews
-    end
-
-    # get agent overviews
-    return [] if !current_user.permissions?('ticket.agent')
-    overview_filter = { active: true }
-    overview_filter_not = { out_of_office: true }
-    if User.where('out_of_office = ? AND out_of_office_start_at <= ? AND out_of_office_end_at >= ? AND out_of_office_replacement_id = ? AND active = ?', true, Time.zone.today, Time.zone.today, current_user.id, true).count.positive?
-      overview_filter_not = {}
-    end
-    Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).where.not(overview_filter_not).distinct('overview.id').order(:prio, :name)
+    Ticket::OverviewsPolicy::Scope.new(data[:current_user], Overview).resolve
+      .where({ link: data[:links] }.compact)
+      .distinct
+      .reorder(:prio, :name)
   end
 
 =begin
 
-  result = Ticket::Overviews.index(User.find(123))
+index of all overviews by user
+
+  result = Ticket::Overviews.index(User.find(3))
+
+index of certain overviews by user
+
+  result = Ticket::Overviews.index(User.find(3), ['all_unassigned', 'my_assigned'])
 
 returns
 
@@ -74,78 +68,112 @@ returns
 
 =end
 
-  def self.index(user)
+  def self.index(user, links = nil)
     overviews = Ticket::Overviews.all(
       current_user: user,
+      links:        links,
     )
     return [] if overviews.blank?
 
-    # get only tickets with permissions
-    access_condition = Ticket.access_condition(user, 'overview')
+    user_scopes = {
+      read:     TicketPolicy::ReadScope.new(user).resolve,
+      overview: TicketPolicy::OverviewScope.new(user).resolve,
+    }
 
-    ticket_attributes = Ticket.new.attributes
-    list = []
-    overviews.each do |overview|
-      query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
-      direction = overview.order[:direction]
-      order_by = overview.order[:by]
+    overviews.map do |overview|
+      db_query_params = _db_query_params(overview, user)
 
-      # validate direction
-      raise "Invalid order direction '#{direction}'" if direction && direction !~ /^(ASC|DESC)$/i
+      scope = if overview.condition['ticket.mention_user_ids'].present?
+                user_scopes[:read]
+              else
+                user_scopes[:overview]
+              end
 
-      # check if order by exists
-      if !ticket_attributes.key?(order_by)
-        order_by = if ticket_attributes.key?("#{order_by}_id")
-                     "#{order_by}_id"
-                   else
-                     'created_at'
-                   end
-      end
-      order_by = "#{ActiveRecord::Base.connection.quote_table_name('tickets')}.#{ActiveRecord::Base.connection.quote_column_name(order_by)}"
-
-      # check if group by exists
-      if overview.group_by.present?
-        group_by = overview.group_by
-        if !ticket_attributes.key?(group_by)
-          group_by = if ticket_attributes.key?("#{group_by}_id")
-                       "#{group_by}_id"
-                     end
-        end
-        if group_by
-          order_by = "#{ActiveRecord::Base.connection.quote_table_name('tickets')}.#{ActiveRecord::Base.connection.quote_column_name(group_by)}, #{order_by}"
-        end
-      end
-
-      ticket_result = Ticket.distinct
-                            .where(access_condition)
-                            .where(query_condition, *bind_condition)
-                            .joins(tables)
-                            .order("#{order_by} #{direction}")
-                            .limit(2000)
-                            .pluck(:id, :updated_at, order_by)
+      ticket_result = scope
+        .distinct
+        .where(db_query_params.query_condition, *db_query_params.bind_condition)
+        .joins(db_query_params.tables)
+        .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
+        .limit(limit_per_overview)
+        .pluck(:id, :updated_at, Arel.sql(db_query_params.order_by))
 
       tickets = ticket_result.map do |ticket|
         {
-          id: ticket[0],
+          id:         ticket[0],
           updated_at: ticket[1],
         }
       end
 
-      count = Ticket.distinct.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
-      item = {
+      count = scope
+        .distinct
+        .where(db_query_params.query_condition, *db_query_params.bind_condition)
+        .joins(db_query_params.tables)
+        .count
+
+      {
         overview: {
-          name: overview.name,
-          id: overview.id,
-          view: overview.link,
+          name:       overview.name,
+          id:         overview.id,
+          view:       overview.link,
           updated_at: overview.updated_at,
         },
-        tickets: tickets,
-        count: count,
+        tickets:  tickets,
+        count:    count,
       }
-
-      list.push item
     end
-    list
   end
 
+  def self.tickets_for_overview(overview, user, order_by: nil, order_direction: nil)
+    db_query_params = _db_query_params(overview, user, order_by: order_by, order_direction: order_direction)
+
+    scope = TicketPolicy::OverviewScope
+    if overview.condition['ticket.mention_user_ids'].present?
+      scope = TicketPolicy::ReadScope
+    end
+    scope.new(user).resolve
+      .distinct
+      .where(db_query_params.query_condition, *db_query_params.bind_condition)
+      .joins(db_query_params.tables)
+      .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
+      .limit(limit_per_overview)
+  end
+
+  DB_QUERY_PARAMS = Struct.new(:query_condition, :bind_condition, :tables, :order_by, :direction)
+
+  def self._db_query_params(overview, user, order_by: nil, order_direction: nil)
+    result = DB_QUERY_PARAMS.new(*Ticket.selector2sql(overview.condition, current_user: user), order_by || overview.order[:by], order_direction || overview.order[:direction])
+
+    # validate direction
+    raise "Invalid order direction '#{result.direction}'" if result.direction && result.direction !~ %r{^(ASC|DESC)$}i
+
+    ticket_attributes = Ticket.new.attributes
+
+    # check if order by exists
+    if !ticket_attributes.key?(result.order_by)
+      result.order_by = if ticket_attributes.key?("#{result.order_by}_id")
+                          "#{result.order_by}_id"
+                        else
+                          'created_at'
+                        end
+    end
+    result.order_by = "#{ActiveRecord::Base.connection.quote_table_name('tickets')}.#{ActiveRecord::Base.connection.quote_column_name(result.order_by)}"
+
+    # check if group by exists
+    if overview.group_by.present?
+      group_by = overview.group_by
+      if !ticket_attributes.key?(group_by)
+        group_by = if ticket_attributes.key?("#{group_by}_id")
+                     "#{group_by}_id"
+                   end
+      end
+      if group_by
+        result.order_by = "#{ActiveRecord::Base.connection.quote_table_name('tickets')}.#{ActiveRecord::Base.connection.quote_column_name(group_by)}, #{result.order_by}"
+      end
+    end
+    result
+  end
+
+  def self.limit_per_overview
+    Setting.get('ui_ticket_overview_ticket_limit')
+  end
 end

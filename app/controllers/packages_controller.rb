@@ -1,13 +1,14 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class PackagesController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.package') }
+  prepend_before_action { authentication_check && authorize! }
 
   # GET /api/v1/packages
   def index
-    packages = Package.all().order('name')
     render json: {
-      packages: packages
+      packages:             Package.all.reorder('name'),
+      package_installation: File.exist?('/usr/bin/zammad'),
+      local_gemfiles:       Dir['Gemfile.local.*'].present?
     }
   end
 

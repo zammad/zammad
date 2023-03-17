@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class Overview extends App.ControllerSubContent
   requiredPermission: 'admin.overview'
-  header: 'Overviews'
+  header: __('Overviews')
   constructor: ->
     super
 
@@ -9,7 +9,7 @@ class Index extends App.ControllerSubContent
       if attribute.name is 'group_by'
         attribute.options = App.Overview.groupByAttributes()
 
-    new App.ControllerGenericIndex(
+    @genericController = new App.ControllerGenericIndex(
       el: @el
       id: @id
       genericObject: 'Overview'
@@ -17,17 +17,17 @@ class Index extends App.ControllerSubContent
       #groupBy: 'role'
       pageData:
         home: 'overviews'
-        object: 'Overview'
-        objects: 'Overviews'
+        object: __('Overview')
+        objects: __('Overviews')
         navupdate: '#overviews'
         notes: [
-          'Overview are ...'
+          __('Overviews are …')
         ]
         buttons: [
-          { name: 'New Overview', 'data-type': 'new', class: 'btn--success' }
+          { name: __('New Overview'), 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      large: true
+      veryLarge: true
       dndCallback: (e, item) =>
         items = @el.find('table > tbody > tr')
         prios = []
@@ -46,4 +46,4 @@ class Index extends App.ControllerSubContent
         )
     )
 
-App.Config.set('Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, permission: ['admin.overview'] }, 'NavBarAdmin')
+App.Config.set('Overview', { prio: 2300, name: __('Overviews'), parent: '#manage', target: '#manage/overviews', controller: Overview, permission: ['admin.overview'] }, 'NavBarAdmin')

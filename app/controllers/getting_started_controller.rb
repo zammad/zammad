@@ -1,5 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class GettingStartedController < ApplicationController
+  prepend_before_action -> { authorize! }, only: [:base]
 
 =begin
 
@@ -34,16 +36,14 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # check it auto wizard is already done
     return if auto_wizard_enabled_response
 
-    # if master user already exists, we need to be authenticated
-    if setup_done
-      return if !authentication_check
-    end
+    # if admin user already exists, we need to be authenticated
+    return if setup_done && !authentication_check
 
     # return result
     render json: {
-      setup_done: setup_done,
-      import_mode: Setting.get('import_mode'),
-      import_backend: Setting.get('import_backend'),
+      setup_done:            setup_done,
+      import_mode:           Setting.get('import_mode'),
+      import_backend:        Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
     }
   end
@@ -65,9 +65,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     auto_wizard_data = AutoWizard.data
     if auto_wizard_data.blank?
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
-        message: 'Invalid auto wizard file.',
+        message:             __('Invalid auto wizard file.'),
       }
       return
     end
@@ -75,7 +75,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # verify auto wizard token
     if auto_wizard_data['Token'] && auto_wizard_data['Token'] != params[:token]
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
       }
       return
@@ -85,9 +85,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     auto_wizard_admin = AutoWizard.setup
     if !auto_wizard_admin
       render json: {
-        auto_wizard: true,
+        auto_wizard:         true,
         auto_wizard_success: false,
-        message: 'Error during execution of auto wizard.',
+        message:             __('Error during execution of auto wizard.'),
       }
       return
     end
@@ -99,32 +99,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     Setting.set('system_init_done', true)
 
     render json: {
-      auto_wizard: true,
+      auto_wizard:         true,
       auto_wizard_success: true,
     }
   end
 
   def base
-
-    # check admin permissions
-    permission_check('admin.wizard')
-
     # validate url
     messages = {}
     settings = {}
     if !Setting.get('system_online_service')
-      if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
-        messages[:url] = 'A URL looks like http://zammad.example.com'
-      end
-
-      # split url in http_type and fqdn
-      if params[:url]
-        if params[:url] =~ %r{^(http|https)://(.+?)(:.+?|/.+?|)$}
-          settings[:http_type] = $1
-          settings[:fqdn] = $2
-        else
-          messages[:url] = 'A URL looks like http://zammad.example.com'
-        end
+      if (result = self.class.validate_uri(params[:url]))
+        settings[:http_type] = result[:scheme]
+        settings[:fqdn]      = result[:fqdn]
+      else
+        messages[:url] = __('A URL looks like this: https://zammad.example.com')
       end
     end
 
@@ -136,10 +125,10 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # validate image
-    if params[:logo] && params[:logo] =~ /^data:image/i
+    if params[:logo] && params[:logo] =~ %r{^data:image}i
       file = StaticAssets.data_url_attributes(params[:logo])
       if !file[:content] || !file[:mime_type]
-        messages[:logo] = 'Unable to process image upload.'
+        messages[:logo] = __('The uploaded image could not be processed.')
       end
     end
 
@@ -148,16 +137,21 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       settings[:locale_default] = params[:locale_default]
     end
 
+    # add timezone_default
+    if params[:timezone_default].present?
+      settings[:timezone_default] = params[:timezone_default]
+    end
+
     if messages.present?
       render json: {
-        result: 'invalid',
+        result:   'invalid',
         messages: messages,
       }
       return
     end
 
     # save image
-    if params[:logo] && params[:logo] =~ /^data:image/i
+    if params[:logo] && params[:logo] =~ %r{^data:image}i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes(params[:logo])
@@ -166,7 +160,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       StaticAssets.store_raw(file[:content], file[:mime_type])
     end
 
-    if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
+    if params[:logo_resize] && params[:logo_resize] =~ %r{^data:image}i
 
       # data:image/png;base64
       file = StaticAssets.data_url_attributes(params[:logo_resize])
@@ -181,9 +175,28 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     render json: {
-      result: 'ok',
+      result:   'ok',
       settings: settings,
     }
+  end
+
+  def self.validate_uri(string)
+    uri = URI(string)
+
+    return false if %w[http https].exclude?(uri.scheme) || uri.host.blank?
+
+    defaults = [['http', 80], ['https', 443]]
+    actual   = [uri.scheme, uri.port]
+
+    fqdn = if defaults.include? actual
+             uri.host
+           else
+             "#{uri.host}:#{uri.port}"
+           end
+
+    { scheme: uri.scheme, fqdn: fqdn }
+  rescue
+    false
   end
 
   private
@@ -198,8 +211,8 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   end
 
   def setup_done
-    #return false
-    count = User.all.count()
+    # return false
+    count = User.all.count
     done = true
     if count <= 2
       done = false
@@ -214,14 +227,14 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     addresses = EmailAddress.where(active: true)
 
     render json: {
-      setup_done: true,
-      import_mode: Setting.get('import_mode'),
-      import_backend: Setting.get('import_backend'),
+      setup_done:            true,
+      import_mode:           Setting.get('import_mode'),
+      import_backend:        Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
-      addresses: addresses,
-      groups: groups,
-      config: config_to_update,
-      channel_driver: {
+      addresses:             addresses,
+      groups:                groups,
+      config:                config_to_update,
+      channel_driver:        {
         email: EmailHelper.available_driver,
       },
     }
@@ -233,5 +246,4 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       product_logo: Setting.get('product_logo')
     }
   end
-
 end

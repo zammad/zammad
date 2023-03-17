@@ -1,16 +1,16 @@
-Connexion #{config.product_name} détectée depuis un nouveau pays
+Connexion à #{config.product_name} détectée depuis un nouveau pays
 
 <div>Bonjour #{user.firstname},</div>
 <br>
-<div>Il semble que vous ayez utilisé votre compte avec un <b>appareil connu mais depuis un nouveau pays</b> le "#{user_device.created_at}":</div>
+<div>Il semble que vous ayez utilisé votre compte avec un <b>appareil connu mais depuis un nouveau pays</b> le "#{user_device.created_at}" :</div>
 <br>
 <div>
-Votre appareil: #{user_device.name}<br>
-Votre localisation (relative): #{user_device.location}<br>
-Votre IP: #{user_device.ip}<br>
+Votre appareil : #{user_device.name}<br>
+Votre localisation (relative) : #{user_device.location}<br>
+Votre adresse IP : #{user_device.ip}<br>
 </div>
 <br>
-<div>Le pays a été ajouté à votre liste d'appareils connus, que vous pouvez l'afficher ici:</div>
+<div>Le pays a été ajouté à votre liste d'appareils connus, que vous pouvez consulter ici :</div>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>

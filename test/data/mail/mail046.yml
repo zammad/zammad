@@ -1,0 +1,45 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"ÎäŔźłÉ" <Glopelf7121@example.com>'
+from_email: Glopelf7121@example.com
+from_display_name: ÎäŔźłÉ
+to: info@example.de
+subject: 转发：整体提升企业服务水平
+body: "Software zur Erkennung von \"Spam\" auf dem Rechner\n\n    bob.example.io\n\nhat
+  die eingegangene E-mail als mögliche \"Spam\"-Nachricht identifiziert.\nDie ursprüngliche
+  Nachricht wurde an diesen Bericht angehängt, so dass\nSie sie anschauen können (falls
+  es doch eine legitime E-Mail ist) oder\nähnliche unerwünschte Nachrichten in Zukunft
+  markieren können.\nBei Fragen zu diesem Vorgang wenden Sie sich bitte an\n\n    the
+  administrator of that system\n\nVorschau: ¡°Ladies and gentlemen,¡± he said loudly,
+  waving for quiet.\n   ¡°What an extraordinary moment this is! The perfect moment
+  for me to make\n   a little announcement I've been sitting on for some time! [...]
+  \n\nInhaltsanalyse im Detail:   (9.4 Punkte, 5.0 benötigt)\n\nPkte Regelname              Beschreibung\n----
+  ---------------------- --------------------------------------------------\n 0.0
+  RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to DNSWL\n                            was
+  blocked.  See\n                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block\n
+  \                            for more information.\n                            [127.0.0.1
+  listed in list.dnswl.org]\n 1.6 RCVD_IN_BRBL_LASTEXT   RBL: No description available.\n
+  \                           [127.0.0.1 listed in bb.barracudacentral.org]\n 1.0
+  RCVD_IN_PBL            RBL: Received via a relay in Spamhaus PBL\n                            [127.0.0.1
+  listed in zen.spamhaus.org]\n 0.0 MIME_HTML_MOSTLY       BODY: Mehrteilige MIME-Nachricht
+  überwiegend in HTML\n 0.0 HTML_MESSAGE           BODY: Nachricht enthält HTML\n
+  0.7 MPART_ALT_DIFF         BODY: Nachrichtentext im Text- und HTML-Format\n                            unterscheiden
+  sich\n 1.6 RDNS_NONE              Delivered to internal network by a host with no
+  rDNS\n 1.1 SUBJ_ILLEGAL_CHARS     Betreff enthält zu viele ungültige Zeichen\n 0.1
+  SUBJECT_NEEDS_ENCODING Subject is encoded but does not specify the\n                            encoding\n
+  3.2 HELO_DYNAMIC_IPADDR    HELO-Rechnername verdächtig (IP-Adresse 1)\n\nDie ursprüngliche
+  Nachricht enthielt nicht ausschließlich Klartext\n(plain text) und kann eventuell
+  eine Gefahr für einige E-Mail-Programme\ndarstellen (falls sie z.B. einen Computervirus
+  enthält).\nMöchten Sie die Nachricht dennoch ansehen, ist es wahrscheinlich\nsicherer,
+  sie zuerst in einer Datei zu speichern und diese Datei danach\nmit einem Texteditor
+  zu öffnen.\n\n"
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: !binary |-
+    UmV0dXJuLVBhdGg6IDxHbG9wZWxmNzEyMUBleGFtcGxlLmNvbT4NCkRlbGl2ZXJlZC1UbzogaW5mb0BleGFtcGxlLmRlDQpSZWNlaXZlZDogZnJvbSBFM0M5QzA0MEM2MEU0RTQueWlua3NvZnQuY29tICh1bmtub3duIFsxMjcuMC4wLjFdKQ0KCWJ5IG1haWwuZXhhbXBsZS5pbyAoUG9zdGZpeCkgd2l0aCBTTVRQIGlkIDgzMDkxNkU1NjYNCglmb3IgPGluZm9AZXhhbXBsZS5kZT47IFdlZCwgMTUgTWFyIDIwMTcgMTM6MDA6NDAgKzAxMDAgKENFVCkNCkRhdGU6IFdlZCwgMTUgTWFyIDIwMTcgMjA6MDA6NDQgKzA4MDANClN1YmplY3Q6INeqt6KjutX7zOXM4cn9xvPStbf+zvHLrsa9DQpGcm9tOiAizuTAvLPJIiA8R2xvcGVsZjcxMjFAZXhhbXBsZS5jb20+DQpSZXBseS1UbzogIs7kwLyzySIgPEdsb3BlbGY3MTIxQGV4YW1wbGUuY29tPg0KVG86IDxpbmZvQGV4YW1wbGUuZGU+DQpNZXNzYWdlLUlEOiA8U0FLMjAxNzAzMTUkNEU2NzU4OEEuJDcyMDhBOEI5QGV4YW1wbGUuY29tPg0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvYWx0ZXJuYXRpdmU7DQoJYm91bmRhcnk9Ii0tLS09X1NBS2JvdW5kXzIwXzAwNDRfMjAxNzAzMTVfNDZGQjMzQTEuMUE5QkNDMkMiDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBxdW90ZWQtcHJpbnRhYmxlDQpYLVByaW9yaXR5OiAzDQpBdXRob3I6IHlpbmtzb2Z0DQoNCi0tLS0gT3JpZ2luYWwgbWFpbCBtZXNzYWdlIC0tLS0tDQq3orz+yMs6u/TV9NPlPEdsb3BlbGY3MTIxQGV4YW1wbGUuY29tPg0KytW8/sjLOjxpbmZvQGV4YW1wbGUuZGU+DQq3osvNyrG85DoxOTg4LTA4LTEyIA0KDQpNSU1FLVZlcnNpb246IDEuMA0KDQpUaGlzIGlzIGEgbXVsdGktcGFydCBtZXNzYWdlIGluIE1JTUUgZm9ybWF0Lg0KDQotLS0tLS09X1NBS2JvdW5kXzIwXzAwNDRfMjAxNzAzMTVfNDZGQjMzQTEuMUE5QkNDMkMNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsNCgljaGFyc2V0PSJnYjIzMTIiDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBxdW90ZWQtcHJpbnRhYmxlDQoNCg0KLS0tLS0tPV9TQUtib3VuZF8yMF8wMDQ0XzIwMTcwMzE1XzQ2RkIzM0ExLjFBOUJDQzJDDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbDsNCgljaGFyc2V0PSJnYjIzMTIiDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBxdW90ZWQtcHJpbnRhYmxlDQoNCg0KPEJPRFk+PFA+PUExPUIwTGFkaWVzIGFuZCBnZW50bGVtZW4sPUExPUIxIGhlIHNhaWQgbG91ZGx5LCB3YXZpbmcgZm9yIHE9DQp1aWV0LiA9QTE9QjBXaGF0IGFuIGV4dHJhb3JkaW5hcnkgbW9tZW50IHRoaXMgaXMhIFRoZSBwZXJmZWN0IG1vbWVudCBmbz0NCnIgbWUgdG8gbWFrZSBhIGxpdHRsZSBhbm5vdW5jZW1lbnQgSSd2ZSBiZWVuIHNpdHRpbmcgb24gZm9yIHNvbWUgdGltZSE8PQ0KL1A+DQo8UD48L1A+PElOUFVUIGlkPTNEVGhlIG1vbWVudCB0aGUgZG9vciBoYWQgY2xvc2VkLCBNci4gQm9yZ2luIGRyb3BwZWQgaD0NCmlzIG9pbHkgbWFubmVyLmJvcmRlcj0zRDAgYWxpZ249M0RiYXNlbGluZSBzcmM9M0QiaHR0cDovL3JyZC5tZS9iQXZHeSIgPQ0KdHlwZT0zRGltYWdlPiA8L0JPRFk+DQoNCg0KLS0tLS0tPV9TQUtib3VuZF8yMF8wMDQ0XzIwMTcwMzE1XzQ2RkIzM0ExLjFBOUJDQzJDLS0NCg0KDQo=
+  filename: 转发：整体提升企业服务水平.eml
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/rfc822; x-spam-type=original
+    Content-Description: original message before SpamAssassin
+    Mime-Type: message/rfc822
+    Charset: UTF-8

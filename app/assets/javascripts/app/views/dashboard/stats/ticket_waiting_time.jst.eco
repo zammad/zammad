@@ -1,0 +1,17 @@
+<div class="time stat-widget vertical">
+  <div class="stat-title">
+    <%- @T('∅ Waiting time today') %>
+    <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketWaitingTime.description) %>" data-placement="bottom">
+      <%- @Icon('help') %>
+    </div>
+  </div>
+  <div class="stat-graphic">
+    <div class="stat-stopwatch centered">
+      <%- @Icon('stopwatch', 'stat-icon stopwatch-icon') %>
+      <canvas class="stat-dial"></canvas>
+      <div class="stat-amount"></div>
+    </div>
+  </div>
+  <div class="stat-label"><%- @T('My handling time: %s minutes', @StatsTicketWaitingTime.handling_time) %></div>
+  <div class="stat-detail"><%- @T('Average: %s minutes', @StatsTicketWaitingTime.average_per_agent) %></div>
+</div>

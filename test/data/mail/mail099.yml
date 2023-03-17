@@ -1,0 +1,10 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: example <noreply@example.org>
+from_email: noreply@example.org
+from_display_name: example
+to: noreply@example.org
+subject: example
+body: "　　　　　①１都３県の鯵と、\n\n"
+content_type: text/plain
+reply-to: info@example.org
+attachments: []

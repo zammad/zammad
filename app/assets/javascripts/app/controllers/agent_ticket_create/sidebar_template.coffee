@@ -5,7 +5,7 @@ class SidebarTemplate extends App.Controller
       name: 'template'
       badgeIcon: 'templates'
       badgeCallback: @badgeRender
-      sidebarHead: 'Templates'
+      sidebarHead: __('Templates')
       sidebarActions: []
       sidebarCallback: @showTemplates
     }

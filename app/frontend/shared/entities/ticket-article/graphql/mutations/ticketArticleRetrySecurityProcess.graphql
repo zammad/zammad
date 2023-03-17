@@ -1,0 +1,16 @@
+mutation ticketArticleRetrySecurityProcess($articleId: ID!) {
+  ticketArticleRetrySecurityProcess(articleId: $articleId) {
+    retryResult {
+      ...securityState
+    }
+    article {
+      id
+      securityState {
+        ...securityState
+      }
+    }
+    errors {
+      ...errors
+    }
+  }
+}

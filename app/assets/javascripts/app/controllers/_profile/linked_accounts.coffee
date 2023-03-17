@@ -1,7 +1,8 @@
-class Index extends App.ControllerSubContent
+class ProfileLinkedAccounts extends App.ControllerSubContent
   requiredPermission: 'user_preferences.linked_accounts'
-  header: 'Linked Accounts'
+  header: __('Linked Accounts')
   events:
+    'click .js-add':    'add'
     'click .js-remove': 'remove'
 
   constructor: ->
@@ -19,6 +20,11 @@ class Index extends App.ControllerSubContent
       user:           App.Session.get()
       auth_providers: auth_providers
     )
+
+  add: (e) =>
+    e.preventDefault()
+    key = $(e.target).data('key')
+    @el.find(".js-addForm-#{key}").submit()
 
   remove: (e) =>
     e.preventDefault()
@@ -39,7 +45,7 @@ class Index extends App.ControllerSubContent
   success: (data, status, xhr) =>
     @notify(
       type: 'success'
-      msg:  App.i18n.translateContent('Successful!')
+      msg:  App.i18n.translateContent('Update successful.')
     )
     update = =>
       @render()
@@ -53,51 +59,56 @@ class Index extends App.ControllerSubContent
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
+App.Config.set('LinkedAccounts', { prio: 4000, name: __('Linked Accounts'), parent: '#profile', target: '#profile/linked', controller: ProfileLinkedAccounts, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
 App.Config.set('auth_provider_all', {
   facebook:
     url:    '/auth/facebook'
-    name:   'Facebook'
+    name:   __('Facebook')
     config: 'auth_facebook'
     class:  'facebook'
   twitter:
     url:    '/auth/twitter'
-    name:   'Twitter'
+    name:   __('Twitter')
     config: 'auth_twitter'
     class:  'twitter'
   linkedin:
     url:    '/auth/linkedin'
-    name:   'LinkedIn'
+    name:   __('LinkedIn')
     config: 'auth_linkedin'
     class:  'linkedin'
   github:
     url:    '/auth/github'
-    name:   'GitHub'
+    name:   __('GitHub')
     config: 'auth_github'
     class:  'github'
   gitlab:
     url:    '/auth/gitlab'
-    name:   'GitLab'
+    name:   __('GitLab')
     config: 'auth_gitlab'
     class:  'gitlab'
   microsoft_office365:
     url:    '/auth/microsoft_office365'
-    name:   'Office 365'
+    name:   __('Microsoft')
     config: 'auth_microsoft_office365'
-    class:  'office365'
+    class:  'microsoft'
   google_oauth2:
     url:    '/auth/google_oauth2'
-    name:   'Google'
+    name:   __('Google')
     config: 'auth_google_oauth2'
     class:  'google'
-  oauth2:
-    url:    '/auth/oauth2'
-    name:   'OAuth2'
-    config: 'auth_oauth2'
-    class:  'oauth2'
   weibo:
     url:    '/auth/weibo'
-    name:   'Weibo'
+    name:   __('Weibo')
     config: 'auth_weibo'
     class:  'weibo'
+  saml:
+    url:    '/auth/saml'
+    name:   __('SAML')
+    config: 'auth_saml'
+    class:  'saml'
+  sso:
+    url:    '/auth/sso'
+    name:   __('SSO')
+    config: 'auth_sso'
+    class:  'sso'
 })

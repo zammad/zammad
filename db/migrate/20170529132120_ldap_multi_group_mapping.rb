@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class LdapMultiGroupMapping < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     # load existing LDAP config
     ldap_config = Setting.get('ldap_config')
@@ -15,6 +17,7 @@ class LdapMultiGroupMapping < ActiveRecord::Migration[4.2]
     # if we need to migrate to new array structure
     ldap_config['group_role_map'].each do |source, dest|
       next if dest.is_a?(Array)
+
       ldap_config['group_role_map'][source] = [dest]
     end
 

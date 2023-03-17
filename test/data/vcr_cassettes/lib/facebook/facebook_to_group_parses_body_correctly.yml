@@ -1,0 +1,718 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/feed?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=id,from,to,message,created_time,permalink_url,comments%7Bid,from,to,message,created_time%7D
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"e8ff6b278cdfc08eb20e427dae10f2530d069f8a"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - AWierOlxw5HWPtns5HsGB9f
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - Fnvryxauwuh
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Pragma:
+      - no-cache
+      X-Fb-Rlafr:
+      - '0'
+      X-Business-Use-Case-Usage:
+      - '{"<FACEBOOK_PAGE_1_ID>":[{"type":"pages","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - 7th7JFKNA4HChbdGxhTj9mfGJrwUWe0YOq0DwuXU3IlBCrAf5m3TU9j1xh2hF84l9DCPcBXABXlkP9pjziP1iw==
+      Date:
+      - Fri, 12 Feb 2021 11:52:58 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '575'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"id":"<FACEBOOK_PAGE_1_ID>_<FACEBOOK_PAGE_1_POST_ID>","from":{"name":"<FACEBOOK_CUSTOMER_FIRSTNAME>
+        <FACEBOOK_CUSTOMER_LASTNAME>","id":"<FACEBOOK_CUSTOMER_ID>"},"to":{"data":[{"id":"<FACEBOOK_PAGE_1_ID>","name":"<FACEBOOK_PAGE_1_NAME>"}]},"message":"<FACEBOOK_PAGE_1_POST_MESSAGE>","created_time":"2021-02-04T15:16:24+0000","permalink_url":"https:\/\/www.facebook.com\/<FACEBOOK_PAGE_1_ID>\/posts\/<FACEBOOK_PAGE_1_POST_ID>\/","comments":{"data":[{"id":"<FACEBOOK_PAGE_1_POST_ID>_105667314885521","from":{"name":"<FACEBOOK_PAGE_1_NAME>","id":"<FACEBOOK_PAGE_1_ID>"},"message":"qqqqq","created_time":"2021-02-04T15:22:43+0000"},{"id":"<FACEBOOK_PAGE_1_POST_ID>_<FACEBOOK_PAGE_1_POST_COMMENT_ID>","from":{"name":"<FACEBOOK_CUSTOMER_FIRSTNAME>
+        <FACEBOOK_CUSTOMER_LASTNAME>","id":"<FACEBOOK_CUSTOMER_ID>"},"message":"dddd","created_time":"2021-02-04T15:23:13+0000"}],"paging":{"cursors":{"before":"WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEExTmpZAM016RTBPRGcxTlRJeE9qRTJNVEkwTlRJeE5qTT0ZD","after":"WTI5dGJXVnVkRjlqZAFhKemIzSTZANVEExTmpZAM05UYzBPRGcxTkRrMU9qRTJNVEkwTlRJeE9UTT0ZD"}}}}],"paging":{"cursors":{"before":"QVFIUnZAPR1lId3h3MGQ3UE5IZAzFkTkNuY2hWdVpyb3hESzFfVnNCMGk3UTRxNkJ5Y0ZAFVVVualJKdE1HYktIemlTd2RvSUFzQnJaMWtrbFc2VHhyYjRZAakVaTWNzZATlvWHppaEROY3FXd3dWUS01NjdlVS1iSFdTeVo3ZA19NY3ByMWdw","after":"QVFIUnZAPR1lId3h3MGQ3UE5IZAzFkTkNuY2hWdVpyb3hESzFfVnNCMGk3UTRxNkJ5Y0ZAFVVVualJKdE1HYktIemlTd2RvSUFzQnJaMWtrbFc2VHhyYjRZAakVaTWNzZATlvWHppaEROY3FXd3dWUS01NjdlVS1iSFdTeVo3ZA19NY3ByMWdw"}}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:58 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/accounts?access_token=<FACEBOOK_ADMIN_ACCESS_TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"54606689e65ecdaf2490533f791b994546646abe"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - AilMVAWxlOCn-NerOng6l5Z
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - DbvRzknNatb
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Pragma:
+      - no-cache
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      X-Fb-Rlafr:
+      - '0'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - 6styz/6oSKPqJ6eCPIAJc3QRBHGkFAnbKx2aghK2nWZ2xgUrqj9dY84LheTxse9/cTlbDIa6DqHCEg5P8riz9w==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '627'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"access_token":"<FACEBOOK_PAGE_1_ACCCESS_TOKEN>","category":"Bed
+        and Breakfast","category_list":[{"id":"110321355709642","name":"Bed and Breakfast"}],"name":"<FACEBOOK_PAGE_1_NAME>","id":"<FACEBOOK_PAGE_1_ID>","tasks":["ANALYZE","ADVERTISE","MESSAGING","MODERATE","CREATE_CONTENT","MANAGE"]},{"access_token":"<FACEBOOK_PAGE_2_ACCCESS_TOKEN>","category":"Just
+        For Fun","category_list":[{"id":"129417183848258","name":"Just For Fun"}],"name":"<FACEBOOK_PAGE_2_NAME>","id":"<FACEBOOK_PAGE_2_ID>","tasks":["ANALYZE","ADVERTISE","MESSAGING","MODERATE","CREATE_CONTENT","MANAGE"]}],"paging":{"cursors":{"before":"MTAwMTY3MDIyMTAyMjE3","after":"MTY4NDc1MjQ4MjY4Mjg5"}}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_CUSTOMER_ID>?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=first_name,last_name,email
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"6cef0e3dceb732d6f12089b9b438ddf189856488"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - A9wjFHozIlpOVRy0NHmjYSY
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - AaOM46JQBzI
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Fb-Rlafr:
+      - '0'
+      X-Business-Use-Case-Usage:
+      - '{"<FACEBOOK_PAGE_1_ID>":[{"type":"messenger","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - ycMXjBUIXgeEto71DYVu7t0Het9ghX7R/I5bhzJr661JLHjWYAsgUnSZMCDBN4UdXWa9GfxLLbfSLGsL4htPtg==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '72'
+    body:
+      encoding: UTF-8
+      string: '{"first_name":"<FACEBOOK_CUSTOMER_FIRSTNAME>","last_name":"<FACEBOOK_CUSTOMER_LASTNAME>","id":"<FACEBOOK_CUSTOMER_ID>"}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_CUSTOMER_ID>/picture?type=large
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.facebook.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.2
+      X-Fb-Request-Id:
+      - A07eVm-q6PujWk2EdrXW1Lh
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - HV1/CYxOEwe
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#3) Application does not have
+        the capability to make this API call."
+      X-Fb-Debug:
+      - PMToDSJjEAnVwJGK2rag1ktLUuJCz5WgAEDCY1dbSQgRSuNvFEy70fjk7dk5eN6QFvrn5rlFJGA137lo6Nqg/w==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '164'
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"(#3) Application does not have the capability
+        to make this API call.","type":"OAuthException","code":3,"fbtrace_id":"A07eVm-q6PujWk2EdrXW1Lh"}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_CUSTOMER_ID>/picture?type=large
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.facebook.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.2
+      X-Fb-Request-Id:
+      - AghEcVKlHkznMNQh6geuHCw
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - GW9Cl35tPZi
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#3) Application does not have
+        the capability to make this API call."
+      X-Fb-Debug:
+      - 6homYHg4n5Vqz49EZyfJZN3eW7TKU6TwTZKXdig5t56e9DhDerVCg3Ol+xRDRPYHqbpw4xsYTcgTmOCnH8TqBg==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '164'
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"(#3) Application does not have the capability
+        to make this API call.","type":"OAuthException","code":3,"fbtrace_id":"AghEcVKlHkznMNQh6geuHCw"}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_PAGE_1_ID>?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=first_name,last_name,email
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      X-Fb-Rlafr:
+      - '0'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - AlswoOCo6zO9DttdDlCJ7fi
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - Di2fLlsl2VY
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#100) Tried accessing nonexisting
+        field (first_name) on node type (Page)"
+      X-Fb-Debug:
+      - AKGq6lVKFyWNa3NDC4TH3FsHZazn2cp5rM/xLdMBeT2etNaeu7j+0MeapsNeqYM4I3RH2DlLuBaw9Rn1GmryvA==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '171'
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"(#100) Tried accessing nonexisting field (first_name)
+        on node type (Page)","type":"OAuthException","code":100,"fbtrace_id":"AlswoOCo6zO9DttdDlCJ7fi"}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_PAGE_1_ID>?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=name
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"861755e903d7086e2efa081e780e9cc1849961b5"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - AcVOgIQmW2UlRDFR9GfnpCs
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - EvpvDPrkJX2
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Fb-Rlafr:
+      - '0'
+      X-Business-Use-Case-Usage:
+      - '{"<FACEBOOK_PAGE_1_ID>":[{"type":"pages","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - jti6ae8ciLMmgdntxeo/Sy7VnF9eY73NaFGfY7W1YI+aSgLJy58LRBUYPt2kRcb6HVlDrXUDoD6jCo2Q2N3Qlg==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '37'
+    body:
+      encoding: UTF-8
+      string: '{"name":"<FACEBOOK_PAGE_1_NAME>","id":"<FACEBOOK_PAGE_1_ID>"}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_PAGE_1_ID>/picture?type=large
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.facebook.com
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Location:
+      - https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/gPCjrIGykBe.gif
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Request-Id:
+      - AW0EiNf9pzVQlIE0Pw7wujU
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - Fk8H4UfhAKf
+      Facebook-Api-Version:
+      - v3.2
+      Content-Type:
+      - image/jpeg
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - h4cr5zwEpI8WS3SqODkidG+YegS4bpL9sBTyoGiYDnh6Yl6NB/4hsTfPO5lWxODKVhtMLuawNjoFfoJVzDsUyQ==
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/gPCjrIGykBe.gif
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - static.xx.fbcdn.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Last-Modified:
+      - Mon, 01 Jan 2001 08:00:00 GMT
+      Content-Md5:
+      - OMs/UjwLoIRaoKN19eGYeQ==
+      Expires:
+      - Thu, 03 Feb 2022 00:56:38 GMT
+      Cache-Control:
+      - public,max-age=31536000,immutable
+      X-Fb-Rlafr:
+      - '0'
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Timing-Allow-Origin:
+      - "*"
+      Content-Type:
+      - image/gif
+      X-Content-Type-Options:
+      - nosniff
+      X-Fb-Debug:
+      - cZZyhYnkYLG7hkH/dRrl4xLbcWXusp/H0hkuf6womBNC7ZO5W6xf9+bEebu8UgNKzr/6R65Lc8V5OOXATUEAEQ==
+      X-Fb-Trip-Id:
+      - '1082456386'
+      Date:
+      - Fri, 12 Feb 2021 11:52:59 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2380'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:52:59 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_PAGE_1_POST_ID>_105667314885521/comments?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=id,from,to,message,created_time
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"1050253aec7b29caff644806927dabfa81406eee"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - ADsX2zK8k6oFBvNfHyBGP5a
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - CI7ERZCWj2t
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Fb-Rlafr:
+      - '0'
+      X-Business-Use-Case-Usage:
+      - '{"<FACEBOOK_PAGE_1_ID>":[{"type":"pages","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - Sp2rVveW0zpCFWdR+6Z2IJ4DSwLXws+BdEJlg83cIuRG8T3wTLgQqeWfvFMye6grcRxxi/vnKbLKdvhJVVlWBg==
+      Date:
+      - Fri, 12 Feb 2021 11:53:00 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+    body:
+      encoding: UTF-8
+      string: '{"data":[]}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:53:00 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_CUSTOMER_ID>/picture?type=large
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - graph.facebook.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.2
+      X-Fb-Request-Id:
+      - Aq5FUDg6y2YCPJiWy-s3NiZ
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - EPj02IZ+5Tp
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#3) Application does not have
+        the capability to make this API call."
+      X-Fb-Debug:
+      - A7G5F/k/9pZykCUAOB6FoXo0yXhqU6D44lAmN9IKRinxQL35vo+Y86+ojf8d6dd59XQZTQZqMYyihUApm25WIg==
+      Date:
+      - Fri, 12 Feb 2021 11:53:00 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '164'
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"(#3) Application does not have the capability
+        to make this API call.","type":"OAuthException","code":3,"fbtrace_id":"Aq5FUDg6y2YCPJiWy-s3NiZ"}}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:53:00 GMT
+- request:
+    method: get
+    uri: https://graph.facebook.com/<FACEBOOK_PAGE_1_POST_ID>_<FACEBOOK_PAGE_1_POST_COMMENT_ID>/comments?access_token=<FACEBOOK_PAGE_1_ACCCESS_TOKEN>&fields=id,from,to,message,created_time
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"1050253aec7b29caff644806927dabfa81406eee"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - A5fBsal2DFvwS20cDUK230u
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - D1iqvBxgNpx
+      X-Fb-Rev:
+      - '1003303417'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-Fb-Rlafr:
+      - '0'
+      X-Business-Use-Case-Usage:
+      - '{"<FACEBOOK_PAGE_1_ID>":[{"type":"pages","call_count":1,"total_cputime":1,"total_time":1,"estimated_time_to_regain_access":0}]}'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - hWIk1RG8G0XsK0SpljvImuIx+Kxh3UjcbEGjapa2zEg9UjaQkSJVdBfZGOvoP1SGlylD1lJIsqm/R8KoM0gZRg==
+      Date:
+      - Fri, 12 Feb 2021 11:53:00 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '11'
+    body:
+      encoding: UTF-8
+      string: '{"data":[]}'
+    http_version:
+  recorded_at: Fri, 12 Feb 2021 11:53:00 GMT
+recorded_with: VCR 4.0.0

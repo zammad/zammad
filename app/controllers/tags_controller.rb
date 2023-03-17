@@ -1,15 +1,17 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TagsController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action -> { authorize! }, only: %i[admin_list admin_create admin_rename admin_delete add remove]
+  prepend_before_action { authentication_check }
 
   # GET /api/v1/tag_search?term=abc
   def search
-    list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order('name ASC').limit(params[:limit] || 10)
+    list = get_tag_list(params[:term], params[:limit] || 10)
+
     results = []
     list.each do |item|
       result = {
-        id: item.id,
+        id:    item.id,
         value: item.name,
       }
       results.push result
@@ -21,7 +23,7 @@ class TagsController < ApplicationController
   def list
     list = Tag.tag_list(
       object: params[:object],
-      o_id: params[:o_id],
+      o_id:   params[:o_id],
     )
 
     # return result
@@ -30,12 +32,12 @@ class TagsController < ApplicationController
     }
   end
 
-  # POST /api/v1/tag/add
+  # POST /api/v1/tags/add
   def add
     success = Tag.tag_add(
       object: params[:object],
-      o_id: params[:o_id],
-      item: params[:item],
+      o_id:   params[:o_id],
+      item:   params[:item],
     )
     if success
       render json: success, status: :created
@@ -44,15 +46,15 @@ class TagsController < ApplicationController
     end
   end
 
-  # DELETE /api/v1/tag/remove
+  # DELETE /api/v1/tags/remove
   def remove
     success = Tag.tag_remove(
       object: params[:object],
-      o_id: params[:o_id],
-      item: params[:item],
+      o_id:   params[:o_id],
+      item:   params[:item],
     )
     if success
-      render json: success, status: :created
+      render json: success
     else
       render json: success.errors, status: :unprocessable_entity
     end
@@ -60,13 +62,12 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_list
   def admin_list
-    permission_check('admin.tag')
-    list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
+    list = Tag::Item.reorder(name: :asc).limit(params[:limit] || 1000)
     results = []
     list.each do |item|
       result = {
-        id: item.id,
-        name: item.name,
+        id:    item.id,
+        name:  item.name,
         count: Tag.where(tag_item_id: item.id).count
       }
       results.push result
@@ -76,16 +77,14 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tag_list
   def admin_create
-    permission_check('admin.tag')
     Tag::Item.lookup_by_name_and_create(params[:name])
     render json: {}
   end
 
   # PUT /api/v1/tag_list/:id
   def admin_rename
-    permission_check('admin.tag')
     Tag::Item.rename(
-      id: params[:id],
+      id:   params[:id],
       name: params[:name],
     )
     render json: {}
@@ -93,9 +92,17 @@ class TagsController < ApplicationController
 
   # DELETE /api/v1/tag_list/:id
   def admin_delete
-    permission_check('admin.tag')
     Tag::Item.remove(params[:id])
     render json: {}
   end
 
+  private
+
+  def get_tag_list(term, limit)
+    if term.blank?
+      return Tag::Item.left_outer_joins(:tags).group(:id).reorder('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
+    end
+
+    Tag::Item.where('name_downcase LIKE ?', "%#{term.strip.downcase}%").reorder(name: :asc).limit(limit)
+  end
 end

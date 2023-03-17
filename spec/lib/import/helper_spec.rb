@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 require 'lib/import/helper_examples'
 
@@ -7,12 +9,14 @@ RSpec.describe Import::Helper do
   context 'import mode' do
 
     it 'checks if import_mode is active' do
-      expect(Setting).to receive(:get).with('import_mode').and_return(true)
-      expect( described_class.check_import_mode ).to be true
+      allow(Setting).to receive(:get).with('import_mode').and_return(true)
+
+      expect(described_class.check_import_mode).to be true
     end
 
     it 'throws an exception if import_mode is disabled' do
-      expect(Setting).to receive(:get).with('import_mode').and_return(false)
+      allow(Setting).to receive(:get).with('import_mode').and_return(false)
+
       expect { described_class.check_import_mode }.to raise_error(RuntimeError)
     end
   end
@@ -20,12 +24,14 @@ RSpec.describe Import::Helper do
   context 'system init' do
 
     it 'checks if system_init_done is active' do
-      expect(Setting).to receive(:get).with('system_init_done').and_return(false)
-      expect( described_class.check_system_init_done ).to be true
+      allow(Setting).to receive(:get).with('system_init_done').and_return(false)
+
+      expect(described_class.check_system_init_done).to be true
     end
 
     it 'throws an exception if system_init_done is disabled' do
-      expect(Setting).to receive(:get).with('system_init_done').and_return(true)
+      allow(Setting).to receive(:get).with('system_init_done').and_return(true)
+
       expect { described_class.check_system_init_done }.to raise_error(RuntimeError)
     end
   end

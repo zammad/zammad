@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanActivityStreamLog
   extend ActiveSupport::Concern
 
@@ -19,7 +20,6 @@ returns
 =end
 
   def activity_stream_log(type, user_id, force = false)
-
     # return if we run import mode
     return if Setting.get('import_mode')
 

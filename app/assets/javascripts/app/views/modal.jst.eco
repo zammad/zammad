@@ -1,7 +1,9 @@
 <div class="modal-dialog">
-  <form autocomplete="off">
+  <% if @includeForm: %>
+    <form autocomplete="off">
+  <% end %>
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header<%= ' modal-header--empty' if !@head %>">
   <% if @buttonClose: %>
         <div class="modal-close js-close">
           <%- @Icon('diagonal-cross') %>
@@ -11,20 +13,26 @@
         <h1 class="modal-title"><% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><%- @T(@head) %></h1>
   <% end %>
       </div>
+      <div class="modal-alerts-container"></div>
       <div class="modal-body">
       <%- @content %>
       </div>
+      <div class="modal-loader js-loading hide">
+        <div class="loading icon"></div>
+      </div>
       <div class="modal-footer">
-  <% if @buttonCancel: %>
-        <div class="modal-leftFooter">
-          <a class="btn <%= @buttonCancelClass %> js-cancel align-left" href="#"><%- @T(@buttonCancel) %></a>
-        </div>
-  <% else if @leftButtons: %>
-    <% for button in @leftButtons: %>
-        <div class="modal-leftFooter">
-          <div class="btn <%= button.className %> align-left" href="#"><%- @T(button.text) %></div>
-        </div>
-    <% end %>
+  <% if @buttonCancel || @leftButtons: %>
+    <div class="modal-leftFooter align-left">
+      <% if @buttonCancel: %>
+        <a class="btn <%= @buttonCancelClass %> js-cancel" href="#"><%- @T(@buttonCancel) %></a>
+      <% end %>
+
+      <% if @leftButtons: %>
+        <% for button in @leftButtons: %>
+          <a class="btn btn--text btn--subtle <%= button.className %>" href="#"><%- @T(button.text) %></a>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
   <% for button in @centerButtons: %>
         <div class="modal-centerFooter">
@@ -38,5 +46,7 @@
   <% end %>
       </div>
     </div>
-  </form>
+  <% if @includeForm: %>
+    </form>
+  <% end %>
 </div>

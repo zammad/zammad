@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   class Exchange
     class ItemAttributes
@@ -15,18 +17,21 @@ module Import
           properties  = @resource.get_all_properties!
           result      = normalize(properties)
           flattened   = flatten(result)
-          booleanized = booleanize_values(flattened)
+          booleanize_values(flattened)
         end
       end
 
       private
 
       def booleanize_values(properties)
+        booleans = %w[true false]
         properties.each do |key, value|
-          if value.is_a?(String)
-            next if !%w[true false].include?(value)
+          case value
+          when String
+            next if booleans.exclude?(value)
+
             properties[key] = value == 'true'
-          elsif value.is_a?(Hash)
+          when Hash
             properties[key] = booleanize_values(value)
           end
         end
@@ -50,9 +55,9 @@ module Import
       def sub_elems(elems)
         elems.each_with_object({}) do |elem, result|
           if elem[:entry]
-            result.merge!( sub_elem_entry( elem[:entry] ) )
+            result.merge!(sub_elem_entry(elem[:entry]))
           else
-            result.merge!( normalize(elem) )
+            result.merge!(normalize(elem))
           end
         end
       end
@@ -78,14 +83,15 @@ module Import
       end
 
       def flatten(properties, prefix: nil)
+        keys = %i[text id]
         properties.each_with_object({}) do |(key, value), result|
 
           result_key = key
           if prefix
-            result_key = if %i[text id].include?(key) && ( !result[result_key] || result[result_key] == value )
+            result_key = if keys.include?(key) && (!result[result_key] || result[result_key] == value)
                            prefix
                          else
-                           "#{prefix}.#{key}".to_sym
+                           :"#{prefix}.#{key}"
                          end
           end
           result_key = result_key.to_s.downcase

@@ -17,17 +17,10 @@
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block">
-        <h3><%- @T('Wall') %></h3>
-        <%= channel.options.user.name %> ->  <%= channel.options.sync.wall.groupName %>
-      </div>
-    </div>
-    <div class="action-flow action-flow--row">
-      <div class="action-block">
         <h3><%- @T('Pages') %></h3>
         <% if channel.options.pages: %>
           <% for page in channel.options.pages: %>
             <%= page.name %> -> <%= page.groupName %><br>
-            (<%= page.perms %>)<br>
           <% end %>
         <% end %>
       </div>

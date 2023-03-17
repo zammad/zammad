@@ -1,4 +1,7 @@
-class App.WidgetAvatar extends App.ObserverController
+class App.WidgetAvatar extends App.ControllerObserver
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
   model: 'User'
   observe:
     login: true
@@ -17,4 +20,4 @@ class App.WidgetAvatar extends App.ObserverController
 
   render: (user) =>
     @html(user.avatar(@size, @position, @cssClass, false, false, @type))
-    @userPopups(@position)
+    @renderPopovers()

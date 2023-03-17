@@ -1,0 +1,15 @@
+Redefinindo sua senha #{config.product_name}
+
+<div>Oi #{user.firstname},</div>
+<br>
+<div>Você ou outra pessoa tentou se inscrever com este endereço de e-mail. No entanto, este e-mail já está sendo usado. </div>
+<br>
+<div>Se você quiser redefinir sua senha, clique no link abaixo (ou copie e cole o URL no seu navegador): </div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Este link leva você a uma página onde você pode alterar sua senha.</div>
+<br>
+<div>Se você não quiser redefinir sua senha, ignore esta mensagem. Sua senha não será redefinida.</div>
+<br>
+<div>Time #{config.product_name} </div>

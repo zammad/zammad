@@ -14,100 +14,30 @@ class App.Model extends Spine.Model
     @constructor.className
 
   displayName: ->
-    return @name if @name
-    if @realname
-      return "#{@realname} <#{@email}>"
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @title
-      return @title
-    if @subject
-      return @subject
-    if @phone
-      return @phone
-    if @login
-      return @login
-    return '???'
+    return @name || '-'
 
-  displayNameLong: ->
-    return @name if @name
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    if !_.isEmpty(name)
-      if !_.isEmpty(@organization)
-        if typeof @organization is 'object'
-          name = "#{name} (#{@organization.name})"
-        else
-          name = "#{name} (#{@organization})"
-      else if !_.isEmpty(@department)
-        name = "#{name} (#{@department})"
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @title
-      return @title
-    if @subject
-      return @subject
-    if @phone
-      return @phone
-    if @login
-      return @login
-    return '???'
-
+  # shows the icon representing the object itself (e. g. the organization icon in organization profile or ticket sidebar)
   icon: (user) ->
     ''
 
+  # shows icons in a list of objects (e. g. the traffic light rings in the ticket list in user profile)
   iconTitle: (user) ->
     ''
 
+  # shows icons in the activity stream (e. g. show ! if the activity stream icon is belonging to the session user)
   iconActivity: (user) ->
     ''
 
   @validate: (data = {}) ->
+    screen = data?.controllerForm?.screen
 
-    # based on model attrbutes
+    # based on model attributes
     if App[ data['model'] ] && App[ data['model'] ].attributesGet
-      attributes = App[ data['model'] ].attributesGet(data['screen'])
+      attributes = App[ data['model'] ].attributesGet(screen)
 
     # based on custom attributes
     else if data['model'].configure_attributes
-      attributes = App.Model.attributesGet(data['screen'], data['model'].configure_attributes)
-
-    # check required_if attributes
-    for attributeName, attribute of attributes
-      if attribute['required_if']
-
-        for key, values of attribute['required_if']
-
-          localValues = data['params'][key]
-          if !_.isArray( localValues )
-            localValues = [ localValues ]
-
-          match = false
-          for value in values
-            if localValues
-              for localValue in localValues
-                if value && localValue && value.toString() is localValue.toString()
-                  match = true
-          if match is true
-            attribute['null'] = false
-          else
-            attribute['null'] = true
+      attributes = App.Model.attributesGet(screen, data['model'].configure_attributes)
 
     # check attributes/each attribute of object
     errors = {}
@@ -117,21 +47,21 @@ class App.Model extends Spine.Model
       if !attribute.readonly
 
         # check required // if null is defined && null is false
-        if 'null' of attribute && !attribute['null']
+        if data.controllerForm && data.controllerForm.attributeIsMandatory(attribute.name)
 
           # check :: fields
           parts = attribute.name.split '::'
           if parts[0] && !parts[1]
 
-            # key exists not in hash || value is '' || value is undefined
-            if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined || data['params'][attributeName] is null
-              errors[attributeName] = 'is required'
+            # key exists not in hash || value is ''|null|undefined
+            if !( attributeName of data['params'] ) || @_validate_is_empty(data['params'][attributeName])
+              errors[attributeName] = __('is required')
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
-            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined || data.params[parts[0]][parts[1]] is null
-              errors[attributeName] = 'is required'
+            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || @_validate_is_empty(data.params[parts[0]][parts[1]])
+              errors[attributeName] = __('is required')
 
           else
             throw "can't parse '#{attribute.name}'"
@@ -146,7 +76,7 @@ class App.Model extends Spine.Model
 
         # check email
         if attribute.type is 'email' && data['params'][attributeName]
-          if !data['params'][attributeName].match(/\S+@\S+\.\S+/)
+          if !data['params'][attributeName].match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)
             errors[attributeName] = 'invalid'
           if data['params'][attributeName].match(/ /)
             errors[attributeName] = 'invalid'
@@ -165,13 +95,25 @@ class App.Model extends Spine.Model
 
           # validate value
 
+    if data?.controllerForm && App.FormHandlerCoreWorkflow.requestsRunning(data.controllerForm)
+      errors['_core_workflow'] = { target: data.target, controllerForm: data.controllerForm }
+
     # return error object
     if !_.isEmpty(errors)
-      App.Log.error('Model', 'validation failed', errors)
+      if !errors['_core_workflow']
+        App.Log.error('Model', 'validation failed', errors)
       return errors
 
     # return no errors
     return
+
+  @_validate_is_empty: (value) ->
+    return true if value is ''
+    return true if value is null
+    return true if value is undefined
+    return true if _.isArray(value) is true && value.length is 0
+    return true if _.isArray(value) is true && value.length is 1 && value[0] is ''
+    false
 
   ###
 
@@ -206,7 +148,7 @@ set new attributes of model (remove already available attributes)
     {
       'name': {
         name:    'name'
-        display: 'Name'
+        display: __('Name')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -214,7 +156,7 @@ set new attributes of model (remove already available attributes)
       },
       'assignment_timeout': {
         name:    'assignment_timeout'
-        display: 'Assignment Timeout'
+        display: __('Assignment timeout')
         tag:     'input'
         type:    'text'
         limit:   100
@@ -224,9 +166,12 @@ set new attributes of model (remove already available attributes)
 
   ###
 
-  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false) ->
+  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false, className = undefined) ->
+    if !className
+      className = @.className
+
     if !attributes
-      attributes = clone(App[@.className].configure_attributes, true)
+      attributes = clone(App[className].configure_attributes, true)
     else
       attributes = clone(attributes, true)
 
@@ -237,7 +182,7 @@ set new attributes of model (remove already available attributes)
     attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined))
+        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined || App.FormHandlerCoreWorkflow.checkScreen(className, screen)))
           for item, value of attribute.screen[screen]
             attribute[item] = value
           attributesNew[ attribute.name ] = attribute
@@ -247,13 +192,27 @@ set new attributes of model (remove already available attributes)
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
+    for key, attribute of attributesNew
+      if attribute.diff
+        current_time = new Date().getTime()
+        switch attribute.tag
+          when 'date'
+            date = new Date(current_time + attribute.diff * 3600 * 1000)
+            attribute.default = App.i18n.convert(date, 0, 'yyyy-mm-dd')
+          when 'datetime'
+            date = new Date(current_time + attribute.diff * 60 * 1000)
+            date.setSeconds(0)
+            date.setMilliseconds(0)
+            attribute.default = date.toISOString()
+
     attributesNew
 
   validate: (params = {}) ->
     App.Model.validate(
       model:  @constructor.className
       params: @
-      screen: params.screen
+      controllerForm: params.controllerForm
+      target: params.target
     )
 
   isOnline: ->
@@ -335,7 +294,7 @@ set new attributes of model (remove already available attributes)
 
   # localOrServer can be:
   #  change -> has changed local
-  #  destroy -> has beed removed local or remote
+  #  destroy -> has been removed local or remote
   #  refresh -> has been changed remote
 
   params =
@@ -442,6 +401,9 @@ set new attributes of model (remove already available attributes)
     # remember record id and callback
     App[ @constructor.className ].subscribeItem(@id, callback)
 
+  unsubscribe: (key) ->
+    App[ @constructor.className ].unsubscribeItem(@id, key)
+
   @subscribeItem: (id, callback) ->
 
     # init bind
@@ -453,7 +415,7 @@ set new attributes of model (remove already available attributes)
         'change'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local change #{@className}", items)
@@ -465,7 +427,7 @@ set new attributes of model (remove already available attributes)
         'destroy'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local destroy #{@className}", items)
@@ -479,7 +441,7 @@ set new attributes of model (remove already available attributes)
         'refresh'
         (items) =>
 
-          # check if result is array or singel item
+          # check if result is array or single item
           if !_.isArray(items)
             items = [items]
           App.Log.debug('Model', "local refresh #{@className}", items)
@@ -533,6 +495,13 @@ set new attributes of model (remove already available attributes)
     @SUBSCRIPTION_ITEM[id][key] = callback
     key
 
+  @unsubscribeItem: (id, key) ->
+    return if !@SUBSCRIPTION_ITEM
+    return if !@SUBSCRIPTION_ITEM[id]
+    return if !@SUBSCRIPTION_ITEM[id][key]
+
+    delete @SUBSCRIPTION_ITEM[id][key]
+
   ###
 
   unsubscribe from model or collection
@@ -560,7 +529,7 @@ set new attributes of model (remove already available attributes)
   App.Model.fetchFull(
     @callback
     clear: true
-    force: false # only do server call if no record exsits
+    force: false # only do server call if no record exists
   )
 
 
@@ -603,7 +572,7 @@ set new attributes of model (remove already available attributes)
         if data.assets
           App.Collection.loadAssets(data.assets, targetModel: @className)
 
-          # in case of no record_ids are there, no inital render is fired
+          # if no record_ids are found, no initial render is fired
           if data.record_ids && _.isEmpty(data.record_ids)
             App[@className].trigger('refresh', [])
 
@@ -615,6 +584,74 @@ set new attributes of model (remove already available attributes)
 
       error: (xhr, statusText, error) =>
         @fetchFullActive = false
+        App.Log.error('Model', statusText, error, url)
+    )
+
+  ###
+
+  index full collection (with assets)
+
+  App.Model.indexFull(@callback)
+
+  App.Model.indexFull(
+    @callback
+    page: 1
+    per_page: 10
+    sort_by: 'name'
+    order_by: 'ASC'
+  )
+
+
+  ###
+  @indexFull: (callback, params = {}) ->
+    url = "#{@url}?full=true"
+    for key in ['page', 'per_page', 'sort_by', 'order_by']
+      continue if !params[key]
+      url += "&#{key}=#{params[key]}"
+
+    App.Log.debug('Model', "indexFull collection #{@className}", url)
+
+    # request already active, queue callback
+    queueManagerName = "#{@className}::indexFull"
+
+    if params.refresh is undefined
+      params.refresh = true
+
+    App.Ajax.request(
+      type:  'GET'
+      url:   url
+      processData: true,
+      success: (data, status, xhr) =>
+        App.Log.debug('Model', "got indexFull collection #{@className}", data)
+
+        recordIds = data.record_ids
+        if data.record_ids is undefined
+          recordIds = data[ @className.toLowerCase() + '_ids' ]
+
+        # full / load assets
+        if data.assets
+          App.Collection.loadAssets(data.assets, targetModel: @className)
+
+          # if no record_ids are found, no initial render is fired
+          if data.record_ids && _.isEmpty(data.record_ids) && params.refresh
+            App[@className].trigger('refresh', [])
+
+        # find / load object
+        else if params.refresh
+          App[@className].refresh(data)
+
+        if callback
+          localCallback = =>
+            collection = []
+            for id in recordIds
+              collection.push App[@className].find(id)
+            callback(collection, data)
+          App.QueueManager.add(queueManagerName, localCallback)
+
+        App.QueueManager.run(queueManagerName)
+
+      error: (xhr, statusText, error) =>
+        @indexFullActive = false
         App.Log.error('Model', statusText, error, url)
     )
 
@@ -637,7 +674,7 @@ set new attributes of model (remove already available attributes)
       # lookup relations
       if attribute.relation
 
-        # relations - not calling object it self, to prevent loops
+        # relations - not calling object itself, to prevent loops
         if !_.contains(classNames, @className)
 
           # only if relation model exists
@@ -664,8 +701,9 @@ set new attributes of model (remove already available attributes)
 
       # just show this values in result, all filters need to match to get shown
       filter:
-        some_attribute1: ['only_this_value1', 'only_that_value1']
-        some_attribute2: ['only_this_value2', 'only_that_value2']
+
+        # check single value
+        some_attribute1: 'only_this_value1'
 
       # just show this values in result, all filters need to match to get shown
       filterExtended:
@@ -706,8 +744,9 @@ set new attributes of model (remove already available attributes)
       all_complied = @_filterExtended(all_complied, params.filterExtended)
 
     # sort by
+    # if translate true then use translated strings to sort list
     if params.sortBy != null
-      all_complied = @_sortBy(all_complied, params.sortBy)
+      all_complied = @_sortBy(all_complied, params.sortBy, params.translate)
 
     # order
     if params.order
@@ -715,7 +754,7 @@ set new attributes of model (remove already available attributes)
 
     all_complied
 
-  @_sortBy: (collection, attribute) ->
+  @_sortBy: (collection, attribute, translate) ->
     _.sortBy(collection, (item) ->
 
       # set displayName as default sort attribute
@@ -725,7 +764,9 @@ set new attributes of model (remove already available attributes)
       # check if displayName exists
       if attribute is 'displayName'
         if item.displayName
-          return item.displayName().toLowerCase()
+          value = item.displayName()
+          valueProcessed = if translate then App.i18n.translateInline(value) else value
+          return valueProcessed.toLowerCase()
         else
           attribute = 'name'
 
@@ -734,7 +775,9 @@ set new attributes of model (remove already available attributes)
 
       # return value if string
       if item[ attribute ].toLowerCase
-        return item[ attribute ].toLowerCase()
+        value = item[ attribute ]
+        valueProcessed = if translate then App.i18n.translateInline(value) else value
+        return valueProcessed.toLowerCase()
 
       item[ attribute ]
     )
@@ -746,9 +789,17 @@ set new attributes of model (remove already available attributes)
 
   @_filter: (collection, filter) ->
     for key, value of filter
+      filterValue = value
+      if !_.isArray(filterValue)
+        filterValue = [filterValue]
+
       collection = _.filter(collection, (item) ->
-        if item[key] is value
-          return item
+        itemValue = item[key]
+        if !_.isArray(itemValue)
+          itemValue = [itemValue]
+
+        for value in filterValue
+          return item if _.contains(itemValue, value)
       )
     collection
 
@@ -778,6 +829,8 @@ set new attributes of model (remove already available attributes)
     collection
 
   activityMessage: (item) ->
+    return if !item
+
     return "Need own activityMessage() in model to generate text (#{@objectDisplayName()}/#{item.type})."
 
   @lastUpdatedAt: ->
@@ -799,11 +852,11 @@ set new attributes of model (remove already available attributes)
 
   @tagGet: (id, key, callback) ->
     App.Ajax.request(
-      id:    key
-      type:  'GET'
-      url:   "#{@apiPath}/tags"
+      id:   key
+      type: 'GET'
+      url:  "#{@apiPath}/tags"
       data:
-        object: @.className
+        object: @serverClassName || @className
         o_id:   id
       processData: true
       success: (data, status, xhr) ->
@@ -812,10 +865,10 @@ set new attributes of model (remove already available attributes)
 
   @tagAdd: (id, item) ->
     App.Ajax.request(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/add"
-      data:
-        object: @.className
+      type: 'POST'
+      url:  "#{@apiPath}/tags/add"
+      data: JSON.stringify
+        object: @serverClassName || @className
         o_id:   id
         item:   item
       processData: true
@@ -823,10 +876,10 @@ set new attributes of model (remove already available attributes)
 
   @tagRemove: (id, item) ->
     App.Ajax.request(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/remove"
-      data:
-        object: @.className
+      type: 'DELETE'
+      url:  "#{@apiPath}/tags/remove"
+      data: JSON.stringify
+        object: @serverClassName || @className
         o_id:   id
         item:   item
       processData: true
@@ -849,20 +902,25 @@ set new attributes of model (remove already available attributes)
 
       # use jquery instead of ._clone() because we need a deep copy of the obj
       @org_configure_attributes = $.extend(true, [], @configure_attributes)
+    configure_attributes = $.extend(true, [], @configure_attributes)
+    allAttributes = []
     for attribute in attributes
       @attributes.push attribute.name
 
       found = false
-      for attribute_model, index in @configure_attributes
+      for attribute_model, index in configure_attributes
         continue if attribute_model.name != attribute.name
 
-        @configure_attributes[index] = _.extend(attribute_model, attribute)
+        allAttributes.push $.extend(true, attribute_model, attribute)
+        configure_attributes.splice(index, 1) # remove found attribute
 
         found = true
         break
 
       if !found
-        @configure_attributes.push attribute
+        allAttributes.push $.extend(true, {}, attribute)
+
+    @configure_attributes = $.extend(true, [], allAttributes.concat(configure_attributes))
 
   @resetAttributes: ->
     return if _.isEmpty(@org_configure_attributes)

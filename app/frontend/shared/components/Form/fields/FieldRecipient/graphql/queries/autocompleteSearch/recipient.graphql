@@ -1,0 +1,12 @@
+# TODO: We'll probably need to move/copy this directly into the recipient component.
+query autocompleteSearchRecipient($input: AutocompleteSearchRecipientInput!) {
+  autocompleteSearchRecipient(input: $input) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+    disabled
+    icon
+  }
+}

@@ -1,4 +1,5 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationModel::CanAssociations
   extend ActiveSupport::Concern
 
@@ -23,8 +24,10 @@ returns
       group_ids: :group_ids_access_map=
     }.each do |param, setter|
       next if !params.key?(param)
+
       map = params[param]
       next if !respond_to?(setter)
+
       send(setter, map)
     end
 
@@ -32,9 +35,11 @@ returns
     self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
-      real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
+
+      real_ids = "#{assoc_name[0, assoc_name.length - 1]}_ids"
       real_ids = real_ids.to_sym
       next if !params.key?(real_ids)
+
       list_of_items = params[real_ids]
       if !params[real_ids].instance_of?(Array)
         list_of_items = [ params[real_ids] ]
@@ -42,34 +47,46 @@ returns
       list = []
       list_of_items.each do |item_id|
         next if !item_id
+
         lookup = assoc.klass.lookup(id: item_id)
 
         # complain if we found no reference
         if !lookup
-          raise ArgumentError, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
+          raise Exceptions::UnprocessableEntity, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
         end
+
         list.push item_id
       end
+
+      next if Array(list).sort == Array(send(real_ids)).sort
+
       send("#{real_ids}=", list)
+      self.updated_at = Time.zone.now
     end
 
     # set relations by name/lookup
     self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
-      real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
+
+      real_ids = "#{assoc_name[0, assoc_name.length - 1]}_ids"
       next if !respond_to?(real_ids)
-      real_values = assoc_name[0, assoc_name.length - 1] + 's'
+
+      real_values = "#{assoc_name[0, assoc_name.length - 1]}s"
       real_values = real_values.to_sym
       next if !respond_to?(real_values)
       next if !params[real_values]
+
       if params[real_values].instance_of?(String) || params[real_values].instance_of?(Integer) || params[real_values].instance_of?(Float)
         params[real_values] = [params[real_values]]
       end
       next if !params[real_values].instance_of?(Array)
+
       list = []
       class_object = assoc.klass
       params[real_values].each do |value|
+        next if value.blank?
+
         lookup = nil
         if class_object == User
           if !lookup
@@ -84,11 +101,16 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise ArgumentError, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+          raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
         end
+
         list.push lookup.id
       end
+
+      next if Array(list).sort == Array(send(real_ids)).sort
+
       send("#{real_ids}=", list)
+      self.updated_at = Time.zone.now
     end
   end
 
@@ -106,10 +128,9 @@ returns
 =end
 
   def attributes_with_association_ids
-
     key = "#{self.class}::aws::#{id}"
-    cache = Cache.get(key)
-    return cache if cache
+    cache = Rails.cache.read(key)
+    return filter_unauthorized_attributes(cache) if cache && cache['updated_at'] == try(:updated_at)
 
     attributes = self.attributes
     relevant   = %i[has_and_belongs_to_many has_many]
@@ -123,7 +144,7 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push("#{assoc.table_name}.id")
+      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(assoc.table_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 
@@ -134,7 +155,7 @@ returns
 
       if keys.size > 1
         values = ids.transpose.map(&:compact).map(&:uniq)
-        attributes.merge!( keys.zip( values ).to_h )
+        attributes.merge!(keys.zip(values).to_h)
       else
         attributes[ keys.first ] = ids.compact
       end
@@ -147,8 +168,8 @@ returns
 
     filter_attributes(attributes)
 
-    Cache.write(key, attributes)
-    attributes
+    Rails.cache.write(key, attributes)
+    filter_unauthorized_attributes(attributes)
   end
 
 =begin
@@ -164,15 +185,20 @@ returns
 
 =end
 
-  def attributes_with_association_names
+  def attributes_with_association_names(empty_keys: false)
 
     # get relations
     attributes = attributes_with_association_ids
     self.class.reflect_on_all_associations.map do |assoc|
       next if !respond_to?(assoc.name)
       next if association_attributes_ignored.include?(assoc.name)
+
       ref = send(assoc.name)
+      if empty_keys
+        attributes[assoc.name.to_s] = nil
+      end
       next if !ref
+
       if ref.respond_to?(:first)
         attributes[assoc.name.to_s] = []
         ref.each do |item|
@@ -181,6 +207,7 @@ returns
             next
           end
           next if !item[:name]
+
           attributes[assoc.name.to_s].push item[:name]
         end
         if ref.count.positive? && attributes[assoc.name.to_s].blank?
@@ -193,6 +220,7 @@ returns
         next
       end
       next if !ref[:name]
+
       attributes[assoc.name.to_s] = ref[:name]
     end
 
@@ -207,21 +235,24 @@ returns
       'updated_by_id' => 'updated_by',
     }.each do |source, destination|
       next if !attributes[source]
+
       user = User.lookup(id: attributes[source])
       next if !user
+
       attributes[destination] = user.login
     end
 
     filter_attributes(attributes)
-
-    attributes
+    filter_unauthorized_attributes(attributes)
   end
 
   def filter_attributes(attributes)
-    # remove forbitten attributes
-    %w[password token tokens token_ids].each do |item|
-      attributes.delete(item)
-    end
+    # remove forbidden attributes
+    attributes.except!('password', 'token', 'tokens', 'token_ids')
+  end
+
+  def filter_unauthorized_attributes(attributes)
+    attributes
   end
 
 =begin
@@ -245,14 +276,18 @@ returns
 
       # check if id is assigned
       next if !key.end_with?('_id')
+
       key_short = key.chomp('_id')
 
       self.class.reflect_on_all_associations.map do |assoc|
         next if assoc.name.to_s != key_short
+
         item = assoc.class_name.constantize
         return false if !item.respond_to?(:find_by)
+
         ref_object = item.find_by(id: value)
         return false if !ref_object
+
         return true
       end
     end
@@ -270,7 +305,7 @@ returns
 
 =begin
 
-serve methode to ignore model attribute associations
+serve method to ignore model attribute associations
 
 class Model < ApplicationModel
   include AssociationConcern
@@ -332,6 +367,7 @@ returns
         assoc_name = assoc.name
         value      = data[assoc_name]
         next if !value # next if we do not have a value
+
         ref_name = "#{assoc_name}_id"
 
         # handle _id values
@@ -343,8 +379,9 @@ returns
           lookup = nil
           if class_object == User
             if !value.instance_of?(String)
-              raise ArgumentError, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableEntity, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
             end
+
             if !lookup
               lookup = class_object.lookup(login: value)
             end
@@ -357,7 +394,7 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise ArgumentError, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
           end
 
           # release data value
@@ -374,6 +411,7 @@ returns
 
         # handle _ids values
         next if !assoc_name.to_s.end_with?('s')
+
         ref_names = "#{assoc_name.to_s.chomp('s')}_ids"
         generic_object_tmp = new
         next if !generic_object_tmp.respond_to?(ref_names) # if we do have an _ids attribute
@@ -383,11 +421,14 @@ returns
         class_object = assoc.klass
         lookup_ids = []
         value.each do |item|
+          next if item.blank?
+
           lookup = nil
           if class_object == User
             if !item.instance_of?(String)
-              raise ArgumentError, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableEntity, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
             end
+
             if !lookup
               lookup = class_object.lookup(login: item)
             end
@@ -400,8 +441,9 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise ArgumentError, "No lookup value found for '#{assoc_name}': #{item.inspect}"
+            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{item.inspect}"
           end
+
           lookup_ids.push lookup.id
         end
 

@@ -1,24 +1,28 @@
 class SidebarOrganization extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    return if !@params.customer_id
-    return if !App.User.exists(@params.customer_id)
-    customer = App.User.find(@params.customer_id)
-    @organization_id = customer.organization_id
+
+    # use ticket organization id or customer user organization id as fallback
+    @organization_id = @params.organization_id || App.User.find(@params.customer_id)?.organization_id
     return if !@organization_id
+
     @item = {
       name: 'organization'
       badgeIcon: 'group'
-      sidebarHead: 'Organization'
+      sidebarHead: __('Organization')
       sidebarCallback: @showOrganization
-      sidebarActions: [
-        {
-          title:    'Edit Organization'
+      sidebarActions: []
+    }
+
+    if @organization_id && App.Organization.exists(@organization_id)
+      organization = App.Organization.find(@organization_id)
+      if organization?.isAccessibleBy(App.User.current(), 'change')
+        @item.sidebarActions.push {
+          title:    __('Edit Organization')
           name:     'organization-edit'
           callback: @editOrganization
-        },
-      ]
-    }
+        }
+
     @item
 
   showOrganization: (el) =>
@@ -33,9 +37,9 @@ class SidebarOrganization extends App.Controller
       id: @organization_id,
       genericObject: 'Organization'
       pageData:
-        title:   'Organizations'
-        object:  'Organization'
-        objects: 'Organizations'
+        title:   __('Organizations')
+        object:  __('Organization')
+        objects: __('Organizations')
       container: @elSidebar.closest('.content')
     )
 

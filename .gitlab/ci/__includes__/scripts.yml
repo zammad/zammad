@@ -1,0 +1,34 @@
+.scripts:
+  source_rvm:
+    - source /etc/profile.d/rvm.sh # ensure RVM is loaded
+  bundle_install:
+    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
+    - bundle config set --local frozen 'true'
+    - bundle config set --local path 'vendor'
+    - bundle install -j $(nproc)
+    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
+  yarn_install:
+    - echo -e "\\e[0Ksection_start:`date +%s`:yarn_install[collapsed=true]\\r\\e[0Kyarn install"
+    - yarn install
+    - echo -e "\\e[0Ksection_end:`date +%s`:yarn_install\\r\\e[0K"
+  yarn_install_all:
+    # retry on errors
+    - yarn install || yarn install || yarn install
+    - yarn cypress:install || yarn cypress:install || yarn cypress:install
+    - yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install || yarn --cwd .eslint-plugin-zammad install
+    - yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install || yarn --cwd public/assets/chat install
+  configure_environment:
+    - bundle exec ruby .gitlab/configure_environment.rb
+    - source .gitlab/environment.env
+  zammad_db_init:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
+    - bundle exec rake zammad:db:init
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
+  zammad_db_unseeded:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"
+    - bundle exec rake zammad:db:unseeded
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_unseeded\\r\\e[0K"
+  zammad_ci_test_prepare:
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_ci_test_prepare[collapsed=true]\\r\\e[0Kbundle exec rake zammad:ci:test:prepare"
+    - bundle exec rake zammad:ci:test:prepare
+    - echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"

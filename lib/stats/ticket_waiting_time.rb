@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketWaitingTime
 
@@ -25,7 +25,6 @@ class Stats::TicketWaitingTime
       average_per_agent = (average_per_agent / 60).round
     end
 
-    state   = 'supergood'
     percent = 0
     state   = if handling_time <= 60
                 percent = handling_time.to_f / 60
@@ -34,19 +33,14 @@ class Stats::TicketWaitingTime
                 percent = (handling_time.to_f - 60) / (60 * 3)
                 'good'
               elsif handling_time <= 60 * 8
-                percent = (handling_time.to_f - 60 * 4) / (60 * 4)
+                percent = (handling_time.to_f - (60 * 4)) / (60 * 4)
                 'ok'
               else
                 percent = 1.00
                 'bad'
               end
 
-    {
-      handling_time: handling_time,
-      average_per_agent: average_per_agent,
-      state: state,
-      percent: percent,
-    }
+    { handling_time:, average_per_agent:, state:, percent: }
   end
 
   def self.average_state(result, _user_id)
@@ -59,7 +53,7 @@ class Stats::TicketWaitingTime
     last_ticket_id = nil
     count_time     = nil
 
-    Ticket::Article.joins(:type).joins(:sender).where('ticket_articles.ticket_id IN (?) AND ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', ticket_ids, start_time, false, true).order(:ticket_id, :created_at).pluck(:created_at, :sender_id, :ticket_id, :id).each do |article|
+    Ticket::Article.joins(:type).joins(:sender).where('ticket_articles.ticket_id IN (?) AND ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', ticket_ids, start_time, false, true).reorder(:ticket_id, :created_at).pluck(:created_at, :sender_id, :ticket_id, :id).each do |article|
       if last_ticket_id != article[2]
         last_ticket_id = article[2]
         count_time = 0
@@ -75,7 +69,7 @@ class Stats::TicketWaitingTime
     end
 
     if count_articles.positive?
-      average_time = average_time / count_articles
+      average_time /= count_articles
     end
 
     average_time

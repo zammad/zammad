@@ -3,35 +3,35 @@ class App.UiElement.postmaster_match
   @defaults: ->
     groups =
       general:
-        name: 'Basic Settings'
+        name: __('Basic Settings')
         options: [
           {
             value:    'from'
-            name:     'From'
+            name:     __('From')
           },
           {
             value:    'to'
-            name:     'To'
+            name:     __('To')
           },
           {
             value:    'cc'
-            name:     'Cc'
+            name:     __('CC')
           },
           {
             value:    'x-any-recipient'
-            name:     'Any Recipient'
+            name:     __('Any recipient')
           },
           {
             value:    'subject'
-            name:     'Subject'
+            name:     __('Subject')
           },
           {
             value:    'body'
-            name:     'Body'
+            name:     __('Body')
           },
         ]
       expert:
-        name: 'Expert Settings'
+        name: __('Expert Settings')
         options: [
           {
             value:    'x-spam'
@@ -108,12 +108,12 @@ class App.UiElement.postmaster_match
             name:     'List-Id'
           },
           {
-            value:    'list-archive'
-            name:     'List-Archive'
+            value:    'list-unsubscribe'
+            name:     'List-Unsubscribe'
           },
           {
-            value:    'mailing-list'
-            name:     'Mailing-List'
+            value:    'list-archive'
+            name:     'List-Archive'
           },
           {
             value:    'message-id'
@@ -142,11 +142,11 @@ class App.UiElement.postmaster_match
     selector = @buildAttributeSelector(groups, attribute)
 
     # scaffold of match elements
-    item = $( App.view('generic/postmaster_match')( attribute: attribute ) )
+    item = $( App.view('generic/postmaster_match')(attribute: attribute) )
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
-    item.find('.js-add').bind('click', (e) ->
+    item.find('.js-add').on('click', (e) ->
       element = $(e.target).closest('.js-filterElement')
       elementClone = element.clone(true)
       element.after(elementClone)
@@ -154,32 +154,33 @@ class App.UiElement.postmaster_match
     )
 
     # remove filter
-    item.find('.js-remove').bind('click', (e) =>
+    item.find('.js-remove').on('click', (e) =>
+      return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @rebuildAttributeSelectors(item)
     )
 
     # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
+    item.find('.js-attributeSelector select').on('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
-
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
       @rebuildOperater(item, elementRow, key, groups, undefined, attribute)
       @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
     )
 
     # change operator
-    item.find('.js-operator select').bind('change', (e) =>
+    item.find('.js-operator select').on('change', (e) =>
       key = $(e.target).find('.js-attributeSelector option:selected').attr('value')
       operator = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
       @buildValue(item, elementRow, key, groups, undefined, operator, attribute)
     )
 
-    # build inital params
-    if !_.isEmpty(params[attribute.name])
-
+    # build initial params
+    if _.isEmpty(params[attribute.name])
+      item.find('.js-filterElement .js-attributeSelector select').trigger('change')
+    else
       selectorExists = false
       for key, meta of params[attribute.name]
         selectorExists = true
@@ -196,6 +197,8 @@ class App.UiElement.postmaster_match
         @rebuildOperater(item, elementClone, key, groups, operator, attribute)
         @buildValue(item, elementClone, key, groups, value, operator, attribute)
         elementLast.after(elementClone)
+
+      item.find('.js-attributeSelector select').trigger('change')
 
       # remove first dummy row
       if selectorExists
@@ -230,7 +233,7 @@ class App.UiElement.postmaster_match
   @rebuildAttributeSelectors: (elementFull, elementRow, key, attribute) ->
 
     # enable all
-    elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
+    elementFull.find('.js-attributeSelector select option').prop('disabled', false)
 
     # disable all used attributes
     elementFull.find('.js-attributeSelector select').each(->

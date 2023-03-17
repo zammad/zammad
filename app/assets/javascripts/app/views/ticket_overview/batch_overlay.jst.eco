@@ -3,12 +3,12 @@
   <%- @T('drag here to cancel') %>
 </div>
 <div class="batch-overlay-circle batch-overlay-circle--top js-batch-macro-circle">
-  <div class="batch-overlay-circle-label"><%- @T('run macro') %></div>
+  <div class="batch-overlay-circle-label"><%- @T('run macro').split(" ").join("<br>") %></div>
   <%- @Icon('arrow-up') %>
 </div>
 <div class="batch-overlay-circle batch-overlay-circle--bottom js-batch-assign-circle">
   <%- @Icon('arrow-down') %>
-  <div class="batch-overlay-circle-label"><%- @T('assign tickets') %></div>
+  <div class="batch-overlay-circle-label"><%- @T('assign tickets').split(" ").join("<br>") %></div>
 </div>
 <div class="batch-overlay-assign batch-overlay-box js-batch-assign">
   <div class="batch-overlay-box-inner js-batch-assign-inner"></div>

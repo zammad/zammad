@@ -15,16 +15,17 @@ class App.Dashboard extends App.Controller
     @render()
 
     # rerender view, e. g. on language change
-    @bind 'ui:rerender', =>
+    @controllerBind('ui:rerender', =>
       return if !@authenticateCheck()
       @render()
+    )
 
     @mayBeClues()
 
   render: ->
 
     localEl = $( App.view('dashboard')(
-      head:    'Dashboard'
+      head:    __('Dashboard')
       isAdmin: @permissionCheck('admin')
     ) )
 
@@ -69,21 +70,24 @@ class App.Dashboard extends App.Controller
 
   show: (params) =>
 
-    if @permissionCheck('ticket.customer')
-      @navigate '#', true
+    # incase of being only customer, redirect to default router
+    if @permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent')
+      @navigate '#ticket/view', { hideCurrentLocationFromHistory: true }
+      return
+
+    # incase of being only admin, redirect to admin interface (show no empty white content page)
+    if !@permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent') && @permissionCheck('admin')
+      @navigate '#manage', { hideCurrentLocationFromHistory: true }
       return
 
     # set title
-    @title 'Dashboard'
+    @title __('Dashboard')
 
     # highlight navbar
     @navupdate '#dashboard'
 
   changed: ->
     false
-
-  release: ->
-    # no
 
   toggle: (e) =>
     @$('.tabs .tab').removeClass('active')
@@ -111,4 +115,4 @@ class DashboardRouter extends App.ControllerPermanent
 
 App.Config.set('dashboard', DashboardRouter, 'Routes')
 App.Config.set('Dashboard', { controller: 'Dashboard', permission: ['*'] }, 'permanentTask')
-App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')
+App.Config.set('Dashboard', { prio: 100, parent: '', name: __('Dashboard'), target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')

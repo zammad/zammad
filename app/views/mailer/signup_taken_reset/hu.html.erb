@@ -1,0 +1,15 @@
+Állítsa vissza a #{config.product_name} jelszavát
+
+<div>Üdvözöljük #{user.firstname},</div>
+<br>
+<div>Ön vagy valaki más megpróbált regisztrálni ezzel az e-mail címmel. Ez az e-mail azonban már használatban van.</div>
+<br>
+<div>Amennyiben vissza szeretné állítani jelszavát, kattintson az alábbi hivatkozásra (vagy másolja be az URL címet a böngészőjébe):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Ez a hivatkozás egy olyan oldalra vezeti Önt, ahol megváltoztathatja jelszavát.</div>
+<br>
+<div>Amennyiben nem szeretné visszaállítani a jelszavát, kérjük, hagyja figyelmen kívül ezt az üzenetet. A jelszavát nem fogjuk visszaállítani.</div>
+<br>
+<div>Az Ön #{config.product_name} csapata</div>

@@ -1,16 +1,19 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module Diff
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def diff_worker
         return if !diff_import_possible?
+
         diff
       end
 
       def diff?
         return true if @diff
+
         false
       end
 
@@ -19,6 +22,7 @@ module Import
       def diff_import_possible?
         return if !Setting.get('import_mode')
         return if Setting.get('import_otrs_endpoint') == 'http://otrs_host/otrs'
+
         true
       end
 

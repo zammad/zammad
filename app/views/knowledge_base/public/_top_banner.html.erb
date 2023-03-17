@@ -1,0 +1,15 @@
+<div class="topbar" data-color="<%= kb_top_bar_color(object) %>"><%# blue: internal, yellow: draft & timed %>
+  <span class="topbar-tag"><%= zt kb_top_bar_tag(object) %></span>
+  <span class="topbar-hint">
+    <%= zt 'This page is invisible to the public.' if !object.visible? %>
+
+    <% if object.kind_of?(CanBePublished) && object.published_at.present? && object.published_at > Time.current %>
+      <%= zt 'Will be published on' %>
+      <%= time_tag object.published_at %>
+    <% end %>
+  </span>
+  <div class="topbar-flex"></div>
+  <div class="topbar-controls">
+    <%= link_to zt(edit_kb_link_label(object)), build_kb_link(object), class: 'topbar-btn', target: :_blank  %>
+  </div>
+</div>

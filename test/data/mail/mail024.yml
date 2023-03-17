@@ -2,6 +2,17 @@
 from: oracle@IG0-1-DB01.example.com
 from_email: oracle@IG0-1-DB01.example.com
 from_display_name: ''
-subject: 'Regelsets im Test-Status gefunden: 1'
 to: support@example.com
+subject: 'Regelsets im Test-Status gefunden: 1'
 body: no visible content
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    RULESET_ID;NAME;ACTIV;RUN_MODE;AUDIT_MODIFY_DATE
+    387;DP DHL JOIN - EN : Einladung eAC;T;SM;1.09.14
+  filename: rulesets-report.csv
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: text/csv
+    Mime-Type: text/csv
+    Charset: UTF-8

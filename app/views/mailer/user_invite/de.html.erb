@@ -1,8 +1,8 @@
 Einladung zu #{config.product_name} über #{config.fqdn}
 
-<div>Hallo #{user.firstname},</div>
+<div>Hallo #{user.fullname},</div>
 <br>
-<div>Ich (#{current_user.firstname} #{current_user.lastname}) möchte Dich zu #{config.product_name} einladen - unsere Kundensupport / Ticket System Platform.</div>
+<div>ich (#{current_user.firstname} #{current_user.lastname}) möchte Sie zu #{config.product_name} einladen - unserer Kundensupport-Plattform.</div>
 <br>
 <div>Um sich anzumelden kann <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">hier</a> das Password gesetzt werden.</div>
 <br>
@@ -10,4 +10,4 @@ Einladung zu #{config.product_name} über #{config.fqdn}
 <br>
 <div>#{current_user.firstname} #{current_user.lastname}</div>
 <br>
-<div>Dein #{config.product_name} Team</div>
+<div>Ihr #{config.product_name}-Team</div>

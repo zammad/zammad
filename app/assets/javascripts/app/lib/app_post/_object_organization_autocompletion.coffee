@@ -7,12 +7,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     'click .js-object':                       'onObjectClick'
     'click .js-objectNew':                    'newObject'
     'focus .js-objectSelect':                 'onFocus'
+    'input .js-objectSelect':                 'open'
     'click .js-objectSelect':                 'stopPropagation'
     'blur .js-objectSelect':                  'onBlur'
     'click .form-control':                    'focusInput'
     'click':                                  'stopPropagation'
     'change .js-objectId':                    'executeCallback'
     'click .js-remove':                       'removeThisToken'
+    'click .js-showMoreMembers':              'showMoreMembers'
 
   elements:
     '.recipientList':   'recipientList'
@@ -29,7 +31,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
   objectIcon: 'user'
   inactiveObjectIcon: 'inactive-user'
   objectSingels: 'People'
-  objectCreate: 'Create new object'
+  objectCreate: __('Create new object')
   referenceAttribute: 'member_ids'
 
   constructor: (params) ->
@@ -39,6 +41,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
     @key = Math.floor( Math.random() * 999999 ).toString()
 
+    if !@attribute.sourceType
+      @attribute.sourceType = 'GET'
     if !@attribute.source
       @attribute.source = "#{@apiPath}/search/user-organization"
     @build()
@@ -72,14 +76,13 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @open()
 
   focusInput: =>
-    @objectSelect.focus() if not @formControl.hasClass('focus')
+    @objectSelect.trigger('focus') if not @formControl.hasClass('focus')
 
   onBlur: =>
     selectObject = @objectSelect.val()
-    if _.isEmpty(selectObject)
+    if _.isEmpty(selectObject) && !@attribute.multiple
       @objectId.val('')
-      return
-    if @attribute.guess is true
+    else if @attribute.guess is true
       currentObjectId = @objectId.val()
       if _.isEmpty(currentObjectId) || currentObjectId.match(/^guess:/)
         if !_.isEmpty(selectObject)
@@ -91,47 +94,41 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
   onObjectClick: (e) =>
     objectId = $(e.currentTarget).data('object-id')
-    @selectObject(objectId)
+    objectName = $(e.currentTarget).find('.recipientList-name').text().trim()
+    @selectObject(objectId, objectName)
     @close()
 
-  selectObject: (objectId) =>
-    if @attribute.multiple and @objectId.val()
-      # add objectId to end of comma separated list
-      objectId = _.chain( @objectId.val().split(',') ).push(objectId).join(',').value()
-
-    @objectSelect.val('')
-    @objectId.val(objectId).trigger('change')
+  selectObject: (objectId, objectName) =>
+    if @attribute.multiple
+      @addValueToObjectInput(objectName, objectId)
+    else
+      @objectSelect.val('')
+      @objectId.val(objectId).trigger('change')
 
   executeCallback: =>
-    # with @attribute.multiple this can be several objects ids.
-    # Only work with the last one since its the newest one
-    objectId = @objectId.val().split(',').pop()
+    if @attribute.multiple
+      # create token
+      @createToken(@currentObject) if @currentObject
+      @currentObject = null
 
-    if objectId && App[@objectSingle].exists(objectId)
-      object = App[@objectSingle].find(objectId)
-      name = object.displayName()
+    else
+      objectId = @objectId.val()
+      if objectId && App[@objectSingle].exists(objectId)
+        object = App[@objectSingle].find(objectId)
+        name = object.displayName()
 
-      if @attribute.multiple
-
-        # create token
-        @createToken(name, objectId)
-      else
         if object.email
-
-          # quote name for special character
-          if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
-            name = "\"#{name}\""
-          name += " <#{object.email}>"
+          name = App.Utils.buildEmailAddress(object.displayName(), object.email)
 
         @objectSelect.val(name)
 
     if @callback
       @callback(objectId)
 
-  createToken: (name, objectId) =>
+  createToken: ({name, value}) =>
     @objectSelect.before App.view('generic/token')(
       name: name
-      value: objectId
+      value: value
     )
 
   removeThisToken: (e) =>
@@ -141,16 +138,13 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     switch which
       when 'last'
         token = @$('.token').last()
-        return if not token.size()
+        return if not token.length
       else
         token = which
 
-    # remove objectId from input
-    index = @$('.token').index(token)
-    ids = @objectId.val().split(',')
-    ids.splice(index, 1)
-    @objectId.val ids.join(',')
-
+    id = token.data('value')
+    @objectId.find("[value=#{id}]").remove()
+    @objectId.trigger('change')
     token.remove()
 
   navigateByKeyboard: (e) =>
@@ -166,7 +160,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         @objectSelect.val('').trigger('change')
       # remove last token on backspace
       when 8
-        if @objectSelect.val() is ''
+        if @objectSelect.val() is '' && @objectSelect.is(e.target)
           @removeToken('last')
       # close on tab
       when 9 then @close()
@@ -219,7 +213,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
             return
           objectId = recipientListOrganizationMembers.find('li.is-active').data('object-id')
           return if !objectId
-          @selectObject(objectId)
+          objectName = recipientListOrganizationMembers.find('li.is-active .recipientList-name').text().trim()
+          @selectObject(objectId, objectName)
           @close() if !@attribute.multiple
           return
 
@@ -229,7 +224,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
           if objectId is 'new'
             @newObject()
           else
-            @selectObject(objectId)
+            objectName = @recipientList.find('li.is-active .recipientList-name').text().trim()
+            @selectObject(objectId, objectName)
             @close() if !@attribute.multiple
           return
 
@@ -237,6 +233,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         return if !organizationId
         @showOrganizationMembers(undefined, @recipientList.find('li.is-active'))
 
+
+  addValueToObjectInput: (objectName, objectId) ->
+    @objectSelect.val('')
+    @currentObject = {name: objectName, value: objectId}
+    if @objectId.val()
+      return if @objectId.val().includes("#{objectId}") # cast objectId to string before check
+    @objectId.append("<option value=#{App.Utils.htmlEscape(@currentObject.value)} selected>#{App.Utils.htmlEscape(@currentObject.name)}</option>")
+    @objectId.trigger('change')
 
   buildOrganizationItem: (organization) ->
     objectCount = 0
@@ -248,14 +252,42 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       objectCount: objectCount
     )
 
+  showMoreMembers: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    memberElement  = $(e.target).closest('.js-showMoreMembers')
+    oldMemberLimit = memberElement.attr('organization-member-limit')
+    newMemberLimit = (parseInt(oldMemberLimit / 25) + 1) * 25
+    memberElement.attr('organization-member-limit', newMemberLimit)
+
+    @renderMembers(memberElement, oldMemberLimit, newMemberLimit)
+
+  renderMembers: (element, fromMemberLimit, toMemberLimit) ->
+    id           = element.closest('.recipientList-organizationMembers').attr('organization-id')
+    organization = App.Organization.find(id)
+
+    # only first 10 members else we would need more ajax requests
+    organization.members(fromMemberLimit, toMemberLimit, (users) =>
+      for user in users
+        element.before(@buildObjectItem(user))
+
+      if element.closest('ul').hasClass('is-shown')
+        @showOrganizationMembers(undefined, element.closest('ul'))
+    )
+
+    if organization.member_ids.length <= toMemberLimit
+      element.addClass('hidden')
+    else
+      element.removeClass('hidden')
+
   buildOrganizationMembers: (organization) =>
-    organizationMemebers = $( App.view(@templateOrganizationItemMembers)(
+    organizationMembers = $( App.view(@templateOrganizationItemMembers)(
       organization: organization
     ) )
-    if organization[@referenceAttribute]
-      for objectId in organization[@referenceAttribute]
-        object = App[@objectSingle].fullLocal(objectId)
-        organizationMemebers.append(@buildObjectItem(object))
+
+    @renderMembers(organizationMembers.find('.js-showMoreMembers'), 0, 10)
+
+    organizationMembers
 
   buildObjectItem: (object) =>
     icon = @objectIcon
@@ -283,17 +315,23 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       # fallback for if the value is not an array
       if typeof @attribute.value isnt 'object'
         @attribute.value = [@attribute.value]
-      value = @attribute.value.join ','
 
-      # create tokens
+      # create tokens and attribute values
+      values = []
       for objectId in @attribute.value
         if App[@objectSingle].exists objectId
+          objectName = App[@objectSingle].find(objectId).displayName()
+          objectValue = objectId
+          values.push({name: objectName, value: objectValue})
           tokens += App.view('generic/token')(
-            name: App[@objectSingle].find(objectId).displayName()
-            value: objectId
+            name: objectName
+            value: objectValue
           )
         else
           @log 'objectId doesn\'t exist', objectId
+
+      @attribute.value = values
+
     else
       value = @attribute.value
       if value
@@ -301,6 +339,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
           object = App[@objectSingle].find(value)
           name = object.displayName()
           if object.email
+            # Do not use App.Utils.buildEmailAddress here because we don't build an email address and the
+            #   quoting would confuse sorting in the GUI.
             name += " <#{object.email}>"
         else if @params && @params["#{@attribute.name}_completion"]
           name = @params["#{@attribute.name}_completion"]
@@ -337,7 +377,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         @recipientList.append(@buildObjectNew())
 
       # reset object selection
-      @resetObjectSelection()
+      @resetObjectSelection() if !@attribute.multiple
       return
 
     # show dropdown
@@ -345,38 +385,49 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       @lazySearch(query)
 
   searchObject: (query) =>
+    data =
+      query: query
+    if @attribute.queryCallback
+      data = @attribute.queryCallback(query)
+
     @ajax(
-      id:    "searchObject#{@key}"
-      type:  'GET'
-      url:   @attribute.source
-      data:
-        query: query
+      id:          "searchObject#{@key}"
+      type:        @attribute.sourceType
+      url:         @attribute.source
+      data:        data
       processData: true
-      success: (data, status, xhr) =>
+      success:     (data, status, xhr) =>
         @emptyResultList()
 
         # load assets
         App.Collection.loadAssets(data.assets)
 
-        # build markup
-        for item in data.result
-
-          # organization
-          if item.type is 'Organization'
-            organization = App.Organization.fullLocal(item.id)
-            @recipientList.append(@buildOrganizationItem(organization))
-
-            # objectss of organization
-            if organization[@referenceAttribute]
-              @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
-
-          # objectss
-          if item.type is @objectSingle
-            object = App[@objectSingle].fullLocal(item.id)
+        # user search endpoint
+        if data.user_ids
+          for id in data.user_ids
+            object = App[@objectSingle].fullLocal(id)
             @recipientList.append(@buildObjectItem(object))
 
-        if !@attribute.disableCreateObject
-          @recipientList.append(@buildObjectNew())
+        # global search endpoint
+        else
+          for item in data.result
+
+            # organization
+            if item.type is 'Organization'
+              organization = App.Organization.fullLocal(item.id)
+              @recipientList.append(@buildOrganizationItem(organization))
+
+              # objectss of organization
+              if organization[@referenceAttribute]
+                @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
+
+            # objectss
+            else if item.type is @objectSingle
+              object = App[@objectSingle].fullLocal(item.id)
+              @recipientList.append(@buildObjectItem(object))
+
+          if !@attribute.disableCreateObject
+            @recipientList.append(@buildObjectNew())
 
         @recipientList.find('.js-object').first().addClass('is-active')
     )
@@ -390,8 +441,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       e.stopPropagation()
       listEntry = $(e.currentTarget)
 
-    organizationId = listEntry.data('organization-id')
-
+    organizationId = listEntry.data('organization-id') || listEntry.attr('organization-id')
     @organizationList = @$("[organization-id=#{ organizationId }]")
 
     return if !@organizationList.get(0)

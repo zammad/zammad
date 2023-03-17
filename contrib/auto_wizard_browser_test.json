@@ -1,0 +1,127 @@
+{
+  "Users": [
+    {
+      "login": "admin@example.com",
+      "firstname": "Test Admin",
+      "lastname": "Agent",
+      "email": "admin@example.com",
+      "password": "test"
+    },
+    {
+      "login": "agent1@example.com",
+      "firstname": "Agent 1",
+      "lastname": "Test",
+      "email": "agent1@example.com",
+      "roles": ["Agent"]
+    }
+  ],
+  "Groups": [
+    {
+      "name": "Users",
+      "users": ["admin@example.com", "agent1@example.com"],
+      "signature": "default",
+      "email_address_id": 1
+    }
+  ],
+  "Channels": [
+    {
+      "id": 1,
+      "area": "Email::Notification",
+      "group": "Users",
+      "options": {
+        "outbound": {
+          "adapter": "smtp",
+          "options": {
+            "host": "mail",
+            "user": "zammad@mail.test.dc.zammad.com",
+            "password": "zammad",
+            "port": 25,
+            "domain": "localhost",
+            "enable_starttls_auto": true,
+            "openssl_verify_mode": "none"
+          }
+        }
+      },
+      "preferences": {
+        "online_service_disable": true
+      }
+    },
+    {
+      "id": 2,
+      "area": "Email::Notification",
+      "options": {
+        "outbound": {
+          "adapter": "smtp",
+          "options": {
+            "host": "mail",
+            "port": 25,
+            "start_tls": true,
+            "user": "zammad@mail.test.dc.zammad.com",
+            "password": "zammad",
+            "domain": "mail.test.dc.zammad.com",
+            "enable_starttls_auto": true,
+            "openssl_verify_mode": "none"
+          }
+        }
+      },
+      "preferences": {
+        "online_service_disable": true
+      }
+    },
+    {
+      "id": 3,
+      "area": "Email::Account",
+      "group": "Users",
+      "options": {
+        "inbound": {
+          "adapter": "imap",
+          "options": {
+            "host": "mail",
+            "port": 993,
+            "ssl": true,
+            "user": "zammad@mail.test.dc.zammad.com",
+            "password": "zammad"
+          }
+        },
+        "outbound": {
+          "adapter": "smtp",
+          "options": {
+            "host": "mail",
+            "port": 25,
+            "start_tls": true,
+            "user": "zammad@mail.test.dc.zammad.com",
+            "password": "zammad",
+            "domain": "mail.test.dc.zammad.com",
+            "enable_starttls_auto": true,
+            "openssl_verify_mode": "none"
+          }
+        }
+      }
+    }
+  ],
+  "EmailAddresses": [
+    {
+      "id": 1,
+      "channel_id": 3,
+      "realname": "Some Realname",
+      "email": "zammad@mail.test.dc.zammad.com"
+    }
+  ],
+  "Settings": [
+    {
+      "name": "fqdn",
+      "value": "localhost"
+    },
+    {
+      "name": "organization",
+      "value": "Some Organization"
+    },
+    {
+      "name": "developer_mode",
+      "value": true
+    }
+  ],
+  "TextModuleLocale": {
+    "Locale": "en-us"
+  }
+}

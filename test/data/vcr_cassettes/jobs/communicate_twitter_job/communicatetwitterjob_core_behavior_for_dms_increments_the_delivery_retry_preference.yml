@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twitter.com/1.1/direct_messages/events/new.json
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","message_create":{"target":{"recipient_id":<TWITTER_DM_REAL_RECIPIENT>},"message_data":{"text":"Please
+        ignore this message."}}}}'
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<TWITTER_CONSUMER_KEY>", oauth_nonce="a0dd10935b94fcaba2455648ead26f8c",
+        oauth_signature="Qpju0hloOH4ZKneTCkAgFeUID0M%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1665143731", oauth_token="<TWITTER_OAUTH_TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 07 Oct 2022 11:55:31 GMT
+      Perf:
+      - '7626143928'
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_o
+      Status:
+      - 200 OK
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Set-Cookie:
+      - guest_id=v1%3A166514373177202421; Max-Age=34214400; Expires=Tue, 07 Nov 2023
+        11:55:31 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=en; Path=/
+      Content-Type:
+      - application/json;charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Last-Modified:
+      - Fri, 07 Oct 2022 11:55:31 GMT
+      X-Transaction:
+      - 9575eb293d7c018b
+      Content-Length:
+      - '322'
+      X-Access-Level:
+      - read-write-directmessages
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Transaction-Id:
+      - 9575eb293d7c018b
+      X-Xss-Protection:
+      - '0'
+      Content-Disposition:
+      - attachment; filename=json.json
+      X-Content-Type-Options:
+      - nosniff
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Response-Time:
+      - '158'
+      X-Connection-Hash:
+      - d3eaeb4c1fbf9d0683dbe8bb927491f835b92de5090c34ca52732aa1486b7bb7
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"event":{"type":"message_create","id":"1578353325266931717","created_timestamp":"1665143731787","message_create":{"target":{"recipient_id":"<TWITTER_DM_REAL_RECIPIENT>"},"sender_id":"<TWITTER_USER_ID>","message_data":{"text":"Please
+        ignore this message.","entities":{"hashtags":[],"symbols":[],"user_mentions":[],"urls":[]}}}}}'
+  recorded_at: Fri, 07 Oct 2022 11:55:31 GMT
+recorded_with: VCR 6.1.0

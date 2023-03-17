@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me?access_token=<FACEBOOK_ADMIN_ACCESS_TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"c74d1549500251fdcbe3e87746dbb3f2c9c91e51"'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v9.0
+      X-Fb-Request-Id:
+      - AHTVf5Vd5vfBscmBmmRJgiZ
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - FfBYxbvUhWi
+      X-Fb-Rev:
+      - '1003324181'
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      X-App-Usage:
+      - '{"call_count":2,"total_cputime":0,"total_time":0}'
+      X-Fb-Rlafr:
+      - '0'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Debug:
+      - Rn16Aztp9wCXYU8VEo7YMZVamHhWg8RaX+fNwAt3VipJ6iZcOawjFooQdgQLRSwa2FmmYZkGRlrkieMe1PNWAg==
+      Date:
+      - Thu, 18 Feb 2021 10:51:21 GMT
+      Alt-Svc:
+      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '45'
+    body:
+      encoding: UTF-8
+      string: '{"name":"<FACEBOOK_ADMIN_FIRSTNAME> <FACEBOOK_ADMIN_LASTNAME>","id":"<FACEBOOK_ADMIN_USER_ID>"}'
+    http_version:
+  recorded_at: Thu, 18 Feb 2021 10:51:21 GMT
+recorded_with: VCR 4.0.0

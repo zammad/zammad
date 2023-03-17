@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
+class ProfileAvatar extends App.ControllerSubContent
   requiredPermission: 'user_preferences.avatar'
-  header: 'Avatar'
+  header: __('Avatar')
   elements:
     '.js-upload':      'fileInput'
     '.avatar-gallery': 'avatarGallery'
@@ -28,7 +28,7 @@ class Index extends App.ControllerSubContent
     )
 
   # check if the browser supports webcam access
-  # doesnt render the camera button if not
+  # doesn't render the camera button if not
   hasGetUserMedia: ->
     return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia || navigator.msGetUserMedia)
@@ -105,8 +105,7 @@ class Index extends App.ControllerSubContent
     new Camera
       callback: @storeImage
 
-  storeImage: (src) =>
-
+  storeImage: (src, type) =>
     # store avatar globally
     @oldDataUrl = src
 
@@ -128,28 +127,31 @@ class Index extends App.ControllerSubContent
       )
 
     # add resized image
-    App.ImageService.resizeForAvatar(src, 'auto', 160, store)
+    App.ImageService.resizeForAvatar(src, 'auto', 160, type, store)
 
   onUpload: (event) =>
+    file = event.target.files[0]
     callback = @storeImage
-    EXIF.getData event.target.files[0], ->
+
+    EXIF.getData file, ->
       orientation   = @exifdata.Orientation
       reader        = new FileReader()
       reader.onload = (e) ->
         new ImageCropper
           imageSource: e.target.result
+          type:        file.type
           callback:    callback
           orientation: orientation
 
       reader.readAsDataURL(@)
 
-App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
+App.Config.set('Avatar', { prio: 1100, name: __('Avatar'), parent: '#profile', target: '#profile/avatar', controller: ProfileAvatar, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Save'
-  head: 'Crop Image'
+  buttonSubmit: __('Save')
+  head: __('Crop Image')
 
   elements:
     '.imageCropper-image': 'image'
@@ -182,7 +184,7 @@ class ImageCropper extends App.ControllerModal
         @image.attr src: dataUrl
 
     # resize if to big
-    App.ImageService.resize(@imageSource, 600, 'auto', 2, 'image/jpeg', 0.9, show)
+    App.ImageService.resize(@imageSource, 600, 'auto', 2, @type, 0.9, show)
 
   orientateImage: (e) =>
     image  = e.currentTarget
@@ -220,20 +222,20 @@ class ImageCropper extends App.ControllerModal
 
   onSubmit: (e) =>
     @formDisable(e)
-    @callback( @image.cropper('getCroppedCanvas').toDataURL() )
+    @callback( @image.cropper('getCroppedCanvas').toDataURL(), @type )
     @image.cropper('destroy')
     @close()
 
 class Camera extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Save'
+  buttonSubmit: __('Save')
   buttonClass: 'btn--success is-disabled'
   centerButtons: [{
     className: 'btn--success js-shoot is-disabled',
-    text: 'Shoot'
+    text: __('Shoot')
   }]
-  head: 'Camera'
+  head: __('Camera')
 
   elements:
     '.js-shoot':       'shootButton'
@@ -284,7 +286,7 @@ class Camera extends App.ControllerModal
     @shootButton.removeClass 'is-disabled'
 
     # in case the modal is closed before the
-    # request was fullfilled
+    # request was fulfilled
     if @hidden
       @stopStream()
       return
@@ -299,14 +301,22 @@ class Camera extends App.ControllerModal
     # start to update the preview once its playing
     @video.on 'playing', @updatePreview
 
-    @video.attr 'src', window.URL.createObjectURL(stream)
+    # start stream
+    # Apparently this functionality (of creating a URL from a MediaStream) is now deprecated
+    # and has been removed from current versions of Chrome and Firefox as of mid/late 2018.
+    # See https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL for details.
+    # Apparently the new recommended approach is to set the srcObject property to the localStream directly:
+    try
+      @video.get(0).srcObject = stream
+    catch err
+      @video.attr 'src', window.URL.createObjectURL(stream)
 
     # start the stream
     @video.get(0).play()
 
   onWebcamError: (error) =>
     # in case the modal is closed before the
-    # request was fullfilled
+    # request was fulfilled
     if @hidden
       return
 
@@ -338,7 +348,7 @@ class Camera extends App.ControllerModal
   updatePreview: =>
     # try catch fixes a Firefox error
     # were the drawImage wouldn't work
-    # because the video didn't get inizialized
+    # because the video didn't get initialized
     # yet internally
     # http://stackoverflow.com/questions/18580844/firefox-drawimagevideo-fails-with-ns-error-not-available-component-is-not-av
     try

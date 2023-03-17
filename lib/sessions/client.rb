@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Client
 
   def initialize(client_id, node_id)
@@ -12,9 +14,7 @@ class Sessions::Client
 
     backends = [
       'Sessions::Backend::TicketOverviewList',
-      'Sessions::Backend::Collections',
       'Sessions::Backend::ActivityStream',
-      'Sessions::Backend::TicketCreate',
     ]
 
     asset_lookup             = {}
@@ -32,8 +32,11 @@ class Sessions::Client
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user]['id']
+
       user = User.lookup(id: session_data[:user]['id'])
       return if !user
+
+      UserInfo.current_user_id = user.id
 
       # init new backends
       if user_id_last_run != user.id

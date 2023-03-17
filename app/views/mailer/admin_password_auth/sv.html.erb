@@ -1,0 +1,15 @@
+Administrationsinloggning till #{config.product_name}
+
+<div>Hej #{user.firstname},</div>
+<br>
+<div>Vi mottog en begäran om administrationsinloggning för ditt #{config.product_name}-konto <b>#{user.login}</b>.</div>
+<br>
+<div>Om det stämmer klicka på länken nedan (eller kopiera och klistra in URL:en i din webbläsare) för att fortsätta:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Länken leder till en inloggningssida.</div>
+<br>
+<div>Om du inte vill logga in, ignorera det här meddelandet.</div>
+<br>
+<div>Dina #{config.product_name}-administratörer</div>

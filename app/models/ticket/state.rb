@@ -1,11 +1,13 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-class Ticket::State < ApplicationModel
-  include ChecksLatestChangeObserved
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-  # rubocop:disable Rails/InverseOf
-  belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states
-  belongs_to :next_state, class_name: 'Ticket::State'
-  # rubocop:enable Rails/InverseOf
+class Ticket::State < ApplicationModel
+  include CanBeImported
+  include ChecksHtmlSanitized
+  include HasCollectionUpdate
+  include HasSearchIndexBackend
+
+  belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states, optional: true
+  belongs_to :next_state, class_name: 'Ticket::State', optional: true
 
   after_create  :ensure_defaults
   after_update  :ensure_defaults
@@ -13,7 +15,26 @@ class Ticket::State < ApplicationModel
 
   validates :name, presence: true
 
+  validates :note, length: { maximum: 250 }
+  sanitized_html :note
+
   attr_accessor :callback_loop
+
+  TYPES = {
+    open:                   ['new', 'open', 'pending reminder', 'pending action'],
+    pending_reminder:       ['pending reminder'],
+    pending_action:         ['pending action'],
+    pending:                ['pending reminder', 'pending action'],
+    work_on:                %w[new open],
+    work_on_all:            ['new', 'open', 'pending reminder'],
+    viewable:               ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed'],
+    viewable_agent_new:     ['new', 'open', 'pending reminder', 'pending action', 'closed'],
+    viewable_agent_edit:    ['open', 'pending reminder', 'pending action', 'closed'],
+    viewable_customer_new:  %w[new closed],
+    viewable_customer_edit: %w[open closed],
+    closed:                 %w[closed],
+    merged:                 %w[merged],
+  }.freeze
 
 =begin
 
@@ -27,42 +48,11 @@ returns:
 
 =end
 
-  def self.by_category(category)
+  def self.by_category(*categories)
+    state_types = TYPES.slice(*categories.map(&:to_sym)).values.uniq
+    raise ArgumentError, "No such categories (#{categories.join(', ')})" if state_types.empty?
 
-    case category.to_sym
-    when :open
-      state_types = ['new', 'open', 'pending reminder', 'pending action']
-    when :pending_reminder
-      state_types = ['pending reminder']
-    when :pending_action
-      state_types = ['pending action']
-    when :pending
-      state_types = ['pending reminder', 'pending action']
-    when :work_on
-      state_types = %w[new open]
-    when :work_on_all
-      state_types = ['new', 'open', 'pending reminder']
-    when :viewable
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
-    when :viewable_agent_new
-      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed']
-    when :viewable_agent_edit
-      state_types = ['open', 'pending reminder', 'pending action', 'closed']
-    when :viewable_customer_new
-      state_types = %w[new closed]
-    when :viewable_customer_edit
-      state_types = %w[open closed]
-    when :closed
-      state_types = %w[closed]
-    when :merged
-      state_types = %w[merged]
-    end
-
-    raise "Unknown category '#{category}'" if state_types.blank?
-
-    Ticket::State.where(
-      state_type_id: Ticket::StateType.where(name: state_types)
-    )
+    Ticket::State.joins(:state_type).where(ticket_state_types: { name: state_types })
   end
 
 =begin
@@ -81,6 +71,7 @@ returns:
 
   def ignore_escalation?
     return true if ignore_escalation
+
     false
   end
 
@@ -92,7 +83,7 @@ returns:
       next if states_with_default.count == 1
 
       if states_with_default.count.zero?
-        state = Ticket::State.where(active: true).order(id: :asc).first
+        state = Ticket::State.where(active: true).reorder(id: :asc).first
         state[default_field] = true
         state.callback_loop = true
         state.save!
@@ -102,6 +93,7 @@ returns:
       Ticket::State.all.each do |local_state|
         next if local_state.id == id
         next if local_state[default_field] == false
+
         local_state[default_field] = false
         local_state.callback_loop = true
         local_state.save!

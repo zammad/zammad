@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketLoadMeasure
 
@@ -21,15 +21,15 @@ class Stats::TicketLoadMeasure
     end
 
     if total.nonzero?
-      load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      load_measure_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
     {
-      used_for_average: load_measure_precent,
+      used_for_average:  load_measure_precent,
       average_per_agent: average,
-      percent: load_measure_precent,
-      state: state,
-      own: count,
-      total: total,
+      percent:           load_measure_precent,
+      state:             state,
+      own:               count,
+      total:             total,
     }
   end
 
@@ -37,12 +37,12 @@ class Stats::TicketLoadMeasure
 
     return result if !result.key?(:used_for_average)
 
-    if result[:total] < 1 || result[:average_per_agent] == 0.0
+    if result[:total] < 1 || result[:average_per_agent].to_d == BigDecimal('0.0')
       result[:state] = 'supergood'
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    in_percent = (result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100)).round(1)
     result[:average_per_agent_in_percent] = in_percent
     result[:state] = if in_percent >= 90
                        'supergood'
@@ -57,7 +57,7 @@ class Stats::TicketLoadMeasure
                      end
 
     # convert result[:used_for_average] in percent to related total
-    result[:average_per_agent] = ( (result[:total].to_f / 100) * result[:average_per_agent] ).round(1)
+    result[:average_per_agent] = ((result[:total].to_f / 100) * result[:average_per_agent]).round(1)
 
     result
   end

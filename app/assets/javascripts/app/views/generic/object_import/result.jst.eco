@@ -1,5 +1,5 @@
 <div>
-<%- @T('Result') %>: <%= @result %>
+<%- @T('Result:') %> <%= @result %>
 <% if @errors: %>
   <ul>
   <% for error in @errors: %>

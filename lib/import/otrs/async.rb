@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module Async
@@ -13,10 +15,10 @@ module Import
         status_update_thread = Thread.new do
           loop do
             result = {
-              data: current_state,
+              data:   current_state,
               result: 'in_progress',
             }
-            Cache.write('import:state', result, expires_in: 10.minutes)
+            Rails.cache.write('import:state', result, expires_in: 10.minutes)
             sleep 8
           end
         end
@@ -31,9 +33,9 @@ module Import
           Rails.logger.error e
           result = {
             message: e.message,
-            result: 'error',
+            result:  'error',
           }
-          Cache.write('import:state', result, expires_in: 10.hours)
+          Rails.cache.write('import:state', result, expires_in: 10.hours)
           return false
         end
         sleep 16 # wait until new finished import state is on client
@@ -43,15 +45,16 @@ module Import
         result = {
           result: 'import_done',
         }
-        Cache.write('import:state', result, expires_in: 10.hours)
+        Rails.cache.write('import:state', result, expires_in: 10.hours)
 
         Setting.set('system_init_done', true)
         Setting.set('import_mode', false)
       end
 
       def status_bg
-        state = Cache.get('import:state')
+        state = Rails.cache.read('import:state')
         return state if state
+
         {
           message: 'not running',
         }

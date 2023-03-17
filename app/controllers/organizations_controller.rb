@@ -1,7 +1,10 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class OrganizationsController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action -> { authorize! }, except: %i[index show]
+  prepend_before_action { authentication_check }
+
+  include CanPaginate
 
 =begin
 
@@ -11,7 +14,7 @@ JSON
 Example:
 {
   "id":1,
-  "name":"Znuny GmbH",
+  "name":"Zammad GmbH",
   "note":"",
   "active":true,
   "shared":true,
@@ -47,56 +50,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 =end
 
   def index
-    offset = 0
-    per_page = 500
-
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      per_page = params[:per_page].to_i
-    end
-
-    if per_page > 500
-      per_page = 500
-    end
-
-    # only allow customer to fetch his own organization
-    organizations = []
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      if current_user.organization_id
-        organizations = Organization.where(id: current_user.organization_id).order(id: 'ASC').offset(offset).limit(per_page)
-      end
-    else
-      organizations = Organization.all.order(id: 'ASC').offset(offset).limit(per_page)
-    end
-
-    if response_expand?
-      list = []
-      organizations.each do |organization|
-        list.push organization.attributes_with_association_names
-      end
-      render json: list, status: :ok
-      return
-    end
-
-    if response_full?
-      assets = {}
-      item_ids = []
-      organizations.each do |item|
-        item_ids.push item.id
-        assets = item.assets(assets)
-      end
-      render json: {
-        record_ids: item_ids,
-        assets: assets,
-      }, status: :ok
-      return
-    end
-
-    list = []
-    organizations.each do |organization|
-      list.push organization.attributes_with_association_ids
-    end
-    render json: list
+    model_index_render(policy_scope(Organization), params)
   end
 
 =begin
@@ -117,14 +71,17 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
 =end
 
   def show
+    begin
+      authorize!
+    rescue Pundit::NotAuthorizedError
+      # we have a special case here where Users that have no
+      # organization can request any organization_id but get
+      # an empty response. However, users with an organization_id
+      # get that error
+      raise if current_user.organization_id
 
-    # only allow customer to fetch his own organization
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      if !current_user.organization_id
-        render json: {}
-        return
-      end
-      raise Exceptions::NotAuthorized if params[:id].to_i != current_user.organization_id
+      render json: {}
+      return
     end
 
     if response_expand?
@@ -168,7 +125,6 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def create
-    permission_check(['admin.organization', 'ticket.agent'])
     model_create_render(Organization, params)
   end
 
@@ -199,7 +155,6 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def update
-    permission_check(['admin.organization', 'ticket.agent'])
     model_update_render(Organization, params)
   end
 
@@ -217,41 +172,28 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    permission_check(['admin.organization', 'ticket.agent'])
     model_references_check(Organization, params)
     model_destroy_render(Organization, params)
   end
 
   # GET /api/v1/organizations/search
   def search
-
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      raise Exceptions::NotAuthorized
-    end
-
-    per_page = params[:per_page] || params[:limit] || 100
-    per_page = per_page.to_i
-    if per_page > 500
-      per_page = 500
-    end
-    page = params[:page] || 1
-    page = page.to_i
-    offset = (page - 1) * per_page
-
     query = params[:query]
     if query.respond_to?(:permit!)
       query = query.permit!.to_h
     end
     query_params = {
-      query: query,
-      limit: per_page,
-      offset: offset,
-      sort_by: params[:sort_by],
-      order_by: params[:order_by],
+      query:        query,
+      limit:        pagination.limit,
+      offset:       pagination.offset,
+      sort_by:      params[:sort_by],
+      order_by:     params[:order_by],
       current_user: current_user,
     }
-    if params[:role_ids].present?
-      query_params[:role_ids] = params[:role_ids]
+    %i[ids role_ids].each do |key|
+      next if params[key].blank?
+
+      query_params[key] = params[key]
     end
 
     # do query
@@ -289,7 +231,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
       # return result
       render json: {
-        assets: assets,
+        assets:           assets,
         organization_ids: organization_ids.uniq,
       }
       return
@@ -304,20 +246,11 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
   # GET /api/v1/organizations/history/1
   def history
-
-    # permission check
-    if !current_user.permissions?(['admin.organization', 'ticket.agent'])
-      raise Exceptions::NotAuthorized
-    end
-
     # get organization data
     organization = Organization.find(params[:id])
 
     # get history of organization
-    history = organization.history_get(true)
-
-    # return result
-    render json: history
+    render json: organization.history_get(true)
   end
 
   # @path    [GET] /organizations/import_example
@@ -327,13 +260,12 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/organizations/import_example
   #
   # @response_message 200 File download.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_example
-    permission_check('admin.organization')
     send_data(
       Organization.csv_example,
-      filename: 'organization-example.csv',
-      type: 'text/csv',
+      filename:    'organization-example.csv',
+      type:        'text/csv',
       disposition: 'attachment'
     )
   end
@@ -346,17 +278,21 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/organizations.csv' 'https://your.zammad/api/v1/organizations/import'
   #
   # @response_message 201 Import started.
-  # @response_message 401 Invalid session.
+  # @response_message 403 Forbidden / Invalid session.
   def import_start
-    permission_check('admin.user')
-    string = params[:data] || params[:file].read.force_encoding('utf-8')
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+
     result = Organization.csv_import(
-      string: string,
+      string:       string,
       parse_params: {
         col_sep: params[:col_sep] || ',',
       },
-      try: params[:try],
-      delete: params[:delete],
+      try:          params[:try],
+      delete:       params[:delete],
     )
     render json: result, status: :ok
   end

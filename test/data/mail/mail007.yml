@@ -2,8 +2,8 @@
 from: Eike.Ehringer@example.com
 from_email: Eike.Ehringer@example.com
 from_display_name: ''
+to: Martin Edenhofer via Znuny Team <support@example.com>
 subject: AW:Installation [Ticket#11392]
-content_type: text/html
 body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Lass uns
   evtl morgen Tel.<br><br>Mfg eike <br><br><div>\n<div>Martin Edenhofer via Znuny
   Team --- Installation [Ticket#11392] ---</div><div>\n<br><table border=\"0\" cellspacing=\"0\"
@@ -11,12 +11,42 @@ body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Las
   &lt;support@example.com&gt;</td>\n</tr>\n<tr>\n<td>An</td>\n<td>eike.xx@xx-corpxx.com</td>\n</tr>\n<tr>\n<td>Datum:</td>\n<td>Mi.,
   13.06.2012 14:30</td>\n</tr>\n<tr>\n<td>Betreff</td>\n<td>Installation [Ticket#11392]</td>\n</tr>\n</table>\n<hr>\n<br><pre>Hi
   Eike,\n\nanbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.\n\na)
-  Installation von <a href=\"http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm\"
-  rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm</a>
+  Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm
   (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.\n\nb) Installation von
   \"mysqld\" und \"perl-DBD-MySQL\".\n\nDas wäre es zur Vorbereitung!\n\nBei Fragen
   nur zu!\n\n -Martin\n\n--\nMartin Edenhofer\n\nZnuny GmbH // Marienstraße 11 //
   10117 Berlin // Germany\n\nP: +49 (0) 30 60 98 54 18-0\nF: +49 (0) 30 60 98 54 18-8\nW:
-  <a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>
-  \n\nLocation: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg\nManaging
+  http://example.com \n\nLocation: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg\nManaging
   Director: Martin Edenhofer\n\n</pre>\n</div></div>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<FONT face=\"arial\">Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen
+    für morgen.<br>Lass uns evtl morgen Tel.<br><br>Mfg eike </FONT><br><br><div class=\"domino-section\"><div
+    class=\"domino-section-head\"><span class=\"domino-section-title\"><font color=\"#424282\">Martin
+    Edenhofer via Znuny Team --- Installation [Ticket#11392] --- </font></span></div><div
+    class=\"domino-section-body\"><br><table width=\"100%\" border=\"0\" cellspacing=\"0\"
+    cellpadding=\"0\"><tr valign=\"top\"><td width=\"1%\" style=\"width: 96px;\"><font
+    size=\"2\" color=\"#5F5F5F\">Von:</font></td><td width=\"100%\" style=\"width:
+    auto;\"><font size=\"2\">&quot;Martin Edenhofer via Znuny Team&quot; &lt;support@example.com&gt;</font></td></tr><tr
+    valign=\"top\"><td width=\"1%\" style=\"width: 96px;\"><font size=\"2\" color=\"#5F5F5F\">An</font></td><td
+    width=\"100%\" style=\"width: auto;\"><font size=\"2\">eike.xx@xx-corpxx.com</font></td></tr><tr
+    valign=\"top\"><td width=\"1%\" style=\"width: 96px;\"><font size=\"2\" color=\"#5F5F5F\">Datum:</font></td><td
+    width=\"100%\" style=\"width: auto;\"><font size=\"2\">Mi., 13.06.2012 14:30</font></td></tr><tr
+    valign=\"top\"><td width=\"1%\" style=\"width: 96px;\"><font size=\"2\" color=\"#5F5F5F\">Betreff</font></td><td
+    width=\"100%\" style=\"width: auto;\"><font size=\"2\">Installation [Ticket#11392]</font></td></tr></table><hr
+    width=\"100%\" size=\"2\" align=\"left\" noshade style=\"color:#8091A5; \"><br><pre>Hi
+    Eike,\n\nanbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.\n\na)
+    Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm
+    (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.\n\nb) Installation
+    von &quot;mysqld&quot; und &quot;perl-DBD-MySQL&quot;.\n\nDas wäre es zur Vorbereitung!\n\nBei
+    Fragen nur zu!\n\n -Martin\n\n--\nMartin Edenhofer\n\nZnuny GmbH // Marienstraße
+    11 // 10117 Berlin // Germany\n\nP: +49 (0) 30 60 98 54 18-0\nF: +49 (0) 30 60
+    98 54 18-8\nW: http://example.com \n\nLocation: Berlin - HRB 139852 B Amtsgericht
+    Berlin-Charlottenburg\nManaging Director: Martin Edenhofer\n\n</pre>"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: UTF-8

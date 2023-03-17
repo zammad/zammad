@@ -1,0 +1,27 @@
+Return-Path: <user.name@example.com>
+Delivered-To: user@example.com
+Received: from host.example.com
+	by host.example.com with LMTP id kFSRC5u/I1tJHBAAz53O+w
+	for <user@example.com>; Fri, 15 Jun 2018 09:31:07 -0400
+Return-path: <user.name@example.com>
+Envelope-to: user@example.com
+Delivery-date: Fri, 15 Jun 2018 09:31:07 -0400
+Received: from mail-do1ram03ok0780.emails.users.example.com ([0.0.0.0]:15241 helo=do1ram03ok0780.emails.users.example.com)
+	by host.example.com with esmtps (TLSv1.2:ECDHE-RSA-AES256-SHA384:256)
+	(Exim 4.91)
+	(envelope-from <user.name@example.com>)
+	id 1dFool-1004vt-2z
+	for user@example.com; Fri, 15 Jun 2018 09:31:07 -0400
+From: "Name R. John" <user.name@example.com>
+To: To This Person <user@example.com>
+Subject: Subject of message
+Thread-Topic: Subject of message
+Thread-Index: AdQDSn2ZjObO2qLmRLWd8iIbgua/6gBYoT0g
+Sender: "Name R. John" <user.name@example.com>
+Date: Fri, 15 Jun 2018 13:30:23 +0000
+Message-ID:
+ <DM6PR02MF1425372C1E5187B91210554G127D5@do1ram03ok0780.emails.users.example.com>
+Accept-Language: en-US
+Content-Language: en-US
+
+Message text

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class Customer
@@ -23,6 +25,7 @@ module Import
         result = nil
         organizations.each do |organization|
           next if customer_id != organization['CustomerID']
+
           result = Organization.find_by(name: organization['CustomerCompanyName'])
           break
         end
@@ -37,12 +40,14 @@ module Import
 
       def create_or_update(customer)
         return if updated?(customer)
+
         create(customer)
       end
 
       def updated?(customer)
         @local_customer = Organization.find_by(name: customer[:name])
         return false if !@local_customer
+
         log "update Organization.find_by(name: #{customer[:name]})"
         @local_customer.update!(customer)
         true

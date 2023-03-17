@@ -1,0 +1,15 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: "=?iso-8859-1?Q?B=FCrling, =20Andreas?= <smith@example.com>"
+from_email: smith@example.com
+from_display_name: "=20Andreas?="
+to: metest@znuny.com
+subject: aaäöüßad asd
+body: |
+  äöüß ad asd
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.
+content_type: text/plain
+attachments: []

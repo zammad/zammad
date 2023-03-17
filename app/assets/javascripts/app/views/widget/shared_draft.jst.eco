@@ -1,0 +1,38 @@
+<div class="shared-drafts-manage">
+  <form>
+    <div class="form-group">
+      <label class="" for="template_name"><%- @T('Create a shared draft') %></label>
+      <input type="text" name="name" id="shared_draft_name" class="form-control js-name"
+        placeholder="Name" value="<%= @active_draft?.name %>">
+    </div>
+    <div class="horizontal" style="justify-content: flex-end">
+      <button type="submit" class="btn btn--action js-update btn--primary <%= if !@active_draft? then 'hide' %>"><%- @T('Update') %></button>
+      <button type="submit" class="btn btn--action js-create btn--create"><%- @T('Create') %></button>
+    </div>
+  </form>
+
+  <hr>
+
+  <div class="form-group">
+    <label class="" for="template_name"><%- @T('Select Shared Draft') %></label>
+  </div>
+
+  <% if _.isEmpty(@shared_drafts): %>
+  <div class="text-placeholder"><%- @T('No drafts') %></div>
+  <% end %>
+
+  <% for draft in @shared_drafts: %>
+    <div class="shared-draft-item" shared-draft-id="<%= draft.id %>">
+      <div class="u-highlight u-clickable"><%= draft.name %></div>
+      <div class="text-muted" style="display: flex;flex-wrap:wrap;column-gap:0.2em">
+        <div>
+          <%= App.User.find(draft.updated_by_id).displayName() %>
+          ⸱
+        </div>
+        <div>
+          <%- @humanTime draft.updated_at %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

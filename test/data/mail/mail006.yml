@@ -2,9 +2,37 @@
 from: '"Hans BÄKOSchönland" <me@bogen.net>'
 from_email: me@bogen.net
 from_display_name: Hans BÄKOSchönland
+to: Namedyński (hans@example.com)
 subject: 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких'
+body: |-
+  <div><p>this is a test</p></div><br><hr> <a href="http://localhost/8HMZENUS/2737??PS=" rel="nofollow noreferrer noopener" target="_blank" title="http://localhost/8HMZENUS/2737??PS=">Compare Cable, DSL or Satellite plans: As low as $2.95. </a>
+
+  <br>
+
+  <br> Test1:– <br> Test2:&amp; <br> Test3:∋ <br> Test4:&amp; <br> Test5:=
 content_type: text/html
-body: '<p>this is a test</p><br><hr> <a href="http://localhost/8HMZENUS/2737??PS="
-  rel="nofollow noreferrer noopener" target="_blank" title="http://localhost/8HMZENUS/2737??PS=">Compare
-  Cable, DSL or Satellite plans: As low as $2.95. </a> <br> <br> Test1:– <br> Test2:&amp;
-  <br> Test3:∋ <br> Test4:&amp; <br> Test5:='
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    <html><div style='background-color:'><P>this is a test</P></div><br clear=all><hr> <a href="http://localhost/8HMZENUS/2737??PS=">Compare Cable, DSL or Satellite plans: As low as $2.95. </a>
+
+    <br>
+
+    <br>
+    Test1:&#8211;
+    <br>
+    Test2:&amp;
+    <br>
+    Test3:&ni;
+    <br>
+    Test4:&amp;
+    <br>
+    Test5:&#x3d;
+
+    </html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: iso-8859-15

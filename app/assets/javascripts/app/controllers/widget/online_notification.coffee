@@ -19,8 +19,8 @@ class App.OnlineNotificationWidget extends App.Controller
   constructor: ->
     super
 
-    # at runtime if a online notifiction has changed
-    @bind('OnlineNotification::changed', =>
+    # at runtime if an online notification has changed
+    @controllerBind('OnlineNotification::changed', =>
       @delay(
         => @fetch()
         2200
@@ -30,7 +30,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
     # after new websocket connection has been established
     @ignoreInitLogin = false
-    @bind('ws:login', =>
+    @controllerBind('ws:login', =>
       if @ignoreInitLogin
         @delay(
           => @fetch()
@@ -41,7 +41,7 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     # rebuild widget on auth
-    @bind('auth', (user) =>
+    @controllerBind('auth', (user) =>
       if !user
         @counterUpdate(0)
         return
@@ -54,8 +54,8 @@ class App.OnlineNotificationWidget extends App.Controller
 
     @createContainer()
 
-    # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    # rerender view, e.g. on language change
+    @controllerBind('ui:rerender', =>
       @createContainer()
       'online_notification'
     )
@@ -63,7 +63,6 @@ class App.OnlineNotificationWidget extends App.Controller
   release: ->
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
-    super
 
   access: ->
     return false if !@Session.get()
@@ -82,25 +81,25 @@ class App.OnlineNotificationWidget extends App.Controller
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      @$('.js-item').filter('.is-hover').find('.js-locationVerify').click()
+      @$('.js-item').filter('.is-hover').find('.js-locationVerify').trigger('click')
 
   nudge: (e, position) ->
 
     # get current
     items = @$('.js-item')
     current = items.filter('.is-hover')
-    if !current.size()
+    if !current.length
       items.first().addClass('is-hover')
       return
 
     if position is 1
       next = current.next('.js-item')
-      if next.size()
+      if next.length
         current.removeClass('is-hover')
         next.addClass('is-hover')
     else
       prev = current.prev('.js-item')
-      if prev.size()
+      if prev.length
         current.removeClass('is-hover')
         prev.addClass('is-hover')
 
@@ -153,8 +152,12 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   fetch: =>
-    load = =>
+    load = (objects) =>
+      for elem in objects
+        App.TaskManager.touch "#{elem.object}-#{elem.o_id}"
+
       @fetchedData = true
+
     App.OnlineNotification.fetchFull(load, clear: true, force: true)
 
   toggle: =>

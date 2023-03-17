@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class OverviewRoleIds < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     create_table :overviews_roles, id: false do |t|
       t.integer :overview_id
@@ -14,12 +16,13 @@ class OverviewRoleIds < ActiveRecord::Migration[4.2]
     Overview.reset_column_information
     Overview.all.each do |overview|
       next if overview.role_id.blank?
+
       overview.role_ids = [overview.role_id]
       overview.save!
     end
     remove_column :overviews, :role_id
 
-    Cache.clear
+    Rails.cache.clear
   end
 
 end

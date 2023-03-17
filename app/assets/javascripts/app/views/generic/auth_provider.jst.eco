@@ -1,0 +1,1 @@
+<input type="text" disabled="disabled" readonly="readonly" value="<%= @attribute.value %>" class="form-control" />

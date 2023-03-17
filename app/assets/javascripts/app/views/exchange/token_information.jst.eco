@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h2><%- @T('OAuth Configuration') %></h2>
+
+  <div class="page-header-meta">
+    <a class="btn js-config-app"><%- @T('Configure App') %></a>
+  <% if _.isEmpty(@oauth): %>
+    <a class="btn btn--success js-new-app"><%- @T('Add Account') %></a>
+    <a class="btn btn--success js-admin-consent"><%- @T('Request Admin Consent') %></a>
+  <% end %>
+  </div>
+</div>
+
+<div class="page-content">
+<% if _.isEmpty(@oauth): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+  <div class="action">
+    <div class="action-flow" style="width: 100%;">
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><% if @oauth.status is undefined || @oauth.status is 200: %><%- @Icon('status', 'ok inline') %><% else: %><%- @Icon('status', 'error inline') %><% end %> <%- @T('Configuration') %></h3>
+        </div>
+
+        <table class="key-value">
+          <tr>
+            <td><%- @T('Client ID') %>
+            <td><%= @external_credential.credentials.client_id %>
+          <tr>
+            <td><%- @T('Tenant UUID/Name') %>
+            <td><%= @external_credential.credentials.client_tenant %>
+        </table>
+      </div>
+    </div>
+
+    <div class="action-controls">
+      <div class="btn btn--danger btn--secondary js-delete-app"><%- @T('Delete') %></div>
+      <div class="btn btn--secondary js-reauthenticate-app"><%- @T('Reauthenticate') %></div>
+    </div>
+  </div>
+<% end %>
+</div>

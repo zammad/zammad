@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CtiController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -6,81 +6,42 @@ class Integration::CtiController < ApplicationController
 
   # notify about inbound call / block inbound call
   def event
-    if params['direction'] == 'in'
-      if params['event'] == 'newCall'
-        config_inbound = config_integration[:inbound] || {}
-        block_caller_ids = config_inbound[:block_caller_ids] || []
+    local_params = ActiveSupport::HashWithIndifferentAccess.new(params.permit!.to_h)
 
-        # check if call need to be blocked
-        block_caller_ids.each do |item|
-          next unless item[:caller_id] == params['from']
+    cti = Cti::Driver::Cti.new(params: local_params, config: config_integration)
 
-          render json: { action: 'reject', reason: 'busy' }, status: :ok
+    result = cti.process
 
-          #params['Reject'] = 'busy'
-          params['comment'] = 'reject, busy'
-          if params['user']
-            params['comment'] = "#{params['user']} -> reject, busy"
-          end
-          Cti::Log.process(params)
-          return true
-        end
-      end
-
-      Cti::Log.process(params)
-
-      render json: {}, status: :ok
-      return true
-    elsif params['direction'] == 'out'
-      config_outbound = config_integration[:outbound]
-      routing_table = nil
-      default_caller_id = nil
-      if config_outbound.present?
-        routing_table = config_outbound[:routing_table]
-        default_caller_id = config_outbound[:default_caller_id]
-      end
-
-      # set callerId
-      data    = {}
-      to      = params[:to]
-      from    = nil
-      if to && routing_table.present?
-        routing_table.each do |row|
-          dest = row[:dest].gsub(/\*/, '.+?')
-          next if to !~ /^#{dest}$/
-          from = row[:caller_id]
-          data = {
-            action: 'dial',
-            caller_id: from,
-            number: params[:to]
-          }
-          break
-        end
-        if data.blank? && default_caller_id.present?
-          from = default_caller_id
-          data = {
-            action: 'dial',
-            caller_id: default_caller_id,
-            number: params[:to]
-          }
-        end
-      end
-      render json: data, status: :ok
-
-      if from.present?
-        params['from'] = from
-      end
-      Cti::Log.process(params)
+    # check if inbound call should get rejected
+    if result[:action] == 'reject'
+      response_ok(action: 'reject', reason: 'busy')
       return true
     end
-    render json: { error: 'Invalid direction!' }, status: :unprocessable_entity
+
+    # check if outbound call changes the outbound caller_id
+    if result[:action] == 'set_caller_id'
+      data = {
+        action:    'dial',
+        caller_id: result[:params][:from_caller_id],
+        number:    result[:params][:to_caller_id],
+      }
+      response_ok(data)
+      return true
+    end
+
+    if result[:action] == 'invalid_direction'
+      response_error(__("Invalid 'direction'!"))
+      return true
+    end
+
+    response_ok({})
   end
 
   private
 
   def check_token
     if Setting.get('cti_token') != params[:token]
-      response_unauthorized('Invalid token, please contact your admin!')
+      response_unauthorized(__('Invalid token, please contact your admin!'))
       return
     end
 
@@ -91,11 +52,11 @@ class Integration::CtiController < ApplicationController
     http_log_config facility: 'cti'
 
     if !Setting.get('cti_integration')
-      response_error('Feature is disable, please contact your admin to enable it!')
+      response_error(__('Feature is disabled, please contact your administrator!'))
       return
     end
     if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?
-      response_error('Feature not configured, please contact your admin!')
+      response_error(__('Feature not configured, please contact your admin!'))
       return
     end
 
@@ -112,6 +73,10 @@ class Integration::CtiController < ApplicationController
 
   def response_unauthorized(error)
     render json: { error: error }, status: :unauthorized
+  end
+
+  def response_ok(data)
+    render json: data, status: :ok
   end
 
 end

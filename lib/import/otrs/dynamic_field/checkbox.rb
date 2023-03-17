@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class DynamicField
@@ -6,8 +8,8 @@ module Import
           @attribute_config.merge!(
             data_type:   'boolean',
             data_option: {
-              default: dynamic_field['Config']['DefaultValue'] == '1',
-              options: {
+              default:   dynamic_field['Config']['DefaultValue'] == '1',
+              options:   {
                 true  => 'Yes',
                 false => 'No',
               },

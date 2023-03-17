@@ -1,0 +1,12 @@
+<div class="knowledge-base-navigation js-navigation"></div>
+
+<div class="knowledge-base-body horizontal flex js-body">
+  <div class="js-sidebar sidebar knowledge-base-sidebar">
+  </div>
+
+  <div class="flex vertical page-content knowledge-base-main">
+  </div>
+
+  <div class="js-content">
+  </div>
+</div>

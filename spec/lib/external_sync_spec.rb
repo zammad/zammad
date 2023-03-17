@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe ExternalSync do
 
-  context '#changed?' do
+  describe '#changed?' do
 
     it 'keeps ActiveRecord instance unchanged on local but no remote changes' do
       object           = create(:group)
@@ -68,7 +70,7 @@ RSpec.describe ExternalSync do
 
   end
 
-  context '#map' do
+  describe '#map' do
     it 'maps to symbol keys' do
       mapping = {
         'key' => 'key'
@@ -170,6 +172,27 @@ RSpec.describe ExternalSync do
 
       expect(described_class.map(mapping: mapping, source: source)).to eq(result)
       expect(source.destroyed?).to be false
+    end
+  end
+
+  describe '.migrate' do
+
+    let(:model)        { 'Ticket' }
+    let(:factory_name) { model.downcase.to_sym }
+    let(:source)       { create(factory_name) }
+    let(:target)       { create(factory_name) }
+    let(:entries) do
+      create_list(:external_sync, 2,
+                  object: model,
+                  o_id:   source.id,)
+    end
+
+    it 'migrates entries' do
+      expect do
+        described_class.migrate('Ticket', source.id, target.id)
+      end.to change {
+        entries.each(&:reload).map(&:o_id).uniq
+      }.from([source.id]).to([target.id])
     end
   end
 end

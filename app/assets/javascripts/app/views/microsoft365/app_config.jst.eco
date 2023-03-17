@@ -1,0 +1,37 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<p>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Microsoft 365 App', 'https://admin-docs.zammad.org/en/latest/channels/microsoft365/index.html') %>
+</p>
+<fieldset>
+  <h2><%- @T('Enter your %s App Keys', 'Microsoft 365') %></h2>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="client_id"><%- @T('Client ID') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="client_id" type="text" name="client_id" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.client_id %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="client_secret"><%- @T('Client Secret') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="client_secret" type="text" name="client_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.client_secret %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="client_tenant"><%- @T('Tenant UUID/Name') %></label>
+    </div>
+    <div class="controls">
+      <input id="client_tenant" type="text" name="client_tenant" value="<%= @external_credential?.credentials?.client_tenant %>" class="form-control" required autocomplete="off" placeholder="common">
+    </div>
+  </div>
+  <h2><%- @T('Your callback URL') %></h2>
+  <div class="input form-group">
+    <div class="controls">
+      <input class="form-control js-select" readonly value="<%= @callbackUrl %>">
+    </div>
+  </div>
+</fieldset>

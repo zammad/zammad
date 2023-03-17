@@ -259,7 +259,7 @@
           switch (this.getCursorPosition()) {
             case 1:
               // highlight minutes but async because the newly typed character is not yet stored in the value (happens after this event)
-              setTimeout($.proxy(this.highlightMinute, this), 0);
+              setTimeout($.proxy(this.highlightMinute, this), 50);
               break;
           }
       }
@@ -416,7 +416,14 @@
       this.$widget.detach();
     },
 
-    highlightUnit: function() {
+    highlightUnit: function(e) {
+      setTimeout($.proxy(this.highlightUnitDelayed, this), 0);
+    },
+
+    // has to run asynchronously to keep both Firefox and Safari
+    // https://github.com/zammad/zammad/issues/3414
+    // https://github.com/zammad/zammad/issues/2887
+    highlightUnitDelayed: function(e) {
       this.position = this.getCursorPosition();
       if (this.position >= 0 && this.position <= 2) {
         this.highlightHour();
@@ -1001,7 +1008,7 @@
     },
 
     updateElement: function() {
-      this.$element.val(this.getTime()).change();
+      this.$element.val(this.getTime()).trigger('change');
     },
 
     updateFromElementVal: function(silent) {

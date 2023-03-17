@@ -14,6 +14,17 @@ class App.TaskbarWidget extends App.CollectionController
   constructor: ->
     super
 
+    App.Event.bind(
+      'Taskbar:destroy'
+      (data, event) =>
+        task = App.Taskbar.find(data.id)
+        return if !task
+        return if !task.key
+
+        @removeTask(task.key)
+      'Collection::Subscribe::Taskbar'
+    )
+
     dndOptions =
       tolerance:            'pointer'
       distance:             15
@@ -33,20 +44,24 @@ class App.TaskbarWidget extends App.CollectionController
     @el.sortable(dndOptions)
 
     # bind to changes
-    @bind('taskInit', =>
+    @controllerBind('taskInit', =>
       @queue.push ['renderAll']
       @uIRunner()
     )
-    @bind('taskUpdate', (tasks) =>
+    @controllerBind('taskUpdate', (tasks) =>
       @queue.push ['change', tasks]
       @uIRunner()
     )
-    @bind('taskRemove', (tasks) =>
+    @controllerBind('taskRemove', (tasks) =>
       @queue.push ['destroy', tasks]
       @uIRunner()
     )
-    @bind('taskCollectionOrderSet', (taskKeys) =>
+    @controllerBind('taskCollectionOrderSet', (taskKeys) =>
       @collectionOrderSet(taskKeys)
+    )
+    @controllerBind('taskClose', (tasks) =>
+      for task in tasks
+        @remove(null, task)
     )
 
   itemGet: (key) ->
@@ -63,8 +78,8 @@ class App.TaskbarWidget extends App.CollectionController
     @locationVerify(e)
 
   remove: (e, key = false, force = false) =>
-    e.preventDefault()
-    e.stopPropagation()
+    e?.preventDefault()
+    e?.stopPropagation()
     if !key
       key = $(e.target).parents('a').data('key')
     if !key
@@ -80,6 +95,10 @@ class App.TaskbarWidget extends App.CollectionController
           event: e
         )
         return
+    @removeTask(key)
+
+  removeTask: (key = false) =>
+    return if !key
 
     # check if active task is closed
     currentTask    = App.TaskManager.get(key)
@@ -106,9 +125,9 @@ class App.TaskbarWidget extends App.CollectionController
 class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Discard Changes'
+  buttonSubmit: __('Discard Changes')
   buttonClass: 'btn--danger'
-  head: 'Confirm'
+  head: __('Confirmation')
 
   content: ->
     App.i18n.translateContent('Tab has changed, do you really want to close it?')

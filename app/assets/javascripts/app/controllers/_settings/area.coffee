@@ -12,7 +12,7 @@ class App.SettingsArea extends App.Controller
 
   render: =>
 
-    # serach area settings
+    # search area settings
     settings = App.Setting.search(
       filter:
         area: @area

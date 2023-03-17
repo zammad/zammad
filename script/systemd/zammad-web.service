@@ -1,0 +1,19 @@
+[Unit]
+Description=Zammad Web Server
+After=syslog.target
+After=network.target
+After=zammad.service
+Requires=zammad.service
+
+[Service]
+EnvironmentFile=/etc/zammad/zammad.env
+User=zammad
+Group=zammad
+Restart=always
+
+WorkingDirectory=/opt/zammad
+
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/rails server -b ${ZAMMAD_BIND_IP} -p ${ZAMMAD_RAILS_PORT}"
+
+[Install]
+WantedBy=zammad.service

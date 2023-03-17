@@ -1,0 +1,54 @@
+name: docker-ci
+
+on:
+  pull_request:
+
+jobs:
+  docker-ci:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # # only needed for arm64 builds
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker metadata action
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images:
+            zammad-local
+          tags: |
+            type=raw,latest
+
+      - name: Build Docker image
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          labels: ${{ steps.meta.outputs.labels }}
+          # arm64 build takes up to 4 hours
+          platforms: linux/amd64 #,linux/arm64
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          outputs: type=docker,dest=/tmp/zammad-local.tar
+
+      - name: Checkout docker-compose files
+        uses: actions/checkout@v3
+        with:
+          repository: zammad/zammad-docker-compose
+          path: zammad-docker-compose
+
+      - name: Run docker-compose tests
+        run: |
+          cd zammad-docker-compose
+          docker load --input /tmp/zammad-local.tar
+          docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.override-local.yml up --detach
+          docker cp .github/auto_wizard.json zammad-docker-compose_zammad-railsserver_1:/opt/zammad
+          .github/tests.sh

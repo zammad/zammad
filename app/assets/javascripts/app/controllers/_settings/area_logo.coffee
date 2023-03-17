@@ -69,7 +69,7 @@ class App.SettingsAreaLogo extends App.Controller
           if data.result is 'ok'
             App.Event.trigger 'notify', {
               type:    'success'
-              msg:     App.i18n.translateContent('Update successful!')
+              msg:     App.i18n.translateContent('Update successful.')
               timeout: 2000
             }
             for setting in data.settings

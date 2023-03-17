@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     class DynamicField
@@ -6,6 +8,7 @@ module Import
         @internal_name = self.class.convert_name(dynamic_field['Name'])
 
         return if already_imported?(dynamic_field)
+        return if skip?(dynamic_field)
 
         initialize_attribute_config(dynamic_field)
 
@@ -14,7 +17,7 @@ module Import
       end
 
       def self.convert_name(dynamic_field_name)
-        dynamic_field_name.underscore.sub(/\_id(s)?\z/, '_no\1')
+        dynamic_field_name.underscore.sub(%r{_id(s)?\z}, '_no\1')
       end
 
       private
@@ -34,10 +37,10 @@ module Import
       def initialize_attribute_config(dynamic_field)
 
         @attribute_config = {
-          object:  dynamic_field['ObjectType'],
-          name:    @internal_name,
-          display: dynamic_field['Label'],
-          screens: {
+          object:        dynamic_field['ObjectType'],
+          name:          @internal_name,
+          display:       dynamic_field['Label'],
+          screens:       {
             view: {
               '-all-' => {
                 shown: true,
@@ -50,6 +53,10 @@ module Import
           created_by_id: 1,
           updated_by_id: 1,
         }
+      end
+
+      def skip?(_dynamic_field)
+        false
       end
 
       def add

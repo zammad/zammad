@@ -1,0 +1,19 @@
+<% label = (row) => %>
+  <%- @Icon('radio', 'icon-unchecked') %>
+  <%- @Icon('radio-checked', 'icon-checked') %>
+  <span class="label-text"><%- @T(row.name) %> <% if row.note: %>- <span class="help-text"><%- @T(row.note) %></span><% end %></span>
+<% end %>
+
+<div class="<%= @attribute.class %> radio selections-container">
+  <% for row in @attribute.options: %>
+    <label class="inline-label radio-replacement">
+      <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>>
+      <span class="label-box">
+        <span class="radio-illustration"<% if row.aspect_ratio: %> style="padding-bottom: <%= 100/row.aspect_ratio %>%"<% end %>>
+          <img src="/assets/images/graphics/<%= row.graphic %>">
+        </span>
+        <span class="label-row"><%= label(row) %></span>
+      </span>
+    </label>
+  <% end %>
+</div>

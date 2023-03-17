@@ -1,0 +1,174 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>/api/v2/users/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 15 Jun 2022 08:08:38 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Zendesk-Api-Version:
+      - '2022-01-01'
+      X-Zendesk-Api-Version:
+      - v2
+      X-Zendesk-Application-Version:
+      - v12548
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Expose-Headers:
+      - X-Zendesk-API-Warn
+      Vary:
+      - origin
+      X-Rate-Limit:
+      - '700'
+      X-Rate-Limit-Remaining:
+      - '699'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Etag:
+      - W/"88278d0a222a041a2fa13aec13749595"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Zendesk-Origin-Server:
+      - classic-app-server-69d7d9558-ztg6m
+      Set-Cookie:
+      - __cfruid=998561a39f6cbcc056bf46cd8443f9a6fe1c8eaf-1655280518; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--459ed01949a36415c1716b5711271c3d08918307;
+        path=/; expires=Thu, 15 Jun 2023 06:03:22 GMT; secure; HttpOnly; SameSite=None
+      X-Request-Id:
+      - 9b377c8022c0aa74e5e2c85a968f524e
+      - 9b377c8022c0aa74e5e2c85a968f524e
+      X-Runtime:
+      - '0.062796'
+      X-Envoy-Upstream-Service-Time:
+      - '65'
+      X-Envoy-Decorator-Operation:
+      - classic.classic.svc.cluster.local:80/*
+      X-Zendesk-Zorg:
+      - 'yes'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=KQnqdEAi3RDQEppznphMFHP1XcZpJRHaONTY5YmPgfBzZBn80MYozBzPKiTFQGqshrZkP%2B8w2U4MhlBd4yUGtjlqWOqjCru2bosNlw3sjJTxasbkOwz3or%2B5m64VLsS%2Byu2iHOHe7g%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 71b9d1aa8d559945-FRA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"user":{"id":null,"url":null,"name":"Nicht registrierter Benutzer","email":"invalid@example.com","created_at":null,"updated_at":null,"time_zone":"Berlin","iana_time_zone":"Europe/Berlin","phone":null,"shared_phone_number":null,"photo":null,"locale_id":8,"locale":"de","organization_id":null,"role":"end-user","verified":false,"authenticity_token":"Est+GdQ2maTRuPbHI5IJcEafCB+PqG/jvSk3R2W5jLiD3frp+5pSMWsZecHZbi9U2lQdFwIlUGab0Vpx9G/pMA=="}}'
+  recorded_at: Wed, 15 Jun 2022 08:08:38 GMT
+- request:
+    method: get
+    uri: https://<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>/api/v2/users/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - ZendeskAPI Ruby 1.36.0
+      Authorization:
+      - Basic <IMPORT_ZENDESK_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 15 Jun 2022 08:08:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Zendesk-Api-Version:
+      - '2022-01-01'
+      X-Zendesk-Api-Version:
+      - v2
+      X-Zendesk-Application-Version:
+      - v12548
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Expose-Headers:
+      - X-Zendesk-API-Warn
+      Vary:
+      - origin
+      X-Rate-Limit:
+      - '700'
+      X-Rate-Limit-Remaining:
+      - '698'
+      Strict-Transport-Security:
+      - max-age=31536000;
+      Etag:
+      - W/"43da3c9ade0840b91a412151a63c0ec0"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Zendesk-Origin-Server:
+      - classic-app-server-69d7d9558-p4mn7
+      Set-Cookie:
+      - __cfruid=676a6faa75c3057d621815a42a07dfe39fe122bf-1655280520; path=/; domain=.<IMPORT_ZENDESK_ENDPOINT_HOSTNAME>;
+        HttpOnly; Secure; SameSite=None
+      - _zendesk_cookie=BAhJIhl7ImRldmljZV90b2tlbnMiOnt9fQY6BkVU--459ed01949a36415c1716b5711271c3d08918307;
+        path=/; expires=Thu, 15 Jun 2023 06:49:41 GMT; secure; HttpOnly; SameSite=None
+      X-Request-Id:
+      - 9acacce6e54ac2d503da097694935896
+      - 9acacce6e54ac2d503da097694935896
+      X-Runtime:
+      - '0.135029'
+      X-Envoy-Upstream-Service-Time:
+      - '138'
+      X-Envoy-Decorator-Operation:
+      - classic.classic.svc.cluster.local:80/*
+      X-Zendesk-Zorg:
+      - 'yes'
+      Content-Encoding:
+      - gzip
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=k4tOqBaEnOzegJ0O7CWfwqIwKjxCmjHBTCm7TYBhqdcngr9U855B%2BIgHAXqoQ2zdMb7zL4Q03uwalGvNAuvdZt%2F8DVGVAVWAESO5wjPX73AogZqZxGoLXOAxSQ4qOYxpd9BRIO%2BDrA%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 71b9d1b28d51995c-FRA
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA21T7U7bMBR9lcl/aZuPJoRGQtrQ+Fi3FQYUtE2T5SZuaurYwb4utIi32ZvsxXadpsCkRfmRXJ9777nnHj8RZ7kh+RMRJcmjKA2zYZINox5xRpKcLAAamwfBRjm1XnDZDDZcldwuB4WuA9aIYBUHvoQNXpMHd1Yr0iOK1RxrHOnZu6tawAJDvGbC153p2cD62Pu2sq+Gp4XhDHhJGSAkDqO0H2b9aHQdx3kS4fsDMa4p32LiuB/u96P0Oszy9CBPY48BUXO60artzo0Uno1gitG3J8fO6IYHL4Bmsc0IwyhKojjBHLtgBvm0J1S5eua1mjNpeY9gEDTJlZOyR6QumOS0FXH3h8256k+vsI42FVNiw0BotQWlSZam6T6CjZaeJyvrluaKGzEXHAuBcdiGOVhwBaIQsKagl1wh+PQszjZLub4brcSXu3p6tJnYD3tjc3YuJ8XB/cmoHl+cbB6L2+nxt5vLz0IPp2p8sdR7QwjCybS5vf9eXo7tx/Pj08tPs+irycaPNw+Hh35Dj8CNYrKluR0OWGVJ/pPE5BfykYLhH0EoK0CskPuW6FarF3k66ViF5F+CklmgUldC7Xb8//09aDrH6tpQPz7lis2kl6ST3opKMXDG64Y8Sg7oqo6U0sC7T68shXWDsATN5SzomrbBdk+j0D/DOExHeFzrkhuGLXfzoORLDtRwC0bgpGjpTg+t5Jo2RqzQiBSdW+OI2LIjt0vwPv5neOts4y/P6xwlnzMngVZGu6YlFSdpmoz8/TO80QZoYVc7Qv6aUbSGLLHZ026eEk1c6gfvirhdH6ubbkISYUAKPsMLUFkQ3rzkzKnyz2/y/Pz8F3JNHJv8AwAA
+  recorded_at: Wed, 15 Jun 2022 08:08:40 GMT
+recorded_with: VCR 6.1.0

@@ -1,6 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params) ->
+  @render: (attributeConfig, params) ->
+    attribute = $.extend(true, {}, attributeConfig)
 
     attribute.options = []
     timezones = App.Config.get('timezones')
@@ -20,9 +21,9 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
     # sort attribute.options
     @sortOptions(attribute, params)
 
-    # finde selected/checked item of list
+    # find selected/checked item of list
     @selectedOptions(attribute, params)
 
     attribute.tag =        'searchable_select'
-    attribute.placeholder = App.i18n.translateInline('Enter timzone...')
+    attribute.placeholder = App.i18n.translateInline('Enter time zone')
     App.UiElement.searchable_select.render(attribute)

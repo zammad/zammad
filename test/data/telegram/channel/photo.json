@@ -1,0 +1,34 @@
+{
+  "update_id": 954691815,
+  "channel_post": {
+    "chat": {
+      "id": 123456789,
+      "title": "Bot Channel",
+      "type": "channel"
+    },
+    "message_id": 9,
+    "date": 1566318591,
+    "photo": [
+      {
+        "file_id": "photofileid1",
+        "file_size": 123456,
+        "width": 90,
+        "height": 82
+      },
+      {
+        "file_id": "photofileid2",
+        "file_size": 123456,
+        "width": 320,
+        "height": 291
+      },
+      {
+        "file_id": "photofileid3",
+        "file_size": 123456,
+        "width": 720,
+        "height": 654
+      }
+    ]
+  },
+  "bid": "0987654321",
+  "callback_token": "FidczWOKOLysIQ"
+}

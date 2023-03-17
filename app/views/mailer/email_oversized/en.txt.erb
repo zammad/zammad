@@ -1,0 +1,12 @@
+[undeliverable] Message too large
+Dear #{mail.from_display_name},
+
+Unfortunately your email titled "#{mail.subject}" could not be delivered to one or more recipients.
+
+Your message was #{mail.msg_size} MB but we only accept messages up to #{config.postmaster_max_size} MB.
+
+Please reduce the message size and try again. Thank you for your understanding.
+
+Regretfully,
+
+Postmaster of #{config.fqdn}

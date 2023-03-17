@@ -1,0 +1,20 @@
+<div class="stat-widget vertical">
+  <div class="stat-title">
+    <%- @T('Assigned') %>
+    <div class="stat-icon-help js-stat-help" title="<%- @Ti(@StatsTicketLoadMeasure.description) %>" data-placement="bottom">
+      <%- @Icon('help') %>
+    </div>
+  </div>
+  <div class="stat-graphic">
+    <div class="stat-tickets vertical reverse end">
+      <% stack_counter = parseInt(@StatsTicketLoadMeasure.percent*0.16) %>
+      <% for count in [1..stack_counter]: %>
+        <%- @Icon('one-ticket', "one-ticket #{@StatsTicketLoadMeasure.state}-color") %>
+      <% end %>
+    </div>
+    <%- @Icon('total-tickets', 'total-tickets') %>
+  </div>
+
+  <div class="stat-label"><%- @T('Tickets assigned to me: %s of %s', @StatsTicketLoadMeasure.own, @StatsTicketLoadMeasure.total) %></div>
+  <div class="stat-detail"><%- @T('Average: %s', @StatsTicketLoadMeasure.average_per_agent) %></div>
+</div>

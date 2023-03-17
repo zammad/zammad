@@ -1,14 +1,20 @@
 <div class="sidebar-block">
+  <% if @customer isnt true: %>
     <div class="avatar organizationInfo-avatar size-50">
       <a href="<%- @organization.uiUrl() %>">
-        <%- @Icon('organization') %>
+        <% if @organization.active is true: %>
+          <%- @Icon('organization') %>
+        <% else: %>
+          <%- @Icon('inactive-organization') %>
+        <% end %>
       </a>
     </div>
+  <% end %>
     <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>
 </div>
 
 <% for row in @organizationData: %>
-  <% if @organization[row.name] || row.name is 'note': %>
+  <% if @organization[row.name]? || row.name is 'note': %>
     <div class="sidebar-block">
     <% if row.tag isnt 'richtext': %>
       <label><%- @T(row.display) %></label>
@@ -21,19 +27,13 @@
   <% end %>
 <% end %>
 
-<% if @organization.members: %>
+<% if @organization.member_ids && @customer isnt true: %>
 <hr>
 <div class="sidebar-block">
   <label><%- @T('Members') %></label>
-  <div class="userList">
-<% for user in @organization.members: %>
-    <div class="userList-entry">
-      <%- user.avatar("40") %>
-      <a href="<%- user.uiUrl() %>" class="userList-name user-popover" data-id="<%- user.id %>">
-        <%= user.displayName() %>
-      </a>
-    </div>
-<% end %>
-  </div>
+  <div class="userList js-userList"></div>
+  <p class="hidden">
+    <a href="#" class="js-showMoreMembers"><%- @T('show more') %></a>
+  <p>
 </div>
 <% end %>

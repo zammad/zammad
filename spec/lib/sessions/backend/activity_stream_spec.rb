@@ -1,9 +1,12 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Sessions::Backend::ActivityStream do
   context 'when async processes affect associated objects / DB records (#2066)' do
-    let(:subject)            { described_class.new(user, {}) }
-    let(:user)               { create(:agent_user, groups: [group]) }
+    subject(:activity_stream) { described_class.new(user, {}) }
+
+    let(:user)               { create(:agent, groups: [group]) }
     let(:group)              { Group.find_by(name: 'Users') }
     let(:associated_tickets) { create_list(:ticket, ticket_count, group: group) }
     let(:ticket_count)       { 20 }
@@ -17,8 +20,9 @@ RSpec.describe Sessions::Backend::ActivityStream do
     end
 
     it 'manages race condition' do
-      Thread.new { associated_tickets.each(&:destroy) }
-      expect { subject.load }.not_to raise_error
+      thread = Thread.new { associated_tickets.each(&:destroy) }
+      expect { activity_stream.load }.not_to raise_error
+      thread.join
     end
   end
 end

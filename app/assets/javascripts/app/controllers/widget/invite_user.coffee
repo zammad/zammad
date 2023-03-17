@@ -1,4 +1,4 @@
-class App.InviteUser extends App.WizardModal
+class App.InviteUser extends App.ControllerWizardModal
   events:
     'click  .js-close':     'hide'
     'submit .js-user':      'submit'
@@ -22,12 +22,15 @@ class App.InviteUser extends App.WizardModal
         if @callback
           @callback()
         @el.remove()
+      'shown.bs.modal': =>
+        @el.addClass('modal--ready')
+
 
   render: =>
     modal = $(App.view('widget/invite_user')(
       head: @head
     ))
-    new App.ControllerForm(
+    @controller = new App.ControllerForm(
       el:        modal.find('.js-form')
       model:     App.User
       screen:    @screen
@@ -48,17 +51,19 @@ class App.InviteUser extends App.WizardModal
     # set invite flag
     @params.invite = true
 
-    # find agent role
-    if @role
-      role = App.Role.findByAttribute('name', @role)
-      if role
-        @params.role_ids = role.id
+    # find signup roles
+    if @signup
+      @params.role_ids = App.Role.search(
+        filter:
+          active: true
+          default_at_signup: true
+      ).map((role) -> role.id)
 
     user = new App.User
     user.load(@params)
 
     errors = user.validate(
-      screen: @screen
+      controllerForm: @controller
     )
     if errors
       @log 'error new', errors

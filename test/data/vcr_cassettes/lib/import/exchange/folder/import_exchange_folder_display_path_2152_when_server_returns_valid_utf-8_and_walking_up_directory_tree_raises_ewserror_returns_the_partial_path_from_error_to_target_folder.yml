@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://exchange.example.com/EWS/Exchange.asmx
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0"?>
+        <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages">
+          <soap:Header>
+            <t:RequestServerVersion Version="Exchange2010"/>
+          </soap:Header>
+          <soap:Body>
+            <FindFolder xmlns="http://schemas.microsoft.com/exchange/services/2006/messages" Traversal="Shallow">
+              <FolderShape>
+                <t:BaseShape>Default</t:BaseShape>
+              </FolderShape>
+              <m:Restriction>
+                <t:IsEqualTo>
+                  <t:FieldURI FieldURI="folder:DisplayName"/>
+                  <t:FieldURIOrConstant>
+                    <t:Constant Value="Inbox"/>
+                  </t:FieldURIOrConstant>
+                </t:IsEqualTo>
+              </m:Restriction>
+              <m:ParentFolderIds>
+                <t:DistinguishedFolderId Id="msgfolderroot"/>
+              </m:ParentFolderIds>
+            </FindFolder>
+          </soap:Body>
+        </soap:Envelope>
+    headers:
+      User-Agent:
+      - HTTPClient/1.0 (2.8.3, ruby 2.4.4 (2018-03-28))
+      Accept:
+      - "*/*"
+      Date:
+      - Tue, 04 Sep 2018 05:12:45 GMT
+      Content-Type:
+      - text/xml
+      Cookie:
+      - ClientId=TMH9PMQHUMIOL0RLW
+      Authorization:
+      - Negotiate TlRMTVNTUAADAAAAGAAYAEQAAADGAMYAXAAAAAAAAAAiAQAARABEACIBAAAAAAAAZgEAAAAAAABmAQAABYKJAgAAAACKsgCrRMWhrvDR0QJjG0Dtb4IfWD0Uc2cyO1jML/8FAggCPZ0gmtrTAQEAAAAAAACAxOXpDUTUAW+CH1g9FHNnAAAAAAIAEABFAFgAQwBIAEEATgBHAEUAAQAMAEUAWABGAEUAMAA2AAQAGABFAFgAQwBIAEEATgBHAEUALgBJAE4AVAADACYARQBYAEYARQAwADYALgBFAFgAQwBIAEEATgBHAEUALgBJAE4AVAAFABgARQBYAEMASABBAE4ARwBFAC4ASQBOAFQABwAIACN63+kNRNQBAAAAAAAAAABjAHUAcwB0AG8AbQBlAHIAMwBAAGEANQAzADEAMgA3ADQALgBlAHgAYwBoAGEAbgBnAGUALQBtAGEAaQBsAC4AZQB1AA==
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=utf-8
+      Server:
+      - Microsoft-IIS/8.0
+      Request-Id:
+      - 9144d49b-057c-4840-8032-80911701fed9
+      X-Calculatedbetarget:
+      - exdag20-2.exchange.int
+      X-Diaginfo:
+      - EXDAG20-2
+      X-Beserver:
+      - EXDAG20-2
+      X-Aspnet-Version:
+      - 4.0.30319
+      Set-Cookie:
+      - X-BackEndCookie=S-1-5-21-2149852636-2334046265-983485362-135679=u56Lnp2ejJqBzpnGyczNzMjSy8nOydLLnJzM0seamc/SzMjJxs6bm8eazZnIgYHNz87H0s7P0s/Lq8/Kxc7NxcvK;
+        expires=Thu, 04-Oct-2018 05:12:45 GMT; path=/EWS; secure; HttpOnly
+      - exchangecookie=43aef8df84174a8098242a61c783c8ef; expires=Wed, 04-Sep-2019
+        05:12:45 GMT; path=/; HttpOnly
+      Persistent-Auth:
+      - 'true'
+      X-Powered-By:
+      - ASP.NET
+      X-Feserver:
+      - EXFE06
+      Date:
+      - Tue, 04 Sep 2018 05:12:44 GMT
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Header><h:ServerVersionInfo
+        MajorVersion="15" MinorVersion="0" MajorBuildNumber="1293" MinorBuildNumber="6"
+        Version="V2_23" xmlns:h="http://schemas.microsoft.com/exchange/services/2006/types"
+        xmlns="http://schemas.microsoft.com/exchange/services/2006/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></s:Header><s:Body
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><m:FindFolderResponse
+        xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages" xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types"><m:ResponseMessages><m:FindFolderResponseMessage
+        ResponseClass="Success"><m:ResponseCode>NoError</m:ResponseCode><m:RootFolder
+        TotalItemsInView="1" IncludesLastItemInRange="true"><t:Folders><t:Folder><t:FolderId
+        Id="AQMkADRjMTk4NmJlLTNjMGUtNDk1Yy04MjAxLWE2Nzk0NWYzY2MANTcALgAAA9shP4dg44BKifl+6m/8GgMBALoafj1aZ5lBsuy9VYcX6tAAAAIBDAAAAA=="
+        ChangeKey="AQAAABYAAAC6Gn49WmeZQbLsvVWHF+rQAAAAABsE"/><t:DisplayName>Inbox</t:DisplayName><t:TotalCount>0</t:TotalCount><t:ChildFolderCount>1</t:ChildFolderCount><t:UnreadCount>0</t:UnreadCount></t:Folder></t:Folders></m:RootFolder></m:FindFolderResponseMessage></m:ResponseMessages></m:FindFolderResponse></s:Body></s:Envelope>
+    http_version: 
+  recorded_at: Tue, 04 Sep 2018 05:12:45 GMT
+recorded_with: VCR 4.0.0

@@ -4,13 +4,13 @@
     <div class="wizard-slide">
       <h2><%- @T('Connect Channels') %></h2>
       <div class="wizard-body vertical center">
-        <p class="help-block help-block--center"><%- @T('Your Zammad as the following email address.') %></p>
+        <p class="text-center"><%- @T('Your Zammad has the following email address:') %></p>
         <% if @addresses: %>
           <% for address in @addresses: %>
           <p><%= address.realname %> &lt;<%= address.email %>&gt;</p>
           <% end %>
         <% end %>
-        <p class="help-block help-block--center"><%- @T('If you want to use more email adresses, you can configure them later.') %></p>
+        <p class="text-center"><%- @T('If you want to use additional email addresses, you can configure them later.') %></p>
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary" href="#getting_started/base"><%- @T('Go Back') %></a>

@@ -1,0 +1,340 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/api/v1/teams
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - "<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Oct 2021 16:05:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '302'
+      Connection:
+      - keep-alive
+      Www-Authenticate:
+      - Basic realm="Zammad GmbH"
+      Cache-Control:
+      - private, max-age=0, must-revalidate
+      Expires:
+      - '0'
+      X-Api-Version:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+            "status": 401,
+            "errors": [
+                {
+                    "code": "AUTHORIZATION_REQUIRED",
+                    "message": "Performing this action on this resource requires authorization",
+                    "more_info": "https://developer.kayako.com/api/v1/reference/errors/AUTHORIZATION_REQUIRED"
+                }
+            ]
+        }
+  recorded_at: Fri, 01 Oct 2021 16:05:21 GMT
+- request:
+    method: get
+    uri: https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/api/v1/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - "<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>"
+      Authorization:
+      - Basic <IMPORT_KAYAKO_ENDPOINT_BASIC_AUTH>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Oct 2021 16:05:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Csrf-Token:
+      - jtJJZ4aiV4LzNq6JOIRHBU3QVu6ZUp1ssJrjWZMMr4A67wFjgBVYfZo7LXEg4CQbmltMmTIgQpO9ieZ6zm12G3JFCYqOYzxqFTAv
+      Content-Location:
+      - https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/api/v1/users/1
+      Last-Modified:
+      - Fri, 01 Oct 2021 16:05:24 +0000
+      Cache-Control:
+      - private, max-age=0, must-revalidate
+      Expires:
+      - '0'
+      X-Api-Version:
+      - '1'
+      Date-Iso:
+      - '2021-10-01T16:05:24+00:00'
+      Access-Control-Expose-Headers:
+      - Date-ISO
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains preload
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+            "status": 200,
+            "data": {
+                "id": 1,
+                "uuid": "a8dfe5fd-b08d-5d07-ad8b-74b113f5d726",
+                "full_name": "Thorsten Eckel",
+                "legacy_id": null,
+                "designation": null,
+                "is_enabled": true,
+                "is_mfa_enabled": false,
+                "role": {
+                    "id": 5,
+                    "resource_type": "role"
+                },
+                "avatar": "https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/avatar/get/a8dfe5fd-b08d-5d07-ad8b-74b113f5d726?1633104104",
+                "agent_case_access": "ALL",
+                "organization_case_access": null,
+                "organization": {
+                    "id": 3,
+                    "resource_type": "organization"
+                },
+                "teams": [
+                    {
+                        "id": 1,
+                        "resource_type": "team"
+                    },
+                    {
+                        "id": 2,
+                        "resource_type": "team"
+                    }
+                ],
+                "emails": [
+                    {
+                        "id": 1,
+                        "resource_type": "identity_email"
+                    }
+                ],
+                "phones": [],
+                "twitter": [],
+                "facebook": [],
+                "external_identifiers": [],
+                "custom_fields": [],
+                "pinned_notes_count": 0,
+                "locale": {
+                    "id": 3,
+                    "resource_type": "locale"
+                },
+                "time_zone": "UTC",
+                "time_zone_offset": 0,
+                "greeting": null,
+                "signature": null,
+                "status_message": null,
+                "last_seen_user_agent": "Ruby",
+                "last_seen_ip": "5.231.138.208",
+                "last_seen_at": "2021-10-01T16:01:44+00:00",
+                "last_active_at": "2021-10-01T16:01:44+00:00",
+                "realtime_channel": "presence-442543cd422877504001eb0550f189ad362d6475fa6d95fd0f2d8ee0ff770f65@v1_users_1",
+                "presence_channel": "user_presence-442543cd422877504001eb0550f189ad362d6475fa6d95fd0f2d8ee0ff770f65@cf0274b394db3af555dbc136fc70aab6e45bee42",
+                "password_updated_at": "2021-08-27T07:18:23+00:00",
+                "avatar_updated_at": null,
+                "last_logged_in_at": "2021-10-01T16:05:24+00:00",
+                "last_activity_at": "2021-10-01T16:05:24+00:00",
+                "created_at": "2021-08-24T18:24:11+00:00",
+                "updated_at": "2021-10-01T16:01:44+00:00",
+                "permissions": [
+                    {
+                        "id": 87,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 26,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 22,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 21,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 25,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 23,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 30,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 29,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 19,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 20,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 18,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 24,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 28,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 27,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 56,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 53,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 54,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 58,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 60,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 59,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 61,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 63,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 62,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 57,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 52,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 55,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 64,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 67,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 75,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 76,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 74,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 80,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 85,
+                        "resource_type": "permission"
+                    },
+                    {
+                        "id": 86,
+                        "resource_type": "permission"
+                    }
+                ],
+                "settings": [
+                    {
+                        "id": 4,
+                        "resource_type": "setting"
+                    },
+                    {
+                        "id": 6,
+                        "resource_type": "setting"
+                    },
+                    {
+                        "id": 5,
+                        "resource_type": "setting"
+                    }
+                ],
+                "notification_channel": "presence-442543cd422877504001eb0550f189ad362d6475fa6d95fd0f2d8ee0ff770f65@c78aaa8dab17000045571b17b135409a48bac06a",
+                "resource_type": "user",
+                "resource_url": "https://<IMPORT_KAYAKO_ENDPOINT_HOSTNAME>/api/v1/users/1"
+            },
+            "resource": "user",
+            "session_id": "gdi6n3BqKfRxbpj404ff61fa7018ddad6c6135fde1872067558a57clJf7mIDAWXNOXlxq5e1VXSLK"
+        }
+  recorded_at: Fri, 01 Oct 2021 16:05:24 GMT
+recorded_with: VCR 6.0.0

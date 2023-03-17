@@ -1,0 +1,47 @@
+<div class="sidebar-block-header">
+  <h2><%- @T('Attachments') %></h2>
+</div>
+
+<div class="dropContainer">
+  <% if @attachments.length > 0: %>
+    <ol class="list list--sidebar">
+      <% for attachment in @attachments: %>
+        <li class="list-item">
+          <a class="list-item-name" target=_blank href="<%= attachment.url %>">
+            <%= attachment.filename %>
+          </a>
+          <a class="list-item-delete js-delete" data-object-id="<%= attachment.id %>" href="#">
+            <%- @Icon('diagonal-cross') %>
+          </a>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+
+  <div class="attachmentUpload attachmentUpload--standalone hide">
+    <div class="horizontal">
+      <div class="u-highlight flex-space-after">
+        <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
+      </div>
+      <div class="attachmentUpload-cancel js-cancel">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </div>
+    <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+  </div>
+
+  <div class="fileUpload btn btn--action btn--small">
+    <%- @Icon('plus-small') %> 
+    <% uid =  _.uniqueId('fileUpload_') %>
+    <input multiple="multiple" type="file" name="file" id="<%- uid %>">
+    <label class="attachmentPlaceholder-label" for="<%- uid %>">
+      <span><%- @T('Add') %></span>
+    </label>
+  </div>
+
+  <div class="dropArea dropArea--small">
+    <div class="dropArea-inner">
+      <%- @T('Drop files here') %>
+    </div>
+  </div>
+</div>

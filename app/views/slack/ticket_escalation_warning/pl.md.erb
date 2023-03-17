@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Zgłoszenie##{ticket.number}>: Zostanie eskalowane #{ticket.escalation_at}_
+Zgłoszenie (#{ticket.title}) od "#{ticket.customer.longname}" zostanie eskalowane "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

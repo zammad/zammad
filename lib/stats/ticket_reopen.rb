@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketReopen
 
@@ -7,17 +7,14 @@ class Stats::TicketReopen
     # get my closed tickets
     total = Ticket.select('id').where(
       'owner_id = ? AND close_at > ?',
-      user.id, Time.zone.now - 7.days
+      user.id, 7.days.ago
     ).count
 
-    # get count of repoens
-    count = StatsStore.count_by_search(
-      object: 'User',
-      o_id:   user.id,
-      key:    'ticket:reopen',
-      start:  Time.zone.now - 7.days,
-      end:    Time.zone.now,
-    )
+    # get count of reopens
+    count = StatsStore.where(
+      stats_storable: user,
+      key:            'ticket:reopen',
+    ).where('created_at > ? AND created_at < ?', 7.days.ago, Time.zone.now).count
 
     if count > total
       total = count
@@ -25,15 +22,15 @@ class Stats::TicketReopen
 
     reopen_in_precent = 0
     if total.nonzero?
-      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(1)
+      reopen_in_precent = (count.to_f / (total.to_f / 100)).round(1)
     end
     {
-      used_for_average: reopen_in_precent,
-      percent: reopen_in_precent,
+      used_for_average:  reopen_in_precent,
+      percent:           reopen_in_precent,
       average_per_agent: '-',
-      state: 'good',
-      count: count,
-      total: total,
+      state:             'good',
+      count:             count,
+      total:             total,
     }
   end
 
@@ -41,14 +38,14 @@ class Stats::TicketReopen
 
     return result if !result.key?(:used_for_average)
 
-    if result[:total] < 1 || result[:average_per_agent] == 0.0
+    if result[:total] < 1 || result[:average_per_agent].to_d == BigDecimal('0.0')
       result[:state] = 'supergood'
       return result
     end
 
-    #in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
-    #result[:average_per_agent_in_percent] = in_percent
-    in_percent = ( result[:count].to_f / (result[:total].to_f / 100) ).round(1)
+    # in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    # result[:average_per_agent_in_percent] = in_percent
+    in_percent = (result[:count].to_f / (result[:total].to_f / 100)).round(1)
     result[:state] = if in_percent >= 90
                        'superbad'
                      elsif in_percent >= 65
@@ -65,10 +62,11 @@ class Stats::TicketReopen
 
   def self.log(object, o_id, changes, updated_by_id)
     return if object != 'Ticket'
+
     ticket = Ticket.lookup(id: o_id)
     return if !ticket
 
-    # check if close_at is already set / if not, ticket is not reopend
+    # check if close_at is already set / if not, ticket is not reopened
     return if !ticket.close_at
 
     # only if state id has changed
@@ -88,14 +86,12 @@ class Stats::TicketReopen
     state_type_now = Ticket::StateType.lookup(id: state_now.state_type_id)
     return if state_type_now.name == 'closed'
 
-    StatsStore.add(
-      object: 'User',
-      o_id: ticket.owner_id,
-      key: 'ticket:reopen',
-      data: { ticket_id: ticket.id },
-      created_at: Time.zone.now,
-      created_by_id: updated_by_id,
-      updated_by_id: updated_by_id,
+    StatsStore.create(
+      stats_storable: ticket.owner,
+      key:            'ticket:reopen',
+      data:           { ticket_id: ticket.id },
+      created_at:     Time.zone.now,
+      created_by_id:  updated_by_id,
     )
   end
 

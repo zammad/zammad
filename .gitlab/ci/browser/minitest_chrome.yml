@@ -1,0 +1,47 @@
+minitest:chrome:1:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "1"
+
+minitest:chrome:2:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "2"
+
+minitest:chrome:3:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "3"
+
+minitest:chrome:4:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "4"
+
+minitest:chrome:5:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "5"
+
+minitest:chrome:6:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "6"
+
+minitest:chrome:7:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "7"
+
+minitest:chrome:8:
+  extends:
+    - .template_browser-core_chrome
+  variables:
+    TEST_SLICE: "8"

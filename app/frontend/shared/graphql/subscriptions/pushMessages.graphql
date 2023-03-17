@@ -1,0 +1,6 @@
+subscription pushMessages {
+  pushMessages {
+    title
+    text
+  }
+}

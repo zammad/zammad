@@ -1,12 +1,12 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our [online documentation](https://zammad.org/documentation/channel/twitter).', 'Twitter App') %>
+  <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Twitter App', 'https://admin-docs.zammad.org/en/latest/channels/twitter.html') %>
 </p>
 <fieldset>
   <h2><%- @T('Enter your %s App Keys', 'Twitter') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="consumer_key">Twitter Consumer Key <span>*</span></label>
+      <label for="consumer_key"><%- @T('Twitter Consumer Key') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="consumer_key" type="text" name="consumer_key" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_key %><% end %>" class="form-control" required autocomplete="off" >
@@ -14,10 +14,34 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="consumer_secret">Twitter Consumer Secret <span>*</span></label>
+      <label for="consumer_secret"><%- @T('Twitter Consumer Secret') %> <span>*</span></label>
     </div>
     <div class="controls">
       <input id="consumer_secret" type="text" name="consumer_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_secret %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="oauth_token"><%- @T('Twitter Access Token') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="oauth_token" type="text" name="oauth_token" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.oauth_token %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="oauth_token_secret"><%- @T('Twitter Access Token Secret') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="oauth_token_secret" type="text" name="oauth_token_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.oauth_token_secret %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="env"><%- @T('Twitter Dev environment label') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="env" type="text" name="env" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.env %><% end %>" class="form-control" required autocomplete="off" >
     </div>
   </div>
   <h2><%- @T('Your callback URL') %></h2>

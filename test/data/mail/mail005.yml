@@ -2,5 +2,25 @@
 from: marc.smith@example.com (Marc Smith)
 from_email: marc.smith@example.com
 from_display_name: Marc Smith
+to: Martin Edenhofer via Znuny Team <support@znuny.com>
 subject: 'Re: XXXX Betatest Ticket Templates [Ticket#11162]'
+body: "Am 07.05.2012 08:10, schrieb Martin Edenhofer via Znuny Team:\n> Hallo Marc,\n>\n>
+  super! Ich freu mich!\n>\n> Wir würden gerne die Präsentation/Einführung in die
+  Ticket Templates per Screensharing oder zumindest per Telefon machen.\n>\n> Mögliche
+  Termine:\n> o Do, 10.05.2012 11:00-12:00\n> o Fr,  11.05.2012 09:00-10:00\n> o Di,
+  \ 15.05.2012 14:00-15:00\n>\n> Über Feedback würde ich mich freuen!\n>\n> PS: Zur
+  besseren Übersicht habe ich ein Ticket erstellt. :) Im Footer sind unsere geschäftlichen
+  Kontaktdaten (falls diese irgendwann einmal benötigt werden sollten), mehr dazu
+  in ein paar Tagen.\n>\n> Liebe Grüße!\n>\n>   -Martin\n>\n> --\n> Martin Edenhofer\n>\n>
+  Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n>\n> P: +49 (0) 30 60
+  98 54 18-0\n> F: +49 (0) 30 60 98 54 18-8\n>\n> Location: Berlin - HRB 139852 B
+  Amtsgericht Berlin-Charlottenburg\n> Managing Director: Martin Edenhofer\nHallo
+  Martin,\n\nJohn und ich könnten leider nur am Freitag, da wir Donnerstag und nächste
+  \nWoche bereits Termine haben.\n\nWir würden uns dann den Freitag vormerken...;-)\n\nN
+  Screensharing ist bei uns leider nicht so ohne Probleme möglich, bzw. \nwir könnten
+  einen PC aufsetzen mit nem seperaten Internetzugang auf dem \nwir ne VM vorbereiten
+  könnten, da wir von dem \"Internet PC\" nicht auf \nunser XXXX zugreifen können.
+  Falls ihr sonst noch irgendwas benötigt \neinfach kurz ne Rückmeldung...;-)\n\nGrüße
+  aus Bonn\n\nJohn & Marc\n\n"
 content_type: text/plain
+attachments: []

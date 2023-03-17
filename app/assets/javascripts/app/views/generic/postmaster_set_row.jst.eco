@@ -11,7 +11,7 @@
         <%- @Icon('arrow-down') %>
       </div>
     </div>
-    <div class="controls js-value"></div>
+    <div class="controls js-value horizontal-filter-value"></div>
   </div>
   <div class="filter-controls">
     <div class="filter-control filter-control-remove js-remove" title="<%- @T('Remote') %>">

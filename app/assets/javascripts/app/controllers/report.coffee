@@ -1,9 +1,9 @@
-class Index extends App.ControllerContent
+class Reporting extends App.ControllerAppContent
   requiredPermission: 'report'
 
   constructor: ->
     super
-    @title 'Reporting'
+    @title __('Reporting')
     @navupdate '#report'
     @startLoading()
     @ajax(
@@ -98,13 +98,14 @@ class Index extends App.ControllerContent
       ui:     @
     )
 
-class Graph extends App.ControllerContent
+class Graph extends App.Controller
   constructor: ->
     super
 
     # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
+    )
 
     @render()
 
@@ -117,11 +118,11 @@ class Graph extends App.ControllerContent
         dataNew[key] = value
       @ui.storeParams()
 
-    if !@lastNewData
-      @lastNewData = {}
+    if !@lastParams
+      @lastParams = {}
 
-    return if @lastNewData && JSON.stringify(dataNew) is JSON.stringify(@lastNewData)
-    @lastNewData = dataNew
+    return if @lastParams && JSON.stringify(@params) is JSON.stringify(@lastParams)
+    @lastParams = $.extend(true, {}, @params)
 
     @draw(dataNew)
     t = new Date
@@ -170,6 +171,13 @@ class Graph extends App.ControllerContent
         backends:  @params.backendSelected
       )
       processData: true
+      error:       (xhr) =>
+        return if !_.include([401, 403, 404, 422, 502], xhr.status)
+
+        @bodyModal = new App.ControllerTechnicalErrorModal(
+          head:        __('The report could not be generated')
+          contentCode: xhr.responseJSON.error
+        )
       success: (data) =>
         @update(data)
         @delay(@render, interval, 'report-update', 'page')
@@ -186,14 +194,14 @@ class Graph extends App.ControllerContent
         xaxis.push [minute, '']
     else if @params.timeRange is 'day'
       for hour in [0..23]
-        xaxis.push [hour, hour+1]
+        xaxis.push [hour, hour]
     else if @params.timeRange is 'month'
       for day in [0..30]
         xaxis.push [day, day+1]
     else if @params.timeRange is 'week'
       xaxis = [[0, 'Mon'], [1, 'Tue'], [2, 'Wed'], [3, 'Thr'], [4, 'Fri'], [5, 'Sat'], [6, 'Sun'] ]
     else
-      xaxis = [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'Mai'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]
+      xaxis = [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]
 
     dataPlot = []
     for key, value of data
@@ -216,7 +224,13 @@ class Graph extends App.ControllerContent
     # plot
     $.plot( $('#placeholder'), dataPlot, {
       yaxis: { min: 0 },
-      xaxis: { ticks: xaxis }
+      xaxis: { ticks: xaxis },
+      legend: { labelBoxBorderColor: 'var(--ghost-color)' },
+      grid: {
+        color: 'var(--text-normal)',
+        markingsColor: 'var(--background-primary)'
+      },
+      series: { points: { fillColor: 'var(--background-secondary)' } }
     } )
 
 
@@ -227,7 +241,7 @@ class Download extends App.Controller
   constructor: (data) ->
 
     # unbind existing click binds
-    data.el.unbind('click .js-dataDownloadBackendSelector')
+    data.el.off('click .js-dataDownloadBackendSelector')
 
     super
     @render()
@@ -307,12 +321,13 @@ class Download extends App.Controller
       value
     callbackIconHeader = (headers) ->
       attribute =
-        name:        'icon'
-        display:     ''
-        translation: false
-        width:       '28px'
-        displayWidth:28
-        unresizable: true
+        name:         'icon'
+        display:      ''
+        parentClass:  'noTruncate'
+        translation:  false
+        width:        '28px'
+        displayWidth: 28
+        unresizable:  true
       headers.unshift(0)
       headers[0] = attribute
       headers
@@ -380,8 +395,9 @@ class TimeRangePicker extends App.Controller
     super
 
    # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
+    )
 
     @render()
 
@@ -411,9 +427,9 @@ class TimePicker extends App.Controller
     @_timeSlotPicker()
 
     # rerender view
-    @bind 'ui:report:rerender', =>
+    @controllerBind('ui:report:rerender', =>
       @render()
-
+    )
     @render()
 
   render: =>
@@ -456,6 +472,7 @@ class TimePicker extends App.Controller
   selectTimeYear: (e) =>
     e.preventDefault()
     @ui.params.year = $(e.target).data('type')
+    @_timeSlotPicker()
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger('ui:report:rerender')
@@ -473,57 +490,60 @@ class TimePicker extends App.Controller
 
     @timeRangeMonth = [
       {
-        display: 'Jan'
+        display: __('Jan')
         value: 1
       },
       {
-        display: 'Feb'
+        display: __('Feb')
         value: 2
       },
       {
-        display: 'Mar'
+        display: __('Mar')
         value: 3
       },
       {
-        display: 'Apr'
+        display: __('Apr')
         value: 4,
       },
       {
-        display: 'Mai'
+        display: __('May')
         value: 5,
       },
       {
-        display: 'Jun'
+        display: __('Jun')
         value: 6,
       },
       {
-        display: 'Jul'
+        display: __('Jul')
         value: 7,
       },
       {
-        display: 'Aug'
+        display: __('Aug')
         value: 8,
       },
       {
-        display: 'Sep'
+        display: __('Sep')
         value: 9,
       },
       {
-        display: 'Oct'
+        display: __('Oct')
         value: 10,
       },
       {
-        display: 'Nov'
+        display: __('Nov')
         value: 11,
       },
       {
-        display: 'Dec'
+        display: __('Dec')
         value: 12,
       },
     ]
 
     @timeRangeWeek = []
-    for item in [1..52]
+
+    numberOfWeeks = App.PrettyDate.getISOWeeks(@ui.params.year)
+
+    for item in [1..numberOfWeeks]
       record = {
         display: item
         value: item
@@ -550,9 +570,8 @@ class Sidebar extends App.Controller
     @render()
 
   render: =>
-
     metrics = @config.metric
-    profiles = App.ReportProfile.all()
+    profiles = App.ReportProfile.search(filter: { active: true })
     @html App.view('report/sidebar')(
       metrics:  metrics
       params:   @params
@@ -585,5 +604,5 @@ class Sidebar extends App.Controller
     App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
-App.Config.set('report', Index, 'Routes')
-App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporting', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')
+App.Config.set('report', Reporting, 'Routes')
+App.Config.set('Reporting', { prio: 8000, parent: '', name: __('Reporting'), translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

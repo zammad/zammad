@@ -1,4 +1,4 @@
-require_dependency 'mixin/rails_logger'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   class Exchange
@@ -13,9 +13,7 @@ module Import
       end
 
       def id_folder_map
-        @id_folder_map ||= all.collect do |folder|
-          [folder.id, folder]
-        end.to_h
+        @id_folder_map ||= all.index_by(&:id)
 
         # duplicate object to avoid errors where keys get
         # added via #get_folder while iterating over
@@ -35,28 +33,21 @@ module Import
       def children(*parents)
         return [] if parents.empty?
 
-        direct_descendants = parents.map(&method(:request_children))
+        direct_descendants = parents.map { |parent| request_children(parent) }
                                     .flatten.uniq.compact
 
         direct_descendants | children(*direct_descendants)
       end
 
       def display_path(folder)
-        display_name = folder.display_name
-        return display_name if !folder.parent_folder_id
-
-        parent_folder = find(folder.parent_folder_id)
-        return display_name if !parent_folder
-
+        display_name  = folder.display_name.utf8_encode(fallback: :read_as_sanitized_binary)
         parent_folder = id_folder_map[folder.parent_folder_id]
-        return display_name if !parent_folder
 
-        # recursive
-        parent_folder_path = display_path(parent_folder)
+        return display_name if parent_folder.blank?
 
-        "#{parent_folder_path} -> #{display_name}"
+        "#{display_path(parent_folder)} -> #{display_name}"
       rescue Viewpoint::EWS::EwsError
-        folder.display_name
+        display_name
       end
 
       private
@@ -65,7 +56,9 @@ module Import
         parent = parent.id if parent.respond_to?(:id) # type coercion
         @connection.folders(root: parent)
       rescue Viewpoint::EWS::EwsFolderNotFound => e
-        logger.warn(e) && return
+        logger.warn("Try to get children folders of: #{parent.inspect}")
+        logger.warn(e)
+        nil
       end
     end
   end

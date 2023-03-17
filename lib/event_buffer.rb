@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module EventBuffer
 
   def self.list(key)
@@ -20,6 +22,7 @@ module EventBuffer
   def self.reset(key)
     return if !Thread.current[:event_buffer]
     return if !Thread.current[:event_buffer][key]
+
     Thread.current[:event_buffer][key] = []
   end
 

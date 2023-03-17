@@ -1,0 +1,55 @@
+capybara:firefox:1:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 1
+
+capybara:firefox:2:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 2
+
+capybara:firefox:3:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 3
+
+capybara:firefox:4:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 4
+
+capybara:firefox:5:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 5
+
+capybara:firefox:6:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 6
+
+capybara:firefox:7:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 7
+
+capybara:firefox:8:
+  extends:
+    - .template_browser-core_capybara_firefox
+  variables:
+    RSPEC_SLICES: 8
+    RSPEC_CURRENT_SLICE: 8

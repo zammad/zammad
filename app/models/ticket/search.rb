@@ -1,10 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Ticket::Search
   extend ActiveSupport::Concern
-
-  included do
-    include HasSearchSortable
-  end
 
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
@@ -30,7 +27,7 @@ returns if user has no permissions to search
 
     def search_preferences(_current_user)
       {
-        prio: 3000,
+        prio:                3000,
         direct_search_index: false,
       }
     end
@@ -42,6 +39,7 @@ search tickets via search index
   result = Ticket.search(
     current_user: User.find(123),
     query:        'search something',
+    scope:        TicketPolicy::ReadScope, # defaults to ReadScope
     limit:        15,
     offset:       100,
   )
@@ -69,6 +67,7 @@ search tickets via database
   result = Ticket.search(
     current_user: User.find(123),
     query: 'some query', # query or condition is required
+    scope: TicketPolicy::ReadScope, # defaults to ReadScope
     condition: {
       'tickets.owner_id' => {
         operator: 'is',
@@ -83,8 +82,8 @@ search tickets via database
               'pending action',
             ],
           ).map(&:id),
-        },
-      ),
+        ),
+      },
     },
     limit: 15,
     offset: 100,
@@ -111,6 +110,7 @@ returns
       # get params
       query        = params[:query]
       condition    = params[:condition]
+      scope        = params[:scope] || TicketPolicy::ReadScope
       limit        = params[:limit] || 12
       offset       = params[:offset] || 0
       current_user = params[:current_user]
@@ -119,42 +119,60 @@ returns
         full = true
       end
 
+      sql_helper = ::SqlHelper.new(object: self)
+
       # check sort
-      sort_by = search_get_sort_by(params, 'updated_at')
+      sort_by = sql_helper.get_sort_by(params, 'updated_at')
 
       # check order
-      order_by = search_get_order_by(params, 'desc')
+      order_by = sql_helper.get_order_by(params, 'desc')
 
       # try search index backend
       if condition.blank? && SearchIndexBackend.enabled?
-        query_extention = {}
-        query_extention['bool'] = {}
-        query_extention['bool']['must'] = []
 
+        query_or = []
         if current_user.permissions?('ticket.agent')
-          group_ids = current_user.group_ids_access('read')
-          access_condition = {
-            'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
-          }
-        else
-          access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-                               {
-                                 'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
-                               }
-                             #  customer_id: XXX
-                             #          conditions = [ 'customer_id = ?', current_user.id ]
-                             else
-                               {
-                                 'query_string' => { 'query' => "customer_id:#{current_user.id} OR organization_id:#{current_user.organization.id}" }
-                               }
-                               # customer_id: XXX OR organization_id: XXX
-                               #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-                             end
+          group_ids = current_user.group_ids_access(scope.const_get(:ACCESS_TYPE))
+          if group_ids.present?
+            access_condition = {
+              'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
+            }
+            query_or.push(access_condition)
+          end
+        end
+        if current_user.permissions?('ticket.customer')
+          organizations_query = current_user.all_organizations.where(shared: true).map { |o| "organization_id:#{o.id}" }.join(' OR ')
+          access_condition    = if organizations_query.present?
+                                  {
+                                    'query_string' => { 'query' => "customer_id:#{current_user.id} OR #{organizations_query}" }
+                                  }
+                                else
+                                  {
+                                    'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
+                                  }
+                                end
+          query_or.push(access_condition)
         end
 
-        query_extention['bool']['must'].push access_condition
+        return [] if query_or.blank?
 
-        items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset, sort_by, order_by)
+        query_extension = {
+          bool: {
+            must: [
+              {
+                bool: {
+                  should: query_or,
+                },
+              },
+            ],
+          }
+        }
+
+        items = SearchIndexBackend.search(query, 'Ticket', limit:           limit,
+                                                           query_extension: query_extension,
+                                                           from:            offset,
+                                                           sort_by:         sort_by,
+                                                           order_by:        order_by)
         if !full
           ids = []
           items.each do |item|
@@ -166,53 +184,40 @@ returns
         items.each do |item|
           ticket = Ticket.lookup(id: item[:id])
           next if !ticket
+
           tickets.push ticket
         end
         return tickets
       end
 
-      # fallback do sql query
-      access_condition = Ticket.access_condition(current_user, 'read')
+      order_sql   = sql_helper.get_order(sort_by, order_by, 'tickets.updated_at DESC')
+      tickets_all = scope.new(current_user).resolve
+                                           .reorder(Arel.sql(order_sql))
+                                           .offset(offset)
+                                           .limit(limit)
 
-      # do query
-      # - stip out * we already search for *query* -
+      ticket_ids = if query
+                     tickets_all.joins(:articles)
+                                .where(<<~SQL.squish, query: "%#{query.delete('*')}%")
+                                  tickets.title              LIKE :query
+                                  OR tickets.number          LIKE :query
+                                  OR ticket_articles.body    LIKE :query
+                                  OR ticket_articles.from    LIKE :query
+                                  OR ticket_articles.to      LIKE :query
+                                  OR ticket_articles.subject LIKE :query
+                                SQL
+                   else
+                     query_condition, bind_condition, tables = selector2sql(condition)
 
-      order_select_sql = search_get_order_select_sql(sort_by, order_by, 'tickets.updated_at')
-      order_sql        = search_get_order_sql(sort_by, order_by, 'tickets.updated_at DESC')
-      if query
-        query.delete! '*'
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .where(access_condition)
-                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
-                            .joins(:articles)
-                            .order(order_sql)
-                            .offset(offset)
-                            .limit(limit)
+                     tickets_all.joins(tables)
+                                .where(query_condition, *bind_condition)
+                   end.group(:id).pluck(:id)
+
+      if full
+        ticket_ids.map { |id| Ticket.lookup(id: id) }
       else
-        query_condition, bind_condition, tables = selector2sql(condition)
-        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
-                            .joins(tables)
-                            .where(access_condition)
-                            .where(query_condition, *bind_condition)
-                            .order(order_sql)
-                            .offset(offset)
-                            .limit(limit)
+        ticket_ids
       end
-
-      # build result list
-      if !full
-        ids = []
-        tickets_all.each do |ticket|
-          ids.push ticket.id
-        end
-        return ids
-      end
-
-      tickets = []
-      tickets_all.each do |ticket|
-        tickets.push Ticket.lookup(id: ticket.id)
-      end
-      tickets
     end
   end
 

@@ -1,0 +1,14 @@
+<label><%- @T('Notifications') %></label>
+<form class="ui-front mentionWidget">
+  <div class="js-subscribe<% if @subscribed: %> hidden<% end %>">
+    <input type="button" class="btn btn--fullWidth" name="subscribe" value="<%- @T('Subscribe') %>">
+  </div>
+  <div class="js-unsubscribe<% if !@subscribed: %> hidden<% end %>">
+    <input type="button" class="btn btn--fullWidth" name="unsubscribe" value="<%- @T('Unsubscribe') %>">
+  </div>
+</form>
+<div class="controls-label">
+<% for mention in @mentions: %>
+  <a href="#user/profile/<%= mention.user_id %>"<% if !mention.access: %> title="<%- @T('This user has no access and will not receive notifications.') %>"<% end %>><%- mention.avatar %></a>
+<% end %>
+</div>

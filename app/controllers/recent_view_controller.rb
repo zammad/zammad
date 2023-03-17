@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class RecentViewController < ApplicationController
   prepend_before_action :authentication_check
@@ -39,7 +39,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end

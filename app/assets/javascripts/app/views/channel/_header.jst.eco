@@ -1,0 +1,11 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <% if @params.hasSwitch: %>
+      <div class="zammad-switch zammad-switch--small js-channelActive">
+         <input name="sms_channel_active" type="checkbox" id="sms_channel_active">
+         <label for="sms_channel_active"></label>
+      </div>
+    <% end %>
+    <h1><%- @T(@params.header) %> <small></small></h1>
+  </div>
+</div>

@@ -1,24 +1,16 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Group
-          class Mapping < Sequencer::Unit::Base
-            include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource
+class Sequencer::Unit::Import::Zendesk::Group::Mapping < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
-            def process
-              provide_mapped do
-                {
-                  name:   resource.name,
-                  active: !resource.deleted,
-                }
-              end
-            end
-          end
-        end
-      end
+  uses :resource
+
+  def process
+    provide_mapped do
+      {
+        name:   resource.name,
+        active: !resource.deleted,
+      }
     end
   end
 end

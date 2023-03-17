@@ -1,0 +1,4 @@
+**/graphql/**/*.ts
+!**/graphql/**/mocks/*.ts
+!**/graphql/**/*.spec.ts
+public/**/*

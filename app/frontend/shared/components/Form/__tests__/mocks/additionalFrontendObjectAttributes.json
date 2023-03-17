@@ -1,0 +1,329 @@
+{
+  "attributes": [
+    {
+      "name": "multiselect",
+      "display": "Multi Select",
+      "dataType": "multiselect",
+      "dataOption": {
+        "options": [
+          {
+            "name": "Key 1",
+            "value": "Key 1"
+          },
+          {
+            "name": "Key 2",
+            "value": "Key 2"
+          },
+          {
+            "name": "Key 3",
+            "value": "Key 3"
+          },
+          {
+            "name": "Key 4",
+            "value": "Key 4"
+          }
+        ],
+        "customsort": "on",
+        "linktemplate": "",
+        "default": [],
+        "null": true,
+        "relation": "",
+        "nulloption": true,
+        "maxlength": 255,
+        "historical_options": {
+          "Key 1": "Key 1",
+          "Key 2": "Key 2",
+          "Key 3": "Key 3",
+          "Key 4": "Key 4"
+        },
+        "multiple": true
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "treeselect",
+      "display": "Treeselect",
+      "dataType": "tree_select",
+      "dataOption": {
+        "options": [
+          {
+            "name": "Incident",
+            "value": "Incident",
+            "children": [
+              {
+                "name": "Hardware",
+                "value": "Incident::Hardware"
+              },
+              {
+                "name": "Softwareproblem",
+                "value": "Incident::Softwareproblem"
+              }
+            ]
+          },
+          {
+            "name": "Service request",
+            "value": "Service request",
+            "children": [
+              {
+                "name": "New hardware",
+                "value": "Service request::New hardware"
+              }
+            ]
+          }
+        ],
+        "default": "",
+        "null": true,
+        "relation": "",
+        "nulloption": true,
+        "maxlength": 255,
+        "historical_options": {
+          "Incident": "Incident",
+          "Incident::Hardware": "Hardware",
+          "Incident::Softwareproblem": "Softwareproblem",
+          "Service request": "Service request",
+          "Service request::New hardware": "New hardware"
+        }
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "multitreeselect",
+      "display": "Multi Treeselect",
+      "dataType": "multi_tree_select",
+      "dataOption": {
+        "options": [
+          {
+            "name": "Incident",
+            "value": "Incident",
+            "children": [
+              {
+                "name": "Hardware",
+                "value": "Incident::Hardware"
+              },
+              {
+                "name": "Softwareproblem",
+                "value": "Incident::Softwareproblem"
+              }
+            ]
+          },
+          {
+            "name": "Service request",
+            "value": "Service request",
+            "children": [
+              {
+                "name": "New hardware",
+                "value": "Service request::New hardware"
+              }
+            ]
+          }
+        ],
+        "default": null,
+        "null": true,
+        "relation": "",
+        "multiple": true
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "example",
+      "display": "Example",
+      "dataType": "input",
+      "dataOption": {
+        "default": "",
+        "type": "text",
+        "maxlength": 40,
+        "linktemplate": "",
+        "null": true,
+        "options": {},
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "textarea",
+      "display": "Textarea",
+      "dataType": "textarea",
+      "dataOption": {
+        "default": "",
+        "maxlength": 500,
+        "rows": 4,
+        "null": true,
+        "options": {},
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "number",
+      "display": "Number",
+      "dataType": "integer",
+      "dataOption": {
+        "default": null,
+        "min": 0,
+        "max": 999999999,
+        "null": true,
+        "options": {},
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "date_time",
+      "display": "Date Time",
+      "dataType": "datetime",
+      "dataOption": {
+        "future": true,
+        "past": true,
+        "diff": null,
+        "default": null,
+        "null": true,
+        "options": {},
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "start_date",
+      "display": "Start Date",
+      "dataType": "date",
+      "dataOption": {
+        "diff": null,
+        "default": null,
+        "null": true,
+        "options": {},
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    },
+    {
+      "name": "shared",
+      "display": "Shared",
+      "dataType": "boolean",
+      "dataOption": {
+        "options": {
+          "false": "nein",
+          "true": "ja"
+        },
+        "default": null,
+        "null": true,
+        "relation": ""
+      },
+      "screens": {
+        "create_middle": {
+          "shown": true,
+          "required": false,
+          "item_class": "column"
+        },
+        "edit": {
+          "shown": true,
+          "required": false
+        }
+      },
+      "isInternal": false
+    }
+  ],
+  "screens": [
+    {
+      "name": "create_middle",
+      "attributes": [
+        "multiselect",
+        "treeselect",
+        "multitreeselect",
+        "example",
+        "textarea",
+        "number",
+        "date_time",
+        "start_date",
+        "shared"
+      ]
+    }
+  ]
+}

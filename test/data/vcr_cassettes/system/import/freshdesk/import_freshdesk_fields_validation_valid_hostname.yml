@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://reallybadexample.freshdesk.com/api/v2/contacts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - reallybadexample.freshdesk.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 04 Jan 2022 12:44:04 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      X-Request-Id:
+      - ad01f052-b3de-4a2b-bd6b-174d9b696f57
+      X-Rack-Cache:
+      - miss
+      Cache-Control:
+      - no-cache
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      X-Fw-Ratelimiting-Managed:
+      - 'false'
+      X-Envoy-Upstream-Service-Time:
+      - '32'
+      X-Trace-Id:
+      - 00-09c3d5f076833268b0f24307042fd611-435154e41b725092-00
+      Server:
+      - fwe
+    body:
+      encoding: ASCII-8BIT
+      string: " "
+  recorded_at: Tue, 04 Jan 2022 12:44:04 GMT
+recorded_with: VCR 6.0.0

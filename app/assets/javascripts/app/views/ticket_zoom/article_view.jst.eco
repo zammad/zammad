@@ -21,7 +21,7 @@
     <% end %>
     <% if @article.cc: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T('Cc') %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('CC') %></div>
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.cc) %></div>
       </div>
     <% end %>
@@ -31,9 +31,50 @@
         <div class="article-meta-value flex contain-text"><%= @article.subject %></div>
       </div>
     <% end %>
+    <% if @article.preferences.security?.encryption?.success || @article.preferences.security?.sign?.success: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T('Security') %></div>
+        <div class="article-meta-value flex contain-text">
+          <% if @article.preferences.security?.encryption?.success: %>
+            <span title="<%- @Ti(@article.preferences.security?.encryption?.comment) %>"><%- @Icon('lock', 'article-meta-icon') %> <%- @T('Encrypted') %></span>
+          <% end %>
+          <% if @article.preferences.security?.encryption?.success && @article.preferences.security?.sign?.success: %>
+          ,
+          <% end %>
+          <% if @article.preferences.security?.sign?.success is not null: %>
+            <span title="<%- @Ti(@article.preferences.security?.sign?.comment) %>"><%- @Icon((if @article.preferences.security?.sign?.success is true then 'signed' else 'not-signed'), 'article-meta-icon') %> <%- @T(if @article.preferences.security?.sign?.success is true then 'Signed' else 'Unsigned') %></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
     </div>
   </div>
 </div>
+<% if ((@article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment) || (@article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment) or (@article.preferences.security?.encryption?.success is true || @article.preferences.security?.sign?.success is true)): %>
+<div class="article-meta-permanent">
+<% if (@article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment) || (@article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment): %>
+  <div class="alert alert--warning">
+    <%- @Icon('not-signed') %> <%- @T('Security Error') %>
+    <% if @article.preferences.security?.sign?.success is false && @article.preferences.security?.sign?.comment: %>
+      <div class="alert-row"><%- @T('Sign:') %> <%- @T(@article.preferences.security?.sign?.comment) %></div>
+    <% end %>
+    <% if @article.preferences.security?.encryption?.success is false && @article.preferences.security?.encryption?.comment: %>
+      <div class="alert-row"><%- @T('Encryption:') %> <%- @T(@article.preferences.security?.encryption?.comment) %></div>
+    <% end %>
+    <div class="btn btn--action btn--small js-securityRetryProcess"><%- @T('Retry security process') %></div>
+  </div>
+<% else if @article.preferences.security?.encryption?.success is true || @article.preferences.security?.sign?.success is true: %>
+  <div class="alert alert--blank horizontal">
+  <% if @article.preferences.security?.encryption?.success is true: %>
+    <span title="<%- @T('Encrypted') %>"><%- @Icon('lock') %></span>
+  <% end %>
+  <% if @article.preferences.security?.sign?.success is true: %>
+    <span title="<%- @T('Signed') %>"><%- @Icon('signed') %></span>
+  <% end %>
+  </div>
+<% end %>
+</div>
+<% end %>
 <div class="article-content">
   <% if @article.sender.name isnt 'Agent': %>
   <%    position = 'left' %>
@@ -51,36 +92,7 @@
             <div class="btn btn--text js-toggleFold"><%- @T('See more') %></div>
           </div>
         </div>
-        <% if !_.isEmpty(@attachments): %>
-          <div class="attachments attachments--list">
-            <%- @Icon('paperclip') %>
-            <div class="attachments-title"><%- @attachments.length %> <%- @T('Attached Files') %></div>
-            <% for attachment in @attachments: %>
-              <% if !@C('ui_ticket_zoom_attachments_preview'): %>
-                <div class="attachment attachment--row">
-                  <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" target="_blank" data-type="attachment"><%= attachment.filename %></a>
-                  <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
-                </div>
-              <% else: %>
-                <a class="attachment attachment--preview" title="<%- attachment.preferences['Content-Type'] %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" data-type="attachment"<% if @canDownload(attachment.preferences['Content-Type']): %> download<% end %>>
-                  <div class="attachment-icon">
-                  <% if attachment.preferences && attachment.preferences['Content-Type'] && @ContentTypeIcon(attachment.preferences['Content-Type']): %>
-                    <% if @canPreview(attachment.preferences['Content-Type']): %>
-                      <img src="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>">
-                    <% else: %>
-                      <%- @Icon( @ContentTypeIcon(attachment.preferences['Content-Type']) ) %>
-                    <% end %>
-                  <% else: %>
-                    <%- @Icon('file-unknown') %>
-                  <% end %>
-                  </div>
-                  <span class="attachment-name u-highlight"><%= attachment.filename %></span>
-                  <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
-                </a>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
+        <%- @attachments %>
       </div>
     </div>
   </div>
@@ -91,8 +103,10 @@
       <div class="horizontal article-meta-row">
         <div class="article-meta-key"><%- @T('Channel') %></div>
         <div class="article-meta-value">
-          <%- @Icon(@article.type.name, 'article-meta-icon') %>
+          <% icon = @article.type.name.split(" ")%>
+          <%- @Icon(icon[0], 'article-meta-icon') %>
           <%- @T(@article.type.name) %>
+          <div class="article-meta-links">
           <% if @links: %>
             <% count = 0 %>
             <% for link in @links: %>
@@ -101,6 +115,7 @@
               <% count =+ 1 %>
             <% end %>
           <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -109,4 +124,4 @@
 
 <div class="js-article-actions"></div>
 
-<small class="task-subline"><%- @humanTime(@article.created_at) %></small>
+<a href="<%- @C('http_type') %>://<%- @C('fqdn') %>/#ticket/zoom/<%- @article.ticket_id %>/<%- @article.id %>"><small class="task-subline"><%- @humanTime(@article.created_at) %></small></a>

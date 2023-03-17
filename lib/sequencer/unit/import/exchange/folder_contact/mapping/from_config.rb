@@ -1,29 +1,21 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContact
-          module Mapping
-            class FromConfig < Sequencer::Unit::Import::Common::Mapping::FlatKeys
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :import_job
+class Sequencer::Unit::Import::Exchange::FolderContact::Mapping::FromConfig < Sequencer::Unit::Import::Common::Mapping::FlatKeys
 
-              private
+  uses :import_job
 
-              def mapping
-                from_import_job || ::Import::Exchange.config[:attributes]
-              end
+  private
 
-              def from_import_job
-                return if !state.provided?(:import_job)
-                payload = import_job.payload
-                return if payload.blank?
-                payload[:ews_attributes]
-              end
-            end
-          end
-        end
-      end
-    end
+  def mapping
+    from_import_job || ::Import::Exchange.config[:attributes]
+  end
+
+  def from_import_job
+    return if !state.provided?(:import_job)
+
+    payload = import_job.payload
+    return if payload.blank?
+
+    payload[:ews_attributes]
   end
 end

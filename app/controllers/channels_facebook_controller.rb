@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsFacebookController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.channel_facebook') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     assets = {}
@@ -9,13 +9,13 @@ class ChannelsFacebookController < ApplicationController
       assets = external_credential.assets(assets)
     end
     channel_ids = []
-    Channel.where(area: 'Facebook::Account').order(:id).each do |channel|
+    Channel.where(area: 'Facebook::Account').reorder(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
     end
     render json: {
-      assets: assets,
-      channel_ids: channel_ids,
+      assets:       assets,
+      channel_ids:  channel_ids,
       callback_url: ExternalCredential.callback_url('facebook'),
     }
   end

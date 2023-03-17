@@ -1,12 +1,14 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 require 'browser_test_helper'
 
 class AdminDragDropToNewGroupTest < TestCase
   def test_group_via_role
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     new_group_name = add_group
@@ -21,9 +23,9 @@ class AdminDragDropToNewGroupTest < TestCase
   def test_new_group
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     new_group_name = add_group
@@ -37,7 +39,7 @@ class AdminDragDropToNewGroupTest < TestCase
   private
 
   def add_group
-    name = "dndgroup-#{rand(99_999_999)}"
+    name = "dndgroup-#{SecureRandom.uuid}"
 
     click(css: '.user-menu a[title=Admin')
     click(css: '.content.active a[href="#manage/groups"]')
@@ -72,7 +74,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     scroll_to(agent_permission.location.y)
 
-    toggle_checkbox(@browser.find_element(css: '.modal'), "\"#{permission_id}\"") #digit-only selector fails
+    toggle_checkbox(@browser.find_element(css: '.modal'), "\"#{permission_id}\"") # digit-only selector fails
 
     assign_group(group_name)
 
@@ -90,7 +92,7 @@ class AdminDragDropToNewGroupTest < TestCase
     watch_for(css: user_css)
 
     user_element = @browser.find_elements(css: user_css).find do |el|
-      el.text.strip == 'master@example.com'
+      el.text.strip == 'admin@example.com'
     end
 
     user_element.click
@@ -133,7 +135,7 @@ class AdminDragDropToNewGroupTest < TestCase
     assert_not_nil role_container
 
     role_id = role_container.find_element(css: 'input').attribute(:value)
-    toggle_checkbox(role_container, "\"#{role_id}\"") #digit-only selector fails
+    toggle_checkbox(role_container, "\"#{role_id}\"") # digit-only selector fails
   end
 
   def get_group_element(group_name)

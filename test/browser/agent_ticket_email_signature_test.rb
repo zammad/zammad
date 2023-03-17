@@ -1,25 +1,26 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketEmailSignatureTest < TestCase
   def test_agent_signature_check
 
-    suffix          = rand(99_999_999_999_999_999).to_s
-    signature_name1 = 'sig name 1 äöüß ' + suffix
-    signature_body1 = "--\nsig body 1 äöüß " + suffix
-    signature_name2 = 'sig name 2 äöüß ' + suffix
-    signature_body2 = "--\nsig body 2 äöüß " + suffix
-    group_name1     = 'group name 1 ' + suffix
-    group_name2     = 'group name 2 ' + suffix
-    group_name3     = 'group name 3 ' + suffix
+    suffix          = SecureRandom.uuid
+    signature_name1 = "sig name 1 äöüß #{suffix}"
+    signature_body1 = "--\nsig body 1 äöüß #{suffix}"
+    signature_name2 = "sig name 2 äöüß #{suffix}"
+    signature_body2 = "--\nsig body 2 äöüß #{suffix}"
+    group_name1     = "group name 1 #{suffix}"
+    group_name2     = "group name 2 #{suffix}"
+    group_name3     = "group name 3 #{suffix}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     #
     # create groups and signatures
@@ -42,11 +43,11 @@ class AgentTicketEmailSignatureTest < TestCase
     # create groups
     group_create(
       data: {
-        name: group_name1,
+        name:      group_name1,
         signature: signature_name1,
-        member: [
+        member:    [
           {
-            login: 'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -54,11 +55,11 @@ class AgentTicketEmailSignatureTest < TestCase
     )
     group_create(
       data: {
-        name: group_name2,
+        name:      group_name2,
         signature: signature_name2,
-        member: [
+        member:    [
           {
-            login: 'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
@@ -66,56 +67,56 @@ class AgentTicketEmailSignatureTest < TestCase
     )
     group_create(
       data: {
-        name: group_name3,
+        name:   group_name3,
         member: [
           {
-            login: 'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
         ],
       }
     )
-    sleep 6
+    sleep 10 # wait until background job is processed
 
     #
     # check signature in new ticket
     #
 
     # reload instances to get new group permissions
-    reload()
+    reload
 
     # create ticket
     ticket_create(
-      data: {
+      data:          {
         customer: 'nicole',
-        group: 'Users',
-        title: 'some subject 5 - 123äöü',
-        body: 'some body 5 - 123äöü',
+        group:    'Users',
+        title:    'some subject 5 - 123äöü',
+        body:     'some body 5 - 123äöü',
       },
       do_not_submit: true,
     )
 
     # select group
     select(
-      css: '.active [name="group_id"]',
+      css:   '.active [name="group_id"]',
       value: group_name1,
     )
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
@@ -128,91 +129,91 @@ class AgentTicketEmailSignatureTest < TestCase
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
     # select group
     select(
-      css: '.active [name="group_id"]',
+      css:   '.active [name="group_id"]',
       value: group_name2,
     )
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
     # select group
     select(
-      css: '.active [name="group_id"]',
+      css:   '.active [name="group_id"]',
       value: group_name3,
     )
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
     # select group
     select(
-      css: '.active [name="group_id"]',
+      css:   '.active [name="group_id"]',
       value: group_name1,
     )
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
@@ -223,19 +224,19 @@ class AgentTicketEmailSignatureTest < TestCase
 
     # check content
     match(
-      css: '.active [data-name="body"]',
+      css:   '.active [data-name="body"]',
       value: 'some body 5',
     )
 
     # check signature
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
@@ -245,9 +246,9 @@ class AgentTicketEmailSignatureTest < TestCase
     ticket_create(
       data: {
         customer: 'nicole',
-        group: group_name1,
-        title: 'some subject 5/2 - 123äöü',
-        body: 'some body 5/2 - 123äöü',
+        group:    group_name1,
+        title:    'some subject 5/2 - 123äöü',
+        body:     'some body 5/2 - 123äöü',
       },
     )
 
@@ -258,19 +259,19 @@ class AgentTicketEmailSignatureTest < TestCase
 
     # check if signature exists
     match(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
     # update group2
     select(
-      css: '.active [name="group_id"]',
+      css:   '.active [name="group_id"]',
       value: group_name2,
     )
 
@@ -286,13 +287,13 @@ class AgentTicketEmailSignatureTest < TestCase
 
     # check if signature exists
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 
@@ -305,13 +306,13 @@ class AgentTicketEmailSignatureTest < TestCase
 
     # check if signature exists
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body1,
+      css:      '.active [data-name="body"]',
+      value:    signature_body1,
       no_quote: true,
     )
     match_not(
-      css: '.active [data-name="body"]',
-      value: signature_body2,
+      css:      '.active [data-name="body"]',
+      value:    signature_body2,
       no_quote: true,
     )
 

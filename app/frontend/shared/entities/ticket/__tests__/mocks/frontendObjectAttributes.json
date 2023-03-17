@@ -1,0 +1,179 @@
+{
+  "attributes": [
+    {
+      "name": "title",
+      "display": "Title",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 200,
+        "null": false,
+        "translate": false
+      },
+      "screens": {
+        "create_top": {
+          "null": false
+        },
+        "edit": {}
+      }
+    },
+    {
+      "name": "customer_id",
+      "display": "Customer",
+      "dataType": "user_autocompletion",
+      "dataOption": {
+        "relation": "User",
+        "autocapitalize": false,
+        "multiple": false,
+        "guess": true,
+        "null": false,
+        "limit": 200,
+        "placeholder": "Enter Person or Organization/Company",
+        "minLengt": 2,
+        "translate": false,
+        "permission": ["ticket.agent"],
+        "belongs_to": "customer"
+      },
+      "screens": {
+        "create_top": {
+          "null": false
+        },
+        "edit": {}
+      },
+      "isInternal": true
+    },
+    {
+      "name": "organization_id",
+      "display": "Organization",
+      "dataType": "autocompletion_ajax_customer_organization",
+      "isInternal": true,
+      "dataOption": {
+        "relation": "Organization",
+        "autocapitalize": false,
+        "multiple": false,
+        "null": true,
+        "translate": false,
+        "permission": ["ticket.agent", "ticket.customer"]
+      },
+      "screens": {
+        "create_top": {
+          "null": false
+        },
+        "edit": {}
+      }
+    },
+    {
+      "name": "type",
+      "display": "Type",
+      "dataType": "select",
+      "isInternal": true,
+      "dataOption": {
+        "options": {
+          "Incident": "Incident",
+          "Problem": "Problem",
+          "Request for Change": "Request for Change"
+        },
+        "linktemplate": "",
+        "default": "",
+        "null": true,
+        "relation": "",
+        "nulloption": true,
+        "maxlength": 255,
+        "historical_options": {
+          "Incident": "Incident",
+          "Problem": "Problem",
+          "Request for Change": "Request for Change",
+          "Other": "Other"
+        }
+      },
+      "screens": {
+        "edit": {
+          "shown": true,
+          "required": false
+        },
+        "create_middle": {
+          "shown": false,
+          "required": false,
+          "item_class": "column"
+        }
+      }
+    },
+    {
+      "name": "group_id",
+      "display": "Group",
+      "dataType": "select",
+      "isInternal": true,
+      "dataOption": {
+        "default": "",
+        "relation": "Group",
+        "relation_condition": {
+          "access": "full"
+        },
+        "nulloption": true,
+        "multiple": false,
+        "null": false,
+        "translate": false,
+        "only_shown_if_selectable": true,
+        "permission": ["ticket.agent", "ticket.customer"],
+        "maxlength": 255
+      },
+      "screens": {
+        "create_middle": {
+          "null": false,
+          "item_class": "column"
+        },
+        "edit": {}
+      }
+    },
+    {
+      "name": "state_id",
+      "display": "State",
+      "dataType": "select",
+      "isInternal": true,
+      "dataOption": {
+        "relation": "TicketState",
+        "nulloption": true,
+        "multiple": false,
+        "null": false,
+        "default": 2,
+        "translate": true,
+        "filter": [2, 1, 3, 4, 6, 7],
+        "maxlength": 255
+      },
+      "screens": {
+        "create_middle": {
+          "item_class": "column",
+          "nulloption": false,
+          "null": true,
+          "filter": [1, 4],
+          "default": 1
+        },
+        "edit": {
+          "nulloption": false,
+          "null": true,
+          "filter": [2, 4],
+          "default": 2
+        }
+      }
+    }
+  ],
+  "screens": [
+    {
+      "name": "create_top",
+      "attributes": ["title", "organization_id"]
+    },
+    {
+      "name": "edit",
+      "attributes": ["type", "state_id"]
+    },
+    {
+      "name": "create_middle",
+      "attributes": ["type", "group_id", "state_id"]
+    },
+    {
+      "name": "create_bottom",
+      "attributes": []
+    }
+  ]
+}

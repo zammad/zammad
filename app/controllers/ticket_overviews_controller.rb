@@ -1,6 +1,19 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class TicketOverviewsController < ApplicationController
   prepend_before_action :authentication_check
+
+  # GET /api/v1/ticket_overview
+  def data
+
+    # get attributes to update
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
+      view:         'ticket_overview',
+      screen:       'overview_bulk',
+      current_user: current_user,
+    )
+    render json: attributes_to_change
+  end
 
   # GET /api/v1/ticket_overviews
   def show
@@ -10,12 +23,12 @@ class TicketOverviewsController < ApplicationController
       index_and_lists = Ticket::Overviews.index(current_user)
       indexes = []
       index_and_lists.each do |index|
-        assets = {}
         overview = Overview.lookup(id: index[:overview][:id])
         meta = {
-          name: overview.name,
-          prio: overview.prio,
-          link: overview.link,
+          id:    overview.id,
+          name:  overview.name,
+          prio:  overview.prio,
+          link:  overview.link,
           count: index[:count],
         }
         indexes.push meta
@@ -42,7 +55,7 @@ class TicketOverviewsController < ApplicationController
 
     render json: {
       assets: assets,
-      index: result,
+      index:  result,
     }
   end
 

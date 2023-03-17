@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eskaliert seit #{ticket.escalation_at}_
+Das Ticket (#{ticket.title}) von "#{ticket.customer.longname}" ist seit "#{ticket.escalation_at}" eskaliert!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

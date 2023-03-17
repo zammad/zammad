@@ -3,7 +3,7 @@
   <div class="setup wizard">
     <div class="wizard-slide">
       <div class="wizard-body vertical centered">
-        <%- @T('The auto wizard is enabled, please use the prodvided auto wizard url.') %>
+        <%- @T('The auto wizard is enabled. Please use the provided auto wizard url.') %>
       </div>
     </div>
   </div>

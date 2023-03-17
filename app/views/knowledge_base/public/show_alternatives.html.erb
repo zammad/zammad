@@ -1,0 +1,15 @@
+<main class="main main--error">
+  <div class="container">
+    <%= icon('mood-ok') %>
+    <h1><%= zt "#{name} found" %></h1>
+    <p><%= zt "But it's only available in these languages:" %></p>
+    <ul>
+      <% @alternative.translations.each do |translation| %>
+        <li>
+          <%= translation.kb_locale.system_locale.name %>:
+          <%= link_to translation.title, custom_path_if_needed(url_for(locale: translation_locale_code(translation)), @knowledge_base) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</main>

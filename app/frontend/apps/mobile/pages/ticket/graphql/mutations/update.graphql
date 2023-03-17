@@ -1,0 +1,13 @@
+mutation ticketUpdate(
+  $ticketId: ID!
+  $input: TicketUpdateInput!
+) {
+  ticketUpdate(ticketId: $ticketId, input: $input) {
+    ticket {
+      ...ticketAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

@@ -1,20 +1,12 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class Subject < Sequencer::Unit::Common::Provider::Named
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :resource
+class Sequencer::Unit::Import::Zendesk::Ticket::Subject < Sequencer::Unit::Common::Provider::Named
 
-            private
+  uses :resource
 
-            def subject
-              resource.subject || resource.description || '-'
-            end
-          end
-        end
-      end
-    end
+  private
+
+  def subject
+    resource.subject || resource.description || '-'
   end
 end

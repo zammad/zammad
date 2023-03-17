@@ -1,33 +1,53 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class CtiController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'cti.agent') }
+  prepend_before_action { authentication_check && authorize! }
 
   # list current caller log
+  # GET /api/v1/cti/log
   def index
     backends = [
       {
-        name: 'CTI (generic)',
+        name:    __('CTI (generic)'),
         enabled: Setting.get('cti_integration'),
-        url: '#system/integration/cti',
+        url:     '#system/integration/cti',
       },
       {
-        name: 'sipgate.io',
+        name:    'sipgate.io',
         enabled: Setting.get('sipgate_integration'),
-        url: '#system/integration/sipgate',
+        url:     '#system/integration/sipgate',
+      },
+      {
+        name:    __('Placetel'),
+        enabled: Setting.get('placetel_integration'),
+        url:     '#system/integration/placetel',
       }
     ]
 
-    result = Cti::Log.log
+    result = Cti::Log.log(current_user)
     result[:backends] = backends
     render json: result
   end
 
   # set caller log to done
+  # POST /api/v1/cti/done/:id
   def done
     log = Cti::Log.find(params['id'])
     log.done = params['done']
     log.save!
+    render json: {}
+  end
+
+  # sets for all given ids the caller log to done
+  # POST /api/v1/cti/done/bulk
+  def done_bulk
+
+    log_ids = params['ids'] || []
+    log_ids.each do |log_id|
+      log = Cti::Log.find(log_id)
+      log.done = true
+      log.save!
+    end
     render json: {}
   end
 

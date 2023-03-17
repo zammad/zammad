@@ -1,0 +1,33 @@
+frontend:vitest:
+  stage: test
+  extends:
+    - .job_rules_default
+  cache: !reference [.cache, read_only_nodejs]
+  before_script:
+    - !reference [.scripts, yarn_install]
+  script:
+    - yarn test
+    - echo "Also test eslint-plugin-zammad..."
+    - cd .eslint-plugin-zammad
+    - yarn install || yarn install || yarn install # retry on errors
+    - yarn test
+
+frontend:cypress:
+  stage: test
+  extends:
+    - .job_rules_default
+  cache: !reference [.cache, read_only_nodejs]
+  before_script:
+    - !reference [.scripts, yarn_install]
+    - yarn cypress:install
+  script:
+    - sysctl -w fs.inotify.max_user_watches=524288 # see https://github.com/cypress-io/cypress/issues/6960
+    - yarn test:ci:ct
+  artifacts:
+    expire_in: 1 week
+    when: on_failure
+    paths:
+      - app/frontend/cypress/**/__image_snapshots__/**/*
+      - .cypress/**/__diff_output__/*
+      - .cypress/videos/**/*
+      - .cypress/screenshots/**/*

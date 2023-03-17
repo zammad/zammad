@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ApplicationsController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.api') }
+  prepend_before_action { authentication_check && authorize! }
 
   def index
     all = Doorkeeper::Application.all
@@ -19,7 +19,7 @@ class ApplicationsController < ApplicationController
       end
       render json: {
         record_ids: item_ids,
-        assets: assets,
+        assets:     assets,
       }, status: :ok
       return
     end

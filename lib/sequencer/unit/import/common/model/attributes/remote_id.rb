@@ -1,32 +1,22 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module Model
-          module Attributes
-            class RemoteId < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :resource
-              provides :remote_id
+class Sequencer::Unit::Import::Common::Model::Attributes::RemoteId < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
 
-              def process
-                state.provide(:remote_id) do
-                  resource.fetch(attribute).dup.to_s
-                end
-              rescue KeyError => e
-                handle_failure(e)
-              end
+  uses :resource
+  provides :remote_id
 
-              private
-
-              def attribute
-                :id
-              end
-            end
-          end
-        end
-      end
+  def process
+    state.provide(:remote_id) do
+      resource.fetch(attribute).dup.to_s
     end
+  rescue KeyError => e
+    handle_failure(e)
+  end
+
+  private
+
+  def attribute
+    :id
   end
 end

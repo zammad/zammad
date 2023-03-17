@@ -1,7 +1,8 @@
-# Copyright (C) 2012-2017 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class VersionController < ApplicationController
-  prepend_before_action { authentication_check(permission: 'admin.version') }
+
+  prepend_before_action { authentication_check && authorize! }
 
   # GET /api/v1/version
   def index

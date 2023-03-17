@@ -1,0 +1,122 @@
+{
+  "clientId": "ZAMMAD_BASE_URL/auth/saml/metadata",
+  "name": "Zammad",
+  "description": "",
+  "surrogateAuthRequired": false,
+  "enabled": true,
+  "alwaysDisplayInConsole": false,
+  "clientAuthenticatorType": "client-secret",
+  "secret": "sgExDFx8OGfCooRBwDYLIV5NnDAzVBey",
+  "redirectUris": [
+    "ZAMMAD_BASE_URL/auth/saml/callback"
+  ],
+  "webOrigins": [
+    "ZAMMAD_BASE_URL"
+  ],
+  "notBefore": 0,
+  "bearerOnly": false,
+  "consentRequired": false,
+  "standardFlowEnabled": true,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": false,
+  "serviceAccountsEnabled": false,
+  "publicClient": false,
+  "frontchannelLogout": true,
+  "protocol": "saml",
+  "attributes": {
+    "client.secret.creation.time": "1670334049",
+    "saml.force.post.binding": "true",
+    "saml.encrypt": "false",
+    "post.logout.redirect.uris": "+",
+    "saml_assertion_consumer_url_post": "ZAMMAD_BASE_URL/auth/saml/callback",
+    "saml.server.signature": "true",
+    "saml.server.signature.keyinfo.ext": "false",
+    "saml.artifact.binding.identifier": "j8oyl9s6Zci93v0jdlB0lEAYaEU=",
+    "saml_single_logout_service_url_redirect": "ZAMMAD_BASE_URL/auth/saml/slo",
+    "saml.signature.algorithm": "RSA_SHA256",
+    "saml_force_name_id_format": "false",
+    "saml.client.signature": "false",
+    "saml.authnstatement": "true",
+    "saml_name_id_format": "email",
+    "saml.allow.ecp.flow": "false",
+    "saml_signature_canonicalization_method": "http://www.w3.org/2001/10/xml-exc-c14n#"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "fullScopeAllowed": true,
+  "nodeReRegistrationTimeout": -1,
+  "protocolMappers": [
+    {
+      "name": "first_name",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "firstName",
+        "aggregate.attrs": "false",
+        "friendly.name": "Given name",
+        "attribute.name": "first_name"
+      }
+    },
+    {
+      "name": "email",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "email",
+        "aggregate.attrs": "false",
+        "friendly.name": "Email address",
+        "attribute.name": "email"
+      }
+    },
+    {
+      "name": "uid",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "user.attribute": "uid",
+        "aggregate.attrs": "false",
+        "friendly.name": "Unique Identifier",
+        "attribute.name": "uid"
+      }
+    },
+    {
+      "name": "name",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "username",
+        "aggregate.attrs": "false",
+        "friendly.name": "Full name",
+        "attribute.name": "name"
+      }
+    },
+    {
+      "name": "last_name",
+      "protocol": "saml",
+      "protocolMapper": "saml-user-attribute-mapper",
+      "consentRequired": false,
+      "config": {
+        "attribute.nameformat": "Basic",
+        "user.attribute": "lastName",
+        "aggregate.attrs": "false",
+        "friendly.name": "Family name",
+        "attribute.name": "last_name"
+      }
+    }
+  ],
+  "defaultClientScopes": [
+    "role_list"
+  ],
+  "optionalClientScopes": [],
+  "access": {
+    "view": true,
+    "configure": true,
+    "manage": true
+  }
+}

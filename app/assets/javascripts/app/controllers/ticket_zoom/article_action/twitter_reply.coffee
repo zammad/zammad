@@ -1,17 +1,18 @@
 class TwitterReply
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
+    return actions if !ticket.editable()
+    return actions if ticket.currentView() is 'customer'
 
     if article.type.name is 'twitter status'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'twitterStatusReply'
         icon: 'reply'
         href: '#'
       }
     if article.type.name is 'twitter direct-message'
       actions.push {
-        name: 'reply'
+        name: __('reply')
         type: 'twitterDirectMessageReply'
         icon: 'reply'
         href: '#'
@@ -126,7 +127,7 @@ class TwitterReply
     })
 
   @articleTypes: (articleTypes, ticket, ui) ->
-    return articleTypes if !ui.permissionCheck('ticket.agent')
+    return articleTypes if ticket.currentView() is 'customer'
 
     return articleTypes if !ticket || !ticket.create_article_type_id
 
@@ -172,11 +173,11 @@ class TwitterReply
       # check if recipient exists
       if _.isEmpty(params.to)
         new App.ControllerModal(
-          head: 'Text missing'
-          buttonCancel: 'Cancel'
+          head: __('Text missing')
+          buttonCancel: __('Cancel')
           buttonCancelClass: 'btn--danger'
           buttonSubmit: false
-          message: 'Need recipient in "To".'
+          message: __('Need recipient in "To".')
           shown: true
           small: true
           container: ui.el.closest('.content')

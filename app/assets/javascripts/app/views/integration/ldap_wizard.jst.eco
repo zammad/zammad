@@ -18,13 +18,27 @@
           </thead>
           <tbody>
             <tr>
-              <td class="settings-list-row-control"><%- @T('Host') %>
-              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off">
+              <td class="settings-list-row-control">
+                <%- @T('Name') %> <span>*</span>
+              <td class="settings-list-control-cell"><%- @nameHtml %>
+            <tr>
+              <td class="settings-list-row-control">
+                <%- @T('Host') %> <span>*</span>
+              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off" required>
+            <tr>
+              <td class="settings-list-row-control"><%- @T('Active') %>
+              <td class="settings-list-control-cell">
+                <%- @activeHtml %>
           </tbody>
         </table>
       </div>
     </div>
     <div class="modal-footer">
+    <% if !@newConnection: %>
+      <div class="modal-leftFooter align-left">
+        <div class="btn  btn--primary align-left js-saveQuit"><%- @T('Save') %></div>
+      </div>
+    <% end %>
       <div class="modal-rightFooter">
         <button class="btn btn--primary align-right js-submit"><%- @T('Connect') %></button>
       </div>
@@ -41,7 +55,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Connecting ...') %> <span class="js-host"></span>
+          <span class="loading icon"></span> <%- @T('Connecting …') %> <span class="js-host"></span>
         </p>
       </div>
     </div>
@@ -98,7 +112,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Analyzing structure...') %>
+          <span class="loading icon"></span> <%- @T('Analyzing structure…') %>
         </p>
       </div>
     </div>
@@ -122,7 +136,7 @@
         </div>
         <div class="js-analyzing hide">
           <p class="wizard-loadingText">
-            <%- @T('Analyzing entries with given configuration...') %>
+            <%- @T('Analyzing entries with given configuration…') %>
           </p>
           <div class="centered js-progress">
             <progress max="" value=""></progress>
@@ -233,7 +247,7 @@
     <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <p><%- @T('With your current configuration the following will happen') %>:</p>
+        <p><%- @T('With your current configuration the following will happen:') %></p>
         <div class="js-summary"></div>
       </div>
     </div>

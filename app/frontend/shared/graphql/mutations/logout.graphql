@@ -1,0 +1,6 @@
+mutation logout {
+  logout {
+    success
+    externalLogoutUrl
+  }
+}

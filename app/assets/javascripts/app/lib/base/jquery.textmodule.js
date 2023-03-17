@@ -20,14 +20,14 @@
 
     this.options    = $.extend({}, defaults, options)
 
-    this._defaults  = defaults
-    this._name      = pluginName
+    this._defaults   = defaults
+    this._name       = pluginName
+    this._fixedWidth = true
 
     this.collection = []
     this.active     = false
     this.buffer     = ''
-
-    this._width = 380
+    this.oldElementText = ''
 
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
@@ -44,7 +44,10 @@
 
   Plugin.prototype.bindEvents = function () {
     this.$element.on('keydown', this.onKeydown.bind(this))
-    this.$element.on('keypress', this.onKeypress.bind(this))
+    this.$element.on('keyup', this.onKeyup.bind(this))
+    // using onInput event to trigger onKeyPress behavior
+    // since keyPress doesn't work on Mobile Chrome / Android
+    this.$element.on('input', this.onKeypress.bind(this))
     this.$element.on('focus', this.onFocus.bind(this))
   }
 
@@ -53,10 +56,11 @@
   }
 
   Plugin.prototype.onKeydown = function (e) {
-    //console.log("onKeydown", this.isActive())
+    // Saves the old element text for some special situations.
+    this.oldElementText = this.$element.text()
+
     // navigate through item
     if (this.isActive()) {
-
       // esc
       if (e.keyCode === 27) {
         e.preventDefault()
@@ -69,18 +73,18 @@
       if (e.keyCode === 13) {
         e.preventDefault()
         e.stopPropagation()
-        var id = this.$widget.find('.dropdown-menu li.is-active').data('id')
+        var elem = this.$widget.find('.dropdown-menu li.is-active')[0]
 
         // as fallback use hovered element
-        if (!id) {
-          id = this.$widget.find('.dropdown-menu li:hover').data('id')
+        if (!elem) {
+          elem = this.$widget.find('.dropdown-menu li:hover')[0]
         }
 
         // as fallback first element
-        if (!id) {
-          id = this.$widget.find('.dropdown-menu li:first-child').data('id')
+        if (!elem) {
+          elem = this.$widget.find('.dropdown-menu li:first-child')[0]
         }
-        this.take(id)
+        this.take(elem)
         return
       }
 
@@ -98,10 +102,10 @@
         var active = this.$widget.find('.dropdown-menu li.is-active')
         active.removeClass('is-active')
 
-        if (e.keyCode == 38 && active.prev().size()) {
+        if (e.keyCode == 38 && active.prev().length) {
           active = active.prev()
         }
-        else if (e.keyCode == 40 && active.next().size()) {
+        else if (e.keyCode == 40 && active.next().length) {
           active = active.next()
         }
 
@@ -131,10 +135,11 @@
 
     // reduce buffer, in case close it
     // backspace
-    if (e.keyCode === 8 && this.buffer) {
+    if (e.keyCode === 8 && !( e.ctrlKey || e.metaKey ) && this.buffer) {
 
+      var trigger = this.findTrigger(this.buffer)
       // backspace + buffer === :: -> close textmodule
-      if (this.buffer === '::') {
+      if (trigger && trigger.trigger === this.buffer) {
         this.close(true)
         e.preventDefault()
         return
@@ -144,57 +149,128 @@
       var length   = this.buffer.length
       this.buffer = this.buffer.substr(0, length-1)
       this.log('BS backspace', this.buffer)
-      this.result(this.buffer.substr(2, length-1))
+      this.result(trigger)
+    }
+  }
+
+  Plugin.prototype.onKeyup = function (e) {
+
+    // in normal use we make sure that mentions
+    // which has no text anymore get deleted
+    if (e.keyCode == 8 && !this.buffer) {
+      this.removeInvalidMentions()
     }
   }
 
   Plugin.prototype.onKeypress = function (e) {
     this.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which))
-
-    // shift
-    if (e.keyCode === 16) return
-
-    // enter
-    if (e.keyCode === 13) return
-
-    // arrow keys
-    if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) return
-
-    // observer other second key
-    if (this.buffer === ':' && String.fromCharCode(e.which) !== ':') {
-      this.buffer = ''
+    // gets the character and keycode from event
+    // this event does not have keyCode and which value set
+    // so we take char and set those values to not break the flow
+    // if originalEvent.data is null that means a non char key is pressed like delete, space
+    if(e.originalEvent && e.originalEvent.data) {
+      var char = e.originalEvent.data
+      var keyCode = char.charCodeAt(0)
+      e.keyCode = e.which = keyCode
     }
 
-    // oberserve second :
-    if (this.buffer === ':' && String.fromCharCode(e.which) === ':') {
-      this.buffer = this.buffer + ':'
+    // ignore invalid key codes if search is opened (issue #3637)
+    if (this.isActive() && e.keyCode === undefined) {
+
+      // Check if the trigger still exists in the new text, after a special key was pressed, otherwise
+      //  close the collection.
+      var indexOfBuffer = this.oldElementText.indexOf(this.buffer)
+      var trigger = this.findTrigger(this.buffer)
+
+      if (this.buffer && indexOfBuffer !== -1 && trigger) {
+        foundCurrentBuffer = this.$element.text().substr(indexOfBuffer, this.buffer.length)
+
+        if ( this.$element.text().substr(indexOfBuffer, trigger.trigger.length) !== trigger.trigger ) {
+          this.close(true)
+        }
+
+        // Check on how many characters the trigger needs to be reduced, in the case it's not the same.
+        else if ( foundCurrentBuffer !== this.buffer ) {
+          var existingLength = 0
+          for (var i = 0; i < this.buffer.length; i++) {
+            if (this.buffer.charAt(i) !== foundCurrentBuffer.charAt(i)) {
+              existingLength = i
+              break
+            }
+          }
+
+          this.buffer = this.buffer.substr(0, existingLength)
+          this.result(trigger)
+        }
+      }
+      return
+    }
+
+    // skip on shift + arrow_keys
+    if (_.contains([16, 37, 38, 39, 40], e.keyCode)) return
+
+    // enter
+    if (e.keyCode === 13) {
+      this.buffer = ''
+      return
+    }
+
+    var newChar = String.fromCharCode(e.which)
+    // observe other keys
+    if (this.hasAvailableTriggers(this.buffer)) {
+      if(this.hasAvailableTriggers(this.buffer + newChar)) {
+        this.buffer = this.buffer + newChar
+      } else if (!this.findTrigger(this.buffer)) {
+        this.buffer = ''
+      }
     }
 
     // oberserve first :
-    if (!this.buffer && String.fromCharCode(e.which) === ':') {
-      this.buffer = this.buffer + ':'
+    if (!this.buffer && this.hasAvailableTriggers(newChar)) {
+      this.buffer = this.buffer + newChar
     }
 
-    if (this.buffer && this.buffer.substr(0,2) === '::') {
-
-      var sign = String.fromCharCode(e.which)
-      if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
-        this.buffer = this.buffer + sign
-        //this.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
-      }
+    var trigger = this.findTrigger(this.buffer)
+    if (trigger) {
       this.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
 
       if (!this.isActive()) {
         this.open()
       }
 
-      this.result(this.buffer.substr(2, this.buffer.length))
+      this.result(trigger)
     }
+  }
+
+  // remove invalid mentions
+  Plugin.prototype.removeInvalidMentions = function() {
+    this.$element.find('a[data-mention-user-id]').each(function() {
+      if ($(this).text() != '') return true
+
+      $(this).remove()
+    })
+  }
+
+  // check if at least one trigger is available with the given prefix
+  Plugin.prototype.hasAvailableTriggers = function(prefix) {
+    var result = _.find(this.helpers, function(helper) {
+      var trigger = helper.trigger
+      return trigger.substr(0, prefix.length) == prefix.substr(0, trigger.length)
+    })
+
+    return result != undefined
+  }
+
+  // find a matching trigger
+  Plugin.prototype.findTrigger = function(string) {
+    return _.find(this.helpers, function(helper) {
+      return helper.trigger == string.substr(0, helper.trigger.length)
+    })
   }
 
   // create base template
   Plugin.prototype.renderBase = function() {
-    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
+    this.$element.after('<div class="shortcut dropdown dropdown--actions"><ul class="dropdown-menu text-modules-box"></ul></div>')
     this.$widget = this.$element.next()
     this.$widget.on('mousedown', 'li', $.proxy(this.onEntryClick, this))
     this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))
@@ -209,19 +285,19 @@
     var top            = -( widgetHeight + height ) + this._position.top
     var start          = this._position.left - 6
     var availableWidth = this.$element.innerWidth()
+    var width          = this.$widget.find('.dropdown-menu').width()
 
     if(rtl){
       start = availableWidth - start
     }
 
     // position the element further left if it would break out of the textarea width
-    if (start + this._width > availableWidth) {
-      start = this.$element.innerWidth() - this._width
+    if (start + width > availableWidth) {
+      start = availableWidth - width
     }
 
     var css = {
-      top: top,
-      width: this._width
+      top: top
     }
 
     css[rtl ? 'right' : 'left'] = start
@@ -292,7 +368,16 @@
           nnode.innerHTML = string
     }
     else {
-      document.execCommand('insertHTML', false, string)
+      var sel = rangy.getSelection();
+      if (!sel.rangeCount) return
+
+      var range = sel.getRangeAt(0);
+      range.collapse(false);
+      $('<div>').append(string).contents().each(function() {
+        range.insertNode($(this).get(0));
+        range.collapseAfter($(this).get(0));
+      })
+      sel.setSingleRange(range);
     }
   }
 
@@ -315,26 +400,10 @@
       start = 0
     }
 
-    // for chrome, remove also leading space, add it later - otherwice space will be tropped
-    if (start) {
-      clone.setStart(range.startContainer, start-1)
-      clone.setEnd(range.startContainer, start)
-      var spacerChar = clone.toString()
-      if (spacerChar === ' ') {
-        start = start - 1
-      }
-    }
     //this.log('CUT FOR', string, "-"+clone.toString()+"-", start, range.startOffset)
     clone.setStart(range.startContainer, start)
     clone.setEnd(range.startContainer, range.startOffset)
     clone.deleteContents()
-
-    // for chrome, insert space again
-    if (start) {
-      if (spacerChar === ' ') {
-        this.paste('&nbsp;')
-      }
-    }
   }
 
   Plugin.prototype.onMouseEnter = function(event) {
@@ -344,27 +413,34 @@
 
   Plugin.prototype.onEntryClick = function(event) {
     event.preventDefault()
-    var id = $(event.currentTarget).data('id')
-    this.take(id)
+    this.take(event.currentTarget)
   }
 
   // select text module and insert into text
-  Plugin.prototype.take = function(id) {
-    if (!id) {
+  Plugin.prototype.take = function(elem) {
+    if (!elem) {
       this.close(true)
       return
     }
-    for (var i = 0; i < this.collection.length; i++) {
-      var item = this.collection[i]
-      if (item.id == id) {
-        var content = item.content
-        this.cutInput()
-        this.paste(content)
-        this.close(true)
-        return
-      }
+
+    var trigger = this.findTrigger(this.buffer)
+
+    if (trigger) {
+      var _this     = this;
+
+      var form_id = this.$element.closest('form').find('[name=form_id]').val()
+
+      trigger.renderValue(this, elem, function(text, attachments) {
+        _this.cutInput()
+        _this.paste(text)
+        _this.close(true)
+
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          attachments: attachments,
+          form_id: form_id
+        })
+      })
     }
-    return
   }
 
   Plugin.prototype.getFirstRange = function() {
@@ -381,42 +457,35 @@
   }
 
   // render result
-  Plugin.prototype.result = function(term) {
-    var _this = this
-    var result = _.filter(this.collection, function(item) {
-      var reg = new RegExp(term, 'i')
-      if (item.name && item.name.match(reg)) {
-        return item
-      }
-      if (item.keywords && item.keywords.match(reg)) {
-        return item
-      }
-      return
-    })
+  Plugin.prototype.result = function(trigger) {
+    if (!trigger) return
 
-    result.reverse()
+    var term      = this.buffer.substr(trigger.trigger.length, this.buffer.length)
+    trigger.renderResults(this, term)
+  }
 
-    this.$widget.find('ul').html('')
-    this.log('result', term, result)
+  Plugin.prototype.emptyResultsContainer = function() {
+    this.$widget.find('ul').empty()
+  }
 
-    var elements = $()
+  Plugin.prototype.appendResults = function(collection) {
+    this.$widget.find('ul').append(collection).scrollTop(9999)
+    this.afterResultRendering()
+  }
 
-    for (var i = 0; i < result.length; i++) {
-      var item = result[i]
-      var element = $('<li>')
-      element.attr('data-id', item.id)
-      element.text(item.name)
-      element.addClass('u-clickable u-textTruncate')
-      if (i == result.length-1) {
-        element.addClass('is-active')
+  Plugin.prototype.afterResultRendering = function() {
+    // keep the width of the dropdown the same even when longer items got filtered out
+    if(this._fixedWidth){
+      var elem = this.$widget.find('ul')
+
+      var currentMinWidth = parseInt(elem.css('min-width'))
+      var realWidth       = elem.width()
+
+      if(!currentMinWidth || realWidth > currentMinWidth) {
+        elem.css('min-width', realWidth + 'px')
       }
-      if (item.keywords) {
-        element.append($('<kbd>').text(item.keywords))
-      }
-      elements = elements.add(element)
     }
 
-    this.$widget.find('ul').append(elements).scrollTop(9999)
     this.movePosition()
   }
 
@@ -437,5 +506,266 @@
       }
     });
   }
+
+  function Collection() {}
+
+  Collection.renderValue = function(textmodule, elem, callback) {
+    var id   = $(elem).data('id')
+    var item = _.find(textmodule.collection, function(elem) { return elem.id == id })
+
+    if (!item) return
+
+    callback(item.content, [])
+  }
+
+  function matchItemWithRegExp(item, regex) {
+    return (item.name && item.name.match(regex)) || (item.keywords && item.keywords.match(regex))
+  }
+
+  function compareItem(a, b) {
+    if (a.name < b.name) return 1;
+    if (a.name > b.name) return -1;
+    return 0;
+  }
+
+  Collection.renderResults = function(textmodule, term) {
+    var reg     = new RegExp(term, 'i')
+    var regFull = new RegExp('\\b' + term + '\\b', 'i')
+    var result  = textmodule.collection.filter(function(item) {
+      return matchItemWithRegExp(item, reg) && !matchItemWithRegExp(item, regFull)
+    })
+    var resultFull = textmodule.collection.filter(function(item) {
+      return matchItemWithRegExp(item, regFull)
+    })
+    result.sort(compareItem)
+    if (resultFull.length) {
+      resultFull.sort(compareItem)
+      result = result.concat(resultFull)
+    }
+
+    textmodule.emptyResultsContainer()
+
+    var elements = result.map(function(elem, index, array){
+      var element = $('<li>')
+        .attr('data-id', elem.id)
+        .text(elem.name)
+        .addClass('u-clickable u-textTruncate')
+
+      if (index == array.length-1) {
+        element.addClass('is-active')
+      }
+
+      if (elem.keywords) {
+        element.append($('<kbd>').text(elem.keywords))
+      }
+
+      return element
+    })
+
+    textmodule.appendResults(elements)
+  }
+
+  Collection.trigger = '::'
+
+  function KbAnswer() {}
+
+  KbAnswer.renderValue = function(textmodule, elem, callback) {
+    textmodule.emptyResultsContainer()
+
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
+    textmodule.appendResults(element)
+
+    var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
+
+    App.Ajax.request({
+      id:   'textmoduleKbAnswer',
+      type: 'GET',
+      url:  $(elem).data('url'),
+      success: function(data, status, xhr) {
+        App.Collection.loadAssets(data.assets)
+
+        var translation = App.KnowledgeBaseAnswerTranslation.find($(elem).data('id'))
+
+        var body = translation.content().bodyWithPublicURLs()
+
+        App.Ajax.request({
+          id:   'textmoduleKbAnswerAttachments',
+          type: 'POST',
+          data: JSON.stringify({
+            form_id: form_id
+          }),
+          url:  translation.parent().generateURL('/attachments/clone_to_form'),
+          success: function(data, status, xhr) {
+            App.Utils.htmlImage2DataUrlAsync(body, function(output){
+              callback(output, data.attachments)
+            })
+          },
+          error: function(xhr) {
+            callback('')
+          }
+        })
+      },
+      error: function(xhr) {
+        callback('')
+      }
+    })
+  }
+
+  KbAnswer.renderResults = function(textmodule, term) {
+    textmodule.emptyResultsContainer()
+
+    if(!term) {
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search in Knowledge Base…'))
+      textmodule.appendResults(element)
+
+      return
+    }
+
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
+    textmodule.appendResults(element)
+
+    App.Delay.set(function() {
+      App.Ajax.request({
+        id:   'textmoduleKbAnswer',
+        type: 'POST',
+        url:  App.Config.get('api_path') + '/knowledge_bases/search',
+        data: JSON.stringify({
+          'query':             term,
+          'flavor':            'agent',
+          'index':             'KnowledgeBase::Answer::Translation',
+          'url_type':          'agent',
+          'highlight_enabled': false,
+          'include_locale': true,
+        }),
+        processData: true,
+        success: function(data, status, xhr) {
+          textmodule.emptyResultsContainer()
+
+          var items = data
+            .result
+            .map(function(elem) {
+              if(result = _.find(data.details, function(detailElem) { return detailElem.type == elem.type && detailElem.id == elem.id })) {
+                return {
+                  'category': result.subtitle,
+                  'name':     result.title,
+                  'value':    elem.id,
+                  'url':      result.url
+                }
+              }
+            })
+            .filter(function(elem){ return elem != undefined })
+            .map(function(elem, index, array) {
+              var element = $('<li>')
+                .attr('data-id',  elem.value)
+                .attr('data-url', elem.url)
+                .addClass('u-clickable u-textTruncate with-category')
+
+              element.append($('<small>').text(elem.category))
+              element.append('<br>')
+              element.append($('<span>').text(elem.name))
+
+              if (index == array.length-1) {
+                element.addClass('is-active')
+              }
+
+              return element
+            })
+
+          if(items.length == 0) {
+            items.push($('<li>').text(App.i18n.translateInline('No results found')))
+          }
+
+          textmodule.appendResults(items)
+        }
+      })
+    }, 200, 'textmoduleKbAnswerDelay', 'textmodule')
+  }
+
+  KbAnswer.trigger = '??'
+
+  function Mention() {}
+
+  Mention.renderValue = function(textmodule, elem, callback) {
+    textmodule.emptyResultsContainer()
+
+    var element = $('<li>').text(App.i18n.translateInline('Please wait…'))
+    textmodule.appendResults(element)
+
+    var form_id = textmodule.$element.closest('form').find('[name=form_id]').val()
+
+    var user_id = $(elem).data('id')
+    var user    = App.User.find(user_id)
+    if (!user) {
+      return callback('')
+    }
+
+    fqdn      = App.Config.get('fqdn')
+    http_type = App.Config.get('http_type')
+
+    $replace = $('<a></a>', {
+      href: http_type + '://' + fqdn + '/' + user.uiUrl(),
+      'data-mention-user-id': user_id,
+      text: user.firstname + ' ' + user.lastname
+    })
+
+    callback($replace[0].outerHTML)
+  }
+
+  Mention.renderResults = function(textmodule, term) {
+    textmodule.emptyResultsContainer()
+
+    if(!term) {
+      var element = $('<li>').text(App.i18n.translateInline('Start typing to search for users…'))
+      textmodule.appendResults(element)
+
+      return
+    }
+
+    var element = $('<li>').text(App.i18n.translateInline('Loading…'))
+    textmodule.appendResults(element)
+
+    App.Delay.set(function() {
+      items = []
+
+      if (textmodule.searchCondition.group_id) {
+        App.Mention.searchUser(term, textmodule.searchCondition.group_id, function(data) {
+          textmodule.emptyResultsContainer()
+
+          activeSet = false
+          $.each(data.user_ids, function(index, user_id) {
+            user = App.User.find(user_id)
+            if (!user) return true
+            if (!user.active) return true
+
+            item = $('<li>', {
+              'data-id': user_id,
+              text: user.firstname + ' ' + user.lastname + ' <' + user.email + '>'
+            })
+            if (!activeSet) {
+              activeSet = true
+              item.addClass('is-active')
+            }
+
+            items.push(item)
+          })
+
+          if(items.length == 0) {
+            items.push($('<li>').text(App.i18n.translateInline('No results found')))
+          }
+
+          textmodule.appendResults(items)
+        })
+      }
+      else {
+        textmodule.emptyResultsContainer()
+        items.push($('<li>').text(App.i18n.translateInline('Before you mention a user, please select a group.')))
+        textmodule.appendResults(items)
+      }
+    }, 200, 'textmoduleMentionDelay', 'textmodule')
+  }
+
+  Mention.trigger = '@@'
+
+  Plugin.prototype.helpers = [Collection, KbAnswer, Mention]
 
 }(jQuery, window));

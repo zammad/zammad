@@ -1,22 +1,24 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::ReplyToBasedSender
 
-  def self.run(_channel, mail)
+  def self.run(_channel, mail, _transaction_params)
 
-    reply_to = mail['reply-to'.to_sym]
+    return if mail[:'reply-to'].blank?
+
+    reply_to = mail[:'reply-to'].gsub('<>', '').strip
     return if reply_to.blank?
 
     setting = Setting.get('postmaster_sender_based_on_reply_to')
     return if setting.blank?
 
     # remember original sender
-    mail['raw-origin_from'.to_sym]          = mail['raw-from'.to_sym]
-    mail['origin_from'.to_sym]              = mail[:from]
-    mail['origin_from_email'.to_sym]        = mail[:from_email]
-    mail['origin_from_local'.to_sym]        = mail[:from_local]
-    mail['origin_from_domain'.to_sym]       = mail[:from_domain]
-    mail['origin_from_display_name'.to_sym] = mail[:from_display_name]
+    mail[:'raw-origin_from']        = mail[:'raw-from']
+    mail[:origin_from]              = mail[:from]
+    mail[:origin_from_email]        = mail[:from_email]
+    mail[:origin_from_local]        = mail[:from_local]
+    mail[:origin_from_domain]       = mail[:from_domain]
+    mail[:origin_from_display_name] = mail[:from_display_name]
 
     # get properties of reply-to header
     result = Channel::EmailParser.sender_attributes(reply_to)
@@ -24,7 +26,7 @@ module Channel::Filter::ReplyToBasedSender
     if setting == 'as_sender_of_email'
 
       # set new sender
-      mail['raw-from'.to_sym]  = mail['raw-reply-to'.to_sym]
+      mail[:'raw-from']        = mail[:'raw-reply-to']
       mail[:from]              = reply_to
       mail[:from_email]        = result[:from_email]
       mail[:from_local]        = result[:from_local]
@@ -36,11 +38,11 @@ module Channel::Filter::ReplyToBasedSender
     if setting == 'as_sender_of_email_use_from_realname'
 
       # set new sender
-      mail['raw-from'.to_sym] = mail['raw-reply-to'.to_sym]
-      mail[:from]             = reply_to
-      mail[:from_email]       = result[:from_email]
-      mail[:from_local]       = result[:from_local]
-      mail[:from_domain]      = result[:from_domain]
+      mail[:'raw-from']  = mail[:'raw-reply-to']
+      mail[:from]        = reply_to
+      mail[:from_email]  = result[:from_email]
+      mail[:from_local]  = result[:from_local]
+      mail[:from_domain] = result[:from_domain]
       return
     end
 

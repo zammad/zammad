@@ -23,10 +23,9 @@
     this._defaults  = defaults
     this._name      = pluginName
 
-    // only run if needed
-    if (!document.queryCommandSupported('enableObjectResizing')) {
-      this.bindEvents()
-    }
+    // disable browser based image resizing, use shim anyway
+    document.execCommand('enableObjectResizing', false, false);
+    this.bindEvents()
   }
 
   Plugin.prototype.bindEvents = function () {
@@ -46,14 +45,22 @@
 
   Plugin.prototype.destroyEditors = function () {
     this.$element.find('img.objectResizingEditorActive').each(function(i, img){
-      editor = $(img).data('objectResizingEditor')
+      $img = $(img)
+      editor = $img.data('objectResizingEditor')
+
+      // remove editor by object
       if(editor){
         editor.destroy()
       }
+
+      // remove editor fragments manually
+      else {
+        $img.removeClass('objectResizingEditorActive')
+        $img.siblings().remove()
+        $img.unwrap()
+      }
     })
   }
-
-
 
   /*
 
@@ -80,11 +87,25 @@
   }
 
   Editor.prototype.onKeydown = function (event) {
+    var elem = this.$element.closest('[contenteditable=true]')
+    var previous = this.$element.parent().parent().prev()
     this.destroy()
 
     switch (event.keyCode) {
       case 8: // backspace
         this.$element.remove()
+        event.preventDefault()
+
+        if(previous[0]){
+          range = document.createRange()
+          range.selectNode(previous[0])
+          range.setStart(range.endContainer, range.endOffset)
+          document.getSelection().removeAllRanges()
+          document.getSelection().addRange(range)
+        }
+
+        elem.trigger('focus')
+
         break
       default:
         event.stopPropagation()
@@ -107,12 +128,14 @@
   }
 
   Editor.prototype.startResize = function (event) {
-    var $handle = $(event.currentTarget)
+    event.preventDefault()
+    var $handle = $(event.currentTarget),
+      maxWidth = this.$element.closest('[contenteditable="true"]').width() || ''
     this.resizeCorner = $handle.index()
     this.resizeDir = this.resizeCorner == 0 || this.resizeCorner == 3 ? -1 : 1
     this.startX = event.pageX
     this.startWidth = this.$element.width()
-    this.$clone = this.$element.clone().css({width: '', height: ''}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
+    this.$clone = this.$element.clone().css({width: '', height: '', 'max-width': maxWidth}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
     this.$element.after(this.$clone)
     this.isResizing = true
     $(document).on('mousemove.enableObjectResizing', this.resize.bind(this))
@@ -121,17 +144,33 @@
 
   Editor.prototype.resize = function (event) {
     event.preventDefault()
+    event.stopPropagation()
     var dx = event.pageX - this.startX
     this.$clone.css('width', this.startWidth + (this.resizeDir * dx))
   }
 
   Editor.prototype.resizeEnd = function (event) {
+    var maxWidth = this.$element.closest('[contenteditable="true"]').width(),
+      width = this.$clone.width(),
+      height = this.$clone.height(),
+      naturalWidth = this.$clone.get(0).naturalWidth,
+      naturalHeight = this.$clone.get(0).naturalHeight
+
+    if (maxWidth && maxWidth < width + 10) {
+      height = ''
+      width = ''
+      if (naturalWidth) {
+        width = naturalWidth / 2
+      }
+    }
+
     $(document).off('mousemove.enableObjectResizing')
     $(document).off('mouseup.enableObjectResizing')
 
     this.$element.css({
-      width: this.$clone.width(),
-      height: this.$clone.height()
+      width: width,
+      height: height,
+      'max-width': '100%'
     })
     this.$clone.remove()
 
@@ -140,9 +179,6 @@
       this.isResizing = false
     }.bind(this))
   }
-
-
-
 
   $.fn[pluginName] = function (options) {
     return this.each(function () {

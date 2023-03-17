@@ -17,18 +17,32 @@
           <% if item.navheader: %>
             <li class="dropdown-header"><%- @T(item.navheader) %></li>
           <% end %>
-          <li>
+          <li<% if item.toggle: %> class="dropdown-menu-item dropdown-menu-item--toggle"<% end %>>
+            <% if item.target: %>
             <a href="<%= item.target %>" class="horizontal center">
+            <% else: %>
+            <div class="horizontal center">
+            <% end %>
               <span class="flex u-textTruncate"><% if item.translate: %><%- @T(item.name) %><% else: %><%= item.name %><% end %></span>
               <% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %>
               <% if item.iconClass: %><%- @Icon(item.iconClass) %><% end %>
+              <% if item.toggle: %>
+                <span class="zammad-switch zammad-switch--tiny">
+                   <input type="checkbox" id="<%- item.toggle %>-switch" <% if item.checked && item.checked(): %>checked<% end %>>
+                   <label for="<%- item.toggle %>-switch"></label>
+                </span>
+              <% end %>
+            <% if item.target: %>
             </a>
+            <% else: %>
+            </div>
+            <% end %>
           </li>
         <% end %>
       </ul>
     </li>
   <% else: %>
-    <li class="settings">
+    <li class="settings<%= if item.class then ' '+ item.class %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti(item.name) %>">
         <%- @Icon(item.icon, 'user-menu-icon') %>
       </a>

@@ -1,26 +1,17 @@
-class Sequencer
-  class Unit
-    module Import
-      module Common
-        module SubSequence
-          module Mixin
-            module Resources
-              include ::Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              def process
-                return if resources.blank?
-                sequence_resources(resources)
-              end
+module Sequencer::Unit::Import::Common::SubSequence::Mixin::Resources
+  include ::Sequencer::Unit::Import::Common::SubSequence::Mixin::Base
 
-              private
+  def process
+    return if resources.blank?
 
-              def resources
-                raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
-              end
-            end
-          end
-        end
-      end
-    end
+    sequence_resources(resources)
+  end
+
+  private
+
+  def resources
+    raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
   end
 end

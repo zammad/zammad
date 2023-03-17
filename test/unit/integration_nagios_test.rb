@@ -1,3 +1,4 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -19,7 +20,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -37,7 +38,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -51,7 +52,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/Disk Usage 123 is WARNING *
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-3@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-3@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -69,7 +70,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_2.state.name)
     assert(ticket_2.preferences)
     assert(ticket_2.preferences['nagios'])
@@ -78,13 +79,13 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('WARNING', ticket_2.preferences['nagios']['state'])
     assert_not_equal(ticket_2.id, ticket_1.id)
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-4@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-4@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -102,7 +103,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1_1.state.name)
     assert(ticket_1_1.preferences)
     assert(ticket_1_1.preferences['nagios'])
@@ -111,13 +112,13 @@ WARNING - load average: 3.44, 0.99, 0.35
     assert_equal('WARNING', ticket_1_1.preferences['nagios']['state'])
     assert_equal(ticket_1.id, ticket_1_1.id)
 
-    # matching sender - follow up - recovery - CPU Load/host.internal.loc
+    # matching sender - follow-up - recovery - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -133,7 +134,7 @@ Date/Time: 2016-01-31 10:48:02 +0100
 
 Additional Info:
 "
-    ticket_1_2, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket_1.id, ticket_1_2.id)
     assert_equal('closed', ticket_1_2.state.name)
     assert(ticket_1_2.preferences)
@@ -149,7 +150,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -166,7 +167,7 @@ Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
 
 Comment: [] =
 "
-    ticket_3, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_3, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_3.state.name)
     assert(ticket_3.preferences)
     assert(ticket_3.preferences['nagios'])
@@ -182,7 +183,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -199,7 +200,7 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 
 Comment: [] =
 "
-    ticket_3_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_3_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket_3.id, ticket_3_1.id)
     assert_equal('closed', ticket_3_1.state.name)
     assert(ticket_3_1.preferences)
@@ -208,7 +209,7 @@ Comment: [] =
     assert_nil(ticket_3_1.preferences['nagios']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
 
-    #Setting.set('nagios_integration', false)
+    # Setting.set('nagios_integration', false)
 
   end
 
@@ -220,7 +221,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 From: nagios_not_matching@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -238,7 +239,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -251,7 +252,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 From: nagios_not_matching@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -269,7 +270,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -280,7 +281,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-1@monitoring.zammad.com>
 Return-Path: bob@example.com
 
 ***** Nagios *****
@@ -298,7 +299,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['nagios'])
@@ -306,13 +307,13 @@ WARNING - load average: 3.44, 0.99, 0.35
 
   test 'matching sender tests' do
 
-    # matching sender - follow up - CPU Load/host.internal.loc
+    # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
 Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -330,7 +331,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -346,7 +347,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -364,7 +365,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -380,7 +381,7 @@ Subject: ** PROBLEM Service Alert: host.internal.loc/CPU Load is WARNING **
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-2@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -398,7 +399,7 @@ Additional Info:
 WARNING - load average: 3.44, 0.99, 0.35
 "
 
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['nagios'])
@@ -417,7 +418,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.zammad.com>
 From: nagios2@monitoring.example.com (nagios)
 
 ***** Nagios *****
@@ -434,7 +435,7 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 
 Comment: [] =
 "
-    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket_count = Ticket.count
     assert_not(ticket_1)
     assert_equal(ticket_count, Ticket.count)

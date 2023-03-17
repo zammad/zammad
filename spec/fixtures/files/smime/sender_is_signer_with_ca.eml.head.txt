@@ -1,0 +1,3 @@
+From: Zammad Helpdesk <smime-sender-ca@example.com>
+To: Nicole Braun <nicole.braun@zammad.org>
+Subject: S/MIME Test - Sender Is Signer with Trusted CA (Sign)

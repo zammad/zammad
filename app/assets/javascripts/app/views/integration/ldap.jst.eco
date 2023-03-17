@@ -1,10 +1,13 @@
 <div class="js-lastImport"></div>
 <div class="js-notConfigured">
-  <p><%- @T('No %s configured.', 'LDAP') %></p>
+  <h5><a href="#" class="js-back">❮ ><%- @T('Back to overview') %></a></h5>
+  <h2><%- @T('Settings %s', @item.name) %></h2>
+  <p><%- @T('No configuration set.') %></p>
   <button type="submit" class="btn btn--primary js-wizard"><%- @T('Configure') %></button>
 </div>
 <div class="js-summary hide">
-  <h2><%- @T('Settings') %></h2>
+  <h5><a href="#" class="js-back">❮ Back to overview</a></h5>
+  <h2><%- @T('Settings %s', @item.name) %></h2>
   <table class="settings-list" style="width: 100%;">
     <thead>
       <tr>
@@ -48,7 +51,7 @@
       <thead><tr><th><%- @T('No Entries') %>
     </table>
   <% else: %>
-    <table class="settings-list" style="width: 100%;">
+    <table class="settings-list settings-list--stretch">
       <thead>
         <tr>
           <th width="40%"><%- @T('LDAP') %>
@@ -69,7 +72,7 @@
       <thead><tr><th><%- @T('No Entries') %>
     </table>
   <% else: %>
-    <table class="settings-list" style="width: 100%;">
+    <table class="settings-list settings-list--stretch">
       <thead>
         <tr>
           <th width="40%"><%- @T('LDAP') %>

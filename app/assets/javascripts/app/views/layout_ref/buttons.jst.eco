@@ -4,9 +4,10 @@
   <h2>Normal Buttons</h2>
   <h3>Default</h3>
   <div class="btn">Default Button</div>
+  <div class="btn btn--active">Active Button</div>
   <div class="btn btn--slim">Slim Button</div>
-  <div class="btn is-disabled">Disabled Button (via .is-disabled)</div>
-  <div class="btn" disabled>Disabled Button (via [disabled])</div>
+  <div class="btn is-disabled">.is-disabled Button</div>
+  <div class="btn" disabled>[disabled] Button</div>
 
   <h3>Primary</h3>
   <div class="btn btn--primary">Primary Button</div>
@@ -24,6 +25,7 @@
   <div class="horizontal">
     <div class="btn btn--split--first">Split First Button</div>
     <div class="btn btn--split">Split Button</div>
+    <div class="btn btn--split btn--active">Active Split Button</div>
     <div class="btn btn--split--last">Split Last Button</div>
   </div>
 
@@ -55,4 +57,33 @@
     <div class="btn btn--action btn--split">Split</div>
     <div class="btn btn--action btn--split--last">Split Last</div>
   </div>
+
+  <h3>Dropdown</h3>
+
+  <div class="buttonDropdown dropup js-submitDropdown" style="margin-left: 0px;">
+    <button class="btn btn--primary btn--split--first js-submit">Dropdown UP</button>
+    <button class="btn btn--primary btn--slim btn--split--last js-openDropdown">
+      <svg class="icon icon-arrow-up "><use xlink:href="assets/images/icons.svg#icon-arrow-up"></use></svg>
+    </button>
+    <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction" style="min-width: 195px;">
+        <li class="js-dropdownAction" role="menuitem" data-id="1">Value 1</li>
+        <li class="js-dropdownAction" role="menuitem" data-id="2">Value 2</li>
+        <li class="js-dropdownAction" role="menuitem" data-id="3">Value 3</li>
+    </ul>
+  </div>
+
+  <br>
+
+  <div class="buttonDropdown dropdown js-submitDropdownDown" style="margin-left: 0px;">
+    <button class="btn btn--primary btn--split--first js-submit">Dropdown Down</button>
+    <button class="btn btn--primary btn--slim btn--split--last js-openDropdownDown">
+      <svg class="icon icon-arrow-down"><use xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+    </button>
+    <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction" style="min-width: 195px;">
+        <li class="js-dropdownActionDown" role="menuitem" data-id="1">Value 1</li>
+        <li class="js-dropdownActionDown" role="menuitem" data-id="2">Value 2</li>
+        <li class="js-dropdownActionDown" role="menuitem" data-id="3">Value 3</li>
+    </ul>
+  </div>
+
 </div>

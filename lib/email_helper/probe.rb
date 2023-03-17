@@ -1,4 +1,6 @@
-module EmailHelper
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class EmailHelper
   class Probe
 
 =begin
@@ -6,7 +8,7 @@ module EmailHelper
 get result of probe
 
   result = EmailHelper::Probe.full(
-    email: 'znuny@example.com',
+    email: 'zammad@example.com',
     password: 'somepassword',
     folder: 'some_folder', # optional im imap
   )
@@ -54,9 +56,9 @@ returns on fail
 
       if !user || !domain
         return {
-          result: 'invalid',
+          result:   'invalid',
           messages: {
-            email: 'Invalid email.'
+            email: "Invalid email '#{params[:email]}'."
           },
         }
       end
@@ -67,11 +69,11 @@ returns on fail
 
       # get mx records, try to find provider based on mx records
       mx_records = EmailHelper.mx_records(domain)
-      domains = domains.concat(mx_records)
+      domains.concat(mx_records)
       provider_map.each_value do |settings|
         domains.each do |domain_to_check|
 
-          next if domain_to_check !~ /#{settings[:domain]}/i
+          next if !domain_to_check.match?(%r{#{settings[:domain]}}i)
 
           # add folder to config if needed
           if params[:folder].present? && settings[:inbound] && settings[:inbound][:options]
@@ -91,9 +93,11 @@ returns on fail
           next if result_outbound[:result] != 'ok'
 
           return {
-            result: 'ok',
-            content_messages: result_inbound[:content_messages],
-            setting: settings,
+            result:             'ok',
+            content_messages:   result_inbound[:content_messages],
+            archive_possible:   result_inbound[:archive_possible],
+            archive_week_range: result_inbound[:archive_week_range],
+            setting:            settings,
           }
         end
       end
@@ -105,7 +109,7 @@ returns on fail
       inbound_guess = EmailHelper.provider_inbound_guess(user, params[:email], params[:password], domain)
       inbound_map = inbound_mx + inbound_guess
       result = {
-        result: 'ok',
+        result:  'ok',
         setting: {}
       }
       success = false
@@ -122,9 +126,11 @@ returns on fail
 
         next if result_inbound[:result] != 'ok'
 
-        success                    = true
-        result[:setting][:inbound] = config
-        result[:content_messages]  = result_inbound[:content_messages]
+        success                     = true
+        result[:setting][:inbound]  = config
+        result[:content_messages]   = result_inbound[:content_messages]
+        result[:archive_possible]   = result_inbound[:archive_possible]
+        result[:archive_week_range] = result_inbound[:archive_week_range]
 
         break
       end
@@ -162,7 +168,7 @@ returns on fail
           reason: 'outbound failed',
         }
       end
-      Rails.logger.info "PROBE FULL SUCCESS: #{result.inspect}"
+      Rails.logger.debug { "PROBE FULL SUCCESS: #{result.inspect}" }
       result
     end
 
@@ -172,7 +178,7 @@ get result of inbound probe
 
   result = EmailHelper::Probe.inbound(
     adapter: 'imap',
-    settings: {
+    options: {
       host: 'imap.gmail.com',
       port: 993,
       ssl: true,
@@ -213,7 +219,7 @@ returns on fail
       # validate adapter
       if !EmailHelper.available_driver[:inbound][adapter.to_sym]
         return {
-          result: 'failed',
+          result:  'failed',
           message: "Unknown adapter '#{adapter}'",
         }
       end
@@ -221,16 +227,16 @@ returns on fail
       # connection test
       result_inbound = {}
       begin
-        require "channel/driver/#{adapter.to_filename}"
-
-        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
       rescue => e
+        Rails.logger.debug { e }
+
         return {
-          result: 'invalid',
-          settings: params,
-          message: e.message,
+          result:        'invalid',
+          settings:      params,
+          message:       e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }
@@ -287,31 +293,37 @@ returns on fail
       # validate adapter
       if !EmailHelper.available_driver[:outbound][adapter.to_sym]
         return {
-          result: 'failed',
+          result:  'failed',
           message: "Unknown adapter '#{adapter}'",
         }
       end
 
       # prepare test email
+      # rubocop:disable Zammad/DetectTranslatableString
       mail = if subject
                {
                  from:    email,
                  to:      email,
                  subject: "Zammad Getting started Test Email #{subject}",
-                 body:    "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
+                 body:    "This is a test email from Zammad to check if email sending and receiving work correctly.\n\nYou can ignore or delete this email.",
                }
              else
                {
                  from:    email,
-                 to:      'emailtrytest@znuny.com',
+                 to:      'verify-external-smtp-sending@discard.zammad.org',
                  subject: 'This is a Test Email',
-                 body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
+                 body:    "This is a test email from Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore or delete it.",
                }
              end
-      if subject
+      # rubocop:enable Zammad/DetectTranslatableString
+
+      if subject.present?
         mail['X-Zammad-Test-Message'] = subject
       end
       mail['X-Zammad-Ignore']          = 'true'
+      mail['X-Zammad-Fqdn']            = Setting.get('fqdn')
+      mail['X-Zammad-Verify']          = 'true'
+      mail['X-Zammad-Verify-Time']     = Time.zone.now.iso8601
       mail['X-Loop']                   = 'yes'
       mail['Precedence']               = 'bulk'
       mail['Auto-Submitted']           = 'auto-generated'
@@ -319,36 +331,37 @@ returns on fail
 
       # test connection
       begin
-        require "channel/driver/#{adapter.to_filename}"
-
-        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_class    = "Channel::Driver::#{adapter.to_classname}".constantize
         driver_instance = driver_class.new
         driver_instance.send(
           params[:options],
           mail,
         )
       rescue => e
+        Rails.logger.debug { e }
+
         # check if sending email was ok, but mailserver rejected
         if !subject
           white_map = {
-            'Recipient address rejected' => true,
+            'Recipient address rejected'                => true,
             'Sender address rejected: Domain not found' => true,
           }
           white_map.each_key do |key|
 
-            next if e.message !~ /#{Regexp.escape(key)}/i
+            next if !e.message.match?(%r{#{Regexp.escape(key)}}i)
 
             return {
-              result: 'ok',
+              result:   'ok',
               settings: params,
-              notice: e.message,
+              notice:   e.message,
             }
           end
         end
+
         return {
-          result: 'invalid',
-          settings: params,
-          message: e.message,
+          result:        'invalid',
+          settings:      params,
+          message:       e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }
@@ -360,7 +373,7 @@ returns on fail
 
     def self.invalid_field(message_backend)
       invalid_fields.each do |key, fields|
-        return fields if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return fields if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       {}
     end
@@ -385,23 +398,24 @@ returns on fail
 
     def self.translation(message_backend)
       translations.each do |key, message_human|
-        return message_human if message_backend.match?(/#{Regexp.escape(key)}/i)
+        return message_human if message_backend.match?(%r{#{Regexp.escape(key)}}i)
       end
       nil
     end
 
     def self.translations
       {
-        'authentication failed'                                     => 'Authentication failed!',
-        'Username and Password not accepted'                        => 'Authentication failed!',
-        'Incorrect username'                                        => 'Authentication failed, username incorrect!',
-        'Lookup failed'                                             => 'Authentication failed, username incorrect!',
-        'Invalid credentials'                                       => 'Authentication failed, invalid credentials!',
-        'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
-        'getaddrinfo: Name or service not known'                    => 'Hostname not found!',
-        'No route to host'                                          => 'No route to host!',
-        'execution expired'                                         => 'Host not reachable!',
-        'Connection refused'                                        => 'Connection refused!',
+        'authentication failed'                                     => __('Authentication failed.'),
+        'Username and Password not accepted'                        => __('Authentication failed.'),
+        'Incorrect username'                                        => __('Authentication failed due to incorrect username.'),
+        'Lookup failed'                                             => __('Authentication failed due to incorrect username.'),
+        'Invalid credentials'                                       => __('Authentication failed due to incorrect credentials.'),
+        'authentication not enabled'                                => __('Authentication not possible (not offered by the service)'),
+        'getaddrinfo: nodename nor servname provided, or not known' => __('The hostname could not be found.'),
+        'getaddrinfo: Name or service not known'                    => __('The hostname could not be found.'),
+        'No route to host'                                          => __('There is no route to this host.'),
+        'execution expired'                                         => __('This host cannot be reached.'),
+        'Connection refused'                                        => __('The connection was refused.'),
       }
     end
 

@@ -77,8 +77,13 @@
   var ACTION_ZOOM = 'zoom';
   var ACTION_NONE = 'none';
 
+  // Function check
+  function _isFunction(obj){
+    return ((typeof obj) === 'function')
+  }
+
   // Supports
-  var SUPPORT_CANVAS = $.isFunction($('<canvas>')[0].getContext);
+  var SUPPORT_CANVAS = _isFunction($('<canvas>')[0].getContext);
 
   // Maths
   var sqrt = Math.sqrt;
@@ -977,23 +982,23 @@
       var $this = this.$element;
       var $cropper = this.$cropper;
 
-      if ($.isFunction(options.cropstart)) {
+      if (_isFunction(options.cropstart)) {
         $this.on(EVENT_CROP_START, options.cropstart);
       }
 
-      if ($.isFunction(options.cropmove)) {
+      if (_isFunction(options.cropmove)) {
         $this.on(EVENT_CROP_MOVE, options.cropmove);
       }
 
-      if ($.isFunction(options.cropend)) {
+      if (_isFunction(options.cropend)) {
         $this.on(EVENT_CROP_END, options.cropend);
       }
 
-      if ($.isFunction(options.crop)) {
+      if (_isFunction(options.crop)) {
         $this.on(EVENT_CROP, options.crop);
       }
 
-      if ($.isFunction(options.zoom)) {
+      if (_isFunction(options.zoom)) {
         $this.on(EVENT_ZOOM, options.zoom);
       }
 
@@ -1021,23 +1026,23 @@
       var $this = this.$element;
       var $cropper = this.$cropper;
 
-      if ($.isFunction(options.cropstart)) {
+      if (_isFunction(options.cropstart)) {
         $this.off(EVENT_CROP_START, options.cropstart);
       }
 
-      if ($.isFunction(options.cropmove)) {
+      if (_isFunction(options.cropmove)) {
         $this.off(EVENT_CROP_MOVE, options.cropmove);
       }
 
-      if ($.isFunction(options.cropend)) {
+      if (_isFunction(options.cropend)) {
         $this.off(EVENT_CROP_END, options.cropend);
       }
 
-      if ($.isFunction(options.crop)) {
+      if (_isFunction(options.crop)) {
         $this.off(EVENT_CROP, options.crop);
       }
 
-      if ($.isFunction(options.zoom)) {
+      if (_isFunction(options.zoom)) {
         $this.off(EVENT_ZOOM, options.zoom);
       }
 
@@ -1947,7 +1952,7 @@
       var cropBoxData = {};
       var ratio;
 
-      if ($.isFunction(data)) {
+      if (_isFunction(data)) {
         data = data.call(this.$element);
       }
 
@@ -2030,7 +2035,7 @@
       var canvas = this.canvas;
       var aspectRatio = canvas.aspectRatio;
 
-      if ($.isFunction(data)) {
+      if (_isFunction(data)) {
         data = data.call(this.$element);
       }
 
@@ -2087,7 +2092,7 @@
       var widthChanged;
       var heightChanged;
 
-      if ($.isFunction(data)) {
+      if (_isFunction(data)) {
         data = data.call(this.$element);
       }
 
@@ -2443,7 +2448,7 @@
         $this.data(NAMESPACE, (data = new Cropper(this, options)));
       }
 
-      if (typeof options === 'string' && $.isFunction(fn = data[options])) {
+      if (typeof options === 'string' && _isFunction(fn = data[options])) {
         result = fn.apply(data, args);
       }
     });

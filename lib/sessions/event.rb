@@ -1,13 +1,15 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Sessions::Event
   include ApplicationLib
 
   def self.run(params)
-    adapter = "Sessions::Event::#{params[:event].to_classname}"
-
     begin
-      backend = load_adapter(adapter)
+      backend = "Sessions::Event::#{params[:event].to_classname}".constantize
     rescue => e
-      return { event: 'error', data: { error: "No such event #{params[:event]}", payload: params[:payload] } }
+      Rails.logger.error e.inspect
+      Rails.logger.error e.backtrace
+      return { event: 'error', data: { error: "No such event #{params[:event]}: #{e.inspect}", payload: params[:payload] } }
     end
 
     begin
@@ -16,7 +18,9 @@ class Sessions::Event
       instance.destroy
       result
     rescue => e
-      return { event: 'error', data: { error: e.message, payload: params[:payload] } }
+      Rails.logger.error e.inspect
+      Rails.logger.error e.backtrace
+      { event: 'error', data: { error: e.message, payload: params[:payload] } }
     end
   end
 

@@ -1,8 +1,10 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class FixedTranslation < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name: 'system_init_done')
+    return if !Setting.exists?(name: 'system_init_done')
 
     settings_update = [
       {
@@ -41,16 +43,6 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
         'description' => 'Use client storage to cache data to enhance performance of application.',
       },
       {
-        'name'        => 'auth_oauth2',
-        'title'       => nil,
-        'description' => 'Enables user authentication via generic OAuth2. Register your app first.',
-      },
-      {
-        'name'        => 'auth_oauth2_credentials',
-        'title'       => nil,
-        'description' => 'Enables user authentication via generic OAuth2.',
-      },
-      {
         'name'        => 'password_min_size',
         'title'       => 'Minimum length',
         'description' => 'Password needs to have at least a minimal number of characters.',
@@ -68,7 +60,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => 'ticket_hook',
         'title'       => nil,
-        'description' => 'The identifier for a ticket, e. g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
+        'description' => 'The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is Ticket#.',
       },
       {
         'name'        => 'ticket_hook_divider',
@@ -101,7 +93,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       {
         'name'        => 'ticket_subject_re',
         'title'       => nil,
-        'description' => 'The text at the beginning of the subject in an email reply, e. g. RE, AW, or AS.',
+        'description' => 'The text at the beginning of the subject in an email reply, e.g. RE, AW, or AS.',
       },
       {
         'name'        => 'ticket_define_email_from',
@@ -411,7 +403,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
     ]
 
     settings_update.each do |setting|
-      fetched_setting = Setting.find_by(name: setting['name'] )
+      fetched_setting = Setting.find_by(name: setting['name'])
       next if !fetched_setting
 
       if setting['title']

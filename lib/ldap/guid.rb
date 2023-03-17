@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 class Ldap
 
   # Class for handling LDAP GUIDs.
@@ -16,7 +18,7 @@ class Ldap
     #
     # @return [Boolean]
     def self.valid?(string)
-      string.match?(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w+/)
+      string.match?(%r{\w{8}-\w{4}-\w{4}-\w{4}-\w+})
     end
 
     # Convers a given GUID string into the HEX equivalent.
@@ -88,14 +90,15 @@ class Ldap
       string.delete!('-')
 
       # split every two chars
-      parts = string.scan(/.{1,2}/)
+      parts = string.scan(%r{.{1,2}})
 
       # re-order according to oracle format index and join
       oracle_format_indices = [3, 2, 1, 0, 5, 4, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15]
-      result                = oracle_format_indices.map { |index| parts[index] }.join('')
+      result                = oracle_format_indices.map { |index| parts[index] }.join
 
       # add dashes if requested
       return result if !dashify
+
       [
         result[0..7],
         result[8..11],

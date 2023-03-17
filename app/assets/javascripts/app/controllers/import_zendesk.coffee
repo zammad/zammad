@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class ImportZendesk extends App.ControllerWizardFullScreen
   className: 'getstarted fit'
   elements:
     '.input-feedback':                       'urlStatus'
@@ -23,9 +23,9 @@ class Index extends App.ControllerContent
     super
 
     # set title
-    @title 'Import'
+    @title __('Import')
 
-    # redirect to login if master user already exists
+    # redirect to login if admin user already exists
     if @Config.get('system_init_done')
       @navigate '#login'
       return
@@ -44,7 +44,7 @@ class Index extends App.ControllerContent
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'zendesk'
-          @navigate "#import/#{data.import_backend}"
+          @navigate "#import/#{data.import_backend}", { emptyEl: true }
           return
 
         # render page
@@ -56,7 +56,7 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-    @html App.view('import/zendesk')()
+    @replaceWith App.view('import/zendesk')()
 
   updateUrl: (e) =>
     @urlStatus.attr('data-state', 'loading')
@@ -73,14 +73,13 @@ class Index extends App.ControllerContent
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @linkErrorMessage.text('')
             @nextEnterCredentials.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @linkErrorMessage.text( data.message_human || data.message)
+            @linkErrorMessage.text( data.message_human || data.message)
             @nextEnterCredentials.addClass('hide')
 
       )
@@ -101,14 +100,13 @@ class Index extends App.ControllerContent
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @apiTokenErrorMessage.text('')
             @nextStartMigration.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @apiTokenErrorMessage.text(data.message_human || data.message)
+            @apiTokenErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
 
       )
@@ -139,7 +137,6 @@ class Index extends App.ControllerContent
       success:     (data, status, xhr) =>
 
         # validate form
-        console.log(data)
         if data.result is 'ok'
           @delay(@updateMigration, 3000)
     )
@@ -166,7 +163,7 @@ class Index extends App.ControllerContent
           @$('.js-error').addClass('hide')
 
         if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
-          window.location.reload()
+          @redirectToLogin()
           return
 
         if !_.isEmpty(data.result)
@@ -189,10 +186,10 @@ class Index extends App.ControllerContent
         @delay(@updateMigration, 5000)
     )
 
-App.Config.set('import/zendesk', Index, 'Routes')
+App.Config.set('import/zendesk', ImportZendesk, 'Routes')
 App.Config.set('zendesk', {
-  title: 'Zendesk'
-  name:  'Zendesk'
+  title: __('Zendesk')
+  name:  __('Zendesk')
   class: 'js-zendesk'
   url:   '#import/zendesk'
 }, 'ImportPlugins')

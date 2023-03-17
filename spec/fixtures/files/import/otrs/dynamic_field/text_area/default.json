@@ -1,0 +1,17 @@
+{
+  "ID": "8",
+  "ChangeTime": "2014-09-12 09:31:58",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-06-19 12:11:23",
+  "Label": "TextArea Example",
+  "FieldOrder": "8",
+  "Config": {
+    "DefaultValue": "",
+    "Rows": "20",
+    "Cols": "10"
+  },
+  "FieldType": "TextArea",
+  "Name": "TextAreaExample",
+  "ObjectType": "Ticket"
+}

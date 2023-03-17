@@ -1,0 +1,15 @@
+query textModuleSuggestions(
+  $query: String!
+  $limit: Int
+  $ticketId: ID
+  $customerId: ID
+) {
+  textModuleSuggestions(query: $query, limit: $limit) {
+    id
+    name
+    keywords
+    renderedContent(
+      templateRenderContext: { ticketId: $ticketId, customerId: $customerId }
+    )
+  }
+}

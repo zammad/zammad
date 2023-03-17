@@ -1,0 +1,5 @@
+mutation formUploadCacheRemove($formId: FormId!, $fileIds: [ID!]!) {
+  formUploadCacheRemove(formId: $formId, fileIds: $fileIds) {
+    success
+  }
+}

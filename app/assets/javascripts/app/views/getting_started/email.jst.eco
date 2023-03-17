@@ -44,7 +44,7 @@
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Verifying...') %>
+          <span class="loading icon"></span> <%- @T('Verifying…') %>
         </p>
       </div>
     </div>
@@ -81,7 +81,23 @@
       <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
-        <p class="js-message"><%- @T('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', 'x') %></p>
+        <p class="js-messageFound"><%- @T('We have already found %s email(s) in your mailbox. We will move them all from your mailbox into Zammad.', 'x') %></p>
+
+        <div class="js-archiveMessage">
+          <p class="js-archiveMessageCount"><%- @T('In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', 'x') %></p>
+
+          <p><%- @T('Should the emails from this mailbox be imported as an archive or as regular emails?') %></p>
+
+          <ul>
+            <li><%- @T('Import as archive: |No notifications are sent|, the |tickets are closed|, and original timestamps are used. You can still find them in Zammad using the search.') %></li>
+            <li><%- @T('Import as regular: |Notifications are sent| and the |tickets are open| - you can find the tickets in the overview of open tickets.') %></li>
+          </ul>
+
+          <p class="js-importType">
+            Import as: <span class="js-importTypeSelect"></span>
+          </p>
+        </div>
+        <div class="inbound-acknowledge-settings"></div>
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary js-goToSlide js-back" data-slide="js-intro"><%- @T('Go Back') %></a>

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 # rubocop:disable Style/ClassVars
 module Import
   module OTRS
@@ -28,6 +30,7 @@ module Import
         history_attribute = @history_attributes[:history_attribute]
         return if !history_attribute
         return if history_attribute_exists?(history_attribute)
+
         @@created_history_attributes[history_attribute] = true
         ::History.attribute_lookup(history_attribute)
       end
@@ -40,7 +43,7 @@ module Import
         # we perform further import
         # otherwise the following import logic (add) will
         # try to add the history attribute, too
-        sleep 1 until ::History::Attribute.find_by(name: name)
+        sleep 1 until ::History::Attribute.exists?(name: name)
         true
       end
     end

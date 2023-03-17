@@ -1,28 +1,22 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        class UserGroupMap < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-          uses :client
-          provides :user_group_map
+class Sequencer::Unit::Import::Zendesk::UserGroupMap < Sequencer::Unit::Base
 
-          def process
-            state.provide(:user_group_map, mapping)
-          end
+  uses :client
+  provides :user_group_map
 
-          private
+  def process
+    state.provide(:user_group_map, mapping)
+  end
 
-          def mapping
-            result = {}
-            client.group_memberships.all! do |group_membership|
-              result[ group_membership.user_id ] ||= []
-              result[ group_membership.user_id ].push( group_membership.group_id )
-            end
-            result
-          end
-        end
-      end
+  private
+
+  def mapping
+    result = {}
+    client.group_memberships.all! do |group_membership|
+      result[ group_membership.user_id ] ||= []
+      result[ group_membership.user_id ].push(group_membership.group_id)
     end
+    result
   end
 end

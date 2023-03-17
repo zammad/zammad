@@ -1,0 +1,64 @@
+<div class="call-widgets">
+  <% for item in @item: %>
+    <div class="call-widget">
+      <div class="call-widget-header">
+        <%- @Icon('status', "neutral") %>
+        <div class="label"><%- @T('Inbound Call') %></div>
+        <!--
+        <div class="flex-spacer"></div>
+        <div class="btn btn--text js-remove" title="<%- @Ti('Remove') %>"><%- @Icon('diagonal-cross') %></div>
+        -->
+      </div>
+      <% user = undefined %>
+      <% shown = false %>
+      <% if item.preferences.from && !_.isEmpty(item.preferences.from): %>
+        <% for caller_id in item.preferences.from: %>
+          <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
+            <% user = App.User.fullLocal(caller_id.user_id) %>
+            <% classes = ['user-popover', 'u-textTruncate'] %>
+            <% classes.push('is-inactive') if !user.active %>
+            <% if shown: %><div class="spacer"></div><% end %>
+            <div class="user-card">
+              <a href="<%- user.uiUrl() %>"><%- user.avatar() %></a>
+              <div class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><% if caller_id.level isnt 'known': %><%- @T('maybe:') %> <% end %><%= user.displayNameLong() %></div>
+              <span class="text-muted"><%= item.from_pretty %></span>
+              <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
+            </div>
+            <% shown = true %>
+          <% else if !_.isEmpty(caller_id.comment): %>
+            <% shown = true %>
+            <div class="user-card">
+              <%- @unique_avatar(caller_id.comment, caller_id.comment.split(" ").map((name) -> name[0]).join("")) %>
+              <%- @T('maybe:') %> <%= caller_id.comment %><br>
+              <span class="text-muted"><%= item.from_pretty %></span>
+              <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if !shown && !_.isEmpty(item.from_comment): %>
+        <% shown = true %>
+        <div class="user-card">
+          <%- @unique_avatar(item.from_comment, item.from_comment.split(" ").map((name) -> name[0]).join("")) %>
+          <%= item.from_comment %><br>
+          <span class="text-muted"><%= item.from_pretty %></span>
+          <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
+        </div>
+      <% end %>
+      <% if !shown: %>
+        <div class="user-card">
+          <%- @unique_avatar(item.from_pretty || item.from, '??') %>
+        <% if !_.isEmpty(item.from_pretty): %>
+          <a class="inherit-color" href="<%- App.Utils.phoneify(item.from_pretty) %>"><%= item.from_pretty %></a>
+          <% if item.direction is 'in': %>
+          <div class="btn btn--text btn--create no-padding js-newUser" href="#" data-phone="<%= item.from_pretty %>"><%- @Icon('plus-small') %> <span><%- @T('New User') %></div>
+          <% end %>
+        <% else: %>
+          <a class="inherit-color" href="<%- App.Utils.phoneify(item.from) %>"><%= item.from %></a>
+        <% end %>
+          <div class="btn btn--small btn--quad btn--create space-left js-newTicket" title="<%- @Ti('New Ticket') %>" data-user-id="<% if user: %><%- user.id %><% end %>"><%- @Icon('plus') %></div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

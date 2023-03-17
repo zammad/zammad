@@ -25,15 +25,15 @@ class App.WebSocket
       _instance ?= new _webSocketSingleton
     _instance.channel()
 
-  @_spool: ->
-    if _instance == undefined
-      _instance ?= new _webSocketSingleton
-    _instance.spool()
-
   @support: ->
     if _instance == undefined
       _instance ?= new _webSocketSingleton
     _instance.support()
+
+  @queue: ->
+    if _instance == undefined
+      _instance ?= new _webSocketSingleton
+    _instance.queue
 
 # The actual Singleton class
 class _webSocketSingleton extends App.Controller
@@ -41,19 +41,19 @@ class _webSocketSingleton extends App.Controller
 
   queue:                    []
   supported:                true
-  lastSpoolMessage:         undefined
-  sentSpoolFinished:        true
   connectionKeepDown:       false
   connectionEstablished:    false
   connectionWasEstablished: false
   tryToConnect:             false
-  backend:                  'websocket'
+  backend:                  undefined # set in constructor when config is available
   backend_port:             ''
   client_id:                undefined
   error:                    false
 
   constructor: (@args) ->
     super
+
+    @backend = @Config.get('websocket_backend') || 'websocket'
 
     # on auth, send new auth data to server
     App.Event.bind(
@@ -71,33 +71,11 @@ class _webSocketSingleton extends App.Controller
       'ws'
     )
 
-    # get spool messages after successful ws login
-    App.Event.bind(
-      'ws:login', =>
-        @spool()
-      'ws'
-    )
-
-    # get spool:sent
-    App.Event.bind(
-      'spool:sent'
-      (data) =>
-
-        # set timestamp to get spool messages later
-        @lastSpoolMessage = data.timestamp
-
-        # set sentSpoolFinished
-        @sentSpoolFinished = true
-
-        App.Delay.clear 'reset-spool-sent-if-not-returned', 'ws'
-      'ws'
-    )
-
     # initial connect
     @connect()
 
     # send ping after visibilitychange to check if connection is open again after wakeup
-    $(document).bind('visibilitychange', =>
+    $(document).on('visibilitychange', =>
       @log 'debug', 'visibilitychange'
       return if document.hidden
       return if !@connectionEstablished
@@ -135,26 +113,6 @@ class _webSocketSingleton extends App.Controller
       event: 'login'
       session_id: App.Config.get('session_id')
       fingerprint: App.Browser.fingerprint()
-    @send(data)
-
-  spool: =>
-    return if !@sentSpoolFinished
-    @sentSpoolFinished = false
-
-    # build data to send to server
-    data =
-      event: 'spool'
-    if @lastSpoolMessage
-      data['timestamp'] = @lastSpoolMessage
-
-    @log 'debug', 'spool', data
-
-    # reset @sentSpoolFinished if spool:sent will not return
-    reset = =>
-      @sentSpoolFinished = true
-    App.Delay.set reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
-
-    # ask for spool messages
     @send(data)
 
   close: ( params = {} ) =>
@@ -286,15 +244,14 @@ class _webSocketSingleton extends App.Controller
     @ws.onerror = (e) =>
       @log 'debug', 'ws:onerror', e
 
+      if @connectionEstablished
+        @connectionEstablished = false
+
   _receiveMessage: (data = []) =>
 
     # go through all blocks
     for item in data
       @log 'debug', 'onmessage', item
-
-      # set timestamp to get spool messages later
-      if item['spool']
-        @lastSpoolMessage = Math.round( +new Date()/1000 )
 
       # reset reconnect loop
       if item['event'] is 'pong'
@@ -355,10 +312,10 @@ class _webSocketSingleton extends App.Controller
         success: (data) =>
           if data && data.error
             @client_id = undefined
-            @_ajaxInit( force: true )
+            @_ajaxInit(force: true)
         error: =>
           @client_id = undefined
-          @_ajaxInit( force: true )
+          @_ajaxInit(force: true)
       )
 
   _ajaxReceive: =>
@@ -391,7 +348,7 @@ class Modal extends App.ControllerModal
   buttonSubmit: false
   backdrop: 'static'
   keyboard: false
-  head: 'Lost network connection!'
+  head: __('Lost network connection!')
 
   content: ->
-    'Trying to reconnect...'
+    __('Trying to reconnect…')

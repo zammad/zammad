@@ -12,7 +12,7 @@
     </td>
     <td>
       <%- ticket.customer.avatar("50", "", "userInfo-avatar") %>
-      <h2 style="margin-top: 0px;"><a href="<%- ticket.uiUrl() %>" data-type="edit"><%= ticket.title %></a></h2>
+      <h2 style="margin-top: 0px;"><a href="<%- ticket.uiUrl() %>" data-type="edit"><%= ticket.title || '-' %></a></h2>
       <div class="horizontal">
         <div class="vertical flex">
           <table style="width: 100%;">
@@ -33,7 +33,7 @@
         <div class="vertical flex">
           <table style="width: 100%;">
             <tr>
-              <td style="width: 25%;"><label><%- @T('Erstellt') %></label></td><td> <%- @P(ticket, 'created_at') %></td>
+              <td style="width: 25%;"><label><%- @T('Created') %></label></td><td> <%- @P(ticket, 'created_at') %></td>
             </tr>
             <tr>
               <td><label><%- @T('Priority') %></label></td><td> <%- @P(ticket, 'priority') %></td>

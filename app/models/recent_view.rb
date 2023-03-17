@@ -1,36 +1,33 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class RecentView < ApplicationModel
   include RecentView::Assets
 
   # rubocop:disable Rails/InverseOf
-  belongs_to :ticket, foreign_key: 'o_id'
-  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id'
+  belongs_to :ticket, foreign_key: 'o_id', optional: true
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id', optional: true
+  belongs_to :created_by, class_name: 'User'
   # rubocop:enable Rails/InverseOf
 
   after_create  :notify_clients
   after_update  :notify_clients
   after_destroy :notify_clients
 
-  def self.log(object, o_id, user)
+  association_attributes_ignored :created_by
 
-    # access check
+  def self.log(object, o_id, user)
     return if !access(object, o_id, user)
 
-    # lookups
-    object_lookup_id = ObjectLookup.by_name(object)
+    exists_by_object_and_id?(object, o_id)
 
-    # create entry
-    record = {
-      o_id: o_id,
-      recent_view_object_id: object_lookup_id.to_i,
-      created_by_id: user.id,
-    }
-    RecentView.create(record)
+    RecentView.create!(o_id:                  o_id,
+                       recent_view_object_id: ObjectLookup.by_name(object),
+                       created_by_id:         user.id)
   end
 
   def self.log_destroy(requested_object, requested_object_id)
     return if requested_object == 'RecentView'
+
     RecentView.where(recent_view_object_id: ObjectLookup.by_name(requested_object))
               .where(o_id: requested_object_id)
               .destroy_all
@@ -41,43 +38,34 @@ class RecentView < ApplicationModel
   end
 
   def self.list(user, limit = 10, object_name = nil)
-    recent_views = if !object_name
-                     RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
-                               .group(:o_id, :recent_view_object_id, :created_by_id)
-                               .where(created_by_id: user.id)
-                               .limit(limit)
-                   elsif object_name == 'Ticket'
-                     state_ids = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
-                     local_recent_views = RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
-                                                    .group(:o_id, :recent_view_object_id, :created_by_id)
-                                                    .where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(object_name))
-                                                    .limit(limit + 10)
-                     clear_list = []
-                     local_recent_views.each do |item|
-                       ticket = Ticket.find_by(id: item.o_id)
-                       next if !ticket
-                       next if !state_ids.include?(ticket.state_id)
-                       clear_list.push item
-                       break if clear_list.count == limit
-                     end
-                     clear_list
-                   else
-                     RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
-                               .group(:o_id, :recent_view_object_id, :created_by_id)
-                               .where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(object_name))
-                               .limit(limit)
-                   end
+    recent_views = RecentView.select('o_id, ' \
+                                     'recent_view_object_id, ' \
+                                     'created_by_id, ' \
+                                     'MAX(created_at) as created_at, ' \
+                                     'MAX(id) as id')
+                             .group(:o_id, :recent_view_object_id, :created_by_id)
+                             .where(created_by_id: user.id)
+                             .reorder(Arel.sql('MAX(created_at) DESC, MAX(id) DESC'))
+                             .limit(limit)
 
-    list = []
-    recent_views.each do |item|
-
-      # access check
-      next if !access(ObjectLookup.by_id(item['recent_view_object_id']), item['o_id'], user)
-
-      # add to result list
-      list.push item
+    if object_name.present?
+      recent_views = recent_views.where(recent_view_object_id: ObjectLookup.by_name(object_name))
     end
-    list
+
+    # hide merged / removed tickets in Ticket Merge dialog
+    if object_name == 'Ticket'
+      recent_views = recent_views.limit(limit * 2)
+
+      viewable_ticket_ids = Ticket.where('id IN (?) AND state_id in (?)',
+                                         recent_views.map(&:o_id),
+                                         Ticket::State.by_category(:viewable_agent_new).pluck(:id)) # rubocop:disable Rails/PluckInWhere
+                                  .pluck(:id)
+
+      recent_views = recent_views.select { |rv| viewable_ticket_ids.include?(rv.o_id) }
+                                 .first(limit)
+    end
+
+    recent_views.select { |rv| access(ObjectLookup.by_id(rv.recent_view_object_id), rv.o_id, user) }
   end
 
   def notify_clients
@@ -85,25 +73,17 @@ class RecentView < ApplicationModel
       created_by_id,
       {
         event: 'RecentView::changed',
-        data: {}
+        data:  {}
       }
     )
   end
 
   def self.access(object, o_id, user)
+    record = object.to_s
+              .safe_constantize
+              .try(:lookup, id: o_id)
 
-    # check if object exists
-    begin
-      return if !Kernel.const_get(object)
-      record = Kernel.const_get(object).lookup(id: o_id)
-      return if !record
-    rescue
-      return
-    end
-
-    # check permission
-    return if !record.respond_to?(:access?)
-    record.access?(user, 'read')
+    Pundit.policy(user, record).try(:show?)
   end
 
 =begin

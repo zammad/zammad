@@ -1,9 +1,4 @@
 -----------------------------------------------------------------------------
-ba-linkify.js
-Source: http://benalman.com/code/test/js-linkify/
-Copyright: 2009 "Cowboy" Ben Alman
-License: MIT license
------------------------------------------------------------------------------
 bootstrap
 Source: https://github.com/twbs/bootstrap
 Copyright: 2011-2015 Twitter, Inc.
@@ -24,9 +19,9 @@ Source: https://github.com/sliptree/bootstrap-tokenfield
 Copyright 2013-2014 Sliptree and other contributors
 License: MIT license
 -----------------------------------------------------------------------------
-clipboard.js
-Source: https://github.com/lgarron/clipboard.js
-Copyright: 2015 Lucas Garron (https://garron.net/)
+clipboard-polyfill.promise.js
+Source: https://github.com/lgarron/clipboard-polyfill
+Copyright: 2021 Lucas Garron (https://garron.net/)
 License: MIT license
 -----------------------------------------------------------------------------
 cropper.js
@@ -44,11 +39,6 @@ Source: https://github.com/jackbowman/email-addresses
 Copyright: 2013 Fog Creek Software, Jack Bowman (https://github.com/jackbowman)
 License: MIT license
 -----------------------------------------------------------------------------
-expanding.js
-Source: https://github.com/bgrins/ExpandingTextareas
-Copyright: Brian Grinstead (https://github.com/bgrins)
-License: MIT license
------------------------------------------------------------------------------
 Exif.js
 Source: https://github.com/exif-js/exif-js
 Copyright: Jacob Seidelin, Roald de Vries
@@ -57,7 +47,12 @@ License: MIT license
 highlight.pack.js
 Source: https://highlightjs.org
 Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
-License: BSD License
+License: BSD License (BSD-3-Clause)
+-----------------------------------------------------------------------------
+is-mobile.js
+Source: https://github.com/juliangruber/is-mobile
+Copyright: 2013 Julian Gruber <julian@juliangruber.com>
+License: MIT license
 -----------------------------------------------------------------------------
 jquery.flot.js
 Source: https://github.com/dnschnur/flot
@@ -74,7 +69,7 @@ jquery.fineuploader-3.0.js
 Source: http://github.com/Valums-File-Uploader/file-uploader
 Copyright: 2010 Andrew Valums <andrew(at)valums.com>
            2012 Ray Nicholus <fineuploader(at)garstasio.com>
-License: MIT license, GNU GPL 2 or later, GNU LGPL 2 or later
+License: GNU GPL 2 or later, GNU LGPL 2 or later
 -----------------------------------------------------------------------------
 jquery.noty.js
 Source: https://github.com/needim/noty/
@@ -105,6 +100,11 @@ License: Dual licensed under the MIT or GPL Version 2 licenses.
 jquery.visible.js
 Source: https://github.com/customd/jquery-visible
 Copyright: 2012, Digital Fusion
+License: MIT license
+-----------------------------------------------------------------------------
+linkify.js
+Source: https://github.com/Hypercontext/linkifyjs
+Copyright: Copyright (c) 2021 SoapBox Innovations Inc.
 License: MIT license
 -----------------------------------------------------------------------------
 marked.js
@@ -162,4 +162,39 @@ word_filter.js
 Source: https://gist.github.com/sbrin/6801034
 Copyright: 2015, sbrin - https://github.com/sbrin
 License: MIT license
+-----------------------------------------------------------------------------
+ant-design icon font
+Source: https://github.com/ant-design/ant-design
+Copyright: 2015-present Alipay.com, https://www.alipay.com/
+License: MIT license
+-----------------------------------------------------------------------------
+Font Awesome icon font
+Source: http://fontawesome.io/
+Copyright: Font Awesome by Dave Gandy - http://fontawesome.io
+License: MIT License
+-----------------------------------------------------------------------------
+Simple line icons font
+Source: https://github.com/thesabbir/simple-line-icons
+Copyright: 2016 Sabbir Ahmed & All Contributors
+License: MIT license
+-----------------------------------------------------------------------------
+Ionicons icon font
+Source: https://github.com/ionic-team/ionicons
+Copyright: 2016 Drifty (http://drifty.com/)
+License: MIT license
+-----------------------------------------------------------------------------
+Material icon font
+Source: https://github.com/google/material-design-icons
+Copyright: Google
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
+QUnit
+Source: https://qunitjs.com/
+Copyright: jQuery Foundation and other contributors
+License: MIT
+-----------------------------------------------------------------------------
+Sinon.JS
+Source: https://sinonjs.org
+Copyright: Sinon committers
+License: BSD-3
 -----------------------------------------------------------------------------

@@ -1,13 +1,14 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module BaseFactory
-
-    # rubocop:disable Style/ModuleFunction
     extend self
 
     def import_action(records, *args)
       pre_import_hook(records, *args)
       import_loop(records, *args) do |record|
         next if skip?(record, *args)
+
         backend_instance = create_instance(record, *args)
         post_import_hook(record, backend_instance, *args)
       end
@@ -35,12 +36,12 @@ module Import
       backend_class(record, *args).new(record, *args)
     end
 
-    def import_loop(records, *_args, &import_block)
-      records.each(&import_block)
+    def import_loop(records, *_args, &)
+      records.each(&)
     end
 
     def module_name
-      name.to_s.sub(/Import::/, '').sub(/Factory/, '')
+      name.to_s.sub(%r{Import::}, '').sub(%r{Factory}, '')
     end
   end
 end

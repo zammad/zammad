@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T(@head) %> <small><%- @T('Management') %></small></h1>
+    <h1><%- @T(@head) %><% if @subHead || @subHead is undefined: %> <small><%- @T(@subHead || 'Management') %></small><% end %></h1>
   </div>
   <div class="page-header-meta">
     <% if @showDescription: %>
@@ -17,3 +17,5 @@
 <div class="page-content">
   <div class="table-overview"></div>
 </div>
+
+<div class="page-footer"></div>

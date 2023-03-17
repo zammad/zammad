@@ -1,25 +1,16 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module ObjectAttribute
-          class Add < Sequencer::Unit::Base
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-            uses :model_class, :sanitized_name, :resource
-            provides :instance
+class Sequencer::Unit::Import::Zendesk::ObjectAttribute::Add < Sequencer::Unit::Base
+  prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-            def process
-              state.provide(:instance) do
-                backend_class.new(model_class, sanitized_name, resource)
-              end
-            end
+  skip_action :skipped, :failed
 
-            def backend_class
-              "Import::Zendesk::ObjectAttribute::#{resource.type.capitalize}".constantize
-            end
-          end
-        end
-      end
+  uses :model_class, :sanitized_name, :resource, :backend_class
+  provides :instance
+
+  def process
+    state.provide(:instance) do
+      backend_class.new(model_class, sanitized_name, resource)
     end
   end
 end

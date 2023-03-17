@@ -1,0 +1,8 @@
+mutation accountLocale($locale: String!) {
+  accountLocale(locale: $locale) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

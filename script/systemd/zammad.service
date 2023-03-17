@@ -3,8 +3,8 @@ Description=Zammad
 After=syslog.target
 After=network.target
 StopWhenUnneeded=true
-Wants=zammad-rails.service
-Wants=zammad-scheduler.service
+Wants=zammad-web.service
+Wants=zammad-worker.service
 Wants=zammad-websocket.service
 
 [Service]

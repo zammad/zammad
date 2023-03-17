@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Organization
   module Assets
@@ -25,45 +25,50 @@ returns
     def assets(data)
 
       app_model_organization = Organization.to_app_model
-      app_model_user = User.to_app_model
 
       if !data[ app_model_organization ]
         data[ app_model_organization ] = {}
       end
+      return data if data[ app_model_organization ][ id ]
+
+      local_attributes = attributes_with_association_ids
+
+      # set temp. current attributes to assets pool to prevent
+      # loops, will be updated with lookup attributes later
+      data[ app_model_organization ][ id ] = local_attributes
+
+      # support primary and secodary members
+      local_attributes['member_ids'] = Array(local_attributes['member_ids']) | Array(local_attributes['secondary_member_ids'])
+
+      app_model_user = User.to_app_model
+      if local_attributes['member_ids'].present?
+
+        # only provide assets for the first 10 organization users
+        # rest will be loaded optionally by the frontend
+        local_attributes['member_ids'] = local_attributes['member_ids'].sort
+        local_attributes['member_ids'][0, 10].each do |local_user_id|
+          next if data[ app_model_user ] && data[ app_model_user ][ local_user_id ]
+
+          user = User.lookup(id: local_user_id)
+          next if !user
+
+          data = user.assets(data)
+        end
+      end
+
+      data[ app_model_organization ][ id ] = local_attributes
+
       if !data[ app_model_user ]
         data[ app_model_user ] = {}
       end
-      if !data[ app_model_organization ][ id ]
-        local_attributes = attributes_with_association_ids
-
-        # set temp. current attributes to assets pool to prevent
-        # loops, will be updated with lookup attributes later
-        data[ app_model_organization ][ id ] = local_attributes
-
-        if local_attributes['member_ids'].present?
-
-          # featrue used for different propose, do limit references
-          if local_attributes['member_ids'].count > 100
-            local_attributes['member_ids'] = local_attributes['member_ids'].sort[0, 100]
-          end
-          local_attributes['member_ids'].each do |local_user_id|
-            next if data[ app_model_user ] && data[ app_model_user ][ local_user_id ]
-            user = User.lookup(id: local_user_id)
-            next if !user
-            data = user.assets(data)
-          end
-        end
-
-        data[ app_model_organization ][ id ] = local_attributes
-      end
-      %w[created_by_id updated_by_id].each do |local_user_id|
-        next if !self[ local_user_id ]
-        next if data[ app_model_user ][ self[ local_user_id ] ]
-        user = User.lookup(id: self[ local_user_id ])
-        next if !user
-        data = user.assets(data)
-      end
       data
+    end
+
+    def filter_unauthorized_attributes(attributes)
+      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+
+      attributes = super
+      attributes.slice('id', 'name', 'active')
     end
   end
 end

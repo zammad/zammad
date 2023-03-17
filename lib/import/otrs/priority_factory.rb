@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module PriorityFactory
@@ -6,13 +8,14 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def import_loop(records, *_args, &import_block)
+      def import_loop(records, *_args, &)
         super
         update_attribute_settings
       end
 
       def update_attribute_settings
         return if Import::OTRS.diff?
+
         update_attribute
       end
 

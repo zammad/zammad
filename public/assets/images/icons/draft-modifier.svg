@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>draft-modifier</title>
+    <desc>Created with Sketch.</desc>
+    <g id="draft-modifier" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="backdrop" fill="#50E3C2" points="5.32542447 0 2 5.97510428 2.01377692 8.98393373 5.5 8.98393373 9 2.97937742 9 1.94808009e-18"></polygon>
+        <path d="M6.9782802,1.05773353 C6.77241149,0.91623667 6.50121443,0.984345235 6.37152196,1.20952588 L6.0499425,1.76996961 L7.61059124,2.84333946 L7.93241176,2.28342371 C8.06162209,2.05771509 8.00015076,1.76046609 7.79428205,1.61923321 L6.9782802,1.05773353 Z M4.83401538,7.68511924 L7.37748229,3.25119889 L5.8158693,2.17730106 L3.27336665,6.61227735 L4.83401538,7.68511924 Z M3,8.98393373 L3.81455546,8.51218952 L4.57149662,8.0744996 L3.06581049,7.03808788 L3.03447216,7.97603256 L3,8.98393373 Z" id="Shape" fill="#BD10E0"></path>
+    </g>
+</svg>

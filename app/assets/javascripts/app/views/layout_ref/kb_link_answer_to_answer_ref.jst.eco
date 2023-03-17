@@ -1,0 +1,10 @@
+<div class="main flex vertical end">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h2><%- @T('Edit Answer') %></h2>
+    </div>
+  </div>
+  <form class="form--grid js-form"></form>
+  <span class="flex-spacer"></span>
+  <a class="btn btn--primary js-submit">Update</a>
+</div>

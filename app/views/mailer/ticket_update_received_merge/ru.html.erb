@@ -1,0 +1,11 @@
+Другая заявка была объединена с заявкой (#{ticket.title}) 
+ 
+<div>Здравствуйте, #{recipient.firstname}.</div> 
+<br> 
+<div> 
+Другая заявка была объединена с заявкой (#{ticket.title}) пользователем "<b>#{current_user.longname}</b>". 
+</div> 
+<br> 
+<div> 
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Посмотреть это в #{config.product_name}</a> 
+</div>

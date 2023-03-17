@@ -1,0 +1,47 @@
+<%- @V('popover/single_object_generic', object: @object, attributes: @attributes) %>
+<% if @object.parent?().canBePublished?(): %>
+  <div class="state-badge">
+    <%- @Icon('task-state', @object.parent().can_be_published_state()) %>
+    <span class="<%= @object.parent().can_be_published_state_css() %>">
+      <%- @T(@object.parent().can_be_published_state()) %>
+    </span>
+  </div>
+
+  <hr>
+
+  <div class="popover-block">
+    <div class="horizontal two-columns">
+      <div class="column">
+        <label><%- @T('Published at') %></label>
+        <% if time = @object.parent().published_at: %>
+          <%- @humanTime(time, false, 'time', 'absolute') %>
+        <% else: %>
+          -
+        <% end %>
+      </div>
+      <div class="column">
+        <label><%- @T('Archived at') %></label>
+        <% if time = @object.parent().archived_at: %>
+          <%- @humanTime(time, false, 'time', 'absolute') %>
+        <% else: %>
+          -
+        <% end %>
+      </div>
+      <div class="column">
+        <label><%- @T('Category') %></label>
+        <a href="<%= @object.parent().category().uiUrl(App.KnowledgeBaseLocale.find(@object.kb_locale_id)) %>" title="<%= @object.parent().category().categoriesForSearch({ full: true, kb_locale: App.KnowledgeBaseLocale.find(@object.kb_locale_id) }) %>"><%= @object.parent().category().guaranteedTitle(@object.kb_locale_id) %></a>
+      </div>
+      <div class="column">
+        <label><%- @T('Language') %></label>
+        <%= App.KnowledgeBaseLocale.localeFor(@object).systemLocale().name %>
+      </div>
+
+      <% if !_.isEmpty(@object.parent().tags): %>
+        <div class="column">
+          <label><%- @T('Tags') %></label>
+          <%= @object.parent().tags.map((elem) -> "##{elem}").join(' ') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

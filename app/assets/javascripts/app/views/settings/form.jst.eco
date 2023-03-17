@@ -11,7 +11,7 @@
 <% for setting in @settings: %>
         <tr>
           <td><%- @T(setting.title) %>
-          <td data-name="<%- setting.name %>">
+          <td class="settings-list-control-cell" data-name="<%- setting.name %>">
           <td><p class="help-text"><%- @RichText(setting.description) %></p>
 <% end %>
       </tbody>

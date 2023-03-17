@@ -1,13 +1,14 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module Import
   module OTRS
     module HistoryFactory
       extend Import::Factory
-
-      # rubocop:disable Style/ModuleFunction
       extend self
 
       def skip?(record, *_args)
         return true if !determine_class(record)
+
         false
       end
 
@@ -26,13 +27,15 @@ module Import
       end
 
       def check_supported(history)
-        return if !supported_types.include?(history['HistoryType'])
+        return if supported_types.exclude?(history['HistoryType'])
+
         history['HistoryType']
       end
 
       def check_article(history)
         return if !history['ArticleID']
         return if history['ArticleID'].to_i.zero?
+
         'Article'
       end
     end

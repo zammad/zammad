@@ -1,12 +1,4 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        module Ticket
-          class Tags < Sequencer::Unit::Import::Zendesk::SubSequence::TicketSubObject
-          end
-        end
-      end
-    end
-  end
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class Sequencer::Unit::Import::Zendesk::Ticket::Tags < Sequencer::Unit::Import::Zendesk::SubSequence::TicketSubObject
 end

@@ -1,0 +1,9 @@
+<li class="section <%= visibility_class_name(answer) %>">
+  <%= link_to custom_path_if_needed help_answer_path(answer.category.translation, answer.translation, locale: params[:locale]), @knowledge_base do %>
+    <span class="section-inner">
+      <%= icon('knowledge-base-answer') %>
+      <%= answer.translation.title %>
+      <%= visibility_note(answer) %>
+    </span>
+  <% end %>
+</li>

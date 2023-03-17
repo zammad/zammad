@@ -1,25 +1,4 @@
-# Rails autoload has some issues with same namend sub-classes
-# in the importer folder require AND simultaniuos requiring
-# of the same file in different threads so we need to
-# require them ourself
-require_dependency 'import/otrs/ticket'
-require_dependency 'import/otrs/ticket_factory'
-require_dependency 'import/otrs/article_customer'
-require_dependency 'import/otrs/article_customer_factory'
-require_dependency 'import/otrs/article'
-require_dependency 'import/otrs/article_factory'
-require_dependency 'import/otrs/article/attachment_factory'
-require_dependency 'import/otrs/history'
-require_dependency 'import/otrs/history_factory'
-require_dependency 'import/otrs/history/article'
-require_dependency 'import/otrs/history/move'
-require_dependency 'import/otrs/history/new_ticket'
-require_dependency 'import/otrs/history/priority_update'
-require_dependency 'import/otrs/history/state_update'
-require_dependency 'store'
-require_dependency 'store/object'
-require_dependency 'store/provider/db'
-require_dependency 'store/provider/file'
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -27,11 +6,17 @@ module Import
     extend Import::OTRS::ImportStats
     extend Import::OTRS::Async
     extend Import::OTRS::Diff
-
-    # rubocop:disable Style/ModuleFunction
     extend self
 
-    def start
+    # Start import with specific parameters.
+    # Useful for debug and continuing from breakpoint of last not success import
+    #
+    # @example
+    #   Import::OTRS::start() - Nomrmal usage
+    #
+    #   Import::OTRS::start(thread: 1, offset: 1000) - Run the task in Single-Thread and start from offset 1000
+
+    def start(args = {})
       log 'Start import...'
 
       checks
@@ -44,7 +29,7 @@ module Import
 
       customer_user
 
-      threaded_import('Ticket')
+      threaded_import('Ticket', args)
 
       true
     end
@@ -74,8 +59,9 @@ module Import
     end
 
     def threaded_import(remote_object, args = {})
-      thread_count = args[:threads] || 8
-      limit        = args[:limit]   || 20
+      thread_count      = args[:threads] || 8
+      limit             = args[:limit]   || 20
+      start_offset_base = args[:offset]  || 0
 
       Thread.abort_on_exception = true
       threads                   = {}
@@ -96,7 +82,7 @@ module Import
             # get the offset for the current thread and loop count
             thread_offset_base = (Thread.current[:thread_no] - 1) * limit
             thread_step        = thread_count * limit
-            offset             = Thread.current[:loop_count] * thread_step + thread_offset_base
+            offset             = (Thread.current[:loop_count] * thread_step) + thread_offset_base + start_offset_base
 
             break if !imported?(
               remote_object: remote_object,
@@ -110,7 +96,7 @@ module Import
           ActiveRecord::Base.connection.close
         end
       end
-      (1..thread_count).each do |thread|
+      (1..thread_count).each do |thread| # rubocop:disable Style/CombinableLoops
         threads[thread].join
       end
     end
@@ -135,6 +121,7 @@ module Import
     def imported?(args)
       log "loading #{args[:limit]} #{args[:remote_object]} starting at #{args[:offset]}..."
       return false if !import_action(args[:remote_object], limit: args[:limit], offset: args[:offset], diff: args[:diff])
+
       true
     end
 

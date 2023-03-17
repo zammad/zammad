@@ -70,7 +70,7 @@ Date: Fri, 26 May 2017 17:01:45 +0200
 From: Twelve SaaS GmbH Helpdesk <example@zammad.com>
 To: ticket-bounce-trigger2@example.com
 Message-ID: <20170526150141.232.13312@example.zammad.loc>
-In-Reply-To: 
+In-Reply-To:
 References: <20170526150142.232.819805@example.zammad.loc>
  <20170526150119.6C5E520A13B2@mx1.zammad.loc>
  <20170526150141.232.799457@example.zammad.loc>
@@ -115,7 +115,7 @@ Content-Type: text/plain;
  charset=UTF-8
  Content-Transfer-Encoding: 7bit
 
-Your follow up for (Ticket#1705265400361) has been received and will be reviewed by our support staff.
+Your follow-up for (Ticket#1705265400361) has been received and will be reviewed by our support staff.
 
 To provide additional information, please reply to this email or click on the following link:[1] https://example.zammad.loc/#ticket/zoom/232
 
@@ -210,7 +210,7 @@ Content-Type: text/html;
       }
     </style>
   </head>
-  <body style="font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"><div>Your follow up for <b>(Ticket#1705265400361)</b> has been received and will be reviewed by our support staff.</div>
+  <body style="font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"><div>Your follow-up for <b>(Ticket#1705265400361)</b> has been received and will be reviewed by our support staff.</div>
   <br>
 <div>To provide additional information, please reply to this email or click on the following link:
 <a href="https://example.zammad.loc/#ticket/zoom/232" rel="nofollow noreferrer noopener" target="_blank">https://example.zammad.loc/#ticket/zoom/232</a>

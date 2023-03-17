@@ -1,6 +1,6 @@
-class Index extends App.ControllerSubContent
-  requiredPermission: 'admin.version'
-  header: 'Version'
+class Version extends App.ControllerSubContent
+  requiredPermission: 'admin'
+  header: __('Version')
 
   constructor: ->
     super
@@ -25,4 +25,4 @@ class Index extends App.ControllerSubContent
       version: @version
     )
 
-App.Config.set('Version', { prio: 3800, name: 'Version', parent: '#system', target: '#system/version', controller: Index, permission: ['admin.version'] }, 'NavBarAdmin' )
+App.Config.set('Version', { prio: 3800, name: __('Version'), parent: '#system', target: '#system/version', controller: Version, permission: ['admin'] }, 'NavBarAdmin' )

@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module ApplicationController::LogsHttpAccess
   extend ActiveSupport::Concern
 
@@ -17,13 +19,14 @@ module ApplicationController::LogsHttpAccess
 
     # request
     request_data = {
-      content: '',
-      content_type: request.headers['Content-Type'],
+      content:          '',
+      content_type:     request.headers['Content-Type'],
       content_encoding: request.headers['Content-Encoding'],
-      source: request.headers['User-Agent'] || request.headers['Server'],
+      source:           request.headers['User-Agent'] || request.headers['Server'],
     }
     request.headers.each do |key, value|
       next if key[0, 5] != 'HTTP_'
+
       request_data[:content] += if key == 'HTTP_COOKIE'
                                   "#{key}: xxxxx\n"
                                 else
@@ -32,35 +35,35 @@ module ApplicationController::LogsHttpAccess
     end
     body = request.body.read
     if body
-      request_data[:content] += "\n" + body
+      request_data[:content] += "\n#{body}"
     end
     request_data[:content] = request_data[:content].slice(0, 8000)
 
     # response
     response_data = {
-      code: response.status = response.code,
-      content: '',
-      content_type: nil,
+      code:             response.status = response.code,
+      content:          '',
+      content_type:     nil,
       content_encoding: nil,
-      source: nil,
+      source:           nil,
     }
     response.headers.each do |key, value|
       response_data[:content] += "#{key}: #{value}\n"
     end
     body = response.body
     if body
-      response_data[:content] += "\n" + body
+      response_data[:content] += "\n#{body}"
     end
     response_data[:content] = response_data[:content].slice(0, 8000)
     record = {
       direction: 'in',
-      facility: @http_log_support[:facility],
-      url: url_for(only_path: false, overwrite_params: {}),
-      status: response.status,
-      ip: request.remote_ip,
-      request: request_data,
-      response: response_data,
-      method: request.method,
+      facility:  @http_log_support[:facility],
+      url:       url_for(only_path: false, overwrite_params: {}),
+      status:    response.status,
+      ip:        request.remote_ip,
+      request:   request_data,
+      response:  response_data,
+      method:    request.method,
     }
     HttpLog.create(record)
   end

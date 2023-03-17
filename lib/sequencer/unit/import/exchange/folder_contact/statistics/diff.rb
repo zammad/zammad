@@ -1,35 +1,25 @@
-class Sequencer
-  class Unit
-    module Import
-      module Exchange
-        module FolderContact
-          module Statistics
-            class Diff < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::ActionDiff
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-              uses :ews_folder_name
+class Sequencer::Unit::Import::Exchange::FolderContact::Statistics::Diff < Sequencer::Unit::Base
+  include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::ActionDiff
 
-              def process
-                state.provide(:statistics_diff) do
-                  # build structure for a general diff
-                  # and a folder specific sub structure
-                  diff.merge(
-                    folders: {
-                      ews_folder_name => diff
-                    }
-                  )
-                end
-              end
+  uses :ews_folder_name
 
-              private
-
-              def actions
-                %i[created updated unchanged skipped failed]
-              end
-            end
-          end
-        end
-      end
+  def process
+    state.provide(:statistics_diff) do
+      # build structure for a general diff
+      # and a folder specific sub structure
+      diff.merge(
+        folders: {
+          ews_folder_name => diff
+        }
+      )
     end
+  end
+
+  private
+
+  def actions
+    %i[created updated unchanged skipped failed]
   end
 end

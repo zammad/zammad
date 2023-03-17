@@ -1,19 +1,13 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.textarea
   @render: (attribute) ->
+
+    # set an appropriate default value for rows, if not given
+    if attribute.rows is undefined
+      attribute.rows = 4
+
     fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
-
-    a = ->
-      visible = $( item[0] ).is(':visible')
-      if visible && !$( item[0] ).expanding('active')
-        $( item[0] ).expanding()
-      $( item[0] ).on('focus', ->
-        visible = $( item[0] ).is(':visible')
-        if visible && !$( item[0] ).expanding('active')
-          $( item[0] ).expanding().focus()
-      )
-    App.Delay.set(a, 80)
 
     if attribute.upload
 
@@ -22,11 +16,10 @@ class App.UiElement.textarea
 
         # only add upload item if html element exists
         if $('#' + fileUploaderId )[0]
+          form_id = item.closest('form').find('[name=form_id]').val()
           $('#' + fileUploaderId ).fineUploader(
             request:
-              endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
-              params:
-                form_id: item.closest('form').find('[name=form_id]').val()
+              endpoint: "#{App.Config.get('api_path')}/upload_caches/#{form_id}"
             text:
               uploadButton: App.Utils.icon('paperclip')
             template: '<div class="qq-uploader">' +

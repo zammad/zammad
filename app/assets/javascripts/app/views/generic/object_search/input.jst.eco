@@ -1,9 +1,17 @@
 <div class="tokenfield form-control u-positionOrigin">
-  <input class="js-objectId" type="hidden" value="<%= @value %>" name="<%- @attribute.name %>" tabindex="-1">
   <% if @attribute.multiple: %>
+    <select multiple class="js-objectId hide" name="<%= @attribute.name %>" tabindex="-1">
+      <% if @attribute.value: %>
+        <% for option in @attribute.value: %>
+          <option value="<%= option.value %>" selected><%= option.name %></option>
+        <% end %>
+      <% end %>
+    </select>
     <%- @tokens %>
+  <% else: %>
+    <input class="js-objectId" type="hidden" value="<%= @value %>" name="<%= @attribute.name %>" tabindex="-1">
   <% end %>
-  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-objectSelect" autocapitalize="off" placeholder="<%- @Ti(@attribute.placeholder) %>" autocomplete="off" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
+  <input name="<%= @attribute.name %>_completion" class="user-select token-input js-objectSelect form-control" autocapitalize="off" placeholder="<%- @Ti(@attribute.placeholder) %>" autocomplete="off" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
   <% if @attribute.disableCreateObject isnt true: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
 </div>
 

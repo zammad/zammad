@@ -1,0 +1,22 @@
+From martin@example.com  Thu May  3 12:04:29 2012
+Return-Path: <martin@example.com>
+X-Original-To: info@example.com
+Delivered-To: box@samba.example.com
+Received: from me.home (1-2-1-1.adsl.highway.example.com [1.2.1.1])
+  by samba.example.com (Postfix) with ESMTPSA id C96F8500D3D
+  for <info@example.com>; Thu,  3 May 2012 12:04:28 +0100 (BST)
+Subject: =?UTF-8?Q? Personal=C3=A4nderung?=
+From: <John.Smith@example.com>
+Content-Type: text/plain;
+  charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 4 May 2012 14:01:03 +0200
+Message-Id: <BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>
+To: metest@znuny.com
+
+=E4=F6=FC=DF ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.

@@ -1,10 +1,4 @@
-class Sequencer
-  class Unit
-    module Import
-      module Zendesk
-        class UserFields < Sequencer::Unit::Import::Zendesk::SubSequence::ObjectFields
-        end
-      end
-    end
-  end
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
+class Sequencer::Unit::Import::Zendesk::UserFields < Sequencer::Unit::Import::Zendesk::SubSequence::ObjectFields
 end

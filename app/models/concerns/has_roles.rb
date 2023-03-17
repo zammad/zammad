@@ -1,6 +1,15 @@
-# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+
 module HasRoles
   extend ActiveSupport::Concern
+
+  included do
+    has_and_belongs_to_many :roles,
+                            before_add:    %i[validate_agent_limit_by_role validate_roles],
+                            after_add:     %i[cache_update check_notifications],
+                            before_remove: :last_admin_check_by_role,
+                            after_remove:  %i[cache_update]
+  end
 
   # Checks a given Group( ID) for given access(es) for the instance associated roles.
   #
@@ -21,16 +30,16 @@ module HasRoles
     return false if !groups_access_permission?
 
     group_id = self.class.ensure_group_id_parameter(group_id)
-    access   = self.class.ensure_group_access_list_parameter(access)
+    access   = Array(access).map(&:to_sym) | [:full]
 
-    RoleGroup.includes(:group, :role).exists?(
+    RoleGroup.eager_load(:group, :role).exists?(
       role_id:  roles.pluck(:id),
       group_id: group_id,
       access:   access,
       groups:   {
         active: true
       },
-      roles: {
+      roles:    {
         active: true
       }
     )
@@ -56,11 +65,12 @@ module HasRoles
     # @return [Array<Integer>]
     def role_access(group_id, access)
       group_id = ensure_group_id_parameter(group_id)
-      access   = ensure_group_access_list_parameter(access)
+      access   = Array(access).map(&:to_sym) | [:full]
 
-      role_ids   = RoleGroup.includes(:role).where(group_id: group_id, access: access, roles: { active: true }).pluck(:role_id)
+      role_ids   = RoleGroup.eager_load(:role).where(group_id: group_id, access: access, roles: { active: true }).pluck(:role_id)
       join_table = reflect_on_association(:roles).join_table
-      joins(:roles).where(active: true, join_table => { role_id: role_ids }).distinct.select(&:groups_access_permission?)
+
+      Permission.join_with(self, 'ticket.agent').joins(:roles).where(active: true, join_table => { role_id: role_ids }).distinct
     end
 
     # Lists IDs of instances having the given access(es) to the given Group through Roles.
@@ -84,13 +94,8 @@ module HasRoles
 
     def ensure_group_id_parameter(group_or_id)
       return group_or_id if group_or_id.is_a?(Integer)
-      group_or_id.id
-    end
 
-    def ensure_group_access_list_parameter(access)
-      access = [access] if access.is_a?(String)
-      access.push('full') if !access.include?('full')
-      access
+      group_or_id.id
     end
   end
 end

@@ -9,11 +9,11 @@
       </thead>
       <tbody>
         <tr>
-          <td class="settings-list-row-control"><%- @T('API token') %> *
-          <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
-        <tr>
           <td class="settings-list-row-control"><%- @T('Endpoint') %> *
           <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.endpoint %>" placeholder="https://idoit.example.com/i-doit/" name="endpoint">
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API token') %> *
+          <td class="settings-list-control-cell"><input type="password" class="form-control form-control--small" value="<%= @config.api_token %>" name="api_token">
         <tr>
           <td class="settings-list-row-control"><%- @T('Client ID') %>
           <td class="settings-list-control-cell"><input type="text" class="form-control form-control--small" value="<%= @config.client_id %>" name="client_id">

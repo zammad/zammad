@@ -2,4 +2,77 @@
 from: MAILER-DAEMON (Mail Delivery System)
 from_email: MAILER-DAEMON
 from_display_name: Mail Delivery System
+to: feedback@example.com
 subject: Undelivered Mail Returned to Sender
+body: |
+  This is the mail system at host smtp30.relay.dfw1a.example.com.
+
+  I'm sorry to have to inform you that your message could not
+  be delivered to one or more recipients. It's attached below.
+
+  For further assistance, please send mail to postmaster.
+
+  If you do so, please include this problem report. You can
+  delete your own text from the attached returned message.
+
+                     The mail system
+
+  <john_example@example.com>: connect to example.com[XX.example.example.example]:25: Connection timed
+      out
+content_type: text/plain
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Reporting-MTA: dns; smtp30.relay.dfw1a.example.com
+    X-SMTP-Server-Queue-ID: 342ADE03AD
+    X-SMTP-Server-Sender: rfc822; feedback@example.com
+    Arrival-Date: Mon, 27 Feb 2017 05:35:21 -0500 (EST)
+
+    Final-Recipient: rfc822; john_example@example.com
+    Original-Recipient: rfc822;john_example@example.com
+    Action: failed
+    Status: 4.4.1
+    Diagnostic-Code: X-SMTP-Server; connect to example.com[XX.example.example.example]:25:
+        Connection timed out
+  filename: Delivery report.txt
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: message/delivery-status
+    Content-Description: Delivery report
+    Mime-Type: message/delivery-status
+    Charset: UTF-8
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    Return-Path: <feedback@example.com>
+    Received: from smtp30.relay.dfw1a.example.com (localhost [127.0.0.1])
+            by smtp30.relay.dfw1a.example.com (SMTP Server) with ESMTP id 342ADE03AD
+            for <john_example@example.com>; Mon, 27 Feb 2017 05:35:21 -0500 (EST)
+    X-Auth-ID: feedback_en@example.com
+    Received: by smtp30.relay.dfw1a.example.com (Authenticated sender: feedback_en-AT-example.com) with ESMTPSA id BC4C5E016E
+            for <john_example@example.com>; Mon, 27 Feb 2017 05:35:20 -0500 (EST)
+    X-Sender-Id: feedback_en@example.com
+    Received: from help.example.com (example.node.dockerapp.io [example.example.example.example])
+            (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+            by 0.0.0.0:25 (trex/5.7.12);
+            Mon, 27 Feb 2017 05:35:21 -0500
+    Date: Mon, 27 Feb 2017 10:35:19 +0000
+    From: Oliver Grahl | Support <feedback@example.com>
+    To: John Stewart <john_example@example.com>
+    Message-ID: <20170227103514.188.920664@help.example.com>
+    In-Reply-To: <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+    References: <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+     <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+    Subject: RE: Feedback after Uninstallation [Ticket#62188]
+    Mime-Version: 1.0
+    Content-Type: multipart/mixed;
+     boundary="--==_mimepart_58b400e72487d_32c43ffa32ed5c3010848";
+     charset=UTF-8
+    Content-Transfer-Encoding: 7bit
+    Organization: example
+    X-Powered-By: Zammad - Helpdesk/Support (https://zammad.org/)
+    X-Mailer: Zammad Mail Service
+  filename: file
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Content-Type: text/rfc822-headers
+    Content-Description: Undelivered Message Headers
+    Mime-Type: text/rfc822-headers
+    Charset: UTF-8

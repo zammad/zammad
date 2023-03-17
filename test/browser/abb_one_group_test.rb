@@ -1,26 +1,27 @@
+# Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
 class AgentTicketActionLevel0Test < TestCase
 
   def test_aaa_agent_ticket_create_with_one_group
-    agent    = "bob.smith_one_group#{rand(99_999_999)}"
+    agent = "bob.smith_one_group#{SecureRandom.uuid}"
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
-        group: '-NONE-',
-        title: 'some subject 123äöü - one group 1',
-        body: 'some body 123äöü - one group 1',
+        group:    '-NONE-',
+        title:    'some subject 123äöü - one group 1',
+        body:     'some body 123äöü - one group 1',
       },
     )
     sleep 1
@@ -30,11 +31,11 @@ class AgentTicketActionLevel0Test < TestCase
       data: {
         state: 'closed',
         group: '-NONE-',
-        body: 'some body 1234 äöüß - one group 1 - update',
+        body:  'some body 1234 äöüß - one group 1 - update',
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
     # invite agent (with one group)
     click(css: '#navigation a[href="#dashboard"]')
@@ -44,33 +45,24 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Bob',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
-    exists(
-      displayed: false,
-      css: '.modal .js-groupList',
-    )
-    exists(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
+    check(css: '.modal .js-groupListItem[value=full]')
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
-    )
-    watch_for(
-      css:   'body div.modal',
-      value: 'Sending',
+      ajax: false,
     )
     watch_for_disappear(
       css:   'body div.modal',
@@ -84,60 +76,33 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Configuration',
     )
     click(css: '.active.content .js-inviteAgent')
-    modal_ready()
+    modal_ready
     set(
-      css: '.modal [name="firstname"]',
+      css:   '.modal [name="firstname"]',
       value: 'Bob2',
     )
     set(
-      css: '.modal [name="lastname"]',
+      css:   '.modal [name="lastname"]',
       value: 'Smith2',
     )
     set(
-      css: '.modal [name="email"]',
+      css:   '.modal [name="email"]',
       value: "#{agent}2@example.com",
     )
 
-    # disable agent role
-    uncheck(
-      css: '.modal [name="role_ids"][value=2]',
-    )
-
-    exists(
-      displayed: false,
-      css: '.modal .js-groupList',
-    )
-    exists_not(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
-
-    # enable agent role
-    check(
-      css: '.modal [name="role_ids"][value=2]',
-    )
-
-    exists(
-      displayed: false,
-      css: '.modal .js-groupList',
-    )
-    exists(
-      css: '.modal .js-groupListItem[value=full]:checked',
-    )
+    check(css: '.modal .js-groupListItem[value=full]')
 
     click(
-      css: '.modal button.btn.btn--primary',
+      css:  '.modal button.btn.btn--primary',
       fast: true,
-    )
-    watch_for(
-      css:   'body div.modal',
-      value: 'Sending',
+      ajax: false,
     )
     watch_for_disappear(
       css:   'body div.modal',
       value: 'Sending',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -147,7 +112,7 @@ class AgentTicketActionLevel0Test < TestCase
     login(
       username: 'nicole.braun@zammad.org',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
 
     # customer ticket create
@@ -155,17 +120,17 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: 'a[href="#customer_ticket_new"]')
 
     watch_for(
-      css: '.newTicket',
+      css:   '.newTicket',
       value: 'New Ticket',
     )
-    exists_not(css: '.newTicket select[name="group_id"]')
+    exists(css: '.newTicket .form-group.hide select[name="group_id"]')
 
     set(
-      css: '.newTicket input[name="title"]',
+      css:   '.newTicket input[name="title"]',
       value: 'one group',
     )
     set(
-      css: '.newTicket [data-name="body"]',
+      css:   '.newTicket [data-name="body"]',
       value: 'one group body',
     )
     click(css: '.newTicket button.js-submit', wait: 5)
@@ -174,15 +139,15 @@ class AgentTicketActionLevel0Test < TestCase
     location_check(url: '#ticket/zoom/')
 
     match(
-      css: '.active div.ticket-article',
-      value: 'one group body',
+      css:      '.active div.ticket-article',
+      value:    'one group body',
       no_quote: true,
     )
 
     # update ticket
     set(
-      css: '.active [data-name="body"]',
-      value: 'one group - some body 1234 äöüß',
+      css:      '.active [data-name="body"]',
+      value:    'one group - some body 1234 äöüß',
       no_click: true,
     )
 
@@ -193,11 +158,11 @@ class AgentTicketActionLevel0Test < TestCase
     click(css: '.active .js-submit')
 
     watch_for(
-      css: '.active div.ticket-article',
+      css:   '.active div.ticket-article',
       value: 'one group - some body 1234 äöüß',
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 
@@ -205,35 +170,38 @@ class AgentTicketActionLevel0Test < TestCase
 
     @browser = browser_instance
     login(
-      username: 'master@example.com',
+      username: 'admin@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
-    tasks_close_all()
+    tasks_close_all
 
     group_create(
       data: {
-        name:   "some group #{rand(999_999_999)}",
+        name:   "some group #{SecureRandom.uuid}",
         member: [
           {
-            login: 'master@example.com',
+            login:  'admin@example.com',
             access: 'full',
           },
           {
-            login: 'agent1@example.com',
+            login:  'agent1@example.com',
             access: 'full',
           },
         ],
       },
     )
 
+    # wait to push new group dependencies to browser (to show group selection)
+    sleep 12
+
     # create new ticket
-    ticket1 = ticket_create(
+    ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject 123äöü - one group 2',
-        body: 'some body 123äöü - one group 2',
+        group:    'Users',
+        title:    'some subject 123äöü - one group 2',
+        body:     'some body 123äöü - one group 2',
       },
     )
     sleep 1
@@ -241,12 +209,12 @@ class AgentTicketActionLevel0Test < TestCase
     # update ticket
     ticket_update(
       data: {
-        body: 'some body 1234 äöüß - one group 2 - update',
+        body:  'some body 1234 äöüß - one group 2 - update',
         group: 'Users',
       },
     )
 
-    tasks_close_all()
+    tasks_close_all
 
   end
 

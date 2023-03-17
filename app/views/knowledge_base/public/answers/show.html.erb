@@ -1,0 +1,46 @@
+<main class="main main--article"
+data-base-path='<%= custom_path_if_needed help_answer_path(@category, @object, locale: '{locale}'), @knowledge_base %>'
+data-available-locales='<%= @object_locales.map(&:locale).join(',') %>'>
+  <article class="article">
+    <div class="container">
+      <h1>
+        <%= @object.translation.title %>
+      </h1>
+
+      <div class="article-content">
+        <%= prepare_rich_text(@object.translation.content.body_with_urls).html_safe %>
+      </div>
+
+      <% if (attachments = @object.attachments_sorted) && attachments.present? %>
+        <div class="attachments article-accessories">
+          <%= icon 'paperclip' %>
+          <div class="article-accessories-title"><%= zt('Attached Files') %></div>
+          <% attachments.each do |attachment| %>
+            <%= link_to custom_path_if_needed(attachment_path(attachment), @knowledge_base), class: 'attachment', download: true do %>
+              <span class="attachment-name u-highlight"><%= attachment.filename %></span>
+              <div class="attachment-size">404kb</div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if (tags = @object.tag_list) && tags.present? %>
+        <div class="tags article-accessories">
+          <%= icon 'hashtag' %>
+          <div class="article-accessories-title"><%= zt('Tags') %></div>
+          <div class="tags-content">
+            <% tags.each do |tag| %>
+              <%= link_to tag, custom_path_if_needed(help_tag_path(tag, locale: params[:locale]), @knowledge_base), class: 'tag' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @object.visible? %>
+        <div class="article-meta">
+          <%= raw zt 'Published %s', human_time_tag([@object.published_at, @object.translation.updated_at].max) %>
+        </div>
+      <% end %>
+    </div>
+  </article>
+</main>
