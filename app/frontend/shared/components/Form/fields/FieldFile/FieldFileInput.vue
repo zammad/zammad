@@ -39,7 +39,10 @@ const removeFileMutation = new MutationHandler(
 const removeFileLoading = addFileMutation.loading()
 
 const canInteract = computed(
-  () => !addFileLoading.value && !removeFileLoading.value,
+  () =>
+    !props.context.disabled &&
+    !addFileLoading.value &&
+    !removeFileLoading.value,
 )
 
 const fileInput = ref<HTMLInputElement>()

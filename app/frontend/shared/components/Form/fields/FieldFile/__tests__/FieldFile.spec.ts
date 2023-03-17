@@ -238,4 +238,20 @@ describe('Fields - FieldFile', () => {
       'file is removed',
     ).not.toBeInTheDocument()
   })
+
+  it('cannot add file, if the field is disabled', async () => {
+    const view = renderFileInput({
+      multiple: true,
+      value: [],
+      disabled: true,
+    })
+
+    const clickEvent = vi.fn()
+    HTMLInputElement.prototype.click = clickEvent
+
+    const fileButton = view.getByRole('button', { name: 'Attach files' })
+    expect(fileButton).toBeDisabled()
+    await view.events.click(fileButton)
+    expect(clickEvent).not.toHaveBeenCalled()
+  })
 })
