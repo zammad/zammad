@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-07 08:23+0000\n"
-"Last-Translator: Antoine Ducret <ducret@comptoir-immo.ch>\n"
+"PO-Revision-Date: 2023-03-18 03:05+0000\n"
+"Last-Translator: Michel Jouvin <michel.jouvin@ijclab.in2p3.fr>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1644,7 +1644,7 @@ msgstr "L'article n'a pas pu être supprimé."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "L'article utilise différents mécanismes de sécurité."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -2609,9 +2609,8 @@ msgid "Clean up 'Cti::Log'."
 msgstr "Vider 'Cti::Log'."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "Tâche-ConfidentialitéDesDonnées"
+msgstr "Nettoyer 'TâcheConfidentialitéDesDonnées'"
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -4842,9 +4841,8 @@ msgid "Editing"
 msgstr "Edition"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
-#, fuzzy
 msgid "Editing on Desktop"
-msgstr "affecter les tickets"
+msgstr "Edition sur le bureau"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5629,9 +5627,8 @@ msgid "Facebook App Secret"
 msgstr "Facebook App Secret"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Facebook Developer Site"
-msgstr "Système de développement"
+msgstr "Site des développeurs Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5716,9 +5713,8 @@ msgid "Filter"
 msgstr "Filtre"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
 msgid "Find a ticket"
-msgstr "affecter les tickets"
+msgstr "Trouver un ticket"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -5861,9 +5857,8 @@ msgid "Form"
 msgstr "Formulaire"
 
 #: app/graphql/gql/queries/form_updater.rb
-#, fuzzy
 msgid "FormSchema could not be found."
-msgstr "%s objet(s) mis à jour."
+msgstr "FormSchema n'a pas pu être trouvé."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee
 msgid "Format"
@@ -6049,9 +6044,8 @@ msgid "GitHub App Credentials"
 msgstr "Information d'identification de GitHub"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "GitHub OAuth Applications"
-msgstr "Applications"
+msgstr "Applications  OAuth GitHub"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -6134,9 +6128,8 @@ msgid "Google"
 msgstr "Google"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Google API Console Site"
-msgstr "Phrase secrète côté client"
+msgstr "Site de la console API Google"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -6270,7 +6263,7 @@ msgstr "HTML Email CSS Font"
 
 #: db/seeds/settings.rb
 msgid "HTML Sanitizer Processing Timeout"
-msgstr ""
+msgstr "Délai dépassé dans le processus de nettoyage du code HTML"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6856,9 +6849,8 @@ msgid "Include attachments of the article?"
 msgstr "Inclure les pièces jointes de l'article ?"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
 msgid "Included ticket overviews"
-msgstr "Aperçus"
+msgstr "Aperçus des tickets inclus"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 msgid "Including private key."
@@ -7402,7 +7394,7 @@ msgstr "Layout"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee
 msgid "Layout Reference"
-msgstr ""
+msgstr "Référence de la mise en page"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
 msgid "Library"
@@ -7493,9 +7485,8 @@ msgid "LinkedIn App Credentials"
 msgstr "Autorisations de l'application LinkedIn"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "LinkedIn Developer Site"
-msgstr "Système de développement"
+msgstr "Site des développeurs LinkedIn"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -7543,9 +7534,8 @@ msgid "Locale"
 msgstr "Langue"
 
 #: app/graphql/gql/mutations/account/locale.rb
-#, fuzzy
 msgid "Locale could not be found."
-msgstr "%s objet(s) mis à jour."
+msgstr "'Locale' n'a pas été trouvé."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "Locale not found"
@@ -9021,9 +9011,8 @@ msgid "Organizations with \"%s\""
 msgstr "Sociétés avec \"%s\""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
-#, fuzzy
 msgid "Organizer"
-msgstr "Société"
+msgstr "Organisateur"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee
 #, fuzzy
@@ -9350,10 +9339,8 @@ msgid "Please add categories and/or answers"
 msgstr "Veuillez ajouter des catégories et/ou des réponses"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
-#, fuzzy
 msgid "Please click on the button below to create your first one."
-msgstr ""
-"Veuillez cliquer sur le bouton ci-dessous pour créer votre premier ticket."
+msgstr "Veuillez cliquer sur le bouton ci-dessous pour créer votre premier."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Please click on the link in the verification email."
@@ -9441,7 +9428,7 @@ msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb
 msgid "Please submit custom address before generating the snippet"
-msgstr ""
+msgstr "Veuillez soumettre une adresse personalisée avant de générer l'extrait"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
@@ -9547,7 +9534,7 @@ msgstr "Priorité"
 
 #: db/seeds/settings.rb
 msgid "Priority Icons in Overviews"
-msgstr ""
+msgstr "Les icones prioritaires dans les aperçus"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Private key for decryption could not be found."
@@ -9738,11 +9725,11 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers"
-msgstr ""
+msgstr "Déclencheurs récursifs de ticket"
 
 #: db/seeds/settings.rb
 msgid "Recursive Ticket Triggers Loop Max."
-msgstr ""
+msgstr "Nombre de boucles maximales de déclencheurs récursifs de tickets."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -9897,9 +9884,8 @@ msgstr "Demande"
 
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
-#, fuzzy
 msgid "Request Admin Consent"
-msgstr "Demander le droit"
+msgstr "Demander l'autorisation Administrateur"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Request for Change"
@@ -10085,7 +10071,7 @@ msgstr "Résultat :"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 msgid "Retry security process"
-msgstr ""
+msgstr "Rééssayer le processus de sécurité"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
@@ -10124,7 +10110,7 @@ msgstr "Rôles :"
 #: app/assets/javascripts/app/views/google/list.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco
 msgid "Rollback migration"
-msgstr ""
+msgstr "Annuler la migration"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
@@ -10993,6 +10979,7 @@ msgid "Site"
 msgstr "Site"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Passer"
 
@@ -13351,9 +13338,8 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb db/seeds/overviews.rb
-#, fuzzy
 msgid "Unassigned & Open Tickets"
-msgstr "NonAssignés & Ouverts"
+msgstr "Tickets ouverts et non assignés"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/google/list.jst.eco

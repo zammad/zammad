@@ -10885,6 +10885,7 @@ msgid "Site"
 msgstr "Doména (site)"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Přeskočit"
 

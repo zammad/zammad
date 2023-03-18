@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-07 08:59+0000\n"
+"PO-Revision-Date: 2023-03-18 03:05+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -4795,9 +4795,8 @@ msgstr "True"
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#, fuzzy
 msgid "Done"
-msgstr "True"
+msgstr "Tamamlandı"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee
 #, fuzzy
@@ -6759,9 +6758,8 @@ msgid "How to use it"
 msgstr "Nasıl kullanılır"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
-#, fuzzy
 msgid "ID"
-msgstr "True"
+msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco
 #, fuzzy
@@ -11683,6 +11681,7 @@ msgid "Site"
 msgstr "Site"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Atla"
 

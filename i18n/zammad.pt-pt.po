@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-01-19 03:30+0000\n"
-"Last-Translator: Pedro Pereira <pedro.pereira@strongcharon.pt>\n"
+"PO-Revision-Date: 2023-03-18 03:05+0000\n"
+"Last-Translator: Ricardo Ribeiro <chacal.ricardo@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/pt_PT/>\n"
+"projects/zammad/zammad-stable/pt_PT/>\n"
 "Language: pt-pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1249,7 +1249,7 @@ msgstr "Avance para o próximo ticket da visão geral"
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
-msgstr ""
+msgstr "Após aprovação, por favor volte a ligar a sua conta Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1548,7 +1548,7 @@ msgstr "Certo de excluir esse objeto?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
-msgstr ""
+msgstr "Tem a certeza que pretende fundir o ticket (#%s) no #%s?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -1583,7 +1583,7 @@ msgstr "Tem a certeza? Tem alterações não gravadas que serão perdidas."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? You have changes that will get lost."
-msgstr ""
+msgstr "Tem a certeza? Tem alterações que serão perdidas."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -1630,7 +1630,7 @@ msgstr "Não foi possível apagar o artigo."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "O Artigo usa um mecanismo de segurança diferente."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -1702,7 +1702,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
-msgstr ""
+msgstr "Deve selecionar pelo menos um objeto."
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
@@ -11195,6 +11195,7 @@ msgid "Site"
 msgstr "Site"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Pular"
 

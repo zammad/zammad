@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-02-21 13:41+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo@mile.si>\n"
+"PO-Revision-Date: 2023-03-16 03:05+0000\n"
+"Last-Translator: marcofenoglio <marco.fenoglio@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
 "Language: it-it\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -83,7 +83,7 @@ msgstr ""
 "updated_at}_\n"
 "* Gruppo: #{ticket.group.name}\n"
 "* Proprietario: #{ticket.owner.fullname}\n"
-"* Stata: #{t(ticket.state.name)}\n"
+"* Stato: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -10877,6 +10877,7 @@ msgid "Site"
 msgstr "Sito"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Ignora"
 
