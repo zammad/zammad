@@ -173,4 +173,8 @@ module ApplicationController::Authenticates
   def raise_unified_login_error
     raise Exceptions::NotAuthorized, __('Login failed. Have you double-checked your credentials and completed the email verification step?')
   end
+
+  def authenticate_and_authorize!
+    authentication_check && authorize!
+  end
 end

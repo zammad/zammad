@@ -3,7 +3,7 @@
 class Integration::ExchangeController < ApplicationController
   include Integration::ImportJobBase
 
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   def index
     assets = {}

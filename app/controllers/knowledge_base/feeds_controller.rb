@@ -1,10 +1,9 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class KnowledgeBase::FeedsController < KnowledgeBase::BaseController
+class KnowledgeBase::FeedsController < ApplicationController
   ITEMS_IN_FEED = 10
 
   prepend_before_action { authorize! }
-  skip_before_action :authentication_check
   prepend_before_action -> { authentication_check_only }, only: %i[root category]
 
   before_action :ensure_response_format

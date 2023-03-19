@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
-  prepend_before_action -> { authentication_check && authorize! }, except: [:lang]
+  prepend_before_action :authenticate_and_authorize!, except: [:lang]
 
   # GET /translations/lang/:locale
   def lang

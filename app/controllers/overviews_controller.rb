@@ -3,7 +3,7 @@
 class OverviewsController < ApplicationController
   include CanPrioritize
 
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
 =begin
 

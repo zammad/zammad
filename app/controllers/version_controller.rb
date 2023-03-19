@@ -2,7 +2,7 @@
 
 class VersionController < ApplicationController
 
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   # GET /api/v1/version
   def index

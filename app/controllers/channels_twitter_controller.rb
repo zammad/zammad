@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsTwitterController < ApplicationController
-  prepend_before_action -> { authentication_check && authorize! }, except: %i[webhook_incoming webhook_verify]
+  prepend_before_action :authenticate_and_authorize!, except: %i[webhook_incoming webhook_verify]
   skip_before_action :verify_csrf_token, only: %i[webhook_incoming webhook_verify]
 
   before_action :validate_webhook_signature!, only: :webhook_incoming

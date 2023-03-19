@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::IdoitController < ApplicationController
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   def verify
     response = ::Idoit.verify(params[:api_token], params[:endpoint], params[:client_id])
