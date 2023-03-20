@@ -2,15 +2,15 @@
 
 require 'csv'
 
-RSpec.shared_examples 'CanCsvImportTicket', :aggregate_failures do
+RSpec.shared_examples 'CanCsvImport - Ticket specific tests', :aggregate_failures do
   describe '.csv_example' do
     before do
-      described_class.destroy_all
+      Ticket.destroy_all
     end
 
     context 'when no data avaiable' do
       let(:headers) do
-        CSV.parse(described_class.csv_example).shift
+        CSV.parse(Ticket.csv_example).shift
       end
 
       it 'returns expected headers' do
@@ -23,7 +23,7 @@ RSpec.shared_examples 'CanCsvImportTicket', :aggregate_failures do
   describe '.csv_import' do
     let(:try)    { true }
     let(:params) { { string: csv_string, parse_params: { col_sep: ';' }, try: try } }
-    let(:result) { described_class.csv_import(**params) }
+    let(:result) { Ticket.csv_import(**params) }
 
     shared_examples 'fails with error' do |errors|
       shared_examples 'checks error handling' do
