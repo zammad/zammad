@@ -40,7 +40,7 @@ module Tasks
           url = 'mysql://'
 
           url += url_credentials(config['username'], config['password'])
-          url += url_hostname(config['host'], config['port'])
+          url += url_hostname(config.fetch('host', 'localhost'), config['port'])
           url += url_path(config['database'])
 
           url

@@ -210,7 +210,7 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         end
 
         it 'returns url without hostname' do
-          expect(described_class.mysql_url).to eq('mysql://mysql_database')
+          expect(described_class.mysql_url).to eq('mysql://localhost:3306/mysql_database')
         end
       end
     end
