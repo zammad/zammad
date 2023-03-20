@@ -8,7 +8,6 @@ $mobileNavigationWidthOpen: 220px;
 
 :root {
   --button-action-color: hsl(0, 0%, 60%);
-  --button-border: hsla(0, 0%, 0%, 0.1);
   --button-background: white;
   --button-background-active: hsl(0, 0, 98%);
   --button-active: hsl(204, 7%, 28%);
@@ -87,7 +86,6 @@ $mobileNavigationWidthOpen: 220px;
 // dark mode
 [data-theme='dark'] {
   --button-action-color: hsl(0, 0%, 80%);
-  --button-border: hsl(230, 4%, 20%);
   --button-background: hsla(0, 0%, 100%, 0.03);
   --button-background-active: hsla(0, 0%, 100%, 0.015);
   --button-active: hsla(0, 0%, 100%, 0.1);
@@ -610,7 +608,7 @@ pre code {
   padding: 10px 24px 9px;
   color: var(--text-normal);
   background: var(--button-background);
-  border: 1px solid var(--button-border);
+  border: 1px solid var(--border);
   outline: none !important;
   border-radius: 4px;
   text-align: center;
@@ -1198,7 +1196,7 @@ pre code {
 }
 
 .status-field {
-  border: 1px solid var(--button-border);
+  border: 1px solid var(--border);
   background: var(--button-background);
   display: flex;
   height: 34px;
@@ -2511,6 +2509,10 @@ input.has-error {
   color: var(--danger-color);
   padding: 2px;
   font-size: 13px;
+}
+
+.zammad-form-modal-body {
+  background: var(--background-primary) !important;
 }
 
 /* use on input[type=radio] */
