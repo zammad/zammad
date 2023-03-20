@@ -94,7 +94,7 @@ FactoryBot.define do
       subject      { nil }
       body         { Faker::Lorem.sentence }
       content_type { 'text/plain' }
-      message_id   { Faker::Number.number(digits: 18) }
+      message_id   { Faker::Number.unique.number(digits: 18) }
 
       after(:create) do |article, context|
         next if context.sender_name == 'Agent'
@@ -108,8 +108,8 @@ FactoryBot.define do
         transient do
           sender_name  { 'Customer' }
           username     { Faker::Twitter.screen_name }
-          sender_id    { Faker::Number.number(digits: 18) }
-          recipient_id { Faker::Number.number(digits: 19) }
+          sender_id    { Faker::Number.unique.number(digits: 18) }
+          recipient_id { Faker::Number.unique.number(digits: 19) }
         end
 
         from { "@#{username}" }
@@ -144,14 +144,14 @@ FactoryBot.define do
       trait :outbound do
         transient do
           username     { Faker::Twitter.screen_name }
-          sender_id    { Faker::Number.number(digits: 18) }
-          recipient_id { Faker::Number.number(digits: 19) }
+          sender_id    { Faker::Number.unique.number(digits: 18) }
+          recipient_id { Faker::Number.unique.number(digits: 19) }
         end
 
         from        { "@#{ticket.preferences['channel_screen_name']}" }
         to          { "@#{username}" }
         body        { "#{to} #{Faker::Lorem.sentence}" }
-        in_reply_to { Faker::Number.number(digits: 19) }
+        in_reply_to { Faker::Number.unique.number(digits: 19) }
 
         preferences do
           {
@@ -179,7 +179,7 @@ FactoryBot.define do
       end
 
       trait :reply do
-        in_reply_to { Faker::Number.number(digits: 19) }
+        in_reply_to { Faker::Number.unique.number(digits: 19) }
       end
     end
 
@@ -194,18 +194,18 @@ FactoryBot.define do
       trait :pending_delivery do
         transient do
           recipient { create(:twitter_authorization) }
-          sender_id { Faker::Number.number(digits: 10) }
+          sender_id { Faker::Number.unique.number(digits: 10) }
         end
 
         from         { ticket.owner.fullname }
         to           { recipient.username }
-        in_reply_to  { Faker::Number.number(digits: 19) }
+        in_reply_to  { Faker::Number.unique.number(digits: 19) }
         content_type { 'text/plain' }
       end
 
       trait :delivered do
         pending_delivery
-        message_id { Faker::Number.number(digits: 19) }
+        message_id { Faker::Number.unique.number(digits: 19) }
         preferences do
           {
             delivery_retry:          1,
@@ -240,7 +240,7 @@ FactoryBot.define do
       to   { Faker::PhoneNumber.cell_phone_in_e164 }
       subject { nil }
       body { Faker::Lorem.sentence }
-      message_id { Faker::Number.number(digits: 19) }
+      message_id { Faker::Number.unique.number(digits: 19) }
       content_type { 'text/plain' }
 
       after(:create) do |article, context|
@@ -277,7 +277,7 @@ FactoryBot.define do
           sender_name { 'Agent' }
         end
 
-        in_reply_to { Faker::Number.number(digits: 19) }
+        in_reply_to { Faker::Number.unique.number(digits: 19) }
 
         preferences do
           {
@@ -303,7 +303,7 @@ FactoryBot.define do
       to { "@#{channel[:options][:bot][:username]}" }
       subject { nil }
       body { Faker::Lorem.sentence }
-      message_id { "#{Faker::Number.decimal(l_digits: 1, r_digits: 10)}@telegram" }
+      message_id { "#{Faker::Number.unique.decimal(l_digits: 1, r_digits: 10)}@telegram" }
       content_type { 'text/plain' }
 
       after(:create) do |article, context|
@@ -313,7 +313,7 @@ FactoryBot.define do
         context.ticket.preferences.tap do |p|
           p['telegram'] = {
             bid:     context.channel[:options][:bot][:id],
-            chat_id: (article.preferences[:telegram] && article.preferences[:telegram][:chat_id]) || Faker::Number.number(digits: 10),
+            chat_id: (article.preferences[:telegram] && article.preferences[:telegram][:chat_id]) || Faker::Number.unique.number(digits: 10),
           }
         end
 
@@ -333,15 +333,15 @@ FactoryBot.define do
               created_at: Time.current.to_i,
               message_id: message_id,
               from:       ActionController::Parameters.new(
-                'id'            => Faker::Number.number,
+                'id'            => Faker::Number.unique.number,
                 'is_bot'        => false,
-                'first_name'    => Faker::Name.first_name,
-                'last_name'     => Faker::Name.last_name,
+                'first_name'    => Faker::Name.unique.first_name,
+                'last_name'     => Faker::Name.unique.last_name,
                 'username'      => username,
                 'language_code' => 'en',
               ),
             },
-            update_id: Faker::Number.number(digits: 8),
+            update_id: Faker::Number.unique.number(digits: 8),
           }
         end
       end
@@ -353,16 +353,16 @@ FactoryBot.define do
 
         to { "@#{username}" }
         created_by_id { create(:agent).id } # NB: influences the value for the from field!
-        in_reply_to { "#{Faker::Number.decimal(l_digits: 1, r_digits: 10)}@telegram" }
+        in_reply_to { "#{Faker::Number.unique.decimal(l_digits: 1, r_digits: 10)}@telegram" }
 
         preferences do
           {
             delivery_retry:          1,
             telegram:                {
               date:       Time.current.to_i,
-              from_id:    Faker::Number.number(digits: 10),
-              chat_id:    Faker::Number.number(digits: 10),
-              message_id: Faker::Number.number,
+              from_id:    Faker::Number.unique.number(digits: 10),
+              chat_id:    Faker::Number.unique.number(digits: 10),
+              message_id: Faker::Number.unique.number,
             },
             delivery_status_message: nil,
             delivery_status:         'success',
@@ -377,14 +377,14 @@ FactoryBot.define do
 
       transient do
         channel { Channel.find(ticket.preferences[:channel_id]) }
-        post_id { Faker::Number.number(digits: 15) }
+        post_id { Faker::Number.unique.number(digits: 15) }
         permalink_url { "https://www.facebook.com/#{channel[:options][:pages][0][:id]}/posts/#{post_id}/?comment_id=#{post_id}" }
       end
 
       association :ticket, factory: :facebook_ticket
       subject { nil }
       body { Faker::Lorem.sentence }
-      message_id { "#{Faker::Number.number(digits: 16)}_#{Faker::Number.number(digits: 15)}" }
+      message_id { "#{Faker::Number.unique.number(digits: 16)}_#{Faker::Number.unique.number(digits: 15)}" }
       content_type { 'text/plain' }
 
       after(:create) do |article, context|
@@ -431,7 +431,7 @@ FactoryBot.define do
 
         from { channel[:options][:pages][0][:name] }
         to { ticket.customer.fullname }
-        in_reply_to { "#{Faker::Number.number(digits: 16)}_#{Faker::Number.number(digits: 15)}" }
+        in_reply_to { "#{Faker::Number.unique.number(digits: 16)}_#{Faker::Number.unique.number(digits: 15)}" }
 
         preferences do
           {

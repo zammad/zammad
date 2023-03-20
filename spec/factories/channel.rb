@@ -242,8 +242,8 @@ FactoryBot.define do
           bot:            {
             id:         bid,
             username:   "#{Faker::Internet.username}bot",
-            first_name: Faker::Name.first_name,
-            last_name:  Faker::Name.last_name,
+            first_name: Faker::Name.unique.first_name,
+            last_name:  Faker::Name.unique.last_name,
           },
           callback_token: callback_token,
           callback_url:   "http://localhost:3000/api/v1/channels_telegram_webhook/#{callback_token}?bid=#{bid}",
@@ -256,7 +256,7 @@ FactoryBot.define do
       transient do
         custom_options      { {} }
         external_credential { create(:telegram_credential) }
-        bid { Faker::Number.number(digits: 10) }
+        bid { Faker::Number.unique.number(digits: 10) }
         callback_token { Faker::Alphanumeric.alphanumeric(number: 14) }
       end
     end

@@ -10,13 +10,13 @@ RSpec.describe Issue2715FixBrokenTwitterUrlsJob, type: :job do
 
     let(:tweet_preferences) do
       # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
-      { links: [{ url: "https://twitter.com/statuses/#{Faker::Number.number(digits: 20)}" }] }
+      { links: [{ url: "https://twitter.com/statuses/#{Faker::Number.unique.number(digits: 20)}" }] }
     end
 
     let(:dm_preferences) do
       {
         # NOTE: Faker 2.0+ has deprecated the `#number(20)` syntax in favor of `#number(digits: 20)`.
-        links:   [{ url: "https://twitter.com/statuses/#{Faker::Number.number(digits: 20)}" }],
+        links:   [{ url: "https://twitter.com/statuses/#{Faker::Number.unique.number(digits: 20)}" }],
         twitter: {
           recipient_id: recipient_id,
           sender_id:    sender_id,

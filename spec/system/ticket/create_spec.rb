@@ -1474,7 +1474,7 @@ RSpec.describe 'Ticket Create', type: :system do
       create(:template,
              options: {
                'ticket.title':          {
-                 value: Faker::Name.name_with_middle,
+                 value: Faker::Name.unique.name_with_middle,
                },
                'ticket.customer_id':    {
                  value:            customer.id,

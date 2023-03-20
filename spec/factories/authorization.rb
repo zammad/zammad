@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :authorization do
-    uid      { Faker::Number.number(digits: 10) }
+    uid      { Faker::Number.unique.number(digits: 10) }
     user     { create(:customer) }
     provider { 'foo' }
 

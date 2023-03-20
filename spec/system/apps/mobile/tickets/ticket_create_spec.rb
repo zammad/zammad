@@ -42,7 +42,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       within_form(form_updater_gql_number: 1) do
 
         # Step 1.
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         # Step 2.
@@ -98,7 +98,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'adds signature' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -119,7 +119,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'changes signature, when group is changed' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -140,7 +140,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature, when another group without signature is selected' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -161,7 +161,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature when type is not email' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -184,7 +184,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature when group is deselected' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -212,7 +212,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       within_form(form_updater_gql_number: 1) do
 
         # Step 1.
-        title = Faker::Name.name_with_middle
+        title = Faker::Name.unique.name_with_middle
         find_input('Title').type(title)
         next_step
 
@@ -249,7 +249,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'shows a confirmation dialog when leaving the screen' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
       end
 
       find_button('Go home').click
@@ -350,7 +350,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'can complete all steps' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_select('Group').select_option('Users')
@@ -377,7 +377,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
           wait_for_form_to_settle('ticket-create')
 
           within_form(form_updater_gql_number: 1) do
-            find_input('Title').type(Faker::Name.name_with_middle)
+            find_input('Title').type(Faker::Name.unique.name_with_middle)
           end
 
           next_step

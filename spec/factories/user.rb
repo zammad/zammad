@@ -8,8 +8,8 @@ FactoryBot.define do
     end
 
     login            { slug }
-    firstname        { Faker::Name.first_name }
-    lastname         { Faker::Name.last_name }
+    firstname        { Faker::Name.unique.first_name }
+    lastname         { Faker::Name.unique.last_name }
     sequence(:email) { |n| "#{slug}.#{n}@zammad.org" }
     password         { nil }
     active           { true }

@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :'ticket/flag', aliases: %i[ticket_flag] do
     ticket
-    key     { "key_#{Faker::Food.fruits}" }
-    value { "value_#{Faker::Food.fruits}" }
+    key     { "key_#{Faker::Food.unique.fruits}" }
+    value { "value_#{Faker::Food.unique.fruits}" }
     created_by_id { 1 }
   end
 end
