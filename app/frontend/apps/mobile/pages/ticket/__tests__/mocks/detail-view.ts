@@ -273,7 +273,7 @@ interface MockOptions {
   mockSubscription?: boolean
   mockFrontendObjectAttributes?: boolean
   ticket?: TicketQuery
-  articles?: TicketArticlesQuery
+  articles?: TicketArticlesQuery | TicketArticlesQuery[]
   ticketView?: TicketView
 }
 

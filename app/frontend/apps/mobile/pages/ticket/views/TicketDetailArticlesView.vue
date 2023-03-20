@@ -33,15 +33,50 @@ const props = defineProps<Props>()
 
 const application = useApplicationStore()
 
+const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
+
+const ticketArticlesMin = computed(() => {
+  return Number(application.config.ticket_articles_min ?? 5)
+})
+
 const articlesQuery = new QueryHandler(
   useTicketArticlesQuery(() => ({
-    ticketId: convertToGraphQLId('Ticket', props.internalId),
-    pageSize: Number(application.config.ticket_articles_min ?? 5),
+    ticketId: ticketId.value,
+    pageSize: ticketArticlesMin.value,
   })),
   { errorShowNotification: false },
 )
 
 const result = articlesQuery.result()
+
+const allArticleLoaded = computed(() => {
+  if (!result.value?.articles.totalCount) return false
+  return result.value?.articles.edges.length < result.value?.articles.totalCount
+})
+
+const refetchArticlesQuery = (pageSize: Maybe<number>) => {
+  articlesQuery.refetch({
+    ticketId: ticketId.value,
+    pageSize,
+  })
+}
+
+// When the last article is deleted, cursor has to be adjusted
+//  to show newly created articles in the list (if any).
+// Cursor is offset-based, so the old cursor is pointing to an unavailable article,
+//  thus using the cursor for the last article of the already filtered edges.
+const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
+  const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}
+
+  if (nextEndCursorEdge) {
+    newPageInfo.endCursor = nextEndCursorEdge
+  } else {
+    newPageInfo.startCursor = null
+    newPageInfo.endCursor = null
+  }
+
+  return newPageInfo
+}
 
 articlesQuery.subscribeToMore<
   TicketArticleUpdatesSubscriptionVariables,
@@ -49,33 +84,48 @@ articlesQuery.subscribeToMore<
 >(() => ({
   document: TicketArticleUpdatesDocument,
   variables: {
-    ticketId: convertToGraphQLId('Ticket', props.internalId),
+    ticketId: ticketId.value,
   },
   onError: noop,
   updateQuery(previous, { subscriptionData }) {
     const updates = subscriptionData.data.ticketArticleUpdates
-    if (updates.deletedArticleId) {
-      const edges = previous.articles.edges.filter(
-        (edge) => edge.node.id !== updates.deletedArticleId,
+
+    if (!previous.articles || updates.updateArticle) return previous
+
+    const previousArticlesEdges = previous.articles.edges
+    const previousArticlesEdgesCount = previousArticlesEdges.length
+
+    if (updates.removeArticleId) {
+      const edges = previousArticlesEdges.filter(
+        (edge) => edge.node.id !== updates.removeArticleId,
       )
 
-      // When the last article is deleted, cursor has to be adjusted
-      //  to show newly created articles in the list (if any).
-      // Cursor is offset-based, so the old cursor is pointing to an unavailable article,
-      //  thus using the cursor for the last article of the already filtered edges.
-      const nextEndCursorEdge =
-        previous.articles.edges[previous.articles.edges.length - 2]
+      const removedArticleVisible = edges.length !== previousArticlesEdgesCount
 
-      const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}
+      if (removedArticleVisible && !allArticleLoaded.value) {
+        refetchArticlesQuery(ticketArticlesMin.value)
 
-      if (nextEndCursorEdge) {
-        newPageInfo.endCursor = nextEndCursorEdge.cursor
-      } else {
-        newPageInfo.startCursor = null
-        newPageInfo.endCursor = null
+        return previous
       }
 
-      const { pageInfo } = previous.articles
+      const result = {
+        ...previous,
+        articles: {
+          ...previous.articles,
+          edges,
+          totalCount: previous.articles.totalCount - 1,
+        },
+      }
+
+      if (removedArticleVisible) {
+        const nextEndCursorEdge =
+          previousArticlesEdges[previousArticlesEdgesCount - 2]
+
+        result.articles.pageInfo = {
+          ...previous.articles.pageInfo,
+          ...adjustPageInfoAfterDeletion(nextEndCursorEdge.cursor),
+        }
+      }
 
       // Trigger cache garbage collection after the returned article deletion subscription
       //  updated the article list.
@@ -83,27 +133,26 @@ articlesQuery.subscribeToMore<
         getApolloClient().cache.gc()
       })
 
-      return {
-        ...previous,
-        articles: {
-          ...previous.articles,
-          pageInfo: {
-            ...pageInfo,
-            ...newPageInfo,
-          },
-          edges,
-          totalCount: previous.articles.totalCount - 1,
-        },
-      }
+      return result
     }
-    if (updates.createdArticle) {
-      articlesQuery.fetchMore({
-        variables: {
-          pageSize: null,
-          loadDescription: false,
-          afterCursor: result.value?.articles.pageInfo.endCursor,
-        },
-      })
+
+    if (updates.addArticle) {
+      const needRefetch =
+        !previousArticlesEdges[previousArticlesEdgesCount - 1] ||
+        updates.addArticle.createdAt <=
+          previousArticlesEdges[previousArticlesEdgesCount - 1].node.createdAt
+
+      if (!allArticleLoaded.value || needRefetch) {
+        refetchArticlesQuery(null)
+      } else {
+        articlesQuery.fetchMore({
+          variables: {
+            pageSize: null,
+            loadDescription: false,
+            afterCursor: result.value?.articles.pageInfo.endCursor,
+          },
+        })
+      }
     }
     return previous
   },

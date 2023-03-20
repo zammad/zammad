@@ -1,11 +1,12 @@
 subscription ticketArticleUpdates($ticketId: ID!) {
   ticketArticleUpdates(ticketId: $ticketId) {
-    createdArticle {
+    addArticle {
       id
+      createdAt
     }
-    updatedArticle {
+    updateArticle {
       ...ticketArticleAttributes
     }
-    deletedArticleId
+    removeArticleId
   }
 }

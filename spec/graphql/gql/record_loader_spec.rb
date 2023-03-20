@@ -2,27 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::RecordLoader, type: :graphql do
+RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent, type: :graphql do
 
   let(:agent) { create(:agent) }
   let(:debug) { false }
-
-  before do
-    loops.times do
-      organization   = create(:organization)
-      user           = create(:user, organization: organization)
-      group          = create(:group)
-
-      tickets_per_loop.times do
-        source_ticket = create(:ticket, customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.all.sample)
-        if articles_per_ticket
-          create_list(:ticket_article, articles_per_ticket, ticket_id: source_ticket.id, from: 'asdf1@record_loader_test.org', created_by_id: user.id)
-        end
-      end
-
-      agent.group_names_access_map = Group.all.to_h { |g| [g.name, ['full']] }
-    end
-  end
 
   def trace_queries(total_queries, uncached_queries)
     callback = lambda do |*, payload|
@@ -53,9 +36,21 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
   end
 
   context 'when querying multiple tickets' do
-    let(:loops) { 5 }
-    let(:tickets_per_loop)    { 5 }
-    let(:articles_per_ticket) { 1 }
+    before do
+      5.times do
+        organization   = create(:organization)
+        user           = create(:user, organization: organization)
+        group          = create(:group)
+
+        5.times do
+          source_ticket = create(:ticket, customer: user, organization: organization, group: group, created_by_id: user.id, state: Ticket::State.all.sample)
+          create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf1@record_loader_test.org', created_by_id: user.id)
+        end
+
+        agent.group_names_access_map = Group.all.to_h { |g| [g.name, ['full']] }
+      end
+    end
+
     let(:overview_id) do
       condition = {
         'article.from' => {
@@ -124,7 +119,7 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       QUERY
     end
 
-    it 'performs only the expected amount of DB queries', :aggregate_failures, authenticated_as: :agent do
+    it 'performs only the expected amount of DB queries' do
       # Create variables here and not via let(), otherwise the objects would be instantiated later in the traced block.
       variables = { overviewId: overview_id }
       total_queries = {}
@@ -174,66 +169,31 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
   end
 
   context 'when querying one ticket with many articles' do
-    let(:loops) { 1 }
-    let(:tickets_per_loop)    { 1 }
-    let(:articles_per_ticket) { 10 }
-    let(:ticket_id)           { gql.id(Ticket.last) }
+    before do
+      create_list(:user, 10, organization: create(:organization))
+    end
+
+    let(:organization_id) { gql.id(Organization.last) }
     let(:query) do
       <<~QUERY
-        query ticket(
-          $ticketId: ID
-          $withArticles: Boolean = false
-        ) {
-          ticket(
-            ticket: {
-              ticketId: $ticketId
-            }
-          ) {
+        query organization($organizationId: ID, $organizationInternalId: Int) {
+          organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
             id
-            internalId
-            number
-            title
-            createdAt
-            updatedAt
-            owner {
-              firstname
-              lastname
+            name
+            shared
+            domain
+            domainAssignment
+            active
+            note
+            ticketsCount {
+              open
+              closed
             }
-            customer {
-              id
-              firstname
-              lastname
-              fullname
-            }
-            organization {
-              name
-            }
-            state {
-              name
-              stateType {
-                name
-              }
-            }
-            group {
-              name
-            }
-            priority {
-              name
-              defaultCreate
-              uiColor
-            }
-            articles @include(if: $withArticles) {
+            members{
               edges {
                 node {
-                  id
-                  internal
-                  body
-                  createdAt
-                  sender {
-                    name
-                  }
-                  subject
-                  internal
+                  firstname
+                  lastname
                 }
               }
             }
@@ -242,8 +202,8 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
       QUERY
     end
 
-    it 'performs only the expected amount of DB queries', :aggregate_failures, authenticated_as: :agent do
-      variables = { ticketId: ticket_id, withArticles: true }
+    it 'performs only the expected amount of DB queries' do
+      variables = { organizationId: organization_id }
       total_queries = {}
       uncached_queries = {}
 
@@ -251,40 +211,23 @@ RSpec.describe Gql::RecordLoader, type: :graphql do
         gql.execute(query, variables: variables)
       end
 
-      expect(gql.result.data['id']).to eq(ticket_id)
+      expect(gql.result.data['id']).to eq(organization_id)
 
       expect(total_queries).to include(
         {
-          'Permission Load'              => 8,
-          'Permission Exists?'           => 7,
-          'Group Load'                   => 12,
-          'UserGroup Exists?'            => 13,
-          'Ticket Load'                  => 11,
-          'Ticket::Article Load'         => 1,
-          'Ticket::Article::Sender Load' => 1,
-          'User Load'                    => 2,
-          'Organization Load'            => 1,
-          'Ticket::State Load'           => 1,
-          'Ticket::Priority Load'        => 1,
-          'Ticket::StateType Load'       => 1
+          'Permission Load'    => 27,
+          'Permission Exists?' => 25,
+          'User Load'          => 2,
+          'Organization Load'  => 1,
         }
       )
 
-      adapter = ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-
       expect(uncached_queries).to include(
         {
-          'Permission Load'        => 4,
-          'Permission Exists?'     => 4,
-          'Group Load'             => 2,
-          'UserGroup Exists?'      => 1,
-          'Ticket Load'            => adapter == 'mysql2' ? 1 : 2,  # differs for some reason, not sure why
-          'Ticket::Article Load'   => 1,
-          'User Load'              => 2,
-          'Organization Load'      => 1,
-          'Ticket::State Load'     => 1,
-          'Ticket::Priority Load'  => 1,
-          'Ticket::StateType Load' => 1
+          'Permission Load'    => 4,
+          'Permission Exists?' => 5,
+          'User Load'          => 2,
+          'Organization Load'  => 1,
         }
       )
     end

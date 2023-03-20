@@ -9,13 +9,14 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const TicketArticleUpdatesDocument = gql`
     subscription ticketArticleUpdates($ticketId: ID!) {
   ticketArticleUpdates(ticketId: $ticketId) {
-    createdArticle {
+    addArticle {
       id
+      createdAt
     }
-    updatedArticle {
+    updateArticle {
       ...ticketArticleAttributes
     }
-    deletedArticleId
+    removeArticleId
   }
 }
     ${TicketArticleAttributesFragmentDoc}`;

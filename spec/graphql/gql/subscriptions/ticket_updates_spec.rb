@@ -13,7 +13,6 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
         ticketUpdates(ticketId: $ticketId) {
           ticket {
             title
-            articleCount
           }
         }
       }
@@ -45,7 +44,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
 
         it 'receives ticket update message' do
           expect(mock_channel.mock_broadcasted_messages).to eq(
-            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket', 'articleCount' => 1 } } } }, more: true } ]
+            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket' } } } }, more: true } ]
           )
         end
       end
@@ -60,7 +59,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
 
         it 'receives article remove push message' do
           expect(mock_channel.mock_broadcasted_messages).to eq(
-            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket', 'articleCount' => 0 } } } }, more: true } ]
+            [ { result: { 'data' => { 'ticketUpdates' => { 'ticket' => { 'title' => 'Test Ticket' } } } }, more: true } ]
           )
         end
       end
