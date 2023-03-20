@@ -6324,10 +6324,10 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
-histoire@^0.15.8:
-  version "0.15.8"
-  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.15.8.tgz#ac2eebcb59b0fb739b1b22a702dcc7695603e685"
-  integrity sha512-weDuhDeguNy+9MNTm04OCk2tyJCKndzxp9pcOivxrIeuwmxA1nv7L5bye1YG7gjKWEOuifxRt9VWYAHo2Nc8VA==
+histoire@^0.15.9:
+  version "0.15.9"
+  resolved "https://registry.yarnpkg.com/histoire/-/histoire-0.15.9.tgz#f9c1862e07d5a0646015d1dcbd3d488abf892bff"
+  integrity sha512-Mb9185Sq/SckVhtHpUdf3dqSrAdf9HDsOFbTcBIZ6W9TYCdsSLY5kLzPU2sHaHHM/myxh5DC+9SLBaTFeNJSug==
   dependencies:
     "@akryum/tinypool" "^0.3.1"
     "@histoire/app" "^0.15.8"
