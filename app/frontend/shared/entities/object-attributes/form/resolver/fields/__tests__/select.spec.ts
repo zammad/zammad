@@ -57,4 +57,38 @@ describe('FieldResolverSelect', () => {
       internal: true,
     })
   })
+
+  it('should return the correct field attributes for relations', () => {
+    const fieldResolver = new FieldResolverSelect({
+      dataType: 'select',
+      name: 'category',
+      display: 'Category',
+      dataOption: {
+        historical_options: {},
+        translate: true,
+        options: {},
+        relation: 'Group',
+        belongs_to: 'group',
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.fieldAttributes()).toEqual({
+      label: 'Category',
+      name: 'category',
+      required: false,
+      props: {
+        historicalOptions: {},
+        noOptionsLabelTranslation: false,
+        clearable: false,
+        options: [],
+        belongsToObjectField: 'group',
+      },
+      relation: {
+        type: 'Group',
+      },
+      type: 'select',
+      internal: true,
+    })
+  })
 })
