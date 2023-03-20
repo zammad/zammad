@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::Mention::Suggestions, type: :graphql do
+RSpec.describe Gql::Queries::Mention::Suggestions, searchindex: true, type: :graphql do
   context 'when searching' do
     let(:agent)    { create(:agent, groups: [group]) }
     let(:customer) { create(:customer) }
@@ -10,8 +10,8 @@ RSpec.describe Gql::Queries::Mention::Suggestions, type: :graphql do
 
     let(:query) do
       <<~QUERY
-        query mentionSuggestions($query: String!, $group: ID!) {
-          mentionSuggestions(query: $query, group: $group) {
+        query mentionSuggestions($query: String!, $groupId: ID!) {
+          mentionSuggestions(query: $query, groupId: $groupId) {
             id
             fullname
             email
@@ -20,9 +20,10 @@ RSpec.describe Gql::Queries::Mention::Suggestions, type: :graphql do
       QUERY
     end
 
-    let(:variables) { { query: search_query, group: Gql::ZammadSchema.id_from_object(group) } }
+    let!(:variables) { { query: search_query, groupId: Gql::ZammadSchema.id_from_object(group) } }
 
     before do
+      searchindex_model_reload([User])
       gql.execute(query, variables: variables)
     end
 

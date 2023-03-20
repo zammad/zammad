@@ -1441,7 +1441,7 @@ export type QueriesLocalesArgs = {
 
 /** All available queries */
 export type QueriesMentionSuggestionsArgs = {
-  group: Scalars['ID'];
+  groupId: Scalars['ID'];
   query: Scalars['String'];
 };
 
@@ -2649,7 +2649,7 @@ export type KnowledgeBaseAnswerSuggestionsQuery = { __typename?: 'Queries', know
 
 export type MentionSuggestionsQueryVariables = Exact<{
   query: Scalars['String'];
-  group: Scalars['ID'];
+  groupId: Scalars['ID'];
 }>;
 
 

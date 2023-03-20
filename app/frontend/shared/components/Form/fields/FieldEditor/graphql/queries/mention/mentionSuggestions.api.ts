@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const MentionSuggestionsDocument = gql`
-    query mentionSuggestions($query: String!, $group: ID!) {
-  mentionSuggestions(query: $query, group: $group) {
+    query mentionSuggestions($query: String!, $groupId: ID!) {
+  mentionSuggestions(query: $query, groupId: $groupId) {
     id
     internalId
     fullname

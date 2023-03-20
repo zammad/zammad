@@ -26,14 +26,14 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const queryMentionsHandler = new QueryHandler(
     useMentionSuggestionsLazyQuery({
       query: '',
-      group: '',
+      groupId: '',
     }),
   )
 
   const getUserMentions = async (query: string, group: string) => {
     const { data } = await queryMentionsHandler.query({
       query,
-      group: ensureGraphqlId('Group', group),
+      groupId: ensureGraphqlId('Group', group),
     })
     return data?.mentionSuggestions || []
   }

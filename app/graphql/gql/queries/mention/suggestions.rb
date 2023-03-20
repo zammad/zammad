@@ -5,7 +5,7 @@ module Gql::Queries
     description 'Suggestions for mentionable users in a new ticket article'
 
     argument :query, String, description: 'User to search for'
-    argument :group, GraphQL::Types::ID, description: 'A group to which the Users have to be allocated to'
+    argument :group_id, GraphQL::Types::ID, loads: Gql::Types::GroupType, description: 'A group to which the Users have to be allocated to'
 
     type [Gql::Types::UserType], null: true
 
@@ -16,8 +16,8 @@ module Gql::Queries
     def resolve(query:, group:)
       ::User.search({
                       query:        query,
-                      group_ids:    { Gql::ZammadSchema.verified_object_from_id(group, type: ::Group)&.id => 'read' },
-                      role_ids:     Role.with_permissions('ticket.agent'),
+                      group_ids:    { group.id => 'read' },
+                      role_ids:     Role.with_permissions('ticket.agent').map(&:id),
                       current_user: context.current_user,
                     })
     end
