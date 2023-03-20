@@ -2314,6 +2314,7 @@ textarea,
   &.is-disabled, // .is-disabled should not be used - legacy support
   &[disabled],
   &[readonly] {
+    background: var(--background-secondary);
     opacity: 0.38;
 
     &:focus,
