@@ -441,14 +441,6 @@ ul {
   z-index: 1100;
 }
 
-.u-high-priority-color {
-  fill: $high-priority-color;
-}
-
-.u-low-priority-color {
-  fill: $low-priority-color;
-}
-
 .clickCatcher {
   top: 0;
   left: 0;
@@ -6082,6 +6074,14 @@ a.list-group-item.active > .badge,
 
 .danger-color {
   color: var(--danger-color);
+}
+
+.u-high-priority-color {
+  fill: $high-priority-color;
+}
+
+.u-low-priority-color {
+  fill: $low-priority-color;
 }
 
 .stat-widgets {
