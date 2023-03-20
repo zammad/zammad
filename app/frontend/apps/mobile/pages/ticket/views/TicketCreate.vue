@@ -119,7 +119,7 @@ const ticketTitleSection = getFormSchemaGroupSection(
       screen: 'create_top',
       outerClass:
         '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
-      wrapperClass: '$reset flex w-full',
+      wrapperClass: '$reset formkit-disabled:opacity-30 flex w-full',
       labelClass: '$reset sr-only',
       blockClass: '$reset flex w-full',
       innerClass: '$reset flex justify-center items-center px-8 w-full',

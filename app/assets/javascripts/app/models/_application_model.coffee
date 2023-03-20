@@ -31,8 +31,11 @@ class App.Model extends Spine.Model
   @validate: (data = {}) ->
     screen = data?.controllerForm?.screen
 
+    if data?.controllerForm?.mixedAttributes
+      attributes = data?.controllerForm?.mixedAttributes
+
     # based on model attributes
-    if App[ data['model'] ] && App[ data['model'] ].attributesGet
+    else if App[ data['model'] ] && App[ data['model'] ].attributesGet
       attributes = App[ data['model'] ].attributesGet(screen)
 
     # based on custom attributes
@@ -166,7 +169,7 @@ set new attributes of model (remove already available attributes)
 
   ###
 
-  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false, className = undefined) ->
+  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = undefined) ->
     if !className
       className = @.className
 
@@ -193,6 +196,8 @@ set new attributes of model (remove already available attributes)
         attributesNew[ attribute.name ] = attribute
 
     for key, attribute of attributesNew
+      if renderTarget
+        attribute.renderTarget = renderTarget
       if attribute.diff
         current_time = new Date().getTime()
         switch attribute.tag

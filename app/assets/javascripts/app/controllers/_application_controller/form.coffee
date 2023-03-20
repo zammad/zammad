@@ -86,7 +86,9 @@ class App.ControllerForm extends App.Controller
 
     # collect form attributes
     @attributes = []
-    if @model.attributesGet
+    if @mixedAttributes
+      attributesClean = @mixedAttributes
+    else if @model.attributesGet
       attributesClean = @model.attributesGet(@screen)
     else
       attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes, undefined, @model.className)
@@ -118,7 +120,10 @@ class App.ControllerForm extends App.Controller
 
       # add item
       item = @formGenItem(attribute, @idPrefix, fieldset, attributeCount)
-      item.appendTo(fieldset)
+      if attribute.renderTarget
+        item.appendTo(@el.find(attribute.renderTarget))
+      else
+        item.appendTo(fieldset)
 
       # if password, add confirm password item
       if attribute.type is 'password'
@@ -133,7 +138,10 @@ class App.ControllerForm extends App.Controller
           attribute.display = App.i18n.translateContent('%s (confirm)', App.i18n.translateContent(attribute.display))
           attribute.name = attribute.name + '_confirm'
           item = @formGenItem(attribute, @idPrefix, fieldset, attributeCount)
-          item.appendTo(fieldset)
+          if attribute.renderTarget
+            item.appendTo(@el.find(attribute.renderTarget))
+          else
+            item.appendTo(fieldset)
 
     if @fullForm
       if !@formClass
@@ -452,9 +460,11 @@ class App.ControllerForm extends App.Controller
 
       if !@constructor.fieldIsReadonly(field_by_name)
         field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
+        field_by_name.closest('.form-group').find('input[type=file]').attr('disabled', true)
         field_by_name.closest('.form-group').addClass('is-readonly')
       if !@constructor.fieldIsReadonly(field_by_data)
         field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
+        field_by_data.closest('.form-group').find('input[type=file]').attr('disabled', true)
         field_by_data.closest('.form-group').addClass('is-readonly')
 
   changeable: (name, el = @form) ->
@@ -466,9 +476,11 @@ class App.ControllerForm extends App.Controller
 
       if @constructor.fieldIsReadonly(field_by_name)
         field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
+        field_by_name.closest('.form-group').find('input[type=file]').attr('disabled', false)
         field_by_name.closest('.form-group').removeClass('is-readonly')
       if @constructor.fieldIsReadonly(field_by_data)
         field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
+        field_by_data.closest('.form-group').find('input[type=file]').attr('disabled', false)
         field_by_data.closest('.form-group').removeClass('is-readonly')
 
   validate: (params) ->

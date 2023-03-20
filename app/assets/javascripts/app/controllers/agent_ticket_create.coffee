@@ -477,67 +477,31 @@ class App.TicketCreate extends App.Controller
 
     handlers = @Config.get('TicketCreateFormHandler')
 
+    top         = App.Ticket.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-top')
+    article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-top')
+    middle      = App.Ticket.attributesGet('create_middle', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-middle')
+    bottom      = App.Ticket.attributesGet('create_bottom', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-bottom')
+
     @controllerFormCreateMiddle = new App.ControllerForm(
-      el:                       @$('.ticket-form-middle')
+      el:                       @$('.ticket-create')
       form_id:                  @formId
       model:                    App.Ticket
       screen:                   'create_middle'
+      mixedAttributes:          Object.assign({}, top, article_top, middle, bottom)
       handlersConfig:           handlers
       formMeta:                 @formMeta
       params:                   params
       noFieldset:               true
       taskKey:                  @taskKey
       rejectNonExistentValues:  true
-    )
-
-    # tunnel events to make sure core workflow does know
-    # about every change of all attributes (like subject)
-    tunnelController = @controllerFormCreateMiddle
-    class TicketCreateFormHandlerControllerFormCreateMiddle
-      @run: (params, attribute, attributes, classname, form, ui) ->
-        return if !ui.lastChangedAttribute
-        tunnelController.lastChangedAttribute = ui.lastChangedAttribute
-        params = App.ControllerForm.params(tunnelController.form)
-        App.FormHandlerCoreWorkflow.run(params, tunnelController.attributes[0], tunnelController.attributes, tunnelController.idPrefix, tunnelController.form, tunnelController)
-
-    handlersTunnel = _.clone(handlers)
-    handlersTunnel['000-TicketCreateFormHandlerControllerFormCreateMiddle'] = TicketCreateFormHandlerControllerFormCreateMiddle
-
-    @controllerFormCreateTop = new App.ControllerForm(
-      el:             @$('.ticket-form-top')
-      form_id:        @formId
-      model:          App.Ticket
-      screen:         'create_top'
-      events:
-        'change [name=customer_id]': @localUserInfo
-        'change [data-attribute-name=organization_id] .js-input': @localUserInfo
-      handlersConfig: handlersTunnel
-      autofocus:      true
-      params:         params
-      taskKey:        @taskKey
-    )
-    @controllerFormCreateTopArticle = new App.ControllerForm(
-      el:      @$('.article-form-top')
-      form_id: @formId
-      model:   App.TicketArticle
-      screen:  'create_top'
+      autofocus:                true
       events:
         'fileUploadStart .richtext': => @submitDisable()
         'fileUploadStop .richtext': => @submitEnable()
-      handlersConfig: handlersTunnel
-      params:  params
-      taskKey: @taskKey
+        'change [name=customer_id]': @localUserInfo
+        'change [data-attribute-name=organization_id] .js-input': @localUserInfo
       richTextUploadRenderCallback: @updateTaskManagerAttachments
       richTextUploadDeleteCallback: @updateTaskManagerAttachments
-    )
-    @controllerFormCreateBottom = new App.ControllerForm(
-      el:             @$('.ticket-form-bottom')
-      form_id:        @formId
-      model:          App.Ticket
-      screen:         'create_bottom'
-      handlersConfig: handlersTunnel
-      params:         params
-      taskKey:        @taskKey
     )
 
     # convert remote images into data urls
@@ -694,32 +658,13 @@ class App.TicketCreate extends App.Controller
 
     ticket.load(params)
 
-    ticketErrorsTop = ticket.validate(
-      controllerForm: @controllerFormCreateTop
-      target: e.target
-    )
-    ticketErrorsMiddle = ticket.validate(
+    article = new App.TicketArticle
+    article.load(params['article'])
+
+    errors = ticket.validate(
       controllerForm: @controllerFormCreateMiddle
       target: e.target
     )
-    ticketErrorsBottom = ticket.validate(
-      controllerForm: @controllerFormCreateBottom
-      target: e.target
-    )
-
-    article = new App.TicketArticle
-    article.load(params['article'])
-    articleErrors = article.validate(
-      controllerForm: @controllerFormCreateTopArticle
-      target: e.target
-    )
-
-    # collect whole validation result
-    errors = {}
-    errors = _.extend(errors, ticketErrorsTop)
-    errors = _.extend(errors, ticketErrorsMiddle)
-    errors = _.extend(errors, ticketErrorsBottom)
-    errors = _.extend(errors, articleErrors)
 
     # show errors in form
     if !_.isEmpty(errors)

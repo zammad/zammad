@@ -206,6 +206,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     end
   end
 
+  # TODO: Frontend tests!?
   context 'with entered form fields' do
     it 'remembers the data when switching between steps' do
 
@@ -348,28 +349,50 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     let(:group1) { Group.find_by(name: 'Users') }
     let(:user)   { create(:customer, :with_org, groups: [group1]) }
 
-    it 'can complete all steps' do
-      within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.unique.name_with_middle)
-        next_step
+    shared_examples 'can complete all steps as customer' do
+      it 'can complete all steps' do
+        within_form(form_updater_gql_number: 1) do
+          find_input('Title').type(Faker::Name.unique.name_with_middle)
+          next_step
 
-        find_select('Group').select_option('Users')
-        next_step
+          find_select('Group').select_option('Users')
 
-        find_editor('Text').type(Faker::Hacker.say_something_smart)
+          if organizations
+            find_select('Organization').select_option(organizations.last.name)
+          else
+            expect(page).to have_no_select('Organization')
+          end
+
+          next_step
+
+          find_editor('Text').type(Faker::Hacker.say_something_smart)
+        end
+
+        submit_form
+
+        find('[role=alert]', text: 'Ticket has been created successfully.')
+
+        expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
       end
+    end
 
-      submit_form
+    context 'with secondary organizations' do
+      include_examples 'can complete all steps as customer' do
+        let(:user)          { create(:customer, :with_org, organizations: organizations, groups: [group1]) }
+        let(:organizations) { create_list(:organization, 3) }
+      end
+    end
 
-      find('[role=alert]', text: 'Ticket has been created successfully.')
-
-      expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
+    context 'without secondary organizations' do
+      include_examples 'can complete all steps as customer' do
+        let(:organizations) { nil }
+      end
     end
   end
 
   describe 'Core Workflow' do
     include_examples 'mobile app: core workflow' do
-      let(:object_name) { 'Ticket' }
+      let(:object_name)             { 'Ticket' }
       let(:form_updater_gql_number) { 2 }
       let(:before_it) do
         lambda {

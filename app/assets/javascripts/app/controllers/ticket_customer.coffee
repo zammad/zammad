@@ -5,13 +5,14 @@ class App.TicketCustomer extends App.ControllerModal
   head: __('Change Customer')
 
   content: ->
-    configure_attributes = [
-      { name: 'customer_id', display: __('Customer'), tag: 'user_autocompletion', null: false, placeholder: __('Enter Person or Organization/Company'), minLengt: 2, disableCreateObject: false },
-      { name: 'organization_id', display: __('Organization'), tag: 'autocompletion_ajax_customer_organization', multiple: false, null: false, relation: 'Organization', autocapitalize: false, translate: false },
-    ]
+    configure_attributes = {
+      customer_id: { name: 'customer_id', display: __('Customer'), tag: 'user_autocompletion', null: false, placeholder: __('Enter Person or Organization/Company'), minLengt: 2, disableCreateObject: false },
+      organization_id: { name: 'organization_id', display: __('Organization'), tag: 'autocompletion_ajax_customer_organization', multiple: false, null: false, relation: 'Organization', autocapitalize: false, translate: false },
+    }
     @controller = new App.ControllerForm(
-      model:
-        configure_attributes: configure_attributes,
+      model: App.Ticket
+      mixedAttributes: configure_attributes
+      screen: 'edit'
       autofocus:      true,
       handlersConfig: [App.TicketZoomFormHandlerMultiOrganization],
     )
@@ -26,6 +27,7 @@ class App.TicketCustomer extends App.ControllerModal
 
     errors = ticket.validate(
       controllerForm: @controller
+      target: e.target
     )
 
     if !_.isEmpty(errors)

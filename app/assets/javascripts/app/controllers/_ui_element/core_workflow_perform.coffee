@@ -49,6 +49,8 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
       '_ids$': ['show', 'hide', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly']
       'organization_id$': ['show', 'hide', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option']
       'owner_id$': ['show', 'hide', 'set_mandatory', 'set_optional', 'set_readonly', 'unset_readonly', 'add_option', 'remove_option', 'select', 'auto_select']
+      'title$': ['set_readonly', 'unset_readonly', 'fill_in', 'fill_in_empty']
+      'body$': ['set_readonly', 'unset_readonly', 'fill_in', 'fill_in_empty']
 
     # merge config
     elements = {}
@@ -65,10 +67,13 @@ class App.UiElement.core_workflow_perform extends App.UiElement.ApplicationSelec
 
       attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
       configureAttributes = attributesByObject[groupMeta.model] || []
+      if groupMeta.model is 'Ticket'
+        configureAttributes.splice(_.findIndex(configureAttributes, (e) -> e.name is 'title') + 1, 0, { name: 'body', display: __('Text'), data_type: 'richtext', tag: 'richtext', rows: 5, limit: 100, null: false })
+
       for config in configureAttributes
-        continue if !_.contains(['input', 'textarea', 'select', 'multiselect', 'integer', 'boolean', 'multi_tree_select', 'tree_select', 'date', 'datetime'], config.tag)
+        continue if !_.contains(['input', 'textarea', 'richtext', 'select', 'multiselect', 'integer', 'boolean', 'multi_tree_select', 'tree_select', 'date', 'datetime'], config.tag)
         continue if _.contains(['created_at', 'updated_at'], config.name)
-        continue if groupKey is 'ticket' && _.contains(['number', 'organization_id', 'title', 'escalation_at', 'first_response_escalation_at', 'update_escalation_at', 'close_escalation_at', 'last_contact_at', 'last_contact_agent_at', 'last_contact_customer_at', 'first_response_at', 'close_at'], config.name)
+        continue if groupKey is 'ticket' && _.contains(['number', 'organization_id', 'escalation_at', 'first_response_escalation_at', 'update_escalation_at', 'close_escalation_at', 'last_contact_at', 'last_contact_agent_at', 'last_contact_customer_at', 'first_response_at', 'close_at'], config.name)
 
         # ignore passwords and relations
         if config.type isnt 'password' && config.name.substr(config.name.length-4,4) isnt '_ids' && config.searchable isnt false

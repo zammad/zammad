@@ -7,5 +7,18 @@ class FormUpdater::CoreWorkflow::Readonly < FormUpdater::CoreWorkflow::Backend
 
       result[name][:disabled] = readonly
     end
+
+    # Currently a special handling for the body field, because in the desktop view it's
+    # really connected to the body field, so it should always have the same readonly/disabled state.
+    handle_attachments_field
+  end
+
+  private
+
+  def handle_attachments_field
+    return if !result['body']&.key?(:disabled)
+
+    result['attachments'] ||= {}
+    result['attachments'][:disabled] = result['body'][:disabled]
   end
 end
