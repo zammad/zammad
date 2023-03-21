@@ -1902,7 +1902,6 @@ table {
 
 .label-text {
   @include bidi-style(margin-left, 3px, margin-right, 0);
-
   @extend %clickable;
 }
 
@@ -7500,7 +7499,6 @@ a.list-group-item.active > .badge,
   white-space: nowrap;
 
   @include bidi-style(margin-left, auto, margin-right, 0);
-
   @extend .u-clickable;
 
   @include phone {
@@ -7555,7 +7553,6 @@ a.list-group-item.active > .badge,
   white-space: nowrap;
 
   @include bidi-style(margin-left, auto, margin-right, 0);
-
   @extend %clickable;
 }
 
@@ -7595,7 +7592,6 @@ a.list-group-item.active > .badge,
 
 .attachmentUpload-cancel {
   @extend .u-clickable;
-
   @include bidi-style(margin-left, auto, margin-right, 0);
 
   text-decoration: underline;
@@ -8849,7 +8845,6 @@ li.list-item-none {
   padding: 0 40px;
 
   @extend .zIndex-11;
-
   @include bidi-style(padding-left, 40px, padding-right, 0);
 
   @include phone {
@@ -9293,7 +9288,6 @@ li.dropdown-header {
 
 .organizationInfo-avatar {
   @extend .userInfo-avatar;
-
   @include bidi-style(padding, 18px 0 0 18px, padding, 18px 18px 0 0);
 
   background: var(--background-modifier-accent);
@@ -9316,7 +9310,6 @@ li.dropdown-header {
 
   .userList-name {
     @extend .u-textTruncate;
-
     @include bidi-style(margin-left, 7px, margin-right, 0);
   }
 }

@@ -1,13 +1,10 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
 
 @layer components {
   .required::after {
-    content: '•';
-    @apply ml-1 inline-block font-extrabold text-yellow;
+    @apply ml-1 inline-block font-extrabold text-yellow content-['•'];
   }
 }
 

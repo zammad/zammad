@@ -368,14 +368,12 @@ span.flatpickr-weekday {
 
 .flatpickr-day.selected:hover,
 .flatpickr-day.selected {
-  background: none;
-  @apply border-blue bg-blue;
+  @apply border-blue bg-blue bg-none;
 }
 
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month:hover,
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month {
-  left: unset;
-  @apply right-8 w-auto p-2;
+  @apply right-8 left-[unset] w-auto p-2;
 }
 
 .flatpickr-months .flatpickr-next-month.flatpickr-next-month:hover,
@@ -401,8 +399,7 @@ span.flatpickr-weekday {
 }
 
 .flatpickr-months .flatpickr-current-month {
-  left: 5px;
-  @apply text-left text-sm;
+  @apply left-[5px] text-left text-sm;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months,

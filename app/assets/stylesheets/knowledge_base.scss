@@ -464,6 +464,7 @@ b {
     ul,
     ol {
       @include bidi-style(padding-left, 0, padding-right, 0);
+
       @include phone {
         @include bidi-style(padding-left, 0, padding-right, 0);
       }
