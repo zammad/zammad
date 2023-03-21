@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-07 03:30+0000\n"
+"PO-Revision-Date: 2023-03-21 03:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -602,6 +602,22 @@ msgstr "%s% се тренутно обрађује"
 msgid "%s% have been reopened"
 msgstr "%s% је поново отворено"
 
+#: app/models/concerns/has_group_relation_definition.rb
+msgid "%{model} can have full or granular access to group"
+msgstr "%{model} може имати потпун или ограничен приступ групи"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} already exists"
+msgstr "%{name} већ постоји"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} is a reserved word"
+msgstr "%{name} је резервисана реч"
+
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+msgid "(state: %s)"
+msgstr "(стање: %s)"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -852,10 +868,6 @@ msgstr "Приступ API путем кључа"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 msgid "API token"
 msgstr "API кључ"
-
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr "Више о Zammad-у"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -1688,10 +1700,6 @@ msgstr ""
 "Неопходан је бар један идентификатор корисника (име, презиме, телефон или "
 "имејл)."
 
-#: app/models/object_manager/attribute.rb
-msgid "At least one letter is required"
-msgstr "Неопходно је бар једно слово"
-
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
@@ -1767,10 +1775,6 @@ msgstr "Неопходно је да атрибут ’%s’ постоји у �
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
 msgstr "Неопходан је ’email’ атрибут!"
-
-#: app/models/object_manager/attribute.rb
-msgid "Attribute not editable!"
-msgstr "Није могуће изменити атрибут!"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2249,10 +2253,6 @@ msgstr "Није било могуће обрисати, објекат има �
 msgid "Can't find User for Token"
 msgstr "Није било могуће пронађи корисника на основу кључа"
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr "Није било могуће послати нагомилане поруке, неаутентификована сесија"
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
@@ -2310,6 +2310,10 @@ msgstr "Није било могуће избрисати запис јер по
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Није било могуће наставити затворен тикет. Молимо отворите нови тикет."
+
+#: app/models/sla.rb
+msgid "Cannot have both response time and update time."
+msgstr "Није могуће имати и време одзива и време освежавања."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -2969,9 +2973,15 @@ msgstr "Ипак настави"
 msgid "Continue session"
 msgstr "Настави сесију"
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
-msgstr "Настави на десктоп апликацију"
+msgid "Continue to desktop"
+msgstr "Настави на десктоп"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Continue to mobile"
+msgstr "Настави на мобилно"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -4436,6 +4446,7 @@ msgid "Deletion failed."
 msgstr "Неуспело брисање."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
 msgid "Delivery failed:"
 msgstr "Неуспела испорука:"
 
@@ -4891,6 +4902,10 @@ msgstr "Имејл обавештења"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
 msgstr "Одлазни имејл"
+
+#: app/models/user.rb
+msgid "Email address '%{email}' is already used for another user."
+msgstr "Други корисник већ користи ’%{email}’ имејл адресу."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -6918,6 +6933,10 @@ msgstr "Неисправан client_id у пријемној петљи!"
 msgid "Invalid client_id received!"
 msgstr "Примљен неисправан client_id!"
 
+#: app/models/user.rb
+msgid "Invalid email '%{email}'"
+msgstr "Неважећи имејл ’%{email}’"
+
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr "Неисправна структура везе"
@@ -7399,6 +7418,7 @@ msgid "Load more"
 msgstr "Учитај више"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 msgid "Loading content"
 msgstr "Учитавање садржаја"
 
@@ -7814,6 +7834,10 @@ msgstr "Минутима"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Мобилни"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
+msgstr "Мобилна апликација је искључена."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8414,6 +8438,10 @@ msgstr "Нема резултата"
 msgid "No results were found."
 msgstr "Нису пронађени резултати."
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "No security information available."
+msgstr "Нема безбедносних информација."
+
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr "Нема доступне сесије."
@@ -8738,10 +8766,6 @@ msgstr "Доступно само корисницима заједничких 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
 msgstr "Само за ове групе."
-
-#: app/models/object_manager/attribute.rb
-msgid "Only lowercase letters, numbers, and '_' are allowed"
-msgstr "Дозвољена су само мала слова, бројеви и ’_’"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -9262,10 +9286,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "Молимо унесите утрошено време."
-
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
-msgstr "Молимо унесите исправну путању или домен"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter your Exchange credentials."
@@ -10833,6 +10853,7 @@ msgid "Site"
 msgstr "Путања"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Прескочи"
 
@@ -11309,6 +11330,7 @@ msgstr "Пробна порука од Zammad-а"
 msgid "Testing"
 msgstr "Тестирање"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11675,6 +11697,10 @@ msgstr "Није пронађен објекат."
 msgid "The object could not be updated."
 msgstr "Није било могуће освежити објекат."
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+msgid "The online notifcation could not be marked as seen."
+msgstr "Није било могуће означити обавештење као прочитано."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr "Страна није више доступна"
@@ -11758,6 +11784,10 @@ msgstr "Није било могуће генерисати извештај"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr "Није било могуће обрадити захтев."
+
+#: lib/validations/verify_perform_rules_validator.rb
+msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
+msgstr "Недостаје обавезна вредност ’%{attribute}’ за %{key}, %{inner}!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -12216,6 +12246,7 @@ msgid "This host cannot be reached."
 msgstr "Није било могуће остварити везу са овим сервером."
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr "Ово је Zammad верзија %s"
 
@@ -13630,6 +13661,7 @@ msgstr "Провера у току…"
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr "Верзија"
 
@@ -13665,7 +13697,6 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Погледај у Zammad"
 
@@ -13790,6 +13821,7 @@ msgid "We've sent password reset instructions to your email address."
 msgstr "Послали смо упутство за поништавање лозинке на вашу имејл адресу."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr "Веб"
@@ -14206,6 +14238,31 @@ msgstr ""
 "Можете генерисати лични кључ приступа за сваку апликацију коју користите а "
 "којој је неопходан приступ Zammad API."
 
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
+msgid "You can no longer see the data privacy task."
+msgstr "Више немате приступ задатку приватности података."
+
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
+msgid "You can no longer see the group."
+msgstr "Више немате приступ групи."
+
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
+msgid "You can no longer see the organization."
+msgstr "Више немате приступ организацији."
+
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
+msgid "You can no longer see the role."
+msgstr "Више немате приступ улози."
+
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+msgid "You can no longer see the ticket."
+msgstr "Више немате приступ тикету."
+
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
+msgid "You can no longer see the user."
+msgstr "Више немате приступ кориснику."
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -14615,6 +14672,10 @@ msgstr "додели тикете"
 msgid "at"
 msgstr "у"
 
+#: app/models/object_manager/attribute.rb
+msgid "at least one letter is required"
+msgstr "неопходно је бар једно слово"
+
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attached"
 msgstr "приложено"
@@ -14622,6 +14683,10 @@ msgstr "приложено"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attachment"
 msgstr "прилог"
+
+#: app/models/object_manager/attribute.rb
+msgid "attribute is not editable"
+msgstr "није могуће изменити атрибут"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -14645,11 +14710,27 @@ msgstr "између два одговора оператера"
 msgid "busy"
 msgstr "заузет(а)"
 
+#: app/models/object_manager/attribute.rb
+msgid ""
+"can't be altered after creation (you can delete the attribute and create "
+"another with the desired value)"
+msgstr ""
+"није могуће изменити по уносу (можете обрисати атрибут и додати нов са "
+"жељеном вредности)"
+
 msgid "can't be blank"
 msgstr "не може бити празно"
 
 msgid "can't be empty"
 msgstr "не може бити празно"
+
+#: app/models/object_manager/attribute.rb
+msgid "can't be used because *_id and *_ids are not allowed"
+msgstr "није могућа употреба зато што _id и *_ids нису дозвољени"
+
+#: app/models/knowledge_base/category.rb
+msgid "cannot be a child of the parent"
+msgstr "није могуће да буде подређени надређеног"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -14742,6 +14823,14 @@ msgstr "клијент"
 msgid "d"
 msgstr "д"
 
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than internal date"
+msgstr "датум не може бити пре интерног"
+
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than published date"
+msgstr "датум не може бити пре објављеног"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
 msgstr "дан"
@@ -14789,6 +14878,14 @@ msgstr "уместо поновног отварања након извесно
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket but create new ticket"
 msgstr "уместо поновног отварања отвори нови тикет"
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow future dates"
+msgstr "не дозвољава датуме у будућности"
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow past dates"
+msgstr "не дозвољава датуме у прошлости"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
@@ -14927,11 +15024,19 @@ msgstr "ч"
 msgid "has already been taken"
 msgstr "је већ заузето"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "has an existing DataPrivacyTask queued"
+msgstr "има заказан постојећи DataPrivacyTask"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "је измењено"
+
+#: lib/validations/mention_validator.rb
+msgid "has no agent access to this ticket"
+msgstr "нема приступ оператера тикету"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -15058,6 +15163,10 @@ msgstr "интерна база података"
 msgid "is"
 msgstr "је"
 
+#: app/models/knowledge_base/has_unique_title.rb
+msgid "is already used"
+msgstr "већ се користи"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "је у току радног времена"
@@ -15065,10 +15174,30 @@ msgstr "је у току радног времена"
 msgid "is invalid"
 msgstr "је неисправно"
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is larger than the allowed maximum value of %{max_value}"
+msgstr "је веће од највеће дозвољене вредности од %{max_value}"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is last account with admin permissions"
+msgstr "је последњи налог са администраторским дозволама"
+
+#: lib/validations/object_manager/attribute_validator/max_length.rb
+msgid "is longer than the allowed length %{maxlength}"
+msgstr "је дуже од дозвољене дужине %{maxlength}"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "није"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is not a User"
+msgstr "није корисник"
+
+#: lib/validations/color_validator.rb
+msgid "is not a color. Only Hex, RGB and HSL colors are supported."
+msgstr "није боја. Подржане су само Hex, RGB и HSL вредности."
 
 msgid "is not a number"
 msgstr "није број"
@@ -15084,12 +15213,20 @@ msgstr "није уврштено у листу"
 msgid "is required"
 msgstr "је обавезно"
 
+#: lib/validations/object_manager/attribute_validator/required.rb
+msgid "is required but missing"
+msgstr "је обавезно али недостаје"
+
 msgid "is reserved"
 msgstr "је резервисано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "је постављено"
+
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is smaller than the allowed minimum value of %{min_value}"
+msgstr "је мање од дозвољене вредности од %{min_value}"
 
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
@@ -15100,6 +15237,10 @@ msgstr "је погрешне дужине (мора бити %{count} знак/
 
 msgid "is the wrong length (should be 1 character)"
 msgstr "је погрешне дужине (мора бити један знак)"
+
+#: app/models/user.rb
+msgid "is too long"
+msgstr "је предугачко"
 
 msgid "is too long (maximum is %{count} characters)"
 msgstr "је предугачко (највише дозвољено %{count} знак/а)"
@@ -15112,6 +15253,14 @@ msgstr "је прекратко (најмање дозвољено %{count} зн
 
 msgid "is too short (minimum is 1 character)"
 msgstr "је прекратко (најмање дозвољено један знак)"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is undeletable system User with ID 1"
+msgstr "је системски корисник који се не може избрисати са ID 1"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is your current account"
+msgstr "је ваш тренутни налог"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -15169,6 +15318,10 @@ msgstr "минут"
 msgid "minutes"
 msgstr "минут(а)"
 
+#: app/models/knowledge_base.rb
+msgid "must be a valid path or domain"
+msgstr "мора бити исправна путања или домен"
+
 msgid "must be accepted"
 msgstr "мора бити прихваћено"
 
@@ -15202,8 +15355,20 @@ msgstr "мора бити непаран"
 msgid "must be other than %{count}"
 msgstr "мора бити другачији од %{count}"
 
+#: app/models/knowledge_base.rb
+msgid "must begin with a slash (\"/\")"
+msgstr "мора започети са косом цртом („/”)"
+
 msgid "must exist"
 msgstr "мора постојати"
+
+#: app/models/knowledge_base.rb
+msgid "must not end with a slash (\"/\")"
+msgstr "не сме се завршавати са косом цртом („/”)"
+
+#: app/models/knowledge_base.rb
+msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
+msgstr "не сме укључивати протокол (нпр. „http://” или „https://”)"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15277,6 +15442,10 @@ msgstr "обавештење послато ’%s’"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "сад"
+
+#: app/models/object_manager/attribute.rb
+msgid "only lowercase letters, numbers, and '_' are allowed"
+msgstr "дозвољена су само мала слова, бројеви и ’_’"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -15473,6 +15642,10 @@ msgstr "прескочено"
 msgid "sms"
 msgstr "sms"
 
+#: app/models/object_manager/attribute.rb
+msgid "spaces are not allowed"
+msgstr "размаци нису дозвољени"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
@@ -15653,6 +15826,13 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "About"
+#~ msgstr "Више о Zammad-у"
+
+#~ msgid "Can't send spool, session not authenticated"
+#~ msgstr ""
+#~ "Није било могуће послати нагомилане поруке, неаутентификована сесија"
 
 #~ msgid "Save ticket"
 #~ msgstr "Сачувај тикет"

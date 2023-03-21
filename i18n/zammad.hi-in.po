@@ -535,6 +535,26 @@ msgstr ""
 msgid "%s% have been reopened"
 msgstr ""
 
+#: app/models/concerns/has_group_relation_definition.rb
+msgid "%{model} can have full or granular access to group"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "%s Object(s) are deleted."
+msgid "%{name} already exists"
+msgstr "% s ऑब्जेक्ट (s) हटा दिए गए हैं।"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} is a reserved word"
+msgstr ""
+
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+#, fuzzy
+#| msgid "Total: %s"
+msgid "(state: %s)"
+msgstr "कुल:% s"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -776,10 +796,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 msgid "API token"
 msgstr "API token"
-
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -1596,10 +1612,6 @@ msgid ""
 "required."
 msgstr ""
 
-#: app/models/object_manager/attribute.rb
-msgid "At least one letter is required"
-msgstr ""
-
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
@@ -1677,10 +1689,6 @@ msgstr ""
 
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
-msgstr ""
-
-#: app/models/object_manager/attribute.rb
-msgid "Attribute not editable!"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -2159,10 +2167,6 @@ msgstr ""
 msgid "Can't find User for Token"
 msgstr ""
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
@@ -2217,6 +2221,10 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
+msgstr ""
+
+#: app/models/sla.rb
+msgid "Cannot have both response time and update time."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
@@ -2894,9 +2902,17 @@ msgstr ""
 msgid "Continue session"
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
+msgid "Continue to desktop"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+#, fuzzy
+#| msgid "Continue"
+msgid "Continue to mobile"
+msgstr "जारी रखें"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -4268,6 +4284,7 @@ msgid "Deletion failed."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
 msgid "Delivery failed:"
 msgstr ""
 
@@ -4741,6 +4758,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
 msgstr "ईमेल आउटबाउंड"
+
+#: app/models/user.rb
+msgid "Email address '%{email}' is already used for another user."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 #, fuzzy
@@ -6693,6 +6714,10 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
+#: app/models/user.rb
+msgid "Invalid email '%{email}'"
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr ""
@@ -7170,6 +7195,7 @@ msgid "Load more"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 #, fuzzy
 #| msgid "Loading..."
 msgid "Loading content"
@@ -7593,6 +7619,10 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "मोबाइल"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
+msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8203,6 +8233,12 @@ msgstr ""
 msgid "No results were found."
 msgstr " कोई परिणाम नहीं मिला।"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "No security information available."
+msgstr " इस स्थान के लिए कोई अनुवाद उपलब्ध नहीं है"
+
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr ""
@@ -8539,10 +8575,6 @@ msgstr " केवल साझा संगठन वाले उपयोग�
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
 msgstr " केवल इन समूहों के लिए।"
-
-#: app/models/object_manager/attribute.rb
-msgid "Only lowercase letters, numbers, and '_' are allowed"
-msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -9091,10 +9123,6 @@ msgstr ""
 #| msgid "Please enter your time which you want to account."
 msgid "Please enter the time you want to record."
 msgstr "कृपया अपना समय दर्ज करें जिसे आप खाते हैं।"
-
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
-msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #, fuzzy
@@ -10692,6 +10720,7 @@ msgid "Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "छोड़ें"
 
@@ -11166,6 +11195,7 @@ msgstr ""
 msgid "Testing"
 msgstr "परिक्षण"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11576,6 +11606,12 @@ msgstr "% s ऑब्जेक्ट (एस) अपडेट किए गए �
 msgid "The object could not be updated."
 msgstr "% s ऑब्जेक्ट (एस) अपडेट किए गए हैं।"
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The online notifcation could not be marked as seen."
+msgstr "% s ऑब्जेक्ट (एस) अपडेट किए गए हैं।"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr ""
@@ -11664,6 +11700,10 @@ msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
+msgstr ""
+
+#: lib/validations/verify_perform_rules_validator.rb
+msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
@@ -12148,6 +12188,7 @@ msgid "This host cannot be reached."
 msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr "यह Zammad संस्करण% s है"
 
@@ -13536,6 +13577,7 @@ msgstr "सत्यापन करें ..."
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr "संस्करण"
 
@@ -13571,7 +13613,6 @@ msgstr "उपयोगकर्ता के दृष्टिकोण से
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "ज़माद में इसे देखें"
 
@@ -13710,6 +13751,7 @@ msgid "We've sent password reset instructions to your email address."
 msgstr "हमने आपके ईमेल पते पर पासवर्ड रीसेट निर्देश भेज दिए हैं।"
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr "Web"
@@ -14125,6 +14167,33 @@ msgstr ""
 "आप अपने द्वारा उपयोग किए जाने वाले प्रत्येक एप्लिकेशन के लिए एक व्यक्तिगत एक्सेस टोकन "
 "उत्पन्न कर सकते हैं, जो कि Zammad API तक पहुँच की आवश्यकता है।"
 
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
+msgid "You can no longer see the data privacy task."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
+msgid "You can no longer see the group."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
+msgid "You can no longer see the organization."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
+msgid "You can no longer see the role."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "You can no longer see the ticket."
+msgstr "आपने टिकट बंद कर दिया है"
+
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
+msgid "You can no longer see the user."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -14539,6 +14608,10 @@ msgstr ""
 msgid "at"
 msgstr ""
 
+#: app/models/object_manager/attribute.rb
+msgid "at least one letter is required"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 #, fuzzy
 #| msgid "reached"
@@ -14547,6 +14620,10 @@ msgstr " पहुंच गए"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attachment"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+msgid "attribute is not editable"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
@@ -14571,10 +14648,24 @@ msgstr ""
 msgid "busy"
 msgstr ""
 
+#: app/models/object_manager/attribute.rb
+msgid ""
+"can't be altered after creation (you can delete the attribute and create "
+"another with the desired value)"
+msgstr ""
+
 msgid "can't be blank"
 msgstr ""
 
 msgid "can't be empty"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+msgid "can't be used because *_id and *_ids are not allowed"
+msgstr ""
+
+#: app/models/knowledge_base/category.rb
+msgid "cannot be a child of the parent"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -14670,6 +14761,14 @@ msgstr ""
 msgid "d"
 msgstr ""
 
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than internal date"
+msgstr ""
+
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than published date"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
 msgstr "दिन"
@@ -14720,6 +14819,14 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket but create new ticket"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow future dates"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow past dates"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -14868,10 +14975,18 @@ msgstr ""
 msgid "has already been taken"
 msgstr ""
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "has an existing DataPrivacyTask queued"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
+msgstr ""
+
+#: lib/validations/mention_validator.rb
+msgid "has no agent access to this ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
@@ -15007,6 +15122,10 @@ msgstr "डेटाबेस अद्यतन करें"
 msgid "is"
 msgstr ""
 
+#: app/models/knowledge_base/has_unique_title.rb
+msgid "is already used"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr ""
@@ -15014,9 +15133,31 @@ msgstr ""
 msgid "is invalid"
 msgstr ""
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is larger than the allowed maximum value of %{max_value}"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is last account with admin permissions"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/max_length.rb
+msgid "is longer than the allowed length %{maxlength}"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "Tickets of User"
+msgid "is not a User"
+msgstr "उपयोगकर्ता का टिकट"
+
+#: lib/validations/color_validator.rb
+msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
 msgid "is not a number"
@@ -15033,6 +15174,10 @@ msgstr ""
 msgid "is required"
 msgstr ""
 
+#: lib/validations/object_manager/attribute_validator/required.rb
+msgid "is required but missing"
+msgstr ""
+
 #, fuzzy
 #| msgid "%s required!"
 msgid "is reserved"
@@ -15040,6 +15185,10 @@ msgstr "% s आवश्यक है!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is smaller than the allowed minimum value of %{min_value}"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
@@ -15052,6 +15201,10 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
+#: app/models/user.rb
+msgid "is too long"
+msgstr ""
+
 msgid "is too long (maximum is %{count} characters)"
 msgstr ""
 
@@ -15062,6 +15215,14 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is undeletable system User with ID 1"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is your current account"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -15120,6 +15281,10 @@ msgstr "मिनट"
 msgid "minutes"
 msgstr "मिनटों"
 
+#: app/models/knowledge_base.rb
+msgid "must be a valid path or domain"
+msgstr ""
+
 msgid "must be accepted"
 msgstr ""
 
@@ -15153,10 +15318,22 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
+#: app/models/knowledge_base.rb
+msgid "must begin with a slash (\"/\")"
+msgstr ""
+
 #, fuzzy
 #| msgid "not exist"
 msgid "must exist"
 msgstr " मौजूद नहीं"
+
+#: app/models/knowledge_base.rb
+msgid "must not end with a slash (\"/\")"
+msgstr ""
+
+#: app/models/knowledge_base.rb
+msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15234,6 +15411,10 @@ msgstr " अधिसूचना प्रेषक"
 #| msgid "no"
 msgid "now"
 msgstr "नहीं"
+
+#: app/models/object_manager/attribute.rb
+msgid "only lowercase letters, numbers, and '_' are allowed"
+msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -15437,6 +15618,10 @@ msgstr "को छोड़ दिया"
 #: db/seeds/ticket_article_types.rb
 msgid "sms"
 msgstr "एसएमएस"
+
+#: app/models/object_manager/attribute.rb
+msgid "spaces are not allowed"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -15784,11 +15969,6 @@ msgstr "Iting आज समय की प्रतीक्षा है"
 
 #~ msgid "Tag"
 #~ msgstr "टैग"
-
-#, fuzzy
-#~| msgid "You have closed a ticket"
-#~ msgid "Could not load the ticket"
-#~ msgstr "आपने टिकट बंद कर दिया है"
 
 #, fuzzy
 #~| msgid "Accounted Time"
