@@ -1,0 +1,15 @@
+Beheer login op #{config.product_name}
+
+<div>Hallo #{user.firstname},</div>
+<br>
+<div>We hebben een verzoek ontvangen voor een beheerderslogin voor je #{config.product_name}-account <b>#{user.login}</b>.</div>
+<br>
+<div>Klik op de onderstaande link (of kopieer en plak de URL in de browser) om verder te gaan:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}">#{config.http_type}://#{config. fqdn}/#login/admin/#{token.name}</a></div>
+<br>
+<div>Deze link brengt je naar een pagina waar je kunt inloggen.</div>
+<br>
+<div>Als je niet wilt inloggen, kun je dit bericht negeren.</div>
+<br>
+<div>Het #{config.product_name}-team</div>

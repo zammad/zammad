@@ -1,0 +1,12 @@
+Ticket (#{ticket.title}) is samengevoegd met een ander ticket
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>
+Het ticket (#{ticket.title}) is samengevoegd met een ander ticket door "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>
+<p>Het #{config.product_name}-Team</p>

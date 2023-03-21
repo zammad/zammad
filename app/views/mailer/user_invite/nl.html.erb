@@ -1,0 +1,13 @@
+Uitnodiging voor #{config.product_name} op #{config.fqdn}
+
+<div>Hallo #{user.firstname},</div>
+<br>
+<div>Ik (#{current_user.firstname} #{current_user.lastname}) nodig je uit voor #{config.product_name} - ons klantondersteuningsplatform.</div>
+<br>
+<div>Klik <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">hier</a> en stel je wachtwoord in.</div>
+<br>
+<div>Veel plezier,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Het #{config.product_name}-team</div>
