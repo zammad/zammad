@@ -134,7 +134,7 @@ class KnowledgeBase::Category < ApplicationModel
   private
 
   def cannot_be_child_of_parent
-    errors.add(:parent_id, __('cannot be a child of the parent')) if self_parent?(self)
+    errors.add(:parent_id, __('cannot be a subcategory of the parent category')) if self_parent?(self)
   end
   validate :cannot_be_child_of_parent
 

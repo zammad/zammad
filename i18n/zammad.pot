@@ -935,6 +935,10 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/organization.coffee
+msgid "Agent and customer users can be grouped into organizations."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
 msgstr ""
@@ -5354,7 +5358,7 @@ msgid "Here you can add further links to your public FAQ page, which will be dis
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
-msgid "Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations."
+msgid "Here you can create new tickets, customers and organizations (depending on your configured permissions)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
@@ -7776,10 +7780,6 @@ msgstr ""
 msgid "Organizations"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid "Organizations are for any person in the system: agents (owners, responsibles, …) and customers."
-msgstr ""
-
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
 msgstr ""
@@ -8020,7 +8020,7 @@ msgid "People who create Tickets ask for help."
 msgstr ""
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "Perform action of the following"
+msgid "Perform actions"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
@@ -10904,7 +10904,7 @@ msgid "This service shows you contacts of incoming calls and a caller list in re
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
-msgid "This signature is inactive, it won't be included in the reply. Change state <a href=\"#channels/email\">here</a>"
+msgid "This signature is inactive, it won't be included in the reply."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
@@ -12425,7 +12425,7 @@ msgid "You can create multiple chat topics."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
-msgid "You can define different signatures for each group, which allows you to use a different signature for every department.\n\nOnce you have created a signature here, you will also need to edit the groups where you want to use it."
+msgid "You can define a separate signature for each group to use a different signature for each department.\n\nOnce you created a signature here, you will also need to edit the groups which should use it."
 msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
@@ -12826,7 +12826,7 @@ msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
 #: app/models/knowledge_base/category.rb
-msgid "cannot be a child of the parent"
+msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
