@@ -13,7 +13,9 @@ export const extendClasses = (
     if (!(type in mergedClasses)) {
       mergedClasses[type] = originalClass
     } else {
-      mergedClasses[type] = clean(`${originalClass} ${newClasses[type]}`)
+      mergedClasses[type] = clean(
+        `${originalClass || ''} ${newClasses[type] || ''}`,
+      )
     }
   })
 

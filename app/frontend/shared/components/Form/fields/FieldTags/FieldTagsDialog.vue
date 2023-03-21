@@ -188,7 +188,7 @@ const processSearchKeydown = (event: KeyboardEvent) => {
               ? 'mobile-check-box-yes'
               : 'mobile-check-box-no'
           "
-          class="mr-3 text-white/50"
+          class="text-white/50 ltr:mr-3 rtl:ml-3"
           size="base"
           decorative
         />

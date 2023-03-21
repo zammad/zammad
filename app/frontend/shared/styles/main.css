@@ -4,7 +4,7 @@
 
 @layer components {
   .required::after {
-    @apply ml-1 inline-block font-extrabold text-yellow content-['•'];
+    @apply inline-block font-extrabold text-yellow content-['•'] ltr:ml-1 rtl:mr-1;
   }
 }
 

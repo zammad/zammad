@@ -31,6 +31,8 @@ module.exports = {
   rules: {
     'zammad/zammad-copyright': 'error',
     'zammad/zammad-detect-translatable-string': 'error',
+    'zammad/zammad-tailwind-ltr': 'error',
+
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'consistent-return': 'off', // allow implicit return
@@ -168,6 +170,7 @@ module.exports = {
         '.eslintrc.js',
       ],
       rules: {
+        'zammad/zammad-tailwind-ltr': 'off',
         'zammad/zammad-detect-translatable-string': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-explicit-any': 'off',

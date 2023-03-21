@@ -61,7 +61,7 @@ const avatarLabel = computed(() => {
     <CommonIcon
       v-if="vip"
       size="xl"
-      class="vip absolute left-1/2 -top-[48px] -ml-5 w-10 text-yellow"
+      class="vip absolute -top-[48px] w-10 text-yellow ltr:left-1/2 ltr:-ml-5 rtl:right-1/2 rtl:-mr-5"
       name="mobile-crown"
       decorative
     />

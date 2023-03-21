@@ -99,9 +99,9 @@ const updateLocalValue = (e: Event) => {
     @keydown.space="updateLocalValue"
   >
     <div
-      class="pointer-events-none inline-block h-[22px] w-[22px] translate-x-0 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
+      class="pointer-events-none inline-block h-[22px] w-[22px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ltr:translate-x-0 rtl:-translate-x-0"
       :class="{
-        'translate-x-4': localValue,
+        'ltr:translate-x-4 rtl:-translate-x-4': localValue,
       }"
     ></div>
   </div>

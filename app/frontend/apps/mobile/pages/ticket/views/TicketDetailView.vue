@@ -280,7 +280,7 @@ const bannerClasses = computed(() => {
     >
       <div
         v-if="canUpdateTicket && isDirty"
-        class="fixed bottom-2 left-2 right-2 z-10 flex rounded-lg bg-gray-300 text-white transition"
+        class="fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
         :class="bannerClasses"
       >
         <div class="relative flex flex-1 items-center gap-2 p-1.5">

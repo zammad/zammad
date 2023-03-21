@@ -44,7 +44,7 @@ const notificationCount = computed(() => {
           v-if="notificationCount"
           role="status"
           :aria-label="$t('Unread notifications')"
-          class="absolute ml-4 h-4 min-w-[1rem] rounded-full bg-blue px-1 text-center text-xs text-black"
+          class="absolute h-4 min-w-[1rem] rounded-full bg-blue px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
         >
           {{ notificationCount }}
         </div>

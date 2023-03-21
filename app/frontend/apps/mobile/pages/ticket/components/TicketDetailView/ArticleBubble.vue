@@ -277,7 +277,11 @@ onMounted(() => {
       </div>
       <div
         class="absolute -bottom-4 flex min-h-[24px] gap-1"
-        :class="[position === 'left' ? 'left-10 flex-row-reverse' : 'right-10']"
+        :class="[
+          position === 'left'
+            ? 'flex-row-reverse ltr:left-10 rtl:right-10'
+            : 'ltr:right-10 rtl:left-10',
+        ]"
       >
         <ArticleSecurityBadge
           v-if="security"

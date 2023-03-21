@@ -91,7 +91,7 @@ const showActions = () => {
           />
           <div
             v-if="liveUserList.length - 1"
-            class="z-0 flex h-6 w-6 -translate-x-2 select-none items-center justify-center rounded-full bg-white/80 text-xs text-black"
+            class="z-0 flex h-6 w-6 select-none items-center justify-center rounded-full bg-white/80 text-xs text-black ltr:-translate-x-2 rtl:translate-x-2"
             role="img"
             :aria-label="$t('Ticket has %s viewers', liveUserList.length)"
           >

@@ -9,6 +9,7 @@ import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { EnumTicketStateColorCode } from '@shared/graphql/types'
+import { useLocaleStore } from '@shared/stores/locale'
 import useSelectOptions from '../../composables/useSelectOptions'
 import type { TreeSelectContext } from './types'
 import { FlatSelectOption } from './types'
@@ -29,6 +30,8 @@ const emit = defineEmits<{
   (e: 'push', option: FlatSelectOption): void
   (e: 'pop'): void
 }>()
+
+const locale = useLocaleStore()
 
 const currentParent = computed(
   () => props.currentPath[props.currentPath.length - 1] ?? null,
@@ -183,7 +186,13 @@ onMounted(() => {
       @click="goToPreviousPage()"
       @keypress.space.prevent="goToPreviousPage()"
     >
-      <CommonIcon size="base" class="mr-3" name="mobile-chevron-left" />
+      <CommonIcon
+        size="base"
+        class="ltr:mr-3 rtl:ml-3"
+        :name="`mobile-chevron-${
+          locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+        }`"
+      />
       <span class="grow font-semibold text-white/80">
         {{ currentParent.label || currentParent.value }}
       </span>
@@ -217,14 +226,14 @@ onMounted(() => {
         <div
           v-if="index !== 0"
           :class="{
-            'left-4': !context.multiple && !option.icon && !(option as FlatSelectOption).status,
-            'left-[50px]': !context.multiple && option.icon && !(option as FlatSelectOption).status,
-            'left-[58px]': !context.multiple && !option.icon && (option as FlatSelectOption).status,
-            'left-[60px]': context.multiple && !option.icon && !(option as FlatSelectOption).status,
-            'left-[88px]': context.multiple && option.icon && !(option as FlatSelectOption).status,
-            'left-[94px]': context.multiple && !option.icon && (option as FlatSelectOption).status,
+            'ltr:left-4 rtl:right-4': !context.multiple && !option.icon && !(option as FlatSelectOption).status,
+            'ltr:left-[50px] rtl:right-[50px]': !context.multiple && option.icon && !(option as FlatSelectOption).status,
+            'ltr:left-[58px] rtl:right-[58px]': !context.multiple && !option.icon && (option as FlatSelectOption).status,
+            'ltr:left-[60px] rtl:right-[60px]': context.multiple && !option.icon && !(option as FlatSelectOption).status,
+            'ltr:left-[88px] rtl:right-[88px]': context.multiple && option.icon && !(option as FlatSelectOption).status,
+            'ltr:left-[94px] rtl:right-[94px]': context.multiple && !option.icon && (option as FlatSelectOption).status,
           }"
-          class="absolute right-4 top-0 h-0 border-t border-white/10"
+          class="absolute top-0 h-0 border-t border-white/10 ltr:right-4 rtl:left-4"
         />
         <CommonIcon
           v-if="context.multiple"
@@ -238,7 +247,7 @@ onMounted(() => {
               : 'mobile-check-box-no'
           "
           size="base"
-          class="mr-3 text-white/50"
+          class="text-white/50 ltr:mr-3 rtl:ml-3"
         />
         <CommonTicketStateIndicator
           v-if="(option as FlatSelectOption).status"
@@ -247,7 +256,7 @@ onMounted(() => {
           :class="{
             'opacity-30': option.disabled,
           }"
-          class="mr-[11px]"
+          class="ltr:mr-[11px] rtl:ml-[11px]"
         />
         <CommonIcon
           v-else-if="option.icon"
@@ -257,7 +266,7 @@ onMounted(() => {
             'opacity-30': option.disabled,
           }"
           size="small"
-          class="mr-[11px] text-white/80"
+          class="text-white/80 ltr:mr-[11px] rtl:ml-[11px]"
         />
         <span
           :class="{
@@ -285,7 +294,7 @@ onMounted(() => {
           v-if="!context.multiple && isCurrentValue(option.value)"
           :class="{
             'opacity-30': option.disabled,
-            'mr-3': (option as FlatSelectOption).hasChildren,
+            'ltr:mr-3 rtl:ml-3': (option as FlatSelectOption).hasChildren,
           }"
           size="tiny"
           name="mobile-check"
@@ -294,7 +303,9 @@ onMounted(() => {
           v-if="(option as FlatSelectOption).hasChildren && !filter"
           class="pointer-events-auto"
           size="base"
-          name="mobile-chevron-right"
+          :name="`mobile-chevron-${
+            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+          }`"
           role="link"
           @click.stop="goToNextPage(option as FlatSelectOption)"
         />

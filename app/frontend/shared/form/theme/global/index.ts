@@ -27,18 +27,20 @@ const classes: FormThemeClasses = {
   password: defaultTextInput,
   checkbox: {
     wrapper: 'inline-flex items-center cursor-pointer',
-    inner: 'mr-2 flex',
+    inner: 'ltr:mr-2 rtl:ml-2 flex',
     input:
       'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
-    decorator: 'relative -left-4 invisible formkit-is-checked:visible',
+    decorator:
+      'relative invisible formkit-is-checked:visible rtl:-right-4 ltr:-left-4',
     decoratorIcon: 'absolute',
   },
   radio: {
     wrapper: 'inline-flex items-center cursor-pointer',
-    inner: 'mr-2 flex',
+    inner: 'ltr:mr-2 rtl:ml-2 flex',
     input:
       'appearance-none focus:outline-none focus:ring-0 focus:ring-offset-0',
-    decorator: 'relative -left-4 invisible formkit-is-checked:visible',
+    decorator:
+      'relative invisible formkit-is-checked:visible rtl:-right-4 ltr:-left-4',
     decoratorIcon: 'absolute',
   },
 }

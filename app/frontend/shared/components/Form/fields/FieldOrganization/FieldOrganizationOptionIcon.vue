@@ -17,6 +17,6 @@ const props = defineProps<{
       'opacity-30': props.option.disabled,
     }"
     size="small"
-    class="mr-4"
+    class="ltr:mr-4 rtl:ml-4"
   />
 </template>

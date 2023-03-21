@@ -198,7 +198,7 @@ setupMissingOptionHandling()
               v-if="getSelectedOptionIcon(selectedValue)"
               :name="getSelectedOptionIcon(selectedValue)"
               size="tiny"
-              class="mr-1"
+              class="ltr:mr-1 rtl:ml-1"
             />
             {{ getSelectedOptionFullPath(selectedValue) }}
           </div>

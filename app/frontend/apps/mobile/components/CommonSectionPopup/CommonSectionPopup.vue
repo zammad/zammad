@@ -96,7 +96,7 @@ const transition = VITE_TEST_MODE
       <!-- empty @click is needed for https://stackoverflow.com/a/39712411 -->
       <div
         v-if="localState"
-        class="window fixed bottom-0 left-0 flex h-screen w-screen flex-col justify-end px-4 pb-4 text-white"
+        class="window fixed bottom-0 flex h-screen w-screen flex-col justify-end px-4 pb-4 text-white ltr:left-0 rtl:right-0"
         :class="{ 'z-20': !zIndex }"
         :style="{ zIndex }"
         data-test-id="popupWindow"

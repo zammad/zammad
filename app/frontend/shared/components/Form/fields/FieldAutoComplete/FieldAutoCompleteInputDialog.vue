@@ -307,12 +307,15 @@ useTraverseOptions(autocompleteList)
         <div
           v-if="index !== 0"
           :class="{
-            'left-4': !context.multiple && !option.icon,
-            'left-[60px]': context.multiple && !option.icon,
-            'left-[72px]': !context.multiple && option.icon,
-            'left-[108px]': context.multiple && option.icon,
+            'ltr:left-4 rtl:right-4': !context.multiple && !option.icon,
+            'ltr:left-[60px] rtl:right-[60px]':
+              context.multiple && !option.icon,
+            'ltr:left-[72px] rtl:right-[72px]':
+              !context.multiple && option.icon,
+            'ltr:left-[108px] rtl:right-[108px]':
+              context.multiple && option.icon,
           }"
-          class="absolute right-4 top-0 h-0 border-t border-white/10"
+          class="absolute top-0 h-0 border-t border-white/10 ltr:right-4 rtl:left-4"
         />
         <CommonIcon
           v-if="context.multiple"
@@ -325,7 +328,7 @@ useTraverseOptions(autocompleteList)
               ? 'mobile-check-box-yes'
               : 'mobile-check-box-no'
           "
-          class="mr-3 text-white/50"
+          class="text-white/50 ltr:mr-3 rtl:ml-3"
           size="base"
         />
         <OptionIconComponent :option="option" />

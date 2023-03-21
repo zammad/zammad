@@ -51,7 +51,7 @@ const backgroundClass = computed(() => {
       textClass,
       backgroundClass,
       {
-        'rounded py-1 pr-1.5 pl-1': pill,
+        'rounded py-1 ltr:pr-1.5 ltr:pl-1 rtl:pl-1.5 rtl:pr-1': pill,
       },
     ]"
     class="flex select-none items-center"
@@ -64,7 +64,7 @@ const backgroundClass = computed(() => {
     />
     <div
       v-if="pill"
-      class="ml-[2px] text-xs uppercase leading-[14px]"
+      class="text-xs uppercase leading-[14px] ltr:ml-[2px] rtl:mr-[2px]"
       aria-hidden="true"
     >
       {{ label }}

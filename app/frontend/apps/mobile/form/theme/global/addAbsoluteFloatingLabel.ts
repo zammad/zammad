@@ -48,8 +48,6 @@ export const addAbsoluteFloatingLabel = (classes: Classes = {}) => {
         text-base
         transition-all duration-100 ease-in-out origin-left
         pointer-events-none
-        formkit-populated:-translate-y-3 formkit-populated:translate-x-6
-        formkit-populated:scale-75 formkit-populated:opacity-75
         formkit-required:required
         formkit-invalid:text-red-bright
       `),

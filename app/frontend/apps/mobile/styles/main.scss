@@ -84,7 +84,7 @@
 @layer components {
   .absolute-floating-input:focus-within label,
   .absolute-floating-input.formkit-outer[data-populated] label {
-    @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:translate-x-6;
+    @apply -translate-y-2 opacity-75 ltr:translate-x-[2px] ltr:scale-75 rtl:pb-0 rtl:pt-5 rtl:text-xs;
   }
 
   .floating-input.formkit-outer[data-populated] label {
