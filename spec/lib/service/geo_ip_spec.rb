@@ -31,11 +31,11 @@ RSpec.describe Service::GeoIp, integration: true do
           let(:expected_result) do
             {
               'country_name'   => 'Switzerland',
-              'city_name'      => 'Effretikon / Watt',
+              'city_name'      => 'Zurich',
               'country_code'   => 'CH',
               'continent_code' => 'EU',
-              'latitude'       => 47.4288,
-              'longitude'      => 8.7025,
+              'latitude'       => 47.3661,
+              'longitude'      => 8.5243,
             }
           end
 
@@ -66,8 +66,8 @@ RSpec.describe Service::GeoIp, integration: true do
               'city_name'      => 'Halle',
               'country_code'   => 'DE',
               'continent_code' => 'EU',
-              'latitude'       => 51.5036,
-              'longitude'      => 11.9594,
+              'latitude'       => 51.4828,
+              'longitude'      => 11.9799,
             }
           end
 
@@ -79,11 +79,11 @@ RSpec.describe Service::GeoIp, integration: true do
           let(:expected_result) do
             {
               'country_name'   => 'United States',
-              'city_name'      => 'Oakland',
+              'city_name'      => 'Berkeley',
               'country_code'   => 'US',
               'continent_code' => 'NA',
-              'latitude'       => 37.7428,
-              'longitude'      => -122.1745,
+              'latitude'       => 37.8736,
+              'longitude'      => -122.257,
             }
           end
 
