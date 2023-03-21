@@ -2,7 +2,7 @@
 _<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Creato da #{current_user.longname} alle #{ticket.updated_at}_
 * Gruppo: #{ticket.group.name}
 * Proprietario: #{ticket.owner.fullname}
-* Stata: #{t(ticket.state.name)}
+* Stato: #{t(ticket.state.name)}
 
 <% if @objects[:article] %>
 #{article.body_as_text}

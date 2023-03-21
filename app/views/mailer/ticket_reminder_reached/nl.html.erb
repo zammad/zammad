@@ -1,0 +1,18 @@
+Ticket herinnering bereikt (#{ticket.title})
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>Een ticket heeft aandacht nodig: herinnering bereikt voor (#{ticket.title}) met klant "<b>#{ticket.customer.longname}</b>".</div>
+<br>
+<% if @objects[:article] %>
+   <div>
+   Informatie:
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>

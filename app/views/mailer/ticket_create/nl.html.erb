@@ -1,0 +1,24 @@
+Nieuw ticket (#{ticket.title})
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>Het nieuwe ticket (#{ticket.title}) is aangemaakt door "<b>#{current_user.longname}</b>".</div>
+<br>
+<div>
+Groep: #{ticket.group.name}<br>
+Behandelaar: #{ticket.owner.fullname}<br>
+Status: #{ticket.state.name}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+   <div>
+   Informatie:
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>

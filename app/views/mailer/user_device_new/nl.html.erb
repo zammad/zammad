@@ -1,0 +1,19 @@
+#{config.product_name} login vanaf een nieuw apparaat
+
+<div>Hallo #{user.firstname},</div>
+<br>
+<div>Het lijkt erop dat je bent ingelogd op je account <b>met een nieuw apparaat</b> op "#{user_device.created_at}":</div>
+<br>
+<div>
+Je apparaat: #{user_device.name}<br>
+Je locatie (relatief): #{user_device.location}<br>
+Je IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Je apparaat is toegevoegd aan je lijst met bekende apparaten, die je hier kunt bekijken:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices </a></div>
+<br>
+<div>Als jij dit niet was, verwijder je het apparaat, wijzig je het wachtwoord van je account en neem je contact op met je beheerder. Iemand heeft mogelijk ongeoorloofde toegang tot je account gekregen.</div>
+<br>
+<div>Het #{config.product_name}-team</div>
