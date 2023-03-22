@@ -64,7 +64,7 @@ describe('playing with overviews', () => {
       setItem: vi.fn(),
     })
 
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
       LOCAL_STORAGE_NAME,
@@ -109,7 +109,7 @@ describe('playing with overviews', () => {
       setItem: vi.fn(),
     })
 
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
       LOCAL_STORAGE_NAME,
@@ -132,7 +132,7 @@ describe('playing with overviews', () => {
     const buttonRemove = await view.findByIconName('mobile-minus')
 
     await view.events.click(buttonRemove)
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     const { notify } = useNotifications()
 

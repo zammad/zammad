@@ -52,7 +52,7 @@ useHeader({
   title: __('Ticket Overview'),
   backUrl: '/',
   backAvoidHomeButton: true,
-  actionTitle: __('Done'),
+  actionTitle: __('Save'),
   onAction() {
     if (!includedOverviews.value.length) {
       notify({
