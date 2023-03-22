@@ -200,16 +200,24 @@ class Object extends App.ControllerObserver
 
       # check if value for _id exists
       name    = attributeName
-      nameNew = name.substr(0, name.length - 3)
+      nameNew = name.substr( 0, name.length - 3 )
       if nameNew of user
         name = nameNew
 
-      # add to show if value exists
-      if (user[name] || attributeConfig.tag is 'richtext') && attributeConfig.shown
+      # do not show firstname and lastname since they are already shown via diplayName()
+      continue if name is 'firstname' || name is 'lastname' || name is 'organization'
 
-        # do not show firstname and lastname / already show via diplayName()
-        if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
-          userData.push attributeConfig
+      # do not show if configured to be not shown
+      continue if !attributeConfig.shown
+
+      # Fix for issue #2277 - note is not shown for customer/organisations if it's empty
+      # Always show for these two conditions:
+      # 1. the attribute exists and is not empty
+      # 2. it is a richtext note field
+      continue if ( !user[name]? || user[name] is '' ) && attributeConfig.tag isnt 'richtext'
+
+      # add to show if all checks passed
+      userData.push attributeConfig
 
     @html App.view('user_profile/object')(
       user:     user

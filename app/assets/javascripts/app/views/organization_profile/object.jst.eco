@@ -7,12 +7,10 @@
           <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @organization[row.name] %></div>
         </div>
       <% else: %>
-        <% if @organization[row.name]: %>
-          <div class="profile-detailsEntry">
-            <label><%- @T(row.display) %></label>
-            <%- @P(@organization, row.name) %>
-          </div>
-        <% end %>
+        <div class="profile-detailsEntry">
+          <label><%- @T(row.display) %></label>
+          <%- @P(@organization, row.name) %>
+        </div>
       <% end %>
     <% end %>
   </div>

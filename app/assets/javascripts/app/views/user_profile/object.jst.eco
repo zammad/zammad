@@ -15,12 +15,10 @@
         </div>
       <% end %>
     <% else: %>
-      <% if @user[row.name]: %>
-        <div class="profile-detailsEntry">
-          <label><%- @T(row.display) %></label>
-          <%- @P(@user, row.name) %>
-        </div>
-      <% end %>
+      <div class="profile-detailsEntry">
+        <label><%- @T(row.display) %></label>
+        <%- @P(@user, row.name) %>
+      </div>
     <% end %>
   <% end %>
 </div>
