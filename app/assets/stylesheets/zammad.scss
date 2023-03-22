@@ -181,6 +181,10 @@ $mobileNavigationWidthOpen: 220px;
 }
 
 @mixin phone {
+  #app.navigation-collapsed & {
+    @content;
+  }
+
   @media screen and (max-width: 767px) {
     @content;
   }
@@ -2717,9 +2721,7 @@ input.has-error {
 
     -webkit-overflow-scrolling: touch;
 
-    .navigation:hover ~ &,
-    .navigation.is-hovered ~ &,
-    .navigation:active ~ & {
+    .navigation.is-not-collapsed ~ & {
       transform: translateX(
         #{$mobileNavigationWidthOpen - $mobileNavigationWidth}
       );
@@ -4131,9 +4133,7 @@ footer {
 
     min-width: 0;
 
-    .navigation:hover ~ &,
-    .navigation.is-hovered ~ &,
-    .navigation:active ~ & {
+    .navigation.is-not-collapsed ~ & {
       @include bidi-style(left, $mobileNavigationWidthOpen, right, 0);
     }
   }
@@ -4307,6 +4307,8 @@ footer {
   width: $navigationWidth;
   background: var(--background-quaternary);
   position: relative;
+  container-name: navigation;
+  container-type: inline-size;
 
   @include phone {
     position: absolute;
@@ -4317,17 +4319,13 @@ footer {
     left: 0;
     width: $mobileNavigationWidth;
     height: 100%;
-    z-index: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
+    z-index: 999;
 
     &:empty {
       display: none !important;
     }
 
-    &:hover,
-    &:active,
-    &.is-hovered {
+    &.is-not-collapsed {
       width: $mobileNavigationWidthOpen;
 
       .menu-item-name {
@@ -4335,6 +4333,18 @@ footer {
         padding-left: 15px;
       }
     }
+  }
+}
+
+@container navigation (width = 50px) {
+  .icon-double-arrow-left {
+    display: none;
+  }
+}
+
+@container navigation (width > 50px) {
+  .icon-double-arrow-right {
+    display: none;
   }
 }
 
@@ -4425,7 +4435,7 @@ footer {
 
   .zammad-switch {
     @include phone {
-      .navigation:not(:hover, :active, .is-hovered) & {
+      .navigation:not(:hover, :active, .is-not-collapsed) & {
         position: absolute;
         right: 12px;
         top: 12px;
@@ -4449,6 +4459,20 @@ footer {
           }
         }
       }
+    }
+  }
+
+  &-navigation-toggle-button {
+    justify-content: center;
+    border-top: 1px solid rgba(213, 213, 216, 0.05);
+    border-bottom: none;
+
+    @include desktop {
+      display: none;
+    }
+
+    @container navigation (width > 50px) {
+      justify-content: flex-end;
     }
   }
 }
@@ -4885,7 +4909,9 @@ footer {
   }
 }
 
-.search:not(.filled, .focused) input[type='search'] {
+.navigation:not(.is-not-collapsed)
+  .search:not(.filled, .focused)
+  input[type='search'] {
   @include phone {
     padding: 0;
   }
@@ -4958,7 +4984,7 @@ input[type='search']::-webkit-search-decoration {
 .search.filled {
   .search-holder {
     @include phone {
-      .navigation:not(:hover, :active, .is-hovered) & {
+      .navigation:not(:hover, :active, .is-not-collapsed) & {
         width: 210px;
       }
     }
@@ -4972,6 +4998,7 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .search .logo {
+  display: inline-block;
   position: relative;
 
   @extend .u-clickable, .zIndex-3;
@@ -5203,7 +5230,8 @@ li.add .dropdown-nose {
   min-width: 0;
   left: 10px;
   right: 15px;
-  width: auto;
+  width: 235px;
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.28);
 
   &.selected-clue {
     position: absolute;
@@ -10636,7 +10664,7 @@ label + .wizard-buttonList {
 
 .horizontal-filters-switch {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 
   & > label {
     display: flex;

@@ -21,6 +21,7 @@ class Navigation extends App.Controller
     'click .js-details-link': 'openExtendedSearch'
     'change .js-menu .js-switch input': 'switch'
     'click .js-onclick': 'click'
+    'click .js-navigation-toggle-button': 'toggleClicked'
 
   constructor: ->
     super
@@ -230,6 +231,9 @@ class Navigation extends App.Controller
     @searchContainer.addClass('focused')
     @selectAll(e)
 
+    $('#app').removeClass('navigation-collapsed')
+    @el.addClass('is-not-collapsed')
+
   searchPaste: (e) =>
     update = =>
       @clearDelay('emptyAndCloseDelayed')
@@ -240,7 +244,6 @@ class Navigation extends App.Controller
     @delay(update, 10, 'searchFocus')
 
   searchBlur: (e) =>
-
     # delay to be able to "click/execute" x if query is ''
     update = =>
       if @searchInput.val().trim() is ''
@@ -518,5 +521,17 @@ class Navigation extends App.Controller
       @navigate("#search/#{encodeURIComponent(query)}")
       return
     @navigate('#search')
+
+  # detect collapsed by both added class and screen size
+  isCollapsed: =>
+    @el.width() == 50
+
+  toggleClicked: (e) =>
+    @preventDefaultAndStopPropagation(e)
+
+    current = @isCollapsed()
+
+    @el.toggleClass('is-not-collapsed', current)
+    $('#app').toggleClass('navigation-collapsed', !current)
 
 App.Config.set('aaa_navigation', Navigation, 'Plugins')

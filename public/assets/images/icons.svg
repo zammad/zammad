@@ -86,6 +86,16 @@
 </symbol><symbol id="icon-document" viewBox="0 0 16 16">
     <title>document</title>
     <path d="M2 1.638A.63.63 0 0 1 2.628 1h10.744c.343 0 .628.286.628.638v12.724a.63.63 0 0 1-.628.638H2.628A.635.635 0 0 1 2 14.362V1.638ZM4.665 3C4.298 3 4 3.222 4 3.5c0 .276.298.5.665.5h4.67c.367 0 .665-.222.665-.5 0-.276-.298-.5-.665-.5h-4.67Zm-.05 3C4.274 6 4 6.222 4 6.5c0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614Zm0 3C4.274 9 4 9.222 4 9.5c0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614Zm0 3c-.34 0-.615.222-.615.5 0 .276.275.5.614.5h6.772c.339 0 .614-.222.614-.5 0-.276-.275-.5-.614-.5H4.614Z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-double-arrow-left" viewBox="0 0 12.2 13">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+        <path d="M7 2.2 5.6.9 0 6.5l5.6 5.6L7 10.7 2.9 6.5z"/>
+        <path d="M12.2 2.2 10.7.9 5.2 6.5l5.5 5.6 1.5-1.4-4.1-4.2z"/>
+    </g>
+</symbol><symbol id="icon-double-arrow-right" viewBox="0 0 12.2 13">
+    <g fill-rule="evenodd" clip-rule="evenodd">
+        <path d="M5.2 2.2 6.6.9l5.6 5.6-5.6 5.6-1.4-1.4 4.1-4.2z"/>
+        <path d="M0 2.2 1.4.9 7 6.5l-5.6 5.6L0 10.7l4.1-4.2z"/>
+    </g>
 </symbol><symbol id="icon-download" viewBox="0 0 14 13">
     <title>download</title>
     <path d="M4 0v6h6V0H4Zm10 6H0l7 7 7-7Z" fill-rule="evenodd"/>
