@@ -8,6 +8,11 @@ class WebsocketServer
     @options = options
     @clients = {}
 
+    # By default, we are only logging errors to STDOUT.
+    # To turn on some more logging to get some insights, please, provide one of the following parameters:
+    #   -n | --info    => info
+    #   -v | --verbose => debug
+
     Rails.configuration.interface = 'websocket'
     EventMachine.run do
       EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: @options[:tls_options]) do |ws|
@@ -78,9 +83,12 @@ class WebsocketServer
 
   def self.onmessage(websocket, msg)
     client_id = websocket.object_id.to_s
-    log 'debug', "received: #{msg} ", client_id
+    log 'info', "receiving #{msg.to_s.bytesize} bytes", client_id
+    log 'debug', "received: #{msg}", client_id
     begin
+      log 'info', 'start: parse message to JSON', client_id
       data = JSON.parse(msg)
+      log 'info', 'end: parse message to JSON', client_id
     rescue => e
       log 'error', "can't parse message: #{msg}, #{e.inspect}", client_id
       return
@@ -93,7 +101,7 @@ class WebsocketServer
     @clients[client_id][:last_ping] = Time.now.utc.to_i
 
     if data['event']
-      log 'debug', "execute event '#{data['event']}'", client_id
+      log 'info', "start: execute event '#{data['event']}'", client_id
       message = Sessions::Event.run(
         event:     data['event'],
         payload:   data,
@@ -103,6 +111,7 @@ class WebsocketServer
         clients:   @clients,
         options:   @options,
       )
+      log 'info', "end: execute event '#{data['event']}'", client_id
       if message
         websocket_send(client_id, message)
       end
@@ -119,7 +128,8 @@ class WebsocketServer
           else
             "[#{data.to_json}]"
           end
-    log 'debug', "send #{msg}", client_id
+    log 'info', "sending #{msg.to_s.bytesize} bytes", client_id
+    log 'debug', "send: #{msg}", client_id
     if !@clients[client_id]
       log 'error', "no such @clients for #{client_id}", client_id
       return
@@ -169,7 +179,6 @@ class WebsocketServer
         queue = Sessions.queue(client_id)
         next if queue.blank?
 
-        log 'info', 'send data to client', client_id
         websocket_send(client_id, queue)
       rescue => e
         log 'error', "problem:#{e.inspect}", client_id
@@ -207,9 +216,26 @@ class WebsocketServer
   end
 
   def self.log(level, data, client_id = '-')
-    return if !@options[:v] && level == 'debug'
+    skip_log = true
 
-    puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}" # rubocop:disable Rails/Output
-    # puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
+    case level
+    when 'error'
+      skip_log = false
+    when 'debug'
+      if @options[:v]
+        skip_log = false
+      end
+    when 'info'
+      if @options[:n] || @options[:v]
+        skip_log = false
+      end
+    end
+
+    return if skip_log
+
+    client_id_str = client_id.eql?('-') ? '' : "##{client_id}"
+
+    # same format as in log/production.log
+    puts "#{level.to_s.first.upcase}, [#{Time.now.utc.strftime('%FT%T.%6N')}#{client_id_str}] #{level.upcase} -- : #{data}" # rubocop:disable Rails/Output
   end
 end

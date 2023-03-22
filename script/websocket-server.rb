@@ -44,6 +44,7 @@ before_fork
   b: '0.0.0.0',
   s: false,
   v: false,
+  n: false,
   d: false,
   k: '/path/to/server.key',
   c: '/path/to/server.crt',
@@ -56,8 +57,11 @@ OptionParser.new do |opts|
   opts.on('-d', '--daemon', 'start as daemon') do |d|
     @options[:d] = d
   end
-  opts.on('-v', '--verbose', 'enable debug messages') do |d|
-    @options[:v] = d
+  opts.on('-v', '--verbose', 'enable debug messages') do |v|
+    @options[:v] = v
+  end
+  opts.on('-n', '--info', 'enable info messages') do |n|
+    @options[:n] = n
   end
   opts.on('-p', '--port [OPT]', 'port of websocket server') do |p|
     @options[:p] = p
