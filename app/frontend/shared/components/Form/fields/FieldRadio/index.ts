@@ -45,6 +45,9 @@ const addSubmitEvent = (node: FormKitNode) => {
 
 const addIconLabel = (node: FormKitNode) => {
   extendSchemaDefinition(node, 'label', {
+    attrs: {
+      id: null,
+    },
     children: [
       {
         if: '$option.icon',

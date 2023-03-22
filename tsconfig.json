@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["DOM", "WebWorker", "dom.iterable"],
     "types": [
+      "@testing-library/jest-dom",
       "vitest/globals",
       "vite/client",
       "vite-plugin-svg-icons/client",

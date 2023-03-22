@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import '@testing-library/jest-dom'
+import domMatchers from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
@@ -160,6 +160,27 @@ afterEach((context) => {
 // Import the matchers for accessibility testing with aXe.
 expect.extend(matchers)
 expect.extend(assertions)
+expect.extend(domMatchers)
+
+expect.extend({
+  // allow aria-disabled in toBeDisabled
+  toBeDisabled(received, ...args) {
+    if (received instanceof Element) {
+      const attr = received.getAttribute('aria-disabled')
+      if (!this.isNot && attr === 'true') {
+        return { pass: true, message: () => '' }
+      }
+      if (this.isNot && attr === 'true') {
+        // pass will be reversed and it will fail
+        return { pass: true, message: () => 'should not have "aria-disabled"' }
+      }
+    }
+    return (domMatchers.toBeDisabled as any).call(this, received, ...args)
+  },
+})
+
+process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
+process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
 
 declare module 'vitest' {
   interface TestContext {

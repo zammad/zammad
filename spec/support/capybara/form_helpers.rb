@@ -94,7 +94,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     return element.find('textarea')['id'] if type_textarea?
     return element.find('.formkit-fieldset')['id'] if type_radio?
     return element.find('[role="textbox"]')['id'] if type_editor?
-    return element.find('input[type="checkbox"]', visible: :all)['id'] if type_toggle? || type_checkbox?
+    return element.find('[role="switch"], input[type="checkbox"]', visible: :all)['id'] if type_toggle? || type_checkbox?
 
     element.find('output', visible: :all)['id']
   end
@@ -434,7 +434,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def toggle_on
     raise 'Field does not support toggling on' if !type_toggle? && !type_checkbox?
 
-    element.find('label').click if !input_element.checked?
+    element.find('label').click if input_element['aria-checked'] == 'false' || !input_element.checked?
 
     self # support chaining
   end
@@ -442,7 +442,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def toggle_off
     raise 'Field does not support toggling off' if !type_toggle? && !type_checkbox?
 
-    element.find('label').click if input_element.checked?
+    element.find('label').click if input_element['aria-checked'] == 'true' || input_element.checked?
 
     self # support chaining
   end
