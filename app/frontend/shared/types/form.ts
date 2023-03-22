@@ -49,4 +49,4 @@ export interface FormDefaultProps {
   internal?: boolean
 }
 
-export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur'
+export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur' | 'form-reset'

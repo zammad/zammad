@@ -43,6 +43,7 @@ export const useTicketEdit = (
       // don't reset to new values, if user changes something
       // if ticket is different, it's probably navigation to another ticket,
       // so we can safely reset the form
+      // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=ticket.id) or?
       resetDirty: ticketId !== ticket.id,
     })
   })

@@ -9,6 +9,7 @@ export type {
   FormHandlerFunction,
   FormHandler,
   FormRef,
+  FormSchemaField,
 } from './types'
 
 export { FormHandlerExecution } from './types'

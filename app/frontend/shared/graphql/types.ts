@@ -367,6 +367,8 @@ export type FormUpdaterMetaInput = {
   initial?: InputMaybe<Scalars['Boolean']>;
   /** Generated frontend request ID */
   requestId?: InputMaybe<Scalars['String']>;
+  /** After form reset form updater request */
+  reset?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Represents the relation field information. */

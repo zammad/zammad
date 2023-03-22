@@ -15,10 +15,14 @@ import { waitForNextTick, waitUntil } from '@tests/support/utils'
 import Form from '@shared/components/Form/Form.vue'
 import type { Props } from '@shared/components/Form/Form.vue'
 import UserError from '@shared/errors/UserError'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
+import {
+  EnumFormUpdaterId,
+  EnumObjectManagerObjects,
+} from '@shared/graphql/types'
 import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
 import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
-import type { FormRef, FormValues } from '..'
+import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api'
+import type { FormRef, FormValues, FormSchemaField } from '..'
 
 const wrapperParameters = {
   form: true,
@@ -766,14 +770,14 @@ describe('Form.vue - Empty', () => {
 })
 
 describe('Form.vue - Reset', () => {
-  const renderForm = async () => {
+  const renderForm = async (formUpdaterId?: EnumFormUpdaterId) => {
     return new Promise<{
       view: ExtendedRenderResult
       form: Ref<FormRef>
     }>((resolve) => {
       const view = renderComponent(
         {
-          template: `<div><Form ref="form" :schema="schema" /></div>`,
+          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" /></div>`,
           components: {
             Form,
           },
@@ -810,7 +814,7 @@ describe('Form.vue - Reset', () => {
                 resolve({ view, form: form as Ref<FormRef> })
               })
             })
-            return { schema, form }
+            return { schema, form, formUpdaterId }
           },
         } as any,
         {
@@ -905,6 +909,62 @@ describe('Form.vue - Reset', () => {
     expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
     expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
       false,
+    )
+  })
+
+  it('should trigger reset form updater call', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(
+      (variables) => {
+        const example: Partial<FormSchemaField> = {}
+
+        if (variables.meta.reset) {
+          example.value = 'Updater example'
+        }
+
+        return {
+          data: {
+            formUpdater: {
+              example,
+            },
+          },
+        }
+      },
+    )
+
+    const { view, form } = await renderForm(
+      EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+    )
+
+    await waitUntil(() => form.value.formNode)
+    await getNode('form-ticket-create')?.settled
+
+    const input = view.getByLabelText('Title')
+    const textarea = view.getByLabelText('Textarea')
+    const example = view.getByLabelText('Example')
+
+    expect(input).toHaveValue('')
+    expect(textarea).toHaveValue('Some text')
+    expect(example).toHaveValue('Some example')
+
+    form.value.resetForm({
+      title: 'New title',
+      text: 'New text',
+      example: 'New example',
+    })
+    await waitForNextTick()
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave === 2)
+
+    expect(input).toHaveValue('New title')
+    expect(textarea).toHaveValue('New text')
+    expect(example).toHaveValue('Updater example')
+
+    expect(mockFormUpdaterApi.spies.behave).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        meta: expect.objectContaining({
+          reset: true,
+        }),
+      }),
     )
   })
 })

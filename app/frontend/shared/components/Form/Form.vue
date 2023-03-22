@@ -39,6 +39,8 @@ import type {
   FormUpdaterQuery,
   FormUpdaterQueryVariables,
   ObjectAttributeValue,
+  FormUpdaterMetaInput,
+  FormUpdaterChangedFieldInput,
 } from '@shared/graphql/types'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
@@ -159,6 +161,7 @@ const debouncedShowInitialLoadingAnimation = refDebounced(
 )
 
 const formKitInitialNodesSettled = ref(false)
+const formResetRunning = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
 const formElement = ref<HTMLElement>()
 
@@ -447,8 +450,10 @@ const getResetFormValues = (
   Object.entries(schemaData.fields).forEach(([field, { props }]) => {
     const formElement = props.id ? getNode(props.id) : getNodeByName(props.name)
 
+    if (!formElement) return
+
     let parentName = ''
-    if (formElement?.parent && formElement?.parent.name !== rootNode.name) {
+    if (formElement.parent && formElement.parent.name !== rootNode.name) {
       parentName = formElement.parent.name
     }
 
@@ -459,7 +464,7 @@ const getResetFormValues = (
       parentName = ''
     }
 
-    if (!resetDirty && formElement?.context?.state.dirty) {
+    if (!resetDirty && formElement.context?.state.dirty) {
       dirtyNodes.push(formElement)
       setResetFormValue(field, formElement._value as FormFieldValue, parentName)
       return
@@ -498,6 +503,8 @@ const resetForm = (
 ) => {
   if (!formNode.value) return
 
+  formResetRunning.value = true
+
   const rootNode = formNode.value
 
   if (object) setInitialEntityObjectAttributeMap(object)
@@ -520,6 +527,11 @@ const resetForm = (
   dirtyNodes.forEach((node) => {
     node.input(node._value, false)
   })
+
+  formResetRunning.value = false
+
+  // Trigger the formUpdater, when the reset is done.
+  handlesFormUpdater('form-reset')
 }
 
 defineExpose({
@@ -615,14 +627,18 @@ const updateSchemaDataField = (
 
     // Select the correct initial value (at this time localInitialValues has not already the information
     // from the initial entity object, so we need to check it manually).
-    combinedFieldProps.value =
-      field.name in localInitialValues
-        ? localInitialValues[field.name]
-        : getInitialEntityObjectValue(field.name) ?? combinedFieldProps.value
+    if (field.name in localInitialValues) {
+      combinedFieldProps.value = localInitialValues[field.name]
+    } else {
+      const initialEntityOjectValue = getInitialEntityObjectValue(field.name)
+      combinedFieldProps.value =
+        initialEntityOjectValue !== undefined
+          ? initialEntityOjectValue
+          : combinedFieldProps.value
+    }
 
-    // Save current initial value for later usage, when not already exists.
-    if (!(field.name in localInitialValues))
-      localInitialValues[field.name] = combinedFieldProps.value
+    // Save current initial value for later usage.
+    localInitialValues[field.name] = combinedFieldProps.value
 
     schemaData.fields[field.name] = {
       show: showField,
@@ -769,31 +785,35 @@ const executeFormUpdaterRefetch = () => {
 
 const handlesFormUpdater = (
   trigger: FormUpdaterTrigger,
-  fieldName: string,
-  newValue: FormFieldValue,
-  oldValue: FormFieldValue,
+  changedField?: FormUpdaterChangedFieldInput,
 ) => {
   if (!props.formUpdaterId || !formUpdaterQueryHandler) return
+  if (trigger !== 'form-reset' && !changedField) return
+
+  const meta: FormUpdaterMetaInput = {
+    // We need a unique requestId, so that the query will always be executed on changes, also when the variables
+    // are the same until the last request, because it could be that core workflow is setting a value back.
+    requestId: getUuid(),
+    formId,
+  }
+
+  const data = {
+    ...values.value,
+  }
+
+  if (trigger === 'form-reset') {
+    meta.reset = true
+  } else if (changedField) {
+    meta.changedField = changedField
+    data[changedField.name] = changedField.newValue
+  }
 
   // We mark this as raw, because we want no deep reactivity on the form updater query variables.
   nextFormUpdaterVariables = markRaw({
     id: props.initialEntityObject?.id,
     formUpdaterId: props.formUpdaterId,
-    data: {
-      ...values.value,
-      [fieldName]: newValue,
-    },
-    meta: {
-      // We need a unique requestId, so that the query will always be executed on changes, also when the variables
-      // are the same until the last request, because it could be that core workflow is setting a value back.
-      requestId: getUuid(),
-      formId,
-      changedField: {
-        name: fieldName,
-        newValue,
-        oldValue,
-      },
-    },
+    data,
+    meta,
     relationFields,
   })
 
@@ -815,7 +835,7 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
     const oldValue = previousValues.get(node)
     if (isEqual(newValue, oldValue)) return
 
-    if (!formKitInitialNodesSettled.value) {
+    if (!formKitInitialNodesSettled.value || formResetRunning.value) {
       previousValues.set(node, cloneDeep(newValue))
       return
     }
@@ -824,12 +844,11 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       inputNode.props.triggerFormUpdater &&
       !updaterChangedFields.has(node.name)
     ) {
-      handlesFormUpdater(
-        inputNode.props.formUpdaterTrigger,
-        node.name,
+      handlesFormUpdater(inputNode.props.formUpdaterTrigger, {
+        name: node.name,
         newValue,
         oldValue,
-      )
+      })
     }
     emit('changed', node.name, newValue, oldValue)
     executeFormHandler(FormHandlerExecution.FieldChange, values.value, {
