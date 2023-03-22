@@ -9,16 +9,20 @@ module Gql::Mutations
     field :avatar, Gql::Types::AvatarType, description: 'The newly created avatar.'
 
     def resolve(images:)
-      file_full   = images[:full]
-      file_resize = images[:resize]
+      original = images[:original]
+      resized  = images[:resized]
 
-      if file_full[:error].present? || file_resize[:error].present?
-        return error_response({ message: file_full[:message] || file_resize[:message] })
+      if original[:error].present? || resized[:error].present?
+        return error_response({ message: original[:message] || resized[:message] })
       end
 
-      {
-        avatar: Service::Avatar::Add.new(current_user: context.current_user).execute(full_image: file_full, resize_image: file_resize)
-      }
+      { avatar: add(original, resized) }
+    end
+
+    private
+
+    def add(original, resized)
+      Service::Avatar::Add.new(current_user: context.current_user).execute(full_image: original, resize_image: resized)
     end
   end
 end

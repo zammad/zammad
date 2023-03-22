@@ -3,12 +3,14 @@
 class Service::Avatar::ImageValidate < Service::Base
   def execute(image_data:)
     begin
-      data = StaticAssets.data_url_attributes(image_data)
+      raise if image_data.nil?
+
+      data = image_data.is_a?(String) ? StaticAssets.data_url_attributes(image_data) : image_data
     rescue
       return error(message: __('The image is invalid.'))
     end
 
-    if !allowed_mime_type?(mime_type: data[:mime_type])
+    if !allowed_mime_type?(mime_type: (data[:type] || data[:mime_type]))
       return error(message: __('The MIME type of the image is invalid.'))
     end
 

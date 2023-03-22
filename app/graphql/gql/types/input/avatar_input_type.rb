@@ -5,8 +5,8 @@ module Gql::Types::Input
 
     description 'The fields for uploading a new avatar.'
 
-    argument :full, String, description: 'The full image to use for the avatar (Base64 encoded).'
-    argument :resize, String, description: 'The resized/cropped image to use for the avatar (Base64 encoded).'
+    argument :original, Gql::Types::Input::UploadFileInputType, description: 'The original image to use for the avatar.'
+    argument :resized, Gql::Types::Input::UploadFileInputType, description: 'The resized/cropped image to use for the avatar.'
 
     def prepare
       super
@@ -14,8 +14,8 @@ module Gql::Types::Input
       service = Service::Avatar::ImageValidate.new
 
       {
-        full:   service.execute(image_data: full),
-        resize: service.execute(image_data: resize)
+        original: service.execute(image_data: original),
+        resized:  service.execute(image_data: resized)
       }
     end
   end

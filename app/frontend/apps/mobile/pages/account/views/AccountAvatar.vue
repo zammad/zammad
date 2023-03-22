@@ -47,11 +47,11 @@ activeAvatarQuery.watchOnResult((data) => {
 const avatarLoading = activeAvatarQuery.loading()
 
 const state = reactive({
-  image: activeAvatar.value?.imageResize || '',
+  resizedImage: activeAvatar.value?.imageResize || '',
 })
 
 watch(activeAvatar, (newValue) => {
-  state.image = newValue?.imageResize || ''
+  state.resizedImage = newValue?.imageResize || ''
 })
 
 const { user } = storeToRefs(useSessionStore())
@@ -61,15 +61,19 @@ const avatarDeleteDisabled = computed(() => {
 })
 
 const addAvatar = () => {
-  if (!state.image) return
+  if (!state.resizedImage) return
   if (!avatarImage.value) return
 
   const addAvatarMutation = new MutationHandler(
     useAccountAvatarAddMutation({
       variables: {
         images: {
-          full: avatarImage.value?.content,
-          resize: state.image,
+          original: avatarImage.value,
+          resized: {
+            name: 'resized_avatar.png',
+            type: 'image/png',
+            content: state.resizedImage,
+          },
         },
       },
     }),
@@ -126,7 +130,7 @@ const removeAvatar = () => {
 
   removeAvatarMutation.send().then((data) => {
     if (data?.accountAvatarDelete?.success) {
-      state.image = ''
+      state.resizedImage = ''
       avatarImage.value = undefined
       activeAvatar.value = undefined
 
@@ -152,7 +156,7 @@ const confirmRemoveAvatar = async () => {
 }
 
 const saveButtonActive = computed(() => {
-  if (state.image && avatarImage.value) return true
+  if (state.resizedImage && avatarImage.value) return true
   return false
 })
 
@@ -177,12 +181,12 @@ const loadAvatar = async (input?: HTMLInputElement) => {
 
 const imageCropped = (crop: CropperResult) => {
   if (!crop.canvas) return
-  state.image = crop.canvas.toDataURL('image/png')
+  state.resizedImage = crop.canvas.toDataURL('image/png')
 }
 
 const cancelCropping = () => {
   avatarImage.value = undefined
-  state.image = activeAvatar.value?.imageResize || ''
+  state.resizedImage = activeAvatar.value?.imageResize || ''
 }
 
 const application = useApplicationStore()
@@ -227,7 +231,11 @@ const actions = computed<CommonButtonOption[]>(() => [
       <CommonLoader
         :loading="avatarLoading && !activeAvatarQuery.result().value"
       >
-        <CommonAvatar v-if="state.image" :image="state.image" size="xl" />
+        <CommonAvatar
+          v-if="state.resizedImage"
+          :image="state.resizedImage"
+          size="xl"
+        />
         <CommonUserAvatar v-else :entity="user" size="xl" personal />
         <CommonButtonGroup class="mt-6" mode="full" :options="actions" />
       </CommonLoader>

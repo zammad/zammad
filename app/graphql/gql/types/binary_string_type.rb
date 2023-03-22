@@ -9,6 +9,8 @@ module Gql::Types
       # Cut out prefix of data: url if needed (in-place to save memory).
       input_value.sub!(%r{data:.*?base64,}, '')
       Base64.strict_decode64(input_value)
+    rescue ArgumentError => e
+      raise GraphQL::CoercionError, e.message
     end
 
     def self.coerce_result(ruby_value, _context = nil)
