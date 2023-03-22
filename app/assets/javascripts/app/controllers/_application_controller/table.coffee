@@ -417,7 +417,7 @@ class App.ControllerTable extends App.Controller
     if @tableId
 
       # enable resize column
-      table.on('mousedown', '.js-col-resize', @onColResizeMousedown)
+      table.on('mousedown touchstart', '.js-col-resize', @onColResizeStart)
       table.on('click', '.js-col-resize', @stopPropagation)
 
     # enable checkbox bulk selection
@@ -990,24 +990,32 @@ class App.ControllerTable extends App.Controller
   stopPropagation: (event) ->
     event.stopPropagation()
 
-  onColResizeMousedown: (event) =>
+  getPageX: (event) ->
+    return event.pageX if event.originalEvent instanceof MouseEvent
+    return event.targetTouches[0].pageX if event.targetTouches[0]
+
+    event.changedTouches[event.changedTouches.length - 1].pageX
+
+  onColResizeStart: (event) =>
     @resizeTargetLeft = $(event.currentTarget).parents('th')
     @resizeTargetRight = @resizeTargetLeft.next()
-    @resizeStartX = event.pageX
+    @resizeStartX = @getPageX(event)
     @resizeLeftStartWidth = @resizeTargetLeft.width()
     @resizeRightStartWidth = @resizeTargetRight.width()
 
-    $(document).on('mousemove.resizeCol', @onColResizeMousemove)
-    $(document).one('mouseup', @onColResizeMouseup)
+    $(document).on('mousemove.resizeCol touchmove.resizeCol', @onColResizeMove)
+    $(document).one('mouseup touchend', @onColResizeEnd)
 
     @tableWidth = @el.width()
 
-  onColResizeMousemove: (event) =>
+  onColResizeMove: (event) =>
+    pageX = @getPageX(event)
+
     # use pixels while moving for max precision
     if App.i18n.dir() is 'rtl'
-      difference = @resizeStartX - event.pageX
+      difference = @resizeStartX - pageX
     else
-      difference = event.pageX - @resizeStartX
+      difference = pageX - @resizeStartX
 
     if @resizeLeftStartWidth + difference < @minColWidth
       difference = - (@resizeLeftStartWidth - @minColWidth)
@@ -1018,8 +1026,8 @@ class App.ControllerTable extends App.Controller
     @resizeTargetLeft.width @resizeLeftStartWidth + difference
     @resizeTargetRight.width @resizeRightStartWidth - difference
 
-  onColResizeMouseup: =>
-    $(document).off('mousemove.resizeCol')
+  onColResizeEnd: =>
+    $(document).off('mousemove.resizeCol touchmove.resizeCol')
 
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()

@@ -356,4 +356,43 @@ RSpec.describe 'Overview', type: :system do
       end
     end
   end
+
+  context 'when dragging table columns' do
+    let(:overview) { create(:overview) }
+
+    before do
+      visit "ticket/view/#{overview.link}"
+    end
+
+    shared_examples 'resizing table columns' do
+      it 'resizes table columns' do
+        initial_number_width = find_all('.js-tableHead')[1].native.size.width.to_i
+        initial_title_width = find_all('.js-tableHead')[2].native.size.width.to_i
+
+        column_resize_handle = find_all('.js-col-resize')[0]
+
+        # Drag the first column resize handle to the left.
+        #   Move the cursor horizontally by 100 pixels.
+        #   Finally, drop the handle to resize the column.
+        page.driver.browser.action
+          .move_to(column_resize_handle.native)
+          .click_and_hold
+          .move_by(-100, 0)
+          .release
+          .perform
+
+        final_number_width = find_all('.js-tableHead')[1].native.size.width.to_i
+        final_title_width = find_all('.js-tableHead')[2].native.size.width.to_i
+
+        expect(final_number_width).to be < initial_number_width
+        expect(final_title_width).to be > initial_title_width
+      end
+    end
+
+    context 'with mouse input' do
+      it_behaves_like 'resizing table columns'
+    end
+
+    # TODO: Add a test example for touch input once the tablet emulation mode starts working in the CI.
+  end
 end
