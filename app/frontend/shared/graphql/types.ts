@@ -2498,6 +2498,7 @@ export type SearchQueryVariables = Exact<{
   search: Scalars['String'];
   isAgent: Scalars['Boolean'];
   onlyIn?: InputMaybe<EnumSearchableModels>;
+  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 

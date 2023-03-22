@@ -2,8 +2,9 @@ query search(
   $search: String!
   $isAgent: Boolean!
   $onlyIn: EnumSearchableModels
+  $limit: Int = 30
 ) {
-  search(search: $search, onlyIn: $onlyIn) {
+  search(search: $search, onlyIn: $onlyIn, limit: $limit) {
     ... on Ticket {
       id
       internalId

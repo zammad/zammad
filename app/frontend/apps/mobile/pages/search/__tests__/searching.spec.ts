@@ -54,6 +54,7 @@ describe('visiting search page', () => {
       onlyIn: 'User',
       isAgent: true,
       search: 'search',
+      limit: 30,
     })
 
     expect(view.container).toHaveTextContent('No entries')
@@ -64,6 +65,7 @@ describe('visiting search page', () => {
       onlyIn: 'Organization',
       isAgent: true,
       search: 'search',
+      limit: 30,
     })
 
     expect(view.getByRole('tab', { name: 'Organizations' })).toHaveFocus()

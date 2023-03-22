@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const SearchDocument = gql`
-    query search($search: String!, $isAgent: Boolean!, $onlyIn: EnumSearchableModels) {
-  search(search: $search, onlyIn: $onlyIn) {
+    query search($search: String!, $isAgent: Boolean!, $onlyIn: EnumSearchableModels, $limit: Int = 30) {
+  search(search: $search, onlyIn: $onlyIn, limit: $limit) {
     ... on Ticket {
       id
       internalId
