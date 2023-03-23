@@ -306,7 +306,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.13.10)
+    nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     nori (2.6.0)
@@ -554,9 +554,9 @@ GEM
     time (0.2.1)
       date
     timeout (0.3.2)
-    twilio-ruby (5.74.5)
+    twilio-ruby (5.75.0)
       faraday (>= 0.9, < 3.0)
-      jwt (>= 1.5, <= 2.6)
+      jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
     twitter (7.0.0)
       addressable (~> 2.3)
