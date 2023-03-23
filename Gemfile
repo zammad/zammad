@@ -238,13 +238,7 @@ group :development, :test do
   gem 'slack-ruby-client', require: false
 end
 
-# Want to extend Zammad with additional gems?
-# ZAMMAD USERS: Specify them in Gemfile.local
-#               (That way, you can customize the Gemfile
-#               without having your changes overwritten during upgrades.)
-# ZAMMAD DEVS:  Consult the internal wiki
-#               (or else risk pushing unwanted changes to Gemfile.lock!)
-#               https://git.zammad.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
+# To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
 Dir['Gemfile.local*'].each do |file|
   eval_gemfile file
 end
