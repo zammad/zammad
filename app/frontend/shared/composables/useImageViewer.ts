@@ -13,10 +13,11 @@ interface CachedFile {
   name?: string
   content?: string
   preview?: string
+  inline?: string
   type?: Maybe<string>
 }
 
-interface ViewerOptions {
+export interface ViewerOptions {
   images: ImagePreview[]
   index: number
   visible: boolean
@@ -41,7 +42,7 @@ const useImageViewer = (viewFiles: MaybeRef<CachedFile[]>) => {
         // be different from original files, if they had non-image uploads
         indexMap.set(image, index)
         return {
-          src: image.preview || image.content,
+          src: image.inline || image.preview || image.content,
           title: image.name,
         }
       })

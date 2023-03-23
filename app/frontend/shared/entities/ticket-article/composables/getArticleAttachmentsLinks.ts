@@ -20,6 +20,7 @@ export const getArticleAttachmentsLinks = (
     return `${apiUrl}/ticket_attachment/${ticketInternalId}/${articleInternalId}/${internalId}`
   }
   const buildPreviewUrl = (baseUrl: string) => `${baseUrl}?view=preview`
+  const buildInlineUrl = (baseUrl: string) => `${baseUrl}?view=inline`
   const canDownloadAttachment = (attachment: { type?: Maybe<string> }) => {
     return canDownloadFile(attachment.type)
   }
@@ -32,9 +33,11 @@ export const getArticleAttachmentsLinks = (
   const previewUrl = buildPreviewUrl(baseUrl)
   const canDownload = canDownloadAttachment(attachment)
   const downloadUrl = buildDownloadUrl(baseUrl, canDownload)
+  const inlineUrl = buildInlineUrl(baseUrl)
 
   return {
     baseUrl,
+    inlineUrl,
     previewUrl,
     canDownload,
     downloadUrl,

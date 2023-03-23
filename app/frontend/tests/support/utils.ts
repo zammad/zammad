@@ -1,7 +1,26 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import type { ViewerOptions } from '@shared/composables/useImageViewer'
+import type { Ref } from 'vue'
 import { nextTick } from 'vue'
 import type { MockGraphQLInstance } from './mock-graphql-api'
+
+const state = Symbol('test:state')
+
+interface TestState {
+  imageViewerOptions: Ref<ViewerOptions>
+}
+
+export const getTestState = (): TestState => {
+  return (globalThis as any)[state] || {}
+}
+
+export const setTestState = (newState: Partial<TestState>) => {
+  ;(globalThis as any)[state] = {
+    ...getTestState(),
+    ...newState,
+  }
+}
 
 export const waitForTimeout = async (milliseconds = 0) => {
   return new Promise((resolve) => {

@@ -17,7 +17,7 @@ export const useArticleAttachments = (options: AttachmentsOptions) => {
 
   const attachments = computed(() => {
     return options.attachments.value.map((attachment) => {
-      const { previewUrl, canDownload, downloadUrl } =
+      const { previewUrl, inlineUrl, canDownload, downloadUrl } =
         getArticleAttachmentsLinks(
           {
             ticketInternalId: options.ticketInternalId,
@@ -31,6 +31,7 @@ export const useArticleAttachments = (options: AttachmentsOptions) => {
       return {
         ...attachment,
         preview: previewUrl,
+        inline: inlineUrl,
         canDownload,
         downloadUrl,
       }

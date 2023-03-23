@@ -270,6 +270,26 @@ describe('component for displaying text article', () => {
       "pdf doesn't have preview",
     ).not.toBeInTheDocument()
   })
+
+  it('shows inlined image when previewing attachments', async () => {
+    const view = renderArticleBubble({
+      ticketInternalId: 6,
+      articleId: convertToGraphQLId('Ticket::Article', 12),
+      attachments: [
+        {
+          internalId: '1',
+          name: 'Zammad 1.png',
+          size: 242143,
+          type: 'image/png',
+        },
+      ],
+    })
+
+    const attachment = view.getByRole('link', { name: /Zammad 1.png/ })
+    await view.events.click(attachment)
+
+    expect(view).toHaveImagePreview('/api/ticket_attachment/6/12/1?view=inline')
+  })
 })
 
 vi.mock('@shared/utils/pwa')

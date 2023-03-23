@@ -71,7 +71,7 @@ export const forwardEmail = async (
     const originalAttachment = article.attachmentsWithoutInline[idx]
     if (!originalAttachment || originalAttachment.name !== file.name)
       return file
-    const { previewUrl } = getArticleAttachmentsLinks(
+    const { previewUrl, inlineUrl } = getArticleAttachmentsLinks(
       {
         ticketInternalId: ticket.internalId,
         articleInternalId: article.internalId,
@@ -83,6 +83,7 @@ export const forwardEmail = async (
     return {
       ...file,
       preview: previewUrl,
+      inline: inlineUrl,
     }
   })
   const quotedHeader =

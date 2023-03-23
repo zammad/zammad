@@ -17,7 +17,6 @@ import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
 import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
 import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
 import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
-import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { imageViewerOptions } from '@shared/composables/useImageViewer'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
@@ -25,7 +24,7 @@ import { initializeObjectAttributes } from '@mobile/object-attributes/initialize
 import { i18n } from '@shared/i18n'
 import buildIconsQueries from './iconQueries'
 import buildLinksQueries from './linkQueries'
-import { waitForNextTick } from '../utils'
+import { setTestState, waitForNextTick } from '../utils'
 import { cleanupStores, initializeStore } from './initializeStore'
 
 // TODO: some things can be handled differently: https://test-utils.vuejs.org/api/#config-global
@@ -34,7 +33,6 @@ export interface ExtendedMountingOptions<Props> extends MountingOptions<Props> {
   router?: boolean
   routerRoutes?: RouteRecordRaw[]
   store?: boolean
-  imageViewer?: boolean
   confirmation?: boolean
   form?: boolean
   formField?: boolean
@@ -231,21 +229,9 @@ const mountDialog = () => {
   dialogMounted = true
 }
 
-let imageViewerMounted = false
-
-const mountImageViewer = () => {
-  if (imageViewerMounted) return
-
-  const ImageViewer = {
-    components: { CommonImageViewer },
-    template: '<CommonImageViewer />',
-  } as any
-
-  const { element } = mount(ImageViewer, defaultWrapperOptions)
-  document.body.appendChild(element)
-
-  imageViewerMounted = true
-}
+setTestState({
+  imageViewerOptions,
+})
 
 afterEach(() => {
   router?.restoreMethods()
@@ -324,9 +310,6 @@ const renderComponent = <Props>(
   }
   if (wrapperOptions?.dialog) {
     mountDialog()
-  }
-  if (wrapperOptions?.imageViewer) {
-    mountImageViewer()
   }
   if (wrapperOptions?.confirmation) {
     mountconfirmation()
