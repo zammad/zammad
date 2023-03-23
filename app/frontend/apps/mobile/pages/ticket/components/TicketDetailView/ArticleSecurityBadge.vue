@@ -184,6 +184,7 @@ const popupItems = computed(() =>
         </div>
         <div
           v-if="security.encryptionMessage"
+          class="break-all"
           :class="{
             'text-orange': !hasError && security.encryptionSuccess === false,
           }"
