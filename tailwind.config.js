@@ -65,7 +65,7 @@ module.exports = {
       orange: '#F39804',
     },
     minWidth: {
-      '1/2-2': 'calc(100% / 2 - theme(spacing.2))',
+      '1/2': '50%',
     },
   },
   plugins: [

@@ -3596,25 +3596,20 @@ ol.tabs li {
 .auth-providers {
   display: flex;
   flex-wrap: wrap;
+  padding: 7px;
+  margin: -14px;
 
   > form {
     display: flex;
     flex-grow: 1;
-    min-width: calc(100% / 2 - 8px);
-
-    &:last-child {
-      .auth-provider {
-        margin-bottom: initial;
-      }
-    }
+    min-width: 50%;
   }
 }
 
 .auth-provider {
   height: 40px;
   padding: 0 10px 0 7px;
-  margin-bottom: 14px;
-  margin-right: 14px;
+  margin: 7px;
   color: white !important;
   line-height: 23px;
   border-radius: 4px;
