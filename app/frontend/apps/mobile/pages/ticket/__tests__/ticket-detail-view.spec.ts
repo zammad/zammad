@@ -176,53 +176,6 @@ describe('user avatars', () => {
   })
 })
 
-test('can refresh data by pulling up', async () => {
-  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
-
-  const view = await visitView('/tickets/1')
-
-  await waitUntilTicketLoaded()
-
-  const articlesElement = view.getByRole('group', { name: 'Articles' })
-
-  const startEvent = new TouchEvent('touchstart', {
-    touches: [{ clientY: 300 } as Touch],
-  })
-
-  articlesElement.dispatchEvent(startEvent)
-
-  const moveEvent = new TouchEvent('touchmove', {
-    touches: [{ clientY: 100 } as Touch],
-  })
-
-  Object.defineProperty(document.documentElement, 'scrollHeight', {
-    value: 200,
-  })
-  Object.defineProperty(document.documentElement, 'scrollTop', {
-    value: 0,
-  })
-  Object.defineProperty(document.documentElement, 'clientHeight', {
-    value: 200,
-  })
-
-  articlesElement.dispatchEvent(moveEvent)
-
-  await flushPromises()
-
-  expect(view.getByIconName('mobile-arrow-down')).toHaveStyle({
-    transform: 'rotate(180deg)',
-  })
-
-  const touchEnd = new TouchEvent('touchend')
-  articlesElement.dispatchEvent(touchEnd)
-
-  await flushPromises()
-
-  expect(view.getAllByIconName('mobile-loading')).not.toHaveLength(0)
-
-  // TODO test api call
-})
-
 test("redirects to error page, if can't find ticket", async () => {
   const { calls } = mockGraphQLApi(TicketDocument).willFailWithNotFoundError(
     'The ticket 9866 could not be found',

@@ -231,7 +231,7 @@ const bannerClasses = computed(() => {
 
   if (route.name !== 'TicketDetailArticlesView') return null
 
-  return articleReplyDialog.isOpened.value ? null : 'ReplyButtonPadding'
+  return articleReplyDialog.isOpened.value ? null : '-translate-y-12'
 })
 </script>
 
@@ -239,7 +239,7 @@ const bannerClasses = computed(() => {
   <RouterView />
   <div
     class="transition-all"
-    :class="{ 'pb-12': needSpaceForSaveBanner }"
+    :class="{ 'pb-safe-12': needSpaceForSaveBanner }"
   ></div>
   <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
   <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
@@ -280,7 +280,7 @@ const bannerClasses = computed(() => {
     >
       <div
         v-if="canUpdateTicket && isDirty"
-        class="fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
+        class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
         :class="bannerClasses"
       >
         <div class="relative flex flex-1 items-center gap-2 p-1.5">
@@ -316,11 +316,3 @@ const bannerClasses = computed(() => {
     </Transition>
   </Teleport>
 </template>
-
-<style lang="scss" scoped>
-.ReplyButtonPadding {
-  --reply-size: calc(0px - theme('height.12') - var(--safe-bottom, 0px));
-
-  transform: translateY(var(--reply-size));
-}
-</style>

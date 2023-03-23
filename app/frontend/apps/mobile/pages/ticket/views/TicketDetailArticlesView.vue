@@ -252,7 +252,7 @@ const { stickyStyles, headerElement } = useStickyHeader([
       <TicketTitle v-if="ticket" :ticket="ticket" />
     </CommonLoader>
   </div>
-  <div class="flex flex-1 flex-col pb-20" :style="stickyStyles.body">
+  <div class="flex flex-1 flex-col pb-safe-20" :style="stickyStyles.body">
     <CommonLoader
       data-test-id="loader-list"
       :loading="isLoadingTicket"
