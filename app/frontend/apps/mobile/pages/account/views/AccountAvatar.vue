@@ -257,7 +257,7 @@ const actions = computed<CommonButtonOption[]>(() => [
         class="hidden"
         aria-hidden="true"
         :accept="allowedImageTypes"
-        capture="environment"
+        capture="user"
         @change="loadAvatar(fileCameraInput)"
       />
 
