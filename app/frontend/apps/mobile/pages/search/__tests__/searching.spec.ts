@@ -52,7 +52,6 @@ describe('visiting search page', () => {
 
     expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
       onlyIn: 'User',
-      isAgent: true,
       search: 'search',
       limit: 30,
     })
@@ -63,7 +62,6 @@ describe('visiting search page', () => {
 
     expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
       onlyIn: 'Organization',
-      isAgent: true,
       search: 'search',
       limit: 30,
     })

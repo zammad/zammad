@@ -15,7 +15,7 @@ interface Author {
 
 interface Entity {
   updatedAt?: string
-  updatedBy?: Author
+  updatedBy?: Maybe<Author>
 }
 
 export const useEditedBy = (entity: Ref<Entity>) => {

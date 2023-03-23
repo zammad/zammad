@@ -14,7 +14,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { useSessionStore } from '@shared/stores/session'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
@@ -32,7 +31,6 @@ const route = useRoute()
 const router = useRouter()
 
 const searchPlugins = useSearchPlugins()
-const { hasPermission } = useSessionStore()
 
 const search = ref(String(route.query.search || ''))
 // we need a separate debounced value to not trigger query
@@ -53,7 +51,6 @@ const searchQuery = new QueryHandler(
     () => ({
       search: filter.value,
       onlyIn: model.value,
-      isAgent: hasPermission(['ticket.agent']),
     }),
     () => ({ enabled: canSearch.value }),
   ),

@@ -110,13 +110,11 @@ describe('testing previous searches block', () => {
 
     expect(mockSearchApi.spies.resolve).toHaveBeenNthCalledWith(1, {
       onlyIn: 'User',
-      isAgent: true,
       search: 'search',
       limit: 30,
     })
     expect(mockSearchApi.spies.resolve).toHaveBeenNthCalledWith(2, {
       onlyIn: 'User',
-      isAgent: true,
       search: 'search123',
       limit: 30,
     })

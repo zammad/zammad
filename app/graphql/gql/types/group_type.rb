@@ -10,12 +10,16 @@ module Gql::Types
 
     # field :signature_id, Integer
     # field :email_address_id, Integer
+
     field :name, String
-    field :assignment_timeout, Integer
-    field :follow_up_possible, String, null: false
-    field :follow_up_assignment, Boolean, null: false
     field :active, Boolean, null: false
-    field :email_address, Gql::Types::Email::AddressType
+
+    scoped_fields do
+      field :email_address, Gql::Types::Email::AddressType
+      field :assignment_timeout, Integer
+      field :follow_up_possible, String
+      field :follow_up_assignment, Boolean
+    end
 
     def email_address
       return nil if !EmailAddress.exists? @object.email_address_id

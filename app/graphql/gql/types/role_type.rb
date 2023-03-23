@@ -4,10 +4,10 @@ module Gql::Types
   class RoleType < Gql::Types::BaseObject
     include Gql::Types::Concerns::IsModelObject
     include Gql::Types::Concerns::HasPunditAuthorization
+    include Gql::Types::Concerns::HasInternalNoteField
 
     description 'Roles'
 
     field :name, String
-    field :note, String
   end
 end

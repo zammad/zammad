@@ -2,7 +2,8 @@
 
 module Gql::Types
   class TicketType < BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
+    include Gql::Types::Concerns::HasScopedModelUserRelations
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization

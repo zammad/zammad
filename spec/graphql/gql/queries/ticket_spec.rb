@@ -24,6 +24,12 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               id
               firstname
               email
+              createdBy {
+                internalId
+              }
+              updatedBy {
+                internalId
+              }
             }
             customer {
               id
@@ -84,6 +90,8 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               'owner'          => include(
                 'firstname' => ticket.owner.firstname,
                 'email'     => ticket.owner.email,
+                'createdBy' => { 'internalId' => 1 },
+                'updatedBy' => { 'internalId' => 1 },
               ),
               'tags'           => %w[tag1 tag2],
               'policy'         => {
@@ -97,6 +105,7 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
               'stateColorCode' => 'open',
             }
           end
+
           it 'finds the ticket' do
             expect(gql.result.data).to include(expected_result)
           end
@@ -170,6 +179,8 @@ RSpec.describe Gql::Queries::Ticket, type: :graphql do
           'owner'      => include(
             'firstname' => ticket.owner.firstname,
             'email'     => nil,
+            'createdBy' => nil,
+            'updatedBy' => nil,
           ),
           # Customer may see their own data
           'customer'   => include(

@@ -2,7 +2,8 @@
 
 module Gql::Types::KnowledgeBase
   class AnswerType < Gql::Types::BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
+    include Gql::Types::Concerns::HasScopedModelUserRelations
     include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Knowledge Base Answer'

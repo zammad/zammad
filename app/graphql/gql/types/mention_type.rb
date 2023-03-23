@@ -2,7 +2,8 @@
 
 module Gql::Types
   class MentionType < BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
+    include Gql::Types::Concerns::HasScopedModelUserRelations
 
     description 'Mention'
 
