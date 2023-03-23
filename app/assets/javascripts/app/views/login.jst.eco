@@ -99,8 +99,8 @@
 
     <% if !user_show_password_login: %>
       <p>
-        <%- @T('If you have problems with the third-party login you can request a one-time password login as an admin.') %>
-        <a href="#admin_password_auth"><%- @T('Request the password login here.') %></a>
+        <%- @T('If you have problems with the third-party login you can request a one-time password login as an admin.') %><br>
+        <a class="text-muted" href="#admin_password_auth"><%- @T('Request the password login here.') %></a>
       </p>
     <% end %>
 

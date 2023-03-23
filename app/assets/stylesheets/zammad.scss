@@ -3238,6 +3238,10 @@ kbd {
 
   a {
     color: var(--text-inverted);
+
+    &.text-muted {
+      color: inherit;
+    }
   }
 }
 
