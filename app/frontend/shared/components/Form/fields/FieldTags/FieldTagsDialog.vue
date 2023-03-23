@@ -166,16 +166,19 @@ const processSearchKeydown = (event: KeyboardEvent) => {
     <div
       ref="tagsListbox"
       class="flex w-full flex-col"
+      :aria-label="$t('Select…')"
       role="listbox"
       aria-multiselectable="true"
     >
       <button
         v-for="option of filteredTags"
+        :id="`${name}-${option}`"
         :key="option"
         class="flex w-full items-center px-4 focus:bg-blue-highlight focus:outline-none"
         role="option"
+        aria-setsize="-1"
+        :aria-posinset="sortedOptions.indexOf(option) + 1"
         :aria-selected="isCurrentValue(option)"
-        :aria-checked="isCurrentValue(option)"
         @click="toggleTag(option)"
         @keydown.space.prevent="toggleTag(option)"
       >

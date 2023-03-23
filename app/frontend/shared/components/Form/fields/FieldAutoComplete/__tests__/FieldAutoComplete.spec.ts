@@ -100,6 +100,7 @@ const wrapperParameters = {
 }
 
 const testProps = {
+  label: 'Select…',
   type: 'autocomplete',
   gqlQuery: AutocompleteSearchUserDocument,
 }
@@ -883,11 +884,6 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
-      'aria-label',
-      'Select…',
-    )
-
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',
       'Clear Selection',
@@ -960,17 +956,11 @@ describe('Form - Field - AutoComplete - Input Checklist', () => {
       props: {
         ...testProps,
         id: 'test_id',
-        label: 'Test label',
         options: testOptions,
       },
     })
 
     expect(wrapper.getByLabelText('Select…')).toHaveAttribute('id', 'test_id')
-
-    expect(wrapper.getByLabelText('Test label')).toHaveAttribute(
-      'id',
-      'test_id',
-    )
   })
 
   it('implements input name', async () => {

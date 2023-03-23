@@ -18,6 +18,9 @@ const emit = defineEmits<{
 }>()
 
 const select = (option: SelectOption) => {
+  if (props.option.disabled) {
+    return
+  }
   emit('select', option)
 }
 

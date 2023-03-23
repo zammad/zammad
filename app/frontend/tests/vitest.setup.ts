@@ -182,6 +182,9 @@ expect.extend({
 process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
 process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
 
+process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
+process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
+
 declare module 'vitest' {
   interface TestContext {
     skipConsole: boolean

@@ -64,6 +64,10 @@ export const openDialog = async (
 
   const options = getDialogOptions(name)
 
+  if (options.refocus) {
+    lastFocusedElements[name] = document.activeElement as HTMLElement
+  }
+
   dialogsOpened.value.add(name)
 
   if (options.beforeOpen) {
@@ -73,10 +77,6 @@ export const openDialog = async (
   const component = defineAsyncComponent(
     options.component as AsyncComponentLoader,
   )
-
-  if (options.refocus) {
-    lastFocusedElements[name] = document.activeElement as HTMLElement
-  }
 
   await pushComponent('dialog', name, component, props)
 
@@ -103,11 +103,12 @@ export const closeDialog = async (name: string) => {
     await options.afterClose()
   }
 
-  const lastFocusedElement = lastFocusedElements[name]
-  if (lastFocusedElement && options.refocus && 'focus' in lastFocusedElement) {
-    lastFocusedElement.focus({ preventScroll: true })
-    delete lastFocusedElements[name]
-  }
+  const controllerElement =
+    (document.querySelector(
+      `[aria-haspopup="dialog"][aria-controls="dialog-${name}"]`,
+    ) as HTMLElement | null) || lastFocusedElements[name]
+  if (controllerElement && 'focus' in controllerElement)
+    controllerElement.focus({ preventScroll: true })
 
   nextTick(() => {
     testFlags.set(`${name}.closed`)

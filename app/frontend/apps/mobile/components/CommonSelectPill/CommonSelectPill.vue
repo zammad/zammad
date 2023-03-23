@@ -38,13 +38,17 @@ const defaultLabel = computed(() => {
 
 <template>
   <CommonSelect
-    #default="{ open }"
+    #default="{ open, state: expanded }"
     v-bind="dialogProps"
     @update:model-value="emit('update:modelValue', $event)"
     @select="emit('select', $event)"
   >
     <button
       type="button"
+      aria-controls="common-select"
+      aria-owns="common-select"
+      aria-haspopup="dialog"
+      :aria-expanded="expanded"
       class="inline-flex w-auto cursor-pointer rounded-lg bg-gray-600 py-1 ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1"
       @click="open()"
       @keypress.space.prevent="open()"

@@ -100,10 +100,14 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
     :options="options"
     no-close
   >
-    <template #default="{ open }">
+    <template #default="{ open, state: expanded }">
       <button
         ref="selectButton"
         type="button"
+        aria-controls="common-select"
+        aria-owns="common-select"
+        aria-haspopup="dialog"
+        :aria-expanded="expanded"
         :aria-label="accessibilityLabel"
         class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
         data-test-id="column"

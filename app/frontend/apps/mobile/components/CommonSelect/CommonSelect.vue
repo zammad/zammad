@@ -24,6 +24,7 @@ export interface Props {
   multiple?: boolean
   noClose?: boolean
   noRefocus?: boolean
+  owner?: string
   noOptionsLabelTranslation?: boolean
 }
 
@@ -52,9 +53,16 @@ const getFocusableOptions = () => {
 const showDialog = ref(false)
 let lastFocusableOutsideElement: HTMLElement | null = null
 
+const getActiveElement = () => {
+  if (props.owner) {
+    return document.getElementById(props.owner)
+  }
+  return document.activeElement as HTMLElement
+}
+
 const openDialog = () => {
   showDialog.value = true
-  lastFocusableOutsideElement = document.activeElement as HTMLElement
+  lastFocusableOutsideElement = getActiveElement()
   requestAnimationFrame(() => {
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
     // focus selected or first available option
@@ -153,7 +161,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
 </script>
 
 <template>
-  <slot :open="openDialog" :close="closeDialog" />
+  <slot :state="showDialog" :open="openDialog" :close="closeDialog" />
   <Teleport to="body">
     <Transition :duration="duration">
       <div

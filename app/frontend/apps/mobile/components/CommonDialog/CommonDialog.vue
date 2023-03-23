@@ -100,12 +100,12 @@ export default {
 
 <template>
   <div
+    :id="`dialog-${name}`"
     class="fixed inset-0 z-10 flex overflow-y-auto"
     :aria-label="$t(label || name)"
     role="dialog"
   >
     <div
-      :id="`dialog-${name}`"
       ref="dialogElement"
       data-common-dialog
       class="flex h-full grow flex-col overflow-x-hidden bg-black"

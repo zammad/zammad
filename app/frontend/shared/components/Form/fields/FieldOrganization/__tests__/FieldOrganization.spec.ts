@@ -59,6 +59,7 @@ const wrapperParameters = {
 
 const testProps = {
   type: 'organization',
+  label: 'Select…',
 }
 
 beforeAll(async () => {

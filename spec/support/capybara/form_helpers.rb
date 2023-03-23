@@ -468,11 +468,11 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     if type_select?
       page.find('#common-select[role="dialog"]', wait: false)
     elsif type_treeselect?
-      page.find("[role=\"dialog\"] #dialog-field-tree-select-#{field_id}", wait: false)
+      page.find("#dialog-field-tree-select-#{field_id}", wait: false)
     elsif type_tags?
-      page.find("[role=\"dialog\"] #dialog-field-tags-#{field_id}", wait: false)
+      page.find("#dialog-field-tags-#{field_id}", wait: false)
     elsif autocomplete?
-      page.find("[role=\"dialog\"] #dialog-field-auto-complete-#{field_id}", wait: false)
+      page.find("#dialog-field-auto-complete-#{field_id}", wait: false)
     end
   end
 

@@ -104,6 +104,7 @@ const wrapperParameters = {
 
 const testProps = {
   type: 'recipient',
+  label: 'Select…',
 }
 
 beforeAll(async () => {
