@@ -10,12 +10,13 @@ const route: RouteRecordRaw[] = [
     component: () => import('./views/Home.vue'),
     beforeEnter(to) {
       const location = to.hash && to.hash.slice(1)
-      if (location) {
-        const route = Router.resolve(location)
-        if (route.name !== 'Error') {
-          return `/${location}`
-        }
-      }
+
+      if (!location) return true
+
+      const route = Router.resolve(location)
+      const path = route.name === 'Error' ? '/' : `/${location}`
+
+      return { path, replace: true }
     },
     meta: {
       title: __('Home'),
