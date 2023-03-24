@@ -20,7 +20,7 @@ import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConf
 import { imageViewerOptions } from '@shared/composables/useImageViewer'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { initializeWalker } from '@shared/router/walker'
-import { initializeObjectAttributes } from '@mobile/object-attributes/initializeObjectAttributes'
+import { initializeObjectAttributes } from '@mobile/initializer/objectAttributes'
 import { i18n } from '@shared/i18n'
 import buildIconsQueries from './iconQueries'
 import buildLinksQueries from './linkQueries'

@@ -14,7 +14,7 @@ import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButt
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import CommonSelectPill from '@mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
-import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
+import { useTicketOverviews } from '@mobile/entities/ticket/composables/useTicketOverviews'
 import CommonRefetch from '@mobile/components/CommonRefetch/CommonRefetch.vue'
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
@@ -29,7 +29,7 @@ const router = useRouter()
 const route = useRoute()
 
 const { overviews, loading: loadingOverviews } = storeToRefs(
-  useTicketOverviewsStore(),
+  useTicketOverviews(),
 )
 
 const optionsOverviews = computed(() => {

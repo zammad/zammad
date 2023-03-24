@@ -31,7 +31,7 @@ export const useAuthenticationStore = defineStore(
       // Refresh the config after logout, to have only the non authenticated version.
       await useApplicationStore().resetAndGetConfig()
 
-      // TODO... check for other things which must be removed/cleared during a logout.
+      session.initialized = false
     }
 
     const refreshAfterAuthentication = async (): Promise<void> => {
@@ -93,9 +93,11 @@ export const useAuthenticationStore = defineStore(
         const session = useSessionStore()
         session.id = newSessionId
         authenticated.value = true
-      }
 
-      await refreshAfterAuthentication()
+        await refreshAfterAuthentication()
+
+        session.initialized = true
+      }
 
       return Promise.resolve()
     }

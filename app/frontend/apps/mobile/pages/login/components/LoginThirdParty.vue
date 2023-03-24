@@ -29,7 +29,7 @@ const { fingerprint } = useFingerprint()
       <form
         v-for="provider of props.providers"
         :key="provider.name"
-        class="min-w-1/2 flex grow"
+        class="flex min-w-1/2 grow"
         method="post"
         :action="`${provider.url}?fingerprint=${fingerprint}`"
       >

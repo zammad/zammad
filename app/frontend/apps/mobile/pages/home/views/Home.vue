@@ -7,7 +7,7 @@ import { useSessionStore } from '@shared/stores/session'
 import type { MenuItem } from '@mobile/components/CommonSectionMenu'
 import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
-import { useTicketOverviewsStore } from '@mobile/entities/ticket/stores/ticketOverviews'
+import { useTicketOverviews } from '@mobile/entities/ticket/composables/useTicketOverviews'
 
 const IS_DEV = import.meta.env.DEV
 
@@ -36,7 +36,7 @@ const menu: MenuItem[] = [
     : []),
 ]
 
-const overviews = useTicketOverviewsStore()
+const overviews = useTicketOverviews()
 
 const ticketOverview = computed<MenuItem[]>(() => {
   if (overviews.loading) return []

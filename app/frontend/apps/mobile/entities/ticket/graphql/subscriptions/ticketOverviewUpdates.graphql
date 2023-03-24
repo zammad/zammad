@@ -1,0 +1,16 @@
+subscription ticketOverviewUpdates($withTicketCount: Boolean!) {
+  ticketOverviewUpdates {
+    ticketOverviews {
+      edges {
+        node {
+          ...overviewAttributes
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}

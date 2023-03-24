@@ -5,13 +5,19 @@ import { useSessionStore } from '@shared/stores/session'
 export const getTicketOverviewStorage = () => {
   const session = useSessionStore()
 
-  const LOCAL_STORAGE_NAME = `ticket-overviews-${session.user?.id || '1'}`
+  const LOCAL_STORAGE_NAME = session.user?.id
+    ? `ticket-overviews-${session.user.id}`
+    : null
 
   const getOverviews = (): string[] => {
+    if (!LOCAL_STORAGE_NAME) return []
+
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_NAME) || '[]')
   }
 
   const saveOverviews = (overviews: string[]) => {
+    if (!LOCAL_STORAGE_NAME) return
+
     return localStorage.setItem(LOCAL_STORAGE_NAME, JSON.stringify(overviews))
   }
 

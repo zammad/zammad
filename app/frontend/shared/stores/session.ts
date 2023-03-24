@@ -35,7 +35,7 @@ const getSessionIdQuery = () => {
 
   sessionIdQuery = new QueryHandler(
     useSessionIdQuery({
-      fetchPolicy: 'no-cache',
+      fetchPolicy: 'network-only',
       context: {
         error: {
           logLevel: 'silent',
@@ -67,10 +67,10 @@ export const useSessionStore = defineStore(
   'session',
   () => {
     const id = ref<Maybe<string>>(null)
+    const initialized = ref(false)
 
     const checkSession = async (): Promise<string | null> => {
       const sessionIdQuery = getSessionIdQuery()
-
       const result = await sessionIdQuery.loadedResult(true)
 
       // Refresh the current sessionId state.
@@ -163,6 +163,7 @@ export const useSessionStore = defineStore(
 
     return {
       id,
+      initialized,
       checkSession,
       user,
       userId,

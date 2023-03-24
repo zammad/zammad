@@ -2,20 +2,25 @@
 
 import { visitView } from '@tests/support/components/visitView'
 import { mockPermissions } from '@tests/support/mock-permissions'
+import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
+import { waitFor } from '@testing-library/vue'
 
-describe('testing home section menu', () => {
-  it('home icon is highlighted on home page', async () => {
+describe('testing quick action', () => {
+  beforeEach(() => {
+    mockTicketOverviews()
+  })
+
+  it('ticket create quick action is present', async () => {
     mockPermissions(['ticket.agent'])
 
     const view = await visitView('/')
 
-    expect(view.getByIconName('mobile-add')).toBeInTheDocument()
+    expect(view.getByLabelText('Create new ticket')).toBeInTheDocument()
 
-    // TODO: Check on ticket create form, when route exists
-    // await view.events.click(quickAction)
+    await view.events.click(view.getByLabelText('Create new ticket'))
 
-    // await waitFor(() => {
-    //   expect(view.getByText('TODO')).toBeInTheDocument()
-    // })
+    await waitFor(() => {
+      expect(view.queryByText('Create Ticket')).toBeInTheDocument()
+    })
   })
 })

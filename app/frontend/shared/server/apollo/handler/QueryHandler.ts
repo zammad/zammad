@@ -7,6 +7,7 @@ import type {
   ApolloQueryResult,
   FetchMoreOptions,
   FetchMoreQueryOptions,
+  ObservableQuery,
   OperationVariables,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
@@ -64,6 +65,12 @@ export default class QueryHandler<
 
   public result(): Ref<TResult | undefined> {
     return this.operationResult.result
+  }
+
+  public watchQuery(): Ref<
+    ObservableQuery<TResult, TVariables> | null | undefined
+  > {
+    return this.operationResult.query
   }
 
   public subscribeToMore<

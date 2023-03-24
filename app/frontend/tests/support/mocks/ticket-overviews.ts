@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { TicketOverviewUpdatesDocument } from '@mobile/entities/ticket/graphql/subscriptions/ticketOverviewUpdates.api'
 import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import type { TicketOverviewsQuery } from '@shared/graphql/types'
 import { EnumOrderDirection } from '@shared/graphql/types'
-import { mockGraphQLApi } from '../mock-graphql-api'
+import { mockGraphQLApi, mockGraphQLSubscription } from '../mock-graphql-api'
 
 export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
   ticketOverviews: {
@@ -15,6 +16,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
       {
         cursor: 'node1',
         node: {
+          __typename: 'Overview',
           id: '1',
           name: __('Overview 1'),
           link: 'overview_1',
@@ -41,6 +43,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
       {
         cursor: 'node2',
         node: {
+          __typename: 'Overview',
           id: '2',
           name: __('Overview 2'),
           link: 'overview_2',
@@ -66,6 +69,7 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
       {
         cursor: 'node3',
         node: {
+          __typename: 'Overview',
           id: '3',
           name: __('Overview 3'),
           link: 'overview_3',
@@ -93,6 +97,8 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
 })
 
 export const mockTicketOverviews = (overviews?: TicketOverviewsQuery) => {
+  mockGraphQLSubscription(TicketOverviewUpdatesDocument)
+
   return mockGraphQLApi(TicketOverviewsDocument).willResolve(
     overviews || getApiTicketOverviews(),
   )

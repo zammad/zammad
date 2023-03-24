@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import CommonNotifications from '@shared/components/CommonNotifications/CommonNotifications.vue'
 import { useApplicationStore } from '@shared/stores/application'
@@ -15,12 +15,15 @@ import useFormKitConfig from '@shared/composables/form/useFormKitConfig'
 import { useAppTheme } from '@shared/composables/useAppTheme'
 import useAuthenticationChanges from '@shared/composables/useAuthenticationUpdates'
 import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
-import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
 import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
+import { useSessionStore } from '@shared/stores/session'
+import CommonConfirmation from '@mobile/components/CommonConfirmation/CommonConfirmation.vue'
+import { useTicketOverviewsStore } from './entities/ticket/stores/ticketOverviews'
 
 const router = useRouter()
 
 const authentication = useAuthenticationStore()
+const session = useSessionStore()
 
 useMetaTitle().initializeMetaTitle()
 
@@ -62,6 +65,18 @@ emitter.on('sessionInvalid', async () => {
     })
   }
 })
+
+// Initialize the ticket overview store after a valid session is present on
+// the app level, so that the query keeps alive.
+watch(
+  () => session.initialized,
+  (newValue, oldValue) => {
+    if (!oldValue && newValue) {
+      useTicketOverviewsStore()
+    }
+  },
+  { immediate: true },
+)
 
 onBeforeUnmount(() => {
   emitter.off('sessionInvalid')

@@ -1,8 +1,9 @@
-query ticketOverviews($withTicketCount: Boolean!) {
+query ticketOverviewTicketCount {
   ticketOverviews {
     edges {
       node {
-        ...overviewAttributes
+        id
+        ticketCount
       }
       cursor
     }

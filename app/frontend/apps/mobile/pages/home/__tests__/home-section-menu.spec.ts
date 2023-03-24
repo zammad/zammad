@@ -2,8 +2,13 @@
 
 import { visitView } from '@tests/support/components/visitView'
 import { mockPermissions } from '@tests/support/mock-permissions'
+import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 
 describe('testing home section menu', () => {
+  beforeEach(() => {
+    mockTicketOverviews()
+  })
+
   it('not show ticket overview section menu item without permission', async () => {
     const view = await visitView('/')
 
