@@ -77,15 +77,11 @@ export type Authorization = {
   __typename?: 'Authorization';
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   id: Scalars['ID'];
   provider: Scalars['String'];
   uid: Scalars['String'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
   username?: Maybe<Scalars['String']>;
 };
 
@@ -465,16 +461,12 @@ export type KnowledgeBase = {
   colorHighlight: Scalars['String'];
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   customAddress?: Maybe<Scalars['String']>;
   homepageLayout: Scalars['String'];
   iconset: Scalars['String'];
   id: Scalars['ID'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Knowledge Base Answer */
@@ -545,14 +537,10 @@ export type KnowledgeBaseAnswerTranslationContent = {
   bodyPrepared?: Maybe<Scalars['String']>;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   hasAttachments: Scalars['Boolean'];
   id: Scalars['ID'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Knowledge Base Category */
@@ -561,8 +549,6 @@ export type KnowledgeBaseCategory = {
   categoryIcon: Scalars['String'];
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   id: Scalars['ID'];
   /** resolver for Rails' belongs_to relationship */
   knowledgeBase: KnowledgeBase;
@@ -572,8 +558,6 @@ export type KnowledgeBaseCategory = {
   translations: Array<KnowledgeBaseCategoryTranslation>;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Knowledge Base Category Translation */
@@ -583,16 +567,12 @@ export type KnowledgeBaseCategoryTranslation = {
   category: KnowledgeBaseCategory;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   id: Scalars['ID'];
   /** resolver for Rails' belongs_to relationship */
   kbLocale: KnowledgeBaseLocale;
   title: Scalars['String'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Knowledge Base Locale */
@@ -600,8 +580,6 @@ export type KnowledgeBaseLocale = {
   __typename?: 'KnowledgeBaseLocale';
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   id: Scalars['ID'];
   /** resolver for Rails' belongs_to relationship */
   knowledgeBase: KnowledgeBase;
@@ -610,8 +588,6 @@ export type KnowledgeBaseLocale = {
   systemLocale: Locale;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Locales available in the system */
@@ -621,16 +597,12 @@ export type Locale = {
   alias?: Maybe<Scalars['String']>;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   dir: EnumTextDirection;
   id: Scalars['ID'];
   locale: Scalars['String'];
   name: Scalars['String'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** Locate an organization via id or internalId. */
@@ -1597,8 +1569,6 @@ export type StoredFile = {
   __typename?: 'StoredFile';
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime'];
-  /** User that created this record */
-  createdBy?: Maybe<User>;
   id: Scalars['ID'];
   /** Internal database ID */
   internalId: Scalars['Int'];
@@ -1611,8 +1581,6 @@ export type StoredFile = {
   type?: Maybe<Scalars['String']>;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime'];
-  /** Last user that updated this record */
-  updatedBy?: Maybe<User>;
 };
 
 /** All available subscriptions */

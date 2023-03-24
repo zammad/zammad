@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TextModule < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include ChecksClientNotification
   include ChecksHtmlSanitized
   include CanCsvImport

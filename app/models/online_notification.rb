@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include OnlineNotification::Assets
   include OnlineNotification::TriggersSubscriptions
 
@@ -13,9 +15,6 @@ class OnlineNotification < ApplicationModel
   after_create    :notify_clients_after_change
   after_update    :notify_clients_after_change
   after_destroy   :notify_clients_after_change
-
-  belongs_to :created_by, class_name: 'User'
-  belongs_to :updated_by, class_name: 'User'
 
 =begin
 

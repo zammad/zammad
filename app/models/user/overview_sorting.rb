@@ -1,12 +1,12 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class User::OverviewSorting < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include CanPriorization
 
   belongs_to :user, class_name: 'User'
   belongs_to :overview
-  belongs_to :created_by, class_name: 'User'
-  belongs_to :updated_by, class_name: 'User'
 
   default_scope { order(:prio, :id) }
 

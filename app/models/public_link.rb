@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class PublicLink < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include CanPriorization
   include ChecksClientNotification
   include PublicLink::TriggersSubscriptions
@@ -14,9 +16,6 @@ class PublicLink < ApplicationModel
   before_validation :check_link
 
   default_scope { order(:prio, :id) }
-
-  belongs_to :created_by, class_name: 'User'
-  belongs_to :updated_by, class_name: 'User'
 
   client_notification_send_type 'public'
 

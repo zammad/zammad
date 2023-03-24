@@ -2,7 +2,7 @@
 
 module Gql::Types::KnowledgeBase::Answer::Translation
   class ContentType < Gql::Types::BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
     include Gql::Types::Concerns::HasPunditAuthorization
     include KnowledgeBaseRichTextHelper
 
