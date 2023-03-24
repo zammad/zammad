@@ -23,7 +23,6 @@ import {
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
-import { setupView } from '@tests/support/mock-user'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
@@ -34,6 +33,7 @@ import {
   mockTicketDetailViewGql,
   mockTicketLiveUsersGql,
 } from './mocks/detail-view'
+import { mockArticleQuery } from './mocks/articles'
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -891,13 +891,82 @@ describe('ticket add/edit reply article', () => {
   })
 })
 
-test('correctly redirects from ticket hash-based routes', async () => {
-  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
-  setupView('agent')
+it('correctly redirects from ticket hash-based routes', async () => {
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+    ticketView: 'agent',
+  })
+
   await visitView('/#ticket/zoom/1')
   await waitUntilTicketLoaded()
+
   const router = getTestRouter()
   const route = router.currentRoute.value
+
   expect(route.name).toBe('TicketDetailArticlesView')
   expect(route.params).toEqual({ internalId: '1' })
+})
+
+it("scrolls to the bottom the first time, but doesn't trigger rescroll on subsequent updates", async () => {
+  const newArticlesQuery = mockArticleQuery(
+    {
+      internalId: 1,
+      bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+    },
+    [
+      {
+        internalId: 2,
+        bodyWithUrls:
+          '<p>Existing article switched to internal> all can see this haha</p>',
+      },
+      {
+        internalId: 3,
+        bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+      },
+    ],
+  )
+
+  const newArticlesQueryAfterUpdate = mockArticleQuery(
+    {
+      internalId: 1,
+      bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+    },
+    [
+      {
+        internalId: 3,
+        bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+      },
+    ],
+  )
+
+  const { waitUntilTicketLoaded, mockTicketArticleSubscription } =
+    mockTicketDetailViewGql({
+      ticketView: 'agent',
+      articles: [newArticlesQuery, newArticlesQueryAfterUpdate],
+    })
+
+  vi.spyOn(window, 'scrollTo').mockReturnValue()
+
+  await visitView('/tickets/1')
+  await waitUntilTicketLoaded()
+
+  const router = getTestRouter()
+  router.restoreMethods()
+
+  expect(window.scrollTo).toHaveBeenCalledTimes(1)
+
+  await mockTicketArticleSubscription.next(
+    nullableMock({
+      data: {
+        ticketArticleUpdates: {
+          addArticle: {
+            __typename: 'TicketArticle',
+            id: convertToGraphQLId('TicketArticle', 100),
+            createdAt: new Date(2022, 0, 31, 0, 0, 0, 0).toISOString(),
+          },
+        },
+      },
+    }),
+  )
+
+  expect(window.scrollTo).toHaveBeenCalledTimes(1)
 })

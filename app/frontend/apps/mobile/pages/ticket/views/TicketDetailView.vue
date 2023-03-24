@@ -2,7 +2,13 @@
 
 <script setup lang="ts">
 import { computed, provide, ref, reactive } from 'vue'
-import { onBeforeRouteLeave, RouterView, useRoute, useRouter } from 'vue-router'
+import {
+  onBeforeRouteLeave,
+  onBeforeRouteUpdate,
+  RouterView,
+  useRoute,
+  useRouter,
+} from 'vue-router'
 import { noop } from 'lodash-es'
 import type {
   TicketUpdatesSubscription,
@@ -160,11 +166,21 @@ const updateRefetchingStatus = (status: boolean) => {
   refetchingStatus.value = status
 }
 
+const scrolledToBottom = ref(false)
+
+onBeforeRouteUpdate((to, from) => {
+  // reset if we opened another ticket from the same page (via ticket merge, for example)
+  if (to.params.internalId !== from.params.internalId) {
+    scrolledToBottom.value = false
+  }
+})
+
 provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   initialFormTicketValue: initialTicketValue,
   ticket,
   form,
+  scrolledToBottom,
   newTicketArticleRequested,
   newTicketArticlePresent,
   updateFormLocation,

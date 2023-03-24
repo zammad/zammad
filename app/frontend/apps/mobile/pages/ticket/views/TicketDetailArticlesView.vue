@@ -8,7 +8,6 @@ import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useApplicationStore } from '@shared/stores/application'
 import { convertToGraphQLId } from '@shared/graphql/utils'
-import type { TicketArticle } from '@shared/entities/ticket/types'
 import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
 import type {
   PageInfo,
@@ -158,7 +157,8 @@ articlesQuery.subscribeToMore<
   },
 }))
 
-const { ticket, liveUserList, ticketQuery } = useTicketInformation()
+const { ticket, liveUserList, ticketQuery, scrolledToBottom } =
+  useTicketInformation()
 const { isTicketEditable } = useTicketView(ticket)
 
 const isLoadingTicket = computed(() => {
@@ -183,9 +183,7 @@ const articles = computed(() => {
   if (totalCount > nodes.length && description) {
     nodes.unshift(description)
   }
-  return nodes
-    .filter((a): a is TicketArticle => a != null)
-    .sort((a, b) => toMs(a.createdAt) - toMs(b.createdAt))
+  return nodes.sort((a, b) => toMs(a.createdAt) - toMs(b.createdAt))
 })
 
 useHeader({
@@ -196,24 +194,34 @@ useHeader({
   }),
 })
 
-watch(
-  () => articles.value.length,
-  (length) => {
-    if (!length) return
+const scrollToBottom = () => {
+  const internalId = articles.value[articles.value.length - 1]?.internalId
+  if (!internalId) return false
 
-    requestAnimationFrame(() => {
-      const lastArticle = document.querySelector(
-        `#article-${articles.value[length - 1].internalId}`,
-      ) as HTMLElement | null
-      if (!lastArticle) return
-      window.scrollTo({
-        behavior: 'smooth',
-        top: lastArticle.offsetTop,
-      })
-    })
-  },
-  { immediate: true },
-)
+  const lastArticle = document.querySelector(
+    `#article-${internalId}`,
+  ) as HTMLElement | null
+
+  if (!lastArticle) return false
+
+  scrolledToBottom.value = true
+  window.scrollTo({
+    behavior: 'smooth',
+    top: lastArticle.offsetTop,
+  })
+  return true
+}
+
+if (!scrolledToBottom.value) {
+  const stopScrollWatch = watch(
+    () => articles.value.length,
+    () => {
+      const scrolled = scrollToBottom()
+      if (scrolled) stopScrollWatch()
+    },
+    { immediate: true, flush: 'post' },
+  )
+}
 
 const loadPreviousArticles = async () => {
   await articlesQuery.fetchMore({

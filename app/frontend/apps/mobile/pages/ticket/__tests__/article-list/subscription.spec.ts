@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { LastArrayElement } from 'type-fest'
 import type { TicketArticlesQuery } from '@shared/graphql/types'
-import { convertToGraphQLId } from '@shared/graphql/utils'
 import { nullableMock } from '@tests/support/utils'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { visitView } from '@tests/support/components/visitView'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { defaultArticles, mockTicketDetailViewGql } from '../mocks/detail-view'
+import { articleContent } from '../mocks/articles'
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -15,58 +14,6 @@ beforeEach(() => {
 
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
-
-const ticketDate = new Date(2022, 0, 30, 0, 0, 0, 0)
-
-const address = {
-  __typename: 'AddressesField' as const,
-  parsed: null,
-  raw: '',
-}
-
-type ArticleNode = LastArrayElement<
-  TicketArticlesQuery['articles']['edges']
->['node']
-
-const articleContent = (
-  id: number,
-  mockedArticleData: Partial<ArticleNode>,
-): ArticleNode => {
-  return {
-    __typename: 'TicketArticle',
-    id: convertToGraphQLId('TicketArticle', id),
-    internalId: id,
-    createdAt: ticketDate.toISOString(),
-    to: address,
-    replyTo: address,
-    cc: address,
-    from: address,
-    author: {
-      __typename: 'User',
-      id: 'fdsf214fse12d',
-      firstname: 'John',
-      lastname: 'Doe',
-      fullname: 'John Doe',
-      active: true,
-      image: null,
-      authorizations: [],
-    },
-    internal: false,
-    bodyWithUrls: '<p>default body</p>',
-    sender: {
-      __typename: 'TicketArticleSender',
-      name: 'Customer',
-    },
-    type: {
-      __typename: 'TicketArticleType',
-      name: 'article',
-    },
-    contentType: 'text/html',
-    attachmentsWithoutInline: [],
-    preferences: {},
-    ...mockedArticleData,
-  }
-}
 
 describe('ticket articles list with subscription', () => {
   it('shows a newly created article', async () => {
