@@ -23,9 +23,10 @@ import { useTicketView } from '@shared/entities/ticket/composables/useTicketView
 import type { TicketInformation } from '@mobile/entities/ticket/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
-import { isDialogOpened } from '@shared/composables/useDialog'
+import { getOpenedDialogs } from '@shared/composables/useDialog'
 import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
 import { useErrorHandler } from '@shared/errors/useErrorHandler'
+import { useCommonSelect } from '@mobile/components/CommonSelect/composable'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -226,13 +227,34 @@ const ticketEditSchemaData = reactive({
   currentArticleType,
 })
 
-const bannerClasses = computed(() => {
-  if (isDialogOpened() && !articleReplyDialog.isOpened.value) return 'hidden'
+const { isOpened: commonSelectOpened } = useCommonSelect()
 
-  if (route.name !== 'TicketDetailArticlesView') return null
+// show banner only in "articles list", "ticket information" and "create article" views
+const showSaveBanner = computed(() => {
+  const dialogs = getOpenedDialogs()
 
-  return articleReplyDialog.isOpened.value ? null : '-translate-y-12'
+  if (
+    commonSelectOpened.value ||
+    dialogs.size > 1 ||
+    (dialogs.size === 1 && !articleReplyDialog.isOpened.value)
+  )
+    return false
+
+  return canUpdateTicket.value && isDirty.value
 })
+
+const bannerClasses = computed(() => {
+  // move "save" button up, when there is "add reply" button
+  if (
+    route.name === 'TicketDetailArticlesView' &&
+    !articleReplyDialog.isOpened.value
+  )
+    return '-translate-y-12'
+
+  return null
+})
+
+const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
 </script>
 
 <template>
@@ -271,15 +293,16 @@ const bannerClasses = computed(() => {
   </Teleport>
   <Teleport to="body">
     <Transition
-      enter-from-class="translate-y-full"
+      :duration="bannerTransitionDuration"
+      enter-from-class="TransitionUnderScreen"
       enter-active-class="translate-y-0"
       enter-to-class="-translate-y-1/3"
       leave-from-class="-translate-y-1/3"
-      leave-active-class="translate-y-full"
-      leave-to-class="translate-y-full"
+      leave-active-class="TransitionUnderScreen"
+      leave-to-class="TransitionUnderScreen"
     >
       <div
-        v-if="canUpdateTicket && isDirty"
+        v-if="showSaveBanner"
         class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
         :class="bannerClasses"
       >
@@ -316,3 +339,9 @@ const bannerClasses = computed(() => {
     </Transition>
   </Teleport>
 </template>
+
+<style scoped>
+.TransitionUnderScreen {
+  transform: translateY(calc(100% + var(--safe-bottom)));
+}
+</style>

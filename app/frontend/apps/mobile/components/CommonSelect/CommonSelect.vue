@@ -8,9 +8,11 @@ import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import stopEvent from '@shared/utils/events'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
 import type { Ref } from 'vue'
-import { computed, nextTick, ref } from 'vue'
+import { onUnmounted, computed, nextTick, ref } from 'vue'
 import testFlags from '@shared/utils/testFlags'
 import CommonSelectItem from './CommonSelectItem.vue'
+import { useCommonSelect } from './composable'
+import type { CommonSelectInternalInstance } from './types'
 
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to
@@ -91,14 +93,22 @@ const closeDialog = () => {
   })
 }
 
-defineExpose({
+const exposedInstance: CommonSelectInternalInstance = {
   isOpen: computed(() => showDialog.value),
   openDialog,
   closeDialog,
   getFocusableOptions,
+}
+
+const { instances } = useCommonSelect()
+
+instances.value.add(exposedInstance)
+
+onUnmounted(() => {
+  instances.value.delete(exposedInstance)
 })
 
-useTrapTab(dialogElement)
+defineExpose(exposedInstance)
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
 useTraverseOptions(dialogElement, { direction: 'vertical' })
@@ -107,6 +117,7 @@ useTraverseOptions(dialogElement, { direction: 'vertical' })
 useFocusWhenTyping(dialogElement)
 
 onClickOutside(dialogElement, closeDialog)
+useTrapTab(dialogElement)
 onKeyDown(
   'Escape',
   (event) => {

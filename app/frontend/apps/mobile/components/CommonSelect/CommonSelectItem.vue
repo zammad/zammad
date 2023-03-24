@@ -75,6 +75,7 @@ const label = computed(() => {
         '!text-white': selected,
         'opacity-30': option.disabled,
       }"
+      decorative
       class="text-white/80 ltr:mr-[11px] rtl:ml-[11px]"
     />
     <span

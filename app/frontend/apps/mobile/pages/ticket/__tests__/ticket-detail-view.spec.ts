@@ -777,6 +777,82 @@ describe('ticket add/edit reply article', () => {
     vi.useRealTimers()
   })
 
+  it('save button is not shown when select field is opened', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('combobox', { name: 'Visibility' }))
+
+    expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('option', { name: 'Public' }))
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+  })
+
+  it('save button is not shown when non-reply dialog field is opened', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Done' }))
+
+    expect(view.queryByText('You have unsaved changes.')).toBeInTheDocument()
+
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket actions' }),
+    )
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Ticket actions' }),
+    )
+
+    expect(
+      view.queryByText('You have unsaved changes.'),
+    ).not.toBeInTheDocument()
+
+    await view.events.click(view.getByText('Change customer'))
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Change customer' }),
+    )
+
+    expect(
+      view.queryByText('You have unsaved changes.'),
+    ).not.toBeInTheDocument()
+  })
+
   it('add reply (first time) should hold the form state after save button with an invalid state is used', async () => {
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
       mockFrontendObjectAttributes: true,
