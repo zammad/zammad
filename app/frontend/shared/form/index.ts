@@ -71,6 +71,9 @@ export const buildFormKitPluginConfig = (
       classes: createTailwindClasses(appSpecificTheme),
       ...config,
     },
+    props: {
+      dirtyBehavior: 'compare',
+    },
   }
 }
 

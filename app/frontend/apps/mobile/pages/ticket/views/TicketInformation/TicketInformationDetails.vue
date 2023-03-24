@@ -172,9 +172,10 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
     v-if="canManageSubscription"
     :header-label="__('Subscribers')"
   >
+    <!-- Currently only modelValue is working: https://github.com/formkit/formkit/issues/629-->
     <FormKit
       type="toggle"
-      :model-value="isSubscribed"
+      :modelValue="isSubscribed"
       :label="__('Get notified')"
       :variants="variants"
       :disabled="isSubscriptionLoading"

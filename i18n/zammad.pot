@@ -792,6 +792,10 @@ msgstr ""
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Add all values"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
 msgstr ""
@@ -828,6 +832,10 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Add selected values"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -1929,6 +1937,10 @@ msgstr ""
 msgid "Change customer"
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Change date"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
@@ -2092,6 +2104,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Choose date"
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
@@ -7177,6 +7193,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr ""
 
@@ -8254,6 +8271,7 @@ msgid "Preview owner tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Previous"
 msgstr ""
 
@@ -8535,8 +8553,16 @@ msgstr ""
 msgid "Remove all"
 msgstr ""
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Remove all values"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Remove selected values"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -10561,6 +10587,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
+msgstr ""
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "The selected date is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
