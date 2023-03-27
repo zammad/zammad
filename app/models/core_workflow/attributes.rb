@@ -102,9 +102,25 @@ class CoreWorkflow::Attributes
   end
 
   def object_elements
-    @object_elements ||= ObjectManager::Object.new(@payload['class_name']).attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
+    @object_elements ||= begin
+      object_elements_class + object_elements_ticket_create_middle
+    end
+  end
+
+  def object_elements_class
+    ObjectManager::Object.new(@payload['class_name']).attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
       result << element.data.merge(screens: element.screens)
     end
+  end
+
+  # for ticket create add the ticket article body so the field can be switched properly between set/unset readonly.
+  # https://github.com/zammad/zammad/issues/4540
+  def object_elements_ticket_create_middle
+    return [] if @payload['class_name'] != 'Ticket' || @payload['screen'] != 'create_middle'
+
+    ObjectManager::Object.new('TicketArticle').attributes(@user, saved_only, data_only: false).each_with_object([]) do |element, result|
+      result << element.data.merge(screens: element.screens)
+    end.select { |o| o[:name] == 'body' }
   end
 
   def object_elements_hash

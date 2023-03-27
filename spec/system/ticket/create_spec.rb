@@ -1646,8 +1646,9 @@ RSpec.describe 'Ticket Create', type: :system do
   describe 'Support title and body in core workflow actions #4519', authenticated_as: :authenticate do
     let(:workflow) do
       create(:core_workflow,
-             object:  'Ticket',
-             perform: { 'ticket.title' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => 'title 123', 'set_readonly' => true }, 'ticket.body' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => '<b>text 123</b>', 'set_readonly' => true } })
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => [Ticket::Priority.find_by(name: '2 normal').id.to_s] } },
+             perform:            { 'ticket.title' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => 'title 123', 'set_readonly' => true }, 'ticket.body' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => '<b>text 123</b>', 'set_readonly' => true } })
     end
 
     context 'when agent' do
@@ -1665,6 +1666,16 @@ RSpec.describe 'Ticket Create', type: :system do
         expect(page).to have_css('div[data-attribute-name=body].is-readonly')
         expect(page.find_field('Title').value).to eq('title 123')
         expect(page.find('div[data-name=body]')['innerHTML']).to eq('<b>text 123</b>')
+
+        # unset readonly (https://github.com/zammad/zammad/issues/4540)
+        select '1 low', from: 'priority_id'
+        expect(page).to have_no_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_no_css('div[data-attribute-name=body].is-readonly')
+
+        # reset readonly
+        select '2 normal', from: 'priority_id'
+        expect(page).to have_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_css('div[data-attribute-name=body].is-readonly')
       end
     end
 
