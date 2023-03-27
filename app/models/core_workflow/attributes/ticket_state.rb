@@ -15,6 +15,10 @@ class CoreWorkflow::Attributes::TicketState < CoreWorkflow::Attributes::Base
     end
   end
 
+  def default_value
+    @default_value ||= Ticket::State.find_by(default_create: true).try(:id)&.to_s
+  end
+
   def state_type
     return if @attributes.saved.id.blank?
 

@@ -1901,4 +1901,26 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
       end
     end
   end
+
+  describe 'Wrong core workflow execution because of missing relation defaults #4541' do
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'is',
+                 value:    [ Ticket::Priority.find_by(name: '1 low').id.to_s ]
+               },
+             })
+    end
+
+    before do
+      Ticket::Priority.find_by(name: '2 normal').update(note: 'Test')
+      workflow
+    end
+
+    it 'does not execute the core workflow because the default priority is 2 normal and not 1 low' do
+      expect(result[:matched_workflows]).not_to include(workflow.id)
+    end
+  end
 end

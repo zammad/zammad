@@ -219,6 +219,13 @@ class CoreWorkflow::Attributes
     @options_relation[key].values
   end
 
+  def options_relation_default(attribute)
+    key = "#{attribute[:relation]}_#{attribute[:name]}"
+    @options_relation ||= {}
+    @options_relation[key] ||= "CoreWorkflow::Attributes::#{attribute[:relation]}".constantize.new(attributes: self, attribute: attribute)
+    @options_relation[key].try(:default_value)
+  end
+
   def attribute_filter?(attribute)
     screen_value(attribute, 'filter').present?
   end
