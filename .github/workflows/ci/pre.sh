@@ -12,3 +12,4 @@ bundle install -j "$(nproc)"
 yarn install
 yarn cypress:install
 bundle exec ruby .gitlab/configure_environment.rb
+bundle exec rake zammad:db:init

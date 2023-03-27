@@ -1,7 +1,10 @@
 name: CI
 
 on:
-  pull_request
+  pull_request:
+  schedule:
+    # Run every on Friday to ensure everything works as expected.
+    - cron:  '0 6 * * 5'
 
 jobs:
   CI:
@@ -14,9 +17,13 @@ jobs:
         env:
           POSTGRES_USER: zammad
           POSTGRES_PASSWORD: zammad
+      redis:
+        # Use Redis 5 which is shipped in Debian 10.
+        image: redis:5
     env:
       RAILS_ENV: test
       Z_LOCALES: "en-us:de-de"
+      REDIS_URL: redis://redis:6379
       # Temporary switch to enable the mobile front end for testing.
       ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
       # Compile assets only once.
