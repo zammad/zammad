@@ -7,13 +7,14 @@ import usePagination from '@mobile/composables/usePagination'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import TicketItem from '@mobile/components/Ticket/TicketItem.vue'
 import { useInfiniteScroll } from '@vueuse/core'
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
 import { edgesToArray } from '@shared/utils/helpers'
 import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOverview.api'
 
 interface Props {
   overviewId: string
+  overviewTicketCount?: number
   maxCount: number
   orderBy: string
   hiddenColumns: string[]
@@ -26,17 +27,19 @@ const emit = defineEmits<{
 }>()
 const TICKETS_COUNT = 10
 
+const ticketsQueryVariables = computed(() => {
+  return {
+    pageSize: TICKETS_COUNT,
+    overviewId: props.overviewId,
+    orderBy: props.orderBy,
+    orderDirection: props.orderDirection,
+    showUpdatedBy: !props.hiddenColumns.includes('updated_by'),
+    showPriority: !props.hiddenColumns.includes('priority'),
+  }
+})
+
 const ticketsQuery = new QueryHandler(
-  useTicketsByOverviewQuery(() => {
-    return {
-      pageSize: TICKETS_COUNT,
-      overviewId: props.overviewId,
-      orderBy: props.orderBy,
-      orderDirection: props.orderDirection,
-      showUpdatedBy: !props.hiddenColumns.includes('updated_by'),
-      showPriority: !props.hiddenColumns.includes('priority'),
-    }
-  }),
+  useTicketsByOverviewQuery(ticketsQueryVariables),
 )
 
 const ticketsResult = ticketsQuery.result()
@@ -54,7 +57,24 @@ const totalCount = computed(
   () => ticketsResult.value?.ticketsByOverview.totalCount || 0,
 )
 
-const pagination = usePagination(ticketsQuery, 'ticketsByOverview')
+const pagination = usePagination(
+  ticketsQuery,
+  'ticketsByOverview',
+  TICKETS_COUNT,
+)
+
+// Refetch tickets, when the ticket count for the current overview changed.
+watch(
+  () => props.overviewTicketCount,
+  (overviewTicketCount) => {
+    if (overviewTicketCount !== totalCount.value) {
+      ticketsQuery.refetch({
+        ...ticketsQueryVariables.value,
+        pageSize: TICKETS_COUNT * pagination.currentPage,
+      })
+    }
+  },
+)
 
 const canLoadMore = computed(() => {
   return (

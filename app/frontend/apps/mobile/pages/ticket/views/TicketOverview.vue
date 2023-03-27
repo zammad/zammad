@@ -211,6 +211,7 @@ const showRefetch = ref(false)
         <TicketList
           v-if="selectedOverview && orderBy && orderDirection"
           :overview-id="selectedOverview.id"
+          :overview-ticket-count="selectedOverview.ticketCount"
           :order-by="orderBy"
           :order-direction="orderDirection"
           :max-count="

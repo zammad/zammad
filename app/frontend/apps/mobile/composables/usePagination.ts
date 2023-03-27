@@ -12,7 +12,11 @@ import type {
 export default function usePagination<
   TQueryResult extends OperationQueryResult = OperationQueryResult,
   TQueryVariables extends OperationVariables = OperationVariables,
->(query: QueryHandler<TQueryResult, TQueryVariables>, resultKey: string) {
+>(
+  query: QueryHandler<TQueryResult, TQueryVariables>,
+  resultKey: string,
+  pageSize: number,
+) {
   const pageInfo = computed(() => {
     const result: OperationQueryResult = query.result().value || {}
 
@@ -28,21 +32,25 @@ export default function usePagination<
   })
 
   const loadingNewPage = ref(false)
+  const currentPage = ref(1)
 
   return reactive({
     pageInfo: readonly(pageInfo),
     hasNextPage: readonly(hasNextPage),
     hasPreviousPage: readonly(hasPreviousPage),
     loadingNewPage: readonly(loadingNewPage),
+    currentPage: readonly(currentPage),
     async fetchPreviousPage() {
       try {
         loadingNewPage.value = true
         await query.fetchMore({
           variables: {
+            pageSize,
             cursor: pageInfo.value?.startCursor,
           } as Partial<TQueryVariables & PaginationVariables>,
         })
       } finally {
+        currentPage.value -= 1
         loadingNewPage.value = false
       }
     },
@@ -51,10 +59,12 @@ export default function usePagination<
         loadingNewPage.value = true
         await query.fetchMore({
           variables: {
+            pageSize,
             cursor: pageInfo.value?.endCursor,
           } as Partial<TQueryVariables & PaginationVariables>,
         })
       } finally {
+        currentPage.value += 1
         loadingNewPage.value = false
       }
     },
