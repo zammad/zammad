@@ -120,7 +120,7 @@ RSpec.describe 'Manage > Templates', type: :system do
                })
       end
 
-      context 'with static operator' do
+      context 'with static operator', time_zone: 'Europe/London' do
         let(:date) { 1.day.from_now }
         let(:pending_time) do
           {
