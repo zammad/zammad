@@ -2,6 +2,9 @@ name: CI
 
 on:
   pull_request
+  schedule:
+    # Run every on Friday to ensure everything works as expected.
+    - cron:  '0 6 * * 5'
 
 jobs:
   CI:
