@@ -31,13 +31,17 @@ class Store::Provider::S3
   end
 
   def self.client
-    Aws::S3::Client.new(
-      region:      Setting.get('storage_provider_s3_region'),
-      credentials: Aws::Credentials.new(
+    options = {
+      force_path_style: Setting.get('storage_provider_s3_path_style_access'),
+      region:           Setting.get('storage_provider_s3_region'),
+      credentials:      Aws::Credentials.new(
         Setting.get('storage_provider_s3_access_key'),
         Setting.get('storage_provider_s3_secret_key')
       )
-    )
+    }
+    endpoint = Setting.get('storage_provider_s3_endpoint')
+    options[:endpoint] = endpoint if !endpoint.empty?
+    Aws::S3::Client.new(options)
   end
 
   def self.create_bucket

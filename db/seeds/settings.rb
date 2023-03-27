@@ -442,6 +442,60 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Storage S3 endpoint'),
+  name:        'storage_provider_s3_endpoint',
+  area:        'System::Storage',
+  description: __('S3 endpoint url'),
+  options:     {
+    form: [
+      {
+        display:     '',
+        null:        true,
+        name:        'storage_provider_s3_endpoint',
+        tag:         'input',
+        placeholder: '',
+      },
+    ],
+  },
+  state:       '',
+  preferences: {
+    online_service_disable: true,
+    prio:                   5,
+    permission:             ['admin.system'],
+  },
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
+  title:       __('Storage S3 path style access'),
+  name:        'storage_provider_s3_path_style_access',
+  area:        'System::Storage',
+  description: __('S3 path style access instead of virtual host'),
+  options:     {
+    form: [
+      {
+        display:   '',
+        null:      false,
+        name:      'storage_provider_s3_path_style_access',
+        tag:       'boolean',
+        translate: true,
+        options:   {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       '',
+  preferences: {
+    online_service_disable: true,
+    prio:                   6,
+    permission:             ['admin.system'],
+  },
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
   title:       __('Image Service'),
   name:        'image_backend',
   area:        'System::Services',
