@@ -14,6 +14,9 @@ jobs:
         env:
           POSTGRES_USER: zammad
           POSTGRES_PASSWORD: zammad
+      redis:
+        # Use Redis 5 which is shipped in Debian 10.
+        image: redis:5
     env:
       RAILS_ENV: test
       Z_LOCALES: "en-us:de-de"
