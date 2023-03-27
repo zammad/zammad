@@ -20,6 +20,7 @@ jobs:
     env:
       RAILS_ENV: test
       Z_LOCALES: "en-us:de-de"
+      REDIS_URL: redis://redis:6379
       # Temporary switch to enable the mobile front end for testing.
       ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
       # Compile assets only once.
