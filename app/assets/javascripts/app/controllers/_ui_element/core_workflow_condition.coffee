@@ -31,7 +31,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       session:
         name: __('Session')
         model: 'User'
-        model_show: ['Ticket']
+        model_show: ['Ticket', 'Group', 'User', 'Organization']
 
     showCustomModules = @coreWorkflowCustomModulesActive()
     if showCustomModules
