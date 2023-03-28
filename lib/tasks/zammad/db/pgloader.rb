@@ -30,7 +30,10 @@ module Tasks
             AFTER LOAD DO
             #{public_links.concat(object_manager_attributes).join(",\n")}
 
-            WITH BATCH CONCURRENCY = 1;
+            WITH BATCH CONCURRENCY = 1
+            SET timezone = 'UTC'
+            SET client_timezone TO '00:00'
+            ;
           PGLOADER
         end
 
