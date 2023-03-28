@@ -2523,7 +2523,7 @@ msgstr ""
 msgid "Continue to desktop"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Continue to mobile"
 msgstr ""
@@ -6785,10 +6785,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/mobile.coffee
-msgid "Mobile frontend is disabled."
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco

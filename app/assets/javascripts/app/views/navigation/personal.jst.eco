@@ -19,7 +19,7 @@
           <% end %>
           <li<% if item.toggle: %> class="dropdown-menu-item dropdown-menu-item--toggle"<% end %>>
             <% if item.target: %>
-            <a href="<%= item.target %>" class="horizontal center">
+            <a href="<%= item.target %>" data-key="<%- item.key %>" class="horizontal center <% if item.onclick: %>js-onclick<% end %>">
             <% else: %>
             <div class="horizontal center">
             <% end %>
