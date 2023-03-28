@@ -274,6 +274,11 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
       @saveParams(item, params, attribute)
     )
 
+    # change pre-condition selector
+    item.off('change.application_selector', '.js-preCondition select').on('change.application_selector', '.js-preCondition select', =>
+      @saveParams(item, params, attribute)
+    )
+
     # change attribute value
     item.off('change.application_selector keyup.application_selector', '.js-value .form-control').on('change.application_selector keyup.application_selector', '.js-value .form-control', =>
       @saveParams(item, params, attribute)
