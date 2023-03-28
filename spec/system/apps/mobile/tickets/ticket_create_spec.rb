@@ -390,6 +390,30 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     end
   end
 
+  context 'when using suggestions' do
+    let(:text_option) { create(:text_module, name: 'test', content: "Hello, \#{ticket.customer.firstname}!") }
+
+    it 'text suggestion parses correctly' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
+        next_step
+        next_step
+
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+        next_step
+
+        editor = find_editor('Text')
+        # only label is rendered as text
+        expect(editor).to have_text_value('', exact: true)
+
+        editor.type('::test')
+        find('[role="option"]', text: text_option.name).click
+
+        expect(editor).to have_text_value("Hello, #{customer.firstname}!")
+      end
+    end
+  end
+
   describe 'Core Workflow' do
     include_examples 'mobile app: core workflow' do
       let(:object_name)             { 'Ticket' }

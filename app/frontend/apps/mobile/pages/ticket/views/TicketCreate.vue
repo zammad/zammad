@@ -226,6 +226,9 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
           object: EnumObjectManagerObjects.TicketArticle,
           props: {
             meta: {
+              mentionText: {
+                customerNodeName: 'customer_id',
+              },
               mentionUser: {
                 groupNodeName: 'group_id',
               },

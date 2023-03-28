@@ -305,6 +305,32 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         let(:content_type) { 'text/plain' }
       end
     end
+
+    context 'when using suggestions' do
+      let(:text_option) do
+        content = "Hello, \#{ticket.customer.firstname}!"
+        content += " Ticket \#{ticket.title} has group \#{ticket.group.name}."
+        create(
+          :text_module,
+          name:    'test',
+          content: content
+        )
+      end
+
+      it 'text suggestion parses correctly' do
+        create(:ticket_article, ticket: ticket)
+
+        open_article_dialog
+
+        find_editor('Text').type('::test')
+        find('[role="option"]', text: text_option.name).click
+
+        body = "Hello, #{ticket.customer.firstname}!"
+        body += " Ticket #{ticket.title} has group #{ticket.group.name}."
+        expect(find_editor('Text')).to have_text(body)
+      end
+    end
+
     # TODO: test security settings
   end
 
