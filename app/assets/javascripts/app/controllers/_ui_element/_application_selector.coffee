@@ -258,6 +258,11 @@ class App.UiElement.ApplicationSelector
       @saveParams(item)
     )
 
+    # change pre-condition selector
+    item.off('change.application_selector', '.js-preCondition select').on('change.application_selector', '.js-preCondition select', =>
+      @saveParams(item)
+    )
+
     # change attribute value
     item.off('change.application_selector keyup.application_selector', '.js-value .form-control').on('change.application_selector keyup.application_selector', '.js-value .form-control', =>
       @saveParams(item)
