@@ -542,6 +542,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :endpoint,                   :string, limit: 300,  null: false
       t.column :signature_token,            :string, limit: 200,  null: true
       t.column :ssl_verify,                 :boolean,             null: false, default: true
+      t.column :basic_auth_username,        :string, limit: 250,  null: true
+      t.column :basic_auth_password,        :string, limit: 250,  null: true
       t.column :note,                       :string, limit: 500,  null: true
       t.column :active,                     :boolean,             null: false, default: true
       t.column :updated_by_id,              :integer,             null: false

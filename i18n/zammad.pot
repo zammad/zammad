@@ -5303,6 +5303,14 @@ msgstr ""
 msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "HTTP Basic Authentication Password"
+msgstr ""
+
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "HTTP Basic Authentication Username"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
 msgstr ""

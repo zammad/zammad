@@ -107,6 +107,26 @@ RSpec.describe TriggerWebhookJob, type: :job do
       end
     end
 
+    context 'with HTTP BasicAuth configured' do
+      let(:webhook) { create(:webhook, endpoint: endpoint, basic_auth_username: 'user', basic_auth_password: 'passw0rd') }
+
+      it 'generates a request with Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| req.headers['Authorization'] == "Basic #{Base64.strict_encode64('user:passw0rd')}" }
+      end
+    end
+
+    context 'without HTTP BasicAuth configured' do
+      let(:webhook)  { create(:webhook, endpoint: endpoint) }
+
+      it 'generates a request without Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| !req.headers.key?('Authorization') }
+      end
+    end
+
     context 'when response is not JSON' do
 
       let(:response_body) { 'Thanks!' }

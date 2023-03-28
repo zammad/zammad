@@ -83,6 +83,8 @@ class TriggerWebhookJob < ApplicationJob
         headers:          headers,
         signature_token:  webhook.signature_token,
         verify_ssl:       webhook.ssl_verify,
+        user:             webhook.basic_auth_username,
+        password:         webhook.basic_auth_password,
         log:              {
           facility: 'webhook',
         },
