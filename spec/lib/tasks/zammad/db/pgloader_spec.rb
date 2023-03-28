@@ -15,7 +15,10 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         ALTER SCHEMA '#{config['database']}' RENAME TO 'public'
 
         #{command_file_after}
-        WITH BATCH CONCURRENCY = 1;
+        WITH BATCH CONCURRENCY = 1
+        SET timezone = 'UTC'
+        SET client_timezone TO '00:00'
+        ;
       PGLOADER
     end
 
