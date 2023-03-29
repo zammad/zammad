@@ -8,6 +8,15 @@ GIT
       nokogiri
       nori
 
+GIT
+  remote: https://github.com/zammad-deps/omniauth-weibo-oauth2
+  revision: 06803ef97f822ede854322587db8049cc67dcfa6
+  branch: unpin-dependencies
+  specs:
+    omniauth-weibo-oauth2 (0.5.2)
+      omniauth
+      omniauth-oauth2
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -358,9 +367,6 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    omniauth-weibo-oauth2 (0.5.2)
-      omniauth (~> 1.5)
-      omniauth-oauth2 (>= 1.4.0)
     openssl (3.1.0)
     overcommit (0.60.0)
       childprocess (>= 0.6.3, < 5)
@@ -685,7 +691,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth-saml
   omniauth-twitter
-  omniauth-weibo-oauth2
+  omniauth-weibo-oauth2!
   openssl
   overcommit
   pg (~> 1.2.0)
