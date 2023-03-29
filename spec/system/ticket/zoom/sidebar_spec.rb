@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket zoom > Sidebar', authenticated_as: :user, type: :system do
+RSpec.describe 'Ticket zoom > Sidebar', authenticated_as: :user, time_zone: 'Europe/London', type: :system do
   let(:ticket) do
     ticket = create(:ticket, customer: customer, group: group)
 
