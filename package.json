@@ -125,7 +125,7 @@
     "graphql": "^16.6.0",
     "graphql-ruby-client": "^1.11.7",
     "graphql-tag": "^2.12.6",
-    "linkify-string": "^4.1.0",
+    "linkify-string": "^4.1.1",
     "linkifyjs": "^4.1.0",
     "lodash-es": "^4.17.21",
     "loglevel": "^1.8.1",
