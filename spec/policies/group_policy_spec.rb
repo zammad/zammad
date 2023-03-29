@@ -30,10 +30,19 @@ describe GroupPolicy do
   context 'when user is customer' do
     let(:user) { create(:customer) }
 
+    shared_examples 'restricts fields' do |method|
+      it "restricts fields for #{method}", :aggregate_failures do
+        expect(subject.public_send(method)).to permit_fields(%i[id name follow_up_possible reopen_time_in_days active])
+        expect(subject.public_send(method)).to forbid_fields(%i[email_address signature note])
+      end
+    end
+
     context 'when has ticket in group' do
       before { create(:ticket, group: record, customer: user) }
 
       it { is_expected.to permit_actions(:show) }
+
+      include_examples 'restricts fields', :show?
     end
 
     context 'when group is in customer_ticket_create_group_ids' do
@@ -42,6 +51,8 @@ describe GroupPolicy do
       end
 
       it { is_expected.to permit_actions(:show) }
+
+      include_examples 'restricts fields', :show?
     end
 
     context 'when customer_ticket_create_group_ids is empty and thus all groups are permitted' do
@@ -50,6 +61,8 @@ describe GroupPolicy do
       end
 
       it { is_expected.to permit_actions(:show) }
+
+      include_examples 'restricts fields', :show?
     end
 
     context 'when group is not in customer_ticket_create_group_ids' do

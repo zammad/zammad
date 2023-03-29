@@ -7,7 +7,7 @@ class GroupPolicy < ApplicationPolicy
     return true if user.group_access?(record, 'read')
 
     if user.permissions?('ticket.customer')
-      return group_is_customer_group? || group_has_customer_tickets?
+      return group_is_customer_group? || group_has_customer_tickets? ? customer_field_scope : false
     end
 
     false
@@ -29,5 +29,9 @@ class GroupPolicy < ApplicationPolicy
   def group_has_customer_tickets?
     # Check if user is customer for any tickets in this group.
     Ticket.exists?(customer: user, group: record)
+  end
+
+  def customer_field_scope
+    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(allow: %w[id name follow_up_possible reopen_time_in_days active])
   end
 end
