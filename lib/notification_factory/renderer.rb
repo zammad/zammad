@@ -13,8 +13,9 @@ examples how to use
       locale: 'de-de',
       timezone: 'America/Port-au-Prince',
       template: 'some template <b>#{ticket.title}</b> {config.fqdn}',
-      escape: false,
-      trusted: false, # Allow ERB tags in the template?
+      escape: false,      # Perform HTML encoding on replaced values
+      url_encode: false, # Perform URI encoding on replaced values
+      trusted: false,     # Allow ERB tags in the template?
     ).render
 
     message_body = NotificationFactory::Renderer.new(
@@ -28,12 +29,13 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, trusted: false)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default_sanitized')
-    @template = NotificationFactory::Template.new(template, escape, trusted)
+    @template = NotificationFactory::Template.new(template, escape || url_encode, trusted)
     @escape = escape
+    @url_encode = url_encode
   end
 
   def render
@@ -191,7 +193,9 @@ examples how to use
   def escaping(key, escape)
     return escaping(key.join(', '), escape) if key.respond_to?(:join)
     return key if escape == false
-    return key if escape.nil? && !@escape
+    return key if escape.nil? && !@escape && !@url_encode
+
+    return ERB::Util.url_encode(key) if @url_encode
 
     h key
   end

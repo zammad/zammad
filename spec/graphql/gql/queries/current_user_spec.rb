@@ -86,10 +86,12 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
           object_attribute
           create(:organization)
         end
+        # Space in fullname must be encoded as %20.
+        let(:encoded_fullname) { ERB::Util.url_encode(agent.fullname) }
 
-        it 'has rendered objectAttributeValue data for User' do
+        it 'has rendered and URL encoded objectAttributeValue data for User' do
           oas = gql.result.data['objectAttributeValues']
-          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => "http://test?#{agent.fullname}")
+          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => "http://test?#{encoded_fullname}")
         end
       end
 
