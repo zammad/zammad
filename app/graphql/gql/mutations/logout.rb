@@ -19,7 +19,13 @@ module Gql::Mutations
 
     def resolve(...)
       # Special handling for SAML logout (we need to redirect to the ISP).
-      return saml_destroy if saml_session?
+      if saml_session?
+        begin
+          return saml_destroy
+        rescue => e
+          Rails.logger.error "SAML SLO failed: #{e.message}"
+        end
+      end
 
       context[:controller].reset_session
       context[:current_user] = nil
@@ -33,7 +39,7 @@ module Gql::Mutations
     end
 
     def saml_session?
-      session['saml_uid'] || session['saml_session_index']
+      (session['saml_uid'] || session['saml_session_index']) && SamlDatabase.setup.fetch('idp_slo_service_url', nil)
     end
 
     def saml_logout_url

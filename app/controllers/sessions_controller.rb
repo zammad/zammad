@@ -54,8 +54,12 @@ class SessionsController < ApplicationController
       ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
-    if session['saml_uid'] || session['saml_session_index']
-      return saml_destroy
+    if (session['saml_uid'] || session['saml_session_index']) && SamlDatabase.setup.fetch('idp_slo_service_url', nil)
+      begin
+        return saml_destroy
+      rescue => e
+        Rails.logger.error "SAML SLO failed: #{e.message}"
+      end
     end
 
     reset_session
