@@ -24,25 +24,26 @@
 
   ol,
   ul {
-    @apply ltr:pl-2 rtl:pr-2;
+    @apply pb-2;
 
+    padding-inline-start: theme('spacing.2');
     list-style-position: inside;
 
     p {
-      display: inline-block;
+      display: inline;
     }
   }
 
   h1 {
-    @apply mb-2 mt-1 text-2xl font-bold;
+    @apply mt-2 mb-1 text-2xl font-bold;
   }
 
   h2 {
-    @apply my-1 text-xl font-bold;
+    @apply mt-2 mb-1 text-xl font-bold;
   }
 
   h3 {
-    @apply my-1 text-lg font-bold;
+    @apply mt-2 mb-1 text-lg font-bold;
   }
 
   a {

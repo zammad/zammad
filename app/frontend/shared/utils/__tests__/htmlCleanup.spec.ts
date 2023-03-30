@@ -1,4 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
+/* eslint-disable no-irregular-whitespace */
 
 import { describe, it, assert } from 'vitest'
 import { htmlCleanup } from '../htmlCleanup'
@@ -116,9 +117,8 @@ describe('htmlCleanup utility', () => {
   it('clears external tags', () => {
     const source =
       '<div><div><label for="Ticket_888344_group_id">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for="Ticket_888344_owner_id">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href="http://localhost:3000/assets/images/icons.svg#icon-arrow-down"></use></svg></div><span></span><span></span></div></div><div><div>    <label for="Ticket_888344_state_id">Status <span>*</span></label></div></div></div>\n'
-    // should = "<div>test 123</div>"
     const should =
-      '<div><div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div></div>\n'
+      '<div><div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div></div>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -127,7 +127,7 @@ describe('htmlCleanup utility', () => {
     const source =
       '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n<html>\n<head>\n  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n  <title></title>\n  <meta name="generator" content="LibreOffice 4.4.7.2 (MacOSX)"/>\n  <style type="text/css">\n    @page { margin: 0.79in }\n    p { margin-bottom: 0.1in; line-height: 120% }\n    a:link { so-language: zxx }\n  </style>\n</head>\n<body lang="en-US" dir="ltr">\n<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%"><br/>\n\n</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n</body>\n</html>'
     const should =
-      '\n\n\n  \n  \n  \n  \n\n\n<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">\n\n</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p>\n<p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n\n'
+      '<p align="center" style="margin-bottom: 0in; line-height: 100%">1.\nGehe a<b>uf </b><b>https://www.pfe</b>rdiathek.ge</p><p align="center" style="margin-bottom: 0in; line-height: 100%"></p><p align="center" style="margin-bottom: 0in; line-height: 100%">2.\nMel<font color="#800000">de Dich mit folgende</font> Zugangsdaten an:</p><p align="center" style="margin-bottom: 0in; line-height: 100%">Benutzer:\nme@xxx.net</p><p align="center" style="margin-bottom: 0in; line-height: 100%">Passwort:\nxxx.</p>\n'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })
@@ -137,6 +137,55 @@ describe('htmlCleanup utility', () => {
       '<table bgcolor="green" aaa="1"><thead><tr><th colspan="2" abc="a">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>'
     const should =
       '<table bgcolor="green" aaa="1"><thead><tr><th colspan="2" abc="a">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>'
+    const result = htmlCleanup(source)
+    assert.equal(result, should, source)
+  })
+
+  it('clears lists and new lines', () => {
+    const source = `<div>Wir führen eine (Produktiv-) Freshdesk Migratione für hosted Kunden kostenfrei durch.</div><div><br></div><div>
+<h3>Ablauf der Migration:</h3>
+<div><ul>
+<li>Abstimmung zum Projektablauf und Zeitplan</li>
+<li>Produktivmigration zum gewünschten Zeitpunkt. Dabei werden folgende Attribute übertragen:<br><ul>
+<li>Companys</li>
+<li>User (Agenten+Kontakte)</li>
+<li>Gruppen</li>
+<li>Tickets (inkl. aller Artikel und Anhänge)</li>
+<li>Individuelle Felder (User, Ticket, Company)</li>
+<li>Time-Accounting der Tickets (sofern im Freshdesk-Plan enthalten)</li>
+</ul>
+</li>
+<li>Nach erfolgreicher Migration ist direkt die Anmeldung durch den hinterlegten User möglich<br>
+</li>
+<li>Passwörter von anderen Usern können nicht mit übergeben werden, daher müssen sich weitere User über Standard Authentifizierung, wie z.B. der Passwort-zurücksetzen Funktion am System anmelden</li>
+<li>Zum gewünschten Zeitpunkt werden die Postfächer aktiviert (durch uns)</li>
+<li>Manuelle Zuweisung des Postfaches (durch den Kunden)</li>
+</ul></div>
+</div><h3>Weiteres Vorgehen:</h3><div>Während der Migration kommt es zu einer Downtime, in der keine Tickets erstellt werden können. Die Downtime kann vorab abgeschätzt werden. Dafür brauchen wir folgende Informationen:<br><ul>
+<li>Name des bisherigen Freshdesk Plans (davon ist die Anzahl der Tickets abhängig, die über die API abgefragt werden können)</li>
+<li>Ticketanzahl gesamt</li>
+</ul>
+<div>Außerdem benötigen wir:</div>
+</div><div><ul>
+<li>Email-Adresse und den API-Token eines Benutzers, der Zugriff auf alle relevanten Tickets hat</li>
+<li>Name der Zammad hosted Instanz</li>
+<li>gewünschter Zeitpunkt der Produktivmigration</li>
+<li>gewünschter Zeitpunkt für die Aktivierung des Zammad-Postfaches</li>
+</ul></div><div>Sobald wir alle Informationen haben, werden wir Ihnen die Downtime zukommen lassen und danach mit dem Kunden alle weiteren Termine abstimmen.<br>
+</div><div><br></div><h3>zusätzliche Testmigration?</h3><div>Möchte der Kunde auf Nummer Sicher gehen und eine Testmigration durchführen, damit er genügend Zeit hat sich mit dem Zammad System und den dazugehörigen Einstellungen vertraut machen? Das ist kein Problem! Über den kostenfreien Migrationsservice in Form der oben beschriebenen Produktiv-Migration hinaus, bieten wir eine zusätzliche Testmigration für 1.450€ an. Dieses Migrationspaket beinhaltet eine zusätzliche Testmigration sowie eventuelle Anpassungswünsche (vgl. Checkliste OTRS Migration). Je nachdem, ob sich weitere Anpassungswünsche aus der Checkliste ergeben, können die Kosten steigen.</div>`
+    const should =
+      '<div>Wir führen eine (Produktiv-) Freshdesk Migratione für hosted Kunden&nbsp;kostenfrei&nbsp;durch.</div><p></p><div><h3>Ablauf der Migration:</h3><div><ul><li>Abstimmung zum Projektablauf und Zeitplan</li><li>Produktivmigration zum gewünschten Zeitpunkt. Dabei werden folgende Attribute übertragen:<ul><li>Companys</li><li>User (Agenten+Kontakte)</li><li>Gruppen</li><li>Tickets (inkl. aller Artikel und Anhänge)</li><li>Individuelle Felder (User, Ticket, Company)</li><li>Time-Accounting der Tickets (sofern im Freshdesk-Plan enthalten)</li></ul></li><li>Nach erfolgreicher Migration ist direkt die Anmeldung durch den hinterlegten User möglich</li><li>Passwörter von anderen Usern können nicht mit übergeben werden, daher müssen sich weitere User über Standard Authentifizierung, wie z.B. der Passwort-zurücksetzen Funktion am System anmelden</li><li>Zum gewünschten Zeitpunkt werden die Postfächer aktiviert (durch uns)</li><li>Manuelle Zuweisung des Postfaches (durch den Kunden)</li></ul></div></div><h3>Weiteres Vorgehen:</h3><div>Während der Migration kommt es zu einer Downtime, in der keine Tickets erstellt werden können. Die Downtime kann vorab abgeschätzt werden. Dafür brauchen wir folgende Informationen:<ul><li>Name des bisherigen Freshdesk Plans (davon ist die Anzahl der Tickets abhängig, die über die API abgefragt werden können)</li><li>Ticketanzahl gesamt</li></ul><div>Außerdem benötigen wir:</div></div><div><ul><li>Email-Adresse und den API-Token eines Benutzers, der Zugriff auf alle relevanten Tickets hat</li><li>Name der Zammad hosted Instanz</li><li>gewünschter Zeitpunkt der Produktivmigration</li><li>gewünschter Zeitpunkt für die Aktivierung des Zammad-Postfaches</li></ul></div><div>Sobald wir alle Informationen haben, werden wir Ihnen die Downtime zukommen lassen und danach mit dem Kunden alle weiteren Termine abstimmen.</div><p></p><h3>zusätzliche Testmigration?</h3><div>Möchte der Kunde auf Nummer Sicher gehen und eine Testmigration durchführen, damit er genügend Zeit hat sich mit dem Zammad System und den dazugehörigen Einstellungen vertraut machen? Das ist kein Problem! Über den kostenfreien Migrationsservice in Form der oben beschriebenen Produktiv-Migration hinaus, bieten wir eine zusätzliche Testmigration für 1.450€ an. Dieses&nbsp;Migrationspaket&nbsp;beinhaltet eine zusätzliche Testmigration sowie eventuelle Anpassungswünsche (vgl. Checkliste OTRS Migration). Je nachdem, ob sich weitere Anpassungswünsche aus der Checkliste ergeben, können die Kosten steigen.</div>'
+    const result = htmlCleanup(source)
+    assert.equal(result, should, source)
+  })
+
+  test("doesn't remove extra break lines", () => {
+    const source = `<p>This is a note<br><br></p><blockquote type="cite">
+<p>On .+, #{article.created_by.fullname} wrote:</p>\n<p><br></p>
+<p>#{article.body}</p>\n
+</blockquote><p><br></p>`
+    const should =
+      '<p>This is a note<br></p><blockquote type="cite"><p>On .+, #{article.created_by.fullname} wrote:</p><p><br></p><p>#{article.body}</p></blockquote><p><br></p>'
     const result = htmlCleanup(source)
     assert.equal(result, should, source)
   })

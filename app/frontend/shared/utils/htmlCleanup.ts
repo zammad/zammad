@@ -29,23 +29,32 @@ const removeComments = (parent: Node) => {
 // but if there is another line break, it will be rendered as two line breaks
 // this should remove a line break at the end of a paragraph, so editor can safely add "visual" one
 const removeTrailingLineBreaks = (parent: Element) => {
-  parent.querySelectorAll('p, div').forEach((element) => {
-    let { lastChild } = element
-    if (
-      lastChild?.nodeType === Node.TEXT_NODE &&
-      lastChild.textContent?.trim().length === 0
-    ) {
-      lastChild = lastChild.previousSibling
-    }
-    if (lastChild?.nodeName !== 'BR') return
-    element.removeChild(lastChild)
-
-    if (element.childNodes.length === 0 && element.tagName === 'DIV') {
+  parent.querySelectorAll('br').forEach((element) => {
+    // keep paragraphs with just a line break, but convert them into <p> tags
+    if (element.parentElement?.childNodes.length === 1) {
+      if (element.parentElement.tagName !== 'DIV') {
+        return
+      }
       const p = document.createElement('p')
-      for (const attr of element.attributes) {
+      for (const attr of element.parentElement.attributes) {
         p.setAttribute(attr.name, attr.value)
       }
-      element.replaceWith(p)
+      element.parentElement.replaceWith(p)
+      return
+    }
+    const { nextSibling } = element
+    if (
+      // if <br> is the last element, remove it because editor will add one anyway
+      !nextSibling ||
+      // if next element is a block element, remove <br>, because it will be converted into a paragraph with a line break
+      (nextSibling.nodeType !== Node.TEXT_NODE &&
+        (nextSibling as Element).tagName !== 'BR') ||
+      // if the next element is an empty text, remove <br>
+      (nextSibling.nodeType === Node.TEXT_NODE &&
+        !nextSibling.nextSibling &&
+        nextSibling.textContent?.trim().length === 0)
+    ) {
+      element.remove()
     }
   })
 }
@@ -77,5 +86,7 @@ export const htmlCleanup = (html: string, removeImages = false): string => {
 
   // we don't need to remove attributes here, because the editor doesn't put unknown attributes on html elements
 
-  return element.innerHTML
+  // remove empty new lines, editor considers them actual new lines
+  // and this will affect lists, where new line is a new list item
+  return element.innerHTML.replace(/\n\s*</g, '<').replace(/>\n/g, '>')
 }

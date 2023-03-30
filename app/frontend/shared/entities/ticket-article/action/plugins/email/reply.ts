@@ -189,7 +189,7 @@ export const replyToEmail = (
   if (selection) {
     const header = getReplyQuoteHeader(config, article)
     // data-full will be removed by the backend, it's used only for siganture handling
-    selection = `${full ? '' : '<br>'}<blockquote type="cite" ${
+    selection = `${full ? '' : '<p><br><br></p>'}<blockquote type="cite" ${
       full ? 'data-marker="signature-before"' : ''
     }>${header}${selection}</blockquote>`
   }

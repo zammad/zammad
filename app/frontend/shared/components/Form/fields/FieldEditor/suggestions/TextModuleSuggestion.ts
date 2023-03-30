@@ -6,7 +6,7 @@ import type { Ref } from 'vue'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { ensureGraphqlId } from '@shared/graphql/utils'
-import { debouncedQuery } from '@shared/utils/helpers'
+import { debouncedQuery, htmlCleanup } from '@shared/utils/helpers'
 import { getNodeByName } from '@shared/components/Form/utils'
 import type { FieldEditorProps, MentionTextItem } from '../types'
 import buildMentionSuggestion from './suggestions'
@@ -59,7 +59,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       activator: ACTIVATOR,
       type: 'text',
       insert(item: MentionTextItem) {
-        return item.renderedContent || ''
+        return htmlCleanup(item.renderedContent || '')
       },
       items: debouncedQuery(async ({ query }) => {
         if (!query) {
