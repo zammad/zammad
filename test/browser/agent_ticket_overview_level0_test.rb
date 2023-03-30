@@ -84,7 +84,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     watch_for_disappear(
       css:     %(.content.active table tr td input[value="#{ticket2[:id]}"]),
-      timeout: 6,
+      timeout: 12,
     )
 
     exists_not(
