@@ -102,8 +102,9 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
   end
 
   def logout_saml
-    visit '/#logout'
-    expect(page).to have_current_route('login')
+    await_empty_ajax_queue
+    logout
+    expect_current_route 'login'
     find_by_id('app')
   end
 
