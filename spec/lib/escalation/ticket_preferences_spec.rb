@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Escalation::TicketPreferences do
+RSpec.describe Escalation::TicketPreferences, time_zone: 'Europe/London' do
   let(:instance) { described_class.new ticket }
   let(:ticket)   { create(:ticket) }
 
