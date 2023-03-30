@@ -284,6 +284,9 @@ class String
     end
     string = string.utf8_encode(fallback: :read_as_sanitized_binary)
 
+    # signature block handling 1/2
+    string.gsub!(%r{^-- \s{1}}, '###SIGNATURE_BLOCK###')
+
     # remove tailing empty spaces
     string.gsub!(%r{[[:blank:]]+$}, '')
 
@@ -297,6 +300,9 @@ class String
 
     # remove double multiple empty lines
     string.gsub!(%r{\n\n\n+}, "\n\n")
+
+    # signature block handling 2/2
+    string.gsub!(%r{###SIGNATURE_BLOCK###}, "-- \n")
 
     string.strip
   end

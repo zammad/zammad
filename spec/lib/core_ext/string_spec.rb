@@ -1464,6 +1464,10 @@ RSpec.describe String do
     context 'signature recognition' do
       let(:marker) { '<span class="js-signatureMarker"></span>' }
 
+      it 'does not trim trailing whitespace and keeps the signature block working' do
+        expect('Hello<br><br>-- <br>This is the signature'.html2html_strict).to eq("Hello<br>#{marker}<br>-- <br>This is the signature")
+      end
+
       it 'places marker before "--" line (surrounded by <br>)' do
         expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
           lalala<br>--<br>Max Mix
