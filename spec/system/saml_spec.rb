@@ -35,7 +35,7 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
     saml_initialized = true
   end
 
-  def set_saml_config(name_identifier_format: nil, uid_attribute: nil)
+  def set_saml_config(name_identifier_format: nil, uid_attribute: nil, idp_slo_service_url: true)
     # Setup Zammad SAML authentication.
     response = UserAgent.get(saml_realm_zammad_descriptor)
     raise 'No Zammad realm descriptor found' if !response.success?
@@ -47,10 +47,12 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       {
         display_name:           'SAML',
         idp_sso_target_url:     "#{saml_base_url}/realms/zammad/protocol/saml",
-        idp_slo_service_url:    "#{saml_base_url}/realms/zammad/protocol/saml",
         idp_cert:               "-----BEGIN CERTIFICATE-----\n#{match[:cert]}\n-----END CERTIFICATE-----",
         name_identifier_format: name_identifier_format || 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
       }
+    if idp_slo_service_url
+      auth_saml_credentials[:idp_slo_service_url] = "#{saml_base_url}/realms/zammad/protocol/saml"
+    end
     auth_saml_credentials[:uid_attribute] = uid_attribute if uid_attribute
     Setting.set('auth_saml_credentials', auth_saml_credentials)
     Setting.set('auth_saml', true)
@@ -149,6 +151,24 @@ RSpec.describe 'SAML Authentication', authenticated_as: false, integration: true
       expect(user.login).to eq('john.doe')
 
       logout_saml
+    end
+  end
+
+  describe 'SAML logout without IDP SLO service URL' do
+    before do
+      set_saml_config(idp_slo_service_url: false)
+    end
+
+    it 'is successful' do
+      login_saml
+
+      user = User.find_by(email: 'john.doe@saml.example.com')
+      expect(user.login).to eq('john.doe@saml.example.com')
+
+      logout_saml
+
+      visit saml_realm_zammad_accounts
+      expect(page).to have_css('#landingSignOutButton')
     end
   end
 end
