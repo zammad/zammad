@@ -152,6 +152,7 @@ const emit = defineEmits<{
   ): void
   (e: 'node', node: FormKitNode): void
   (e: 'settled'): void
+  (e: 'focused'): void
 }>()
 
 const showInitialLoadingAnimation = ref(false)
@@ -178,12 +179,16 @@ const findNodeByName = (name: string) => {
   return formNode.value?.find(name, 'name')
 }
 
-const autofocusFirstInput = () => {
+const autofocusFirstInput = (node: FormKitNode) => {
   nextTick(() => {
     const firstInput = getFirstFocusableElement(formElement.value)
 
     firstInput?.focus()
     firstInput?.scrollIntoView({ block: 'nearest' })
+
+    const formName = node.context?.id || node.name
+    testFlags.set(`${formName}.focused`)
+    emit('focused')
   })
 }
 
@@ -214,11 +219,11 @@ const setFormNode = (node: FormKitNode) => {
       testFlags.set(`${formName}.settled`)
       emit('settled')
 
-      if (props.autofocus) autofocusFirstInput()
+      if (props.autofocus) autofocusFirstInput(node)
     })
   })
 
-  node.on('autofocus', autofocusFirstInput)
+  node.on('autofocus', () => autofocusFirstInput(node))
 
   emit('node', node)
 }

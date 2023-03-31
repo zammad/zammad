@@ -263,6 +263,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
   context 'with accessibility support' do
     it 'focuses first visible field when switching between steps' do
+      wait_for_form_autofocus('ticket-create')
 
       # Step 1.
       check_is_focused find_input('Title').input_element
