@@ -411,6 +411,13 @@ class ConnectionWizard extends App.ControllerWizardModal
       data: JSON.stringify(@wizardConfig)
       processData: true
       success: (data, status, xhr) =>
+        if data.result isnt 'ok'
+          @handleCertificateIssue(
+            message:     data.message
+            wizardClass: 'js-discover'
+          )
+          return
+
         @wizardConfig.wizardData = {}
         @wizardConfig.wizardData.backend_folders = data.folders || []
 
