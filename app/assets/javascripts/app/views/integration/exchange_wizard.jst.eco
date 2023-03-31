@@ -11,7 +11,7 @@
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
 
-        <p><%- @T('Please enter the endpoint and select the authentication method for accessing Exchange Web Services.') %></p>
+        <p><%- @T('Please enter the endpoint for accessing Exchange Web Services.') %></p>
         <table class="settings-list" style="width: 100%;">
           <thead>
             <tr>

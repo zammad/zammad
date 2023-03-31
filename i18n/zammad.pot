@@ -8051,7 +8051,7 @@ msgid "Please enter a valid email address."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid "Please enter the endpoint and select the authentication method for accessing Exchange Web Services."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
