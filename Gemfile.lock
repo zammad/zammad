@@ -557,7 +557,7 @@ GEM
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.11)
-    time (0.2.1)
+    time (0.2.2)
       date
     timeout (0.3.2)
     twilio-ruby (5.75.0)
@@ -586,7 +586,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.12.0)
+    uri (0.12.1)
     vcr (6.1.0)
     version_gem (1.1.1)
     viewpoint (1.1.1)
@@ -730,10 +730,12 @@ DEPENDENCIES
   terser
   test-unit
   thor
+  time (>= 0.2.2)
   twilio-ruby
   twitter
   tzinfo-data
   unicorn
+  uri (>= 0.12.1)
   vcr
   viewpoint
   vite_rails
