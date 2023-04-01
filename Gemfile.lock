@@ -373,7 +373,7 @@ GEM
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.22.1)
-    parser (3.2.1.1)
+    parser (3.2.2.0)
       ast (~> 2.4.1)
     pg (1.2.3)
     power_assert (2.0.2)
@@ -484,7 +484,7 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (1.1.0)
+    rubocop-graphql (1.1.1)
       rubocop (>= 0.87, < 2)
     rubocop-inflector (0.2.1)
       activesupport
