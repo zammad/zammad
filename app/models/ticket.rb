@@ -834,7 +834,7 @@ perform active triggers on ticket
         user = User.lookup(id: user_id)
 
         # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(trigger.condition, limit: 1, execution_time: true, current_user: user, access: 'ignore', ticket_action: type, ticket_id: ticket.id, article_id: article&.id, changes: item[:changes])
+        ticket_count, tickets = Ticket.selectors(trigger.condition, limit: 1, execution_time: true, current_user: user, access: 'ignore', ticket_action: type, ticket_id: ticket.id, article_id: article&.id, changes: item[:changes], changes_required: true)
 
         next if ticket_count.blank?
         next if ticket_count.zero?
