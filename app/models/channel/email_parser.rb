@@ -12,6 +12,9 @@ class Channel::EmailParser
   EXCESSIVE_LINKS_MSG = __('This message cannot be displayed because it contains over 5,000 links. Download the raw message below and open it via an Email client if you still wish to view it.').freeze
   MESSAGE_STRUCT = Struct.new(:from_display_name, :subject, :msg_size).freeze
 
+  UNPROCESSABLE_MAIL_DIRECTORY = Rails.root.join('var/spool/unprocessable_mail')
+  OVERSIZED_MAIL_DIRECTORY = Rails.root.join('var/spool/oversized_mail')
+
 =begin
 
   parser = Channel::EmailParser.new
@@ -124,7 +127,7 @@ returns
     end
   rescue => e
     # store unprocessable email for bug reporting
-    filename = archive_mail('unprocessable_mail', msg)
+    filename = archive_mail(UNPROCESSABLE_MAIL_DIRECTORY, msg)
 
     message = "Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
 
@@ -496,16 +499,15 @@ returns
 
 =begin
 
-process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
+process unprocessable_mails (var/spool/unprocessable_mail/*.eml) again
 
   Channel::EmailParser.process_unprocessable_mails
 
 =end
 
   def self.process_unprocessable_mails(params = {})
-    path = Rails.root.join('tmp/unprocessable_mail')
     files = []
-    Dir.glob("#{path}/*.eml") do |entry|
+    Dir.glob("#{UNPROCESSABLE_MAIL_DIRECTORY}/*.eml") do |entry|
       ticket, _article, _user, _mail = Channel::EmailParser.new.process(params, File.binread(entry))
       next if ticket.blank?
 
@@ -524,7 +526,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 =end
 
   def process_oversized_mail(channel, msg)
-    archive_mail('oversized_mail', msg)
+    archive_mail(OVERSIZED_MAIL_DIRECTORY, msg)
     postmaster_response(channel, msg)
   end
 
@@ -909,17 +911,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   end
 
   # Archive the given message as tmp/folder/md5.eml
-  def archive_mail(folder, msg)
-    path = Rails.root.join('tmp', folder)
+  def archive_mail(path, msg)
     FileUtils.mkpath path
 
-    # MD5 hash the msg and save it as "md5.eml"
-    md5 = Digest::MD5.hexdigest(msg)
-    file_path = Rails.root.join('tmp', folder, "#{md5}.eml")
-
-    File.binwrite(file_path, msg)
-
-    file_path
+    path.join("#{Digest::MD5.hexdigest(msg)}.eml").tap do |file_path|
+      File.binwrite(file_path, msg)
+    end
   end
 
   # Auto reply as the postmaster to oversized emails with:

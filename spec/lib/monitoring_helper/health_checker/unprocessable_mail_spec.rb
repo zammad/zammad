@@ -7,7 +7,8 @@ RSpec.describe MonitoringHelper::HealthChecker::UnprocessableMail do
   let(:folder)    { SecureRandom.hex }
   let(:directory) { Rails.root.join('tmp', folder) }
 
-  before { stub_const("#{described_class}::DIRECTORY", directory) }
+  before { stub_const('Channel::EmailParser::UNPROCESSABLE_MAIL_DIRECTORY', directory) }
+  after { FileUtils.rm_r(directory) if File.exist?(directory) }
 
   describe '#check_health' do
     it 'does nothing if directory missing' do

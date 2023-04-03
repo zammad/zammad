@@ -52,10 +52,13 @@
 /public/assets/custom
 /public/assets/chat/node_modules
 /tmp/*
+!/tmp/README.md
 !/tmp/pids
 /tmp/pids/*
 !/tmp/pids/.keep
 /storage/fs
+/var/*
+!/var/README.md
 
 # doorkeeper (OAuth 2)
 /public/assets/doorkeeper

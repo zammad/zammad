@@ -155,8 +155,7 @@ function backup_files () {
       chown -R zammad:zammad ${ZAMMAD_DIR}/storage/
     fi
 
-      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
-        ${ZAMMAD_DIR#/}/storage/\
+      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR#/}/storage/ ${ZAMMAD_DIR#/}/var/
 
       state=$?
   fi
