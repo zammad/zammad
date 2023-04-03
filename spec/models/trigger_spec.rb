@@ -1134,4 +1134,51 @@ RSpec.describe Trigger, type: :model do
       end
     end
   end
+
+  describe 'Triggers without configured action inside condition are executed differently compared to 5.3 #4550' do
+    let(:ticket_match) { create(:ticket, group: Group.first) }
+    let(:ticket_no_match) { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '1 low')) }
+    let(:condition) do
+      { 'ticket.priority_id' => { 'operator' => 'is', 'value' => Ticket::Priority.where(name: ['2 normal', '3 high']).pluck(:id).map(&:to_s) } }
+    end
+    let(:perform) do
+      { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
+    end
+
+    before do
+      ticket_match
+      ticket_no_match
+      trigger
+      TransactionDispatcher.commit
+    end
+
+    context 'when conditions match' do
+      it 'does not create an article if the state changes' do
+        ticket_match.update(state: Ticket::State.find_by(name: 'closed'))
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+
+      it 'does create an article if priority changes' do
+        ticket_match.update(priority: Ticket::Priority.find_by(name: '3 high'))
+        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+      end
+
+      it 'does create an article if priority matches and new article is created' do
+        create(:ticket_article, ticket: ticket_match)
+        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+      end
+    end
+
+    context "when conditions don't match" do
+      it 'does not create an article if priority does not match but new article is created' do
+        create(:ticket_article, ticket: ticket_no_match)
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+
+      it 'does not create an article if priority does not match and priority changes to low' do
+        ticket_match.update(priority: Ticket::Priority.find_by(name: '1 low'))
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+    end
+  end
 end

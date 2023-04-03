@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Selector::Sql < Ticket::Selector::Base
-  attr_accessor :final_query, :final_bind_params, :final_tables, :final_tables_query, :changed_attributes
+  attr_accessor :final_query, :final_bind_params, :final_tables, :final_tables_query
 
   def get
     @final_query        = []
