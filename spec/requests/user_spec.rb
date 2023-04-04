@@ -173,6 +173,40 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       expect(json_response['error']).to eq('Authentication required')
     end
 
+    it 'does not create user with verified state' do
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', signup: true, password: '1asdASDasd', verified: true }
+      post '/api/v1/users', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_truthy
+      user = User.find_by email: 'new_agent@example.com'
+      expect(user.verified).to be(false)
+    end
+
+    it 'does not create user with ticket groups permissions' do
+      users_group = Group.find_by(name: 'Users')
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', signup: true, password: '1asdASDasd', verified: true, group_ids: { users_group.id => 'full' } }
+      post '/api/v1/users', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_truthy
+      user = User.find_by email: 'new_agent@example.com'
+      expect(user.groups).to eq([])
+    end
+
+    it 'does not create user with verified state as customer' do
+      authenticated_as(customer)
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', signup: true, password: '1asdASDasd', verified: true }
+      post '/api/v1/users', params: params, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'does not create user with ticket groups permissions as customer' do
+      authenticated_as(customer)
+      users_group = Group.find_by(name: 'Users')
+      params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', signup: true, password: '1asdASDasd', verified: true, group_ids: { users_group.id => 'full' } }
+      post '/api/v1/users', params: params, as: :json
+      expect(response).to have_http_status(:forbidden)
+    end
+
     context 'password security' do
       it 'verified with no current user' do
         params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
