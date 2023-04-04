@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class WeiboDatabase < OmniAuth::Strategies::Weibo
+class OmniAuth::Strategies::WeiboDatabase < OmniAuth::Strategies::Weibo
   option :name, 'weibo'
 
   def initialize(app, *args, &)

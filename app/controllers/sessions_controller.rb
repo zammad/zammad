@@ -54,7 +54,7 @@ class SessionsController < ApplicationController
       ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
-    if (session['saml_uid'] || session['saml_session_index']) && SamlDatabase.setup.fetch('idp_slo_service_url', nil)
+    if (session['saml_uid'] || session['saml_session_index']) && OmniAuth::Strategies::SamlDatabase.setup.fetch('idp_slo_service_url', nil)
       begin
         return saml_destroy
       rescue => e
@@ -287,7 +287,7 @@ class SessionsController < ApplicationController
   end
 
   def saml_destroy
-    options = SamlDatabase.setup
+    options = OmniAuth::Strategies::SamlDatabase.setup
     settings = OneLogin::RubySaml::Settings.new(options)
 
     logout_request = OneLogin::RubySaml::Logoutrequest.new

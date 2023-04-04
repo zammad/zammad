@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class SamlDatabase < OmniAuth::Strategies::SAML
+class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
   option :name, 'saml'
 
   def self.setup

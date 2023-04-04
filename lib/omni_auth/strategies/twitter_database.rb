@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class TwitterDatabase < OmniAuth::Strategies::Twitter
+class OmniAuth::Strategies::TwitterDatabase < OmniAuth::Strategies::Twitter
   option :name, 'twitter'
 
   def initialize(app, *args, &)

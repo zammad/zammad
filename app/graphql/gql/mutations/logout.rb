@@ -39,11 +39,11 @@ module Gql::Mutations
     end
 
     def saml_session?
-      (session['saml_uid'] || session['saml_session_index']) && SamlDatabase.setup.fetch('idp_slo_service_url', nil)
+      (session['saml_uid'] || session['saml_session_index']) && OmniAuth::Strategies::SamlDatabase.setup.fetch('idp_slo_service_url', nil)
     end
 
     def saml_logout_url
-      options = SamlDatabase.setup
+      options = OmniAuth::Strategies::SamlDatabase.setup
       settings = OneLogin::RubySaml::Settings.new(options)
 
       logout_request = OneLogin::RubySaml::Logoutrequest.new

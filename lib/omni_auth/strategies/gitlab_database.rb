@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class GitLabDatabase < OmniAuth::Strategies::GitLab
+class OmniAuth::Strategies::GitLabDatabase < OmniAuth::Strategies::GitLab
   option :name, 'gitlab'
 
   def initialize(app, *args, &)

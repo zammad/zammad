@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-class FacebookDatabase < OmniAuth::Strategies::Facebook
+class OmniAuth::Strategies::FacebookDatabase < OmniAuth::Strategies::Facebook
   option :name, 'facebook'
 
   def initialize(app, *args, &)
