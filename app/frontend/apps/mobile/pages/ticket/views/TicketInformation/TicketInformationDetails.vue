@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+/* eslint-disable vue/attribute-hyphenation */
+
 import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
@@ -172,7 +174,7 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
     v-if="canManageSubscription"
     :header-label="__('Subscribers')"
   >
-    <!-- Currently only modelValue is working: https://github.com/formkit/formkit/issues/629-->
+    <!-- Currently only modelValue is working: https://github.com/formkit/formkit/issues/629 -->
     <FormKit
       type="toggle"
       :modelValue="isSubscribed"

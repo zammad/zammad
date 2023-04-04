@@ -65,7 +65,7 @@ export default defineConfig(({ mode, command }) => {
   // Ruby plugin is not needed inside of the vitest context and has some side effects.
   if (!isTesting || isBuild) {
     const { default: RubyPlugin } = require('vite-plugin-ruby')
-    // const ManualChunks = require('./app/frontend/build/manualChunks')
+    const ManualChunks = require('./app/frontend/build/manualChunks')
 
     plugins.push(RubyPlugin())
     plugins.push(
@@ -80,8 +80,7 @@ export default defineConfig(({ mode, command }) => {
         strategies: 'injectManifest',
       }),
     )
-    // TODO: Disable manual chunks for now, check if it's still neded with Vite 3.0.
-    // plugins.push(ManualChunks())
+    plugins.push(ManualChunks())
   }
 
   let https = false
@@ -98,6 +97,7 @@ export default defineConfig(({ mode, command }) => {
   }
 
   return {
+    publicDir: isBuild ? undefined : resolve(dir, 'public'),
     esbuild: {
       target: tsconfig.compilerOptions.target,
     },
@@ -137,6 +137,9 @@ export default defineConfig(({ mode, command }) => {
         // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
         inline: ['@tiptap/extension-mention'],
       },
+    },
+    build: {
+      minify: false,
     },
     plugins,
   }

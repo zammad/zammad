@@ -80,6 +80,7 @@ vi.mock('@shared/components/CommonNotifications/composable', async () => {
   }
 
   return {
+    useNotifications,
     default: useNotifications,
   }
 })

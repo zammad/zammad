@@ -3,7 +3,7 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import useNotifications from '@shared/components/CommonNotifications/composable'
+import { useNotifications } from '@shared/components/CommonNotifications/composable'
 import type { Notification } from '@shared/components/CommonNotifications/types'
 import { markup } from '@shared/utils/markup'
 

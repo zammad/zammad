@@ -2,9 +2,6 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { useNotifications } from '@shared/components/CommonNotifications'
-
 export const isMainRoute = true
 
 const route: RouteRecordRaw[] = [
@@ -24,6 +21,12 @@ const route: RouteRecordRaw[] = [
     name: 'Logout',
     component: {
       async beforeRouteEnter() {
+        const [{ useAuthenticationStore }, { useNotifications }] =
+          await Promise.all([
+            import('@shared/stores/authentication'),
+            import('@shared/components/CommonNotifications/composable'),
+          ])
+
         const { clearAllNotifications } = useNotifications()
 
         const authentication = useAuthenticationStore()

@@ -5,8 +5,7 @@ import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { flushPromises } from '@vue/test-utils'
-import { waitForNextTick, waitForTimeout } from '@tests/support/utils'
-import { ExtendedRenderResult } from '../../../../../../tests/support/components/renderComponent'
+import { waitForNextTick } from '@tests/support/utils'
 
 const renderToggle = (props: any = {}) => {
   return renderComponent(FormKit, {

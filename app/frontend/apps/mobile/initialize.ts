@@ -2,7 +2,6 @@
 
 import type { App } from 'vue'
 
-import '@shared/initializer/translatableMarker'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import '@mobile/styles/main.scss'
 
