@@ -363,7 +363,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     @wizardConfig.endpoint           = params.endpoint
     @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
 
-    if params.authentication_method is 'basic'
+    if @wizardConfig.auth_type is 'basic'
       @wizardConfig.user      = params.user
       @wizardConfig.password  = params.password
 
