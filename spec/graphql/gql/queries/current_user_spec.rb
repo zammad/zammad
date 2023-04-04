@@ -77,7 +77,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
         let(:object_attribute) do
           screens = { create: { 'admin.organization': { shown: true, required: false } } }
           create(:object_manager_attribute_text, name: 'UserLink', object_name: 'User', screens: screens).tap do |oa|
-            oa.data_option['linktemplate'] = 'http://test?#{user.fullname}' # rubocop:disable Lint/InterpolationCheck
+            oa.data_option['linktemplate'] = 'http://test?user=#{user.fullname};missing=#{missing.nonexisting}' # rubocop:disable Lint/InterpolationCheck
             oa.save!
             ObjectManager::Attribute.migration_execute
           end
@@ -86,12 +86,13 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
           object_attribute
           create(:organization)
         end
-        # Space in fullname must be encoded as %20.
+        # Space in fullname must be encoded as %20, missing values must be '-'.
         let(:encoded_fullname) { ERB::Util.url_encode(agent.fullname) }
+        let(:rendered_link)    { "http://test?user=#{encoded_fullname};missing=-" }
 
         it 'has rendered and URL encoded objectAttributeValue data for User' do
           oas = gql.result.data['objectAttributeValues']
-          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => "http://test?#{encoded_fullname}")
+          expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => rendered_link)
         end
       end
 

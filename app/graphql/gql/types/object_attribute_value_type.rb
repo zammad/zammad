@@ -18,7 +18,7 @@ module Gql::Types
         template:   template,
         escape:     false,
         url_encode: true,
-      ).render
+      ).render(debug_errors: false)
     end
   end
 end

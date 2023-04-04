@@ -16,7 +16,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
       create_list(:text_module, 4).each_with_index do |tm, i|
         tm.name = "TextModuleTest#{i}"
         tm.keywords = "KeywordTextModuleTest#{i}"
-        tm.content = 't:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}' # rubocop:disable Lint/InterpolationCheck
+        tm.content = 't:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}-m:#{missing.nonexisting}' # rubocop:disable Lint/InterpolationCheck
         tm.groups = if i <= 2
                       groups
                     elsif i == 3
@@ -82,7 +82,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
             'name'            => text_modules.first.name,
             'keywords'        => text_modules.first.keywords,
             'content'         => text_modules.first.content,
-            'renderedContent' => "t:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}",
+            'renderedContent' => "t:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}-m:-",
           }
         end
         let(:query_string) { text_modules.first.name }
@@ -99,7 +99,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
             'name'            => text_modules.first.name,
             'keywords'        => text_modules.first.keywords,
             'content'         => text_modules.first.content,
-            'renderedContent' => "t:#{customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}",
+            'renderedContent' => "t:#{customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}-m:-",
           }
         end
         let(:query_string) { text_modules.first.name }

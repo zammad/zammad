@@ -26,7 +26,7 @@ module Gql::Types
         objects:  template_render_context.to_context_hash,
         template: @object.content,
         escape:   false
-      ).render
+      ).render(debug_errors: false)
 
     end
   end

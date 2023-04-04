@@ -58,6 +58,23 @@ RSpec.describe NotificationFactory::Renderer do
       end
     end
 
+    describe 'interpolation error handling' do
+      let(:renderer)   { build(:notification_factory_renderer, objects: {}, template: template) }
+      let(:template)   { '#{ ticket.title }' }
+
+      context 'with debug_errors' do
+        it 'renders an debug message' do
+          expect(renderer.render).to eq "\#{ticket / no such object}"
+        end
+      end
+
+      context 'without debug_errors' do
+        it 'renders a dash' do
+          expect(renderer.render(debug_errors: false)).to eq '-'
+        end
+      end
+    end
+
     it 'correctly renders chained object references' do
       user = User.where(firstname: 'Nicole').first
       ticket = create(:ticket, customer: user)
