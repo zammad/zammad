@@ -10,8 +10,8 @@ class ApplicationPolicy
     attr_reader :allow, :deny
 
     def initialize(allow: nil, deny: nil)
-      @allow = allow.map(&:to_sym).to_set if allow
-      @deny = deny.map(&:to_sym).to_set if deny
+      @allow = allow.to_set(&:to_sym) if allow
+      @deny = deny.to_set(&:to_sym) if deny
     end
 
     def field_authorized?(field)

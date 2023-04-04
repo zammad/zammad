@@ -46,7 +46,7 @@ class MysqlStrategy
 
   def self.mysql_arguments
     args = " -u#{username} -h#{host}"
-    args += " -p#{password}" if password.present?  # allow for passwordless access on dev systems
+    args += " -p#{password}" if password.present? # allow for passwordless access on dev systems
     args + " #{database}"
   end
 
