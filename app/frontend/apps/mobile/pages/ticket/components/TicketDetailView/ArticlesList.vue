@@ -48,7 +48,7 @@ const filterAttachments = (article: TicketArticle) => {
     aria-label="Articles"
     class="relative flex-1 space-y-5 px-4 pt-4"
   >
-    <template v-for="row in rows" :key="row.key">
+    <template v-for="(row, idx) in rows" :key="row.key">
       <ArticleBubble
         v-if="row.type === 'article-bubble'"
         :content="row.article.bodyWithUrls"
@@ -65,6 +65,7 @@ const filterAttachments = (article: TicketArticle) => {
       <ArticleDeliveryMessage
         v-if="row.type === 'delivery'"
         :content="row.content"
+        :gap="rows[idx - 1]?.type === 'article-bubble' ? 'big' : 'small'"
       />
       <ArticleSystem
         v-if="row.type === 'system'"
