@@ -39,7 +39,10 @@ const ticketsQueryVariables = computed(() => {
 })
 
 const ticketsQuery = new QueryHandler(
-  useTicketsByOverviewQuery(ticketsQueryVariables),
+  useTicketsByOverviewQuery(ticketsQueryVariables, {
+    fetchPolicy: 'cache-first',
+    nextFetchPolicy: 'cache-first',
+  }),
 )
 
 const ticketsResult = ticketsQuery.result()

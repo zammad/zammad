@@ -31,8 +31,17 @@ export default function usePagination<
     return pageInfo.value?.hasPreviousPage ?? false
   })
 
+  const getInitialCurrentPage = (): number => {
+    const result: OperationQueryResult = query.result().value || {}
+    const data = result[resultKey] as BaseConnection
+    if (!data) return 1
+    const currentLength = data.edges?.length || 0
+    if (!currentLength) return 1
+    return Math.ceil(currentLength / pageSize)
+  }
+
   const loadingNewPage = ref(false)
-  const currentPage = ref(1)
+  const currentPage = ref(getInitialCurrentPage())
 
   return reactive({
     pageInfo: readonly(pageInfo),
