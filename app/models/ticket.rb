@@ -6,6 +6,7 @@ class Ticket < ApplicationModel
   include ChecksClientNotification
   include CanCsvImport
   include ChecksHtmlSanitized
+  include ChecksHumanChanges
   include HasHistory
   include HasTags
   include HasSearchIndexBackend
@@ -732,7 +733,16 @@ perform changes on ticket
       when 'notification.email'
         send_email_notification(value, article, perform_origin)
       when 'notification.webhook'
-        TriggerWebhookJob.perform_later(performable, self, article)
+        TriggerWebhookJob.perform_later(performable,
+                                        self,
+                                        article,
+                                        changes:        human_changes(
+                                          item.try(:dig, :changes),
+                                          self,
+                                        ),
+                                        user_id:        item.try(:dig, :user_id),
+                                        execution_type: perform_origin,
+                                        event_type:     item.try(:dig, :type))
       end
     end
 
@@ -940,6 +950,30 @@ result
     return false if last_contact_agent_at.blank?
 
     last_contact_customer_at < last_contact_agent_at
+  end
+
+=begin
+
+Get the color of the state the current ticket is in
+
+  ticket.current_state_color
+
+returns a hex color code
+
+=end
+  def current_state_color
+    return '#f35912' if escalation_at && escalation_at < Time.zone.now
+
+    case state.state_type.name
+    when 'new', 'open'
+      return '#faab00'
+    when 'closed'
+      return '#38ad69'
+    when 'pending reminder'
+      return '#faab00' if pending_time && pending_time < Time.zone.now
+    end
+
+    '#000000'
   end
 
   private

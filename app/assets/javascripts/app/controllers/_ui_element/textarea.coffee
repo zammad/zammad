@@ -6,10 +6,17 @@ class App.UiElement.textarea
     if attribute.rows is undefined
       attribute.rows = 4
 
-    fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
-    item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
+    item = $( App.view('generic/textarea')( attribute: attribute ) )
+
+    if attribute.collapsible
+      collapseClasses= 'panel-collapse collapse'
+      if !_.isEmpty(attribute.value)
+        collapseClasses += ' in'
+      item = $('<div id="collapse-' + attribute.id + '" class="' + collapseClasses + '">').append(item)
 
     if attribute.upload
+      fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+      item.append('<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>')
 
       # add file uploader
       u = ->

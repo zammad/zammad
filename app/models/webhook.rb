@@ -9,6 +9,7 @@ class Webhook < ApplicationModel
 
   validates :name, presence: true
   validate :validate_endpoint
+  validate :validate_custom_payload
 
   validates :note, length: { maximum: 500 }
   sanitized_html :note
@@ -22,5 +23,17 @@ class Webhook < ApplicationModel
     errors.add(:endpoint, __('The provided endpoint is invalid, no hostname was specified.')) if uri.host.blank?
   rescue URI::InvalidURIError
     errors.add :endpoint, __('The provided endpoint is invalid.')
+  end
+
+  def validate_custom_payload
+    return true if custom_payload.blank?
+
+    begin
+      JSON.parse(custom_payload)
+    rescue
+      errors.add :custom_payload, __('The provided payload is invalid. Please check your syntax.')
+    end
+
+    true
   end
 end

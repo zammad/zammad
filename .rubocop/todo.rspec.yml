@@ -45,7 +45,6 @@ RSpec/ContextWording:
     - 'spec/lib/ldap/user_spec.rb'
     - 'spec/lib/ldap_spec.rb'
     - 'spec/lib/notification_factory/mailer_spec.rb'
-    - 'spec/lib/notification_factory/slack_spec.rb'
     - 'spec/lib/notification_factory/template_spec.rb'
     - 'spec/lib/notification_factory_spec.rb'
     - 'spec/lib/password_hash_spec.rb'

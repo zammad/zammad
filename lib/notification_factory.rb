@@ -19,7 +19,7 @@ or
     template: 'ticket_update',
     locale: 'en-us',
     format: 'md',
-    type: 'slack',
+    type: 'messaging',
   )
 
 returns
@@ -75,7 +75,7 @@ or
 
   string = NotificationFactory.application_template_read(
     format: 'md',
-    type: 'slack',
+    type: 'messaging',
   )
 
 returns

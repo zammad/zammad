@@ -1092,19 +1092,21 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created - ticket notification template')
 
+    last_changes = {
+      'priority_id'  => [1, 2],
+      'pending_time' => [nil, Time.zone.parse('2015-01-11 23:33:47 UTC')],
+    }
+
     bg = Transaction::Notification.new(
       ticket_id:  ticket1.id,
       article_id: article.id,
       type:       'update',
-      changes:    {
-        'priority_id'  => [1, 2],
-        'pending_time' => [nil, Time.zone.parse('2015-01-11 23:33:47 UTC')],
-      },
+      changes:    last_changes,
       user_id:    ticket1.updated_by_id,
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(@agent2, ticket1)
+    human_changes = bg.human_changes(last_changes, ticket1, @agent2)
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('1 low', human_changes['Priority'][0])
@@ -1137,7 +1139,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(%r{pending_till}, result[:body])
     assert_no_match(%r{i18n}, result[:body])
 
-    human_changes = bg.human_changes(@agent1, ticket1)
+    human_changes = bg.human_changes(last_changes, ticket1, @agent1)
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('1 niedrig', human_changes['Priority'][0])
@@ -1171,19 +1173,21 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(%r{pending_till}, result[:body])
     assert_no_match(%r{i18n}, result[:body])
 
+    last_changes = {
+      title:       ['some notification template test old 1', 'some notification template test 1 #2'],
+      priority_id: [2, 3],
+    }
+
     bg = Transaction::Notification.new(
       ticket_id:  ticket1.id,
       article_id: article.id,
       type:       'update',
-      changes:    {
-        title:       ['some notification template test old 1', 'some notification template test 1 #2'],
-        priority_id: [2, 3],
-      },
+      changes:    last_changes,
       user_id:    @customer.id,
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(@agent1, ticket1)
+    human_changes = bg.human_changes(last_changes, ticket1, @agent1)
     assert(human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('2 normal', human_changes['Priority'][0])
@@ -1218,7 +1222,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(%r{2 normal}, result[:body])
     assert_match(%r{aktualisier}, result[:body])
 
-    human_changes = bg.human_changes(@agent2, ticket1)
+    human_changes = bg.human_changes(last_changes, ticket1, @agent2)
 
     # en notification
     result = NotificationFactory::Mailer.template(

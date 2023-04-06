@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Manage > Webhook', type: :system do
 
   context 'when showing the example payload' do
-
     it 'shows correctly' do
       visit '/#manage/webhook'
 
@@ -15,6 +14,32 @@ RSpec.describe 'Manage > Webhook', type: :system do
 
       in_modal do
         expect(page).to have_text('X-Zammad-Trigger:')
+      end
+    end
+  end
+
+  context 'when checking custom payload validation' do
+    it 'shows error message' do
+      visit '/#manage/webhook'
+
+      within :active_content do
+        click 'a[data-type="new"]'
+      end
+
+      in_modal do
+        fill_in 'name', with: 'Test'
+        fill_in 'endpoint', with: 'https://example.com/webhook'
+
+        click 'a[data-toggle="collapse"]'
+        wait.until do
+          expect(page).to have_field('Custom Payload', type: 'textarea')
+        end
+
+        fill_in 'custom_payload', with: 'invalid json'
+        click '.js-submit'
+
+        expect(page).to have_css('div[data-attribute-name="custom_payload"].has-error')
+          .and have_text('Please enter a valid JSON string.')
       end
     end
   end

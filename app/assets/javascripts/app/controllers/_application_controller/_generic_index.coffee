@@ -169,26 +169,28 @@ class App.ControllerGenericIndex extends App.Controller
       return
 
     new App.ControllerGenericEdit(
-      id:            item.id
-      pageData:      @pageData
-      genericObject: @genericObject
-      container:     @container
-      small:         @small
-      large:         @large
-      veryLarge:     @veryLarge
-      handlers:      @handlers
+      id:               item.id
+      pageData:         @pageData
+      genericObject:    @genericObject
+      container:        @container
+      small:            @small
+      large:            @large
+      veryLarge:        @veryLarge
+      handlers:         @handlers
+      validateOnSubmit: @validateOnSubmit
     )
 
   new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
-      pageData:      @pageData
-      genericObject: @genericObject
-      container:     @container
-      small:         @small
-      large:         @large
-      veryLarge:     @veryLarge
-      handlers:      @handlers
+      pageData:         @pageData
+      genericObject:    @genericObject
+      container:        @container
+      small:            @small
+      large:            @large
+      veryLarge:        @veryLarge
+      handlers:         @handlers
+      validateOnSubmit: @validateOnSubmit
     )
 
   payload: (e) ->

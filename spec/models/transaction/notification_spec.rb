@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'models/concerns/checks_human_changes_examples'
+
 RSpec.describe Transaction::Notification, type: :model do
   describe 'pending ticket reminder repeats after midnight at selected time zone' do
     let(:group)  { create(:group) }
@@ -137,6 +139,8 @@ RSpec.describe Transaction::Notification, type: :model do
       end
     end
   end
+
+  it_behaves_like 'ChecksHumanChanges'
 
   def run(ticket, user, type)
     build(ticket, user, type).perform

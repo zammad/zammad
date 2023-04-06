@@ -2127,6 +2127,42 @@ fieldset > .form-group {
     margin: 0;
   }
 
+  a[data-toggle='collapse'] > label {
+    cursor: pointer;
+    color: var(--text-link);
+  }
+
+  a[data-toggle='collapse'] {
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+
+    &.collapsed {
+      & svg {
+        &.icon-arrow-right {
+          display: inline;
+        }
+
+        &.icon-arrow-down {
+          display: none;
+        }
+      }
+    }
+
+    &:not(.collapsed) {
+      & svg {
+        &.icon-arrow-right {
+          display: none;
+        }
+
+        &.icon-arrow-down {
+          display: inline;
+        }
+      }
+    }
+  }
+
   .bookmark.icon {
     margin-bottom: -1px;
   }

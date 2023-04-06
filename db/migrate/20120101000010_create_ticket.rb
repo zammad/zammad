@@ -538,16 +538,17 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :report_profiles, :users, column: :updated_by_id
 
     create_table :webhooks do |t|
-      t.column :name,                       :string, limit: 250,  null: false
-      t.column :endpoint,                   :string, limit: 300,  null: false
-      t.column :signature_token,            :string, limit: 200,  null: true
-      t.column :ssl_verify,                 :boolean,             null: false, default: true
-      t.column :basic_auth_username,        :string, limit: 250,  null: true
-      t.column :basic_auth_password,        :string, limit: 250,  null: true
-      t.column :note,                       :string, limit: 500,  null: true
-      t.column :active,                     :boolean,             null: false, default: true
-      t.column :updated_by_id,              :integer,             null: false
-      t.column :created_by_id,              :integer,             null: false
+      t.column :name,                       :string, limit: 250,              null: false
+      t.column :endpoint,                   :string, limit: 300,              null: false
+      t.column :signature_token,            :string, limit: 200,              null: true
+      t.column :ssl_verify,                 :boolean,                         null: false, default: true
+      t.column :basic_auth_username,        :string, limit: 250,              null: true
+      t.column :basic_auth_password,        :string, limit: 250,              null: true
+      t.column :note,                       :string, limit: 500,              null: true
+      t.column :custom_payload,             :text, limit: 500.kilobytes + 1,  null: true
+      t.column :active,                     :boolean,                         null: false, default: true
+      t.column :updated_by_id,              :integer,                         null: false
+      t.column :created_by_id,              :integer,                         null: false
       t.timestamps limit: 3, null: false
     end
 

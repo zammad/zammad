@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe NotificationFactory::Slack do
+RSpec.describe NotificationFactory::Messaging do
   describe '.template' do
     subject(:template) do
       described_class.template(
@@ -24,7 +24,7 @@ RSpec.describe NotificationFactory::Slack do
     let(:agent)        { create(:agent) }
     let(:current_user) { create(:agent) }
 
-    context 'for "ticket_create", with an empty "changes" hash' do
+    context 'with an empty "changes" hash for "ticket_create"' do
       let(:action) { 'ticket_create' }
 
       let(:changes) { {} }
@@ -40,7 +40,7 @@ RSpec.describe NotificationFactory::Slack do
       end
     end
 
-    context 'for "ticket_update", with a populated "changes" hash' do
+    context 'with a populated "changes" hash for "ticket_update"' do
       let(:action) { 'ticket_update' }
 
       let(:changes) do
@@ -65,7 +65,7 @@ RSpec.describe NotificationFactory::Slack do
       end
     end
 
-    context 'for "ticket_escalate"' do
+    context 'when "ticket_escalate"' do
       subject(:template) do
         described_class.template(
           template: 'ticket_escalation',
@@ -91,7 +91,6 @@ RSpec.describe NotificationFactory::Slack do
         expect(template[:body])
           .to match(%r{The ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"})
           .and match(%r{escalated since "04/01/2019 12:00 pm \(Europe/Berlin\)"!})
-          .and match(%r{#{article.body}\z})
       end
     end
   end

@@ -16,7 +16,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
   context 'when serialized model argument gets deleted' do
 
-    subject!(:job) { described_class.perform_later(trigger, ticket, article) }
+    subject!(:job) do
+      described_class.perform_later(
+        trigger,
+        ticket,
+        article,
+        changes:        nil,
+        user_id:        nil,
+        execution_type: nil,
+        event_type:     nil,
+      )
+    end
 
     let(:ticket) { create(:ticket) }
     let(:article) { create(:'ticket/article') }
@@ -53,7 +63,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
   end
 
   describe '#perform' do
-    subject(:perform) { described_class.perform_now(trigger, ticket, article) }
+    subject(:perform) do
+      described_class.perform_now(
+        trigger,
+        ticket,
+        article,
+        changes:        nil,
+        user_id:        nil,
+        execution_type: nil,
+        event_type:     nil,
+      )
+    end
 
     let(:payload_ticket) { TriggerWebhookJob::RecordPayload.generate(ticket) }
     let(:payload_article) { TriggerWebhookJob::RecordPayload.generate(article) }

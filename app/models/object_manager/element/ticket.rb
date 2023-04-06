@@ -5,6 +5,7 @@ class ObjectManager::Element::Ticket < ObjectManager::Element::Backend
   private
 
   def authorized?(permission)
+    return true if skip_permission
     return false if skip?(permission)
 
     super

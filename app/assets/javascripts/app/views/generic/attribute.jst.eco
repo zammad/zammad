@@ -3,7 +3,18 @@
   <h2>
   <% end %>
   <div class="formGroup-label">
-    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <% if @attribute.collapsible: %>
+      <a data-toggle="collapse" href="#collapse-<%= @attribute.id %>"<% if _.isEmpty(@attribute.value): %> class="collapsed"<% end %>>
+    <% end %>
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>>
+      <% if @attribute.collapsible: %>
+      <%- @Icon('arrow-right') %>
+      <%- @Icon('arrow-down') %>
+      <% end %>
+      <%- @T(@attribute.display) %>
+      <span><% if !@attribute.null: %>*<% end %></span>
+    </label>
+    <% if @attribute.collapsible: %></a><% end %>
     <%- @item %>
     <% if @bookmarkable: %>
     <div class="align-right js-bookmark formGroup-bookmark">

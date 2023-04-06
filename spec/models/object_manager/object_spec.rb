@@ -5,11 +5,9 @@ require 'rails_helper'
 RSpec.describe ObjectManager::Object do
 
   describe 'attribute permissions', db_strategy: :reset do
-
-    let(:user) do
-      create(:user, roles: [role_attribute_permissions])
-    end
-    let(:attribute) { described_class.new('Ticket').attributes(user).detect { |attribute| attribute[:name] == attribute_name } }
+    let(:user)            { create(:user, roles: [role_attribute_permissions]) }
+    let(:skip_permission) { false }
+    let(:attribute)       { described_class.new('Ticket').attributes(user, skip_permission: skip_permission).detect { |attribute| attribute[:name] == attribute_name } }
 
     let(:role_attribute_permissions) do
       create(:role).tap do |role|
@@ -42,6 +40,14 @@ RSpec.describe ObjectManager::Object do
       it 'uses true' do
         expect(attribute[:screen]['create']['shown']).to be true
       end
+
+      context 'with skip_permission: true' do
+        let(:skip_permission) { true }
+
+        it 'uses true' do
+          expect(attribute[:screen]['create']['shown']).to be true
+        end
+      end
     end
 
     context 'when -all- is present' do
@@ -63,6 +69,14 @@ RSpec.describe ObjectManager::Object do
 
       it 'takes its values into account' do
         expect(attribute[:screen]['create']['shown']).to be true
+      end
+
+      context 'with skip_permission: true' do
+        let(:skip_permission) { true }
+
+        it 'takes its values into account' do
+          expect(attribute[:screen]['create']['shown']).to be true
+        end
       end
     end
 
@@ -87,6 +101,14 @@ RSpec.describe ObjectManager::Object do
       it 'takes these values into account' do
         expect(attribute[:screen]['create']['item_class']).to eq('column')
       end
+
+      context 'with skip_permission: true' do
+        let(:skip_permission) { true }
+
+        it 'takes these values into account' do
+          expect(attribute[:screen]['create']['item_class']).to eq('column')
+        end
+      end
     end
 
     context 'when agent is also customer' do
@@ -106,6 +128,14 @@ RSpec.describe ObjectManager::Object do
 
       it 'prefers agent over customer permissions' do
         expect(attribute[:screen]['create']['filter']).to eq([3, 5])
+      end
+
+      context 'with skip_permission: true' do
+        let(:skip_permission) { true }
+
+        it 'prefers agent over customer permissions' do
+          expect(attribute[:screen]['create']['filter']).to eq([3, 5])
+        end
       end
     end
   end

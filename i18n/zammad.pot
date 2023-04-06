@@ -50,33 +50,36 @@ msgstr ""
 msgid "\"Database\" stores all attachments in the database (not recommended for storing large amounts of data). \"Filesystem\" stores the data in the filesystem. You can switch between the modules even on a system that is already in production without any loss of data."
 msgstr ""
 
-#. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_create/en.md.erb
+#: app/views/messaging/ticket_create/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
-#. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation/en.md.erb
+#: app/views/messaging/ticket_escalation/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
-#. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_reminder_reached/en.md.erb
+#: app/views/messaging/ticket_reminder_reached/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
-#. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_update/en.md.erb
+#. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/messaging/ticket_info/en.md.erb
+#: app/views/messaging/ticket_update/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
-#. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation_warning/en.md.erb
+#: app/views/messaging/ticket_escalation_warning/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will escalate at \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
@@ -2834,6 +2837,10 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "Custom Payload"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
@@ -5213,9 +5220,9 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
@@ -7903,9 +7910,9 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Owner"
@@ -8147,6 +8154,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Please enter a text."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/webhook.coffee
+msgid "Please enter a valid JSON string."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts
@@ -9748,9 +9759,9 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "State"
@@ -10426,6 +10437,10 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 msgid "The provided match operator is missing or invalid."
+msgstr ""
+
+#: app/models/webhook.rb
+msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb

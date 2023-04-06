@@ -892,7 +892,15 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'schedules the webhooks notification job' do
-          expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(trigger, ticket, nil)
+          expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(
+            trigger,
+            ticket,
+            nil,
+            changes:        {},
+            user_id:        nil,
+            execution_type: 'trigger',
+            event_type:     nil,
+          )
         end
       end
 

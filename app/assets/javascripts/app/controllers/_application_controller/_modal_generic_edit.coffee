@@ -30,7 +30,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
     errors = @item.validate(
       controllerForm: @controller
     )
-    if errors
+
+    if @validateOnSubmit
+      errors = Object.assign({}, errors, @validateOnSubmit(params))
+
+    if !_.isEmpty(errors)
       @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false
