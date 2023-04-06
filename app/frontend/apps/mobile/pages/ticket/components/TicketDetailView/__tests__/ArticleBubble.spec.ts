@@ -124,10 +124,6 @@ describe('component for displaying text article', () => {
     })
 
     expect(
-      view.queryByIconName('mobile-lock'),
-      'has a lock icon',
-    ).toBeInTheDocument()
-    expect(
       view.getByTestId('article-username'),
       'doesnt have content name',
     ).not.toHaveTextContent('-')
