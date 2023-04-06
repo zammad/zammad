@@ -478,7 +478,7 @@ class App.TicketCreate extends App.Controller
     handlers = @Config.get('TicketCreateFormHandler')
 
     top         = App.Ticket.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-top')
-    article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-top')
+    article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.article-form-top')
     middle      = App.Ticket.attributesGet('create_middle', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-middle')
     bottom      = App.Ticket.attributesGet('create_bottom', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-bottom')
 
