@@ -13,17 +13,17 @@
   keywords: ''
   content: Für weitere Fragen stehe ich gerne zur Verfügung!
   note: ''
-- name: glg - Ganz liebe Grüße,
+- name: glg - Ganz liebe Grüße
   keywords: ''
-  content: Ganz liebe Grüße,
+  content: Ganz liebe Grüße
   note: ''
 - name: vg - Viele Grüße,
   keywords: ''
   content: Viele Grüße,
   note: ''
-- name: lg - Liebe Grüße,
+- name: lg - Liebe Grüße
   keywords: ''
-  content: Liebe Grüße,
+  content: Liebe Grüße
   note: ''
 - name: 'hallo - Hallo #{ticket.customer.firstname},'
   keywords: ''
@@ -73,27 +73,27 @@
   keywords: ''
   content: Mit freundlichen Grüßen,
   note: ''
-- name: sg - Sonnige Grüße,
+- name: sg - Sonnige Grüße
   keywords: ''
-  content: Sonnige Grüße,
+  content: Sonnige Grüße
   note: ''
-- name: sog - Sommerliche Grüße,
+- name: sog - Sommerliche Grüße
   keywords: ''
-  content: Sommerliche Grüße,
+  content: Sommerliche Grüße
   note: ''
-- name: wg - Winterliche Grüße,
+- name: wg - Winterliche Grüße
   keywords: ''
-  content: Winterliche Grüße,
+  content: Winterliche Grüße
   note: ''
-- name: ivbd - Ich verbleibe bis dahin,
+- name: ivbd - Ich verbleibe bis dahin
   keywords: ''
-  content: Ich verbleibe bis dahin,
+  content: Ich verbleibe bis dahin
   note: ''
-- name: bg - Beste Grüße,
+- name: bg - Beste Grüße
   keywords: ''
-  content: Beste Grüße,
+  content: Beste Grüße
   note: ''
-- name: vdbg - Vielen Dank und beste Grüße,
+- name: vdbg - Vielen Dank und beste Grüße
   keywords: ''
   content: Vielen Dank und beste Grüße.
   note: ''
