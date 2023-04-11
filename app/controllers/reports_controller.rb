@@ -98,7 +98,7 @@ class ReportsController < ApplicationController
           timezone:   params[:timezone],
           locale:     current_user.locale,
         )
-        filename = "tickets-#{get_params[:profile].name}-#{backend[:display]}.xls"
+        filename = "tickets-#{get_params[:profile].name}-#{backend[:display]}.xlsx"
       end
       break
     end
@@ -106,7 +106,7 @@ class ReportsController < ApplicationController
       send_data(
         excel.content,
         filename:    filename,
-        type:        'application/vnd.ms-excel',
+        type:        ExcelSheet::CONTENT_TYPE,
         disposition: 'attachment'
       )
       return

@@ -613,7 +613,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    writeexcel (1.0.5)
+    write_xlsx (1.10.2)
+      rubyzip (>= 1.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.7)
@@ -744,7 +745,7 @@ DEPENDENCIES
   viewpoint
   vite_rails
   webmock
-  writeexcel
+  write_xlsx
   zendesk_api
 
 RUBY VERSION

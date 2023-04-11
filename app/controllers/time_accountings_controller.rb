@@ -103,8 +103,8 @@ class TimeAccountingsController < ApplicationController
     )
     send_data(
       excel.content,
-      filename:    "by_activity-#{year}-#{month}.xls",
-      type:        'application/vnd.ms-excel',
+      filename:    "by_activity-#{year}-#{month}.xlsx",
+      type:        ExcelSheet::CONTENT_TYPE,
       disposition: 'attachment'
     )
   end
@@ -176,8 +176,8 @@ class TimeAccountingsController < ApplicationController
 
     send_data(
       excel.content,
-      filename:    "by_ticket-#{year}-#{month}.xls",
-      type:        'application/vnd.ms-excel',
+      filename:    "by_ticket-#{year}-#{month}.xlsx",
+      type:        ExcelSheet::CONTENT_TYPE,
       disposition: 'attachment'
     )
   end
@@ -255,8 +255,8 @@ class TimeAccountingsController < ApplicationController
       )
       send_data(
         excel.content,
-        filename:    "by_customer-#{year}-#{month}.xls",
-        type:        'application/vnd.ms-excel',
+        filename:    "by_customer-#{year}-#{month}.xlsx",
+        type:        ExcelSheet::CONTENT_TYPE,
         disposition: 'attachment'
       )
       return
@@ -330,8 +330,8 @@ class TimeAccountingsController < ApplicationController
       )
       send_data(
         excel.content,
-        filename:    "by_organization-#{year}-#{month}.xls",
-        type:        'application/vnd.ms-excel',
+        filename:    "by_organization-#{year}-#{month}.xlsx",
+        type:        ExcelSheet::CONTENT_TYPE,
         disposition: 'attachment'
       )
       return
