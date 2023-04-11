@@ -40,7 +40,7 @@ class Index extends App.ControllerSubContent
     @genericController.paginate( @page || 1 )
 
   validateOnSubmit: (params) ->
-    return if params['custom_payload'] is undefined
+    return if _.isEmpty(params['custom_payload'])
 
     errors = {}
 

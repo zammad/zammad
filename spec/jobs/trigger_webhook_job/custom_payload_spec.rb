@@ -204,6 +204,16 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         expect(generate).to eq(json_data)
       end
     end
+
+    context 'when the replacement value contains double quotes' do
+      let(:ticket)    { create(:ticket, title: 'Test "Title"') }
+      let(:record)    { { 'ticket.title' => '#{ticket.title}' }.to_json }
+      let(:json_data) { { 'ticket.title' => 'Test "Title"' } }
+
+      it 'returns the determined value' do
+        expect(generate).to eq(json_data)
+      end
+    end
   end
   # rubocop:enable Lint/InterpolationCheck
 end

@@ -210,7 +210,7 @@ class TriggerWebhookJob::CustomPayload
 
   def self.replace(record, mappings)
     mappings.each do |variable, value|
-      record.gsub!("\#{#{variable}}", value.to_s)
+      record.gsub!("\#{#{variable}}", value.to_s.gsub(%r{"}, '\"'))
     end
 
     record
