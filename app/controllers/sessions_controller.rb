@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
     raise Exceptions::NotAuthorized, "User '#{login}' could not be found." if user.blank?
 
     session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(user, 'SSO', {})
+    authentication_check_prerequesits(user, 'SSO')
 
     initiate_session_for(user)
 
@@ -235,7 +235,7 @@ class SessionsController < ApplicationController
     raise_unified_login_error if !auth.valid?
 
     session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(auth.user, 'session', {})
+    authentication_check_prerequesits(auth.user, 'session')
   end
 
   def initiate_session_for(user)

@@ -423,9 +423,9 @@ function restore_zammad () {
   # Ensure all data is loaded from the restored database and not the cache of the previous system state
   echo "# Clearing Cache ..."
   if command -v zammad > /dev/null; then
-    zammad run rails r "Cache.clear"
+    zammad run rails r "Rails.cache.clear"
   else
-    ${ZAMMAD_DIR}/bin/rails r "Cache.clear"
+    ${ZAMMAD_DIR}/bin/rails r "Rails.cache.clear"
   fi
 }
 

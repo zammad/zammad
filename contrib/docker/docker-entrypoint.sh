@@ -77,7 +77,7 @@ if [ "$1" = 'zammad-init' ]; then
       base64 -d <<< "${AUTOWIZARD_JSON}" > auto_wizard.json
     fi
   else
-    bundle exec rails r "Cache.clear"
+    bundle exec rails r "Rails.cache.clear"
     bundle exec rake db:migrate
   fi
 
