@@ -97,7 +97,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
     create_table :email_addresses do |t|
       t.integer :channel_id,                        null: true
-      t.string  :realname,             limit: 250,  null: false
+      t.string  :name,                 limit: 250,  null: false
       t.string  :email,                limit: 255,  null: false
       t.boolean :active,                            null: false, default: true
       t.string  :note,                 limit: 250,  null: true

@@ -11,7 +11,7 @@ JSON
 Example:
 {
   "id":1,
-  "realname":"some realname",
+  "name":"some realname",
   "email":"system@example.com",
   "updated_at":"2012-09-14T17:51:53Z",
   "created_at":"2012-09-14T17:51:53Z",
@@ -30,12 +30,12 @@ Response:
 [
   {
     "id": 1,
-    "realname":"some realname1",
+    "name":"some realname1",
     ...
   },
   {
     "id": 2,
-    "realname":"some realname2",
+    "name":"some realname2",
     ...
   }
 ]
@@ -77,7 +77,7 @@ POST /api/v1/email_addresses.json
 
 Payload:
 {
-  "realname":"some realname",
+  "name":"some realname",
   "email":"system@example.com",
   "note": "",
   "active":true,
@@ -86,7 +86,7 @@ Payload:
 Response:
 {
   "id": 1,
-  "realname":"some realname",
+  "name":"some realname",
   "email":"system@example.com",
   ...
 }
@@ -107,7 +107,7 @@ PUT /api/v1/email_addresses/{id}.json
 
 Payload:
 {
-  "realname":"some realname",
+  "name":"some realname",
   "email":"system@example.com",
   "note": "",
   "active":true,
@@ -116,7 +116,7 @@ Payload:
 Response:
 {
   "id": 1,
-  "realname":"some realname",
+  "name":"some realname",
   "email":"system@example.com",
   ...
 }

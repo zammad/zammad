@@ -26,7 +26,7 @@ module Gql::Types
 
       email_address = @object.email_address
 
-      { name: email_address.realname, email_address: email_address.email }
+      { name: email_address.name, email_address: email_address.email }
     end
   end
 end

@@ -72,7 +72,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     let(:server_address) { ENV['MAIL_SERVER'] }
     let(:server_login)    { ENV['MAIL_ADDRESS'] }
     let(:server_password) { ENV['MAIL_PASS'] }
-    let(:email_address)   { create(:email_address, realname: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
+    let(:email_address)   { create(:email_address, name: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
     let(:group)           { create(:group, email_address: email_address) }
     let(:inbound_options) do
       {

@@ -13,7 +13,7 @@ if channel
 end
 
 email_address = EmailAddress.create_or_update(
-  realname:      'Zammad',
+  name:          'Zammad',
   email:         'zammad@localhost',
   channel_id:    channel_id,
   updated_by_id: 1,

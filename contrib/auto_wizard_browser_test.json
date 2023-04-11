@@ -103,7 +103,7 @@
     {
       "id": 1,
       "channel_id": 3,
-      "realname": "Some Realname",
+      "name": "Some Realname",
       "email": "zammad@mail.test.dc.zammad.com"
     }
   ],

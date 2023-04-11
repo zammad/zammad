@@ -122,8 +122,8 @@ class ExternalCredential::Google
 
     email_addresses = user_aliases(response)
     email_addresses.unshift({
-                              realname: "#{Setting.get('product_name')} Support",
-                              email:    user_data[:email],
+                              name:  "#{Setting.get('product_name')} Support",
+                              email: user_data[:email],
                             })
 
     email_addresses.each do |email|
@@ -145,7 +145,7 @@ class ExternalCredential::Google
     email_addresses.each do |user_alias|
       EmailAddress.create!(
         channel_id:    channel.id,
-        realname:      user_alias[:realname],
+        name:          user_alias[:name],
         email:         user_alias[:email],
         active:        true,
         created_by_id: 1,
@@ -262,8 +262,8 @@ class ExternalCredential::Google
       next if row['verificationStatus'] != 'accepted'
 
       aliases.push({
-                     realname: row['displayName'],
-                     email:    row['sendAsEmail'],
+                     name:  row['displayName'],
+                     email: row['sendAsEmail'],
                    })
     end
 

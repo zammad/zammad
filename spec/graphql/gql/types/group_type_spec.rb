@@ -10,7 +10,7 @@ RSpec.describe Gql::Types::GroupType do
 
     it 'has email address and name' do
       expect(instance.email_address)
-        .to include(name: group.email_address.realname, email_address: group.email_address.email)
+        .to include(name: group.email_address.name, email_address: group.email_address.email)
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe Gql::Types::GroupType do
           'group' => include(
             'name'         => group.name,
             'emailAddress' => include(
-              'name'         => group.email_address.realname,
+              'name'         => group.email_address.name,
               'emailAddress' => group.email_address.email,
             )
           ),

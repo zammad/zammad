@@ -18,7 +18,7 @@
       <% for email_address in @not_used_email_addresses: %>
         <li class="list-item" data-id="<%= email_address.id %>">
           <div class="list-item-name">
-            <a href="#" class="js-emailAddressEdit"><%= email_address.realname %> &lt;<%= email_address.email %>&gt;</a>
+            <a href="#" class="js-emailAddressEdit"><%= email_address.name %> &lt;<%= email_address.email %>&gt;</a>
           </div>
           <div class="list-item-delete js-emailAddressDelete">
             <%- @Icon('diagonal-cross') %>

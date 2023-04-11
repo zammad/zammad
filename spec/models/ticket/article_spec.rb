@@ -54,7 +54,7 @@ RSpec.describe Ticket::Article, type: :model do
           let(:created_by) { User.find(1) }
 
           it 'sets the from to realname of the mail address)' do
-            expect(article.reload.from).to eq("#{article.ticket.group.email_address.realname} <#{article.ticket.group.email_address.email}>")
+            expect(article.reload.from).to eq("#{article.ticket.group.email_address.name} <#{article.ticket.group.email_address.email}>")
           end
         end
 

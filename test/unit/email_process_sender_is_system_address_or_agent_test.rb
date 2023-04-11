@@ -7,7 +7,7 @@ class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
   setup do
     EmailAddress.create_or_update(
       channel_id:    1,
-      realname:      'My System',
+      name:          'My System',
       email:         'Myzammad@system.TEST',
       active:        true,
       updated_by_id: 1,

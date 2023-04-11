@@ -162,14 +162,14 @@ class ChannelsEmailController < ApplicationController
 
     if address
       address.update!(
-        realname:   params[:meta][:realname],
+        name:       params[:meta][:realname],
         email:      email,
         active:     true,
         channel_id: channel.id,
       )
     else
       EmailAddress.create(
-        realname:   params[:meta][:realname],
+        name:       params[:meta][:realname],
         email:      email,
         active:     true,
         channel_id: channel.id,

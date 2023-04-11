@@ -71,13 +71,13 @@ module Ticket::Article::AddsMetadataEmail
       case Setting.get('ticket_define_email_from')
       when 'AgentNameSystemAddressName'
         separator = Setting.get('ticket_define_email_from_separator')
-        return "#{created_by.firstname} #{created_by.lastname} #{separator} #{email_address.realname}"
+        return "#{created_by.firstname} #{created_by.lastname} #{separator} #{email_address.name}"
       when 'AgentName'
         return "#{created_by.firstname} #{created_by.lastname}"
       end
     end
 
-    email_address.realname
+    email_address.name
   end
 
   def metadata_email_process_from

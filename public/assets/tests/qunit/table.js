@@ -643,14 +643,14 @@ QUnit.test('table test 4', assert => {
   App.EmailAddress.refresh( [
     {
       id:         55,
-      realname:   'realname 55',
+      name:       'realname 55',
       email:      'email 55',
       active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
       id:         56,
-      realname:   'realname 56',
+      name:       'realname 56',
       email:      'email 56',
       active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
@@ -697,7 +697,7 @@ QUnit.test('table test 4', assert => {
   new App.ControllerTable({
     el:                 el,
     model:              App.EmailAddress,
-    objects:            App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
+    objects:            App.EmailAddress.search({sortBy:'name', order: 'ASC'}),
     callbackHeader:     [callbackHeader],
     callbackAttributes: {
       'some name': [ callbackAttributes ]

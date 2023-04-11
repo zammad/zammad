@@ -384,9 +384,9 @@ RSpec.describe ExternalCredential::Google do
     it 'returns the google user email aliases' do
       result = described_class.user_aliases(token)
       expect(result).to eq([
-                             { realname: 'alias1', email: 'alias1@example.com' },
-                             { realname: 'alias2', email: 'alias2@example.com' },
-                             { realname: 'alias3', email: 'alias3@example.com' }
+                             { name: 'alias1', email: 'alias1@example.com' },
+                             { name: 'alias2', email: 'alias2@example.com' },
+                             { name: 'alias3', email: 'alias3@example.com' }
                            ])
     end
 
