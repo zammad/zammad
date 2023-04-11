@@ -885,6 +885,18 @@ QUnit.test('supports advanced features', (assert) => {
           pre_condition: 'current_user.id',
           value: [],
         },
+        {
+          name: 'ticket.pending_time',
+          operator: 'has reached',
+        },
+        {
+          name: 'ticket.escalation_at',
+          operator: 'has reached',
+        },
+        {
+          name: 'ticket.escalation_at',
+          operator: 'has reached warning',
+        },
       ],
     },
   }
@@ -892,7 +904,7 @@ QUnit.test('supports advanced features', (assert) => {
     el,
     model: {
       configure_attributes: [
-        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', action: true, hasChanged: true, executionTime: true, out_of_office: true, preview: false, always_expert_mode: true },
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', action: true, hasChanged: true, executionTime: true, out_of_office: true, preview: false, always_expert_mode: true, hasReached: true },
       ],
     },
     params: clone(defaults),
@@ -923,6 +935,28 @@ QUnit.test('supports advanced features', (assert) => {
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-attributeSelector select option:selected').text(), 'Out of office replacement', 'ooo attribute selected')
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-operator select option:selected').text(), 'is', 'is operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-preCondition select option:selected').text(), 'current user', 'current user pre-condition selected')
+
+  // Check pending till options.
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-attributeSelector select option:selected').text(), 'Pending till', 'pending till attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-operator select option:selected').text(), 'has reached', 'has reached operator selected')
+
+  el.find('.js-filterElement:nth-child(6) .js-operator select').val('before (relative)').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-value').hasClass('hide'), false, 'value visible')
+
+  el.find('.js-filterElement:nth-child(6) .js-operator select').val('has reached').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-value').hasClass('hide'), true, 'value invisible')
+
+  // Check escalation at options.
+  assert.equal(el.find('.js-filterElement:nth-child(7) .js-attributeSelector select option:selected').text(), 'Escalation at', 'escalation at attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(7) .js-operator select option:selected').text(), 'has reached', 'has reached operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-attributeSelector select option:selected').text(), 'Escalation at', 'escalation at attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-operator select option:selected').text(), 'has reached warning', 'has reached warning operator selected')
+
+  el.find('.js-filterElement:nth-child(8) .js-operator select').val('before (relative)').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-value').hasClass('hide'), false, 'value visible')
+
+  el.find('.js-filterElement:nth-child(8) .js-operator select').val('has reached warning').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-value').hasClass('hide'), true, 'value invisible')
 })
 
 QUnit.test('supports migration of the outdated param structure', (assert) => {

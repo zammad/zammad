@@ -482,6 +482,9 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
   @renderCondition: (item, attribute, params, condition, level) ->
     [defaults, groups, elements] = @defaults(attribute, params)
 
+    if !elements[condition.name]
+      condition.name = 'ticket.number'
+
     row = @rowContainer(groups, elements, attribute, level)
     @rebuildAttributeSelectors(item, row, condition.name, elements, condition, attribute)
     item.filter('.js-filter').append(row)
@@ -645,53 +648,26 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationSelector
     @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     toggleValue()
 
-  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     if !@hasExpertConditions() or !@isExpertMode
       return super
 
-    # build new item
-    attributeConfig = elements[groupAndAttribute]
-    config = _.clone(attributeConfig)
+    # Allow for multiple elements of the same type.
+    delete config['name']
+    delete config['id']
 
-    if config.relation is 'User'
-      config.tag = 'user_autocompletion'
-    if config.relation is 'Organization'
-      config.tag = 'autocompletion_ajax'
+    if typeof meta.value isnt 'undefined'
+      config['value'] = meta.value
 
-    # render ui element
-    item = ''
-    if config && App.UiElement[config.tag] && meta.operator isnt 'today'
+    config
 
-      # Allow for multiple elements of the same type.
-      delete config['name']
-      delete config['id']
+  @buildValueConfigRelativeNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    if !@hasExpertConditions() or !@isExpertMode
+      return super
 
-      if typeof meta.value isnt 'undefined'
-        config['value'] = meta.value
-      if 'multiple' of config
-        config = @buildValueConfigMultiple(config, meta)
-      if config.relation is 'User'
-        config.multiple = false
-        config.nulloption = false
-        config.guess = false
-        config.disableCreateObject = true
-      if config.relation is 'Organization'
-        config.multiple = false
-        config.nulloption = false
-        config.guess = false
-      if config.tag is 'checkbox'
-        config.tag = 'select'
-      item = @renderConfig(config, meta)
-    if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)' || meta.operator is 'from (relative)' || meta.operator is 'till (relative)'
-      config['value'] = meta
-      item = App.UiElement['time_range'].render(config, {})
+    config['value'] = meta
 
-    elementRow.find('.js-value').removeClass('hide').html(item)
-    if meta.operator is 'has changed'
-      elementRow.find('.js-value').addClass('hide')
-      elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
-    else
-      elementRow.find('.js-value').removeClass('hide')
+    config
 
   @buildExpertConditions: (item, attribute) ->
     expertConditions = item.find('.js-expertConditions input:hidden')

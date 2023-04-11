@@ -598,7 +598,8 @@ perform changes on ticket
 
 =end
 
-  def perform_changes(performable, perform_origin, item = nil, current_user_id = nil)
+  def perform_changes(performable, perform_origin, item = nil, current_user_id = nil, activator_type: nil)
+    return if performable.try(:performable_on?, self, activator_type:) === false # rubocop:disable Style/CaseEquality
 
     perform = performable.perform
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
@@ -746,6 +747,8 @@ perform changes on ticket
       end
     end
 
+    performable.try(:performed_on, self, activator_type:)
+
     true
   end
 
@@ -791,11 +794,11 @@ perform changes on ticket
 
 perform active triggers on ticket
 
-  Ticket.perform_triggers(ticket, article, item, options)
+  Ticket.perform_triggers(ticket, article, triggers, item, triggers, options)
 
 =end
 
-  def self.perform_triggers(ticket, article, item, options = {})
+  def self.perform_triggers(ticket, article, triggers, item, options = {})
     recursive = Setting.get('ticket_trigger_recursive')
     type = options[:type] || item[:type]
     local_options = options.clone
@@ -814,11 +817,6 @@ perform active triggers on ticket
       return [false, message]
     end
 
-    triggers = if Rails.configuration.db_case_sensitive
-                 ::Trigger.where(active: true).reorder(Arel.sql('LOWER(name)'))
-               else
-                 ::Trigger.where(active: true).reorder(:name)
-               end
     return [true, __('No triggers active')] if triggers.blank?
 
     # check if notification should be send because of customer emails
@@ -844,7 +842,18 @@ perform active triggers on ticket
         user = User.lookup(id: user_id)
 
         # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(trigger.condition, limit: 1, execution_time: true, current_user: user, access: 'ignore', ticket_action: type, ticket_id: ticket.id, article_id: article&.id, changes: item[:changes], changes_required: true)
+        ticket_count, tickets = Ticket.selectors(
+          trigger.condition,
+          limit:            1,
+          execution_time:   true,
+          current_user:     user,
+          access:           'ignore',
+          ticket_action:    type,
+          ticket_id:        ticket.id,
+          article_id:       article&.id,
+          changes:          item[:changes],
+          changes_required: trigger.condition_changes_required?
+        )
 
         next if ticket_count.blank?
         next if ticket_count.zero?
@@ -872,7 +881,7 @@ perform active triggers on ticket
         local_options[:trigger_ids][ticket.id.to_s].push trigger.id
         logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
 
-        ticket.perform_changes(trigger, 'trigger', item, user_id)
+        ticket.perform_changes(trigger, 'trigger', item, user_id, activator_type: type)
 
         if recursive == true
           TransactionDispatcher.commit(local_options)

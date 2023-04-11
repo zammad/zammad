@@ -293,17 +293,20 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :overviews_groups, :groups
 
     create_table :triggers do |t|
-      t.column :name,                 :string, limit: 250, null: false
-      t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
-      t.column :perform,              :text, limit: 500.kilobytes + 1, null: false
-      t.column :disable_notification, :boolean,               null: false, default: true
-      t.column :note,                 :string, limit: 250,    null: true
-      t.column :active,               :boolean,               null: false, default: true
-      t.column :updated_by_id,        :integer,               null: false
-      t.column :created_by_id,        :integer,               null: false
+      t.column :name,                     :string, limit: 250, null: false
+      t.column :condition,                :text, limit: 500.kilobytes + 1, null: false
+      t.column :perform,                  :text, limit: 500.kilobytes + 1, null: false
+      t.column :disable_notification,     :boolean,               null: false, default: true
+      t.column :note,                     :string, limit: 250,    null: true
+      t.column :activator,                :string, limit: 50,     null: false, default: 'action'
+      t.column :execution_condition_mode, :string, limit: 50,     null: false, default: 'selective'
+      t.column :active,                   :boolean,               null: false, default: true
+      t.column :updated_by_id,            :integer,               null: false
+      t.column :created_by_id,            :integer,               null: false
       t.timestamps limit: 3, null: false
     end
     add_index :triggers, [:name], unique: true
+    add_index :triggers, %i[active activator]
     add_foreign_key :triggers, :users, column: :created_by_id
     add_foreign_key :triggers, :users, column: :updated_by_id
 

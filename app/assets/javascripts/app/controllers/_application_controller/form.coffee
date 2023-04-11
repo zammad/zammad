@@ -370,6 +370,7 @@ class App.ControllerForm extends App.Controller
     return el.find('[data-name="' + key + '"]')
 
   @findFieldByGroup: (key, el) ->
+    return el if el.data('attributeName') is key
     return el.find('.form-group[data-attribute-name="' + key + '"]')
 
   @fieldIsShown: (field) ->

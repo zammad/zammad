@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 Trigger.create_or_update(
-  name:          'auto reply (on new tickets)',
-  condition:     {
+  name:                     'auto reply (on new tickets)',
+  condition:                {
     'ticket.action'     => {
       'operator' => 'is',
       'value'    => 'create',
@@ -24,7 +24,7 @@ Trigger.create_or_update(
       'value'    => Ticket::Article::Sender.lookup(name: 'Customer').id,
     },
   },
-  perform:       {
+  perform:                  {
     'notification.email' => {
       'body'      => '<div>Your request <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
@@ -39,13 +39,15 @@ Trigger.create_or_update(
       'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
-  active:        true,
-  created_by_id: 1,
-  updated_by_id: 1,
+  activator:                'action',
+  execution_condition_mode: 'selective',
+  active:                   true,
+  created_by_id:            1,
+  updated_by_id:            1,
 )
 Trigger.create_or_update(
-  name:          'auto reply (on follow-up of tickets)',
-  condition:     {
+  name:                     'auto reply (on follow-up of tickets)',
+  condition:                {
     'ticket.action'     => {
       'operator' => 'is',
       'value'    => 'update',
@@ -63,7 +65,7 @@ Trigger.create_or_update(
       ],
     },
   },
-  perform:       {
+  perform:                  {
     'notification.email' => {
       'body'      => '<div>Your follow-up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
@@ -78,14 +80,16 @@ Trigger.create_or_update(
       'subject'   => 'Thanks for your follow-up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
-  active:        false,
-  created_by_id: 1,
-  updated_by_id: 1,
+  activator:                'action',
+  execution_condition_mode: 'selective',
+  active:                   false,
+  created_by_id:            1,
+  updated_by_id:            1,
 )
 
 Trigger.create_or_update(
-  name:          'customer notification (on owner change)',
-  condition:     {
+  name:                     'customer notification (on owner change)',
+  condition:                {
     'ticket.owner_id' => {
       'operator'         => 'has changed',
       'pre_condition'    => 'current_user.id',
@@ -93,7 +97,7 @@ Trigger.create_or_update(
       'value_completion' => '',
     }
   },
-  perform:       {
+  perform:                  {
     'notification.email' => {
       'body'      => '<p>The owner of ticket (Ticket##{ticket.number}) has changed and is now "#{ticket.owner.firstname} #{ticket.owner.lastname}".<p>
 <br/>
@@ -106,7 +110,9 @@ Trigger.create_or_update(
       'subject'   => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
-  active:        false,
-  created_by_id: 1,
-  updated_by_id: 1,
+  activator:                'action',
+  execution_condition_mode: 'selective',
+  active:                   false,
+  created_by_id:            1,
+  updated_by_id:            1,
 )

@@ -1,7 +1,22 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Selector::Sql < Ticket::Selector::Base
-  attr_accessor :final_query, :final_bind_params, :final_tables, :final_tables_query
+  VALID_OPERATORS = [
+    'has changed',
+    'has reached',
+    'has reached warning',
+    'is',
+    'is not',
+    'contains',
+    %r{contains (not|all|one|all not|one not)},
+    'today',
+    %r{(after|before) \(absolute\)},
+    %r{(within next|within last|after|before|till|from) \(relative\)},
+    'is in working time',
+    'is not in working time'
+  ].freeze
+
+  attr_accessor :final_query, :final_bind_params, :final_tables, :final_tables_query, :changed_attributes
 
   def get
     @final_query        = []
@@ -106,21 +121,11 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       end
     end
 
-    # validation
-    raise "Invalid block_condition, operator missing #{block_condition.inspect}" if !block_condition[:operator]
-    raise "Invalid block_condition, operator #{block_condition[:operator]} is invalid #{block_condition.inspect}" if !block_condition[:operator].match?(%r{^(has changed|is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|today|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before|till|from)\s\(relative\))|(is\sin\sworking\stime|is\snot\sin\sworking\stime)$})
+    validate_operator! block_condition
 
-    # validate value / allow blank but only if pre_condition exists and is not specific
-    if block_condition[:operator] != 'has changed' && ((block_condition[:operator] != 'today' && !block_condition.key?(:value)) ||
-       (block_condition[:value].instance_of?(Array) && block_condition[:value].respond_to?(:blank?) && block_condition[:value].blank?) ||
-       (block_condition[:operator].start_with?('contains') && block_condition[:value].respond_to?(:blank?) && block_condition[:value].blank?))
-      raise InvalidCondition, "Invalid condition pre_condition nil #{block_condition}!" if block_condition[:pre_condition].nil?
-      raise InvalidCondition, "Invalid condition pre_condition blank #{block_condition}!" if block_condition[:pre_condition].respond_to?(:blank?) && block_condition[:pre_condition].blank?
-      raise InvalidCondition, "Invalid condition pre_condition specific #{block_condition}!" if block_condition[:pre_condition] == 'specific'
-    end
+    validate_pre_condition_blank! block_condition
 
-    # validate pre_condition values
-    raise InvalidCondition, "Invalid condition pre_condition not set #{block_condition}!" if block_condition[:operator] != 'has changed' && block_condition[:pre_condition] && block_condition[:pre_condition] !~ %r{^(not_set|current_user\.|specific)}
+    validate_pre_condition_values! block_condition
 
     # get attributes
     attribute = "#{ActiveRecord::Base.connection.quote_table_name("#{attribute_table}s")}.#{ActiveRecord::Base.connection.quote_column_name(attribute_name)}"
@@ -157,10 +162,24 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                  '1 = 0'
                end
 
+    elsif block_condition[:operator] == 'has reached'
+      query << if time_based_trigger?(block_condition, warning: false)
+                 '1 = 1'
+               else
+                 '1 = 0'
+               end
+
+    elsif block_condition[:operator] == 'has reached warning'
+      query << if time_based_trigger?(block_condition, warning: true)
+                 '1 = 1'
+               else
+                 '1 = 0'
+               end
+
     elsif attribute_table == 'ticket' && attribute_name == 'action'
       check = options[:ticket_action] == block_condition[:value] ? 1 : 0
 
-      query << if block_condition[:value] == 'update' && check && changed_attributes.blank?
+      query << if update_action_requires_changed_attributes?(block_condition, check)
                  '1 = 0'
                elsif block_condition[:operator] == 'is'
                  "1 = #{check}"
@@ -409,5 +428,58 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     selector[:value].to_i.send(selector[:range].pluralize)
   rescue
     raise 'unknown selector'
+  end
+
+  def validate_operator!(condition)
+    if condition[:operator].blank?
+      raise "Invalid condition, operator missing #{condition.inspect}"
+    end
+
+    return true if self.class.valid_operator? condition[:operator]
+
+    raise "Invalid condition, operator #{condition[:operator]} is invalid #{condition.inspect}"
+  end
+
+  def time_based_trigger?(condition, warning:)
+    case [condition[:name], options[:ticket_action]]
+    in 'ticket.pending_time', 'reminder_reached'
+      true
+    in 'ticket.escalation_at', 'escalation'
+      !warning
+    in 'ticket.escalation_at', 'escalation_warning'
+      warning
+    else
+      false
+    end
+  end
+
+  # validate pre_condition values
+  def validate_pre_condition_values!(condition)
+    return if ['has changed', 'has reached', 'has reached warning'].include? condition[:operator]
+    return if condition[:pre_condition].blank?
+    return if %w[not_set current_user. specific].any? { |elem| condition[:pre_condition].start_with? elem }
+
+    raise InvalidCondition, "Invalid condition pre_condition not set #{condition}!"
+  end
+
+  # validate value / allow blank but only if pre_condition exists and is not specific
+  def validate_pre_condition_blank!(condition)
+    return if ['has changed', 'has reached', 'has reached warning'].include? condition[:operator]
+
+    if (condition[:operator] != 'today' && !condition.key?(:value)) ||
+       (condition[:value].instance_of?(Array) && condition[:value].respond_to?(:blank?) && condition[:value].blank?) ||
+       (condition[:operator].start_with?('contains') && condition[:value].respond_to?(:blank?) && condition[:value].blank?)
+      raise InvalidCondition, "Invalid condition pre_condition nil #{condition}!" if condition[:pre_condition].nil?
+      raise InvalidCondition, "Invalid condition pre_condition blank #{condition}!" if condition[:pre_condition].respond_to?(:blank?) && condition[:pre_condition].blank?
+      raise InvalidCondition, "Invalid condition pre_condition specific #{condition}!" if condition[:pre_condition] == 'specific'
+    end
+  end
+
+  def update_action_requires_changed_attributes?(condition, check)
+    condition[:value] == 'update' && check && options[:changes_required] && changed_attributes.blank?
+  end
+
+  def self.valid_operator?(operator)
+    VALID_OPERATORS.any? { |elem| operator.match? elem }
   end
 end

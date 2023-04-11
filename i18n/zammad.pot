@@ -627,6 +627,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
@@ -650,6 +651,10 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Action execution"
+msgstr ""
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -658,6 +663,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Activated by"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -1030,6 +1039,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Always"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
@@ -3590,6 +3603,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Defines the transaction backend which detects caller IDs in objects and stores them for CTI lookups."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -9152,6 +9169,10 @@ msgstr ""
 msgid "Selected conditions"
 msgstr ""
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Selective"
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Selector"
 msgstr ""
@@ -11271,6 +11292,10 @@ msgstr ""
 msgid "Time Units Total"
 msgstr ""
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Time event"
+msgstr ""
+
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Time zone"
@@ -11457,6 +11482,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/trigger.coffee
 #: db/seeds/permissions.rb
 msgid "Triggers"
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Triggers activated by actions are executed whenever a ticket is created or updated, while triggers activated by time events are executed when certain times are reached (e.g. pending time, escalation)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
@@ -12302,6 +12331,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco
 msgid "What values of %s should be synced to users."
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "When at least one field from conditions was updated or article was added and conditions match"
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "When conditions match"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
@@ -13186,6 +13223,14 @@ msgstr ""
 msgid "has no agent access to this ticket"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "has reached"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "has reached warning"
+msgstr ""
+
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
 msgstr ""
@@ -13863,6 +13908,18 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "today"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because pending reminder was reached"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket was escalated"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco

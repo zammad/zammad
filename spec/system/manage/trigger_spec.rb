@@ -66,9 +66,7 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
     end
 
     it 'sets a customer email address with no @ character' do
-      visit '/#manage/trigger'
-
-      click '.page-header-meta .btn--success'
+      open_new_trigger_dialog
 
       in_modal do
         find(".js-attributeSelector select option[value='customer.email']").select_option
@@ -164,8 +162,7 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
     let!(:ticket) { create(:ticket, group: group,) }
 
     before do
-      visit '/#manage/trigger'
-      click_on 'New Trigger'
+      open_new_trigger_dialog
 
       in_modal do
         fill_in 'Name',	with: 'Test Trigger'
@@ -280,6 +277,67 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
         let(:ticket_multiselect_values) { options.values - trigger_values }
 
         it_behaves_like 'updating the ticket with the trigger condition'
+      end
+    end
+  end
+
+  context 'when switching a trigger to time events' do
+    shared_examples 'adding reached operator to attribute' do |attribute, operator|
+      let(:attribute) { attribute }
+      let(:operator)  { operator }
+
+      it "adds '#{operator}' operator to '#{attribute}' attribute" do
+        open_new_trigger_dialog
+
+        in_modal do
+          find_field('activator').select 'Time event'
+
+          within '.ticket_selector' do
+            find('.js-filterElement .js-attributeSelector select').select attribute
+            find('.js-filterElement .js-operator select').select operator
+          end
+
+          find_field('activator').select 'Action'
+
+          within '.ticket_selector' do
+            expect(find('.js-filterElement .js-operator select')).to have_no_selector('option', text: operator)
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'adding reached operator to attribute', 'Pending till', 'has reached'
+    it_behaves_like 'adding reached operator to attribute', 'Escalation at', 'has reached'
+    it_behaves_like 'adding reached operator to attribute', 'Escalation at', 'has reached warning'
+
+    it "removes 'action' attribute" do
+      open_new_trigger_dialog
+
+      in_modal do
+        expect(page).to have_select('activator', selected: 'Action')
+
+        within '.ticket_selector' do
+          find('.js-filterElement .js-attributeSelector select').select 'Action'
+        end
+
+        find_field('activator').select 'Time event'
+
+        within '.ticket_selector' do
+          expect(find('.js-filterElement .js-attributeSelector select')).to have_no_selector('option', text: 'Action')
+        end
+      end
+    end
+
+    it 'hides execution condition mode control' do
+      open_new_trigger_dialog
+
+      in_modal do
+        expect(page).to have_select('activator', selected: 'Action')
+        expect(page).to have_field('execution_condition_mode', visible: :all)
+
+        find_field('activator').select 'Time event'
+
+        expect(page).to have_no_field('execution_condition_mode')
       end
     end
   end
