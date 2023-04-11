@@ -28,7 +28,7 @@
   <% else: %>
     <% for token in @tokens: %>
       <tr>
-        <td><%= token.label %></td>
+        <td><%= token.name %></td>
         <td><% if token.preferences && token.preferences.permission: %><%= token.preferences.permission.join(', ') %><% end %></td>
         <td><%- @humanTime(token.created_at) %></td>
         <td><%- @Tdate(token.expires_at) %></td>

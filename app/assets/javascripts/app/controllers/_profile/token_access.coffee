@@ -86,8 +86,9 @@ class Create extends App.ControllerModal
       permissions: @permissions
     ))
     datepicker = App.UiElement.date.render(
-      name: 'expires_at',
+      name:    'expires_at',
     )
+    datepicker.find('.js-datepicker').attr('id', 'token-expires-at')
     content.find('.js-date').html(datepicker)
     content
 
@@ -129,7 +130,7 @@ class Create extends App.ControllerModal
       buttonSubmit: __("OK, I've copied my token")
       content: ->
         App.view('profile/token_access_created')(
-          name: ui.newToken.name
+          token: ui.newToken.token
         )
       onShown: ->
         @$('.js-select').on('click', ui.selectAll)

@@ -27,9 +27,9 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
 =end
 
   def index
-    tokens = Token.select(Token.column_names - %w[persistent name])
+    tokens = Token.select(Token.column_names - %w[persistent token])
                   .where(action: 'api', persistent: true, user_id: current_user.id)
-                  .reorder(updated_at: :desc, label: :asc)
+                  .reorder(updated_at: :desc, name: :asc)
 
     base_query       = Permission.reorder(:name).where(active: true)
     permission_names = current_user.permissions.pluck(:name)
@@ -78,13 +78,13 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
     if Setting.get('api_token_access') == false
       raise Exceptions::UnprocessableEntity, 'API token access disabled!'
     end
-    if params[:label].blank?
-      raise Exceptions::UnprocessableEntity, __('Need label!')
+    if params[:name].blank?
+      raise Exceptions::UnprocessableEntity, __("The required parameter 'name' is missing.")
     end
 
     token = Token.create!(
       action:      'api',
-      label:       params[:label],
+      name:        params[:name],
       persistent:  true,
       user_id:     current_user.id,
       expires_at:  params[:expires_at],
@@ -93,7 +93,7 @@ curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Co
       }
     )
     render json: {
-      name: token.name,
+      token: token.token,
     }, status: :ok
   end
 

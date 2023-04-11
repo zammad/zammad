@@ -274,16 +274,16 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :tokens do |t|
       t.references :user,                         null: false
       t.boolean :persistent
-      t.string  :name,                limit: 100, null: false
+      t.string  :name,                limit: 255, null: true
+      t.string  :token,               limit: 100, null: false
       t.string  :action,              limit: 40,  null: false
-      t.string  :label,               limit: 255, null: true
       t.text    :preferences,         limit: 500.kilobytes + 1, null: true
       t.timestamp :last_used_at,      limit: 3,   null: true
       t.date :expires_at,                         null: true
       t.timestamps limit: 3, null: false
     end
     add_index :tokens, :user_id
-    add_index :tokens, %i[name action], unique: true
+    add_index :tokens, %i[token action], unique: true
     add_index :tokens, :created_at
     add_index :tokens, :persistent
     add_foreign_key :tokens, :users

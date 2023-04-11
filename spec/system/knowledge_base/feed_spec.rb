@@ -12,6 +12,7 @@ RSpec.describe 'Knowledge Base feed', type: :system do
 
   context 'when feed is on' do
     let(:show_feed_icon) { true }
+    let(:token)          { Token.last }
 
     it 'shows root link at main page' do
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}"
@@ -19,11 +20,9 @@ RSpec.describe 'Knowledge Base feed', type: :system do
       click '.icon-rss'
 
       in_modal do
-        token = Token.last.name
-
         link = find('a', text: knowledge_base.translations.first.title)
 
-        expect(link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token)
+        expect(link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token.token)
       end
     end
 
@@ -33,15 +32,13 @@ RSpec.describe 'Knowledge Base feed', type: :system do
       click '.icon-rss'
 
       in_modal do
-        token = Token.last.name
-
         kb_link = find('a', text: knowledge_base.translations.first.title)
 
-        expect(kb_link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token)
+        expect(kb_link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token.token)
 
         category_link = find('a', text: category.translations.first.title)
 
-        expect(category_link[:href]).to end_with feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token)
+        expect(category_link[:href]).to end_with feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token.token)
       end
     end
 
@@ -51,15 +48,13 @@ RSpec.describe 'Knowledge Base feed', type: :system do
       click '.icon-rss'
 
       in_modal do
-        token = Token.last.name
-
         kb_link = find('a', text: knowledge_base.translations.first.title)
 
-        expect(kb_link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token)
+        expect(kb_link[:href]).to end_with feed_knowledge_base_path(knowledge_base, locale_name, token: token.token)
 
         category_link = find('a', text: category.translations.first.title)
 
-        expect(category_link[:href]).to end_with feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token)
+        expect(category_link[:href]).to end_with feed_knowledge_base_category_path(knowledge_base, category, locale_name, token: token.token)
       end
     end
   end

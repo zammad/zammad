@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe 'Password Reset verify', authenticated_as: false, type: :system do
   context 'with a valid token' do
     let(:user)  { create(:agent) }
-    let(:token) { User.password_reset_new_token(user.email)[:token].name }
+    let(:token) { User.password_reset_new_token(user.email)[:token] }
 
     before do
-      visit "password_reset_verify/#{token}"
+      visit "password_reset_verify/#{token.token}"
     end
 
     it 'resetting password with non matching passwords fail' do

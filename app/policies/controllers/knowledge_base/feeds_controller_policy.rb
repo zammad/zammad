@@ -17,7 +17,7 @@ class Controllers::KnowledgeBase::FeedsControllerPolicy < Controllers::Applicati
 
   def access?
     user&.permissions?('knowledge_base.*') ||
-      Token.check(action: 'KnowledgeBaseFeed', name: given_token)&.permissions?('knowledge_base.*')
+      Token.check(action: 'KnowledgeBaseFeed', token: given_token)&.permissions?('knowledge_base.*')
   end
 
   def given_token

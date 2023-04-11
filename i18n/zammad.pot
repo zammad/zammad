@@ -907,7 +907,7 @@ msgstr ""
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-msgid "Administration login to #{config.product_name}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request for an administration login for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>Please, click on the link below (or copy and paste the URL into your browser) to proceed:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can log in.</div>\n<br>\n<div>If you don't want to log in, please ignore this message.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Administration login to #{config.product_name}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request for an administration login for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>Please, click on the link below (or copy and paste the URL into your browser) to proceed:</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</a></div>\n<br>\n<div>This link takes you to a page where you can log in.</div>\n<br>\n<div>If you don't want to log in, please ignore this message.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco
@@ -2405,7 +2405,7 @@ msgstr ""
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
-msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</a></div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -6035,7 +6035,7 @@ msgstr ""
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
-msgid "Invitation to #{config.product_name} at #{config.fqdn}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - our customer support platform.</div>\n<br>\n<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">here</a> and set your password.</div>\n<br>\n<div>Enjoy,</div>\n<br>\n<div>#{current_user.firstname} #{current_user.lastname}</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Invitation to #{config.product_name} at #{config.fqdn}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - our customer support platform.</div>\n<br>\n<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}\">here</a> and set your password.</div>\n<br>\n<div>Enjoy,</div>\n<br>\n<div>#{current_user.firstname} #{current_user.lastname}</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco
@@ -7045,10 +7045,6 @@ msgstr ""
 
 #: app/controllers/application_controller/handles_devices.rb
 msgid "Need fingerprint param!"
-msgstr ""
-
-#: app/controllers/user_access_token_controller.rb
-msgid "Need label!"
 msgstr ""
 
 #: app/controllers/settings_controller.rb
@@ -8741,13 +8737,13 @@ msgstr ""
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
-msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request to reset the password for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>We received a request to reset the password for your #{config.product_name} account <b>#{user.login}</b>.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
-msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
+msgid "Reset your #{config.product_name} password\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>You or someone else tried to sign up with this email address. However, this email is already being used.</div>\n<br>\n<div>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</div>\n<br>\n<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}</a></div>\n<br>\n<div>This link takes you to a page where you can change your password.</div>\n<br>\n<div>If you don't want to reset your password, please ignore this message. Your password will not be reset.</div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee
@@ -10568,6 +10564,10 @@ msgstr ""
 
 #: app/models/text_module.rb
 msgid "The required parameter 'locale' is missing."
+msgstr ""
+
+#: app/controllers/user_access_token_controller.rb
+msgid "The required parameter 'name' is missing."
 msgstr ""
 
 #: lib/external_credential/twitter.rb

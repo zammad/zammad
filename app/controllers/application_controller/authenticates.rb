@@ -68,12 +68,12 @@ module ApplicationController::Authenticates
 
       user = Token.check(
         action:        'api',
-        name:          token_string,
+        token:         token_string,
         inactive_user: true,
       )
 
       if user
-        token = Token.find_by(name: token_string)
+        token = Token.find_by(token: token_string)
 
         token.last_used_at = Time.zone.now
         token.save!

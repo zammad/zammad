@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile > Token Access', type: :system do
-  let(:label)          { 'Some App Token' }
+  let(:name)           { 'Some App Token' }
   let(:checkbox_input) { 'input[value="ticket.agent"]' }
   let(:expiry_date)    { '05/15/2024' }
   let(:token_list)     { find('.js-tokenList') }
@@ -27,7 +27,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       # modal closes but it is swiftly replaced by another modal
       in_modal disappears: false do
-        fill_in 'label', with: label
+        fill_in 'Name', with: name
         checkbox = find(checkbox_input, visible: :all)
         checkbox.check allow_label_click: true
         find('.js-datepicker').fill_in with: expiry_date
@@ -50,7 +50,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         end
 
         within :active_content do
-          expect(token_list).to have_text(label)
+          expect(token_list).to have_text(name)
             .and have_text(expiry_date)
         end
       end
@@ -72,7 +72,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         end
 
         within :active_content do
-          expect(token_list).to have_text(label)
+          expect(token_list).to have_text(name)
         end
       end
     end
@@ -87,14 +87,14 @@ RSpec.describe 'Profile > Token Access', type: :system do
       end
 
       in_modal disappears: false do
-        fill_in 'label', with: label
+        fill_in 'name', with: name
         send_keys(:tab)
       end
     end
 
-    context 'without label' do
-      let(:label)         { nil }
-      let(:error_message) { 'Need label!' }
+    context 'without name' do
+      let(:name)          { nil }
+      let(:error_message) { "The required parameter 'name' is missing." }
 
       before do
         in_modal disappears: false do
@@ -108,7 +108,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
     end
 
     context 'without permission' do
-      let(:label) { nil }
+      let(:name) { nil }
       let(:error_message) { "The required parameter 'permission' is missing." }
 
       before { click_button }
@@ -117,12 +117,12 @@ RSpec.describe 'Profile > Token Access', type: :system do
     end
   end
 
-  context 'with already created token', authenticated_as: -> { admin_user } do
+  context 'with already created token', authenticated_as: :admin_user do
     let(:admin_user) { create(:admin) }
     let(:create_token) do
       create(:api_token,
              user:        admin_user,
-             label:       label,
+             name:        name,
              preferences: { permission: %w[admin ticket.agent] })
     end
 
@@ -132,7 +132,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
     end
 
     it 'shows the created token' do
-      expect(token_list).to have_text(label)
+      expect(token_list).to have_text(name)
     end
 
     it 'deletes created token' do
@@ -143,7 +143,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
         click_button
       end
 
-      expect(token_list).to have_no_text(label)
+      expect(token_list).to have_no_text(name)
     end
   end
 end

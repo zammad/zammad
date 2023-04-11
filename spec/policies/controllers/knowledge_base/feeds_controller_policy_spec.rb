@@ -32,7 +32,7 @@ describe Controllers::KnowledgeBase::FeedsControllerPolicy do
   context 'with token with KB user' do
     let(:user)   { create(:admin) }
     let(:token)  { create(:token, action: 'KnowledgeBaseFeed', user: user) }
-    let(:params) { { token: token.name } }
+    let(:params) { { token: token.token } }
 
     it { is_expected.to permit_actions(:root, :category) }
   end
@@ -40,7 +40,7 @@ describe Controllers::KnowledgeBase::FeedsControllerPolicy do
   context 'with token with non-KB user' do
     let(:user)   { create(:customer) }
     let(:token)  { create(:token, action: 'KnowledgeBaseFeed', user: user) }
-    let(:params) { { token: token.name } }
+    let(:params) { { token: token.token } }
 
     it { is_expected.to forbid_actions(:root, :category) }
   end

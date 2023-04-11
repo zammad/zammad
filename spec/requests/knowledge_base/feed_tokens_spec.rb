@@ -13,7 +13,7 @@ RSpec.describe 'KnowledgeBase::FeedTokens', authenticated_as: :user, type: :requ
 
       get endpoint
 
-      expect(json_response['token']).to eq(token.name)
+      expect(json_response['token']).to eq(token.token)
     end
 
     it 'created and returns token' do
@@ -33,7 +33,7 @@ RSpec.describe 'KnowledgeBase::FeedTokens', authenticated_as: :user, type: :requ
     it 'changes token when it exists' do
       token
 
-      expect { patch(endpoint) }.to change { token.reload.name }
+      expect { patch(endpoint) }.to change { token.reload.token }
     end
 
     it 'created and returns token' do

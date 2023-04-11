@@ -78,7 +78,7 @@ module ZammadSpecSupportRequest
 
       # if we want to authenticate by token
       credentials = if options[:token].present?
-                      "Token token=#{options[:token].name}"
+                      "Token token=#{options[:token].token}"
                     else
                       ActionController::HttpAuthentication::Basic.encode_credentials(login, password)
                     end

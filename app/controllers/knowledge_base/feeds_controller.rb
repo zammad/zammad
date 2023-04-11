@@ -78,7 +78,7 @@ class KnowledgeBase::FeedsController < ApplicationController
   def effective_user
     return current_user if current_user.present?
 
-    Token.check(action: 'KnowledgeBaseFeed', name: params[:token])
+    Token.check(action: 'KnowledgeBaseFeed', token: params[:token])
   end
 
   def ensure_response_format

@@ -1084,7 +1084,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         let(:user) { create(:customer, login: 'somebody', email: '') }
 
         it 'return failed' do
-          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.token, password: 'Test1234#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a(Hash)
@@ -1094,7 +1094,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
       context 'for user with email address' do
         it 'return ok' do
-          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'TEst1234#.' }, as: :json
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.token, password: 'TEst1234#.' }, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response).to be_a(Hash)
@@ -1106,7 +1106,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         before { Setting.set('user_lost_password', false) }
 
         it 'raise 422' do
-          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.name, password: 'Test1234#.' }, as: :json
+          post '/api/v1/users/password_reset_verify', params: { username: user.login, token: token.token, password: 'Test1234#.' }, as: :json
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(json_response['error']).to be_truthy

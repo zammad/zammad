@@ -40,13 +40,13 @@ returns
 
 check token
 
-  user = Token.check(action: 'PasswordReset', name: '123abc12qweads')
+  user = Token.check(action: 'PasswordReset', token: '123abc12qweads')
 
 check api token with permissions
 
-  user = Token.check(action: 'api', name: '123abc12qweads', permission: 'admin.session')
+  user = Token.check(action: 'api', token: '123abc12qweads', permission: 'admin.session')
 
-  user = Token.check(action: 'api', name: '123abc12qweads', permission: ['admin.session', 'ticket.agent'])
+  user = Token.check(action: 'api', token: '123abc12qweads', permission: ['admin.session', 'ticket.agent'])
 
 returns
 
@@ -56,7 +56,7 @@ returns
 
   def self.check(data)
     # fetch token
-    token = Token.find_by(action: data[:action], name: data[:name])
+    token = Token.find_by(action: data[:action], token: data[:token])
 
     return if !token
 
@@ -153,9 +153,9 @@ cleanup old token
   def self.ensure_token!(action_name, user_id = UserInfo.current_user_id, persistent: false)
     instance = fetch(action_name, user_id)
 
-    return instance.name if instance.present?
+    return instance.token if instance.present?
 
-    create!(action: action_name, user_id: user_id, persistent: persistent).name
+    create!(action: action_name, user_id: user_id, persistent: persistent).token
   end
 
   # regenerates an existing token
@@ -167,7 +167,7 @@ cleanup old token
   def self.renew_token!(action_name, user_id = UserInfo.current_user_id, persistent: false)
     instance = fetch(action_name, user_id)
 
-    return create(action: action_name, user_id: user_id, persistent: persistent).name if !instance
+    return create(action: action_name, user_id: user_id, persistent: persistent).token if !instance
 
     instance.renew_token!
   end
@@ -179,15 +179,15 @@ cleanup old token
     generate_token
     save!
 
-    name
+    token
   end
 
   private
 
   def generate_token
     loop do
-      self.name = SecureRandom.urlsafe_base64(48)
-      break if !Token.exists?(name: name)
+      self.token = SecureRandom.urlsafe_base64(48)
+      break if !Token.exists?(token: token)
     end
     true
   end
