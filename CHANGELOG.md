@@ -1,5 +1,21 @@
 # Change Log
 
+## [5.4.1](https://github.com/zammad/zammad/tree/5.4.1) (2023-04-12)
+[Full Changelog](https://github.com/zammad/zammad/compare/5.4.0...5.4.1)
+
+**Fixed bugs:**
+
+- Triggers without configured action inside condition are executed differently compared to 5.3 [4550](https://github.com/zammad/zammad/issues/4550) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[trigger](https://github.com/zammad/zammad/labels/trigger)] [[ticket](https://github.com/zammad/zammad/labels/ticket)]
+- Allow logout for SAML accounts without set idp_slo_service_url [4548](https://github.com/zammad/zammad/issues/4548) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[SAML](https://github.com/zammad/zammad/labels/SAML)]
+- Change of the pre-condition dropdown value in expert mode is not saved [4532](https://github.com/zammad/zammad/issues/4532) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)] [[data loss](https://github.com/zammad/zammad/labels/data%20loss)]
+- Request one-time admin password link diverts user's attention [4536](https://github.com/zammad/zammad/issues/4536) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+- "Type application/netcdf is already registered as a variant of application/netcdf." when using Zammad console [4038](https://github.com/zammad/zammad/issues/4038) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- rake zammad:db:pgloader fails if no host value is set in config [4526](https://github.com/zammad/zammad/issues/4526) [[bug](https://github.com/zammad/zammad/labels/bug)] [[migration / update](https://github.com/zammad/zammad/labels/migration%20%2F%20update)]
+- Priority icons in ticket overviews have lost their color [4384](https://github.com/zammad/zammad/issues/4384) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)]
+- Previewing forms in admin UI looks broken in dark mode [4372](https://github.com/zammad/zammad/issues/4372) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[dark mode](https://github.com/zammad/zammad/labels/dark%20mode)]
+- Can't skip wizard any more with sendmail when error message occurs [4525](https://github.com/zammad/zammad/issues/4525) [[bug](https://github.com/zammad/zammad/labels/bug)] [[blocker](https://github.com/zammad/zammad/labels/blocker)] [[channel](https://github.com/zammad/zammad/labels/channel)] [[admin area](https://github.com/zammad/zammad/labels/admin%20area)] [[notification](https://github.com/zammad/zammad/labels/notification)]
+- Alphabetical listing of organizations in admin area [4520](https://github.com/zammad/zammad/issues/4520) [[bug](https://github.com/zammad/zammad/labels/bug)] [[prioritised by payment](https://github.com/zammad/zammad/labels/prioritised%20by%20payment)]
+
 ## [5.4.0](https://github.com/zammad/zammad/tree/5.4.0) (2023-03-14)
 [Full Changelog](https://github.com/zammad/zammad/compare/5.3.0...5.4.0)
 

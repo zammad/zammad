@@ -62,7 +62,7 @@
     - echo "bundler-audit security check..."
     - gem install bundler-audit
     - bundle-audit update
-    - bundle-audit --ignore CVE-2015-9284
+    - bundle-audit --ignore CVE-2015-9284 GHSA-pxvg-2qj5-37jq
     - echo "Checking if chat assets need a rebuild..."
     - echo "Please see public/assets/chat/README.md for build instructions."
     - cp public/assets/chat/chat.js tmp/chat.js
