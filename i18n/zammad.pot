@@ -62,17 +62,20 @@ msgstr ""
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\nThe ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been escalated since \"#{ticket.escalation_at}\"!\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
+#. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/messaging/ticket_info/en.md.erb
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Gruppe: #{ticket.group.name}\n* Besitzer: #{ticket.owner.fullname}\n* Status: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgstr ""
+
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_reminder_reached/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Reminder reached!_\nA ticket needs attention: reminder reached for (#{ticket.title}) with customer \"*#{ticket.customer.longname}*\".\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
-#. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
-#. Please make sure to translate it to a valid corresponding output structure.
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/messaging/ticket_info/en.md.erb
 #: app/views/messaging/ticket_update/en.md.erb
 msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_\n<% if @objects[:changes].present? %>\n  <% @objects[:changes].each do |key, value| %>\n  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n  <% end %>\n<% end %>\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""

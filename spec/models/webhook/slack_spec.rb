@@ -20,7 +20,7 @@ RSpec.describe 'Webhook > Slack', integration: true, performs_jobs: true, requir
       text:        '# #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
       attachments: [
         {
-          text:      '#{notification}', # rubocop:disable Lint/InterpolationCheck
+          text:      '"_[Ticket##{ticket.number}](#{notification.link}): #{notification.message}_\n\n#{notification.changes}\n\n#{notification.body}"', # rubocop:disable Lint/InterpolationCheck
           mrkdwn_in: [
             'text',
           ],

@@ -174,14 +174,15 @@ class App.ControllerGenericIndex extends App.Controller
       return
 
     new constructor(
-      id:            item.id
-      pageData:      @pageData
-      genericObject: @genericObject
-      container:     @container
-      small:         @small
-      large:         @large
-      veryLarge:     @veryLarge
-      handlers:      @handlers
+      id:               item.id
+      pageData:         @pageData
+      genericObject:    @genericObject
+      container:        @container
+      small:            @small
+      large:            @large
+      veryLarge:        @veryLarge
+      handlers:         @handlers
+      validateOnSubmit: @validateOnSubmit
     )
 
   newControllerClass: ->

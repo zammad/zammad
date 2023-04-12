@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 module TriggerWebhookJob::CustomPayload::Notification
+  Notification = Struct.new('Notification', :subject, :message, :link, :changes, :body)
 
   def self.generate(tracks = {}, event)
     return '\#{bad event}' if event.exclude?(:execution)
@@ -8,8 +9,8 @@ module TriggerWebhookJob::CustomPayload::Notification
     type = type!(event)
     return '\#{bad type}' if type.blank?
 
-    notification = fetch(tracks, event, type)
-    sanitize(notification[:body].to_s)
+    template = fetch(tracks, event, type)
+    assemble(template, has_article: tracks[:article].present?)
   end
 
   # private class methods
@@ -35,21 +36,46 @@ module TriggerWebhookJob::CustomPayload::Notification
     nil
   end
 
-  # NOTE: Somewhere down in the code some weird white space replacement is
-  # done. This leads to improper (Ruby) JSON formatting. This hackish method
-  # works around this issue.
-  def self.sanitize(string)
-    string
-      .gsub(%r{\n}, '\n')
-      .gsub(%r{\r}, '\r')
-      .gsub(%r{\t}, '\t')
-      .gsub(%r{\f}, '\f')
-      .gsub(%r{\v}, '\v')
+  def self.assemble(template, has_article: false)
+    match = regex(has_article).match(template[:body])
+    notification = {
+      subject: template[:subject][2..],
+      message: match[:message].presence || '',
+      link:    match[:link].presence || '',
+      changes: match[:changes].presence || '',
+      body:    has_article ? match[:body].presence || '' : '',
+    }
+
+    sanitize(notification)
+    Notification.new(*notification.values)
+  end
+
+  def self.regex(extended)
+    source = '_<(?<link>.+)>:(?<message>.+)_\n(?<changes>.+)'
+    source = "#{source}\n{3,4}(?<body>.+)?" if extended
+
+    Regexp.new(source, Regexp::MULTILINE)
+  end
+
+  def self.sanitize(hash)
+    hash.each do |key, value|
+      if key.eql?(:changes)
+        value = value
+          .split(%r{\n})
+          .map(&:strip)
+          .compact_blank
+          .join('\n')
+      end
+
+      hash[key] = value.strip
+    end
   end
 
   private_class_method %i[
+    assemble
     fetch
-    type!
+    regex
     sanitize
+    type!
   ]
 end

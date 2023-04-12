@@ -9,7 +9,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
     subject(:generate) { described_class.generate(record, { ticket:, article: }, event) }
 
     let(:ticket)  { create(:ticket) }
-    let(:article) { create(:ticket_article) }
+    let(:article) { create(:ticket_article, body: "Text with\nnew line.") }
     let(:event)   { {} }
 
     context 'when the payload is empty' do
@@ -144,26 +144,6 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       end
     end
 
-    context "when the placeholder contains object 'notification'" do
-      let(:record) { { 'body' => '#{notification}' }.to_json }
-      let(:event)  do
-        {
-          type:      '',
-          execution: 'job',
-          changes:   {
-            state: %w[open closed],
-            group: %w[Users Customers],
-          },
-          user_id:   1,
-        }
-      end
-
-      it 'returns a valid json with an notification factory generated message"' do
-        expect(generate['body']).to include('open -> closed')
-          .and include('Users -> Customers')
-      end
-    end
-
     context 'when the payload contains a complex structure' do
       let(:record) do
         {
@@ -213,6 +193,148 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       it 'returns the determined value' do
         expect(generate).to eq(json_data)
       end
+    end
+
+    describe "when the placeholder contains object 'notification'" do
+      let(:record) do
+        {
+          'subject' => '#{notification.subject}',
+          'message' => '#{notification.message}',
+          'changes' => '#{notification.changes}',
+          'body'    => '#{notification.body}',
+          'link'    => '#{notification.link}',
+        }.to_json
+      end
+
+      context "when the event is of the type 'create'" do
+        let(:event) do
+          {
+            type:      'create',
+            execution: 'trigger',
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Created by')
+          expect(generate['changes']).to include('State: new')
+        end
+      end
+
+      context "when the event is of the type 'update'" do
+        let(:event) do
+          {
+            type:      'update',
+            execution: 'trigger',
+            changes:   { 'state' => %w[open closed] },
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Updated by')
+          expect(generate['changes']).to include('state: open -> closed')
+        end
+      end
+
+      context "when the event is of the type 'info'" do
+        let(:event) do
+          {
+            type:      'info',
+            execution: 'trigger',
+            changes:   { 'state' => %w[open closed] },
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Last updated at')
+        end
+      end
+
+      context "when the event is of the type 'escalation'" do
+        let(:event) do
+          {
+            type:      'escalation',
+            execution: 'trigger',
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Escalated at')
+          expect(generate['changes']).to include('has been escalated since')
+        end
+      end
+
+      context "when the event is of the type 'escalation warning'" do
+        let(:event) do
+          {
+            type:      'escalation_warning',
+            execution: 'trigger',
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Will escalate at')
+          expect(generate['changes']).to include('will escalate at')
+        end
+      end
+
+      context "when the event is of the type 'reminder reached'" do
+        let(:event) do
+          {
+            type:      'reminder_reached',
+            execution: 'trigger',
+            user_id:   1,
+          }
+        end
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to eq(article.body_as_text)
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Reminder reached!')
+          expect(generate['changes']).to include('reminder reached for')
+        end
+      end
+
+      context "when the event is triggered by a 'job'" do
+        let(:event) do
+          {
+            type:      '',
+            execution: 'job',
+            changes:   { 'state' => %w[open closed] },
+            user_id:   1,
+          }
+        end
+
+        let(:article) { nil }
+
+        it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+          expect(generate['subject']).to eq(ticket.title)
+          expect(generate['body']).to be_empty
+          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['message']).to include('Last updated at')
+        end
+      end
+
     end
   end
   # rubocop:enable Lint/InterpolationCheck

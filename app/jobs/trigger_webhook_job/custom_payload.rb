@@ -20,6 +20,10 @@ class TriggerWebhookJob::CustomPayload
     User
   ].freeze
 
+  ALLOWED_NOTIFICATION_CLASSES = %w[
+    Struct::Notification
+  ].freeze
+
   ALLOWED_SIMPLE_CLASSES = %w[
     Integer
     String
@@ -35,7 +39,8 @@ class TriggerWebhookJob::CustomPayload
     ALLOWED_TICKET_CLASSES +
     ALLOWED_USER_CLASSES +
     ALLOWED_SIMPLE_CLASSES +
-    ALLOWED_RAILS_CLASSES
+    ALLOWED_RAILS_CLASSES +
+    ALLOWED_NOTIFICATION_CLASSES
 
   ALLOWED_TICKET_METHODS = %w[
     created_by
@@ -61,10 +66,19 @@ class TriggerWebhookJob::CustomPayload
     fullname
   ].freeze
 
+  ALLOWED_NOTIFICATION_METHODS = %w[
+    subject
+    link
+    message
+    body
+    changes
+  ].freeze
+
   ALLOWED_METHODS = {
     'Ticket'          => ALLOWED_TICKET_METHODS,
     'Ticket::Article' => ALLOWED_TICKET_ARTICLE_METHODS,
     'User'            => ALLOWED_USER_METHODS,
+    'Notification'    => ALLOWED_NOTIFICATION_METHODS,
   }.freeze
 
   DENIED_USER_ATTRIBUTES = %w[
@@ -87,7 +101,8 @@ class TriggerWebhookJob::CustomPayload
     return JSON.parse(record) if variables.blank?
 
     tracks.transform_keys!(&:to_sym)
-    mappings = parse(variables, tracks, event)
+    tracks[:notification] = TriggerWebhookJob::CustomPayload::Notification.generate(tracks, event)
+    mappings = parse(variables, tracks)
 
     # NeverShouldHappen(TM)
     return JSON.parse(record) if mappings.blank?
@@ -121,10 +136,8 @@ class TriggerWebhookJob::CustomPayload
     variables
   end
 
-  def self.parse(variables, tracks, event)
+  def self.parse(variables, tracks)
     mappings = {}
-
-    notification(variables, mappings, tracks, event)
 
     variables.each do |variable|
       methods = variable.split('.')
@@ -138,13 +151,6 @@ class TriggerWebhookJob::CustomPayload
     end
 
     mappings
-  end
-
-  def self.notification(variables, mappings, tracks, event)
-    return if variables.exclude?('notification')
-
-    mappings['notification'] = TriggerWebhookJob::CustomPayload::Notification.generate(tracks, event)
-    variables.delete('notification')
   end
 
   def self.validate_methods!(methods, reference, display)
@@ -202,6 +208,8 @@ class TriggerWebhookJob::CustomPayload
   end
 
   def self.allowed_subroutines(klass)
+    return ALLOWED_NOTIFICATION_METHODS if klass.to_s.in?(ALLOWED_NOTIFICATION_CLASSES)
+
     klass_attributes = klass.attribute_names - (DENIED_ATTRIBUTES[klass.to_s] || [])
     klass_methods    = ALLOWED_METHODS[klass.to_s] || []
 
@@ -210,7 +218,14 @@ class TriggerWebhookJob::CustomPayload
 
   def self.replace(record, mappings)
     mappings.each do |variable, value|
-      record.gsub!("\#{#{variable}}", value.to_s.gsub(%r{"}, '\"'))
+      record.gsub!("\#{#{variable}}", value
+      .to_s
+      .gsub(%r{"}, '\"')
+      .gsub(%r{\n}, '\n')
+      .gsub(%r{\r}, '\r')
+      .gsub(%r{\t}, '\t')
+      .gsub(%r{\f}, '\f')
+      .gsub(%r{\v}, '\v'))
     end
 
     record
@@ -223,7 +238,6 @@ class TriggerWebhookJob::CustomPayload
   private_class_method %i[
     allowed_class_method?
     allowed_subroutines
-    notification
     parse
     replace
     scan
