@@ -12,10 +12,9 @@ class Awork
       @endpoint = endpoint
     end
 
-    def perform(payload)
-      response = UserAgent.post(
-        endpoint,
-        payload,
+    def perform(method='post', path='', payload={})
+      method = method.downcase
+      response = UserAgent.send(method.to_sym, endpoint, payload,
         {
           headers:      headers,
           json:         true,
@@ -25,7 +24,7 @@ class Awork
             facility: 'Awork',
           },
           verify_ssl:   true,
-        },
+        }
       )
 
       if !response.success?
