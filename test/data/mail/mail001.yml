@@ -6,7 +6,7 @@ to: martin@example.com
 subject: 'CI Daten für PublicView '
 body: |-
   <div lang="DE">
-  <div>Hallo Martin,</div><div><p>&nbsp;</p></div><div>wie besprochen hier noch die Daten für die Intranetseite:</div><div><p>&nbsp;</p></div><div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div><div>Schriftfarbe: Schwarz</div><div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div><div><p>&nbsp;</p></div><div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div><div><p>&nbsp;</p></div><div><span>Mit freundlichem Gruß <br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</span></div><div>
+  <div>Hallo Martin,</div><div> </div><div>wie besprochen hier noch die Daten für die Intranetseite:</div><div> </div><div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div><div>Schriftfarbe: Schwarz</div><div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div><div> </div><div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div><div> </div><div><span>Mit freundlichem Gruß <br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</span></div><div>
   <span>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span>
   </div><div>
   <span>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span>
@@ -22,7 +22,7 @@ body: |-
   <span>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin:</span>
   </div><div>
   <span>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test</span>
-  </div><div><p>&nbsp;</p></div></div>
+  </div><div> </div></div>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
