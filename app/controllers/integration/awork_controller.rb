@@ -40,7 +40,7 @@ class Integration::AworkController < ApplicationController
 
     task = awork.create(params[:create_task])
 
-    link_tasks(params[:linked_tasks] + ", #{task.result[:id]}")
+    link_tasks(params[:linked_tasks].add(task.result[:id]))
 
     render json: {
       result:   'ok',
