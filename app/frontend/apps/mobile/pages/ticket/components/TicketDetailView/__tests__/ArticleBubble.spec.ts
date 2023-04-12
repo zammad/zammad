@@ -267,7 +267,7 @@ describe('component for displaying text article', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('shows inlined image when previewing attachments', async () => {
+  it('shows image when previewing attachments', async () => {
     const view = renderArticleBubble({
       ticketInternalId: 6,
       articleId: convertToGraphQLId('Ticket::Article', 12),
@@ -285,6 +285,31 @@ describe('component for displaying text article', () => {
     await view.events.click(attachment)
 
     expect(view).toHaveImagePreview('/api/ticket_attachment/6/12/1?view=inline')
+  })
+
+  it('always shows selected image to preview', async () => {
+    const imageSrcs = [
+      ['name1.png', 'http://localhost:3000/image/1/2?preview=inline'],
+      ['name2.jpeg', 'http://localhost:3000/image/1/3?preview=inline'],
+      ['name3.jpg', 'http://localhost:3000/image/1/4?preview=inline'],
+      ['some random text', 'http://localhost:3000/image/1/5?preview=inline'],
+    ]
+    const view = renderArticleBubble({
+      ticketInternalId: 6,
+      articleId: convertToGraphQLId('Ticket::Article', 12),
+      attachments: [],
+      content: `<div>Some Text:</div>${imageSrcs.map(
+        ([alt, src]) => `<img alt="${alt}" src="${src}" />`,
+      )}`,
+    })
+
+    const [randomImageName, randomImageSrc] =
+      imageSrcs[Math.floor(Math.random() * imageSrcs.length)]
+
+    const image = view.getByAltText(randomImageName)
+    await view.events.click(image)
+
+    expect(view).toHaveImagePreview(randomImageSrc)
   })
 })
 

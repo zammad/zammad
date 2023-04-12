@@ -9,7 +9,7 @@ interface ImagePreview {
   title?: string
 }
 
-interface CachedFile {
+export interface ImageViewerFile {
   name?: string
   content?: string
   preview?: string
@@ -29,8 +29,8 @@ export const imageViewerOptions = ref<ViewerOptions>({
   images: [],
 })
 
-const useImageViewer = (viewFiles: MaybeRef<CachedFile[]>) => {
-  const indexMap = new WeakMap<CachedFile, number>()
+const useImageViewer = (viewFiles: MaybeRef<ImageViewerFile[]>) => {
+  const indexMap = new WeakMap<ImageViewerFile, number>()
 
   let images: ImagePreview[] = []
 
@@ -48,7 +48,7 @@ const useImageViewer = (viewFiles: MaybeRef<CachedFile[]>) => {
       })
   })
 
-  const showImage = (image: CachedFile) => {
+  const showImage = (image: ImageViewerFile) => {
     const foundIndex = indexMap.get(image) ?? 0
     imageViewerOptions.value = {
       index: foundIndex,
@@ -65,7 +65,7 @@ const useImageViewer = (viewFiles: MaybeRef<CachedFile[]>) => {
     }
   }
 
-  const isViewable = (file: CachedFile) => indexMap.has(file)
+  const isViewable = (file: ImageViewerFile) => indexMap.has(file)
 
   return {
     isViewable,

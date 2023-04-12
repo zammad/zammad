@@ -4,7 +4,7 @@
 /* eslint-disable vue/no-v-html */
 
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { computed, nextTick, onMounted, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
@@ -13,6 +13,7 @@ import type {
   TicketArticlesQuery,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
+import type { ImageViewerFile } from '@shared/composables/useImageViewer'
 import useImageViewer from '@shared/composables/useImageViewer'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import stopEvent from '@shared/utils/events'
@@ -107,7 +108,11 @@ const { attachments: articleAttachments } = useArticleAttachments({
   attachments: computed(() => props.attachments),
 })
 
-const { showImage } = useImageViewer(articleAttachments)
+const inlineAttachments = ref<ImageViewerFile[]>([])
+
+const { showImage } = useImageViewer(
+  computed(() => [...inlineAttachments.value, ...articleAttachments.value]),
+)
 
 const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   stopEvent(event)
@@ -174,16 +179,39 @@ const setupLinksHandlers = (element: HTMLDivElement) => {
   })
 }
 
+const populateInlineAttachments = (element: HTMLDivElement) => {
+  const images = element.querySelectorAll('img')
+  inlineAttachments.value = []
+
+  images.forEach((image) => {
+    const mime = image.alt?.match(/\.(jpe?g)$/i) ? 'image/jpeg' : 'image/png'
+    const preview: ImageViewerFile = {
+      name: image.alt,
+      inline: image.src,
+      type: mime,
+    }
+    image.classList.add('cursor-pointer')
+    const index = inlineAttachments.value.push(preview) - 1
+    image.onclick = () => showImage(inlineAttachments.value[index])
+  })
+}
+
 watch(
   () => props.content,
   async () => {
     await nextTick()
-    if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+    if (bubbleElement.value) {
+      setupLinksHandlers(bubbleElement.value)
+      populateInlineAttachments(bubbleElement.value)
+    }
   },
 )
 
 onMounted(() => {
-  if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+  if (bubbleElement.value) {
+    setupLinksHandlers(bubbleElement.value)
+    populateInlineAttachments(bubbleElement.value)
+  }
 })
 </script>
 
