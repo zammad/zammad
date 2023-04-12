@@ -7,6 +7,7 @@ if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
   # If REDIS_URL is not set, fall back to default port / localhost, to ease configuration
   #   for simple installations.
   redis_url = ENV['REDIS_URL'].presence || 'redis://localhost:6379'
+
   Rails.application.config.action_cable.cable = {
     adapter:        :redis,
     driver:         :hiredis,
@@ -24,7 +25,7 @@ if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
       warn 'Please provide a Redis instance at localhost:6379 or set REDIS_URL to point to a different location.'
     end
     warn e.inspect
-    exit! # rubocop:disable Rails/Exit
+    Zammad::SafeMode.continue_or_exit!
   end
 
   if Rails.env.production?

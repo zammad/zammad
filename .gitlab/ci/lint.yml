@@ -9,12 +9,13 @@
     - .template_lint
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, redis]
   before_script:
     - !reference [.scripts, source_rvm]
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]
     - !reference [.scripts, zammad_db_init]
+  variables:
+    ZAMMAD_SAFE_MODE: 1
 
 # Must be a separate job because it uses a custom image.
 'lint: shellcheck':
