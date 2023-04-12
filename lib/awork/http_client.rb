@@ -14,7 +14,7 @@ class Awork
 
     def perform(method='post', path='', payload={})
       method = method.downcase
-      response = UserAgent.send(method.to_sym, endpoint, payload,
+      response = UserAgent.send(method.to_sym, endpoint+path, payload,
         {
           headers:      headers,
           json:         true,
