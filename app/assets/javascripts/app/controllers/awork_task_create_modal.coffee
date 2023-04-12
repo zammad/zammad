@@ -1,0 +1,1 @@
+class App.AworkTaskCreateModal extends App.ControllerModal
