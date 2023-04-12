@@ -1,6 +1,8 @@
 class Awork
   class Task < Awork::Entity
 
+    entity_name='task'
+
     def to_h
       {
         id:               @result['iid'],
@@ -17,9 +19,9 @@ class Awork
     def tags
       @result['tags'].map do |tag|
         {
-          id:         tag['node']['id'],
-          color:      tag['node']['color'],
-          title:      tag['node']['title']
+          id:     tag['id'],
+          color:  tag['color'],
+          name:   tag['name']
         }
       end
     end

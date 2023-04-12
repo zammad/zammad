@@ -40,10 +40,10 @@ class Awork
 
     def status
       {
-        id:       @result['status']['id'],
-        name:       @result['status']['name'],
-        type:       @result['status']['type'],
-        color:       status_color(@result['status']['type']),
+        id:         @result["#{ entity_name }Status"]['id'],
+        name:       @result["#{ entity_name }Status"]['name'],
+        type:       @result["#{ entity_name }Status"]['type'],
+        color:      status_color(@result["#{ entity_name }Status"]['type']),
       }
     end
 
