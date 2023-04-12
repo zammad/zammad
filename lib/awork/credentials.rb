@@ -8,6 +8,7 @@ class Awork
     end
 
     def verify
+      # request the clientapplications just to see if the authorization works
       response = client.perform('get', 'clientapplications')
       return if response[0].dig('clientId').present?
 
