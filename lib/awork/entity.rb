@@ -34,7 +34,7 @@ class Awork
 
     def assignees
       @result['assignees'].map do |assignee|
-        assignee['node']['name']
+        "#{ assignee['firstName'] } #{ assignee['lastName'] }"
       end
     end
 
