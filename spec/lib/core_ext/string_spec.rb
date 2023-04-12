@@ -689,7 +689,7 @@ RSpec.describe String do
         <div>
       HTML
         <div>
-        <p><span style="color:#1f497d;">Guten Morgen, Frau Koppenhagen,</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p></div>
+        <p><span style="color:#1f497d;">Guten Morgen, Frau Koppenhagen,</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p></div>
       TEXT
     end
 
@@ -1335,8 +1335,8 @@ RSpec.describe String do
           <p class="MsoNormal"><span style="font-size:8.0pt;color:#1F497D">Geschäftsführer Vor Nach, VorUndZu Nach&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp; Amtsgericht Dort HRB 12345&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; Ein Unternehmer der ABC Gruppe<o:p></o:p></span></p>
         HTML
           <div>
-          <p><span style="color:#1f497d;">Guten Morgen, Frau ABC,</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p><div>
-          <p><b><span style="color:#1f497d;"><p>&nbsp;</p></span></b></p><p><b><span style="color:#1f497d;">Anna Smith</span></b></p><p><b><span style="color:#1f497d;">art abc SEV GmbH</span></b></p><p><b><span style="color:#1f497d;">art abc TRAV</span></b></p><p><span style="color:#1f497d;">Marktstätte 123</span></p><p><span style="color:#1f497d;">123456 Dorten</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-1</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-0</span></p><p><span style="color:#1f497d;">F: +49 (0) 12345/1234560-2</span></p><p><a href="mailto:annad@example.com">annad@example.com</a><span style="color:#c00000;"></span></p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><span style="color:#1f497d;"> </span><a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a><span style="color:#1f497d;"></span></p><p><span style="color:#1f497d;">Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</span></p></div></div>
+          <p><span style="color:#1f497d;">Guten Morgen, Frau ABC,</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">vielen Dank für die Reservierung. Dabei allerdings die Sprache (Niederländisch) nicht erwähnt. Können Sie bitte dieses in Ihrer Reservierung vormerken?</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Nochmals vielen Dank und herzliche Grüße </span></p><div>
+          <p><b><span style="color:#1f497d;"> </span></b></p><p><b><span style="color:#1f497d;">Anna Smith</span></b></p><p><b><span style="color:#1f497d;">art abc SEV GmbH</span></b></p><p><b><span style="color:#1f497d;">art abc TRAV</span></b></p><p><span style="color:#1f497d;">Marktstätte 123</span></p><p><span style="color:#1f497d;">123456 Dorten</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-1</span></p><p><span style="color:#1f497d;">T: +49 (0) 12345/1234560-0</span></p><p><span style="color:#1f497d;">F: +49 (0) 12345/1234560-2</span></p><p><a href="mailto:annad@example.com">annad@example.com</a><span style="color:#c00000;"></span></p><p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><span style="color:#1f497d;"> </span><a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a><span style="color:#1f497d;"></span></p><p><span style="color:#1f497d;">Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</span></p></div></div>
         TEXT
       end
 
@@ -1357,7 +1357,7 @@ RSpec.describe String do
           <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Segoe UI&quot;,&quot;sans-serif&quot;;color:#1F497D">&nbsp;</span><o:p></o:p></p>
           <p class="MsoNormal">Guten Morgen Frau Epalza,<o:p></o:p></p>
         HTML
-          <p><span style="color:#1f497d;"><p>&nbsp;</p></span></p><div>
+          <p><span style="color:#1f497d;"> </span></p><div>
           <div>
           <span class="js-signatureMarker"></span><p><b>Von:</b><span> Besucherbüro, MKuk [<a href="mailto:besucherbuero@example.com">mailto:besucherbuero@example.com</a>] <br>
           <b>Gesendet:</b> Freitag, 16. Dezember 2016 08:05<br>
@@ -1380,7 +1380,7 @@ RSpec.describe String do
           <b>bitte</b> noch meine Testphase verlängern?<o:p></o:p></span></p>
           <p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US"><o:p>&nbsp;</o:p></span></p>
         HTML
-          <p><span style="color:#1f497d;">oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</span></p><p><span style="color:#1f497d;"><p>&nbsp;</p></span></p>
+          <p><span style="color:#1f497d;">oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</span></p><p><span style="color:#1f497d;"> </span></p>
         TEXT
       end
 
