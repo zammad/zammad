@@ -9,7 +9,7 @@ class Awork
 
     def verify
       response = client.perform('get', 'clientapplications')
-      return if response.dig('data', 0, 'clientId').present?
+      return if response[0].dig('clientId').present?
 
       raise __('Invalid Awork API token')
     end
