@@ -59,9 +59,12 @@ class Integration::AworkController < ApplicationController
 
     awork = ::Awork.new(config['endpoint'], config['api_token'])
 
+    ticket = Ticket.find(params[:ticket_id])
+    ids = ticket.preferences[:awork][:task_ids] || []
+
     render json: {
       result:   'ok',
-      response: awork.linked_tasks(params[:linked_tasks]),
+      response: awork.linked_tasks(ids),
     }
   rescue => e
     logger.error e
@@ -110,12 +113,12 @@ class Integration::AworkController < ApplicationController
 
   private
 
-  def link_tasks(tasks)
+  def link_tasks(task)
     ticket = Ticket.find(params[:ticket_id])
     ticket.with_lock do
       authorize!(ticket, :show?)
       ticket.preferences[:awork] ||= {}
-      ticket.preferences[:awork][:task_links] = Array(tasks).uniq
+      ticket.preferences[:awork][:task_ids] = Array(task).uniq
       ticket.save!
     end
   end

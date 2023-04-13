@@ -47,7 +47,6 @@ class Awork
     end
 
     def status_color(type)
-      puts type
       STATUS_COLOR_MAP.fetch(type, 'unknown')
     end
   end

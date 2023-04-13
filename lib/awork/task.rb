@@ -4,7 +4,7 @@ class Awork
     def to_h
       {
         id:               @result['id'],
-        title:            @result['title'],
+        name:            @result['name'],
         description:      @result['description'],
         assignees:        assignees,
         tags:             tags,
