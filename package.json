@@ -146,6 +146,7 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.21"
+    "postcss": "^8.4.21",
+    "stylelint-config-recommended": "^10.0.1"
   }
 }
