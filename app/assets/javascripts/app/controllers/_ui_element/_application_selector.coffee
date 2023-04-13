@@ -84,6 +84,18 @@ class App.UiElement.ApplicationSelector
         operator: [__('is'), __('is not')]
 
     for groupKey, groupMeta of groups
+      if groupKey is 'article'
+        if attribute.action
+          elements['article.action'] =
+            name: 'action'
+            display: __('Action')
+            tag: 'select'
+            null: false
+            translate: true
+            options:
+              create: 'created'
+            operator: [__('is'), __('is not')]
+
       if groupKey is 'execution_time'
         if attribute.executionTime
           elements['execution_time.calendar_id'] =

@@ -88,7 +88,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     return if !attribute_name
     return if !attribute_table
 
-    if attribute_table && attribute_table != 'execution_time' && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set')
+    if attribute_table && attribute_table != 'execution_time' && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set') && !(attribute_table == 'article' && attribute_name == 'action')
       case attribute_table
       when 'customer'
         tables         |= ['INNER JOIN users customers ON tickets.customer_id = customers.id']
@@ -130,8 +130,9 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     #
     # checks
     #
+    #
 
-    if attribute_table == 'article' && options.key?(:article_id) && options[:article_id].blank?
+    if attribute_table == 'article' && options.key?(:article_id) && options[:article_id].blank? && attribute_name != 'action'
       query << '1 = 0'
     elsif block_condition[:operator].include?('in working time')
       raise __('Please enable execution_time feature to use it (currently only allowed for triggers and schedulers)') if !options[:execution_time]
@@ -170,6 +171,15 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       query << if update_action_requires_changed_attributes?(block_condition, check)
                  '1 = 0'
                elsif block_condition[:operator] == 'is'
+                 "1 = #{check}"
+               else
+                 "0 = #{check}" # is not
+               end
+
+    elsif attribute_table == 'article' && attribute_name == 'action'
+      check = options[:article_id] ? 1 : 0
+
+      query << if block_condition[:operator] == 'is'
                  "1 = #{check}"
                else
                  "0 = #{check}" # is not

@@ -1265,6 +1265,50 @@ RSpec.describe Trigger, type: :model do
     it_behaves_like 'getting triggered', attribute: 'ticket.escalation_at', operator: 'has reached warning', with_escalation: true
   end
 
+  context 'when aticle action is set' do
+    let(:activator) { 'action' }
+    let(:perform)   { { 'ticket.title' => { 'value' => 'triggered' } } }
+    let(:ticket)    { create(:ticket, title: 'Test Ticket') }
+    let(:article)   { create(:ticket_article, ticket: ticket) }
+
+    shared_examples 'getting triggered' do |triggered:, operator:, with_article:, type:|
+      before do
+        ticket && trigger
+
+        article if with_article
+      end
+
+      let(:article_id) { with_article ? article.id : nil }
+      let(:type)       { type }
+      let(:condition) do
+        { 'article.action' => { 'operator' => operator, 'value' => 'create' } }
+      end
+
+      if triggered
+        it "gets triggered for article action created operator: #{operator}" do
+          expect { TransactionDispatcher.commit }
+            .to change { ticket.reload.title }
+            .to('triggered')
+        end
+      else
+        it "does not get triggered for article action created operator: #{operator}" do
+          expect { TransactionDispatcher.commit }
+            .not_to change { ticket.reload.title }
+        end
+      end
+    end
+
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'update'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'update'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'update'
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'update'
+
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'create'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'create'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'create'
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'create'
+  end
+
   describe '#performed_on', current_user_id: 1 do
     let(:ticket) { create(:ticket) }
 

@@ -897,6 +897,11 @@ QUnit.test('supports advanced features', (assert) => {
           name: 'ticket.escalation_at',
           operator: 'has reached warning',
         },
+        {
+          name: 'article.action',
+          operator: 'is',
+          value: 'create',
+        },
       ],
     },
   }
@@ -957,6 +962,11 @@ QUnit.test('supports advanced features', (assert) => {
 
   el.find('.js-filterElement:nth-child(8) .js-operator select').val('has reached warning').trigger('change')
   assert.equal(el.find('.js-filterElement:nth-child(8) .js-value').hasClass('hide'), true, 'value invisible')
+
+  // Check article action option
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-attributeSelector select option:selected').text(), 'Action', 'article action attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-operator select option:selected').text(), 'is', 'is operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-value select option:selected').text(), 'created', 'created value selected')
 })
 
 QUnit.test('supports migration of the outdated param structure', (assert) => {

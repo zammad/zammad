@@ -317,7 +317,7 @@ RSpec.describe 'Manage > Trigger', mariadb: true, type: :system do
         expect(page).to have_select('activator', selected: 'Action')
 
         within '.ticket_selector' do
-          find('.js-filterElement .js-attributeSelector select').select 'Action'
+          find('.js-filterElement .js-attributeSelector select option[value="ticket.action"]').select_option
         end
 
         find_field('activator').select 'Time event'
