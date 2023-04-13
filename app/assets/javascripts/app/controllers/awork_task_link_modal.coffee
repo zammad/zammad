@@ -82,20 +82,21 @@ class App.AworkTaskLinkModal extends App.ControllerModal
   onSubmit: (e) ->
     @startLoading()
 
-    if !@taskSelectTable
+    if !@taskSelectTable || @taskSelectTable.getBulkSelected().length == 0
       @stopLoading()
       @close()
       return
 
-    selectedIds = @taskSelectTable.getBulkSelected()
-    @taskLinks.concat(selectedIds)
+    for id in @taskSelectTable.getBulkSelected()
+      if !@taskLinks.includes(id)
+        @taskLinks.push(id)
 
     @ajax(
       id:    'link-tasks'
       type:  'POST'
       url:   "#{@apiPath}/integration/awork/tasks/update"
       data:  JSON.stringify(
-        linked_tasks: @taskLinks
+        linked_tasks: @taskLinks,
         ticket_id: @ticket_id
       )
       success: (data, status, xhr) =>
@@ -106,7 +107,12 @@ class App.AworkTaskLinkModal extends App.ControllerModal
           )
           return
 
-        @callback()
+        App.Event.trigger 'notify', {
+          type: 'success'
+          msg:  App.i18n.translateContent('Update successful.')
+        }
+
+        @callback(@taskLinks)
         @stopLoading()
         @close()
     )

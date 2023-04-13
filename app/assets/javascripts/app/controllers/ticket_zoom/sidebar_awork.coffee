@@ -54,7 +54,8 @@ class SidebarAwork extends App.Controller
       ticket_id: @ticket.id
       taskLinks: @taskLinks
       container: @el.closest('.content')
-      callback: =>
+      callback: (taskLinks) =>
+        @taskLinks = taskLinks
         @getTasks()
     )
 
@@ -63,7 +64,8 @@ class SidebarAwork extends App.Controller
       head: @provider
       ticket_id: @ticket.id
       container: @el.closest('.content')
-      callback: =>
+      callback: (taskLinks) =>
+        @taskLinks = taskLinks
         @getTasks()
     )
 
@@ -73,7 +75,7 @@ class SidebarAwork extends App.Controller
 
     return @renderTasks() if !@ticket
 
-    ticketLinks = @ticket?.preferences?[@providerIdentifier]?.task_links || []
+    ticketLinks = @ticket?.preferences?[@providerIdentifier]?.task_ids || []
     return @renderTasks() if _.isEqual(@taskLinks, ticketLinks)
 
     @taskLinks = ticketLinks
@@ -89,8 +91,9 @@ class SidebarAwork extends App.Controller
     ))
     list.on('click', '.js-delete', (e) =>
       e.preventDefault()
-      taskLink = $(e.currentTarget).attr 'data-task-id'
-      @deleteTask(taskLink)
+      taskId = $(e.currentTarget).attr 'data-task-id'
+      @deleteTask(taskId)
+      @renderTasks()
     )
     @html(list)
     @badgeRenderLocal()
@@ -121,11 +124,34 @@ class SidebarAwork extends App.Controller
         @showError(App.i18n.translateInline('Loading failed.'))
     )
 
-  deleteTask: (link) =>
-    @taskLinks    = _.filter(@taskLinks, (element) -> element isnt link)
-    @taskLinkData = _.filter(@taskLinkData, (element) -> element.url isnt link)
+  saveTasks: =>
+    App.Ajax.request(
+      id:    "#{@providerIdentifier}-update-#{@ticket.id}"
+      type:  'POST'
+      url:   "#{@apiPath}/integration/#{@providerIdentifier}/tasks/update"
+      data:  JSON.stringify(
+        ticket_id: @ticket.id,
+        linked_tasks: @taskLinks
+      )
+      success: (data, status, xhr) =>
+        if data.result is 'failed'
+          new App.ControllerErrorModal(
+            message: data.message
+            container: @el.closest('.content')
+          )
+          return
 
-    #TODO Remove
+        App.Event.trigger 'notify', {
+          type: 'success'
+          msg:  App.i18n.translateContent('Update successful.')
+        }
+    )
+
+  deleteTask: (id) =>
+    @taskLinks    = _.filter(@taskLinks, (element) -> element isnt id)
+    @taskLinkData = _.filter(@taskLinkData, (element) -> element.id isnt id)
+
+    @saveTasks()
     @renderTasks()
 
   showEmpty: ->
@@ -145,7 +171,7 @@ class SidebarAwork extends App.Controller
     return if _.isEmpty(@taskLinks)
     args.ticket.preferences ||= {}
     args.ticket.preferences[@providerIdentifier] ||= {}
-    args.ticket.preferences[@providerIdentifier].task_links = @taskLinks
+    args.ticket.preferences[@providerIdentifier].task_ids = @taskLinks
 
 App.Config.set('500-Awork', SidebarAwork, 'TicketCreateSidebar')
 App.Config.set('500-Awork', SidebarAwork, 'TicketZoomSidebar')
