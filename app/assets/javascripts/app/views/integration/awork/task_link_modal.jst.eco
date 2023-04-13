@@ -1,4 +1,5 @@
-<div class="flex horizontal js-result">
+<div class="flex js-result">
   <div id="awork-task-link-project-select"></div>
+  <hr>
   <div id="awork-task-link-task-select"></div>
 </div>

@@ -1,5 +1,10 @@
 class App.AworkTaskLinkModal extends App.ControllerModal
 
+  constructor: (params) ->
+    super
+    @ticket_id = params['ticket_id']
+    @taskLinks = params['taskLinks']
+
   content: ->
     content = $( App.view('integration/awork/task_link_modal')() )
 
@@ -10,6 +15,12 @@ class App.AworkTaskLinkModal extends App.ControllerModal
       url:   "#{@apiPath}/integration/awork/projects"
       processData: true
       success: (data, status, xhr) =>
+        if data.result is 'failed'
+          new App.ControllerErrorModal(
+            message: data.message
+            container: @el.closest('.content')
+          )
+          return
         @projectList = data.response
 
         @searchableSelectProject = new App.SearchableSelect(
@@ -36,13 +47,20 @@ class App.AworkTaskLinkModal extends App.ControllerModal
               url:   "#{@apiPath}/integration/awork/projects/#{newValue}/tasks"
               processData: true
               success: (data, status, xhr) =>
+                if data.result is 'failed'
+                  new App.ControllerErrorModal(
+                    message: data.message
+                    container: @el.closest('.content')
+                  )
+                  return
                 @taskList = data.response.map (task) -> {
-                  status: 'test',
+                  id: task.id
+                  status: task.status,
                   title: task.name,
-                  assignees: 'assignees'
+                  assignees: task.assignees.join(', ')
                 }
 
-                @searchableSelectTask = new App.ControllerTable(
+                @taskSelectTable = new App.ControllerTable(
                   tableId:  'awork-task-link-task-select-table'
                   el:       content.find('#awork-task-link-task-select')
                   overview: [ 'status', 'title', 'assignees']
@@ -53,10 +71,42 @@ class App.AworkTaskLinkModal extends App.ControllerModal
                   ]
                   objects: @taskList
                   checkbox: true
-                  pagerItemsPerPage: 30
+                  pagerItemsPerPage: 10
                 )
             )
           currentValue = newValue
     )
 
     content
+
+  onSubmit: (e) ->
+    @startLoading()
+
+    if !@taskSelectTable
+      @stopLoading()
+      @close()
+      return
+
+    selectedIds = @taskSelectTable.getBulkSelected()
+    @taskLinks.concat(selectedIds)
+
+    @ajax(
+      id:    'link-tasks'
+      type:  'POST'
+      url:   "#{@apiPath}/integration/awork/tasks/update"
+      data:  JSON.stringify(
+        linked_tasks: @taskLinks
+        ticket_id: @ticket_id
+      )
+      success: (data, status, xhr) =>
+        if data.result is 'failed'
+          new App.ControllerErrorModal(
+            message: data.message
+            container: @el.closest('.content')
+          )
+          return
+
+        @callback()
+        @stopLoading()
+        @close()
+    )

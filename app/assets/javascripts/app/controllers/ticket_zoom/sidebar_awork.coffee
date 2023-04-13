@@ -51,13 +51,20 @@ class SidebarAwork extends App.Controller
   linkTask: =>
     new App.AworkTaskLinkModal(
       head: @provider
+      ticket_id: @ticket.id
+      taskLinks: @taskLinks
       container: @el.closest('.content')
+      callback: =>
+        @getTasks()
     )
 
   createTask: =>
     new App.AworkTaskCreateModal(
       head: @provider
+      ticket_id: @ticket.id
       container: @el.closest('.content')
+      callback: =>
+        @getTasks()
     )
 
   reloadTasks: (el) =>
@@ -94,61 +101,32 @@ class SidebarAwork extends App.Controller
 
     return @renderTasks() if _.isEmpty(@taskLinks)
 
-    @getTasks(
-      links: @taskLinks
-      success: (result) =>
-        @taskLinks    = result.map((element) -> element.url)
-        @taskLinkData = result
-        @renderTasks()
-      error: =>
-        @showError(App.i18n.translateInline('Loading failed.'))
-    )
+    @getTasks()
 
-  getTasks: (params) ->
+  getTasks: =>
     @ajax(
-      id:    "#{@providerIdentifier}-#{@taskKey}"
+      id:    "#{@providerIdentifier}-get-tasks-#{@ticket.id}"
       type:  'GET'
-      url:   "#{@apiPath}/integration/#{@providerIdentifier}tasks/#{@ticket.id}"
-      success: (data, status, xhr) ->
+      url:   "#{@apiPath}/integration/#{@providerIdentifier}/tasks/#{@ticket.id}"
+      success: (data, status, xhr) =>
         if data.response
-          params.success(data.response)
+          @taskLinks    = data.response.map((task) -> task.id)
+          @taskLinkData = data.response
+          @renderTasks()
         else
-          params.error(data.message)
+          @showError(data.message)
       error: (xhr, status, error) ->
         return if status is 'abort'
 
-        params.error()
+        @showError(App.i18n.translateInline('Loading failed.'))
     )
 
-  saveTasks: (params) ->
-    App.Ajax.request(
-      id:    "#{@providerIdentifier}-update-#{params.ticket_id}"
-      type:  'POST'
-      url:   "#{@apiPath}/integration/#{@providerIdentifier}/tasks/update"
-      data:  JSON.stringify(ticket_id: params.ticket_id, linked_tasks: params.links)
-      success: (data, status, xhr) ->
-        params.success(data)
-      error: (xhr, status, details) ->
-        return if status is 'abort'
-
-        params.error()
-    )
-
-  deleteTask: (link) ->
+  deleteTask: (link) =>
     @taskLinks    = _.filter(@taskLinks, (element) -> element isnt link)
     @taskLinkData = _.filter(@taskLinkData, (element) -> element.url isnt link)
 
-    if @ticket && @ticket.id
-      @saveTasks(
-        ticket_id: @ticket.id
-        links: @taskLinks
-        success: =>
-          @renderTasks()
-        error: (message = __('The task could not be saved.')) =>
-          @showError(App.i18n.translateInline(message))
-      )
-    else
-      @renderTasks()
+    #TODO Remove
+    @renderTasks()
 
   showEmpty: ->
     @html("<div>#{App.i18n.translateInline('No linked tasks')}</div>")
