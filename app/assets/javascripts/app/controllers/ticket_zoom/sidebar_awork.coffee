@@ -46,7 +46,7 @@ class SidebarAwork extends App.Controller
 
   badgeRenderLocal: =>
     return if !@badgeEl
-    @badgeEl.html(App.view('awork/sidebar_tabs_item')(@metaBadge()))
+    @badgeEl.html(App.view('integration/awork/sidebar_tabs_item')(@metaBadge()))
 
   linkTask: =>
     new App.AworkTaskLinkModal(
