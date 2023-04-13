@@ -65,7 +65,7 @@ msgstr ""
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/messaging/ticket_info/en.md.erb
-msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Gruppe: #{ticket.group.name}\n* Besitzer: #{ticket.owner.fullname}\n* Status: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
+msgid "# #{ticket.title}\n_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n* Group: #{ticket.group.name}\n* Owner: #{ticket.owner.fullname}\n* State: #{t(ticket.state.name)}\n\n<% if @objects[:article] %>\n#{article.body_as_text}\n<% end %>\n"
 msgstr ""
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
