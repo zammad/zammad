@@ -24,6 +24,7 @@ class Awork
   end
 
   def tasks_by_project(id)
+    return if !id
     result = client.perform('get', "projects/#{id}/projecttasks")
     result.map { |task| Awork::Task.new(client, task).to_h }
   end
