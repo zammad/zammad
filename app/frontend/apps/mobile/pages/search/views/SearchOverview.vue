@@ -172,6 +172,11 @@ const { headerElement, stickyStyles } = useStickyHeader([
   loading,
   () => !!props.type,
 ])
+
+const showLoader = computed(() => {
+  if (!loading.value) return false
+  return !props.type || !found[props.type]
+})
 </script>
 
 <script lang="ts">
@@ -239,7 +244,10 @@ export default {
       </div>
     </header>
     <div :style="stickyStyles.body">
-      <div v-if="loading" class="flex h-14 w-full items-center justify-center">
+      <div
+        v-if="showLoader"
+        class="flex h-14 w-full items-center justify-center"
+      >
         <CommonIcon name="mobile-loading" animation="spin" />
       </div>
       <div
@@ -247,7 +255,7 @@ export default {
         id="search-results"
         aria-live="polite"
         role="tabpanel"
-        :aria-busy="loading"
+        :aria-busy="showLoader"
       >
         <SearchResults :data="found[type]" :type="type" />
       </div>
