@@ -1,11 +1,11 @@
 class Awork
   class Task < Awork::Entity
 
-    entity_name='task'
+    ENTITY_NAME = 'task'
 
     def to_h
       {
-        id:               @result['iid'],
+        id:               @result['id'],
         title:            @result['title'],
         description:      @result['description'],
         assignees:        assignees,

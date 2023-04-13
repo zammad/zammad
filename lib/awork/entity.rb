@@ -10,13 +10,14 @@ class Awork
       'unknown':      '#000000',
     }.freeze
 
-    entity_name = 'entity'
+    ENTITY_NAME = 'entity'
 
-    attr_reader :client, :result
+    attr_reader :entity
 
     def initialize(client, result)
       @client = client
       @result = result
+      @entity = to_h()
     end
 
     def to_h
@@ -34,16 +35,16 @@ class Awork
 
     def assignees
       @result['assignees'].map do |assignee|
-        "#{ assignee['firstName'] } #{ assignee['lastName'] }"
+        "#{assignee['firstName']} #{assignee['lastName']}"
       end
     end
 
     def status
       {
-        id:         @result["#{ entity_name }Status"]['id'],
-        name:       @result["#{ entity_name }Status"]['name'],
-        type:       @result["#{ entity_name }Status"]['type'],
-        color:      status_color(@result["#{ entity_name }Status"]['type']),
+        id:         @result["#{ENTITY_NAME}Status"]['id'],
+        name:       @result["#{ENTITY_NAME}Status"]['name'],
+        type:       @result["#{ENTITY_NAME}Status"]['type'],
+        color:      status_color(@result["#{ENTITY_NAME}Status"]['type']),
       }
     end
 
@@ -54,7 +55,7 @@ class Awork
     def image
       return if !@result['hasImage']
 
-      client.perform('get', "files/images/#{ @entity_name }/#{ @result['id'] }")
+      client.perform('get', "files/images/#{@ENTITY_NAME}/#{@result['id']}")
     end
   end
 end

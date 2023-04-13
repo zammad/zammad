@@ -1,7 +1,7 @@
 class Awork
   class Project < Awork::Entity
 
-    entity_name='project'
+    ENTITY_NAME = 'project'
 
     def to_h
       {

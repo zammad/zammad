@@ -13,19 +13,19 @@ class Awork
     ids.map do |id|
       Awork::Task.new(
         client,
-        client.perform('get', "tasks/#{ id }")
-      )
+        client.perform('get', "tasks/#{id}")
+      ).to_h
     end
   end
 
   def projects
     result = client.perform('get', 'projects')
-    result.map { |entity| Awork::Project.new(client, entity) }
+    result.map { |entity| Awork::Project.new(client, entity).to_h }
   end
 
   def tasks_by_project(id)
     result = client.perform('get', "projects/#{id}/projecttasks")
-    result.map { |entity| Awork::Task.new(client, entity) }
+    result.map { |entity| Awork::Task.new(client, entity).to_h }
   end
 
   def create(task)
@@ -36,6 +36,6 @@ class Awork
       'parentId': task['project_id']
     })
 
-    Awork::Task.new(client, result)
+    Awork::Task.new(client, result).to_h
   end
 end
