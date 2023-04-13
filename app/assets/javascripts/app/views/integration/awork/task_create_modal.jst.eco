@@ -1,0 +1,7 @@
+<div class="flex js-result">
+  <input id="awork-task-create-name" type="text" name="name" autocomplete="off" value="<%= @data.name %>" class="form-control"/>
+  <hr>
+  <div id="awork-task-create-description" class="textBubble js-writeArea">
+    <div class="richtext-content" data-name="body" contenteditable="true"><br><br><%- @data.description %></div>
+  </div>
+</div>

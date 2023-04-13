@@ -30,11 +30,10 @@ class Awork
   end
 
   def create(task)
-    result = client.perform('post', '/tasks', {
+    result = client.perform('post', 'tasks', {
       'name': task['name'],
       'description': task['description'],
       'baseType': 'projecttask',
-      'parentId': task['project_id']
     })
 
     Awork::Task.new(client, result).to_h

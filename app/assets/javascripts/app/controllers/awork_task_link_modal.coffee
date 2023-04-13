@@ -1,4 +1,5 @@
 class App.AworkTaskLinkModal extends App.ControllerModal
+  buttonCancel: true
 
   constructor: (params) ->
     super

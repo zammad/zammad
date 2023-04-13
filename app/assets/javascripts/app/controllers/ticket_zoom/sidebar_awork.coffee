@@ -62,7 +62,8 @@ class SidebarAwork extends App.Controller
   createTask: =>
     new App.AworkTaskCreateModal(
       head: @provider
-      ticket_id: @ticket.id
+      ticket: @ticket
+      taskLinks: @taskLinks
       container: @el.closest('.content')
       callback: (taskLinks) =>
         @taskLinks = taskLinks
@@ -140,11 +141,6 @@ class SidebarAwork extends App.Controller
             container: @el.closest('.content')
           )
           return
-
-        App.Event.trigger 'notify', {
-          type: 'success'
-          msg:  App.i18n.translateContent('Update successful.')
-        }
     )
 
   deleteTask: (id) =>
