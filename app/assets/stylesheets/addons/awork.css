@@ -2,3 +2,7 @@
     width: 24px;
     height: 24px;
 }
+
+#awork-task-link-project-select {
+    flex-grow: 1;
+}
