@@ -32,4 +32,9 @@ class WebhooksController < ApplicationController
   def destroy
     model_destroy_render(Webhook, params)
   end
+
+  def replacements
+    render json:   TriggerWebhookJob::CustomPayload.objects_and_subroutines,
+           status: :ok
+  end
 end

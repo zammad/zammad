@@ -19,6 +19,11 @@ Source: https://github.com/sliptree/bootstrap-tokenfield
 Copyright 2013-2014 Sliptree and other contributors
 License: MIT license
 -----------------------------------------------------------------------------
+codemirror.js
+Source: https://github.com/codemirror/codemirror5
+Copyright: 2017 Marijn Haverbeke <marijn@haverbeke.berlin> and others
+License: MIT license
+-----------------------------------------------------------------------------
 clipboard-polyfill.promise.js
 Source: https://github.com/lgarron/clipboard-polyfill
 Copyright: 2021 Lucas Garron (https://garron.net/)
@@ -52,6 +57,11 @@ License: BSD License (BSD-3-Clause)
 is-mobile.js
 Source: https://github.com/juliangruber/is-mobile
 Copyright: 2013 Julian Gruber <julian@juliangruber.com>
+License: MIT license
+-----------------------------------------------------------------------------
+jsonlint.js
+Source: https://github.com/zaach/jsonlint
+Copyright: 2012 Zachary Carter
 License: MIT license
 -----------------------------------------------------------------------------
 jquery.flot.js

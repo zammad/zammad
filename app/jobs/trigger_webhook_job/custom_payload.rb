@@ -94,6 +94,36 @@ class TriggerWebhookJob::CustomPayload
     'User' => DENIED_USER_ATTRIBUTES,
   }.freeze
 
+  def self.objects_and_subroutines
+    data = {
+      ticket:                Ticket,
+      'ticket.priority':     Ticket::Priority,
+      'ticket.state':        Ticket::State,
+      'ticket.group':        Group,
+      'ticket.owner':        User,
+      'ticket.customer':     User,
+      'ticket.updated_by':   User,
+      'ticket.created_by':   User,
+      'ticket.organization': Organization,
+      article:               Ticket::Article,
+      'article.sender':      Ticket::Article::Sender,
+      'article.type':        Ticket::Article::Type,
+      'article.created_by':  User,
+      'article.updated_by':  User,
+      notification:          nil
+    }
+
+    data.each do |object, klass|
+      if klass.nil?
+        data[object] = "TriggerWebhookJob::CustomPayload::ALLOWED_#{object.to_s.upcase}_METHODS".constantize
+        next
+      end
+      data[object] = allowed_subroutines(klass)
+    end
+
+    data
+  end
+
   def self.generate(record, tracks, event)
     return {} if record.blank?
 

@@ -1,0 +1,563 @@
+/* BASICS */
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+  height: 300px;
+  color: black;
+  direction: ltr;
+}
+
+/* PADDING */
+
+.CodeMirror-lines {
+  padding: 4px 0; /* Vertical padding around content */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 4px; /* Horizontal padding of content */
+}
+
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+
+/* CURSOR */
+
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0 !important;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+.cm-fat-cursor .CodeMirror-line::selection,
+.cm-fat-cursor .CodeMirror-line > span::selection, 
+.cm-fat-cursor .CodeMirror-line > span > span::selection { background: transparent; }
+.cm-fat-cursor .CodeMirror-line::-moz-selection,
+.cm-fat-cursor .CodeMirror-line > span::-moz-selection,
+.cm-fat-cursor .CodeMirror-line > span > span::-moz-selection { background: transparent; }
+.cm-fat-cursor { caret-color: transparent; }
+@-moz-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+
+.cm-tab { display: inline-block; text-decoration: inherit; }
+
+.CodeMirror-rulers {
+  position: absolute;
+  left: 0; right: 0; top: -50px; bottom: 0;
+  overflow: hidden;
+}
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  top: 0; bottom: 0;
+  position: absolute;
+}
+
+/* DEFAULT THEME */
+
+.cm-s-default .cm-header {color: blue;}
+.cm-s-default .cm-quote {color: #090;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+
+.cm-s-default .cm-keyword {color: #708;}
+.cm-s-default .cm-atom {color: #219;}
+.cm-s-default .cm-number {color: #164;}
+.cm-s-default .cm-def {color: #00f;}
+.cm-s-default .cm-variable,
+.cm-s-default .cm-punctuation,
+.cm-s-default .cm-property,
+.cm-s-default .cm-operator {}
+.cm-s-default .cm-variable-2 {color: #05a;}
+.cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
+.cm-s-default .cm-comment {color: #a50;}
+.cm-s-default .cm-string {color: #a11;}
+.cm-s-default .cm-string-2 {color: #f50;}
+.cm-s-default .cm-meta {color: #555;}
+.cm-s-default .cm-qualifier {color: #555;}
+.cm-s-default .cm-builtin {color: #30a;}
+.cm-s-default .cm-bracket {color: #997;}
+.cm-s-default .cm-tag {color: #170;}
+.cm-s-default .cm-attribute {color: #00c;}
+.cm-s-default .cm-hr {color: #999;}
+.cm-s-default .cm-link {color: #00c;}
+
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+
+.CodeMirror-composing { border-bottom: 2px solid; }
+
+/* Default styles for common addons */
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
+.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
+.CodeMirror-activeline-background {background: #e8f2ff;}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 50px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -50px; margin-right: -50px;
+  padding-bottom: 50px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+  z-index: 0;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 50px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+  outline: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  min-height: 100%;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: -50px;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper ::selection { background-color: transparent }
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-variant-ligatures: contextual;
+  font-variant-ligatures: contextual;
+}
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  padding: 0.1px; /* Force widget margins to stay inside of the container */
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-rtl pre { direction: rtl; }
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.CodeMirror-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+.CodeMirror-measure pre { position: static; }
+
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+
+.cm-searching {
+  background-color: #ffa;
+  background-color: rgba(255, 255, 0, .4);
+}
+
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+
+/* addon/hint/show-hint.css */
+
+.CodeMirror-hints {
+  position: absolute;
+  z-index: 1100;
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--background-tertiary);
+  font-family: monospace;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.CodeMirror-hint {
+  align-items: center;
+  color: var(--text-inverted);
+  cursor: pointer;
+  display: flex;
+  font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  height: auto;
+  letter-spacing: 0;
+  line-height: initial;
+  list-style: none;
+  overflow: hidden;
+  padding: 11px 15px;
+  text-align: left;
+  text-overflow: ellipsis;
+  text-transform: initial;
+  touch-action: manipulation;
+  user-select: none;
+  white-space: nowrap;
+  word-break: break-all;
+}
+
+.CodeMirror-hint:not(:first-child) {
+  box-shadow: 0 1px rgba(255, 255, 255, 0.13) inset;
+}
+
+li.CodeMirror-hint-active {
+  background: var(--highlight);
+  color: var(--text-inverted);
+}
+
+.CodeMirror-hint kbd {
+  background: none;
+  border-radius: 3px;
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: var(--elevation-stroke);
+  color: inherit;
+  display: inline-block;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1;
+  margin: 0 1px;
+  margin-left: 7px;
+  opacity: 0.5;
+  padding: 2px 5px;
+  vertical-align: baseline;
+}
+
+li.CodeMirror-hint-active kbd {
+  background: inherit;
+  color: inherit;
+}
+
+/* addon/lint/lint.css */
+
+/* The lint marker gutter */
+.CodeMirror-lint-markers {
+  width: 16px;
+}
+
+.CodeMirror-lint-tooltip {
+  background-color: var(--background-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-inverted);
+  font-family: monospace;
+  font-size: 10pt;
+  overflow: hidden;
+  padding: 2px 5px;
+  position: fixed;
+  white-space: pre;
+  white-space: pre-wrap;
+  z-index: 1100;
+  max-width: 600px;
+  opacity: 0;
+  transition: opacity .4s;
+  -moz-transition: opacity .4s;
+  -webkit-transition: opacity .4s;
+  -o-transition: opacity .4s;
+  -ms-transition: opacity .4s;
+}
+
+.CodeMirror-lint-mark {
+  background-position: left bottom;
+  background-repeat: repeat-x;
+}
+
+.CodeMirror-lint-mark-warning {
+  background-image: url("data:image/svg+xml,%3Csvg width='4px' height='3px' viewBox='0 0 4 3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23FAAB00' d='M2,1.5C2,1.2,2.2,1,2.5,1C2.8,1,3,1.2,3,1.5c0,0.7,0.4,1.2,1,1.4V1.5C4,0.7,3.3,0,2.5,0S1,0.7,1,1.5 C1,1.8,0.8,2,0.5,2S0,1.8,0,1.5c0,0,0,0,0,0v1.4C0.2,3,0.3,3,0.5,3C1.3,3,2,2.3,2,1.5z'/%3E%3C/svg%3E%0A");
+}
+
+.CodeMirror-lint-mark-error {
+  background-image: url("data:image/svg+xml,%3Csvg width='4px' height='3px' viewBox='0 0 4 3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23D74242' d='M2,1.5C2,1.2,2.2,1,2.5,1C2.8,1,3,1.2,3,1.5c0,0.7,0.4,1.2,1,1.4V1.5C4,0.7,3.3,0,2.5,0S1,0.7,1,1.5 C1,1.8,0.8,2,0.5,2S0,1.8,0,1.5c0,0,0,0,0,0v1.4C0.2,3,0.3,3,0.5,3C1.3,3,2,2.3,2,1.5z'/%3E%3C/svg%3E%0A");
+}
+
+.CodeMirror-lint-marker {
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.CodeMirror-lint-message {
+  padding-left: 18px;
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+.CodeMirror-lint-marker-warning, .CodeMirror-lint-message-warning {
+  background-image: url("data:image/svg+xml,%3Csvg width='16px' height='16px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' fill='%23FAAB00' d='M9.5,2.9l4.8,8.6c0.5,0.8,0.2,1.9-0.7,2.4 c-0.3,0.1-0.6,0.2-0.8,0.2H3.2c-1,0-1.7-0.8-1.7-1.7c0-0.3,0.1-0.6,0.2-0.8l4.8-8.6C7,2.1,8,1.8,8.8,2.2C9.1,2.4,9.4,2.6,9.5,2.9z M8,4.5c-0.5,0-0.8,0.4-0.8,0.9l0.1,3.5c0,0.5,0.4,0.9,0.9,0.9H7.8c0.5,0,0.9-0.4,0.9-0.9l0.1-3.5C8.9,4.9,8.5,4.5,8,4.5L8,4.5z M8,12.3c0.5,0,0.9-0.4,0.9-0.9S8.5,10.6,8,10.6c-0.5,0-0.9,0.4-0.9,0.9S7.5,12.3,8,12.3z'/%3E%3C/svg%3E");
+}
+
+.CodeMirror-lint-marker-error, .CodeMirror-lint-message-error {
+  background-image: url("data:image/svg+xml,%3Csvg width='16px' height='16px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' fill='%23D74242' d='M8,14.6c-3.6,0-6.6-2.9-6.6-6.6S4.4,1.5,8,1.5s6.6,2.9,6.6,6.6 S11.6,14.6,8,14.6z M10.1,5.3L8,7.4L5.9,5.3c-0.2-0.2-0.4-0.2-0.6,0c-0.2,0.2-0.2,0.4,0,0.6L7.4,8l-2,2.1c-0.2,0.2-0.2,0.4,0,0.6 c0.2,0.2,0.4,0.2,0.6,0l2-2.1l2.1,2.1c0.2,0.2,0.4,0.2,0.6,0s0.2-0.4,0-0.6L8.6,8l2.1-2.1c0.2-0.2,0.2-0.4,0-0.6S10.2,5.2,10.1,5.3z'/%3E%3C/svg%3E");
+}
+
+.CodeMirror-lint-marker-multiple {
+  background-image: url("data:image/svg+xml,%3Csvg width='16px' height='16px' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon fill-rule='evenodd' clip-rule='evenodd' fill='%23888888' points='9,3 7,3 7,7 3,7 3,9 7,9 7,13 9,13 9,9 13,9 13,7 9,7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  width: 100%;
+  height: 100%;
+}
+
+.CodeMirror-lint-line-error {
+  background-color: rgba(183, 76, 81, 0.08);
+}
+
+.CodeMirror-lint-line-warning {
+  background-color: rgba(255, 211, 0, 0.1);
+}
+
+/* ZAMMAD THEME */
+
+.cm-s-zammad.CodeMirror {
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+
+  /* Zammad form control style */
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.cm-s-zammad .CodeMirror-gutters {
+  background: var(--background-modifier-accent);
+  color: var(--text-muted);
+  border: none;
+}
+
+.cm-s-zammad .CodeMirror-cursor {
+  border-left-color: var(--text-normal);
+}
+
+.cm-s-zammad .cm-header {color: var(--text-highlight);}
+.cm-s-zammad .cm-quote {color: var(--supergood-color);}
+.cm-s-zammad .cm-negative {color: var(--danger-color);}
+.cm-s-zammad .cm-positive {color: var(--supergood-color);}
+
+.cm-s-zammad .cm-keyword {color: #708;}
+.cm-s-zammad .cm-atom {color: var(--highlight);}
+.cm-s-zammad .cm-number {color: var(--supergood-color);}
+.cm-s-zammad .cm-def {color: var(--highlight);}
+.cm-s-zammad .cm-variable,
+.cm-s-zammad .cm-punctuation,
+.cm-s-zammad .cm-property,
+.cm-s-zammad .cm-operator {color: var(--text-normal);}
+.cm-s-zammad .cm-variable-2 {color: var(--highlight);}
+.cm-s-zammad .cm-variable-3, .cm-s-zammad .cm-type, .cm-s-zammad .cm-json {color: var(--supergood-color);}
+.cm-s-zammad .cm-comment {color: var(--ghost-color);}
+.cm-s-zammad .cm-string {color: var(--ok-color);}
+.cm-s-zammad .cm-string-2 {color: var(--good-color);}
+.cm-s-zammad .cm-meta {color: var(--text-muted);}
+.cm-s-zammad .cm-qualifier {color: var(--text-muted);}
+.cm-s-zammad .cm-builtin {color: #30a;}
+.cm-s-zammad .cm-bracket {color: var(--good-color);}
+.cm-s-zammad .cm-tag {color: var(--supergood-color);}
+.cm-s-zammad .cm-attribute {color: var(--highlight);}
+.cm-s-zammad .cm-hr {color: var(--pending-color);}
+.cm-s-zammad .cm-link {color: var(--text-link);}
+
+.cm-s-zammad .cm-error {color: var(--danger-color);}
+.cm-s-zammad .cm-invalidchar {color: var(--danger-color);}
+
+.cm-s-zammad .CodeMirror-line::selection,
+.cm-s-zammad .CodeMirror-line>span::selection,
+.cm-s-zammad .CodeMirror-line>span>span::selection {
+  background: var(--interactive-muted);
+}
+
+.cm-s-zammad .CodeMirror-line::-moz-selection,
+.cm-s-zammad .CodeMirror-line>span::-moz-selection,
+.cm-s-zammad .CodeMirror-line>span>span::-moz-selection {
+  background: var(--interactive-muted);
+}
+
+.cm-s-zammad div.CodeMirror-selected {
+  background: var(--interactive-muted);
+}

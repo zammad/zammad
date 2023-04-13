@@ -47,6 +47,7 @@
     "public/vite/**",
     "**/reset*.css",
     "**/bootstrap*.css",
+    "**/codemirror.css",
     "**/jquery*.css",
     "**/cropper.css",
     "**/fineuploader.css",

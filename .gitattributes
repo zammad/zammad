@@ -1,6 +1,8 @@
 app/assets/javascripts/app/lib/animations/** linguist-vendored
 app/assets/javascripts/app/lib/base/bootstrap-tokenfield.js linguist-vendored
 app/assets/javascripts/app/lib/base/clipboard.js linguist-vendored
+app/assets/javascripts/app/lib/base/codemirror.js linguist-vendored
+app/assets/javascripts/app/lib/base/codemirror-javascript.js linguist-vendored
 app/assets/javascripts/app/lib/base/cropper.js linguist-vendored
 app/assets/javascripts/app/lib/base/desktop-notify.js linguist-vendored
 app/assets/javascripts/app/lib/base/email-addresses.js linguist-vendored
@@ -8,6 +10,7 @@ app/assets/javascripts/app/lib/base/exif.js linguist-vendored
 app/assets/javascripts/app/lib/base/highlight.pack.js linguist-vendored
 app/assets/javascripts/app/lib/base/html5Upload.js linguist-vendored
 app/assets/javascripts/app/lib/base/is-mobile.js linguist-vendored
+app/assets/javascripts/app/lib/base/jsonlint.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery-scrollto.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.enableObjectResizingShim.js linguist-vendored
 app/assets/javascripts/app/lib/base/jquery.fineuploader-3.0.js linguist-vendored
@@ -40,4 +43,5 @@ app/assets/stylesheets/jquery-ui.css linguist-vendored
 app/assets/stylesheets/bootstrap-tokenfield.css linguist-vendored
 app/assets/stylesheets/bootstrap.css linguist-vendored
 app/assets/stylesheets/cropper.css linguist-vendored
+app/assets/stylesheets/codemirror.css linguist-vendored
 app/assets/stylesheets/fineuploader.css linguist-vendored

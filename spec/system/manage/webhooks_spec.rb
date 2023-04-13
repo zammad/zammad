@@ -31,11 +31,9 @@ RSpec.describe 'Manage > Webhook', type: :system do
         fill_in 'endpoint', with: 'https://example.com/webhook'
 
         click 'a[data-toggle="collapse"]'
-        wait.until do
-          expect(page).to have_field('Custom Payload', type: 'textarea')
-        end
 
-        fill_in 'custom_payload', with: 'invalid json'
+        find(:code_editor, 'custom_payload').send_keys 'invalid json'
+
         click '.js-submit'
 
         expect(page).to have_css('div[data-attribute-name="custom_payload"].has-error')

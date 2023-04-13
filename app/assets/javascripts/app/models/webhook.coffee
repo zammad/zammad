@@ -9,7 +9,7 @@ class App.Webhook extends App.Model
     { name: 'ssl_verify',       display: __('SSL Verify'),                tag: 'boolean',   null: true, translate: true, options: { true: 'yes', false: 'no'  }, default: true },
     { name: 'basic_auth_username', display: __('HTTP Basic Authentication Username'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'basic_auth_password', display: __('HTTP Basic Authentication Password'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
-    { name: 'custom_payload',   display: __('Custom Payload'),            tag: 'textarea', rows: 6, null: true, collapsible: true },
+    { name: 'custom_payload',   display: __('Custom Payload'),            tag: 'code_editor', null: true, collapsible: true },
     { name: 'note',             display: __('Note'),                      tag: 'textarea', note: '', limit: 250, null: true },
     { name: 'active',           display: __('Active'),                    tag: 'active',    default: true },
     { name: 'updated_at',       display: __('Updated'),                   tag: 'datetime',  readonly: 1 },
