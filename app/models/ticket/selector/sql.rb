@@ -16,13 +16,12 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     'is not in working time'
   ].freeze
 
-  attr_accessor :final_query, :final_bind_params, :final_tables, :final_tables_query, :changed_attributes
+  attr_accessor :final_query, :final_bind_params, :final_tables, :changed_attributes
 
   def get
     @final_query        = []
     @final_bind_params  = []
     @final_tables       = []
-    @final_tables_query = []
     @final_query        = run(selector, 0)
     [query_sql, final_bind_params, tables_sql]
   rescue InvalidCondition => e
@@ -34,26 +33,22 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
   end
 
   def query_sql
-    [
-      final_tables_query.join(' AND ').presence,
-      final_query.presence,
-    ].compact.join(' AND ')
+    Array(final_query).join(' AND ')
   end
 
   def tables_sql
     return '' if final_tables.blank?
 
-    ", #{final_tables.join(', ')}"
+    " #{final_tables.join(' ')}"
   end
 
   def run(block, level)
     if block.key?(:conditions)
       run_block(block, level)
     else
-      query, bind_params, tables, tables_query = condition_sql(block)
+      query, bind_params, tables = condition_sql(block)
       @final_bind_params                   += bind_params
       @final_tables                        |= tables
-      @final_tables_query                  |= tables_query
       query
     end
   end
@@ -85,7 +80,6 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     # remember query and bind params
     query                           = []
     tables                          = []
-    tables_query                    = []
     bind_params                     = []
     like                            = Rails.application.config.db_like
     attribute_table, attribute_name = block_condition[:name].split('.')
@@ -97,24 +91,18 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     if attribute_table && attribute_table != 'execution_time' && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set')
       case attribute_table
       when 'customer'
-        tables         |= ['users customers']
-        tables_query   |= ['tickets.customer_id = customers.id']
+        tables         |= ['INNER JOIN users customers ON tickets.customer_id = customers.id']
       when 'organization'
-        tables         |= ['organizations']
-        tables_query   |= ['tickets.organization_id = organizations.id']
+        tables         |= ['LEFT JOIN organizations ON tickets.organization_id = organizations.id']
       when 'owner'
-        tables         |= ['users owners']
-        tables_query   |= ['tickets.owner_id = owners.id']
+        tables         |= ['INNER JOIN users owners ON tickets.owner_id = owners.id']
       when 'article'
-        tables         |= ['ticket_articles articles']
-        tables_query   |= ['tickets.id = articles.ticket_id']
+        tables         |= ['INNER JOIN ticket_articles articles ON tickets.id = articles.ticket_id']
       when 'ticket_state'
-        tables         |= ['ticket_states']
-        tables_query   |= ['tickets.state_id = ticket_states.id']
+        tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
       when 'ticket'
         if attribute_name == 'mention_user_ids'
-          tables       |= ['mentions']
-          tables_query |= ["tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
+          tables |= ["LEFT JOIN mentions ON tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
         end
       else
         raise "invalid selector #{attribute_table}, #{attribute_name}"
@@ -324,13 +312,8 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       end
     elsif block_condition[:operator] == 'contains one' && attribute_table == 'ticket'
       if attribute_name == 'tags'
-        tables |= %w[tag_objects tag_items tags]
-        query << "
-          tickets.id = tags.o_id AND
-          tag_objects.id = tags.tag_object_id AND
-          tag_objects.name = 'Ticket' AND
-          tag_items.id = tags.tag_item_id AND
-          tag_items.name IN (?)"
+        tables |= ["LEFT JOIN tags ON tickets.id = tags.o_id LEFT JOIN tag_objects ON tag_objects.id = tags.tag_object_id AND tag_objects.name = 'Ticket' LEFT JOIN tag_items ON tag_items.id = tags.tag_item_id"]
+        query << 'tag_items.name IN (?)'
 
         bind_params.push block_condition[:value]
       elsif Ticket.column_names.include?(attribute_name)
@@ -421,7 +404,7 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
       raise "Invalid operator '#{block_condition[:operator]}' for '#{block_condition[:value].inspect}'"
     end
 
-    [query, bind_params, tables, tables_query]
+    [query, bind_params, tables]
   end
 
   def range(selector)
