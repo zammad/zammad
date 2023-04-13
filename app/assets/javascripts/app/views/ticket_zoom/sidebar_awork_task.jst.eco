@@ -1,16 +1,16 @@
 <% for task in @tasks: %>
-  <div class="sidebar-git-task-delete">
+  <div class="sidebar-awork-task-delete">
     <span class="list-item-delete js-delete" data-task-id="<%= task.id %>" data-type="remove">
       <%- @Icon('diagonal-cross') %>
     </span>
   </div>
-  <div class="sidebar-git-task-content">
+  <div class="sidebar-awork-task-content">
     <div class="sidebar-block">
       <a href="<%- task.url %>" target="_blank">
         <span class="icon-holder" title="<%= @T(task.status.name) %>">
           <%- @Icon('task-state', 'open') %>
         </span>
-        <%= task.title %>
+        <%= task.name %>
       </a>
     </div>
   <% if task.assignees.length > 0: %>
