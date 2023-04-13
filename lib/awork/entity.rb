@@ -2,15 +2,13 @@ class Awork
   class Entity
 
     STATUS_COLOR_MAP = {
-      'open':         '#5bc0ff',
-      'progress':     '#ffd26a',
-      'in_release':   '#c17fff',
-      'blocked':      '#ff4398',
-      'done':         '#33f29e',
-      'unknown':      '#000000',
+      'not-started' => '#5bc0ff',
+      'progress' => '#ffd26a',
+      'in_release' => '#c17fff',
+      'stuck' => '#ff4398',
+      'closed' => '#33f29e',
+      'unknown' => '#000000',
     }.freeze
-
-    ENTITY_NAME = 'entity'
 
     attr_reader :entity
 
@@ -22,7 +20,7 @@ class Awork
 
     def to_h
       {
-        id:               @result['iid'],
+        id:               @result['id'],
         title:            @result['title'],
         description:      @result['description'],
         status:           status,
@@ -39,23 +37,18 @@ class Awork
       end
     end
 
-    def status
+    def status(entity_name = 'entity')
       {
-        id:         @result["#{ENTITY_NAME}Status"]['id'],
-        name:       @result["#{ENTITY_NAME}Status"]['name'],
-        type:       @result["#{ENTITY_NAME}Status"]['type'],
-        color:      status_color(@result["#{ENTITY_NAME}Status"]['type']),
+        id:         @result["#{entity_name}Status"]['id'],
+        name:       @result["#{entity_name}Status"]['name'],
+        type:       @result["#{entity_name}Status"]['type'],
+        color:      status_color(@result["#{entity_name}Status"]['type']),
       }
     end
 
     def status_color(type)
+      puts type
       STATUS_COLOR_MAP.fetch(type, 'unknown')
-    end
-
-    def image
-      return if !@result['hasImage']
-
-      client.perform('get', "files/images/#{@ENTITY_NAME}/#{@result['id']}")
     end
   end
 end

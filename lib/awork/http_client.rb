@@ -17,7 +17,7 @@ class Awork
       response = UserAgent.send(method.to_sym, endpoint+path, payload,
         {
           headers:      headers,
-          json:         true,
+          json: true,
           open_timeout: 6,
           read_timeout: 16,
           log:          {
