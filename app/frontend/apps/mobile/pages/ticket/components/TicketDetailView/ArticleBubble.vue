@@ -219,7 +219,7 @@ onMounted(() => {
   <div
     :id="`article-${articleInternalId}`"
     role="comment"
-    class="Article relative flex"
+    class="Article relative flex pb-4"
     :class="{
       Internal: internal,
       'Right flex-row-reverse': position === 'right',
@@ -237,7 +237,7 @@ onMounted(() => {
     </div>
     <div class="Border">
       <div
-        class="content flex flex-col overflow-hidden rounded-3xl px-4 py-2"
+        class="content flex flex-col overflow-hidden rounded-3xl px-4 pt-2 pb-3"
         :class="[bubbleClasses, colorClasses]"
       >
         <div
@@ -263,15 +263,7 @@ onMounted(() => {
           :class="{
             BubbleGradient: hasShowMore && !shownMore,
           }"
-        >
-          <button
-            class="h-5 text-xs"
-            aria-hidden="true"
-            @click="toggleShowMore()"
-          >
-            {{ shownMore ? $t('See less') : $t('See more') }}
-          </button>
-        </div>
+        ></div>
         <div
           v-if="attachments.length"
           class="mt-1 mb-2"
@@ -299,7 +291,7 @@ onMounted(() => {
           />
         </div>
         <div
-          class="absolute -bottom-4 flex min-h-[24px] gap-1"
+          class="absolute bottom-0 flex gap-1"
           :class="[
             position === 'left'
               ? 'flex-row-reverse ltr:left-10 rtl:right-10'
@@ -313,9 +305,21 @@ onMounted(() => {
             :security="security"
           />
           <button
+            v-if="hasShowMore"
             :class="[
               colorClasses,
-              'flex h-6 w-6 items-center justify-center rounded-md',
+              'flex h-7 items-center justify-center rounded-md px-2 font-semibold',
+            ]"
+            type="button"
+            @click="toggleShowMore()"
+            @keydown.enter.prevent="toggleShowMore()"
+          >
+            {{ shownMore ? $t('See less') : $t('See more') }}
+          </button>
+          <button
+            :class="[
+              colorClasses,
+              'flex h-7 w-7 items-center justify-center rounded-md',
             ]"
             type="button"
             data-name="article-context"
@@ -323,7 +327,7 @@ onMounted(() => {
             @click="emit('showContext')"
             @keydown.enter.prevent="emit('showContext')"
           >
-            <CommonIcon name="mobile-more-vertical" size="tiny" decorative />
+            <CommonIcon name="mobile-more-vertical" size="small" decorative />
           </button>
         </div>
       </div>
@@ -350,8 +354,8 @@ onMounted(() => {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1.25rem;
-  height: 30px;
+  bottom: 0;
+  height: 50px;
   pointer-events: none;
 }
 
@@ -364,6 +368,10 @@ onMounted(() => {
 
 .Left:not(.Internal) .BubbleGradient::before {
   background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.white'));
+}
+
+.Border {
+  overflow: hidden;
 }
 
 .Internal .Border {

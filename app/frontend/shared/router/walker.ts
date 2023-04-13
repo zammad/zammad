@@ -17,6 +17,7 @@ export class Walker {
   }
 
   private static getHistoryBackRoute(): string | null {
+    if (typeof window === 'undefined') return null
     const { state } = window.history
 
     if (state && typeof state.back === 'string') {

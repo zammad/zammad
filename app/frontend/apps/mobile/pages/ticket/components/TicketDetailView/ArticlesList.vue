@@ -46,7 +46,7 @@ const filterAttachments = (article: TicketArticle) => {
     ref="articlesElement"
     role="group"
     aria-label="Articles"
-    class="relative flex-1 space-y-5 px-4 pt-4"
+    class="relative flex-1 space-y-4 px-4 pt-4"
   >
     <template v-for="(row, idx) in rows" :key="row.key">
       <ArticleBubble
