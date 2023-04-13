@@ -1,0 +1,4 @@
+<% if @counterPossible is true and @counter and @counter > 0: %>
+  <div class="tabsSidebar-tab-count js-tabCounter <% if @cssClass: %><%= @cssClass %><% end %>"><%= @counter %></div>
+<% end %>
+<svg class="icon icon-<%= @icon %>"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/custom-icons.svg#icon-<%= @icon %>"></use></svg>
