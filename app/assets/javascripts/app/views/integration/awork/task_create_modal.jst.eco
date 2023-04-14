@@ -1,7 +1,14 @@
-<div class="flex js-result">
-  <input id="awork-task-create-name" type="text" name="name" autocomplete="off" value="<%= @data.name %>" class="form-control"/>
-  <hr>
-  <div id="awork-task-create-description" class="textBubble js-writeArea">
-    <div class="richtext-content" data-name="body" contenteditable="true"><br><br><%- @data.description %></div>
-  </div>
+<div class="main flex">
+  <form class="form--grid js-form">
+    <fieldset>
+      <div data-attribute-name="task::project" class="input form-group">
+        <div class="formGroup-label">
+          <label for="awork-task-create-project-select"><%= @label.project %></label>
+        </div>
+        <div class="controls ">
+          <div id="awork-task-create-project-select"></div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
 </div>

@@ -9,20 +9,84 @@ class App.AworkTaskCreateModal extends App.ControllerModal
 
   content: =>
     content = $( App.view('integration/awork/task_create_modal')(
-      data: {
-        name: @nameTemplate(),
-        description: @descriptionTemplate()
+      label: {
+        project: __('Project')
       }
     ))
 
-    @nameInput = content.find('#awork-task-create-name')
+    @searchableSelectProject = new App.SearchableSelect(
+      el: content.find('#awork-task-create-project-select')
+      attribute:
+        name: 'task::project'
+        value: 0
+        null: false
+        translate: true
+        placeholder: __('Select Project...')
+        options: [{
+          name: 'Test Projektname',
+          value: 'asfshjktzk5465jz567jjs5j'
+        }]
+    )
 
-    @descriptionTextArea = new App.WidgetTextModule(
-      el: content.find('#awork-task-create-description'),
-      data:{
-        user:   App.Session.get(),
-        config: App.Config.all(),
-      }
+    @formController = new App.ControllerForm(
+      el: content.find('.js-form')
+      params:
+        task:
+          name: @nameTemplate()
+          description:
+            body:
+              text: @descriptionTemplate()
+      model:
+        configure_attributes: [
+          {
+            name: 'task::name'
+            model: 'task'
+            display: __('Title')
+            tag: 'input'
+          }
+          {
+            name: 'task::description::body'
+            model: 'task'
+            display: __('Description')
+            tag: 'richtext'
+          }
+          {
+            name: 'task::status'
+            model: 'task'
+            display: __('State')
+            tag: 'select'
+            null: true
+            options: [
+              {
+                value: 1
+                name: 'Metal'
+              }
+              {
+                value: 2
+                name: 'Alkali metal'
+              }
+            ]
+            grid_width: '1/2'
+          }
+          {
+            name: 'task::type'
+            model: 'task'
+            display: __('Type')
+            tag: 'select'
+            null: true
+            options: [
+              {
+                value: 1
+                name: 'Metal'
+              }
+              {
+                value: 2
+                name: 'Alkali metal'
+              }
+            ]
+            grid_width: '1/2'
+          }
+        ]
     )
 
     content
@@ -45,16 +109,8 @@ class App.AworkTaskCreateModal extends App.ControllerModal
     "#{__('Ticket')}: #{@descriptionTicketLink}" + str
 
   onSubmit: (e) =>
-    @startLoading()
-
-    if !@nameInput.val()
-      @stopLoading()
-      @close()
-      return
-
-    nameValue         = @nameInput.val()
-    # check if ticket-link is contained description and prepend it if not
-    descriptionValue  = if @descriptionTextArea.el.find('.richtext-content').html().includes(@descriptionTicketLink) then @descriptionTextArea.el.find('.richtext-content').html() else @prependLink(@descriptionTextArea.el.find('.richtext-content').html())
+    params = @formParams(e.target)
+    console.log(params)
 
     @ajax(
       id:    'create-task'
@@ -64,8 +120,12 @@ class App.AworkTaskCreateModal extends App.ControllerModal
         linked_tasks: @taskLinks,
         ticket_id: @ticket.id,
         create_task: {
-          name: nameValue,
-          description: descriptionValue
+          name: params.task.name[0],
+          description: if params.task.description.body.includes(@descriptionTicketLink) then params.task.description.body else @prependLink(params.task.description.body)
+          taskStatusId: params.task.status[0]
+          typeOfWorkId: params.task.type[0]
+          entityId: params.task.project[0]
+          baseType: 'projecttask' # always stays the same
         }
       })
       success: (data, status, xhr) =>
