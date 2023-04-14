@@ -2,8 +2,6 @@ class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
 
-    @authenticateCheckRedirect()
-
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)
 
@@ -82,6 +80,9 @@ class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'
   constructor: (params) ->
     super
+
+    # check authentication
+    @authenticateCheckRedirect()
 
     # cleanup params
     clean_params =

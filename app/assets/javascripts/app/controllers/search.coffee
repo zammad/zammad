@@ -17,9 +17,6 @@ class App.Search extends App.Controller
   constructor: ->
     super
 
-    # check authentication
-    @authenticateCheckRedirect()
-
     current = App.TaskManager.get(@taskKey).state
     if current && current.query
       @query = current.query
@@ -352,8 +349,13 @@ class App.Search extends App.Controller
     @savedOrderBy[model] = { order: table.lastOrderBy, direction: table.lastOrderDirection }
 
 class Router extends App.ControllerPermanent
+  requiredPermission: ['ticket.agent', 'ticket.customer']
+
   constructor: (params) ->
     super
+
+    # check authentication
+    @authenticateCheckRedirect()
 
     query = undefined
     if !_.isEmpty(params.query)
