@@ -387,4 +387,63 @@ RSpec.describe Ticket::Selector::Base, searchindex: true do
       check_condition("organization.#{field_name}")
     end
   end
+
+  describe 'Reporting profiles do not work with multi tree select #4546' do
+    context 'when value is a string' do
+      before do
+        create(:tag, tag_item: create(:'tag/item', name: 'AAA'), o: ticket_1)
+        create(:tag, tag_item: create(:'tag/item', name: 'BBB'), o: ticket_1)
+        searchindex_model_reload([Ticket])
+      end
+
+      it 'does return ticket by contains all string value', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.tags',
+              operator: 'contains all',
+              value:    'AAA, BBB',
+            }
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+    end
+
+    context 'when value is an array', db_strategy: :reset do
+      let(:field_name) { SecureRandom.uuid }
+
+      before do
+        create(:object_manager_attribute_multi_tree_select, name: field_name)
+        ObjectManager::Attribute.migration_execute
+        ticket_1.reload.update(field_name => ['Incident', 'Incident::Hardware'])
+        searchindex_model_reload([Ticket])
+      end
+
+      it 'does return ticket by contains all array value', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'contains all',
+              value:    ['Incident', 'Incident::Hardware'],
+            }
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+    end
+  end
 end
