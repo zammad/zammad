@@ -51,24 +51,6 @@ class App.AworkTaskCreateModal extends App.ControllerModal
             tag: 'richtext'
           }
           {
-            name: 'task::status'
-            model: 'task'
-            display: __('State')
-            tag: 'select'
-            null: true
-            options: [
-              {
-                value: 1
-                name: 'Metal'
-              }
-              {
-                value: 2
-                name: 'Alkali metal'
-              }
-            ]
-            grid_width: '1/2'
-          }
-          {
             name: 'task::type'
             model: 'task'
             display: __('Type')
@@ -84,7 +66,6 @@ class App.AworkTaskCreateModal extends App.ControllerModal
                 name: 'Alkali metal'
               }
             ]
-            grid_width: '1/2'
           }
         ]
     )
@@ -122,7 +103,6 @@ class App.AworkTaskCreateModal extends App.ControllerModal
         create_task: {
           name: params.task.name[0],
           description: if params.task.description.body.includes(@descriptionTicketLink) then params.task.description.body else @prependLink(params.task.description.body)
-          taskStatusId: params.task.status[0]
           typeOfWorkId: params.task.type[0]
           entityId: params.task.project[0]
           baseType: 'projecttask' # always stays the same
