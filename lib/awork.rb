@@ -10,12 +10,18 @@ class Awork
   end
 
   def linked_tasks(ids)
-    ids.map do |id|
-      Awork::Task.new(
+    tasks = []
+    for id in ids
+      task = client.perform('get', "tasks/#{id}")
+
+      next if !task
+
+      tasks.append(Awork::Task.new(
         client,
-        client.perform('get', "tasks/#{id}")
-      ).to_h
+        task
+      ).to_h)
     end
+    tasks
   end
 
   def projects
@@ -31,6 +37,7 @@ class Awork
   def tasks_by_project(id)
     return if !id
     result = client.perform('get', "projects/#{id}/projecttasks")
+    return if !result
     result.map { |task| Awork::Task.new(client, task).to_h }
   end
 
@@ -46,6 +53,8 @@ class Awork
       'baseType': 'projecttask',
     })
 
+    return if !result
+
     Awork::Task.new(client, result).to_h
   end
 
@@ -53,7 +62,7 @@ class Awork
 
   def get_todo_status_for_project(project_id)
     status_list = client.perform('get', "projects/#{project_id}/taskstatuses")
-
+    return if !status_list
     filtered = status_list.select { |status| status['type'] == 'todo' }
 
     filtered[0]['id']

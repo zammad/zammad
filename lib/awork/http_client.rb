@@ -29,7 +29,7 @@ class Awork
 
       if !response.success?
         Rails.logger.error response.error
-        raise __('Awork request failed! Please have a look at the log file for details')
+        return false
       end
 
       response.data
