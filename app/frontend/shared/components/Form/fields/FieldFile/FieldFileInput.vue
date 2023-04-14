@@ -7,6 +7,7 @@ import useImageViewer from '@shared/composables/useImageViewer'
 import { convertFileList } from '@shared/utils/files'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
+import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api'
 import type { FieldFileProps, FileUploaded } from './types'
@@ -76,10 +77,14 @@ const { waitForConfirmation } = useConfirmation()
 const removeFile = async (file: FileUploaded) => {
   const fileId = file.id
 
-  const confirmed = await waitForConfirmation(__('Are you sure?'), {
-    buttonTitle: 'Delete',
-    buttonVariant: 'danger',
-  })
+  const confirmed = await waitForConfirmation(
+    __('Are you sure you want to delete "%s"?'),
+    {
+      headingPlaceholder: [file.name],
+      buttonTitle: __('Delete'),
+      buttonVariant: 'danger',
+    },
+  )
 
   if (!confirmed) return
 
@@ -123,6 +128,12 @@ const onFilesScroll = (event: UIEvent) => {
 }
 
 const { showImage } = useImageViewer(uploadFiles)
+
+const filesContainer = ref<HTMLDivElement>()
+
+useTraverseOptions(filesContainer, {
+  direction: 'vertical',
+})
 </script>
 
 <template>
@@ -131,6 +142,7 @@ const { showImage } = useImageViewer(uploadFiles)
   </div>
   <div
     v-if="uploadFiles.length"
+    ref="filesContainer"
     class="max-h-48 overflow-auto px-4 pt-4"
     :class="{
       'opacity-60': !canInteract,
@@ -142,6 +154,7 @@ const { showImage } = useImageViewer(uploadFiles)
       :key="uploadFile.id || `${uploadFile.name}${idx}`"
       :file="uploadFile"
       :preview-url="uploadFile.preview || uploadFile.content"
+      :download-url="uploadFile.content"
       @preview="canInteract && showImage(uploadFile)"
       @remove="canInteract && removeFile(uploadFile)"
     />
@@ -155,6 +168,7 @@ const { showImage } = useImageViewer(uploadFiles)
   <button
     class="flex w-full items-center justify-center gap-1 p-4 text-blue"
     type="button"
+    tabindex="0"
     :class="{ 'text-blue/60': !canInteract }"
     :disabled="!canInteract"
     @click="canInteract && fileInput?.click()"
@@ -170,6 +184,7 @@ const { showImage } = useImageViewer(uploadFiles)
     type="file"
     :name="context.node.name"
     class="hidden"
+    tabindex="-1"
     aria-hidden="true"
     :accept="context.accept"
     :capture="context.capture"

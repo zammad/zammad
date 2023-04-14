@@ -24,6 +24,7 @@ const renderFileInput = (props: Record<string, unknown> = {}) => {
     },
     form: true,
     confirmation: true,
+    router: true,
   })
 }
 
@@ -91,7 +92,7 @@ describe('Fields - FieldFile', () => {
       'Attach another file',
     )
 
-    const filePreview = view.getByRole('button', { name: 'Preview foo.png' })
+    const filePreview = view.getByRole('link', { name: 'Preview foo.png' })
     expect(filePreview).toBeInTheDocument()
 
     await view.events.click(filePreview)
@@ -124,13 +125,15 @@ describe('Fields - FieldFile', () => {
       },
     ])
 
-    const filePreview = await view.findByRole('button', {
+    const filePreview = await view.findByRole('link', {
       name: 'Preview bar.png',
     })
     expect(filePreview).toBeInTheDocument()
   })
 
-  it('renders non-images', async () => {
+  it('renders non-images', async (ctx) => {
+    ctx.skipConsole = true
+
     const file = new File([], 'foo.txt', { type: 'text/plain' })
     const { view } = await uploadFiles([file])
 
@@ -158,11 +161,11 @@ describe('Fields - FieldFile', () => {
       `data:image/png;base64,${base64('image2')}`,
     ]
 
-    const elementImage1 = view.getByRole('button', {
+    const elementImage1 = view.getByRole('link', {
       name: 'Preview image1.png',
     })
     const elementPdf = view.getByText('pdf.pdf')
-    const elementImage2 = view.getByRole('button', {
+    const elementImage2 = view.getByRole('link', {
       name: 'Preview image2.png',
     })
 

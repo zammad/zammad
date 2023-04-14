@@ -84,7 +84,7 @@ const hideAfterLeaving = () => {
   emit('hide')
 }
 
-useTraverseOptions(actionBar, { direction: 'horizontal' })
+useTraverseOptions(actionBar, { direction: 'horizontal', ignoreTabindex: true })
 </script>
 
 <template>

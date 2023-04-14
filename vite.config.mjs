@@ -137,6 +137,9 @@ export default defineConfig(({ mode, command }) => {
         // TODO remove after https://github.com/ueberdosis/tiptap/pull/3521 is merged
         inline: ['@tiptap/extension-mention'],
       },
+      onConsoleLog(log) {
+        if (log.includes('Not implemented: navigation')) return false
+      },
     },
     build: {
       minify: false,

@@ -87,7 +87,7 @@ describe('preview file component', () => {
     const view = renderFilePreview({
       file: {
         name: 'name.pdf',
-        type: 'application/pdf',
+        type: 'text/html',
         size: 1025,
       },
       downloadUrl: '#/api/url',

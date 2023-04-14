@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   sizeClass: 'text-white/80',
 })
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'remove'): void
   (e: 'preview', $event: Event): void
 }>()
@@ -64,23 +64,33 @@ const ariaLabel = computed(() => {
     return i18n.t('Open %s', props.file.name) // opens file in another tab
   return props.file.name // cannot download and preview, probably just uploaded pdf
 })
+
+const onFileClick = (event: Event) => {
+  if (canPreview.value) {
+    event.preventDefault()
+    emit('preview', event)
+  }
+}
 </script>
 
 <template>
   <div
-    class="mb-2 flex w-full items-center gap-2 rounded-2xl border-[0.5px] p-3 last:mb-0"
+    class="mb-2 flex w-full items-center gap-2 rounded-2xl border-[0.5px] p-3 outline-none last:mb-0 focus-within:bg-blue-highlight"
     :class="wrapperClass"
   >
     <Component
       :is="componentType"
-      class="flex w-full select-none items-center gap-2 overflow-hidden text-left"
-      :type="componentType === 'button' && 'button'"
+      class="flex w-full select-none items-center gap-2 overflow-hidden text-left outline-none"
+      :type="componentType === 'button' ? 'button' : undefined"
       :class="{ 'cursor-pointer': componentType !== 'div' }"
       :aria-label="ariaLabel"
+      tabindex="0"
       :link="downloadUrl"
-      :download="canDownload ? true : undefined"
-      :target="!canDownload ? '_blank' : ''"
-      @click="canPreview && $emit('preview', $event)"
+      :download="canDownload ? file.name : undefined"
+      :target="!canDownload ? '_blank' : undefined"
+      @click="onFileClick"
+      @keydown.delete.prevent="$emit('remove')"
+      @keydown.backspace.prevent="$emit('remove')"
     >
       <div
         v-if="!noPreview"
@@ -109,6 +119,7 @@ const ariaLabel = computed(() => {
     <button
       v-if="!noRemove"
       type="button"
+      tabindex="-1"
       :aria-label="i18n.t('Remove %s', file.name)"
       @click.stop.prevent="$emit('remove')"
       @keypress.space.prevent="$emit('remove')"

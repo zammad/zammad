@@ -1,5 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+export interface FocusableOptions {
+  ignoreTabindex?: boolean
+}
+
 const FOCUSABLE_QUERY =
   'button, a[href]:not([href=""]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
@@ -10,12 +14,21 @@ export const isElementVisible = (el: HTMLElement) => {
   return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length) // from jQuery
 }
 
-export const getFocusableElements = (container?: Maybe<HTMLElement>) => {
+const isNegativeTabIndex = (el: HTMLElement) => {
+  const tabIndex = el.getAttribute('tabindex')
+  return tabIndex && parseInt(tabIndex, 10) < 0
+}
+
+export const getFocusableElements = (
+  container?: Maybe<HTMLElement>,
+  options: FocusableOptions = {},
+) => {
   return Array.from<HTMLElement>(
     container?.querySelectorAll(FOCUSABLE_QUERY) || [],
   ).filter(
     (el) =>
       isElementVisible(el) &&
+      (options.ignoreTabindex || !isNegativeTabIndex(el)) &&
       !el.hasAttribute('disabled') &&
       el.getAttribute('aria-disabled') !== 'true',
   )
