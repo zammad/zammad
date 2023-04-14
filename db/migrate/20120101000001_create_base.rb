@@ -161,7 +161,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
 
     create_table :organizations do |t|
-      t.string :name,                   limit: 100, null: false
+      t.string :name,                   limit: 150, null: false
       t.boolean :shared,                            null: false, default: true
       t.string :domain,                 limit: 250, null: true,  default: ''
       t.boolean :domain_assignment,                 null: false, default: false
