@@ -35,14 +35,27 @@ class Awork
   end
 
   def create(task)
+    status_id = get_todo_status_for_project(task['projectId'])
+
     result = client.perform('post', 'tasks', {
       'name': task['name'],
       'description': task['description'],
       'typeOfWorkId': task['typeOfWorkId'],
+      'taskStatusId': status_id,
       'entityId': task['projectId'],
       'baseType': 'projecttask',
     })
 
     Awork::Task.new(client, result).to_h
+  end
+
+  private
+
+  def get_todo_status_for_project(project_id)
+    status_list = client.perform('get', "projects/#{project_id}/taskstatuses")
+
+    filtered = status_list.select { |status| status['type'] == 'todo' }
+
+    filtered[0]['id']
   end
 end
