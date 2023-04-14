@@ -45,7 +45,7 @@ describe Controllers::MonitoringControllerPolicy do
     let(:user) { create(:admin) }
 
     before do
-      allow(instance).to receive(:permission_and_permission_active?).and_return(permission)
+      allow(instance).to receive(:monitoring_admin?).and_return(permission)
     end
 
     context 'when permission' do
@@ -149,38 +149,6 @@ describe Controllers::MonitoringControllerPolicy do
     end
   end
 
-  describe '#permission_and_permission_active?' do
-    context 'when not logged in' do
-      let(:user) { nil }
-
-      it 'returns false' do
-        expect(instance.send(:permission_and_permission_active?)).to be_falsey
-      end
-    end
-
-    context 'when user does not have permission' do
-      let(:user) { create(:agent) }
-
-      it 'returns false' do
-        expect(instance.send(:permission_and_permission_active?)).to be_falsey
-      end
-    end
-
-    context 'when user has permission' do
-      let(:user) { create(:admin) }
-
-      it 'returns true' do
-        expect(instance.send(:permission_and_permission_active?)).to be_truthy
-      end
-
-      it 'when permission not active returns false' do
-        Permission.where(name: 'admin.monitoring').first.update!(active: false)
-
-        expect(instance.send(:permission_and_permission_active?)).to be_falsey
-      end
-    end
-  end
-
   describe '#valid_token_param?' do
     let(:token) { 'token' }
     let(:user)  { create(:admin) }
@@ -210,6 +178,16 @@ describe Controllers::MonitoringControllerPolicy do
 
       it 'returns true' do
         expect(instance.send(:monitoring_admin?)).to be_truthy
+      end
+
+      context 'when permission is inactive' do
+        before do
+          Permission.find_by(name: 'admin.monitoring').update!(active: false)
+        end
+
+        it 'when permission not active returns false' do
+          expect(instance.send(:monitoring_admin?)).to be_falsey
+        end
       end
     end
 

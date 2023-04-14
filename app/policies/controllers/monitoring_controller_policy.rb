@@ -15,11 +15,11 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
   end
 
   def token?
-    permission_and_permission_active?
+    monitoring_admin?
   end
 
   def restart_failed_jobs?
-    permission_and_permission_active?
+    monitoring_admin?
   end
 
   private
@@ -29,26 +29,16 @@ class Controllers::MonitoringControllerPolicy < Controllers::ApplicationControll
   end
 
   def token_or_permission?
-    if user.present?
-      return monitoring_admin?
-    end
+    return monitoring_admin? if user.present?
 
     valid_token_param?
-  end
-
-  def permission_and_permission_active?
-    user.present? && monitoring_admin? && permission_active?
   end
 
   def valid_token_param?
     Setting.get('monitoring_token') == record.params[:token]
   end
 
-  def permission_active?
-    Permission.exists?(name: 'admin.monitoring', active: true)
-  end
-
   def monitoring_admin?
-    user.permissions?('admin.monitoring')
+    user&.permissions?('admin.monitoring')
   end
 end
