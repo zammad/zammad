@@ -4,7 +4,8 @@ class Awork
     def to_h
       {
         id:               @result['id'],
-        name:            @result['name'],
+        url:              "https://tomato-word-class-fairies.awork.io/tasks/#{@result['id']}/details",
+        name:             @result['name'],
         description:      @result['description'],
         assignees:        assignees,
         tags:             tags,
