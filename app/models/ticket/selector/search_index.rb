@@ -238,7 +238,11 @@ class Ticket::Selector::SearchIndex < Ticket::Selector::Base
         query_must_not.push t
       end
     elsif ['contains all', 'contains one', 'contains all not', 'contains one not'].include?(data[:operator])
-      values = data[:value].split(',').map(&:strip)
+      values = data[:value]
+      if data[:value].is_a?(String)
+        values = values.split(',').map(&:strip)
+      end
+
       t[:query_string] = {}
       case data[:operator]
       when 'contains all'
