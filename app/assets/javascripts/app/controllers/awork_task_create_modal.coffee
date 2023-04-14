@@ -59,12 +59,6 @@ class App.AworkTaskCreateModal extends App.ControllerModal
 
         @formController = new App.ControllerForm(
           el: content.find('.js-form')
-          params:
-            task:
-              name: @nameTemplate()
-              description:
-                body:
-                  text: @descriptionTemplate()
           model:
             configure_attributes: [
               {
@@ -72,12 +66,15 @@ class App.AworkTaskCreateModal extends App.ControllerModal
                 model: 'task'
                 display: __('Title')
                 tag: 'input'
+                type: 'text'
+                default: @nameTemplate()
               }
               {
-                name: 'task::description::body'
+                name: 'task::description'
                 model: 'task'
                 display: __('Description')
                 tag: 'richtext'
+                default: @descriptionTemplate()
               }
               {
                 name: 'task::type'
@@ -91,6 +88,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
                 }
               }
             ]
+            className: ''
         )
     )
 
@@ -115,7 +113,25 @@ class App.AworkTaskCreateModal extends App.ControllerModal
 
   onSubmit: (e) =>
     params = @formParams(e.target)
-    console.log(params)
+    validation = @formController.validate(params) || {}
+
+    # add validation for project select
+    if params.task.project[0] == '0'
+      validation['task::project'] = 'is required'
+
+    # add validation for name input
+    if params.task.name[0] == ''
+      validation['task::name'] = 'is required'
+
+    App.ControllerForm.validate(
+      form: @formController.form
+      errors: validation
+    )
+
+    if !_.isEmpty(validation)
+      return
+
+    @startLoading()
 
     @ajax(
       id:    'create-task'
@@ -126,7 +142,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
         ticket_id: @ticket.id,
         create_task: {
           name: params.task.name[0],
-          description: if params.task.description.body.includes(@descriptionTicketLink) then params.task.description.body else @prependLink(params.task.description.body)
+          description: if params.task.description.includes(@descriptionTicketLink) then params.task.description else @prependLink(params.task.description)
           typeOfWorkId: params.task.type[0]
           entityId: params.task.project[0]
           baseType: 'projecttask' # always stays the same

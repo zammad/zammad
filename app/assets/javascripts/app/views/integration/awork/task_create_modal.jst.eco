@@ -1,4 +1,4 @@
-<div class="main flex">
+<div class="flex">
   <form class="form--grid js-form">
     <fieldset>
       <div data-attribute-name="task::project" class="input form-group">
@@ -7,6 +7,8 @@
         </div>
         <div class="controls ">
           <div id="awork-task-create-project-select"></div>
+          <span class="help-inline"></span>
+          <span class="help-block"></span>
         </div>
       </div>
     </fieldset>
