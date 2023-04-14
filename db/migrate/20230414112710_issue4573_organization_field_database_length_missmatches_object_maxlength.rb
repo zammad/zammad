@@ -5,7 +5,7 @@ class Issue4573OrganizationFieldDatabaseLengthMissmatchesObjectMaxlength < Activ
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
-    change_column :organizations, :name, :string, limit: 150
+    change_column :organizations, :name, :string, limit: 150, null: false
 
     Organization.reset_column_information
   end
