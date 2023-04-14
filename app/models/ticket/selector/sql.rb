@@ -73,18 +73,24 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
     return if !attribute_name
     return if !attribute_table
 
+    sql_helper = SqlHelper.new(object: Ticket)
     if attribute_table && attribute_table != 'execution_time' && tables.exclude?(attribute_table) && !(attribute_table == 'ticket' && attribute_name != 'mention_user_ids') && !(attribute_table == 'ticket' && attribute_name == 'mention_user_ids' && block_condition[:pre_condition] == 'not_set')
       case attribute_table
       when 'customer'
         tables         |= ['INNER JOIN users customers ON tickets.customer_id = customers.id']
+        sql_helper      = SqlHelper.new(object: User, table_name: 'customers')
       when 'organization'
         tables         |= ['LEFT JOIN organizations ON tickets.organization_id = organizations.id']
+        sql_helper      = SqlHelper.new(object: Organization)
       when 'owner'
         tables         |= ['INNER JOIN users owners ON tickets.owner_id = owners.id']
+        sql_helper      = SqlHelper.new(object: User, table_name: 'owners')
       when 'article'
         tables         |= ['INNER JOIN ticket_articles articles ON tickets.id = articles.ticket_id']
+        sql_helper      = SqlHelper.new(object: Ticket::Article)
       when 'ticket_state'
         tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
+        sql_helper      = SqlHelper.new(object: Ticket::State)
       when 'ticket'
         if attribute_name == 'mention_user_ids'
           tables |= ["LEFT JOIN mentions ON tickets.id = mentions.mentionable_id AND mentions.mentionable_type = 'Ticket'"]
@@ -288,20 +294,20 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                                             )"
         bind_params.push block_condition[:value].count
         bind_params.push block_condition[:value]
-      elsif Ticket.column_names.include?(attribute_name)
-        query << SqlHelper.new(object: Ticket).array_contains_all(attribute_name, block_condition[:value])
+      elsif sql_helper.containable?(attribute_name)
+        query << sql_helper.array_contains_all(attribute_name, block_condition[:value])
       end
-    elsif block_condition[:operator] == 'contains one' && attribute_table == 'ticket'
-      if attribute_name == 'tags'
+    elsif block_condition[:operator] == 'contains one'
+      if attribute_name == 'tags' && attribute_table == 'ticket'
         tables |= ["LEFT JOIN tags ON tickets.id = tags.o_id LEFT JOIN tag_objects ON tag_objects.id = tags.tag_object_id AND tag_objects.name = 'Ticket' LEFT JOIN tag_items ON tag_items.id = tags.tag_item_id"]
         query << 'tag_items.name IN (?)'
 
         bind_params.push block_condition[:value]
-      elsif Ticket.column_names.include?(attribute_name)
-        query << SqlHelper.new(object: Ticket).array_contains_one(attribute_name, block_condition[:value])
+      elsif sql_helper.containable?(attribute_name)
+        query << sql_helper.array_contains_one(attribute_name, block_condition[:value])
       end
-    elsif block_condition[:operator] == 'contains all not' && attribute_table == 'ticket'
-      if attribute_name == 'tags'
+    elsif block_condition[:operator] == 'contains all not'
+      if attribute_name == 'tags' && attribute_table == 'ticket'
         query << "0 = (
                         SELECT
                           COUNT(*)
@@ -317,11 +323,11 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                           tag_items.name IN (?)
                       )"
         bind_params.push block_condition[:value]
-      elsif Ticket.column_names.include?(attribute_name)
-        query << SqlHelper.new(object: Ticket).array_contains_all(attribute_name, block_condition[:value], negated: true)
+      elsif sql_helper.containable?(attribute_name)
+        query << sql_helper.array_contains_all(attribute_name, block_condition[:value], negated: true)
       end
-    elsif block_condition[:operator] == 'contains one not' && attribute_table == 'ticket'
-      if attribute_name == 'tags'
+    elsif block_condition[:operator] == 'contains one not'
+      if attribute_name == 'tags' && attribute_table == 'ticket'
         query << "(
                     SELECT
                       COUNT(*)
@@ -337,8 +343,8 @@ class Ticket::Selector::Sql < Ticket::Selector::Base
                       tag_items.name IN (?)
                   ) BETWEEN 0 AND 0"
         bind_params.push block_condition[:value]
-      elsif Ticket.column_names.include?(attribute_name)
-        query << SqlHelper.new(object: Ticket).array_contains_one(attribute_name, block_condition[:value], negated: true)
+      elsif sql_helper.containable?(attribute_name)
+        query << sql_helper.array_contains_one(attribute_name, block_condition[:value], negated: true)
       end
     elsif block_condition[:operator] == 'today'
       Time.use_zone(Setting.get('timezone_default_sanitized').presence) do
