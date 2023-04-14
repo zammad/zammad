@@ -2,12 +2,13 @@
 
 class SqlHelper
 
-  def initialize(object:)
-    @object = object
+  def initialize(object:, table_name: nil)
+    @object     = object
+    @table_name = table_name
   end
 
   def db_column(column)
-    "#{ActiveRecord::Base.connection.quote_table_name(@object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(column)}"
+    "#{ActiveRecord::Base.connection.quote_table_name(@table_name || @object.table_name)}.#{ActiveRecord::Base.connection.quote_column_name(column)}"
   end
 
   def db_value(value)
@@ -176,6 +177,10 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
     sql = set_sql_order_default(sql, default)
 
     sql.join(', ')
+  end
+
+  def containable?(attribute)
+    ObjectManager::Attribute.for_object(@object).exists?(name: attribute, data_type: %w[multiselect multi_tree_select])
   end
 
   def array_contains_all(attribute, value, negated: false)
