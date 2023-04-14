@@ -7,5 +7,6 @@ Zammad::Application.routes.draw do
   match api_path + '/integration/awork/tasks/:ticket_id',                 to: 'integration/awork#linked_tasks',           via: :get
   match api_path + '/integration/awork/projects',                         to: 'integration/awork#projects',               via: :get
   match api_path + '/integration/awork/projects/:project_id/tasks',       to: 'integration/awork#tasks_by_project',       via: :get
+  match api_path + '/integration/awork/types_of_work',                    to: 'integration/awork#types_of_work',          via: :get
 
 end

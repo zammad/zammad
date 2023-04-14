@@ -93,6 +93,24 @@ class Integration::AworkController < ApplicationController
     }
   end
 
+  def types_of_work
+    config = Setting.get('awork_config')
+
+    awork = ::Awork.new(config['endpoint'], config['api_token'])
+
+    render json: {
+      result:   'ok',
+      response: awork.types_of_work,
+    }
+  rescue => e
+    logger.error e
+
+    render json: {
+      result:  'failed',
+      message: e.message,
+    }
+  end
+
   def tasks_by_project
     config = Setting.get('awork_config')
 

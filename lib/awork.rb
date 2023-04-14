@@ -23,6 +23,11 @@ class Awork
     result.map { |project| Awork::Project.new(client, project).to_h }
   end
 
+  def types_of_work
+    result = client.perform('get', 'typeofwork')
+    result.map { |type| Awork::TypeOfWork.new(client, type).to_h }
+  end
+
   def tasks_by_project(id)
     return if !id
     result = client.perform('get', "projects/#{id}/projecttasks")
