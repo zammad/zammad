@@ -9,7 +9,7 @@ class Awork
       raise 'endpoint required' if endpoint.blank? || endpoint.scan(URI::DEFAULT_PARSER.make_regexp).blank?
 
       @api_token = api_token
-      @endpoint = endpoint
+      @endpoint = endpoint[-1] == '/' ? endpoint : endpoint+'/'
     end
 
     def perform(method='post', path='', payload={})
