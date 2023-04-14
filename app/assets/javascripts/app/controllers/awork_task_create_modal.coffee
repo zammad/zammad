@@ -144,8 +144,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
           name: params.task.name[0],
           description: if params.task.description.includes(@descriptionTicketLink) then params.task.description else @prependLink(params.task.description)
           typeOfWorkId: params.task.type[0]
-          entityId: params.task.project[0]
-          baseType: 'projecttask' # always stays the same
+          projectId: params.task.project[0]
         }
       })
       success: (data, status, xhr) =>

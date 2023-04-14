@@ -38,6 +38,8 @@ class Awork
     result = client.perform('post', 'tasks', {
       'name': task['name'],
       'description': task['description'],
+      'typeOfWorkId': task['typeOfWorkId'],
+      'entityId': task['projectId'],
       'baseType': 'projecttask',
     })
 
