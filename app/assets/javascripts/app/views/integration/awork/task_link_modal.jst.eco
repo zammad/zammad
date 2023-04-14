@@ -1,5 +1,14 @@
 <div class="flex js-result">
-  <div id="awork-task-link-project-select"></div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="awork-task-link-project-select"><%= @label.project %></label>
+    </div>
+    <div class="controls ">
+      <div id="awork-task-link-project-select"></div>
+      <span class="help-inline"></span>
+      <span class="help-block"></span>
+    </div>
+  </div>
   <hr>
-  <div id="awork-task-link-task-select"></div>
+  <div id="awork-task-link-task-select" class="awork-task-select"></div>
 </div>

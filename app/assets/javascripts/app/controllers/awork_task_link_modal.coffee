@@ -7,7 +7,11 @@ class App.AworkTaskLinkModal extends App.ControllerModal
     @taskLinks = params['taskLinks']
 
   content: ->
-    content = $( App.view('integration/awork/task_link_modal')() )
+    content = $( App.view('integration/awork/task_link_modal')(
+      label: {
+        project: __('Project')
+      }
+    ))
 
     # Create project select
     @ajax(
@@ -31,7 +35,7 @@ class App.AworkTaskLinkModal extends App.ControllerModal
             value:        0
             null:         false
             translate:    true
-            placeholder:  'Select Project...'
+            placeholder:  __('Enter Project Name')
             options:      @projectList.map (project) -> {
               name: project.name,
               value: project.id
@@ -66,9 +70,9 @@ class App.AworkTaskLinkModal extends App.ControllerModal
                   el:       content.find('#awork-task-link-task-select')
                   overview: [ 'status', 'title', 'assignees']
                   attribute_list: [
-                    { name: 'status',       display: 'Status',        type: 'text' },
-                    { name: 'title',        display: 'Title',         type: 'text' },
-                    { name: 'assignees',    display: 'Assignees',     type: 'text' },
+                    { name: 'status', display: 'Status', type: 'text', class: 'awork-state', width: '12%' },
+                    { name: 'title', display: 'Title', type: 'text' },
+                    { name: 'assignees', display: 'Assignees', type: 'text', width: '20%' },
                   ]
                   objects: @taskList
                   checkbox: true

@@ -35,7 +35,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
             value: 0
             null: false
             translate: true
-            placeholder: __('Select Project...')
+            placeholder: __('Enter Project Name')
             options: @projectList.map (project) => {
               name: project.name,
               value: project.id

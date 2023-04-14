@@ -17,12 +17,12 @@ class SidebarAwork extends App.Controller
       sidebarCallback: @reloadTasks
       sidebarActions: [
         {
-          title:    __('Link task')
+          title:    __('Add Link')
           name:     'link-task'
           callback: @linkTask
         },
         {
-          title:    __('Create task')
+          title:    __('Create')
           name:     'create-task'
           callback: @createTask
         },
@@ -51,7 +51,7 @@ class SidebarAwork extends App.Controller
 
   linkTask: =>
     new App.AworkTaskLinkModal(
-      head: @provider
+      head: __('Add Link')
       ticket_id: @ticket.id
       taskLinks: @taskLinks
       container: @el.closest('.content')
@@ -62,7 +62,7 @@ class SidebarAwork extends App.Controller
 
   createTask: =>
     new App.AworkTaskCreateModal(
-      head: @provider
+      head: __('Create')
       ticket: @ticket
       taskLinks: @taskLinks
       container: @el.closest('.content')
