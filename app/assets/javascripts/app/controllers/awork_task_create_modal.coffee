@@ -14,60 +14,84 @@ class App.AworkTaskCreateModal extends App.ControllerModal
       }
     ))
 
-    @searchableSelectProject = new App.SearchableSelect(
-      el: content.find('#awork-task-create-project-select')
-      attribute:
-        name: 'task::project'
-        value: 0
-        null: false
-        translate: true
-        placeholder: __('Select Project...')
-        options: [{
-          name: 'Test Projektname',
-          value: 'asfshjktzk5465jz567jjs5j'
-        }]
+    @ajax(
+      id:    'get-projects'
+      type:  'GET'
+      url:   "#{@apiPath}/integration/awork/projects"
+      success: (data, status, xhr) =>
+        if data.result is 'failed'
+          new App.ControllerErrorModal(
+            message: data.message
+            container: @el.closest('.content')
+          )
+          return
+
+        @projectList = data.response
+
+        @searchableSelectProject = new App.SearchableSelect(
+          el: content.find('#awork-task-create-project-select')
+          attribute:
+            name: 'task::project'
+            value: 0
+            null: false
+            translate: true
+            placeholder: __('Select Project...')
+            options: @projectList.map (project) => {
+              name: project.name,
+              value: project.id
+            }
+        )
     )
 
-    @formController = new App.ControllerForm(
-      el: content.find('.js-form')
-      params:
-        task:
-          name: @nameTemplate()
-          description:
-            body:
-              text: @descriptionTemplate()
-      model:
-        configure_attributes: [
-          {
-            name: 'task::name'
-            model: 'task'
-            display: __('Title')
-            tag: 'input'
-          }
-          {
-            name: 'task::description::body'
-            model: 'task'
-            display: __('Description')
-            tag: 'richtext'
-          }
-          {
-            name: 'task::type'
-            model: 'task'
-            display: __('Type')
-            tag: 'select'
-            null: true
-            options: [
+    @ajax(
+      id:    'get-typesofwork'
+      type:  'GET'
+      url:   "#{@apiPath}/integration/awork/types_of_work"
+      success: (data, status, xhr) =>
+        if data.result is 'failed'
+          new App.ControllerErrorModal(
+            message: data.message
+            container: @el.closest('.content')
+          )
+          return []
+
+        @typeofworkList = data.response
+
+        @formController = new App.ControllerForm(
+          el: content.find('.js-form')
+          params:
+            task:
+              name: @nameTemplate()
+              description:
+                body:
+                  text: @descriptionTemplate()
+          model:
+            configure_attributes: [
               {
-                value: 1
-                name: 'Metal'
+                name: 'task::name'
+                model: 'task'
+                display: __('Title')
+                tag: 'input'
               }
               {
-                value: 2
-                name: 'Alkali metal'
+                name: 'task::description::body'
+                model: 'task'
+                display: __('Description')
+                tag: 'richtext'
+              }
+              {
+                name: 'task::type'
+                model: 'task'
+                display: __('Type')
+                tag: 'select'
+                null: true
+                options: @typeofworkList.map (typeofwork) => {
+                  name: typeofwork.name,
+                  value: typeofwork.id
+                }
               }
             ]
-          }
-        ]
+        )
     )
 
     content
