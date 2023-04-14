@@ -3,6 +3,7 @@ class SidebarAwork extends App.Controller
 
   constructor: ->
     super
+
     @taskLinks         = []
     @taskLinkData      = []
     @providerIdentifier = @provider.toLowerCase()
@@ -169,5 +170,4 @@ class SidebarAwork extends App.Controller
     args.ticket.preferences[@providerIdentifier] ||= {}
     args.ticket.preferences[@providerIdentifier].task_ids = @taskLinks
 
-App.Config.set('500-Awork', SidebarAwork, 'TicketCreateSidebar')
 App.Config.set('500-Awork', SidebarAwork, 'TicketZoomSidebar')
