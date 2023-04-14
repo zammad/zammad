@@ -618,7 +618,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.7)
-    zendesk_api (2.0.0)
+    zendesk_api (2.0.1)
       faraday (> 2.0.0)
       faraday-multipart
       hashie (>= 3.5.2, < 6.0.0)
