@@ -1,7 +1,4 @@
-.icon-awork-logo {
-    width: 24px;
-    height: 24px;
-}
+@import 'awork-colors';
 
 #awork-task-link-project-select {
     flex-grow: 1;
@@ -10,4 +7,58 @@
 .sidebar-awork-task-delete {
     text-align: right;
     float: right;
+}
+
+.sidebar-awork-task-content {
+    .sidebar-block {
+        line-height: 1.2;
+
+        .icon-holder {
+            vertical-align: middle;
+            display: inline-block;
+
+            .icon {
+                width: 20px;
+                height: 20px;
+                fill: currentColor;
+
+                &.awork-todo {
+                    color: $awork-color-blue
+                }
+
+                &.awork-progress {
+                    color: $awork-color-yellow
+                }
+
+                &.awork-review {
+                    color: $awork-color-purple
+                }
+
+                &.awork-stuck {
+                    color: $awork-color-red
+                }
+
+                &.awork-done {
+                    color: $awork-color-green
+                }
+            }
+        }
+    }
+}
+
+.icon-awork-logo {
+    width: 24px;
+    height: 24px;
+}
+
+.badge.awork-badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+
+    @each $key, $color in $awork-illustration-colors {
+        &.awork-color-#{$key} {
+            background-color: rgba($color, 0.2);
+            color: $color;
+        }
+    }
 }

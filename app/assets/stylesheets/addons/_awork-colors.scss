@@ -1,0 +1,81 @@
+$awork-color-red: #ff4398;
+$awork-color-red-d: #f21b7d;
+$awork-color-red-l: #ff84bc;
+
+$awork-color-green: #33f29e;
+$awork-color-green-d: #08cc77;
+$awork-color-green-l: #80f3c1;
+
+$awork-color-blue: #5bc0ff;
+$awork-color-blue-d: #1495e6;
+$awork-color-blue-l: #90d4ff;
+
+$awork-color-yellow: #ffd26a;
+$awork-color-yellow-d: #f5b218;
+$awork-color-yellow-l: #ffe099;
+
+$awork-color-purple: #c17fff;
+$awork-color-purple-d: #ac52ff;
+$awork-color-purple-l: #d7acfe;
+
+$awork-color-violet: #8559e4;
+$awork-color-violet-d: #5a39a1;
+$awork-color-violet-l: #5a39a1;
+
+$awork-color-coral: #ff7a6a;
+$awork-color-coral-d: #db5444;
+$awork-color-coral-l: #db5444;
+
+$awork-color-arctic: #81e6f1;
+$awork-color-arctic-d: #57bcc7;
+$awork-color-arctic-l: #57bcc7;
+
+$awork-color-teal: #9bf2d2;
+$awork-color-teal-d: #67cba6;
+$awork-color-teal-l: #67cba6;
+
+$awork-color-azure: #3187f6;
+$awork-color-azure-d: #1a62c0;
+$awork-color-azure-l: #1a62c0;
+
+$awork-main-colors: (
+    'red': $awork-color-red,
+    'green': $awork-color-green,
+    'blue': $awork-color-blue,
+    'yellow': $awork-color-yellow,
+    'purple': $awork-color-purple,
+);
+
+// Color map for all UI colors
+$awork-illustration-colors: (
+    'red': $awork-color-red,
+    'red-d': $awork-color-red-d,
+    'red-l': $awork-color-red-l,
+    'green': $awork-color-green,
+    'green-d': $awork-color-green-d,
+    'green-l': $awork-color-green-l,
+    'blue': $awork-color-blue,
+    'blue-d': $awork-color-blue-d,
+    'blue-l': $awork-color-blue-l,
+    'yellow': $awork-color-yellow,
+    'yellow-d': $awork-color-yellow-d,
+    'yellow-l': $awork-color-yellow-l,
+    'purple': $awork-color-purple,
+    'purple-d': $awork-color-purple-d,
+    'purple-l': $awork-color-purple-l,
+    'violet': $awork-color-violet,
+    'violet-d': $awork-color-violet-d,
+    'violet-l': $awork-color-violet-l,
+    'coral': $awork-color-coral,
+    'coral-d': $awork-color-coral-d,
+    'coral-l': $awork-color-coral-l,
+    'arctic': $awork-color-arctic,
+    'arctic-d': $awork-color-arctic-d,
+    'arctic-l': $awork-color-arctic-l,
+    'teal': $awork-color-teal,
+    'teal-d': $awork-color-teal-d,
+    'teal-l': $awork-color-teal-l,
+    'azure': $awork-color-azure,
+    'azure-d': $awork-color-azure-d,
+    'azure-l': $awork-color-azure-l
+);
