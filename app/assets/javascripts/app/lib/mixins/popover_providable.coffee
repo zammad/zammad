@@ -47,6 +47,10 @@ InstanceMethods =
       popover.build(buildParams)
 
   renderPopovers: (buildParams = {}) ->
+    # do not render popovers for touch
+    if window.matchMedia('(pointer: coarse)').matches
+      return
+
     if !@initializedPopovers
       @initializePopovers()
 

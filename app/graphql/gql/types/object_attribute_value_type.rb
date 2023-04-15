@@ -14,10 +14,11 @@ module Gql::Types
       return nil if !template
 
       NotificationFactory::Renderer.new(
-        objects:  { @object[:parent].class.name.downcase.to_sym => @object[:parent] },
-        template: template,
-        escape:   false
-      ).render
+        objects:    { @object[:parent].class.name.downcase.to_sym => @object[:parent] },
+        template:   template,
+        escape:     false,
+        url_encode: true,
+      ).render(debug_errors: false)
     end
   end
 end

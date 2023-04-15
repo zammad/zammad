@@ -69,8 +69,8 @@ RSpec.describe 'Report', searchindex: true, type: :request do
 
       expect(response).to have_http_status(:ok)
       assert(@response['Content-Disposition'])
-      expect(@response['Content-Disposition']).to eq('attachment; filename="tickets--all--Created.xls"; filename*=UTF-8\'\'tickets--all--Created.xls')
-      expect(@response['Content-Type']).to eq('application/vnd.ms-excel')
+      expect(@response['Content-Disposition']).to eq('attachment; filename="tickets--all--Created.xlsx"; filename*=UTF-8\'\'tickets--all--Created.xlsx')
+      expect(@response['Content-Type']).to eq(ExcelSheet::CONTENT_TYPE)
     end
 
     it 'does report example - deliver result' do

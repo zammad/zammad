@@ -48,7 +48,9 @@ const addIcon = (node: FormKitNode) => {
             name: '$icon',
             key: node.name,
             class: `absolute top-1/2 transform -translate-y-1/2 ${
-              iconPosition === 'prefix' ? 'left-3' : 'right-3'
+              iconPosition === 'prefix'
+                ? 'rtl:right-3 ltr:left-3'
+                : 'rtl:left-3 ltr:right-3'
             }`,
             size: 'small',
             onClick: {

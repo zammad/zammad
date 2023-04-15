@@ -1,6 +1,7 @@
 class Login extends App.ControllerFullPage
   events:
     'submit #login': 'login'
+    'click .js-go-to-mobile': 'goToMobile'
   className: 'login'
 
   constructor: ->
@@ -149,6 +150,11 @@ class Login extends App.ControllerFullPage
       => @shake( @$('.hero-unit') )
       600
     )
+
+  goToMobile: (e) ->
+    @preventDefaultAndStopPropagation(e)
+
+    App.MobileDetection.redirectToMobile()
 
 App.Config.set('login', Login, 'Routes')
 App.Config.set('login/admin/:password_auth_token', Login, 'Routes')

@@ -30,4 +30,8 @@
   <% if !_.isEmpty(@user): %>
     <ul class="user-menu navbar-items-personal"></ul>
   <% end %>
+  <a class="menu-item menu-item-navigation-toggle-button js-navigation-toggle-button" href="#">
+    <%- @Icon "double-arrow-right" %>
+    <%- @Icon "double-arrow-left" %>
+  </a>
 </div>

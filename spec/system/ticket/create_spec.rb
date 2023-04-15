@@ -1474,7 +1474,7 @@ RSpec.describe 'Ticket Create', type: :system do
       create(:template,
              options: {
                'ticket.title':          {
-                 value: Faker::Name.name_with_middle,
+                 value: Faker::Name.unique.name_with_middle,
                },
                'ticket.customer_id':    {
                  value:            customer.id,
@@ -1640,6 +1640,61 @@ RSpec.describe 'Ticket Create', type: :system do
       expect(page).to have_selector('span.token-label', text: 'Incident')
       expect(page).to have_selector('span.token-label', text: 'Service request')
       expect(page).to have_selector('span.token-label', text: 'Change request')
+    end
+  end
+
+  describe 'Support title and body in core workflow actions #4519', authenticated_as: :authenticate do
+    let(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: { 'ticket.priority_id'=>{ 'operator' => 'is', 'value' => [Ticket::Priority.find_by(name: '2 normal').id.to_s] } },
+             perform:            { 'ticket.title' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => 'title 123', 'set_readonly' => true }, 'ticket.body' => { 'operator' => %w[fill_in set_readonly], 'fill_in' => '<b>text 123</b>', 'set_readonly' => true } })
+    end
+
+    context 'when agent' do
+      def authenticate
+        workflow
+        true
+      end
+
+      before do
+        visit '#ticket/create'
+      end
+
+      it 'has core workflow support for title and text' do
+        expect(page).to have_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_css('div[data-attribute-name=body].is-readonly')
+        expect(page.find_field('Title').value).to eq('title 123')
+        expect(page.find('div[data-name=body]')['innerHTML']).to eq('<b>text 123</b>')
+
+        # unset readonly (https://github.com/zammad/zammad/issues/4540)
+        select '1 low', from: 'priority_id'
+        expect(page).to have_no_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_no_css('div[data-attribute-name=body].is-readonly')
+
+        # reset readonly
+        select '2 normal', from: 'priority_id'
+        expect(page).to have_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_css('div[data-attribute-name=body].is-readonly')
+      end
+    end
+
+    context 'when customer' do
+      def authenticate
+        workflow
+        create(:customer)
+      end
+
+      before do
+        visit '#customer_ticket_new'
+      end
+
+      it 'has core workflow support for title and text' do
+        expect(page).to have_css('div[data-attribute-name=title].is-readonly')
+        expect(page).to have_css('div[data-attribute-name=body].is-readonly')
+        expect(page.find_field('Title').value).to eq('title 123')
+        expect(page.find('div[data-name=body]')['innerHTML']).to eq('<b>text 123</b>')
+      end
     end
   end
 end

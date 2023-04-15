@@ -16,7 +16,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
   context 'when serialized model argument gets deleted' do
 
-    subject!(:job) { described_class.perform_later(trigger, ticket, article) }
+    subject!(:job) do
+      described_class.perform_later(
+        trigger,
+        ticket,
+        article,
+        changes:        nil,
+        user_id:        nil,
+        execution_type: nil,
+        event_type:     nil,
+      )
+    end
 
     let(:ticket) { create(:ticket) }
     let(:article) { create(:'ticket/article') }
@@ -53,7 +63,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
   end
 
   describe '#perform' do
-    subject(:perform) { described_class.perform_now(trigger, ticket, article) }
+    subject(:perform) do
+      described_class.perform_now(
+        trigger,
+        ticket,
+        article,
+        changes:        nil,
+        user_id:        nil,
+        execution_type: nil,
+        event_type:     nil,
+      )
+    end
 
     let(:payload_ticket) { TriggerWebhookJob::RecordPayload.generate(ticket) }
     let(:payload_article) { TriggerWebhookJob::RecordPayload.generate(article) }
@@ -104,6 +124,26 @@ RSpec.describe TriggerWebhookJob, type: :job do
           .with(body: payload, headers: headers)
           .with { |req| req.headers['X-Zammad-Delivery'].is_a?(String) }
           .with { |req| !req.headers.key?('X-Hub-Signature') }
+      end
+    end
+
+    context 'with HTTP BasicAuth configured' do
+      let(:webhook) { create(:webhook, endpoint: endpoint, basic_auth_username: 'user', basic_auth_password: 'passw0rd') }
+
+      it 'generates a request with Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| req.headers['Authorization'] == "Basic #{Base64.strict_encode64('user:passw0rd')}" }
+      end
+    end
+
+    context 'without HTTP BasicAuth configured' do
+      let(:webhook)  { create(:webhook, endpoint: endpoint) }
+
+      it 'generates a request without Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| !req.headers.key?('Authorization') }
       end
     end
 

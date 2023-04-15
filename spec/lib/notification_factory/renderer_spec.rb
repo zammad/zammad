@@ -27,6 +27,54 @@ RSpec.describe NotificationFactory::Renderer do
       end
     end
 
+    describe 'escaping' do
+      let(:ticket) { create(:ticket, title: '< + some % special " characters') }
+      let(:objects)    { { ticket: ticket } }
+      let(:renderer)   { build(:notification_factory_renderer, objects: objects, template: template, escape: escape, url_encode: url_encode) }
+      let(:escape)     { false }
+      let(:url_encode) { false }
+      let(:template)   { 'embedded #{ ticket.title } value' }
+
+      context 'without escaping' do
+        it 'renders correctly' do
+          expect(renderer.render).to eq "embedded #{ticket.title} value"
+        end
+      end
+
+      context 'with HTML escaping' do
+        let(:escape) { true }
+
+        it 'renders correctly' do
+          expect(renderer.render).to eq 'embedded &lt; + some % special &quot; characters value'
+        end
+      end
+
+      context 'with link encoding' do
+        let(:url_encode) { true }
+
+        it 'renders correctly' do
+          expect(renderer.render).to eq 'embedded %3C%20%2B%20some%20%25%20special%20%22%20characters value'
+        end
+      end
+    end
+
+    describe 'interpolation error handling' do
+      let(:renderer)   { build(:notification_factory_renderer, objects: {}, template: template) }
+      let(:template)   { '#{ ticket.title }' }
+
+      context 'with debug_errors' do
+        it 'renders an debug message' do
+          expect(renderer.render).to eq "\#{ticket / no such object}"
+        end
+      end
+
+      context 'without debug_errors' do
+        it 'renders a dash' do
+          expect(renderer.render(debug_errors: false)).to eq '-'
+        end
+      end
+    end
+
     it 'correctly renders chained object references' do
       user = User.where(firstname: 'Nicole').first
       ticket = create(:ticket, customer: user)

@@ -39,11 +39,16 @@ const wrapperParameters = {
   dialog: true,
 }
 
+const commonProps = {
+  label: 'Select…',
+}
+
 describe('Form - Field - Select - Dialog', () => {
   it('renders select options in a modal dialog', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
       },
@@ -68,6 +73,7 @@ describe('Form - Field - Select - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
@@ -93,6 +99,7 @@ describe('Form - Field - Select - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         value: testOptions[1].value,
@@ -128,6 +135,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         value: 3,
         options: optionsProp,
@@ -176,6 +184,7 @@ describe('Form - Field - Select - Options', () => {
       ...wrapperParameters,
       props: {
         clearable: true, // otherwise it defaults to the first option
+        ...commonProps,
         type: 'select',
         value: 3,
         options: optionsProp,
@@ -219,6 +228,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         value: [2, 3, 4],
         options: optionsProp,
@@ -262,6 +272,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: disabledOptions,
       },
@@ -308,6 +319,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: statusOptions,
       },
@@ -345,6 +357,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: iconOptions,
         clearable: true,
@@ -361,6 +374,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         value: 3,
         options: testOptions,
@@ -413,6 +427,7 @@ describe('Form - Field - Select - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         value: 3,
         options: testOptions,
@@ -446,6 +461,7 @@ describe('Form - Field - Select - Options', () => {
       ...wrapperParameters,
       props: {
         id: 'select',
+        ...commonProps,
         type: 'select',
         value: 1,
         options: testOptions,
@@ -469,6 +485,7 @@ describe('Form - Field - Select - Options', () => {
       ...wrapperParameters,
       props: {
         id: 'select',
+        ...commonProps,
         type: 'select',
         value: [1, 2],
         options: testOptions,
@@ -500,6 +517,7 @@ describe('Form - Field - Select - Options', () => {
       ...wrapperParameters,
       props: {
         id: 'select',
+        ...commonProps,
         type: 'select',
         value: 1,
         options: optionsProp,
@@ -527,6 +545,7 @@ describe('Form - Field - Select - Features', () => {
       ...wrapperParameters,
       props: {
         id: 'select',
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: false,
@@ -552,6 +571,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         value: testOptions[1].value,
@@ -568,6 +588,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         value: testOptions[1].value,
@@ -597,6 +618,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         multiple: true,
@@ -701,6 +723,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: reversedOptions,
         sorting: 'label',
@@ -766,6 +789,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: untranslatedOptions,
       },
@@ -808,6 +832,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         name: 'select',
         id: 'select',
@@ -921,6 +946,7 @@ describe('Form - Field - Select - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         name: 'select',
         id: 'select',
@@ -941,6 +967,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
@@ -967,6 +994,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
@@ -991,6 +1019,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         disabled: true,
@@ -1004,6 +1033,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         disabled: true,
@@ -1019,6 +1049,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: [],
       },
@@ -1033,17 +1064,13 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
         value: testOptions[1].value,
       },
     })
-
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
-      'aria-label',
-      'Select…',
-    )
 
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',
@@ -1055,6 +1082,7 @@ describe('Form - Field - Select - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
@@ -1092,18 +1120,13 @@ describe('Form - Field - Select - Input Checklist', () => {
       ...wrapperParameters,
       props: {
         id: 'test_id',
-        label: 'Test label',
+        ...commonProps,
         type: 'select',
         options: testOptions,
       },
     })
 
     expect(wrapper.getByLabelText('Select…')).toHaveAttribute('id', 'test_id')
-
-    expect(wrapper.getByLabelText('Test label')).toHaveAttribute(
-      'id',
-      'test_id',
-    )
   })
 
   it('implements input name', async () => {
@@ -1111,6 +1134,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       ...wrapperParameters,
       props: {
         name: 'test_name',
+        ...commonProps,
         type: 'select',
         options: testOptions,
       },
@@ -1128,6 +1152,7 @@ describe('Form - Field - Select - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         onBlur: blurHandler,
@@ -1144,6 +1169,7 @@ describe('Form - Field - Select - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         clearable: true,
@@ -1171,6 +1197,7 @@ describe('Form - Field - Select - Input Checklist', () => {
       const wrapper = renderComponent(FormKit, {
         ...wrapperParameters,
         props: {
+          ...commonProps,
           type: 'select',
           options: testOptions,
           value: testOption.value,
@@ -1185,6 +1212,7 @@ describe('Form - Field - Select - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         disabled: true,
@@ -1200,6 +1228,7 @@ describe('Form - Field - Select - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
         'test-attribute': 'test_value',
@@ -1216,6 +1245,7 @@ describe('Form - Field - Select - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        ...commonProps,
         type: 'select',
         options: testOptions,
       },

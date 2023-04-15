@@ -3,7 +3,7 @@
 import '@mobile/styles/main.scss'
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 
-import './commands'
+import './commands.js'
 
 // @testing-library/cypress uses env to display errors
 globalThis.process.env = {

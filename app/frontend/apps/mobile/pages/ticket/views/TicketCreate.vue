@@ -119,7 +119,7 @@ const ticketTitleSection = getFormSchemaGroupSection(
       screen: 'create_top',
       outerClass:
         '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
-      wrapperClass: '$reset flex w-full',
+      wrapperClass: '$reset formkit-disabled:opacity-30 flex w-full',
       labelClass: '$reset sr-only',
       blockClass: '$reset flex w-full',
       innerClass: '$reset flex justify-center items-center px-8 w-full',
@@ -226,6 +226,9 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
           object: EnumObjectManagerObjects.TicketArticle,
           props: {
             meta: {
+              mentionText: {
+                customerNodeName: 'customer_id',
+              },
               mentionUser: {
                 groupNodeName: 'group_id',
               },
@@ -507,7 +510,7 @@ export default {
     :class="{
       'bg-gray-light backdrop-blur-lg': !isScrolledToBottom,
     }"
-    class="bottom-navigation fixed bottom-0 z-10 h-32 w-full px-4 transition"
+    class="pb-safe fixed bottom-0 z-10 w-full px-4 transition"
   >
     <FormKit
       :variant="lastStepName === activeStep ? 'submit' : 'primary'"

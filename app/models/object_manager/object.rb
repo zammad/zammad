@@ -24,14 +24,15 @@ returns:
 
 =end
 
-  def attributes(user, record = nil, data_only: true)
+  def attributes(user, record = nil, data_only: true, skip_permission: false)
     @attributes ||= begin
       attribute_records.each_with_object([]) do |attribute_record, result|
 
         element = element_class.new(
-          user:      user,
-          attribute: attribute_record,
-          record:    record,
+          user:            user,
+          attribute:       attribute_record,
+          record:          record,
+          skip_permission: skip_permission,
         )
 
         next if !element.visible?

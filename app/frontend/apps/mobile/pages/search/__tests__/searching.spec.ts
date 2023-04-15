@@ -52,8 +52,8 @@ describe('visiting search page', () => {
 
     expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
       onlyIn: 'User',
-      isAgent: true,
       search: 'search',
+      limit: 30,
     })
 
     expect(view.container).toHaveTextContent('No entries')
@@ -62,8 +62,8 @@ describe('visiting search page', () => {
 
     expect(mockSearchApi.spies.resolve).toHaveBeenCalledWith({
       onlyIn: 'Organization',
-      isAgent: true,
       search: 'search',
+      limit: 30,
     })
 
     expect(view.getByRole('tab', { name: 'Organizations' })).toHaveFocus()

@@ -6,7 +6,7 @@ import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
 import type { Ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import type { FormFieldContext } from '@shared/components/Form/types/field'
-import { debouncedQuery } from '@shared/utils/helpers'
+import { debouncedQuery, htmlCleanup } from '@shared/utils/helpers'
 import { getNodeByName } from '@shared/components/Form/utils'
 import type { FileUploaded } from '../../FieldFile/types'
 import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api'
@@ -72,7 +72,9 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
           attachmentField?.input?.([...existingAttachments, ...newAttachments])
         }
 
-        return result?.knowledgeBaseAnswerSuggestionContentTransform?.body || ''
+        return htmlCleanup(
+          result?.knowledgeBaseAnswerSuggestionContentTransform?.body || '',
+        )
       },
       items: debouncedQuery(async ({ query }) => {
         if (!query) {

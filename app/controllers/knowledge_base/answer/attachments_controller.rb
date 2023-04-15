@@ -1,8 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::AttachmentsController < ApplicationController
-  prepend_before_action :authentication_check
-  before_action :authorize!
+  prepend_before_action :authenticate_and_authorize!
   before_action :fetch_answer
 
   def create

@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const SearchDocument = gql`
-    query search($search: String!, $isAgent: Boolean!, $onlyIn: EnumSearchableModels) {
-  search(search: $search, onlyIn: $onlyIn) {
+    query search($search: String!, $onlyIn: EnumSearchableModels, $limit: Int = 30) {
+  search(search: $search, onlyIn: $onlyIn, limit: $limit) {
     ... on Ticket {
       id
       internalId
@@ -16,7 +16,7 @@ export const SearchDocument = gql`
       state {
         name
       }
-      priority @include(if: $isAgent) {
+      priority {
         name
         defaultCreate
         uiColor
@@ -27,7 +27,7 @@ export const SearchDocument = gql`
         fullname
       }
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }
@@ -48,7 +48,7 @@ export const SearchDocument = gql`
         name
       }
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }
@@ -72,7 +72,7 @@ export const SearchDocument = gql`
       active
       name
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }

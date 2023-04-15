@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Role < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification

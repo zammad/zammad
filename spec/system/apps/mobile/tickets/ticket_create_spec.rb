@@ -42,7 +42,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       within_form(form_updater_gql_number: 1) do
 
         # Step 1.
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         # Step 2.
@@ -98,7 +98,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'adds signature' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -119,7 +119,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'changes signature, when group is changed' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -140,7 +140,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature, when another group without signature is selected' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -161,7 +161,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature when type is not email' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -184,7 +184,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'removes signature when group is deselected' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
         find_radio('articleSenderType').select_choice('Send Email')
@@ -206,13 +206,14 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     end
   end
 
+  # TODO: Frontend tests!?
   context 'with entered form fields' do
     it 'remembers the data when switching between steps' do
 
       within_form(form_updater_gql_number: 1) do
 
         # Step 1.
-        title = Faker::Name.name_with_middle
+        title = Faker::Name.unique.name_with_middle
         find_input('Title').type(title)
         next_step
 
@@ -249,7 +250,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
     it 'shows a confirmation dialog when leaving the screen' do
       within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
       end
 
       find_button('Go home').click
@@ -262,6 +263,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
   context 'with accessibility support' do
     it 'focuses first visible field when switching between steps' do
+      wait_for_form_autofocus('ticket-create')
 
       # Step 1.
       check_is_focused find_input('Title').input_element
@@ -348,28 +350,74 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
     let(:group1) { Group.find_by(name: 'Users') }
     let(:user)   { create(:customer, :with_org, groups: [group1]) }
 
-    it 'can complete all steps' do
-      within_form(form_updater_gql_number: 1) do
-        find_input('Title').type(Faker::Name.name_with_middle)
-        next_step
+    shared_examples 'can complete all steps as customer' do
+      it 'can complete all steps' do
+        within_form(form_updater_gql_number: 1) do
+          find_input('Title').type(Faker::Name.unique.name_with_middle)
+          next_step
 
-        find_select('Group').select_option('Users')
-        next_step
+          find_select('Group').select_option('Users')
 
-        find_editor('Text').type(Faker::Hacker.say_something_smart)
+          if organizations
+            find_select('Organization').select_option(organizations.last.name)
+          else
+            expect(page).to have_no_select('Organization')
+          end
+
+          next_step
+
+          find_editor('Text').type(Faker::Hacker.say_something_smart)
+        end
+
+        submit_form
+
+        find('[role=alert]', text: 'Ticket has been created successfully.')
+
+        expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
       end
+    end
 
-      submit_form
+    context 'with secondary organizations' do
+      include_examples 'can complete all steps as customer' do
+        let(:user)          { create(:customer, :with_org, organizations: organizations, groups: [group1]) }
+        let(:organizations) { create_list(:organization, 3) }
+      end
+    end
 
-      find('[role=alert]', text: 'Ticket has been created successfully.')
+    context 'without secondary organizations' do
+      include_examples 'can complete all steps as customer' do
+        let(:organizations) { nil }
+      end
+    end
+  end
 
-      expect(page).to have_current_path("/mobile/tickets/#{Ticket.last.id}")
+  context 'when using suggestions' do
+    let(:text_option) { create(:text_module, name: 'test', content: "Hello, \#{ticket.customer.firstname}!") }
+
+    it 'text suggestion parses correctly' do
+      within_form(form_updater_gql_number: 1) do
+        find_input('Title').type(Faker::Name.unique.name_with_middle)
+        next_step
+        next_step
+
+        find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+        next_step
+
+        editor = find_editor('Text')
+        # only label is rendered as text
+        expect(editor).to have_text_value('', exact: true)
+
+        editor.type('::test')
+        find('[role="option"]', text: text_option.name).click
+
+        expect(editor).to have_text_value("Hello, #{customer.firstname}!")
+      end
     end
   end
 
   describe 'Core Workflow' do
     include_examples 'mobile app: core workflow' do
-      let(:object_name) { 'Ticket' }
+      let(:object_name)             { 'Ticket' }
       let(:form_updater_gql_number) { 2 }
       let(:before_it) do
         lambda {
@@ -377,7 +425,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
           wait_for_form_to_settle('ticket-create')
 
           within_form(form_updater_gql_number: 1) do
-            find_input('Title').type(Faker::Name.name_with_middle)
+            find_input('Title').type(Faker::Name.unique.name_with_middle)
           end
 
           next_step

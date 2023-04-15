@@ -203,7 +203,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
         msgstr "custom-string-übersetzt"
 
         #: app/views/mailer/ticket_create/zh-tw.html.erb
-        #: app/views/slack/ticket_create/en.md.erb
+        #: app/views/messaging/ticket_create/en.md.erb
         msgid "custom-string-to-skip"
         msgstr "custom-string-zu-überspringen"
 

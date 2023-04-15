@@ -1,0 +1,18 @@
+Ticket zal escaleren (#{ticket.title})
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>Het ticket (#{ticket.title}) van "<b>#{ticket.customer.longname}</b>" zal escaleren op "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+   <div>
+   Informatie:
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>

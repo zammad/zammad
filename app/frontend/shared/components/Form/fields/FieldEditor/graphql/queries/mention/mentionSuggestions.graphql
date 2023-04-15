@@ -1,5 +1,5 @@
-query mentionSuggestions($query: String!, $group: ID!) {
-  mentionSuggestions(query: $query, group: $group) {
+query mentionSuggestions($query: String!, $groupId: ID!) {
+  mentionSuggestions(query: $query, groupId: $groupId) {
     id
     internalId
     fullname

@@ -7,6 +7,7 @@ import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvat
 import CommonTicketEscalationIndicator from '@shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import type { TicketById } from '@shared/entities/ticket/types'
+import { useLocaleStore } from '@shared/stores/locale'
 import { useTicketInformation } from '../../composable/useTicketInformation'
 
 const { ticket } = useTicketInformation()
@@ -16,6 +17,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const locale = useLocaleStore()
 
 const customer = computed(() => {
   const { customer } = props.ticket
@@ -76,9 +79,11 @@ const customer = computed(() => {
         </div>
       </div>
       <CommonIcon
-        name="mobile-chevron-right"
+        :name="`mobile-chevron-${
+          locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+        }`"
         size="base"
-        class="shrink-0 self-center ltr:ml-auto ltr:-mr-2 rtl:mr-auto"
+        class="shrink-0 self-center ltr:ml-auto ltr:-mr-2 rtl:mr-auto rtl:-ml-2"
         decorative
       />
     </CommonLink>

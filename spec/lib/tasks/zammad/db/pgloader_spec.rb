@@ -15,7 +15,10 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         ALTER SCHEMA '#{config['database']}' RENAME TO 'public'
 
         #{command_file_after}
-        WITH BATCH CONCURRENCY = 1;
+        WITH BATCH CONCURRENCY = 1
+        SET timezone = 'UTC'
+        SET client_timezone TO '00:00'
+        ;
       PGLOADER
     end
 
@@ -210,7 +213,7 @@ RSpec.describe Tasks::Zammad::DB::Pgloader do
         end
 
         it 'returns url without hostname' do
-          expect(described_class.mysql_url).to eq('mysql://mysql_database')
+          expect(described_class.mysql_url).to eq('mysql://localhost:3306/mysql_database')
         end
       end
     end

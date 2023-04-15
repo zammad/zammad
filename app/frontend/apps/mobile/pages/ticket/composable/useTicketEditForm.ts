@@ -184,6 +184,8 @@ export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {
         object: EnumObjectManagerObjects.TicketArticle,
         validation: validations.body,
         props: {
+          ticketId: computed(() => ticket.value?.internalId),
+          customerId: computed(() => ticket.value?.customer.internalId),
           contentType: editorType,
           meta: editorMeta,
         },

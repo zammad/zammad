@@ -132,7 +132,7 @@ const popupItems = computed(() =>
     v-if="hasError"
     v-bind="$attrs"
     type="button"
-    class="inline-flex h-6 grow items-center gap-1 rounded-lg bg-yellow px-2 py-1 text-xs font-bold text-black"
+    class="inline-flex h-7 grow items-center gap-1 rounded-lg bg-yellow px-2 py-1 text-xs font-bold text-black"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
@@ -143,7 +143,7 @@ const popupItems = computed(() =>
     v-else-if="canView"
     v-bind="$attrs"
     :class="successClass"
-    class="inline-flex h-6 grow items-center gap-1 rounded-lg px-2 py-1"
+    class="inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1"
     type="button"
     data-test-id="securityBadge"
     @click.prevent="showPopup = !showPopup"
@@ -152,13 +152,13 @@ const popupItems = computed(() =>
     <CommonIcon
       v-if="security.encryptionSuccess"
       name="mobile-lock"
-      size="xs"
+      size="tiny"
       :label="$t('Encrypted')"
     />
     <CommonIcon
       v-if="security.signingSuccess"
       name="mobile-signed"
-      size="xs"
+      size="tiny"
       :label="$t('Signed')"
     />
   </button>
@@ -184,6 +184,7 @@ const popupItems = computed(() =>
         </div>
         <div
           v-if="security.encryptionMessage"
+          class="break-all"
           :class="{
             'text-orange': !hasError && security.encryptionSuccess === false,
           }"

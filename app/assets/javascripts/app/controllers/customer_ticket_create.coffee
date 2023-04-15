@@ -32,59 +32,26 @@ class CustomerTicketCreate extends App.ControllerAppContent
       form_id: @form_id
     )
 
+    top         = App.Ticket.attributesGet('create_top', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.ticket-form-top')
+    article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.article-form-top')
+    middle      = App.Ticket.attributesGet('create_middle', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.ticket-form-middle')
+    bottom      = App.Ticket.attributesGet('create_bottom', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.ticket-form-bottom')
+
     @controllerFormCreateMiddle = new App.ControllerForm(
-      el:                      @el.find('.ticket-form-middle')
+      el:                      @el.find('.ticket-create')
       form_id:                 @form_id
       model:                   App.Ticket
       screen:                  'create_middle'
+      mixedAttributes:         Object.assign({}, top, article_top, middle, bottom)
       params:                  defaults
       noFieldset:              true
       handlersConfig:          handlers
       rejectNonExistentValues: true
-    )
-
-    # tunnel events to make sure core workflow does know
-    # about every change of all attributes (like subject)
-    tunnelController = @controllerFormCreateMiddle
-    class TicketCreateFormHandlerControllerFormCreateMiddle
-      @run: (params, attribute, attributes, classname, form, ui) ->
-        return if !ui.lastChangedAttribute
-        tunnelController.lastChangedAttribute = ui.lastChangedAttribute
-        params = App.ControllerForm.params(tunnelController.form)
-        App.FormHandlerCoreWorkflow.run(params, tunnelController.attributes[0], tunnelController.attributes, tunnelController.idPrefix, tunnelController.form, tunnelController)
-
-    handlersTunnel = _.clone(handlers)
-    handlersTunnel['000-TicketCreateFormHandlerControllerFormCreateMiddle'] = TicketCreateFormHandlerControllerFormCreateMiddle
-
-    @controllerFormCreateTop = new App.ControllerForm(
-      el:             @el.find('.ticket-form-top')
-      form_id:        @form_id
-      model:          App.Ticket
-      screen:         'create_top'
-      handlersConfig: handlersTunnel
       autofocus:      true
-      params:         defaults
-    )
-    @controllerFormCreateTopArticle = new App.ControllerForm(
-      el:             @el.find('.article-form-top')
-      form_id:        @form_id
-      model:          App.TicketArticle
-      screen:         'create_top'
       events:
         'fileUploadStart .richtext': => @submitDisable()
         'fileUploadStop .richtext': => @submitEnable()
-      params:         defaults
-      handlersConfig: handlersTunnel
     )
-    if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
-      @controllerFormCreateBottom = new App.ControllerForm(
-        el:             @el.find('.ticket-form-bottom')
-        form_id:        @form_id
-        model:          App.Ticket
-        screen:         'create_bottom'
-        handlersConfig: handlersTunnel
-        params:         defaults
-      )
 
     new App.ControllerDrox(
       el:   @el.find('.sidebar')
@@ -138,27 +105,13 @@ class CustomerTicketCreate extends App.ControllerAppContent
 
     ticket.load(params)
 
-    # validate form
-    ticketErrorsTop = ticket.validate(
-      controllerForm: @controllerFormCreateTop
-      target: e.target
-    )
-    ticketErrorsMiddle = ticket.validate(
+    article = new App.TicketArticle
+    article.load(params['article'])
+
+    errors = ticket.validate(
       controllerForm: @controllerFormCreateMiddle
       target: e.target
     )
-    article = new App.TicketArticle
-    article.load(params['article'])
-    articleErrors = article.validate(
-      controllerForm: @controllerFormCreateTop
-      target: e.target
-    )
-
-    # collect whole validation
-    errors = {}
-    errors = _.extend( errors, ticketErrorsTop )
-    errors = _.extend( errors, ticketErrorsMiddle )
-    errors = _.extend( errors, articleErrors )
 
     # show errors in form
     if !_.isEmpty(errors)

@@ -5,7 +5,16 @@ require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Trigger, type: :model do
-  subject(:trigger) { create(:trigger, condition: condition, perform: perform) }
+  subject(:trigger) { create(:trigger, condition: condition, perform: perform, activator: activator, execution_condition_mode: execution_condition_mode) }
+
+  let(:activator)                { 'action' }
+  let(:execution_condition_mode) { 'selective' }
+  let(:condition) do
+    { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
+  end
+  let(:perform) do
+    { 'ticket.title'=>{ 'value'=>'triggered' } }
+  end
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
@@ -14,6 +23,11 @@ RSpec.describe Trigger, type: :model do
     it 'uses Validations::VerifyPerformRulesValidator' do
       expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)
     end
+
+    it { is_expected.to validate_presence_of(:activator) }
+    it { is_expected.to validate_presence_of(:execution_condition_mode) }
+    it { is_expected.to validate_inclusion_of(:activator).in_array(%w[action time]) }
+    it { is_expected.to validate_inclusion_of(:execution_condition_mode).in_array(%w[selective always]) }
   end
 
   describe 'Send-email triggers' do
@@ -244,7 +258,7 @@ RSpec.describe Trigger, type: :model do
             <p><span>Internet: <a href="http://example-straubing-bogen.de/" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">http://example-straubing-bogen.de</span></a></span></p>
             <p><span lang="EN-US">Facebook: </span><a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a><span lang="EN-US"></span></p>
             <p><b><span style="color:navy;"><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></span></b><b><span lang="EN-US" style="color:navy;"> - European Foundation für Quality Management</span></b><span lang="EN-US"></span></p>
-            <p><span lang="EN-US"><p> </p></span></p>
+            <p><span lang="EN-US"> </span></p>
             </div>&gt;/snip&lt;
           RAW
                                     )
@@ -1131,6 +1145,240 @@ RSpec.describe Trigger, type: :model do
 
           it_behaves_like 'not updating the ticket with the trigger condition'
         end
+      end
+    end
+  end
+
+  describe 'Triggers without configured action inside condition are executed differently compared to 5.3 #4550' do
+    let(:ticket_match) { create(:ticket, group: Group.first) }
+    let(:ticket_no_match) { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '1 low')) }
+    let(:condition) do
+      { 'ticket.priority_id' => { 'operator' => 'is', 'value' => Ticket::Priority.where(name: ['2 normal', '3 high']).pluck(:id).map(&:to_s) } }
+    end
+    let(:perform) do
+      { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
+    end
+
+    shared_examples 'executing trigger when conditions match' do |execution_condition_mode:|
+      it 'does not create an article if the state changes', if: execution_condition_mode == 'selective' do
+        ticket_match.update(state: Ticket::State.find_by(name: 'closed'))
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+
+      it 'does create an article if the state changes', if: execution_condition_mode == 'always' do
+        ticket_match.update(state: Ticket::State.find_by(name: 'closed'))
+        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count)
+      end
+
+      it 'does create an article if priority changes' do
+        ticket_match.update(priority: Ticket::Priority.find_by(name: '3 high'))
+        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+      end
+
+      it 'does create an article if priority matches and new article is created' do
+        create(:ticket_article, ticket: ticket_match)
+        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+      end
+    end
+
+    shared_examples "not executing trigger when conditions don't match" do
+      it 'does not create an article if priority does not match but new article is created' do
+        create(:ticket_article, ticket: ticket_no_match)
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+
+      it 'does not create an article if priority does not match and priority changes to low' do
+        ticket_match.update(priority: Ticket::Priority.find_by(name: '1 low'))
+        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
+      end
+    end
+
+    before do
+      ticket_match
+      ticket_no_match
+      trigger
+      TransactionDispatcher.commit
+    end
+
+    context "with execution condition mode 'selective'" do
+      it_behaves_like 'executing trigger when conditions match', execution_condition_mode: 'selective'
+      it_behaves_like "not executing trigger when conditions don't match"
+    end
+
+    context "with execution condition mode 'always'" do
+      let(:execution_condition_mode) { 'always' }
+
+      it_behaves_like 'executing trigger when conditions match', execution_condition_mode: 'always'
+      it_behaves_like "not executing trigger when conditions don't match"
+    end
+  end
+
+  context 'when time events are reached', time_zone: 'Europe/London' do
+    let(:activator)   { 'time' }
+    let(:perform)     { { 'ticket.title' => { 'value' => 'triggered' } } }
+    let(:ticket)      { create(:ticket, title: 'Test Ticket', state_name: state_name, pending_time: pending_time) }
+
+    shared_examples 'getting triggered' do |attribute:, operator:, with_pending_time: false, with_escalation: false|
+      let(:attribute)    { attribute }
+      let(:condition)    { { attribute => { operator: operator } } }
+      let(:state_name)   { 'pending reminder' if with_pending_time }
+      let(:pending_time) { 1.hour.ago if with_pending_time }
+      let(:calendar)     { create(:calendar, :'24/7') }
+      let(:sla)          { create(:sla, :condition_blank, solution_time: 10, calendar: calendar) }
+
+      before do
+        sla if with_escalation
+        ticket && trigger
+        travel 1.hour if with_escalation
+      end
+
+      it "gets triggered for attribute: #{attribute}, operator: #{operator}" do
+        expect { perform_job(attribute, operator) }
+          .to change { ticket.reload.title }
+          .to('triggered')
+      end
+
+      def job_type(attribute, operator)
+        case [attribute, operator]
+        in 'ticket.pending_time', _
+          'reminder_reached'
+        in 'ticket.escalation_at', 'has reached'
+          'escalation'
+        in 'ticket.escalation_at', 'has reached warning'
+          'escalation_warning'
+        end
+      end
+
+      def perform_job(...)
+        TransactionJob.perform_now(
+          object:     'Ticket',
+          type:       job_type(...),
+          object_id:  ticket.id,
+          article_id: nil,
+          user_id:    1,
+        )
+      end
+    end
+
+    it_behaves_like 'getting triggered', attribute: 'ticket.pending_time', operator: 'has reached', with_pending_time: true
+    it_behaves_like 'getting triggered', attribute: 'ticket.escalation_at', operator: 'has reached', with_escalation: true
+    it_behaves_like 'getting triggered', attribute: 'ticket.escalation_at', operator: 'has reached warning', with_escalation: true
+  end
+
+  context 'when aticle action is set' do
+    let(:activator) { 'action' }
+    let(:perform)   { { 'ticket.title' => { 'value' => 'triggered' } } }
+    let(:ticket)    { create(:ticket, title: 'Test Ticket') }
+    let(:article)   { create(:ticket_article, ticket: ticket) }
+
+    shared_examples 'getting triggered' do |triggered:, operator:, with_article:, type:|
+      before do
+        ticket && trigger
+
+        article if with_article
+      end
+
+      let(:article_id) { with_article ? article.id : nil }
+      let(:type)       { type }
+      let(:condition) do
+        { 'article.action' => { 'operator' => operator, 'value' => 'create' } }
+      end
+
+      if triggered
+        it "gets triggered for article action created operator: #{operator}" do
+          expect { TransactionDispatcher.commit }
+            .to change { ticket.reload.title }
+            .to('triggered')
+        end
+      else
+        it "does not get triggered for article action created operator: #{operator}" do
+          expect { TransactionDispatcher.commit }
+            .not_to change { ticket.reload.title }
+        end
+      end
+    end
+
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'update'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'update'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'update'
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'update'
+
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'create'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'create'
+    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'create'
+    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'create'
+  end
+
+  describe '#performed_on', current_user_id: 1 do
+    let(:ticket) { create(:ticket) }
+
+    before { ticket }
+
+    context 'given action-based trigger' do
+      let(:activator) { 'action' }
+
+      it 'does nothing' do
+        expect { trigger.performed_on(ticket, activator_type: 'reminder_reached') }
+          .not_to change(History, :count)
+      end
+    end
+
+    context 'given time-based trigger' do
+      let(:activator) { 'time' }
+
+      it 'creates history item' do
+        expect { trigger.performed_on(ticket, activator_type: 'reminder_reached') }
+          .to change(History, :count)
+          .by(1)
+      end
+    end
+  end
+
+  describe 'performable_on?', current_user_id: 1 do
+    let(:ticket) { create(:ticket) }
+
+    before { ticket }
+
+    context 'given action-based trigger' do
+      let(:activator) { 'action' }
+
+      it 'returns nil' do
+        expect(trigger.performable_on?(ticket, activator_type: 'reminder_reached'))
+          .to be_nil
+      end
+    end
+
+    context 'given time-based trigger' do
+      let(:activator) { 'time' }
+
+      it 'returns true if it was not performed yet' do
+        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
+      end
+
+      it 'returns true if it was performed yesterday' do
+        travel(-1.day) do
+          trigger.performed_on(ticket, activator_type: 'reminder_reached')
+        end
+
+        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
+      end
+
+      it 'returns true if it was performed today on another ticket' do
+        trigger.performed_on(create(:ticket), activator_type: 'reminder_reached')
+
+        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
+      end
+
+      it 'returns true if it was performed today by another activator' do
+        trigger.performed_on(ticket, activator_type: 'escalation')
+
+        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
+      end
+
+      it 'returns false if it was performed today on the same ticket by the same activator and same user' do
+        trigger.performed_on(ticket, activator_type: 'reminder_reached')
+
+        expect(trigger).not_to be_performable_on(ticket, activator_type: 'reminder_reached')
       end
     end
   end

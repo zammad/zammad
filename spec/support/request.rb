@@ -78,14 +78,14 @@ module ZammadSpecSupportRequest
 
       # if we want to authenticate by token
       credentials = if options[:token].present?
-                      "Token token=#{options[:token].name}"
+                      "Token token=#{options[:token].token}"
                     else
                       ActionController::HttpAuthentication::Basic.encode_credentials(login, password)
                     end
 
       add_headers('Authorization' => credentials)
     when :browser
-      post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.number(digits: 9) }
+      post '/api/v1/signin', params: { username: login, password: password, fingerprint: Faker::Number.unique.number(digits: 9) }
     end
   end
 

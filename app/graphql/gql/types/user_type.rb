@@ -17,15 +17,16 @@ module Gql::Types
       :nested_show?
     end
 
-    field :created_by, Gql::Types::UserType, null: false, description: 'User that created this record'
-    field :updated_by, Gql::Types::UserType, null: false, description: 'Last user that updated this record'
     field :policy, Gql::Types::Policy::DefaultType, null: false, method: :itself
 
-    scoped_fields do
+    scoped_fields do # rubocop:disable Metrics/BlockLength
       belongs_to :organization, Gql::Types::OrganizationType
 
       field :secondary_organizations, Gql::Types::OrganizationType.connection_type
       field :has_secondary_organizations, Boolean, resolver_method: :secondary_organizations?
+
+      field :created_by, Gql::Types::UserType, description: 'User that created this record'
+      field :updated_by, Gql::Types::UserType, description: 'Last user that updated this record'
 
       field :authorizations, [Gql::Types::AuthorizationType]
 

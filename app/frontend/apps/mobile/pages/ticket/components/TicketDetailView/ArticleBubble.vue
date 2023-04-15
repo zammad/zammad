@@ -4,7 +4,7 @@
 /* eslint-disable vue/no-v-html */
 
 import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { computed, nextTick, onMounted, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { i18n } from '@shared/i18n'
 import { textToHtml } from '@shared/utils/helpers'
 import { useSessionStore } from '@shared/stores/session'
@@ -13,6 +13,7 @@ import type {
   TicketArticlesQuery,
 } from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
+import type { ImageViewerFile } from '@shared/composables/useImageViewer'
 import useImageViewer from '@shared/composables/useImageViewer'
 import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
 import stopEvent from '@shared/utils/events'
@@ -107,7 +108,11 @@ const { attachments: articleAttachments } = useArticleAttachments({
   attachments: computed(() => props.attachments),
 })
 
-const { showImage } = useImageViewer(articleAttachments)
+const inlineAttachments = ref<ImageViewerFile[]>([])
+
+const { showImage } = useImageViewer(
+  computed(() => [...inlineAttachments.value, ...articleAttachments.value]),
+)
 
 const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   stopEvent(event)
@@ -174,16 +179,39 @@ const setupLinksHandlers = (element: HTMLDivElement) => {
   })
 }
 
+const populateInlineAttachments = (element: HTMLDivElement) => {
+  const images = element.querySelectorAll('img')
+  inlineAttachments.value = []
+
+  images.forEach((image) => {
+    const mime = image.alt?.match(/\.(jpe?g)$/i) ? 'image/jpeg' : 'image/png'
+    const preview: ImageViewerFile = {
+      name: image.alt,
+      inline: image.src,
+      type: mime,
+    }
+    image.classList.add('cursor-pointer')
+    const index = inlineAttachments.value.push(preview) - 1
+    image.onclick = () => showImage(inlineAttachments.value[index])
+  })
+}
+
 watch(
   () => props.content,
   async () => {
     await nextTick()
-    if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+    if (bubbleElement.value) {
+      setupLinksHandlers(bubbleElement.value)
+      populateInlineAttachments(bubbleElement.value)
+    }
   },
 )
 
 onMounted(() => {
-  if (bubbleElement.value) setupLinksHandlers(bubbleElement.value)
+  if (bubbleElement.value) {
+    setupLinksHandlers(bubbleElement.value)
+    populateInlineAttachments(bubbleElement.value)
+  }
 })
 </script>
 
@@ -191,7 +219,7 @@ onMounted(() => {
   <div
     :id="`article-${articleInternalId}`"
     role="comment"
-    class="Article relative flex"
+    class="Article relative flex pb-4"
     :class="{
       Internal: internal,
       'Right flex-row-reverse': position === 'right',
@@ -207,97 +235,101 @@ onMounted(() => {
     >
       <CommonUserAvatar v-if="user" size="xs" :entity="user" />
     </div>
-    <div
-      class="content flex flex-col overflow-hidden rounded-3xl px-4 py-2"
-      :class="[bubbleClasses, colorClasses]"
-    >
+    <div class="Border">
       <div
-        class="flex items-center text-xs font-bold"
-        data-test-id="article-username"
+        class="content flex flex-col overflow-hidden rounded-3xl px-4 pt-2 pb-3"
+        :class="[bubbleClasses, colorClasses]"
       >
-        <CommonIcon v-if="internal" size="xs" name="mobile-lock" />
-        <span
-          class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
+        <div
+          class="flex items-center text-xs font-bold"
+          data-test-id="article-username"
         >
-          {{ username }}
-        </span>
-      </div>
-      <div
-        ref="bubbleElement"
-        data-test-id="article-content"
-        class="overflow-hidden text-base"
-      >
-        <div class="Content" v-html="body" />
-      </div>
-      <div
-        v-if="hasShowMore"
-        class="relative"
-        :class="{
-          bubbleGradient: hasShowMore && !shownMore,
-        }"
-      >
-        <button
-          class="h-5 text-xs"
-          aria-hidden="true"
-          @click="toggleShowMore()"
-        >
-          {{ shownMore ? $t('See less') : $t('See more') }}
-        </button>
-      </div>
-      <div
-        v-if="attachments.length"
-        class="mt-1 mb-2"
-        :class="colorsClasses.top"
-      >
-        <div class="py-1 text-xs" :class="colorsClasses.amount">
-          {{
-            attachments.length === 1
-              ? $t('1 attached file')
-              : $t('%s attached files', attachments.length)
-          }}
+          <span
+            class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
+          >
+            {{ username }}
+          </span>
         </div>
-        <!--
-            TODO action on click?
-            app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee:147
-            we would need internal ID for this url to work, or update url to allow GQL IDs
-          -->
-        <CommonFilePreview
-          v-for="attachment of articleAttachments"
-          :key="attachment.internalId"
-          :file="attachment"
-          :download-url="attachment.downloadUrl"
-          :preview-url="attachment.preview"
-          :no-preview="!$c.ui_ticket_zoom_attachments_preview"
-          :wrapper-class="colorsClasses.file"
-          :icon-class="colorsClasses.icon"
-          :size-class="colorsClasses.amount"
-          no-remove
-          @preview="previewImage($event, attachment)"
-        />
-      </div>
-      <div
-        class="absolute -bottom-4 flex min-h-[24px] gap-1"
-        :class="[position === 'left' ? 'left-10 flex-row-reverse' : 'right-10']"
-      >
-        <ArticleSecurityBadge
-          v-if="security"
-          :article-id="articleId"
-          :success-class="colorClasses"
-          :security="security"
-        />
-        <button
-          :class="[
-            colorClasses,
-            'flex h-6 w-6 items-center justify-center rounded-md',
-          ]"
-          type="button"
-          data-name="article-context"
-          :aria-label="$t('Article actions')"
-          @click="emit('showContext')"
-          @keydown.enter.prevent="emit('showContext')"
+        <div
+          ref="bubbleElement"
+          data-test-id="article-content"
+          class="overflow-hidden text-base"
         >
-          <CommonIcon name="mobile-more-vertical" size="tiny" decorative />
-        </button>
+          <div class="Content" v-html="body" />
+        </div>
+        <div
+          v-if="hasShowMore"
+          class="relative"
+          :class="{
+            BubbleGradient: hasShowMore && !shownMore,
+          }"
+        ></div>
+        <div
+          v-if="attachments.length"
+          class="mt-1 mb-2"
+          :class="colorsClasses.top"
+        >
+          <div class="py-1 text-xs" :class="colorsClasses.amount">
+            {{
+              attachments.length === 1
+                ? $t('1 attached file')
+                : $t('%s attached files', attachments.length)
+            }}
+          </div>
+          <CommonFilePreview
+            v-for="attachment of articleAttachments"
+            :key="attachment.internalId"
+            :file="attachment"
+            :download-url="attachment.downloadUrl"
+            :preview-url="attachment.preview"
+            :no-preview="!$c.ui_ticket_zoom_attachments_preview"
+            :wrapper-class="colorsClasses.file"
+            :icon-class="colorsClasses.icon"
+            :size-class="colorsClasses.amount"
+            no-remove
+            @preview="previewImage($event, attachment)"
+          />
+        </div>
+        <div
+          class="absolute bottom-0 flex gap-1"
+          :class="[
+            position === 'left'
+              ? 'flex-row-reverse ltr:left-10 rtl:right-10'
+              : 'ltr:right-10 rtl:left-10',
+          ]"
+        >
+          <ArticleSecurityBadge
+            v-if="security"
+            :article-id="articleId"
+            :success-class="colorClasses"
+            :security="security"
+          />
+          <button
+            v-if="hasShowMore"
+            :class="[
+              colorClasses,
+              'flex h-7 items-center justify-center rounded-md px-2 font-semibold',
+            ]"
+            type="button"
+            @click="toggleShowMore()"
+            @keydown.enter.prevent="toggleShowMore()"
+          >
+            {{ shownMore ? $t('See less') : $t('See more') }}
+          </button>
+          <button
+            :class="[
+              colorClasses,
+              'flex h-7 w-7 items-center justify-center rounded-md',
+            ]"
+            type="button"
+            data-name="article-context"
+            :aria-label="$t('Article actions')"
+            @click="emit('showContext')"
+            @keydown.enter.prevent="emit('showContext')"
+          >
+            <CommonIcon name="mobile-more-vertical" size="small" decorative />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -317,28 +349,47 @@ onMounted(() => {
   }
 }
 
-.bubbleGradient::before {
+.BubbleGradient::before {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 1.25rem;
-  height: 30px;
+  bottom: 0;
+  height: 50px;
   pointer-events: none;
 }
 
-.Right:not(.Internal) .bubbleGradient::before {
+.Right:not(.Internal) .BubbleGradient::before {
   background: linear-gradient(
     rgba(255, 255, 255, 0),
     theme('colors.blue.DEFAULT')
   );
 }
 
-.Left:not(.Internal) .bubbleGradient::before {
+.Left:not(.Internal) .BubbleGradient::before {
   background: linear-gradient(rgba(255, 255, 255, 0), theme('colors.white'));
 }
 
-.Internal .bubbleGradient::before {
+.Border {
+  overflow: hidden;
+}
+
+.Internal .Border {
+  background: repeating-linear-gradient(
+    45deg,
+    theme('colors.blue.DEFAULT'),
+    theme('colors.blue.DEFAULT') 5px,
+    theme('colors.blue.dark') 5px,
+    theme('colors.blue.dark') 10px
+  );
+  background-size: 14px 14px;
+  background-position: -1px;
+  padding: 4px;
+  border-radius: calc(1.5rem + 4px);
+  margin: -4px;
+}
+
+.Internal .BubbleGradient::before {
   background: linear-gradient(
     rgba(255, 255, 255, 0),
     theme('colors.black.DEFAULT')

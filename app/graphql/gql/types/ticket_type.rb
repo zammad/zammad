@@ -2,7 +2,8 @@
 
 module Gql::Types
   class TicketType < BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
+    include Gql::Types::Concerns::HasScopedModelUserRelations
     include Gql::Types::Concerns::HasInternalIdField
     include Gql::Types::Concerns::HasInternalNoteField
     include Gql::Types::Concerns::HasPunditAuthorization
@@ -27,7 +28,8 @@ module Gql::Types
     belongs_to :customer, Gql::Types::UserType, null: false
     belongs_to :create_article_type, Gql::Types::Ticket::Article::TypeType
 
-    field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
+    # Don't expose articles at this point as they can only be used safely with agent read permission.
+    # field :articles, Gql::Types::Ticket::ArticleType.connection_type, null: false
 
     field :policy, Gql::Types::Policy::TicketType, null: false, method: :itself
 
@@ -53,7 +55,7 @@ module Gql::Types
     field :pending_time, GraphQL::Types::ISO8601DateTime
 
     # field :create_article_sender_id, Integer
-    field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
+    # field :article_count, Integer, description: "Count of ticket articles that were not sent by 'System'."
     # field :type, String
     field :time_unit, Float
     field :preferences, GraphQL::Types::JSON

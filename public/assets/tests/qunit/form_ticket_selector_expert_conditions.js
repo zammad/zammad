@@ -885,6 +885,23 @@ QUnit.test('supports advanced features', (assert) => {
           pre_condition: 'current_user.id',
           value: [],
         },
+        {
+          name: 'ticket.pending_time',
+          operator: 'has reached',
+        },
+        {
+          name: 'ticket.escalation_at',
+          operator: 'has reached',
+        },
+        {
+          name: 'ticket.escalation_at',
+          operator: 'has reached warning',
+        },
+        {
+          name: 'article.action',
+          operator: 'is',
+          value: 'create',
+        },
       ],
     },
   }
@@ -892,7 +909,7 @@ QUnit.test('supports advanced features', (assert) => {
     el,
     model: {
       configure_attributes: [
-        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', action: true, hasChanged: true, executionTime: true, out_of_office: true, preview: false, always_expert_mode: true },
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', action: true, hasChanged: true, executionTime: true, out_of_office: true, preview: false, always_expert_mode: true, hasReached: true },
       ],
     },
     params: clone(defaults),
@@ -923,6 +940,33 @@ QUnit.test('supports advanced features', (assert) => {
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-attributeSelector select option:selected').text(), 'Out of office replacement', 'ooo attribute selected')
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-operator select option:selected').text(), 'is', 'is operator selected')
   assert.equal(el.find('.js-filterElement:nth-child(5) .js-preCondition select option:selected').text(), 'current user', 'current user pre-condition selected')
+
+  // Check pending till options.
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-attributeSelector select option:selected').text(), 'Pending till', 'pending till attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-operator select option:selected').text(), 'has reached', 'has reached operator selected')
+
+  el.find('.js-filterElement:nth-child(6) .js-operator select').val('before (relative)').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-value').hasClass('hide'), false, 'value visible')
+
+  el.find('.js-filterElement:nth-child(6) .js-operator select').val('has reached').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(6) .js-value').hasClass('hide'), true, 'value invisible')
+
+  // Check escalation at options.
+  assert.equal(el.find('.js-filterElement:nth-child(7) .js-attributeSelector select option:selected').text(), 'Escalation at', 'escalation at attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(7) .js-operator select option:selected').text(), 'has reached', 'has reached operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-attributeSelector select option:selected').text(), 'Escalation at', 'escalation at attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-operator select option:selected').text(), 'has reached warning', 'has reached warning operator selected')
+
+  el.find('.js-filterElement:nth-child(8) .js-operator select').val('before (relative)').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-value').hasClass('hide'), false, 'value visible')
+
+  el.find('.js-filterElement:nth-child(8) .js-operator select').val('has reached warning').trigger('change')
+  assert.equal(el.find('.js-filterElement:nth-child(8) .js-value').hasClass('hide'), true, 'value invisible')
+
+  // Check article action option
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-attributeSelector select option:selected').text(), 'Action', 'article action attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-operator select option:selected').text(), 'is', 'is operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(9) .js-value select option:selected').text(), 'created', 'created value selected')
 })
 
 QUnit.test('supports migration of the outdated param structure', (assert) => {
@@ -1218,6 +1262,107 @@ QUnit.test('handles tags attribute without any errors #4507', (assert) => {
           name: 'ticket.tags',
           operator: 'contains all not',
           value: 'tag 5, tag 6',
+        },
+      ],
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+})
+
+QUnit.test('reacts on changes of pre-condition dropdown values #4532', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'ticket_allow_expert_conditions', value: true }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  var defaults = {
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.organization_id',
+          operator: 'is',
+          pre_condition: 'current_user.organization_id',
+          value: [],
+        },
+        {
+          name: 'ticket.owner_id',
+          operator: 'is',
+          pre_condition: 'not_set',
+          value: [],
+        },
+      ],
+    },
+  }
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', preview: false, always_expert_mode: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-attributeSelector select option:selected').text(), 'Organization', 'organization attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-operator select option:selected').text(), 'is', 'is operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-preCondition select option:selected').text(), 'current user organization', 'current user organization pre-condition selected')
+  assert.equal(el.find('.js-filterElement:nth-child(2) .js-value').hasClass('hide'), true, 'value invisible')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-attributeSelector select option:selected').text(), 'Owner', 'owner attribute selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-operator select option:selected').text(), 'is', 'is operator selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-preCondition select option:selected').text(), 'not set (not defined)', 'not defined pre-condition selected')
+  assert.equal(el.find('.js-filterElement:nth-child(3) .js-value').hasClass('hide'), true, 'value invisible')
+
+  el.find('.js-filterElement:nth-child(3) .js-preCondition select').val('current_user.id').trigger('change')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    _completion: [
+      '',
+      '',
+    ],
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.organization_id',
+          operator: 'is',
+          pre_condition: 'current_user.organization_id',
+          value: [],
+        },
+        {
+          name: 'ticket.owner_id',
+          operator: 'is',
+          pre_condition: 'current_user.id',
+          value: [],
+        },
+      ],
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+
+  el.find('.js-filterElement:nth-child(2) .js-preCondition select').val('not_set').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    _completion: [
+      '',
+      '',
+    ],
+    condition: {
+      operator: 'OR',
+      conditions: [
+        {
+          name: 'ticket.organization_id',
+          operator: 'is',
+          pre_condition: 'not_set',
+          value: [],
+        },
+        {
+          name: 'ticket.owner_id',
+          operator: 'is',
+          pre_condition: 'current_user.id',
+          value: [],
         },
       ],
     },

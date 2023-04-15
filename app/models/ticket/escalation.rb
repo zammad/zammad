@@ -9,24 +9,6 @@ module Ticket::Escalation
 
 =begin
 
-rebuild escalations for all open tickets
-
-  result = Ticket::Escalation.rebuild_all
-
-returns
-
-  result = true
-
-=end
-
-  def self.rebuild_all
-    ActiveSupport::Deprecation.warn("Method 'rebuild_all' is deprecated. Run `TicketEscalationRebuildJob.perform_now` instead")
-
-    TicketEscalationRebuildJob.perform_now
-  end
-
-=begin
-
 rebuild escalation for ticket
 
   ticket = Ticket.find(123)

@@ -5,30 +5,11 @@ module ApplicationController::Authenticates
 
   private
 
-  def permission_check(key)
-    ActiveSupport::Deprecation.warn("Method 'permission_check' is deprecated. Use Pundit policy and `authorize!` instead.")
-
-    if @_token_auth
-      user = Token.check(
-        action:     'api',
-        name:       @_token_auth,
-        permission: key,
-      )
-      return false if user
-
-      raise Exceptions::Forbidden, __('Not authorized (token)!')
-    end
-
-    return false if current_user&.permissions?(key)
-
-    raise Exceptions::Forbidden, __('Not authorized (user)!')
-  end
-
-  def authentication_check(auth_param = {})
-    user = authentication_check_only(auth_param)
+  def authentication_check(basic_auth_prompt: nil)
+    user = authentication_check_only
 
     # check if basic_auth fallback is possible
-    if auth_param[:basic_auth_promt] && !user
+    if basic_auth_prompt && !user
       request_http_basic_authentication
       return false
     end
@@ -42,7 +23,7 @@ module ApplicationController::Authenticates
     true
   end
 
-  def authentication_check_only(auth_param = {})
+  def authentication_check_only
     if %w[test development].include?(Rails.env) && ENV['FAKE_SELENIUM_LOGIN_USER_ID'].present? && session[:user_id].blank?
       session[:user_id] = ENV['FAKE_SELENIUM_LOGIN_USER_ID'].to_i
       session[:user_device_updated_at] = Time.zone.now
@@ -58,7 +39,7 @@ module ApplicationController::Authenticates
     if session.id && session[:user_id]
       logger.debug { 'session based auth check' }
       user = User.lookup(id: session[:user_id])
-      return authentication_check_prerequesits(user, 'session', auth_param) if user
+      return authentication_check_prerequesits(user, 'session') if user
 
       authentication_errors.push("Can't find User with ID #{session[:user_id]} from Session")
     end
@@ -72,7 +53,7 @@ module ApplicationController::Authenticates
       end
 
       auth = Auth.new(username, password)
-      return authentication_check_prerequesits(auth.user, 'basic_auth', auth_param) if auth.valid?
+      return authentication_check_prerequesits(auth.user, 'basic_auth') if auth.valid?
 
       authentication_errors.push(__('Invalid BasicAuth credentials'))
     end
@@ -87,23 +68,12 @@ module ApplicationController::Authenticates
 
       user = Token.check(
         action:        'api',
-        name:          token_string,
+        token:         token_string,
         inactive_user: true,
       )
-      if user && auth_param[:permission]
-        ActiveSupport::Deprecation.warn("Paramter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
-
-        user = Token.check(
-          action:        'api',
-          name:          token_string,
-          permission:    auth_param[:permission],
-          inactive_user: true,
-        )
-        raise Exceptions::NotAuthorized, __('Not authorized (token)!') if !user
-      end
 
       if user
-        token = Token.find_by(name: token_string)
+        token = Token.find_by(token: token_string)
 
         token.last_used_at = Time.zone.now
         token.save!
@@ -117,7 +87,7 @@ module ApplicationController::Authenticates
       end
 
       @_token_auth = token_string # remember for permission_check
-      return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
+      return authentication_check_prerequesits(user, 'token_auth') if user
 
       authentication_errors.push(__("Can't find User for Token"))
     end
@@ -141,7 +111,7 @@ module ApplicationController::Authenticates
       # end
 
       user = User.find(access_token.resource_owner_id)
-      return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
+      return authentication_check_prerequesits(user, 'token_auth') if user
 
       authentication_errors.push("Can't find User with ID #{access_token.resource_owner_id} for OAuth2 token")
     end
@@ -151,18 +121,10 @@ module ApplicationController::Authenticates
     raise Exceptions::NotAuthorized, authentication_errors.join(', ')
   end
 
-  def authentication_check_prerequesits(user, auth_type, auth_param)
+  def authentication_check_prerequesits(user, auth_type)
     raise Exceptions::Forbidden, __('Maintenance mode enabled!') if in_maintenance_mode?(user)
 
     raise_unified_login_error if !user.active
-
-    if auth_param[:permission]
-      ActiveSupport::Deprecation.warn("Parameter ':permission' is deprecated. Use Pundit policy and `authorize!` instead.")
-
-      if !user.permissions?(auth_param[:permission])
-        raise Exceptions::Forbidden, __('Not authorized (user)!')
-      end
-    end
 
     current_user_set(user, auth_type)
     user_device_log(user, auth_type)
@@ -172,5 +134,9 @@ module ApplicationController::Authenticates
 
   def raise_unified_login_error
     raise Exceptions::NotAuthorized, __('Login failed. Have you double-checked your credentials and completed the email verification step?')
+  end
+
+  def authenticate_and_authorize!
+    authentication_check && authorize!
   end
 end

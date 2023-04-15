@@ -4,6 +4,7 @@ require_relative 'boot'
 
 require 'rails/all'
 require_relative 'issue_2656_workaround_for_rails_issue_33600'
+require_relative '../lib/zammad/safe_mode'
 
 # Temporary Hack: skip vite build if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
 # This must be called before ViteRuby is loaded by Bundler.
@@ -31,6 +32,8 @@ if ArgvHelper.argv.any? { |e| e.start_with? 'assets:' } || Rails.groups.exclude?
     require dep.name if dep.groups.include?(:assets)
   end
 end
+
+Zammad::SafeMode.hint
 
 module Zammad
   class Application < Rails::Application
@@ -74,7 +77,7 @@ module Zammad
     config.api_path = '/api/v1'
 
     # define cache store
-    if ENV['MEMCACHE_SERVERS'].present?
+    if ENV['MEMCACHE_SERVERS'].present? && !Zammad::SafeMode.enabled?
       require 'dalli' # Only load this gem when it is really used.
       config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { expires_in: 7.days }]
     else
@@ -84,7 +87,8 @@ module Zammad
     # define websocket session store
     # The web socket session store will fall back to localhost Redis usage if REDIS_URL is not set.
     # In this case, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
-    config.websocket_session_store = ENV['REDIS_URL'].present? && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? ? :redis : :file
+    legacy_ws_use_redis = ENV['REDIS_URL'].present? && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? && !Zammad::SafeMode.enabled?
+    config.websocket_session_store = legacy_ws_use_redis ? :redis : :file
 
     # default preferences by permission
     config.preferences_default_by_permission = {

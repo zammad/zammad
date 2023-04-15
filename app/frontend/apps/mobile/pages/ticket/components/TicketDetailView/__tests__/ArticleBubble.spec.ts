@@ -124,10 +124,6 @@ describe('component for displaying text article', () => {
     })
 
     expect(
-      view.queryByIconName('mobile-lock'),
-      'has a lock icon',
-    ).toBeInTheDocument()
-    expect(
       view.getByTestId('article-username'),
       'doesnt have content name',
     ).not.toHaveTextContent('-')
@@ -269,6 +265,51 @@ describe('component for displaying text article', () => {
       queryByAltText(attachment2, 'Image of Zammad 2.pdf'),
       "pdf doesn't have preview",
     ).not.toBeInTheDocument()
+  })
+
+  it('shows image when previewing attachments', async () => {
+    const view = renderArticleBubble({
+      ticketInternalId: 6,
+      articleId: convertToGraphQLId('Ticket::Article', 12),
+      attachments: [
+        {
+          internalId: '1',
+          name: 'Zammad 1.png',
+          size: 242143,
+          type: 'image/png',
+        },
+      ],
+    })
+
+    const attachment = view.getByRole('link', { name: /Zammad 1.png/ })
+    await view.events.click(attachment)
+
+    expect(view).toHaveImagePreview('/api/ticket_attachment/6/12/1?view=inline')
+  })
+
+  it('always shows selected image to preview', async () => {
+    const imageSrcs = [
+      ['name1.png', 'http://localhost:3000/image/1/2?preview=inline'],
+      ['name2.jpeg', 'http://localhost:3000/image/1/3?preview=inline'],
+      ['name3.jpg', 'http://localhost:3000/image/1/4?preview=inline'],
+      ['some random text', 'http://localhost:3000/image/1/5?preview=inline'],
+    ]
+    const view = renderArticleBubble({
+      ticketInternalId: 6,
+      articleId: convertToGraphQLId('Ticket::Article', 12),
+      attachments: [],
+      content: `<div>Some Text:</div>${imageSrcs.map(
+        ([alt, src]) => `<img alt="${alt}" src="${src}" />`,
+      )}`,
+    })
+
+    const [randomImageName, randomImageSrc] =
+      imageSrcs[Math.floor(Math.random() * imageSrcs.length)]
+
+    const image = view.getByAltText(randomImageName)
+    await view.events.click(image)
+
+    expect(view).toHaveImagePreview(randomImageSrc)
   })
 })
 

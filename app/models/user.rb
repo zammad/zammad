@@ -544,7 +544,7 @@ returns
 =end
 
   def self.by_reset_token(token)
-    Token.check(action: 'PasswordReset', name: token)
+    Token.check(action: 'PasswordReset', token: token)
   end
 
 =begin
@@ -569,7 +569,7 @@ returns
     user.update!(password: password, verified: true)
 
     # delete token
-    Token.find_by(action: 'PasswordReset', name: token).destroy
+    Token.find_by(action: 'PasswordReset', token: token).destroy
     user
   end
 
@@ -595,10 +595,10 @@ returns
   end
 
   def self.admin_password_auth_via_token(token)
-    user = Token.check(action: 'AdminAuth', name: token)
+    user = Token.check(action: 'AdminAuth', token: token)
     return if !user
 
-    Token.find_by(action: 'AdminAuth', name: token).destroy
+    Token.find_by(action: 'AdminAuth', token: token).destroy
 
     user
   end
@@ -671,7 +671,7 @@ returns
   def self.signup_verify_via_token(token, user = nil)
 
     # check token
-    local_user = Token.check(action: 'Signup', name: token)
+    local_user = Token.check(action: 'Signup', token: token)
     return if !local_user
 
     # if requested user is different to current user
@@ -681,7 +681,7 @@ returns
     local_user.update!(verified: true)
 
     # delete token
-    Token.find_by(action: 'Signup', name: token).destroy
+    Token.find_by(action: 'Signup', token: token).destroy
     local_user
   end
 

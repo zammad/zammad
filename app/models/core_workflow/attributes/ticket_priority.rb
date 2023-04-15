@@ -10,6 +10,10 @@ class CoreWorkflow::Attributes::TicketPriority < CoreWorkflow::Attributes::Base
     end
   end
 
+  def default_value
+    @default_value ||= Ticket::Priority.find_by(default_create: true).try(:id)&.to_s
+  end
+
   def assets(priority)
     return if @attributes.assets == false
     return if @attributes.assets[Ticket::Priority.to_app_model] && @attributes.assets[Ticket::Priority.to_app_model][priority.id]

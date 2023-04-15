@@ -10,7 +10,7 @@ class App.Group extends App.Model
     { name: 'reopen_time_in_days',  display: __('Reopening time in days'), tag: 'input',  type: 'integer', null: true },
     { name: 'follow_up_assignment', display: __('Assign follow-ups'), tag: 'select', default: 'yes', options: { true: 'yes', false: 'no' }, null: false, note: __('Assign follow-up to latest agent again.'), translate: true },
     { name: 'email_address_id',     display: __('Email'),             tag: 'select', multiple: false, null: true, relation: 'EmailAddress', nulloption: true, do_not_log: true },
-    { name: 'signature_id',         display: __('Signature'),         tag: 'select', multiple: false, null: true, relation: 'Signature', nulloption: true, do_not_log: true, display_warn: true, warn: __('This signature is inactive, it won\'t be included in the reply. Change state <a href="#channels/email">here</a>') },
+    { name: 'signature_id',         display: __('Signature'),         tag: 'select', multiple: false, null: true, relation: 'Signature', nulloption: true, do_not_log: true, display_warn: true, warn: __('This signature is inactive, it won\'t be included in the reply.') },
     { name: 'note',                 display: __('Note'),              tag: 'textarea', note: __('Notes are visible to agents only, never to customers.'), limit: 250, null: true },
     { name: 'updated_at',           display: __('Updated'),           tag: 'datetime', readonly: 1 },
     { name: 'active',               display: __('Active'),            tag: 'active', default: true },

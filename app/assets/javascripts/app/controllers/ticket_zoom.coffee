@@ -17,9 +17,6 @@ class App.TicketZoom extends App.Controller
   constructor: (params) ->
     super
 
-    # check authentication
-    @authenticateCheckRedirect()
-
     @formMeta      = undefined
     @ticket_id     = parseInt(params.ticket_id)
     @article_id    = params.article_id
@@ -1241,6 +1238,9 @@ class TicketZoomRouter extends App.ControllerPermanent
   requiredPermission: ['ticket.agent', 'ticket.customer']
   constructor: (params) ->
     super
+
+    # check authentication
+    @authenticateCheckRedirect()
 
     return @byNumber(params) if params.ticket_number
     @byTicketId(params)

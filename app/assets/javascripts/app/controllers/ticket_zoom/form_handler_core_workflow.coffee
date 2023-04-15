@@ -191,7 +191,12 @@ class App.FormHandlerCoreWorkflow
     return if _.isEmpty(data)
 
     for field, values of data
-      form.find('[name="' + field + '"]').val(data[field])
+      fieldElement = form.find('[name="' + field + '"], div[data-name="' + field + '"]')
+      if fieldElement.hasClass('richtext-content')
+        fieldElement.html(data[field])
+      else
+        fieldElement.val(data[field])
+
       coreWorkflowParams[classname][field] = data[field]
 
   # changes the visibility of form elements

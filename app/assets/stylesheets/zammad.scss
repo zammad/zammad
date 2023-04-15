@@ -181,6 +181,10 @@ $mobileNavigationWidthOpen: 220px;
 }
 
 @mixin phone {
+  #app.navigation-collapsed & {
+    @content;
+  }
+
   @media screen and (max-width: 767px) {
     @content;
   }
@@ -439,14 +443,6 @@ ul {
 
 .zIndex-11 {
   z-index: 1100;
-}
-
-.u-high-priority-color {
-  fill: $high-priority-color;
-}
-
-.u-low-priority-color {
-  fill: $low-priority-color;
 }
 
 .clickCatcher {
@@ -1910,7 +1906,6 @@ table {
 
 .label-text {
   @include bidi-style(margin-left, 3px, margin-right, 0);
-
   @extend %clickable;
 }
 
@@ -2132,6 +2127,42 @@ fieldset > .form-group {
     margin: 0;
   }
 
+  a[data-toggle='collapse'] > label {
+    cursor: pointer;
+    color: var(--text-link);
+  }
+
+  a[data-toggle='collapse'] {
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+
+    &.collapsed {
+      & svg {
+        &.icon-arrow-right {
+          display: inline;
+        }
+
+        &.icon-arrow-down {
+          display: none;
+        }
+      }
+    }
+
+    &:not(.collapsed) {
+      & svg {
+        &.icon-arrow-right {
+          display: none;
+        }
+
+        &.icon-arrow-down {
+          display: inline;
+        }
+      }
+    }
+  }
+
   .bookmark.icon {
     margin-bottom: -1px;
   }
@@ -2322,6 +2353,7 @@ textarea,
   &.is-disabled, // .is-disabled should not be used - legacy support
   &[disabled],
   &[readonly] {
+    background: var(--background-secondary);
     opacity: 0.38;
 
     &:focus,
@@ -2725,9 +2757,7 @@ input.has-error {
 
     -webkit-overflow-scrolling: touch;
 
-    .navigation:hover ~ &,
-    .navigation.is-hovered ~ &,
-    .navigation:active ~ & {
+    .navigation.is-not-collapsed ~ & {
       transform: translateX(
         #{$mobileNavigationWidthOpen - $mobileNavigationWidth}
       );
@@ -3244,6 +3274,10 @@ kbd {
 
   a {
     color: var(--text-inverted);
+
+    &.text-muted {
+      color: inherit;
+    }
   }
 }
 
@@ -3598,25 +3632,20 @@ ol.tabs li {
 .auth-providers {
   display: flex;
   flex-wrap: wrap;
+  padding: 7px;
+  margin: -14px;
 
   > form {
     display: flex;
     flex-grow: 1;
-    min-width: calc(100% / 2 - 8px);
-
-    &:last-child {
-      .auth-provider {
-        margin-bottom: initial;
-      }
-    }
+    min-width: 50%;
   }
 }
 
 .auth-provider {
   height: 40px;
   padding: 0 10px 0 7px;
-  margin-bottom: 14px;
-  margin-right: 14px;
+  margin: 7px;
   color: white !important;
   line-height: 23px;
   border-radius: 4px;
@@ -4139,9 +4168,7 @@ footer {
 
     min-width: 0;
 
-    .navigation:hover ~ &,
-    .navigation.is-hovered ~ &,
-    .navigation:active ~ & {
+    .navigation.is-not-collapsed ~ & {
       @include bidi-style(left, $mobileNavigationWidthOpen, right, 0);
     }
   }
@@ -4315,6 +4342,8 @@ footer {
   width: $navigationWidth;
   background: var(--background-quaternary);
   position: relative;
+  container-name: navigation;
+  container-type: inline-size;
 
   @include phone {
     position: absolute;
@@ -4325,17 +4354,13 @@ footer {
     left: 0;
     width: $mobileNavigationWidth;
     height: 100%;
-    z-index: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
+    z-index: 999;
 
     &:empty {
       display: none !important;
     }
 
-    &:hover,
-    &:active,
-    &.is-hovered {
+    &.is-not-collapsed {
       width: $mobileNavigationWidthOpen;
 
       .menu-item-name {
@@ -4343,6 +4368,18 @@ footer {
         padding-left: 15px;
       }
     }
+  }
+}
+
+@container navigation (width = 50px) {
+  .icon-double-arrow-left {
+    display: none;
+  }
+}
+
+@container navigation (width > 50px) {
+  .icon-double-arrow-right {
+    display: none;
   }
 }
 
@@ -4433,7 +4470,7 @@ footer {
 
   .zammad-switch {
     @include phone {
-      .navigation:not(:hover, :active, .is-hovered) & {
+      .navigation:not(:hover, :active, .is-not-collapsed) & {
         position: absolute;
         right: 12px;
         top: 12px;
@@ -4457,6 +4494,20 @@ footer {
           }
         }
       }
+    }
+  }
+
+  &-navigation-toggle-button {
+    justify-content: center;
+    border-top: 1px solid rgba(213, 213, 216, 0.05);
+    border-bottom: none;
+
+    @include desktop {
+      display: none;
+    }
+
+    @container navigation (width > 50px) {
+      justify-content: flex-end;
     }
   }
 }
@@ -4893,7 +4944,9 @@ footer {
   }
 }
 
-.search:not(.filled, .focused) input[type='search'] {
+.navigation:not(.is-not-collapsed)
+  .search:not(.filled, .focused)
+  input[type='search'] {
   @include phone {
     padding: 0;
   }
@@ -4966,7 +5019,7 @@ input[type='search']::-webkit-search-decoration {
 .search.filled {
   .search-holder {
     @include phone {
-      .navigation:not(:hover, :active, .is-hovered) & {
+      .navigation:not(:hover, :active, .is-not-collapsed) & {
         width: 210px;
       }
     }
@@ -4980,6 +5033,7 @@ input[type='search']::-webkit-search-decoration {
 }
 
 .search .logo {
+  display: inline-block;
   position: relative;
 
   @extend .u-clickable, .zIndex-3;
@@ -5211,7 +5265,8 @@ li.add .dropdown-nose {
   min-width: 0;
   left: 10px;
   right: 15px;
-  width: auto;
+  width: 235px;
+  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.28);
 
   &.selected-clue {
     position: absolute;
@@ -6082,6 +6137,14 @@ a.list-group-item.active > .badge,
 
 .danger-color {
   color: var(--danger-color);
+}
+
+.u-high-priority-color {
+  fill: $high-priority-color;
+}
+
+.u-low-priority-color {
+  fill: $low-priority-color;
 }
 
 .stat-widgets {
@@ -7499,7 +7562,6 @@ a.list-group-item.active > .badge,
   white-space: nowrap;
 
   @include bidi-style(margin-left, auto, margin-right, 0);
-
   @extend .u-clickable;
 
   @include phone {
@@ -7554,7 +7616,6 @@ a.list-group-item.active > .badge,
   white-space: nowrap;
 
   @include bidi-style(margin-left, auto, margin-right, 0);
-
   @extend %clickable;
 }
 
@@ -7594,7 +7655,6 @@ a.list-group-item.active > .badge,
 
 .attachmentUpload-cancel {
   @extend .u-clickable;
-
   @include bidi-style(margin-left, auto, margin-right, 0);
 
   text-decoration: underline;
@@ -8848,7 +8908,6 @@ li.list-item-none {
   padding: 0 40px;
 
   @extend .zIndex-11;
-
   @include bidi-style(padding-left, 40px, padding-right, 0);
 
   @include phone {
@@ -9292,7 +9351,6 @@ li.dropdown-header {
 
 .organizationInfo-avatar {
   @extend .userInfo-avatar;
-
   @include bidi-style(padding, 18px 0 0 18px, padding, 18px 18px 0 0);
 
   background: var(--background-modifier-accent);
@@ -9315,7 +9373,6 @@ li.dropdown-header {
 
   .userList-name {
     @extend .u-textTruncate;
-
     @include bidi-style(margin-left, 7px, margin-right, 0);
   }
 }
@@ -10642,7 +10699,7 @@ label + .wizard-buttonList {
 
 .horizontal-filters-switch {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 
   & > label {
     display: flex;

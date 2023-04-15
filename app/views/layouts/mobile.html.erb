@@ -8,12 +8,16 @@
     <link rel="manifest" href="/mobile/manifest.webmanifest" />
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <%= stylesheet_link_tag '/fonts.css', nonce: true %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
 
     <%= vite_typescript_tag 'mobile', nonce: true %>
     <%= vite_client_tag %>
+    <%= javascript_tag nonce: true do -%>
+      window.__ = (str) => str
+    <% end -%>
   </head>
   <body>
     <%= yield %>

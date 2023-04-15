@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
   context 'when creating a new avatar for the logged-in user', authenticated_as: :agent do
     let(:agent)         { create(:agent) }
-    let(:variables)     { { images: { full: base64_img, resize: base64_img } } }
-    let(:base64_img)    { "data:#{mime_type};base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" }
-    let(:mime_type)     { 'image/png' }
+    let(:variables)     { { images: { original: upload, resized: upload } } }
+    let(:upload)        { { name: filename, type: type, content: image_data } }
+    let(:image_data)    { 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }
+    let(:type)          { 'image/png' }
+    let(:filename)      { 'avatar.png' }
     let(:execute_query) { true }
 
     let(:query) do
@@ -52,15 +54,15 @@ RSpec.describe Gql::Mutations::Account::Avatar::Add, type: :graphql do
     end
 
     context 'with invalid image' do
-      let(:base64_img) { 'invalid image' }
+      let(:image_data) { 'invalid image' }
 
       it 'fails with error message' do
-        expect(gql.result.data['errors'][0]).to include('message' => 'The image is invalid.')
+        expect(gql.result.error_message).to eq('Variable $images of type AvatarInput! was provided invalid value for original.content (invalid base64), resized.content (invalid base64)')
       end
     end
 
     context 'with invalid mime-type' do
-      let(:mime_type) { 'image/tiff' }
+      let(:type) { 'image/tiff' }
 
       it 'fails with error message' do
         expect(gql.result.data['errors'][0]).to include('message' => 'The MIME type of the image is invalid.')

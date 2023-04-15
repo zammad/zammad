@@ -7,12 +7,12 @@ import {
   outer,
   inner,
   wrapper,
-  label,
   help,
   messages,
   message,
   prefix,
   suffix,
+  label,
 } from '@formkit/inputs'
 import { block } from '../sections/block'
 import { arrow } from '../sections/arrow'

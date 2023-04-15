@@ -12,7 +12,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
     wait_for_gql 'apps/mobile/pages/ticket/graphql/queries/ticket.graphql'
   end
 
-  it 'can subscribe to a ticket inside a dialog' do
+  it 'can subscribe to a ticket inside the ticket action dialog' do
     visit_information
 
     expect(find_toggle('Get notified')).to be_toggled_off
@@ -31,7 +31,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
     expect(Mention.subscribed?(ticket, agent)).to be true
   end
 
-  it 'can unsubscribe from a ticket inside a dialog', current_user_id: 1 do
+  it 'can unsubscribe from a ticket inside the ticket action dialog', current_user_id: 1 do
     Mention.subscribe!(ticket, agent)
 
     visit_information

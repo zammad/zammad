@@ -2,7 +2,8 @@
 
 module Gql::Types
   class DataPrivacyTaskType < BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
+    include Gql::Types::Concerns::HasScopedModelUserRelations
     include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Data privacy task type'

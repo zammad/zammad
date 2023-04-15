@@ -9,13 +9,19 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @head = @pageData.head || @pageData.object
 
     @controller = new App.ControllerForm(
-      model:     App[ @genericObject ]
-      params:    @item
+      model:     @contentFormModel()
+      params:    @contentFormParams()
       screen:    @screen || 'edit'
       autofocus: true
       handlers:  @handlers
     )
     @controller.form
+
+  contentFormModel: =>
+    App[ @genericObject ]
+
+  contentFormParams: =>
+    @item
 
   onSubmit: (e) ->
     params = @formParam(e.target)
@@ -30,7 +36,11 @@ class App.ControllerGenericEdit extends App.ControllerModal
     errors = @item.validate(
       controllerForm: @controller
     )
-    if errors
+
+    if @validateOnSubmit
+      errors = Object.assign({}, errors, @validateOnSubmit(params))
+
+    if !_.isEmpty(errors)
       @log 'error', errors
       @formValidate( form: e.target, errors: errors )
       return false

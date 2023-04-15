@@ -1,17 +1,5 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-namespace :searchindex do
-  %i[drop create drop_pipeline create_pipeline reload refresh rebuild].each do |name|
-    redirect_name = :"zammad:searchindex:#{name}"
-    desc "Forwards to #{redirect_name}"
-    task name => redirect_name do
-      warning = "The rake task 'searchindex:#{name}' is deprecated. Use '#{redirect_name}' instead."
-      warn "DEPRECATION WARNING: #{warning}"
-      ActiveSupport::Deprecation.warn(warning)
-    end
-  end
-end
-
 namespace :zammad do
   namespace :searchindex do
     desc 'Drop all search indexes'

@@ -3,12 +3,11 @@
 module MonitoringHelper
   class HealthChecker
     class UnprocessableMail < Backend
-      DIRECTORY = Rails.root.join('tmp/unprocessable_mail')
 
       def run_health_check
-        return if !File.exist?(DIRECTORY)
+        return if !File.exist?(Channel::EmailParser::UNPROCESSABLE_MAIL_DIRECTORY)
 
-        count = Dir.glob("#{DIRECTORY}/*.eml").count
+        count = Dir.glob("#{Channel::EmailParser::UNPROCESSABLE_MAIL_DIRECTORY}/*.eml").count
 
         return if count.zero?
 

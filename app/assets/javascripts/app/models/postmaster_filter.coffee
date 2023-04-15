@@ -7,7 +7,7 @@ class App.PostmasterFilter extends App.Model
     { name: 'name',           display: __('Name'),              tag: 'input', type: 'text', limit: 250, 'null': false },
     { name: 'channel',        display: __('Channel'),           type: 'input', readonly: 1 },
     { name: 'match',          display: __('Match all of the following'),      tag: 'postmaster_match', note: __('You can use regular expression by using "regex:your_reg_exp".') },
-    { name: 'perform',        display: __('Perform action of the following'), tag: 'postmaster_set', user_action: false },
+    { name: 'perform',        display: __('Perform actions'),   tag: 'postmaster_set', user_action: false },
     { name: 'note',           display: __('Note'),              tag: 'textarea', limit: 250, null: true },
     { name: 'updated_at',     display: __('Updated'),           tag: 'datetime', readonly: 1 },
     { name: 'active',         display: __('Active'),            tag: 'active', default: true },

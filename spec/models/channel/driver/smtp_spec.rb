@@ -6,7 +6,7 @@ RSpec.describe Channel::Driver::Smtp, integration: true, required_envs: %w[MAIL_
   let(:server_host)     { ENV['MAIL_SERVER'] }
   let(:server_login)    { ENV['MAIL_ADDRESS'] }
   let(:server_password) { ENV['MAIL_PASS'] }
-  let(:email_address)   { create(:email_address, realname: 'me Helpdesk', email: "some-zammad-#{server_login}") }
+  let(:email_address)   { create(:email_address, name: 'me Helpdesk', email: "some-zammad-#{server_login}") }
   let(:group)           { create(:group, name: 'DeliverTest', email_address: email_address) }
   let(:channel) do
     create(:email_channel,

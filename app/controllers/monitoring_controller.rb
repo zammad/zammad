@@ -33,15 +33,18 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     health_status = MonitoringHelper::HealthChecker.new
     health_status.check_health
 
-    token = Setting.get('monitoring_token')
-
     result = {
       healthy: health_status.healthy?,
       message: health_status.message,
       issues:  health_status.response.issues,
       actions: health_status.response.actions,
-      token:   token,
     }
+
+    # Send the token if the request came from the admin GUI which needs it.
+    if authorized? policy_record, :token?
+      result[:token] = Setting.get('monitoring_token')
+    end
+
     render json: result
   end
 

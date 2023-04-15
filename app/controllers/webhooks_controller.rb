@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class WebhooksController < ApplicationController
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   def preview
     ticket = TicketPolicy::ReadScope.new(current_user).resolve.last
@@ -31,5 +31,10 @@ class WebhooksController < ApplicationController
 
   def destroy
     model_destroy_render(Webhook, params)
+  end
+
+  def replacements
+    render json:   TriggerWebhookJob::CustomPayload.objects_and_subroutines,
+           status: :ok
   end
 end

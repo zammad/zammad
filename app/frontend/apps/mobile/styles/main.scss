@@ -2,6 +2,10 @@
 
 .Content,
 .ProseMirror {
+  [style*='color'] {
+    color: inherit !important;
+  }
+
   div[data-signature-marker] {
     display: none;
   }
@@ -24,25 +28,26 @@
 
   ol,
   ul {
-    @apply ltr:pl-2 rtl:pr-2;
+    @apply pb-2;
 
+    padding-inline-start: theme('spacing.2');
     list-style-position: inside;
 
     p {
-      display: inline-block;
+      display: inline;
     }
   }
 
   h1 {
-    @apply mb-2 mt-1 text-2xl font-bold;
+    @apply mt-2 mb-1 text-2xl font-bold;
   }
 
   h2 {
-    @apply my-1 text-xl font-bold;
+    @apply mt-2 mb-1 text-xl font-bold;
   }
 
   h3 {
-    @apply my-1 text-lg font-bold;
+    @apply mt-2 mb-1 text-lg font-bold;
   }
 
   a {
@@ -84,7 +89,7 @@
 @layer components {
   .absolute-floating-input:focus-within label,
   .absolute-floating-input.formkit-outer[data-populated] label {
-    @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:translate-x-6;
+    @apply -translate-y-2 opacity-75 ltr:translate-x-[2px] ltr:scale-75 rtl:pb-0 rtl:pt-5 rtl:text-xs;
   }
 
   .floating-input.formkit-outer[data-populated] label {
@@ -94,5 +99,15 @@
   .floating-textarea:focus-within label,
   .floating-textarea.formkit-outer[data-populated] label {
     @apply translate-y-0 text-xs opacity-75;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
   }
 }

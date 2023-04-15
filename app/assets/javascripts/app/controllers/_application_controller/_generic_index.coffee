@@ -160,35 +160,47 @@ class App.ControllerGenericIndex extends App.Controller
         facility: @pageData.logFacility
       )
 
+  editControllerClass: ->
+    App.ControllerGenericEdit
+
   edit: (id, e) =>
     e.preventDefault()
+    constructor = @editControllerClass()
+
     item = App[ @genericObject ].find(id)
 
     if @editCallback
       @editCallback(item)
       return
 
-    new App.ControllerGenericEdit(
-      id:            item.id
-      pageData:      @pageData
-      genericObject: @genericObject
-      container:     @container
-      small:         @small
-      large:         @large
-      veryLarge:     @veryLarge
-      handlers:      @handlers
+    new constructor(
+      id:               item.id
+      pageData:         @pageData
+      genericObject:    @genericObject
+      container:        @container
+      small:            @small
+      large:            @large
+      veryLarge:        @veryLarge
+      handlers:         @handlers
+      validateOnSubmit: @validateOnSubmit
     )
 
-  new: (e) ->
+  newControllerClass: ->
+    App.ControllerGenericNew
+
+  new: (e) =>
     e.preventDefault()
-    new App.ControllerGenericNew(
-      pageData:      @pageData
-      genericObject: @genericObject
-      container:     @container
-      small:         @small
-      large:         @large
-      veryLarge:     @veryLarge
-      handlers:      @handlers
+    constructor = @newControllerClass()
+
+    new constructor(
+      pageData:         @pageData
+      genericObject:    @genericObject
+      container:        @container
+      small:            @small
+      large:            @large
+      veryLarge:        @veryLarge
+      handlers:         @handlers
+      validateOnSubmit: @validateOnSubmit
     )
 
   payload: (e) ->

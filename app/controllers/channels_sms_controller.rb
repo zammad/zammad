@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsSmsController < ApplicationController
-  prepend_before_action -> { authentication_check && authorize! }, except: [:webhook]
+  prepend_before_action :authenticate_and_authorize!, except: [:webhook]
   skip_before_action :verify_csrf_token, only: [:webhook]
 
   def index

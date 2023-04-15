@@ -283,7 +283,7 @@ const { forceDesktop } = useForceDesktop()
       </template>
     </nav>
     <footer
-      class="mt-8 mb-14 flex w-full max-w-md items-center justify-center border-t border-gray-600 pt-2.5 align-middle font-medium leading-4 text-gray"
+      class="mt-8 flex w-full max-w-md items-center justify-center border-t border-gray-600 py-2.5 align-middle font-medium leading-4 text-gray"
     >
       <CommonLink
         v-if="application.hasCustomProductBranding"

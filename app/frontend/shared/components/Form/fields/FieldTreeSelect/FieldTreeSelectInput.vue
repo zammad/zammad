@@ -55,6 +55,7 @@ const dialog = useDialog({
 })
 
 const clearValue = () => {
+  if (props.context.disabled) return
   clearInternalValue()
   focusOutputElement()
 }
@@ -131,6 +132,7 @@ const getSelectedOptionFullPath = (selectedValue: string | number) =>
     i18n.t('%s (unknown)', selectedValue.toString()))
 
 const toggleDialog = async (isVisible: boolean) => {
+  if (props.context.disabled) return
   if (isVisible) {
     await openModal()
     nextTick(() => focusFirstTarget(getDialogFocusTargets(true)))
@@ -159,20 +161,28 @@ setupMissingOptionHandling()
     class="flex h-auto rounded-none bg-transparent"
     data-test-id="field-treeselect"
   >
+    <!-- https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ -->
     <output
       :id="context.id"
       ref="outputElement"
+      role="combobox"
       :name="context.node.name"
       class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
-      :aria-disabled="context.disabled"
-      :aria-label="i18n.t('Select…')"
-      :data-multiple="context.multiple"
       :tabindex="context.disabled ? '-1' : '0'"
+      :aria-labelledby="`label-${context.id}`"
+      :aria-disabled="context.disabled ? 'true' : undefined"
       v-bind="{
         ...context.attrs,
         onBlur: undefined,
       }"
-      @keypress.space.prevent="toggleDialog(true)"
+      :data-multiple="context.multiple"
+      aria-haspopup="dialog"
+      aria-autocomplete="none"
+      :aria-controls="`dialog-${nameDialog}`"
+      :aria-owns="`dialog-${nameDialog}`"
+      :aria-expanded="dialog.isOpened.value"
+      @keyup.shift.down.prevent="toggleDialog(true)"
+      @keyup.space.prevent="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
       <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
@@ -198,7 +208,7 @@ setupMissingOptionHandling()
               v-if="getSelectedOptionIcon(selectedValue)"
               :name="getSelectedOptionIcon(selectedValue)"
               size="tiny"
-              class="mr-1"
+              class="ltr:mr-1 rtl:ml-1"
             />
             {{ getSelectedOptionFullPath(selectedValue) }}
           </div>
@@ -206,7 +216,7 @@ setupMissingOptionHandling()
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
-        :aria-label="i18n.t('Clear Selection')"
+        :label="__('Clear Selection')"
         class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
         name="mobile-close-small"
         size="base"

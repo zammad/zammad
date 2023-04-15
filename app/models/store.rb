@@ -31,11 +31,6 @@ class Store < ApplicationModel
     self.store_file_id = file.id
   end
 
-  def self.add(...)
-    ActiveSupport::Deprecation.warn("The method 'Store.add' is deprecated. Use 'Store.create!' instead.")
-    create!(...)
-  end
-
 =begin
 
 get attachment of object

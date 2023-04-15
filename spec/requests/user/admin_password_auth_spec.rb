@@ -42,7 +42,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
           post api_v1_users_admin_password_auth_path, params: { username: user.email }
 
-          expect(message).to include "http://zammad.example.com/#login/admin/#{Token.last.name}"
+          expect(message).to include "<a href=\"http://zammad.example.com/#login/admin/#{Token.last.token}\">"
         end
       end
     end
@@ -117,7 +117,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
         user  = create(:admin)
         token = Token.create(action: 'AdminAuth', user_id: user.id, persistent: false)
 
-        post api_v1_users_admin_password_auth_verify_path, params: { token: token.name }
+        post api_v1_users_admin_password_auth_verify_path, params: { token: token.token }
         expect(JSON.parse(response.body)).to include('message' => 'ok', 'user_login' => user.login)
       end
     end

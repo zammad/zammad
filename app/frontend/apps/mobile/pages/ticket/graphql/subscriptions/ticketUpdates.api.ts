@@ -12,7 +12,6 @@ export const TicketUpdatesDocument = gql`
   ticketUpdates(ticketId: $ticketId) {
     ticket {
       ...ticketAttributes
-      articleCount
       mentions {
         totalCount
         edges {

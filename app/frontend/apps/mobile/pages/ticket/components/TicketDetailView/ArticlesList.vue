@@ -1,12 +1,10 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-// TODO scroll to bottom when data is loaded(?)
 import { toRef, shallowRef } from 'vue'
 import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
 import ArticleBubble from './ArticleBubble.vue'
-import ArticlesPullDown from './ArticlesPullDown.vue'
 import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
 import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
 import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
@@ -30,16 +28,6 @@ const { contextOptions, articleContextShown, showArticleContext } =
   useTicketArticleContext()
 
 const articlesElement = shallowRef<HTMLElement>()
-const loaderElement = shallowRef<{
-  stopLoader(): void
-}>()
-
-const loadMoreArticles = () => {
-  // start loading instead
-  setTimeout(() => {
-    loaderElement.value?.stopLoader()
-  }, 1000)
-}
 
 const { rows } = useTicketArticleRows(
   toRef(props, 'articles'),
@@ -58,9 +46,9 @@ const filterAttachments = (article: TicketArticle) => {
     ref="articlesElement"
     role="group"
     aria-label="Articles"
-    class="relative flex-1 space-y-5 px-4 pt-4"
+    class="relative flex-1 space-y-4 px-4 pt-4"
   >
-    <template v-for="row in rows" :key="row.key">
+    <template v-for="(row, idx) in rows" :key="row.key">
       <ArticleBubble
         v-if="row.type === 'article-bubble'"
         :content="row.article.bodyWithUrls"
@@ -77,6 +65,7 @@ const filterAttachments = (article: TicketArticle) => {
       <ArticleDeliveryMessage
         v-if="row.type === 'delivery'"
         :content="row.content"
+        :gap="rows[idx - 1]?.type === 'article-bubble' ? 'big' : 'small'"
       />
       <ArticleSystem
         v-if="row.type === 'system'"
@@ -95,10 +84,5 @@ const filterAttachments = (article: TicketArticle) => {
   <CommonSectionPopup
     v-model:state="articleContextShown"
     :items="contextOptions"
-  />
-  <ArticlesPullDown
-    ref="loaderElement"
-    :articles-element="articlesElement"
-    @load="loadMoreArticles"
   />
 </template>

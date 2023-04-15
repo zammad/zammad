@@ -161,6 +161,8 @@ describe('visuals for common dialog', () => {
 
   it('refocuses element that opened dialog', async () => {
     const button = document.createElement('button')
+    button.setAttribute('aria-haspopup', 'dialog')
+    button.setAttribute('aria-controls', 'dialog-dialog')
     button.setAttribute('data-test-id', 'button')
     document.body.appendChild(button)
 

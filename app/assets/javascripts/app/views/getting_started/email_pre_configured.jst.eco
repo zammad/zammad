@@ -7,7 +7,7 @@
         <p class="text-center"><%- @T('Your Zammad has the following email address:') %></p>
         <% if @addresses: %>
           <% for address in @addresses: %>
-          <p><%= address.realname %> &lt;<%= address.email %>&gt;</p>
+          <p><%= address.name %> &lt;<%= address.email %>&gt;</p>
           <% end %>
         <% end %>
         <p class="text-center"><%- @T('If you want to use additional email addresses, you can configure them later.') %></p>

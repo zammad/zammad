@@ -1,9 +1,9 @@
 query search(
   $search: String!
-  $isAgent: Boolean!
   $onlyIn: EnumSearchableModels
+  $limit: Int = 30
 ) {
-  search(search: $search, onlyIn: $onlyIn) {
+  search(search: $search, onlyIn: $onlyIn, limit: $limit) {
     ... on Ticket {
       id
       internalId
@@ -12,7 +12,7 @@ query search(
       state {
         name
       }
-      priority @include(if: $isAgent) {
+      priority {
         name
         defaultCreate
         uiColor
@@ -23,7 +23,7 @@ query search(
         fullname
       }
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }
@@ -44,7 +44,7 @@ query search(
         name
       }
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }
@@ -68,7 +68,7 @@ query search(
       active
       name
       updatedAt
-      updatedBy @include(if: $isAgent) {
+      updatedBy {
         id
         fullname
       }

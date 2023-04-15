@@ -1,0 +1,29 @@
+Bijgewerkt ticket (#{ticket.title})
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>
+Ticket (#{ticket.title}) is bijgewerkt door "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<% if @objects[:changes].present? %>
+   <div>
+   Wijzigingen:<br>
+   <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+   Informatie:
+   <blockquote type="citeer">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
+<% end %>
+<br>
+<div>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id} <% end %>" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>

@@ -2,7 +2,7 @@
 
 module Gql::Types
   class KnowledgeBaseType < Gql::Types::BaseObject
-    include Gql::Types::Concerns::IsModelObject
+    include Gql::Types::Concerns::HasDefaultModelFields
     include Gql::Types::Concerns::HasPunditAuthorization
 
     description 'Knowledge Base'

@@ -15,6 +15,6 @@ const props = defineProps<{
     :class="{
       'opacity-30': props.option.disabled,
     }"
-    class="mr-4"
+    class="ltr:mr-4 rtl:ml-4"
   />
 </template>

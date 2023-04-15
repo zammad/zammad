@@ -1,13 +1,12 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class DataPrivacyTask < ApplicationModel
+  include HasDefaultModelUserRelations
+
   include DataPrivacyTask::HasActivityStreamLog
   include ChecksClientNotification
 
   store :preferences
-
-  belongs_to :created_by, class_name: 'User'
-  belongs_to :updated_by, class_name: 'User'
 
   # optional because related data will get deleted and it would
   # cause validation errors if e.g. the created_by_id of the task

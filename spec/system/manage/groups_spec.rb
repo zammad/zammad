@@ -111,7 +111,7 @@ RSpec.describe 'Manage > Groups', type: :system do
 
       click "tr[data-id='#{group.id}']"
 
-      expect(page).to have_select('email_address_id', text: "#{email_address.realname} <#{email_address.email}>")
+      expect(page).to have_select('email_address_id', text: "#{email_address.name} <#{email_address.email}>")
     end
   end
 end

@@ -1,6 +1,13 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerPolicy
+  def index?
+    true
+  end
+
+  def create?
+    true
+  end
 
   def show?
     own?

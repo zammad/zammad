@@ -4,5 +4,5 @@ module Gql::Types::Concerns::IsModelObject # rubocop:disable GraphQL/ObjectDescr
   extend ActiveSupport::Concern
 
   include Gql::Types::Concerns::HasDefaultModelFields
-  include Gql::Types::Concerns::HasDefaultModelRelations
+  include Gql::Types::Concerns::HasDefaultModelUserRelations
 end

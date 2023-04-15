@@ -3,7 +3,7 @@
 class User::OverviewSortingsController < ApplicationController
   include CanPrioritize
 
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   def index
     render json: {

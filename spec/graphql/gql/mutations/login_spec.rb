@@ -28,7 +28,7 @@ RSpec.describe Gql::Mutations::Login, type: :request do
       QUERY
     end
     let(:password) { agent_password }
-    let(:fingerprint) { Faker::Number.number(digits: 6).to_s }
+    let(:fingerprint) { Faker::Number.unique.number(digits: 6).to_s }
     let(:variables) do
       {
         input: {

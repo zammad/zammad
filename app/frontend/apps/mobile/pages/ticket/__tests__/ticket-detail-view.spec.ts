@@ -23,7 +23,6 @@ import {
 import { mockPermissions } from '@tests/support/mock-permissions'
 import { nullableMock, waitUntil } from '@tests/support/utils'
 import { flushPromises } from '@vue/test-utils'
-import { setupView } from '@tests/support/mock-user'
 import { TicketDocument } from '../graphql/queries/ticket.api'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
@@ -34,6 +33,7 @@ import {
   mockTicketDetailViewGql,
   mockTicketLiveUsersGql,
 } from './mocks/detail-view'
+import { mockArticleQuery } from './mocks/articles'
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -174,53 +174,6 @@ describe('user avatars', () => {
       active: true,
     })
   })
-})
-
-test('can refresh data by pulling up', async () => {
-  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
-
-  const view = await visitView('/tickets/1')
-
-  await waitUntilTicketLoaded()
-
-  const articlesElement = view.getByRole('group', { name: 'Articles' })
-
-  const startEvent = new TouchEvent('touchstart', {
-    touches: [{ clientY: 300 } as Touch],
-  })
-
-  articlesElement.dispatchEvent(startEvent)
-
-  const moveEvent = new TouchEvent('touchmove', {
-    touches: [{ clientY: 100 } as Touch],
-  })
-
-  Object.defineProperty(document.documentElement, 'scrollHeight', {
-    value: 200,
-  })
-  Object.defineProperty(document.documentElement, 'scrollTop', {
-    value: 0,
-  })
-  Object.defineProperty(document.documentElement, 'clientHeight', {
-    value: 200,
-  })
-
-  articlesElement.dispatchEvent(moveEvent)
-
-  await flushPromises()
-
-  expect(view.getByIconName('mobile-arrow-down')).toHaveStyle({
-    transform: 'rotate(180deg)',
-  })
-
-  const touchEnd = new TouchEvent('touchend')
-  articlesElement.dispatchEvent(touchEnd)
-
-  await flushPromises()
-
-  expect(view.getAllByIconName('mobile-loading')).not.toHaveLength(0)
-
-  // TODO test api call
 })
 
 test("redirects to error page, if can't find ticket", async () => {
@@ -824,6 +777,82 @@ describe('ticket add/edit reply article', () => {
     vi.useRealTimers()
   })
 
+  it('save button is not shown when select field is opened', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('combobox', { name: 'Visibility' }))
+
+    expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('option', { name: 'Public' }))
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+  })
+
+  it('save button is not shown when non-reply dialog field is opened', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await expect(
+      view.findByRole('button', { name: 'Save' }),
+    ).resolves.toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Done' }))
+
+    expect(view.queryByText('You have unsaved changes.')).toBeInTheDocument()
+
+    await view.events.click(
+      view.getByRole('button', { name: 'Show ticket actions' }),
+    )
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Ticket actions' }),
+    )
+
+    expect(
+      view.queryByText('You have unsaved changes.'),
+    ).not.toBeInTheDocument()
+
+    await view.events.click(view.getByText('Change customer'))
+
+    await waitUntil(() =>
+      view.queryByRole('dialog', { name: 'Change customer' }),
+    )
+
+    expect(
+      view.queryByText('You have unsaved changes.'),
+    ).not.toBeInTheDocument()
+  })
+
   it('add reply (first time) should hold the form state after save button with an invalid state is used', async () => {
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
       mockFrontendObjectAttributes: true,
@@ -862,13 +891,82 @@ describe('ticket add/edit reply article', () => {
   })
 })
 
-test('correctly redirects from ticket hash-based routes', async () => {
-  const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
-  setupView('agent')
+it('correctly redirects from ticket hash-based routes', async () => {
+  const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+    ticketView: 'agent',
+  })
+
   await visitView('/#ticket/zoom/1')
   await waitUntilTicketLoaded()
+
   const router = getTestRouter()
   const route = router.currentRoute.value
+
   expect(route.name).toBe('TicketDetailArticlesView')
   expect(route.params).toEqual({ internalId: '1' })
+})
+
+it("scrolls to the bottom the first time, but doesn't trigger rescroll on subsequent updates", async () => {
+  const newArticlesQuery = mockArticleQuery(
+    {
+      internalId: 1,
+      bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+    },
+    [
+      {
+        internalId: 2,
+        bodyWithUrls:
+          '<p>Existing article switched to internal> all can see this haha</p>',
+      },
+      {
+        internalId: 3,
+        bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+      },
+    ],
+  )
+
+  const newArticlesQueryAfterUpdate = mockArticleQuery(
+    {
+      internalId: 1,
+      bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+    },
+    [
+      {
+        internalId: 3,
+        bodyWithUrls: '<p>Existing article> all can see this haha</p>',
+      },
+    ],
+  )
+
+  const { waitUntilTicketLoaded, mockTicketArticleSubscription } =
+    mockTicketDetailViewGql({
+      ticketView: 'agent',
+      articles: [newArticlesQuery, newArticlesQueryAfterUpdate],
+    })
+
+  vi.spyOn(window, 'scrollTo').mockReturnValue()
+
+  await visitView('/tickets/1')
+  await waitUntilTicketLoaded()
+
+  const router = getTestRouter()
+  router.restoreMethods()
+
+  expect(window.scrollTo).toHaveBeenCalledTimes(1)
+
+  await mockTicketArticleSubscription.next(
+    nullableMock({
+      data: {
+        ticketArticleUpdates: {
+          addArticle: {
+            __typename: 'TicketArticle',
+            id: convertToGraphQLId('TicketArticle', 100),
+            createdAt: new Date(2022, 0, 31, 0, 0, 0, 0).toISOString(),
+          },
+        },
+      },
+    }),
+  )
+
+  expect(window.scrollTo).toHaveBeenCalledTimes(1)
 })

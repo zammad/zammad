@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
-  prepend_before_action { authentication_check && authorize! }
+  prepend_before_action :authenticate_and_authorize!
 
   def index
     system_online_service = Setting.get('system_online_service')
@@ -162,14 +162,14 @@ class ChannelsEmailController < ApplicationController
 
     if address
       address.update!(
-        realname:   params[:meta][:realname],
+        name:       params[:meta][:realname],
         email:      email,
         active:     true,
         channel_id: channel.id,
       )
     else
       EmailAddress.create(
-        realname:   params[:meta][:realname],
+        name:       params[:meta][:realname],
         email:      email,
         active:     true,
         channel_id: channel.id,

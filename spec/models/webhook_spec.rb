@@ -65,6 +65,34 @@ RSpec.describe Webhook, type: :model do
     end
   end
 
+  describe 'check custom payload' do
+    subject(:webhook) { build(:webhook, custom_payload: custom_payload) }
+
+    before { webhook.valid? }
+
+    let(:custom_payload_errors) { webhook.errors.messages[:custom_payload] }
+
+    context 'with valid JSON' do
+      let(:custom_payload) { '{"foo": "bar"}' }
+
+      it { is_expected.to be_valid }
+
+      it 'has no errors' do
+        expect(custom_payload_errors).to be_empty
+      end
+    end
+
+    context 'with invalid JSON' do
+      let(:custom_payload) { '{"foo": bar}' }
+
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(custom_payload_errors).to include 'The provided payload is invalid. Please check your syntax.'
+      end
+    end
+  end
+
   describe '#destroy' do
     subject(:webhook) { create(:webhook) }
 

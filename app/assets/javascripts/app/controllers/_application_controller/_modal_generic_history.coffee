@@ -70,6 +70,16 @@ class App.GenericHistory extends App.ControllerModal
         content = App.i18n.translateContent( "notification sent to '%s'", item.value_to )
       if item.type is 'email'
         content = App.i18n.translateContent( "email sent to '%s'", item.value_to )
+      else if item.type is 'time_trigger_performed'
+        message = switch item.value_from
+          when 'reminder_reached'
+            __("trigger '%s' was performed because pending reminder was reached")
+          when 'escalation'
+            __("trigger '%s' was performed because ticket was escalated")
+          when 'escalation_warning'
+            __("trigger '%s' was performed because ticket will escalate soon")
+
+        content = App.i18n.translateContent(message, item.value_to)
       else if item.type is 'received_merge'
         ticket = App.Ticket.find( item.id_from )
         ticket_link = if ticket

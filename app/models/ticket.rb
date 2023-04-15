@@ -6,6 +6,7 @@ class Ticket < ApplicationModel
   include ChecksClientNotification
   include CanCsvImport
   include ChecksHtmlSanitized
+  include ChecksHumanChanges
   include HasHistory
   include HasTags
   include HasSearchIndexBackend
@@ -597,7 +598,8 @@ perform changes on ticket
 
 =end
 
-  def perform_changes(performable, perform_origin, item = nil, current_user_id = nil)
+  def perform_changes(performable, perform_origin, item = nil, current_user_id = nil, activator_type: nil)
+    return if performable.try(:performable_on?, self, activator_type:) === false # rubocop:disable Style/CaseEquality
 
     perform = performable.perform
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
@@ -732,9 +734,20 @@ perform changes on ticket
       when 'notification.email'
         send_email_notification(value, article, perform_origin)
       when 'notification.webhook'
-        TriggerWebhookJob.perform_later(performable, self, article)
+        TriggerWebhookJob.perform_later(performable,
+                                        self,
+                                        article,
+                                        changes:        human_changes(
+                                          item.try(:dig, :changes),
+                                          self,
+                                        ),
+                                        user_id:        item.try(:dig, :user_id),
+                                        execution_type: perform_origin,
+                                        event_type:     item.try(:dig, :type))
       end
     end
+
+    performable.try(:performed_on, self, activator_type:)
 
     true
   end
@@ -781,11 +794,11 @@ perform changes on ticket
 
 perform active triggers on ticket
 
-  Ticket.perform_triggers(ticket, article, item, options)
+  Ticket.perform_triggers(ticket, article, triggers, item, triggers, options)
 
 =end
 
-  def self.perform_triggers(ticket, article, item, options = {})
+  def self.perform_triggers(ticket, article, triggers, item, options = {})
     recursive = Setting.get('ticket_trigger_recursive')
     type = options[:type] || item[:type]
     local_options = options.clone
@@ -804,11 +817,6 @@ perform active triggers on ticket
       return [false, message]
     end
 
-    triggers = if Rails.configuration.db_case_sensitive
-                 ::Trigger.where(active: true).reorder(Arel.sql('LOWER(name)'))
-               else
-                 ::Trigger.where(active: true).reorder(:name)
-               end
     return [true, __('No triggers active')] if triggers.blank?
 
     # check if notification should be send because of customer emails
@@ -834,7 +842,18 @@ perform active triggers on ticket
         user = User.lookup(id: user_id)
 
         # verify is condition is matching
-        ticket_count, tickets = Ticket.selectors(trigger.condition, limit: 1, execution_time: true, current_user: user, access: 'ignore', ticket_action: type, ticket_id: ticket.id, article_id: article&.id, changes: item[:changes])
+        ticket_count, tickets = Ticket.selectors(
+          trigger.condition,
+          limit:            1,
+          execution_time:   true,
+          current_user:     user,
+          access:           'ignore',
+          ticket_action:    type,
+          ticket_id:        ticket.id,
+          article_id:       article&.id,
+          changes:          item[:changes],
+          changes_required: trigger.condition_changes_required?
+        )
 
         next if ticket_count.blank?
         next if ticket_count.zero?
@@ -862,7 +881,7 @@ perform active triggers on ticket
         local_options[:trigger_ids][ticket.id.to_s].push trigger.id
         logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
 
-        ticket.perform_changes(trigger, 'trigger', item, user_id)
+        ticket.perform_changes(trigger, 'trigger', item, user_id, activator_type: type)
 
         if recursive == true
           TransactionDispatcher.commit(local_options)
@@ -940,6 +959,30 @@ result
     return false if last_contact_agent_at.blank?
 
     last_contact_customer_at < last_contact_agent_at
+  end
+
+=begin
+
+Get the color of the state the current ticket is in
+
+  ticket.current_state_color
+
+returns a hex color code
+
+=end
+  def current_state_color
+    return '#f35912' if escalation_at && escalation_at < Time.zone.now
+
+    case state.state_type.name
+    when 'new', 'open'
+      return '#faab00'
+    when 'closed'
+      return '#38ad69'
+    when 'pending reminder'
+      return '#faab00' if pending_time && pending_time < Time.zone.now
+    end
+
+    '#000000'
   end
 
   private

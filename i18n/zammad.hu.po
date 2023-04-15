@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-07 03:30+0000\n"
+"PO-Revision-Date: 2023-03-18 03:05+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -604,6 +604,22 @@ msgstr "%s% jelenleg folyamatban van"
 msgid "%s% have been reopened"
 msgstr "%s% újra meg lett nyitva"
 
+#: app/models/concerns/has_group_relation_definition.rb
+msgid "%{model} can have full or granular access to group"
+msgstr "%{model} teljes vagy részletes hozzáféréssel rendelkezhet a csoporthoz"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} already exists"
+msgstr "%{name} már létezik"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} is a reserved word"
+msgstr "%{name} egy foglalt szó"
+
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+msgid "(state: %s)"
+msgstr "(állapot: %s)"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -861,10 +877,6 @@ msgstr "API token hozzáférés"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 msgid "API token"
 msgstr "API token"
-
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr "Névjegy"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -1705,10 +1717,6 @@ msgstr ""
 "Legalább egy azonosító (keresztnév, vezetéknév, telefon vagy e-mail) "
 "szükséges a felhasználóhoz."
 
-#: app/models/object_manager/attribute.rb
-msgid "At least one letter is required"
-msgstr "Legalább egy betű szükséges"
-
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr "Legalább egy megfelelési szabály szükséges, de egy sem lett megadva."
@@ -1787,10 +1795,6 @@ msgstr "A '%s' tulajdonság szükséges a hozzárendeléshez"
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
 msgstr "Az 'email' tulajdonság kötelező!"
-
-#: app/models/object_manager/attribute.rb
-msgid "Attribute not editable!"
-msgstr "A tulajdonság nem szerkeszthető!"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2272,10 +2276,6 @@ msgstr "Nem lehet törölni, az objektumnak vannak hivatkozásai."
 msgid "Can't find User for Token"
 msgstr "Nem található felhasználó a tokenhez"
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr "Nem lehet elküldeni a spool-t, a munkamenet nem hitelesített"
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
@@ -2334,6 +2334,10 @@ msgstr "Nem lehet a bejegyzést törölni, mert a függő %{record} létezik"
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 "Nem lehet utánkövetni egy lezárt jegyet. Kérjük, hozzon létre egy új jegyet."
+
+#: app/models/sla.rb
+msgid "Cannot have both response time and update time."
+msgstr "Nem lehet egyszerre válaszidő és frissítési idő."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -2999,9 +3003,15 @@ msgstr "Folytatás mindenképp"
 msgid "Continue session"
 msgstr "Munkamenet folytatása"
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
-msgstr "Folytatás az asztali alkalmazásba"
+msgid "Continue to desktop"
+msgstr "Folytatás asztali gépen"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+msgid "Continue to mobile"
+msgstr "Folytatás mobilon"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Contributing Translations"
@@ -4535,6 +4545,7 @@ msgid "Deletion failed."
 msgstr "A törlés nem sikerült."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
 msgid "Delivery failed:"
 msgstr "A kézbesítés sikertelen:"
 
@@ -4991,6 +5002,11 @@ msgstr "E-mail értesítések"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
 msgstr "Kimenő e-mail"
+
+#: app/models/user.rb
+msgid "Email address '%{email}' is already used for another user."
+msgstr ""
+"A '%{email}' e-mail cím már használatban van egy másik felhasználó számára."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -7054,6 +7070,10 @@ msgstr "Érvénytelen client_id a fogadási ciklusban!"
 msgid "Invalid client_id received!"
 msgstr "Érvénytelen client_id érkezett!"
 
+#: app/models/user.rb
+msgid "Invalid email '%{email}'"
+msgstr "Érvénytelen e-mail cím '%{email}'"
+
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr "Érvénytelen hivatkozási struktúra"
@@ -7539,6 +7559,7 @@ msgid "Load more"
 msgstr "Bővebben"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 msgid "Loading content"
 msgstr "Tartalom betöltése"
 
@@ -7956,6 +7977,10 @@ msgstr "perc"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Mobiltelefon"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
+msgstr "A mobil frontend le van tiltva."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8556,6 +8581,10 @@ msgstr "Nincs eredmény"
 msgid "No results were found."
 msgstr "Nem található eredmény."
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+msgid "No security information available."
+msgstr "Nem áll rendelkezésre biztonsági információ."
+
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr "Nincs elérhető munkamenet."
@@ -8885,10 +8914,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
 msgstr "Csak ezeknek a csoportoknak."
-
-#: app/models/object_manager/attribute.rb
-msgid "Only lowercase letters, numbers, and '_' are allowed"
-msgstr "Csak kisbetűk, számok és '_' engedélyezettek"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -9414,10 +9439,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "Kérjük, adja meg a rögzíteni kívánt időpontot."
-
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
-msgstr "Kérjük, adjon meg érvényes elérési utat vagy tartományt"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 msgid "Please enter your Exchange credentials."
@@ -10987,7 +11008,7 @@ msgstr "Egyetlen kiválasztási mező"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Single tree selection field"
-msgstr ""
+msgstr "Egyetlen fa kiválasztási mező"
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Sipgate"
@@ -10998,6 +11019,7 @@ msgid "Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Kihagyás"
 
@@ -11474,6 +11496,7 @@ msgstr "Tesztüzenet Zammad rendszertől"
 msgid "Testing"
 msgstr "Tesztelés"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11849,6 +11872,10 @@ msgstr "Az objektumot nem sikerült megtalálni."
 msgid "The object could not be updated."
 msgstr "Az objektumot nem lehetett frissíteni."
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+msgid "The online notifcation could not be marked as seen."
+msgstr "Az online értesítést nem lehetett megtekintettként megjelölni."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr "Az oldal már nem érhető el"
@@ -11934,6 +11961,10 @@ msgstr "A jelentést nem lehetett létrehozni"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr "A kérést nem lehetett feldolgozni."
+
+#: lib/validations/verify_perform_rules_validator.rb
+msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
+msgstr "A szükséges '%{attribute}' érték a %{key}, %{inner} esetében hiányzik!"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -12401,6 +12432,7 @@ msgid "This host cannot be reached."
 msgstr "Ez a gazdagép nem érhető el."
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr "Ez a Zammad verzió %s"
 
@@ -13818,6 +13850,7 @@ msgstr "Ellenőrzés…"
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr "Verzió"
 
@@ -13853,7 +13886,6 @@ msgstr "Megtekintés a felhasználó szemszögéből"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Tekintse meg ezt a Zammad rendszerben"
 
@@ -13980,6 +14012,7 @@ msgstr ""
 "Elküldtük a jelszó változtatással kapcsolatos információkat az email címedre."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr "Web"
@@ -14395,6 +14428,31 @@ msgstr ""
 "Személyes hozzáférési tokent generálhat minden olyan alkalmazáshoz, amely "
 "hozzáférést igényel a Zammad API-hoz."
 
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
+msgid "You can no longer see the data privacy task."
+msgstr "A továbbiakban nem láthatja az adatvédelmi feladatot."
+
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
+msgid "You can no longer see the group."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
+msgid "You can no longer see the organization."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
+msgid "You can no longer see the role."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+msgid "You can no longer see the ticket."
+msgstr "A továbbiakban nem láthatja a jegyet."
+
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
+msgid "You can no longer see the user."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -14809,6 +14867,10 @@ msgstr "jegyek hozzárendelése"
 msgid "at"
 msgstr "ekkor"
 
+#: app/models/object_manager/attribute.rb
+msgid "at least one letter is required"
+msgstr "legalább egy betű szükséges"
+
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attached"
 msgstr "csatolva"
@@ -14816,6 +14878,10 @@ msgstr "csatolva"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attachment"
 msgstr "csatolmány"
+
+#: app/models/object_manager/attribute.rb
+msgid "attribute is not editable"
+msgstr "a tulajdonság nem szerkeszthető"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -14839,11 +14905,27 @@ msgstr "az ügynökfrissítések között"
 msgid "busy"
 msgstr "elfoglalt"
 
+#: app/models/object_manager/attribute.rb
+msgid ""
+"can't be altered after creation (you can delete the attribute and create "
+"another with the desired value)"
+msgstr ""
+"a létrehozás után nem módosítható (törölheti az attribútumot, és létrehozhat "
+"egy másikat a kívánt értékkel)"
+
 msgid "can't be blank"
 msgstr "nem lehet üres"
 
 msgid "can't be empty"
 msgstr "nem lehet üres"
+
+#: app/models/object_manager/attribute.rb
+msgid "can't be used because *_id and *_ids are not allowed"
+msgstr "nem használható, mert *_id és *_ids nem engedélyezettek"
+
+#: app/models/knowledge_base/category.rb
+msgid "cannot be a child of the parent"
+msgstr "nem lehet a szülő gyermeke"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -14936,6 +15018,14 @@ msgstr "ügyfél"
 msgid "d"
 msgstr "n"
 
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than internal date"
+msgstr "a dátum nem lehet korábbi, mint a belső dátum"
+
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than published date"
+msgstr "a dátum nem lehet korábbi, mint a publikálási dátum"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
 msgstr "nap"
@@ -14984,6 +15074,14 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket but create new ticket"
 msgstr "ne nyissa meg újra a jegyet, hanem hozzon létre új jegyet"
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow future dates"
+msgstr "nem engedélyezi a jövőbeli dátumokat"
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow past dates"
+msgstr "nem engedélyezi a múltbeli dátumokat"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
@@ -15122,11 +15220,19 @@ msgstr "ó"
 msgid "has already been taken"
 msgstr "már foglalt"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "has an existing DataPrivacyTask queued"
+msgstr "van egy meglévő Adatvédelmi Feladat várakozóban"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "megváltozott"
+
+#: lib/validations/mention_validator.rb
+msgid "has no agent access to this ticket"
+msgstr "nincs ügynöki hozzáférése ehhez a jegyhez"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -15254,6 +15360,10 @@ msgstr "belső adatbázis"
 msgid "is"
 msgstr "="
 
+#: app/models/knowledge_base/has_unique_title.rb
+msgid "is already used"
+msgstr "már használatban van"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "munkaidőben van"
@@ -15261,10 +15371,30 @@ msgstr "munkaidőben van"
 msgid "is invalid"
 msgstr "érvénytelen"
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is larger than the allowed maximum value of %{max_value}"
+msgstr "nagyobb, mint a megengedett maximális érték %{max_value}"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is last account with admin permissions"
+msgstr "az utolsó rendszergazdai jogosultsággal rendelkező fiók"
+
+#: lib/validations/object_manager/attribute_validator/max_length.rb
+msgid "is longer than the allowed length %{maxlength}"
+msgstr "hosszabb, mint a megengedett hossz %{maxlength}"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "≠"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is not a User"
+msgstr "nem egy Felhasználó"
+
+#: lib/validations/color_validator.rb
+msgid "is not a color. Only Hex, RGB and HSL colors are supported."
+msgstr "nem egy szín. Csak a Hex, RGB és HSL színek támogatottak."
 
 msgid "is not a number"
 msgstr "nem egy szám"
@@ -15280,12 +15410,20 @@ msgstr "nem szerepel a listán"
 msgid "is required"
 msgstr "kötelező"
 
+#: lib/validations/object_manager/attribute_validator/required.rb
+msgid "is required but missing"
+msgstr "kötelező, de hiányzik"
+
 msgid "is reserved"
 msgstr "fenntartva"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "be van állítva"
+
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is smaller than the allowed minimum value of %{min_value}"
+msgstr "kisebb, mint a minimálisan megengedett érték %{min_érték}"
 
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
@@ -15296,6 +15434,10 @@ msgstr "nem megfelelő hosszúságú (%{count} karaktereknek kellene lennie)"
 
 msgid "is the wrong length (should be 1 character)"
 msgstr "nem megfelelő hosszúságú (1 karakter kellene, hogy legyen)"
+
+#: app/models/user.rb
+msgid "is too long"
+msgstr "túl hosszú"
 
 msgid "is too long (maximum is %{count} characters)"
 msgstr "túl hosszú (maximum %{count} karakter)"
@@ -15308,6 +15450,14 @@ msgstr "túl rövid (minimum %{count} karakter)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "túl rövid (minimum 1 karakter)"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is undeletable system User with ID 1"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is your current account"
+msgstr "az Ön jelenlegi fiókja"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -15365,6 +15515,10 @@ msgstr "perc"
 msgid "minutes"
 msgstr "perc"
 
+#: app/models/knowledge_base.rb
+msgid "must be a valid path or domain"
+msgstr "érvényes elérési útvonalnak vagy tartománynak kell lennie"
+
 msgid "must be accepted"
 msgstr "el kell fogadni"
 
@@ -15398,8 +15552,20 @@ msgstr "páratlannak kell lennie"
 msgid "must be other than %{count}"
 msgstr "másnak kell lennie, mint %{count}"
 
+#: app/models/knowledge_base.rb
+msgid "must begin with a slash (\"/\")"
+msgstr ""
+
 msgid "must exist"
 msgstr "léteznie kell"
+
+#: app/models/knowledge_base.rb
+msgid "must not end with a slash (\"/\")"
+msgstr ""
+
+#: app/models/knowledge_base.rb
+msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
+msgstr "nem tartalmazhat protokollt (pl. \"http://\" vagy \"https://\")"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15473,6 +15639,10 @@ msgstr "értesítés elküldve '%s' részére"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "most"
+
+#: app/models/object_manager/attribute.rb
+msgid "only lowercase letters, numbers, and '_' are allowed"
+msgstr "csak kisbetűk, számok és '_' engedélyezettek"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -15670,6 +15840,10 @@ msgstr "kihagyott"
 msgid "sms"
 msgstr "SMS"
 
+#: app/models/object_manager/attribute.rb
+msgid "spaces are not allowed"
+msgstr "szóközök nem engedélyezettek"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
@@ -15852,6 +16026,12 @@ msgstr "...a teljes szövegterületből"
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
 
+#~ msgid "About"
+#~ msgstr "Névjegy"
+
+#~ msgid "Can't send spool, session not authenticated"
+#~ msgstr "Nem lehet elküldeni a spool-t, a munkamenet nem hitelesített"
+
 #~ msgid "Save ticket"
 #~ msgstr "Jegy mentése"
 
@@ -15985,11 +16165,6 @@ msgstr "Várakozási idő ma"
 
 #~ msgid "Tag"
 #~ msgstr "Címke"
-
-#, fuzzy
-#~| msgid "You have closed a ticket"
-#~ msgid "Could not load the ticket"
-#~ msgstr "Lezártál egy hibajegyet"
 
 #, fuzzy
 #~| msgid "Accounted Time"

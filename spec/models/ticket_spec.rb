@@ -25,7 +25,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'CanCsvImport'
-  it_behaves_like 'CanCsvImportTicket'
+  include_examples 'CanCsvImport - Ticket specific tests'
   it_behaves_like 'ChecksCoreWorkflow'
   it_behaves_like 'HasHistory', history_relation_object: ['Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom']
   it_behaves_like 'HasTags'
@@ -892,7 +892,15 @@ RSpec.describe Ticket, type: :model do
         end
 
         it 'schedules the webhooks notification job' do
-          expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(trigger, ticket, nil)
+          expect { ticket.perform_changes(trigger, 'trigger', {}, 1) }.to have_enqueued_job(TriggerWebhookJob).with(
+            trigger,
+            ticket,
+            nil,
+            changes:        {},
+            user_id:        nil,
+            execution_type: 'trigger',
+            event_type:     nil,
+          )
         end
       end
 

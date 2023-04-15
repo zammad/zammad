@@ -8,9 +8,11 @@ import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
 import stopEvent from '@shared/utils/events'
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
 import type { Ref } from 'vue'
-import { computed, nextTick, ref } from 'vue'
+import { onUnmounted, computed, nextTick, ref } from 'vue'
 import testFlags from '@shared/utils/testFlags'
 import CommonSelectItem from './CommonSelectItem.vue'
+import { useCommonSelect } from './composable'
+import type { CommonSelectInternalInstance } from './types'
 
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to
@@ -24,6 +26,7 @@ export interface Props {
   multiple?: boolean
   noClose?: boolean
   noRefocus?: boolean
+  owner?: string
   noOptionsLabelTranslation?: boolean
 }
 
@@ -52,9 +55,16 @@ const getFocusableOptions = () => {
 const showDialog = ref(false)
 let lastFocusableOutsideElement: HTMLElement | null = null
 
+const getActiveElement = () => {
+  if (props.owner) {
+    return document.getElementById(props.owner)
+  }
+  return document.activeElement as HTMLElement
+}
+
 const openDialog = () => {
   showDialog.value = true
-  lastFocusableOutsideElement = document.activeElement as HTMLElement
+  lastFocusableOutsideElement = getActiveElement()
   requestAnimationFrame(() => {
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
     // focus selected or first available option
@@ -83,14 +93,22 @@ const closeDialog = () => {
   })
 }
 
-defineExpose({
+const exposedInstance: CommonSelectInternalInstance = {
   isOpen: computed(() => showDialog.value),
   openDialog,
   closeDialog,
   getFocusableOptions,
+}
+
+const { instances } = useCommonSelect()
+
+instances.value.add(exposedInstance)
+
+onUnmounted(() => {
+  instances.value.delete(exposedInstance)
 })
 
-useTrapTab(dialogElement)
+defineExpose(exposedInstance)
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
 useTraverseOptions(dialogElement, { direction: 'vertical' })
@@ -99,6 +117,7 @@ useTraverseOptions(dialogElement, { direction: 'vertical' })
 useFocusWhenTyping(dialogElement)
 
 onClickOutside(dialogElement, closeDialog)
+useTrapTab(dialogElement)
 onKeyDown(
   'Escape',
   (event) => {
@@ -153,7 +172,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
 </script>
 
 <template>
-  <slot :open="openDialog" :close="closeDialog" />
+  <slot :state="showDialog" :open="openDialog" :close="closeDialog" />
   <Teleport to="body">
     <Transition :duration="duration">
       <div

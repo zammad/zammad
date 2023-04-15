@@ -5,7 +5,7 @@ module FormMatchers
 
   matcher :be_toggled_on do
     match do
-      actual.input_element.checked?
+      actual.input_element['aria-checked'] == 'true' || actual.input_element.checked?
     end
   end
 

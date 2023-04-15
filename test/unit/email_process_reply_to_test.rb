@@ -121,7 +121,7 @@ Some Text"
     Setting.set('postmaster_sender_based_on_reply_to', 'as_sender_of_email')
 
     EmailAddress.create!(
-      realname:      'address #1',
+      name:          'address #1',
       email:         'marketing_tool@example.com',
       active:        true,
       updated_by_id: 1,

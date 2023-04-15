@@ -287,7 +287,6 @@ Metrics/AbcSize:
     - 'lib/models.rb'
     - 'lib/notification_factory/mailer.rb'
     - 'lib/notification_factory/renderer.rb'
-    - 'lib/notification_factory/slack.rb'
     - 'lib/push_messages.rb'
     - 'lib/report/article_by_type_sender.rb'
     - 'lib/report/base.rb'

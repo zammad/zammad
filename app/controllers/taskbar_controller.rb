@@ -1,8 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TaskbarController < ApplicationController
-  prepend_before_action -> { authorize! }, only: %i[show update destroy]
-  prepend_before_action :authentication_check
+  prepend_before_action :authenticate_and_authorize!
 
   before_action :set_task_user_param, only: %i[create update]
 

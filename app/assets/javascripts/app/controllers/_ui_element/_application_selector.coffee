@@ -84,6 +84,18 @@ class App.UiElement.ApplicationSelector
         operator: [__('is'), __('is not')]
 
     for groupKey, groupMeta of groups
+      if groupKey is 'article'
+        if attribute.action
+          elements['article.action'] =
+            name: 'action'
+            display: __('Action')
+            tag: 'select'
+            null: false
+            translate: true
+            options:
+              create: 'created'
+            operator: [__('is'), __('is not')]
+
       if groupKey is 'execution_time'
         if attribute.executionTime
           elements['execution_time.calendar_id'] =
@@ -116,6 +128,17 @@ class App.UiElement.ApplicationSelector
               if config.name && config.name.match(myRegExp)
                 config.operator = operator
               elements["#{groupKey}.#{config.name}"] = config
+
+    if attribute.hasReached
+      [
+        'ticket.pending_time',
+        'ticket.escalation_at',
+      ].forEach (element_name) ->
+        new_operator = clone(elements[element_name]['operator'])
+        new_operator.push(__('has reached'))
+        if element_name == 'ticket.escalation_at'
+          new_operator.push(__('has reached warning'))
+        elements[element_name]['operator'] = new_operator
 
     if attribute.out_of_office
       elements['ticket.out_of_office_replacement_id'] =
@@ -255,6 +278,11 @@ class App.UiElement.ApplicationSelector
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
+      @saveParams(item)
+    )
+
+    # change pre-condition selector
+    item.off('change.application_selector', '.js-preCondition select').on('change.application_selector', '.js-preCondition select', =>
       @saveParams(item)
     )
 
@@ -513,8 +541,6 @@ class App.UiElement.ApplicationSelector
     return "#{attribute.name}::#{groupAndAttribute}::value"
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    name = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
-
     # build new item
     attributeConfig = elements[groupAndAttribute]
     config = _.clone(attributeConfig)
@@ -527,9 +553,8 @@ class App.UiElement.ApplicationSelector
     # render ui element
     item = ''
     if config && App.UiElement[config.tag] && meta.operator isnt 'today'
-      config['name'] = name
-      if attribute.value && attribute.value[groupAndAttribute]
-        config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      config = @buildValueConfigNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+
       if 'multiple' of config
         config = @buildValueConfigMultiple(config, meta)
       if config.relation is 'User'
@@ -545,17 +570,35 @@ class App.UiElement.ApplicationSelector
         config.tag = 'select'
       item = @renderConfig(config, meta)
     if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)' || meta.operator is 'from (relative)' || meta.operator is 'till (relative)'
-      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
-      if attribute.value && attribute.value[groupAndAttribute]
-        config['value'] = _.clone(attribute.value[groupAndAttribute])
+      config = @buildValueConfigRelativeNameValue(config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+
       item = App.UiElement['time_range'].render(config, {})
 
     elementRow.find('.js-value').removeClass('hide').html(item)
-    if meta.operator is 'has changed'
+
+    # Hide pre-condition and value fields if the operator is one of the following:
+    #   - has changed
+    #   - has reached
+    #   - has reached warning
+    if /^has\s(changed|reached(\swarning)?)$/.test(meta.operator)
       elementRow.find('.js-value').addClass('hide')
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
       elementRow.find('.js-value').removeClass('hide')
+
+  @buildValueConfigNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    config['name'] = @buildValueName(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    if attribute.value && attribute.value[groupAndAttribute]
+      config['value'] = @buildValueConfigValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+
+    config
+
+  @buildValueConfigRelativeNameValue: (config, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    config['name'] = "#{attribute.name}::#{groupAndAttribute}"
+    if attribute.value && attribute.value[groupAndAttribute]
+      config['value'] = _.clone(attribute.value[groupAndAttribute])
+
+    config
 
   @renderConfig: (config, meta) ->
     tagSearch = "#{config.tag}_search"

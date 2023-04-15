@@ -598,6 +598,26 @@ msgstr "%s% je aktuálně rozpracováno"
 msgid "%s% have been reopened"
 msgstr "%s% bylo opětovně otevřeno"
 
+#: app/models/concerns/has_group_relation_definition.rb
+msgid "%{model} can have full or granular access to group"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Queue already exists!"
+msgid "%{name} already exists"
+msgstr "Fronta již existuje!"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} is a reserved word"
+msgstr ""
+
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+#, fuzzy
+#| msgid "Total: %s"
+msgid "(state: %s)"
+msgstr "Celkem: %s"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
@@ -851,10 +871,6 @@ msgstr "API přístup s tokenem"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 msgid "API token"
 msgstr "API token"
-
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr "O systému"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -1687,10 +1703,6 @@ msgstr ""
 "Pro uživatele je vyžadován nejméně jeden identifikátor (jméno, příjmení, "
 "telefon nebo e-mail)."
 
-#: app/models/object_manager/attribute.rb
-msgid "At least one letter is required"
-msgstr "Je vyžadováno nejméně jedno písmeno"
-
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr "Je vyžadováno nejméně jedno pravidlo shody, ale žádné nebylo zadáno."
@@ -1766,10 +1778,6 @@ msgstr "Atribut '%s' je pro mapování vyžadován"
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
 msgstr "Atribut 'e-mail' je povinný!"
-
-#: app/models/object_manager/attribute.rb
-msgid "Attribute not editable!"
-msgstr "Atribut není upravitelný!"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2255,10 +2263,6 @@ msgstr "Nelze smazat, objekt má návaznosti."
 msgid "Can't find User for Token"
 msgstr "Uživatel tokenu nebyl nalezen"
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr "Paměť nelze odeslat, sezení je neautentizováno"
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
@@ -2316,6 +2320,10 @@ msgstr "Nelze smazat záznam, neboť existuje závislý %{record}"
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Nelze pokračovat v uzavřeném požadavku. Prosím, vytvořte nový ticket."
+
+#: app/models/sla.rb
+msgid "Cannot have both response time and update time."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
@@ -2988,8 +2996,18 @@ msgstr "I tak pokračovat"
 msgid "Continue session"
 msgstr "Pokračovat v sezení"
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
+#, fuzzy
+#| msgid "Continue to desktop app"
+msgid "Continue to desktop"
+msgstr "Pokračovat do desktopové aplikace"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+#, fuzzy
+#| msgid "Continue to desktop app"
+msgid "Continue to mobile"
 msgstr "Pokračovat do desktopové aplikace"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -4486,6 +4504,7 @@ msgid "Deletion failed."
 msgstr "Smazání se nezdařilo."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
 msgid "Delivery failed:"
 msgstr "Doručení se nezdařilo:"
 
@@ -4953,6 +4972,10 @@ msgstr "E-mailová oznámení"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
 msgstr "Odchozí Email"
+
+#: app/models/user.rb
+msgid "Email address '%{email}' is already used for another user."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -7003,6 +7026,10 @@ msgstr "Neplatné ID klienta v přijímacím cyklu!"
 msgid "Invalid client_id received!"
 msgstr "Obdrženo neplatné ID klienta!"
 
+#: app/models/user.rb
+msgid "Invalid email '%{email}'"
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr "Neplatná struktura odkazu"
@@ -7488,6 +7515,7 @@ msgid "Load more"
 msgstr "Načíst další"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 #, fuzzy
 #| msgid "Loading failed."
 msgid "Loading content"
@@ -7907,6 +7935,10 @@ msgstr "Minut"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Mobil"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
+msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8507,6 +8539,12 @@ msgstr "Nenalezeny žádné výsledky"
 msgid "No results were found."
 msgstr "Nebyly nalezeny žádné výsledky."
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "No session available."
+msgid "No security information available."
+msgstr "Není k dispozici žádné sezení."
+
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr "Není k dispozici žádné sezení."
@@ -8839,10 +8877,6 @@ msgstr "Dostupné jen pro uživatele ve sdílené organizaci"
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
 msgstr "Jen pro tyto skupiny."
-
-#: app/models/object_manager/attribute.rb
-msgid "Only lowercase letters, numbers, and '_' are allowed"
-msgstr "Povolená jsou pouze malá písmena, čísla a '_'"
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -9362,10 +9396,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "Prosím, zadejte čas, který chcete zaznamenat."
-
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
-msgstr "Zadejte prosím platnou cestu nebo doménu"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #, fuzzy
@@ -10954,6 +10984,7 @@ msgid "Site"
 msgstr "Doména (site)"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "Přeskočit"
 
@@ -11437,6 +11468,7 @@ msgstr "Zkušební zpráva ze Zammadu"
 msgid "Testing"
 msgstr "Testování"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11810,6 +11842,12 @@ msgstr "Objekt nebyl nalezen."
 msgid "The object could not be updated."
 msgstr "Objekt se nepodařilo aktualizovat."
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "The notifcation could not be deleted."
+msgid "The online notifcation could not be marked as seen."
+msgstr "Oznámení se nepodařilo smazat."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr "Tato stránka již není k dispozici"
@@ -11893,6 +11931,12 @@ msgstr "Report se nepodařilo vygenerovat"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr "Požadavek se nepodařilo zpracovat."
+
+#: lib/validations/verify_perform_rules_validator.rb
+#, fuzzy
+#| msgid "The required match value is missing."
+msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
+msgstr "Požadovaná hodnota shody chybí."
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -12350,6 +12394,7 @@ msgid "This host cannot be reached."
 msgstr "Tohoto hostitele se nedaří kontaktovat."
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr "Verze tohoto Zammad systému je %s"
 
@@ -13797,6 +13842,7 @@ msgstr "Ověřuji…"
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr "Verze"
 
@@ -13832,7 +13878,6 @@ msgstr "Prohlédnout z uživatelovy perspektivy"
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "Prohlédnout v Zammadu"
 
@@ -13957,6 +14002,7 @@ msgid "We've sent password reset instructions to your email address."
 msgstr "Byly vým zaskány instrukce pro obnovení / vytvoření hesla na E-mail."
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr "Web"
@@ -14369,6 +14415,35 @@ msgid ""
 msgstr ""
 "Zde můžete vygenerovat osobní přístupový token pro každou aplikaci od které "
 "potřebujete přístup do Zammad API."
+
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
+#, fuzzy
+#| msgid "Handle data privacy tasks."
+msgid "You can no longer see the data privacy task."
+msgstr "Spouštějte úlohy soukromí dat."
+
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
+msgid "You can no longer see the group."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
+msgid "You can no longer see the organization."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
+msgid "You can no longer see the role."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "You can no longer see the ticket."
+msgstr "Uzavřel jste tiket"
+
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
+msgid "You can no longer see the user."
+msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
@@ -14793,6 +14868,12 @@ msgstr "přiřadit tickety"
 msgid "at"
 msgstr "v"
 
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "at least one letter is required"
+msgstr "Je vyžadováno nejméně jedno písmeno"
+
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attached"
 msgstr "přiloženo"
@@ -14800,6 +14881,12 @@ msgstr "přiloženo"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attachment"
 msgstr "příloha"
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Attribute not editable!"
+msgid "attribute is not editable"
+msgstr "Atribut není upravitelný!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -14823,11 +14910,25 @@ msgstr "mezi aktualizacemi řešitele"
 msgid "busy"
 msgstr "zaneprázdněn"
 
+#: app/models/object_manager/attribute.rb
+msgid ""
+"can't be altered after creation (you can delete the attribute and create "
+"another with the desired value)"
+msgstr ""
+
 msgid "can't be blank"
 msgstr "nemůže být prázdný"
 
 msgid "can't be empty"
 msgstr "nemůže být prázdný"
+
+#: app/models/object_manager/attribute.rb
+msgid "can't be used because *_id and *_ids are not allowed"
+msgstr ""
+
+#: app/models/knowledge_base/category.rb
+msgid "cannot be a child of the parent"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -14920,6 +15021,14 @@ msgstr "zákazník"
 msgid "d"
 msgstr "d"
 
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than internal date"
+msgstr ""
+
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than published date"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
 msgstr "den"
@@ -14968,6 +15077,14 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "do not reopen ticket but create new ticket"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow future dates"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow past dates"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
@@ -15109,11 +15226,21 @@ msgstr "h"
 msgid "has already been taken"
 msgstr "je již obsazeno"
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "has an existing DataPrivacyTask queued"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "byl změněn"
+
+#: lib/validations/mention_validator.rb
+#, fuzzy
+#| msgid "Not allowed to access this task."
+msgid "has no agent access to this ticket"
+msgstr "K této úloze není oprávnění přístupu."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -15242,6 +15369,12 @@ msgstr "interní"
 msgid "is"
 msgstr "je"
 
+#: app/models/knowledge_base/has_unique_title.rb
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "is already used"
+msgstr "Tento bot již existuje."
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "je v pracovní době"
@@ -15249,10 +15382,34 @@ msgstr "je v pracovní době"
 msgid "is invalid"
 msgstr "je neplatné"
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is larger than the allowed maximum value of %{max_value}"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "At least one user needs to have admin permissions."
+msgid "is last account with admin permissions"
+msgstr "Nejméně jeden uživatel musí mít oprávnění správce."
+
+#: lib/validations/object_manager/attribute_validator/max_length.rb
+msgid "is longer than the allowed length %{maxlength}"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "není"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "is not a number"
+msgid "is not a User"
+msgstr "není číslo"
+
+#: lib/validations/color_validator.rb
+msgid "is not a color. Only Hex, RGB and HSL colors are supported."
+msgstr ""
 
 msgid "is not a number"
 msgstr "není číslo"
@@ -15268,12 +15425,22 @@ msgstr "není zahrnuto v seznamu"
 msgid "is required"
 msgstr "je povinné"
 
+#: lib/validations/object_manager/attribute_validator/required.rb
+#, fuzzy
+#| msgid "is required"
+msgid "is required but missing"
+msgstr "je povinné"
+
 msgid "is reserved"
 msgstr "je rezervován"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is set"
 msgstr "je nastaveno"
+
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is smaller than the allowed minimum value of %{min_value}"
+msgstr ""
 
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
@@ -15284,6 +15451,10 @@ msgstr "nemá správnou délku (mělo by být %{count} znaků)"
 
 msgid "is the wrong length (should be 1 character)"
 msgstr "nemá správnou délku (měl by být 1 znak)"
+
+#: app/models/user.rb
+msgid "is too long"
+msgstr ""
 
 msgid "is too long (maximum is %{count} characters)"
 msgstr "je příliš dlouhé (maximum je %{count} znaků)"
@@ -15296,6 +15467,14 @@ msgstr "je příliš krátké (minimum je %{count} znaků)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "je příliš krátké (minimum je 1 znak)"
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is undeletable system User with ID 1"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is your current account"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "just now"
@@ -15353,6 +15532,12 @@ msgstr "minuta"
 msgid "minutes"
 msgstr "minut(y)"
 
+#: app/models/knowledge_base.rb
+#, fuzzy
+#| msgid "Please enter valid path or domain"
+msgid "must be a valid path or domain"
+msgstr "Zadejte prosím platnou cestu nebo doménu"
+
 msgid "must be accepted"
 msgstr "musí být přijato"
 
@@ -15386,8 +15571,20 @@ msgstr "musí být liché"
 msgid "must be other than %{count}"
 msgstr "musí být jiné než %{count}"
 
+#: app/models/knowledge_base.rb
+msgid "must begin with a slash (\"/\")"
+msgstr ""
+
 msgid "must exist"
 msgstr "musí existovat"
+
+#: app/models/knowledge_base.rb
+msgid "must not end with a slash (\"/\")"
+msgstr ""
+
+#: app/models/knowledge_base.rb
+msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15461,6 +15658,12 @@ msgstr "oznámení odesláno uživateli '%s'"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "nyní"
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Only lowercase letters, numbers, and '_' are allowed"
+msgid "only lowercase letters, numbers, and '_' are allowed"
+msgstr "Povolená jsou pouze malá písmena, čísla a '_'"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -15658,6 +15861,12 @@ msgstr "přeskočen"
 msgid "sms"
 msgstr "SMS"
 
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Feature not enabled!"
+msgid "spaces are not allowed"
+msgstr "Funkce není povolena!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
@@ -15839,6 +16048,12 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "About"
+#~ msgstr "O systému"
+
+#~ msgid "Can't send spool, session not authenticated"
+#~ msgstr "Paměť nelze odeslat, sezení je neautentizováno"
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"
@@ -16025,11 +16240,6 @@ msgstr "dnešní ∅ čekací doby"
 
 #~ msgid "Tag"
 #~ msgstr "Štítek"
-
-#, fuzzy
-#~| msgid "You have closed a ticket"
-#~ msgid "Could not load the ticket"
-#~ msgstr "Uzavřel jste tiket"
 
 #, fuzzy
 #~| msgid "Accounted Time"

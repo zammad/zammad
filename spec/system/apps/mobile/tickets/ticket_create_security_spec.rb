@@ -17,7 +17,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
   def prepare_phone_ticket
     within_form(form_updater_gql_number: 1) do
       # Step 1.
-      find_input('Title').type(Faker::Name.name_with_middle)
+      find_input('Title').type(Faker::Name.unique.name_with_middle)
       next_step
 
       # Step 2.
@@ -32,7 +32,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
   def prepare_email_ticket(with_body: false)
     within_form(form_updater_gql_number: 1) do
       # Step 1.
-      find_input('Title').type(Faker::Name.name_with_middle)
+      find_input('Title').type(Faker::Name.unique.name_with_middle)
       next_step
 
       # Step 2.

@@ -8,6 +8,15 @@ GIT
       nokogiri
       nori
 
+GIT
+  remote: https://github.com/zammad-deps/omniauth-weibo-oauth2
+  revision: 06803ef97f822ede854322587db8049cc67dcfa6
+  branch: unpin-dependencies
+  specs:
+    omniauth-weibo-oauth2 (0.5.2)
+      omniauth
+      omniauth-oauth2
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -86,7 +95,7 @@ GEM
       zeitwerk (~> 2.3)
     acts_as_list (1.1.0)
       activerecord (>= 4.2)
-    addressable (2.8.1)
+    addressable (2.8.2)
       public_suffix (>= 2.0.2, < 6.0)
     argon2 (2.2.0)
       ffi (~> 1.15)
@@ -107,7 +116,7 @@ GEM
     builder (3.2.4)
     byebug (11.1.3)
     byk (1.1.0)
-    capybara (3.38.0)
+    capybara (3.39.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
@@ -151,7 +160,7 @@ GEM
     diffy (3.4.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    doorkeeper (5.6.5)
+    doorkeeper (5.6.6)
       railties (>= 5)
     dotenv (2.8.1)
     dry-cli (1.0.0)
@@ -193,7 +202,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (3.1.1)
+    faker (3.2.0)
       i18n (>= 1.8.11, < 2)
     faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
@@ -213,7 +222,7 @@ GEM
       activesupport (>= 5.0)
     gmail_xoauth (0.4.2)
       oauth (>= 0.3.6)
-    graphql (2.0.19)
+    graphql (2.0.21)
     graphql-batch (0.5.2)
       graphql (>= 1.10, < 3)
       promise.rb (~> 0.7.2)
@@ -298,7 +307,7 @@ GEM
     net-imap (0.3.4)
       date
       net-protocol
-    net-ldap (0.17.1)
+    net-ldap (0.18.0)
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.1)
@@ -306,7 +315,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.14.2)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     nori (2.6.0)
@@ -323,21 +332,23 @@ GEM
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
       version_gem (~> 1.1)
-    omniauth (1.9.2)
+    omniauth (2.1.1)
       hashie (>= 3.4.6)
-      rack (>= 1.6.2, < 3)
+      rack (>= 2.2.3)
+      rack-protection
     omniauth-facebook (9.0.0)
       omniauth-oauth2 (~> 1.2)
-    omniauth-github (1.4.0)
-      omniauth (~> 1.5)
-      omniauth-oauth2 (>= 1.4.0, < 2.0)
-    omniauth-gitlab (2.0.0)
-      omniauth (~> 1.0)
-      omniauth-oauth2 (~> 1.0)
-    omniauth-google-oauth2 (0.8.0)
+    omniauth-github (2.0.1)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8)
+    omniauth-gitlab (4.1.0)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8.0)
+    omniauth-google-oauth2 (1.1.1)
       jwt (>= 2.0)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.6)
+      oauth2 (~> 2.0.6)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8.0)
     omniauth-linkedin-oauth2 (1.0.0)
       omniauth-oauth2
     omniauth-microsoft-office365 (0.0.8)
@@ -346,28 +357,25 @@ GEM
     omniauth-oauth (1.2.0)
       oauth
       omniauth (>= 1.0, < 3)
-    omniauth-oauth2 (1.7.3)
+    omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
-      omniauth (>= 1.9, < 3)
-    omniauth-rails_csrf_protection (0.1.2)
+      omniauth (~> 2.0)
+    omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
-      omniauth (>= 1.3.1)
-    omniauth-saml (1.10.3)
-      omniauth (~> 1.3, >= 1.3.2)
-      ruby-saml (~> 1.9)
+      omniauth (~> 2.0)
+    omniauth-saml (2.1.0)
+      omniauth (~> 2.0)
+      ruby-saml (~> 1.12)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
-    omniauth-weibo-oauth2 (0.5.2)
-      omniauth (~> 1.5)
-      omniauth-oauth2 (>= 1.4.0)
     openssl (3.1.0)
     overcommit (0.60.0)
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.22.1)
-    parser (3.2.1.1)
+    parser (3.2.2.0)
       ast (~> 2.4.1)
     pg (1.2.3)
     power_assert (2.0.3)
@@ -397,6 +405,8 @@ GEM
     rack (2.2.6.4)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
+    rack-protection (3.0.5)
+      rack
     rack-proxy (0.7.6)
       rack
     rack-test (2.1.0)
@@ -461,30 +471,30 @@ GEM
       rspec-core (> 3.3)
     rspec-support (3.12.0)
     rszr (1.3.0)
-    rubocop (1.48.1)
+    rubocop (1.50.1)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.2.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.26.0, < 2.0)
+      rubocop-ast (>= 1.28.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.27.0)
+    rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
     rubocop-capybara (2.17.1)
       rubocop (~> 1.41)
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (1.0.1)
+    rubocop-graphql (1.1.1)
       rubocop (>= 0.87, < 2)
     rubocop-inflector (0.2.1)
       activesupport
       rubocop
       rubocop-rspec
-    rubocop-performance (1.16.0)
+    rubocop-performance (1.17.1)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.18.0)
@@ -509,7 +519,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (4.8.1)
+    selenium-webdriver (4.8.6)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -550,13 +560,13 @@ GEM
       power_assert
     thor (1.2.1)
     thread_safe (0.3.6)
-    tilt (2.1.0)
-    time (0.2.1)
+    tilt (2.0.11)
+    time (0.2.2)
       date
     timeout (0.3.2)
-    twilio-ruby (5.74.5)
+    twilio-ruby (5.76.0)
       faraday (>= 0.9, < 3.0)
-      jwt (>= 1.5, <= 2.6)
+      jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
     twitter (7.0.0)
       addressable (~> 2.3)
@@ -571,7 +581,7 @@ GEM
       simple_oauth (~> 0.3.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2022.7)
+    tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
     unf (0.1.4)
       unf_ext
@@ -580,7 +590,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.12.0)
+    uri (0.12.1)
     vcr (6.1.0)
     version_gem (1.1.2)
     viewpoint (1.1.1)
@@ -603,11 +613,12 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    writeexcel (1.0.5)
+    write_xlsx (1.10.2)
+      rubyzip (>= 1.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.7)
-    zendesk_api (2.0.0)
+    zendesk_api (2.0.1)
       faraday (> 2.0.0)
       faraday-multipart
       hashie (>= 3.5.2, < 6.0.0)
@@ -685,7 +696,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth-saml
   omniauth-twitter
-  omniauth-weibo-oauth2
+  omniauth-weibo-oauth2!
   openssl
   overcommit
   pg (~> 1.2.0)
@@ -724,15 +735,17 @@ DEPENDENCIES
   terser
   test-unit
   thor
+  time (>= 0.2.2)
   twilio-ruby
   twitter
   tzinfo-data
   unicorn
+  uri (>= 0.12.1)
   vcr
   viewpoint
   vite_rails
   webmock
-  writeexcel
+  write_xlsx
   zendesk_api
 
 RUBY VERSION

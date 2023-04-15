@@ -14,7 +14,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
 import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { useSessionStore } from '@shared/stores/session'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
 import SearchResults from '../components/SearchResults.vue'
 import { useSearchPlugins } from '../plugins'
@@ -32,7 +31,6 @@ const route = useRoute()
 const router = useRouter()
 
 const searchPlugins = useSearchPlugins()
-const { hasPermission } = useSessionStore()
 
 const search = ref(String(route.query.search || ''))
 // we need a separate debounced value to not trigger query
@@ -53,7 +51,6 @@ const searchQuery = new QueryHandler(
     () => ({
       search: filter.value,
       onlyIn: model.value,
-      isAgent: hasPermission(['ticket.agent']),
     }),
     () => ({ enabled: canSearch.value }),
   ),
@@ -175,6 +172,11 @@ const { headerElement, stickyStyles } = useStickyHeader([
   loading,
   () => !!props.type,
 ])
+
+const showLoader = computed(() => {
+  if (!loading.value) return false
+  return !props.type || !found[props.type]
+})
 </script>
 
 <script lang="ts">
@@ -242,7 +244,10 @@ export default {
       </div>
     </header>
     <div :style="stickyStyles.body">
-      <div v-if="loading" class="flex h-14 w-full items-center justify-center">
+      <div
+        v-if="showLoader"
+        class="flex h-14 w-full items-center justify-center"
+      >
         <CommonIcon name="mobile-loading" animation="spin" />
       </div>
       <div
@@ -250,7 +255,7 @@ export default {
         id="search-results"
         aria-live="polite"
         role="tabpanel"
-        :aria-busy="loading"
+        :aria-busy="showLoader"
       >
         <SearchResults :data="found[type]" :type="type" />
       </div>

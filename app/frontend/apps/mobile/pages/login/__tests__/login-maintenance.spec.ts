@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
 import { useApplicationStore } from '@shared/stores/application'
 import { visitView } from '@tests/support/components/visitView'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
@@ -11,13 +12,13 @@ import {
 import { ConfigUpdatesDocument } from '@shared/graphql/subscriptions/configUpdates.api'
 import { LogoutDocument } from '@shared/graphql/mutations/logout.api'
 import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationConfig.api'
-import { waitFor } from '@testing-library/vue'
 import { useAuthenticationStore } from '@shared/stores/authentication'
 import { mockPermissions } from '@tests/support/mock-permissions'
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
 } from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
+import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 
 vi.mock('@shared/server/apollo/client', () => {
   return {
@@ -28,6 +29,7 @@ vi.mock('@shared/server/apollo/client', () => {
 })
 
 beforeEach(() => {
+  mockTicketOverviews()
   mockPublicLinks([])
   mockPublicLinksSubscription()
 })

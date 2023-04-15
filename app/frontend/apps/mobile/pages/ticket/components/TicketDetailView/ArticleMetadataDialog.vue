@@ -117,17 +117,14 @@ const encryptionMessage = computed(() => {
         v-if="sign || encryptionMessage"
         :label="__('Security')"
       >
-        <div class="flex gap-1">
-          <span v-if="encryptionMessage" class="inline-flex items-center gap-1">
-            <CommonIcon name="mobile-lock" size="tiny" />
+        <div class="flex flex-col gap-1">
+          <span v-if="encryptionMessage" class="break-all">
+            <CommonIcon class="inline" name="mobile-lock" size="tiny" />
             {{ encryptionMessage }}
           </span>
-          <span
-            v-if="sign"
-            class="inline-flex items-center gap-1"
-            :class="{ 'text-orange': !sign.success }"
-          >
+          <span v-if="sign" :class="{ 'text-orange': !sign.success }">
             <CommonIcon
+              class="inline"
               :name="sign.success ? 'mobile-signed' : 'mobile-not-signed'"
               size="tiny"
             />

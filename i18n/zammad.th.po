@@ -559,6 +559,26 @@ msgstr "%s% อยู่ระหว่างดำเนินการ"
 msgid "%s% have been reopened"
 msgstr "%s% ถูกเปิดขึ้นอีกครั้ง"
 
+#: app/models/concerns/has_group_relation_definition.rb
+msgid "%{model} can have full or granular access to group"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Bot already exists!"
+msgid "%{name} already exists"
+msgstr "มีบอทอยู่แล้ว!"
+
+#: app/models/object_manager/attribute.rb
+msgid "%{name} is a reserved word"
+msgstr ""
+
+#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue
+#, fuzzy
+#| msgid "Total: %s"
+msgid "(state: %s)"
+msgstr "รวม: %s"
+
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #, fuzzy
 #| msgid ""
@@ -842,10 +862,6 @@ msgstr "เข้าถึงโทเค็น API"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco
 msgid "API token"
 msgstr "โทเค็น API"
-
-#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
-msgid "About"
-msgstr "เกี่ยวกับ"
 
 #: app/assets/javascripts/app/controllers/_channel/form.coffee
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -1654,10 +1670,6 @@ msgid ""
 "required."
 msgstr "ต้องมีตัวระบุอย่างน้อยหนึ่งตัว (ชื่อ นามสกุล หมายเลขโทรศัพท์หรืออีเมล) สำหรับผู้ใช้."
 
-#: app/models/object_manager/attribute.rb
-msgid "At least one letter is required"
-msgstr "ต้องมีตัวอักษรอย่างน้อยหนึ่งตัว"
-
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
 msgstr "ต้องมีกฎการจับคู่อย่างน้อยหนึ่งกฎ แต่ไม่มีการระบุ"
@@ -1730,10 +1742,6 @@ msgstr "จำเป็นต้องมีแอตทริบิวต์ '%
 #: app/controllers/users_controller.rb
 msgid "Attribute 'email' required!"
 msgstr "ต้องการแอตทริบิวต์ 'อีเมล'!"
-
-#: app/models/object_manager/attribute.rb
-msgid "Attribute not editable!"
-msgstr "แก้ไขแอตทริบิวต์ไม่ได้!"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -2217,10 +2225,6 @@ msgstr "ลบไม่ได้ วัตถุมีการอ้างอ�
 msgid "Can't find User for Token"
 msgstr "ไม่พบผู้ใช้สำหรับโทเค็น"
 
-#: lib/sessions/event/spool.rb
-msgid "Can't send spool, session not authenticated"
-msgstr "ส่ง spool ไม่ได้ ประวัติการเข้าสู่ระบบไม่ผ่านการตรวจสอบสิทธิ์"
-
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid ""
@@ -2276,6 +2280,10 @@ msgstr ""
 #: app/policies/ticket_policy.rb
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "ไม่สามารถติดตามผล ticket ที่ปิดได้ โปรดสร้าง ticket ใหม่"
+
+#: app/models/sla.rb
+msgid "Cannot have both response time and update time."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 #, fuzzy
@@ -2946,8 +2954,18 @@ msgstr "ดำเนินการต่อ"
 msgid "Continue session"
 msgstr "เข้าสู่ระบบต่อไป"
 
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-msgid "Continue to desktop app"
+#, fuzzy
+#| msgid "Continue to desktop app"
+msgid "Continue to desktop"
+msgstr "ไปที่แอปเดสก์ท็อป"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/views/login.jst.eco
+#, fuzzy
+#| msgid "Continue to desktop app"
+msgid "Continue to mobile"
 msgstr "ไปที่แอปเดสก์ท็อป"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
@@ -4357,6 +4375,7 @@ msgid "Deletion failed."
 msgstr "การลบล้มเหลว"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Delivery failed:"
@@ -4821,6 +4840,10 @@ msgstr "การแจ้งเตือนทางอีเมล"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "Email Outbound"
 msgstr "อีเมลขาออก"
+
+#: app/models/user.rb
+msgid "Email address '%{email}' is already used for another user."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 msgid "Email could not be verified. Please contact your administrator."
@@ -6815,6 +6838,10 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
+#: app/models/user.rb
+msgid "Invalid email '%{email}'"
+msgstr ""
+
 #: app/controllers/tickets_controller.rb
 msgid "Invalid link structure"
 msgstr ""
@@ -7290,6 +7317,7 @@ msgid "Load more"
 msgstr "แสดงเพิ่ม"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
+#: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
 msgid "Loading content"
 msgstr ""
 
@@ -7701,6 +7729,10 @@ msgstr "นาที"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "มือถือ"
+
+#: app/assets/javascripts/app/controllers/mobile.coffee
+msgid "Mobile frontend is disabled."
+msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8283,6 +8315,12 @@ msgstr "ไม่พบรายการ"
 msgid "No results were found."
 msgstr "ไม่พบผลลัพธ์"
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
+#, fuzzy
+#| msgid "No translation for this locale available"
+msgid "No security information available."
+msgstr "ไม่มีคำแปลสำหรับสถานที่นี้"
+
 #: lib/sessions/event/chat_session_start.rb lib/sessions/event/chat_transfer.rb
 msgid "No session available."
 msgstr ""
@@ -8615,10 +8653,6 @@ msgstr "ใช้ได้เฉพาะกับผู้ใช้ที่ม
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Only for these groups."
 msgstr "สำหรับกลุ่มเหล่านี้เท่านั้น"
-
-#: app/models/object_manager/attribute.rb
-msgid "Only lowercase letters, numbers, and '_' are allowed"
-msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco
 msgid ""
@@ -9141,10 +9175,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
 msgstr "โปรดป้อนเวลาที่คุณต้องการบันทึก"
-
-#: app/models/knowledge_base.rb
-msgid "Please enter valid path or domain"
-msgstr "โปรดป้อนเส้นทางหรือโดเมนที่ถูกต้อง"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #, fuzzy
@@ -10695,6 +10725,7 @@ msgid "Site"
 msgstr "ไซต์"
 
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco
 msgid "Skip"
 msgstr "ข้าม"
 
@@ -11165,6 +11196,7 @@ msgstr ""
 msgid "Testing"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/models/signature.coffee
 #: app/assets/javascripts/app/models/ticket_article.coffee
@@ -11539,6 +11571,12 @@ msgstr ""
 msgid "The object could not be updated."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The online notifcation could not be marked as seen."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr ""
@@ -11624,6 +11662,12 @@ msgstr "ไม่สามารถสร้างรายงานได้"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "The request could not be processed."
 msgstr ""
+
+#: lib/validations/verify_perform_rules_validator.rb
+#, fuzzy
+#| msgid "The required match value is missing."
+msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
+msgstr "ไม่มีค่าการจับคู่ที่จำเป็น"
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -12081,6 +12125,7 @@ msgid "This host cannot be reached."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "This is Zammad version %s"
 msgstr "Zammad เวอร์ชั่น %s"
 
@@ -13433,6 +13478,7 @@ msgstr "กำลังยืนยัน…"
 #: app/assets/javascripts/app/controllers/version.coffee
 #: app/assets/javascripts/app/views/package.jst.eco
 #: app/assets/javascripts/app/views/version.jst.eco
+#: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Version"
 msgstr "เวอร์ชั่น"
 
@@ -13468,7 +13514,6 @@ msgstr ""
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 #: app/views/mailer/ticket_update_merged_into/fr.html.erb
 #: app/views/mailer/ticket_update_merged_into/ru.html.erb
-#: app/views/mailer/ticket_update_received_merge/fr.html.erb
 msgid "View this in Zammad"
 msgstr "ดูสิ่งนี้ใน Zammad"
 
@@ -13591,6 +13636,7 @@ msgid "We've sent password reset instructions to your email address."
 msgstr "เราได้ส่งคำแนะนำในการรีเซ็ตรหัสผ่านไปยังที่อยู่อีเมลของคุณแล้ว"
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts
 #: db/seeds/object_manager_attributes.rb
 msgid "Web"
 msgstr "เว็บ"
@@ -13986,6 +14032,35 @@ msgid ""
 "needs access to the Zammad API."
 msgstr ""
 
+#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
+#, fuzzy
+#| msgid "Handle data privacy tasks."
+msgid "You can no longer see the data privacy task."
+msgstr "จัดการงานความเป็นส่วนตัวของข้อมูล"
+
+#: app/frontend/shared/components/ActivityMessage/builders/group.ts
+msgid "You can no longer see the group."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/organization.ts
+msgid "You can no longer see the organization."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/role.ts
+msgid "You can no longer see the role."
+msgstr ""
+
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
+#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "You can no longer see the ticket."
+msgstr "ปิด ticket แล้ว"
+
+#: app/frontend/shared/components/ActivityMessage/builders/user.ts
+msgid "You can no longer see the user."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -14378,6 +14453,12 @@ msgstr "กำหนด tickets"
 msgid "at"
 msgstr "ที่"
 
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "At least one letter is required"
+msgid "at least one letter is required"
+msgstr "ต้องมีตัวอักษรอย่างน้อยหนึ่งตัว"
+
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attached"
 msgstr "ติดใหม่"
@@ -14385,6 +14466,12 @@ msgstr "ติดใหม่"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "attachment"
 msgstr "เอกสารแนบ"
+
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Attribute not editable!"
+msgid "attribute is not editable"
+msgstr "แก้ไขแอตทริบิวต์ไม่ได้!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee
 msgid "auto select"
@@ -14408,10 +14495,24 @@ msgstr "ระหว่างการปรับปรุงเจ้าหน
 msgid "busy"
 msgstr "ไม่ว่าง"
 
+#: app/models/object_manager/attribute.rb
+msgid ""
+"can't be altered after creation (you can delete the attribute and create "
+"another with the desired value)"
+msgstr ""
+
 msgid "can't be blank"
 msgstr ""
 
 msgid "can't be empty"
+msgstr ""
+
+#: app/models/object_manager/attribute.rb
+msgid "can't be used because *_id and *_ids are not allowed"
+msgstr ""
+
+#: app/models/knowledge_base/category.rb
+msgid "cannot be a child of the parent"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -14505,6 +14606,14 @@ msgstr "ลูกค้า"
 msgid "d"
 msgstr "d"
 
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than internal date"
+msgstr ""
+
+#: app/models/concerns/can_be_published.rb
+msgid "date must be no earlier than published date"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "day"
 msgstr "วัน"
@@ -14556,6 +14665,14 @@ msgstr ""
 #| msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgid "do not reopen ticket but create new ticket"
 msgstr "ไม่สามารถติดตามผล ticket ที่ปิดได้ โปรดสร้าง ticket ใหม่"
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow future dates"
+msgstr ""
+
+#: lib/validations/object_manager/attribute_validator/future_past.rb
+msgid "does not allow past dates"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
@@ -14698,11 +14815,19 @@ msgstr "ซ"
 msgid "has already been taken"
 msgstr ""
 
+#: lib/validations/data_privacy_task_validator.rb
+msgid "has an existing DataPrivacyTask queued"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "has changed"
 msgstr "มีการเปลี่ยนแปลง"
+
+#: lib/validations/mention_validator.rb
+msgid "has no agent access to this ticket"
+msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -14829,6 +14954,12 @@ msgstr "ภายใน"
 msgid "is"
 msgstr "เท่ากับ"
 
+#: app/models/knowledge_base/has_unique_title.rb
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "is already used"
+msgstr "รายการนี้อยู่แล้ว!."
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 msgid "is in working time"
 msgstr "อยู่ในเวลาทำงาน"
@@ -14838,10 +14969,34 @@ msgstr "อยู่ในเวลาทำงาน"
 msgid "is invalid"
 msgstr "กลุ่มไม่ถูกต้อง!"
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is larger than the allowed maximum value of %{max_value}"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "At least one user needs to have admin permissions."
+msgid "is last account with admin permissions"
+msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
+
+#: lib/validations/object_manager/attribute_validator/max_length.rb
+msgid "is longer than the allowed length %{maxlength}"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "is not"
 msgstr "ไม่เท่ากับ"
+
+#: lib/validations/data_privacy_task_validator.rb
+#, fuzzy
+#| msgid "Min. size of number"
+msgid "is not a User"
+msgstr "ต่ำสุด. ขนาดของตัวเลข"
+
+#: lib/validations/color_validator.rb
+msgid "is not a color. Only Hex, RGB and HSL colors are supported."
+msgstr ""
 
 #, fuzzy
 #| msgid "Min. size of number"
@@ -14861,6 +15016,12 @@ msgstr "ไม่ได้อยู่ในเวลาทำงาน"
 msgid "is required"
 msgstr "%s จำเป็น"
 
+#: lib/validations/object_manager/attribute_validator/required.rb
+#, fuzzy
+#| msgid "is required"
+msgid "is required but missing"
+msgstr "%s จำเป็น"
+
 #, fuzzy
 #| msgid "is required"
 msgid "is reserved"
@@ -14870,6 +15031,10 @@ msgstr "%s จำเป็น"
 msgid "is set"
 msgstr "ถูกตั้งค่า"
 
+#: lib/validations/object_manager/attribute_validator/min_max.rb
+msgid "is smaller than the allowed minimum value of %{min_value}"
+msgstr ""
+
 #: app/assets/javascripts/app/views/translation/todo.jst.eco
 msgid "is the same"
 msgstr "เหมือนกัน"
@@ -14878,6 +15043,10 @@ msgid "is the wrong length (should be %{count} characters)"
 msgstr ""
 
 msgid "is the wrong length (should be 1 character)"
+msgstr ""
+
+#: app/models/user.rb
+msgid "is too long"
 msgstr ""
 
 msgid "is too long (maximum is %{count} characters)"
@@ -14890,6 +15059,14 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is undeletable system User with ID 1"
+msgstr ""
+
+#: lib/validations/data_privacy_task_validator.rb
+msgid "is your current account"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -14952,6 +15129,12 @@ msgstr "นาที"
 msgid "minutes"
 msgstr "นาที"
 
+#: app/models/knowledge_base.rb
+#, fuzzy
+#| msgid "Please enter valid path or domain"
+msgid "must be a valid path or domain"
+msgstr "โปรดป้อนเส้นทางหรือโดเมนที่ถูกต้อง"
+
 msgid "must be accepted"
 msgstr ""
 
@@ -14985,10 +15168,22 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
+#: app/models/knowledge_base.rb
+msgid "must begin with a slash (\"/\")"
+msgstr ""
+
 #, fuzzy
 #| msgid "does not exist"
 msgid "must exist"
 msgstr "ไม่มีอยู่"
+
+#: app/models/knowledge_base.rb
+msgid "must not end with a slash (\"/\")"
+msgstr ""
+
+#: app/models/knowledge_base.rb
+msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -15062,6 +15257,10 @@ msgstr "ส่งการแจ้งเตือนไปที่ '%s'"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "ขณะนี้"
+
+#: app/models/object_manager/attribute.rb
+msgid "only lowercase letters, numbers, and '_' are allowed"
+msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue
 #: db/seeds/ticket_state_types.rb db/seeds/ticket_states.rb
@@ -15264,6 +15463,12 @@ msgstr "ข้าม"
 msgid "sms"
 msgstr "sms"
 
+#: app/models/object_manager/attribute.rb
+#, fuzzy
+#| msgid "Feature not enabled!"
+msgid "spaces are not allowed"
+msgstr "ไม่ได้เปิดใช้งานคุณสมบัติ!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
@@ -15450,6 +15655,12 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "About"
+#~ msgstr "เกี่ยวกับ"
+
+#~ msgid "Can't send spool, session not authenticated"
+#~ msgstr "ส่ง spool ไม่ได้ ประวัติการเข้าสู่ระบบไม่ผ่านการตรวจสอบสิทธิ์"
 
 #, fuzzy
 #~| msgid "Create a Test Ticket"
@@ -15648,11 +15859,6 @@ msgstr "∅ รอเวลาวันนี้"
 #~ msgstr "คัดลอกไปยังคลิปบอร์ด: Ctrl+C, Enter"
 
 #, fuzzy
-#~| msgid "You have closed a ticket"
-#~ msgid "Could not load the ticket"
-#~ msgstr "ปิด ticket แล้ว"
-
-#, fuzzy
 #~| msgid "Accounted Time"
 #~ msgid "Accounted time"
 #~ msgstr "เวลาบัญชี"
@@ -15665,9 +15871,6 @@ msgstr "∅ รอเวลาวันนี้"
 
 #~ msgid "to"
 #~ msgstr "ถึง"
-
-#~ msgid "Bot already exists!"
-#~ msgstr "มีบอทอยู่แล้ว!"
 
 #~ msgid "Cannot generate report"
 #~ msgstr "ไม่สามารถสร้างรายงาน"

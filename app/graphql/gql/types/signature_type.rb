@@ -21,7 +21,7 @@ module Gql::Types
         objects:  { user: context.current_user, ticket: ticket },
         template: @object.body,
         escape:   false
-      ).render
+      ).render(debug_errors: false)
     end
   end
 end

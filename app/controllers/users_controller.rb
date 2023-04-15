@@ -1006,23 +1006,26 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       raise Exceptions::UnprocessableEntity, __("The required parameter 'signup' is missing.")
     end
 
+    # only allow fixed fields
+    # TODO: https://github.com/zammad/zammad/issues/3295
+    new_params = clean_user_params.slice(:firstname, :lastname, :email, :password)
+
     # check if user already exists
-    if clean_user_params[:email].blank?
+    if new_params[:email].blank?
       raise Exceptions::UnprocessableEntity, __('Attribute \'email\' required!')
     end
 
-    email_taken_by = User.find_by email: clean_user_params[:email].downcase.strip
+    email_taken_by = User.find_by email: new_params[:email].downcase.strip
 
-    result = PasswordPolicy.new(clean_user_params[:password])
+    result = PasswordPolicy.new(new_params[:password])
     if !result.valid?
       render json: { error: result.error }, status: :unprocessable_entity
       return
     end
 
-    user = User.new(clean_user_params)
-    user.associations_from_param(params)
-    user.role_ids      = Role.signup_role_ids
-    user.source        = 'signup'
+    user = User.new(new_params)
+    user.role_ids = Role.signup_role_ids
+    user.source = 'signup'
 
     if email_taken_by # show fake OK response to avoid leaking that email is already in use
       user.skip_ensure_uniq_email = true

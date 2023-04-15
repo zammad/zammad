@@ -450,6 +450,100 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             expect(object.reload.condition).to eq(param_condition)
           end
         end
+
+        context 'with pre-conditions' do
+          let(:condition) do
+            {
+              'operator'   => 'OR',
+              'conditions' => [
+                {
+                  'name'          => 'ticket.organization_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'current_user.organization_id',
+                  'value'         => [],
+                },
+                {
+                  'name'          => 'ticket.owner_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'not_set',
+                  'value'         => [],
+                },
+              ],
+            }
+          end
+
+          it 'saves changes made to pre-condition options (#4532)' do
+            scroll_into_view('.ticket_selector')
+
+            within '.ticket_selector' do
+              check_expert_mode(true)
+              check_subclause_selector(1, 'Match any (OR)')
+              check_condition(2, 'Organization', 'is', pre_condition: 'current user organization')
+              check_condition(3, 'Owner', 'is', pre_condition: 'not set (not defined)')
+
+              set_condition(3, nil, nil, pre_condition: 'current user')
+            end
+
+            click '.js-submit'
+            await_empty_ajax_queue
+
+            param_condition = {
+              'operator'   => 'OR',
+              'conditions' => [
+                {
+                  'name'          => 'ticket.organization_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'current_user.organization_id',
+                  'value'         => [],
+                },
+                {
+                  'name'          => 'ticket.owner_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'current_user.id',
+                  'value'         => [],
+                },
+              ],
+            }
+
+            expect(object.reload.condition).to eq(param_condition)
+
+            within ".table-#{object_name} .js-tableBody" do
+              find("tr[data-id='#{object.id}'] td.table-draggable").click
+            end
+
+            modal_ready
+            scroll_into_view('.ticket_selector')
+
+            within '.ticket_selector' do
+              check_condition(3, 'Owner', 'is', pre_condition: 'current user')
+
+              set_condition(2, nil, nil, pre_condition: 'not set (not defined)')
+            end
+
+            click '.js-submit'
+            await_empty_ajax_queue
+
+            param_condition = {
+              'operator'   => 'OR',
+              'conditions' => [
+                {
+                  'name'          => 'ticket.organization_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'not_set',
+                  'value'         => [],
+                },
+                {
+                  'name'          => 'ticket.owner_id',
+                  'operator'      => 'is',
+                  'pre_condition' => 'current_user.id',
+                  'value'         => [],
+                },
+              ],
+            }
+
+            expect(object.reload.condition).to eq(param_condition)
+          end
+        end
       end
 
       context 'without expert conditions' do
@@ -726,8 +820,8 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
   end
 
   def set_condition(row_number, attribute, operator, pre_condition: nil, value: nil, value_input: nil, value_token_input: nil)
-    set_attribute_selector(row_number, attribute)
-    set_operator_selector(row_number, operator)
+    set_attribute_selector(row_number, attribute) if attribute.present?
+    set_operator_selector(row_number, operator) if operator.present?
 
     if !pre_condition.nil?
       set_precondition_selector(row_number, pre_condition)

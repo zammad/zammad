@@ -8,7 +8,7 @@ import { closeDialog } from '@shared/composables/useDialog'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
 import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
+import { useLocaleStore } from '@shared/stores/locale'
 import useSelectOptions from '../../composables/useSelectOptions'
 import type { TreeSelectContext } from './types'
 import { FlatSelectOption } from './types'
@@ -29,6 +29,8 @@ const emit = defineEmits<{
   (e: 'push', option: FlatSelectOption): void
   (e: 'pop'): void
 }>()
+
+const locale = useLocaleStore()
 
 const currentParent = computed(
   () => props.currentPath[props.currentPath.length - 1] ?? null,
@@ -111,7 +113,7 @@ const filteredOptions = computed(() => {
   // Otherwise, search across options which are children of the current parent.
   if (currentParent.value)
     options = props.sortedOptions.filter((option) =>
-      (option as FlatSelectOption).parents.includes(currentParent.value?.value),
+      option.parents.includes(currentParent.value?.value),
     )
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
@@ -128,6 +130,7 @@ const filteredOptions = computed(() => {
 })
 
 const select = (option: FlatSelectOption) => {
+  if (props.context.disabled) return
   selectOption(option)
   if (!props.context.multiple) close()
 }
@@ -135,17 +138,13 @@ const select = (option: FlatSelectOption) => {
 const currentOptions = computed(() => {
   // In case we are not currently filtering for a parent, return only top-level options.
   if (!currentParent.value)
-    return props.sortedOptions.filter(
-      (option) => !(option as FlatSelectOption).parents?.length,
-    )
+    return props.sortedOptions.filter((option) => !option.parents?.length)
 
   // Otherwise, return all options which are children of the current parent.
   return props.sortedOptions.filter(
     (option) =>
-      (option as FlatSelectOption).parents.length &&
-      (option as FlatSelectOption).parents[
-        (option as FlatSelectOption).parents.length - 1
-      ] === currentParent.value?.value,
+      option.parents.length &&
+      option.parents[option.parents.length - 1] === currentParent.value?.value,
   )
 })
 
@@ -154,12 +153,24 @@ const goToPreviousPage = () => {
 }
 
 const goToNextPage = (option: FlatSelectOption) => {
+  if (props.context.disabled) return
   nextPageCallback(option)
+}
+
+const selectAndClose = (option: FlatSelectOption) => {
+  if (props.context.disabled) return
+  select(option)
+  // "Enter" always closes the dialog after selection: https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
+  close()
 }
 
 onMounted(() => {
   filterInput.value?.focus()
 })
+
+const getCurrentIndex = (option: FlatSelectOption) => {
+  return props.flatOptions.findIndex((o) => o.value === option.value)
+}
 </script>
 
 <template>
@@ -183,11 +194,18 @@ onMounted(() => {
       @click="goToPreviousPage()"
       @keypress.space.prevent="goToPreviousPage()"
     >
-      <CommonIcon size="base" class="mr-3" name="mobile-chevron-left" />
+      <CommonIcon
+        size="base"
+        class="ltr:mr-3 rtl:ml-3"
+        :name="`mobile-chevron-${
+          locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+        }`"
+      />
       <span class="grow font-semibold text-white/80">
         {{ currentParent.label || currentParent.value }}
       </span>
     </div>
+    <!-- https://www.w3.org/WAI/ARIA/apg/patterns/listbox/ -->
     <div
       v-if="filter ? filteredOptions.length : currentOptions.length"
       ref="dialog"
@@ -201,30 +219,45 @@ onMounted(() => {
     >
       <div
         v-for="(option, index) in filter ? filteredOptions : currentOptions"
+        :id="`${name}-${option.value}`"
         :key="String(option.value)"
         :class="{
           'px-6': !context.noFiltering,
           'pointer-events-none': option.disabled,
         }"
-        :tabindex="option.disabled ? '-1' : '0'"
-        :aria-selected="isCurrentValue(option.value)"
         class="relative flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
+        :tabindex="option.disabled ? '-1' : '0'"
         role="option"
+        :aria-selected="
+          option.disabled ? undefined : isCurrentValue(option.value)
+        "
+        :aria-setsize="flatOptions.length"
+        :aria-posinset="getCurrentIndex(option) + 1"
         :data-value="option.value"
-        @click="select(option as FlatSelectOption)"
-        @keypress.space.prevent="select(option as FlatSelectOption)"
+        :aria-haspopup="option.hasChildren && !filter ? 'menu' : 'false'"
+        :aria-expanded="option.hasChildren && !filter ? 'false' : undefined"
+        :aria-disabled="option.disabled ? 'true' : undefined"
+        @click="select(option)"
+        @keyup.enter.prevent="selectAndClose(option)"
+        @keypress.space.prevent="select(option)"
       >
         <div
           v-if="index !== 0"
           :class="{
-            'left-4': !context.multiple && !option.icon && !(option as FlatSelectOption).status,
-            'left-[50px]': !context.multiple && option.icon && !(option as FlatSelectOption).status,
-            'left-[58px]': !context.multiple && !option.icon && (option as FlatSelectOption).status,
-            'left-[60px]': context.multiple && !option.icon && !(option as FlatSelectOption).status,
-            'left-[88px]': context.multiple && option.icon && !(option as FlatSelectOption).status,
-            'left-[94px]': context.multiple && !option.icon && (option as FlatSelectOption).status,
+            'ltr:left-4 rtl:right-4':
+              !context.multiple && !option.icon && !option.status,
+            'ltr:left-[50px] rtl:right-[50px]':
+              !context.multiple && option.icon && !option.status,
+            'ltr:left-[58px] rtl:right-[58px]':
+              !context.multiple && !option.icon && option.status,
+            'ltr:left-[60px] rtl:right-[60px]':
+              context.multiple && !option.icon && !option.status,
+            'ltr:left-[88px] rtl:right-[88px]':
+              context.multiple && option.icon && !option.status,
+            'ltr:left-[94px] rtl:right-[94px]':
+              context.multiple && !option.icon && option.status,
           }"
-          class="absolute right-4 top-0 h-0 border-t border-white/10"
+          class="absolute top-0 h-0 border-t border-white/10 ltr:right-4 rtl:left-4"
         />
         <CommonIcon
           v-if="context.multiple"
@@ -238,16 +271,17 @@ onMounted(() => {
               : 'mobile-check-box-no'
           "
           size="base"
-          class="mr-3 text-white/50"
+          decorative
+          class="text-white/50 ltr:mr-3 rtl:ml-3"
         />
         <CommonTicketStateIndicator
-          v-if="(option as FlatSelectOption).status"
-          :color-code="(option as FlatSelectOption).status as EnumTicketStateColorCode"
+          v-if="option.status"
+          :color-code="option.status"
           :label="option.label || String(option.value)"
           :class="{
             'opacity-30': option.disabled,
           }"
-          class="mr-[11px]"
+          class="ltr:mr-[11px] rtl:ml-[11px]"
         />
         <CommonIcon
           v-else-if="option.icon"
@@ -257,7 +291,7 @@ onMounted(() => {
             'opacity-30': option.disabled,
           }"
           size="small"
-          class="mr-[11px] text-white/80"
+          class="text-white/80 ltr:mr-[11px] rtl:ml-[11px]"
         />
         <span
           :class="{
@@ -285,18 +319,22 @@ onMounted(() => {
           v-if="!context.multiple && isCurrentValue(option.value)"
           :class="{
             'opacity-30': option.disabled,
-            'mr-3': (option as FlatSelectOption).hasChildren,
+            'ltr:mr-3 rtl:ml-3': option.hasChildren,
           }"
           size="tiny"
+          decorative
           name="mobile-check"
         />
         <CommonIcon
-          v-if="(option as FlatSelectOption).hasChildren && !filter"
+          v-if="option.hasChildren && !filter"
           class="pointer-events-auto"
           size="base"
-          name="mobile-chevron-right"
+          :name="`mobile-chevron-${
+            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
+          }`"
           role="link"
-          @click.stop="goToNextPage(option as FlatSelectOption)"
+          :label="$t('Has submenu')"
+          @click.stop="goToNextPage(option)"
         />
       </div>
     </div>

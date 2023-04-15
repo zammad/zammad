@@ -19,7 +19,7 @@ class Zammad::TranslationCatalog::Extractor::ViewTemplates < Zammad::Translation
 
   def find_files
     files = []
-    %w[mailer slack].each do |dir|
+    %w[mailer messaging].each do |dir|
       files += Dir.glob("#{base_path}/app/views/#{dir}/*/en.*.erb")
     end
     files

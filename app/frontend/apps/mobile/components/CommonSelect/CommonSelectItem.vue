@@ -18,6 +18,9 @@ const emit = defineEmits<{
 }>()
 
 const select = (option: SelectOption) => {
+  if (props.option.disabled) {
+    return
+  }
   emit('select', option)
 }
 
@@ -53,7 +56,7 @@ const label = computed(() => {
       size="base"
       decorative
       :name="selected ? 'mobile-check-box-yes' : 'mobile-check-box-no'"
-      class="mr-3 text-white/50"
+      class="text-white/50 ltr:mr-3 rtl:ml-3"
     />
     <CommonTicketStateIndicator
       v-if="option.status"
@@ -62,7 +65,7 @@ const label = computed(() => {
       :class="{
         'opacity-30': option.disabled,
       }"
-      class="mr-[11px]"
+      class="ltr:mr-[11px] rtl:ml-[11px]"
     />
     <CommonIcon
       v-else-if="option.icon"
@@ -72,7 +75,8 @@ const label = computed(() => {
         '!text-white': selected,
         'opacity-30': option.disabled,
       }"
-      class="mr-[11px] text-white/80"
+      decorative
+      class="text-white/80 ltr:mr-[11px] rtl:ml-[11px]"
     />
     <span
       :class="{

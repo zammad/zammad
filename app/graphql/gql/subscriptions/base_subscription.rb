@@ -30,13 +30,14 @@ module Gql::Subscriptions
 
     # Shortcut method to trigger a subscription. Just call:
     #
-    #   Gql::Subscriptions::MyScubscription.trigger(
+    #   Gql::Subscriptions::MySubscription.trigger(
     #     self,                             # object to pass as payload,
     #     arguments: { 'filter' => arg },   # custom arguments
     #   )
     def self.trigger(object, arguments: {}, scope: nil)
 
-      return if Setting.get('import_mode')
+      return if Setting.get('import_mode') || Zammad::SafeMode.enabled?
+      return if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
 
       ::Gql::ZammadSchema.subscriptions.trigger(
         graphql_field_name,

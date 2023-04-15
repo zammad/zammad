@@ -10,7 +10,7 @@ const { newTicketArticlePresent, showArticleReplyDialog } =
 <template>
   <button
     type="button"
-    class="Reply fixed bottom-0 flex w-screen items-center justify-center bg-gray-600 pt-3"
+    class="fixed bottom-0 flex w-screen items-center justify-center bg-gray-600 pt-3 pb-safe-4"
     @click="showArticleReplyDialog"
   >
     <template v-if="newTicketArticlePresent">
@@ -21,9 +21,3 @@ const { newTicketArticlePresent, showArticleReplyDialog } =
     </template>
   </button>
 </template>
-
-<style land="scss" scoped>
-.Reply {
-  padding-bottom: calc(var(--safe-bottom, 0) + theme('height.4'));
-}
-</style>

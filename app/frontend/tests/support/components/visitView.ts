@@ -12,6 +12,13 @@ vi.mock('@shared/server/apollo/client', () => {
     clearApolloClientStore: () => {
       return Promise.resolve()
     },
+    getApolloClient: () => {
+      return {
+        cache: {
+          gc: () => [],
+        },
+      }
+    },
   }
 })
 

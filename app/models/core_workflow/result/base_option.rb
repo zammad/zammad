@@ -23,8 +23,19 @@ class CoreWorkflow::Result::BaseOption < CoreWorkflow::Result::Backend
     end
   end
 
+  def first_value_default
+    @result_object.result[:restrict_values][field]&.first
+  end
+
+  def relation_value_default
+    return if attribute.blank?
+    return if !@result_object.attributes.attribute_options_relation?(attribute)
+
+    @result_object.attributes.options_relation_default(attribute)
+  end
+
   def remove_string
-    @result_object.payload['params'][field] = @result_object.result[:restrict_values][field]&.first
+    @result_object.payload['params'][field] = relation_value_default || first_value_default
     set_rerun
   end
 

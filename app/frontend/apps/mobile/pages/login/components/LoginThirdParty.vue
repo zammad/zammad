@@ -25,17 +25,17 @@ const { fingerprint } = useFingerprint()
           : $t('Sign in using')
       }}
     </p>
-    <div class="flex flex-wrap gap-2">
+    <div class="-m-2 flex flex-wrap p-1">
       <form
         v-for="provider of props.providers"
         :key="provider.name"
-        class="min-w-1/2-2 grow"
+        class="flex min-w-1/2 grow"
         method="post"
         :action="`${provider.url}?fingerprint=${fingerprint}`"
       >
         <input type="hidden" name="authenticity_token" :value="csrfToken" />
         <button
-          class="flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 py-2 px-4 text-white"
+          class="m-1 flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 py-2 px-4 text-white"
         >
           <CommonIcon
             :name="`mobile-${provider.icon}`"

@@ -5,6 +5,7 @@
  *= require_self
  *= require ./bootstrap.css
  *= require ./jquery-ui.css
+ *= require ./codemirror.css
  *= require ./cropper.css
  *= require ./fineuploader.css
  *= require ./font.css

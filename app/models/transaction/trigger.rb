@@ -37,8 +37,27 @@ class Transaction::Trigger
 
     original_user_id = UserInfo.current_user_id
 
-    Ticket.perform_triggers(ticket, article, @item, @params)
+    Ticket.perform_triggers(ticket, article, triggers_scope, @item, @params)
     UserInfo.current_user_id = original_user_id
   end
 
+  private
+
+  def triggers_scope
+    ::Trigger
+      .activated_by(trigger_activator)
+      .reorder(reorder_clause)
+  end
+
+  def trigger_activator
+    :action
+  end
+
+  def reorder_clause
+    if Rails.configuration.db_case_sensitive
+      return Arel.sql('LOWER(name)')
+    end
+
+    :name
+  end
 end

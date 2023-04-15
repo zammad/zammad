@@ -14,6 +14,7 @@ const needBase64Convert = (src: string) => {
   return !(src.startsWith('data:') || src.startsWith('cid:'))
 }
 
+const isResized = ref(false)
 const isResizing = ref(false)
 const imageLoaded = ref(false)
 const isDraggable = computed(() => props.node.attrs.isDraggable)
@@ -57,10 +58,11 @@ const onLoadImage = (e: Event) => {
 const stopResizing = ({ w, h }: { w: number; h: number }) => {
   dimensions.width = w
   dimensions.height = h
+  isResized.value = true
 }
 
 const style = computed(() => {
-  if (!imageLoaded.value) return {}
+  if (!imageLoaded.value || !isResized.value) return {}
   const { width, height } = dimensions
   return {
     width: `${width}px`,

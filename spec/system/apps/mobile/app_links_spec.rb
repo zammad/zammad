@@ -87,7 +87,7 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
         it_behaves_like 'redirecting to mobile app', 'ticket/create', 'ticket/create', authenticated: true
         it_behaves_like 'redirecting to mobile app', 'ticket/zoom/1', 'ticket/zoom/1', authenticated: true
         it_behaves_like 'redirecting to mobile app', 'user/profile/1', 'user/profile/1', authenticated: true
-        it_behaves_like 'redirecting to mobile app', 'dashboard', '#dashboard', authenticated: true
+        it_behaves_like 'redirecting to mobile app', 'dashboard', %r{mobile/$}, authenticated: true
 
         context 'with customer user', authenticated_as: :customer do
           let(:customer) { create(:customer) }
@@ -99,10 +99,15 @@ RSpec.describe 'Mobile > App links', app: :mobile, type: :system do
   end
 
   context 'with mobile device detection', mobile_user_agent: true do
-    it 'automatically redirects to mobile app' do
-      visit '/', app: :desktop
+    shared_examples 'automatically redirecting to mobile app' do |source, target|
+      it 'automatically redirects to mobile app' do
+        visit source, app: :desktop
 
-      expect_current_route('/', app: :mobile)
+        expect_current_route(target, app: :mobile)
+      end
     end
+
+    it_behaves_like 'automatically redirecting to mobile app', '/', %r{mobile/$}
+    it_behaves_like 'automatically redirecting to mobile app', 'ticket/zoom/1', 'ticket/zoom/1'
   end
 end

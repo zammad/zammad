@@ -48,7 +48,7 @@ RSpec.describe 'Admin password auth', type: :system do
         expect(generated_tokens.count).to eq 1
         expect(generated_tokens.first.persistent).to be false
 
-        visit "/#login/admin/#{generated_tokens[0].name}"
+        visit "/#login/admin/#{generated_tokens.first.token}"
 
         expect(page).to have_selector '#username'
       end

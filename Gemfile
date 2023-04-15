@@ -6,6 +6,12 @@ source 'https://rubygems.org'
 ruby '3.1.3'
 gem 'rails', '~> 6.1.0'
 
+# TEMPORARY Security updates from Ruby 3.1.4. Can be removed when updating from Ruby 3.1.3 to a higher version.
+# See also: https://www.ruby-lang.org/en/news/2023/03/30/ruby-3-1-4-released/
+gem 'time', '>= 0.2.2'
+gem 'uri', '>= 0.12.1'
+# END TEMPORARY
+
 # core - rails additions
 gem 'activerecord-import'
 gem 'activerecord-session_store'
@@ -100,7 +106,7 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-microsoft-office365'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
-gem 'omniauth-weibo-oauth2'
+gem 'omniauth-weibo-oauth2', git: 'https://github.com/zammad-deps/omniauth-weibo-oauth2', branch: 'unpin-dependencies'
 
 # Rate limiting
 gem 'rack-attack'
@@ -135,7 +141,7 @@ gem 'biz'
 gem 'diffy'
 
 # feature - excel output
-gem 'writeexcel', require: false
+gem 'write_xlsx', require: false
 
 # feature - csv import/export
 gem 'csv', require: false
@@ -238,13 +244,7 @@ group :development, :test do
   gem 'slack-ruby-client', require: false
 end
 
-# Want to extend Zammad with additional gems?
-# ZAMMAD USERS: Specify them in Gemfile.local
-#               (That way, you can customize the Gemfile
-#               without having your changes overwritten during upgrades.)
-# ZAMMAD DEVS:  Consult the internal wiki
-#               (or else risk pushing unwanted changes to Gemfile.lock!)
-#               https://git.zammad.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
+# To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
 Dir['Gemfile.local*'].each do |file|
   eval_gemfile file
 end

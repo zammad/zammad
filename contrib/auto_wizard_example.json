@@ -34,7 +34,7 @@
     {
       "id": 1,
       "channel_id": 10,
-      "realname": "Zammad Demo System",
+      "name": "Zammad Demo System",
       "email": "zammad_demo@localhost"
     }
   ],

@@ -1,19 +1,5 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-interface CustomMatchers<R = unknown> {
-  toHaveClasses(classes?: string[]): R
-}
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface Assertion extends CustomMatchers {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface AsymmetricMatchersContaining extends CustomMatchers {}
-  }
-}
-
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function toHaveClasses(
   this: any,

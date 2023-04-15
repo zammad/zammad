@@ -20,7 +20,7 @@ FactoryBot.define do
           controller:         'external_credentials',
           action:             'app_verify',
           provider:           'twitter',
-          webhook_id:         Faker::Number.number(digits: 19),
+          webhook_id:         Faker::Number.unique.number(digits: 19),
         }
       end
 

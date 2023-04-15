@@ -43,7 +43,8 @@ const slots = useSlots()
 
 const hasHelp = computed(() => slots.help || props.help)
 const showLabel = computed(() => {
-  if (!itemsWithPermission.value && !slots.default) return false
+  if (!itemsWithPermission.value && !slots.default && !slots['before-items'])
+    return false
   return slots.header || props.headerLabel || props.actionLabel
 })
 </script>
@@ -64,7 +65,7 @@ const showLabel = computed(() => {
     </component>
   </div>
   <div
-    v-if="itemsWithPermission || $slots.default"
+    v-if="itemsWithPermission || $slots.default || $slots['before-items']"
     class="flex w-full flex-col rounded-xl bg-gray-500 px-3 py-1 text-base text-white"
     :class="{ 'mb-6': !hasHelp }"
     v-bind="$attrs"

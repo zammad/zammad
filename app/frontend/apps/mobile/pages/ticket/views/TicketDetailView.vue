@@ -2,7 +2,13 @@
 
 <script setup lang="ts">
 import { computed, provide, ref, reactive } from 'vue'
-import { onBeforeRouteLeave, RouterView, useRoute, useRouter } from 'vue-router'
+import {
+  onBeforeRouteLeave,
+  onBeforeRouteUpdate,
+  RouterView,
+  useRoute,
+  useRouter,
+} from 'vue-router'
 import { noop } from 'lodash-es'
 import type {
   TicketUpdatesSubscription,
@@ -23,9 +29,10 @@ import { useTicketView } from '@shared/entities/ticket/composables/useTicketView
 import type { TicketInformation } from '@mobile/entities/ticket/types'
 import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
 import useConfirmation from '@mobile/components/CommonConfirmation/composable'
-import { isDialogOpened } from '@shared/composables/useDialog'
+import { getOpenedDialogs } from '@shared/composables/useDialog'
 import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
 import { useErrorHandler } from '@shared/errors/useErrorHandler'
+import { useCommonSelect } from '@mobile/components/CommonSelect/composable'
 import { useTicketEdit } from '../composable/useTicketEdit'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation'
 import { useTicketQuery } from '../graphql/queries/ticket.api'
@@ -159,11 +166,21 @@ const updateRefetchingStatus = (status: boolean) => {
   refetchingStatus.value = status
 }
 
+const scrolledToBottom = ref(false)
+
+onBeforeRouteUpdate((to, from) => {
+  // reset if we opened another ticket from the same page (via ticket merge, for example)
+  if (to.params.internalId !== from.params.internalId) {
+    scrolledToBottom.value = false
+  }
+})
+
 provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   ticketQuery,
   initialFormTicketValue: initialTicketValue,
   ticket,
   form,
+  scrolledToBottom,
   newTicketArticleRequested,
   newTicketArticlePresent,
   updateFormLocation,
@@ -226,20 +243,41 @@ const ticketEditSchemaData = reactive({
   currentArticleType,
 })
 
-const bannerClasses = computed(() => {
-  if (isDialogOpened() && !articleReplyDialog.isOpened.value) return 'hidden'
+const { isOpened: commonSelectOpened } = useCommonSelect()
 
-  if (route.name !== 'TicketDetailArticlesView') return null
+// show banner only in "articles list", "ticket information" and "create article" views
+const showSaveBanner = computed(() => {
+  const dialogs = getOpenedDialogs()
 
-  return articleReplyDialog.isOpened.value ? null : 'ReplyButtonPadding'
+  if (
+    commonSelectOpened.value ||
+    dialogs.size > 1 ||
+    (dialogs.size === 1 && !articleReplyDialog.isOpened.value)
+  )
+    return false
+
+  return canUpdateTicket.value && isDirty.value
 })
+
+const bannerClasses = computed(() => {
+  // move "save" button up, when there is "add reply" button
+  if (
+    route.name === 'TicketDetailArticlesView' &&
+    !articleReplyDialog.isOpened.value
+  )
+    return '-translate-y-12'
+
+  return null
+})
+
+const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
 </script>
 
 <template>
   <RouterView />
   <div
     class="transition-all"
-    :class="{ 'pb-12': needSpaceForSaveBanner }"
+    :class="{ 'pb-safe-12': needSpaceForSaveBanner }"
   ></div>
   <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
   <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
@@ -271,16 +309,17 @@ const bannerClasses = computed(() => {
   </Teleport>
   <Teleport to="body">
     <Transition
-      enter-from-class="translate-y-full"
+      :duration="bannerTransitionDuration"
+      enter-from-class="TransitionUnderScreen"
       enter-active-class="translate-y-0"
       enter-to-class="-translate-y-1/3"
       leave-from-class="-translate-y-1/3"
-      leave-active-class="translate-y-full"
-      leave-to-class="translate-y-full"
+      leave-active-class="TransitionUnderScreen"
+      leave-to-class="TransitionUnderScreen"
     >
       <div
-        v-if="canUpdateTicket && isDirty"
-        class="fixed bottom-2 left-2 right-2 z-10 flex rounded-lg bg-gray-300 text-white transition"
+        v-if="showSaveBanner"
+        class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
         :class="bannerClasses"
       >
         <div class="relative flex flex-1 items-center gap-2 p-1.5">
@@ -317,10 +356,8 @@ const bannerClasses = computed(() => {
   </Teleport>
 </template>
 
-<style lang="scss" scoped>
-.ReplyButtonPadding {
-  --reply-size: calc(0px - theme('height.12') - var(--safe-bottom, 0px));
-
-  transform: translateY(var(--reply-size));
+<style scoped>
+.TransitionUnderScreen {
+  transform: translateY(calc(100% + var(--safe-bottom)));
 }
 </style>

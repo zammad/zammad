@@ -51,6 +51,8 @@ export default async function mountApp(): Promise<void> {
 
   await Promise.all(initalizeAfterSessionCheck)
 
+  if (session.id) session.initialized = true
+
   const locale = useLocaleStore()
 
   if (!locale.localeData) {

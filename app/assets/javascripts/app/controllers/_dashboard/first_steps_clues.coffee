@@ -17,7 +17,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.user-menu .add'
       headline: __('Create')
-      text: __('Here you can create new tickets. Also, if you have the permission, you can create new customers and organizations.')
+      text: __('Here you can create new tickets, customers and organizations (depending on your configured permissions).')
       actions: [
         'hover .navigation',
         'hover .user-menu .add'

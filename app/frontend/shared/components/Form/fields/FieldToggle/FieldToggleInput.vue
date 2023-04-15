@@ -79,30 +79,26 @@ const updateLocalValue = (e: Event) => {
 </script>
 
 <template>
-  <input
+  <button
     :id="context.id"
-    class="hidden"
-    type="checkbox"
-    tabindex="-1"
-    :disabled="disabled"
-    :checked="localValue"
-    @change="updateLocalValue"
-  />
-  <div
+    type="button"
+    role="switch"
     class="relative inline-flex h-6 w-10 flex-shrink-0 cursor-pointer rounded-full border border-transparent bg-gray-300 transition-colors duration-200 ease-in-out focus-within:ring-1 focus-within:ring-white focus-within:ring-opacity-75 focus:outline-none formkit-invalid:border-solid formkit-invalid:border-red"
     :class="{
       '!bg-blue': localValue,
     }"
-    aria-hidden="true"
-    :tabindex="props.context.disabled ? '-1' : '0'"
+    :aria-labelledby="`label-${context.id}`"
+    :aria-disabled="disabled"
+    :aria-checked="localValue"
+    :tabindex="context.disabled ? '-1' : '0'"
     @click="updateLocalValue"
     @keydown.space="updateLocalValue"
   >
     <div
-      class="pointer-events-none inline-block h-[22px] w-[22px] translate-x-0 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
+      class="pointer-events-none inline-block h-[22px] w-[22px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ltr:translate-x-0 rtl:-translate-x-0"
       :class="{
-        'translate-x-4': localValue,
+        'ltr:translate-x-4 rtl:-translate-x-4': localValue,
       }"
     ></div>
-  </div>
+  </button>
 </template>

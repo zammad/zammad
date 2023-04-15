@@ -83,6 +83,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
       },
@@ -107,6 +108,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         clearable: true,
@@ -132,6 +134,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         value: testOptions[1].value,
@@ -174,6 +177,7 @@ describe('Form - Field - TreeSelect - Dialog', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
       },
@@ -291,6 +295,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         value: 10,
         options: optionsProp,
@@ -367,6 +372,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         value: 10,
         options: testOptions,
@@ -419,6 +425,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         value: 10,
         options: testOptions,
@@ -473,6 +480,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: disabledOptions,
       },
@@ -531,6 +539,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: statusOptions,
       },
@@ -568,6 +577,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: iconOptions,
         clearable: true,
@@ -640,6 +650,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         multiple: true,
@@ -738,6 +749,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: reversedOptions,
         sorting: 'label',
@@ -803,6 +815,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: untranslatedOptions,
       },
@@ -845,6 +858,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         name: 'treeselect',
         id: 'treeselect',
         type: 'treeselect',
@@ -983,6 +997,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
       },
@@ -1098,6 +1113,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         clearable: true,
@@ -1124,6 +1140,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         disabled: true,
@@ -1137,6 +1154,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         disabled: false,
@@ -1158,6 +1176,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         disabled: true,
@@ -1173,6 +1192,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: [],
       },
@@ -1194,11 +1214,6 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute(
-      'aria-label',
-      'Select…',
-    )
-
     expect(wrapper.getByRole('button')).toHaveAttribute(
       'aria-label',
       'Clear Selection',
@@ -1209,6 +1224,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         clearable: true,
@@ -1252,8 +1268,6 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Select…')).toHaveAttribute('id', 'test_id')
-
     expect(wrapper.getByLabelText('Test label')).toHaveAttribute(
       'id',
       'test_id',
@@ -1264,6 +1278,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         name: 'test_name',
         type: 'treeselect',
         options: testOptions,
@@ -1282,6 +1297,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         onBlur: blurHandler,
@@ -1298,6 +1314,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         clearable: true,
@@ -1325,6 +1342,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       const wrapper = renderComponent(FormKit, {
         ...wrapperParameters,
         props: {
+          label: 'Select…',
           type: 'treeselect',
           options: testOptions,
           value: testOption.value,
@@ -1339,6 +1357,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         disabled: true,
@@ -1354,6 +1373,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
+        label: 'Select…',
         type: 'treeselect',
         options: testOptions,
         'test-attribute': 'test_value',

@@ -2,15 +2,17 @@
 
 class ObjectManager::Element::Backend
 
-  attr_reader :user, :attribute, :record
+  attr_reader :user, :attribute, :record, :skip_permission
 
-  def initialize(user:, attribute:, record:)
-    @user      = user
-    @attribute = attribute
-    @record    = record
+  def initialize(user:, attribute:, record:, skip_permission: false)
+    @user            = user
+    @attribute       = attribute
+    @record          = record
+    @skip_permission = skip_permission
   end
 
   def visible?
+    return true if skip_permission
     return true if attribute.data_option[:permission].blank?
     return false if user.blank?
 
@@ -20,6 +22,8 @@ class ObjectManager::Element::Backend
   end
 
   def authorized?(permission)
+    return true if skip_permission
+
     user.permissions?(permission)
   end
 

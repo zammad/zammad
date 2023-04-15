@@ -1,8 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class TagsController < ApplicationController
-  prepend_before_action -> { authorize! }, only: %i[admin_list admin_create admin_rename admin_delete add remove]
-  prepend_before_action { authentication_check }
+  prepend_before_action :authenticate_and_authorize!
 
   # GET /api/v1/tag_search?term=abc
   def search

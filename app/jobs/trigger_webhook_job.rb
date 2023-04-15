@@ -13,7 +13,7 @@ class TriggerWebhookJob < ApplicationJob
     authorizations
   ].freeze
 
-  attr_reader :ticket, :trigger, :article
+  attr_reader :ticket, :trigger, :article, :changes, :user_id, :execution_type, :event_type
 
   retry_on TriggerWebhookJob::RequestError, attempts: 5, wait: lambda { |executions|
     executions * 10.seconds
@@ -24,10 +24,14 @@ class TriggerWebhookJob < ApplicationJob
     Rails.logger.info e
   end
 
-  def perform(trigger, ticket, article)
+  def perform(trigger, ticket, article, changes:, user_id:, execution_type:, event_type:)
     @trigger = trigger
     @ticket  = ticket
     @article = article
+    @changes    = changes
+    @user_id    = user_id
+    @execution_type = execution_type
+    @event_type = event_type
 
     return if abort?
     return if request.success?
@@ -83,6 +87,8 @@ class TriggerWebhookJob < ApplicationJob
         headers:          headers,
         signature_token:  webhook.signature_token,
         verify_ssl:       webhook.ssl_verify,
+        user:             webhook.basic_auth_username,
+        password:         webhook.basic_auth_password,
         log:              {
           facility: 'webhook',
         },
@@ -98,6 +104,13 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def payload
+    if webhook.custom_payload.present?
+      tracks = { ticket:, article: }
+      event  = { type: event_type, execution: execution_type, changes:, user_id: }
+
+      return TriggerWebhookJob::CustomPayload.generate(webhook.custom_payload, tracks, event)
+    end
+
     {
       ticket:  TriggerWebhookJob::RecordPayload.generate(ticket),
       article: TriggerWebhookJob::RecordPayload.generate(article),

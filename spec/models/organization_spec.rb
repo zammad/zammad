@@ -16,7 +16,7 @@ RSpec.describe Organization, type: :model do
 
   it_behaves_like 'ApplicationModel', can_assets: { associations: :members }
   it_behaves_like 'CanCsvImport', unique_attributes: 'name'
-  it_behaves_like 'CanCsvImportOrganization'
+  include_examples 'CanCsvImport - Organization specific tests'
   it_behaves_like 'HasHistory'
   it_behaves_like 'HasSearchIndexBackend', indexed_factory: :organization
   it_behaves_like 'HasXssSanitizedNote', model_factory: :organization

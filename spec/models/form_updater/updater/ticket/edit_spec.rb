@@ -63,6 +63,29 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       )
     end
 
+    context 'when body is used' do
+      before do
+        create(:core_workflow, object:  'Ticket',
+                               perform: {
+                                 body: {
+                                   operator:     'set_readonly',
+                                   set_readonly: true
+                                 },
+                               })
+      end
+
+      it 'body (and also attachments) should be disabled' do
+        expect(resolved_result.resolve).to include(
+          'body'        => include({
+                                     disabled: true,
+                                   }),
+          'attachments' => include({
+                                     disabled: true,
+                                   }),
+        )
+      end
+    end
+
     context 'when ticket has object attribute value with a historical value', db_strategy: :reset do
       let(:field_name) { SecureRandom.uuid }
       let(:screens) do

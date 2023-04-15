@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  prepend_before_action -> { authentication_check && authorize! }, only: %i[switch_to_user list delete]
+  prepend_before_action :authenticate_and_authorize!, only: %i[switch_to_user list delete]
   skip_before_action :verify_csrf_token, only: %i[show destroy create_omniauth failure_omniauth saml_destroy]
   skip_before_action :user_device_log, only: %i[create_sso create_omniauth]
 
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
     raise Exceptions::NotAuthorized, "User '#{login}' could not be found." if user.blank?
 
     session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(user, 'SSO', {})
+    authentication_check_prerequesits(user, 'SSO')
 
     initiate_session_for(user)
 
@@ -54,8 +54,12 @@ class SessionsController < ApplicationController
       ENV['FAKE_SELENIUM_LOGIN_PENDING'] = nil # rubocop:disable Rails/EnvironmentVariableAccess
     end
 
-    if session['saml_uid'] || session['saml_session_index']
-      return saml_destroy
+    if (session['saml_uid'] || session['saml_session_index']) && OmniAuth::Strategies::SamlDatabase.setup.fetch('idp_slo_service_url', nil)
+      begin
+        return saml_destroy
+      rescue => e
+        Rails.logger.error "SAML SLO failed: #{e.message}"
+      end
     end
 
     reset_session
@@ -231,7 +235,7 @@ class SessionsController < ApplicationController
     raise_unified_login_error if !auth.valid?
 
     session.delete(:switched_from_user_id)
-    authentication_check_prerequesits(auth.user, 'session', {})
+    authentication_check_prerequesits(auth.user, 'session')
   end
 
   def initiate_session_for(user)
@@ -283,7 +287,7 @@ class SessionsController < ApplicationController
   end
 
   def saml_destroy
-    options = SamlDatabase.setup
+    options = OmniAuth::Strategies::SamlDatabase.setup
     settings = OneLogin::RubySaml::Settings.new(options)
 
     logout_request = OneLogin::RubySaml::Logoutrequest.new

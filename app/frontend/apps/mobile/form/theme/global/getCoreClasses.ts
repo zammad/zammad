@@ -52,7 +52,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       wrapper: 'inline-flex w-full h-14 px-2',
       label:
         'flex items-center w-full h-full text-base cursor-pointer formkit-required:required',
-      inner: `${classes.toggle?.inner || ''} flex items-center h-full`,
+      inner: 'flex items-center h-full',
     }),
     tags: addBlockFloatingLabel(classes.tags),
     select: addBlockFloatingLabel(classes.select),

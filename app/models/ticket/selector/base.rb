@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Selector::Base
-  attr_accessor :selector, :options
+  attr_accessor :selector, :options, :changed_attributes
 
   def initialize(selector:, options:)
     if selector.respond_to?(:permit!)
@@ -35,43 +35,63 @@ class Ticket::Selector::Base
     @selector = result
   end
 
-  def set_static_conditions # rubocop:disable Metrics/AbcSize
-    return if %i[ticket_id article_id exclude_merged].none? { |key| options[key].present? }
+  def set_static_conditions
+    conditions = static_conditions_ticket + static_conditions_article + static_conditions_merged + static_conditions_ticket_update
+    return if conditions.blank?
 
-    new_selector = {
+    @selector = {
       operator:   'AND',
-      conditions: []
+      conditions: conditions + [@selector]
     }
+  end
 
-    if options[:ticket_id].present?
-      new_selector[:conditions] << {
+  def static_conditions_ticket
+    return [] if options[:ticket_id].blank?
+
+    [
+      {
         name:     'ticket.id',
         operator: 'is',
         value:    options[:ticket_id]
       }
-    end
+    ]
+  end
 
-    if options[:article_id].present?
-      new_selector[:conditions] << {
+  def static_conditions_article
+    return [] if options[:article_id].blank?
+
+    [
+      {
         name:     'article.id',
         operator: 'is',
         value:    options[:article_id]
       }
-    end
+    ]
+  end
 
-    if options[:exclude_merged].present?
-      new_selector[:conditions] << {
+  def static_conditions_merged
+    return [] if options[:exclude_merged].blank?
+
+    [
+      {
         name:     'ticket_state.name',
         operator: 'is not',
         value:    Ticket::StateType.find_by(name: 'merged').states.pluck(:name),
       }
-    end
+    ]
+  end
 
-    if @selector[:conditions].present?
-      new_selector[:conditions] << @selector
-    end
+  # https://github.com/zammad/zammad/issues/4550
+  def static_conditions_ticket_update
+    return [] if options[:ticket_action] != 'update' || options[:changes_required].blank?
 
-    @selector = new_selector
+    [
+      {
+        name:     'ticket.action',
+        operator: 'is',
+        value:    'update'
+      }
+    ]
   end
 
   def check_changes

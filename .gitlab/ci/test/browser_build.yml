@@ -2,7 +2,6 @@ browser:build:
   stage: test
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, redis]
   artifacts:
     expire_in: 1 week
     paths:
@@ -15,8 +14,10 @@ browser:build:
   variables:
     RAILS_ENV: 'production'
     VITE_TEST_MODE: 1
+    ZAMMAD_SAFE_MODE: 1
   script:
     - !reference [.scripts, yarn_install]
     - !reference [.scripts, zammad_db_unseeded]
     - node -v
+    # Don't require Redis.
     - bundle exec rake assets:precompile

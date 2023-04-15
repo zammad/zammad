@@ -81,7 +81,7 @@ class ConfigureEnvironment
 
   def self.configure_redis
     has_redis = network_host_exists?('redis')
-    needs_redis = ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
+    needs_redis = !%w[1 true].include?(ENV['ZAMMAD_SAFE_MODE']) && ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true' # rubocop:disable Rails/NegateInclude
 
     if needs_redis && !has_redis
       raise 'Redis was not found, but is required for ActionCable.'

@@ -56,6 +56,42 @@ const loadLocales = (): FormKitLocaleExtended => {
        * Shown when there is more to load.
        */
       loadMore: () => i18n.t('Load more'),
+      /**
+       * Show on buttons that navigate state forward
+       */
+      next: () => i18n.t('Next'),
+      /**
+       * Show on buttons that navigate state backward
+       */
+      prev: () => i18n.t('Previous'),
+      /**
+       * Shown when adding all values.
+       */
+      addAllValues: () => i18n.t('Add all values'),
+      /**
+       * Shown when adding selected values.
+       */
+      addSelectedValues: () => i18n.t('Add selected values'),
+      /**
+       * Shown when removing all values.
+       */
+      removeAllValues: () => i18n.t('Remove all values'),
+      /**
+       * Shown when removing selected values.
+       */
+      removeSelectedValues: () => i18n.t('Remove selected values'),
+      /**
+       * Shown when there is a date to choose.
+       */
+      chooseDate: () => i18n.t('Choose date'),
+      /**
+       * Shown when there is a date to change.
+       */
+      changeDate: () => i18n.t('Change date'),
+      /**
+       * Shown when the date is invalid.
+       */
+      invalidDate: () => i18n.t('The selected date is invalid.'),
     },
 
     validation: {

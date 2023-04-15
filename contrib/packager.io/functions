@@ -274,16 +274,47 @@ function elasticsearch_searchindex_rebuild () {
   fi
 }
 
+function detect_local_gemfiles () {
+  if ls ${ZAMMAD_DIR}/Gemfile.local* 1> /dev/null 2>&1; then
+    zammad config:set BUNDLE_DEPLOYMENT=0
+    zammad run bundle config set --local deployment 'false'
+    zammad run bundle install
+  fi
+}
+
+function detect_zammad_packages () {
+  if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && [ -n "$(which yarn 2> /dev/null)" ] ; then
+    echo "# Detected custom packages..."
+    ZAMMAD_PACKAGES="yes"
+  else
+    echo "# No custom packages detected..."
+    ZAMMAD_PACKAGES="no"
+  fi
+}
+
+function zammad_packages_reinstall_all () {
+  detect_zammad_packages
+
+  if [ "${ZAMMAD_PACKAGES}" == "yes" ]; then
+    echo "# Setup custom packages files..."
+    zammad run rake zammad:package:reinstall_all
+    detect_local_gemfiles
+    zammad run rake zammad:package:migrate
+    zammad run rake assets:precompile
+  fi
+}
+
 function update_or_install () {
 
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
-
     echo "# Clear cache..."
-    zammad run rails r Cache.clear
+    zammad run rails r Rails.cache.clear
 
     update_database
 
     update_translations
+
+    zammad_packages_reinstall_all
   else
     REBUILD_ES_SEARCHINDEX="yes"
     create_database_password

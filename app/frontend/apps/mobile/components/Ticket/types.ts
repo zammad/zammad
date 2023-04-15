@@ -20,9 +20,9 @@ export interface TicketItemData {
     fullname?: Maybe<string>
   }
   updatedAt?: string
-  updatedBy?: {
+  updatedBy?: Maybe<{
     id: string
     fullname?: Maybe<string>
-  }
+  }>
   stateColorCode: EnumTicketStateColorCode
 }

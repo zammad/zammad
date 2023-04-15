@@ -6,8 +6,9 @@ FactoryBot.define do
     locale   { 'en-en' }
     template { '' }
     escape   { true }
-    trusted  { false }
+    url_encode { false }
+    trusted { false }
 
-    initialize_with { new(objects:, locale:, template:, escape:, trusted:) }
+    initialize_with { new(objects:, locale:, template:, escape:, url_encode:, trusted:) }
   end
 end

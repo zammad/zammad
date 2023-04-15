@@ -29,6 +29,7 @@ class Index extends App.ControllerSubContent
       payloadExampleUrl: '/api/v1/webhooks/preview'
       container: @el.closest('.content')
       veryLarge: true
+      validateOnSubmit: @validateOnSubmit
     )
 
   show: (params) =>
@@ -37,5 +38,22 @@ class Index extends App.ControllerSubContent
         @[key] = value
 
     @genericController.paginate( @page || 1 )
+
+  validateOnSubmit: (params) ->
+    return if _.isEmpty(params['custom_payload'])
+
+    errors = {}
+
+    isError = false
+    try
+      if(!_.isObject(JSON.parse(params['custom_payload'])))
+        isError = true
+    catch e
+      isError = true
+
+    if isError
+      errors['custom_payload'] = __('Please enter a valid JSON string.')
+
+    errors
 
 App.Config.set('Webhook', { prio: 3350, name: __('Webhook'), parent: '#manage', target: '#manage/webhook', controller: Index, permission: ['admin.webhook'] }, 'NavBarAdmin')

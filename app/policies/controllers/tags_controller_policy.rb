@@ -3,6 +3,14 @@
 class Controllers::TagsControllerPolicy < Controllers::ApplicationControllerPolicy
   default_permit!('admin.tag')
 
+  def search?
+    true
+  end
+
+  def list?
+    true
+  end
+
   def add?
     object_update?
   end

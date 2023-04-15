@@ -9,7 +9,7 @@ const addLink = (node: FormKitNode) => {
 
   const toggleLink = (isLink: boolean) => {
     if (isLink) {
-      props.inputClass = `${props.inputClass} ltr:pr-2 rtl:pl-2`
+      props.inputClass = `${props.inputClass || ''} ltr:pr-2 rtl:pl-2`
     } else if (props.inputClass) {
       props.inputClass = props.inputClass.replace('ltr:pr-2 rtl:pl-2', '')
     }

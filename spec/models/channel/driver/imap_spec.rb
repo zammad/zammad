@@ -72,7 +72,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     let(:server_address) { ENV['MAIL_SERVER'] }
     let(:server_login)    { ENV['MAIL_ADDRESS'] }
     let(:server_password) { ENV['MAIL_PASS'] }
-    let(:email_address)   { create(:email_address, realname: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
+    let(:email_address)   { create(:email_address, name: 'Zammad Helpdesk', email: "some-zammad-#{ENV['MAIL_ADDRESS']}") }
     let(:group)           { create(:group, email_address: email_address) }
     let(:inbound_options) do
       {
@@ -283,7 +283,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       end
       let(:oversized_email_md5) { Digest::MD5.hexdigest(oversized_email) }
       let(:oversized_email_size) { format('%<MB>.2f', MB: oversized_email.size.to_f / 1024 / 1024) }
-      let(:oversized_eml_folder) { Rails.root.join('tmp/oversized_mail') }
+      let(:oversized_eml_folder) { Rails.root.join('var/spool/oversized_mail') }
       let(:oversized_eml_file) do
         Dir.entries(oversized_eml_folder).grep(%r{^#{oversized_email_md5}\.eml$}).map { |path| oversized_eml_folder.join(path) }.last
       end
@@ -317,7 +317,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
 
         it 'creates email reply correctly' do
           # 1. verify that the oversized email has been saved locally to:
-          # /tmp/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
+          # var/spool/oversized_mail/yyyy-mm-ddThh:mm:ss-:md5.eml
           expect(oversized_eml_file).to be_present
 
           # verify that the file is byte for byte identical to the sent message
@@ -327,12 +327,14 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           expect(oversized_email_reply).to be_present
 
           # parse the reply mail and verify the various headers
-          expect(parsed_oversized_email_reply).to include({
-                                                            from_email: email_address.email,
-            subject: '[undeliverable] Message too large',
-            'references' => "<#{cid}@zammad.test.com>",
-            'in-reply-to' => "<#{cid}@zammad.test.com>",
-                                                          })
+          expect(parsed_oversized_email_reply).to include(
+            {
+              from_email: email_address.email,
+              subject: '[undeliverable] Message too large',
+              'references' => "<#{cid}@zammad.test.com>",
+              'in-reply-to' => "<#{cid}@zammad.test.com>",
+            }
+          )
 
           # verify the reply mail body content
           expect(parsed_oversized_email_reply[:body]).to match(%r{^Dear Max Mustermann.*Oversized Email Message.*#{oversized_email_size} MB.*0.1 MB.*#{Setting.get('fqdn')}}sm)

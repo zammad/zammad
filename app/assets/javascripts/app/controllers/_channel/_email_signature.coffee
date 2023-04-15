@@ -12,9 +12,9 @@ class App.ChannelEmailSignature extends App.Controller
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     description = __('''
-You can define different signatures for each group, which allows you to use a different signature for every department.
+You can define a separate signature for each group to use a different signature for each department.
 
-Once you have created a signature here, you will also need to edit the groups where you want to use it.
+Once you created a signature here, you will also need to edit the groups which should use it.
 ''')
 
     new App.ControllerTable(

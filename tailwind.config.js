@@ -64,15 +64,26 @@ module.exports = {
       'dark-blue': '#045972',
       orange: '#F39804',
     },
-    extend: {},
     minWidth: {
-      '1/2-2': 'calc(100% / 2 - theme(spacing.2))',
+      '1/2': '50%',
     },
   },
   plugins: [
     lineClampPlugin,
     formKitTailwind,
-    plugin(({ addVariant }) => {
+    plugin(({ addVariant, matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          'pb-safe': (value) => ({
+            paddingBottom: `calc(var(--safe-bottom, 0) + ${value})`,
+          }),
+          'mb-safe': (value) => ({
+            marginBottom: `calc(var(--safe-bottom, 0) + ${value})`,
+          }),
+        },
+        { values: theme('padding') },
+      )
+
       addVariant('formkit-populated', [
         '&[data-populated]',
         '[data-populated] &',

@@ -1,14 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { keyBy } from 'lodash-es'
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import { useTicketOverviewsQuery } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
-import type { TicketOverviewsQuery } from '@shared/graphql/types'
-import { ref, computed } from 'vue'
-import { keyBy } from 'lodash-es'
-import { watchOnce } from '@vueuse/core'
+import type {
+  TicketOverviewsQuery,
+  TicketOverviewUpdatesSubscription,
+  TicketOverviewUpdatesSubscriptionVariables,
+} from '@shared/graphql/types'
 import type { ConfidentTake } from '@shared/types/utils'
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
+import { TicketOverviewUpdatesDocument } from '../graphql/subscriptions/ticketOverviewUpdates.api'
 
 export type TicketOverview = ConfidentTake<
   TicketOverviewsQuery,
@@ -16,11 +21,35 @@ export type TicketOverview = ConfidentTake<
 >
 
 export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
-  const handler = new QueryHandler(
+  const ticketOverviewHandler = new QueryHandler(
     useTicketOverviewsQuery({ withTicketCount: true }),
   )
-  const overviewsRaw = handler.result()
-  const overviewsLoading = handler.loading()
+
+  // Updates the overviews when overviews got added, updated and/or deleted.
+  ticketOverviewHandler.subscribeToMore<
+    TicketOverviewUpdatesSubscriptionVariables,
+    TicketOverviewUpdatesSubscription
+  >({
+    document: TicketOverviewUpdatesDocument,
+    variables: {
+      withTicketCount: true,
+    },
+    updateQuery(_, { subscriptionData }) {
+      const ticketOverviews =
+        subscriptionData.data.ticketOverviewUpdates?.ticketOverviews
+      // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
+      // if we return existing value, it will throw an error, because "overviews" doesn't exist yet on the query result
+      if (!ticketOverviews) {
+        return null as unknown as TicketOverviewsQuery
+      }
+      return {
+        ticketOverviews,
+      }
+    },
+  })
+
+  const overviewsRaw = ticketOverviewHandler.result()
+  const overviewsLoading = ticketOverviewHandler.loading()
 
   const overviews = computed(() => {
     if (!overviewsRaw.value?.ticketOverviews.edges) return []
@@ -66,8 +95,13 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
     }
   }
 
+  tryOnScopeDispose(() => {
+    ticketOverviewHandler.stop()
+  })
+
   return {
     overviews,
+    initializing: ticketOverviewHandler.operationResult.forceDisabled.value,
     loading: overviewsLoading,
     includedOverviews,
     includedIds,

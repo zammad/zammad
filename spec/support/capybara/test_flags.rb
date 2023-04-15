@@ -18,6 +18,10 @@ module TestFlags
   def wait_for_form_updater(form_updater_call_number = 1)
     wait_for_gql('shared/components/Form/graphql/queries/formUpdater.graphql', number: form_updater_call_number)
   end
+
+  def wait_for_form_autofocus(form)
+    wait_for_test_flag("#{form}.focused")
+  end
 end
 
 RSpec.configure do |config|

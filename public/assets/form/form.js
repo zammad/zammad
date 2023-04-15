@@ -175,7 +175,7 @@ $(function() {
         'Message': 'Bericht',
         'Name': 'Naam',
         'Your Email': 'Uw Email adres',
-        'Your Message…': '',
+        'Your Message…': 'Uw bericht…',
         'Your Name': 'Uw naam',
       },
       'pl': {

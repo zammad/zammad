@@ -1,0 +1,15 @@
+query ticketOverviewTicketCount {
+  ticketOverviews {
+    edges {
+      node {
+        id
+        ticketCount
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

@@ -19,15 +19,9 @@ class App.TicketZoomFormHandlerMultiOrganization
       customer = App.Session.get()
 
     if customer && customer.organization_ids.length > 0
-      ui.show('organization_id')
-      ui.mandantory('organization_id')
-
       if customer.organization_id
         customer_organization = App.Organization.find(customer.organization_id)
         if customer_organization
           organization_id.get(0).selectValue(customer_organization.id, customer_organization.name)
-    else
-      ui.hide('organization_id', undefined, true)
-      ui.optional('organization_id')
 
 App.Config.set('200-MultiOrganization', App.TicketZoomFormHandlerMultiOrganization, 'TicketCreateFormHandler')

@@ -4,7 +4,6 @@ import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '@shared/router'
 import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
-import LayoutMain from '@mobile/components/layout/LayoutMain.vue'
 import transitionViewGuard from './guards/before/viewTransition'
 import { errorAfterGuard } from './error'
 
@@ -57,7 +56,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Main',
     props: true,
-    component: LayoutMain,
+    component: () => import('@mobile/components/layout/LayoutMain.vue'),
     children: childRoutes,
   },
 ]

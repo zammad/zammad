@@ -31,7 +31,7 @@ attachments:
   data: Hello Zammad
   filename: PGP_Cmts_on_12-14-01_Pkg.txt
   preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
-    Content-Type: application/msword; name=pgp_cmts_on_12-14-01_pkg.txt; x-mac-creator=4d535744;
+    Content-Type: application/msword; name=PGP_Cmts_on_12-14-01_Pkg.txt; x-mac-creator=4d535744;
       x-mac-type=5738424e
     Content-ID: p05100307b863befdfb67@[127.0.0.1].0.0
     Mime-Type: application/msword

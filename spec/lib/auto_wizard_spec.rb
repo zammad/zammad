@@ -129,7 +129,7 @@ RSpec.describe AutoWizard do
           EmailAddresses: [
             {
               channel_id: channel.id,
-              realname:   'John Doe',
+              name:       'John Doe',
               email:      'johndoe@example.com',
             }
           ],
@@ -141,7 +141,7 @@ RSpec.describe AutoWizard do
       it 'creates an email address with the given attributes' do
         expect { described_class.setup }
           .to change(EmailAddress, :count)
-          .and change { EmailAddress.last&.realname }.to('John Doe')
+          .and change { EmailAddress.last&.name }.to('John Doe')
           .and change { EmailAddress.last&.email }.to('johndoe@example.com')
           .and change { EmailAddress.last&.channel }.to(channel)
       end
@@ -154,7 +154,7 @@ RSpec.describe AutoWizard do
             {
               id:         email_address.id,
               channel_id: new_channel.id,
-              realname:   'John Doe',
+              name:       'John Doe',
               email:      'johndoe@example.com',
             }
           ],
@@ -167,7 +167,7 @@ RSpec.describe AutoWizard do
       it 'updates the specified email address with the given attributes' do
         expect { described_class.setup }
           .to not_change(EmailAddress, :count)
-          .and change { email_address.reload.realname }.to('John Doe')
+          .and change { email_address.reload.name }.to('John Doe')
           .and change { email_address.reload.email }.to('johndoe@example.com')
           .and change { email_address.reload.channel }.to(new_channel)
       end

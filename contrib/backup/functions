@@ -155,8 +155,7 @@ function backup_files () {
       chown -R zammad:zammad ${ZAMMAD_DIR}/storage/
     fi
 
-      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
-        ${ZAMMAD_DIR#/}/storage/\
+      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR#/}/storage/ ${ZAMMAD_DIR#/}/var/
 
       state=$?
   fi
@@ -424,9 +423,9 @@ function restore_zammad () {
   # Ensure all data is loaded from the restored database and not the cache of the previous system state
   echo "# Clearing Cache ..."
   if command -v zammad > /dev/null; then
-    zammad run rails r "Cache.clear"
+    zammad run rails r "Rails.cache.clear"
   else
-    ${ZAMMAD_DIR}/bin/rails r "Cache.clear"
+    ${ZAMMAD_DIR}/bin/rails r "Rails.cache.clear"
   fi
 }
 

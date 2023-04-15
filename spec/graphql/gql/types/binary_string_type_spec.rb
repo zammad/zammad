@@ -25,7 +25,7 @@ RSpec.describe Gql::Types::BinaryStringType do
       let(:input_with_prefix) { "data:,#{input}" }
 
       it 'raises an error' do
-        expect { described_class.coerce_input(input_with_prefix).b }.to raise_error(ArgumentError)
+        expect { described_class.coerce_input(input_with_prefix).b }.to raise_error(GraphQL::CoercionError)
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe Gql::Types::BinaryStringType do
       let(:raw_input) { 'some string' }
 
       it 'raises an error' do
-        expect { described_class.coerce_input(raw_input).b }.to raise_error(ArgumentError)
+        expect { described_class.coerce_input(raw_input).b }.to raise_error(GraphQL::CoercionError)
       end
     end
   end

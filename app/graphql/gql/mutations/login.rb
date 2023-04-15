@@ -35,7 +35,7 @@ module Gql::Mutations
       context[:controller].session.delete(:switched_from_user_id)
 
       # authentication_check_prerequesits is private
-      context[:controller].send(:authentication_check_prerequesits, user, 'session', {})
+      context[:controller].send(:authentication_check_prerequesits, user, 'session')
       context[:current_user] = user
 
       initiate_session_for(user, remember_me)

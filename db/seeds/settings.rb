@@ -4849,6 +4849,15 @@ Setting.create_if_not_exists(
   state:       'Transaction::CtiCallerIdDetection',
   frontend:    false
 )
+Setting.create_if_not_exists(
+  title:       __('Defines transaction backend.'),
+  name:        '9200_time_based_trigger',
+  area:        'Transaction::Backend::Async',
+  description: __('Defines the transaction backend which executes time based triggers.'),
+  options:     {},
+  state:       'Transaction::TimeBasedTrigger',
+  frontend:    false
+)
 
 Setting.create_if_not_exists(
   title:       __('Set agent limit'),

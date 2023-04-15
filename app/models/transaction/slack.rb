@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class Transaction::Slack
+  include ChecksHumanChanges
 
 =begin
 
@@ -45,6 +46,7 @@ class Transaction::Slack
 
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+      Rails.logger.error "Transaction::Slack - sender: #{sender.inspect}"
       if sender&.name == 'System'
         return if @item[:changes].blank?
 
@@ -53,7 +55,7 @@ class Transaction::Slack
     end
 
     # ignore if no changes has been done
-    changes = human_changes(ticket)
+    changes = human_changes(@item[:changes], ticket)
     return if @item[:type] == 'update' && !article && changes.blank?
 
     # get user based notification template
@@ -85,7 +87,7 @@ class Transaction::Slack
       current_user = User.lookup(id: 1)
     end
 
-    result = NotificationFactory::Slack.template(
+    result = NotificationFactory::Messaging.template(
       template: template,
       locale:   user.locale,
       timezone: Setting.get('timezone_default_sanitized'),
@@ -96,21 +98,6 @@ class Transaction::Slack
         changes:      changes,
       },
     )
-
-    # good, warning, danger
-    color = '#000000'
-    ticket_state_type = ticket.state.state_type.name
-    if ticket.escalation_at && ticket.escalation_at < Time.zone.now
-      color = '#f35912'
-    elsif ticket_state_type == 'pending reminder'
-      if ticket.pending_time && ticket.pending_time < Time.zone.now
-        color = '#faab00'
-      end
-    elsif ticket_state_type.match?(%r{^(new|open)$})
-      color = '#faab00'
-    elsif ticket_state_type == 'closed'
-      color = '#38ad69'
-    end
 
     config['items'].each do |local_config|
       next if local_config['webhook'].blank?
@@ -184,7 +171,7 @@ class Transaction::Slack
         attachment = {
           text:      result[:body],
           mrkdwn_in: ['text'],
-          color:     color,
+          color:     ticket.current_state_color,
         }
         result = notifier.ping result[:subject],
                                attachments: [attachment]
@@ -199,94 +186,6 @@ class Transaction::Slack
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
     end
 
-  end
-
-  def human_changes(record)
-
-    return {} if !@item[:changes]
-
-    user = User.find(1)
-    locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
-
-    # only show allowed attributes
-    attribute_list = ObjectManager::Object.new('Ticket').attributes(user).index_by { |item| item[:name] }
-    # puts "AL #{attribute_list.inspect}"
-    user_related_changes = {}
-    @item[:changes].each do |key, value|
-
-      # if no config exists, use all attributes
-      # or if config exists, just use existing attributes for user
-      if attribute_list.blank? || attribute_list[key.to_s]
-        user_related_changes[key] = value
-      end
-    end
-
-    changes = {}
-    user_related_changes.each do |key, value|
-
-      # get attribute name
-      attribute_name           = key.to_s
-      object_manager_attribute = attribute_list[attribute_name]
-      if attribute_name[-3, 3] == '_id'
-        attribute_name = attribute_name[ 0, attribute_name.length - 3 ].to_s
-      end
-
-      # add item to changes hash
-      if key.to_s == attribute_name
-        changes[attribute_name] = value
-      end
-
-      # if changed item is an _id field/reference, look up the real values
-      value_id  = []
-      value_str = [ value[0], value[1] ]
-      if key.to_s[-3, 3] == '_id'
-        value_id[0] = value[0]
-        value_id[1] = value[1]
-
-        if record.respond_to?(attribute_name) && record.send(attribute_name)
-          relation_class = record.send(attribute_name).class
-          if relation_class && value_id[0]
-            relation_model = relation_class.lookup(id: value_id[0])
-            if relation_model
-              if relation_model['name']
-                value_str[0] = relation_model['name']
-              elsif relation_model.respond_to?(:fullname)
-                value_str[0] = relation_model.send(:fullname)
-              end
-            end
-          end
-          if relation_class && value_id[1]
-            relation_model = relation_class.lookup(id: value_id[1])
-            if relation_model
-              if relation_model['name']
-                value_str[1] = relation_model['name']
-              elsif relation_model.respond_to?(:fullname)
-                value_str[1] = relation_model.send(:fullname)
-              end
-            end
-          end
-        end
-      end
-
-      # check if we have a dedicated display name for it
-      display = attribute_name
-      if object_manager_attribute && object_manager_attribute[:display]
-
-        # delete old key
-        changes.delete(display)
-
-        # set new key
-        display = object_manager_attribute[:display].to_s
-      end
-      changes[display] = if object_manager_attribute && object_manager_attribute[:translate]
-                           from = Translation.translate(locale, value_str[0])
-                           to = Translation.translate(locale, value_str[1])
-                           [from, to]
-                         else
-                           [value_str[0].to_s, value_str[1].to_s]
-                         end
-    end
-    changes
   end
 
   class Transaction::Slack::Client

@@ -15,7 +15,7 @@ require 'fileutils'
 require 'optparse'
 require 'daemons'
 
-def before_fork
+def before_start
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
@@ -23,7 +23,7 @@ def before_fork
   end
 end
 
-def after_fork(dir)
+def after_start(dir)
   Dir.chdir dir
 
   # Re-open file handles
@@ -36,7 +36,7 @@ def after_fork(dir)
   $stderr.reopen("#{dir}/log/websocket-server_err.log", 'w').sync = true
 end
 
-before_fork
+before_start
 
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {
@@ -44,6 +44,7 @@ before_fork
   b: '0.0.0.0',
   s: false,
   v: false,
+  n: false,
   d: false,
   k: '/path/to/server.key',
   c: '/path/to/server.crt',
@@ -56,8 +57,11 @@ OptionParser.new do |opts|
   opts.on('-d', '--daemon', 'start as daemon') do |d|
     @options[:d] = d
   end
-  opts.on('-v', '--verbose', 'enable debug messages') do |d|
-    @options[:v] = d
+  opts.on('-v', '--verbose', 'enable debug messages') do |v|
+    @options[:v] = v
+  end
+  opts.on('-n', '--info', 'enable info messages') do |n|
+    @options[:n] = n
   end
   opts.on('-p', '--port [OPT]', 'port of websocket server') do |p|
     @options[:p] = p
@@ -79,6 +83,9 @@ OptionParser.new do |opts|
     @options[:tls_options] ||= {}
     @options[:tls_options][:cert_chain_file] = c
   end
+  opts.on('-l', '--to-logfile', 'enable logging to files') do |l|
+    @options[:logfile] = l
+  end
 end.parse!
 
 if ARGV[0] != 'start' && ARGV[0] != 'stop'
@@ -99,17 +106,21 @@ if ARGV[0] == 'stop'
   exit
 end
 
-if ARGV[0] == 'start' && @options[:d]
-  puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure: #{@options[:s]}, pidfile: #{@options[:i]})"
+if ARGV[0] == 'start'
+  if @options[:d]
+    puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure: #{@options[:s]}, pidfile: #{@options[:i]})"
 
-  # Use Daemons.rb's built-in facility for generating PID files
-  Daemons.daemonize(
-    app_name: File.basename(@options[:i], '.pid'),
-    dir_mode: :normal,
-    dir:      File.dirname(@options[:i])
-  )
+    # Use Daemons.rb's built-in facility for generating PID files
+    Daemons.daemonize(
+      app_name: File.basename(@options[:i], '.pid'),
+      dir_mode: :normal,
+      dir:      File.dirname(@options[:i])
+    )
+  end
 
-  after_fork(dir)
+  if @options[:d] || @options[:logfile]
+    after_start(dir)
+  end
 end
 
 WebsocketServer.run(@options)

@@ -57,10 +57,20 @@ RSpec.describe 'Monitoring', authenticated_as: :admin, type: :request do
 
     it_behaves_like 'accessible', token: true, admin: true, agent: false
 
-    it 'returns matching token' do
-      make_call
+    context 'when logged in as admin' do
+      it 'includes the token in the response' do
+        make_call
 
-      expect(json_response['token']).to eq access_token
+        expect(json_response).to include('token' => access_token)
+      end
+    end
+
+    context 'when using the token URL', authenticated_as: false do
+      it 'does not echo the token in the response' do
+        make_call
+
+        expect(json_response).not_to have_key 'token'
+      end
     end
 
     it 'returns health status' do

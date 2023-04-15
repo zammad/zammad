@@ -9,6 +9,8 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_image_sanitized_note_examples'
 require 'models/concerns/can_be_imported_examples'
+require 'models/concerns/can_csv_import_examples'
+require 'models/concerns/can_csv_import_user_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/user/performs_geo_lookup_examples'
@@ -29,6 +31,8 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasImageSanitizedNote', model_factory: :user
   it_behaves_like 'HasGroups and Permissions', group_access_no_permission_factory: :user
   it_behaves_like 'CanBeImported'
+  # it_behaves_like 'CanCsvImport', unique_attributes: 'email'
+  include_examples 'CanCsvImport - User specific tests'
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
@@ -423,7 +427,7 @@ RSpec.describe User, type: :model do
 
       context 'with a valid token' do
         it 'returns the matching user' do
-          expect(described_class.by_reset_token(token.name)).to eq(user)
+          expect(described_class.by_reset_token(token.token)).to eq(user)
         end
       end
 
@@ -440,7 +444,7 @@ RSpec.describe User, type: :model do
       let!(:token) { create(:token_password_reset) }
 
       it 'changes the password of the token user and destroys the token' do
-        expect { described_class.password_reset_via_token(token.name, Faker::Internet.password) }
+        expect { described_class.password_reset_via_token(token.token, Faker::Internet.password) }
           .to change { user.reload.password }
           .and change(Token, :count).by(-1)
       end
@@ -483,13 +487,13 @@ RSpec.describe User, type: :model do
 
         it 'returns the matching user' do
           result = described_class.admin_password_auth_new_token(user.login)
-          token = result[:token].name
+          token = result[:token].token
           expect(described_class.admin_password_auth_via_token(token)).to match(user)
         end
 
         it 'destroys token' do
           result = described_class.admin_password_auth_new_token(user.login)
-          token = result[:token].name
+          token = result[:token].token
           expect { described_class.admin_password_auth_via_token(token) }.to change(Token, :count).by(-1)
         end
       end

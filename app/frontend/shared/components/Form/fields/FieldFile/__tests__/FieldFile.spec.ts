@@ -6,11 +6,13 @@ import type { ExtendedRenderResult } from '@tests/support/components'
 import { renderComponent } from '@tests/support/components'
 import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
 import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { waitUntil } from '@tests/support/utils'
 import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api'
 import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api'
 
 const renderFileInput = (props: Record<string, unknown> = {}) => {
+  renderComponent(CommonImageViewer)
   return renderComponent(FormKit, {
     props: {
       id: 'file',
@@ -21,7 +23,6 @@ const renderFileInput = (props: Record<string, unknown> = {}) => {
       ...props,
     },
     form: true,
-    imageViewer: true,
     confirmation: true,
   })
 }

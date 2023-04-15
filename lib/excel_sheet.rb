@@ -2,17 +2,19 @@
 
 class ExcelSheet
 
+  CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'.freeze
+
   def initialize(title:, header:, records:, locale:, timezone: nil)
 
-    require 'writeexcel' # Only load this gem when it is really used.
+    require 'write_xlsx' # Only load this gem when it is really used.
 
     @title           = title
     @header          = header
     @records         = records
     @timezone        = timezone.presence || Setting.get('timezone_default_sanitized')
     @locale          = locale || Locale.default
-    @tempfile        = Tempfile.new('excel-export.xls')
-    @workbook        = WriteExcel.new(@tempfile)
+    @tempfile        = Tempfile.new('excel-export.xlsx')
+    @workbook        = WriteXLSX.new(@tempfile)
     @worksheet       = @workbook.add_worksheet
     @contents        = nil
     @current_row     = 0

@@ -24,9 +24,7 @@ export class FieldResolverSelect extends FieldResolver {
       historicalOptions: this.attributeConfig.historical_options,
     }
 
-    if (this.attributeConfig.options) {
-      props.options = this.mappedOptions()
-    } else if (this.attributeConfig.relation) {
+    if (this.attributeConfig.relation) {
       attributes.relation = {
         type: this.attributeConfig.relation as string,
       }
@@ -38,6 +36,8 @@ export class FieldResolverSelect extends FieldResolver {
       props.belongsToObjectField = camelize(
         (this.attributeConfig.belongs_to as string) || '',
       )
+    } else if (this.attributeConfig.options) {
+      props.options = this.mappedOptions()
     }
 
     if (this.attributeType === 'multiselect') props.multiple = true

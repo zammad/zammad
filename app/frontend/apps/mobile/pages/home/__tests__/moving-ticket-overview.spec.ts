@@ -1,8 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
-import createMockClient from '@tests/support/mock-apollo-client'
 import { visitView } from '@tests/support/components/visitView'
 import {
   NotificationTypes,
@@ -10,7 +8,7 @@ import {
 } from '@shared/components/CommonNotifications'
 import { mockAccount } from '@tests/support/mock-account'
 import { getByIconName } from '@tests/support/components/iconQueries'
-import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
+import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { getTicketOverviewStorage } from '@mobile/entities/ticket/helpers/ticketOverviewStorage'
 
 const actualLocalStorage = window.localStorage
@@ -18,12 +16,7 @@ const actualLocalStorage = window.localStorage
 describe('playing with overviews', () => {
   beforeEach(() => {
     mockAccount({ id: '666' })
-    createMockClient([
-      {
-        operationDocument: TicketOverviewsDocument,
-        handler: async () => ({ data: getApiTicketOverviews() }),
-      },
-    ])
+    mockTicketOverviews()
   })
 
   afterEach(() => {
@@ -64,7 +57,7 @@ describe('playing with overviews', () => {
       setItem: vi.fn(),
     })
 
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
       LOCAL_STORAGE_NAME,
@@ -109,7 +102,7 @@ describe('playing with overviews', () => {
       setItem: vi.fn(),
     })
 
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
       LOCAL_STORAGE_NAME,
@@ -132,7 +125,7 @@ describe('playing with overviews', () => {
     const buttonRemove = await view.findByIconName('mobile-minus')
 
     await view.events.click(buttonRemove)
-    await view.events.click(view.getByText('Done'))
+    await view.events.click(view.getByText('Save'))
 
     const { notify } = useNotifications()
 

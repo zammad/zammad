@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class CalendarSubscriptionsController < ApplicationController
-  prepend_before_action { authentication_check(basic_auth_promt: true) && authorize! }
+  prepend_before_action { authentication_check(basic_auth_prompt: true) && authorize! }
 
   # @path       [GET] /calendar_subscriptions
   #

@@ -22,8 +22,10 @@ const selectedTagsList = computed(() => {
   return localValue.value
 })
 
+const nameDialog = `field-tags-${props.context.id}`
+
 const dialog = useDialog({
-  name: `field-tags-${props.context.id}`,
+  name: nameDialog,
   prefetch: true,
   component: () => import('./FieldTagsDialog.vue'),
   afterClose: () => {
@@ -32,6 +34,7 @@ const dialog = useDialog({
 })
 
 const showDialog = () => {
+  if (props.context.disabled) return
   return dialog.open({
     name: dialog.name,
     context: reactiveContext,
@@ -55,11 +58,18 @@ useFormBlock(reactiveContext, onInputClick)
     <output
       :id="context.id"
       :name="context.node.name"
+      role="combobox"
       class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
-      :aria-disabled="context.disabled"
+      :aria-disabled="context.disabled ? 'true' : undefined"
       :tabindex="context.disabled ? '-1' : '0'"
-      data-multiple="true"
       v-bind="context.attrs"
+      aria-haspopup="dialog"
+      data-multiple="true"
+      :aria-labelledby="`label-${context.id}`"
+      :aria-controls="`dialog-${nameDialog}`"
+      :aria-owns="`dialog-${nameDialog}`"
+      :aria-expanded="dialog.isOpened.value"
+      @keyup.shift.down.prevent="showDialog()"
       @keypress.space.prevent="showDialog()"
       @blur="context.handlers.blur"
     >

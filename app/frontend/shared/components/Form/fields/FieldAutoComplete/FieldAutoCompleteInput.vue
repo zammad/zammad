@@ -105,16 +105,23 @@ useFormBlock(contextReactive, onInputClick)
   >
     <output
       :id="context.id"
+      role="combobox"
       :name="context.node.name"
       class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
-      :aria-disabled="context.disabled"
-      :aria-label="i18n.t('Select…')"
+      :aria-disabled="context.disabled ? 'true' : undefined"
+      :aria-labelledby="`label-${context.id}`"
+      aria-haspopup="dialog"
+      aria-autocomplete="none"
+      :aria-controls="`dialog-${nameDialog}`"
+      :aria-owns="`dialog-${nameDialog}`"
+      :aria-expanded="dialog.isOpened.value"
       :tabindex="context.disabled ? '-1' : '0'"
-      :data-multiple="context.multiple"
+      :data-multiple="context.multiple ? 'true' : undefined"
       v-bind="{
         ...context.attrs,
         onBlur: undefined,
       }"
+      @keyup.shift.down.prevent="toggleDialog(true)"
       @keypress.space.prevent="toggleDialog(true)"
       @blur="context.handlers.blur"
     >
@@ -129,7 +136,7 @@ useFormBlock(contextReactive, onInputClick)
             v-if="getSelectedOptionIcon(selectedValue)"
             :name="getSelectedOptionIcon(selectedValue)"
             size="tiny"
-            class="mr-1"
+            class="ltr:mr-1 rtl:ml-1"
           />
           {{
             getSelectedOptionLabel(selectedValue) ||

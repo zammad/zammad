@@ -1,23 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByTestId } from '@testing-library/vue'
-import { TicketOverviewsDocument } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
 import { visitView } from '@tests/support/components/visitView'
 import { mockAccount } from '@tests/support/mock-account'
-import createMockClient from '@tests/support/mock-apollo-client'
 import { mockPermissions } from '@tests/support/mock-permissions'
-import { getApiTicketOverviews } from '@tests/support/mocks/ticket-overviews'
+import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
 import { getTicketOverviewStorage } from '@mobile/entities/ticket/helpers/ticketOverviewStorage'
 
 describe('home page', () => {
   beforeEach(() => {
     mockAccount({ id: '666' })
-    createMockClient([
-      {
-        operationDocument: TicketOverviewsDocument,
-        handler: async () => ({ data: getApiTicketOverviews() }),
-      },
-    ])
+    mockTicketOverviews()
   })
 
   it('renders ticket overviews based on localStorage', async () => {

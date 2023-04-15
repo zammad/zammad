@@ -53,7 +53,7 @@
     {
       "id": 1,
       "channel_id": 1,
-      "realname": "Zammad Helpdesk",
+      "name": "Zammad Helpdesk",
       "email": "zammad@localhost"
     }
   ],

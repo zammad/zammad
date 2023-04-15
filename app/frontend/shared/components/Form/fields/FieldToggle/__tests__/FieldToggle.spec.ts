@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import { ref } from 'vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { renderComponent } from '@tests/support/components'
 import { flushPromises } from '@vue/test-utils'
+import { waitForNextTick } from '@tests/support/utils'
 
 const renderToggle = (props: any = {}) => {
   return renderComponent(FormKit, {
@@ -100,5 +102,40 @@ describe('FieldToggle', () => {
     expect(node).toHaveProperty('_value', undefined)
 
     expect(toggle.getByLabelText('Toggle')).not.toBeChecked()
+  })
+
+  test('can use model-value to toggle', async () => {
+    const toggled = ref(false)
+
+    // Currently only "modelValue" is working: https://github.com/formkit/formkit/issues/629
+    const view = renderComponent(
+      {
+        template: `<div><FormKit label="Toggle" type="toggle" name="toggle" id="toggle" :variants="variants" :modelValue="toggled" /></div>`,
+        components: {
+          FormKit,
+        },
+        setup() {
+          const variants = {
+            true: 'yes',
+            false: 'no',
+          }
+          return { toggled, variants }
+        },
+      },
+      {
+        form: true,
+        formField: true,
+      },
+    )
+
+    const switcher = view.getByLabelText('Toggle')
+
+    expect(switcher).not.toBeChecked()
+
+    toggled.value = true
+
+    await waitForNextTick()
+
+    expect(switcher).toBeChecked()
   })
 })

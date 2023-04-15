@@ -363,7 +363,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     @wizardConfig.endpoint           = params.endpoint
     @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
 
-    if params.authentication_method is 'basic'
+    if @wizardConfig.auth_type is 'basic'
       @wizardConfig.user      = params.user
       @wizardConfig.password  = params.password
 
@@ -411,6 +411,13 @@ class ConnectionWizard extends App.ControllerWizardModal
       data: JSON.stringify(@wizardConfig)
       processData: true
       success: (data, status, xhr) =>
+        if data.result isnt 'ok'
+          @handleCertificateIssue(
+            message:     data.message
+            wizardClass: 'js-discover'
+          )
+          return
+
         @wizardConfig.wizardData = {}
         @wizardConfig.wizardData.backend_folders = data.folders || []
 

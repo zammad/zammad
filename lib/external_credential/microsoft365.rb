@@ -130,8 +130,8 @@ class ExternalCredential::Microsoft365
 
     email_addresses = [
       {
-        realname: "#{Setting.get('product_name')} Support",
-        email:    user_data[:preferred_username],
+        name:  "#{Setting.get('product_name')} Support",
+        email: user_data[:preferred_username],
       },
     ]
 
@@ -154,7 +154,7 @@ class ExternalCredential::Microsoft365
     email_addresses.each do |user_alias|
       EmailAddress.create!(
         channel_id:    channel.id,
-        realname:      user_alias[:realname],
+        name:          user_alias[:name],
         email:         user_alias[:email],
         active:        true,
         created_by_id: 1,

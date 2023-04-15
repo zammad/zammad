@@ -37,7 +37,12 @@ const {
 const select = ref<CommonSelectInstance>()
 
 const openSelectDialog = () => {
-  if (select.value?.isOpen || !props.context.options?.length) return
+  if (
+    select.value?.isOpen ||
+    !props.context.options?.length ||
+    props.context.disabled
+  )
+    return
   select.value?.openDialog()
 }
 
@@ -60,9 +65,11 @@ setupMissingOptionHandling()
   >
     <CommonSelect
       ref="select"
+      #default="{ state: expanded }"
       :model-value="currentValue"
       :options="sortedOptions"
       :multiple="context.multiple"
+      :owner="context.id"
       no-options-label-translation
       passive
       @select="selectOption"
@@ -70,16 +77,22 @@ setupMissingOptionHandling()
       <output
         :id="context.id"
         ref="outputElement"
+        role="combobox"
+        aria-controls="common-select"
+        aria-owns="common-select"
+        aria-haspopup="dialog"
+        :aria-expanded="expanded"
         :name="context.node.name"
         class="flex grow items-center focus:outline-none formkit-disabled:pointer-events-none"
+        :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
-        :aria-label="i18n.t('Select…')"
         :data-multiple="context.multiple"
         :tabindex="context.disabled ? '-1' : '0'"
         v-bind="{
           ...context.attrs,
           onBlur: undefined,
         }"
+        @keyup.shift.down.prevent="openSelectDialog()"
         @keypress.space.prevent="openSelectDialog()"
         @blur="context.handlers.blur"
       >
@@ -109,7 +122,8 @@ setupMissingOptionHandling()
                 v-if="getSelectedOptionIcon(selectedValue)"
                 :name="getSelectedOptionIcon(selectedValue)"
                 size="tiny"
-                class="mr-1"
+                class="ltr:mr-1 rtl:ml-1"
+                decorative
               />
               <FieldSelectInputSelected
                 :slotted="(context.slots as any)?.output"

@@ -74,7 +74,7 @@ describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
 
     cy.wrap(mock).should('have.been.calledWith', {
       query: 'Jo',
-      group: convertToGraphQLId('Group', '1'),
+      groupId: convertToGraphQLId('Group', '1'),
     })
   })
 })
