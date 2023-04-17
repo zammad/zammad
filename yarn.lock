@@ -10612,10 +10612,10 @@ vue-demi@*, vue-demi@^0.13.1:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
-vue-easy-lightbox@1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.15.0.tgz#c04803471e06122996924ef625d6b4e3ba13d5ff"
-  integrity sha512-iPjNmCHHUZQdmJoM85pBNwPqY93KKPOpWPuHPMq7VD3V0CSa/gzrf+Aa7cD/rhD0rAxxE13cvN9AozRTDgIBRw==
+vue-easy-lightbox@1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.16.0.tgz#151db0a332eb32ac30616afb4e7dc09f3c82281b"
+  integrity sha512-9ckBIi56kTNkfbxioTBLKR3xnFjmkIs4SOvePn6XUciR+Dzuav0tgNjqDHkfsoo3nxIpUmfpQAT0YDl9TpJ5jA==
 
 vue-eslint-parser@^9.0.0, vue-eslint-parser@^9.0.1:
   version "9.1.0"
