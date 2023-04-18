@@ -20,7 +20,7 @@ if [ "$1" = 'builder' ]; then
   sed -e 's#.*adapter: postgresql#  adapter: nulldb#g' -e 's#.*username:.*#  username: postgres#g' -e 's#.*password:.*#  password: \n  host: zammad-postgresql\n#g' < contrib/packager.io/database.yml.pkgr > config/database.yml
   sed -i "/require 'rails\/all'/a require\ 'nulldb'" config/application.rb
   touch db/schema.rb
-  bundle exec rake assets:precompile
+  ZAMMAD_SAFE_MODE=1 bundle exec rake assets:precompile # Don't require Redis.
   rm -r tmp/cache
   script/build/cleanup.sh
 fi
@@ -30,5 +30,5 @@ if [ "$1" = 'runner' ]; then
   useradd -M -d "${ZAMMAD_DIR}" -s /bin/bash -u 1000 -g 1000 "${ZAMMAD_USER}"
   sed -i -e "s#user www-data;##g" -e 's#/var/log/nginx/\(access\|error\).log#/dev/stdout#g' -e 's#pid /run/nginx.pid;#pid /tmp/nginx.pid;#g' /etc/nginx/nginx.conf
   mkdir -p "${ZAMMAD_DIR}" /var/log/nginx
-  chown -R "${ZAMMAD_USER}":"${ZAMMAD_USER}" /etc/nginx /var/lib/nginx /var/log/nginx "${ZAMMAD_DIR}" "${ZAMMAD_TMP_DIR}" 
+  chown -R "${ZAMMAD_USER}":"${ZAMMAD_USER}" /etc/nginx /var/lib/nginx /var/log/nginx "${ZAMMAD_DIR}" "${ZAMMAD_TMP_DIR}"
 fi
