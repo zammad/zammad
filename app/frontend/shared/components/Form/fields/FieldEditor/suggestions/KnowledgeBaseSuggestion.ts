@@ -25,7 +25,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   )
 
   const getKnowledgeBaseMentions = async (query: string) => {
-    const { data } = await queryHandler.query({ query })
+    const { data } = await queryHandler.query({ variables: { query } })
     return data?.knowledgeBaseAnswerSuggestions || []
   }
 

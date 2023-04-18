@@ -98,7 +98,7 @@ export const useApplicationStore = defineStore(
     const getConfig = async (): Promise<void> => {
       const configQuery = getApplicationConfigQuery()
 
-      const result = await configQuery.loadedResult(true)
+      const { data: result } = await configQuery.refetch()
       if (result?.applicationConfig) {
         result.applicationConfig.forEach((item) => {
           config.value[item.key] = item.value

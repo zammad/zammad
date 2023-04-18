@@ -3,8 +3,8 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
-import { useSessionIdQuery } from '@shared/graphql/queries/sessionId.api'
-import { useCurrentUserQuery } from '@shared/graphql/queries/currentUser.api'
+import { useSessionIdLazyQuery } from '@shared/graphql/queries/sessionId.api'
+import { useCurrentUserLazyQuery } from '@shared/graphql/queries/currentUser.api'
 import {
   QueryHandler,
   SubscriptionHandler,
@@ -34,7 +34,7 @@ const getSessionIdQuery = () => {
   const { fingerprint } = useFingerprint()
 
   sessionIdQuery = new QueryHandler(
-    useSessionIdQuery({
+    useSessionIdLazyQuery({
       fetchPolicy: 'network-only',
       context: {
         error: {
@@ -58,7 +58,9 @@ let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>
 const getCurrentUserQuery = () => {
   if (currentUserQuery) return currentUserQuery
 
-  currentUserQuery = new QueryHandler(useCurrentUserQuery())
+  currentUserQuery = new QueryHandler(
+    useCurrentUserLazyQuery({ fetchPolicy: 'network-only' }),
+  )
 
   return currentUserQuery
 }
@@ -71,7 +73,7 @@ export const useSessionStore = defineStore(
 
     const checkSession = async (): Promise<string | null> => {
       const sessionIdQuery = getSessionIdQuery()
-      const result = await sessionIdQuery.loadedResult(true)
+      const { data: result } = await sessionIdQuery.query()
 
       // Refresh the current sessionId state.
       id.value = result?.sessionId || null
@@ -85,25 +87,18 @@ export const useSessionStore = defineStore(
       CurrentUserUpdatesSubscription,
       CurrentUserUpdatesSubscriptionVariables
     >
-    let currentUserWatchOnResultInitialized = false
     const getCurrentUser = async (): Promise<Maybe<UserData>> => {
       if (currentUserQuery && !user.value) {
         currentUserQuery.start()
       }
 
-      const query = getCurrentUserQuery()
+      const userQuery = getCurrentUserQuery()
 
-      // Watch on result that also the subscription to more will update the user data.
-      if (!currentUserWatchOnResultInitialized) {
-        query.watchOnResult((result) => {
-          user.value = cloneDeep(result?.currentUser) || null
+      const { data: result } = await userQuery.query()
 
-          log.debug('currentUserUpdate', user.value)
-        })
-        currentUserWatchOnResultInitialized = true
-      }
+      user.value = cloneDeep(result?.currentUser) || null
 
-      await query.loadedResult(true)
+      log.debug('currentUserUpdate', user.value)
 
       // Check if the locale is different, then a update is needed.
       const locale = useLocaleStore()
@@ -125,9 +120,11 @@ export const useSessionStore = defineStore(
           )
 
           currentUserUpdateSubscription.onResult((result) => {
-            const user = result.data?.userUpdates.user
-            if (!user) {
+            const updatedUser = result.data?.userUpdates.user
+            if (!updatedUser) {
               testFlags.set('useCurrentUserUpdatesSubscription.subscribed')
+            } else {
+              user.value = updatedUser
             }
           })
         } else {

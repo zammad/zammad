@@ -9,6 +9,7 @@ import type {
   FetchMoreQueryOptions,
   ObservableQuery,
   OperationVariables,
+  QueryOptions,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
 import type {
@@ -19,6 +20,7 @@ import type {
 import type { ReactiveFunction } from '@shared/types/utils'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
 import { useApolloClient } from '@vue/apollo-composable'
+import { getOperationName } from '@apollo/client/utilities'
 import BaseHandler from './BaseHandler'
 
 export default class QueryHandler<
@@ -29,31 +31,72 @@ export default class QueryHandler<
   TVariables,
   UseQueryReturn<TResult, TVariables>
 > {
-  private firstResultLoaded = false
-
   private lastCancel: (() => void) | null = null
 
   public cancel() {
     this.lastCancel?.()
   }
 
-  public async query(variables?: TVariables) {
+  /**
+   * Calls the query immidiately and returns the result in `data` property.
+   *
+   * Will throw an error, if used with "useQuery" instead of "useLazyQuery".
+   *
+   * Returns cached result, if there is one. Otherwise, will
+   * `fetch` the result from the server.
+   *
+   * If called multiple times, cancels the previous query.
+   *
+   * Respects options that were defined in `useLazyQuery`, but can be overriden.
+   *
+   * If an error was throws, `data` is `null`, and `error` is the thrown error.
+   */
+  public async query(
+    options: Omit<QueryOptions<TVariables, TResult>, 'query'> = {},
+  ) {
+    const {
+      options: defaultOptions,
+      document: { value: node },
+    } = this.operationResult
+    if (import.meta.env.DEV && !('load' in this.operationResult)) {
+      let error = `${getOperationName(
+        node,
+      )} is initialized with "useQuery" instead of "useLazyQuery". `
+      error += `If you need to get the value immediately with ".query()", use "useLazyQuery" instead to not start extra network requests. `
+      error += `"useQuery" should be used inside components to dynamically react to changed data.`
+      throw new Error(error)
+    }
     this.cancel()
-    const node = this.operationResult.document.value
     const { client } = useApolloClient()
     const aborter =
       typeof AbortController !== 'undefined' ? new AbortController() : null
     this.lastCancel = () => aborter?.abort()
+    const { fetchPolicy: defaultFetchPolicy, ...defaultOptionsValue } =
+      'value' in defaultOptions ? defaultOptions.value : defaultOptions
+    const fetchPolicy =
+      options.fetchPolicy ||
+      (defaultFetchPolicy !== 'cache-and-network'
+        ? defaultFetchPolicy
+        : undefined)
     try {
       return await client.query<TResult, TVariables>({
+        ...defaultOptionsValue,
+        ...options,
+        fetchPolicy,
         query: node,
-        variables,
         context: {
+          ...defaultOptionsValue.context,
+          ...options.context,
           fetchOptions: {
             signal: aborter?.signal,
           },
         },
       })
+    } catch (error) {
+      return {
+        data: null,
+        error,
+      }
     } finally {
       this.lastCancel = null
     }
@@ -116,18 +159,20 @@ export default class QueryHandler<
     })
   }
 
-  public refetch(variables?: TVariables): Promise<Maybe<TResult>> {
+  public refetch(
+    variables?: TVariables,
+  ): Promise<{ data: Maybe<TResult>; error?: unknown }> {
     return new Promise((resolve, reject) => {
       const refetch = this.operationResult.refetch(variables)
 
       if (!refetch) {
-        resolve(null)
+        resolve({ data: null })
         return
       }
 
       refetch
         .then((result) => {
-          resolve(result.data)
+          resolve({ data: result.data })
         })
         .catch(() => {
           reject(this.operationError().value)
@@ -159,52 +204,12 @@ export default class QueryHandler<
   }
 
   public stop(): void {
-    this.firstResultLoaded = false
     this.operationResult.stop()
   }
 
   public abort() {
     this.operationResult.stop()
     this.operationResult.start()
-  }
-
-  public async onLoaded(
-    triggerPossibleRefetch = false,
-  ): Promise<Maybe<TResult>> {
-    if (this.firstResultLoaded && triggerPossibleRefetch) {
-      return this.refetch()
-    }
-
-    return new Promise((resolve, reject) => {
-      let errorUnsubscribe!: () => void
-      let resultUnsubscribe!: () => void
-
-      const onFirstResultLoaded = () => {
-        this.firstResultLoaded = true
-        resultUnsubscribe()
-        errorUnsubscribe()
-      }
-
-      resultUnsubscribe = watch(this.result(), (result) => {
-        // After a variable change, the result will be reseted.
-        if (result === undefined) return null
-
-        // Remove the watchers again after the promise was resolved.
-        onFirstResultLoaded()
-        return resolve(result || null)
-      })
-
-      errorUnsubscribe = watch(this.operationError(), (error) => {
-        onFirstResultLoaded()
-        return reject(error)
-      })
-    })
-  }
-
-  public loadedResult(triggerPossibleRefetch = false): Promise<Maybe<TResult>> {
-    return this.onLoaded(triggerPossibleRefetch)
-      .then((data: Maybe<TResult>) => data)
-      .catch((error) => error)
   }
 
   public watchOnceOnResult(callback: WatchResultCallback<TResult>) {

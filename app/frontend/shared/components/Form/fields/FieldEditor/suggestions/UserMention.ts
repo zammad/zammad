@@ -32,8 +32,10 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
 
   const getUserMentions = async (query: string, group: string) => {
     const { data } = await queryMentionsHandler.query({
-      query,
-      groupId: ensureGraphqlId('Group', group),
+      variables: {
+        query,
+        groupId: ensureGraphqlId('Group', group),
+      },
     })
     return data?.mentionSuggestions || []
   }

@@ -38,10 +38,12 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     }
 
     const { data } = await queryHandler.query({
-      query,
-      customerId: customerId && ensureGraphqlId('User', customerId),
-      ticketId: ticketId && ensureGraphqlId('Ticket', ticketId),
-      limit: LIMIT_QUERY_MODULES,
+      variables: {
+        query,
+        customerId: customerId && ensureGraphqlId('User', customerId),
+        ticketId: ticketId && ensureGraphqlId('Ticket', ticketId),
+        limit: LIMIT_QUERY_MODULES,
+      },
     })
     return data?.textModuleSuggestions || []
   }
