@@ -3,8 +3,6 @@
 module Gql::Queries
   class TicketsByOverview < BaseQuery
 
-    max_page_size 2000
-
     description 'Fetch tickets of a given ticket overview'
 
     argument :overview_id, GraphQL::Types::ID, description: 'Overview ID'
