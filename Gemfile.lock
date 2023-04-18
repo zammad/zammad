@@ -399,7 +399,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
-    pundit-matchers (1.9.0)
+    pundit-matchers (2.0.0)
       rspec-rails (>= 3.0.0)
     racc (1.6.2)
     rack (2.2.6.4)
