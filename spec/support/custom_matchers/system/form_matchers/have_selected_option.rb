@@ -27,7 +27,8 @@ module FormMatchers
     match do
       expected.all? do |label|
         begin
-          actual.find('[role="listitem"]', exact_text: label, wait: false)
+          exact_text = label.is_a?(Regexp) ? label : %r{#{Regexp.escape(label)},?}
+          actual.find('[role="listitem"]', exact_text: exact_text, wait: false)
         rescue
           false
         end

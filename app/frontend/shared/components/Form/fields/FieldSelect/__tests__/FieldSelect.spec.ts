@@ -567,23 +567,6 @@ describe('Form - Field - Select - Features', () => {
     )
   })
 
-  it('can pass down a slot', () => {
-    const wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        ...commonProps,
-        type: 'select',
-        options: testOptions,
-        value: testOptions[1].value,
-      },
-      slots: {
-        output: '<span>Custom label</span>',
-      },
-    })
-
-    expect(wrapper.getByText('Custom label')).toBeInTheDocument()
-  })
-
   it('supports selection clearing', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

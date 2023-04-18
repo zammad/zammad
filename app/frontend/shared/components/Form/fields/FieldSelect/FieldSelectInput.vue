@@ -12,7 +12,6 @@ import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
 import type { SelectContext } from './types'
-import FieldSelectInputSelected from './FieldSelectInputSelected.vue'
 
 interface Props {
   context: SelectContext
@@ -113,9 +112,9 @@ setupMissingOptionHandling()
           </template>
           <template v-else-if="hasValue">
             <div
-              v-for="selectedValue in valueContainer"
+              v-for="(selectedValue, idx) in valueContainer"
               :key="selectedValue"
-              class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
+              class="flex items-center text-base leading-[19px]"
               role="listitem"
             >
               <CommonIcon
@@ -124,14 +123,10 @@ setupMissingOptionHandling()
                 size="tiny"
                 class="ltr:mr-1 rtl:ml-1"
                 decorative
-              />
-              <FieldSelectInputSelected
-                :slotted="(context.slots as any)?.output"
-                :label="
-                  getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue)
-                "
-              />
+              />{{
+                getSelectedOptionLabel(selectedValue) ||
+                i18n.t('%s (unknown)', selectedValue)
+              }}{{ idx === valueContainer.length - 1 ? '' : ',' }}
             </div>
           </template>
         </div>

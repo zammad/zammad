@@ -6,7 +6,6 @@ import { i18n } from '@shared/i18n'
 import { useDialog } from '@shared/composables/useDialog'
 import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { useFormBlock } from '@mobile/form/useFormBlock'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
 import useValue from '../../composables/useValue'
 import useSelectOptions from '../../composables/useSelectOptions'
 import useSelectPreselect from '../../composables/useSelectPreselect'
@@ -190,7 +189,7 @@ setupMissingOptionHandling()
           <CommonTicketStateIndicator
             v-for="selectedValue in valueContainer"
             :key="selectedValue"
-            :color-code="getSelectedOptionStatus(selectedValue) as EnumTicketStateColorCode"
+            :color-code="getSelectedOptionStatus(selectedValue)!"
             :label="getSelectedOptionFullPath(selectedValue)"
             :data-test-status="getSelectedOptionStatus(selectedValue)"
             role="listitem"
@@ -199,9 +198,9 @@ setupMissingOptionHandling()
         </template>
         <template v-else>
           <div
-            v-for="selectedValue in valueContainer"
+            v-for="(selectedValue, idx) in valueContainer"
             :key="selectedValue"
-            class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
+            class="flex items-center text-base leading-[19px]"
             role="listitem"
           >
             <CommonIcon
@@ -210,7 +209,8 @@ setupMissingOptionHandling()
               size="tiny"
               class="ltr:mr-1 rtl:ml-1"
             />
-            {{ getSelectedOptionFullPath(selectedValue) }}
+            {{ getSelectedOptionFullPath(selectedValue)
+            }}{{ idx === valueContainer.length - 1 ? '' : ',' }}
           </div>
         </template>
       </div>

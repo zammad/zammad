@@ -127,9 +127,9 @@ useFormBlock(contextReactive, onInputClick)
     >
       <div v-if="hasValue" class="flex grow flex-wrap gap-1" role="list">
         <div
-          v-for="selectedValue in valueContainer"
+          v-for="(selectedValue, idx) in valueContainer"
           :key="selectedValue"
-          class="flex items-center text-base leading-[19px] after:content-[','] last:after:content-none"
+          class="flex items-center text-base leading-[19px]"
           role="listitem"
         >
           <CommonIcon
@@ -137,11 +137,10 @@ useFormBlock(contextReactive, onInputClick)
             :name="getSelectedOptionIcon(selectedValue)"
             size="tiny"
             class="ltr:mr-1 rtl:ml-1"
-          />
-          {{
+          />{{
             getSelectedOptionLabel(selectedValue) ||
             i18n.t('%s (unknown)', selectedValue)
-          }}
+          }}{{ idx === valueContainer.length - 1 ? '' : ',' }}
         </div>
       </div>
       <CommonIcon
