@@ -132,6 +132,7 @@ class App.ControllerGenericIndex extends App.Controller
         explanation: @pageData.explanation
         groupBy: @groupBy
         dndCallback: @dndCallback
+        cloneCallback: @clone
       },
       @pageData.tableExtend
     )
@@ -188,11 +189,12 @@ class App.ControllerGenericIndex extends App.Controller
   newControllerClass: ->
     App.ControllerGenericNew
 
-  new: (e) =>
-    e.preventDefault()
+  new: (e, item) =>
+    e?.preventDefault()
     constructor = @newControllerClass()
 
     new constructor(
+      item:             item
       pageData:         @pageData
       genericObject:    @genericObject
       container:        @container
@@ -202,6 +204,9 @@ class App.ControllerGenericIndex extends App.Controller
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
     )
+
+  clone: (item) =>
+    @new(null, item)
 
   payload: (e) ->
     e.preventDefault()
