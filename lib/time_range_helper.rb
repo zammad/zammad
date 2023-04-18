@@ -11,6 +11,8 @@ class TimeRangeHelper
       from += value.minutes
     when 'hour'
       from += value.hours
+    when 'week'
+      from += value.weeks
     when 'month'
       from += value.months
     when 'year'

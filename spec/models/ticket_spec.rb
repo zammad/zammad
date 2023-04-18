@@ -578,6 +578,13 @@ RSpec.describe Ticket, type: :model do
 
           include_examples 'verify'
         end
+
+        context 'and value in weeks' do
+          let(:relative_value) { 2 }
+          let(:relative_range) { :weeks }
+
+          include_examples 'verify'
+        end
       end
 
       context 'with "ticket.action" => { "value" => "delete" } in "perform" hash' do
