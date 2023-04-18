@@ -119,11 +119,6 @@ sudo systemctl restart elasticsearch.service
 
 ## Redis
 
-If you would like to develop something for the new mobile front end, you need
-
-- to set `ENABLE_EXPERIMENTAL_MOBILE_FRONTEND` to `true`
-- and install a Redis server on your machine.
-
 For macOS:
 
 ```screen

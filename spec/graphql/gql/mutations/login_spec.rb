@@ -5,12 +5,6 @@ require 'rails_helper'
 # Login and logout work only via controller, so use type: request.
 RSpec.describe Gql::Mutations::Login, type: :request do
 
-  # Temporary Hack: skip tests if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
-  # TODO: Remove when this switch is not needed any more.
-  around do |example|
-    example.run if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
-  end
-
   context 'when logging on' do
     let(:agent_password) { 'some_test_password' }
     let(:agent)          { create(:agent, password: agent_password) }

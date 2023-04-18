@@ -14,6 +14,7 @@ targets:
       - epel-release
       - imlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-1.4.9-8.el7.x86_64.rpm
       - https://download.fedoraproject.org/pub/epel/7/x86_64/Packages/i/imlib2-devel-1.4.9-8.el7.x86_64.rpm
@@ -28,6 +29,7 @@ targets:
       - epel-release
       - imlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-1.4.9-8.el8.x86_64.rpm
       - https://download.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/i/imlib2-devel-1.4.9-8.el8.x86_64.rpm
@@ -40,6 +42,7 @@ targets:
       - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -52,6 +55,7 @@ targets:
       - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -64,6 +68,7 @@ targets:
       - postgresql|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -76,6 +81,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -88,6 +94,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -100,6 +107,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -112,6 +120,7 @@ targets:
       - postgresql|mysql-server|mariadb-server
       - libimlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       - libimlib2
       - libimlib2-dev
@@ -124,6 +133,7 @@ targets:
       - postgresql-server
       - libImlib2-1
       - imlib2
+      - redis
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
@@ -142,6 +152,7 @@ targets:
       - libImlib2-1
       - imlib2
       - shared-mime-info
+      - redis
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
@@ -163,5 +174,6 @@ env:
   - ZAMMAD_WEBSOCKET_PORT=6042
 services:
   - postgres:13
+  - redis
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh

@@ -279,10 +279,6 @@ class SessionsController < ApplicationController
       config['session_id'] = session.id.public_id
     end
 
-    # Temporary Hack: include the info about mobile frontend switch in the frontend config.
-    # TODO: Remove when this switch is not needed any more.
-    config['mobile_frontend_enabled'] = ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
-
     config
   end
 
