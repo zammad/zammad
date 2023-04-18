@@ -103,17 +103,35 @@ class TriggerWebhookJob < ApplicationJob
     }
   end
 
-  def payload
-    if webhook.custom_payload.present?
-      tracks = { ticket:, article: }
-      event  = { type: event_type, execution: execution_type, changes:, user_id: }
-
-      return TriggerWebhookJob::CustomPayload.generate(webhook.custom_payload, tracks, event)
-    end
-
+  def default_payload
     {
       ticket:  TriggerWebhookJob::RecordPayload.generate(ticket),
       article: TriggerWebhookJob::RecordPayload.generate(article),
     }
+  end
+
+  def payload
+    return generate_custom_payload if webhook.customized_payload || webhook.pre_defined_webhook_type.present?
+
+    default_payload
+  end
+
+  def pre_defined_webhook_payload
+    TriggerWebhookJob::CustomPayload::PreDefined.payload(webhook.pre_defined_webhook_type)
+  end
+
+  def generate_custom_payload
+    tracks = { ticket:, article: }
+    event  = { type: event_type, execution: execution_type, changes:, user_id: }
+
+    payload = webhook.custom_payload
+
+    if payload.blank?
+      return default_payload if webhook.pre_defined_webhook_type.blank?
+
+      payload = pre_defined_webhook_payload
+    end
+
+    TriggerWebhookJob::CustomPayload.generate(payload, tracks, event, webhook)
   end
 end

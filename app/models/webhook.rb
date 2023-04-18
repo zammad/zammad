@@ -5,6 +5,7 @@ class Webhook < ApplicationModel
   include ChecksHtmlSanitized
   include HasCollectionUpdate
 
+  before_save    :reset_custom_payload
   before_destroy Webhook::EnsureNoRelatedObjects
 
   validates :name, presence: true
@@ -14,7 +15,17 @@ class Webhook < ApplicationModel
   validates :note, length: { maximum: 500 }
   sanitized_html :note
 
+  store :preferences
+
   private
+
+  def reset_custom_payload
+    return true if customized_payload
+
+    self.custom_payload = nil
+
+    true
+  end
 
   def validate_endpoint
     uri = URI.parse(endpoint)

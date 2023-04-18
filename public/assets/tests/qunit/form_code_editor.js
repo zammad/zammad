@@ -21,7 +21,7 @@ QUnit.test('form code editor', (assert) => {
   assert.deepEqual(params, test_params, 'default param check')
 
   var initDelay = 350
-  var updateDelay = 500
+  var updateDelay = 1000
 
   setTimeout(() => {
 

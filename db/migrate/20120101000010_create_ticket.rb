@@ -548,7 +548,10 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :basic_auth_username,        :string, limit: 250,              null: true
       t.column :basic_auth_password,        :string, limit: 250,              null: true
       t.column :note,                       :string, limit: 500,              null: true
+      t.column :pre_defined_webhook_type,   :string, limit: 250,              null: true
+      t.column :customized_payload,         :boolean,                         null: false, default: false
       t.column :custom_payload,             :text, limit: 500.kilobytes + 1,  null: true
+      t.column :preferences,                :text, limit: 500.kilobytes + 1,  null: true
       t.column :active,                     :boolean,                         null: false, default: true
       t.column :updated_by_id,              :integer,                         null: false
       t.column :created_by_id,              :integer,                         null: false

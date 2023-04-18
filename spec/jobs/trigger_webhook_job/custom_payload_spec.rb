@@ -6,11 +6,12 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
 
   # rubocop:disable Lint/InterpolationCheck
   describe '.generate' do
-    subject(:generate) { described_class.generate(record, { ticket:, article: }, event) }
+    subject(:generate) { described_class.generate(record, { ticket:, article: }, event, webhook) }
 
-    let(:ticket)  { create(:ticket) }
-    let(:article) { create(:ticket_article, body: "Text with\nnew line.") }
-    let(:event)   { {} }
+    let(:ticket)    { create(:ticket) }
+    let(:article)   { create(:ticket_article, body: "Text with\nnew line.") }
+    let(:event)     { {} }
+    let(:webhook)   { create(:webhook) }
 
     context 'when the payload is empty' do
       let(:record) { {}.to_json }
@@ -241,6 +242,23 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
           expect(generate['message']).to include('Updated by')
           expect(generate['changes']).to include('state: open -> closed')
         end
+
+        context 'without changes' do
+          let(:event) do
+            {
+              type:      'update',
+              execution: 'trigger',
+              user_id:   1,
+            }
+          end
+
+          it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+            expect(generate['subject']).to eq(ticket.title)
+            expect(generate['body']).to eq(article.body_as_text)
+            expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+            expect(generate['message']).to include('Updated by')
+          end
+        end
       end
 
       context "when the event is of the type 'info'" do
@@ -335,6 +353,25 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         end
       end
 
+    end
+
+    context 'when pre defined webhook is used' do
+      let(:record)    { { 'text' => '#{ticket.title}', 'channel' => '#{webhook.messaging_channel}' }.to_json }
+      let(:json_data) { { 'text' => 'Test Ticket', 'channel' => webhook.preferences['pre_defined_webhook']['messaging_channel'] } }
+      let(:webhook)   { create(:mattermost_webhook) }
+
+      it 'returns replaced webhook variables' do
+        expect(generate).to eq(json_data)
+      end
+
+      context 'with not existing pre defined webhook field' do
+        let(:record)    { { 'channel' => '#{webhook.wrong}' }.to_json }
+        let(:json_data) { { 'channel' => '#{webhook.wrong / no such method}' } }
+
+        it 'returns replaced webhook variables' do
+          expect(generate).to eq(json_data)
+        end
+      end
     end
   end
   # rubocop:enable Lint/InterpolationCheck

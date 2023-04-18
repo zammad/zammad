@@ -3772,6 +3772,11 @@ ol.tabs li {
   .btn--action & {
     opacity: var(--interactive-primary);
   }
+
+  .btn--success & {
+    fill: var(--text-inverted);
+    opacity: 1;
+  }
 }
 
 .icon-arrow-left,
@@ -10712,6 +10717,22 @@ label + .wizard-buttonList {
 
       @include rtl(margin-left, 0);
       @include rtl(margin-right, 10px);
+    }
+  }
+
+  &--align-start {
+    justify-content: flex-start;
+
+    & > label {
+      flex-direction: row-reverse;
+
+      .zammad-switch {
+        margin-left: 0;
+        margin-right: 10px;
+
+        @include rtl(margin-right, 0);
+        @include rtl(margin-left, 10px);
+      }
     }
   }
 

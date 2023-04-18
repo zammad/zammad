@@ -1664,38 +1664,12 @@ App.Config.set( 'layout_ref/calendar_subscriptions', CalendarSubscriptionsRef, '
 
 class ButtonsRef extends App.ControllerAppContent
 
-  elements:
-    '.js-submitDropdown': 'buttonDropdown'
-
-  events:
-    'click .js-openDropdown':        'toggleMenu'
-    'mouseenter .js-dropdownAction': 'onActionMouseEnter'
-    'mouseleave .js-dropdownAction': 'onActionMouseLeave'
-
   constructor: ->
     super
     @render()
 
   render: ->
     @html App.view('layout_ref/buttons')
-
-  toggleMenu: =>
-    if @buttonDropdown.hasClass('is-open')
-      @closeMenu()
-      return
-    @openMenu()
-
-  closeMenu: =>
-    @buttonDropdown.removeClass 'is-open'
-
-  openMenu: =>
-    @buttonDropdown.addClass 'is-open'
-
-  onActionMouseEnter: (e) =>
-    @$(e.currentTarget).addClass('is-active')
-
-  onActionMouseLeave: (e) =>
-    @$(e.currentTarget).removeClass('is-active')
 
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 

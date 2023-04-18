@@ -493,6 +493,10 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr ""
 
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid "A Webhook can be fired by Triggers and Schedulers, don't forget to define them!"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -6632,6 +6636,10 @@ msgstr ""
 msgid "Material"
 msgstr ""
 
+#: app/models/webhook/pre_defined/mattermost.rb
+msgid "Mattermost Notifications"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Mattermost, RocketChat"
 msgstr ""
@@ -6740,6 +6748,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
+msgstr ""
+
+#: app/models/webhook/pre_defined/mattermost.rb
+msgid "Messaging Channel"
+msgstr ""
+
+#: app/models/webhook/pre_defined/mattermost.rb
+msgid "Messaging Icon URL"
+msgstr ""
+
+#: app/models/webhook/pre_defined/mattermost.rb
+msgid "Messaging Username"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
@@ -7221,6 +7241,7 @@ msgstr ""
 msgid "New user?"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -8273,6 +8294,15 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid "Pre-defined Webhook"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/webhook.coffee
+msgid "Pre-defined webhook for %s."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Pretty Date"
 msgstr ""
@@ -8788,6 +8818,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
+msgstr ""
+
+#: app/models/webhook/pre_defined/rocket_chat.rb
+msgid "Rocket Chat Notifications"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -9645,6 +9679,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Slack"
+msgstr ""
+
+#: app/models/webhook/pre_defined/slack.rb
+msgid "Slack Notifications"
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -10923,6 +10961,10 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "This is a default maintenance message. Click here to change."
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
+msgid "This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each Webhook."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -12528,8 +12570,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "You can find a tutorial on how to manage a %s in our online documentation %l."
 msgstr ""
 

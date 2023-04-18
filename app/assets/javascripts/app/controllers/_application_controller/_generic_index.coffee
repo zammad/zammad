@@ -1,10 +1,10 @@
 class App.ControllerGenericIndex extends App.Controller
   events:
-    'click [data-type=edit]': 'edit'
-    'click [data-type=new]': 'new'
+    'click [data-type=edit]':    'edit'
+    'click [data-type=new]':     'new'
     'click [data-type=payload]': 'payload'
-    'click [data-type=import]': 'import'
-    'click .js-description': 'description'
+    'click [data-type=import]':  'import'
+    'click .js-description':     'description'
 
   constructor: ->
     super
