@@ -74,6 +74,7 @@ const secondaryOrganizations = computed(() =>
       :attributes="objectAttributes"
       :object="user"
       :skip-attributes="['firstname', 'lastname']"
+      :always-show-after-fields="user.policy.update"
     >
       <template v-if="user.policy.update" #after-fields>
         <CommonButton

@@ -11,6 +11,7 @@ export interface Props {
   attributes: ObjectManagerFrontendAttribute[]
   skipAttributes?: string[]
   accessors?: Record<string, string>
+  alwaysShowAfterFields?: boolean
 }
 
 const props = defineProps<Props>()
@@ -19,7 +20,10 @@ const { fields } = useDisplayObjectAttributes(props)
 </script>
 
 <template>
-  <Component :is="objectAttributesConfig.outer" v-if="fields.length">
+  <Component
+    :is="objectAttributesConfig.outer"
+    v-if="fields.length || props.alwaysShowAfterFields"
+  >
     <template v-for="field of fields" :key="field.attribute.name">
       <Component
         :is="objectAttributesConfig.wrapper"

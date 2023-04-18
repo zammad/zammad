@@ -8,7 +8,7 @@ module Gql::Types::Input
 
     argument :firstname, String, required: false, description: 'The user first name'
     argument :lastname, String, required: false, description: 'The user last name'
-    argument :email, String, description: 'The user email'
+    argument :email, String, required: false, description: 'The user email'
     argument :password, String, required: false, description: 'The user password'
     argument :organization_id, GraphQL::Types::ID, required: false, description: 'The organization the user belongs to', loads: Gql::Types::OrganizationType
     argument :organization_ids, [GraphQL::Types::ID], required: false, description: 'The secondary organizations the user belongs to', loads: Gql::Types::OrganizationType

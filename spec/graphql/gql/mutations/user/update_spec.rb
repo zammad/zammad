@@ -129,5 +129,17 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
         end
       end
     end
+
+    context 'when user is email-less' do
+      let(:user)      { create(:user, :without_email) }
+      let(:firstname) { 'dummy test name' }
+      let(:input)     { { firstname: firstname } }
+
+      it 'updates User record' do
+        gql.execute(query, variables: variables)
+
+        expect(user.reload).to have_attributes(firstname: firstname)
+      end
+    end
   end
 end
