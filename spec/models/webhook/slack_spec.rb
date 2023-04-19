@@ -8,7 +8,7 @@ OAUTH_TOKEN = ENV['SLACK_CI_OAUTH_TOKEN']
 WEBHOOK_URL = ENV['SLACK_CI_WEBHOOK_URL']
 
 RSpec.describe 'Webhook > Slack', integration: true, performs_jobs: true, required_envs: %w[SLACK_CI_CHANNEL_NAME SLACK_CI_OAUTH_TOKEN SLACK_CI_WEBHOOK_URL], time_zone: 'Europe/London', use_vcr: true do # rubocop:disable RSpec/DescribeClass
-  let(:webhook) { create(:webhook, endpoint: WEBHOOK_URL, custom_payload: custom_payload) }
+  let(:webhook) { create(:webhook, endpoint: WEBHOOK_URL, customized_payload: true, custom_payload: custom_payload) }
   let(:perform) { { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } } }
 
   let(:custom_payload) do
