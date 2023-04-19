@@ -37,10 +37,7 @@ RSpec.describe BackgroundServices do
 
   describe '.available_services' do
     it 'matches existing classes' do
-      expect(described_class.available_services).to match_array [
-        BackgroundServices::Service::ProcessScheduledJobs,
-        BackgroundServices::Service::ProcessDelayedJobs
-      ]
+      expect(described_class.available_services).to contain_exactly(BackgroundServices::Service::ProcessScheduledJobs, BackgroundServices::Service::ProcessDelayedJobs)
     end
   end
 

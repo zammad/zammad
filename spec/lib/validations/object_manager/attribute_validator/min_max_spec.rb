@@ -37,7 +37,7 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::MinMax do
   context 'when validation should be performed' do
 
     shared_examples 'data_option validator' do |data_option:, data_option_value:, valid:, invalid:|
-      context "for data_option '#{data_option}'" do
+      context "with data_option '#{data_option}'" do
 
         before { attribute.data_option[data_option] = data_option_value }
 

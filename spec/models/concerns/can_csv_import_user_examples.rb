@@ -33,6 +33,7 @@ RSpec.shared_examples 'CanCsvImport - User specific tests', :aggregate_failures 
           expect { result }.not_to change(User, :count)
         end
       end
+
       context 'with :try' do
         include_examples 'checks error handling'
       end

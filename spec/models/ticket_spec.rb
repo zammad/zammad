@@ -66,7 +66,7 @@ RSpec.describe Ticket, type: :model do
 
         it 'returns a list of unique tickets (i.e., no duplicates)' do
           expect(described_class.selectors(condition, limit: 100, access: 'full'))
-            .to match_array([2, tickets.to_a])
+            .to contain_exactly(2, tickets.to_a)
         end
       end
 
@@ -95,7 +95,7 @@ RSpec.describe Ticket, type: :model do
 
           it 'returns the customer tickets' do
             expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: customer))
-              .to match_array([3, include(ticket1, ticket2, ticket3)])
+              .to contain_exactly(3, include(ticket1, ticket2, ticket3))
           end
         end
       end
@@ -2172,7 +2172,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to match_array([1, [ticket_normal].to_a])
+          .to contain_exactly(1, [ticket_normal].to_a)
       end
 
       it 'pre condition is not not_set' do
@@ -2184,7 +2184,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to match_array([1, [ticket_mentions].to_a])
+          .to contain_exactly(1, [ticket_mentions].to_a)
       end
 
       it 'pre condition is current_user.id' do
@@ -2196,7 +2196,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to match_array([1, [ticket_mentions].to_a])
+          .to contain_exactly(1, [ticket_mentions].to_a)
       end
 
       it 'pre condition is not current_user.id' do
@@ -2208,7 +2208,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full', current_user: user_mentions))
-          .to match_array([0, []])
+          .to contain_exactly(0, [])
       end
 
       it 'pre condition is specific' do
@@ -2221,7 +2221,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to match_array([1, [ticket_mentions].to_a])
+          .to contain_exactly(1, [ticket_mentions].to_a)
       end
 
       it 'pre condition is not specific' do
@@ -2234,7 +2234,7 @@ RSpec.describe Ticket, type: :model do
         }
 
         expect(described_class.selectors(condition, limit: 100, access: 'full'))
-          .to match_array([0, []])
+          .to contain_exactly(0, [])
       end
     end
   end

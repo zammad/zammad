@@ -152,7 +152,7 @@ RSpec.describe Tag, type: :model do
       it 'removes no longer present tags' do
         described_class.tag_update(object: 'Ticket', items: ['tag1'], o_id: ticket.id, created_by_id: 1)
 
-        expect(ticket.tag_list).to match_array ['tag1']
+        expect(ticket.tag_list).to contain_exactly('tag1')
       end
 
       it 'adds and removes no longer present tags at once' do
@@ -214,16 +214,11 @@ RSpec.describe Tag, type: :model do
       let(:tag)      { 'foo' }
 
       it 'returns references' do
-        expect(described_class.tag_references(tag: tag)).to match_array [
-          [object_1.class.name, object_1.id],
-          [object_2.class.name, object_2.id]
-        ]
+        expect(described_class.tag_references(tag: tag)).to contain_exactly([object_1.class.name, object_1.id], [object_2.class.name, object_2.id])
       end
 
       it 'returns references for the given object type' do
-        expect(described_class.tag_references(tag: tag, object: 'Ticket')).to match_array [
-          [object_1.class.name, object_1.id]
-        ]
+        expect(described_class.tag_references(tag: tag, object: 'Ticket')).to contain_exactly([object_1.class.name, object_1.id])
       end
     end
 

@@ -26,17 +26,12 @@ RSpec.describe History, type: :model do
           let(:list) { described_class.list(object.class.name, object.id) }
 
           it 'returns an array of attribute hashes for those histories' do
-            expect(list).to match_array(
-              [
-                hash_including(
-                  'o_id' => object.id,
-                ),
-                hash_including(
-                  'o_id'     => object.id,
-                  'value_to' => 'foo@example.com',
-                )
-              ]
-            )
+            expect(list).to contain_exactly(hash_including(
+                                              'o_id' => object.id,
+                                            ), hash_including(
+                                                 'o_id'     => object.id,
+                                                 'value_to' => 'foo@example.com',
+                                               ))
           end
 
           it 'replaces *_id attributes with the corresponding association #name' do
@@ -103,20 +98,14 @@ RSpec.describe History, type: :model do
           let(:list) { described_class.list(object.class.name, object.id, 'Ticket::Article') }
 
           it 'returns an array of attribute hashes for those histories' do
-            expect(list).to match_array(
-              [
-                hash_including(
-                  'o_id'   => object.id,
-                ),
-                hash_including(
-                  'o_id'   => related_object.id,
-                ),
-                hash_including(
-                  'o_id'     => object.id,
-                  'value_to' => 'Lorem ipsum dolor',
-                )
-              ]
-            )
+            expect(list).to contain_exactly(hash_including(
+                                              'o_id' => object.id,
+                                            ), hash_including(
+                                                 'o_id' => related_object.id,
+                                               ), hash_including(
+                                                    'o_id'     => object.id,
+                                                    'value_to' => 'Lorem ipsum dolor',
+                                                  ))
           end
 
           it 'replaces *_id attributes with the corresponding association #name' do

@@ -40,7 +40,7 @@ RSpec.describe MonitoringHelper::HealthChecker::DelayedJob do
       job2 = Delayed::Job.enqueue(SampleJob.new)
       job2.update!(attempts: 5)
 
-      expect(instance.send(:scope)).to match_array([job2])
+      expect(instance.send(:scope)).to contain_exactly(job2)
     end
   end
 

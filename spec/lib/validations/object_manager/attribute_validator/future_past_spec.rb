@@ -18,7 +18,7 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::FuturePast do
   it_behaves_like 'validate backend'
 
   shared_examples 'data_option validator' do |data_option:, value:|
-    context "for data_option '#{data_option}'" do
+    context "with data_option '#{data_option}'" do
 
       let(:value) { value }
 

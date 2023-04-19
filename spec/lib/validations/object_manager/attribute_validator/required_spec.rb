@@ -27,7 +27,7 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::Required do
 
       before { UserInfo.current_user_id = performing_user.id }
 
-      context "for applying permission (#{permission})" do
+      context "when applying permission (#{permission})" do
 
         let(:permission) { permission }
 

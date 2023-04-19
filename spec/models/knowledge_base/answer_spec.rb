@@ -80,7 +80,7 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
       answer3 = create(:knowledge_base_answer, published_at: 1.minute.ago)
       answer3.update! updated_at: 1.day.ago
 
-      expect(described_class.sorted_by_published).to match_array [answer3, answer1, answer2]
+      expect(described_class.sorted_by_published).to contain_exactly(answer3, answer1, answer2)
     end
   end
 
@@ -100,7 +100,7 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
       answer5.update! updated_at: 1.week.ago
       _answer6 = create(:knowledge_base_answer, internal_at: nil, published_at: nil)
 
-      expect(described_class.sorted_by_internally_published).to match_array [answer4, answer3, answer1, answer2, answer5]
+      expect(described_class.sorted_by_internally_published).to contain_exactly(answer4, answer3, answer1, answer2, answer5)
     end
   end
 end

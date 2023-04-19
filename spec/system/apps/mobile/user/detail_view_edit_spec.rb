@@ -87,7 +87,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     it 'shows links to open and closed issues' do
       expect(find_all('[data-test-id="section-menu-item"]'))
-        .to match_array [have_text("open\n1"), have_text("closed\n2")]
+        .to contain_exactly(have_text("open\n1"), have_text("closed\n2"))
     end
   end
 

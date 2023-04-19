@@ -33,6 +33,7 @@ RSpec.shared_examples 'CanCsvImport - TextModule specific tests', :aggregate_fai
           expect { result }.not_to change(Organization, :count)
         end
       end
+
       context 'with :try' do
         include_examples 'checks error handling'
       end

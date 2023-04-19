@@ -36,6 +36,7 @@ RSpec.shared_examples 'CanCsvImport - Ticket specific tests', :aggregate_failure
           expect { result }.not_to change(Ticket, :count)
         end
       end
+
       context 'with :try' do
         include_examples 'checks error handling'
       end

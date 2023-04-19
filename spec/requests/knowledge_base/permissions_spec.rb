@@ -31,8 +31,8 @@ RSpec.describe 'KnowledgeBase permissions', authenticated_as: :current_user, typ
     {
       'inherited'    => be_empty,
       'permissions'  => be_empty,
-      'roles_reader' => match_array([{ 'id' => role_agent.id, 'name' => 'Agent' }]),
-      'roles_editor' => match_array([{ 'id' => role_admin.id, 'name' => 'Admin' }])
+      'roles_reader' => contain_exactly({ 'id' => role_agent.id, 'name' => 'Agent' }),
+      'roles_editor' => contain_exactly({ 'id' => role_admin.id, 'name' => 'Admin' })
     }
   end
 

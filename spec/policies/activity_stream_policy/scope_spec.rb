@@ -41,7 +41,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'returns agent ActivityStreams (w/o permission: nil)' do
         expect(scope.resolve)
-          .to match_array([activity_streams[:agent][:groupless]])
+          .to contain_exactly(activity_streams[:agent][:groupless])
       end
 
       it 'does not include groups’ agent ActivityStreams' do
@@ -55,8 +55,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'returns same ActivityStreams as groupless agent, plus groups’ (WITH permission: nil)' do
         expect(scope.resolve)
-          .to match_array([activity_streams[:permissionless][:grouped],
-                           *activity_streams[:agent].values])
+          .to contain_exactly(activity_streams[:permissionless][:grouped], *activity_streams[:agent].values)
       end
     end
 
@@ -71,8 +70,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'returns agent/admin ActivityStreams (w/o permission: nil)' do
         expect(scope.resolve)
-          .to match_array([activity_streams[:admin][:groupless],
-                           activity_streams[:agent][:groupless]])
+          .to contain_exactly(activity_streams[:admin][:groupless], activity_streams[:agent][:groupless])
       end
 
       it 'does not include groups’ agent ActivityStreams' do
@@ -92,9 +90,7 @@ RSpec.describe ActivityStreamPolicy::Scope do
 
       it 'returns same ActivityStreams as groupless admin, plus groups’ (WITH permission: nil)' do
         expect(scope.resolve)
-          .to match_array([activity_streams[:permissionless][:grouped],
-                           *activity_streams[:admin].values,
-                           *activity_streams[:agent].values])
+          .to contain_exactly(activity_streams[:permissionless][:grouped], *activity_streams[:admin].values, *activity_streams[:agent].values)
       end
     end
   end

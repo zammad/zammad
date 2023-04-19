@@ -665,7 +665,7 @@ RSpec.describe Taskbar, type: :model do
     before { taskbar_1 && taskbar_2 && taskbar_3 && taskbar_4 }
 
     it 'returns all taskbars with the same key except given taskbars' do
-      expect(described_class.related_taskbars(taskbar_1)).to match_array([taskbar_2, taskbar_3])
+      expect(described_class.related_taskbars(taskbar_1)).to contain_exactly(taskbar_2, taskbar_3)
     end
   end
 end

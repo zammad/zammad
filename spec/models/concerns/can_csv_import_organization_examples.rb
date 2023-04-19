@@ -37,6 +37,7 @@ RSpec.shared_examples 'CanCsvImport - Organization specific tests', :aggregate_f
           expect { result }.not_to change(Organization, :count)
         end
       end
+
       context 'with :try' do
         include_examples 'checks error handling'
       end
