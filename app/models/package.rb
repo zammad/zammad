@@ -349,18 +349,23 @@ returns
       Package::Migration.migrate(package['name'], 'reverse')
     end
 
-    package['files'].each do |file|
-      permission = file['permission'] || '644'
-      content    = Base64.decode64(file['content'])
-      _delete_file(file['location'], permission, content)
+    record = Package.find_by(
+      name:    package['name'],
+      version: package['version'],
+    )
+
+    if record.state == 'installed'
+      package['files'].each do |file|
+        permission = file['permission'] || '644'
+        content    = Base64.decode64(file['content'])
+        _delete_file(file['location'], permission, content)
+      end
     end
 
     # delete package
-    if !data[:reinstall]
-      record = Package.find_by(
-        name:    package['name'],
-        version: package['version'],
-      )
+    if data[:reinstall]
+      record.update(state: 'uninstalled')
+    else
       record.destroy
     end
 
