@@ -507,7 +507,7 @@ li.CodeMirror-hint-active kbd {
 }
 
 .cm-s-zammad .CodeMirror-gutters {
-  background: var(--background-tertiary);
+  background: var(--background-modifier-accent);
   color: var(--text-muted);
   border: none;
 }
