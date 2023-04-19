@@ -3,7 +3,7 @@ class App.Manage extends App.ControllerNavSidbar
   configKey: 'NavBarAdmin'
 
 class ManageRouter extends App.ControllerPermanent
-  requiredPermission: ['admin.*']
+  @requiredPermission: ['admin.*']
 
   constructor: (params) ->
     super

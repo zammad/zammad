@@ -1,5 +1,5 @@
 class Monitoring extends App.ControllerSubContent
-  requiredPermission: 'admin.monitoring'
+  @requiredPermission: 'admin.monitoring'
   header: __('Monitoring')
   events:
     'click .js-resetToken': 'resetToken'

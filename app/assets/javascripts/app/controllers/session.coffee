@@ -1,5 +1,5 @@
 class Session extends App.ControllerSubContent
-  requiredPermission: 'admin.session'
+  @requiredPermission: 'admin.session'
   header: __('Sessions')
   events:
     'click .js-delete': 'destroy'

@@ -349,7 +349,7 @@ class App.Search extends App.Controller
     @savedOrderBy[model] = { order: table.lastOrderBy, direction: table.lastOrderDirection }
 
 class Router extends App.ControllerPermanent
-  requiredPermission: ['*']
+  @requiredPermission: ['*']
 
   constructor: (params) ->
     super

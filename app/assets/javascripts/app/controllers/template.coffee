@@ -1,5 +1,5 @@
 class Template extends App.ControllerSubContent
-  requiredPermission: 'admin.template'
+  @requiredPermission: 'admin.template'
   header: __('Templates')
   constructor: ->
     super

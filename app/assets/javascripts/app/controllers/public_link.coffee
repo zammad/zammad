@@ -1,5 +1,5 @@
 class PublicLink extends App.ControllerSubContent
-  requiredPermission: 'admin.public_link'
+  @requiredPermission: 'admin.public_link'
   header: __('Public Links')
   constructor: ->
     super

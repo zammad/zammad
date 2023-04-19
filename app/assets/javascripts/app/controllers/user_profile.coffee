@@ -1,4 +1,6 @@
 class App.UserProfile extends App.Controller
+  @requiredPermission: ['ticket.agent', 'admin.user']
+
   constructor: (params) ->
     super
 
@@ -80,7 +82,8 @@ class App.UserProfile extends App.Controller
     @$('.profile').scrollTop()
 
 class Router extends App.ControllerPermanent
-  requiredPermission: 'ticket.agent'
+  @requiredPermission: ['ticket.agent', 'admin.user']
+
   constructor: (params) ->
     super
 

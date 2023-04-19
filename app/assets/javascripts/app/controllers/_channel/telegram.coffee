@@ -1,5 +1,5 @@
 class ChannelTelegram extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_telegram'
+  @requiredPermission: 'admin.channel_telegram'
   events:
     'click .js-new':     'new'
     'click .js-edit':    'edit'

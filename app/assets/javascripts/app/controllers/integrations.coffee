@@ -1,5 +1,5 @@
 class Integrations extends App.ControllerSubContent
-  requiredPermission: 'admin.integration'
+  @requiredPermission: 'admin.integration'
   header: __('Integrations')
   constructor: ->
     super

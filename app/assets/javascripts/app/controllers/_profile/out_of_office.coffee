@@ -1,5 +1,5 @@
 class ProfileOutOfOffice extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.out_of_office+ticket.agent'
+  @requiredPermission: 'user_preferences.out_of_office+ticket.agent'
   header: __('Out of Office')
   events:
     'submit form': 'submit'

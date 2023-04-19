@@ -1,5 +1,5 @@
 class Job extends App.ControllerSubContent
-  requiredPermission: 'admin.scheduler'
+  @requiredPermission: 'admin.scheduler'
   header: __('Scheduler')
   constructor: ->
     super

@@ -1,5 +1,5 @@
 class Translation extends App.ControllerSubContent
-  requiredPermission: 'admin.translation'
+  @requiredPermission: 'admin.translation'
   header: __('Translations')
   events:
     'click .js-resetChanges': 'resetChanges'

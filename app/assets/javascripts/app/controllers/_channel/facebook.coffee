@@ -1,5 +1,5 @@
 class ChannelFacebook extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_facebook'
+  @requiredPermission: 'admin.channel_facebook'
   header: __('Facebook')
   events:
     'click .js-new':       'new'

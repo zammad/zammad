@@ -1,5 +1,5 @@
 class ProfilePassword extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.password'
+  @requiredPermission: 'user_preferences.password'
   header: __('Password')
   events:
     'submit form': 'update'

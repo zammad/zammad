@@ -1,5 +1,5 @@
 class Index extends App.ControllerSubContent
-  requiredPermission: 'admin.webhook'
+  @requiredPermission: 'admin.webhook'
   header: __('Webhooks')
 
   events:

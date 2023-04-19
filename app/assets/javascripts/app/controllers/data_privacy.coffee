@@ -1,5 +1,5 @@
 class Index extends App.ControllerSubContent
-  requiredPermission: 'admin.data_privacy'
+  @requiredPermission: 'admin.data_privacy'
   header: __('Data Privacy')
   events:
     'click .js-new':         'new'

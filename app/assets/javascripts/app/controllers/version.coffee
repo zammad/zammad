@@ -1,5 +1,5 @@
 class Version extends App.ControllerSubContent
-  requiredPermission: 'admin'
+  @requiredPermission: 'admin'
   header: __('Version')
 
   constructor: ->

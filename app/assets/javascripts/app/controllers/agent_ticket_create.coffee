@@ -746,7 +746,7 @@ class App.TicketCreate extends App.Controller
     @formEnable(@$('.js-submit'), 'button')
 
 class Router extends App.ControllerPermanent
-  requiredPermission: 'ticket.agent'
+  @requiredPermission: 'ticket.agent'
   constructor: (params) ->
     super
 

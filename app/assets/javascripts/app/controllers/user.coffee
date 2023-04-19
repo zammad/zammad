@@ -1,5 +1,5 @@
 class User extends App.ControllerSubContent
-  requiredPermission: 'admin.user'
+  @requiredPermission: 'admin.user'
   header: __('Users')
   elements:
     '.js-search': 'searchInput'

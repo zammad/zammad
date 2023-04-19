@@ -77,7 +77,8 @@ class App.OrganizationProfile extends App.Controller
     @$('.profile').scrollTop()
 
 class Router extends App.ControllerPermanent
-  requiredPermission: 'ticket.agent'
+  @requiredPermission: ['ticket.agent', 'admin.organization']
+
   constructor: (params) ->
     super
 

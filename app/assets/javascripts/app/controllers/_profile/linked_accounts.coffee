@@ -1,5 +1,5 @@
 class ProfileLinkedAccounts extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.linked_accounts'
+  @requiredPermission: 'user_preferences.linked_accounts'
   header: __('Linked Accounts')
   events:
     'click .js-add':    'add'

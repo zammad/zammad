@@ -1,5 +1,5 @@
 class ProfileAvatar extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.avatar'
+  @requiredPermission: 'user_preferences.avatar'
   header: __('Avatar')
   elements:
     '.js-upload':      'fileInput'

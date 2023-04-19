@@ -97,7 +97,7 @@ class App.Dashboard extends App.Controller
     @$(".tab-content.#{target}").removeClass('hidden')
 
 class DashboardRouter extends App.ControllerPermanent
-  requiredPermission: ['*']
+  @requiredPermission: ['*']
 
   constructor: (params) ->
     super

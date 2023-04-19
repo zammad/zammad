@@ -1,5 +1,5 @@
 class ChannelWeb extends App.ControllerTabs
-  requiredPermission: 'admin.channel_web'
+  @requiredPermission: 'admin.channel_web'
   header: __('Web')
   constructor: ->
     super

@@ -1,5 +1,5 @@
 class Overview extends App.ControllerSubContent
-  requiredPermission: 'admin.overview'
+  @requiredPermission: 'admin.overview'
   header: __('Overviews')
   constructor: ->
     super

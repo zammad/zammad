@@ -1,5 +1,5 @@
 class Organization extends App.ControllerSubContent
-  requiredPermission: 'admin.organization'
+  @requiredPermission: 'admin.organization'
   header: __('Organizations')
   constructor: ->
     super

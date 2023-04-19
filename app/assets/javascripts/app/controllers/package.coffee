@@ -1,5 +1,5 @@
 class Package extends App.ControllerSubContent
-  requiredPermission: 'admin.package'
+  @requiredPermission: 'admin.package'
   header: __('Packages')
   events:
     'click .package-action[data-type="uninstall"]':  'action'

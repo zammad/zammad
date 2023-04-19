@@ -1,5 +1,5 @@
 class Router extends App.ControllerPermanent
-  requiredPermission: 'knowledge_base.*'
+  @requiredPermission: 'knowledge_base.*'
 
   constructor: (params) ->
     super

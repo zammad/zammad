@@ -1,5 +1,5 @@
 class CoreWorkflow extends App.ControllerSubContent
-  requiredPermission: 'admin.core_workflow'
+  @requiredPermission: 'admin.core_workflow'
   header: __('Core Workflows')
   constructor: ->
     super

@@ -305,7 +305,7 @@ class WidgetAvatar extends App.ControllerObserver
     @renderPopovers()
 
 class CTIRouter extends App.ControllerPermanent
-  requiredPermission: 'cti.agent'
+  @requiredPermission: 'cti.agent'
   constructor: (params) ->
     super
 

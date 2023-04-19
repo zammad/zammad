@@ -909,7 +909,7 @@ class App.OverviewSettings extends App.ControllerModal
     )
 
 class TicketOverviewRouter extends App.ControllerPermanent
-  requiredPermission: ['ticket.agent', 'ticket.customer']
+  @requiredPermission: ['ticket.agent', 'ticket.customer']
 
   constructor: (params) ->
     super

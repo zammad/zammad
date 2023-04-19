@@ -1,5 +1,5 @@
 class ProfileNotification extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.notifications+ticket.agent'
+  @requiredPermission: 'user_preferences.notifications+ticket.agent'
   header: __('Notifications')
   events:
     'submit form': 'update'

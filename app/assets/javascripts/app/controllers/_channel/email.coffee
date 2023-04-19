@@ -1,5 +1,5 @@
 class ChannelEmail extends App.ControllerTabs
-  requiredPermission: 'admin.channel_email'
+  @requiredPermission: 'admin.channel_email'
   header: __('Email')
   constructor: ->
     super
