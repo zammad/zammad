@@ -1,5 +1,0 @@
-'integration:minitest:idoit':
-  extends:
-    - .template_browser-integration_chrome
-  variables:
-    TEST_FILE: "test/integration/idoit_browser_test.rb"
