@@ -6794,6 +6794,10 @@ msgstr ""
 msgid "Microsoft Application Registration Portal"
 msgstr ""
 
+#: app/models/webhook/pre_defined/microsoft_teams.rb
+msgid "Microsoft Teams Notifications"
+msgstr ""
+
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco

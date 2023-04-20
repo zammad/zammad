@@ -78,9 +78,9 @@ module RSpecSlackHelper
       message_count = 0
 
       channel_history['messages'].each do |message|
-        next if !message['text']
+        next if !message['text'] && message['attachments'].blank?
 
-        if message['text'].include?(actual)
+        if message['text']&.include?(actual) || message['attachments'].try(:first)['text'].include?(actual)
           message_count += 1
         end
       end

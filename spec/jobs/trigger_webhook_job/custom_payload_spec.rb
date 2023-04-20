@@ -219,7 +219,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Created by')
           expect(generate['changes']).to include('State: new')
         end
@@ -238,7 +238,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Updated by')
           expect(generate['changes']).to include('state: open -> closed')
         end
@@ -255,7 +255,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
           it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
             expect(generate['subject']).to eq(ticket.title)
             expect(generate['body']).to eq(article.body_as_text)
-            expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+            expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
             expect(generate['message']).to include('Updated by')
           end
         end
@@ -274,7 +274,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Last updated at')
         end
       end
@@ -291,7 +291,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Escalated at')
           expect(generate['changes']).to include('has been escalated since')
         end
@@ -309,7 +309,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Will escalate at')
           expect(generate['changes']).to include('will escalate at')
         end
@@ -327,7 +327,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Reminder reached!')
           expect(generate['changes']).to include('reminder reached for')
         end
@@ -348,7 +348,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to be_empty
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Last updated at')
         end
       end

@@ -51,7 +51,7 @@ module TriggerWebhookJob::CustomPayload::Notification
   end
 
   def self.regex(extended)
-    source = '_<(?<link>.+)>:(?<message>.+)_\n(?<changes>.+)?'
+    source = '_<(?<link>.+)\|.+>:(?<message>.+)_\n(?<changes>.+)?'
     source = "#{source}\n{3,4}(?<body>.+)?" if extended
 
     Regexp.new(source, Regexp::MULTILINE)

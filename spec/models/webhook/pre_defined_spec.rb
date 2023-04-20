@@ -4,7 +4,12 @@ require 'rails_helper'
 
 RSpec.describe(Webhook::PreDefined) do
   it 'checks that pre defined webhook list can be used' do
-    expect(described_class.pre_defined_webhooks.sort_by(&:name)).to include(Webhook::PreDefined::Mattermost, Webhook::PreDefined::RocketChat, Webhook::PreDefined::Slack)
+    expect(described_class.pre_defined_webhooks.sort_by(&:name)).to include(
+      Webhook::PreDefined::Mattermost,
+      Webhook::PreDefined::MicrosoftTeams,
+      Webhook::PreDefined::RocketChat,
+      Webhook::PreDefined::Slack
+    )
   end
 
   context 'when definition is used' do
