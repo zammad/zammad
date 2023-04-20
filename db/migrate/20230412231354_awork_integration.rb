@@ -1,6 +1,8 @@
 class AworkIntegration < ActiveRecord::Migration[6.1]
   def up
 
+    change_column :http_logs, :response, :mediumtext
+
     # return if it's a new setup
     return if !Setting.exists?(name: 'system_init_done')
 
