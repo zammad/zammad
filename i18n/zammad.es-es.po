@@ -4380,7 +4380,7 @@ msgstr "Define el back-end de transacciones."
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4779,9 +4779,9 @@ msgstr "Duración"
 msgid "Easter holiday"
 msgstr "Festivos de Semana Santa"
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4962,7 +4962,7 @@ msgstr ""
 "No se ha podido verificar el envío y recepción de correos electrónicos. Por "
 "favor, compruebe la configuración."
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 "Correo electrónico enviado a \"%s\". Se ruega permitir al usuario comprobar "
@@ -5629,7 +5629,7 @@ msgstr "¡No se ha encontrado copia de seguridad en el canal!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "¡No se ha podido restaurar la migración del canal!"
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "No se pudo enviar el correo electrónico a \"%s\". Por favor, contacte con un "
@@ -6391,9 +6391,9 @@ msgid "Hint for adding an article to an existing ticket."
 msgstr "Indicio para añadir un artículo a un ticket existente."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Historial"
@@ -8240,7 +8240,7 @@ msgstr "Nueva plantilla"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8909,7 +8909,7 @@ msgstr "Orden de supervisión"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8953,7 +8953,7 @@ msgstr "Tickets de mi organización"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9329,9 +9329,11 @@ msgid "Please enter a valid email address."
 msgstr "Introduzca una dirección de correo electrónico válida."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
+#, fuzzy
+#| msgid ""
+#| "Please enter the endpoint and select the authentication method for "
+#| "accessing Exchange Web Services."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
 "Introduzca el endpoint y seleccione el método de autenticación para acceder "
 "a Exchange Web Services."
@@ -9871,7 +9873,7 @@ msgid "Requirements"
 msgstr "Requisitos"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr "Reenviar correo electrónico de verificación"
@@ -13565,7 +13567,7 @@ msgstr "Se usa cuando se ve un ticket"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -13660,7 +13662,7 @@ msgstr "Nombre de usuario para conexión proxy."
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco

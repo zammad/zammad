@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-07 08:23+0000\n"
-"Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
+"PO-Revision-Date: 2023-04-20 03:05+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
 "Language: hu\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -4405,7 +4405,7 @@ msgstr "Meghatározza a tranzakciós háttérrendszert."
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4800,9 +4800,9 @@ msgstr "Időtartam"
 msgid "Easter holiday"
 msgstr "Húsvét"
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4983,7 +4983,7 @@ msgstr ""
 "Az e-mail küldése és fogadása nem volt ellenőrizhető. Kérjük, ellenőrizze a "
 "beállításokat."
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 "E-mail elküldve a következő címre: \"%s\". Kérjük, hagyja, hogy a "
@@ -5650,7 +5650,7 @@ msgstr "Nem sikerült biztonsági mentést találni a csatornán!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Nem sikerült visszavonni a csatorna migrációját!"
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Nem sikerült e-mailt küldeni a következő címre: \"%s\". Kérjük, lépjen "
@@ -6412,9 +6412,9 @@ msgid "Hint for adding an article to an existing ticket."
 msgstr "Hasznos tipp egy cikk hozzáadásához egy meglévő jegyhez."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Előzmények"
@@ -8257,7 +8257,7 @@ msgstr "Új sablon"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8928,7 +8928,7 @@ msgstr "Az áttekintések sorrendje"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8972,7 +8972,7 @@ msgstr "Szervezet jegyek"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9346,12 +9346,8 @@ msgid "Please enter a valid email address."
 msgstr "Kérjük, adjon meg egy érvényes e-mail címet."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
-msgstr ""
-"Kérjük, adja meg a végpontot, és válassza ki az Exchange webszolgáltatások "
-"eléréséhez szükséges hitelesítési módszert."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
+msgstr "Kérjük, adja meg az Exchange webszolgáltatások elérésének végpontját."
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
@@ -9886,7 +9882,7 @@ msgid "Requirements"
 msgstr "Követelmények"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr "Ellenőrző e-mail újraküldése"
@@ -13553,7 +13549,7 @@ msgstr "Jegy megjelenítésekor használható"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -13646,7 +13642,7 @@ msgstr "Felhasználónév a proxy kapcsolathoz."
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14445,7 +14441,7 @@ msgstr ""
 "\n"
 "<p>Üdvözöljük #{user.firstname},</p>\n"
 "<br>\n"
-"<p>Az Ön #{config.product_name} fiókjának <b>#{{user.login}</b> jelszava "
+"<p>Az Ön #{config.product_name} fiókjának <b>#{user.login}</b> jelszava "
 "nemrég megváltozott.</p>\n"
 "<br>\n"
 "<p>Nem ismert Önnek ez a tevékenység? Amennyiben nem, lépjen kapcsolatba a "

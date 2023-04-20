@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-12-02 03:30+0000\n"
-"Last-Translator: Prometeus <prometeus17@gmail.com>\n"
+"PO-Revision-Date: 2023-04-01 03:05+0000\n"
+"Last-Translator: Martin Miškovič <miskovic.martin@gmail.com>\n"
 "Language-Team: Slovak <https://translations.zammad.org/projects/zammad/"
-"zammad-development/sk/>\n"
+"zammad-stable/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -47,7 +47,7 @@ msgstr "dd.mm.yyyy HH:MM"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid " to "
-msgstr ""
+msgstr " do "
 
 #: db/seeds/settings.rb
 msgid ""
@@ -56,6 +56,10 @@ msgid ""
 "filesystem. You can switch between the modules even on a system that is "
 "already in production without any loss of data."
 msgstr ""
+"\"Databáza\" ukladá všetky prílohy do databázy (neodporúča sa na ukladanie "
+"veľkého množstva dát). \"Súborový systém\" ukladá dáta na disk. Medzi "
+"modulmi môžete prepínať aj v systéme, ktorý už je na produkčnom prostredí, a "
+"to bez straty dát."
 
 #. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -73,6 +77,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Vytvoril #{current_user.longname} #{ticket."
+"updated_at}_\n"
+"* Skupina: #{ticket.group.name}\n"
+"* Vlastník: #{ticket.owner.fullname}\n"
+"* Stav: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -88,6 +103,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Eskalovaný o #{ticket.escalation_at}_\n"
+"Ticket (#{ticket.title}) od \"#{ticket.customer.longname}\" je v eskalácii "
+"od \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -122,6 +146,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Aktualizoval #{current_user.longname} #{ticket."
+"updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -137,6 +174,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Bude eskalovaný #{ticket.escalation_at}_\n"
+"Ticket (#{ticket.title}) od \"#{ticket.customer.longname}\" bude eskalovaný "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -155,6 +201,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} účet prepojený s aplikáciou tretej strany\n"
+"\n"
+"<div>Dobrý deň, #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Zdá sa, že ste svoj účet prepojili <b>s aplikáciou tretej strany</b> "
+"\"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Ak ste to nebyli Vy, odeberte prepojený účet z Vášho profilu a zmeňte "
+"si heslo v aplikácii tretej strany. Niekto mohol získať neoprávnený prístup "
+"k Vášmu účtu v aplikácii tretej strany.</div>\n"
+"<br>\n"
+"<div>Tím #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -2698,7 +2756,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
-msgstr "poznámka"
+msgstr "Poznámka"
 
 #: app/models/report.rb
 msgid "Communication"
@@ -4212,7 +4270,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4620,9 +4678,9 @@ msgstr ""
 msgid "Easter holiday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4803,7 +4861,7 @@ msgid ""
 "settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 
@@ -5413,7 +5471,7 @@ msgstr ""
 msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 
@@ -6205,9 +6263,9 @@ msgid "Hint for adding an article to an existing ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "História"
@@ -8036,7 +8094,7 @@ msgstr "Šablóny"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8688,7 +8746,7 @@ msgstr "Nový prehľad"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8736,7 +8794,7 @@ msgstr "Spoločnosti"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9125,9 +9183,7 @@ msgid "Please enter a valid email address."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
@@ -9682,7 +9738,7 @@ msgid "Requirements"
 msgstr "Požiadavky"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr ""
@@ -13299,7 +13355,7 @@ msgstr "Používané pri zobrazení tiketu"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -13396,7 +13452,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco

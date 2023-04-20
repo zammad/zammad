@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-18 03:05+0000\n"
-"Last-Translator: Michel Jouvin <michel.jouvin@ijclab.in2p3.fr>\n"
+"PO-Revision-Date: 2023-04-20 03:05+0000\n"
+"Last-Translator: Hypee <pascal@hypee.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -772,9 +772,8 @@ msgstr ""
 "notification d'escalade seront envoyées aux agents seulement pendant les "
 "heures ouvrées définies.\n"
 "\n"
-"Si vous vos clients ont différentes heures ouvrées, vous pouvez créer "
-"plusieurs calendriers. Les tickets sont liés aux calendriers en utilisant "
-"les **SLAs**."
+"Si vos clients ont différentes heures ouvrées, vous pouvez créer plusieurs "
+"calendriers. Les tickets sont liés aux calendriers en utilisant les **SLAs**."
 
 #: app/controllers/getting_started_controller.rb
 msgid "A URL looks like this: https://zammad.example.com"
@@ -1325,7 +1324,7 @@ msgstr "Tous les agents"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
-msgstr "Tout les agents sont occupés."
+msgstr "Tous les agents sont occupés."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -4394,7 +4393,7 @@ msgstr "Déinit le backend de transaction."
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4794,9 +4793,9 @@ msgstr "Durée"
 msgid "Easter holiday"
 msgstr "Vacance de pâques"
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4977,7 +4976,7 @@ msgstr ""
 "L'envoi et la réception de courriels n'a pas pu être vérifiée. Merci de "
 "vérifier les paramètres."
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr "Courriel envoyé à \"%s\". L'utilisateur doit vérifier sa boite."
 
@@ -5644,7 +5643,7 @@ msgstr "Impossible de trouver la sauvegarde sur le canal !"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "L'annulation de la migration du canal a échoué !"
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Echec d'envoi de l'email à \"%s\". Veuillez contacter un administrateur."
@@ -6411,9 +6410,9 @@ msgid "Hint for adding an article to an existing ticket."
 msgstr "Aide pour ajouter un article à un ticket existant."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Historique"
@@ -8268,7 +8267,7 @@ msgstr "Nouveau modèle"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8945,7 +8944,7 @@ msgstr "Ordre des aperçus"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -8990,7 +8989,7 @@ msgstr "Les tickets de ma société"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9367,9 +9366,11 @@ msgid "Please enter a valid email address."
 msgstr "Veuillez entrer une adresse email valide."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
+#, fuzzy
+#| msgid ""
+#| "Please enter the endpoint and select the authentication method for "
+#| "accessing Exchange Web Services."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
 "Merci de spécifier l'URL d'accès et de sélectionner la méthode "
 "d'authentification pour accéder à Exchange Web Services."
@@ -9917,7 +9918,7 @@ msgid "Requirements"
 msgstr "Prérequis"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr "Renvoyer l'email de vérification"
@@ -13685,7 +13686,7 @@ msgstr "Utilisé lors de la vue d'un ticket"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -13780,7 +13781,7 @@ msgstr "Nom d'utilisateur pour la connexion proxy."
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
