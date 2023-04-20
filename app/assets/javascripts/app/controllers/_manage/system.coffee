@@ -1,5 +1,5 @@
 class System extends App.ControllerTabs
-  requiredPermission: 'admin.setting_system'
+  @requiredPermission: 'admin.setting_system'
   header: __('System')
   constructor: ->
     super

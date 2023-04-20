@@ -1,11 +1,9 @@
 class App.MobileDetection
   @isMobile: ->
-    # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
-    App.Config.get('mobile_frontend_enabled') and isMobile()
+    isMobile()
 
   @isForcingDesktopView: ->
-    # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
-    App.Config.get('mobile_frontend_enabled') and App.LocalStorage.get('forceDesktopApp', false)
+    App.LocalStorage.get('forceDesktopApp', false)
 
   @clearForceDesktopApp: ->
     if App.LocalStorage.get('forceDesktopApp', false)
@@ -20,9 +18,6 @@ class App.MobileDetection
     window.location.href = target
 
   @redirectToMobile: =>
-    # TODO: Remove this when the mobile frontend switch is not needed any more.
-    return if not App.Config.get('mobile_frontend_enabled')
-
     @clearForceDesktopApp()
     @navigateToMobile()
 
@@ -54,7 +49,6 @@ class App.MobileDetectionPlugin extends App.Controller
 App.Config.set('mobile_detection', App.MobileDetectionPlugin, 'Plugins')
 
 if App.MobileDetection.isMobile() or App.LocalStorage.get('forceDesktopApp', false)
-  # TODO: Remove `mobile_frontend_enabled` check when this switch is not needed any more.
   App.Config.set('Mobile',
     {
       prio: 1500,
@@ -64,6 +58,5 @@ if App.MobileDetection.isMobile() or App.LocalStorage.get('forceDesktopApp', fal
       target: '#',
       onclick: true,
       key: 'MobileDetection',
-      setting: ['mobile_frontend_enabled']
     }
     , 'NavBarRight')

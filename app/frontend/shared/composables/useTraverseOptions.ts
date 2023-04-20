@@ -2,18 +2,22 @@
 
 import stopEvent from '@shared/utils/events'
 import { getFocusableElements } from '@shared/utils/getFocusableElements'
+import type { FocusableOptions } from '@shared/utils/getFocusableElements'
 import { onKeyStroke, unrefElement } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/shared'
 
 type TraverseDirection = 'horizontal' | 'vertical' | 'mixed'
 
-interface TraverseOptions {
+interface TraverseOptions extends FocusableOptions {
   onNext?(key: string, element: HTMLElement): boolean | null | void
   onPrevious?(key: string, element: HTMLElement): boolean | null | void
   /**
    * @default true
    */
   scrollIntoView?: boolean
+  /**
+   * @default 'vertical'
+   */
   direction?: TraverseDirection
   filterOption?: (element: HTMLElement, index: number) => boolean
   onArrowLeft?(): boolean | null | void
@@ -97,6 +101,7 @@ export const useTraverseOptions = (
 
       let elements = getFocusableElements(
         unrefElement(container) as HTMLElement,
+        options,
       )
 
       if (options.filterOption) {

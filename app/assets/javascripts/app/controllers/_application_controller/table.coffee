@@ -637,6 +637,11 @@ class App.ControllerTable extends App.Controller
         callback: (id) =>
           item = @model.find(id)
           item.name = "Clone: #{item.name}"
+
+          if @cloneCallback
+            @cloneCallback(item)
+            return
+
           new App.ControllerGenericNew(
             item: item
             pageData:

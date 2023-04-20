@@ -33,8 +33,10 @@ const addSignature = async (
 ) => {
   const ticketSignature = getTicketSignatureQuery()
   const { data: signature } = await ticketSignature.query({
-    groupId: ticket.group.id,
-    ticketId: ticket.id,
+    variables: {
+      groupId: ticket.group.id,
+      ticketId: ticket.id,
+    },
   })
   const text = signature?.ticketSignature?.renderedBody
   const id = signature?.ticketSignature?.id

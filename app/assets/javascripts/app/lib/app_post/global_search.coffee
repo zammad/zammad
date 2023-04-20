@@ -41,9 +41,16 @@ class App.GlobalSearch extends App.Controller
         success: (data, status, xhr) =>
           @clearDelay('global-search-ajax-longer-as-expected')
           App.Collection.loadAssets(data.assets)
+
+          userProfileAccess         = @permissionCheck(App.Config.get('user/profile/:user_id', 'Routes').requiredPermission)
+          organizationProfileAccess = @permissionCheck(App.Config.get('organization/profile/:organization_id', 'Routes').requiredPermission)
+
           result = {}
           for item in data.result
-            continue if item.type isnt 'Ticket' && !@permissionCheck('ticket.agent')
+            # user and organization are allowed via API but should not show
+            # up for customers because there are no profile pages for customers
+            continue if item.type is 'User' && !userProfileAccess
+            continue if item.type is 'Organization' && !organizationProfileAccess
 
             if App[item.type] && App[item.type].find
               if !result[item.type]

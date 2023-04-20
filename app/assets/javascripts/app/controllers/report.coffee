@@ -1,5 +1,5 @@
 class Reporting extends App.ControllerAppContent
-  requiredPermission: 'report'
+  @requiredPermission: 'report'
 
   constructor: ->
     super

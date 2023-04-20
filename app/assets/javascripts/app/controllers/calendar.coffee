@@ -1,5 +1,5 @@
 class Calendar extends App.ControllerSubContent
-  requiredPermission: 'admin.calendar'
+  @requiredPermission: 'admin.calendar'
   header: __('Calendars')
   events:
     'click .js-new':         'new'

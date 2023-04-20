@@ -1,0 +1,18 @@
+<div>
+  <fieldset>
+    <div class="input form-group">
+      <div class="formGroup-label">
+        <label for="preDefinedWebhooks"><%- @T('Pre-defined Webhook') %></label>
+      </div>
+      <div class="controls">
+        <div class="js-preDefinedWebhooks"></div>
+      </div>
+    </div>
+    <p class="help-text">
+      <%- @T("A Webhook can be fired by Triggers and Schedulers, don't forget to define them!") %>
+    </p>
+    <p class="help-text">
+      <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Webhook', 'https://admin-docs.zammad.org/en/latest/manage/webhook.html') %>
+    </p>
+  </fieldset>
+</div>

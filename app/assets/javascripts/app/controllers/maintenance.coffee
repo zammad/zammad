@@ -1,5 +1,5 @@
 class Maintenance extends App.ControllerSubContent
-  requiredPermission: 'admin.maintenance'
+  @requiredPermission: 'admin.maintenance'
   header: __('Maintenance')
   events:
     'change .js-modeSetting input': 'setMode'

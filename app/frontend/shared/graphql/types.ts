@@ -2369,7 +2369,7 @@ export type UserInput = {
   /** The user active flag */
   active?: InputMaybe<Scalars['Boolean']>;
   /** The user email */
-  email: Scalars['String'];
+  email?: InputMaybe<Scalars['String']>;
   /** The user fax */
   fax?: InputMaybe<Scalars['String']>;
   /** The user first name */

@@ -121,6 +121,7 @@ describe('visiting ticket user page', () => {
   it('cannot edit user without permission', async () => {
     mockPermissions([])
     const user = defaultUser()
+    user.policy.update = false
     const { view } = await visitTicketUser(user)
 
     expect(

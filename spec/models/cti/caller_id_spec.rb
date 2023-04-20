@@ -109,7 +109,7 @@ RSpec.describe Cti::CallerId do
       let(:number) { '1234567890' }
 
       it 'returns an array with the corresponding CallerId' do
-        expect(described_class.lookup(number)).to match_array([caller_id])
+        expect(described_class.lookup(number)).to contain_exactly(caller_id)
       end
 
       context 'shared by multiple CallerIds' do
@@ -258,7 +258,7 @@ RSpec.describe Cti::CallerId do
 
       it 'gives matching agents' do
         expect(described_class.known_agents_by_number('49123456'))
-          .to match_array([agent1])
+          .to contain_exactly(agent1)
       end
     end
 

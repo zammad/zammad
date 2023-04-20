@@ -1,5 +1,5 @@
 class Group extends App.ControllerSubContent
-  requiredPermission: 'admin.group'
+  @requiredPermission: 'admin.group'
   header: __('Groups')
   constructor: ->
     super

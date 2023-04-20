@@ -1235,7 +1235,7 @@ class App.TicketZoom extends App.Controller
     @tooltipCopied.tooltip('hide')
 
 class TicketZoomRouter extends App.ControllerPermanent
-  requiredPermission: ['ticket.agent', 'ticket.customer']
+  @requiredPermission: ['ticket.agent', 'ticket.customer']
   constructor: (params) ->
     super
 

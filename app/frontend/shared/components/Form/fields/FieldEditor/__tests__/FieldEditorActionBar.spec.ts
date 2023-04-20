@@ -45,6 +45,7 @@ describe('keyboard interactions', () => {
     await view.events.keyboard('{ArrowRight}')
     expect(actions[0]).toHaveFocus()
   })
+
   it('can use home and end to traverse toolbar', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
@@ -64,6 +65,7 @@ describe('keyboard interactions', () => {
     await view.events.keyboard('{End}')
     expect(actions.at(-1)).toHaveFocus()
   })
+
   it('hides on blur', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
@@ -78,6 +80,7 @@ describe('keyboard interactions', () => {
 
     expect(view.emitted().hide).toBeTruthy()
   })
+
   it('hides on escape', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
@@ -93,6 +96,7 @@ describe('keyboard interactions', () => {
     // emits blur, because toolbar is not hidden, but focus is shifted to the editor instead
     expect(view.emitted().blur).toBeTruthy()
   })
+
   it('hides on click outside', async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {

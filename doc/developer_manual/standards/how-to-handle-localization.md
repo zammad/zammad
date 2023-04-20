@@ -10,6 +10,15 @@ You are welcome to contribute. Please get a free account there if you want to do
 
 Any pull requests modifying translation files directly will be rejected.
 
+### Zammad Notification Templates - `app/views/mailer/*` and `app/views/messaging/*`
+
+These back end template files are also managed via [translations.zammad.org](https://translations.zammad.org/).
+
+Translatable strings are extracted from the English templates. Any other languages are automatically generated
+from the available translated contents of translations.zammad.org.
+
+Any pull requests modifying translated template files directly will be rejected.
+
 ### Zammad Text Modules - `i18n/text_modules/*.yml`
 
 Zammad text modules are automatically imported when the first admin user is created, according to this user's language.

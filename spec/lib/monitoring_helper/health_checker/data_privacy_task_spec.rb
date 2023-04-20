@@ -19,7 +19,7 @@ RSpec.describe MonitoringHelper::HealthChecker::DataPrivacyTask do
     it 'finds incomplete tasks started before timeout' do
       task1 && task2 && task3
 
-      expect(instance.send(:scope)).to match_array [task2]
+      expect(instance.send(:scope)).to contain_exactly(task2)
     end
   end
 end

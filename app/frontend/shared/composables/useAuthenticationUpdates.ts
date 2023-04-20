@@ -17,7 +17,6 @@ const useAuthenticationChanges = () => {
 
   authentication.$subscribe(async (mutation, state) => {
     if (state.authenticated && !session.id) {
-      console.log('SUBSCRIBE-ZZZZZZZZZZZZZZZZZ')
       session.checkSession().then(async (sessionId) => {
         if (sessionId) {
           await authentication.refreshAfterAuthentication()

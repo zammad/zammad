@@ -24,6 +24,10 @@ class TriggerWebhookJob::CustomPayload
     Struct::Notification
   ].freeze
 
+  ALLOWED_WEBHOOK_CLASSES = %w[
+    Struct::PreDefinedWebhook
+  ].freeze
+
   ALLOWED_SIMPLE_CLASSES = %w[
     Integer
     String
@@ -40,7 +44,8 @@ class TriggerWebhookJob::CustomPayload
     ALLOWED_USER_CLASSES +
     ALLOWED_SIMPLE_CLASSES +
     ALLOWED_RAILS_CLASSES +
-    ALLOWED_NOTIFICATION_CLASSES
+    ALLOWED_NOTIFICATION_CLASSES +
+    ALLOWED_WEBHOOK_CLASSES
 
   ALLOWED_TICKET_METHODS = %w[
     created_by
@@ -72,6 +77,12 @@ class TriggerWebhookJob::CustomPayload
     message
     body
     changes
+  ].freeze
+
+  ALLOWED_WEBHOOK_METHODS = %w[
+    messaging_channel
+    messaging_username
+    messaging_icon_url
   ].freeze
 
   ALLOWED_METHODS = {
@@ -110,7 +121,8 @@ class TriggerWebhookJob::CustomPayload
       'article.type':        Ticket::Article::Type,
       'article.created_by':  User,
       'article.updated_by':  User,
-      notification:          nil
+      notification:          nil,
+      webhook:               nil,
     }
 
     data.each do |object, klass|
@@ -124,14 +136,14 @@ class TriggerWebhookJob::CustomPayload
     data
   end
 
-  def self.generate(record, tracks, event)
+  def self.generate(record, tracks, event, webhook)
     return {} if record.blank?
 
     variables = scan(record)
     return JSON.parse(record) if variables.blank?
 
-    tracks.transform_keys!(&:to_sym)
-    tracks[:notification] = TriggerWebhookJob::CustomPayload::Notification.generate(tracks, event)
+    append_custom_tracks(tracks, event, webhook)
+
     mappings = parse(variables, tracks)
 
     # NeverShouldHappen(TM)
@@ -149,6 +161,15 @@ class TriggerWebhookJob::CustomPayload
   end
 
   # private class methods
+
+  def self.append_custom_tracks(tracks, event, webhook)
+    tracks.transform_keys!(&:to_sym)
+    tracks[:notification] = TriggerWebhookJob::CustomPayload::Notification.generate(tracks, event)
+
+    return if webhook.pre_defined_webhook_type.blank?
+
+    tracks[:webhook] = TriggerWebhookJob::CustomPayload::PreDefined.generate(webhook.pre_defined_webhook_type, webhook.preferences&.dig('pre_defined_webhook'))
+  end
 
   def self.scan(record)
     placeholders = record.scan(%r{(#\{[a-z_.?!]+\})}).flatten.uniq
@@ -240,7 +261,11 @@ class TriggerWebhookJob::CustomPayload
   def self.allowed_subroutines(klass)
     return ALLOWED_NOTIFICATION_METHODS if klass.to_s.in?(ALLOWED_NOTIFICATION_CLASSES)
 
-    klass_attributes = klass.attribute_names - (DENIED_ATTRIBUTES[klass.to_s] || [])
+    denied_attributes = DENIED_ATTRIBUTES[klass.to_s] || []
+
+    return klass.members.map(&:to_s) - denied_attributes if klass.to_s.in?(ALLOWED_WEBHOOK_CLASSES)
+
+    klass_attributes = klass.attribute_names - denied_attributes
     klass_methods    = ALLOWED_METHODS[klass.to_s] || []
 
     klass_attributes + klass_methods
@@ -266,6 +291,7 @@ class TriggerWebhookJob::CustomPayload
   end
 
   private_class_method %i[
+    append_custom_tracks
     allowed_class_method?
     allowed_subroutines
     parse

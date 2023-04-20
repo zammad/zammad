@@ -163,5 +163,75 @@ RSpec.describe TriggerWebhookJob, type: :job do
         expect(described_class).to have_been_enqueued
       end
     end
+
+    context 'with different payloads' do
+      let(:webhook) { create(:webhook, endpoint: endpoint, customized_payload: customized_payload, custom_payload: custom_payload, pre_defined_webhook_type: pre_defined_webhook_type) }
+      let(:customized_payload)       { false }
+      let(:custom_payload)           { nil }
+      let(:pre_defined_webhook_type) { nil }
+
+      def pre_defined_webhook_payload
+        tracks = { ticket:, article: }
+        event  = { type: nil, execution: nil, changes: nil, user_id: nil }
+
+        custom_payload = TriggerWebhookJob::CustomPayload::PreDefined.payload(pre_defined_webhook_type)
+        TriggerWebhookJob::CustomPayload.generate(custom_payload, tracks, event, webhook)
+      end
+
+      shared_examples 'including correct payload' do
+        it 'includes correct payload' do
+          expect(WebMock).to have_requested(:post, endpoint)
+            .with(body: payload, headers: headers)
+        end
+      end
+
+      context 'with non-customized payload' do
+        it_behaves_like 'including correct payload'
+
+        context 'with pre-defined webhook' do
+          let(:pre_defined_webhook_type) { 'Mattermost' }
+          let(:payload)                  { pre_defined_webhook_payload }
+
+          it_behaves_like 'including correct payload'
+        end
+      end
+
+      context 'with customized payload' do
+        let(:customized_payload) { true }
+        let(:custom_payload)     { '{"ticket":"\#{ticket.title}"}' }
+        let(:payload) do
+          {
+            ticket: ticket.title,
+          }
+        end
+
+        it_behaves_like 'including correct payload'
+
+        context 'with pre-defined webhook' do
+          let(:pre_defined_webhook_type) { 'Mattermost' }
+
+          it_behaves_like 'including correct payload'
+        end
+
+        context 'with empty custom payload' do
+          let(:custom_payload) { '' }
+          let(:payload) do
+            {
+              ticket:  payload_ticket,
+              article: payload_article,
+            }
+          end
+
+          it_behaves_like 'including correct payload'
+
+          context 'with pre-defined webhook' do
+            let(:pre_defined_webhook_type) { 'Mattermost' }
+            let(:payload)                  { pre_defined_webhook_payload }
+
+            it_behaves_like 'including correct payload'
+          end
+        end
+      end
+    end
   end
 end

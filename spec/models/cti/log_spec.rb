@@ -65,7 +65,7 @@ RSpec.describe Cti::Log do
 
       it 'returns one matching log record' do
 
-        expect(described_class.log(user)[:list]).to match_array([cti_logs[3]])
+        expect(described_class.log(user)[:list]).to contain_exactly(cti_logs[3])
       end
     end
 

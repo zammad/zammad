@@ -41,7 +41,7 @@ RSpec.describe MacroPolicy::Scope do
       before { user.groups << group_a }
 
       it 'returns global and group macro' do
-        expect(scope.resolve).to match_array [macro_a, macro_c]
+        expect(scope.resolve).to contain_exactly(macro_a, macro_c)
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe MacroPolicy::Scope do
       before { user.groups << group_b }
 
       it 'returns all macros' do
-        expect(scope.resolve).to match_array [macro_a, macro_b, macro_c]
+        expect(scope.resolve).to contain_exactly(macro_a, macro_b, macro_c)
       end
     end
   end

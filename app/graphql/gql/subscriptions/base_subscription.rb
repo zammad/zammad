@@ -37,7 +37,6 @@ module Gql::Subscriptions
     def self.trigger(object, arguments: {}, scope: nil)
 
       return if Setting.get('import_mode') || Zammad::SafeMode.enabled?
-      return if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
 
       ::Gql::ZammadSchema.subscriptions.trigger(
         graphql_field_name,

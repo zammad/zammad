@@ -1,5 +1,5 @@
 class ProfileTokenAccess extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.access_token'
+  @requiredPermission: 'user_preferences.access_token'
   header: __('Token Access')
   events:
     'click .js-delete': 'delete'

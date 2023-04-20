@@ -567,4 +567,94 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       end
     end
   end
+
+  describe 'Admin user can not find user or organization in the search bar #4574' do
+    let(:admin) { create(:admin_only) }
+    let(:agent)        { create(:agent, groups: [Group.first]) }
+    let(:organization) { create(:organization, name: SecureRandom.uuid) }
+    let(:customer)     { create(:customer, organization: organization, firstname: SecureRandom.uuid) }
+    let(:ticket)       { create(:ticket, title: SecureRandom.uuid, customer: customer, group: Group.first) }
+
+    before do
+      visit '#dashboard'
+    end
+
+    context 'when customer', authenticated_as: :authenticate do
+      def authenticate
+        organization && customer && ticket
+        searchindex_model_reload([Ticket, Organization, User])
+        customer
+      end
+
+      it 'does find the ticket' do
+        fill_in id: 'global-search', with: ticket.title
+
+        expect(page.find('.global-search-menu')).to have_content(ticket.title)
+      end
+
+      it 'does not find the customer' do
+        fill_in id: 'global-search', with: customer.firstname
+
+        expect(page.find('.global-search-menu')).not_to have_content(customer.firstname)
+      end
+
+      it 'does not find the organization' do
+        fill_in id: 'global-search', with: organization.name
+
+        expect(page.find('.global-search-menu')).not_to have_content(organization.name)
+      end
+    end
+
+    context 'when agent', authenticated_as: :authenticate do
+      def authenticate
+        organization && customer && ticket
+        searchindex_model_reload([Ticket, Organization, User])
+        agent
+      end
+
+      it 'does find the ticket' do
+        fill_in id: 'global-search', with: ticket.title
+
+        expect(page.find('.global-search-menu')).to have_content(ticket.title)
+      end
+
+      it 'does find the customer' do
+        fill_in id: 'global-search', with: customer.firstname
+
+        expect(page.find('.global-search-menu')).to have_content(customer.firstname)
+      end
+
+      it 'does find the organization' do
+        fill_in id: 'global-search', with: organization.name
+
+        expect(page.find('.global-search-menu')).to have_content(organization.name)
+      end
+    end
+
+    context 'when admin only', authenticated_as: :authenticate do
+      def authenticate
+        organization && customer && ticket
+        searchindex_model_reload([Ticket, Organization, User])
+        admin
+      end
+
+      it 'does not find the ticket' do
+        fill_in id: 'global-search', with: ticket.title
+
+        expect(page.find('.global-search-menu')).not_to have_content(ticket.title)
+      end
+
+      it 'does find the customer' do
+        fill_in id: 'global-search', with: customer.firstname
+
+        expect(page.find('.global-search-menu')).to have_content(customer.firstname)
+      end
+
+      it 'does find the organization' do
+        fill_in id: 'global-search', with: organization.name
+
+        expect(page.find('.global-search-menu')).to have_content(organization.name)
+      end
+    end
+  end
 end

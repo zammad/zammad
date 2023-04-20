@@ -1,5 +1,5 @@
 class Sla extends App.ControllerSubContent
-  requiredPermission: 'admin.sla'
+  @requiredPermission: 'admin.sla'
   header: __('SLAs')
   events:
     'click .js-new':         'new'

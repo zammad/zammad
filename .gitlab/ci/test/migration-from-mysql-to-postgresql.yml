@@ -9,8 +9,6 @@
       allow_failure: true
     - when: on_success
   variables:
-    # Turn off not not require redis for MySQL/MariaDB.
-    ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: ''
     ENFORCE_DB_SERVICE: mysql
   script:
     - !reference [.scripts, configure_environment]
@@ -35,6 +33,7 @@ migration:database:mysql_to_postgresql:
   services:
     - !reference [.services, mysql]
     - !reference [.services, postgresql]
+    - !reference [.services, redis]
 
 migration:database:mariadb_to_postgresql:
   extends:
@@ -42,3 +41,4 @@ migration:database:mariadb_to_postgresql:
   services:
     - !reference [.services, mariadb]
     - !reference [.services, postgresql]
+    - !reference [.services, redis]

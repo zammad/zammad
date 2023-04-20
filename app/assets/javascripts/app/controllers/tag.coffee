@@ -1,5 +1,5 @@
 class Tag extends App.ControllerSubContent
-  requiredPermission: 'admin.tag'
+  @requiredPermission: 'admin.tag'
   header: __('Tags')
   events:
     'change .js-newTagSetting input': 'setTagNew'

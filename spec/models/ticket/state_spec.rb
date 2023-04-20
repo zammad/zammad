@@ -16,21 +16,21 @@ RSpec.describe Ticket::State, type: :model do
     describe 'of whole table:' do
       it 'has seven records' do
         expect(described_class.pluck(:name))
-          .to match_array(['closed', 'merged', 'new', 'open', 'pending close', 'pending reminder', 'removed'])
+          .to contain_exactly('closed', 'merged', 'new', 'open', 'pending close', 'pending reminder', 'removed')
       end
     end
 
     describe 'of "new" state:' do
       it 'is the sole #default_create state' do
         expect(described_class.where(default_create: true))
-          .to match_array([described_class.find_by(name: 'new')])
+          .to contain_exactly(described_class.find_by(name: 'new'))
       end
     end
 
     describe 'of "open" state:' do
       it 'is the sole #default_follow_up state' do
         expect(described_class.where(default_follow_up: true))
-          .to match_array([described_class.find_by(name: 'open')])
+          .to contain_exactly(described_class.find_by(name: 'open'))
       end
     end
   end

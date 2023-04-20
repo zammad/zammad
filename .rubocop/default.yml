@@ -391,6 +391,10 @@ RSpec/Rails/InferredSpecType:
   Description: 'Identifies redundant spec type.'
   Enabled: false  # We use types to add DSL to rspec.
 
+RSpec/IndexedLet:
+  Description: 'Do not set up test data using indexes (e.g., `item_1`, `item_2`).'
+  Enabled: false
+
 Capybara/SpecificFinders:
   Description: 'Checks if there is a more specific finder offered by Capybara.'
   Enabled: false

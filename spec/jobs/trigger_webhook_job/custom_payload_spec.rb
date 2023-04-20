@@ -6,11 +6,12 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
 
   # rubocop:disable Lint/InterpolationCheck
   describe '.generate' do
-    subject(:generate) { described_class.generate(record, { ticket:, article: }, event) }
+    subject(:generate) { described_class.generate(record, { ticket:, article: }, event, webhook) }
 
-    let(:ticket)  { create(:ticket) }
-    let(:article) { create(:ticket_article, body: "Text with\nnew line.") }
-    let(:event)   { {} }
+    let(:ticket)    { create(:ticket) }
+    let(:article)   { create(:ticket_article, body: "Text with\nnew line.") }
+    let(:event)     { {} }
+    let(:webhook)   { create(:webhook) }
 
     context 'when the payload is empty' do
       let(:record) { {}.to_json }
@@ -218,7 +219,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Created by')
           expect(generate['changes']).to include('State: new')
         end
@@ -237,9 +238,26 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Updated by')
           expect(generate['changes']).to include('state: open -> closed')
+        end
+
+        context 'without changes' do
+          let(:event) do
+            {
+              type:      'update',
+              execution: 'trigger',
+              user_id:   1,
+            }
+          end
+
+          it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
+            expect(generate['subject']).to eq(ticket.title)
+            expect(generate['body']).to eq(article.body_as_text)
+            expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
+            expect(generate['message']).to include('Updated by')
+          end
         end
       end
 
@@ -256,7 +274,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Last updated at')
         end
       end
@@ -273,7 +291,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Escalated at')
           expect(generate['changes']).to include('has been escalated since')
         end
@@ -291,7 +309,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Will escalate at')
           expect(generate['changes']).to include('will escalate at')
         end
@@ -309,7 +327,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to eq(article.body_as_text)
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Reminder reached!')
           expect(generate['changes']).to include('reminder reached for')
         end
@@ -330,11 +348,30 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
         it 'returns a valid json with an notification factory generated information"', :aggregate_failures do
           expect(generate['subject']).to eq(ticket.title)
           expect(generate['body']).to be_empty
-          expect(generate['link']).to match(%r{http.*#{ticket.id}.*#{ticket.number}.*})
+          expect(generate['link']).to match(%r{http.*#ticket/zoom/#{ticket.id}$})
           expect(generate['message']).to include('Last updated at')
         end
       end
 
+    end
+
+    context 'when pre defined webhook is used' do
+      let(:record)    { { 'text' => '#{ticket.title}', 'channel' => '#{webhook.messaging_channel}' }.to_json }
+      let(:json_data) { { 'text' => 'Test Ticket', 'channel' => webhook.preferences['pre_defined_webhook']['messaging_channel'] } }
+      let(:webhook)   { create(:mattermost_webhook) }
+
+      it 'returns replaced webhook variables' do
+        expect(generate).to eq(json_data)
+      end
+
+      context 'with not existing pre defined webhook field' do
+        let(:record)    { { 'channel' => '#{webhook.wrong}' }.to_json }
+        let(:json_data) { { 'channel' => '#{webhook.wrong / no such method}' } }
+
+        it 'returns replaced webhook variables' do
+          expect(generate).to eq(json_data)
+        end
+      end
     end
   end
   # rubocop:enable Lint/InterpolationCheck

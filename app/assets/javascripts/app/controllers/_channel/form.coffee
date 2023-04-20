@@ -1,6 +1,6 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class ChannelForm extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_formular'
+  @requiredPermission: 'admin.channel_formular'
   header: __('Form')
   events:
     'change form.js-paramsDesigner': 'updateParamsDesigner'

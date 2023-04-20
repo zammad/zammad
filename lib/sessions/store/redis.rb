@@ -7,9 +7,6 @@ class Sessions::Store::Redis
   NODES_KEY = 'nodes'.freeze
 
   def initialize
-    # Only load redis if it is really used.
-    require 'redis'
-    require 'hiredis'
     @redis = Redis.new(driver: :hiredis)
   end
 

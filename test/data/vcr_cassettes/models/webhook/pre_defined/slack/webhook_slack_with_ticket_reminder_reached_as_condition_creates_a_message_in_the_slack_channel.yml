@@ -5,10 +5,9 @@ http_interactions:
     uri: "<SLACK_CI_WEBHOOK_URL>"
     body:
       encoding: UTF-8
-      string: '{"channel":"<SLACK_CI_CHANNEL_NAME>","username":"zammad_agent","icon_url":"https://zammad.com/assets/images/logo-200x200.png","mrkdwn":true,"text":"#
-        Slack Webhook Test","attachments":[{"text":"_\u003chttp://zammad.example.com/#ticket/zoom/291|Ticket#67002\u003e:
-        Created by - at 04/06/2023  7:53 am (UTC)_\n* Group: Users\n* Owner: -\n*
-        State: new","mrkdwn_in":["text"],"color":"#faab00"}]}'
+      string: '{"mrkdwn":true,"text":"# Slack Webhook Test (Reminder reached)","attachments":[{"text":"_[Ticket#81002](http://zammad.example.com/#ticket/zoom/2):
+        Reminder reached!_\n\nA ticket needs attention: reminder reached for (Slack
+        Webhook Test (Reminder reached)) with customer \"*Thalia O''Hara*\".\n\n","mrkdwn_in":["text"],"color":"#faab00"}]}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -21,7 +20,7 @@ http_interactions:
       X-Zammad-Trigger:
       - Test trigger 1
       X-Zammad-Delivery:
-      - 5f990c13-7c14-44b4-b508-54f9776b2193
+      - f8f1b51e-89b1-49aa-b8c9-36ddceb5677e
       Content-Type:
       - application/json
   response:
@@ -30,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Apr 2023 07:53:05 GMT
+      - Wed, 19 Apr 2023 08:19:50 GMT
       Server:
       - Apache
       Vary:
@@ -38,7 +37,7 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Slack-Unique-Id:
-      - ZC56YQCc5GS-LkX8UbF7tAAAAAw
+      - ZD-kJiPIIU1T1nhCgThwiQAAEBU
       X-Slack-Backend:
       - r
       Referrer-Policy:
@@ -54,13 +53,13 @@ http_interactions:
       Content-Length:
       - '2'
       Via:
-      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-crkz, envoy-edge-fra-twad
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-occn, envoy-edge-fra-lfan
       X-Envoy-Upstream-Service-Time:
-      - '133'
+      - '130'
       X-Backend:
       - main_normal main_canary_with_overflow main_control_with_overflow
       X-Server:
-      - slack-www-hhvm-main-iad-aurf
+      - slack-www-hhvm-main-iad-rswd
       X-Slack-Shared-Secret-Outcome:
       - no-match
       X-Edge-Backend:
@@ -70,7 +69,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ok
-  recorded_at: Thu, 06 Apr 2023 07:53:05 GMT
+  recorded_at: Wed, 19 Apr 2023 08:19:50 GMT
 - request:
     method: post
     uri: https://slack.com/api/auth.test
@@ -94,13 +93,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Apr 2023 07:53:06 GMT
+      - Wed, 19 Apr 2023 08:19:50 GMT
       Server:
       - Apache
       Vary:
       - Accept-Encoding
       X-Slack-Req-Id:
-      - 73165cc29d56952306848f3924449a74
+      - cb4ab1301235085c9834b8f2758bb2f9
       X-Content-Type-Options:
       - nosniff
       X-Xss-Protection:
@@ -123,7 +122,7 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Slack-Unique-Id:
-      - ZC56YhD1cKVrcBEYA9yGXgAAED4
+      - ZD-kJjk4AkEpgNY39L7a7wAAECs
       X-Slack-Backend:
       - r
       Referrer-Policy:
@@ -133,15 +132,15 @@ http_interactions:
       X-Powered-By:
       - HHVM/4.153.1-slack-bionic-blessed-build-538
       Via:
-      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-jwfg, envoy-edge-fra-rngp
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-kwyg, envoy-edge-fra-qgtp
       Content-Length:
       - '186'
       X-Envoy-Upstream-Service-Time:
-      - '119'
+      - '122'
       X-Backend:
       - main_normal main_canary_with_overflow main_control_with_overflow
       X-Server:
-      - slack-www-hhvm-main-iad-cgbr
+      - slack-www-hhvm-main-iad-gryp
       X-Slack-Shared-Secret-Outcome:
       - no-match
       X-Edge-Backend:
@@ -152,7 +151,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"ok":true,"url":"https:\/\/zammaddevelopment.slack.com\/","team":"Zammad
         Development","user":"development","team_id":"T04PAE1JDD1","user_id":"U04Q084V9QQ","is_enterprise_install":false}'
-  recorded_at: Thu, 06 Apr 2023 07:53:06 GMT
+  recorded_at: Wed, 19 Apr 2023 08:19:50 GMT
 - request:
     method: post
     uri: https://slack.com/api/conversations.list
@@ -176,13 +175,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Apr 2023 07:53:06 GMT
+      - Wed, 19 Apr 2023 08:19:50 GMT
       Server:
       - Apache
       Vary:
       - Accept-Encoding
       X-Slack-Req-Id:
-      - a0fd6296560d863c5568255ca83ff939
+      - 12ce0af05740336b9c057064924397e3
       X-Content-Type-Options:
       - nosniff
       X-Xss-Protection:
@@ -207,7 +206,7 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Slack-Unique-Id:
-      - ZC56YtMm2pNVO-D06tevUgAAADg
+      - ZD-kJprfkmcUsddxEPYXBAAAIDo
       X-Slack-Backend:
       - r
       Referrer-Policy:
@@ -217,15 +216,15 @@ http_interactions:
       X-Powered-By:
       - HHVM/4.153.1-slack-bionic-blessed-build-538
       Via:
-      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-wzzz, envoy-edge-fra-hrrd
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-avjg, envoy-edge-fra-xirp
       Content-Length:
       - '1572'
       X-Envoy-Upstream-Service-Time:
-      - '125'
+      - '131'
       X-Backend:
       - main_normal main_canary_with_overflow main_control_with_overflow
       X-Server:
-      - slack-www-hhvm-main-iad-jtto
+      - slack-www-hhvm-main-iad-ombu
       X-Slack-Shared-Secret-Outcome:
       - no-match
       X-Edge-Backend:
@@ -235,10 +234,10 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"ok":true,"channels":[{"id":"C04P7MS4WPP","name":"<SLACK_CI_CHANNEL_NAME>","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676287456,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"<SLACK_CI_CHANNEL_NAME>","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676289623188,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"Zammad
-        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1676286228292,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
+        CI - Test Channel","creator":"U04Q084V9QQ","last_set":1676287457},"previous_names":[],"num_members":2},{"id":"C04Q0850XFA","name":"general","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1676286228,"is_archived":false,"is_general":true,"unlinked":0,"name_normalized":"general","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"T04PAE1JDD1","updated":1681220820645,"parent_conversation":null,"creator":"U04Q084V9QQ","is_ext_shared":false,"shared_team_ids":["T04PAE1JDD1"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"This
         is the one channel that will always include everyone. It\u2019s a great spot
         for announcements and team-wide conversations.","creator":"U04Q084V9QQ","last_set":1676286228},"previous_names":[],"num_members":1}],"response_metadata":{"next_cursor":""}}'
-  recorded_at: Thu, 06 Apr 2023 07:53:06 GMT
+  recorded_at: Wed, 19 Apr 2023 08:19:50 GMT
 - request:
     method: post
     uri: https://slack.com/api/conversations.history
@@ -262,13 +261,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Apr 2023 07:53:06 GMT
+      - Wed, 19 Apr 2023 08:19:50 GMT
       Server:
       - Apache
       Vary:
       - Accept-Encoding
       X-Slack-Req-Id:
-      - cdc9f3bb1a36e529d51648a9fcbcf76c
+      - 8b450ac74d449a4c3002f8acf5fca5df
       X-Content-Type-Options:
       - nosniff
       X-Xss-Protection:
@@ -293,7 +292,7 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Slack-Unique-Id:
-      - ZC56YiTWjnVCyjF_QySOggAAAAE
+      - ZD-kJlYKwcYgmw56LWfwGwAAEDY
       X-Slack-Backend:
       - r
       Referrer-Policy:
@@ -303,15 +302,15 @@ http_interactions:
       X-Powered-By:
       - HHVM/4.153.1-slack-bionic-blessed-build-538
       Via:
-      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-rinm, envoy-edge-fra-iatw
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-pwgx, envoy-edge-fra-xhgp
       Content-Length:
-      - '768'
+      - '3796'
       X-Envoy-Upstream-Service-Time:
-      - '130'
+      - '202'
       X-Backend:
       - main_normal main_canary_with_overflow main_control_with_overflow
       X-Server:
-      - slack-www-hhvm-main-iad-zhbt
+      - slack-www-hhvm-main-iad-dsif
       X-Slack-Shared-Secret-Outcome:
       - no-match
       X-Edge-Backend:
@@ -321,11 +320,33 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"ok":true,"messages":[{"type":"message","subtype":"bot_message","text":"#
-        Slack Webhook Test","ts":"1680767585.854659","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"qS1x","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
-        Slack Webhook Test"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/291|Ticket#67002>:
-        Created by - at 04\/06\/2023  7:53 am (UTC)_\n* Group: Users\n* Owner: -\n*
-        State: new","text":"_<http:\/\/zammad.example.com\/#ticket\/zoom\/291|Ticket#67002>:
-        Created by - at 04\/06\/2023  7:53 am (UTC)_\n* Group: Users\n* Owner: -\n*
-        State: new","mrkdwn_in":["text"]}]}],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
-  recorded_at: Thu, 06 Apr 2023 07:53:06 GMT
+        Slack Webhook Test (Reminder reached)","ts":"1681892390.086619","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"IooOF","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        Slack Webhook Test (Reminder reached)"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_[Ticket#81002](<http:\/\/zammad.example.com\/#ticket\/zoom\/2>):
+        Reminder reached!_\n\nA ticket needs attention: reminder reached for (Slack
+        Webhook Test (Reminder reached)) with customer \"*Thalia O''Hara*\".","text":"_[Ticket#81002](<http:\/\/zammad.example.com\/#ticket\/zoom\/2>):
+        Reminder reached!_\n\nA ticket needs attention: reminder reached for (Slack
+        Webhook Test (Reminder reached)) with customer \"*Thalia O''Hara*\".","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        A example ticket for testing","ts":"1681891872.991219","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"5ST","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        A example ticket for testing"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"_<http:\/\/localhost:3000\/#ticket\/zoom\/780|Ticket#59772>:
+        Updated by Test Admin Agent at 04\/19\/2023 10:10 am (Europe\/Berlin)_\n\n\n\nTest","text":"_<http:\/\/localhost:3000\/#ticket\/zoom\/780|Ticket#59772>:
+        Updated by Test Admin Agent at 04\/19\/2023 10:10 am (Europe\/Berlin)_\n\n\n\nTest","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        Slack Webhook Test","ts":"1681887952.707529","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"4R+G","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        Slack Webhook Test"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/6%7CTicket#88002>):
+        Created by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Group: Users\n* Owner:
+        -\n* State: new\\n\\n\"","text":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/6%7CTicket#88002>):
+        Created by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Group: Users\n* Owner:
+        -\n* State: new\\n\\n\"","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        New article","ts":"1681887922.639349","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"dKcjY","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        New article"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/5%7CTicket#88002>):
+        Updated by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Title: Another Slack Webhook
+        Test -&gt; New article\\n\\nsome message 123\"","text":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/5%7CTicket#88002>):
+        Updated by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Title: Another Slack Webhook
+        Test -&gt; New article\\n\\nsome message 123\"","mrkdwn_in":["text"]}]},{"type":"message","subtype":"bot_message","text":"#
+        Slack Webhook Test","ts":"1681887920.856359","bot_id":"B04PDGJS4CC","blocks":[{"type":"rich_text","block_id":"\/tEr","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"#
+        Slack Webhook Test"}]}]}],"attachments":[{"id":1,"color":"faab00","fallback":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/4%7CTicket#88002>):
+        Created by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Group: Users\n* Owner:
+        -\n* State: new\\n\\n\"","text":"\"_[Ticket#88002](<http:\/\/zammad.example.com\/#ticket\/zoom\/4%7CTicket#88002>):
+        Created by - at 04\/19\/2023  7:05 am (UTC)_\\n\\n* Group: Users\n* Owner:
+        -\n* State: new\\n\\n\"","mrkdwn_in":["text"]}]}],"has_more":false,"pin_count":0,"channel_actions_ts":null,"channel_actions_count":0}'
+  recorded_at: Wed, 19 Apr 2023 08:19:50 GMT
 recorded_with: VCR 6.1.0

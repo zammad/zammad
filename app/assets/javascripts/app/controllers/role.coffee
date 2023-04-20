@@ -1,5 +1,5 @@
 class Role extends App.ControllerSubContent
-  requiredPermission: 'admin.role'
+  @requiredPermission: 'admin.role'
   header: __('Roles')
   constructor: ->
     super

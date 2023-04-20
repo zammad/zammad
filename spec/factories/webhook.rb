@@ -8,5 +8,51 @@ FactoryBot.define do
     active          { true }
     created_by_id   { 1 }
     updated_by_id   { 1 }
+
+    factory :mattermost_webhook do
+      name                     { 'Mattermost Notifications' }
+      endpoint                 { 'https://example.com/mattermost' }
+      pre_defined_webhook_type { 'Mattermost' }
+      note                     { 'Pre-defined webhook for Mattermost Notifications.' }
+      preferences do
+        {
+          pre_defined_webhook: {
+            messaging_username: Faker::Internet.unique.username,
+            messaging_channel:  Faker::Internet.unique.slug,
+            messaging_icon_url: Faker::Internet.unique.url,
+          },
+        }
+      end
+    end
+
+    factory :microsoftteams_webhook do
+      name                     { 'Microsoft Teams Notifications' }
+      endpoint                 { 'https://example.com/msteams' }
+      pre_defined_webhook_type { 'MicrosoftTeams' }
+      note                     { 'Pre-defined webhook for Microsoft Teams Notifications.' }
+    end
+
+    factory :rocketchat_webhook do
+      name                     { 'Rocket Chat Notifications' }
+      endpoint                 { 'https://example.com/rocket_chat' }
+      pre_defined_webhook_type { 'RocketChat' }
+      note                     { 'Pre-defined webhook for Rocket Chat Notifications.' }
+      preferences do
+        {
+          pre_defined_webhook: {
+            messaging_username: Faker::Internet.unique.username,
+            messaging_channel:  Faker::Internet.unique.slug,
+            messaging_icon_url: Faker::Internet.unique.url,
+          },
+        }
+      end
+    end
+
+    factory :slack_webhook do
+      name                     { 'Slack Notifications' }
+      endpoint                 { 'https://example.com/slack' }
+      pre_defined_webhook_type { 'Slack' }
+      note                     { 'Pre-defined webhook for Slack Notifications.' }
+    end
   end
 end

@@ -1,5 +1,5 @@
 class Trigger extends App.ControllerSubContent
-  requiredPermission: 'admin.trigger'
+  @requiredPermission: 'admin.trigger'
   header: __('Triggers')
 
   constructor: ->

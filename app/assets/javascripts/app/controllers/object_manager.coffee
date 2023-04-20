@@ -75,7 +75,7 @@ customsortDataOptions = ({target}, params) ->
   params
 
 class ObjectManager extends App.ControllerTabs
-  requiredPermission: 'admin.object'
+  @requiredPermission: 'admin.object'
   constructor: ->
     super
 

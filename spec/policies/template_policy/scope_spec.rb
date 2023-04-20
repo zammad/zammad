@@ -36,7 +36,7 @@ RSpec.describe TemplatePolicy::Scope do
       let(:user) { create(:agent) }
 
       it 'returns active template only' do
-        expect(scope.resolve).to match_array [active_template]
+        expect(scope.resolve).to contain_exactly(active_template)
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe TemplatePolicy::Scope do
       let(:user) { create(:admin) }
 
       it 'returns all templates' do
-        expect(scope.resolve).to match_array [active_template, inactive_template]
+        expect(scope.resolve).to contain_exactly(active_template, inactive_template)
       end
     end
   end

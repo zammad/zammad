@@ -1,5 +1,5 @@
 class Api extends App.ControllerSubContent
-  requiredPermission: 'admin.api'
+  @requiredPermission: 'admin.api'
   header: __('API')
   events:
     'click .action':  'action'

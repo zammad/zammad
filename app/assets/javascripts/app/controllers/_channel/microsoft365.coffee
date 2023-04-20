@@ -1,5 +1,5 @@
 class App.ChannelMicrosoft365 extends App.ControllerTabs
-  requiredPermission: 'admin.channel_microsoft365'
+  @requiredPermission: 'admin.channel_microsoft365'
   header: __('Microsoft 365')
   constructor: ->
     super
@@ -33,7 +33,7 @@ class App.ChannelMicrosoft365 extends App.ControllerTabs
     @render()
 
 class ChannelAccountOverview extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_microsoft365'
+  @requiredPermission: 'admin.channel_microsoft365'
   events:
     'click .js-new':                'new'
     'click .js-admin-consent':      'adminConsent'

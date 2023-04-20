@@ -1,5 +1,5 @@
 class ChannelTwitter extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_twitter'
+  @requiredPermission: 'admin.channel_twitter'
   events:
     'click .js-new':       'new'
     'click .js-edit':      'edit'

@@ -1,10 +1,16 @@
 <div>
-<%- @T('Header') %>
-<pre>
-X-Zammad-Trigger:  Name of the Trigger
-X-Zammad-Delivery: 6d600811-06a3-40af-aebd-a2d8213e85aa
-X-Hub-Signature:   sha1=06007ef23c38e435f49091cdfa3c770b3d85d7be
-</pre>
-<%- @T('Body') %>
-<pre><%= @payload %></pre>
+  <p>
+    <%- @T('This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each Webhook.') %>
+  </p>
+  <p>
+    <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Webhook', 'https://admin-docs.zammad.org/en/latest/manage/webhook.html') %>
+  </p>
+  <h2><%- @T('Header') %></h2>
+  <pre>
+  X-Zammad-Trigger:  Name of the Trigger
+  X-Zammad-Delivery: 6d600811-06a3-40af-aebd-a2d8213e85aa
+  X-Hub-Signature:   sha1=06007ef23c38e435f49091cdfa3c770b3d85d7be
+  </pre>
+  <h2><%- @T('Body') %></h2>
+  <pre><%= @payload %></pre>
 </div>

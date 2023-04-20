@@ -244,10 +244,4 @@ RSpec.configure do |config|
   config.before(:each, :authenticated_as, type: :graphql) do |example|
     gql.graphql_current_user = authenticated_as_get_user example.metadata[:authenticated_as], return_type: :user
   end
-
-  # Temporary Hack: skip tests if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
-  # TODO: Remove when this switch is not needed any more.
-  config.around(:each, type: :graphql) do |example|
-    example.run if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] == 'true'
-  end
 end

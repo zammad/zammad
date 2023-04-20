@@ -18,8 +18,6 @@ variables:
   ES_INDEX: 'estest.ci'
   ELASTICSEARCH_TAG: '7.16'
 
-  # Temporary switch to enable the mobile front end for testing.
-  ENABLE_EXPERIMENTAL_MOBILE_FRONTEND: 'true'
   # Compile assets only once.
   CI_SKIP_ASSETS_PRECOMPILE: 'true'
   # Avoid unnecessary DB resets.

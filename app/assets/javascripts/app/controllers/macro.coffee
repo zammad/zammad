@@ -1,5 +1,5 @@
 class Macro extends App.ControllerSubContent
-  requiredPermission: 'admin.macro'
+  @requiredPermission: 'admin.macro'
   header: __('Macros')
   constructor: ->
     super

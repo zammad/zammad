@@ -1,5 +1,5 @@
 class ProfileCalendarSubscriptions extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.calendar+ticket.agent'
+  @requiredPermission: 'user_preferences.calendar+ticket.agent'
   header: __('Calendar')
   elements:
     'input[type=checkbox]': 'options'

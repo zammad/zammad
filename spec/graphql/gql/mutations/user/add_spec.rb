@@ -57,6 +57,32 @@ RSpec.describe Gql::Mutations::User::Add, type: :graphql do
       end
     end
 
+    context 'without email' do
+      let(:variables) do
+        {
+          input: {
+            email:     '',
+            firstname: 'Bender',
+            lastname:  'Email-less',
+          }
+        }
+      end
+
+      let(:expected_response) do
+        {
+          'id'        => gql.id(User.find_by(firstname: 'Bender', lastname: 'Email-less')),
+          'firstname' => 'Bender',
+          'lastname'  => 'Email-less',
+          'fullname'  => 'Bender Email-less',
+        }
+      end
+
+      it 'creates User record' do
+        gql.execute(query, variables: variables)
+        expect(gql.result.data['user']).to eq(expected_response)
+      end
+    end
+
     context 'without permission', authenticated_as: :customer do
       let(:customer) { create(:customer) }
 

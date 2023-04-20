@@ -1,5 +1,5 @@
 class CustomerTicketCreate extends App.ControllerAppContent
-  requiredPermission: 'ticket.customer'
+  @requiredPermission: 'ticket.customer'
   events:
     'submit form':         'submit',
     'click .submit':       'submit',

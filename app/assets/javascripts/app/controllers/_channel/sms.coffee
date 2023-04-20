@@ -1,5 +1,5 @@
 class ChannelSms extends App.ControllerTabs
-  requiredPermission: 'admin.channel_sms'
+  @requiredPermission: 'admin.channel_sms'
   header: __('SMS')
   constructor: ->
     super

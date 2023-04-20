@@ -104,7 +104,7 @@ RSpec.shared_examples 'HasTags' do
   describe '.tag_references' do
     include_context 'with subject and another object being tagged' do
       it 'returns reference to subject' do
-        expect(described_class.tag_references(tag)).to match_array [subject.id]
+        expect(described_class.tag_references(tag)).to contain_exactly(subject.id)
       end
 
       it 'does not return reference to subject when called with other tag' do
@@ -116,7 +116,7 @@ RSpec.shared_examples 'HasTags' do
   describe '.tag_objects' do
     include_context 'with subject and another object being tagged' do
       it 'returns subject' do
-        expect(described_class.tag_objects(tag)).to match_array [subject]
+        expect(described_class.tag_objects(tag)).to contain_exactly(subject)
       end
 
       it 'does not return subject when called with other tag' do

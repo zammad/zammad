@@ -12,7 +12,7 @@ class App.Profile extends App.ControllerNavSidbar
     )
 
 class ProfileRouter extends App.ControllerPermanent
-  requiredPermission: ['user_preferences.*']
+  @requiredPermission: ['user_preferences.*']
 
   constructor: (params) ->
     super

@@ -46,7 +46,7 @@ class Transaction::Slack
 
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
-      Rails.logger.error "Transaction::Slack - sender: #{sender.inspect}"
+
       if sender&.name == 'System'
         return if @item[:changes].blank?
 
@@ -148,9 +148,9 @@ class Transaction::Slack
         next if local_config['group_ids'].to_s != ticket.group_id.to_s
       end
 
-      logo_url = 'https://zammad.com/assets/images/logo-200x200.png'
-      if local_config['logo_url'].present?
-        logo_url = local_config['logo_url']
+      icon_url = 'https://zammad.com/assets/images/logo-200x200.png'
+      if local_config['icon_url'].present?
+        icon_url = local_config['icon_url']
       end
 
       Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
@@ -160,7 +160,7 @@ class Transaction::Slack
         local_config['webhook'],
         channel:     local_config['channel'],
         username:    local_config['username'],
-        icon_url:    logo_url,
+        icon_url:    icon_url,
         mrkdwn:      true,
         http_client: Transaction::Slack::Client,
       )

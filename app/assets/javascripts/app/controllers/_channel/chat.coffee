@@ -1,5 +1,5 @@
 class ChannelChat extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_chat'
+  @requiredPermission: 'admin.channel_chat'
   header: __('Chat')
   events:
     'change .js-params': 'updateParams'

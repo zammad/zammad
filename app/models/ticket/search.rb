@@ -25,7 +25,9 @@ returns if user has no permissions to search
 
 =end
 
-    def search_preferences(_current_user)
+    def search_preferences(current_user)
+      return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('ticket.customer')
+
       {
         prio:                3000,
         direct_search_index: false,

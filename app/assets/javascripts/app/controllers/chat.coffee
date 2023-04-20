@@ -934,7 +934,7 @@ class Setting extends App.ControllerModal
     )
 
 class CustomerChatRouter extends App.ControllerPermanent
-  requiredPermission: 'chat.agent'
+  @requiredPermission: 'chat.agent'
   constructor: (params) ->
     super
 

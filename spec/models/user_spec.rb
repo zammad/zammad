@@ -365,7 +365,7 @@ RSpec.describe User, type: :model do
 
           it 'returns an ActiveRecord::Relation including that agent' do
             expect(agent.out_of_office_agent_of)
-              .to match_array([agent_on_holiday])
+              .to contain_exactly(agent_on_holiday)
           end
         end
 
@@ -383,7 +383,7 @@ RSpec.describe User, type: :model do
 
           it 'returns an ActiveRecord::Relation including both agents' do
             expect(agent.out_of_office_agent_of)
-              .to match_array([agent_on_holiday, agent_on_holiday_sub])
+              .to contain_exactly(agent_on_holiday, agent_on_holiday_sub)
           end
         end
 
@@ -414,7 +414,7 @@ RSpec.describe User, type: :model do
 
           it 'returns an ActiveRecord::Relation including both agents referencing each other' do
             expect(agent_on_holiday_sub.out_of_office_agent_of)
-              .to match_array([agent_on_holiday_sub, agent_on_holiday_sub2])
+              .to contain_exactly(agent_on_holiday_sub, agent_on_holiday_sub2)
           end
         end
       end

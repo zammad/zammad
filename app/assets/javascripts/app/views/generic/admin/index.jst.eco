@@ -8,7 +8,19 @@
     <% end %>
     <% if @buttons: %>
       <% for button in @buttons: %>
-        <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></a>
+        <% if button.menu: %>
+          <div class="buttonDropdown dropdown">
+            <button data-type="<%= button['data-type'] %>" class="btn btn--split--first <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></button>
+            <button class="btn btn--slim btn--split--last <%= button.class %>" data-toggle="dropdown" data-bs-auto-close="outside"><%- @Icon('arrow-down') %></button>
+            <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction">
+            <% for item in button.menu: %>
+              <li class="<%= item.class %>" role="menuitem" data-type="<%= item['data-type'] %>"><%- @T(item.name) %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% else: %>
+          <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></a>
+        <% end %>
       <% end %>
     <% end %>
   </div>

@@ -87,7 +87,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     it 'shows links to open and closed issues' do
       expect(find_all('[data-test-id="section-menu-item"]'))
-        .to match_array [have_text("open\n1"), have_text("closed\n2")]
+        .to contain_exactly(have_text("open\n1"), have_text("closed\n2"))
     end
   end
 
@@ -167,11 +167,27 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
         expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
       end
     end
+
+    context 'when user is email-less' do
+      let(:user) { create(:customer, :without_email) }
+
+      it 'updates User record' do
+        within_form(form_updater_gql_number: 1) do
+          find_input('First name').type('No Email')
+
+          click_button('Save')
+
+          wait_for_gql('shared/graphql/subscriptions/userUpdates.graphql')
+
+          expect(user.reload).to have_attributes(firstname: 'No Email')
+        end
+      end
+    end
   end
 
   describe 'Core Workflow' do
     include_examples 'mobile app: core workflow' do
-      let(:object_name) { 'User' }
+      let(:object_name)             { 'User' }
       let(:form_updater_gql_number) { 1 }
       let(:before_it) do
         lambda {

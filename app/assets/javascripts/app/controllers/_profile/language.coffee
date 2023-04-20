@@ -1,5 +1,5 @@
 class ProfileLanguage extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.language'
+  @requiredPermission: 'user_preferences.language'
   header: __('Language')
   events:
     'submit form': 'update'

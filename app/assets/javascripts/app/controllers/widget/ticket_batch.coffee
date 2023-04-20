@@ -1,5 +1,5 @@
 class App.TicketBatch extends App.Controller
-  requiredPermission: 'ticket.agent'
+  @requiredPermission: 'ticket.agent'
 
   mouse:
     x: null

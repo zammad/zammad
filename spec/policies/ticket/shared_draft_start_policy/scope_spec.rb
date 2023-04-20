@@ -39,7 +39,7 @@ RSpec.describe Ticket::SharedDraftStartPolicy::Scope do
       before { user.groups << group_a }
 
       it 'returns group a' do
-        expect(scope.resolve).to match_array [draft_a]
+        expect(scope.resolve).to contain_exactly(draft_a)
       end
     end
   end

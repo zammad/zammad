@@ -1,5 +1,5 @@
 class Branding extends App.ControllerTabs
-  requiredPermission: 'admin.branding'
+  @requiredPermission: 'admin.branding'
   header: __('Branding')
   constructor: ->
     super

@@ -1,5 +1,5 @@
 class ReportProfile extends App.ControllerSubContent
-  requiredPermission: 'admin.report_profile'
+  @requiredPermission: 'admin.report_profile'
   header: __('Report Profile')
   constructor: ->
     super

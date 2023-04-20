@@ -60,29 +60,29 @@
 
   <h3>Dropdown</h3>
 
-  <div class="buttonDropdown dropup js-submitDropdown" style="margin-left: 0px;">
-    <button class="btn btn--primary btn--split--first js-submit">Dropdown UP</button>
-    <button class="btn btn--primary btn--slim btn--split--last js-openDropdown">
-      <svg class="icon icon-arrow-up "><use xlink:href="assets/images/icons.svg#icon-arrow-up"></use></svg>
+  <div class="buttonDropdown dropup" style="margin-left: 0px;">
+    <button class="btn btn--primary btn--split--first js-submit">Dropdown Up</button>
+    <button class="btn btn--primary btn--slim btn--split--last" data-toggle="dropdown" data-bs-auto-close="outside">
+      <svg class="icon icon-arrow-up"><use xlink:href="assets/images/icons.svg#icon-arrow-up"></use></svg>
     </button>
     <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction" style="min-width: 195px;">
-        <li class="js-dropdownAction" role="menuitem" data-id="1">Value 1</li>
-        <li class="js-dropdownAction" role="menuitem" data-id="2">Value 2</li>
-        <li class="js-dropdownAction" role="menuitem" data-id="3">Value 3</li>
+        <li role="menuitem" data-id="1">Value 1</li>
+        <li role="menuitem" data-id="2">Value 2</li>
+        <li role="menuitem" data-id="3">Value 3</li>
     </ul>
   </div>
 
   <br>
 
-  <div class="buttonDropdown dropdown js-submitDropdownDown" style="margin-left: 0px;">
+  <div class="buttonDropdown dropdown" style="margin-left: 0px;">
     <button class="btn btn--primary btn--split--first js-submit">Dropdown Down</button>
-    <button class="btn btn--primary btn--slim btn--split--last js-openDropdownDown">
+    <button class="btn btn--primary btn--slim btn--split--last" data-toggle="dropdown" data-bs-auto-close="outside">
       <svg class="icon icon-arrow-down"><use xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
     </button>
     <ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="userAction" style="min-width: 195px;">
-        <li class="js-dropdownActionDown" role="menuitem" data-id="1">Value 1</li>
-        <li class="js-dropdownActionDown" role="menuitem" data-id="2">Value 2</li>
-        <li class="js-dropdownActionDown" role="menuitem" data-id="3">Value 3</li>
+      <li role="menuitem" data-id="1">Value 1</li>
+      <li role="menuitem" data-id="2">Value 2</li>
+      <li role="menuitem" data-id="3">Value 3</li>
     </ul>
   </div>
 

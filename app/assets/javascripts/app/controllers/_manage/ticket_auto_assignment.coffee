@@ -1,5 +1,5 @@
 class App.SettingTicketAutoAssignment extends App.ControllerSubContent
-  requiredPermission: 'admin.ticket_auto_assignment'
+  @requiredPermission: 'admin.ticket_auto_assignment'
   events:
     'change .js-ticketAutoAssignment input': 'setTicketAutoAssignment'
     'click .js-timeAccountingFilter': 'setFilter'

@@ -1,16 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { i18n } from '@shared/i18n'
 import log from '@shared/utils/log'
-import { useTranslationsQuery } from '@shared/graphql/queries/translations.api'
+import { useTranslationsLazyQuery } from '@shared/graphql/queries/translations.api'
 import { QueryHandler } from '@shared/server/apollo/handler'
 import type {
   TranslationsQuery,
   TranslationsQueryVariables,
 } from '@shared/graphql/types'
-import type { ReactiveFunction } from '@shared/types/utils'
 import { useApplicationStore } from '@shared/stores/application'
 
 interface TranslationsCacheValue {
@@ -39,8 +38,6 @@ const setCache = (locale: string, value: TranslationsCacheValue): void => {
   log.debug('translations.setCache()', locale, value)
 }
 
-const translationsQueryVariables = reactive({})
-
 let translationsQuery: QueryHandler<
   TranslationsQuery,
   TranslationsQueryVariables
@@ -50,9 +47,7 @@ const getTranslationsQuery = () => {
   if (translationsQuery) return translationsQuery
 
   translationsQuery = new QueryHandler(
-    useTranslationsQuery(
-      translationsQueryVariables as ReactiveFunction<TranslationsQueryVariables>,
-    ),
+    useTranslationsLazyQuery({} as TranslationsQueryVariables),
     {
       // Don't show an error while app is loading as this would cause startup failure.
       errorShowNotification: useApplicationStore().loaded,
@@ -73,14 +68,15 @@ export const useTranslationsStore = defineStore(
 
       const cachedData = loadCache(locale)
 
-      Object.assign(translationsQueryVariables, {
-        cacheKey: cachedData.cacheKey,
-        locale,
+      const translationsQuery = getTranslationsQuery()
+
+      const { data: result } = await translationsQuery.query({
+        variables: {
+          cacheKey: cachedData.cacheKey,
+          locale,
+        },
       })
 
-      const query = getTranslationsQuery()
-
-      const result = await query.loadedResult()
       if (!result?.translations) {
         return
       }

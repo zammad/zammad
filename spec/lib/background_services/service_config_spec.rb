@@ -41,7 +41,7 @@ RSpec.describe BackgroundServices::ServiceConfig do
     it 'returns configurations for all known services' do
       configurations = described_class.configuration_from_env({})
 
-      expect(configurations.map(&:service)).to match_array [BackgroundServices::Service::ProcessScheduledJobs, BackgroundServices::Service::ProcessDelayedJobs]
+      expect(configurations.map(&:service)).to contain_exactly(BackgroundServices::Service::ProcessScheduledJobs, BackgroundServices::Service::ProcessDelayedJobs)
     end
 
     it 'parses configuration for a service' do

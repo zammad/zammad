@@ -34,6 +34,16 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', app:
       expect(page).to have_text('Rose Nylund')
     end
 
+    context 'when customer has neither email nor phone number' do
+      let(:user) { create(:customer, :without_email) }
+
+      it 'shows name and edit button' do
+        open_user
+
+        expect(page).to have_text('Edit Customer')
+      end
+    end
+
     it 'can load all secondary organizations' do
       organizations = create_list(:organization, 5)
       user.update(organizations: organizations)

@@ -15,6 +15,7 @@ import {
   SubscriptionHandler,
 } from '@shared/server/apollo/handler'
 import testFlags from '@shared/utils/testFlags'
+import { useApplicationLoaded } from '@shared/composables/useApplicationLoaded'
 
 let configUpdatesSubscriptionInitialized = false
 
@@ -35,11 +36,11 @@ const getApplicationConfigQuery = () => {
 
 // TODO: consider switching from notification to a modal dialog, and improving the message
 const notifications = useNotifications()
+const { loaded } = useApplicationLoaded()
 
 export const useApplicationStore = defineStore(
   'application',
   () => {
-    const loaded = ref(false)
     const loading = computed(() => !loaded.value)
 
     const setLoaded = (): void => {
@@ -98,7 +99,7 @@ export const useApplicationStore = defineStore(
     const getConfig = async (): Promise<void> => {
       const configQuery = getApplicationConfigQuery()
 
-      const result = await configQuery.loadedResult(true)
+      const { data: result } = await configQuery.refetch()
       if (result?.applicationConfig) {
         result.applicationConfig.forEach((item) => {
           config.value[item.key] = item.value

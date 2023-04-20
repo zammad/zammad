@@ -14,7 +14,8 @@ class Gql::ZammadSchema < GraphQL::Schema
   description 'This is the Zammad GraphQL API'
 
   # Set default limits to protect the system. Values may need to be adjusted in future.
-  default_max_page_size 100
+  default_max_page_size 2000
+  default_page_size 100
   max_complexity 10_000
 
   # The GraphQL introspection query has a depth of 13, so allow that in the development env.

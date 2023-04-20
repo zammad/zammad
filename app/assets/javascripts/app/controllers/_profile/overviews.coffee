@@ -1,5 +1,5 @@
 class Overviews extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.overview_sorting'
+  @requiredPermission: 'user_preferences.overview_sorting'
   header: __('Order of Overviews')
 
   constructor: ->

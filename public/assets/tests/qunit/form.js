@@ -28,6 +28,8 @@ QUnit.test("form elements check", assert => {
     checkbox2: '1',
     boolean1: true,
     boolean2: false,
+    switch1: true,
+    switch2: false,
   }
   new App.ControllerForm({
     el:        el,
@@ -55,6 +57,9 @@ QUnit.test("form elements check", assert => {
         { name: 'boolean1',  display: 'Boolean1',  tag: 'boolean',  null: false, default: defaults['boolean1'] },
         { name: 'boolean2',  display: 'Boolean2',  tag: 'boolean',  null: false, default: defaults['boolean2'] },
         { name: 'boolean3',  display: 'Boolean3',  tag: 'boolean',  null: false, default: defaults['boolean3'] },
+        { name: 'switch1',   display: 'Switch1',   tag: 'switch',   null: false, default: defaults['switch1'] },
+        { name: 'switch2',   display: 'Switch2',   tag: 'switch',   null: false, default: defaults['switch2'] },
+        { name: 'switch3',   display: 'Switch3',   tag: 'switch',   null: false, default: defaults['switch3'] },
       ]
     },
     autofocus: true
@@ -120,6 +125,10 @@ QUnit.test("form elements check", assert => {
   assert.equal(el.find('[name="boolean1"]').val(), 'true')
   assert.equal(el.find('[name="boolean1"]').val(), 'true')
   assert.equal(el.find('[name="boolean2"]').val(), 'false')
+
+  assert.equal(el.find('[name="switch1"]').is(':checked'), true)
+  assert.equal(el.find('[name="switch2"]').is(':checked'), false)
+  assert.equal(el.find('[name="switch3"]').is(':checked'), false)
 });
 
 QUnit.test("form params check 1", assert => {
@@ -171,6 +180,9 @@ QUnit.test("form params check 1", assert => {
     boolean1:  true,
     boolean2:  false,
     boolean4:  false,
+    switch1:  true,
+    switch2:  false,
+    switch4:  true,
   }
   new App.ControllerForm({
     el:        el,
@@ -230,6 +242,10 @@ QUnit.test("form params check 1", assert => {
         { name: 'boolean2',  display: 'Boolean2',  tag: 'boolean',  null: false, default: defaults['boolean2'] },
         { name: 'boolean3',  display: 'Boolean3',  tag: 'boolean',  null: false, default: defaults['boolean3'] },
         { name: 'boolean4',  display: 'Boolean4',  tag: 'boolean',  null: false, default: defaults['boolean4'], disabled: true },
+        { name: 'switch1',   display: 'Switch1',   tag: 'switch',   null: false, default: defaults['switch1'] },
+        { name: 'switch2',   display: 'Switch2',   tag: 'switch',   null: false, default: defaults['switch2'] },
+        { name: 'switch3',   display: 'Switch3',   tag: 'switch',   null: false, default: defaults['switch3'] },
+        { name: 'switch4',   display: 'Switch4',   tag: 'switch',   null: false, default: defaults['switch4'], disabled: true },
       ],
     },
     params: defaults,
@@ -300,6 +316,8 @@ QUnit.test("form params check 1", assert => {
   assert.equal(el.find('[name="checkbox5"]').prop("disabled"), true, 'check checkbox5 disabled')
   assert.equal(el.find('[name="radiobox3"]').prop("disabled"), true, 'check radiobox3 disabled')
 
+  assert.equal(el.find('[name="switch4"]').prop("disabled"), true, 'check switch4 disabled')
+
   params = App.ControllerForm.params(el)
   test_params = {
     input1: '',
@@ -362,6 +380,10 @@ QUnit.test("form params check 1", assert => {
     boolean2: false,
     boolean3: true,
     boolean4: false,
+    switch1: true,
+    switch2: false,
+    switch3: false,
+    switch4: true,
   }
   assert.deepEqual(params, test_params, 'form param check 1')
 

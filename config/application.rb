@@ -6,13 +6,6 @@ require 'rails/all'
 require_relative 'issue_2656_workaround_for_rails_issue_33600'
 require_relative '../lib/zammad/safe_mode'
 
-# Temporary Hack: skip vite build if ENABLE_EXPERIMENTAL_MOBILE_FRONTEND is not set.
-# This must be called before ViteRuby is loaded by Bundler.
-# TODO: Remove when this switch is not needed any more.
-if ENV['ENABLE_EXPERIMENTAL_MOBILE_FRONTEND'] != 'true'
-  ENV['VITE_RUBY_SKIP_ASSETS_PRECOMPILE_EXTENSION'] = 'true'
-end
-
 # DO NOT REMOVE THIS LINE - see issue #2037
 Bundler.setup
 

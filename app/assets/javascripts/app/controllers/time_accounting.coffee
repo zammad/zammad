@@ -1,5 +1,5 @@
 class TimeAccounting extends App.ControllerSubContent
-  requiredPermission: 'admin.time_accounting'
+  @requiredPermission: 'admin.time_accounting'
   header: __('Time Accounting')
   events:
     'change .js-timeAccountingSetting input': 'setTimeAccounting'

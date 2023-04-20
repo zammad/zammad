@@ -1,5 +1,5 @@
 class App.ChannelGoogle extends App.ControllerTabs
-  requiredPermission: 'admin.channel_google'
+  @requiredPermission: 'admin.channel_google'
   header: __('Google')
   constructor: ->
     super
@@ -33,7 +33,7 @@ class App.ChannelGoogle extends App.ControllerTabs
     @render()
 
 class ChannelAccountOverview extends App.ControllerSubContent
-  requiredPermission: 'admin.channel_google'
+  @requiredPermission: 'admin.channel_google'
   events:
     'click .js-new':                'new'
     'click .js-delete':             'delete'

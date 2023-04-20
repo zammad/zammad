@@ -1,5 +1,5 @@
 class ProfileDevices extends App.ControllerSubContent
-  requiredPermission: 'user_preferences.device'
+  @requiredPermission: 'user_preferences.device'
   header: __('Devices')
   events:
     'click [data-type=delete]': 'delete'

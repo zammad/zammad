@@ -1,5 +1,5 @@
 class TextModule extends App.ControllerSubContent
-  requiredPermission: 'admin.text_module'
+  @requiredPermission: 'admin.text_module'
   header: __('Text modules')
   constructor: ->
     super

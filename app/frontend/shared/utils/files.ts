@@ -30,7 +30,9 @@ export const convertFileList = async (
     }
   })
 
-  return Promise.all(promises)
+  const readFiles = await Promise.all(promises)
+
+  return readFiles.filter((file) => file.content)
 }
 
 export const loadImageIntoBase64 = async (
@@ -64,7 +66,7 @@ export const loadImageIntoBase64 = async (
 }
 
 export const canDownloadFile = (type?: Maybe<string>) => {
-  return Boolean(type && type !== 'application/pdf' && type !== 'text/html')
+  return Boolean(type && type !== 'text/html')
 }
 
 export const canPreviewFile = (type?: Maybe<string>) => {

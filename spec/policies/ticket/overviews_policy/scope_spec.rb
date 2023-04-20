@@ -30,7 +30,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
       let(:user) { create(:customer, organization: create(:organization, shared: false)) }
 
       it 'returns base' do
-        expect(scope.resolve).to match_array [overview_a]
+        expect(scope.resolve).to contain_exactly(overview_a)
       end
 
       context 'with shared organization' do
@@ -39,7 +39,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
         end
 
         it 'returns base and shared' do
-          expect(scope.resolve).to match_array [overview_a, overview_b]
+          expect(scope.resolve).to contain_exactly(overview_a, overview_b)
         end
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
       let(:user) { create(:agent) }
 
       it 'returns base' do
-        expect(scope.resolve).to match_array [overview_a]
+        expect(scope.resolve).to contain_exactly(overview_a)
       end
 
       context 'when out of office replacement' do
@@ -62,7 +62,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
         end
 
         it 'returns base and out of office' do
-          expect(scope.resolve).to match_array [overview_a, overview_c]
+          expect(scope.resolve).to contain_exactly(overview_a, overview_c)
         end
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
       let(:user) { create(:agent_and_customer, organization: create(:organization, shared: false)) }
 
       it 'returns base' do
-        expect(scope.resolve).to match_array [overview_a]
+        expect(scope.resolve).to contain_exactly(overview_a)
       end
 
       context 'with shared organization' do
@@ -80,7 +80,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
         end
 
         it 'returns base and shared' do
-          expect(scope.resolve).to match_array [overview_a, overview_b]
+          expect(scope.resolve).to contain_exactly(overview_a, overview_b)
         end
 
         context 'when out of office replacement' do
@@ -94,7 +94,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
           end
 
           it 'returns all' do
-            expect(scope.resolve).to match_array [overview_a, overview_b, overview_c]
+            expect(scope.resolve).to contain_exactly(overview_a, overview_b, overview_c)
           end
         end
       end
@@ -110,7 +110,7 @@ RSpec.describe Ticket::OverviewsPolicy::Scope do
         end
 
         it 'returns base and out of office' do
-          expect(scope.resolve).to match_array [overview_a, overview_c]
+          expect(scope.resolve).to contain_exactly(overview_a, overview_c)
         end
       end
     end

@@ -8,8 +8,10 @@ import type {
 } from '@tests/fixtures/graphqlSampleTypes'
 import { SampleTypedQueryDocument } from '@tests/fixtures/graphqlSampleTypes'
 import { useNotifications } from '@shared/components/CommonNotifications'
+import type { ApolloError, ApolloQueryResult } from '@apollo/client/core'
 import { NetworkStatus } from '@apollo/client/core'
 import { GraphQLErrorTypes } from '@shared/types/error'
+import { waitForNextTick } from '@tests/support/utils'
 import QueryHandler from '../QueryHandler'
 
 const queryFunctionCallSpy = vi.fn()
@@ -61,10 +63,29 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
   queryFunctionCallSpy.mockClear()
 }
 
+const waitFirstResult = (queryHandler: QueryHandler<any, any>) =>
+  new Promise<ApolloQueryResult<any> | ApolloError>((resolve) => {
+    queryHandler.onResult((res) => {
+      resolve(res)
+    })
+    queryHandler.onError((err) => {
+      resolve(err)
+    })
+  })
+
 describe('QueryHandler', () => {
   const sampleQuery = (variables: SampleQueryVariables, options = {}) => {
     queryFunctionCallSpy()
     return useQuery<SampleQuery, SampleQueryVariables>(
+      SampleTypedQueryDocument,
+      variables,
+      options,
+    )
+  }
+
+  const sampleLazyQuery = (variables: SampleQueryVariables, options = {}) => {
+    queryFunctionCallSpy()
+    return useLazyQuery<SampleQuery, SampleQueryVariables>(
       SampleTypedQueryDocument,
       variables,
       options,
@@ -109,7 +130,7 @@ describe('QueryHandler', () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
       expect(queryHandlerObject.loading().value).toBe(true)
 
-      await queryHandlerObject.onLoaded()
+      await waitFirstResult(queryHandlerObject)
 
       expect(queryHandlerObject.loading().value).toBe(false)
     })
@@ -117,27 +138,16 @@ describe('QueryHandler', () => {
     it('supports lazy queries', async () => {
       expect.assertions(3)
 
-      const sampleLazyQuery = (
-        variables: SampleQueryVariables,
-        options = {},
-      ) => {
-        queryFunctionCallSpy()
-        return useLazyQuery<SampleQuery, SampleQueryVariables>(
-          SampleTypedQueryDocument,
-          variables,
-          options,
-        )
-      }
-
       const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
 
       expect(queryHandlerObject.loading().value).toBe(false)
 
-      await queryHandlerObject.load()
+      queryHandlerObject.load()
+      await waitForNextTick()
 
       expect(queryHandlerObject.loading().value).toBe(true)
 
-      await queryHandlerObject.onLoaded()
+      await queryHandlerObject.query()
 
       expect(queryHandlerObject.loading().value).toBe(false)
     })
@@ -151,21 +161,25 @@ describe('QueryHandler', () => {
     it('result is available', async () => {
       const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-      await expect(queryHandlerObject.loadedResult()).resolves.toEqual(
-        querySampleResult,
-      )
+      const result = await waitFirstResult(queryHandlerObject)
+
+      expect(result).toMatchObject({
+        data: querySampleResult,
+      })
     })
 
     it('loaded result is also resolved after additional result call with active trigger refetch', async () => {
-      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+      const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
 
-      await expect(queryHandlerObject.loadedResult()).resolves.toEqual(
-        querySampleResult,
-      )
+      await expect(queryHandlerObject.query()).resolves.toMatchObject({
+        data: querySampleResult,
+      })
 
-      await expect(queryHandlerObject.loadedResult(true)).resolves.toEqual(
-        querySampleResult,
-      )
+      await expect(queryHandlerObject.query()).resolves.toMatchObject({
+        data: querySampleResult,
+      })
+
+      expect(handlerCallSpy).toBeCalledTimes(1)
     })
 
     it('watch on result change', async () => {
@@ -176,7 +190,7 @@ describe('QueryHandler', () => {
       queryHandlerObject.watchOnResult((result) => {
         expect(result).toEqual(querySampleResult)
       })
-      await queryHandlerObject.onLoaded()
+      await waitFirstResult(queryHandlerObject)
     })
 
     it('on result trigger', async () => {
@@ -187,11 +201,11 @@ describe('QueryHandler', () => {
       queryHandlerObject.onResult((result) => {
         expect(result.data).toEqual(querySampleResult)
       })
-      await queryHandlerObject.onLoaded()
+      await waitFirstResult(queryHandlerObject)
     })
 
     it('receive value immediately in non-reactive way', async () => {
-      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+      const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
 
       await expect(queryHandlerObject.query()).resolves.toEqual(
         expect.objectContaining({ data: querySampleResult }),
@@ -199,7 +213,7 @@ describe('QueryHandler', () => {
     })
 
     it('cancels previous attempt, if the new one started', async () => {
-      const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+      const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
 
       const cancelSpy = vi.spyOn(queryHandlerObject, 'cancel')
 
@@ -234,7 +248,7 @@ describe('QueryHandler', () => {
 
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
 
-        await queryHandlerObject.loadedResult()
+        await waitFirstResult(queryHandlerObject)
 
         const { notifications } = useNotifications()
 
@@ -252,7 +266,7 @@ describe('QueryHandler', () => {
           },
         })
 
-        await queryHandlerObject.loadedResult()
+        await waitFirstResult(queryHandlerObject)
 
         expect(errorCallbackSpy).toHaveBeenCalledWith({
           type: 'Exceptions::Unknown',
@@ -266,7 +280,7 @@ describe('QueryHandler', () => {
 
         const errorCallbackSpy = vi.fn()
 
-        await queryHandlerObject.loadedResult()
+        await waitFirstResult(queryHandlerObject)
 
         // Refetch after first load again.
         await queryHandlerObject.refetch().catch((error) => {
@@ -292,7 +306,7 @@ describe('QueryHandler', () => {
           },
         })
 
-        await queryHandlerObject.loadedResult()
+        await waitFirstResult(queryHandlerObject)
       })
     })
   })

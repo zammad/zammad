@@ -93,6 +93,44 @@ RSpec.describe Webhook, type: :model do
     end
   end
 
+  describe 'reset custom payload' do
+    subject(:webhook) { create(:webhook, customized_payload: customized_payload, custom_payload: custom_payload) }
+
+    context 'with customized payload' do
+      let(:customized_payload) { true }
+      let(:custom_payload)     { '{"foo": "bar"}' }
+
+      it 'saves custom payload' do
+        expect(webhook).to have_attributes(
+          customized_payload: customized_payload,
+          custom_payload:     custom_payload,
+        )
+      end
+    end
+
+    context 'without customized payload' do
+      let(:customized_payload) { false }
+      let(:custom_payload)     { '{"foo": "bar"}' }
+
+      it 'resets custom payload' do
+        expect(webhook).to have_attributes(
+          customized_payload: customized_payload,
+          custom_payload:     nil,
+        )
+      end
+    end
+  end
+
+  describe 'check preferences' do
+    subject(:webhook) { build(:webhook, preferences: preferences) }
+
+    let(:preferences) { { pre_defined: { class_name: 'Webhook::PreDefined::Example' } } }
+
+    it 'has preferences' do
+      expect(webhook.preferences).to include({ 'pre_defined' => { 'class_name' => 'Webhook::PreDefined::Example' } })
+    end
+  end
+
   describe '#destroy' do
     subject(:webhook) { create(:webhook) }
 

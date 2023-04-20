@@ -12,6 +12,8 @@ class App.TicketStats extends App.Controller
   constructor: ->
     super
 
+    return if !@permissionCheck('ticket.agent')
+
     # subscribe and reload data / fetch new data if triggered
     if @user
       @subscribeIdUser = App.User.full(@user.id, @load, false, true)

@@ -1,5 +1,5 @@
 class Security extends App.ControllerTabs
-  requiredPermission: 'admin.security'
+  @requiredPermission: 'admin.security'
   header: __('Security')
   constructor: ->
     super

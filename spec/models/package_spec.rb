@@ -209,4 +209,54 @@ RSpec.describe Package, type: :model do
       include_examples 'check not allowed file location', '%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/tmp/test_controller.rb'
     end
   end
+
+  describe 'Multiple uninstalling packages will course missing backup files #4577' do
+    let(:core_file) { Rails.root.join('app/models/ticket.rb') }
+    let(:orig_content) { File.read(core_file) }
+
+    let(:package_zpm_files_json) do
+      <<-JSON
+        [
+          {
+            "permission": "644",
+            "location": "app/models/ticket.rb",
+            "content": "YWJjw6TDtsO8w58="
+          }
+        ]
+      JSON
+    end
+
+    before do
+      orig_content
+    end
+
+    it 'does handle reinstalls properly', :aggregate_failures do
+      described_class.install(string: package_zpm_json)
+      expect(File.exist?(core_file)).to be(true)
+      expect(File.read(core_file)).to eq('abcäöüß')
+      expect(File.exist?("#{core_file}.save")).to be(true)
+      expect(File.read("#{core_file}.save")).to eq(orig_content)
+
+      described_class.uninstall(string: package_zpm_json, migration_not_down: true, reinstall: true)
+      expect(File.exist?(core_file)).to be(true)
+      expect(File.read(core_file)).to eq(orig_content)
+      expect(File.exist?("#{core_file}.save")).to be(false)
+
+      described_class.uninstall(string: package_zpm_json, migration_not_down: true, reinstall: true)
+      expect(File.exist?(core_file)).to be(true)
+      expect(File.read(core_file)).to eq(orig_content)
+      expect(File.exist?("#{core_file}.save")).to be(false)
+
+      described_class.reinstall(package_name)
+      expect(File.exist?(core_file)).to be(true)
+      expect(File.read(core_file)).to eq('abcäöüß')
+      expect(File.exist?("#{core_file}.save")).to be(true)
+      expect(File.read("#{core_file}.save")).to eq(orig_content)
+
+      described_class.uninstall(string: package_zpm_json)
+      expect(File.exist?(core_file)).to be(true)
+      expect(File.read(core_file)).to eq(orig_content)
+      expect(File.exist?("#{core_file}.save")).to be(false)
+    end
+  end
 end

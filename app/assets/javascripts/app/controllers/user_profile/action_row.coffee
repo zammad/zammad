@@ -54,12 +54,14 @@ class App.UserProfileActionRow extends App.ControllerObserverActionRow
         title:    __('History')
         callback: @showHistory
       }
-      {
+    ]
+
+    if @permissionCheck('ticket.agent')
+      actions.unshift {
         name:     'ticket'
         title:    __('New Ticket')
         callback: @newTicket
       }
-    ]
 
     if user.isAccessibleBy(App.User.current(), 'change')
       actions.unshift {

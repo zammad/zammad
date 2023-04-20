@@ -1,5 +1,5 @@
 class Ticket extends App.ControllerTabs
-  requiredPermission: 'admin.ticket'
+  @requiredPermission: 'admin.ticket'
   header: __('Ticket')
   constructor: ->
     super

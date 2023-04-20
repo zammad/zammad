@@ -185,7 +185,7 @@ RSpec.describe ObjectManager::Attribute, type: :model do
 
     describe '.attribute_to_references_hash_objects' do
       it 'returns classes with conditions' do
-        expect(described_class.attribute_to_references_hash_objects).to match_array [Trigger, Overview, Job, Sla, Report::Profile ]
+        expect(described_class.attribute_to_references_hash_objects).to contain_exactly(Trigger, Overview, Job, Sla, Report::Profile)
       end
     end
 
