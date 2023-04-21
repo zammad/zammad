@@ -165,17 +165,41 @@ RSpec.describe TriggerWebhookJob, type: :job do
     end
 
     context 'with different payloads' do
+      subject(:perform) do
+        described_class.perform_now(
+          trigger,
+          ticket,
+          article,
+          changes:        nil,
+          user_id:        nil,
+          execution_type: 'trigger',
+          event_type:     'info',
+        )
+      end
+
       let(:webhook) { create(:webhook, endpoint: endpoint, customized_payload: customized_payload, custom_payload: custom_payload, pre_defined_webhook_type: pre_defined_webhook_type) }
       let(:customized_payload)       { false }
       let(:custom_payload)           { nil }
       let(:pre_defined_webhook_type) { nil }
 
       def pre_defined_webhook_payload
-        tracks = { ticket:, article: }
-        event  = { type: nil, execution: nil, changes: nil, user_id: nil }
+        tracks = { ticket: ticket, article: article }
+        data = {
+          event:   {
+            type:      'info',
+            execution: 'trigger',
+            changes:   nil,
+            user_id:   nil,
+          },
+          webhook: webhook
+        }
 
-        custom_payload = TriggerWebhookJob::CustomPayload::PreDefined.payload(pre_defined_webhook_type)
-        TriggerWebhookJob::CustomPayload.generate(custom_payload, tracks, event, webhook)
+        TriggerWebhookJob::CustomPayload.tracks.select { |t| t.respond_to?(:generate) }.each do |klass|
+          klass.generate(tracks, data)
+        end
+
+        predefined_payload = TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload('Mattermost')
+        TriggerWebhookJob::CustomPayload.generate(predefined_payload, tracks)
       end
 
       shared_examples 'including correct payload' do
@@ -189,8 +213,8 @@ RSpec.describe TriggerWebhookJob, type: :job do
         it_behaves_like 'including correct payload'
 
         context 'with pre-defined webhook' do
-          let(:pre_defined_webhook_type) { 'Mattermost' }
-          let(:payload)                  { pre_defined_webhook_payload }
+          let(:webhook) { create(:mattermost_webhook, endpoint: endpoint) }
+          let(:payload) { pre_defined_webhook_payload }
 
           it_behaves_like 'including correct payload'
         end
@@ -208,13 +232,13 @@ RSpec.describe TriggerWebhookJob, type: :job do
         it_behaves_like 'including correct payload'
 
         context 'with pre-defined webhook' do
-          let(:pre_defined_webhook_type) { 'Mattermost' }
+          let(:webhook) { create(:mattermost_webhook, endpoint: endpoint, customized_payload:, custom_payload:) }
 
           it_behaves_like 'including correct payload'
         end
 
         context 'with empty custom payload' do
-          let(:custom_payload) { '' }
+          let(:custom_payload) { nil }
           let(:payload) do
             {
               ticket:  payload_ticket,
@@ -225,8 +249,8 @@ RSpec.describe TriggerWebhookJob, type: :job do
           it_behaves_like 'including correct payload'
 
           context 'with pre-defined webhook' do
-            let(:pre_defined_webhook_type) { 'Mattermost' }
-            let(:payload)                  { pre_defined_webhook_payload }
+            let(:webhook) { create(:mattermost_webhook, endpoint: endpoint) }
+            let(:payload) { pre_defined_webhook_payload }
 
             it_behaves_like 'including correct payload'
           end

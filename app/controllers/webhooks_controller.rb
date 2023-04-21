@@ -38,7 +38,7 @@ class WebhooksController < ApplicationController
   end
 
   def replacements
-    render json:   TriggerWebhookJob::CustomPayload.objects_and_subroutines,
+    render json:   TriggerWebhookJob::CustomPayload.replacements,
            status: :ok
   end
 end

@@ -10533,6 +10533,14 @@ msgstr ""
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
 
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is missing."
+msgstr ""
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is unknown or missing."
+msgstr ""
+
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
 msgstr ""

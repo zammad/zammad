@@ -2,17 +2,6 @@
 
 class TriggerWebhookJob < ApplicationJob
 
-  USER_ATTRIBUTE_FILTER = %w[
-    last_login
-    login_failed
-    password
-    preferences
-    group_ids
-    groups
-    authorization_ids
-    authorizations
-  ].freeze
-
   attr_reader :ticket, :trigger, :article, :changes, :user_id, :execution_type, :event_type
 
   retry_on TriggerWebhookJob::RequestError, attempts: 5, wait: lambda { |executions|
@@ -117,21 +106,35 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def pre_defined_webhook_payload
-    TriggerWebhookJob::CustomPayload::PreDefined.payload(webhook.pre_defined_webhook_type)
+    TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload(webhook.pre_defined_webhook_type)
   end
 
   def generate_custom_payload
     tracks = { ticket:, article: }
-    event  = { type: event_type, execution: execution_type, changes:, user_id: }
+    add_custom_tracks(tracks)
 
-    payload = webhook.custom_payload
+    payload = webhook.customized_payload ? webhook.custom_payload : pre_defined_webhook_payload
+    return default_payload if payload.nil?
 
-    if payload.blank?
-      return default_payload if webhook.pre_defined_webhook_type.blank?
-
-      payload = pre_defined_webhook_payload
-    end
-
-    TriggerWebhookJob::CustomPayload.generate(payload, tracks, event, webhook)
+    TriggerWebhookJob::CustomPayload.generate(payload, tracks)
   end
+
+  def add_custom_tracks(tracks)
+    data = {
+      event:   {
+        type:      event_type,
+        execution: execution_type,
+        changes:,
+        user_id:
+      },
+      webhook: webhook
+    }
+
+    TriggerWebhookJob::CustomPayload.tracks.each do |track|
+      next if !track.respond_to?(:generate)
+
+      track.generate(tracks, data)
+    end
+  end
+
 end
