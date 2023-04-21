@@ -8,7 +8,7 @@ namespace :zammad do
 
       desc 'Stops the application'
       task stop: %i[
-        zammad:ci:service:scheduler:stop
+        zammad:ci:service:background_worker:stop
         zammad:ci:service:websocket:stop
         zammad:ci:service:puma:stop
       ]

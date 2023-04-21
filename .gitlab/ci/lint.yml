@@ -26,7 +26,6 @@
   before_script: []
   script:
     - shellcheck -S warning $(find . -name "*.sh" -o -name "functions" | egrep -v "/vendor|node_modules/")
-    - shellcheck -S error script/init.d/*
   after_script: []
 
 'lint: i18n & rails':

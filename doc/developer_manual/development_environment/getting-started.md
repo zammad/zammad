@@ -128,8 +128,8 @@ Of course, you can always just start and stop all the processes by hand:
 ```sh
 # in three separate terminal windows
 $ rails server
-$ script/scheduler.rb start         # runs in bg; use -t for fg
-$ script/websocket-server.rb start  # runs in fg; use -d for bg
+$ script/background-worker.rb start
+$ script/websocket-server.rb start
 ```
 
 ## Login

@@ -415,7 +415,6 @@ Metrics/BlockLength:
     - 'lib/sessions/backend/ticket_overview_list.rb'
     - 'lib/sessions/client.rb'
     - 'lib/tasks/zammad/search_index_es.rake'
-    - 'lib/tasks/zammad/ci/service/puma/start.rake'
     - 'lib/transaction_dispatcher.rb'
     - 'lib/twitter_sync.rb'
     - 'script/websocket-server.rb'

@@ -10,16 +10,20 @@ namespace :zammad do
 
         desc 'Stops the puma application webserver'
         task :stop do # rubocop:disable Rails/RakeEnvironment
-          file = Rails.root.join('tmp/pids/server.pid')
-          pid  = File.read(file).to_i
 
-          Process.kill('SIGTERM', pid)
+          command = [
+            'script/ci/daemonize.rb',
+            'stop',
+            '--',
+            'puma',
+            'bundle exec puma',
+          ]
 
-          sleep 5
+          stdout, stderr, status = Open3.capture3(*command)
 
-          next if !File.exist?(file)
+          next if status.success? && !stdout.include?('ERROR') # rubocop:disable Rails/NegateInclude
 
-          Process.kill('SIGKILL', pid)
+          abort("Error while stopping Puma - error status #{status.exitstatus}: #{stdout} #{stderr}")
         end
       end
     end

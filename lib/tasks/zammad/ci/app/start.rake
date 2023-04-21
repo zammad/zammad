@@ -13,7 +13,7 @@ namespace :zammad do
 
         Rake::Task['zammad:ci:service:puma:start'].invoke(ENV['BROWSER_PORT'], ENV['RAILS_ENV'])
         Rake::Task['zammad:ci:service:websocket:start'].invoke(ENV['WS_PORT'])
-        Rake::Task['zammad:ci:service:scheduler:start'].invoke
+        Rake::Task['zammad:ci:service:background_worker:start'].invoke
       end
     end
   end

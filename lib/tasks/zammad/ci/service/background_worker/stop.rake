@@ -6,16 +6,17 @@ namespace :zammad do
 
     namespace :service do
 
-      namespace :scheduler do
+      namespace :background_worker do
 
         desc 'Stops the scheduler'
         task :stop do # rubocop:disable Rails/RakeEnvironment
 
           command = [
-            'bundle',
-            'exec',
-            'script/scheduler.rb',
-            'stop',
+            'script/ci/daemonize.rb',
+            'start',
+            '--',
+            'background-worker',
+            'bundle exec script/background-worker.rb stop',
           ]
 
           _stdout, stderr, status = Open3.capture3(*command)

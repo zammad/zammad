@@ -14,23 +14,18 @@ namespace :zammad do
           env      = args.fetch(:env, 'production')
 
           command = [
-            'bundle',
-            'exec',
+            'script/ci/daemonize.rb',
+            'start',
+            '--',
             'puma',
-            '--pidfile',
-            'tmp/pids/server.pid',
-            '-d',
-            '-p',
-            port,
-            '-e',
-            env
+            "bundle exec puma -p #{port} -e#{env}",
           ]
 
-          _stdout, stderr, status = Open3.capture3(*command)
+          stdout, stderr, status = Open3.capture3(*command)
 
-          next if status.success?
+          next if status.success? && !stdout.include?('ERROR') # rubocop:disable Rails/NegateInclude
 
-          abort("Error while starting Puma - error status #{status.exitstatus}: #{stderr}")
+          abort("Error while starting Puma - error status #{status.exitstatus}: #{stdout} #{stderr}")
         end
       end
     end

@@ -314,7 +314,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -395,7 +395,7 @@ GEM
       binding_of_caller (~> 1.0)
       pry (~> 0.13)
     public_suffix (5.0.1)
-    puma (4.3.12)
+    puma (6.2.2)
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
@@ -704,7 +704,7 @@ DEPENDENCIES
   pry-remote
   pry-rescue
   pry-stack_explorer
-  puma (~> 4)
+  puma
   pundit
   pundit-matchers
   rack-attack
