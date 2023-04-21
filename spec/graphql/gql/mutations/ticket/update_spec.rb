@@ -152,7 +152,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
         it 'raises an error', :aggregate_failures do
           gql.execute(query, variables: variables)
-          expect(gql.result.error_type).to eq(GraphQL::ExecutionError)
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::GroupType')
         end
       end
