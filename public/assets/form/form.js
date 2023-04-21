@@ -193,7 +193,7 @@ $(function() {
         'Message': 'Mensagem',
         'Name': 'Nome',
         'Your Email': 'Seu Email',
-        'Your Message…': '',
+        'Your Message…': 'Sua Mensagem…',
         'Your Name': 'Seu nome',
       },
       'ru': {
