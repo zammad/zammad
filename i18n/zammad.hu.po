@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-18 03:05+0000\n"
+"PO-Revision-Date: 2023-04-20 03:05+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -61,9 +61,9 @@ msgstr ""
 "fájlrendszerben tárolja. A modulok között adatvesztés nélkül lehet váltani "
 "akár egy már üzemelő rendszeren is."
 
-#. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_create/en.md.erb
+#: app/views/messaging/ticket_create/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -89,9 +89,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation/en.md.erb
+#: app/views/messaging/ticket_escalation/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -113,9 +113,36 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_reminder_reached/en.md.erb
+#: app/views/messaging/ticket_info/en.md.erb
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+"# #{ticket.title}\n"
+"_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Utoljára frissítve: #{current_user.longname} "
+"ekkor: #{ticket.updated_at}_\n"
+"* Csoport: #{ticket.group.name}\n"
+"* Tulajdonos: #{ticket.owner.fullname}\n"
+"* Állapot: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+
+#. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/messaging/ticket_reminder_reached/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -137,9 +164,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_update/en.md.erb
+#: app/views/messaging/ticket_update/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -169,9 +196,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation_warning/en.md.erb
+#: app/views/messaging/ticket_escalation_warning/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -795,6 +822,12 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr "Egy URL így néz ki: https://zammad.example.com"
 
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid ""
+"A Webhook can be fired by Triggers and Schedulers, don't forget to define "
+"them!"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -946,6 +979,7 @@ msgstr "Fiókok"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
@@ -969,6 +1003,10 @@ msgstr "Fiókok"
 msgid "Action"
 msgstr "Művelet"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Action execution"
+msgstr "Művelet végrehajtás"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -978,6 +1016,10 @@ msgstr "Műveletek"
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "Aktiválja a jegykezdeményezések rekurzív feldolgozását."
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Activated by"
+msgstr "Aktiválta"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1120,6 +1162,10 @@ msgstr ""
 "Riasztás hozzáadása a függőben lévő emlékeztetőkhöz és az eszkalált "
 "jegyekhez."
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Add all values"
+msgstr "Minden érték hozzáadása"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
 msgstr "Feltölthető csatolmány lehetőség hozzáadása."
@@ -1157,6 +1203,10 @@ msgstr "Válasz hozzáadása"
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add second level heading"
 msgstr "Második szintű címsor hozzáadása"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Add selected values"
+msgstr "Kiválasztott értékek hozzáadása"
 
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
@@ -1229,8 +1279,8 @@ msgid ""
 "browser) to proceed:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
 "<br>\n"
@@ -1249,8 +1299,8 @@ msgstr ""
 "be az URL címet a böngészőjébe):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>Ez a hivatkozás egy olyan oldalra vezeti Önt, ahol bejelentkezhet.</"
 "div>\n"
@@ -1309,6 +1359,10 @@ msgstr "Ügynök neve"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 "Ügynök neve + From elválasztójel + A rendszer címének megjelenített neve"
+
+#: app/assets/javascripts/app/controllers/organization.coffee
+msgid "Agent and customer users can be grouped into organizations."
+msgstr "Az ügynök- és ügyfélfelhasználók szervezetekbe csoportosíthatók."
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1395,6 +1449,10 @@ msgstr "Alternatív név"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr "Alternatívaként használhatja a Zammad API-t az adatok importálásához."
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Always"
+msgstr "Mindig"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1574,6 +1632,10 @@ msgstr "Archiválva ekkor"
 msgid "Are you sure to remove this article?"
 msgstr "Biztos, hogy el szeretné távolítani ezt a cikket?"
 
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+msgid "Are you sure you want to delete \"%s\"?"
+msgstr "Biztos, hogy törölni szeretné a következőt: \"%s\"?"
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
 msgstr ""
@@ -1600,7 +1662,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr "Biztos benne?"
 
@@ -2398,6 +2459,10 @@ msgstr "Változtassa meg jelszavát"
 msgid "Change customer"
 msgstr "Ügyfélváltás"
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Change date"
+msgstr "Dátum módosítása"
+
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
@@ -2566,6 +2631,10 @@ msgstr "Ellenőrző összeg"
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee
 msgid "Child"
 msgstr "Gyermek"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Choose date"
+msgstr "Dátum kiválasztása"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
@@ -2860,7 +2929,7 @@ msgid ""
 "account. It's easy, just click the link below.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
 "a></div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
@@ -2874,7 +2943,7 @@ msgstr ""
 "fiókja. Ez könnyű, csak kattintson az alábbi linkre.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
 "a></div>\n"
 "<br>\n"
 "<div>Az Ön #{config.product_name} csapata</div>\n"
@@ -3008,7 +3077,7 @@ msgstr "Munkamenet folytatása"
 msgid "Continue to desktop"
 msgstr "Folytatás asztali gépen"
 
-#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "Continue to mobile"
 msgstr "Folytatás mobilon"
@@ -3377,6 +3446,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
 msgstr "Egyéni"
+
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "Custom Payload"
+msgstr "Hasznos terhelés"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -4400,6 +4473,12 @@ msgstr ""
 "hívóazonosítókat az objektumokban, és tárolja azokat a CTI-kereséshez."
 
 #: db/seeds/settings.rb
+msgid "Defines the transaction backend which executes time based triggers."
+msgstr ""
+"Meghatározza a tranzakciós háttérrendszert, amely időalapú eseményindítókat "
+"hajt végre."
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
@@ -4426,7 +4505,7 @@ msgstr "Meghatározza a tranzakciós háttérrendszert."
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4448,6 +4527,7 @@ msgstr "Meghatározza a tranzakciós háttérrendszert."
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Törlés"
 
@@ -4762,7 +4842,6 @@ msgstr "Ne szinkronizáljon"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
@@ -4835,9 +4914,9 @@ msgstr "Időtartam"
 msgid "Easter holiday"
 msgstr "Húsvét"
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -5023,7 +5102,7 @@ msgstr ""
 "Az e-mail küldése és fogadása nem volt ellenőrizhető. Kérjük, ellenőrizze a "
 "beállításokat."
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 "E-mail elküldve a következő címre: \"%s\". Kérjük, hagyja, hogy a "
@@ -5688,7 +5767,7 @@ msgstr "Nem sikerült biztonsági mentést találni a csatornán!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Nem sikerült visszavonni a csatorna migrációját!"
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Nem sikerült e-mailt küldeni a következő címre: \"%s\". Kérjük, lépjen "
@@ -6225,9 +6304,9 @@ msgstr "Üdvözlés"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6317,6 +6396,14 @@ msgstr "HTML E-mail CSS betűtípus"
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "HTML tisztító feldolgozási időkorlát"
 
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "HTTP Basic Authentication Password"
+msgstr "HTTP alapszintű hitelesítési jelszó"
+
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "HTTP Basic Authentication Username"
+msgstr "HTTP alapszintű hitelesítési felhasználónév"
+
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
 msgstr "HTTP napló"
@@ -6332,6 +6419,10 @@ msgstr "Adatvédelmi feladatok kezelése."
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "Feldolgozta"
+
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+msgid "Has submenu"
+msgstr "Almenüvel rendelkezik"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
@@ -6394,11 +6485,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
-"Here you can create new tickets. Also, if you have the permission, you can "
-"create new customers and organizations."
+"Here you can create new tickets, customers and organizations (depending on "
+"your configured permissions)."
 msgstr ""
-"Itt hozhat létre új jegyeket. Továbbá, ha rendelkezik jogosultsággal, akkor "
-"létrehozhat új ügyfeleket és szervezeteket is."
+"Itt hozhat létre új jegyeket, ügyfeleket és szervezeteket (a konfigurált "
+"jogosultságaitól függően)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
@@ -6459,9 +6550,9 @@ msgid "Hint for adding an article to an existing ticket."
 msgstr "Hasznos tipp egy cikk hozzáadásához egy meglévő jegyhez."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "Előzmények"
@@ -7153,7 +7244,7 @@ msgid ""
 "#{config.product_name} - our customer support platform.</div>\n"
 "<br>\n"
 "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.name}\">here</a> and set your password.</"
+"#password_reset_verify/#{token.token}\">here</a> and set your password.</"
 "div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
@@ -7170,7 +7261,7 @@ msgstr ""
 "#{config.product_name} - ügyfélszolgálati platformunkra.</div>\n"
 "<br>\n"
 "<div>Kattintson a <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.name}\">ide</a> és állítsa be a jelszavát.</"
+"#password_reset_verify/#{token.token}\">ide</a> és állítsa be a jelszavát.</"
 "div>\n"
 "<br>\n"
 "<div>Sok sikert,</div>\n"
@@ -7784,6 +7875,12 @@ msgstr ""
 msgid "Material"
 msgstr "Material"
 
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Host Notification"
+msgid "Mattermost Notifications"
+msgstr "Gazdagép értesítés"
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Mattermost, RocketChat"
 msgstr "Mattermost, RocketChat"
@@ -7894,6 +7991,24 @@ msgstr "Az üzenetet a feladó nem írta alá."
 msgid "Messages"
 msgstr "Üzenetek"
 
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Creation Channels"
+msgid "Messaging Channel"
+msgstr "Csatornák létrehozása"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Icon URL"
+msgid "Messaging Icon URL"
+msgstr "Ikon URL"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Username"
+msgid "Messaging Username"
+msgstr "Felhasználónév"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
 msgstr "Meta adatok"
@@ -7925,6 +8040,12 @@ msgstr "Microsoft 365 alkalmazás hitelesítő adatok"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft alkalmazás regisztrációs portál"
+
+#: app/models/webhook/pre_defined/microsoft_teams.rb
+#, fuzzy
+#| msgid "Host Notification"
+msgid "Microsoft Teams Notifications"
+msgstr "Gazdagép értesítés"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -7977,10 +8098,6 @@ msgstr "perc"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Mobiltelefon"
-
-#: app/assets/javascripts/app/controllers/mobile.coffee
-msgid "Mobile frontend is disabled."
-msgstr "A mobil frontend le van tiltva."
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8208,10 +8325,6 @@ msgstr "Szükség van legalább egy 'article body' mezőre."
 msgid "Need fingerprint param!"
 msgstr "Szükség van ujjlenyomat paraméterre!"
 
-#: app/controllers/user_access_token_controller.rb
-msgid "Need label!"
-msgstr "Szükség van címkére!"
-
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
 msgstr "Szükség van logó paraméterre"
@@ -8324,7 +8437,7 @@ msgstr "Új sablon"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8434,9 +8547,11 @@ msgstr ""
 msgid "New user?"
 msgstr "Új felhasználó?"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Következő"
 
@@ -8683,11 +8798,11 @@ msgstr "Nem engedélyezett ( a funkció nem lehetséges)"
 msgid "Not authorized (token expired)!"
 msgstr "Nem engedélyezett (a token lejárt)!"
 
-#: app/controllers/application_controller/authenticates.rb app/models/token.rb
+#: app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr "Nem engedélyezett (token)!"
 
-#: app/controllers/application_controller/authenticates.rb app/models/user.rb
+#: app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr "Nem engedélyezett (felhasználó)!"
 
@@ -9003,7 +9118,7 @@ msgstr "Az áttekintések sorrendje"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9055,7 +9170,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9064,14 +9179,6 @@ msgstr ""
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "Szervezetek"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid ""
-"Organizations are for any person in the system: agents (owners, "
-"responsibles, …) and customers."
-msgstr ""
-"A szervezetek a rendszerben lévő bármely személyre vonatkoznak: ügynökök "
-"(tulajdonosok, felelősök, ...) és ügyfelek."
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
@@ -9173,9 +9280,9 @@ msgstr "Piszkozat felülírása"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Tulajdonos"
@@ -9315,8 +9422,8 @@ msgid "People who create Tickets ask for help."
 msgstr "Azok az emberek, akik Jegyeket hoznak létre segítségkéréshez."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "Perform action of the following"
-msgstr "Végezze el a következő műveletet"
+msgid "Perform actions"
+msgstr "Műveletek végrehajtása"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
@@ -9424,17 +9531,17 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Kérjük, írjon be egy szöveget."
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+msgid "Please enter a valid JSON string."
+msgstr "Kérjük, adjon meg egy érvényes JSON karakterláncot."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please enter a valid email address."
 msgstr "Kérjük, adjon meg egy érvényes e-mail címet."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
-msgstr ""
-"Kérjük, adja meg a végpontot, és válassza ki az Exchange webszolgáltatások "
-"eléréséhez szükséges hitelesítési módszert."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
+msgstr "Kérjük, adja meg az Exchange webszolgáltatások elérésének végpontját."
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
 msgid "Please enter the time you want to record."
@@ -9528,6 +9635,15 @@ msgstr "Postmaster szűrő"
 msgid "Powered by"
 msgstr "Powered by"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid "Pre-defined Webhook"
+msgstr "Előre definiált Webhook"
+
+#: app/assets/javascripts/app/controllers/webhook.coffee
+msgid "Pre-defined webhook for %s."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Pretty Date"
 msgstr "Szép dátum"
@@ -9559,6 +9675,7 @@ msgid "Preview owner tickets"
 msgstr "Tulajdonos jegyek előnézete"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Previous"
 msgstr "Előző"
 
@@ -9849,9 +9966,17 @@ msgstr "%s eltávolítása"
 msgid "Remove all"
 msgstr "Az összes eltávolítása"
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Remove all values"
+msgstr "Minden érték eltávolítása"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Formázás eltávolítása"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Remove selected values"
+msgstr "Kiválasztott értékek eltávolítása"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -9966,7 +10091,7 @@ msgid "Requirements"
 msgstr "Követelmények"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr "Ellenőrző e-mail újraküldése"
@@ -10011,8 +10136,8 @@ msgid ""
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -10033,8 +10158,8 @@ msgstr ""
 "hivatkozásra (vagy másolja be az URL címet a böngészőjébe):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>Ez a hivatkozás egy olyan oldalra vezeti Önt, ahol megváltoztathatja "
 "jelszavát.</div>\n"
@@ -10060,8 +10185,8 @@ msgid ""
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -10082,8 +10207,8 @@ msgstr ""
 "hivatkozásra (vagy másolja be az URL címet a böngészőjébe):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>Ez a hivatkozás egy olyan oldalra vezeti Önt, ahol megváltoztathatja "
 "jelszavát.</div>\n"
@@ -10130,6 +10255,10 @@ msgstr "Retweetek"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
 msgstr "A retweetek jegyekké lesznek alakítva."
+
+#: app/models/webhook/pre_defined/rocket_chat.rb
+msgid "Rocket Chat Notifications"
+msgstr "Rocket Chat értesítések"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
@@ -10324,6 +10453,7 @@ msgstr "szombat"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
@@ -10525,6 +10655,10 @@ msgstr "Válassza ki a létrehozandó jegy típusát"
 msgid "Selected conditions"
 msgstr "Kiválasztott feltételek"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Selective"
+msgstr "Szelektív"
+
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Selector"
 msgstr "Választó"
@@ -10534,10 +10668,8 @@ msgid "Selects the ticket number generator module."
 msgstr "Kiválasztja a jegyszámgenerátor modult."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Választás…"
@@ -11027,6 +11159,10 @@ msgstr "Kihagyás"
 msgid "Slack"
 msgstr "Slack"
 
+#: app/models/webhook/pre_defined/slack.rb
+msgid "Slack Notifications"
+msgstr "Slack értesítések"
+
 #: db/seeds/settings.rb
 msgid "Slack config"
 msgstr "Slack konfiguráció"
@@ -11176,9 +11312,9 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Állapot"
@@ -11700,7 +11836,7 @@ msgid ""
 msgstr ""
 "A Zammad konfigurációja megváltozott. Kérjük, töltse be újra amint lehet."
 
-#: app/frontend/shared/stores/connection.ts
+#: app/frontend/shared/server/connection.ts
 msgid "The connection to the server was lost."
 msgstr "Megszakadt a kapcsolat a kiszolgálóval."
 
@@ -11944,6 +12080,10 @@ msgstr "A megadott végpont érvénytelen."
 msgid "The provided match operator is missing or invalid."
 msgstr ""
 
+#: app/models/webhook.rb
+msgid "The provided payload is invalid. Please check your syntax."
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
 #: app/controllers/users_controller.rb
@@ -12053,6 +12193,10 @@ msgstr "A kötelező 'link_type' paraméter hiányzik."
 msgid "The required parameter 'locale' is missing."
 msgstr "A kötelező 'locale' paraméter hiányzik."
 
+#: app/controllers/user_access_token_controller.rb
+msgid "The required parameter 'name' is missing."
+msgstr "A kötelező 'name' paraméter hiányzik."
+
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'oauth_token' is missing."
 msgstr "A kötelező 'oauth_token' paraméter hiányzik."
@@ -12113,6 +12257,10 @@ msgstr "A kért external_credential érték nem található a gyorsítótárban.
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Az ismételten megkísérelt biztonsági folyamat sikertelen volt!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "The selected date is invalid."
+msgstr "A kiválasztott dátum érvénytelen."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12441,6 +12589,12 @@ msgid "This is a default maintenance message. Click here to change."
 msgstr ""
 "Ez egy alapértelmezett karbantartási üzenet. Kattintson ide a módosításhoz."
 
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
+msgid ""
+"This is an example payload for your installation, including any custom "
+"objects. It is possible to further customize payload of each Webhook."
+msgstr ""
+
 #: app/models/channel/email_parser.rb
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
@@ -12527,12 +12681,8 @@ msgstr ""
 "hívólistát."
 
 #: app/assets/javascripts/app/models/group.coffee
-msgid ""
-"This signature is inactive, it won't be included in the reply. Change state "
-"<a href=\"#channels/email\">here</a>"
-msgstr ""
-"Ez az aláírás inaktív, nem kerül bele a válaszba. Az állapot megváltoztatása "
-"<a href=\"#channels/email\">itt</a>"
+msgid "This signature is inactive, it won't be included in the reply."
+msgstr "Ez az aláírás inaktív, nem kerül bele a válaszba."
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 msgid "This user has no access and will not receive notifications."
@@ -12949,6 +13099,10 @@ msgstr "Időegységek"
 msgid "Time Units Total"
 msgstr "Időegységek összesen"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Time event"
+msgstr "Időpont esemény"
+
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Time zone"
@@ -13159,6 +13313,13 @@ msgstr "Eseményindító"
 #: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "Eseményindítók"
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Triggers activated by actions are executed whenever a ticket is created or "
+"updated, while triggers activated by time events are executed when certain "
+"times are reached (e.g. pending time, escalation)."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -13648,7 +13809,7 @@ msgstr "Jegy megjelenítésekor használható"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -13747,7 +13908,7 @@ msgstr "Felhasználónév a proxy kapcsolathoz."
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14157,6 +14318,16 @@ msgstr "A %s milyen értékeit kell szinkronizálni a szervezettel."
 msgid "What values of %s should be synced to users."
 msgstr "A %s milyen értékeit kell szinkronizálni a felhasználókkal."
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"When at least one field from conditions was updated or article was added and "
+"conditions match"
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "When conditions match"
+msgstr "Ha a feltételek megegyeznek"
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "When notification is being sent."
 msgstr "Amikor az értesítés elküldésre kerül."
@@ -14382,17 +14553,17 @@ msgstr "Több csevegési témát is létrehozhat."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
 msgid ""
-"You can define different signatures for each group, which allows you to use "
-"a different signature for every department.\n"
+"You can define a separate signature for each group to use a different "
+"signature for each department.\n"
 "\n"
-"Once you have created a signature here, you will also need to edit the "
-"groups where you want to use it."
+"Once you created a signature here, you will also need to edit the groups "
+"which should use it."
 msgstr ""
-"Az egyes csoportok számára különböző aláírásokat határozhat meg, ami "
-"lehetővé teszi, hogy minden egyes részleg számára más aláírást használjon.\n"
+"Az egyes csoportok számára külön aláírást határozhat meg, hogy az egyes "
+"részlegekhez eltérő aláírást használhasson.\n"
 "\n"
-"Miután itt létrehozta az aláírást, azokat a csoportokat is szerkesztenie "
-"kell, ahol azt használni szeretné."
+"Miután itt létrehozta az aláírást, szerkesztenie kell azokat a csoportokat "
+"is, amelyeknek azt használniuk kell."
 
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid ""
@@ -14408,8 +14579,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
 msgstr "A %s kezeléséről online dokumentációnkban %l talál egy útmutatót."
@@ -14434,15 +14607,15 @@ msgstr "A továbbiakban nem láthatja az adatvédelmi feladatot."
 
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts
 msgid "You can no longer see the group."
-msgstr ""
+msgstr "A továbbiakban nem láthatja a csoportot."
 
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts
 msgid "You can no longer see the organization."
-msgstr ""
+msgstr "A továbbiakban nem láthatja a szervezetet."
 
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts
 msgid "You can no longer see the role."
-msgstr ""
+msgstr "A továbbiakban nem láthatja a szerepkört."
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
@@ -14451,7 +14624,7 @@ msgstr "A továbbiakban nem láthatja a jegyet."
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
 msgid "You can no longer see the user."
-msgstr ""
+msgstr "A továbbiakban nem láthatja a felhasználót."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
@@ -14602,7 +14775,7 @@ msgstr ""
 "\n"
 "<p>Üdvözöljük #{user.firstname},</p>\n"
 "<br>\n"
-"<p>Az Ön #{config.product_name} fiókjának <b>#{{user.login}</b> jelszava "
+"<p>Az Ön #{config.product_name} fiókjának <b>#{user.login}</b> jelszava "
 "nemrég megváltozott.</p>\n"
 "<br>\n"
 "<p>Nem ismert Önnek ez a tevékenység? Amennyiben nem, lépjen kapcsolatba a "
@@ -14924,8 +15097,8 @@ msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "nem használható, mert *_id és *_ids nem engedélyezettek"
 
 #: app/models/knowledge_base/category.rb
-msgid "cannot be a child of the parent"
-msgstr "nem lehet a szülő gyermeke"
+msgid "cannot be a subcategory of the parent category"
+msgstr "nem lehet a szülő kategória alkategóriája"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "changed to"
@@ -15233,6 +15406,14 @@ msgstr "megváltozott"
 #: lib/validations/mention_validator.rb
 msgid "has no agent access to this ticket"
 msgstr "nincs ügynöki hozzáférése ehhez a jegyhez"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "has reached"
+msgstr "elérte"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+msgid "has reached warning"
+msgstr "elérte a figyelmeztetést"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -15914,6 +16095,18 @@ msgstr "a kezdőlapra való lépéshez."
 msgid "today"
 msgstr "ma"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because pending reminder was reached"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket was escalated"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket will escalate soon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
 msgstr "próbálja meg újra"
@@ -16026,6 +16219,29 @@ msgstr "...a teljes szövegterületből"
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
 
+#~ msgid "Need label!"
+#~ msgstr "Szükség van címkére!"
+
+#~ msgid "Mobile frontend is disabled."
+#~ msgstr "A mobil frontend le van tiltva."
+
+#~ msgid ""
+#~ "Here you can create new tickets. Also, if you have the permission, you "
+#~ "can create new customers and organizations."
+#~ msgstr ""
+#~ "Itt hozhat létre új jegyeket. Továbbá, ha rendelkezik jogosultsággal, "
+#~ "akkor létrehozhat új ügyfeleket és szervezeteket is."
+
+#~ msgid ""
+#~ "Organizations are for any person in the system: agents (owners, "
+#~ "responsibles, …) and customers."
+#~ msgstr ""
+#~ "A szervezetek a rendszerben lévő bármely személyre vonatkoznak: ügynökök "
+#~ "(tulajdonosok, felelősök, ...) és ügyfelek."
+
+#~ msgid "Perform action of the following"
+#~ msgstr "Végezze el a következő műveletet"
+
 #~ msgid "About"
 #~ msgstr "Névjegy"
 
@@ -16072,11 +16288,6 @@ msgstr "Várakozási idő ma"
 #~| msgid "Ticket %s created!"
 #~ msgid "Ticket Create"
 #~ msgstr "%s jegy létrehozva!"
-
-#, fuzzy
-#~| msgid "Select item"
-#~ msgid "Selected"
-#~ msgstr "Elem kiválasztása"
 
 #, fuzzy
 #~| msgid "Last sync"

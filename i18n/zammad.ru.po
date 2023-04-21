@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-22 03:30+0000\n"
-"Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
+"PO-Revision-Date: 2023-04-12 03:05+0000\n"
+"Last-Translator: Falkonio <falkovds@gmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -62,9 +62,9 @@ msgstr ""
 "файловой системе. Вы можете переключаться между модулями даже в системе, "
 "которая уже находится в рабочем состоянии, без какой-либо потери данных."
 
-#. This is the template file app/views/slack/ticket_create/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_create/en.md.erb
+#: app/views/messaging/ticket_create/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -90,9 +90,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_escalation/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation/en.md.erb
+#: app/views/messaging/ticket_escalation/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -114,9 +114,49 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_reminder_reached/en.md.erb
+#: app/views/messaging/ticket_info/en.md.erb
+#, fuzzy
+#| msgid ""
+#| "# #{ticket.title}\n"
+#| "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+#| "Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
+#| "updated_at}_\n"
+#| "* Group: #{ticket.group.name}\n"
+#| "* Owner: #{ticket.owner.fullname}\n"
+#| "* State: #{t(ticket.state.name)}\n"
+#| "\n"
+#| "<% if @objects[:article] %>\n"
+#| "#{article.body_as_text}\n"
+#| "<% end %>\n"
+msgid ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket."
+"updated_at}_\n"
+"* Группа: #{ticket.group.name}\n"
+"* Владелец: #{ticket.owner.fullname}\n"
+"* Состояние: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
+
+#. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/messaging/ticket_reminder_reached/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -138,9 +178,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_update/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_update/en.md.erb
+#: app/views/messaging/ticket_update/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -170,9 +210,9 @@ msgstr ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 
-#. This is the template file app/views/slack/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
+#. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
-#: app/views/slack/ticket_escalation_warning/en.md.erb
+#: app/views/messaging/ticket_escalation_warning/en.md.erb
 msgid ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
@@ -211,6 +251,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"риложением третьей стороны\n"
+"<div>Привет, #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Похоже, что вы связали свой аккаунт <b>с приложением третьей стороны</"
+"b> \"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Если это были не вы, пожалуйста, удалите связанный аккаунт из своего "
+"профиля и измените пароль для приложения третьей стороны. Кто-то мог "
+"получить несанкционированный доступ к вашему аккаунту в сервисе третьей "
+"стороны.</div>\n"
+"<br>\n"
+"<div>Ваша команда #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -786,6 +838,12 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr "URL-адрес выглядит следующим образом: https://zammad.example.com"
 
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid ""
+"A Webhook can be fired by Triggers and Schedulers, don't forget to define "
+"them!"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -838,7 +896,7 @@ msgstr ""
 #, fuzzy
 #| msgid "this ticket was merged into ticket %s"
 msgid "A ticket cannot be merged into itself."
-msgstr "эта заявка была объединена с заявкой %s"
+msgstr "Эта заявка не может быть объединена сама с собой."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
@@ -944,6 +1002,7 @@ msgstr "Учетные записи"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/models/core_workflow.coffee
+#: app/assets/javascripts/app/models/trigger.coffee
 #: app/assets/javascripts/app/views/api.jst.eco
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco
 #: app/assets/javascripts/app/views/generic/actions.jst.eco
@@ -967,6 +1026,12 @@ msgstr "Учетные записи"
 msgid "Action"
 msgstr "Действие"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Action execution"
+msgstr "Массовое действие выполнено!"
+
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -976,6 +1041,12 @@ msgstr "Действия"
 #: db/seeds/settings.rb
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "Активирует рекурсивную обработку триггеров заявки."
+
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Activity"
+msgid "Activated by"
+msgstr "Деятельность"
 
 #: db/seeds/settings.rb
 msgid ""
@@ -1108,7 +1179,7 @@ msgstr "Добавить личный ключ доступа"
 #, fuzzy
 #| msgid "Add image"
 msgid "Add a message"
-msgstr "Добавить изображение"
+msgstr "Добавить сообщение"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add agreement text before submit."
@@ -1117,6 +1188,12 @@ msgstr "Добавьте текст соглашения перед отправ
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Добавить оповещение для отложенных и эскалированных заявок."
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Add bullet list"
+msgid "Add all values"
+msgstr "Добавить маркированный список"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Add attachment option to upload."
@@ -1131,7 +1208,7 @@ msgstr "Добавить маркированный список"
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Add condition"
-msgstr "Сохраненные условия"
+msgstr "Добавить условие"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add first level heading"
@@ -1158,14 +1235,19 @@ msgstr "Добавить ответ"
 msgid "Add second level heading"
 msgstr "Добавить заголовок второго уровня"
 
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Add selected values"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Add sender initials to end of a tweet."
 msgstr "Добавить инициалы отправителя в конец сообщения в tweeter."
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco
+#, fuzzy
 msgid "Add subclause"
-msgstr ""
+msgstr "Добавить подпункт"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Add third level heading"
@@ -1185,10 +1267,8 @@ msgid "Additional follow-up detection"
 msgstr "Дополнительные способы проверки"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Additional information"
-msgstr "Уведомления о заявках"
+msgstr "Дополнительная информация"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Address"
@@ -1218,6 +1298,27 @@ msgstr "Пароль для авторизации администратора"
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Administration login to #{config.product_name}\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>We received a request for an administration login for your #{config."
+#| "product_name} account <b>#{user.login}</b>.</div>\n"
+#| "<br>\n"
+#| "<div>Please, click on the link below (or copy and paste the URL into your "
+#| "browser) to proceed:</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
+#| "name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</"
+#| "a></div>\n"
+#| "<br>\n"
+#| "<div>This link takes you to a page where you can log in.</div>\n"
+#| "<br>\n"
+#| "<div>If you don't want to log in, please ignore this message.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1230,8 +1331,8 @@ msgid ""
 "browser) to proceed:</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.name}</a></"
-"div>\n"
+"token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}</"
+"a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can log in.</div>\n"
 "<br>\n"
@@ -1273,12 +1374,10 @@ msgid "Advance to next ticket from overview"
 msgstr "Перейти к следующей заявке из представления"
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
-#, fuzzy
-#| msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgid "After approval, please re-connect your Exchange account."
 msgstr ""
-"После утверждения, пожалуйста, повторно подключите свой почтовый ящик "
-"Microsoft365."
+"После подтверждения, пожалуйста, повторно подключите свою учетную запись "
+"Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco
 msgid "After approval, please re-connect your Microsoft365 mailbox."
@@ -1313,6 +1412,10 @@ msgstr "Имя агента"
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Имя агента + Разделитель «От» + Отображаемое имя системной почты"
+
+#: app/assets/javascripts/app/controllers/organization.coffee
+msgid "Agent and customer users can be grouped into organizations."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1402,6 +1505,10 @@ msgid "Alternatively, you can use the Zammad API to import data."
 msgstr ""
 "Кроме того, вы можете использовать программный интерфейс приложения (API) "
 "Zammad для импорта данных."
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid "Always"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
 msgid "An error has occurred"
@@ -1578,14 +1685,18 @@ msgid "Archived at"
 msgstr "Архивировано в"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
-#, fuzzy
-#| msgid "Are you sure to delete"
 msgid "Are you sure to remove this article?"
-msgstr "Вы уверены, что хотите удалить"
+msgstr "Вы уверены, что хотите удалить эту статью?"
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
+#, fuzzy
+#| msgid "Do you really want to delete \"%s\"?"
+msgid "Are you sure you want to delete \"%s\"?"
+msgstr "Вы действительно хотите удалить \"%s\"?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
-msgstr ""
+msgstr "Вы уверены, что хотите объединить эту заявку (#%s) с заявкой #%s?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid ""
@@ -1608,23 +1719,16 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Are you sure? You have unsaved changes that will get lost."
 msgid "Are you sure? The prepared article will be removed."
-msgstr ""
-"Вы уверены? У вас есть несохраненные изменения, которые будут потеряны."
+msgstr "Вы уверены? Подготовленная статья будет удалена."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
-#, fuzzy
-#| msgid "Are you sure? You have unsaved changes that will get lost."
 msgid "Are you sure? You have changes that will get lost."
-msgstr ""
-"Вы уверены? У вас есть несохраненные изменения, которые будут потеряны."
+msgstr "Вы уверены? У вас есть изменения, которые будут потеряны."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
@@ -1649,10 +1753,8 @@ msgid "Article Count"
 msgstr "Количество статей"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
-#, fuzzy
-#| msgid "Article"
 msgid "Article Type"
-msgstr "Статья"
+msgstr "Тип статьи"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "Article actions"
@@ -1672,7 +1774,7 @@ msgstr "Статья не может быть удалена."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "В статье используется другой механизм безопасности."
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -1813,6 +1915,8 @@ msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
+"Атрибут, однозначно идентифицирующий пользователя. Если не установлено, "
+"используется идентификатор имени, возвращаемый IDP."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -1905,10 +2009,8 @@ msgid "Automatic account link on initial logon"
 msgstr "Автоматическая привязка учетной записи при первом входе в систему"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Automatic account link on initial logon"
 msgid "Automatic account linking notification"
-msgstr "Автоматическая привязка учетной записи при первом входе в систему"
+msgstr "Уведомление об автоматической привязке аккаунта"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid ""
@@ -1984,10 +2086,8 @@ msgid "Back to overview"
 msgstr "Назад к обзору"
 
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
-#, fuzzy
-#| msgid "Back to overview"
 msgid "Back to previous page"
-msgstr "Назад к обзору"
+msgstr "Вернуться на предыдущую страницу"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco
 msgid "Back to search results"
@@ -2028,10 +2128,8 @@ msgid "Base Objects"
 msgstr "Базовые объекты"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
-#, fuzzy
-#| msgid "Authentication"
 msgid "Basic Authentication"
-msgstr "Аутентификация"
+msgstr "Простая аутентификация"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
@@ -2385,7 +2483,7 @@ msgstr "Компоновка страницы категории"
 #, fuzzy
 #| msgid "Duration"
 msgid "Caution!"
-msgstr "Период"
+msgstr "Внимание!"
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Certificate for verification could not be found."
@@ -2422,15 +2520,19 @@ msgstr "Изменить пароль"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "Измененить клиента"
+msgstr "Изменить клиента"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Change order"
+msgid "Change date"
+msgstr "Изменить заказ"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco
 msgid "Change order"
-msgstr "Изменить заказ"
+msgstr "Изменить порядок"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -2594,6 +2696,12 @@ msgstr "Контрольная сумма"
 msgid "Child"
 msgstr "Потомок"
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Close tab"
+msgid "Choose date"
+msgstr "Закрыть вкладку"
+
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
 msgstr "Выберите, нужно ли преобразовывать ретвиты (retweets) в заявки."
@@ -2636,10 +2744,8 @@ msgid "Clean up 'Cti::Log'."
 msgstr "Очистить Cti::Log."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "DataPrivacyTask"
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "ЗадачаОбеспеченияЗащитыИнформации"
+msgstr "Очистить 'DataPrivacyTask'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -2869,20 +2975,31 @@ msgid "Configure Basic Settings"
 msgstr "Настройка основных параметров"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
-#, fuzzy
-#| msgid "Confirm/submit dialog"
 msgid "Confirm dialog"
-msgstr "Подтвердить/отправить диалог"
+msgstr "Подтвердить диалог"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Configure"
 msgid "Confirm merge"
-msgstr "Настроить"
+msgstr "Подтвердить слияние"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Confirm your #{config.product_name} account, #{user.firstname} #{user."
+#| "lastname}\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>Confirm your email address to complete your #{config.product_name} "
+#| "account. It's easy, just click the link below.</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
+#| "name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+#| "a></div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Confirm your #{config.product_name} account, #{user.firstname} #{user."
 "lastname}\n"
@@ -2893,7 +3010,7 @@ msgid ""
 "account. It's easy, just click the link below.</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#email_verify/#{token."
-"name}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</"
+"token}\">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.token}</"
 "a></div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
@@ -2945,10 +3062,8 @@ msgstr "Подключение каналов"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
-#, fuzzy
-#| msgid "Connect Google App"
 msgid "Connect Exchange App"
-msgstr "Подключить приложение Google"
+msgstr "Подключить приложение Exchange"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
@@ -3046,7 +3161,7 @@ msgstr "Продолжение сессии"
 msgid "Continue to desktop"
 msgstr "Перейти к настольному приложению"
 
-#: app/assets/javascripts/app/controllers/mobile.coffee
+#: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee
 #: app/assets/javascripts/app/views/login.jst.eco
 #, fuzzy
 #| msgid "Continue to desktop app"
@@ -3199,10 +3314,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create Ticket"
-msgstr "Создать тестовую заявку"
+msgstr "Создать заявку"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3241,10 +3354,8 @@ msgid "Create new records"
 msgstr "Создать новые записи"
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue
-#, fuzzy
-#| msgid "Create new object"
 msgid "Create new ticket"
-msgstr "Создать новый объект"
+msgstr "Создать новую заявку"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts
 msgid "Create new ticket for this organization"
@@ -3270,10 +3381,8 @@ msgid "Create tag"
 msgstr "Создать тег"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create ticket"
-msgstr "Создать тестовую заявку"
+msgstr "Создать заявку"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -3308,10 +3417,8 @@ msgid "Created"
 msgstr "Создан/а"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Created At"
 msgid "Created Article"
-msgstr "Созданный на"
+msgstr "Созданная статья"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -3320,16 +3427,12 @@ msgid "Created At"
 msgstr "Созданный на"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Create new object"
 msgid "Created External Article"
-msgstr "Создать новый объект"
+msgstr "Создана внешняя статья"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Create new object"
 msgid "Created Internal Article"
-msgstr "Создать новый объект"
+msgstr "Создана внутренняя статья"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee
 #: app/assets/javascripts/app/models/organization.coffee
@@ -3366,10 +3469,8 @@ msgid "Created by"
 msgstr "Создал"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Create new ticket for this user"
 msgid "Creating new tickets via web is disabled."
-msgstr "Создать новую заявку для этого пользователя"
+msgstr "Создание новых заявок через Интернет отключено."
 
 #: app/models/report.rb
 msgid "Creation Channels"
@@ -3430,6 +3531,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
 msgstr "Пользовательский"
+
+#: app/assets/javascripts/app/models/webhook.coffee
+#, fuzzy
+#| msgid "Example Payload"
+msgid "Custom Payload"
+msgstr "Пример полезной нагрузки (Payload)"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
@@ -3577,10 +3684,8 @@ msgid "Decryption failed!"
 msgstr "Ошибка расшифровки!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
-#, fuzzy
-#| msgid "Decryption failed!"
 msgid "Decryption failed! %s"
-msgstr "Ошибка расшифровки!"
+msgstr "Ошибка расшифровки! %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
@@ -3980,6 +4085,8 @@ msgstr ""
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
+"Определяет, поддерживает ли редактор условий заявки сложные логические "
+"выражения."
 
 #: db/seeds/settings.rb
 msgid "Defines if tickets can be created via web form."
@@ -4158,7 +4265,7 @@ msgstr "Определяет удобный формат дат."
 
 #: db/seeds/settings.rb
 msgid "Defines processing timeout for the html sanitizer."
-msgstr ""
+msgstr "Определяет время ожидания очистки html."
 
 #: db/seeds/settings.rb
 msgid "Defines searchable models."
@@ -4186,10 +4293,8 @@ msgid "Defines the Clearbit config."
 msgstr "Определяет настройки Clearbit."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the Exchange config."
 msgid "Defines the Exchange OAuth config."
-msgstr "Определяет настройки Exchange."
+msgstr "Определяет конфигурацию Exchange OAuth."
 
 #: db/seeds/settings.rb
 msgid "Defines the Exchange config."
@@ -4429,6 +4534,12 @@ msgstr ""
 "CTI."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the transaction backend to execute triggers."
+msgid "Defines the transaction backend which executes time based triggers."
+msgstr "Определяет серверную операцию для выполнения триггеров."
+
+#: db/seeds/settings.rb
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
@@ -4455,7 +4566,7 @@ msgstr "Определяет серверную операцию."
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 #: app/assets/javascripts/app/controllers/package.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4477,14 +4588,13 @@ msgstr "Определяет серверную операцию."
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Delete"
 msgstr "Удалить"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete Article"
-msgstr "Удалить файл"
+msgstr "Удалить статью"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Delete Avatar?"
@@ -4799,7 +4909,6 @@ msgstr "Не синхронизировать"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
 msgid "Done"
@@ -4872,9 +4981,9 @@ msgstr "Период"
 msgid "Easter holiday"
 msgstr "Рождественские каникулы"
 
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
@@ -4911,22 +5020,16 @@ msgstr "Редактировать маску"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewReplyButton.vue
-#, fuzzy
-#| msgid "Add reply"
 msgid "Edit reply"
-msgstr "Добавить ответ"
+msgstr "Редактировать ответ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
-#, fuzzy
-#| msgid "Edit"
 msgid "Editing"
-msgstr "Редактировать"
+msgstr "Редактирование"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue
-#, fuzzy
-#| msgid "Editing ticket"
 msgid "Editing on Desktop"
-msgstr "Редактирование заявки"
+msgstr "Редактирование на рабочем столе"
 
 #: db/seeds/settings.rb
 msgid "Elasticsearch Attachment Extensions"
@@ -5065,7 +5168,7 @@ msgstr ""
 "Не удалось проверить отправку и получение электронной почты. Пожалуйста, "
 "проверьте свои настройки."
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 "Электронное письмо отправлено на адрес \"%s\". Пожалуйста, дайте "
@@ -5239,6 +5342,8 @@ msgid ""
 "Enables sending of an email notification to a user when they link their "
 "account with a third-party application."
 msgstr ""
+"Позволяет отправлять уведомление по электронной почте пользователю, когда он "
+"связывает свою учетную запись со сторонним приложением."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5396,7 +5501,7 @@ msgstr "Введите URL ссылки"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue
 msgid "Enter search and select a type to search for"
-msgstr ""
+msgstr "Введите поисковый запрос и выберите тип поиска"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -5619,10 +5724,8 @@ msgid "Exchange"
 msgstr "Exchange"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Exchange"
 msgid "Exchange OAuth"
-msgstr "Exchange"
+msgstr "Exchange OAuth"
 
 #: db/seeds/settings.rb
 msgid "Exchange config"
@@ -5642,10 +5745,8 @@ msgid "Execute changes on objects"
 msgstr "Применить изменения к объектам"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Not configured"
 msgid "Execute configured macros"
-msgstr "Не настроено"
+msgstr "Выполнить настроенный макрос"
 
 #: db/seeds/schedulers.rb
 msgid "Execute import jobs."
@@ -5668,10 +5769,8 @@ msgid "Expert Settings"
 msgstr "Расширенные настройки"
 
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco
-#, fuzzy
-#| msgid "Expert"
 msgid "Expert mode"
-msgstr "Эксперт"
+msgstr "Экспертный режим"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 msgid "Experts"
@@ -5719,10 +5818,8 @@ msgid "Facebook App Secret"
 msgstr "Пароль приложения Facebook"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Developer System"
 msgid "Facebook Developer Site"
-msgstr "Системный разработчик"
+msgstr "Сайт разработчика Facebook"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 msgid "Failed Tasks"
@@ -5738,7 +5835,7 @@ msgstr "Не удалось найти резервную копию на кан
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Не удалось откатить перенос канала!"
 
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
 "Не удалось отправить электронное письмо на \"%s\". Пожалуйста, свяжитесь с "
@@ -5807,10 +5904,8 @@ msgid "Filter"
 msgstr "Фильтр"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Editing ticket"
 msgid "Find a ticket"
-msgstr "Редактирование заявки"
+msgstr "Найти заявку"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -6121,10 +6216,8 @@ msgid "Get Started"
 msgstr "Начать"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#, fuzzy
-#| msgid "Account not verified"
 msgid "Get notified"
-msgstr "Аккаунт не подтвержден"
+msgstr "Получить уведомление"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
@@ -6142,10 +6235,8 @@ msgid "GitHub App Credentials"
 msgstr "Учетные данные приложения GitHub"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Applications"
 msgid "GitHub OAuth Applications"
-msgstr "Приложения"
+msgstr "Приложения GitHub OAuth"
 
 #: db/seeds/settings.rb
 msgid "GitHub config"
@@ -6171,10 +6262,8 @@ msgid "GitLab App Credentials"
 msgstr "Учетные данные приложения GitLab"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Applications"
 msgid "GitLab Applications"
-msgstr "Приложения"
+msgstr "Приложения GitLab"
 
 #: db/seeds/settings.rb
 msgid "GitLab config"
@@ -6213,7 +6302,7 @@ msgstr "Назад"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go back"
-msgstr ""
+msgstr "Назад"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue
 msgid "Go home"
@@ -6232,10 +6321,8 @@ msgid "Google"
 msgstr "Google"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Google Client Secret"
 msgid "Google API Console Site"
-msgstr "Пароль клиента Google"
+msgstr "Сайт консоли Google API"
 
 #: db/seeds/settings.rb
 msgid "Google App Credentials"
@@ -6279,9 +6366,9 @@ msgstr "Приветствие"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Group"
@@ -6369,7 +6456,19 @@ msgstr "CSS-шрифт для HTML-писем"
 
 #: db/seeds/settings.rb
 msgid "HTML Sanitizer Processing Timeout"
-msgstr ""
+msgstr "Истекло время обработки очистки HTML"
+
+#: app/assets/javascripts/app/models/webhook.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Basic Authentication Password"
+msgstr "Аутентификация"
+
+#: app/assets/javascripts/app/models/webhook.coffee
+#, fuzzy
+#| msgid "Authentication"
+msgid "HTTP Basic Authentication Username"
+msgstr "Аутентификация"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee
 msgid "HTTP Log"
@@ -6386,6 +6485,12 @@ msgstr "Выполнить задачи по обеспечению защиты
 #: app/assets/javascripts/app/models/job.coffee
 msgid "Has processed"
 msgstr "Обработано"
+
+#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
+#, fuzzy
+#| msgid "%s subdomain"
+msgid "Has submenu"
+msgstr "%s поддомен"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
@@ -6448,11 +6553,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
-"Here you can create new tickets. Also, if you have the permission, you can "
-"create new customers and organizations."
+"Here you can create new tickets, customers and organizations (depending on "
+"your configured permissions)."
 msgstr ""
-"Здесь вы можете создавать новые заявки. Кроме того, если у вас есть "
-"разрешение, вы можете создавать новых клиентов и организации."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid "Here you can create one."
@@ -6505,15 +6608,17 @@ msgstr "Приветствую! Какой из наших продуктов?"
 #: db/seeds/settings.rb
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
+"Выделяет, является ли заметка, которую пишет пользователь, общедоступной или "
+"частной"
 
 #: db/seeds/settings.rb
 msgid "Hint for adding an article to an existing ticket."
-msgstr ""
+msgstr "Подсказка для добавления статьи в существующую заявку."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "History"
 msgstr "История"
@@ -7210,6 +7315,24 @@ msgstr "Приглашение отправлено!"
 #. This is the template file app/views/mailer/user_invite/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/user_invite/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Invitation to #{config.product_name} at #{config.fqdn}\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>I (#{current_user.firstname} #{current_user.lastname}) invite you to "
+#| "#{config.product_name} - our customer support platform.</div>\n"
+#| "<br>\n"
+#| "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
+#| "#password_reset_verify/#{token.name}\">here</a> and set your password.</"
+#| "div>\n"
+#| "<br>\n"
+#| "<div>Enjoy,</div>\n"
+#| "<br>\n"
+#| "<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Invitation to #{config.product_name} at #{config.fqdn}\n"
 "\n"
@@ -7219,7 +7342,7 @@ msgid ""
 "#{config.product_name} - our customer support platform.</div>\n"
 "<br>\n"
 "<div>Click <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.name}\">here</a> and set your password.</"
+"#password_reset_verify/#{token.token}\">here</a> and set your password.</"
 "div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
@@ -7277,7 +7400,7 @@ msgstr "Ionicons"
 
 #: app/models/ticket.rb
 msgid "It is not possible to merge into an already merged ticket."
-msgstr ""
+msgstr "Объединение в уже объединенную заявку невозможно."
 
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
 msgid "Items per page"
@@ -7442,10 +7565,8 @@ msgid "Languages"
 msgstr "Языки"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Article"
 msgid "Last Article"
-msgstr "Статья"
+msgstr "Последняя статья"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Last Contact Agent At"
@@ -7461,13 +7582,11 @@ msgstr "Последний контакт с клиентом был в"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
 msgid "Last External Article"
-msgstr ""
+msgstr "Последняя внешняя статья"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee
-#, fuzzy
-#| msgid "Last Contact At"
 msgid "Last Internal Article"
-msgstr "Последний контакт был в"
+msgstr "Последняя внутренняя статья"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee
 msgid "Last change %s %s by %s"
@@ -7612,10 +7731,8 @@ msgid "LinkedIn App Credentials"
 msgstr "Учетные данные приложения LinkedIn"
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Developer System"
 msgid "LinkedIn Developer Site"
-msgstr "Системный разработчик"
+msgstr "Сайт разработчика LinkedIn"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco
 msgid "Links"
@@ -7635,10 +7752,8 @@ msgstr "Загрузить ещё"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue
 #: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue
-#, fuzzy
-#| msgid "contains one not"
 msgid "Loading content"
-msgstr "contains one not"
+msgstr "Загрузка контента"
 
 #: app/views/mobile/index.html.erb
 msgid "Loading failed, please try again later."
@@ -7844,7 +7959,7 @@ msgstr "отметить все как прочитанное"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match all (AND)"
-msgstr ""
+msgstr "Совпадение со всеми (И)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
 msgid "Match all of the following"
@@ -7852,15 +7967,21 @@ msgstr "Соответствует всем последующим"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match any (OR)"
-msgstr ""
+msgstr "Совпадение с любым (ИЛИ)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_selector.coffee
 msgid "Match none (NOT)"
-msgstr ""
+msgstr "Не соответствует ни одному (НЕ)"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
 msgstr "Material"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Host Notification"
+msgid "Mattermost Notifications"
+msgstr "Уведомление хоста"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "Mattermost, RocketChat"
@@ -7943,10 +8064,8 @@ msgid "Merge"
 msgstr "Объединить"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge tickets"
-msgstr "Объединить в заявку №"
+msgstr "Объединить заявки"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
@@ -7968,11 +8087,29 @@ msgstr "Сообщение для страницы входа."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Message is not signed by sender."
-msgstr ""
+msgstr "Сообщение не подписано отправителем."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Messages"
 msgstr "Сообщения"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Creation Channels"
+msgid "Messaging Channel"
+msgstr "Создание каналов"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Icon URL"
+msgid "Messaging Icon URL"
+msgstr "URL-адрес значка"
+
+#: app/models/webhook/pre_defined/mattermost.rb
+#, fuzzy
+#| msgid "Username"
+msgid "Messaging Username"
+msgstr "Логин"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
 msgid "Meta Data"
@@ -8005,6 +8142,12 @@ msgstr "Учетные данные приложения Microsoft 365"
 #: db/seeds/settings.rb
 msgid "Microsoft Application Registration Portal"
 msgstr "Портал регистрации приложений Microsoft"
+
+#: app/models/webhook/pre_defined/microsoft_teams.rb
+#, fuzzy
+#| msgid "Host Notification"
+msgid "Microsoft Teams Notifications"
+msgstr "Уведомление хоста"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -8057,10 +8200,6 @@ msgstr "Минуты"
 #: db/seeds/object_manager_attributes.rb
 msgid "Mobile"
 msgstr "Мобильный"
-
-#: app/assets/javascripts/app/controllers/mobile.coffee
-msgid "Mobile frontend is disabled."
-msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 msgid "Mode"
@@ -8288,10 +8427,6 @@ msgstr "Необходимо хотя бы поле «тело статьи»."
 msgid "Need fingerprint param!"
 msgstr "Необходимы параметры отпечатка!"
 
-#: app/controllers/user_access_token_controller.rb
-msgid "Need label!"
-msgstr "Необходима этикетка!"
-
 #: app/controllers/settings_controller.rb
 msgid "Need logo param"
 msgstr "Необходим параметры логотипа"
@@ -8406,7 +8541,7 @@ msgstr "Новый шаблон"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco
 msgid "New Ticket"
@@ -8516,9 +8651,11 @@ msgstr ""
 msgid "New user?"
 msgstr "Новый пользователь?"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Next"
 msgstr "Далее"
 
@@ -8556,10 +8693,8 @@ msgid "No Entries"
 msgstr "Нет записей"
 
 #: lib/external_credential/exchange.rb
-#, fuzzy
-#| msgid "No Facebook app configured!"
 msgid "No Exchange app configured!"
-msgstr "Приложение Facebook не настроено!"
+msgstr "Нет настроенных приложений Exchange!"
 
 #: lib/external_credential/facebook.rb
 msgid "No Facebook app configured!"
@@ -8768,11 +8903,11 @@ msgstr "Не пройдена авторизация (функция недос�
 msgid "Not authorized (token expired)!"
 msgstr "Не пройдена авторизация (срок действия ключа истек)!"
 
-#: app/controllers/application_controller/authenticates.rb app/models/token.rb
+#: app/models/token.rb
 msgid "Not authorized (token)!"
 msgstr "Не пройдена авторизация (ключ)!"
 
-#: app/controllers/application_controller/authenticates.rb app/models/user.rb
+#: app/models/user.rb
 msgid "Not authorized (user)!"
 msgstr "Не пройдена авторизация (пользователь)!"
 
@@ -8889,14 +9024,12 @@ msgstr "Число"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 msgid "OAuth"
-msgstr ""
+msgstr "OAuth"
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco
-#, fuzzy
-#| msgid "Configuration"
 msgid "OAuth Configuration"
-msgstr "Настройки"
+msgstr "Настройки OAuth"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "OAuth URLs are:"
@@ -8965,6 +9098,8 @@ msgstr "После завершения…"
 #: app/models/application_model/can_creates_and_updates.rb
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
+"Должен быть предоставлен один из требуемых параметров, но ни один из них не "
+"найден."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 #: public/assets/chat/chat.coffee
@@ -9046,10 +9181,8 @@ msgid "Open Tickets"
 msgstr "Открытые заявки"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Opened in tabs"
 msgid "Open in new tab"
-msgstr "Открыта во вкладках"
+msgstr "Открыть в новой вкладке"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Open macro selection"
@@ -9096,7 +9229,7 @@ msgstr "Порядок представлений"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/models/ticket.coffee
@@ -9146,7 +9279,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee
 #: app/assets/javascripts/app/controllers/organization.coffee
-#: app/assets/javascripts/app/controllers/organization_profile.coffee
+#: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -9155,14 +9288,6 @@ msgstr ""
 #: db/seeds/permissions.rb
 msgid "Organizations"
 msgstr "Организации"
-
-#: app/assets/javascripts/app/controllers/organization.coffee
-msgid ""
-"Organizations are for any person in the system: agents (owners, "
-"responsibles, …) and customers."
-msgstr ""
-"Организации предназначены для любого человека в системе: агентов "
-"(владельцев, ответственных, …) и клиентов."
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts
 msgid "Organizations with \"%s\""
@@ -9263,9 +9388,9 @@ msgstr "Перезаписать черновик"
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "Owner"
 msgstr "Владелец"
@@ -9405,8 +9530,10 @@ msgid "People who create Tickets ask for help."
 msgstr "Люди, которые создают заявки для помощи."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee
-msgid "Perform action of the following"
-msgstr "Выполните действие для продолжения"
+#, fuzzy
+#| msgid "Information"
+msgid "Perform actions"
+msgstr "Информация"
 
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
@@ -9514,14 +9641,18 @@ msgstr ""
 msgid "Please enter a text."
 msgstr "Пожалуйста, введите текст."
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#, fuzzy
+#| msgid "Please enter a valid email address."
+msgid "Please enter a valid JSON string."
+msgstr "Пожалуйста, введите действующий адрес электронной почты."
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Please enter a valid email address."
 msgstr "Пожалуйста, введите действующий адрес электронной почты."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
-msgid ""
-"Please enter the endpoint and select the authentication method for accessing "
-"Exchange Web Services."
+msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_accounting.jst.eco
@@ -9623,6 +9754,17 @@ msgstr "Фильтр почтового мастера"
 msgid "Powered by"
 msgstr "Работает на"
 
+#: app/assets/javascripts/app/controllers/webhook.coffee
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+#, fuzzy
+#| msgid "New Webhook"
+msgid "Pre-defined Webhook"
+msgstr "Новый веб-перехватчик (webhook)"
+
+#: app/assets/javascripts/app/controllers/webhook.coffee
+msgid "Pre-defined webhook for %s."
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Pretty Date"
 msgstr "Удобный формат даты"
@@ -9654,6 +9796,7 @@ msgid "Preview owner tickets"
 msgstr "Предварительный просмотр заявок владельца"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
+#: app/frontend/shared/form/i18n/locales.ts
 msgid "Previous"
 msgstr "Назад"
 
@@ -9942,9 +10085,19 @@ msgstr "Удалить %s"
 msgid "Remove all"
 msgstr "Удалить всё"
 
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "Remove all"
+msgid "Remove all values"
+msgstr "Удалить всё"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Remove formatting"
 msgstr "Удалить форматирование"
+
+#: app/frontend/shared/form/i18n/locales.ts
+msgid "Remove selected values"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Removes any hyperlink"
@@ -10061,7 +10214,7 @@ msgid "Requirements"
 msgstr "Требования"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
 msgid "Resend verification email"
 msgstr "Отправить письмо с подтверждением"
@@ -10094,6 +10247,29 @@ msgstr "Сбросить порядок представлений"
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/password_reset/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Reset your #{config.product_name} password\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>We received a request to reset the password for your #{config."
+#| "product_name} account <b>#{user.login}</b>.</div>\n"
+#| "<br>\n"
+#| "<div>If you want to reset your password, click on the link below (or copy "
+#| "and paste the URL into your browser):</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
+#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
+#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
+#| "<br>\n"
+#| "<div>This link takes you to a page where you can change your password.</"
+#| "div>\n"
+#| "<br>\n"
+#| "<div>If you don't want to reset your password, please ignore this "
+#| "message. Your password will not be reset.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -10106,8 +10282,8 @@ msgid ""
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -10142,6 +10318,29 @@ msgstr ""
 #. This is the template file app/views/mailer/signup_taken_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/signup_taken_reset/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Reset your #{config.product_name} password\n"
+#| "\n"
+#| "<div>Hi #{user.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>You or someone else tried to sign up with this email address. "
+#| "However, this email is already being used.</div>\n"
+#| "<br>\n"
+#| "<div>If you want to reset your password, click on the link below (or copy "
+#| "and paste the URL into your browser):</div>\n"
+#| "<br>\n"
+#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/"
+#| "#password_reset_verify/#{token.name}\">#{config.http_type}://#{config."
+#| "fqdn}/#password_reset_verify/#{token.name}</a></div>\n"
+#| "<br>\n"
+#| "<div>This link takes you to a page where you can change your password.</"
+#| "div>\n"
+#| "<br>\n"
+#| "<div>If you don't want to reset your password, please ignore this "
+#| "message. Your password will not be reset.</div>\n"
+#| "<br>\n"
+#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Reset your #{config.product_name} password\n"
 "\n"
@@ -10154,8 +10353,8 @@ msgid ""
 "and paste the URL into your browser):</div>\n"
 "<br>\n"
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
-"#{token.name}</a></div>\n"
+"#{token.token}\">#{config.http_type}://#{config.fqdn}/#password_reset_verify/"
+"#{token.token}</a></div>\n"
 "<br>\n"
 "<div>This link takes you to a page where you can change your password.</"
 "div>\n"
@@ -10224,6 +10423,12 @@ msgstr "Ретвиты (Retweets)"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid "Retweets are converted into tickets."
 msgstr "Ретвиты (Retweets) преобразуются в заявки."
+
+#: app/models/webhook/pre_defined/rocket_chat.rb
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Rocket Chat Notifications"
+msgstr "Блокировка уведомлений"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/role.coffee
@@ -10419,6 +10624,7 @@ msgstr "Суббота"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 msgid "Save"
@@ -10626,6 +10832,12 @@ msgstr "Выберите клиента заявки или создайте е�
 msgid "Selected conditions"
 msgstr "Выбранные условия"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Selected"
+msgid "Selective"
+msgstr "Выбрано"
+
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Selector"
 msgstr "Отборщик"
@@ -10635,10 +10847,8 @@ msgid "Selects the ticket number generator module."
 msgstr "Определяет способ формирования номера заявки."
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue
-#: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue
 #: app/frontend/shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue
-#: app/frontend/shared/components/Form/fields/FieldSelect/FieldSelectInput.vue
-#: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue
+#: app/frontend/shared/components/Form/fields/FieldTags/FieldTagsDialog.vue
 #: app/frontend/shared/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue
 msgid "Select…"
 msgstr "Выберите…"
@@ -11149,6 +11359,12 @@ msgstr "Пропустить"
 msgid "Slack"
 msgstr "Slack"
 
+#: app/models/webhook/pre_defined/slack.rb
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Slack Notifications"
+msgstr "Блокировка уведомлений"
+
 #: db/seeds/settings.rb
 msgid "Slack config"
 msgstr "Настройки Slack"
@@ -11301,9 +11517,9 @@ msgstr ""
 #: app/views/mailer/ticket_create/fr.html.erb
 #: app/views/mailer/ticket_create/zh-cn.html.erb
 #: app/views/mailer/ticket_create/zh-tw.html.erb
-#: app/views/slack/ticket_create/pt-br.md.erb
-#: app/views/slack/ticket_create/zh-cn.md.erb
-#: app/views/slack/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_create/pt-br.md.erb
+#: app/views/messaging/ticket_create/zh-cn.md.erb
+#: app/views/messaging/ticket_create/zh-tw.md.erb
 #: db/seeds/object_manager_attributes.rb lib/excel_sheet/ticket.rb
 msgid "State"
 msgstr "Состояние"
@@ -11833,7 +12049,7 @@ msgid ""
 msgstr ""
 "Настройки Zammad изменились. Пожалуйста, перезагрузите как можно раньше."
 
-#: app/frontend/shared/stores/connection.ts
+#: app/frontend/shared/server/connection.ts
 msgid "The connection to the server was lost."
 msgstr "Соединение с сервером было потеряно."
 
@@ -12085,6 +12301,10 @@ msgstr "Указанная конечная точка (endpoint) недейст
 msgid "The provided match operator is missing or invalid."
 msgstr "Указанный оператор соответствия отсутствует или недействителен."
 
+#: app/models/webhook.rb
+msgid "The provided payload is invalid. Please check your syntax."
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb
 #: app/controllers/integration/check_mk_controller.rb
 #: app/controllers/users_controller.rb
@@ -12208,6 +12428,12 @@ msgstr "Отсутствует обязательный параметр «ти�
 msgid "The required parameter 'locale' is missing."
 msgstr "Отсутствует обязательный параметр «Региональные_настройки» (locale)."
 
+#: app/controllers/user_access_token_controller.rb
+#, fuzzy
+#| msgid "The required parameter 'area' is missing."
+msgid "The required parameter 'name' is missing."
+msgstr "Отсутствует обязательный параметр «Область» (area)."
+
 #: lib/external_credential/twitter.rb
 msgid "The required parameter 'oauth_token' is missing."
 msgstr ""
@@ -12283,6 +12509,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "The retried security process failed!"
 msgstr "Повторная процедура обеспечения безопасности завершилась неудачно!"
+
+#: app/frontend/shared/form/i18n/locales.ts
+#, fuzzy
+#| msgid "The resized image is invalid."
+msgid "The selected date is invalid."
+msgstr "Изображение с измененным размером является недопустимым."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee
@@ -12613,6 +12845,12 @@ msgstr ""
 "Это стандартное сообщение о техническом обслуживании. Щелкните здесь, чтобы "
 "изменить."
 
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
+msgid ""
+"This is an example payload for your installation, including any custom "
+"objects. It is possible to further customize payload of each Webhook."
+msgstr ""
+
 #: app/models/channel/email_parser.rb
 msgid ""
 "This message cannot be displayed because it contains over 5,000 links. "
@@ -12698,9 +12936,11 @@ msgstr ""
 "режиме реального времени."
 
 #: app/assets/javascripts/app/models/group.coffee
-msgid ""
-"This signature is inactive, it won't be included in the reply. Change state "
-"<a href=\"#channels/email\">here</a>"
+#, fuzzy
+#| msgid ""
+#| "This signature is inactive, it won't be included in the reply. Change "
+#| "state <a href=\"#channels/email\">here</a>"
+msgid "This signature is inactive, it won't be included in the reply."
 msgstr ""
 "Эта подпись неактивна, она не будет включена в ответ. Изменить состояние <a "
 "href=\"#channels/email\">здесь</a>"
@@ -13195,6 +13435,12 @@ msgstr "Единицы времени"
 msgid "Time Units Total"
 msgstr "Единицы времени ОБЩЕЕ"
 
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Time Units"
+msgid "Time event"
+msgstr "Единицы времени"
+
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Time zone"
@@ -13401,6 +13647,13 @@ msgstr "Триггер"
 #: db/seeds/permissions.rb
 msgid "Triggers"
 msgstr "Триггеры"
+
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"Triggers activated by actions are executed whenever a ticket is created or "
+"updated, while triggers activated by time events are executed when certain "
+"times are reached (e.g. pending time, escalation)."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee
 msgid "Triggers are …"
@@ -13944,7 +14197,7 @@ msgstr "Используется при просмотре заявки"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 #: app/assets/javascripts/app/models/mention.coffee
@@ -14045,7 +14298,7 @@ msgstr "Имя пользователя для подключения через
 #: app/assets/javascripts/app/controllers/cti.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee
 #: app/assets/javascripts/app/controllers/user.coffee
-#: app/assets/javascripts/app/controllers/user_profile.coffee
+#: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
@@ -14465,6 +14718,18 @@ msgstr "Какие значения %s следует синхронизиров
 msgid "What values of %s should be synced to users."
 msgstr "Какие значения %s следует синхронизировать с пользователями."
 
+#: app/assets/javascripts/app/models/trigger.coffee
+msgid ""
+"When at least one field from conditions was updated or article was added and "
+"conditions match"
+msgstr ""
+
+#: app/assets/javascripts/app/models/trigger.coffee
+#, fuzzy
+#| msgid "Saved conditions"
+msgid "When conditions match"
+msgstr "Сохраненные условия"
+
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
 msgid "When notification is being sent."
 msgstr "Когда отправляется уведомление."
@@ -14690,12 +14955,19 @@ msgid "You can create multiple chat topics."
 msgstr "Вы можете создать несколько тем в чате."
 
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee
+#, fuzzy
+#| msgid ""
+#| "You can define different signatures for each group, which allows you to "
+#| "use a different signature for every department.\n"
+#| "\n"
+#| "Once you have created a signature here, you will also need to edit the "
+#| "groups where you want to use it."
 msgid ""
-"You can define different signatures for each group, which allows you to use "
-"a different signature for every department.\n"
+"You can define a separate signature for each group to use a different "
+"signature for each department.\n"
 "\n"
-"Once you have created a signature here, you will also need to edit the "
-"groups where you want to use it."
+"Once you created a signature here, you will also need to edit the groups "
+"which should use it."
 msgstr ""
 "Вы можете определить разные подписи для каждой группы, что позволит вам "
 "использовать разные подписи для каждого отдела.\n"
@@ -14713,8 +14985,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
+#: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
 msgstr ""
@@ -15255,7 +15529,7 @@ msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
 #: app/models/knowledge_base/category.rb
-msgid "cannot be a child of the parent"
+msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
@@ -15574,6 +15848,18 @@ msgstr "изменился"
 #| msgid "Not allowed to access this task."
 msgid "has no agent access to this ticket"
 msgstr "Нет доступа к этой задаче."
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "reached"
+msgid "has reached"
+msgstr "достигнуто"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
+#, fuzzy
+#| msgid "has changed"
+msgid "has reached warning"
+msgstr "изменился"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "here"
@@ -16281,6 +16567,18 @@ msgstr "для перехода на главную страницу."
 msgid "today"
 msgstr "сегодня"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because pending reminder was reached"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket was escalated"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
+msgid "trigger '%s' was performed because ticket will escalate soon"
+msgstr ""
+
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco
 msgid "try again"
 msgstr "попробуйте еще раз"
@@ -16399,6 +16697,26 @@ msgstr "…всей текстовой области"
 msgid "∅ Waiting time today"
 msgstr "∅ Сегодня время ожидания"
 
+#~ msgid "Need label!"
+#~ msgstr "Необходима этикетка!"
+
+#~ msgid ""
+#~ "Here you can create new tickets. Also, if you have the permission, you "
+#~ "can create new customers and organizations."
+#~ msgstr ""
+#~ "Здесь вы можете создавать новые заявки. Кроме того, если у вас есть "
+#~ "разрешение, вы можете создавать новых клиентов и организации."
+
+#~ msgid ""
+#~ "Organizations are for any person in the system: agents (owners, "
+#~ "responsibles, …) and customers."
+#~ msgstr ""
+#~ "Организации предназначены для любого человека в системе: агентов "
+#~ "(владельцев, ответственных, …) и клиентов."
+
+#~ msgid "Perform action of the following"
+#~ msgstr "Выполните действие для продолжения"
+
 #~ msgid "About"
 #~ msgstr "Об"
 
@@ -16469,9 +16787,6 @@ msgstr "∅ Сегодня время ожидания"
 #~ msgstr ""
 #~ "Необходимо имя, логин, адрес электронной почты или регион для создания "
 #~ "или обновления (create_or_update())"
-
-#~ msgid "Selected"
-#~ msgstr "Выбрано"
 
 #, fuzzy
 #~| msgid "Elasticsearch Endpoint User"
@@ -16683,9 +16998,6 @@ msgstr "∅ Сегодня время ожидания"
 
 #~ msgid "The full-size image is invalid."
 #~ msgstr "Недопустимое полноразмерное изображение."
-
-#~ msgid "The resized image is invalid."
-#~ msgstr "Изображение с измененным размером является недопустимым."
 
 #~ msgid "Copied to clipboard!"
 #~ msgstr "Скопировано в буфер обмена!"
