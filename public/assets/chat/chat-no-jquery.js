@@ -999,6 +999,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
         'You are on waiting list position <strong>%s</strong>.': 'Jste <strong>%s</strong>. v pořadí na čekací listině.'
       },
+      'da': {
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> med os!',
+        'All colleagues are busy.': 'Alle medarbejdere er optaget.',
+        'Chat closed by %s': 'Chat lukket af %s',
+        'Compose your message…': 'Skriv din besked…',
+        'Connecting': 'Forbinder',
+        'Connection lost': 'Forbindelse mistet',
+        'Connection re-established': 'Forbindelse genoprettet',
+        'Offline': 'Offline',
+        'Online': 'Online',
+        'Scroll down to see new messages': 'Scroll ned for at se nye beskeder',
+        'Send': 'Afsend',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '',
+        'Start new conversation': 'Start en ny samtale',
+        'Today': 'I dag',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
+        'You are on waiting list position <strong>%s</strong>.': 'Du er i kø som nummer <strong>%s</strong>.'
+      },
       'de': {
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!',
         'All colleagues are busy.': 'Alle Kollegen sind beschäftigt.',
@@ -1039,7 +1058,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       },
       'fr': {
         '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous !',
-        'All colleagues are busy.': 'Tout les agents sont occupés.',
+        'All colleagues are busy.': 'Tous les agents sont occupés.',
         'Chat closed by %s': 'Chat fermé par %s',
         'Compose your message…': 'Ecrivez votre message…',
         'Connecting': 'Connexion',
@@ -1163,11 +1182,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Online': 'Online',
         'Scroll down to see new messages': 'Rolar para baixo para ver novas mensagems',
         'Send': 'Enviar',
-        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Como você não respondeu nos últimos %s minutos, sua conversa foi encerrada.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Como você não respondeu nos últimos %s minutos, sua conversa com <strong>%s</strong> foi encerrada.',
         'Start new conversation': 'Iniciar uma nova conversa',
         'Today': 'Hoje',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Lamentamos, está demorando mais do que o esperado para conseguir uma vaga. Tente novamente mais tarde ou envie-nos um e-mail. Obrigado!',
         'You are on waiting list position <strong>%s</strong>.': 'Você está na posição <strong>%s</strong> da lista de espera.'
       },
       'ru': {
