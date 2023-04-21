@@ -141,9 +141,6 @@ export default defineConfig(({ mode, command }) => {
         if (log.includes('Not implemented: navigation')) return false
       },
     },
-    build: {
-      minify: false,
-    },
     plugins,
   }
 })

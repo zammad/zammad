@@ -16,6 +16,7 @@ import type {
 } from '@shared/graphql/types'
 import { getApolloClient } from '@shared/server/apollo/client'
 import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import { edgesToArray } from '@shared/utils/helpers'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
@@ -23,6 +24,7 @@ import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewRe
 import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
 import { useTicketInformation } from '../composable/useTicketInformation'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
+import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables'
 
 interface Props {
   internalId: string
@@ -34,24 +36,22 @@ const application = useApplicationStore()
 
 const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
+const {
+  allTicketArticlesLoaded,
+  markTicketArticlesLoaded,
+  getTicketArticlesQueryVariables,
+} = useTicketArticlesQueryVariables()
+
 const ticketArticlesMin = computed(() => {
   return Number(application.config.ticket_articles_min ?? 5)
 })
 
 const articlesQuery = new QueryHandler(
-  useTicketArticlesQuery(() => ({
-    ticketId: ticketId.value,
-    pageSize: ticketArticlesMin.value,
-  })),
+  useTicketArticlesQuery(() => getTicketArticlesQueryVariables(ticketId.value)),
   { errorShowNotification: false },
 )
 
 const result = articlesQuery.result()
-
-const allArticleLoaded = computed(() => {
-  if (!result.value?.articles.totalCount) return false
-  return result.value?.articles.edges.length < result.value?.articles.totalCount
-})
 
 const refetchArticlesQuery = (pageSize: Maybe<number>) => {
   articlesQuery.refetch({
@@ -101,7 +101,7 @@ articlesQuery.subscribeToMore<
 
       const removedArticleVisible = edges.length !== previousArticlesEdgesCount
 
-      if (removedArticleVisible && !allArticleLoaded.value) {
+      if (removedArticleVisible && !allTicketArticlesLoaded(ticketId.value)) {
         refetchArticlesQuery(ticketArticlesMin.value)
 
         return previous
@@ -141,7 +141,7 @@ articlesQuery.subscribeToMore<
         updates.addArticle.createdAt <=
           previousArticlesEdges[previousArticlesEdgesCount - 1].node.createdAt
 
-      if (!allArticleLoaded.value || needRefetch) {
+      if (allTicketArticlesLoaded(ticketId.value) || needRefetch) {
         refetchArticlesQuery(null)
       } else {
         articlesQuery.fetchMore({
@@ -176,10 +176,10 @@ const articles = computed(() => {
   if (!result.value) {
     return []
   }
-  const nodes = result.value.articles.edges.map(({ node }) => node) || []
+  const nodes = edgesToArray(result.value.articles)
   const totalCount = result.value.articles.totalCount || 0
   // description might've returned with "articles"
-  const description = result.value.description.edges[0]?.node
+  const description = result.value.description?.edges[0]?.node
   if (totalCount > nodes.length && description) {
     nodes.unshift(description)
   }
@@ -194,6 +194,14 @@ useHeader({
   }),
 })
 
+// don't scroll only if articles are already loaded when you opened the page
+// and there is a saved scroll position
+// otherwise if we only check the scroll position we will never scroll to the bottom
+// because it can be defined when we open the page the first time
+if (result.value && window.history?.state?.scroll) {
+  scrolledToBottom.value = true
+}
+
 const scrollToBottom = () => {
   const internalId = articles.value[articles.value.length - 1]?.internalId
   if (!internalId) return false
@@ -205,10 +213,7 @@ const scrollToBottom = () => {
   if (!lastArticle) return false
 
   scrolledToBottom.value = true
-  window.scrollTo({
-    behavior: 'smooth',
-    top: lastArticle.offsetTop,
-  })
+  lastArticle.scrollIntoView({ behavior: 'smooth', block: 'end' })
   return true
 }
 
@@ -224,6 +229,7 @@ if (!scrolledToBottom.value) {
 }
 
 const loadPreviousArticles = async () => {
+  markTicketArticlesLoaded(ticketId.value)
   await articlesQuery.fetchMore({
     variables: {
       pageSize: null,

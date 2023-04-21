@@ -62,18 +62,40 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
   end
 
   context 'when opening ticket with a lot of articles' do
+    let(:customer) { create(:customer) }
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
     let(:articles) do
-      (1..10).map do |number|
-        create(:ticket_article, body: "Article #{number}.", ticket: ticket)
+      create_list(:ticket_article, 10, ticket: ticket, content_type: 'text/html').tap do |articles|
+        articles.each_with_index do |article, index|
+          body = "Article #{index + 1}."
+          body += "<a href='/mobile/users/#{customer.id}'>UserLink</a>" if index == 3
+          # last article is deletable
+          internal = index == articles.length - 1
+
+          article.update!(body: body, internal: internal)
+        end
       end
+    end
+
+    it 'deleting article if every article is loaded', current_user_id: -> { agent.id } do
+      click('button', text: 'load 4 more')
+
+      wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+
+      expect(page).to have_text(articles.last.body)
+
+      all('[data-name="article-context"]').last.click
+      click_on 'Delete Article'
+      click_on 'OK'
+
+      expect(page).to have_no_text(articles.last.body)
     end
 
     it 'can use "load more" button' do
       expect(page).to have_text('Article 1.')
 
-      (5..9).each do |number|
-        expect(page).to have_text(articles[number].body, count: 1)
+      (6..10).each do |number|
+        expect(page).to have_text("Article #{number}.", count: 1)
       end
 
       expect(page).to have_no_text('Article 5.')
@@ -82,11 +104,35 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
 
-      (1..4).each do |number|
-        expect(page).to have_text(articles[number].body, count: 1)
+      (1..5).each do |number|
+        expect(page).to have_text("Article #{number}.", count: 1)
       end
 
       expect(page).to have_no_text('load')
+    end
+
+    it 'can go back to the same spot' do
+      expect(page).to have_text('Article 1.')
+      expect(page).to have_no_text('Article 5.')
+
+      click('button', text: 'load 4 more')
+
+      page.scroll_to 0, 100
+
+      expect(page).to have_text('Article 2.', count: 1)
+
+      link = find_link('UserLink')
+      position_old = link.evaluate_script('this.getBoundingClientRect().top')
+
+      link.click
+
+      find_button('Go back').click
+
+      expect_current_route "/tickets/#{ticket.id}"
+
+      position_new = find_link('UserLink').evaluate_script('this.getBoundingClientRect().top')
+
+      expect(position_old).to eq(position_new)
     end
   end
 

@@ -34,9 +34,11 @@ import {
   mockTicketLiveUsersGql,
 } from './mocks/detail-view'
 import { mockArticleQuery } from './mocks/articles'
+import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables'
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
+  clearTicketArticlesLoadedState()
 })
 
 test('statics inside ticket zoom view', async () => {
@@ -952,7 +954,7 @@ it("scrolls to the bottom the first time, but doesn't trigger rescroll on subseq
   const router = getTestRouter()
   router.restoreMethods()
 
-  expect(window.scrollTo).toHaveBeenCalledTimes(1)
+  expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1)
 
   await mockTicketArticleSubscription.next(
     nullableMock({
@@ -968,5 +970,5 @@ it("scrolls to the bottom the first time, but doesn't trigger rescroll on subseq
     }),
   )
 
-  expect(window.scrollTo).toHaveBeenCalledTimes(1)
+  expect(Element.prototype.scrollIntoView).toHaveBeenCalledTimes(1)
 })
