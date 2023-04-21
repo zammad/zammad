@@ -237,7 +237,7 @@ onMounted(() => {
     </div>
     <div class="Border">
       <div
-        class="content flex flex-col overflow-hidden rounded-3xl px-4 pt-2 pb-3"
+        class="content flex flex-col overflow-hidden rounded-3xl px-4 pb-3 pt-2"
         :class="[bubbleClasses, colorClasses]"
       >
         <div
@@ -266,7 +266,7 @@ onMounted(() => {
         ></div>
         <div
           v-if="attachments.length"
-          class="mt-1 mb-2"
+          class="mb-2 mt-1"
           :class="colorsClasses.top"
         >
           <div class="py-1 text-xs" :class="colorsClasses.amount">

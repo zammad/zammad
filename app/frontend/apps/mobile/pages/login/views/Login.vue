@@ -184,7 +184,7 @@ const { forceDesktop } = useForceDesktop()
 </script>
 
 <template>
-  <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
+  <div class="flex h-full min-h-screen flex-col items-center px-6 pb-4 pt-6">
     <main class="m-auto w-full max-w-md">
       <div class="flex grow flex-col justify-center">
         <div class="my-5 grow">
@@ -196,7 +196,7 @@ const { forceDesktop } = useForceDesktop()
           </h1>
           <template v-if="$c.maintenance_mode">
             <div
-              class="my-1 flex items-center rounded-xl bg-red py-2 px-4 text-white"
+              class="my-1 flex items-center rounded-xl bg-red px-4 py-2 text-white"
             >
               {{
                 $t(
@@ -208,7 +208,7 @@ const { forceDesktop } = useForceDesktop()
           <template v-if="$c.maintenance_login && $c.maintenance_login_message">
             <!-- eslint-disable vue/no-v-html -->
             <div
-              class="my-1 flex items-center rounded-xl bg-green py-2 px-4 text-white"
+              class="my-1 flex items-center rounded-xl bg-green px-4 py-2 text-white"
               v-html="$c.maintenance_login_message"
             ></div>
           </template>

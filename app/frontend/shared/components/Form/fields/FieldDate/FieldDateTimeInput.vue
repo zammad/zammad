@@ -373,7 +373,7 @@ span.flatpickr-weekday {
 
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month:hover,
 .flatpickr-months .flatpickr-prev-month.flatpickr-prev-month {
-  @apply right-8 left-[unset] w-auto p-2;
+  @apply left-[unset] right-8 w-auto p-2;
 }
 
 .flatpickr-months .flatpickr-next-month.flatpickr-next-month:hover,

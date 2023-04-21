@@ -35,7 +35,7 @@ const customer = computed(() => {
     class="relative border-b-[0.5px] border-white/10 bg-gray-600/90"
   >
     <CommonLink
-      class="flex py-5 px-4"
+      class="flex px-4 py-5"
       data-test-id="title-content"
       :link="`/tickets/${ticket.internalId}/information`"
     >
@@ -83,7 +83,7 @@ const customer = computed(() => {
           locale.localeData?.dir === 'rtl' ? 'left' : 'right'
         }`"
         size="base"
-        class="shrink-0 self-center ltr:ml-auto ltr:-mr-2 rtl:mr-auto rtl:-ml-2"
+        class="shrink-0 self-center ltr:-mr-2 ltr:ml-auto rtl:-ml-2 rtl:mr-auto"
         decorative
       />
     </CommonLink>

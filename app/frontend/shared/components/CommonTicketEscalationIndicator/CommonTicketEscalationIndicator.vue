@@ -44,7 +44,7 @@ const escalationState = computed(() => {
       'bg-yellow-highlight text-yellow':
         escalationState === EscalationState.Warning,
     }"
-    class="flex select-none items-center rounded bg-gray-100 py-1 text-black ltr:pr-1.5 ltr:pl-1 rtl:pl-1.5 rtl:pr-1"
+    class="flex select-none items-center rounded bg-gray-100 py-1 text-black ltr:pl-1 ltr:pr-1.5 rtl:pl-1.5 rtl:pr-1"
     role="alert"
   >
     <CommonIcon name="mobile-warning-triangle" size="tiny" decorative />

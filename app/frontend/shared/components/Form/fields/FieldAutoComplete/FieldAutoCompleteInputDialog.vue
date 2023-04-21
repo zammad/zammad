@@ -385,14 +385,14 @@ useTraverseOptions(autocompleteList)
         autocompleteQueryResultOptions &&
         !autocompleteOptions.length
       "
-      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      class="relative flex h-[58px] items-center justify-center self-stretch px-4 py-5 text-base leading-[19px] text-white/50"
       role="alert"
     >
       {{ $t(context.dialogNotFoundMessage || __('No results found')) }}
     </div>
     <div
       v-else-if="!debouncedFilter && !options.length"
-      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      class="relative flex h-[58px] items-center justify-center self-stretch px-4 py-5 text-base leading-[19px] text-white/50"
       role="alert"
     >
       {{ $t(context.dialogEmptyMessage || __('Start typing to search…')) }}

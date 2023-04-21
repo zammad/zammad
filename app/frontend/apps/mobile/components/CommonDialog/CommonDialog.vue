@@ -117,7 +117,7 @@ export default {
         class="relative flex h-16 shrink-0 select-none items-center justify-center rounded-t-xl bg-gray-600/80"
       >
         <div
-          class="absolute top-0 bottom-0 flex items-center ltr:left-0 ltr:pl-4 rtl:right-0 rtl:pr-4"
+          class="absolute bottom-0 top-0 flex items-center ltr:left-0 ltr:pl-4 rtl:right-0 rtl:pr-4"
         >
           <slot name="before-label" />
         </div>
@@ -129,7 +129,7 @@ export default {
           </slot>
         </div>
         <div
-          class="absolute top-0 bottom-0 flex items-center ltr:right-0 ltr:pr-4 rtl:left-0 rtl:pl-4"
+          class="absolute bottom-0 top-0 flex items-center ltr:right-0 ltr:pr-4 rtl:left-0 rtl:pl-4"
         >
           <slot name="after-label">
             <CommonButton

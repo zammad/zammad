@@ -41,7 +41,7 @@ const label = computed(() => {
     }"
     :tabindex="option.disabled ? '-1' : '0'"
     :aria-selected="selected"
-    class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-none"
+    class="flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-none"
     role="option"
     :data-value="option.value"
     @click="select(option)"

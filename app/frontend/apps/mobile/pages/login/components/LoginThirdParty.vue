@@ -17,7 +17,7 @@ const { fingerprint } = useFingerprint()
 </script>
 
 <template>
-  <section class="mt-4 mb-16 w-full max-w-md">
+  <section class="mb-16 mt-4 w-full max-w-md">
     <p class="p-3 text-center">
       {{
         $c.user_show_password_login
@@ -35,7 +35,7 @@ const { fingerprint } = useFingerprint()
       >
         <input type="hidden" name="authenticity_token" :value="csrfToken" />
         <button
-          class="m-1 flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 py-2 px-4 text-white"
+          class="m-1 flex h-14 w-full cursor-pointer select-none items-center justify-center rounded-xl bg-gray-600 px-4 py-2 text-white"
         >
           <CommonIcon
             :name="`mobile-${provider.icon}`"

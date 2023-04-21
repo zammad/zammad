@@ -187,7 +187,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
       :class="{
         'px-6': !context.noFiltering,
       }"
-      class="flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
+      class="flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
       tabindex="0"
       role="button"
       :aria-label="$t('Back to previous page')"
@@ -225,7 +225,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           'px-6': !context.noFiltering,
           'pointer-events-none': option.disabled,
         }"
-        class="relative flex h-[58px] cursor-pointer items-center self-stretch py-5 px-4 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
+        class="relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-none"
         :tabindex="option.disabled ? '-1' : '0'"
         role="option"
         :aria-selected="
@@ -340,7 +340,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
     </div>
     <div
       v-if="filter && !filteredOptions.length"
-      class="relative flex h-[58px] items-center justify-center self-stretch py-5 px-4 text-base leading-[19px] text-white/50"
+      class="relative flex h-[58px] items-center justify-center self-stretch px-4 py-5 text-base leading-[19px] text-white/50"
       role="alert"
     >
       {{ $t('No results found') }}

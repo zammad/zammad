@@ -49,7 +49,7 @@ const clickHandler = (notification: Notification) => {
         >
           <div class="flex justify-center">
             <div
-              class="m-3 flex cursor-pointer items-center rounded py-2 px-4"
+              class="m-3 flex cursor-pointer items-center rounded px-4 py-2"
               :class="getClassName(notification)"
               @click="clickHandler(notification)"
             >

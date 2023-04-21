@@ -319,7 +319,7 @@ const bannerTransitionDuration = VITE_TEST_MODE ? 0 : { enter: 300, leave: 200 }
     >
       <div
         v-if="showSaveBanner"
-        class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:right-2 rtl:left-2"
+        class="mb-safe fixed bottom-2 z-10 flex rounded-lg bg-gray-300 text-white transition ltr:left-2 ltr:right-2 rtl:left-2 rtl:right-2"
         :class="bannerClasses"
       >
         <div class="relative flex flex-1 items-center gap-2 p-1.5">

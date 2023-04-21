@@ -58,7 +58,7 @@ defineExpose({
       v-for="(item, index) in items"
       :id="`mention-${index}`"
       :key="item.id"
-      class="cursor-pointer py-2 px-6 hover:bg-gray-400"
+      class="cursor-pointer px-6 py-2 hover:bg-gray-400"
       :class="{ 'bg-gray-400': selectedIndex === index }"
       role="option"
       @click="selectItem(index)"
@@ -90,7 +90,7 @@ defineExpose({
       </template>
     </li>
   </ul>
-  <div v-else class="rounded bg-gray-300 py-1 px-6 text-white">
+  <div v-else class="rounded bg-gray-300 px-6 py-1 text-white">
     {{ $t('No results found') }}
   </div>
 </template>

@@ -51,7 +51,7 @@ const backgroundClass = computed(() => {
       textClass,
       backgroundClass,
       {
-        'rounded py-1 ltr:pr-1.5 ltr:pl-1 rtl:pl-1.5 rtl:pr-1': pill,
+        'rounded py-1 ltr:pl-1 ltr:pr-1.5 rtl:pl-1.5 rtl:pr-1': pill,
       },
     ]"
     class="flex select-none items-center"

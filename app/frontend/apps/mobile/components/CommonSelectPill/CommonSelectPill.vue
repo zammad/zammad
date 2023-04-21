@@ -49,7 +49,7 @@ const defaultLabel = computed(() => {
       aria-owns="common-select"
       aria-haspopup="dialog"
       :aria-expanded="expanded"
-      class="inline-flex w-auto cursor-pointer rounded-lg bg-gray-600 py-1 ltr:pl-2 ltr:pr-1 rtl:pr-2 rtl:pl-1"
+      class="inline-flex w-auto cursor-pointer rounded-lg bg-gray-600 py-1 ltr:pl-2 ltr:pr-1 rtl:pl-1 rtl:pr-2"
       @click="open()"
       @keypress.space.prevent="open()"
     >

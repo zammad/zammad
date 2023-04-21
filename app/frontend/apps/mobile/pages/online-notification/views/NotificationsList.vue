@@ -117,7 +117,7 @@ const haveUnread = computed(() => unseenCount.value > 0)
 
 <template>
   <CommonLoader :loading="!notifications.length && loading">
-    <div class="ltr:pr-4 ltr:pl-3 rtl:pl-4 rtl:pr-3">
+    <div class="ltr:pl-3 ltr:pr-4 rtl:pl-4 rtl:pr-3">
       <NotificationItem
         v-for="notification of notifications"
         :key="notification.id"

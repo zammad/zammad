@@ -526,7 +526,7 @@ export default {
     <CommonStepper
       v-model="activeStep"
       :steps="allSteps"
-      class="mt-4 mb-8 px-8"
+      class="mb-8 mt-4 px-8"
     />
   </footer>
 </template>
