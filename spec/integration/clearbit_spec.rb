@@ -387,8 +387,8 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
       expect(ExternalSync).to be_exist(source: 'clearbit', object: 'Organization', o_id: customer.organization.id)
 
       expect(customer.organization).to have_attributes(
-        name: start_with('APIHub Inc'),
-        note: 'The Clearbit Data Activation Platform helps B2B teams understand customers, identify prospects, &amp; personalize interactions with real-time intelligence.'
+        name: 'APIHub Inc',
+        note: 'Clearbit.com provides business intelligence and data enrichment solutions to help companies grow their customer base and revenue. Their products include data enrichment APIs, ad targeting platforms, sales intelligence tools, and integrations with marke...'
       )
     end
   end
