@@ -95,7 +95,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
     content
 
   nameTemplate: =>
-    "#{__('Ticket')}: \"#{@ticket.title}\""
+    "#{__('Ticket')} ##{@ticket.id}: \"#{@ticket.title}\""
 
   descriptionTemplate: =>
     descriptionTemplate = ''
@@ -109,7 +109,7 @@ class App.AworkTaskCreateModal extends App.ControllerModal
     @prependLink(descriptionTemplate)
 
   prependLink: (str) =>
-    "#{__('Ticket')}: #{@descriptionTicketLink}" + str
+    "#{__('Ticket')} ##{@ticket.id}: #{@descriptionTicketLink}" + str
 
   onSubmit: (e) =>
     params = @formParams(e.target)
