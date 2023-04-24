@@ -3,10 +3,6 @@
 class Webhook::PreDefined
   include Mixin::RequiredSubPaths
 
-  def initialize
-    # TODO: ...
-  end
-
   def self.pre_defined_webhooks
     descendants.sort_by(&:name)
   end

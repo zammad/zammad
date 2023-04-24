@@ -34,7 +34,7 @@ class TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook < TriggerWebhoo
       pre_defined_webhook = "#{WEBHOOK_PREDEFINED_CLASS_PREFIX}#{webhook.pre_defined_webhook_type}".constantize.new
       struct = struct(pre_defined_webhook)
 
-      values = webhook.preferences&.dig('pre_defined_webhook')
+      values = webhook.preferences&.dig('pre_defined_webhook') || {}
       tracks[:webhook] = struct.new(*values.values_at(*struct.members))
     end
 

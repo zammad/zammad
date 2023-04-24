@@ -393,6 +393,15 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
           expect(generate).to not_include(:attachments)
         end
       end
+
+      context 'when pre-defined webhook has no additional values' do
+        let(:webhook)        { create(:slack_webhook) }
+        let(:record)         { TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload('Slack') }
+
+        it 'returns a valid json with webhook information"', :aggregate_failures do
+          expect(generate['text']).to eq("# #{ticket.title}")
+        end
+      end
     end
   end
   # rubocop:enable Lint/InterpolationCheck
