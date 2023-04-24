@@ -1,0 +1,11 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: me@example.com
+from_email: me@example.com
+from_display_name: ''
+to: you@example.com
+subject: test
+body: 'some text
+
+  '
+content_type: text/plain
+attachments: []

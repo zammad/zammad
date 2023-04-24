@@ -1,0 +1,8 @@
+From: me@example.com
+To: you@example.com
+Date: Fri, 07 Apr 2023 17:30:44 +0200Received: from m241-41.example.com (m241-41.example.com [1.1.1.1])
+	by in45.mail.example.com (Postfix) with ESMTPS id 4PgzCH5GFlz279jM6
+	for <service@example.com>; Tue, 21 Mar 2023 17:30:35 +0000 (UTC)
+Subject: test
+
+some text
