@@ -61,7 +61,7 @@
     "histoire": "^0.16.1",
     "jsdom": "^21.1.1",
     "mock-apollo-client": "^1.2.1",
-    "postcss": "^8.4.22",
+    "postcss": "^8.4.23",
     "postcss-html": "^1.5.0",
     "prettier": "2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.7",
@@ -146,7 +146,7 @@
   },
   "resolutions": {
     "loader-utils": "^3.2.1",
-    "postcss": "^8.4.22",
+    "postcss": "^8.4.23",
     "stylelint-config-recommended": "^10.0.1"
   }
 }
