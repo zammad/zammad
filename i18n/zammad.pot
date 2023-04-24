@@ -11443,6 +11443,10 @@ msgstr ""
 msgid "To make translations easier you can enable and disable the inline translation feature by pressing \"%s\"."
 msgstr ""
 
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid "To revert back to default payload, simply turn off Custom Payload switch above."
+msgstr ""
+
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
 msgstr ""

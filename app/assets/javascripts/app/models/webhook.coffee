@@ -10,7 +10,7 @@ class App.Webhook extends App.Model
     { name: 'basic_auth_username', display: __('HTTP Basic Authentication Username'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'basic_auth_password', display: __('HTTP Basic Authentication Password'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
     { name: 'customized_payload',  display: __('Custom Payload'),            tag: 'switch',      null: true, label_class: 'hidden' },
-    { name: 'custom_payload',      display: __('Custom Payload'),            tag: 'code_editor', null: true, collapsible: true, label_class: 'hidden' },
+    { name: 'custom_payload',      display: __('Custom Payload'),            tag: 'code_editor', null: true, collapsible: true, label_class: 'hidden', hint: __('To revert back to default payload, simply turn off Custom Payload switch above.') },
     { name: 'note',                display: __('Note'),                      tag: 'textarea',    null: true, note: '', limit: 250 },
     { name: 'active',              display: __('Active'),                    tag: 'active',      default: true },
     { name: 'updated_at',          display: __('Updated'),                   tag: 'datetime',    readonly: 1 },
