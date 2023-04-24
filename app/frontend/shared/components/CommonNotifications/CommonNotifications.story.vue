@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CommonNotifications from './CommonNotifications.vue'
-import { useNotifications } from './composable'
-import type { NewNotification } from './types'
-import { NotificationTypes } from './types'
+import { useNotifications } from './composable.ts'
+import type { NewNotification } from './types.ts'
+import { NotificationTypes } from './types.ts'
 
 const types = [
   NotificationTypes.Error,

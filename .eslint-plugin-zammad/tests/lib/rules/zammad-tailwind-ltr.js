@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 const { RuleTester } = require('eslint')
-const rule = require('../../../lib/rules/zammad-tailwind-ltr')
+const rule = require('../../../lib/rules/zammad-tailwind-ltr.js')
 
 //------------------------------------------------------------------------------
 // Tests

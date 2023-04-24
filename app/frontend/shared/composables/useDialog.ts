@@ -3,7 +3,7 @@
 import {
   destroyComponent,
   pushComponent,
-} from '@shared/components/DynamicInitializer/manage'
+} from '#shared/components/DynamicInitializer/manage.ts'
 import { noop } from 'lodash-es'
 import {
   computed,
@@ -15,7 +15,7 @@ import {
   nextTick,
 } from 'vue'
 import type { AsyncComponentLoader, Component } from 'vue'
-import testFlags from '@shared/utils/testFlags'
+import testFlags from '#shared/utils/testFlags.ts'
 
 interface DialogOptions {
   name: string

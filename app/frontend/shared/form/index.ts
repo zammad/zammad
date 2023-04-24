@@ -8,15 +8,15 @@ import '@formkit/dev'
 import type {
   FormAppSpecificTheme,
   FormFieldTypeImportModules,
-} from '@shared/types/form'
+} from '#shared/types/form.ts'
 import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
-} from '@shared/types/utils'
-import createFieldPlugin from './core/createFieldPlugin'
-import createValidationPlugin from './core/createValidationPlugin'
-import createI18nPlugin from './core/createI18nPlugin'
-import createTailwindClasses from './core/createTailwindClasses'
+} from '#shared/types/utils.ts'
+import createFieldPlugin from './core/createFieldPlugin.ts'
+import createValidationPlugin from './core/createValidationPlugin.ts'
+import createI18nPlugin from './core/createI18nPlugin.ts'
+import createTailwindClasses from './core/createTailwindClasses.ts'
 
 export const getFormPlugins = (
   modules: ImportGlobEagerOutput<FormKitPlugin>,

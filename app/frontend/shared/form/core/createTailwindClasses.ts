@@ -5,13 +5,13 @@ import { generateClasses } from '@formkit/themes'
 import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
-} from '@shared/types/utils'
+} from '#shared/types/utils.ts'
 import type {
   FormAppSpecificTheme,
   FormThemeClasses,
   FormThemeExtension,
-} from '@shared/types/form'
-import commonClasses from '../theme/global'
+} from '#shared/types/form.ts'
+import commonClasses from '../theme/global/index.ts'
 
 const extensionsModules: ImportGlobEagerOutput<FormThemeExtension> =
   import.meta.glob('../theme/global/extensions/*.ts', { eager: true })

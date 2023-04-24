@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { MutationHandler } from '@shared/server/apollo/handler'
-import { useTicketArticleDeleteMutation } from '@shared/entities/ticket-article/graphql/mutations/delete.api'
-import { useSessionStore } from '@shared/stores/session'
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import useConfirmation from '@mobile/components/CommonConfirmation/composable'
-import type { TicketArticleActionPlugin, TicketArticleAction } from './types'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useTicketArticleDeleteMutation } from '#shared/entities/ticket-article/graphql/mutations/delete.api.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 
 const deleteAction = async (ticket: TicketById, article: TicketArticle) => {
   const { waitForConfirmation } = useConfirmation()

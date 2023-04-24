@@ -5,18 +5,18 @@ import { ref, onBeforeUnmount, watch } from 'vue'
 import type {
   TicketById,
   TicketLiveAppUser,
-} from '@shared/entities/ticket/types'
+} from '#shared/entities/ticket/types.ts'
 import {
   MutationHandler,
   SubscriptionHandler,
-} from '@shared/server/apollo/handler'
-import { EnumTaskbarApp } from '@shared/graphql/types'
-import type { TicketLiveUser } from '@shared/graphql/types'
-import { useAppName } from '@shared/composables/useAppName'
-import { useSessionStore } from '@shared/stores/session'
-import { useTicketLiveUserUpsertMutation } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api'
-import { useTicketLiveUserDeleteMutation } from '../graphql/mutations/live-user/delete.api'
-import { useTicketLiveUserUpdatesSubscription } from '../graphql/subscriptions/live-user/ticketLiveUserUpdates.api'
+} from '#shared/server/apollo/handler/index.ts'
+import { EnumTaskbarApp } from '#shared/graphql/types.ts'
+import type { TicketLiveUser } from '#shared/graphql/types.ts'
+import { useAppName } from '#shared/composables/useAppName.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { useTicketLiveUserUpsertMutation } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
+import { useTicketLiveUserDeleteMutation } from '../graphql/mutations/live-user/delete.api.ts'
+import { useTicketLiveUserUpdatesSubscription } from '../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 
 export const useTicketLiveUser = (
   ticket: Ref<TicketById | undefined>,

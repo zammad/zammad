@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { buildEmailForwardHeader } from '../email/forward'
+import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { buildEmailForwardHeader } from '../email/forward.ts'
 
 describe('building header, when "forward" action is called', () => {
   it('renders all fields', () => {

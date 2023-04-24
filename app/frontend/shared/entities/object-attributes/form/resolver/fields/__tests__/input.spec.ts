@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverInput } from '../input'
+import { FieldResolverInput } from '../input.ts'
 
 describe('FieldResovlerInput', () => {
   it('should return the correct field attributes', () => {

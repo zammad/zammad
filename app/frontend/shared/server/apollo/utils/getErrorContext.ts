@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Operation } from '@apollo/client/core'
-import type { ClientErrorContext } from '@shared/types/server/apollo/client'
+import type { ClientErrorContext } from '#shared/types/server/apollo/client.ts'
 
 export default function getErrorContext(
   operation: Operation,

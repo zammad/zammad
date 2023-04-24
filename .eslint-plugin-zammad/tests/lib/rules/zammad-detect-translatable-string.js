@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 const { RuleTester } = require('eslint')
-const rule = require('../../../lib/rules/zammad-detect-translatable-string')
+const rule = require('../../../lib/rules/zammad-detect-translatable-string.js')
 
 //------------------------------------------------------------------------------
 // Tests

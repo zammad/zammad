@@ -3,9 +3,9 @@
 import type {
   TicketArticleEdge,
   TicketArticlesQuery,
-} from '@shared/graphql/types'
-import { nullableMock } from '@tests/support/utils'
-import { convertToGraphQLId } from '@shared/graphql/utils'
+} from '#shared/graphql/types.ts'
+import { nullableMock } from '#tests/support/utils.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { LastArrayElement } from 'type-fest'
 
 export const mockTicketDate = new Date(2022, 0, 30, 0, 0, 0, 0)

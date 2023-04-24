@@ -2,15 +2,15 @@
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { i18n } from '@shared/i18n'
-import log from '@shared/utils/log'
-import { useTranslationsLazyQuery } from '@shared/graphql/queries/translations.api'
-import { QueryHandler } from '@shared/server/apollo/handler'
+import { i18n } from '#shared/i18n.ts'
+import log from '#shared/utils/log.ts'
+import { useTranslationsLazyQuery } from '#shared/graphql/queries/translations.api.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   TranslationsQuery,
   TranslationsQueryVariables,
-} from '@shared/graphql/types'
-import { useApplicationStore } from '@shared/stores/application'
+} from '#shared/graphql/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 interface TranslationsCacheValue {
   cacheKey: string

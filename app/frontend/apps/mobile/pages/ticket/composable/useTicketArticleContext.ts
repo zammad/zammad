@@ -1,19 +1,22 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PopupItem } from '@mobile/components/CommonSectionPopup'
-import { useDialog } from '@shared/composables/useDialog'
+import type { PopupItem } from '#mobile/components/CommonSectionPopup/index.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
 import { computed, nextTick, ref, shallowRef } from 'vue'
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import { createArticleActions } from '@shared/entities/ticket-article/action/plugins'
-import type { TicketArticlePerformOptions } from '@shared/entities/ticket-article/action/plugins/types'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
+import type { TicketArticlePerformOptions } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type {
   EditorContentType,
   FieldEditorContext,
-} from '@shared/components/Form/fields/FieldEditor/types'
-import { getArticleSelection } from '@shared/entities/ticket-article/composables/getArticleSelection'
-import type { SelectionData } from '@shared/utils/selection'
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
+import type { SelectionData } from '#shared/utils/selection.ts'
 import type { FormKitNode } from '@formkit/core'
-import { useTicketInformation } from './useTicketInformation'
+import { useTicketInformation } from './useTicketInformation.ts'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()

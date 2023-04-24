@@ -1,16 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
-import { useApplicationStore } from '@shared/stores/application'
-import type { AppName } from '@shared/types/app'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import type { AppName } from '#shared/types/app.ts'
 import type {
   TicketTypeAddOptions,
   TicketActionAddOptions,
   TicketArticleActionPlugin,
   TicketViewPolicyMap,
   AppSpecificTicketArticleType,
-} from './types'
+} from './types.ts'
 
 const pluginsModules = import.meta.glob<TicketArticleActionPlugin>(
   ['./*.ts', '!./initialize.ts', '!./types.ts', '!./__tests__/**/*.ts'],

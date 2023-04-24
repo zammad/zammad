@@ -2,8 +2,8 @@
 
 import { computed, reactive, watch } from 'vue'
 import { isString } from 'lodash-es'
-import { i18n } from '@shared/i18n'
-import { useApplicationStore } from '@shared/stores/application'
+import { i18n } from '#shared/i18n.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 const viewMetaHeader = reactive({
   title: '',

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { NavigationHookAfter, RouteLocationNormalized } from 'vue-router'
-import useMetaTitle from '@shared/composables/useMetaTitle'
+import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 
 const headerTitleGuard: NavigationHookAfter = (to: RouteLocationNormalized) => {
   if (to.meta.title) {

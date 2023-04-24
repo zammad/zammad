@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getInitials, toClassName } from '../formatter'
+import { getInitials, toClassName } from '../formatter.ts'
 
 describe('getInitials', () => {
   it('returns ?? initials, if no arguments are present', () => {

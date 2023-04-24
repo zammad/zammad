@@ -4,14 +4,14 @@ import { onMounted } from 'vue'
 import {
   useNotifications,
   NotificationTypes,
-} from '@shared/components/CommonNotifications'
-import { usePushMessagesSubscription } from '@shared/graphql/subscriptions/pushMessages.api'
+} from '#shared/components/CommonNotifications/index.ts'
+import { usePushMessagesSubscription } from '#shared/graphql/subscriptions/pushMessages.api.ts'
 import type {
   PushMessagesSubscription,
   PushMessagesSubscriptionVariables,
-} from '@shared/graphql/types'
-import { SubscriptionHandler } from '@shared/server/apollo/handler'
-import testFlags from '@shared/utils/testFlags'
+} from '#shared/graphql/types.ts'
+import { SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 let subscription: SubscriptionHandler<
   PushMessagesSubscription,

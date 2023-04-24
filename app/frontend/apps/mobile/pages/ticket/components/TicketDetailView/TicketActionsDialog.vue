@@ -3,17 +3,17 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { truthy } from '@shared/utils/helpers'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useDialog, closeDialog } from '@shared/composables/useDialog'
-import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
-import CommonSectionMenuLink from '@mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import type { TicketById } from '@shared/entities/ticket/types'
-import { useTicketsMerge } from '../../composable/useTicketsMerge'
-import { useTicketSubscribe } from '../../composable/useTicketSubscribe'
+import { truthy } from '#shared/utils/helpers.ts'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useDialog, closeDialog } from '#shared/composables/useDialog.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import CommonSectionMenuLink from '#mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
+import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { useTicketsMerge } from '../../composable/useTicketsMerge.ts'
+import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'
 
 // TODO I think the complete dialog should not be available for none agent user (and maybe also for agents without write permission?)
 
@@ -84,7 +84,7 @@ const changeCustomerDialog = useDialog({
   name: 'ticket-change-customer',
   component: () =>
     import(
-      '@mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'
+      '#mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'
     ),
 })
 

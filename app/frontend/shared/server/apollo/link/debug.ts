@@ -7,8 +7,8 @@ import { print } from 'graphql/language/printer'
 import type {
   DebugLinkRequestOutput,
   DebugLinkResponseOutput,
-} from '@shared/types/server/apollo/client'
-import log from '@shared/utils/log'
+} from '#shared/types/server/apollo/client.ts'
+import log from '#shared/utils/log.ts'
 
 const debugLink = new ApolloLink((operation, forward) => {
   if (log.getLevel() < log.levels.DEBUG) return forward(operation)

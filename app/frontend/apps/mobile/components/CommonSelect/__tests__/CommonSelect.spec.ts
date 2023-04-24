@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
-import { renderComponent } from '@tests/support/components'
+import { i18n } from '#shared/i18n.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import CommonSelect, { type Props } from '../CommonSelect.vue'

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FieldResolverModule } from '@shared/entities/object-attributes/types/resolver'
-import { camelize } from '@shared/utils/formatter'
-import FieldResolver from '../FieldResolver'
+import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
+import { camelize } from '#shared/utils/formatter.ts'
+import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverAutocompletionCustomer extends FieldResolver {
   fieldType = 'customer'

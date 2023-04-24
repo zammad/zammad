@@ -4,10 +4,10 @@ import { nextTick } from 'vue'
 import {
   renderComponent,
   type ExtendedRenderResult,
-} from '@tests/support/components'
-import { waitForTimeout } from '@tests/support/utils'
-import { useNotifications } from '../composable'
-import { NotificationTypes } from '../types'
+} from '#tests/support/components/index.ts'
+import { waitForTimeout } from '#tests/support/utils.ts'
+import { useNotifications } from '../composable.ts'
+import { NotificationTypes } from '../types.ts'
 import CommonNotifications from '../CommonNotifications.vue'
 
 let wrapper: ExtendedRenderResult

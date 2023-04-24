@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
-import consumer from '@shared/server/action_cable/consumer'
-import { useLocaleStore } from '@shared/stores/locale'
-import { useSessionStore } from '@shared/stores/session'
-import { useApplicationStore } from '@shared/stores/application'
+import consumer from '#shared/server/action_cable/consumer.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 export default function initializeStoreSubscriptions(): void {
   const session = useSessionStore()

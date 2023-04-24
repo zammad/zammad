@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { activityMessageBuilder } from '../index'
+import { activityMessageBuilder } from '../index.ts'
 
 describe('activity message builder are available', () => {
   it('should return all search plugins', () => {

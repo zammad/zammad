@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById, TicketArticle } from '@shared/entities/ticket/types'
-import type { AddressesField } from '@shared/graphql/types'
-import type { ConfigList } from '@shared/types/store'
+import type {
+  TicketById,
+  TicketArticle,
+} from '#shared/entities/ticket/types.ts'
+import type { AddressesField } from '#shared/graphql/types.ts'
+import type { ConfigList } from '#shared/types/store.ts'
 import { uniq } from 'lodash-es'
-import type { TicketArticlePerformOptions } from '../types'
-import { getArticleSelection, getReplyQuoteHeader } from './selection'
+import type { TicketArticlePerformOptions } from '../types.ts'
+import { getArticleSelection, getReplyQuoteHeader } from './selection.ts'
 
 const getEmailAddresses = (field?: Maybe<AddressesField>) => {
   if (!field) return []

@@ -2,11 +2,11 @@
 
 <script setup lang="ts">
 import { computed, getCurrentInstance, ref } from 'vue'
-import type { StoredFile } from '@shared/graphql/types'
-import { canDownloadFile, canPreviewFile } from '@shared/utils/files'
-import { humanizeFileSize } from '@shared/utils/helpers'
-import { getIconByContentType } from '@shared/utils/icons'
-import { i18n } from '@shared/i18n'
+import type { StoredFile } from '#shared/graphql/types.ts'
+import { canDownloadFile, canPreviewFile } from '#shared/utils/files.ts'
+import { humanizeFileSize } from '#shared/utils/helpers.ts'
+import { getIconByContentType } from '#shared/utils/icons.ts'
+import { i18n } from '#shared/i18n.ts'
 
 export interface Props {
   file: Pick<StoredFile, 'type' | 'name' | 'size'>

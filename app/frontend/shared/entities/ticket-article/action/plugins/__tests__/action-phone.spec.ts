@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { setupView } from '@tests/support/mock-user'
-import { createTestArticleTypes } from './utils'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { createTestArticleTypes } from './utils.ts'
 
 describe('phone type', () => {
   it('customer cannot use phone type', () => {

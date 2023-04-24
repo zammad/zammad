@@ -3,9 +3,9 @@
 <script setup lang="ts">
 // TODO doesn't work as expected
 import { defineComponent, h, ref } from 'vue'
-import { useViewTransition } from './composable'
+import { useViewTransition } from './composable.ts'
 import TransitionViewNavigation from './TransitionViewNavigation.vue'
-import { ViewTransitions } from './types'
+import { ViewTransitions } from './types.ts'
 
 const FirstView = defineComponent(() => () => h('div', 'First View'))
 const SecondView = defineComponent(() => () => h('div', 'Second View'))

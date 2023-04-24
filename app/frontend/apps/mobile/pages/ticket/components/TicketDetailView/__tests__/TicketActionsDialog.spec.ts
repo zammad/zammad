@@ -1,27 +1,27 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { TicketMergeDocument } from '@shared/entities/ticket/graphql/mutations/merge.api'
+import { TicketMergeDocument } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import { useDialog } from '@shared/composables/useDialog'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { renderComponent } from '@tests/support/components'
-import { getTestRouter } from '@tests/support/components/renderComponent'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { nullableMock, waitUntil } from '@tests/support/utils'
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { AutocompleteSearchMergeTicketDocument } from '../../../graphql/queries/autocompleteSearchMergeTicket.api'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { AutocompleteSearchMergeTicketDocument } from '../../../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketActionsDialog from '../TicketActionsDialog.vue'
 
 const { notify } = useNotifications()
 
 beforeAll(async () => {
   await import(
-    '@shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
+    '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
   )
 })
 

@@ -7,9 +7,9 @@ import type {
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import log from '@shared/utils/log'
-import { useApplicationStore } from '@shared/stores/application'
-import { useAuthenticationStore } from '@shared/stores/authentication'
+import log from '#shared/utils/log.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 const checkAuthenticated = (
   to: RouteLocationNormalized,

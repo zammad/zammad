@@ -2,11 +2,11 @@
 
 import { InMemoryCache } from '@apollo/client/core'
 import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
-import type { ImportGlobEagerDefault } from '@shared/types/utils'
+import type { ImportGlobEagerDefault } from '#shared/types/utils.ts'
 import type {
   CacheInitializerModules,
   RegisterInMemoryCacheConfig,
-} from '@shared/types/server/apollo/client'
+} from '#shared/types/server/apollo/client.ts'
 
 let cacheConfig: InMemoryCacheConfig = {}
 

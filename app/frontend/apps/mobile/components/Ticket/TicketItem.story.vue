@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { TicketState } from '@shared/entities/ticket/types'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
+import { TicketState } from '#shared/entities/ticket/types.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import TicketItem from './TicketItem.vue'
 
 const ticket = {

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import type { TicketArticle } from '@shared/entities/ticket/types'
+import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getAllByRole } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
-import { getByIconName } from '@tests/support/components/iconQueries'
-import type { TicketArticleSecurityState } from '@shared/graphql/types'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import type { TicketArticleSecurityState } from '#shared/graphql/types.ts'
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
 
 // parsed is tested in unit test

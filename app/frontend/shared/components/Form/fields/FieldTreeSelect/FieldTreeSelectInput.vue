@@ -2,19 +2,19 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, toRef } from 'vue'
-import { i18n } from '@shared/i18n'
-import { useDialog } from '@shared/composables/useDialog'
-import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import { useFormBlock } from '@mobile/form/useFormBlock'
-import useValue from '../../composables/useValue'
-import useSelectOptions from '../../composables/useSelectOptions'
-import useSelectPreselect from '../../composables/useSelectPreselect'
-import type { SelectValue } from '../FieldSelect'
+import { i18n } from '#shared/i18n.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import { useFormBlock } from '#mobile/form/useFormBlock.ts'
+import useValue from '../../composables/useValue.ts'
+import useSelectOptions from '../../composables/useSelectOptions.ts'
+import useSelectPreselect from '../../composables/useSelectPreselect.ts'
+import type { SelectValue } from '../FieldSelect/index.ts'
 import type {
   TreeSelectOption,
   FlatSelectOption,
   TreeSelectContext,
-} from './types'
+} from './types.ts'
 
 interface Props {
   context: TreeSelectContext

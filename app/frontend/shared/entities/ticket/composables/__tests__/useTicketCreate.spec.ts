@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { useTicketCreate } from '../useTicketCreate'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { useTicketCreate } from '../useTicketCreate.ts'
 
 describe('useTicketCreate', () => {
   it('check for agent permission and setting customer ticket create enabled', () => {

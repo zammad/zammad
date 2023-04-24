@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { defineComponent, h } from 'vue'
-import { useDialog } from '@shared/composables/useDialog'
+import { useDialog } from '#shared/composables/useDialog.ts'
 import CommonDialog from './CommonDialog.vue'
 
 const DialogDefault = defineComponent({

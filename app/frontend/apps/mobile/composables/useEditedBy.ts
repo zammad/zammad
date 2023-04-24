@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { userDisplayName } from '@shared/entities/user/utils/getUserDisplayName'
-import { i18n } from '@shared/i18n'
-import { useSessionStore } from '@shared/stores/session'
+import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
+import { i18n } from '#shared/i18n.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type { Ref } from 'vue'
 import { computed } from 'vue'
 

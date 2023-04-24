@@ -3,13 +3,13 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
 import type { SuggestionKeyDownProps } from '@tiptap/suggestion'
-import useNavigateOptions from './useNavigateOptions'
+import useNavigateOptions from './useNavigateOptions.ts'
 import type {
   MentionKnowledgeBaseItem,
   MentionTextItem,
   MentionType,
   MentionUserItem,
-} from './types'
+} from './types.ts'
 
 type PossibleItem = MentionUserItem | MentionKnowledgeBaseItem | MentionTextItem
 

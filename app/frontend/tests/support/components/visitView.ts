@@ -4,10 +4,10 @@ import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
 import type { RouteRecordRaw } from 'vue-router'
 import LayoutTest from './LayoutTest.vue'
-import mockApolloClient from '../mock-apollo-client'
-import renderComponent, { getTestRouter } from './renderComponent'
+import mockApolloClient from '../mock-apollo-client.ts'
+import renderComponent, { getTestRouter } from './renderComponent.ts'
 
-vi.mock('@shared/server/apollo/client', () => {
+vi.mock('#shared/server/apollo/client.ts', () => {
   return {
     clearApolloClientStore: () => {
       return Promise.resolve()
@@ -33,7 +33,7 @@ Object.defineProperty(window, 'fetch', {
 const html = String.raw
 
 export const visitView = async (href: string) => {
-  const { routes } = await import('@mobile/router')
+  const { routes } = await import('#mobile/router/index.ts')
 
   mockApolloClient([])
 

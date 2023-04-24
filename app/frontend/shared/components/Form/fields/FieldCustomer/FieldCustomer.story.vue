@@ -6,8 +6,8 @@ import { escapeRegExp } from 'lodash-es'
 import gql from 'graphql-tag'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
-import type { AvatarUser } from '@shared/components/CommonUserAvatar/types'
+import testOptions from '#shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 
 const AutocompleteSearchCustomerDocument = gql`
   query autocompleteSearchCustomer($input: AutocompleteSearchInput!) {

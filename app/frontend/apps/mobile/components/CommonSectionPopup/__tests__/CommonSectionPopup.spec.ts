@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import CommonSectionPopup from '../CommonSectionPopup.vue'
-import type { PopupItem } from '../types'
+import type { PopupItem } from '../types.ts'
 
 const html = String.raw
 

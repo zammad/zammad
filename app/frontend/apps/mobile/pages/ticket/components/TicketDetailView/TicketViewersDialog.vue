@@ -2,10 +2,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useReactiveNow } from '@shared/composables/useReactiveNow'
-import type { TicketLiveAppUser } from '@shared/entities/ticket/types'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import TicketViewerItem from './TicketViewerItem.vue'
 
 interface Props {

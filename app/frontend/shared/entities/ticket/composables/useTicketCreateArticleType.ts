@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
-import { useApplicationStore } from '@shared/stores/application'
-import type { FormFieldAdditionalProps } from '@shared/components/Form/types'
-import { TicketCreateArticleType } from '../types'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import type { FormFieldAdditionalProps } from '#shared/components/Form/types.ts'
+import { TicketCreateArticleType } from '../types.ts'
 
 export const useTicketCreateArticleType = (
   additionalProps: FormFieldAdditionalProps = {},

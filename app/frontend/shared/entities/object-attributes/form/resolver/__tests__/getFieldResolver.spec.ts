@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import getFieldResolver from '../getFieldResolver'
+import getFieldResolver from '../getFieldResolver.ts'
 
 describe('object attribute resolver available', () => {
   it('should return the correct field resolver', () => {

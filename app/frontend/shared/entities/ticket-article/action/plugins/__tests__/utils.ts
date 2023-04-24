@@ -3,13 +3,16 @@
 import {
   defaultArticles,
   defaultTicket,
-} from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import type { PolicyTicket } from '@shared/graphql/types'
-import type { AppName } from '@shared/types/app'
-import { initializeStore } from '@tests/support/components/initializeStore'
-import { createArticleActions, createArticleTypes } from '../index'
-import type { TicketActionAddOptions } from '../types'
+} from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import type { PolicyTicket } from '#shared/graphql/types.ts'
+import type { AppName } from '#shared/types/app.ts'
+import { initializeStore } from '#tests/support/components/initializeStore.ts'
+import { createArticleActions, createArticleTypes } from '../index.ts'
+import type { TicketActionAddOptions } from '../types.ts'
 
 export const createTicketArticle = () => {
   const { description } = defaultArticles()

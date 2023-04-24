@@ -2,7 +2,7 @@
 
 import type { FormKitTypeDefinition } from '@formkit/core'
 import type { FormKitSchemaExtendableSection } from '@formkit/inputs'
-import { mergeArray } from '@shared/utils/helpers'
+import { mergeArray } from '#shared/utils/helpers.ts'
 import {
   outer,
   inner,
@@ -14,10 +14,10 @@ import {
   suffix,
   label,
 } from '@formkit/inputs'
-import { block } from '../sections/block'
-import { arrow } from '../sections/arrow'
-import { link } from '../sections/link'
-import defaulfFieldDefinition from './defaultFieldDefinition'
+import { block } from '../sections/block.ts'
+import { arrow } from '../sections/arrow.ts'
+import { link } from '../sections/link.ts'
+import defaulfFieldDefinition from './defaultFieldDefinition.ts'
 
 export interface FieldsCustomOptions {
   addDefaultProps?: boolean

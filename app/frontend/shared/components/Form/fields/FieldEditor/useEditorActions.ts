@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
-import { convertFileList } from '@shared/utils/files'
+import { i18n } from '#shared/i18n.ts'
+import { convertFileList } from '#shared/utils/files.ts'
 import type { ChainedCommands } from '@tiptap/core'
 import type { Editor } from '@tiptap/vue-3'
 import { computed, onUnmounted } from 'vue'
 import type { ShallowRef } from 'vue'
 
-import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion'
-import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion'
-import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention'
-import type { EditorContentType } from './types'
+import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion.ts'
+import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion.ts'
+import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention.ts'
+import type { EditorContentType } from './types.ts'
 
 export interface EditorButton {
   name: string

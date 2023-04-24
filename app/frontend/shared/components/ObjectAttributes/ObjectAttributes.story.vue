@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { keyBy } from 'lodash-es'
-import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
+import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
 import ObjectAttributes from './ObjectAttributes.vue'
 import attributesJson from './__tests__/attributes.json'
 

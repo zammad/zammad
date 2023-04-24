@@ -7,7 +7,7 @@ import type {
   FormKitSchemaCondition,
   FormKitSchemaNode,
 } from '@formkit/core'
-import { FormSchemaExtendType } from '@shared/types/form'
+import { FormSchemaExtendType } from '#shared/types/form.ts'
 import { extend } from '@formkit/utils'
 
 // Can later be switched to in built-in feature from FormKit (when it's available).

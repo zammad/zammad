@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { onError } from '@apollo/client/link/error'
-import getErrorContext from '@shared/server/apollo/utils/getErrorContext'
-import log from '@shared/utils/log'
-import type { GraphQLErrorExtensionsHandler } from '@shared/types/error'
-import { GraphQLErrorTypes } from '@shared/types/error'
-import emitter from '@shared/utils/emitter'
-import { recordCommunicationFailure } from '@shared/server/connection'
+import getErrorContext from '#shared/server/apollo/utils/getErrorContext.ts'
+import log from '#shared/utils/log.ts'
+import type { GraphQLErrorExtensionsHandler } from '#shared/types/error.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import emitter from '#shared/utils/emitter.ts'
+import { recordCommunicationFailure } from '#shared/server/connection.ts'
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   const errorContext = getErrorContext(operation)

@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import useFingerprint from '../useFingerprint'
+import useFingerprint from '../useFingerprint.ts'
 
 const generateFingerprintSpy = vi.fn()
 
-vi.mock('@shared/utils/browser', () => {
+vi.mock('#shared/utils/browser.ts', () => {
   return {
     generateFingerprint: () => {
       generateFingerprintSpy()

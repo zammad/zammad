@@ -3,9 +3,9 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import { useNotifications } from '@shared/components/CommonNotifications/composable'
-import type { Notification } from '@shared/components/CommonNotifications/types'
-import { markup } from '@shared/utils/markup'
+import { useNotifications } from '#shared/components/CommonNotifications/composable.ts'
+import type { Notification } from '#shared/components/CommonNotifications/types.ts'
+import { markup } from '#shared/utils/markup.ts'
 
 const notificationTypeClassMap = {
   warn: 'bg-yellow text-white',

@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { useLink } from 'vue-router'
-import stopEvent from '@shared/utils/events'
-import type { Link } from '@shared/types/router'
-import { useApplicationStore } from '@shared/stores/application'
+import stopEvent from '#shared/utils/events.ts'
+import type { Link } from '#shared/types/router.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 export interface Props {
   link: Link

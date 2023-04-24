@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, toRefs } from 'vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   ObjectManagerFrontendAttribute,
   EnumObjectManagerObjects,
-} from '@shared/graphql/types'
-import type { FormSchemaField } from '@shared/components/Form/types'
-import { useObjectAttributesStore } from '../stores/objectAttributes'
-import { useObjectManagerFrontendAttributesQuery } from '../graphql/queries/objectManagerFrontendAttributes.api'
-import getFieldFromAttribute from '../form/getFieldFromAttribute'
+} from '#shared/graphql/types.ts'
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
+import { useObjectAttributesStore } from '../stores/objectAttributes.ts'
+import { useObjectManagerFrontendAttributesQuery } from '../graphql/queries/objectManagerFrontendAttributes.api.ts'
+import getFieldFromAttribute from '../form/getFieldFromAttribute.ts'
 
 export const useObjectAttributes = (object: EnumObjectManagerObjects) => {
   const objectAttributes = useObjectAttributesStore()

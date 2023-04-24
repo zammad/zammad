@@ -2,12 +2,12 @@
 
 import { computed, reactive, readonly, ref } from 'vue'
 import type { OperationVariables } from '@apollo/client/core'
-import type { QueryHandler } from '@shared/server/apollo/handler'
+import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   BaseConnection,
   OperationQueryResult,
   PaginationVariables,
-} from '@shared/types/server/apollo/handler'
+} from '#shared/types/server/apollo/handler.ts'
 
 export default function usePagination<
   TQueryResult extends OperationQueryResult = OperationQueryResult,

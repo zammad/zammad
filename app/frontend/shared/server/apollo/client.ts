@@ -2,9 +2,9 @@
 
 import type { NormalizedCacheObject } from '@apollo/client/core'
 import { ApolloClient } from '@apollo/client/core'
-import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
-import link from './link'
-import createCache from './cache'
+import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
+import link from './link.ts'
+import createCache from './cache.ts'
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ComputedRef, Ref } from 'vue'
-import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
-import type { FormSchemaField } from '@shared/components/Form/types'
+import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 
 export interface ObjectAttributesObject {
   attributes: ComputedRef<ObjectManagerFrontendAttribute[]>

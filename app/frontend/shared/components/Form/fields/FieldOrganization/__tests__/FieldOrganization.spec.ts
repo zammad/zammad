@@ -4,17 +4,21 @@ import { escapeRegExp } from 'lodash-es'
 import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
 import { getNode } from '@formkit/core'
-import { renderComponent } from '@tests/support/components'
-import { queryByIconName } from '@tests/support/components/iconQueries'
-import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { queryByIconName } from '#tests/support/components/iconQueries.ts'
+import testOptions from '#shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
 import type {
   AutocompleteSearchOrganizationEntry,
   AutocompleteSearchOrganizationQuery,
-} from '@shared/graphql/types'
-import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { nullableMock, waitForNextTick, waitUntil } from '@tests/support/utils'
-import { AutocompleteSearchOrganizationDocument } from '@shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api'
+} from '#shared/graphql/types.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import {
+  nullableMock,
+  waitForNextTick,
+  waitUntil,
+} from '#tests/support/utils.ts'
+import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 
 const mockQueryResult = (input: {
   query: string

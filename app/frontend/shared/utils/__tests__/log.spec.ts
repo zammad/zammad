@@ -14,7 +14,7 @@ describe('log', () => {
   })
 
   it('logs with default log level', async (context) => {
-    const { default: log } = await import('../log')
+    const { default: log } = await import('../log.ts')
 
     context.skipConsole = true
 

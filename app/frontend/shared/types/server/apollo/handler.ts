@@ -9,10 +9,10 @@ import type {
   UseMutationOptions,
 } from '@vue/apollo-composable'
 import type { Ref } from 'vue'
-import type { ReactiveFunction } from '@shared/types/utils'
-import type { NotificationTypes } from '@shared/components/CommonNotifications'
-import type { PageInfo } from '@shared/graphql/types'
-import type { GraphQLHandlerError } from '../../error'
+import type { ReactiveFunction } from '#shared/types/utils.ts'
+import type { NotificationTypes } from '#shared/components/CommonNotifications/index.ts'
+import type { PageInfo } from '#shared/graphql/types.ts'
+import type { GraphQLHandlerError } from '../../error.ts'
 
 export type OperationReturn<TResult, TVariables> =
   | UseQueryReturn<TResult, TVariables>

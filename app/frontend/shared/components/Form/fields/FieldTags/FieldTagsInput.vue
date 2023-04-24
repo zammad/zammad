@@ -2,10 +2,10 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import { useDialog } from '@shared/composables/useDialog'
-import { useFormBlock } from '@mobile/form/useFormBlock'
-import useValue from '../../composables/useValue'
-import type { FieldTagsContext } from './types'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import { useFormBlock } from '#mobile/form/useFormBlock.ts'
+import useValue from '../../composables/useValue.ts'
+import type { FieldTagsContext } from './types.ts'
 
 interface Props {
   context: FieldTagsContext

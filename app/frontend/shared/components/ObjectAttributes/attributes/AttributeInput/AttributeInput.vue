@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { phoneify } from '@shared/utils/formatter'
+import { phoneify } from '#shared/utils/formatter.ts'
 import { computed } from 'vue'
-import type { ObjectAttributeInput } from './attributeInputTypes'
+import type { ObjectAttributeInput } from './attributeInputTypes.ts'
 
 const props = defineProps<{
   attribute: ObjectAttributeInput

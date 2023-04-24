@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
-import { useErrorHandler } from '@shared/errors/useErrorHandler'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import type {
   OrganizationUpdatesSubscriptionVariables,
   OrganizationUpdatesSubscription,
-} from '@shared/graphql/types'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { QueryHandler } from '@shared/server/apollo/handler'
+} from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { computed, nextTick, ref, watch } from 'vue'
-import { useOrganizationLazyQuery } from '../graphql/queries/organization.api'
-import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api'
+import { useOrganizationLazyQuery } from '../graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
 
 export const useOrganizationDetail = () => {
   const internalId = ref(0)

@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { reactive } from 'vue'
-import { useDialogObjectForm } from '@mobile/components/CommonDialogObjectForm/useDialogObjectForm'
-import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import type { OrganizationQuery } from '@shared/graphql/types'
-import type { FormSchemaField } from '@shared/components/Form/types'
+import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
+import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import type { OrganizationQuery } from '#shared/graphql/types.ts'
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
-import { useOrganizationUpdateMutation } from '../graphql/mutations/update.api'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import { useOrganizationUpdateMutation } from '../graphql/mutations/update.api.ts'
 
 export const useOrganizationEdit = () => {
   const dialog = useDialogObjectForm(

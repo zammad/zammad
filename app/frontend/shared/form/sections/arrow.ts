@@ -2,7 +2,7 @@
 
 import type { FormKitSchemaNode } from '@formkit/core'
 import { createSection } from '@formkit/inputs'
-import { useLocaleStore } from '@shared/stores/locale'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 export const arrow = createSection('arrow', () => {
   const locale = useLocaleStore()

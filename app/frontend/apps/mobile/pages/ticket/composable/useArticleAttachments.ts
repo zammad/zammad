@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApplicationStore } from '@shared/stores/application'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
-import type { TicketArticleAttachment } from '@shared/entities/ticket/types'
-import { getArticleAttachmentsLinks } from '@shared/entities/ticket-article/composables/getArticleAttachmentsLinks'
+import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
+import { getArticleAttachmentsLinks } from '#shared/entities/ticket-article/composables/getArticleAttachmentsLinks.ts'
 
 interface AttachmentsOptions {
   ticketInternalId: number

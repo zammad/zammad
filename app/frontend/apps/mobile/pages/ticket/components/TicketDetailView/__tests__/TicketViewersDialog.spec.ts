@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumTaskbarApp } from '@shared/graphql/types'
-import { renderComponent } from '@tests/support/components'
+import { EnumTaskbarApp } from '#shared/graphql/types.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import TicketViewersDialog from '../TicketViewersDialog.vue'
 
 describe('displaying ticket viewer dialog', () => {

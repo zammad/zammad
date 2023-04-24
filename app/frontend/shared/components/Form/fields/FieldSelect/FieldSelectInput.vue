@@ -2,16 +2,16 @@
 
 <script setup lang="ts">
 import { ref, toRef } from 'vue'
-import { i18n } from '@shared/i18n'
-import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '@mobile/components/CommonSelect/types'
-import { useFormBlock } from '@mobile/form/useFormBlock'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
-import useValue from '../../composables/useValue'
-import useSelectOptions from '../../composables/useSelectOptions'
-import useSelectPreselect from '../../composables/useSelectPreselect'
-import type { SelectContext } from './types'
+import { i18n } from '#shared/i18n.ts'
+import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
+import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
+import { useFormBlock } from '#mobile/form/useFormBlock.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import useValue from '../../composables/useValue.ts'
+import useSelectOptions from '../../composables/useSelectOptions.ts'
+import useSelectPreselect from '../../composables/useSelectPreselect.ts'
+import type { SelectContext } from './types.ts'
 
 interface Props {
   context: SelectContext

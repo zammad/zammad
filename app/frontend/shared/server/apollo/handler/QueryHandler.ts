@@ -16,12 +16,12 @@ import type {
   OperationQueryOptionsReturn,
   OperationQueryResult,
   WatchResultCallback,
-} from '@shared/types/server/apollo/handler'
-import type { ReactiveFunction } from '@shared/types/utils'
+} from '#shared/types/server/apollo/handler.ts'
+import type { ReactiveFunction } from '#shared/types/utils.ts'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
 import { useApolloClient } from '@vue/apollo-composable'
 import { getOperationName } from '@apollo/client/utilities'
-import BaseHandler from './BaseHandler'
+import BaseHandler from './BaseHandler.ts'
 
 export default class QueryHandler<
   TResult = OperationQueryResult,

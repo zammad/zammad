@@ -8,16 +8,16 @@ import type {
   CommonHandlerOptionsParameter,
   OperationResult,
   OperationReturn,
-} from '@shared/types/server/apollo/handler'
+} from '#shared/types/server/apollo/handler.ts'
 import type {
   GraphQLErrorReport,
   GraphQLHandlerError,
-} from '@shared/types/error'
-import { GraphQLErrorTypes } from '@shared/types/error'
+} from '#shared/types/error.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import {
   useNotifications,
   NotificationTypes,
-} from '@shared/components/CommonNotifications'
+} from '#shared/components/CommonNotifications/index.ts'
 
 export default abstract class BaseHandler<
   TResult = OperationResult,

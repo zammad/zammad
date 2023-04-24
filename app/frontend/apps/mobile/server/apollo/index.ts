@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { App } from 'vue'
-import mainInitializeApolloClient from '@shared/server/apollo'
+import mainInitializeApolloClient from '#shared/server/apollo/index.ts'
 import type {
   InitializeAppApolloClient,
   CacheInitializerModules,
-} from '@shared/types/server/apollo/client'
+} from '#shared/types/server/apollo/client.ts'
 
 export const cacheInitializerModules: CacheInitializerModules =
   import.meta.glob('./cache/initializer/*.ts', { eager: true })

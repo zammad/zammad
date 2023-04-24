@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ConfigList } from '@shared/types/store'
-import { canDownloadFile } from '@shared/utils/files'
+import type { ConfigList } from '#shared/types/store.ts'
+import { canDownloadFile } from '#shared/utils/files.ts'
 
 interface Attachment {
   type?: Maybe<string>

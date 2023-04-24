@@ -2,14 +2,14 @@
 
 <script setup lang="ts">
 import { markRaw, ref, toRef, watch } from 'vue'
-import { i18n } from '@shared/i18n'
-import { useDialog } from '@shared/composables/useDialog'
-import type { ObjectLike } from '@shared/types/utils'
-import { useFormBlock } from '@mobile/form/useFormBlock'
-import useValue from '../../composables/useValue'
-import useSelectOptions from '../../composables/useSelectOptions'
-import type { FormFieldContext } from '../../types/field'
-import type { AutoCompleteOption, AutoCompleteProps } from './types'
+import { i18n } from '#shared/i18n.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+import { useFormBlock } from '#mobile/form/useFormBlock.ts'
+import useValue from '../../composables/useValue.ts'
+import useSelectOptions from '../../composables/useSelectOptions.ts'
+import type { FormFieldContext } from '../../types/field.ts'
+import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 
 interface Props {
   context: FormFieldContext<AutoCompleteProps>

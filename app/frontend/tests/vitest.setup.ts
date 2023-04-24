@@ -1,12 +1,22 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import domMatchers from '@testing-library/jest-dom/matchers'
+import domMatchers, {
+  type TestingLibraryMatchers,
+} from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
 import 'vitest-axe/extend-expect'
-import { ServiceWorkerHelper } from '@shared/utils/testSw'
-import * as assertions from './support/assertions/index'
+import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
+import * as assertions from './support/assertions/index.ts'
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Vi {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
+  }
+}
 
 global.__ = (source) => {
   return source
@@ -61,9 +71,9 @@ vi.stubGlobal('matchMedia', (media: string) => ({
   removeEventListener: vi.fn(),
 }))
 
-vi.mock('@shared/components/CommonNotifications/composable', async () => {
+vi.mock('#shared/components/CommonNotifications/composable.ts', async () => {
   const { default: originalUseNotifications } = await vi.importActual<any>(
-    '@shared/components/CommonNotifications/composable',
+    '#shared/components/CommonNotifications/composable.ts',
   )
   let notifications: any
   const useNotifications = () => {
@@ -87,7 +97,7 @@ vi.mock('@shared/components/CommonNotifications/composable', async () => {
 
 // don't rely on tiptap, because it's not supported in JSDOM
 vi.mock(
-  '@shared/components/Form/fields/FieldEditor/FieldEditorInput.vue',
+  '#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue',
   async () => {
     const { computed, defineComponent } = await import('vue')
     const component = defineComponent({

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useTicketInformation } from '../../composable/useTicketInformation'
+import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
 const { newTicketArticlePresent, showArticleReplyDialog } =
   useTicketInformation()

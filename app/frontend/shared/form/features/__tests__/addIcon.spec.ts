@@ -2,7 +2,7 @@
 
 import { createNode } from '@formkit/core'
 import { createLibraryPlugin } from '@formkit/inputs'
-import addIcon from '../addIcon'
+import addIcon from '../addIcon.ts'
 
 describe('hideIcon', () => {
   it('can show icon inside of a text field', () => {

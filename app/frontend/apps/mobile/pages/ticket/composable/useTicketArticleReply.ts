@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormRef } from '@shared/components/Form'
-import { useDialog } from '@shared/composables/useDialog'
-import type { TicketById } from '@shared/entities/ticket/types'
+import type { FormRef } from '#shared/components/Form/index.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { Ref, ShallowRef } from 'vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -34,7 +34,7 @@ export const useTicketArticleReply = (
     name: 'ticket-article-reply',
     component: () =>
       import(
-        '@mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue'
+        '#mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue'
       ),
     beforeOpen: () => {
       newTicketArticleRequested.value = true

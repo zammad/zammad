@@ -9,11 +9,11 @@ import {
   type Router,
   type RouteRecordRaw,
 } from 'vue-router'
-import type { RouteRecordMeta } from '@shared/types/router'
-import authenticationGuard from './guards/before/authentication'
-import permissionGuard from './guards/before/permission'
-import headerTitleGuard from './guards/after/headerTitle'
-import { initializeWalker } from './walker'
+import type { RouteRecordMeta } from '#shared/types/router.ts'
+import authenticationGuard from './guards/before/authentication.ts'
+import permissionGuard from './guards/before/permission.ts'
+import headerTitleGuard from './guards/after/headerTitle.ts'
+import { initializeWalker } from './walker.ts'
 
 declare module 'vue-router' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -1,26 +1,26 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { useApplicationStore } from '@shared/stores/application'
-import { visitView } from '@tests/support/components/visitView'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockAuthentication } from '@tests/support/mock-authentication'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { ConfigUpdatesDocument } from '@shared/graphql/subscriptions/configUpdates.api'
-import { LogoutDocument } from '@shared/graphql/mutations/logout.api'
-import { ApplicationConfigDocument } from '@shared/graphql/queries/applicationConfig.api'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { mockPermissions } from '@tests/support/mock-permissions'
+} from '#tests/support/mock-graphql-api.ts'
+import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdates.api.ts'
+import { LogoutDocument } from '#shared/graphql/mutations/logout.api.ts'
+import { ApplicationConfigDocument } from '#shared/graphql/queries/applicationConfig.api.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
-} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
-import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
+} from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 
-vi.mock('@shared/server/apollo/client', () => {
+vi.mock('#shared/server/apollo/client.ts', () => {
   return {
     clearApolloClientStore: () => {
       return Promise.resolve()

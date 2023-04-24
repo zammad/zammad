@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverTreeselect } from '../treeselect'
+import { FieldResolverTreeselect } from '../treeselect.ts'
 
 describe('FieldResolverTreeselect', () => {
   it('should return the correct field attributes', () => {

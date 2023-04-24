@@ -1,30 +1,30 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import { convertFileList } from '@shared/utils/files'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { convertFileList } from '#shared/utils/files.ts'
 import type { Editor } from '@tiptap/vue-3'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
 import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
-import testFlags from '@shared/utils/testFlags'
-import { htmlCleanup } from '@shared/utils/htmlCleanup'
-import useValue from '../../composables/useValue'
+import testFlags from '#shared/utils/testFlags.ts'
+import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+import useValue from '../../composables/useValue.ts'
 import {
   getCustomExtensions,
   getHtmlExtensions,
   getPlainExtensions,
-} from './extensions/list'
+} from './extensions/list.ts'
 import type {
   EditorContentType,
   EditorCustomPlugins,
   FieldEditorContext,
   FieldEditorProps,
   PossibleSignature,
-} from './types'
+} from './types.ts'
 import FieldEditorActionBar from './FieldEditorActionBar.vue'
 import FieldEditorFooter from './FieldEditorFooter.vue'
-import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention'
+import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>

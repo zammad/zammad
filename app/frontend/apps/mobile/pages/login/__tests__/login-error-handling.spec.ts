@@ -3,10 +3,10 @@
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
-} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
-import { LoginDocument } from '@shared/graphql/mutations/login.api'
-import { visitView } from '@tests/support/components/visitView'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+} from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
+import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
 describe('testing login error handling', () => {
   beforeEach(() => {

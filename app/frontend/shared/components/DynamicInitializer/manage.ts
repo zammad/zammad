@@ -3,7 +3,7 @@
 import type { Component } from 'vue'
 import { nextTick, reactive } from 'vue'
 
-import type { DestroyComponentData, PushComponentData } from './types'
+import type { DestroyComponentData, PushComponentData } from './types.ts'
 
 export enum Events {
   Push = 'dynamic-component.push',

@@ -2,7 +2,7 @@
 
 import { createNode } from '@formkit/core'
 import { createLibraryPlugin } from '@formkit/inputs'
-import hideField from '../hideField'
+import hideField from '../hideField.ts'
 
 describe('hideField', () => {
   it('can hide a field', () => {

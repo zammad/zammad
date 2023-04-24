@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '@shared/graphql/utils'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { getByRole, getByText } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import ArticleSecurityBadge, { type Props } from '../ArticleSecurityBadge.vue'
 
 const renderBadge = (propsData: Props) => {

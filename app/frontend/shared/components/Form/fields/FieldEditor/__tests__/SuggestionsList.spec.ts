@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 import SuggestionsList from '../SuggestionsList.vue'
@@ -8,7 +8,7 @@ import type {
   MentionKnowledgeBaseItem,
   MentionTextItem,
   MentionUserItem,
-} from '../types'
+} from '../types.ts'
 
 describe('component for rendering suggestions', () => {
   it('renders knowledge base article', () => {

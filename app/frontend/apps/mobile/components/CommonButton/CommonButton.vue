@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { startCase } from 'lodash-es'
-import type { ButtonVariant } from '@shared/components/Form/fields/FieldButton/types'
+import type { ButtonVariant } from '#shared/components/Form/fields/FieldButton/types.ts'
 
 interface Props {
   form?: string

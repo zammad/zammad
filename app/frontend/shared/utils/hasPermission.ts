@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { RequiredPermission } from '@shared/types/permission'
+import type { RequiredPermission } from '#shared/types/permission.ts'
 
 /**
  * Check if the access can be granted for the given permissions.

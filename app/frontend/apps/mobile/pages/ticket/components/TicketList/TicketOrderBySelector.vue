@@ -1,13 +1,13 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '@mobile/components/CommonSelect/types'
-import type { Sizes } from '@shared/components/CommonIcon/types'
-import type { SelectOption } from '@shared/components/Form/fields/FieldSelect'
-import { EnumOrderDirection } from '@shared/graphql/types'
-import { i18n } from '@shared/i18n'
-import stopEvent from '@shared/utils/events'
+import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
+import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
+import type { Sizes } from '#shared/components/CommonIcon/types.ts'
+import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/index.ts'
+import { EnumOrderDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import stopEvent from '#shared/utils/events.ts'
 import { useVModel } from '@vueuse/core'
 import { computed, ref } from 'vue'
 

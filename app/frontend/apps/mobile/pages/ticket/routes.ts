@@ -2,7 +2,7 @@
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { ticketInformationRoutes } from './views/TicketInformation/plugins'
+import { ticketInformationRoutes } from './views/TicketInformation/plugins/index.ts'
 
 const routes: RouteRecordRaw[] = [
   {

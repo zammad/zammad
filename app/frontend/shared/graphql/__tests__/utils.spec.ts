@@ -6,7 +6,7 @@ import {
   ensureGraphqlId,
   parseGraphqlId,
   getIdFromGraphQLId,
-} from '../utils'
+} from '../utils.ts'
 
 describe('isGraphQLId', () => {
   it('check for valid id', async () => {

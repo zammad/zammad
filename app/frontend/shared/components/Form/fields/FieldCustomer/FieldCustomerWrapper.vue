@@ -1,19 +1,19 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { markRaw, defineAsyncComponent } from 'vue'
-import type { ObjectLike } from '@shared/types/utils'
-import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
-import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
+import type { ObjectLike } from '#shared/types/utils.ts'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
+import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 import FieldCustomerOptionIcon from './FieldCustomerOptionIcon.vue'
-import type { AutoCompleteProps } from '../FieldAutoComplete/types'
-import type { FormFieldContext } from '../../types/field'
-import type { SelectValue } from '../FieldSelect'
-import type { AutoCompleteCustomerOption } from './types'
+import type { AutoCompleteProps } from '../FieldAutoComplete/types.ts'
+import type { FormFieldContext } from '../../types/field.ts'
+import type { SelectValue } from '../FieldSelect/index.ts'
+import type { AutoCompleteCustomerOption } from './types.ts'
 
 const FieldAutoCompleteInput = defineAsyncComponent(
   () =>
     import(
-      '@shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
+      '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
     ),
 )
 

@@ -2,11 +2,11 @@
 
 import { createTestingPinia } from '@pinia/testing'
 import type { RouteLocationNormalized } from 'vue-router'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { useApplicationStore } from '@shared/stores/application'
-import authenticationGuard from '../authentication'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import authenticationGuard from '../authentication.ts'
 
-vi.mock('@shared/server/apollo/client', () => {
+vi.mock('#shared/server/apollo/client.ts', () => {
   return {}
 })
 

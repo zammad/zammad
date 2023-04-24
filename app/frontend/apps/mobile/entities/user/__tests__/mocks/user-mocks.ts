@@ -1,19 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultOrganization } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
-import type { UserQuery } from '@shared/graphql/types'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import type { ConfidentTake } from '@shared/types/utils'
+import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
+import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
+import type { UserQuery } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
-import { nullableMock, waitUntil } from '@tests/support/utils'
-import { UserDocument } from '../../graphql/queries/user.api'
+} from '#tests/support/mock-graphql-api.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+import { UserDocument } from '../../graphql/queries/user.api.ts'
 import managerAttributes from './managerAttributes.json'
 
 export const userObjectAttributes = () => ({ ...managerAttributes })

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import FormLayout from '@shared/components/Form/FormLayout.vue'
-import type { ExtendedRenderResult } from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
+import FormLayout from '#shared/components/Form/FormLayout.vue'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 
 describe('FormLayout.vue', () => {
   let wrapper: ExtendedRenderResult

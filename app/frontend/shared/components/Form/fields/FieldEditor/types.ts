@@ -4,9 +4,9 @@ import type {
   KnowledgeBaseAnswerSuggestionsQuery,
   MentionSuggestionsQuery,
   TextModuleSuggestionsQuery,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
-import type { ImageFileData } from '@shared/utils/files'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import type { ImageFileData } from '#shared/utils/files.ts'
 
 export interface PossibleSignature {
   active?: boolean

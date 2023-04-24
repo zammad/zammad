@@ -4,10 +4,10 @@ import { flushPromises, mount } from '@vue/test-utils'
 import {
   destroyComponent,
   pushComponent,
-} from '@shared/components/DynamicInitializer/manage'
-import { getDialogMeta, useDialog } from '../useDialog'
+} from '#shared/components/DynamicInitializer/manage.ts'
+import { getDialogMeta, useDialog } from '../useDialog.ts'
 
-vi.mock('@shared/components/DynamicInitializer/manage', () => {
+vi.mock('#shared/components/DynamicInitializer/manage.ts', () => {
   return {
     destroyComponent: vi.fn(),
     pushComponent: vi.fn(),

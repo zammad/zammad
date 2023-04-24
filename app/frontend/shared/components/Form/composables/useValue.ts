@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
-import { type FormFieldContext } from '../types/field'
+import { type FormFieldContext } from '../types/field.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useValue = <T = any>(

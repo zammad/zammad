@@ -3,10 +3,10 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { i18n } from '@shared/i18n'
-import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
-import type { TranslationsPayload } from '@shared/graphql/types'
-import { useTranslationsStore } from '../translations'
+import { i18n } from '#shared/i18n.ts'
+import { TranslationsDocument } from '#shared/graphql/queries/translations.api.ts'
+import type { TranslationsPayload } from '#shared/graphql/types.ts'
+import { useTranslationsStore } from '../translations.ts'
 
 const mockQueryResult = (
   locale: string,

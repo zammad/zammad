@@ -2,7 +2,7 @@
 
 import createValidationPlugin, {
   getValidationRuleMessages,
-} from '@shared/form/core/createValidationPlugin'
+} from '#shared/form/core/createValidationPlugin.ts'
 
 describe('createValidationPlugin', () => {
   it('check that validation plugin will be returned', () => {

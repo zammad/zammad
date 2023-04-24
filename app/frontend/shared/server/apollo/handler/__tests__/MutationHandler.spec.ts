@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable'
-import createMockClient from '@tests/support/mock-apollo-client'
+import createMockClient from '#tests/support/mock-apollo-client.ts'
 import type {
   SampleUpdateMutation,
   SampleUpdateMutationVariables,
-} from '@tests/fixtures/graphqlSampleTypes'
-import { SampleTypedMutationDocument } from '@tests/fixtures/graphqlSampleTypes'
-import { useNotifications } from '@shared/components/CommonNotifications'
-import { GraphQLErrorTypes } from '@shared/types/error'
-import UserError from '@shared/errors/UserError'
-import MutationHandler from '../MutationHandler'
+} from '#tests/fixtures/graphqlSampleTypes.ts'
+import { SampleTypedMutationDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import UserError from '#shared/errors/UserError.ts'
+import MutationHandler from '../MutationHandler.ts'
 
 const mutationFunctionCallSpy = vi.fn()
 

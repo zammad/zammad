@@ -5,7 +5,7 @@ import type { Dictionary } from 'ts-essentials'
 import type {
   SelectOption,
   SelectValue,
-} from '@shared/components/Form/fields/FieldSelect'
+} from '#shared/components/Form/fields/FieldSelect/index.ts'
 
 type OptionValueLookup = Dictionary<SelectOption>
 type SelectValueWithoutBoolean = Exclude<SelectValue, boolean>

@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
-import { i18n } from '@shared/i18n'
-import { useApplicationStore } from '@shared/stores/application'
-import type { DateTimeType, DateTimeAbsoluteFormat } from './types'
+import { i18n } from '#shared/i18n.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import type { DateTimeType, DateTimeAbsoluteFormat } from './types.ts'
 
 export interface Props {
   dateTime: string

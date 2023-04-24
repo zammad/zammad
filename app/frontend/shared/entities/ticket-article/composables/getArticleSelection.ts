@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-// import { textToHtml } from '@shared/utils/helpers'
-import { getCurrentSelectionData } from '@shared/utils/selection'
+// import { textToHtml } from '#shared/utils/helpers.ts'
+import { getCurrentSelectionData } from '#shared/utils/selection.ts'
 
 const closest = (node: Node, selector: string) => {
   while (node.parentNode) {

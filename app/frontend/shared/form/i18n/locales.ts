@@ -2,8 +2,8 @@
 
 import type { FormKitValidationMessages } from '@formkit/validation'
 import type { FormKitLocale } from '@formkit/i18n'
-import { i18n } from '@shared/i18n'
-import { commaSeparatedList, order } from '@shared/utils/formatter'
+import { i18n } from '#shared/i18n.ts'
+import { commaSeparatedList, order } from '#shared/utils/formatter.ts'
 
 interface FormKitLocaleExtended extends FormKitLocale {
   validation: FormKitValidationMessages

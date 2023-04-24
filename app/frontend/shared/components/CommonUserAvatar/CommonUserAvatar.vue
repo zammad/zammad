@@ -2,12 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useApplicationStore } from '@shared/stores/application'
-import { getInitials } from '@shared/utils/formatter'
-import { i18n } from '@shared/i18n'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { getInitials } from '#shared/utils/formatter.ts'
+import { i18n } from '#shared/i18n.ts'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
-import type { AvatarSize } from '../CommonAvatar'
-import type { AvatarUser } from './types'
+import type { AvatarSize } from '../CommonAvatar/index.ts'
+import type { AvatarUser } from './types.ts'
 import logo from './assets/logo.svg'
 
 export interface Props {

@@ -2,14 +2,14 @@
 
 import type { App } from 'vue'
 import type { FormKitPlugin } from '@formkit/core'
-import mainInitializeForm, { getFormPlugins } from '@shared/form'
+import mainInitializeForm, { getFormPlugins } from '#shared/form/index.ts'
 import type {
   FormFieldTypeImportModules,
   FormThemeExtension,
   InitializeAppForm,
-} from '@shared/types/form'
-import type { ImportGlobEagerOutput } from '@shared/types/utils'
-import getCoreClasses from './theme/global/getCoreClasses'
+} from '#shared/types/form.ts'
+import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
+import getCoreClasses from './theme/global/getCoreClasses.ts'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',

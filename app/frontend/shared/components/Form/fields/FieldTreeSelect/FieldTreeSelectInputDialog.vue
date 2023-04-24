@@ -1,19 +1,18 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import { closeDialog } from '@shared/composables/useDialog'
+import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import { closeDialog } from '#shared/composables/useDialog.ts'
 import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 import { escapeRegExp } from 'lodash-es'
-import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
-import { useLocaleStore } from '@shared/stores/locale'
-import useSelectOptions from '../../composables/useSelectOptions'
-import type { TreeSelectContext } from './types'
-import { FlatSelectOption } from './types'
-import type { SelectOption } from '../FieldSelect'
-import useValue from '../../composables/useValue'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import useSelectOptions from '../../composables/useSelectOptions.ts'
+import type { TreeSelectContext, FlatSelectOption } from './types.ts'
+import type { SelectOption } from '../FieldSelect/index.ts'
+import useValue from '../../composables/useValue.ts'
 
 const props = defineProps<{
   context: TreeSelectContext

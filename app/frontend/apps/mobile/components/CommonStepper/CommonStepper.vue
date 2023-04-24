@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { CommonStepperStep as Step } from './types'
+import type { CommonStepperStep as Step } from './types.ts'
 import CommonStepperStep from './CommonStepperStep.vue'
 
 interface Props {

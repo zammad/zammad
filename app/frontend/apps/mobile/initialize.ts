@@ -3,14 +3,14 @@
 import type { App } from 'vue'
 
 import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
-import '@mobile/styles/main.scss'
+import '#mobile/styles/main.scss'
 
-import initializeStore from '@shared/stores'
-import initializeGlobalComponents from '@shared/initializer/globalComponents'
-import { initializeAppName } from '@shared/composables/useAppName'
-import initializeGlobalProperties from '@shared/initializer/globalProperties'
-import initializeForm from '@mobile/form'
-import { initializeObjectAttributes } from './initializer/objectAttributes'
+import initializeStore from '#shared/stores/index.ts'
+import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
+import { initializeAppName } from '#shared/composables/useAppName.ts'
+import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
+import initializeForm from '#mobile/form/index.ts'
+import { initializeObjectAttributes } from './initializer/objectAttributes.ts'
 
 export default function initializeApp(app: App) {
   // TODO remove when Vue 3.3 released

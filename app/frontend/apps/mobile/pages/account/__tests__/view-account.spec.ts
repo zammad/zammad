@@ -1,18 +1,18 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { ProductAboutDocument } from '@shared/graphql/queries/about.api'
-import { TranslationsDocument } from '@shared/graphql/queries/translations.api'
-import type { LocalesQuery } from '@shared/graphql/types'
-import { EnumTextDirection } from '@shared/graphql/types'
-import { useLocaleStore } from '@shared/stores/locale'
-import { visitView } from '@tests/support/components/visitView'
-import { mockAccount } from '@tests/support/mock-account'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
-import { setupView } from '@tests/support/mock-user'
-import { getTestRouter } from '@tests/support/components/renderComponent'
-import { AccountLocaleDocument } from '../graphql/mutations/locale.api'
+import { ProductAboutDocument } from '#shared/graphql/queries/about.api.ts'
+import { TranslationsDocument } from '#shared/graphql/queries/translations.api.ts'
+import type { LocalesQuery } from '#shared/graphql/types.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { AccountLocaleDocument } from '../graphql/mutations/locale.api.ts'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {

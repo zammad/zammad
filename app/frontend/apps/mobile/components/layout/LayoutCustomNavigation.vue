@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted } from 'vue'
-import { useCustomLayout } from './useCustomLayout'
+import { useCustomLayout } from './useCustomLayout.ts'
 
 const { setCustomLayout } = useCustomLayout()
 

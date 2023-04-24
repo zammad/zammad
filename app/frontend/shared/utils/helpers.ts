@@ -2,7 +2,7 @@
 
 import linkifyStr from 'linkify-string'
 
-export { htmlCleanup } from './htmlCleanup'
+export { htmlCleanup } from './htmlCleanup.ts'
 
 type Falsy = false | 0 | '' | null | undefined
 type IsTruthy<T> = T extends Falsy ? never : T

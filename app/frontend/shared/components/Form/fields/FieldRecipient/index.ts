@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import createInput from '@shared/form/core/createInput'
-import addLink from '@shared/form/features/addLink'
-import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
+import createInput from '#shared/form/core/createInput.ts'
+import addLink from '#shared/form/features/addLink.ts'
+import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
-import { autoCompleteProps } from '../FieldAutoComplete'
+import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
 
 export type FieldRecipientContact = 'email' | 'phone'
 

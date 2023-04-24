@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mountComponent } from '@cy/utils'
-import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { defineComponent, h, Fragment } from 'vue'
+import { mountComponent } from '#cy/utils.ts'
 
 const Component = defineComponent({
   setup() {

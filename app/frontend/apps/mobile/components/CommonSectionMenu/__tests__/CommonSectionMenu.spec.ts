@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import CommonSectionMenu from '../CommonSectionMenu.vue'
-import type { MenuItem } from '../types'
+import type { MenuItem } from '../types.ts'
 
 describe('rendering section', () => {
   it('no output without default slot and items', () => {

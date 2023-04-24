@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
-import getUuid from '@shared/utils/getUuid'
-import { NotificationTypes } from './types'
-import type { NewNotification, Notification } from './types'
+import getUuid from '#shared/utils/getUuid.ts'
+import { NotificationTypes } from './types.ts'
+import type { NewNotification, Notification } from './types.ts'
 
 const notifications = ref<Notification[]>([])
 const defaultNotificationDurationMS = 3000

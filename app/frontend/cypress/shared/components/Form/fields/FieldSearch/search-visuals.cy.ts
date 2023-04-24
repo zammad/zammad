@@ -3,7 +3,7 @@
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { mountFormField, checkFormMatchesSnapshot } from '@cy/utils'
+import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'
 
 describe('testing visuals for "FieldSearch"', () => {
   const input = 'search test'

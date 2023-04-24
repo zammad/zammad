@@ -3,15 +3,15 @@
 import type {
   ObjectManagerFrontendAttribute,
   ObjectAttributeValue,
-} from '@shared/graphql/types'
-import { useSessionStore } from '@shared/stores/session'
-import type { ObjectLike } from '@shared/types/utils'
+} from '#shared/graphql/types.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import { keyBy, get } from 'lodash-es'
 import type { Dictionary } from 'ts-essentials'
-import { camelize } from '@shared/utils/formatter'
+import { camelize } from '#shared/utils/formatter.ts'
 import type { Component } from 'vue'
 import { computed } from 'vue'
-import type { AttributeDeclaration } from './types'
+import type { AttributeDeclaration } from './types.ts'
 
 export interface ObjectAttributesDisplayOptions {
   object: ObjectLike

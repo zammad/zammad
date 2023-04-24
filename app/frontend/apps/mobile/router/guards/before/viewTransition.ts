@@ -8,7 +8,7 @@ import type {
 import {
   useViewTransition,
   ViewTransitions,
-} from '@mobile/components/transition/TransitionViewNavigation'
+} from '#mobile/components/transition/TransitionViewNavigation/index.ts'
 
 const transitionViewGuard: NavigationGuard = (
   to: RouteLocationNormalized,

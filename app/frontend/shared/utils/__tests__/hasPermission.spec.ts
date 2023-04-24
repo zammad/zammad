@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import hasPermission from '../hasPermission'
+import hasPermission from '../hasPermission.ts'
 
 describe('hasPermission', () => {
   it('no access when permissions are required, but no permission are present', () => {

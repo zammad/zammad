@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Translator } from './translator'
+import type { Translator } from './translator.ts'
 
 const formatNumber = (num: number, digits: number): string => {
   let result = num.toString()

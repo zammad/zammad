@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { headerOptions as header } from '@mobile/composables/useHeader'
+import { headerOptions as header } from '#mobile/composables/useHeader.ts'
 import { computed, ref, unref } from 'vue'
 import { useRoute } from 'vue-router'
 // import TransitionViewNavigation from '../transition/TransitionViewNavigation/TransitionViewNavigation.vue'
-import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import LayoutBottomNavigation from './LayoutBottomNavigation.vue'
 import LayoutHeader from './LayoutHeader.vue'
 

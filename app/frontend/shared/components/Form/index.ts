@@ -10,8 +10,8 @@ export type {
   FormHandler,
   FormRef,
   FormSchemaField,
-} from './types'
+} from './types.ts'
 
-export { FormHandlerExecution } from './types'
+export { FormHandlerExecution } from './types.ts'
 
-export { useForm, useMultiStepForm } from './composable'
+export { useForm, useMultiStepForm } from './composable.ts'

@@ -2,9 +2,9 @@
 
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useApplicationStore } from '@shared/stores/application'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { useSessionStore } from '@shared/stores/session'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 // Add a watcher for authenticated changes (e.g. login/logout in a other browser tab).
 const useAuthenticationChanges = () => {

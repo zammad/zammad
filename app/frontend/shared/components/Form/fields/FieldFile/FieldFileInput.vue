@@ -1,16 +1,16 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { toRef, computed, ref } from 'vue'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import useImageViewer from '@shared/composables/useImageViewer'
-import { convertFileList } from '@shared/utils/files'
-import useConfirmation from '@mobile/components/CommonConfirmation/composable'
-import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
-import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
-import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api'
-import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api'
-import type { FieldFileProps, FileUploaded } from './types'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import useImageViewer from '#shared/composables/useImageViewer.ts'
+import { convertFileList } from '#shared/utils/files.ts'
+import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api.ts'
+import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
+import type { FieldFileProps, FileUploaded } from './types.ts'
 
 // TODO: Add a test + story for this component.
 

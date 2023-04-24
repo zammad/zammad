@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getTestState } from '../utils'
+import { getTestState } from '../utils.ts'
 
 export default function toHaveImagePreview(
   this: any,

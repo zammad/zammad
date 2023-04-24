@@ -2,8 +2,8 @@
 
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from 'vue'
-import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
-import { useLocaleStore } from '@shared/stores/locale'
+import { type Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 export interface Props {
   label?: string

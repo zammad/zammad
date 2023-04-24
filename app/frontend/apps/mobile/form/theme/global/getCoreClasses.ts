@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormThemeClasses, FormThemeExtension } from '@shared/types/form'
-import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel'
-import { addFloatingTextareaLabel } from './addFloatingTextareaLabel'
-import { addBlockFloatingLabel } from './addBlockFloatingLabel'
-import type { Classes } from './utils'
-import { extendClasses } from './utils'
+import type {
+  FormThemeClasses,
+  FormThemeExtension,
+} from '#shared/types/form.ts'
+import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel.ts'
+import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
+import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
+import type { Classes } from './utils.ts'
+import { extendClasses } from './utils.ts'
 
 export const addDateLabel = (classes: Classes = {}): Classes => {
   const newClasses = addAbsoluteFloatingLabel(classes)

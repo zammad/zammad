@@ -2,8 +2,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import useConfirmation from './composable'
+import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+import useConfirmation from './composable.ts'
 
 // TODO: Add a story for this component.
 

@@ -3,10 +3,16 @@
 const now = new Date('2020-02-01 00:00:00')
 vi.setSystemTime(now)
 
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { EnumTaskbarApp } from '@shared/graphql/types'
-import { renderComponent } from '@tests/support/components'
-import TicketDetailViewHeader from '../TicketDetailViewHeader.vue'
+const { defaultTicket } = await import(
+  '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+)
+const { EnumTaskbarApp } = await import('#shared/graphql/types.ts')
+const { default: TicketDetailViewHeader } = await import(
+  '../TicketDetailViewHeader.vue'
+)
+const { renderComponent } = await import('#tests/support/components/index.ts')
+
+export {}
 
 const createdAt = new Date('2020-01-29 00:00:00')
 

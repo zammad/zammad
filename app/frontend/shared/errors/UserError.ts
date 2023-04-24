@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { UserErrors, UserFieldError } from '@shared/types/error'
+import type { UserErrors, UserFieldError } from '#shared/types/error.ts'
 
 export default class UserError extends Error {
   public errors: UserErrors

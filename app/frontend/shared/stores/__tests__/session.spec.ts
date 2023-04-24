@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { CurrentUserDocument } from '@shared/graphql/queries/currentUser.api'
-import { CurrentUserUpdatesDocument } from '@shared/graphql/subscriptions/currentUserUpdates.api'
+import { CurrentUserDocument } from '#shared/graphql/queries/currentUser.api.ts'
+import { CurrentUserUpdatesDocument } from '#shared/graphql/subscriptions/currentUserUpdates.api.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
+} from '#tests/support/mock-graphql-api.ts'
 import { createPinia, setActivePinia } from 'pinia'
-import { useSessionStore } from '../session'
+import { useSessionStore } from '../session.ts'
 
 const userData = {
   __typename: 'User',

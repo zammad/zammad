@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ActivityMessageBuilder } from '../types'
+import type { ActivityMessageBuilder } from '../types.ts'
 
 const builderModules = import.meta.glob<ActivityMessageBuilder>(
   ['./**/*.ts', '!./**/index.ts', '!./__tests__/**/*.ts'],

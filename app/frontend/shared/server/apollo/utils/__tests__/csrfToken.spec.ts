@@ -8,7 +8,7 @@ vi.spyOn(document, 'querySelector').mockImplementation((): Element => {
   return metaElement
 })
 
-import { getCSRFToken, setCSRFToken } from '../csrfToken'
+const { getCSRFToken, setCSRFToken } = await import('../csrfToken.ts')
 
 describe('csrfToken handling', () => {
   it('get initial token', () => {

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
-import type { Role } from '@shared/graphql/types'
-import type { ActivityMessageBuilder } from '../types'
+import { i18n } from '#shared/i18n.ts'
+import type { Role } from '#shared/graphql/types.ts'
+import type { ActivityMessageBuilder } from '../types.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const path = (metaObject: Role) => {

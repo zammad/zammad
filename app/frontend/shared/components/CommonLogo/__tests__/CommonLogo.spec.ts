@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
-import { renderComponent } from '@tests/support/components'
-import { useApplicationStore } from '@shared/stores/application'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import CommonLogo from '../CommonLogo.vue'
 
 describe('CommonLogo.vue', () => {

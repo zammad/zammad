@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import stopEvent from '@shared/utils/events'
-import { getFocusableElements } from '@shared/utils/getFocusableElements'
-import type { FocusableOptions } from '@shared/utils/getFocusableElements'
+import stopEvent from '#shared/utils/events.ts'
+import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
+import type { FocusableOptions } from '#shared/utils/getFocusableElements.ts'
 import { onKeyStroke, unrefElement } from '@vueuse/core'
 import type { MaybeComputedRef } from '@vueuse/shared'
 

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useTicketCreate } from '@shared/entities/ticket/composables/useTicketCreate'
+import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 
 const { ticketCreateEnabled } = useTicketCreate()
 </script>

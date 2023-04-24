@@ -2,9 +2,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { AvatarUser } from '@shared/components/CommonUserAvatar'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { EnumTaskbarApp } from '@shared/graphql/types'
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/index.ts'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { EnumTaskbarApp } from '#shared/graphql/types.ts'
 
 interface Props {
   user: AvatarUser

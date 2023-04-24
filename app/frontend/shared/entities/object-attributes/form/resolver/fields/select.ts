@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { SelectOption } from '@shared/components/Form/fields/FieldSelect'
+import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/index.ts'
 import type {
   FormFieldAdditionalProps,
   FormSchemaField,
-} from '@shared/components/Form/types'
-import { camelize } from '@shared/utils/formatter'
+} from '#shared/components/Form/types.ts'
+import { camelize } from '#shared/utils/formatter.ts'
 import type {
   FieldResolverModule,
   ObjectAttributeSelectOptions,
-} from '@shared/entities/object-attributes/types/resolver'
-import FieldResolver from '../FieldResolver'
+} from '#shared/entities/object-attributes/types/resolver.ts'
+import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverSelect extends FieldResolver {
   fieldType = 'select'

@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import stopEvent from '@shared/utils/events'
+import stopEvent from '#shared/utils/events.ts'
 import { computed, nextTick, toRef, watch } from 'vue'
-import useValue from '../../composables/useValue'
-import type { FormFieldContext } from '../../types/field'
+import useValue from '../../composables/useValue.ts'
+import type { FormFieldContext } from '../../types/field.ts'
 
 const props = defineProps<{
   context: FormFieldContext<{

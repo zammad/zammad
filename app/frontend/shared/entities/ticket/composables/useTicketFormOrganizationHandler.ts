@@ -1,17 +1,20 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormHandlerExecution } from '@shared/components/Form'
-import type { FormHandlerFunction, FormHandler } from '@shared/components/Form'
-import { useSessionStore } from '@shared/stores/session'
-import type { Organization, Scalars } from '@shared/graphql/types'
-import type { AutoCompleteCustomerOption } from '@shared/components/Form/fields/FieldCustomer'
-import type { UserData } from '@shared/types/store' // TODO: remove this import
+import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+import type {
+  FormHandlerFunction,
+  FormHandler,
+} from '#shared/components/Form/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { Organization, Scalars } from '#shared/graphql/types.ts'
+import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/index.ts'
+import type { UserData } from '#shared/types/store.ts' // TODO: remove this import
 import type {
   FormSchemaField,
   ReactiveFormSchemData,
   ChangedField,
-} from '@shared/components/Form/types'
-import { getAutoCompleteOption } from '@shared/entities/organization/utils/getAutoCompleteOption'
+} from '#shared/components/Form/types.ts'
+import { getAutoCompleteOption } from '#shared/entities/organization/utils/getAutoCompleteOption.ts'
 
 // TODO: needs to be aligned, when auto completes has a final state.
 export const useTicketFormOganizationHandler = (): FormHandler => {

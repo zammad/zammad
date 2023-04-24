@@ -2,13 +2,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonTicketPriorityIndicator from '@shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import CommonTicketEscalationIndicator from '@shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
-import CommonTicketStateIndicator from '@shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
-import type { TicketById } from '@shared/entities/ticket/types'
-import { useLocaleStore } from '@shared/stores/locale'
-import { useTicketInformation } from '../../composable/useTicketInformation'
+import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
+import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
 const { ticket } = useTicketInformation()
 

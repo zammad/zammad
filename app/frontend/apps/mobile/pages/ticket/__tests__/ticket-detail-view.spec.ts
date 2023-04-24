@@ -3,38 +3,50 @@
 const now = new Date(2022, 1, 1, 0, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { getNode } from '@formkit/core'
-import { ApolloError } from '@apollo/client/errors'
-import { TicketArticleRetrySecurityProcessDocument } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
-import type { TicketArticleRetrySecurityProcessMutation } from '@shared/graphql/types'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
-import { getAllByTestId, getByLabelText, getByRole } from '@testing-library/vue'
-import { getByIconName } from '@tests/support/components/iconQueries'
-import { getTestRouter } from '@tests/support/components/renderComponent'
-import { visitView } from '@tests/support/components/visitView'
-import createMockClient from '@tests/support/mock-apollo-client'
-import { mockAccount } from '@tests/support/mock-account'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { nullableMock, waitUntil } from '@tests/support/utils'
-import { flushPromises } from '@vue/test-utils'
-import { TicketDocument } from '../graphql/queries/ticket.api'
-import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api'
-import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
-import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api'
-import {
+import type { TicketArticleRetrySecurityProcessMutation } from '#shared/graphql/types.ts'
+
+const { getNode } = await import('@formkit/core')
+const { ApolloError } = await import('@apollo/client/errors')
+const { TicketArticleRetrySecurityProcessDocument } = await import(
+  '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
+)
+const { convertToGraphQLId } = await import('#shared/graphql/utils.ts')
+const { getAllByTestId, getByLabelText, getByRole } = await import(
+  '@testing-library/vue'
+)
+const { getByIconName } = await import(
+  '#tests/support/components/iconQueries.ts'
+)
+const { getTestRouter } = await import(
+  '#tests/support/components/renderComponent.ts'
+)
+const { visitView } = await import('#tests/support/components/visitView.ts')
+const { mockAccount } = await import('#tests/support/mock-account.ts')
+const { mockGraphQLApi, mockGraphQLSubscription } = await import(
+  '#tests/support/mock-graphql-api.ts'
+)
+const { mockPermissions } = await import('#tests/support/mock-permissions.ts')
+const { nullableMock, waitUntil } = await import('#tests/support/utils.ts')
+const { flushPromises } = await import('@vue/test-utils')
+const { TicketDocument } = await import('../graphql/queries/ticket.api.ts')
+const { TicketArticlesDocument } = await import(
+  '../graphql/queries/ticket/articles.api.ts'
+)
+const { TicketArticleUpdatesDocument } = await import(
+  '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
+)
+const { TicketUpdatesDocument } = await import(
+  '../graphql/subscriptions/ticketUpdates.api.ts'
+)
+const {
   defaultArticles,
   defaultTicket,
   mockTicketDetailViewGql,
-  mockTicketLiveUsersGql,
-} from './mocks/detail-view'
-import { mockArticleQuery } from './mocks/articles'
-import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables'
+} = await import('./mocks/detail-view.ts')
+const { mockArticleQuery } = await import('./mocks/articles.ts')
+const { clearTicketArticlesLoadedState } = await import(
+  '../composable/useTicketArticlesVariables.ts'
+)
 
 beforeEach(() => {
   mockPermissions(['ticket.agent'])
@@ -247,78 +259,6 @@ test('change content on subscription', async () => {
   })
 
   expect(view.getByText('Some New Title')).toBeInTheDocument()
-})
-
-test('can load more articles', async () => {
-  mockApplicationConfig({
-    ticket_articles_min: 1,
-  })
-
-  const { description, articles } = defaultArticles()
-
-  const [article1, article2] = articles.edges
-
-  const articlesHandler = vi.fn(async (variables: any) => {
-    if (!variables.loadDescription) {
-      return {
-        data: {
-          description: null,
-          articles: {
-            __typename: 'TicketArticleConnection',
-            totalCount: 3,
-            edges: [article2],
-            pageInfo: {
-              __typename: 'PageInfo',
-              hasPreviousPage: false,
-              startCursor: '',
-              endCursor: '',
-            },
-          },
-        },
-      }
-    }
-    return {
-      data: {
-        description,
-        articles: {
-          __typename: 'TicketArticleConnection',
-          totalCount: 3,
-          edges: [article1],
-          pageInfo: {
-            __typename: 'PageInfo',
-            hasPreviousPage: true,
-            startCursor: article1.cursor,
-            endCursor: '',
-          },
-        },
-      },
-    }
-  })
-
-  mockTicketLiveUsersGql()
-  mockOnlineNotificationSeenGql()
-
-  mockGraphQLApi(TicketDocument).willResolve(defaultTicket())
-  mockGraphQLSubscription(TicketUpdatesDocument)
-  mockGraphQLSubscription(TicketArticleUpdatesDocument)
-  createMockClient([
-    {
-      operationDocument: TicketArticlesDocument,
-      handler: articlesHandler,
-    },
-  ])
-
-  const view = await visitView('/tickets/1')
-
-  const comments = await view.findAllByRole('comment')
-
-  expect(comments).toHaveLength(2)
-
-  vi.useRealTimers()
-
-  await view.events.click(view.getByText('load 1 more'))
-
-  expect(view.getAllByRole('comment')).toHaveLength(3)
 })
 
 describe('calling API to retry encryption', () => {

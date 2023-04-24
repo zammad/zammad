@@ -7,11 +7,11 @@ import {
   type MockApolloClient,
   type RequestHandler,
 } from 'mock-apollo-client'
-import createCache from '@shared/server/apollo/cache'
-import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
+import createCache from '#shared/server/apollo/cache.ts'
+import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
 
 const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
-  '@mobile/server/apollo/cache/initializer/*.ts',
+  '../../mobile/server/apollo/cache/initializer/*.ts',
   { eager: true },
 )
 

@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { i18n } from '@shared/i18n'
-import { useApplicationStore } from '@shared/stores/application'
+import { i18n } from '#shared/i18n.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/themes/dark.css'
 import {
@@ -18,10 +18,10 @@ import {
 } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import type { RouteLocationRaw } from 'vue-router'
-import { useRawHTMLIcon } from '@shared/components/CommonIcon'
-import testFlags from '@shared/utils/testFlags'
-import type { FormFieldContext } from '../../types/field'
-import useValue from '../../composables/useValue'
+import { useRawHTMLIcon } from '#shared/components/CommonIcon/index.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+import type { FormFieldContext } from '../../types/field.ts'
+import useValue from '../../composables/useValue.ts'
 
 export interface Props {
   context: FormFieldContext<{

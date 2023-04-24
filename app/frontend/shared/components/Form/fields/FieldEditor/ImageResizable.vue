@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { loadImageIntoBase64 } from '@shared/utils/files'
+import { loadImageIntoBase64 } from '#shared/utils/files.ts'
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import { computed, reactive, ref } from 'vue'
 import DraggableResizable from 'vue3-draggable-resizable'
-import log from '@shared/utils/log'
+import log from '#shared/utils/log.ts'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
 
 const props = defineProps(nodeViewProps)

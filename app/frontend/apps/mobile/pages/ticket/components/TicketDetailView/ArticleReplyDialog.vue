@@ -5,12 +5,12 @@ import type { ShallowRef } from 'vue'
 import type { FormKitNode } from '@formkit/core'
 import { cloneDeep, isEqual } from 'lodash-es'
 import { computed, onMounted, onUnmounted } from 'vue'
-import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import { closeDialog } from '@shared/composables/useDialog'
-import type { TicketById } from '@shared/entities/ticket/types'
-import type { FormRef } from '@shared/components/Form'
-import { useConfirmationDialog } from '@mobile/components/CommonConfirmation'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { closeDialog } from '#shared/composables/useDialog.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { FormRef } from '#shared/components/Form/index.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/index.ts'
 
 interface Props {
   name: string

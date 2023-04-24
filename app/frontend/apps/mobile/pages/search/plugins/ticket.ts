@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import TicketItem from '@mobile/components/Ticket/TicketItem.vue'
-import type { SearchPlugin } from './index'
+import TicketItem from '#mobile/components/Ticket/TicketItem.vue'
+import type { SearchPlugin } from './index.ts'
 
 export default <SearchPlugin>{
   model: 'Ticket',

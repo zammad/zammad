@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getFocusableElements } from '@shared/utils/getFocusableElements'
+import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 import { onKeyStroke } from '@vueuse/core'
 import type { Ref } from 'vue'
 

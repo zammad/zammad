@@ -4,10 +4,13 @@ import type { ComputedRef, Ref, ShallowRef } from 'vue'
 import type {
   TicketById,
   TicketLiveAppUser,
-} from '@shared/entities/ticket/types'
-import type { FormRef, FormValues } from '@shared/components/Form'
-import type { TicketQuery, TicketQueryVariables } from '@shared/graphql/types'
-import type { QueryHandler } from '@shared/server/apollo/handler'
+} from '#shared/entities/ticket/types.ts'
+import type { FormRef, FormValues } from '#shared/components/Form/index.ts'
+import type {
+  TicketQuery,
+  TicketQueryVariables,
+} from '#shared/graphql/types.ts'
+import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 export interface TicketInformation {
   ticketQuery: QueryHandler<TicketQuery, TicketQueryVariables>

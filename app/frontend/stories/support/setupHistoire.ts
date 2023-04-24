@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import initializeApp from '@mobile/initialize'
-import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
+import initializeApp from '#mobile/initialize.ts'
+import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { defineSetupVue3 } from '@histoire/plugin-vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { h, createApp, type App } from 'vue'

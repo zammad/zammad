@@ -13,14 +13,14 @@ import CharacterCount from '@tiptap/extension-character-count'
 import type { Extensions } from '@tiptap/core'
 
 import type { Ref } from 'vue'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import UserMention, { UserLink } from '../suggestions/UserMention'
-import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion'
-import TextModuleSuggestion from '../suggestions/TextModuleSuggestion'
-import Image from './Image'
-import HardBreakPlain from './HardBreakPlain'
-import Signature from './Signature'
-import type { FieldEditorProps } from '../types'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import UserMention, { UserLink } from '../suggestions/UserMention.ts'
+import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion.ts'
+import TextModuleSuggestion from '../suggestions/TextModuleSuggestion.ts'
+import Image from './Image.ts'
+import HardBreakPlain from './HardBreakPlain.ts'
+import Signature from './Signature.ts'
+import type { FieldEditorProps } from '../types.ts'
 
 export const getPlainExtensions = (): Extensions => [
   StarterKit.configure({

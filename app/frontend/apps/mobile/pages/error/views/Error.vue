@@ -2,9 +2,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
-import { errorOptions } from '@mobile/router/error'
-import { ErrorStatusCodes } from '@shared/types/error'
+import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
+import { errorOptions } from '#mobile/router/error.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 const errorImage = computed(() => {
   switch (errorOptions.value.statusCode) {

@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
-import type { FormFieldValue } from '@shared/components/Form/types'
+import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import type {
   TicketQuery,
   TicketArticlesQuery,
   TicketLiveUser,
   EnumTaskbarApp,
   EnumSecurityOption,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
 
 export enum TicketState {
   Closed = 'closed',

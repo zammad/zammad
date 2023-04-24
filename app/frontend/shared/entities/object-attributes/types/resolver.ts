@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
-import type FieldResolver from '../form/resolver/FieldResolver'
+import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type FieldResolver from '../form/resolver/FieldResolver.ts'
 
 export interface ScreenConfig {
   required?: boolean

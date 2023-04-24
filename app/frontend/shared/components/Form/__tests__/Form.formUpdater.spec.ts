@@ -2,30 +2,30 @@
 
 import { cloneDeep } from 'lodash-es'
 import { waitFor } from '@testing-library/vue'
-import Form from '@shared/components/Form/Form.vue'
-import type { Props } from '@shared/components/Form/Form.vue'
+import Form from '#shared/components/Form/Form.vue'
+import type { Props } from '#shared/components/Form/Form.vue'
 import type {
   ExtendedMountingOptions,
   ExtendedRenderResult,
-} from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { waitForNextTick, waitUntil } from '@tests/support/utils'
+} from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
   type ObjectManagerScreenAttributes,
   type ObjectManagerFrontendAttributesPayload,
   type FormUpdaterQuery,
-} from '@shared/graphql/types'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
+} from '#shared/graphql/types.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import {
   getByIconName,
   queryByIconName,
-} from '@tests/support/components/iconQueries'
-import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api'
-import type { FormSchemaField, FormValues } from '../types'
+} from '#tests/support/components/iconQueries.ts'
+import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
+import type { FormSchemaField, FormValues } from '../types.ts'
 import additionalFrontendObjectAttributes from './mocks/additionalFrontendObjectAttributes.json'
 
 const wrapperParameters = {

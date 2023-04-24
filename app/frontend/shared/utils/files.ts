@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
-import { useApplicationStore } from '@shared/stores/application'
+import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 export interface ImageFileData {
   name: string

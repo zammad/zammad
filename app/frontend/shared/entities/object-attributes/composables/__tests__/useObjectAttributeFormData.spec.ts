@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitForTimeout } from '@tests/support/utils'
-import { ObjectManagerFrontendAttributesDocument } from '../../graphql/queries/objectManagerFrontendAttributes.api'
-import { useObjectAttributes } from '../useObjectAttributes'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { waitForTimeout } from '#tests/support/utils.ts'
+import { ObjectManagerFrontendAttributesDocument } from '../../graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { useObjectAttributes } from '../useObjectAttributes.ts'
 import objectFrontendAttributes from './mocks/objectFrontendAttributes.json'
-import { useObjectAttributeFormData } from '../useObjectAttributeFormData'
+import { useObjectAttributeFormData } from '../useObjectAttributeFormData.ts'
 
 const mockOrganizationObjectManagerAttributes = () => {
   mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willResolve({

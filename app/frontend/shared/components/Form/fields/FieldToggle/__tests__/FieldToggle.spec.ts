@@ -3,9 +3,9 @@
 import { ref } from 'vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
-import { waitForNextTick } from '@tests/support/utils'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 const renderToggle = (props: any = {}) => {
   return renderComponent(FormKit, {

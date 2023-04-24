@@ -1,13 +1,13 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import FieldEditorFooter from './FieldEditorFooter.vue'
 import type {
   FieldEditorContext,
   FieldEditorProps,
   PossibleSignature,
-} from './types'
+} from './types.ts'
 
 const FieldEditor = defineAsyncComponent(() => import('./FieldEditorInput.vue'))
 

@@ -2,9 +2,9 @@
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import log from '@shared/utils/log'
-import type { EnumObjectManagerObjects } from '@shared/graphql/types'
-import type { ObjectAttributesObject } from '../types/store'
+import log from '#shared/utils/log.ts'
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type { ObjectAttributesObject } from '../types/store.ts'
 
 export const useObjectAttributesStore = defineStore('objectAttributes', () => {
   const objectAttributesObjectLookup = ref<

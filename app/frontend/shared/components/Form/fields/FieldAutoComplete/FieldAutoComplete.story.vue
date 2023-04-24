@@ -2,10 +2,13 @@
 
 <script setup lang="ts">
 import { FormKit } from '@formkit/vue'
-import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import type { AutocompleteSearchUserQuery, User } from '@shared/graphql/types'
+import type {
+  AutocompleteSearchUserQuery,
+  User,
+} from '#shared/graphql/types.ts'
 import { escapeRegExp } from 'lodash-es'
 
 const testOptions = [

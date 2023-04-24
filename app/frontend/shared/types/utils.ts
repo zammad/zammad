@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Scalars } from '@shared/graphql/types'
+import type { Scalars } from '#shared/graphql/types.ts'
 
 export type ReactiveFunction<TParam> = () => TParam
 

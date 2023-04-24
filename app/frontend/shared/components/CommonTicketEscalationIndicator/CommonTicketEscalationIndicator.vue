@@ -2,8 +2,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useReactiveNow } from '@shared/composables/useReactiveNow'
-import type { Scalars } from '@shared/graphql/types'
+import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import type { Scalars } from '#shared/graphql/types.ts'
 
 export interface Props {
   escalationAt?: Maybe<Scalars['ISO8601DateTime']>

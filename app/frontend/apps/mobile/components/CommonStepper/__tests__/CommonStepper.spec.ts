@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { ref } from 'vue'
 import CommonStepper from '../CommonStepper.vue'
-import type { CommonStepperStep } from '../types'
+import type { CommonStepperStep } from '../types.ts'
 
 describe('stepper component', () => {
   test('renders valid steps', async () => {

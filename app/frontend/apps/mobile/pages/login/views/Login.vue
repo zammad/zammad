@@ -5,26 +5,26 @@ import { useRoute, useRouter } from 'vue-router'
 import {
   useNotifications,
   NotificationTypes,
-} from '@shared/components/CommonNotifications'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import CommonLogo from '@shared/components/CommonLogo/CommonLogo.vue'
-import Form from '@shared/components/Form/Form.vue'
-import { type FormData, useForm } from '@shared/components/Form'
-import UserError from '@shared/errors/UserError'
-import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import { useApplicationStore } from '@shared/stores/application'
-import { usePublicLinksQuery } from '@shared/entities/public-links/graphql/queries/links.api'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
+import Form from '#shared/components/Form/Form.vue'
+import { type FormData, useForm } from '#shared/components/Form/index.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { usePublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.api.ts'
 import type {
   PublicLinksQuery,
   PublicLinkUpdatesSubscription,
   PublicLinkUpdatesSubscriptionVariables,
-} from '@shared/graphql/types'
-import { EnumPublicLinksScreen } from '@shared/graphql/types'
+} from '#shared/graphql/types.ts'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import { computed } from 'vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { PublicLinkUpdatesDocument } from '@shared/entities/public-links/graphql/subscriptions/currentLinks.api'
-import { useThirdPartyAuthentication } from '@shared/composables/useThirdPartyAuthentication'
-import { useForceDesktop } from '@shared/composables/useForceDesktop'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { PublicLinkUpdatesDocument } from '#shared/entities/public-links/graphql/subscriptions/currentLinks.api.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/useThirdPartyAuthentication.ts'
+import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import LoginThirdParty from '../components/LoginThirdParty.vue'
 
 const route = useRoute()

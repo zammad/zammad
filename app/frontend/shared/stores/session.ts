@@ -3,16 +3,16 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
-import { useSessionIdLazyQuery } from '@shared/graphql/queries/sessionId.api'
-import { useCurrentUserLazyQuery } from '@shared/graphql/queries/currentUser.api'
+import { useSessionIdLazyQuery } from '#shared/graphql/queries/sessionId.api.ts'
+import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
 import {
   QueryHandler,
   SubscriptionHandler,
-} from '@shared/server/apollo/handler'
-import type { UserData } from '@shared/types/store'
-import hasPermission from '@shared/utils/hasPermission'
-import type { RequiredPermission } from '@shared/types/permission'
-import { useCurrentUserUpdatesSubscription } from '@shared/graphql/subscriptions/currentUserUpdates.api'
+} from '#shared/server/apollo/handler/index.ts'
+import type { UserData } from '#shared/types/store.ts'
+import hasPermission from '#shared/utils/hasPermission.ts'
+import type { RequiredPermission } from '#shared/types/permission.ts'
+import { useCurrentUserUpdatesSubscription } from '#shared/graphql/subscriptions/currentUserUpdates.api.ts'
 import type {
   CurrentUserQuery,
   CurrentUserQueryVariables,
@@ -20,11 +20,11 @@ import type {
   CurrentUserUpdatesSubscriptionVariables,
   SessionIdQuery,
   SessionIdQueryVariables,
-} from '@shared/graphql/types'
-import useFingerprint from '@shared/composables/useFingerprint'
-import testFlags from '@shared/utils/testFlags'
-import log from '@shared/utils/log'
-import { useLocaleStore } from './locale'
+} from '#shared/graphql/types.ts'
+import useFingerprint from '#shared/composables/useFingerprint.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+import log from '#shared/utils/log.ts'
+import { useLocaleStore } from './locale.ts'
 
 let sessionIdQuery: QueryHandler<SessionIdQuery, SessionIdQueryVariables>
 

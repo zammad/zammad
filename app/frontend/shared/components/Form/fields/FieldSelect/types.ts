@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { EnumTicketStateColorCode } from '@shared/graphql/types'
-import type { Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
-import type { FormFieldContext } from '../../types/field'
+import type { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import type { Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
+import type { FormFieldContext } from '../../types/field.ts'
 
 export type SelectValue = string | number | boolean
 

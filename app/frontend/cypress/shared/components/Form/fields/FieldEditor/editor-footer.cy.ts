@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mountEditor } from './utils'
+import { mountEditor } from './utils.ts'
 
 describe('displays footer information', () => {
   it("doesn't display footer by default", () => {

@@ -4,15 +4,15 @@ import { FormKit } from '@formkit/vue'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import { AutocompleteSearchTagDocument } from '@shared/entities/tags/graphql/queries/autocompleteTags.api'
+} from '#shared/components/CommonNotifications/index.ts'
+import { AutocompleteSearchTagDocument } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
 import { getByText, queryByRole } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
-import { getByIconName } from '@tests/support/components/iconQueries'
-import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import type { FieldTagsProps } from '../types'
-import { waitUntil } from '../../../../../../tests/support/utils'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import type { FieldTagsProps } from '../types.ts'
+import { waitUntil } from '../../../../../../tests/support/utils.ts'
 
 const defaultTags = [
   { label: 'test', value: 'test' },

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
+import { i18n } from '#shared/i18n.ts'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import type { ExtendedRenderResult } from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { waitForTimeout } from '@tests/support/utils'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForTimeout } from '#tests/support/utils.ts'
 import { nextTick } from 'vue'
 
 const wrapperParameters = {

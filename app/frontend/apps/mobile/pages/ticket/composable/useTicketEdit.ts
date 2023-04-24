@@ -2,19 +2,23 @@
 
 import type { ComputedRef, ShallowRef } from 'vue'
 import { computed, reactive, watch } from 'vue'
-import type { FormValues, FormRef, FormData } from '@shared/components/Form'
-import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
-import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
-import type { TicketUpdateInput } from '@shared/graphql/types'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import type { TicketById } from '@shared/entities/ticket/types'
-import type { TicketArticleFormValues } from '@shared/entities/ticket-article/action/plugins/types'
-import type { PartialRequired } from '@shared/types/utils'
-import { convertFilesToAttachmentInput } from '@shared/utils/files'
-import { getNodeByName } from '@shared/components/Form/utils'
-import { populateEditorNewLines } from '@shared/components/Form/fields/FieldEditor/utils'
-import { useTicketUpdateMutation } from '../graphql/mutations/update.api'
+import type {
+  FormValues,
+  FormRef,
+  FormData,
+} from '#shared/components/Form/index.ts'
+import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import type { TicketUpdateInput } from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
+import type { PartialRequired } from '#shared/types/utils.ts'
+import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
+import { useTicketUpdateMutation } from '../graphql/mutations/update.api.ts'
 
 type TicketArticleReceivedFormValues = PartialRequired<
   TicketArticleFormValues,

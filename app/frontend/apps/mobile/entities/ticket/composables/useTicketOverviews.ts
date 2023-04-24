@@ -2,9 +2,9 @@
 
 import { onMounted } from 'vue'
 import { useTimeoutFn } from '@vueuse/shared'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useTicketOverviewsStore } from '../stores/ticketOverviews'
-import { useTicketOverviewTicketCountLazyQuery } from '../graphql/queries/ticketOverviewTicketCount.api'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useTicketOverviewsStore } from '../stores/ticketOverviews.ts'
+import { useTicketOverviewTicketCountLazyQuery } from '../graphql/queries/ticketOverviewTicketCount.api.ts'
 
 const POLLING_INTERVAL = 60000
 

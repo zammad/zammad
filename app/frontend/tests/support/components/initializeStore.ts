@@ -2,7 +2,7 @@
 
 import type { TestingPinia } from '@pinia/testing'
 import { createTestingPinia } from '@pinia/testing'
-import { useApplicationStore } from '@shared/stores/application'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import type { Store } from 'pinia'
 
 let storeInitialized = false

@@ -1,3 +1,3 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-export type { AvatarSize } from './types'
+export type { AvatarSize } from './types.ts'

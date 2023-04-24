@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Classes } from './utils'
-import { clean } from './utils'
+import type { Classes } from './utils.ts'
+import { clean } from './utils.ts'
 
 /**
  * Creates classes for a floating input label. Here we don't have a problem, where

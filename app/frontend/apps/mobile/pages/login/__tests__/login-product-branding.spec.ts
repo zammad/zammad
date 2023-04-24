@@ -3,9 +3,9 @@
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
-} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
-import { visitView } from '@tests/support/components/visitView'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
+} from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 const applicationConfig = {
   product_name: 'Zammad Example App',

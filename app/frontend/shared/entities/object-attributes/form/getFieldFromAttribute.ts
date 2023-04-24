@@ -3,10 +3,10 @@
 import type {
   FormSchemaField,
   FormFieldValue,
-} from '@shared/components/Form/types'
-import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
-import type { ScreenConfig } from '../types/resolver'
-import getFieldResolver from './resolver/getFieldResolver'
+} from '#shared/components/Form/types.ts'
+import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type { ScreenConfig } from '../types/resolver.ts'
+import getFieldResolver from './resolver/getFieldResolver.ts'
 
 export const transformResolvedFieldForScreen = (
   screen: ScreenConfig,

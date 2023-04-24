@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormSchemaNode } from '@shared/components/Form'
+import type { FormSchemaNode } from '#shared/components/Form/index.ts'
 
 type FormSchemaOptions = {
   showDirtyMark: boolean

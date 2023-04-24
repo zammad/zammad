@@ -3,9 +3,9 @@
 import type { Ref } from 'vue'
 import type { UseMutationReturn } from '@vue/apollo-composable'
 import type { OperationVariables } from '@apollo/client/core'
-import UserError from '@shared/errors/UserError'
-import type { OperationMutationResult } from '@shared/types/server/apollo/handler'
-import BaseHandler from './BaseHandler'
+import UserError from '#shared/errors/UserError.ts'
+import type { OperationMutationResult } from '#shared/types/server/apollo/handler.ts'
+import BaseHandler from './BaseHandler.ts'
 
 export default class MutationHandler<
   TResult = OperationMutationResult,

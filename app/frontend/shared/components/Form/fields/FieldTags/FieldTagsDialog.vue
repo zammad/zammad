@@ -3,19 +3,19 @@
 <script setup lang="ts">
 import { computed, ref, toRef } from 'vue'
 import { watchIgnorable } from '@vueuse/shared'
-import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
-import stopEvent from '@shared/utils/events'
+import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import stopEvent from '#shared/utils/events.ts'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useAutocompleteSearchTagQuery } from '@shared/entities/tags/graphql/queries/autocompleteTags.api'
-import type { FieldTagsContext } from './types'
-import useValue from '../../composables/useValue'
+} from '#shared/components/CommonNotifications/index.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
+import type { FieldTagsContext } from './types.ts'
+import useValue from '../../composables/useValue.ts'
 
 interface Props {
   name: string

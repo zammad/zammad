@@ -5,11 +5,11 @@ import type {
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import log from '@shared/utils/log'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { useSessionStore } from '@shared/stores/session'
-import { ErrorStatusCodes } from '@shared/types/error'
-import { errorOptions } from '@mobile/router/error'
+import log from '#shared/utils/log.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
+import { errorOptions } from '#mobile/router/error.ts'
 
 const permissionGuard: NavigationGuard = (
   to: RouteLocationNormalized,

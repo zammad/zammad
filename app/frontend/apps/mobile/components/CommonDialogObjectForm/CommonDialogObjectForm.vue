@@ -1,30 +1,30 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ObjectLike } from '@shared/types/utils'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import {
   type FormSchemaNode,
   type FormData,
   useForm,
-} from '@shared/components/Form'
-import { closeDialog } from '@shared/composables/useDialog'
+} from '#shared/components/Form/index.ts'
+import { closeDialog } from '#shared/composables/useDialog.ts'
 import type {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
   ObjectAttributeValue,
-} from '@shared/graphql/types'
+} from '#shared/graphql/types.ts'
 import type {
   FormFieldValue,
   FormSchemaField,
-} from '@shared/components/Form/types'
-import type { OperationMutationFunction } from '@shared/types/server/apollo/handler'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import Form from '@shared/components/Form/Form.vue'
-import { useObjectAttributes } from '@shared/entities/object-attributes/composables/useObjectAttributes'
-import { useObjectAttributeFormData } from '@shared/entities/object-attributes/composables/useObjectAttributeFormData'
-import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import { useConfirmationDialog } from '../CommonConfirmation'
+} from '#shared/components/Form/types.ts'
+import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import Form from '#shared/components/Form/Form.vue'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { useConfirmationDialog } from '../CommonConfirmation/index.ts'
 
 export interface Props {
   name: string

@@ -2,7 +2,7 @@
 
 import type { Ref } from 'vue'
 import { ref } from 'vue'
-import type { ConfirmationOptions } from './types'
+import type { ConfirmationOptions } from './types.ts'
 
 const confirmationDialog: Ref<ConfirmationOptions | undefined> = ref()
 

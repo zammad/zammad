@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { UserDocument } from '@mobile/entities/user/graphql/queries/user.api'
+import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
 import {
   defaultUser,
   mockUserDetailsApis,
-} from '@mobile/entities/user/__tests__/mocks/user-mocks'
-import { visitView } from '@tests/support/components/visitView'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { setupView } from '@tests/support/mock-user'
-import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
-import { getTestRouter } from '@tests/support/components/renderComponent'
+} from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 
 describe('visiting user page', () => {
   test('view static content', async () => {

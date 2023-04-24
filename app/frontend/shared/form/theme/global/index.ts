@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormThemeClasses } from '@shared/types/form'
+import type { FormThemeClasses } from '#shared/types/form.ts'
 
 const defaultTextInput: Record<string, string> = {
   input: 'block focus:outline-none focus:ring-0',

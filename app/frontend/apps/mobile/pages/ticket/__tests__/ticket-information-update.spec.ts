@@ -1,23 +1,23 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { ticketObjectAttributes } from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
-import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
-import { visitView } from '@tests/support/components/visitView'
+import { ticketObjectAttributes } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import { waitUntil } from '@tests/support/utils'
+} from '#tests/support/mock-graphql-api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { waitUntil } from '#tests/support/utils.ts'
 import { getNode } from '@formkit/core'
 import {
   mockUserGql,
   userObjectAttributes,
-} from '@mobile/entities/user/__tests__/mocks/user-mocks'
-import { UserUpdatesDocument } from '@shared/graphql/subscriptions/userUpdates.api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import type { TicketQuery } from '@shared/graphql/types'
-import { mockTicketDetailViewGql } from './mocks/detail-view'
+} from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
+import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import type { TicketQuery } from '#shared/graphql/types.ts'
+import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockPermissions(['ticket.agent'])

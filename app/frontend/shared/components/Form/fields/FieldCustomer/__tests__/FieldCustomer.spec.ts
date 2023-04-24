@@ -3,17 +3,17 @@
 import { escapeRegExp } from 'lodash-es'
 import { getByTestId, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import testOptions from '@shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
+import testOptions from '#shared/components/Form/fields/FieldCustomer/__tests__/test-options.json'
 import type {
   AutocompleteSearchUserQuery,
   AutocompleteSearchUserEntry,
-} from '@shared/graphql/types'
-import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
+} from '#shared/graphql/types.ts'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { getNode } from '@formkit/core'
-import { nullableMock, waitForNextTick } from '@tests/support/utils'
+import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 const mockQueryResult = (input: {
   query: string

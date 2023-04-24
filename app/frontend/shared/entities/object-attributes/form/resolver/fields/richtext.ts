@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FieldResolverModule } from '@shared/entities/object-attributes/types/resolver'
-import FieldResolver from '../FieldResolver'
+import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
+import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverRichtext extends FieldResolver {
   fieldType = 'editor'

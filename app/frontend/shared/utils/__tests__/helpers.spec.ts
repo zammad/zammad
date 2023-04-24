@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { textToHtml, debouncedQuery } from '../helpers'
+import { textToHtml, debouncedQuery } from '../helpers.ts'
 
 describe('textToHtml', () => {
   it('adds links to URL-like text', () => {

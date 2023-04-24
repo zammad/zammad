@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
+import { type Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
 
 export interface CommonButtonOption {
   link?: string

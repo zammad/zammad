@@ -1,10 +1,10 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { type Props as IconProps } from '@shared/components/CommonIcon/CommonIcon.vue'
-import { useSessionStore } from '@shared/stores/session'
+import { type Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
+import { useSessionStore } from '#shared/stores/session.ts'
 import { computed } from 'vue'
-import type { CommonButtonOption } from './types'
+import type { CommonButtonOption } from './types.ts'
 
 export interface Props {
   modelValue?: string | number

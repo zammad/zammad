@@ -8,20 +8,20 @@ import { waitFor, within } from '@testing-library/vue'
 import type {
   ExtendedMountingOptions,
   ExtendedRenderResult,
-} from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitForNextTick, waitUntil } from '@tests/support/utils'
-import Form from '@shared/components/Form/Form.vue'
-import type { Props } from '@shared/components/Form/Form.vue'
-import UserError from '@shared/errors/UserError'
+} from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { Props } from '#shared/components/Form/Form.vue'
+import UserError from '#shared/errors/UserError.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
-} from '@shared/graphql/types'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import frontendObjectAttributes from '@shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
-import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api'
+} from '#shared/graphql/types.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
+import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
 import type { FormRef, FormValues, FormSchemaField } from '..'
 
 const wrapperParameters = {

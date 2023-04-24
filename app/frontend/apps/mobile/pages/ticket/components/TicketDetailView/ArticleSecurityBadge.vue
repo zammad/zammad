@@ -1,15 +1,15 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSectionPopup from '@mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import { useTicketArticleRetrySecurityProcessMutation } from '@shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api'
-import type { TicketArticleSecurityState } from '@shared/graphql/types'
-import { i18n } from '@shared/i18n'
-import { MutationHandler } from '@shared/server/apollo/handler'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useTicketArticleRetrySecurityProcessMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
+import type { TicketArticleSecurityState } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { computed, ref } from 'vue'
 
 export interface Props {

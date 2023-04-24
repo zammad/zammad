@@ -4,23 +4,23 @@ import {
   ticketObjectAttributes,
   ticketArticleObjectAttributes,
   ticketPayload,
-} from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
-import { defaultOrganization } from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import { visitView } from '@tests/support/components/visitView'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { mockAccount } from '@tests/support/mock-account'
-import type { ExtendedRenderResult } from '@tests/support/components'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
+} from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
+import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { flushPromises } from '@vue/test-utils'
-import { nullableMock, waitUntil } from '@tests/support/utils'
-import { getTestRouter } from '@tests/support/components/renderComponent'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { getNode } from '@formkit/core'
-import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
-import { setupView } from '@tests/support/mock-user'
-import { TicketCreateDocument } from '../graphql/mutations/create.api'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { TicketCreateDocument } from '../graphql/mutations/create.api.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {
   const mockObjectAttributes = mockGraphQLApi(
@@ -155,7 +155,7 @@ const checkShownSteps = async (
 beforeAll(async () => {
   // So we don't need to wait until it loads inside test.
   await import(
-    '@shared/components/Form/fields/FieldEditor/FieldEditorInput.vue'
+    '#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue'
   )
 })
 

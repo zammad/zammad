@@ -13,7 +13,7 @@ window.setLogLevel = (level: LogLevel, persistent = true): void => {
 // Usage:
 
 // // Logging in code:
-// import log from '@shared/util/log'
+// import log from '#shared/util/log.ts'
 // log.error('error message', ...)
 // log.warn('warn message', ...)
 // log.info('info message', ...)

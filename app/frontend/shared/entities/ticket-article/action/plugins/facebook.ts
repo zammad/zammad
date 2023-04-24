@@ -4,7 +4,7 @@ import type {
   TicketArticleAction,
   TicketArticleActionPlugin,
   TicketArticleType,
-} from './types'
+} from './types.ts'
 
 const actionPlugin: TicketArticleActionPlugin = {
   order: 300,

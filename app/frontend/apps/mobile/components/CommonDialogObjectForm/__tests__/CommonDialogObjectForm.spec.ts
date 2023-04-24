@@ -3,19 +3,19 @@
 import { keyBy } from 'lodash-es'
 import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { closeDialog } from '@shared/composables/useDialog'
+import { closeDialog } from '#shared/composables/useDialog.ts'
 import {
   mockOrganizationObjectAttributes,
   organizationObjectAttributes,
-} from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
-import { renderComponent } from '@tests/support/components'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import { waitUntilApisResolved } from '@tests/support/utils'
+} from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
+import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { waitUntilApisResolved } from '#tests/support/utils.ts'
 import CommonDialogObjectForm from '../CommonDialogObjectForm.vue'
 
-vi.mock('@shared/composables/useDialog')
+vi.mock('#shared/composables/useDialog.ts')
 
 const renderForm = () => {
   const attributesResult = organizationObjectAttributes()

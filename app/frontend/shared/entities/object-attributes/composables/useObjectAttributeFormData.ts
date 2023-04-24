@@ -1,12 +1,15 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldValue, FormValues } from '@shared/components/Form/types'
+import type {
+  FormFieldValue,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import type {
   ObjectAttributeValueInput,
   ObjectManagerFrontendAttribute,
-} from '@shared/graphql/types'
-import { convertToGraphQLId, isGraphQLId } from '@shared/graphql/utils'
-import { camelize, toClassName } from '@shared/utils/formatter'
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId, isGraphQLId } from '#shared/graphql/utils.ts'
+import { camelize, toClassName } from '#shared/utils/formatter.ts'
 import type { Primitive } from 'type-fest'
 
 export const useObjectAttributeFormData = (

@@ -3,9 +3,9 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole } from '@testing-library/vue'
-import type { ExtendedMountingOptions } from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { waitForTimeout } from '@tests/support/utils'
+import type { ExtendedMountingOptions } from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForTimeout } from '#tests/support/utils.ts'
 
 const wrapperParameters = {
   form: true,

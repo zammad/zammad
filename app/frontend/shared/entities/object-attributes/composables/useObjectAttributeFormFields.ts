@@ -3,10 +3,10 @@
 import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
-} from '@shared/graphql/types'
-import type { FormSchemaField } from '@shared/components/Form/types'
-import { useObjectAttributesStore } from '../stores/objectAttributes'
-import { transformResolvedFieldForScreen } from '../form/getFieldFromAttribute'
+} from '#shared/graphql/types.ts'
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
+import { useObjectAttributesStore } from '../stores/objectAttributes.ts'
+import { transformResolvedFieldForScreen } from '../form/getFieldFromAttribute.ts'
 
 export const useObjectAttributeFormFields = (skippedFields: string[] = []) => {
   const { getObjectAttributesForObject } = useObjectAttributesStore()

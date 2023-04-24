@@ -2,7 +2,7 @@
 
 import type { FormKitFrameworkContext } from '@formkit/core'
 import { createNode } from '@formkit/core'
-import requiredValidation from '../global/requiredValidation'
+import requiredValidation from '../global/requiredValidation.ts'
 
 const createInput = (props: any = {}) => {
   const originalSchema = vi.fn()

@@ -1,25 +1,25 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { merge } from 'lodash-es'
-import initializeStore from '@shared/stores'
-import initializeGlobalComponents from '@shared/initializer/globalComponents'
-import initializeGlobalProperties from '@shared/initializer/globalProperties'
-import initializeForm from '@mobile/form'
+import initializeStore from '#shared/stores/index.ts'
+import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
+import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
+import initializeForm from '#mobile/form/index.ts'
 
 // imported only for types
 // for some reason adding it to tsconfig doesn't work
 import '@testing-library/cypress'
 import 'cypress-real-events'
-import '../types/commands'
+import './types/commands.ts'
 
-import type { FormSchemaField } from '@shared/components/Form/types'
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import { FormKit } from '@formkit/vue'
 import type { mount } from 'cypress/vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import type { App } from 'vue'
 
-import { cacheInitializerModules } from '@mobile/server/apollo'
-import createCache from '@shared/server/apollo/cache'
+import { cacheInitializerModules } from '#mobile/server/apollo/index.ts'
+import createCache from '#shared/server/apollo/cache.ts'
 
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'

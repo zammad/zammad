@@ -9,11 +9,11 @@ import {
 import type {
   FormValidationRules,
   FormValidationRuleType,
-} from '@shared/types/form'
+} from '#shared/types/form.ts'
 import type {
   ImportGlobEagerDefault,
   ImportGlobEagerOutput,
-} from '@shared/types/utils'
+} from '#shared/types/utils.ts'
 
 const ruleModules: ImportGlobEagerOutput<FormValidationRuleType> =
   import.meta.glob('../validation/rules/*.ts', { eager: true })

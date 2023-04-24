@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverBoolean } from '../boolean'
+import { FieldResolverBoolean } from '../boolean.ts'
 
 describe('FieldResolverBoolean', () => {
   it('should return the correct field attributes', () => {

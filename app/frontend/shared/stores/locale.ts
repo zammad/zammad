@@ -3,11 +3,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { LastArrayElement } from 'type-fest'
-import log from '@shared/utils/log'
-import localeForBrowserLanguage from '@shared/i18n/localeForBrowserLanguage'
-import getAvailableLocales from '@shared/i18n/availableLocales'
-import type { LocalesQuery } from '@shared/graphql/types'
-import { useTranslationsStore } from './translations'
+import log from '#shared/utils/log.ts'
+import localeForBrowserLanguage from '#shared/i18n/localeForBrowserLanguage.ts'
+import getAvailableLocales from '#shared/i18n/availableLocales.ts'
+import type { LocalesQuery } from '#shared/graphql/types.ts'
+import { useTranslationsStore } from './translations.ts'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>
 

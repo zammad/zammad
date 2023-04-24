@@ -14,8 +14,8 @@ import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
-import type { EnumObjectManagerObjects } from '@shared/graphql/types'
-import type { ObjectLike } from '@shared/types/utils'
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
 
 export interface FormFieldAdditionalProps {

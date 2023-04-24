@@ -3,10 +3,10 @@
 import {
   renderComponent,
   type ExtendedRenderResult,
-} from '@tests/support/components'
-import { waitForNextTick } from '@tests/support/utils'
+} from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
-import useConfirmationDialog from '../composable'
+import useConfirmationDialog from '../composable.ts'
 import CommonConfirmation from '../CommonConfirmation.vue'
 
 let wrapper: ExtendedRenderResult

@@ -7,9 +7,9 @@ import type {
   OperationSubscriptionOptionsReturn,
   OperationSubscriptionsResult,
   WatchResultCallback,
-} from '@shared/types/server/apollo/handler'
+} from '#shared/types/server/apollo/handler.ts'
 import type { UseSubscriptionReturn } from '@vue/apollo-composable'
-import BaseHandler from './BaseHandler'
+import BaseHandler from './BaseHandler.ts'
 
 export default class SubscriptionHandler<
   TResult = OperationSubscriptionsResult,

@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
-import { visitView } from '@tests/support/components/visitView'
-import { mockAccount } from '@tests/support/mock-account'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { AccountAvatarActiveDocument } from '../avatar/graphql/queries/active.api'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { AccountAvatarActiveDocument } from '../avatar/graphql/queries/active.api.ts'
 
 const mockAvatarImage =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='

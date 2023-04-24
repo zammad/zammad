@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
-import { getByIconName } from '@tests/support/components/iconQueries'
-import { getTestRouter } from '@tests/support/components/renderComponent'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import CommonButtonGroup from '../CommonButtonGroup.vue'
-import type { CommonButtonOption } from '../types'
+import type { CommonButtonOption } from '../types.ts'
 
 describe('buttons group', () => {
   it('renders a list of buttons', async () => {

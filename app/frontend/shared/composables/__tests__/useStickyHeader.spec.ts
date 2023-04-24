@@ -3,7 +3,7 @@
 import { flushPromises } from '@vue/test-utils'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
-import { useStickyHeader } from '../useStickyHeader'
+import { useStickyHeader } from '../useStickyHeader.ts'
 
 const fixedHeaderStyle = {
   left: '0',

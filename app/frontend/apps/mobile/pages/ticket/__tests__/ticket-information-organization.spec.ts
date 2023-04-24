@@ -1,21 +1,21 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { visitView } from '@tests/support/components/visitView'
+import { visitView } from '#tests/support/components/visitView.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { waitUntil } from '@tests/support/utils'
-import { OrganizationDocument } from '@mobile/entities/organization/graphql/queries/organization.api'
-import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
+} from '#tests/support/mock-graphql-api.ts'
+import { waitUntil } from '#tests/support/utils.ts'
+import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
-} from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
-import type { ConfidentTake } from '@shared/types/utils'
-import type { OrganizationQuery } from '@shared/graphql/types'
+} from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import type { OrganizationQuery } from '#shared/graphql/types.ts'
 import { within } from '@testing-library/vue'
-import { mockTicketDetailViewGql } from './mocks/detail-view'
+import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 const visitTicketOrganization = async (
   organization: ConfidentTake<OrganizationQuery, 'organization'>,

@@ -1,22 +1,22 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import useConfirmation from '@mobile/components/CommonConfirmation/composable'
+import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
 import {
   useNotifications,
   NotificationTypes,
-} from '@shared/components/CommonNotifications'
-import { useDialog } from '@shared/composables/useDialog'
-import UserError from '@shared/errors/UserError'
-import { MutationHandler } from '@shared/server/apollo/handler'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { Ref } from 'vue'
 import { ref, markRaw } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTicketMergeMutation } from '@shared/entities/ticket/graphql/mutations/merge.api'
-import type { AutocompleteSearchMergeTicketEntry } from '@shared/graphql/types'
+import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
+import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
 import { keyBy } from 'lodash-es'
-import type { TicketById } from '@shared/entities/ticket/types'
-import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
 
 export const useTicketsMerge = (
@@ -29,7 +29,7 @@ export const useTicketsMerge = (
     prefetch: true,
     component: () =>
       import(
-        '@shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
+        '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
       ),
   })
 

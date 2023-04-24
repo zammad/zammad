@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Mock } from 'vitest'
-import { visitView } from '@tests/support/components/visitView'
-import * as utilsPWA from '@shared/utils/pwa'
-import * as utilsBrowser from '@shared/utils/browser'
+import { visitView } from '#tests/support/components/visitView.ts'
+import * as utilsPWA from '#shared/utils/pwa.ts'
+import * as utilsBrowser from '#shared/utils/browser.ts'
 import { computed } from 'vue'
 
 const utilsPWAmock = vi.mocked(utilsPWA)
 const utilsBrowsermock = vi.mocked(utilsBrowser)
 
-vi.mock('@shared/utils/browser')
-vi.mock('@shared/utils/pwa')
+vi.mock('#shared/utils/browser.ts')
+vi.mock('#shared/utils/pwa.ts')
 
 const mockPWA = ({
   canInstallPWA = false,

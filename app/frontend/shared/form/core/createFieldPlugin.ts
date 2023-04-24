@@ -9,11 +9,11 @@ import { isArray } from 'lodash-es'
 import type {
   FormFieldTypeImportModules,
   FormFieldsTypeDefinition,
-} from '@shared/types/form'
+} from '#shared/types/form.ts'
 import type {
   ImportGlobEagerDefault,
   ImportGlobEagerOutput,
-} from '@shared/types/utils'
+} from '#shared/types/utils.ts'
 
 const fieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
   import.meta.glob('../../components/Form/fields/**/index.ts', { eager: true })

@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
-import { errorOptions } from '@mobile/router/error'
+import { errorOptions } from '#mobile/router/error.ts'
 import type { RouteLocationNormalized } from 'vue-router'
-import { useAuthenticationStore } from '@shared/stores/authentication'
-import { useSessionStore } from '@shared/stores/session'
-import permissionGuard from '../permission'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import permissionGuard from '../permission.ts'
 
-vi.mock('@shared/server/apollo/client', () => {
+vi.mock('#shared/server/apollo/client.ts', () => {
   return {}
 })
 

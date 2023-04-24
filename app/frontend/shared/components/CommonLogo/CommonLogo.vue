@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useApplicationStore } from '@shared/stores/application'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 const assetsPath = '/assets/images'
 const application = useApplicationStore()

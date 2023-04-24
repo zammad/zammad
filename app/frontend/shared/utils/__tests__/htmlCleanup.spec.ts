@@ -2,7 +2,7 @@
 /* eslint-disable no-irregular-whitespace */
 
 import { describe, it, assert } from 'vitest'
-import { htmlCleanup } from '../htmlCleanup'
+import { htmlCleanup } from '../htmlCleanup.ts'
 
 // htmlCleanup
 describe('htmlCleanup utility', () => {

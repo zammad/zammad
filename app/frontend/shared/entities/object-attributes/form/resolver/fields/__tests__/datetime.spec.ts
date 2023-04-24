@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverDateTime } from '../datetime'
+import { FieldResolverDateTime } from '../datetime.ts'
 
 describe('FieldResolverDateTime', () => {
   it('should return the correct field attributes', () => {

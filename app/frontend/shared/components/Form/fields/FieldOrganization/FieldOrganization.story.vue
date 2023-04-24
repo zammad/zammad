@@ -6,8 +6,8 @@ import { escapeRegExp } from 'lodash-es'
 import gql from 'graphql-tag'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import testOptions from '@shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
-import type { Organization } from '@shared/graphql/types'
+import testOptions from '#shared/components/Form/fields/FieldOrganization/__tests__/test-options.json'
+import type { Organization } from '#shared/graphql/types.ts'
 
 const AutocompleteSearchOrganizationDocument = gql`
   query autocompleteSearchOrganization($input: AutocompleteSearchInput!) {

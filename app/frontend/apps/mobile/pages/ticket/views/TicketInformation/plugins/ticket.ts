@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketInformationPlugin } from './index'
+import type { TicketInformationPlugin } from './index.ts'
 
 export default <TicketInformationPlugin>{
   label: __('Ticket'),

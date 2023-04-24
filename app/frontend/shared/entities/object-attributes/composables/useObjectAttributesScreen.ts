@@ -4,8 +4,8 @@ import { computed, type ComputedRef } from 'vue'
 import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
-} from '@shared/graphql/types'
-import { useObjectAttributes } from './useObjectAttributes'
+} from '#shared/graphql/types.ts'
+import { useObjectAttributes } from './useObjectAttributes.ts'
 
 export const useObjectAttributesScreen = (
   object: EnumObjectManagerObjects,

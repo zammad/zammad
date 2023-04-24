@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockPermissions } from '@tests/support/mock-permissions'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import CommonTicketCreateLink from '../CommonTicketCreateLink.vue'
 
 describe('CommonTicketCreateLink', () => {

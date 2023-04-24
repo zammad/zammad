@@ -1,18 +1,21 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { getTicketSignatureQuery } from '@shared/composables/useTicketSignature'
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import { getIdFromGraphQLId } from '@shared/graphql/utils'
-import { textCleanup } from '@shared/utils/helpers'
+import { getTicketSignatureQuery } from '#shared/composables/useTicketSignature.ts'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
+import { textCleanup } from '#shared/utils/helpers.ts'
 import { uniq } from 'lodash-es'
-import { forwardEmail } from './email/forward'
-import { replyToEmail } from './email/reply'
+import { forwardEmail } from './email/forward.ts'
+import { replyToEmail } from './email/reply.ts'
 import type {
   TicketArticleAction,
   TicketArticleActionPlugin,
   TicketArticleSelectionOptions,
   TicketArticleType,
-} from './types'
+} from './types.ts'
 
 const canReplyAll = (article: TicketArticle) => {
   const addresses = [article.to, article.cc]

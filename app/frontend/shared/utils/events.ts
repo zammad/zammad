@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { StopEventOptions } from '@shared/types/events'
+import type { StopEventOptions } from '#shared/types/events.ts'
 
 const stopEvent = (event: Event, stopOptions: StopEventOptions = {}): void => {
   const {

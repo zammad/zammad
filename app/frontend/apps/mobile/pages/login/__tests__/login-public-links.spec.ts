@@ -3,12 +3,12 @@
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
-} from '@shared/entities/public-links/__tests__/mocks/mockPublicLinks'
-import type { PublicLinksQuery } from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
+} from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
+import type { PublicLinksQuery } from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
 import { getAllByRole } from '@testing-library/vue'
-import { visitView } from '@tests/support/components/visitView'
-import { waitUntilApisResolved } from '@tests/support/utils'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { waitUntilApisResolved } from '#tests/support/utils.ts'
 
 describe('testing login public links', () => {
   it('always renders a single link to desktop app', async () => {

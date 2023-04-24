@@ -2,7 +2,7 @@
 
 import getFieldFromAttribute, {
   transformResolvedFieldForScreen,
-} from '../getFieldFromAttribute'
+} from '../getFieldFromAttribute.ts'
 
 const objectAttribute = {
   dataType: 'input',

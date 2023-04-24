@@ -3,11 +3,11 @@
 import { escapeRegExp } from 'lodash-es'
 import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '@tests/support/components'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { AutocompleteSearchRecipientDocument } from '@shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api'
-import type { AutoCompleteOption } from '../../FieldAutoComplete/types'
+import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
+import type { AutoCompleteOption } from '../../FieldAutoComplete/types.ts'
 
 const testOptions: AutoCompleteOption[] = [
   {

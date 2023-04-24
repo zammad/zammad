@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import Form from '@shared/components/Form/Form.vue'
-import { useForm } from '@shared/components/Form/composable'
+import Form from '#shared/components/Form/Form.vue'
+import { useForm } from '#shared/components/Form/composable.ts'
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
-import { renderComponent } from '@tests/support/components'
-import { waitForNextTick } from '@tests/support/utils'
-import type { FormRef } from '../types'
-import { FormValidationVisibility } from '../types'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
+import type { FormRef } from '../types.ts'
+import { FormValidationVisibility } from '../types.ts'
 
 const wrapperParameters = {
   form: true,

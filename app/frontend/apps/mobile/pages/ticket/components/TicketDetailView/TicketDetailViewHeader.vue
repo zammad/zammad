@@ -2,16 +2,16 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useDialog } from '@shared/composables/useDialog'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import CommonBackButton from '@mobile/components/CommonBackButton/CommonBackButton.vue'
-import { useSessionStore } from '@shared/stores/session'
-import CommonRefetch from '@mobile/components/CommonRefetch/CommonRefetch.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
+import { useSessionStore } from '#shared/stores/session.ts'
+import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
 import type {
   TicketById,
   TicketLiveAppUser,
-} from '@shared/entities/ticket/types'
+} from '#shared/entities/ticket/types.ts'
 
 interface Props {
   ticket?: TicketById

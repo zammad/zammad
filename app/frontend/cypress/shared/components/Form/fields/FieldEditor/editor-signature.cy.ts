@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
-import type { FieldEditorContext } from '@shared/components/Form/fields/FieldEditor/types'
-import { mountEditor } from './utils'
+import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { mountEditor } from './utils.ts'
 
 const html = String.raw
 

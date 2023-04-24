@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { type Ref, onMounted, watch } from 'vue'
-import type { FormFieldContext } from '../types/field'
-import type { SelectOption } from '../fields/FieldSelect'
-import type { FlatSelectOption } from '../fields/FieldTreeSelect'
-import useValue from './useValue'
+import type { FormFieldContext } from '../types/field.ts'
+import type { SelectOption } from '../fields/FieldSelect/index.ts'
+import type { FlatSelectOption } from '../fields/FieldTreeSelect/index.ts'
+import useValue from './useValue.ts'
 
 const useSelectPreselect = (
   options: Ref<SelectOption[] | FlatSelectOption[]>,

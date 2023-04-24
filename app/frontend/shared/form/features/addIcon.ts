@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormKitNode } from '@formkit/core'
-import { FormSchemaExtendType } from '@shared/types/form'
-import extendSchemaDefinition from '../utils/extendSchemaDefinition'
+import { FormSchemaExtendType } from '#shared/types/form.ts'
+import extendSchemaDefinition from '../utils/extendSchemaDefinition.ts'
 
 const addIcon = (node: FormKitNode) => {
   node.addProps(['iconPosition', 'icon', 'onIconClick'])

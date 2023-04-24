@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import createI18nPlugin from '@shared/form/core/createI18nPlugin'
+import createI18nPlugin from '#shared/form/core/createI18nPlugin.ts'
 
 describe('createI18nPlugin', () => {
   it('check that i18n plugin will be returned', () => {

@@ -3,27 +3,27 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import CommonUserAvatar from '@shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import { i18n } from '@shared/i18n'
-import { textToHtml } from '@shared/utils/helpers'
-import { useSessionStore } from '@shared/stores/session'
+import { i18n } from '#shared/i18n.ts'
+import { textToHtml } from '#shared/utils/helpers.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type {
   TicketArticleSecurityState,
   TicketArticlesQuery,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
-import type { ImageViewerFile } from '@shared/composables/useImageViewer'
-import useImageViewer from '@shared/composables/useImageViewer'
-import CommonFilePreview from '@mobile/components/CommonFilePreview/CommonFilePreview.vue'
-import stopEvent from '@shared/utils/events'
-import { getIdFromGraphQLId } from '@shared/graphql/utils'
-import type { TicketArticleAttachment } from '@shared/entities/ticket/types'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
+import useImageViewer from '#shared/composables/useImageViewer.ts'
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
+import stopEvent from '#shared/utils/events.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
+import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
 import { useRouter } from 'vue-router'
-import { useApplicationStore } from '@shared/stores/application'
-import { isStandalone } from '@shared/utils/pwa'
-import { useArticleToggleMore } from '../../composable/useArticleToggleMore'
-import { useArticleAttachments } from '../../composable/useArticleAttachments'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { isStandalone } from '#shared/utils/pwa.ts'
+import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
+import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
 
 interface Props {

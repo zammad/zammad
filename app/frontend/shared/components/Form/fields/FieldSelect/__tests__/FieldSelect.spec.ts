@@ -3,10 +3,10 @@
 import { cloneDeep, keyBy } from 'lodash-es'
 import { getByText, waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '@tests/support/components'
-import { i18n } from '@shared/i18n'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { i18n } from '#shared/i18n.ts'
 import { getNode } from '@formkit/core'
-import { waitForNextTick } from '@tests/support/utils'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverTag } from '../tag'
+import { FieldResolverTag } from '../tag.ts'
 
 describe('FieldResolverTag', () => {
   it('should return the correct field attributes', () => {

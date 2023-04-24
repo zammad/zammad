@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
-import { visitView } from '@tests/support/components/visitView'
+import { visitView } from '#tests/support/components/visitView.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { OnlineNotificationsDocument } from '@shared/entities/online-notification/graphql/queries/onlineNotifications.api'
-import { OnlineNotificationsCountDocument } from '@shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api'
-import { waitUntil } from '@tests/support/utils'
-import { mockOnlineNotificationQuery } from '@shared/entities/online-notification/__tests__/mocks/online-notification-mocks'
-import { mockAccount } from '@tests/support/mock-account'
+} from '#tests/support/mock-graphql-api.ts'
+import { OnlineNotificationsDocument } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
+import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
+import { waitUntil } from '#tests/support/utils.ts'
+import { mockOnlineNotificationQuery } from '#shared/entities/online-notification/__tests__/mocks/online-notification-mocks.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
 
 const testNotifications: any[] = [
   {

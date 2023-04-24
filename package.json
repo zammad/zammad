@@ -22,6 +22,12 @@
   "engines": {
     "node": ">=16"
   },
+  "imports": {
+    "#tests/*": "./app/frontend/tests/*",
+    "#shared/*": "./app/frontend/shared/*",
+    "#mobile/*": "./app/frontend/apps/mobile/*",
+    "#cy/*": ".cypress/*"
+  },
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@graphql-codegen/cli": "^3.2.2",
@@ -51,6 +57,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-prettier-vue": "^4.2.0",
@@ -78,8 +85,8 @@
     "timezone-mock": "^1.3.6",
     "ts-node": "^10.9.1",
     "type-fest": "^3.8.0",
-    "typescript": "^4.9.5",
-    "vite": "^4.2.1",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.1",
     "vite-plugin-pwa": "^0.14.7",
     "vite-plugin-ruby": "^3.2.1",
     "vite-plugin-svg-icons": "^2.0.1",

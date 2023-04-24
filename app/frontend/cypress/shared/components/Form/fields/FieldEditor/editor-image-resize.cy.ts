@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mountEditor } from './utils'
+import { mountEditor } from './utils.ts'
 
 describe('resizing image within editor', () => {
   it('can be resized', { retries: 2 }, () => {

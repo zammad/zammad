@@ -5,8 +5,8 @@ import {
   DefaultApolloClient,
   provideApolloClient,
 } from '@vue/apollo-composable'
-import type { CacheInitializerModules } from '@shared/types/server/apollo/client'
-import { createApolloClient } from './client'
+import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
+import { createApolloClient } from './client.ts'
 
 const initializeApolloClient = (
   app: App,

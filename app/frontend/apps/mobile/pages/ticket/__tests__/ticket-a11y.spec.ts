@@ -1,25 +1,25 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
-import { visitView } from '@tests/support/components/visitView'
-import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { waitUntil, waitUntilApisResolved } from '@tests/support/utils'
-import { OrganizationDocument } from '@mobile/entities/organization/graphql/queries/organization.api'
-import { OrganizationUpdatesDocument } from '@mobile/entities/organization/graphql/subscriptions/organizationUpdates.api'
+} from '#tests/support/mock-graphql-api.ts'
+import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
+import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
-} from '@mobile/entities/organization/__tests__/mocks/organization-mocks'
+} from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
 import {
   defaultUser,
   mockUserDetailsApis,
-} from '@mobile/entities/user/__tests__/mocks/user-mocks'
-import { mockTicketsByOverview } from './mocks/overview'
-import { mockTicketDetailViewGql } from './mocks/detail-view'
+} from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
+import { mockTicketsByOverview } from './mocks/overview.ts'
+import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 describe('testing ticket a11y', () => {
   beforeEach(() => {

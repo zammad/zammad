@@ -1,20 +1,20 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
-import { nullableMock, waitUntil } from '@tests/support/utils'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import { AutocompleteSearchUserDocument } from '@shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api'
-import { mockTicketObjectAttributesGql } from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import type { AutocompleteSearchUserQuery } from '@shared/graphql/types'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
+import { mockTicketObjectAttributesGql } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
 import TicketActionChangeCustomerDialog from '../TicketActionChangeCustomerDialog.vue'
 
 beforeAll(async () => {
   await import(
-    '@shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
+    '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
   )
 })
 

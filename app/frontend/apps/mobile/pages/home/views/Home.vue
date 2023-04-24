@@ -2,12 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import { useSessionStore } from '@shared/stores/session'
-import type { MenuItem } from '@mobile/components/CommonSectionMenu'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import CommonTicketCreateLink from '@mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
-import { useTicketOverviews } from '@mobile/entities/ticket/composables/useTicketOverviews'
+import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { MenuItem } from '#mobile/components/CommonSectionMenu/index.ts'
+import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import CommonTicketCreateLink from '#mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
+import { useTicketOverviews } from '#mobile/entities/ticket/composables/useTicketOverviews.ts'
 
 const IS_DEV = import.meta.env.DEV
 

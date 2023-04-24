@@ -3,9 +3,14 @@
 const now = new Date('2023-02-28 12:00:00')
 vi.useFakeTimers().setSystemTime(now)
 
-import { renderComponent } from '@tests/support/components'
-import CommonTicketEscalationIndicator from '../CommonTicketEscalationIndicator.vue'
 import type { Props } from '../CommonTicketEscalationIndicator.vue'
+
+const { renderComponent } = await import('#tests/support/components/index.ts')
+const { default: CommonTicketEscalationIndicator } = await import(
+  '../CommonTicketEscalationIndicator.vue'
+)
+
+export {}
 
 const renderCommonTicketEscalationIndicator = (props: Partial<Props> = {}) => {
   return renderComponent(CommonTicketEscalationIndicator, {

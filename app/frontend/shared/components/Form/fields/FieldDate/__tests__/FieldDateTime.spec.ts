@@ -4,11 +4,13 @@
 const now = new Date('2021-04-13T11:10:10Z')
 vi.useFakeTimers().setSystemTime(now)
 
-import { FormKit } from '@formkit/vue'
-import { waitFor } from '@testing-library/vue'
-import flatpickr from 'flatpickr'
-import { i18n } from '@shared/i18n'
-import { renderComponent } from '@tests/support/components'
+const { FormKit } = await import('@formkit/vue')
+const { waitFor } = await import('@testing-library/vue')
+const { default: flatpickr } = await import('flatpickr')
+const { renderComponent } = await import('#tests/support/components/index.ts')
+const { i18n } = await import('#shared/i18n.ts')
+
+export {}
 
 const renderDateField = (
   props: Record<string, unknown> = {},

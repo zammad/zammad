@@ -5,7 +5,7 @@ userAgentSpy.mockReturnValue(
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4758.102 Safari/537.36',
 )
 
-import { generateFingerprint } from '../browser'
+const { generateFingerprint } = await import('../browser.ts')
 
 describe('browser', () => {
   it('generate fingerprint', () => {

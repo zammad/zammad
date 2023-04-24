@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
-import type { AvatarSize } from '../CommonAvatar'
-import type { AvatarOrganization } from './types'
+import type { AvatarSize } from '../CommonAvatar/index.ts'
+import type { AvatarOrganization } from './types.ts'
 
 export interface Props {
   entity: AvatarOrganization

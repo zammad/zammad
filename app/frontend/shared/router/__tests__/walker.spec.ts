@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteLocationNormalized, Router } from 'vue-router'
-import { Walker } from '../walker'
+import { Walker } from '../walker.ts'
 
 const buildRouter = () =>
   ({

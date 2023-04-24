@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import type { App } from 'vue'
-import { i18n } from '@shared/i18n'
-import applicationConfigPlugin from '../plugins/applicationConfigPlugin'
+import { i18n } from '#shared/i18n.ts'
+import applicationConfigPlugin from '../plugins/applicationConfigPlugin.ts'
 
 export default function initializeGlobalProperties(app: App): void {
   app.config.globalProperties.i18n = i18n

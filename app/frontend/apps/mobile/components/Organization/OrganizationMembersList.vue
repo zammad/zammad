@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { OrganizationQuery } from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
+import type { OrganizationQuery } from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
 import { computed } from 'vue'
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonShowMoreButton from '../CommonShowMoreButton/CommonShowMoreButton.vue'

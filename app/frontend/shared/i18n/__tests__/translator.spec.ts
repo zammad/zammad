@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { Translator } from '../translator'
+import { Translator } from '../translator.ts'
 
 describe('Translator', () => {
   const t = new Translator()

@@ -1,17 +1,17 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref, type Ref, watch } from 'vue'
-import { i18n } from '@shared/i18n'
+import { i18n } from '#shared/i18n.ts'
 import { cloneDeep, keyBy } from 'lodash-es'
 import type {
   SelectOptionSorting,
   SelectOption,
   SelectValue,
-} from '../fields/FieldSelect'
-import type { FormFieldContext } from '../types/field'
-import type { FlatSelectOption } from '../fields/FieldTreeSelect'
-import type { AutoCompleteOption } from '../fields/FieldAutoComplete'
-import useValue from './useValue'
+} from '../fields/FieldSelect/index.ts'
+import type { FormFieldContext } from '../types/field.ts'
+import type { FlatSelectOption } from '../fields/FieldTreeSelect/index.ts'
+import type { AutoCompleteOption } from '../fields/FieldAutoComplete/index.ts'
+import useValue from './useValue.ts'
 
 const useSelectOptions = <
   T extends SelectOption[] | FlatSelectOption[] | AutoCompleteOption[],

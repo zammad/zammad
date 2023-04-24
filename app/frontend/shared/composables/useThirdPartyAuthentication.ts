@@ -2,9 +2,9 @@
 
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { i18n } from '@shared/i18n'
-import { useApplicationStore } from '@shared/stores/application'
-import type { ThirdPartyAuthProvider } from '@shared/types/authentication'
+import { i18n } from '#shared/i18n.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
 
 export const useThirdPartyAuthentication = () => {
   const application = useApplicationStore()

@@ -2,9 +2,9 @@
 /* eslint-disable no-use-before-define */
 
 import { NetworkStatus } from '@apollo/client/core'
-import type { UserError } from '@shared/graphql/types'
-import type { GraphQLErrorReport } from '@shared/types/error'
-import { GraphQLErrorTypes } from '@shared/types/error'
+import type { UserError } from '#shared/graphql/types.ts'
+import type { GraphQLErrorReport } from '#shared/types/error.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type { DocumentNode } from 'graphql'
 import {
   createMockSubscription,
@@ -12,8 +12,8 @@ import {
   type RequestHandlerResponse,
 } from 'mock-apollo-client'
 import type { SpyInstance } from 'vitest'
-import createMockClient from './mock-apollo-client'
-import { waitForNextTick } from './utils'
+import createMockClient from './mock-apollo-client.ts'
+import { waitForNextTick } from './utils.ts'
 
 interface Result {
   [key: string]: unknown

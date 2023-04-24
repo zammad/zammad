@@ -3,13 +3,13 @@
 <script setup lang="ts">
 /* eslint-disable zammad/zammad-detect-translatable-string */
 
-import Form from '@shared/components/Form/Form.vue'
-import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import { useDialog } from '@shared/composables/useDialog'
-import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
-import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { useUserCreate } from '@mobile/entities/user/composables/useUserCreate'
-import CommonStepper from '@mobile/components/CommonStepper/CommonStepper.vue'
+import Form from '#shared/components/Form/Form.vue'
+import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
+import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import { computed, reactive, ref } from 'vue'
 
 const linkSchemaRaw = [
@@ -314,7 +314,7 @@ const schema = defineFormSchema([
 
 const dialog = useDialog({
   name: 'dialog',
-  component: () => import('@mobile/components/CommonDialog/CommonDialog.vue'),
+  component: () => import('#mobile/components/CommonDialog/CommonDialog.vue'),
 })
 
 const { openCreateUserDialog } = useUserCreate()

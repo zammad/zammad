@@ -2,22 +2,22 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue'
-import type { CommonInputSearchExpose } from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonInputSearch from '@shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonSectionMenu from '@mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import type { MenuItem } from '@mobile/components/CommonSectionMenu'
+import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import type { MenuItem } from '#mobile/components/CommonSectionMenu/index.ts'
 import { ignorableWatch } from '@vueuse/shared'
 import { useLocalStorage } from '@vueuse/core'
-import { QueryHandler } from '@shared/server/apollo/handler'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { LocationQueryRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
-import type { CommonButtonOption } from '@mobile/components/CommonButtonGroup/types'
-import CommonButtonGroup from '@mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { useStickyHeader } from '@shared/composables/useStickyHeader'
+import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
+import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import SearchResults from '../components/SearchResults.vue'
-import { useSearchPlugins } from '../plugins'
-import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api'
+import { useSearchPlugins } from '../plugins/index.ts'
+import { useSearchLazyQuery } from '../graphql/queries/searchOverview.api.ts'
 
 interface SearchTypeItem extends MenuItem {
   value: string

@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSelect from '@mobile/components/CommonSelect/CommonSelect.vue'
-import type { SelectOption } from '@shared/components/Form/fields/FieldSelect/types'
+import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
+import type { SelectOption } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import { computed } from 'vue'
 
 const props = defineProps<{

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ViewerOptions } from '@shared/composables/useImageViewer'
+import type { ViewerOptions } from '#shared/composables/useImageViewer.ts'
 import type { Ref } from 'vue'
 import { nextTick } from 'vue'
 import type { MockGraphQLInstance } from './mock-graphql-api'

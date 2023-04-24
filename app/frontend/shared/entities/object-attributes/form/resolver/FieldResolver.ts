@@ -3,8 +3,8 @@
 import type {
   FormFieldValue,
   FormSchemaField,
-} from '@shared/components/Form/types'
-import type { ObjectManagerFrontendAttribute } from '@shared/graphql/types'
+} from '#shared/components/Form/types.ts'
+import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
 import type { JsonValue } from 'type-fest'
 
 export default abstract class FieldResolver {

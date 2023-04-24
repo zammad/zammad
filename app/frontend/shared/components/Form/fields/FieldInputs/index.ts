@@ -10,14 +10,14 @@ import {
   textInput,
   url as inputUrlDefinition,
 } from '@formkit/inputs'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import addLink from '@shared/form/features/addLink'
-import addSubmitEvent from '@shared/form/features/addSubmitEvent'
-import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import addLink from '#shared/form/features/addLink.ts'
+import addSubmitEvent from '#shared/form/features/addSubmitEvent.ts'
+import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
-} from '@shared/types/form'
+} from '#shared/types/form.ts'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,

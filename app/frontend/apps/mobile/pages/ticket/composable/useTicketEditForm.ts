@@ -1,19 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormHandlerFunction } from '@shared/components/Form'
-import { FormHandlerExecution } from '@shared/components/Form'
-import { createArticleTypes } from '@shared/entities/ticket-article/action/plugins'
-import type { AppSpecificTicketArticleType } from '@shared/entities/ticket-article/action/plugins/types'
-import type { TicketById } from '@shared/entities/ticket/types'
-import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
-import { EnumObjectManagerObjects } from '@shared/graphql/types'
+import type { FormHandlerFunction } from '#shared/components/Form/index.ts'
+import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
+import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { ComputedRef, Ref } from 'vue'
 import { computed, shallowRef } from 'vue'
 import type {
   ChangedField,
   ReactiveFormSchemData,
-} from '@shared/components/Form/types'
-import type { FieldEditorContext } from '@shared/components/Form/fields/FieldEditor/types'
+} from '#shared/components/Form/types.ts'
+import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormKitNode } from '@formkit/core'
 
 export const useTicketEditForm = (ticket: Ref<TicketById | undefined>) => {

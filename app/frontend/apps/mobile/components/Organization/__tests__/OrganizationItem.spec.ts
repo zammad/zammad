@@ -3,9 +3,10 @@
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { renderComponent } from '@tests/support/components'
-import type { OrganizationItemData } from '../types'
-import OrganizationItem from '../OrganizationItem.vue'
+import type { OrganizationItemData } from '../types.ts'
+
+const { default: OrganizationItem } = await import('../OrganizationItem.vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
 
 describe('ticket item display', () => {
   afterEach(() => {

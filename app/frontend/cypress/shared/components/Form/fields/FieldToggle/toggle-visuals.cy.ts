@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { checkFormMatchesSnapshot, mountFormField } from '@cy/utils'
-import { FormValidationVisibility } from '@shared/components/Form/types'
+import { FormValidationVisibility } from '#shared/components/Form/types.ts'
+import { checkFormMatchesSnapshot, mountFormField } from '#cy/utils.ts'
 
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)

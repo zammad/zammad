@@ -23,8 +23,8 @@ const route: RouteRecordRaw[] = [
       async beforeRouteEnter() {
         const [{ useAuthenticationStore }, { useNotifications }] =
           await Promise.all([
-            import('@shared/stores/authentication'),
-            import('@shared/components/CommonNotifications/composable'),
+            import('#shared/stores/authentication.ts'),
+            import('#shared/components/CommonNotifications/composable.ts'),
           ])
 
         const { clearAllNotifications } = useNotifications()

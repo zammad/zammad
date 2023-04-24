@@ -2,15 +2,20 @@
 
 vi.setSystemTime('2021-04-09T10:11:12Z')
 
-import { i18n } from '@shared/i18n'
-import { getByRole } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { flushPromises } from '@vue/test-utils'
-import { keyBy } from 'lodash-es'
-import ObjectAttributes from '../ObjectAttributes.vue'
-import attributes from './attributes.json'
+const { getByRole } = await import('@testing-library/vue')
+const { mockApplicationConfig } = await import(
+  '#tests/support/mock-applicationConfig.ts'
+)
+const { mockPermissions } = await import('#tests/support/mock-permissions.ts')
+const { flushPromises } = await import('@vue/test-utils')
+const { keyBy } = await import('lodash-es')
+const { default: attributes } = await import('./attributes.json')
+
+const { i18n } = await import('#shared/i18n.ts')
+const { default: ObjectAttributes } = await import('../ObjectAttributes.vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
+
+export {}
 
 const attributesByKey = keyBy(attributes, 'name')
 

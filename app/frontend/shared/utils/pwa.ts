@@ -46,5 +46,5 @@ export const registerPWAHooks = () => {
 }
 
 if (import.meta.env.DEV) {
-  import('./testSw')
+  import('./testSw.ts')
 }

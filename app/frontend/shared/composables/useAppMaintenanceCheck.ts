@@ -5,22 +5,22 @@ import { useRouteQuery } from '@vueuse/router'
 import {
   useNotifications,
   NotificationTypes,
-} from '@shared/components/CommonNotifications'
-import { useApplicationBuildChecksumQuery } from '@shared/graphql/queries/applicationBuildChecksum.api'
-import { useAppMaintenanceSubscription } from '@shared/graphql/subscriptions/appMaintenance.api'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useApplicationBuildChecksumQuery } from '#shared/graphql/queries/applicationBuildChecksum.api.ts'
+import { useAppMaintenanceSubscription } from '#shared/graphql/subscriptions/appMaintenance.api.ts'
 import type {
   ApplicationBuildChecksumQuery,
   ApplicationBuildChecksumQueryVariables,
   AppMaintenanceSubscription,
   AppMaintenanceSubscriptionVariables,
-} from '@shared/graphql/types'
-import { EnumAppMaintenanceType } from '@shared/graphql/types'
+} from '#shared/graphql/types.ts'
+import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
 import {
   QueryHandler,
   SubscriptionHandler,
-} from '@shared/server/apollo/handler'
-import testFlags from '@shared/utils/testFlags'
-import { registerSW } from '@shared/sw/register'
+} from '#shared/server/apollo/handler/index.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+import { registerSW } from '#shared/sw/register.ts'
 
 let checksumQuery: QueryHandler<
   ApplicationBuildChecksumQuery,

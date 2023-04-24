@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketArticle } from '@shared/entities/ticket/types'
-import { i18n } from '@shared/i18n'
-import type { ConfigList } from '@shared/types/store'
-import { textToHtml, textCleanup } from '@shared/utils/helpers'
-import type { SelectionData } from '@shared/utils/selection'
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import type { ConfigList } from '#shared/types/store.ts'
+import { textToHtml, textCleanup } from '#shared/utils/helpers.ts'
+import type { SelectionData } from '#shared/utils/selection.ts'
 
 const formatDate = (date: string) => {
   const options = {

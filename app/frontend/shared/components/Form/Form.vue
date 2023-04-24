@@ -28,10 +28,10 @@ import type {
 import { getNode, createMessage, reset } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
 import { refDebounced, watchOnce } from '@vueuse/shared'
-import getUuid from '@shared/utils/getUuid'
-import log from '@shared/utils/log'
-import { camelize } from '@shared/utils/formatter'
-import UserError from '@shared/errors/UserError'
+import getUuid from '#shared/utils/getUuid.ts'
+import log from '#shared/utils/log.ts'
+import { camelize } from '#shared/utils/formatter.ts'
+import UserError from '#shared/errors/UserError.ts'
 import type {
   EnumObjectManagerObjects,
   EnumFormUpdaterId,
@@ -41,19 +41,19 @@ import type {
   ObjectAttributeValue,
   FormUpdaterMetaInput,
   FormUpdaterChangedFieldInput,
-} from '@shared/graphql/types'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useObjectAttributeLoadFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields'
-import { useObjectAttributeFormFields } from '@shared/entities/object-attributes/composables/useObjectAttributeFormFields'
-import testFlags from '@shared/utils/testFlags'
-import { edgesToArray } from '@shared/utils/helpers'
-import type { FormUpdaterTrigger } from '@shared/types/form'
-import type { EntityObject } from '@shared/types/entity'
-import { getFirstFocusableElement } from '@shared/utils/getFocusableElements'
-import { parseGraphqlId } from '@shared/graphql/utils'
-import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api'
-import { FormHandlerExecution, FormValidationVisibility } from './types'
-import { getNodeByName as getFormkitFieldNode } from './utils'
+} from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useObjectAttributeLoadFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields.ts'
+import { useObjectAttributeFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeFormFields.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+import { edgesToArray } from '#shared/utils/helpers.ts'
+import type { FormUpdaterTrigger } from '#shared/types/form.ts'
+import type { EntityObject } from '#shared/types/entity.ts'
+import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
+import { parseGraphqlId } from '#shared/graphql/utils.ts'
+import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
+import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
+import { getNodeByName as getFormkitFieldNode } from './utils.ts'
 import type {
   ChangedField,
   FormData,
@@ -66,7 +66,7 @@ import type {
   FormSchemaNode,
   FormValues,
   ReactiveFormSchemData,
-} from './types'
+} from './types.ts'
 import FormLayout from './FormLayout.vue'
 import FormGroup from './FormGroup.vue'
 

@@ -5,7 +5,7 @@ import 'virtual:svg-icons-register' // eslint-disable-line import/no-unresolved
 import icons from 'virtual:svg-icons-names' // eslint-disable-line import/no-unresolved
 import { type Ref, ref, computed } from 'vue'
 import CommonIcon from './CommonIcon.vue'
-import type { Animations, Sizes } from './types'
+import type { Animations, Sizes } from './types.ts'
 
 const iconNames = computed(() =>
   icons.map((icon) => icon.slice('icon-'.length)),

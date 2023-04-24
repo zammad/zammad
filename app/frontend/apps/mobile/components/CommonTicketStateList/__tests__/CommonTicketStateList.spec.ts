@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { TicketState } from '@shared/entities/ticket/types'
-import { renderComponent } from '@tests/support/components'
+import { TicketState } from '#shared/entities/ticket/types.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import CommonTicketStateList from '../CommonTicketStateList.vue'
 
 describe('show tickets', () => {

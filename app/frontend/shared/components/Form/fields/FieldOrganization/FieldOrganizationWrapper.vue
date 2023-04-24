@@ -1,20 +1,20 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { markRaw, defineAsyncComponent } from 'vue'
-import type { ObjectLike } from '@shared/types/utils'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import type { Organization } from '@shared/graphql/types'
-import { getAutoCompleteOption } from '@shared/entities/organization/utils/getAutoCompleteOption'
-import { AutocompleteSearchOrganizationDocument } from '@shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api'
+import type { ObjectLike } from '#shared/types/utils.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import type { Organization } from '#shared/graphql/types.ts'
+import { getAutoCompleteOption } from '#shared/entities/organization/utils/getAutoCompleteOption.ts'
+import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
-import type { AutoCompleteProps } from '../FieldAutoComplete/types'
-import type { AutoCompleteOrganizationOption } from './types'
-import type { SelectValue } from '../FieldSelect'
+import type { AutoCompleteProps } from '../FieldAutoComplete/types.ts'
+import type { AutoCompleteOrganizationOption } from './types.ts'
+import type { SelectValue } from '../FieldSelect/index.ts'
 
 const FieldAutoCompleteInput = defineAsyncComponent(
   () =>
     import(
-      '@shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
+      '#shared/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
     ),
 )
 

@@ -74,18 +74,7 @@ module.exports = {
       },
     ],
 
-    // Adding typescript file types, because airbnb doesn't allow this by default.
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        mjs: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
+    'import/extensions': ['error', 'ignorePackages'],
 
     'import/prefer-default-export': 'off',
 
@@ -181,10 +170,8 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx', '*.vue'],
       rules: {
-        '@typescript-eslint/consistent-type-imports': [
-          'error',
-          { prefer: 'type-imports', disallowTypeAnnotations: false },
-        ],
+        // handled by typescript itself with "verbatimModuleSyntax"
+        '@typescript-eslint/consistent-type-imports': 'off',
         '@typescript-eslint/consistent-type-exports': 'error',
         'security/detect-object-injection': 'off',
         'security/detect-non-literal-fs-filename': 'off',
@@ -197,31 +184,20 @@ module.exports = {
   ],
   settings: {
     'import/core-modules': ['virtual:pwa-register'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
     'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+      },
       alias: {
         map: [
-          ['@', path.resolve(__dirname, './app/frontend')],
-          ['@mobile', path.resolve(__dirname, './app/frontend/apps/mobile')],
-          ['@shared', path.resolve(__dirname, './app/frontend/shared')],
-          ['@tests', path.resolve(__dirname, './app/frontend/tests')],
-          ['@stories', path.resolve(__dirname, './app/frontend/stories')],
-          ['@cy', path.resolve(__dirname, './.cypress')],
-          [
-            'vitest',
-            path.resolve(__dirname, 'node_modules/vitest/dist/index.mjs'),
-          ],
           [
             'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css',
             path.resolve(
               __dirname,
               'node_modules/vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css',
-            ),
-          ],
-          [
-            'histoire',
-            path.resolve(
-              __dirname,
-              './node_modules/histoire/dist/node/index.js',
             ),
           ],
         ],

@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApolloClient } from '@cy/utils'
-import { useNotifications } from '@shared/components/CommonNotifications'
-import { MentionSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { useApplicationStore } from '@shared/stores/application'
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { MentionSuggestionsDocument } from '#shared/components/Form/fields/FieldEditor/graphql/queries/mention/mentionSuggestions.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { mockApolloClient } from '#cy/utils.ts'
 
-import { mountEditor } from './utils'
+import { mountEditor } from './utils.ts'
 
 describe('Testing "user mention" popup: "@@" command', { retries: 2 }, () => {
   it('shows notification when no group is provided', () => {

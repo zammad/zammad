@@ -3,10 +3,10 @@
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { checkFormMatchesSnapshot, mountComponent } from '@cy/utils'
 import { h } from 'vue'
-import Form from '@shared/components/Form/Form.vue'
-import DynamicInitializer from '@shared/components/DynamicInitializer/DynamicInitializer.vue'
+import Form from '#shared/components/Form/Form.vue'
+import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
+import { checkFormMatchesSnapshot, mountComponent } from '#cy/utils.ts'
 
 describe('grouping form fields', () => {
   it('renders basic group', () => {

@@ -2,17 +2,20 @@
 
 import Mention from '@tiptap/extension-mention'
 
-import { MutationHandler, QueryHandler } from '@shared/server/apollo/handler'
+import {
+  MutationHandler,
+  QueryHandler,
+} from '#shared/server/apollo/handler/index.ts'
 import type { Ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import type { FormFieldContext } from '@shared/components/Form/types/field'
-import { debouncedQuery, htmlCleanup } from '@shared/utils/helpers'
-import { getNodeByName } from '@shared/components/Form/utils'
-import type { FileUploaded } from '../../FieldFile/types'
-import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api'
-import buildMentionSuggestion from './suggestions'
-import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api'
-import type { FieldEditorProps, MentionKnowledgeBaseItem } from '../types'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { debouncedQuery, htmlCleanup } from '#shared/utils/helpers.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
+import type { FileUploaded } from '../../FieldFile/types.ts'
+import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api.ts'
+import buildMentionSuggestion from './suggestions.ts'
+import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts'
+import type { FieldEditorProps, MentionKnowledgeBaseItem } from '../types.ts'
 
 export const PLUGIN_NAME = 'mentionKnowledgeBase'
 const ACTIVATOR = '??'

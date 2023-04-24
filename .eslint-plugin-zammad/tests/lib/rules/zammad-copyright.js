@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 const { RuleTester } = require('eslint')
-const rule = require('../../../lib/rules/zammad-copyright')
+const rule = require('../../../lib/rules/zammad-copyright.js')
 
 //------------------------------------------------------------------------------
 // Tests

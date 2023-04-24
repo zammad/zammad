@@ -1,29 +1,30 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import Form from '@shared/components/Form/Form.vue'
-import { type FormData, useForm } from '@shared/components/Form'
+import Form from '#shared/components/Form/Form.vue'
+import { type FormData, useForm } from '#shared/components/Form/index.ts'
 import {
   EnumObjectManagerObjects,
   type TicketCustomerUpdateInput,
-} from '@shared/graphql/types'
-import { closeDialog } from '@shared/composables/useDialog'
-import { useTicketFormOganizationHandler } from '@shared/entities/ticket/composables/useTicketFormOrganizationHandler'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import { convertToGraphQLId } from '@shared/graphql/utils'
+} from '#shared/graphql/types.ts'
+import { closeDialog } from '#shared/composables/useDialog.ts'
+import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import UserError from '@shared/errors/UserError'
-import { useTicketCustomerUpdateMutation } from '@shared/entities/ticket/graphql/mutations/customerUpdate.api'
-import CommonButton from '@mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '@mobile/components/CommonDialog/CommonDialog.vue'
-import { defineFormSchema } from '@mobile/form/defineFormSchema'
-import type { TicketById } from '@shared/entities/ticket/types'
-// No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
-import { TicketCustomerUpdateFormData } from '@shared/entities/ticket/types'
-import { useConfirmationDialog } from '@mobile/components/CommonConfirmation'
+} from '#shared/components/CommonNotifications/index.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { useTicketCustomerUpdateMutation } from '#shared/entities/ticket/graphql/mutations/customerUpdate.api.ts'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { defineFormSchema } from '#mobile/form/defineFormSchema.ts'
+import type {
+  TicketById,
+  TicketCustomerUpdateFormData,
+} from '#shared/entities/ticket/types.ts'
+import { useConfirmationDialog } from '#mobile/components/CommonConfirmation/index.ts'
 
 export interface Props {
   name: string

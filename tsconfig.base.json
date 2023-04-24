@@ -8,16 +8,18 @@
     "noEmit": true,
     "importHelpers": true,
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "resolvePackageJsonImports": true,
+    "resolvePackageJsonExports": false,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@mobile/*": ["app/frontend/apps/mobile/*"],
-      "@shared/*": ["app/frontend/shared/*"],
-      "@tests/*": ["app/frontend/tests/*"],
-      "@stories/*": ["app/frontend/stories/*"],
-      "@cy/*": [".cypress/*"],
-      "@/*": ["app/frontend/*"]
+      "#mobile/*": ["app/frontend/apps/mobile/*"],
+      "#shared/*": ["app/frontend/shared/*"],
+      "#tests/*": ["app/frontend/tests/*"],
+      "#cy/*": [".cypress/*"]
     },
     "types": [
       "vite/client",

@@ -4,9 +4,9 @@ import type { ConcreteComponent } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import type { JsonValue } from 'type-fest'
 import type { DocumentNode } from 'graphql'
-import type { ObjectLike } from '@shared/types/utils'
-import type { FormFieldContext } from '../../types/field'
-import type { SelectOptionSorting, SelectValue } from '../FieldSelect'
+import type { ObjectLike } from '#shared/types/utils.ts'
+import type { FormFieldContext } from '../../types/field.ts'
+import type { SelectOptionSorting, SelectValue } from '../FieldSelect/index.ts'
 
 export type AutoCompleteOption = {
   value: string | number

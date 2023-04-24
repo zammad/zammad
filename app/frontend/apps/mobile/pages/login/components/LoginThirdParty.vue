@@ -1,9 +1,9 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useFingerprint from '@shared/composables/useFingerprint'
-import { getCSRFToken } from '@shared/server/apollo/utils/csrfToken'
-import type { ThirdPartyAuthProvider } from '@shared/types/authentication'
+import useFingerprint from '#shared/composables/useFingerprint.ts'
+import { getCSRFToken } from '#shared/server/apollo/utils/csrfToken.ts'
+import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
 
 export interface Props {
   providers: ThirdPartyAuthProvider[]

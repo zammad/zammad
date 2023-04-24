@@ -4,11 +4,11 @@ import {
   text as inputTextDefinition,
   select as selectDefinition,
 } from '@formkit/inputs'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import { cloneDeep } from 'lodash-es'
-import translateWrapperProps from '@shared/form/features/translateWrapperProps'
-import addBlurEvent from '@shared/form/features/addBlurEvent'
-import hideField from '@shared/form/features/hideField'
+import translateWrapperProps from '#shared/form/features/translateWrapperProps.ts'
+import addBlurEvent from '#shared/form/features/addBlurEvent.ts'
+import hideField from '#shared/form/features/hideField.ts'
 
 describe('initializeFieldDefinition', () => {
   it('check for added default props without already existing props', () => {

@@ -3,9 +3,9 @@
 import type { FormKitNode } from '@formkit/core'
 import { radio as radioDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
-import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
+import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
 
 // TODO: Add story, when storybook replacement (histoire) was merged.
 
@@ -110,4 +110,4 @@ export default {
   definition: radioDefinition,
 }
 
-export type { RadioOption } from './types'
+export type { RadioOption } from './types.ts'

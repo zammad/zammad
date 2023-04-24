@@ -1,16 +1,16 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { getTestRouter } from '@tests/support/components/renderComponent'
-import { visitView } from '@tests/support/components/visitView'
-import type { MockGraphQLInstance } from '@tests/support/mock-graphql-api'
-import { setupView } from '@tests/support/mock-user'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { setupView } from '#tests/support/mock-user.ts'
 import {
   nullableMock,
   waitUntil,
   waitUntilApisResolved,
-} from '@tests/support/utils'
-import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview'
+} from '#tests/support/utils.ts'
+import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview.ts'
 
 describe('visiting search page', () => {
   let mockSearchApi: MockGraphQLInstance

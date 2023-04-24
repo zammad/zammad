@@ -5,8 +5,8 @@ import { FormKit } from '@formkit/vue'
 import { escapeRegExp } from 'lodash-es'
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { AutocompleteSearchRecipientDocument } from '@shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api'
-import type { AutoCompleteOption } from '../FieldAutoComplete'
+import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
+import type { AutoCompleteOption } from '../FieldAutoComplete/index.ts'
 
 type AutocompleteSearchRecipientQuery = {
   __typename?: 'Queries'

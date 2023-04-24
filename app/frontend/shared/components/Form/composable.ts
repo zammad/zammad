@@ -4,9 +4,9 @@ import { createMessage, getNode } from '@formkit/core'
 import type { FormKitNode } from '@formkit/core'
 import { computed, shallowRef, toRef, ref, reactive, watch } from 'vue'
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
-import type { CommonStepperStep } from '@mobile/components/CommonStepper'
-import type { ObjectLike } from '@shared/types/utils'
-import type { FormRef, FormResetOptions, FormValues } from './types'
+import type { CommonStepperStep } from '#mobile/components/CommonStepper/index.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+import type { FormRef, FormResetOptions, FormValues } from './types.ts'
 
 export const useForm = () => {
   const form: ShallowRef<FormRef | undefined> = shallowRef()

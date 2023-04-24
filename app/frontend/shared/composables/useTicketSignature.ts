@@ -1,22 +1,25 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById } from '@shared/entities/ticket/types'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type {
   FormHandler,
   FormHandlerFunction,
   FormValues,
-} from '@shared/components/Form'
-import { FormHandlerExecution } from '@shared/components/Form'
-import type { FieldEditorContext } from '@shared/components/Form/fields/FieldEditor/types'
-import type { ChangedField } from '@shared/components/Form/types'
-import { useTicketSignatureLazyQuery } from '@shared/graphql/queries/ticketSignature.api'
-import { convertToGraphQLId, getIdFromGraphQLId } from '@shared/graphql/utils'
-import { QueryHandler } from '@shared/server/apollo/handler'
+} from '#shared/components/Form/index.ts'
+import { FormHandlerExecution } from '#shared/components/Form/index.ts'
+import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type { ChangedField } from '#shared/components/Form/types.ts'
+import { useTicketSignatureLazyQuery } from '#shared/graphql/queries/ticketSignature.api.ts'
+import {
+  convertToGraphQLId,
+  getIdFromGraphQLId,
+} from '#shared/graphql/utils.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { Ref } from 'vue'
 import type {
   TicketSignatureQuery,
   TicketSignatureQueryVariables,
-} from '@shared/graphql/types'
+} from '#shared/graphql/types.ts'
 
 let signatureQuery: QueryHandler<
   TicketSignatureQuery,

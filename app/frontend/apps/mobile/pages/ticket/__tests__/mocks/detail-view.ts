@@ -7,33 +7,33 @@ import {
   type TicketQuery,
   type PolicyTicket,
   EnumTicketStateColorCode,
-} from '@shared/graphql/types'
-import { TicketState } from '@shared/entities/ticket/types'
-import type { TicketView } from '@shared/entities/ticket/types'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { FormUpdaterDocument } from '@shared/components/Form/graphql/queries/formUpdater.api'
-import { mockOnlineNotificationSeenGql } from '@shared/composables/__tests__/mocks/online-notification'
-import { useSessionStore } from '@shared/stores/session'
-import { ObjectManagerFrontendAttributesDocument } from '@shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api'
-import type { ExtendedIMockSubscription } from '@tests/support/mock-graphql-api'
+} from '#shared/graphql/types.ts'
+import { TicketState } from '#shared/entities/ticket/types.ts'
+import type { TicketView } from '#shared/entities/ticket/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
+import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import type { ExtendedIMockSubscription } from '#tests/support/mock-graphql-api.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
-} from '@tests/support/mock-graphql-api'
-import { setupView } from '@tests/support/mock-user'
-import { initializeStore } from '@tests/support/components/initializeStore'
-import { nullableMock, waitUntil } from '@tests/support/utils'
+} from '#tests/support/mock-graphql-api.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { initializeStore } from '#tests/support/components/initializeStore.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 import {
   ticketObjectAttributes,
   ticketArticleObjectAttributes,
-} from '@mobile/entities/ticket/__tests__/mocks/ticket-mocks'
-import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api'
-import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api'
-import { TicketDocument } from '../../graphql/queries/ticket.api'
-import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api'
-import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api'
-import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api'
-import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api'
+} from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api.ts'
+import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
+import { TicketDocument } from '../../graphql/queries/ticket.api.ts'
+import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api.ts'
+import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
+import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api.ts'
+import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api.ts'
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 

@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumOrderDirection } from '@shared/graphql/types'
+import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { waitFor } from '@testing-library/vue'
-import { visitView } from '@tests/support/components/visitView'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockTicketOverviews } from '@tests/support/mocks/ticket-overviews'
-import { waitForNextTick } from '@tests/support/utils'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 import { stringifyQuery } from 'vue-router'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { mockTicketsByOverview, ticketDefault } from './mocks/overview'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockTicketsByOverview, ticketDefault } from './mocks/overview.ts'
 
 beforeEach(() => {
   mockTicketOverviews()

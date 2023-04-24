@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { wordFilter } from './wordFilter'
+import { wordFilter } from './wordFilter.ts'
 
 const replaceWithContent = (parent: Element, selector: string) => {
   parent.querySelectorAll(selector).forEach((element) => {

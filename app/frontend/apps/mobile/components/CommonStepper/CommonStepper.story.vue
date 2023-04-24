@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CommonStepper from './CommonStepper.vue'
-import type { CommonStepperStep } from './types'
+import type { CommonStepperStep } from './types.ts'
 
 const modelValue = ref('step1')
 const steps: Record<string, CommonStepperStep> = {

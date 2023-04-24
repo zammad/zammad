@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { TagAssignmentUpdateDocument } from '@shared/entities/tags/graphql/mutations/assignment/update.api'
-import { renderComponent } from '@tests/support/components'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { waitUntil } from '@tests/support/utils'
+import { TagAssignmentUpdateDocument } from '#shared/entities/tags/graphql/mutations/assignment/update.api.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { waitUntil } from '#tests/support/utils.ts'
 import TicketTags from '../TicketTags.vue'
 
 beforeAll(async () => {
-  await import('@shared/components/Form/fields/FieldTags/FieldTagsDialog.vue')
+  await import('#shared/components/Form/fields/FieldTags/FieldTagsDialog.vue')
 })
 
 describe('TicketTags', () => {

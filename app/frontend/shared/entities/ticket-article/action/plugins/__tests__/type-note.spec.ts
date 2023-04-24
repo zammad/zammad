@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockPermissions } from '@tests/support/mock-permissions'
-import { createTestArticleTypes } from './utils'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { createTestArticleTypes } from './utils.ts'
 
 describe('note type', () => {
   it.each([

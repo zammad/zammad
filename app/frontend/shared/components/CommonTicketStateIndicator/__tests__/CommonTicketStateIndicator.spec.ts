@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '@tests/support/components'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import CommonTicketStateIndicator from '../CommonTicketStateIndicator.vue'
 import type { Props } from '../CommonTicketStateIndicator.vue'
 

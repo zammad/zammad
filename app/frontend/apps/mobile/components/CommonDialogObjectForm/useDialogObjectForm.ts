@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldValue } from '@shared/components/Form/types'
-import { useDialog } from '@shared/composables/useDialog'
-import type { EnumObjectManagerObjects } from '@shared/graphql/types'
+import type { FormFieldValue } from '#shared/components/Form/types.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { Props } from './CommonDialogObjectForm.vue'
 
 interface ObjectDescription extends Omit<Props, 'name' | 'type'> {

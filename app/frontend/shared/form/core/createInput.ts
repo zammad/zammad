@@ -6,8 +6,8 @@ import type { FormKitSchemaNode, FormKitTypeDefinition } from '@formkit/core'
 import { cloneAny } from '@formkit/utils'
 import type { FormKitSchemaExtendableSection } from '@formkit/inputs'
 import { createSection } from '@formkit/inputs'
-import type { FieldsCustomOptions } from './initializeFieldDefinition'
-import initializeFieldDefinition from './initializeFieldDefinition'
+import type { FieldsCustomOptions } from './initializeFieldDefinition.ts'
+import initializeFieldDefinition from './initializeFieldDefinition.ts'
 
 let totalCreated = 0
 

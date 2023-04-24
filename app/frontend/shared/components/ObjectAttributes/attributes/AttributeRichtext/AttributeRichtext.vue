@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
-import type { ObjectAttributeRichtext } from './attributeRichtextTypes'
+import type { ObjectAttributeRichtext } from './attributeRichtextTypes.ts'
 
 defineProps<{
   attribute: ObjectAttributeRichtext

@@ -2,10 +2,10 @@
 
 import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
-import mainInitializeRouter from '@shared/router'
-import type { InitializeAppRouter, RoutesModule } from '@shared/types/router'
-import transitionViewGuard from './guards/before/viewTransition'
-import { errorAfterGuard } from './error'
+import mainInitializeRouter from '#shared/router/index.ts'
+import type { InitializeAppRouter, RoutesModule } from '#shared/types/router.ts'
+import transitionViewGuard from './guards/before/viewTransition.ts'
+import { errorAfterGuard } from './error.ts'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
   ['../pages/*/routes.ts', '../pages/*/routes/*.ts'],
@@ -56,7 +56,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Main',
     props: true,
-    component: () => import('@mobile/components/layout/LayoutMain.vue'),
+    component: () => import('#mobile/components/layout/LayoutMain.vue'),
     children: childRoutes,
   },
 ]

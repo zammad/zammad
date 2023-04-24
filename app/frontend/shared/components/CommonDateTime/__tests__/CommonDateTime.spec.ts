@@ -2,10 +2,12 @@
 
 vi.useFakeTimers().setSystemTime(new Date('2020-10-11T10:10:10Z'))
 
-import { nextTick } from 'vue'
-import { renderComponent } from '@tests/support/components'
-import { useApplicationStore } from '@shared/stores/application'
-import CommonDateTime, { type Props } from '../CommonDateTime.vue'
+import { type Props } from '../CommonDateTime.vue'
+
+const { nextTick } = await import('vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
+const { useApplicationStore } = await import('#shared/stores/application.ts')
+const { default: CommonDateTime } = await import('../CommonDateTime.vue')
 
 const dateTime = '2020-10-10T10:10:10Z'
 const renderDateTime = (props: Props) => {

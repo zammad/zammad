@@ -2,7 +2,7 @@
 
 import { createNode } from '@formkit/core'
 import { createLibraryPlugin } from '@formkit/inputs'
-import formUpdaterTrigger from '../formUpdaterTrigger'
+import formUpdaterTrigger from '../formUpdaterTrigger.ts'
 
 describe('formUpdaterTrigger', () => {
   it('triggers form updater directly', () => {

@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PolicyTicket } from '@shared/graphql/types'
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import { setupView } from '@tests/support/mock-user'
+import type { PolicyTicket } from '#shared/graphql/types.ts'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { setupView } from '#tests/support/mock-user.ts'
 import {
   createEligibleTicketArticleReplyData,
   createTestArticleActions,
   createTestArticleTypes,
-} from './utils'
+} from './utils.ts'
 
 // we have some generic replies that can be used only on article with the same type
 // and only if it was sent by a customer

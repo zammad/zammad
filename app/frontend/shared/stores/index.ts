@@ -2,7 +2,7 @@
 
 import type { App } from 'vue'
 import { createPinia, type Pinia } from 'pinia'
-import type { UsedStore } from '@shared/types/store'
+import type { UsedStore } from '#shared/types/store.ts'
 
 declare module 'pinia' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

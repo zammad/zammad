@@ -3,11 +3,11 @@
 import {
   EnumTicketStateColorCode,
   type TicketsByOverviewQuery,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import { nullableMock } from '@tests/support/utils'
-import { TicketsByOverviewDocument } from '../../graphql/queries/ticketsByOverview.api'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { nullableMock } from '#tests/support/utils.ts'
+import { TicketsByOverviewDocument } from '../../graphql/queries/ticketsByOverview.api.ts'
 
 type TicketItemByOverview = ConfidentTake<
   TicketsByOverviewQuery,

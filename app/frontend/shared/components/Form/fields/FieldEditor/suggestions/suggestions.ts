@@ -7,7 +7,7 @@ import tippy, { type GetReferenceClientRect, type Instance } from 'tippy.js'
 import { PluginKey } from '@tiptap/pm/state'
 
 import SuggestionsList from '../SuggestionsList.vue'
-import type { MentionType } from '../types'
+import type { MentionType } from '../types.ts'
 
 interface MentionOptions<T> {
   activator: string

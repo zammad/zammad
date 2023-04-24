@@ -3,9 +3,9 @@
 import { cloneDeep } from 'lodash-es'
 import type { FormKitNode } from '@formkit/core'
 import { password as passwordDefinition } from '@formkit/inputs'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
-import formUpdaterTrigger from '@shared/form/features/formUpdaterTrigger'
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
+import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 
 const localPasswordDefinition = cloneDeep(passwordDefinition)
 

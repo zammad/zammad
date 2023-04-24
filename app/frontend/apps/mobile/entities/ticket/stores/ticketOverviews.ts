@@ -4,16 +4,16 @@ import { keyBy } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useTicketOverviewsQuery } from '@shared/entities/ticket/graphql/queries/ticket/overviews.api'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useTicketOverviewsQuery } from '#shared/entities/ticket/graphql/queries/ticket/overviews.api.ts'
 import type {
   TicketOverviewsQuery,
   TicketOverviewUpdatesSubscription,
   TicketOverviewUpdatesSubscriptionVariables,
-} from '@shared/graphql/types'
-import type { ConfidentTake } from '@shared/types/utils'
-import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage'
-import { TicketOverviewUpdatesDocument } from '../graphql/subscriptions/ticketOverviewUpdates.api'
+} from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
+import { TicketOverviewUpdatesDocument } from '../graphql/subscriptions/ticketOverviewUpdates.api.ts'
 
 export type TicketOverview = ConfidentTake<
   TicketOverviewsQuery,

@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useTraverseOptions } from '@shared/composables/useTraverseOptions'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { computed, ref, toRef } from 'vue'
-import useValue from '../../composables/useValue'
-import type { SecurityOption, SecurityValue, SecurityAllowed } from './types'
-import type { FormFieldContext } from '../../types/field'
+import useValue from '../../composables/useValue.ts'
+import type { SecurityOption, SecurityValue, SecurityAllowed } from './types.ts'
+import type { FormFieldContext } from '../../types/field.ts'
 
 interface FieldSecurityProps {
   context: FormFieldContext<{

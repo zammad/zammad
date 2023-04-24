@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { FieldResolverSelect } from '../select'
+import { FieldResolverSelect } from '../select.ts'
 
 describe('FieldResolverSelect', () => {
   it('should return the correct field attributes', () => {

@@ -9,10 +9,10 @@ import {
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
-} from '@shared/types/form'
-import initializeFieldDefinition from '@shared/form/core/initializeFieldDefinition'
-import extendSchemaDefinition from '@shared/form/utils/extendSchemaDefinition'
-import addIcon from '@shared/form/features/addIcon'
+} from '#shared/types/form.ts'
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
+import addIcon from '#shared/form/features/addIcon.ts'
 
 // TODO: Build-In loading cycle funcitonality for the buttons or at least a disabled-state when loading is in progress?
 

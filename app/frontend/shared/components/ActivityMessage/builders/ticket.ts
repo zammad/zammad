@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ticket } from '@shared/graphql/types'
-import { i18n } from '@shared/i18n'
-import type { ActivityMessageBuilder } from '../types'
+import type { Ticket } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import type { ActivityMessageBuilder } from '../types.ts'
 
 const path = (metaObject: Ticket) => {
   return `tickets/${metaObject.internalId}`

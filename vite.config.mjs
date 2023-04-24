@@ -55,7 +55,7 @@ export default defineConfig(({ mode, command }) => {
           nodeTransforms:
             isTesting || !!process.env.VITE_TEST_MODE
               ? []
-              : [require('./app/frontend/build/transforms/transformTestId')],
+              : [require('./app/frontend/build/transforms/transformTestId.js')],
         },
       },
     }),
@@ -65,7 +65,7 @@ export default defineConfig(({ mode, command }) => {
   // Ruby plugin is not needed inside of the vitest context and has some side effects.
   if (!isTesting || isBuild) {
     const { default: RubyPlugin } = require('vite-plugin-ruby')
-    const ManualChunks = require('./app/frontend/build/manualChunks')
+    const ManualChunks = require('./app/frontend/build/manualChunks.js')
 
     plugins.push(RubyPlugin())
     plugins.push(
@@ -99,16 +99,10 @@ export default defineConfig(({ mode, command }) => {
   return {
     publicDir: isBuild ? undefined : resolve(dir, 'public'),
     esbuild: {
-      target: tsconfig.compilerOptions.target,
+      target: isTesting ? 'esnext' : tsconfig.compilerOptions.target,
     },
     resolve: {
       alias: {
-        '@mobile': resolve(dir, 'app/frontend/apps/mobile'),
-        '@shared': resolve(dir, 'app/frontend/shared'),
-        '@tests': resolve(dir, 'app/frontend/tests'),
-        '@stories': resolve(dir, 'app/frontend/stories'),
-        '@cy': resolve(dir, '.cypress'),
-        '@': resolve(dir, 'app/frontend'),
         '^vue-easy-lightbox$':
           'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
       },
@@ -118,7 +112,12 @@ export default defineConfig(({ mode, command }) => {
       watch: {
         ignored: isTesting
           ? []
-          : ['**/*.spec.*', '**/__tests__/**/*', 'app/frontend/tests/**/*'],
+          : [
+              '**/*.spec.*',
+              '**/__tests__/**/*',
+              'app/frontend/tests/**/*',
+              '**/tmp/**',
+            ],
       },
     },
     define: {

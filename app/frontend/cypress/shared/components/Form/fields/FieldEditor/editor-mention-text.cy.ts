@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApolloClient } from '@cy/utils'
-import { TextModuleSuggestionsDocument } from '@shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.api'
-import { mountEditor } from './utils'
+import { TextModuleSuggestionsDocument } from '#shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.api.ts'
+import { mockApolloClient } from '#cy/utils.ts'
+import { mountEditor } from './utils.ts'
 
 describe('Testing "text" popup: "::" command', { retries: 2 }, () => {
   it('inserts a text', () => {

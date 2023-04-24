@@ -1,20 +1,23 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormData } from '@shared/components/Form'
-import type { FieldRecipientContact } from '@shared/components/Form/fields/FieldRecipient'
+import type { FormData } from '#shared/components/Form/index.ts'
+import type { FieldRecipientContact } from '#shared/components/Form/fields/FieldRecipient/index.ts'
 import type {
   EditorContentType,
   FieldEditorContext,
   FieldEditorProps,
-} from '@shared/components/Form/fields/FieldEditor/types'
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import type { getTicketView } from '@shared/entities/ticket/utils/getTicketView'
-import type { AppName, AppSpecificRecord } from '@shared/types/app'
-import type { ConfigList } from '@shared/types/store'
-import type { SelectionData } from '@shared/utils/selection'
-import type { SecurityValue } from '@shared/components/Form/fields/FieldSecurity/types'
-import type { FileUploaded } from '@shared/components/Form/fields/FieldFile/types'
-import type { MaybeRecord } from '@shared/types/utils'
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import type { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
+import type { AppName, AppSpecificRecord } from '#shared/types/app.ts'
+import type { ConfigList } from '#shared/types/store.ts'
+import type { SelectionData } from '#shared/utils/selection.ts'
+import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
+import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import type { MaybeRecord } from '#shared/types/utils.ts'
 
 export interface TicketArticleSelectionOptions {
   body: FieldEditorContext

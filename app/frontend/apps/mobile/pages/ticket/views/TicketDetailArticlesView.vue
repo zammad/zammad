@@ -3,28 +3,27 @@
 <script setup lang="ts">
 import { computed, watch, nextTick } from 'vue'
 import { noop } from 'lodash-es'
-import { useHeader } from '@mobile/composables/useHeader'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import { QueryHandler } from '@shared/server/apollo/handler'
-import { useApplicationStore } from '@shared/stores/application'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { useTicketView } from '@shared/entities/ticket/composables/useTicketView'
+import { useHeader } from '#mobile/composables/useHeader.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type {
   PageInfo,
   TicketArticleUpdatesSubscription,
   TicketArticleUpdatesSubscriptionVariables,
-} from '@shared/graphql/types'
-import { getApolloClient } from '@shared/server/apollo/client'
-import { useStickyHeader } from '@shared/composables/useStickyHeader'
-import { edgesToArray } from '@shared/utils/helpers'
+} from '#shared/graphql/types.ts'
+import { getApolloClient } from '#shared/server/apollo/client.ts'
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+import { edgesToArray } from '#shared/utils/helpers.ts'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketReplyButton from '../components/TicketDetailView/TicketDetailViewReplyButton.vue'
-import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api'
-import { useTicketInformation } from '../composable/useTicketInformation'
-import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api'
-import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables'
+import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api.ts'
+import { useTicketInformation } from '../composable/useTicketInformation.ts'
+import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
+import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables.ts'
 
 interface Props {
   internalId: string
@@ -32,19 +31,13 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const application = useApplicationStore()
-
 const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
 const {
-  allTicketArticlesLoaded,
+  ticketArticlesMin,
   markTicketArticlesLoaded,
   getTicketArticlesQueryVariables,
 } = useTicketArticlesQueryVariables()
-
-const ticketArticlesMin = computed(() => {
-  return Number(application.config.ticket_articles_min ?? 5)
-})
 
 const articlesQuery = new QueryHandler(
   useTicketArticlesQuery(() => getTicketArticlesQueryVariables(ticketId.value)),
@@ -52,6 +45,11 @@ const articlesQuery = new QueryHandler(
 )
 
 const result = articlesQuery.result()
+
+const allArticleLoaded = computed(() => {
+  if (!result.value?.articles.totalCount) return false
+  return result.value?.articles.edges.length < result.value?.articles.totalCount
+})
 
 const refetchArticlesQuery = (pageSize: Maybe<number>) => {
   articlesQuery.refetch({
@@ -101,7 +99,7 @@ articlesQuery.subscribeToMore<
 
       const removedArticleVisible = edges.length !== previousArticlesEdgesCount
 
-      if (removedArticleVisible && !allTicketArticlesLoaded(ticketId.value)) {
+      if (removedArticleVisible && !allArticleLoaded.value) {
         refetchArticlesQuery(ticketArticlesMin.value)
 
         return previous
@@ -141,7 +139,7 @@ articlesQuery.subscribeToMore<
         updates.addArticle.createdAt <=
           previousArticlesEdges[previousArticlesEdgesCount - 1].node.createdAt
 
-      if (allTicketArticlesLoaded(ticketId.value) || needRefetch) {
+      if (!allArticleLoaded.value || needRefetch) {
         refetchArticlesQuery(null)
       } else {
         articlesQuery.fetchMore({

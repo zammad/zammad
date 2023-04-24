@@ -4,8 +4,8 @@
 import { useEventListener } from '@vueuse/core'
 import type { TransitionProps } from 'vue'
 import { markRaw, shallowRef } from 'vue'
-import { Events } from './manage'
-import type { DestroyComponentData, PushComponentData } from './types'
+import { Events } from './manage.ts'
+import type { DestroyComponentData, PushComponentData } from './types.ts'
 
 const props = defineProps<{
   /**

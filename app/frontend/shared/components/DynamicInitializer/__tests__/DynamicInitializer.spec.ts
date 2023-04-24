@@ -3,7 +3,7 @@
 import { render } from '@testing-library/vue'
 import { h, nextTick, ref } from 'vue'
 import DynamicInitializer from '../DynamicInitializer.vue'
-import { destroyComponent, pushComponent } from '../manage'
+import { destroyComponent, pushComponent } from '../manage.ts'
 
 describe('dynamicaly add components to dom', () => {
   test('adds and destroys components', async () => {

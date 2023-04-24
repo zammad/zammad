@@ -3,7 +3,7 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import { markup } from '@shared/utils/markup'
+import { markup } from '#shared/utils/markup.ts'
 
 interface Props {
   loading?: boolean

@@ -3,11 +3,12 @@
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { renderComponent } from '@tests/support/components'
-import { TicketState } from '@shared/entities/ticket/types'
-import { EnumTicketStateColorCode } from '@shared/graphql/types'
-import type { TicketItemData } from '../types'
-import TicketItem from '../TicketItem.vue'
+import type { TicketItemData } from '../types.ts'
+
+const { TicketState } = await import('#shared/entities/ticket/types.ts')
+const { EnumTicketStateColorCode } = await import('#shared/graphql/types.ts')
+const { default: TicketItem } = await import('../TicketItem.vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
 
 describe('ticket item display', () => {
   afterEach(() => {

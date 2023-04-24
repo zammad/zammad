@@ -3,9 +3,10 @@
 const now = new Date('2022-01-03 00:00:00')
 vi.setSystemTime(now)
 
-import { renderComponent } from '@tests/support/components'
-import ActivityMessage from '../ActivityMessage.vue'
 import type { Props } from '../ActivityMessage.vue'
+
+const { default: ActivityMessage } = await import('../ActivityMessage.vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
 
 const renderActivityMessage = (props: Partial<Props> = {}) => {
   return renderComponent(ActivityMessage, {

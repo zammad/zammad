@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { useSessionStore } from '@shared/stores/session'
-import type { UserData } from '@shared/types/store'
-import { initializePiniaStore } from './components/renderComponent'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { UserData } from '#shared/types/store.ts'
+import { initializePiniaStore } from './components/renderComponent.ts'
 
 export const mockAccount = (mockUser: Partial<UserData>) => {
   initializePiniaStore()

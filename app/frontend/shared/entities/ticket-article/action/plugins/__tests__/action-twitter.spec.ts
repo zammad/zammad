@@ -1,16 +1,19 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketArticle, TicketById } from '@shared/entities/ticket/types'
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { mockAccount } from '@tests/support/mock-account'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { setupView } from '@tests/support/mock-user'
+import type {
+  TicketArticle,
+  TicketById,
+} from '#shared/entities/ticket/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { setupView } from '#tests/support/mock-user.ts'
 import { nextTick } from 'vue'
 import { createArticleTypes } from '..'
 import {
   createEligibleTicketArticleReplyData,
   createTestArticleActions,
-} from './utils'
+} from './utils.ts'
 
 const getArticleActionData = (
   name: string,

@@ -2,9 +2,9 @@
 
 import type { App } from 'vue'
 import type { FormKit } from '@formkit/vue'
-import CommonIcon from '@shared/components/CommonIcon/CommonIcon.vue'
-import CommonLink from '@shared/components/CommonLink/CommonLink.vue'
-import CommonDateTime from '@shared/components/CommonDateTime/CommonDateTime.vue'
+import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
+import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import type { RouterLink, RouterView } from 'vue-router'
 
 declare module '@vue/runtime-core' {

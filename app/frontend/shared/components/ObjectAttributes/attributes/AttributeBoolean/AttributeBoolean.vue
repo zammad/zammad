@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ObjectAttributeBoolean } from './attributeBooleanTypes'
+import type { ObjectAttributeBoolean } from './attributeBooleanTypes.ts'
 
 const props = defineProps<{
   attribute: ObjectAttributeBoolean

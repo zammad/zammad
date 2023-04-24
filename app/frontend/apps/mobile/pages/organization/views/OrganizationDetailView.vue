@@ -2,17 +2,17 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonOrganizationAvatar from '@shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import { useOnlineNotificationSeen } from '@shared/composables/useOnlineNotificationSeen'
-import { useHeader } from '@mobile/composables/useHeader'
-import CommonLoader from '@mobile/components/CommonLoader/CommonLoader.vue'
-import CommonTicketStateList from '@mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import { useOrganizationEdit } from '@mobile/entities/organization/composables/useOrganizationEdit'
-import OrganizationMembersList from '@mobile/components/Organization/OrganizationMembersList.vue'
-import { AvatarOrganization } from '@shared/components/CommonOrganizationAvatar'
-import ObjectAttributes from '@shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useOrganizationTicketsCount } from '@mobile/entities/organization/composables/useOrganizationTicketsCount'
-import { useOrganizationDetail } from '@mobile/entities/organization/composables/useOrganizationDetail'
+import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useHeader } from '#mobile/composables/useHeader.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
+import { useOrganizationEdit } from '#mobile/entities/organization/composables/useOrganizationEdit.ts'
+import OrganizationMembersList from '#mobile/components/Organization/OrganizationMembersList.vue'
+import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
+import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
+import { useOrganizationDetail } from '#mobile/entities/organization/composables/useOrganizationDetail.ts'
 
 interface Props {
   internalId: number

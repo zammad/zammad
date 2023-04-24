@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
-import { mountEditor } from './utils'
+import { mountEditor } from './utils.ts'
 
 describe('changes private value depending on content type', () => {
   it('has html content type by default', () => {

@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
-import { useLocaleStore } from '@shared/stores/locale'
-import { useWalker } from '@shared/router/walker'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useWalker } from '#shared/router/walker.ts'
 
 interface Props {
   fallback: RouteLocationRaw

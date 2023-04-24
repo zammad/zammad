@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultTicket } from '@mobile/pages/ticket/__tests__/mocks/detail-view'
-import type { TicketView } from '@shared/entities/ticket/types'
-import { setupView } from '@tests/support/mock-user'
-import { createTicketArticle, createTestArticleActions } from './utils'
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import type { TicketView } from '#shared/entities/ticket/types.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { createTicketArticle, createTestArticleActions } from './utils.ts'
 
 describe('changeVisibility action', () => {
   it('returns changeVisibility for customer and editable ticket', () => {

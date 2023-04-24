@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { markup } from '../markup'
+import { markup } from '../markup.ts'
 
 it('markup creates correct html', () => {
   expect(markup('||italic||')).toBe('<i>italic</i>')

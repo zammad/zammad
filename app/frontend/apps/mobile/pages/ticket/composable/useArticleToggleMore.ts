@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitForAnimationFrame } from '@shared/utils/helpers'
+import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { onMounted, ref } from 'vue'
 
 export const useArticleToggleMore = () => {

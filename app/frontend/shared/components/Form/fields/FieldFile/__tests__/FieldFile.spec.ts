@@ -2,14 +2,14 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import type { ExtendedRenderResult } from '@tests/support/components'
-import { renderComponent } from '@tests/support/components'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
-import { mockGraphQLApi } from '@tests/support/mock-graphql-api'
-import CommonImageViewer from '@shared/components/CommonImageViewer/CommonImageViewer.vue'
-import { waitUntil } from '@tests/support/utils'
-import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api'
-import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
+import { waitUntil } from '#tests/support/utils.ts'
+import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api.ts'
+import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api.ts'
 
 const renderFileInput = (props: Record<string, unknown> = {}) => {
   renderComponent(CommonImageViewer)

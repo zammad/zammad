@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref, watch } from 'vue'
-import consumer from '@shared/server/action_cable/consumer'
-import log from '@shared/utils/log'
+import consumer from '#shared/server/action_cable/consumer.ts'
+import log from '#shared/utils/log.ts'
 import {
   NotificationTypes,
   useNotifications,
-} from '@shared/components/CommonNotifications'
-import { useApplicationLoaded } from '@shared/composables/useApplicationLoaded'
+} from '#shared/components/CommonNotifications/index.ts'
+import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
 
 const wsConnectionState = ref(true)
 const { loaded } = useApplicationLoaded()

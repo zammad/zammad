@@ -3,9 +3,10 @@
 const now = new Date(2022, 1, 1, 20, 0, 0, 0)
 vi.setSystemTime(now)
 
-import { renderComponent } from '@tests/support/components'
-import type { UserItemData } from '../types'
-import UserItem from '../UserItem.vue'
+import type { UserItemData } from '../types.ts'
+
+const { default: UserItem } = await import('../UserItem.vue')
+const { renderComponent } = await import('#tests/support/components/index.ts')
 
 describe('user item display', () => {
   afterEach(() => {

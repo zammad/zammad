@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TreeSelectOption } from '@shared/components/Form/fields/FieldTreeSelect/types'
-import type { FormFieldAdditionalProps } from '@shared/components/Form/types'
+import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import type { FormFieldAdditionalProps } from '#shared/components/Form/types.ts'
 import type {
   FieldResolverModule,
   ObjectAttributeTreeSelectOption,
-} from '@shared/entities/object-attributes/types/resolver'
-import FieldResolver from '../FieldResolver'
+} from '#shared/entities/object-attributes/types/resolver.ts'
+import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverTreeselect extends FieldResolver {
   fieldType = 'treeselect'

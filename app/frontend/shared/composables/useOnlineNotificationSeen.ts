@@ -2,9 +2,9 @@
 
 import type { Ref } from 'vue'
 import { watch } from 'vue'
-import { useOnlineNotificationSeenMutation } from '@shared/entities/online-notification/graphql/mutations/seen.api'
-import { MutationHandler } from '@shared/server/apollo/handler'
-import type { ObjectWithId } from '@shared/types/utils'
+import { useOnlineNotificationSeenMutation } from '#shared/entities/online-notification/graphql/mutations/seen.api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { ObjectWithId } from '#shared/types/utils.ts'
 
 export const useOnlineNotificationSeen = (
   object: Ref<ObjectWithId | undefined>,

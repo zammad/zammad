@@ -1,14 +1,14 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '@shared/graphql/utils'
-import { waitForAnimationFrame } from '@shared/utils/helpers'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { getByAltText, queryByAltText } from '@testing-library/vue'
-import { renderComponent } from '@tests/support/components'
-import { getTestRouter } from '@tests/support/components/renderComponent'
-import { mockAccount } from '@tests/support/mock-account'
-import { routes } from '@mobile/router'
-import { isStandalone } from '@shared/utils/pwa'
-import { mockApplicationConfig } from '@tests/support/mock-applicationConfig'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { mockAccount } from '#tests/support/mock-account.ts'
+import { routes } from '#mobile/router/index.ts'
+import { isStandalone } from '#shared/utils/pwa.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import ArticleBubble from '../ArticleBubble.vue'
 
 const mainRoutes = routes.at(-1)?.children || []
@@ -313,7 +313,7 @@ describe('component for displaying text article', () => {
   })
 })
 
-vi.mock('@shared/utils/pwa')
+vi.mock('#shared/utils/pwa.ts')
 
 describe('links handling', () => {
   // current location is `http://localhost:3000/mobile`

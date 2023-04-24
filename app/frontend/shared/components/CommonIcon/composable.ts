@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '@shared/i18n'
+import { i18n } from '#shared/i18n.ts'
 import { computed } from 'vue'
 import type { Props } from './CommonIcon.vue'
-import type { Animations, Sizes } from './types'
+import type { Animations, Sizes } from './types.ts'
 
 export const usePrivateIcon = (
   props: Omit<Props, 'size'> & { size: Sizes },

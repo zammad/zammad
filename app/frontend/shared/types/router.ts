@@ -2,7 +2,7 @@
 
 import type { App } from 'vue'
 import type { Router, RouteRecordRaw, RouteLocationRaw } from 'vue-router'
-import type { RequiredPermission } from './permission'
+import type { RequiredPermission } from './permission.ts'
 
 export type InitializeAppRouter = (app: App) => Router
 

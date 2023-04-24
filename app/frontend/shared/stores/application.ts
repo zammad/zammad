@@ -2,20 +2,20 @@
 
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useNotifications } from '@shared/components/CommonNotifications'
-import type { ConfigList } from '@shared/types/store'
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import type { ConfigList } from '#shared/types/store.ts'
 import type {
   ApplicationConfigQuery,
   ApplicationConfigQueryVariables,
-} from '@shared/graphql/types'
-import { useConfigUpdatesSubscription } from '@shared/graphql/subscriptions/configUpdates.api'
-import { useApplicationConfigQuery } from '@shared/graphql/queries/applicationConfig.api'
+} from '#shared/graphql/types.ts'
+import { useConfigUpdatesSubscription } from '#shared/graphql/subscriptions/configUpdates.api.ts'
+import { useApplicationConfigQuery } from '#shared/graphql/queries/applicationConfig.api.ts'
 import {
   QueryHandler,
   SubscriptionHandler,
-} from '@shared/server/apollo/handler'
-import testFlags from '@shared/utils/testFlags'
-import { useApplicationLoaded } from '@shared/composables/useApplicationLoaded'
+} from '#shared/server/apollo/handler/index.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
 
 let configUpdatesSubscriptionInitialized = false
 
