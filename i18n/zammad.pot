@@ -9211,7 +9211,7 @@ msgid "Selected conditions"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Selective"
+msgid "Selective (default)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
