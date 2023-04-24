@@ -291,7 +291,9 @@ example
       msg = nil
       begin
         timeout(FETCH_MSG_TIMEOUT) do
-          msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
+          # https://github.com/zammad/zammad/issues/4589
+          key = options['host'] == 'imap.mail.me.com' ? 'BODY[]' : 'RFC822'
+          msg = @imap.fetch(message_id, key)[0].attr[key]
         end
       rescue Timeout::Error => e
         Rails.logger.error "Unable to fetch email from #{count}/#{count_all} from server (#{options[:host]}/#{options[:user]}): #{e.inspect}"
