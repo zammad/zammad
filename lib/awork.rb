@@ -55,6 +55,13 @@ class Awork
 
     return if !result
 
+    # get the checklistitems from specific template
+    checklistitems = get_checklistitems_from_hardcoded_template()
+    if checklistitems
+      # POST each of the checklistitems to the new task
+      checklistitems.each { |item| client.perform('post', "tasks/#{result['id']}/checklistitems", item) }
+    end
+
     Awork::Task.new(client, result).to_h
   end
 
@@ -66,5 +73,18 @@ class Awork
     filtered = status_list.select { |status| status['type'] == 'todo' }
 
     filtered[0]['id']
+  end
+
+  def get_checklistitems_from_hardcoded_template()
+    # hardcoded because there is only one specific template to use
+    bundle_name = 'Helpdeskaufgabe'
+    bundle = client.perform('get', "taskbundles?filterby=name eq '#{bundle_name}'")
+    return if !bundle
+    # take the first item because we get an array
+    bundle = bundle[0]
+    return if !bundle['tasks']
+    return if !bundle['tasks'][0]
+
+    client.perform('get', "tasktemplates/#{bundle['tasks'][0]['id']}/checklistitemtemplates")
   end
 end
