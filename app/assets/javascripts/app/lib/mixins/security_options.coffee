@@ -81,9 +81,5 @@ App.SecurityOptions =
           else
             @$('.js-securitySign').attr('disabled', true)
             @$('.js-securitySign').removeClass('btn--active')
-
-        error: (data) ->
-          details = data.responseJSON || {}
-          console.log(details)
       )
     @delay(callback, 200, 'security-check')
