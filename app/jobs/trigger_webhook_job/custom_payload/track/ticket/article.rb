@@ -20,7 +20,7 @@ class TriggerWebhookJob::CustomPayload::Track::Ticket::Article < TriggerWebhookJ
     ].freeze
   end
 
-  def self.replacements
+  def self.replacements(pre_defined_webhook_type:)
     user_functions = TriggerWebhookJob::CustomPayload::Track::User.functions
     {
       article:              functions,

@@ -9,10 +9,10 @@ module TriggerWebhookJob::CustomPayload
 
   # The API provides an endpoint GET /api/v1/webhook/replacements returning a
   # list of all available replacement variables lined by this method.
-  def self.replacements
+  def self.replacements(pre_defined_webhook_type:)
     hash = {}
     tracks.select(&:root?).each do |track|
-      hash.merge!(track.replacements)
+      hash.merge!(track.replacements(pre_defined_webhook_type: pre_defined_webhook_type))
     end
 
     hash

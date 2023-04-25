@@ -136,9 +136,33 @@ RSpec.describe Webhook, type: :request do
         expect(json_response).to be_an_instance_of(Hash)
       end
 
+      it 'returns no webhook variables by default' do
+        expect(json_response).not_to include('webhook')
+      end
+
       context 'with agent permissions', authenticated_as: :agent do
         it 'request is forbidden' do
           expect(response).to have_http_status(:forbidden)
+        end
+      end
+
+      context "when the pre-defined webhook type 'Mattermost' is used" do
+        before do
+          get '/api/v1/webhooks/payload/replacements?pre_defined_webhook_type=Mattermost'
+        end
+
+        it 'returns webhook variables' do
+          expect(json_response).to include('webhook' => %w[messaging_username messaging_channel messaging_icon_url])
+        end
+      end
+
+      context "when the pre-defined webhook type 'Slack' is used" do
+        before do
+          get '/api/v1/webhooks/payload/replacements?pre_defined_webhook_type=Slack'
+        end
+
+        it 'returns no webhook variables' do
+          expect(json_response).not_to include('webhook')
         end
       end
     end

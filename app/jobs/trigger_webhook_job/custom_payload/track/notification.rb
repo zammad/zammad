@@ -20,7 +20,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
       ].freeze
     end
 
-    def replacements
+    def replacements(pre_defined_webhook_type:)
       {
         notification: functions,
       }

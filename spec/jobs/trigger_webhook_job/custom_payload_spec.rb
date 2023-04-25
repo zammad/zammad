@@ -407,7 +407,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
   # rubocop:enable Lint/InterpolationCheck
 
   describe '.replacements' do
-    subject(:replacements) { described_class.replacements }
+    subject(:replacements) { described_class.replacements(pre_defined_webhook_type: 'Mattermost') }
 
     it 'returns a hash with the replacement variables', :aggregate_failures do
       expect(replacements).to be_a(Hash)

@@ -15,7 +15,7 @@ class TriggerWebhookJob::CustomPayload::Track
     klass.constantize.attribute_names
   end
 
-  def self.replacements
+  def self.replacements(pre_defined_webhook_type:)
     return {} if !root?
 
     raise 'not implemented'

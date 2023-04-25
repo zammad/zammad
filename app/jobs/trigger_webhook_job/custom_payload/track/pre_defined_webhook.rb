@@ -13,23 +13,30 @@ class TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook < TriggerWebhoo
       'Struct::PreDefinedWebhook'
     end
 
-    def functions
-      %w[
-        messaging_channel
-        messaging_username
-        messaging_icon_url
-      ].freeze
+    def functions(pre_defined_webhook_type: nil)
+      final_type = pre_defined_webhook_type.presence || @type.presence
+      return [] if final_type.nil?
+
+      pre_defined_webhook = "#{WEBHOOK_PREDEFINED_CLASS_PREFIX}#{final_type}".constantize.new
+      pre_defined_webhook.field_names
     end
 
-    def replacements
+    def replacements(pre_defined_webhook_type:)
+      return {} if pre_defined_webhook_type.blank?
+
+      possible_field_names = functions(pre_defined_webhook_type: pre_defined_webhook_type)
+      return {} if possible_field_names.blank?
+
       {
-        webhook: functions,
+        webhook: possible_field_names,
       }
     end
 
     def generate(tracks, data)
       webhook = data[:webhook]
       return if webhook.pre_defined_webhook_type.blank?
+
+      @type = webhook.pre_defined_webhook_type
 
       values = webhook.preferences&.dig('pre_defined_webhook')
       return if values.blank?

@@ -119,10 +119,17 @@ class App.CodeEditor extends App.Controller
       @renderHints(cursor, line, resolve)
       return
 
+    params = @formParam($(@el).parents('form'))
+    pre_defined_webhook_type = params['pre_defined_webhook_type'] || ''
+
+    url = "#{@apiPath}/webhooks/payload/replacements"
+    if pre_defined_webhook_type
+      url += "?pre_defined_webhook_type=#{pre_defined_webhook_type}"
+
     @ajax(
       id:    'webhooks_replacements'
       type:  'GET'
-      url:   "#{@apiPath}/webhooks/payload/replacements"
+      url:   url
       processData: true
       success: (data, status, xhr) =>
         @replacements = @transformReplacements(data)
