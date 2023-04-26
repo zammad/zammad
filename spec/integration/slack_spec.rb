@@ -3,10 +3,6 @@
 require 'rails_helper'
 require 'slack-ruby-client' # Only load this gem when it is really used.
 
-CHANNEL_NAME = ENV['SLACK_CI_CHANNEL_NAME']
-OAUTH_TOKEN = ENV['SLACK_CI_OAUTH_TOKEN']
-WEBHOOK_URL = ENV['SLACK_CI_WEBHOOK_URL']
-
 RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, required_envs: %w[SLACK_CI_CHANNEL_NAME SLACK_CI_OAUTH_TOKEN SLACK_CI_WEBHOOK_URL], time_zone: 'Europe/London', use_vcr: true do # rubocop:disable RSpec/DescribeClass
   let(:slack_group)  { create(:group) }
   let(:types)        { %w[create update reminder_reached] }
@@ -15,8 +11,8 @@ RSpec.describe 'Slack Integration', integration: true, performs_jobs: true, requ
       {
         group_ids: [slack_group.id],
         types:     types,
-        webhook:   WEBHOOK_URL,
-        channel:   CHANNEL_NAME,
+        webhook:   ENV['SLACK_CI_WEBHOOK_URL'],
+        channel:   ENV['SLACK_CI_CHANNEL_NAME'],
         username:  'zammad_agent',
         expand:    false,
       }

@@ -21,7 +21,7 @@ module RSpecSlackHelper
 
   def slack_client
     Slack.configure do |config|
-      config.token = OAUTH_TOKEN
+      config.token = ENV['SLACK_CI_OAUTH_TOKEN']
     end
 
     client = Slack::Web::Client.new
@@ -34,13 +34,13 @@ module RSpecSlackHelper
     channels = client.conversations_list['channels']
     channel_id = nil
     channels.each do |channel|
-      next if channel['name'] != CHANNEL_NAME
+      next if channel['name'] != ENV['SLACK_CI_CHANNEL_NAME']
 
       channel_id = channel['id']
     end
 
     if !channel_id
-      raise "ERROR: No such channel '#{CHANNEL_NAME}'"
+      raise "ERROR: No such channel '#{ENV['SLACK_CI_CHANNEL_NAME']}'"
     end
 
     channel_id
@@ -50,11 +50,11 @@ module RSpecSlackHelper
     channel_history = client.conversations_history(channel: channel_id)
 
     if !channel_history
-      raise "ERROR: No history for channel #{CHANNEL_NAME}/#{channel_id}"
+      raise "ERROR: No history for channel #{ENV['SLACK_CI_CHANNEL_NAME']}/#{channel_id}"
     end
 
     if !channel_history['messages']
-      raise "ERROR: No history messages for channel #{CHANNEL_NAME}/#{channel_id}"
+      raise "ERROR: No history messages for channel #{ENV['SLACK_CI_CHANNEL_NAME']}/#{channel_id}"
     end
 
     channel_history
