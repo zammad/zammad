@@ -52,8 +52,10 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
         expect_current_route '/tickets/view/all_open'
 
-        position_new = find_link(href: "/mobile/tickets/#{open_tickets[6].id}").evaluate_script('this.getBoundingClientRect().top')
-        expect(position_old).to eq(position_new)
+        wait.until do
+          position_new = find_link(href: "/mobile/tickets/#{open_tickets[6].id}").evaluate_script('this.getBoundingClientRect().top')
+          expect(position_old).to eq(position_new)
+        end
       end
     end
 
