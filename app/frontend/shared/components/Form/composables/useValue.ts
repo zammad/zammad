@@ -24,7 +24,9 @@ const useValue = <T = any>(
 
   const clearValue = (asyncSettling = true) => {
     if (!hasValue.value) return
-    context.value.node.input(undefined, asyncSettling)
+    // if value is undefined, it is not sent to the backend
+    // we want to clear the value, so we set it to null
+    context.value.node.input(null, asyncSettling)
   }
 
   const localValue = computed({

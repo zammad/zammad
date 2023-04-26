@@ -237,6 +237,46 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         ticket.reload
         expect(ticket[attribute.name]).to eq('New Text')
       end
+
+      it 'can clear the value in select fields', db_strategy: :reset do
+        screens = { edit: { 'ticket.agent': { shown: true, required: false } } }
+        attribute = create_attribute(
+          :object_manager_attribute_select,
+          object_name: 'Ticket',
+          display:     'Custom Text',
+          screens:     screens,
+          data_option: {
+            options:    {
+              'name 1': 'name 1',
+              'name 2': 'name 2',
+            },
+            default:    '',
+            null:       false,
+            relation:   '',
+            maxlength:  255,
+            nulloption: true,
+          }
+        )
+        ObjectManager::Attribute.migration_execute
+
+        ticket[attribute.name] = 'name 1'
+        ticket.save!
+        visit "/tickets/#{ticket.id}/information"
+
+        wait_for_form_to_settle('form-ticket-edit')
+
+        within_form(form_updater_gql_number: 1) do
+          attribute_field = find_select(attribute.display)
+          expect(attribute_field).to have_value('name 1')
+
+          attribute_field.clear_selection
+        end
+
+        submit_form
+
+        ticket.reload
+        expect(ticket[attribute.name]).to be_nil
+      end
     end
 
     context 'with customer user', authenticated_as: :customer do

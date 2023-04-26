@@ -205,7 +205,7 @@ describe('Form - Field - Select - Options', () => {
 
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe(undefined)
+    expect(emittedInput[0][0]).toBe(null)
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
@@ -442,7 +442,7 @@ describe('Form - Field - Select - Options', () => {
 
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe(undefined)
+    expect(emittedInput[0][0]).toBe(null)
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
@@ -591,7 +591,7 @@ describe('Form - Field - Select - Features', () => {
 
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe(undefined)
+    expect(emittedInput[0][0]).toBe(null)
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button')).not.toBeInTheDocument()
@@ -1090,7 +1090,7 @@ describe('Form - Field - Select - Accessibility', () => {
     wrapper.events.type(wrapper.getByRole('button'), '{Space}')
 
     await waitFor(() => {
-      expect(emittedInput[1][0]).toBe(undefined)
+      expect(emittedInput[1][0]).toBe(null)
     })
   })
 })
