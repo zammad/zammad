@@ -11,6 +11,22 @@ module TestFlags
     wait_for_test_flag("__gql #{operation} #{number}", skip_clearing: skip_clearing)
   end
 
+  def wait_for_query(name, number: 1, skip_clearing: false)
+    wait_for_test_flag("__gql query #{name} #{number}", skip_clearing: skip_clearing)
+  end
+
+  def wait_for_mutation(name, number: 1, skip_clearing: false)
+    wait_for_test_flag("__gql mutation #{name} #{number}", skip_clearing: skip_clearing)
+  end
+
+  def wait_for_subscription_update(name, number: 1, skip_clearing: false)
+    wait_for_test_flag("__gql subscription #{name} #{number}", skip_clearing: skip_clearing)
+  end
+
+  def wait_for_subscription_start(name, skip_clearing: true)
+    wait_for_test_flag("__gql subscription #{name} start", skip_clearing: skip_clearing)
+  end
+
   def wait_for_form_to_settle(form)
     wait_for_test_flag("#{form}.settled")
   end

@@ -12,11 +12,13 @@ RSpec.describe 'Mobile > Ticket', app: :mobile, authenticated_as: :agent, type: 
     it 'updates the content on the page' do
       visit "/tickets/#{ticket.id}"
 
-      wait_for_gql 'apps/mobile/pages/ticket/graphql/queries/ticket.graphql'
+      wait_for_query 'ticket'
       expect(page).to have_text('Ticket Title')
 
+      wait_for_subscription_start 'ticketUpdates'
+
       ticket.update!(title: 'New Title')
-      wait_for_gql 'apps/mobile/pages/ticket/graphql/subscriptions/ticketUpdates.graphql'
+      wait_for_subscription_update 'ticketUpdates'
 
       expect(page).to have_text('New Title')
     end

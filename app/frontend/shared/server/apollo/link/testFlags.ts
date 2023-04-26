@@ -41,6 +41,8 @@ const testFlagsLink = /* #__PURE__ */ new ApolloLink((operation, forward) => {
       ) {
         counts[operationFlag] = count + 1
         window.testFlags?.set(testFlag)
+      } else {
+        window.testFlags?.set(`__gql subscription ${operationName} start`)
       }
     } else {
       counts[operationFlag] = count + 1
