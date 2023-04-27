@@ -334,14 +334,9 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         next_step
         next_step
 
-        # Footer is non-transparent while it's obscuring the fields.
-        expect(find('footer')[:class]).to include('bg-gray-light', 'backdrop-blur-lg')
-
         # Tags is the last field in the form.
+        #   In case the field is obscured, the following action would fail.
         find_autocomplete('Tags').search_for_option('tag 1')
-
-        # Footer is transparent when the screen is scrolled to the bottom.
-        expect(find('footer')[:class]).not_to include('bg-gray-light', 'backdrop-blur-lg')
       end
     end
   end
