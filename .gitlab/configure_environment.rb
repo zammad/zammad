@@ -88,8 +88,14 @@ class ConfigureEnvironment
     end
 
     if has_redis && [true, needs_redis].sample
-      puts 'Using Redis as web socket session store and as adapter for ActionCable.'
+      puts 'Using Redis as adapter for ActionCable.'
       @env_file_content += "export REDIS_URL='redis://redis:6379'\n"
+      if [true, false].sample
+        puts 'Using FS as web socket session store.'
+        @env_file_content += "export ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND='true'\n"
+      else
+        puts 'Using Redis as web socket session store.'
+      end
       return
     end
 
