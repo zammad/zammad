@@ -2445,4 +2445,48 @@ RSpec.describe 'Ticket', type: :request do
         .and include('organization' => hash_including('open_ids' => [ticket2.id, ticket1.id]))
     end
   end
+
+  describe 'Articles are not indexed properly #4596', performs_jobs: true, searchindex: true do
+    let(:ticket) { create(:ticket, group: Group.first) }
+
+    def new_article_body
+      params = {
+        article: {
+          body:         SecureRandom.uuid,
+          content_type: 'text/plain',
+          internal:     false,
+        },
+      }
+      authenticated_as(agent)
+      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+
+      perform_enqueued_jobs
+      SearchIndexBackend.refresh
+
+      params[:article][:body]
+    end
+
+    def delete_article_body
+      article = ticket.articles.last
+      delete "/api/v1/ticket_articles/#{article.id}"
+      expect(response).to have_http_status(:ok)
+
+      perform_enqueued_jobs
+      SearchIndexBackend.refresh
+
+      article.body
+    end
+
+    before do
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'does find articles after creations', :aggregate_failures do
+      expect(SearchIndexBackend.search(new_article_body, 'Ticket', limit: 1)).to be_present
+      expect(SearchIndexBackend.search(new_article_body, 'Ticket', limit: 1)).to be_present
+      expect(SearchIndexBackend.search(delete_article_body, 'Ticket', limit: 1)).to be_blank
+    end
+  end
 end

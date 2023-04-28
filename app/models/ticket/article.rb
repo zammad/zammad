@@ -36,10 +36,10 @@ class Ticket::Article < ApplicationModel
   belongs_to :origin_by,  class_name: 'User', optional: true
 
   before_validation :check_mentions, on: :create
-  before_save :touch_ticket_if_needed
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
   after_destroy :store_delete, :update_time_units
+  after_commit :ticket_touch, if: :persisted?
 
   store :preferences
 
@@ -397,9 +397,7 @@ returns
     Ticket::TimeAccounting.update_ticket(ticket)
   end
 
-  def touch_ticket_if_needed
-    return if !internal_changed?
-
-    ticket&.touch # rubocop:disable Rails/SkipsModelValidations
+  def ticket_touch
+    ticket.touch # rubocop:disable Rails/SkipsModelValidations
   end
 end
