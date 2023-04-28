@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
-  let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
-
   context 'when on Account > Avatar page', authenticated_as: :agent do
+    let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
+    let(:route) { '/account/avatar' }
     let(:initial_buttons) do
       [
         {
@@ -24,7 +24,7 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
     end
 
     before do
-      visit '/account/avatar'
+      visit route
     end
 
     def wait_for_avatar
@@ -77,7 +77,7 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
       end
     end
 
-    context 'when an avatar is already uploaded' do
+    context 'when an avatar is already uploaded', authenticated_as: :authenticate do
       let(:base64_img) { Base64.decode64(Rails.root.join('test/data/image/1000x1000.png').read) }
 
       let(:avatar) do
@@ -106,26 +106,32 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
         "data:#{store.preferences['Mime-Type']};base64,#{Base64.strict_encode64(store.content)}"
       end
 
-      before do
+      def authenticate
         avatar
-        visit '/account/avatar'
+        agent
       end
 
       it 'displays the avatar' do
+        sleep 3.seconds
+
         avatar_element_style = find('[data-test-id="common-avatar"]').style('background-image')
         expect(avatar_element_style['background-image']).to eq("url(\"#{background_image}\")")
       end
 
-      it 'displays the avatar in the footer' do
-        visit '/account'
+      context 'when on Account page' do
+        let(:route) { '/account' }
 
-        avatar_element_style = find('footer [data-test-id="common-avatar"]').style('background-image')
-        background_image_api_url = "/api/v1/users/image/#{avatar.store_hash}"
+        it 'displays the avatar in the footer' do
+          avatar_element_style = find('footer [data-test-id="common-avatar"]').style('background-image')
+          background_image_api_url = "/api/v1/users/image/#{avatar.store_hash}"
 
-        expect(avatar_element_style['background-image']).to match(%r{#{background_image_api_url}})
+          expect(avatar_element_style['background-image']).to match(%r{#{background_image_api_url}})
+        end
       end
 
       it 'can delete an existing avatar' do
+        visit '/account/avatar'
+
         wait.until do
           expect(page).to have_css('[data-test-id="common-avatar"]')
           expect(page).to have_button('Delete', disabled: false)
