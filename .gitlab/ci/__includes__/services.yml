@@ -32,6 +32,12 @@
     MATTERMOST_PASSWORD: 'zammad'
     MATTERMOST_CHANNEL: 'zammad-channel'
 
+.variables_idoit:
+  variables:
+    IDOIT_API_CATEGORY: "Building"
+    IDOIT_API_ENDPOINT: "http://ci-service-idoit:80"
+    IDOIT_API_TOKEN: "admin"
+
 .variables_auth:
   variables:
     KEYCLOAK_BASE_URL: http://ci-service-auth:8080
@@ -87,3 +93,7 @@
   mattermost:
     name: $CI_REGISTRY/docker/zammad-mattermost:stable
     alias: ci-service-mattermost
+
+  idoit:
+    name: $CI_REGISTRY/docker/zammad-idoit:stable
+    alias: ci-service-idoit
