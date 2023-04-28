@@ -10,19 +10,23 @@ capybara:integration:chrome:
     - .template_browser-core_capybara_chrome
     - .template_browser-core_capybara_integration
     - .variables_auth
+    - .variables_idoit
   services:
     - !reference [.services, postgresql]
     - !reference [.services, selenium-chrome]
     - !reference [.services, redis]
     - !reference [.services, auth]
+    - !reference [.services, idoit]
 
 capybara:integration:firefox:
   extends:
     - .template_browser-core_capybara_firefox
     - .template_browser-core_capybara_integration
     - .variables_auth
+    - .variables_idoit
   services:
     - !reference [.services, mysql]
     - !reference [.services, selenium-firefox]
     - !reference [.services, redis]
     - !reference [.services, auth]
+    - !reference [.services, idoit]

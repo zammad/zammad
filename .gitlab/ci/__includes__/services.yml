@@ -25,6 +25,12 @@
     CI_PROXY_USER: 'zammad'
     CI_PROXY_PASSWORD: 'zammad'
 
+.variables_idoit:
+  variables:
+    IDOIT_API_CATEGORY: "Building"
+    IDOIT_API_ENDPOINT: "http://ci-service-idoit:80"
+    IDOIT_API_TOKEN: "admin"
+
 .variables_auth:
   variables:
     KEYCLOAK_BASE_URL: http://auth:8080
@@ -76,3 +82,7 @@
   auth:
     name: $CI_REGISTRY/docker/zammad-auth:stable
     alias: auth
+
+  idoit:
+    name: $CI_REGISTRY/docker/zammad-idoit:stable
+    alias: ci-service-idoit

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Handling with i-doit', integration: true, required_envs: %w[IDOIT_API_TOKEN IDOIT_API_ENDPOINT IDOIT_API_CATEGORY], type: :system, use_vcr: true do
+RSpec.describe 'Ticket Handling with i-doit', integration: true, required_envs: %w[IDOIT_API_TOKEN IDOIT_API_ENDPOINT IDOIT_API_CATEGORY], type: :system do
 
   let(:api_endpoint) { ENV['IDOIT_API_ENDPOINT'] }
   let(:api_category) { ENV['IDOIT_API_CATEGORY'] }
