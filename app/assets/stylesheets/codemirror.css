@@ -504,12 +504,16 @@ li.CodeMirror-hint-active kbd {
   /* Zammad form control style */
   border: 1px solid var(--border);
   border-radius: 3px;
+
+  /* Make editor resizable (not supported by IE!) */
+  resize: vertical;
 }
 
 .cm-s-zammad .CodeMirror-gutters {
-  background: var(--background-modifier-accent);
+  background: var(--background-primary-alt);
   color: var(--text-muted);
-  border: none;
+  border-color: var(--border);
+  margin-left: -1px;
 }
 
 .cm-s-zammad .CodeMirror-cursor {
