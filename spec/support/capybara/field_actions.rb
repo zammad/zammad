@@ -104,6 +104,47 @@ module FieldActions
 
     find("div[data-name='#{name}'] .js-timepicker").fill_in with: value
   end
+
+  # Check the field value of a form tokens field.
+  #
+  # @example
+  #  check_tokens_field_value('tags', 'tag name')
+  #  check_tokens_field_value('tags', %w[tag1 tag2 tag3)
+  #
+  def check_tokens_field_value(name, value, **find_options)
+    input_value = if value.is_a?(Array)
+                    value.join(', ')
+                  else
+                    value
+                  end
+
+    expect(find("input[name='#{name}']", visible: :all, **find_options).value).to eq(input_value)
+  end
+
+  # Set the field value of a form tokens field.
+  #
+  # @example
+  #  set_tokens_field_value('tags', 'tag name')
+  #  set_tokens_field_value('tags', %w[tag1 tag2 tag3])
+  #
+  def set_tokens_field_value(name, value, **find_options)
+    input_string = if value.is_a?(Array)
+                     value.join(', ')
+                   else
+                     value
+                   end
+
+    find("input[name='#{name}'] ~ input.token-input", **find_options).send_keys input_string, :tab
+
+    token_count = if value.is_a?(Array)
+                    value.length
+                  else
+                    1
+                  end
+
+    wait.until { find_all("input[name='#{name}'] ~ .token").length == token_count }
+  end
+
 end
 
 RSpec.configure do |config|

@@ -84,25 +84,23 @@ RSpec.describe 'Ticket Create', type: :system do
 
       shared_examples 'merging with existing tags in a dirty form' do
         it 'merges with existing tags in a dirty form' do
-          find('input[name="tags"]', visible: :all)
-          set_input_field_value('tags', 'baz, qux, foo', visible: :all)
-          wait.until { find_all('.token').length == 3 }
+          set_tokens_field_value('tags', %w[baz qux foo])
           use_template(template)
-          check_input_field_value('tags', "baz, qux, #{template_value}", visible: :all)
+          check_tokens_field_value('tags', ['baz', 'qux', *template_value.split(', ')])
         end
       end
 
       shared_examples 'replacing tags in a clean form' do
         it 'replaces tags in a clean form' do
           use_template(template)
-          check_input_field_value('tags', template_value, visible: :all)
+          check_tokens_field_value('tags', template_value.split(', '), visible: :all)
         end
       end
 
       shared_examples 'leaving tags empty in a clean form' do
         it 'does nothing in a clean form' do
           use_template(template)
-          check_input_field_value('tags', '', visible: :all)
+          check_tokens_field_value('tags', '')
         end
       end
 
@@ -121,11 +119,9 @@ RSpec.describe 'Ticket Create', type: :system do
         it_behaves_like 'leaving tags empty in a clean form'
 
         it 'removes existing tags in a dirty form' do
-          find('input[name="tags"]', visible: :all)
-          set_input_field_value('tags', 'foo, bar, baz, qux', visible: :all)
-          wait.until { find_all('.token').length == 4 }
+          set_tokens_field_value('tags', %w[foo bar baz qux])
           use_template(template)
-          check_input_field_value('tags', 'baz, qux', visible: :all)
+          check_tokens_field_value('tags', %w[baz qux])
         end
       end
 
@@ -144,11 +140,9 @@ RSpec.describe 'Ticket Create', type: :system do
         it_behaves_like 'leaving tags empty in a clean form'
 
         it 'leaves existing tags untouched in a dirty form' do
-          find('input[name="tags"]', visible: :all)
-          set_input_field_value('tags', 'baz, qux', visible: :all)
-          wait.until { find_all('.token').length == 2 }
+          set_tokens_field_value('tags', %w[baz qux])
           use_template(template)
-          check_input_field_value('tags', 'baz, qux', visible: :all)
+          check_tokens_field_value('tags', %w[baz qux])
         end
       end
     end
