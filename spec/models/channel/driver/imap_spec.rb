@@ -366,5 +366,61 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
         end
       end
     end
+
+    describe 'iCloud emails are not fetchable via IMAP #4589', required_envs: %w[ICLOUD_USER ICLOUD_PASS] do
+      let(:server_address) { 'imap.mail.me.com' }
+      let(:server_login)    { ENV['ICLOUD_USER'] }
+      let(:server_password) { ENV['ICLOUD_PASS'] }
+      let(:email_address)   { create(:email_address, name: 'Zammad Helpdesk', email: ENV['ICLOUD_USER']) }
+      let(:group)           { create(:group, email_address: email_address) }
+      let(:inbound_options) do
+        {
+          'adapter' => 'imap',
+          'options' => {
+            'host'           => server_address,
+            'user'           => ENV['ICLOUD_USER'],
+            'password'       => ENV['ICLOUD_PASS'],
+            'folder'         => folder,
+            'keep_on_server' => false,
+            'port'           => '993',
+          }
+        }
+      end
+      let(:outbound_options) do
+        {
+          'adapter' => 'smtp',
+          'options' => {
+            'host'     => 'smtp.mail.me.com',
+            'user'     => ENV['ICLOUD_USER'],
+            'password' => ENV['ICLOUD_PASS'],
+            'port'     => '587'
+          },
+          'email'   => ENV['ICLOUD_USER']
+        }
+      end
+
+      let(:body) { SecureRandom.uuid }
+      let(:email1) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello1
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some1@example_keep_on_server>
+
+          #{body}
+        EMAIL
+      end
+
+      it 'does handle mails' do
+        imap.append(folder, email1, [], Time.zone.now)
+
+        # verify if message is still on server
+        message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+        expect(message_ids.count).to be(1)
+
+        expect { channel.fetch(true) }.to change(Ticket::Article, :count)
+        expect(Ticket::Article.where('body LIKE ?', "%#{body}%").count).to eq(1)
+      end
+    end
   end
 end
