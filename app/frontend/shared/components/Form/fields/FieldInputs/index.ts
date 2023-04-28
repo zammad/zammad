@@ -14,6 +14,7 @@ import initializeFieldDefinition from '#shared/form/core/initializeFieldDefiniti
 import addLink from '#shared/form/features/addLink.ts'
 import addSubmitEvent from '#shared/form/features/addSubmitEvent.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
+import { setPopulatedOnWebkitAutofill } from '#shared/form/features/setPopulatedOnWebkitAutofill.ts'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
@@ -34,7 +35,14 @@ const inputFields: FormFieldType[] = []
 Object.keys(inputFieldDefinitionList).forEach((inputType) => {
   initializeFieldDefinition(
     inputFieldDefinitionList[inputType],
-    { features: [addLink, addSubmitEvent, formUpdaterTrigger('delayed')] },
+    {
+      features: [
+        addLink,
+        addSubmitEvent,
+        formUpdaterTrigger('delayed'),
+        setPopulatedOnWebkitAutofill,
+      ],
+    },
     { schema: textInput },
   )
 

@@ -84,6 +84,43 @@
   textarea {
     @apply px-2 py-1;
   }
+
+  /* Override autofill styles in Firefox. */
+  :-moz-autofill {
+    background: transparent;
+  }
+
+  /* Override autofill styles in Webkit-based browsers. */
+  :-webkit-autofill {
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: text;
+    caret-color: white;
+  }
+
+  /* No-op animation for hooking into autofill mechanism in Webkit-based browsers. */
+  :-webkit-autofill {
+    animation-name: onAutoFillStart;
+  }
+
+  :not(:-webkit-autofill) {
+    animation-name: onAutoFillEnd;
+  }
+
+  @keyframes onAutoFillStart {
+    from {
+    }
+
+    to {
+    }
+  }
+
+  @keyframes onAutoFillEnd {
+    from {
+    }
+
+    to {
+    }
+  }
 }
 
 @layer components {
