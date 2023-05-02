@@ -595,13 +595,13 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       it 'does not find the customer' do
         fill_in id: 'global-search', with: customer.firstname
 
-        expect(page.find('.global-search-menu')).not_to have_content(customer.firstname)
+        expect(page.find('.global-search-menu')).to have_no_content(customer.firstname)
       end
 
       it 'does not find the organization' do
         fill_in id: 'global-search', with: organization.name
 
-        expect(page.find('.global-search-menu')).not_to have_content(organization.name)
+        expect(page.find('.global-search-menu')).to have_no_content(organization.name)
       end
     end
 
@@ -641,7 +641,7 @@ RSpec.describe 'Search', authenticated: true, searchindex: true, type: :system d
       it 'does not find the ticket' do
         fill_in id: 'global-search', with: ticket.title
 
-        expect(page.find('.global-search-menu')).not_to have_content(ticket.title)
+        expect(page.find('.global-search-menu')).to have_no_content(ticket.title)
       end
 
       it 'does find the customer' do
