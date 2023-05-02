@@ -123,4 +123,10 @@ if ARGV[0] == 'start'
   end
 end
 
+if %w[1 true].include? ENV['WEBSOCKET_SERVER_LOG_TO_STDOUT']
+  Zammad::Logging.extend_logging_to_stdout
+elsif Rails.env.development?
+  puts 'WebsocketServer do not log to STDOUT. You can enable this by setting WEBSOCKET_SERVER_LOG_TO_STDOUT=1.'
+end
+
 WebsocketServer.run(@options)

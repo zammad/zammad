@@ -12,6 +12,12 @@ class BackgroundServices
     desc 'start', 'Execute background services.'
     def start
       config = BackgroundServices::ServiceConfig.configuration_from_env(ENV)
+      if %w[1 true].include? ENV['BACKGROUND_SERVICES_LOG_TO_STDOUT']
+        Zammad::Logging.extend_logging_to_stdout
+      elsif Rails.env.development?
+        puts 'BackgroundServices do not log to STDOUT. You can enable this by setting BACKGROUND_SERVICES_LOG_TO_STDOUT=1.' # rubocop:disable Rails/Output
+      end
+
       BackgroundServices.new(config).run
     end
 
