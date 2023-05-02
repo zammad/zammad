@@ -371,7 +371,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
       let(:server_address) { 'imap.mail.me.com' }
       let(:server_login)    { ENV['ICLOUD_USER'] }
       let(:server_password) { ENV['ICLOUD_PASS'] }
-      let(:email_address)   { create(:email_address, name: 'Zammad Helpdesk', email: ENV['ICLOUD_USER']) }
+      let(:email_address)   { create(:email_address, realname: 'Zammad Helpdesk', email: ENV['ICLOUD_USER']) }
       let(:group)           { create(:group, email_address: email_address) }
       let(:inbound_options) do
         {
