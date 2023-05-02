@@ -1,0 +1,52 @@
+<table class="settings-list">
+  <thead>
+    <tr>
+      <th>
+      <th width="16%" style="text-align: center;"><%- @T('My Tickets') %>
+      <th width="16%" style="text-align: center;"><%- @T('Not Assigned') %>*
+      <th width="16%" style="text-align: center;"><%- @T('Subscribed Tickets') %>
+      <th width="16%" style="text-align: center;"><%- @T('All Tickets') %>*
+      <th width="120px" class="settings-list-separator" style="text-align: center;"><%- @T('Also notify via email') %>
+  </thead>
+  <tbody>
+  <% if @matrixYAxe: %>
+    <% for key, value of @matrixYAxe: %>
+    <tr>
+      <td>
+        <%- @T(value.name) %>
+        <% criteria = @values[key]?.criteria %>
+        <% channel = @values[key]?.channel %>
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_me" value="true"<% if criteria && criteria.owned_by_me: %> checked<% end %> />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_nobody" value="true"<% if criteria && criteria.owned_by_nobody: %> checked<% end %> />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" name="matrix.<%= key %>.criteria.subscribed" value="true"<% if criteria && criteria.subscribed: %> checked<% end %> />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" name="matrix.<%= key %>.criteria.no" value="true"<% if criteria && criteria.no: %> checked<% end %> />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <td class="u-positionOrigin settings-list-separator">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
+          <input type="checkbox" name="matrix.<%= key %>.channel" value="email"<% if channel && channel.email: %> checked<% end %> />
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>

@@ -1,8 +1,11 @@
 class ProfileNotification extends App.ControllerSubContent
+  @include App.TicketNotificationMatrix
+
   @requiredPermission: 'user_preferences.notifications+ticket.agent'
   header: __('Notifications')
   events:
-    'submit form': 'update'
+    'submit form':                  'update'
+    'click .js-reset' :             'reset'
     'change .js-notificationSound': 'previewSound'
 
   sounds: [
@@ -46,7 +49,7 @@ class ProfileNotification extends App.ControllerSubContent
 
   constructor: ->
     super
-    @render()
+    App.User.full(App.Session.get().id, @render, true, true)
 
   render: =>
 
@@ -90,7 +93,7 @@ class ProfileNotification extends App.ControllerSubContent
       sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
 
     @html App.view('profile/notification')
-      matrix: matrix
+      matrixTableHTML: @renderNotificationMatrix(config.matrix)
       groups: groups
       config: config
       sounds: @sounds
@@ -103,56 +106,20 @@ class ProfileNotification extends App.ControllerSubContent
     params = {}
     params.notification_config = {}
 
-    form_params = @formParam(e.target)
+    formParams = @formParam(e.target)
 
-    for key, value of form_params
-      if key is 'group_ids'
-        if typeof value isnt 'object'
-          value = [value]
-        params.notification_config[key] = value
-      else
-        area = key.split('.')
-        if value is 'true'
-          value = true
-        if area[0] is 'matrix'
-          if area[2] is 'criteria'
-            if !params.notification_config[area[0]]
-              params.notification_config[area[0]] = {}
-            if !params.notification_config[area[0]][area[1]]
-              params.notification_config[area[0]][area[1]] = {}
-            if !params.notification_config[area[0]][area[1]][area[2]]
-              params.notification_config[area[0]][area[1]][area[2]] = {}
+    params.notification_config.matrix = @updatedNotificationMatrixValues(formParams)
 
-            for recipientKey in ['owned_by_me', 'owned_by_nobody', 'subscribed', 'no']
-              if params.notification_config[area[0]][area[1]][area[2]][recipientKey] == undefined
-                params.notification_config[area[0]][area[1]][area[2]][recipientKey] = false
-
-            params.notification_config[area[0]][area[1]][area[2]][area[3]] = value
-          if area[2] is 'channel'
-            if !params.notification_config[area[0]]
-              params.notification_config[area[0]] = {}
-            if !params.notification_config[area[0]][area[1]]
-              params.notification_config[area[0]][area[1]] = {}
-            if value is 'email'
-              params.notification_config[area[0]][area[1]][area[2]] = {
-                email:  true
-                online: true
-              }
-
-    # check missing channels
-    if params['notification_config']
-      for key, value of params['notification_config']['matrix']
-        if !value.channel
-          value.channel = {
-            email:  false
-            online: true
-          }
+    params.notification_config.group_ids = formParams['group_ids']
+    if typeof params.notification_config.group_ids isnt 'object'
+      params.notification_config.group_ids = [params.notification_config.group_ids]
 
     if !params.notification_config.group_ids || _.isEmpty(params.notification_config.group_ids)
       params.notification_config.group_ids = ['-']
+
     @formDisable(e)
 
-    params.notification_sound = form_params.notification_sound
+    params.notification_sound = formParams.notification_sound
     if !params.notification_sound.enabled
       params.notification_sound.enabled = false
     else
@@ -168,6 +135,21 @@ class ProfileNotification extends App.ControllerSubContent
       success:     @success
       error:       @error
     )
+
+  reset: (e) =>
+    new App.ControllerConfirm(
+      message: __('Are you sure? Your notifications settings will be reset to default.')
+      callback: =>
+        @ajax(
+          id:          'preferences_notifications_reset'
+          type:        'POST'
+          url:         "#{@apiPath}/users/preferences_notifications_reset"
+          processData: true
+          success:     @success
+        )
+      container: @el.closest('.content')
+    )
+
 
   success: (data, status, xhr) =>
     App.User.full(

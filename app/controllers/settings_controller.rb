@@ -87,6 +87,26 @@ class SettingsController < ApplicationController
     raise Exceptions::Forbidden, __('Not authorized (feature not possible)')
   end
 
+  # POST /settings/reset/1
+  def reset
+    setting = Setting.find(params[:id])
+    Setting.reset(setting.name)
+
+    setting.reload
+
+    if response_expand?
+      render json: setting.attributes_with_association_names, status: :ok
+      return
+    end
+
+    if response_full?
+      render json: setting.class.full(setting.id), status: :ok
+      return
+    end
+
+    render json: setting.attributes_with_association_ids, status: :ok
+  end
+
   private
 
   def keep_certain_attributes

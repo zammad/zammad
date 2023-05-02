@@ -18,6 +18,10 @@ class Controllers::SettingsControllerPolicy < Controllers::ApplicationController
     updateable?
   end
 
+  def reset?
+    updateable?
+  end
+
   private
 
   def setting

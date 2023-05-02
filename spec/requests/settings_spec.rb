@@ -251,5 +251,25 @@ RSpec.describe 'Settings', type: :request do
       put "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
     end
+
+    context 'when reset is used', authenticated_as: :admin do
+      it 'can not reset protected setting' do
+        setting = Setting.find_by(name: 'application_secret')
+        post "/api/v1/settings/reset/#{setting.id}", params: {}, as: :json
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'reset a setting', :aggregate_failures do
+        setting = Setting.find_by(name: 'product_name')
+
+        setting.update(state_current: { value: 'Other name' })
+
+        post "/api/v1/settings/reset/#{setting.id}", params: {}, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to be_a(Hash)
+        expect(json_response['state_current']).to eq(setting[:state_initial])
+      end
+    end
   end
 end

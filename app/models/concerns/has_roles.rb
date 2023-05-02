@@ -4,9 +4,11 @@ module HasRoles
   extend ActiveSupport::Concern
 
   included do
+    attr_accessor :reset_notification_config_before_save
+
     has_and_belongs_to_many :roles,
                             before_add:    %i[validate_agent_limit_by_role validate_roles],
-                            after_add:     %i[cache_update check_notifications],
+                            after_add:     %i[cache_update role_check_preference_notifications_default],
                             before_remove: :last_admin_check_by_role,
                             after_remove:  %i[cache_update]
   end
@@ -43,6 +45,20 @@ module HasRoles
         active: true
       }
     )
+  end
+
+  def role_check_preference_notifications_default(new_role)
+    return true if preferences.dig(:notification_config, :matrix)
+
+    # Check if the new role for the user has "ticket.agent" permission.
+    return if new_role.permissions.none? { |permission| permission.name == 'ticket.agent' }
+
+    fill_notification_config_preferences
+
+    self.reset_notification_config_before_save = true
+    save if persisted?
+
+    true
   end
 
   # methods defined here are going to extend the class, not the instance of it

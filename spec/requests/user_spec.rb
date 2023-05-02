@@ -1711,4 +1711,24 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       end
     end
   end
+
+  describe 'POST /api/v1/preferences_notifications_reset', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    it 'return ok' do
+      post '/api/v1/users/preferences_notifications_reset', as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to include('message' => 'ok')
+    end
+
+    it 'calls notification reset method' do
+      allow(User)
+        .to receive(:reset_notifications_preferences!)
+
+      post '/api/v1/users/preferences_notifications_reset', as: :json
+
+      expect(User).to have_received(:reset_notifications_preferences!).with(agent)
+    end
+  end
 end

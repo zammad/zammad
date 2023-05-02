@@ -2386,6 +2386,74 @@ Setting.create_or_update(
   state:       [],
   frontend:    true
 )
+
+Setting.create_or_update(
+  title:       __('Default Ticket Agent Notifications'),
+  name:        'ticket_agent_default_notifications',
+  area:        'Ticket::Core',
+  description: __('Define the default agent notifications for new users.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket'],
+  },
+  state:       {
+    create:           {
+      criteria: {
+        owned_by_me:     true,
+        owned_by_nobody: true,
+        subscribed:      true,
+        no:              false,
+      },
+      channel:  {
+        email:  true,
+        online: true,
+      }
+    },
+    update:           {
+      criteria: {
+        owned_by_me:     true,
+        owned_by_nobody: true,
+        subscribed:      true,
+        no:              false,
+      },
+      channel:  {
+        email:  true,
+        online: true,
+      }
+    },
+    reminder_reached: {
+      criteria: {
+        owned_by_me:     true,
+        owned_by_nobody: false,
+        subscribed:      false,
+        no:              false,
+      },
+      channel:  {
+        email:  true,
+        online: true,
+      }
+    },
+    escalation:       {
+      criteria: {
+        owned_by_me:     true,
+        owned_by_nobody: false,
+        subscribed:      false,
+        no:              false,
+      },
+      channel:  {
+        email:  true,
+        online: true,
+      }
+    }
+  },
+  frontend:    true
+)
+
 Setting.create_if_not_exists(
   title:       __('Ticket Number ignore system_id'),
   name:        'ticket_number_ignore_system_id',

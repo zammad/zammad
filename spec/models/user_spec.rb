@@ -52,6 +52,68 @@ RSpec.describe User, type: :model do
         expect(described_class.identify('')).to be_nil
       end
     end
+
+    describe '.reset_notifications_preferences!' do
+      let(:sample_notifications) { { sample_notifications: true } }
+
+      def change_setting_ticket_agent_default_notifications
+        Setting.set('ticket_agent_default_notifications', sample_notifications)
+      end
+
+      context 'when user is agent' do
+        before do
+          # Create the agent, before the default notifications are set, so
+          agent
+
+          change_setting_ticket_agent_default_notifications
+        end
+
+        it 'changes existing matrix' do
+          expect { described_class.reset_notifications_preferences!(agent) }
+            .to change { agent.preferences.dig('notification_config', 'matrix') }
+            .to sample_notifications
+        end
+
+        it 'sets matrix if preferences are empty' do
+          agent.update_columns preferences: nil
+
+          expect { described_class.reset_notifications_preferences!(agent) }
+            .to change { agent.preferences&.dig('notification_config', 'matrix') }
+            .to(sample_notifications)
+            .from(nil)
+        end
+
+        it 'does not touch selected groups do' do
+          agent.preferences['notification_config']['group_ids'] = ['123']
+          agent.save!
+
+          expect { described_class.reset_notifications_preferences!(agent) }
+            .not_to change { agent.preferences&.dig('notification_config', 'group_ids') }
+        end
+      end
+
+      context 'when user is not agent' do
+        before do
+          # Create the customer, before the default notifications are set, so
+          customer
+
+          change_setting_ticket_agent_default_notifications
+        end
+
+        it 'does not change existing matrix' do
+          expect { described_class.reset_notifications_preferences!(customer) }
+            .not_to change { customer.preferences.dig('notification_config', 'matrix') }
+        end
+
+        it 'sets matrix if preferences are empty' do
+          customer.update_columns preferences: nil
+
+          expect { described_class.reset_notifications_preferences!(customer) }
+            .not_to change { customer.preferences&.dig('notification_config', 'matrix') }
+            .from(nil)
+        end
+      end
+    end
   end
 
   describe 'Instance methods:' do
@@ -1693,6 +1755,37 @@ RSpec.describe User, type: :model do
 
       it 'does not allow creation with more than 250 organizations' do
         expect { create(:agent, organization: create(:organization), organizations: create_list(:organization, 251)) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: More than 250 secondary organizations are not allowed.')
+      end
+    end
+  end
+
+  describe 'Check default agent notifications preferences' do
+    context 'when creating users' do
+      it 'does apply default agent notification to agent preferences' do
+        user = create(:agent)
+        expect(user.reload.preferences[:notification_config][:matrix]).to eq(Setting.get('ticket_agent_default_notifications'))
+      end
+
+      it 'does not apply default agent notification to customer preferences' do
+        user = create(:customer)
+        expect(user.reload.preferences[:notification_config]).to be_blank
+      end
+    end
+
+    context 'when adding role to existing user' do
+      it 'does apply default agent notification to agent preferences (without "ticket.agent" permission before)' do
+        future_agent = create(:customer)
+
+        expect { future_agent.roles = [Role.lookup(name: 'Agent')] }
+          .to change { future_agent.reload.preferences.dig('notification_config', 'matrix') }
+          .to Setting.get('ticket_agent_default_notifications')
+      end
+
+      it 'does not apply default agent notification to agent preferences (with "ticket.agent" permission before)' do
+        agent = create(:agent)
+
+        expect { agent.roles = [Role.lookup(name: 'Customer')] }
+          .not_to change { agent.reload.preferences.dig('notification_config', 'matrix') }
       end
     end
   end

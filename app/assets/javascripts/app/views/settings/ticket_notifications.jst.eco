@@ -1,0 +1,13 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Default Notifications') %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <form class="settings-entry">
+    <%- @matrixTableHTML %>
+    <button type="submit" class="btn btn--primary js-ticketDefaultNotifications"><%- @T('Save') %></button>
+    <button type="submit" class="btn btn--secondary js-ticketDefaultNotificationsApplyToAll"><%- @T('Apply current defaults to all agents') %></button>
+    <button type="submit" class="btn btn--danger js-ticketDefaultNotificationsReset"><%- @T('Reset to default') %></button>
+  </form>
+</div>

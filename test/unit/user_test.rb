@@ -610,67 +610,6 @@ class UserTest < ActiveSupport::TestCase
     admin.destroy!
   end
 
-  test 'user default preferences' do
-    name = SecureRandom.uuid
-    groups = Group.where(name: 'Users')
-    roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
-      login:         "agent-default-preferences#{name}@example.com",
-      firstname:     'Preferences',
-      lastname:      "Agent#{name}",
-      email:         "agent-default-preferences#{name}@example.com",
-      password:      'agentpw',
-      active:        true,
-      roles:         roles,
-      groups:        groups,
-      preferences:   {
-        locale: 'de-de',
-      },
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    agent1 = User.find(agent1.id)
-    assert(agent1.preferences)
-    assert(agent1.preferences['locale'])
-    assert_equal(agent1.preferences['locale'], 'de-de')
-    assert(agent1.preferences['notification_config'])
-    assert(agent1.preferences['notification_config']['matrix'])
-    assert(agent1.preferences['notification_config']['matrix']['create'])
-    assert(agent1.preferences['notification_config']['matrix']['update'])
-
-    roles = Role.where(name: 'Customer')
-    customer1 = User.create_or_update(
-      login:         "customer-default-preferences#{name}@example.com",
-      firstname:     'Preferences',
-      lastname:      "Customer#{name}",
-      email:         "customer-default-preferences#{name}@example.com",
-      password:      'customerpw',
-      active:        true,
-      roles:         roles,
-      preferences:   {
-        locale: 'de-de',
-      },
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    customer1 = User.find(customer1.id)
-    assert(customer1.preferences)
-    assert(customer1.preferences['locale'])
-    assert_equal(customer1.preferences['locale'], 'de-de')
-    assert_not(customer1.preferences['notification_config'])
-
-    customer1 = User.find(customer1.id)
-    customer1.roles = Role.where(name: 'Agent')
-    customer1 = User.find(customer1.id)
-
-    assert(customer1.preferences)
-    assert(customer1.preferences['locale'])
-    assert_equal(customer1.preferences['locale'], 'de-de')
-    assert(customer1.preferences['notification_config'])
-    assert(customer1.preferences['notification_config']['matrix']['create'])
-    assert(customer1.preferences['notification_config']['matrix']['update'])
-  end
-
   test 'permission' do
     test_role_1 = Role.create_or_update(
       name:          'Test1',

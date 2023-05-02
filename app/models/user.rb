@@ -45,8 +45,9 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_organizations, :ensure_organizations_limit
   before_validation :check_mail_delivery_failed, on: :update
-  before_create     :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update     :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  before_save       :ensure_notification_preferences, if: :reset_notification_config_before_save
+  before_create     :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update     :validate_preferences, :validate_ooo, :reset_login_failed_after_password_change, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   before_destroy    :destroy_longer_required_objects, :destroy_move_dependency_ownership
   after_commit      :update_caller_id
 
@@ -741,110 +742,16 @@ returns
         .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids).reorder('users.updated_at DESC')
   end
 
-=begin
+  # Reset agent notification preferences
+  # Non-agent cannot receive notifications, thus notifications reset
+  #
+  # @option user [User] to reset preferences
+  def self.reset_notifications_preferences!(user)
+    return if !user.permissions? 'ticket.agent'
 
-update/sync default preferences of users with dedicated permissions
+    user.fill_notification_config_preferences
 
-  result = User.update_default_preferences_by_permission('ticket.agent', force)
-
-returns
-
-  result = true # false
-
-=end
-
-  def self.update_default_preferences_by_permission(permission_name, force = false)
-    permission = ::Permission.lookup(name: permission_name)
-    return if !permission
-
-    default = Rails.configuration.preferences_default_by_permission
-    return false if !default
-
-    default.deep_stringify_keys!
-    User.with_permissions(permission.name).each do |user|
-      next if !default[permission.name]
-
-      has_changed = false
-      default[permission.name].each do |key, value|
-        next if !force && user.preferences[key]
-
-        has_changed = true
-        user.preferences[key] = value
-      end
-      if has_changed
-        user.save!
-      end
-    end
-    true
-  end
-
-=begin
-
-update/sync default preferences of users in a dedicated role
-
-  result = User.update_default_preferences_by_role('Agent', force)
-
-returns
-
-  result = true # false
-
-=end
-
-  def self.update_default_preferences_by_role(role_name, force = false)
-    role = Role.lookup(name: role_name)
-    return if !role
-
-    default = Rails.configuration.preferences_default_by_permission
-    return false if !default
-
-    default.deep_stringify_keys!
-    role.permissions.each do |permission|
-      User.update_default_preferences_by_permission(permission.name, force)
-    end
-    true
-  end
-
-  def check_notifications(other, should_save = true)
-    default = Rails.configuration.preferences_default_by_permission
-    return if !default
-
-    default.deep_stringify_keys!
-    has_changed = false
-    other.permissions.each do |permission|
-      next if !default[permission.name]
-
-      default[permission.name].each do |key, value|
-        next if preferences[key]
-
-        preferences[key] = value
-        has_changed = true
-      end
-    end
-
-    return true if !has_changed
-
-    if id && should_save
-      save!
-      return true
-    end
-
-    @preferences_default = preferences
-    true
-  end
-
-  def check_preferences_default
-    if @preferences_default.blank? && id
-      roles.each do |role|
-        check_notifications(role, false)
-      end
-    end
-
-    return if @preferences_default.blank?
-
-    preferences_tmp = @preferences_default.merge(preferences)
-    self.preferences = preferences_tmp
-    @preferences_default = nil
-    true
+    user.save!
   end
 
 =begin
@@ -937,6 +844,11 @@ try to find correct name
 
   def create_organization_remove_history(org)
     organization_history_log(org, 'removed')
+  end
+
+  def fill_notification_config_preferences
+    preferences[:notification_config] ||= {}
+    preferences[:notification_config][:matrix] = Setting.get('ticket_agent_default_notifications')
   end
 
   private
@@ -1123,6 +1035,12 @@ try to find correct name
     raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled needs to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
 
     true
+  end
+
+  def ensure_notification_preferences
+    fill_notification_config_preferences
+
+    self.reset_notification_config_before_save = false
   end
 
 =begin

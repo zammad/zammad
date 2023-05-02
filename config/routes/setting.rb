@@ -10,6 +10,10 @@ Zammad::Application.routes.draw do
   match api_path + '/settings',               to: 'settings#create',        via: :post
   match api_path + '/settings/image/:id',     to: 'settings#update_image',  via: :put
   match api_path + '/settings/:id',           to: 'settings#update',        via: :put
+  match api_path + '/settings/reset/:id',     to: 'settings#reset',         via: :post
   match api_path + '/settings/:id',           to: 'settings#destroy',       via: :delete
 
+  match api_path + '/settings/ticket_agent_default_notifications/apply_to_all',
+        to:  'settings/ticket_agent_default_notifications#apply_to_all',
+        via: :post
 end

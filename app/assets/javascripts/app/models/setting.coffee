@@ -28,7 +28,7 @@ class App.Setting extends App.Model
       options.fail = (settings, details) ->
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be updated.'))
+          msg:     App.i18n.translateContent(details?.error_human || details?.error || __('The setting could not be updated.'))
           timeout: 2000
         }
         if options.failLocal
@@ -36,6 +36,39 @@ class App.Setting extends App.Model
     if setting.frontend
       App.Config.set(name, value)
     setting.save(options)
+
+  @reset: (name, callback, options = {}) ->
+    setting = App.Setting.findByAttribute('name', name)
+    throw "No such setting '#{name}' found!" if !setting
+
+    App.Ajax.request(
+      type: 'POST'
+      url: "#{@url}/reset/#{setting.id}"
+      processData: true,
+      success: (data, status, xhr) ->
+        if setting.frontend
+          App.Config.set(name, setting.state_initial.value)
+
+        if data.assets
+          App.Collection.loadAssets(data.assets, targetModel: @className)
+        else
+          setting.refresh(data)
+
+        if options.notify
+          App.Event.trigger 'notify', {
+            type:    'success'
+            msg:     App.i18n.translateContent('Reset successful.')
+            timeout: 2000
+          }
+      error: (xhr, statusText, error) ->
+        given_error = xhr.responseJSON?.error || statusText || error
+
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     App.i18n.translateContent(given_error || __('The setting could not be reseted.'))
+          timeout: 2000
+        }
+    )
 
   @preferencesPost: (setting) ->
     return if !setting.preferences

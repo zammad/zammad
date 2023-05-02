@@ -695,6 +695,27 @@ curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Co
 =begin
 
 Resource:
+POST /api/v1/users/preferences_reset
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/preferences_reset -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST'
+
+=end
+
+  def preferences_notifications_reset
+    User.reset_notifications_preferences!(current_user)
+
+    render json: { message: 'ok' }, status: :ok
+  end
+
+=begin
+
+Resource:
 PUT /api/v1/users/out_of_office
 
 Payload:
