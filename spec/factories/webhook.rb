@@ -27,7 +27,7 @@ FactoryBot.define do
       end
     end
 
-    factory :microsoftteams_webhook do
+    factory :ms_teams_webhook do
       name                     { 'Microsoft Teams Notifications' }
       endpoint                 { 'https://example.com/msteams' }
       pre_defined_webhook_type { 'MicrosoftTeams' }
