@@ -230,33 +230,53 @@ RSpec.describe Package, type: :model do
       orig_content
     end
 
-    it 'does handle reinstalls properly', :aggregate_failures do
+    def expect_install_package
       described_class.install(string: package_zpm_json)
       expect(File.exist?(core_file)).to be(true)
       expect(File.read(core_file)).to eq('abcäöüß')
       expect(File.exist?("#{core_file}.save")).to be(true)
       expect(File.read("#{core_file}.save")).to eq(orig_content)
+      expect(described_class.last.state).to eq('installed')
+    end
 
+    def expect_uninstall_package_files
       described_class.uninstall(string: package_zpm_json, migration_not_down: true, reinstall: true)
       expect(File.exist?(core_file)).to be(true)
       expect(File.read(core_file)).to eq(orig_content)
       expect(File.exist?("#{core_file}.save")).to be(false)
+      expect(described_class.last.state).to eq('uninstalled')
+    end
 
-      described_class.uninstall(string: package_zpm_json, migration_not_down: true, reinstall: true)
-      expect(File.exist?(core_file)).to be(true)
-      expect(File.read(core_file)).to eq(orig_content)
-      expect(File.exist?("#{core_file}.save")).to be(false)
-
+    def expect_reinstall_package
       described_class.reinstall(package_name)
       expect(File.exist?(core_file)).to be(true)
       expect(File.read(core_file)).to eq('abcäöüß')
       expect(File.exist?("#{core_file}.save")).to be(true)
       expect(File.read("#{core_file}.save")).to eq(orig_content)
+      expect(described_class.last.state).to eq('installed')
+    end
 
+    def expect_uninstall_package
       described_class.uninstall(string: package_zpm_json)
       expect(File.exist?(core_file)).to be(true)
       expect(File.read(core_file)).to eq(orig_content)
       expect(File.exist?("#{core_file}.save")).to be(false)
+      expect(File.read(core_file)).to eq(orig_content)
+    end
+
+    it 'does support the classic package migration path but with multiple uninstalls' do
+      expect_install_package
+      expect_uninstall_package_files
+      expect_uninstall_package_files
+      expect_reinstall_package
+      expect_uninstall_package
+    end
+
+    it 'does have a proper package state after multiple reinstalls' do
+      expect_install_package
+      expect_reinstall_package
+      expect_reinstall_package
+      expect_uninstall_package
     end
   end
 end

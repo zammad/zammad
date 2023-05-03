@@ -289,6 +289,7 @@ subsequently in a separate step.
       end
 
       # update package state
+      package_db.reload
       package_db.state = 'installed'
       package_db.save
     end
