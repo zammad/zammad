@@ -1,6 +1,6 @@
 <div>
   <p>
-    <%- @T('This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each Webhook.') %>
+    <%- @T('This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each webhook.') %>
   </p>
   <p>
     <%- @T('You can find a tutorial on how to manage a %s in our online documentation %l.', 'Webhook', 'https://admin-docs.zammad.org/en/latest/manage/webhook.html') %>

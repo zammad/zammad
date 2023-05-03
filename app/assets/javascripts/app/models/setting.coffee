@@ -65,7 +65,7 @@ class App.Setting extends App.Model
 
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(given_error || __('The setting could not be reseted.'))
+          msg:     App.i18n.translateContent(given_error || __('The setting could not be reset.'))
           timeout: 2000
         }
     )

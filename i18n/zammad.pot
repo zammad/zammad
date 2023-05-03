@@ -493,10 +493,6 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr ""
 
-#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-msgid "A Webhook can be fired by Triggers and Schedulers, don't forget to define them!"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -535,6 +531,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
+msgstr ""
+
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid "A webhook can be fired by triggers and schedulers, don't forget to define them!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -10756,7 +10756,7 @@ msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
 #: app/assets/javascripts/app/models/setting.coffee
-msgid "The setting could not be reseted."
+msgid "The setting could not be reset."
 msgstr ""
 
 #: app/assets/javascripts/app/models/setting.coffee
@@ -11033,7 +11033,7 @@ msgid "This is a default maintenance message. Click here to change."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
-msgid "This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each Webhook."
+msgid "This is an example payload for your installation, including any custom objects. It is possible to further customize payload of each webhook."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -11504,7 +11504,7 @@ msgid "To make translations easier you can enable and disable the inline transla
 msgstr ""
 
 #: app/assets/javascripts/app/models/webhook.coffee
-msgid "To revert back to default payload, simply turn off Custom Payload switch above."
+msgid "To revert back to the default payload, simply turn off the \"Custom Payload\" switch above."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
