@@ -1612,9 +1612,10 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       get "/api/v1/users/image/#{image_hash}", params: params, as: :json
     end
 
-    it 'returns verbose error when full image is missing' do
+    it 'returns the image with caching headers', :aggregate_failures do
       make_request(avatar.store_hash)
       expect(response.body).to eq(avatar_content)
+      expect(response.headers['Cache-Control']).to match('^max-age=\d{9,}, private, must-revalidate$')
     end
 
     context 'with a not allowed inline mime-type' do

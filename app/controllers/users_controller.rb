@@ -804,10 +804,8 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
 =end
 
   def image
-    # cache image
-    response.headers['Expires']       = 1.year.from_now.httpdate
-    response.headers['Cache-Control'] = 'cache, store, max-age=31536000, must-revalidate'
-    response.headers['Pragma']        = 'cache'
+    # Cache images in the browser.
+    expires_in(1.year.from_now, must_revalidate: true)
 
     file = Avatar.get_by_hash(params[:hash])
 
