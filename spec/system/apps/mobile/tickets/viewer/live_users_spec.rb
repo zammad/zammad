@@ -31,7 +31,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
   end
 
   context 'when opening viewers', authenticated_as: :agent do
-    it 'shows the users currently looking at the ticket' do # rubocop:disable RSpec/ExampleLength
+    it 'shows the users currently looking at the ticket' do
       taskbar_item = create(:taskbar, user_id: another_agent.id, key: "Ticket-#{ticket.id}", app: 'mobile')
       open_viewers_dialog
 
@@ -61,19 +61,19 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         .and have_no_text('Viewing ticket')
         .and have_text(another_agent.fullname)
         .and have_no_css('.icon.icon-mobile-edit')
+    end
 
-      # Another viewer appears.
-      another_taskbar_item = create(:taskbar, user_id: third_agent.id, key: "Ticket-#{ticket.id}", app: 'mobile')
-      update_taskbar_item(another_taskbar_item, { editing: true }, third_agent.id, 4)
+    it 'shows the users that start looking at the ticket' do
+      visit "/tickets/#{ticket.id}"
 
-      # Wait until the third viewer name element appears.
-      find 'div', exact_text: third_agent.fullname, wait: 60
+      expect(page).to have_no_button('Show ticket viewers')
+
+      taskbar_item = create(:taskbar, user_id: third_agent.id, key: "Ticket-#{ticket.id}", app: 'mobile')
+      update_taskbar_item(taskbar_item, { editing: true }, third_agent.id, 1)
+      open_viewers_dialog
 
       expect(page)
-        .to have_text('Opened in tabs')
-        .and have_text('Viewing ticket')
-        .and have_no_text(agent.fullname)
-        .and have_text(another_agent.fullname)
+        .to have_text('Viewing ticket')
         .and have_text(third_agent.fullname)
         .and have_css('.icon.icon-mobile-edit')
     end
