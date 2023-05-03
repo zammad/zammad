@@ -24,13 +24,25 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
 
     it 'can change notifications' do
       find('input[name="matrix.escalation.criteria.owned_by_me"]', visible: :all).click
+      find('input[name="matrix.escalation.channel"]', visible: :all).click
 
       find('#content_permanent_Profile form .btn--primary').click
 
       await_empty_ajax_queue
 
       expect(user.reload.preferences).to include(
-        notification_config: include(matrix: include(escalation: include(criteria: include(owned_by_me: false))))
+        notification_config: include(
+          matrix: include(
+            escalation: include(
+              criteria: include(owned_by_me: false),
+              channel:  include(email: false, online: true)
+            ),
+            update:     include(
+              criteria: include(owned_by_me: true),
+              channel:  include(email: true, online: true)
+            )
+          )
+        )
       )
     end
   end

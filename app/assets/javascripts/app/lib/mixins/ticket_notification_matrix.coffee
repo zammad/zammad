@@ -11,34 +11,19 @@ App.TicketNotificationMatrix =
 
       continue if area[0] isnt 'matrix'
 
-      if value is 'true'
-        value = true
-      else
-        value = false
+      if !matrix[area[1]]
+        matrix[area[1]] = {}
 
-      if area[2] is 'criteria'
-        if !matrix[area[1]]
-          matrix[area[1]] = {}
-        if !matrix[area[1]][area[2]]
-          matrix[area[1]][area[2]] = {}
+      switch area[2]
+        when 'criteria'
+          if !matrix[area[1]][area[2]]
+            matrix[area[1]][area[2]] = {}
 
-        matrix[area[1]][area[2]][area[3]] = value
-      if area[2] is 'channel'
-        if !matrix
-          matrix = {}
-        if !matrix[area[1]]
-          matrix[area[1]] = {}
-        if value is 'email'
+          matrix[area[1]][area[2]][area[3]] = value is 'true'
+        when 'channel'
           matrix[area[1]][area[2]] = {
-            email:  true
+            email:  value is 'email'
             online: true
           }
-
-    for key, value of matrix
-      if !value.channel
-        value.channel = {
-          email:  false
-          online: true
-        }
 
     matrix

@@ -58,12 +58,22 @@ RSpec.describe 'Manage > Settings > Ticket', type: :system do
         expect(page).to have_field('matrix.escalation.criteria.owned_by_me', checked: true, visible: :all)
 
         find('input[name="matrix.escalation.criteria.owned_by_me"]', visible: :all).click
+        find('input[name="matrix.escalation.channel"]', visible: :all).click
 
         find('.js-ticketDefaultNotifications').click
 
         await_empty_ajax_queue
 
-        expect(Setting.get('ticket_agent_default_notifications').dig('escalation', 'criteria', 'owned_by_me')).to be_falsey
+        expect(Setting.get('ticket_agent_default_notifications')).to include(
+          escalation: include(
+            criteria: include(owned_by_me: false),
+            channel:  include(email: false, online: true)
+          ),
+          update:     include(
+            criteria: include(owned_by_me: true),
+            channel:  include(email: true, online: true)
+          )
+        )
       end
     end
 
