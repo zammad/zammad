@@ -178,8 +178,8 @@
     - echo "Clean-up project build directory…"  # shell runners don't clean-up, see https://gitlab.com/gitlab-org/gitlab/-/issues/243716
     - rm -rf $CI_PROJECT_DIR
     - echo "Perform docker clean-up…"
-    - docker image prune -f
-    - docker volume prune -f
+    - docker image  prune --all --force
+    - docker volume prune --all --force
 
 review-app:deploy:
   extends:
