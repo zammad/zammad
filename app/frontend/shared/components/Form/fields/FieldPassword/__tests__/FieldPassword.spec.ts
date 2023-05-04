@@ -39,7 +39,7 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
     expect(input).not.toHaveAttribute('placeholder')
 
     const node = getNode('password')
-    expect(node?.value).toBe(undefined)
+    expect(node?.value).toBe('')
   })
 
   it('set some props', async () => {

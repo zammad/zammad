@@ -751,9 +751,9 @@ describe('Form.vue - Flatten form groups', () => {
     expect(submitCallbackSpy).toHaveBeenCalledWith({
       formId: expect.any(String),
       street: 'Street 12',
-      city: undefined,
+      city: '',
       other: 'Some text',
-      title: undefined,
+      title: '',
       fullname: 'John Doe',
     })
   })

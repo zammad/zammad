@@ -19,6 +19,7 @@ import type {
   FormFieldsTypeDefinition,
   FormFieldType,
 } from '#shared/types/form.ts'
+import defaultEmptyValueString from '#shared/form/features/defaultEmptyValueString.ts'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,
@@ -41,6 +42,7 @@ Object.keys(inputFieldDefinitionList).forEach((inputType) => {
         addSubmitEvent,
         formUpdaterTrigger('delayed'),
         setPopulatedOnWebkitAutofill,
+        defaultEmptyValueString,
       ],
     },
     { schema: textInput },

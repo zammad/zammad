@@ -40,7 +40,7 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
     expect(textarea).not.toHaveAttribute('placeholder')
 
     const node = getNode('textarea')
-    expect(node?.value).toBe(undefined)
+    expect(node?.value).toBe('')
   })
 
   it('set some props', async () => {

@@ -64,7 +64,7 @@ describe('useForm', () => {
 
     expect(currentNode.value).toBeDefined()
     expect(currentNode.value).toStrictEqual({
-      title: undefined,
+      title: '',
       text: 'Some text',
     })
   })
@@ -110,7 +110,7 @@ describe('useForm', () => {
     form.value = getFormContext()
 
     expect(values.value).toStrictEqual({
-      title: undefined,
+      title: '',
       text: 'Some text',
     })
   })
