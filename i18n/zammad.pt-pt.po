@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-03-18 03:05+0000\n"
-"Last-Translator: Ricardo Ribeiro <chacal.ricardo@gmail.com>\n"
+"PO-Revision-Date: 2023-05-02 12:17+0000\n"
+"Last-Translator: affarinha <andre.farinha@syswave.pt>\n"
 "Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/pt_PT/>\n"
 "Language: pt-pt\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -210,6 +210,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Conta #{config.product_name} ligada a aplicação de terceiros\n"
+"\n"
+"<div>Olá #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Parece que ligou a sua conta com uma <b>aplicação de terceiros</b> \""
+"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>Se não foi você, por favor remova a conta do seu perfil e altere a sua "
+"password na aplicação de terceiros. Alguém poderá ter tido acesso não "
+"autorizado à sua conta na aplicação de terceiros.</div>\n"
+"<br>\n"
+"<div>Equipa #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -5855,10 +5867,8 @@ msgid "Forbidden"
 msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Forgot password?"
 msgid "Forgot Password Screen"
-msgstr "Forgot password?"
+msgstr "Ecrã \"Esqueceu a Password\""
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
@@ -7678,8 +7688,8 @@ msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
 msgstr ""
-"Login falhou. Por gentileza, cheque suas credenciais ou valide o seu e-mail "
-"para acessar."
+"O login falhou. Verificou as suas credenciais e completou o passo da "
+"validação de email?"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/frontend/apps/mobile/pages/login/views/Login.vue db/seeds/settings.rb
@@ -7849,7 +7859,7 @@ msgstr "Comprimento máximo"
 
 #: db/seeds/settings.rb
 msgid "Max. length of the subject in an email reply."
-msgstr " Tamanho  máximo de um assunto em uma resposta de email."
+msgstr "Tamanho máximo de um assunto numa resposta de email."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Maximal"
@@ -7869,9 +7879,8 @@ msgid "Maximum number of open tabs."
 msgstr "Número Máximo de \"triggers\" executados recursivamente."
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Maximum number of recursively executed triggers."
-msgstr "Número Máximo de \"triggers\" executados recursivamente."
+msgstr "Número máximo de \"triggers\" executados recursivamente."
 
 #: db/seeds/settings.rb
 msgid "Maximum number of ticket shown in overviews"
@@ -7937,9 +7946,8 @@ msgid "Message after sending form"
 msgstr "Mensagem após envio de formulário"
 
 #: db/seeds/settings.rb
-#, fuzzy
 msgid "Message for login page."
-msgstr "Mensagem para tela de Login."
+msgstr "Mensagem para ecrã de Login."
 
 #: lib/secure_mailing/smime/incoming.rb
 msgid "Message is not signed by sender."
@@ -8485,10 +8493,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/login/views/Login.vue
-#, fuzzy
-#| msgid "New User"
 msgid "New user?"
-msgstr "New User"
+msgstr "Novo utilizador?"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
@@ -8802,7 +8808,7 @@ msgstr "Note"
 #: app/assets/javascripts/app/models/signature.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Notes are visible to agents only, never to customers."
-msgstr " Notas são visíveis somente para os agentes, nunca para clientes."
+msgstr "Notas visíveis somente para os agentes, nunca para clientes."
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco
 msgid "Nothing selected"
@@ -9455,7 +9461,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
-" Selecione um nome para a aplicação, e vamos  atribuir a você um tokem único."
+"Selecione um nome para a aplicação, e vamos atribuir-lhe um token único."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Pink"
@@ -9825,7 +9831,7 @@ msgid ""
 "Put a message on the login page. To change it, click on the text area below "
 "and change it in-line."
 msgstr ""
-" Coloque uma Mensagem na págian de login> para altera-la, clique na área de "
+"Coloque uma mensagem na página de login. Para alterá-la, clique na área de "
 "texto abaixo."
 
 #: db/seeds/settings.rb
@@ -9898,7 +9904,7 @@ msgid ""
 "Records that exist in the import data (but not in Zammad) will always be "
 "created."
 msgstr ""
-" Registros que existem nos dados de importação (mas não no zammad)  sempre "
+"Registros que existem nos dados de importação (mas não no zammad) sempre "
 "serão criados."
 
 #: db/seeds/settings.rb
@@ -10727,7 +10733,7 @@ msgstr "Sender"
 
 #: db/seeds/settings.rb
 msgid "Sender based on Reply-To header"
-msgstr " Remetente baseado no cabeçalho reponder para"
+msgstr "Remetente baseado no cabeçalho \"Reply-To\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #, fuzzy
@@ -11732,11 +11738,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with disabled inline translations looks like"
-msgstr " O texto com as traduções in-line se parecerão com"
+msgstr "Texto com as traduções in-line desligadas parece-se com"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco
 msgid "Text with enabled inline translations looks like"
-msgstr " O texto com as traduções in-line se parecerão com"
+msgstr "Texto com as traduções in-line ligadas parece-se com"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #, fuzzy
@@ -11886,16 +11892,12 @@ msgid "The chat is turned off."
 msgstr "O chat está desabilitado."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "The chat will show up once the connection to the server got established "
-#| "and if there is someone online to chat with."
 msgid ""
 "The chat will show up once the connection to the server got established and "
 "if there is an operator online to chat with."
 msgstr ""
-" O chat será exibido quando a conexão com o servidor for estabelecida, e um "
-"atendente estiver disponível."
+"O chat será exibido quando a ligação ao servidor for estabelecida e um "
+"agente estiver disponível."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -11925,9 +11927,8 @@ msgid ""
 "UTF-8. You can import a CSV file or paste the data directly into the text "
 "area."
 msgstr ""
-" Os dados precisam estar separados  no formato (CSV) e salvo no formato "
-"UTF-8. Você pode importar um arquivo  CSV, ou colar os dados diretamente na "
-"área de texto."
+"Os dados precisam de estar em formato CSV e codificação UTF-8. Você pode "
+"importar um arquivo CSV ou colar os dados diretamente na área de texto."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid ""
@@ -12008,8 +12009,8 @@ msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
 msgstr ""
-" O identificador de um chamado . EX: Chamado#, Ligação#, Meu Chamado#. o "
-"pedrão é Chamado#."
+"O identificador de um ticket. Ex: Ticket#, Chamada#, MeuTicket#. O padrão é "
+"Ticket#."
 
 #: app/services/service/avatar/image_validate.rb
 msgid "The image is invalid."
@@ -12740,20 +12741,15 @@ msgstr "Este serviço possibilita que você se conecte %s em %s. "
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee
 msgid "This service enables Zammad to connect with your Exchange server."
-msgstr ""
-" Este serviço possibilita que o Zammad conecte-se com seu servidor exchange"
+msgstr "Este serviço possibilita ao Zammad ligar-se ao seu servidor Exchange."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
-#, fuzzy
-#| msgid ""
-#| "This service receives http requests or emails from %s and creates tickets "
-#| "with host and service."
 msgid ""
 "This service receives HTTP requests or emails from %s and creates tickets "
 "with host and service."
 msgstr ""
-" Este serviço recebe  solicitações HTTP ou email de %s e cria chamados com "
-"host e serviços"
+"Este serviço recebe pedidos HTTP ou emails de %s e cria tickets com host e "
+"serviços."
 
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
@@ -12774,8 +12770,8 @@ msgid ""
 "This service shows you contacts of incoming calls and a caller list in "
 "realtime."
 msgstr ""
-" Este serviço exibe seus contatos de chamadas recebidas e uma lista de "
-"chamadas em tempo real"
+"Este serviço mostra contactos de chamadas recebidas e uma lista de chamadas "
+"em tempo real."
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid ""
@@ -13099,7 +13095,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Ticket |%s| will escalate soon!"
-msgstr " Chamado |%s| será atribuído em breve!"
+msgstr "Ticket |%s| será escalado em breve!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
@@ -13127,8 +13123,7 @@ msgstr "Tickets"
 msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
 msgstr ""
-" Chamados são atribuídos automaticamente, somente se eles não tiverem ainda "
-"um dono."
+"Tickets são atribuídos automaticamente apenas se ainda não tiverem um dono."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue
 msgid "Tickets are ordered by \"%s\" column (%s)."

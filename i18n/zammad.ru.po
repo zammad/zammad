@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-04-13 03:05+0000\n"
+"PO-Revision-Date: 2023-04-25 17:17+0000\n"
 "Last-Translator: Falkonio <falkovds@gmail.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -211,16 +211,16 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"риложением третьей стороны\n"
+"Аккаунт #{config.product_name} теперь связан со сторонним приложением\n"
+"\n"
 "<div>Привет, #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Похоже, что вы связали свой аккаунт <b>с приложением третьей стороны</"
-"b> \"#{t(provider)}\".</div>\n"
+"<div>Похоже, что Вы связали свой аккаунт <b>со сторонним приложением</b> \""
+"#{t(provider)}\".</div>\n"
 "<br>\n"
-"<div>Если это были не вы, пожалуйста, удалите связанный аккаунт из своего "
-"профиля и измените пароль для приложения третьей стороны. Кто-то мог "
-"получить несанкционированный доступ к вашему аккаунту в сервисе третьей "
-"стороны.</div>\n"
+"<div>Если это были не Вы, пожалуйста, удалите связанный аккаунт из своего "
+"профиля и измените пароль для стороннего приложения. Кто-то мог получить "
+"несанкционированный доступ к Вашему аккаунту в стороннем приложении.</div>\n"
 "<br>\n"
 "<div>Ваша команда #{config.product_name}</div>\n"
 
@@ -2635,10 +2635,8 @@ msgid "Clean up expired sessions."
 msgstr "Очистить просроченные сеансы."
 
 #: db/seeds/schedulers.rb
-#, fuzzy
-#| msgid "Clean up ActiveJob locks."
 msgid "Clean up mobile taskbars."
-msgstr "Очистить блокировки ActiveJob."
+msgstr "Очистить панель задач мобильных устройств."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue
 msgid "Clear"
@@ -4638,10 +4636,8 @@ msgstr "Отменить изменения"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
-#, fuzzy
-#| msgid "Discard your unsaved changes."
 msgid "Discard your unsaved changes"
-msgstr "Отмените ваши несохраненные изменения."
+msgstr "Отмените ваши несохраненные изменения"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
@@ -9385,10 +9381,8 @@ msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Необходим получатель в поле \"Кому\" (\"TO\") или \"Копия\" (\"CC\")."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts
-#, fuzzy
-#| msgid "Please select at least one ticket overview"
 msgid "Please select a ticket to merge into."
-msgstr "Пожалуйста, выберите по крайней мере одно представление заявок"
+msgstr "Пожалуйста, выберите заявку для объединения."
 
 #: app/controllers/integration/exchange_controller.rb
 msgid "Please select at least one folder."
@@ -10450,10 +10444,8 @@ msgid "Select the customer of the ticket or create one."
 msgstr "Выберите клиента заявки или создайте его."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
-#, fuzzy
-#| msgid "Select the customer of the ticket or create one."
 msgid "Select the type of ticket your are creating"
-msgstr "Выберите клиента заявки или создайте его."
+msgstr "Выберите тип создаваемой заявки"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee
 msgid "Selected conditions"
@@ -10804,6 +10796,8 @@ msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
 msgstr ""
+"Показывать пользователям пароль на странице входа. Отключение вступает в "
+"силу, только если включена сторонняя аутентификация."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Show previous tab"
@@ -10896,10 +10890,8 @@ msgid "Signature verification failed!"
 msgstr "Не удалось проверить подпись!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
-#, fuzzy
-#| msgid "Signature verification failed!"
 msgid "Signature verification failed! %s"
-msgstr "Не удалось проверить подпись!"
+msgstr "Не удалось проверить подпись! %s"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -10914,10 +10906,8 @@ msgid "Signed"
 msgstr "Подписано"
 
 #: app/assets/javascripts/app/models/public_link.coffee
-#, fuzzy
-#| msgid "Signature"
 msgid "Signup Screen"
-msgstr "Подпись"
+msgstr "Экран регистрации"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -12672,10 +12662,8 @@ msgid "Ticket Overview"
 msgstr "Представление заявки"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
-#, fuzzy
-#| msgid "Ticket Overview settings are saved"
 msgid "Ticket Overview settings are saved."
-msgstr "Сохраняются настройки представления заявок"
+msgstr "Сохраняются настройки представления заявок."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue
 msgid "Ticket Overviews"
@@ -14507,6 +14495,10 @@ msgid ""
 "screen. These have many purposes, such as displaying a data privacy page for "
 "all people using your Zammad instance."
 msgstr ""
+"Вы можете определить ссылки, которые будут показаны, например, в нижнем "
+"колонтитуле экрана входа в систему Zammad. Они могут быть использованы в "
+"разных целях, таких как отображение страницы конфиденциальности данных для "
+"всех людей, использующих ваш экземпляр Zammad."
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
@@ -14697,10 +14689,8 @@ msgid "Your Logo"
 msgstr "Ваш логотип"
 
 #: public/assets/form/form.js
-#, fuzzy
-#| msgid "Your Message..."
 msgid "Your Message…"
-msgstr "Ваше Сообщение..."
+msgstr "Ваше сообщение…"
 
 #: public/assets/form/form.js
 msgid "Your Name"
@@ -15114,11 +15104,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
-#, fuzzy
-#| msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgid "do not reopen ticket but create new ticket"
-msgstr ""
-"Невозможно отслеживание закрытой заявки. Пожалуйста, создайте новую заявку."
+msgstr "не открывайте заявку повторно, вместо этого создайте новую заявку"
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "does not exist"
