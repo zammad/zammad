@@ -751,12 +751,6 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr ""
 
-#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-msgid ""
-"A Webhook can be fired by Triggers and Schedulers, don't forget to define "
-"them!"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
@@ -811,6 +805,12 @@ msgstr "Les billets n'ont pas pu être fusionnés."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
+msgstr ""
+
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid ""
+"A webhook can be fired by triggers and schedulers, don't forget to define "
+"them!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
@@ -1305,6 +1305,7 @@ msgstr "Agents"
 msgid "Alarm"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
 msgstr "Tous les tickets"
@@ -1324,6 +1325,12 @@ msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Tous les ordinateurs et navigateurs qui ont accès à votre Zammad "
 "apparaissent ici."
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "All Tickets"
+msgid "All tickets"
+msgstr "Tous les tickets"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1353,7 +1360,7 @@ msgstr ""
 msgid "Allow websites (separated by ;)"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Also notify via email"
 msgstr "Notifier également par courrier électronique"
 
@@ -1525,6 +1532,10 @@ msgstr "Appliquer"
 msgid "Apply Shared Draft"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+msgid "Apply current defaults to all agents"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1587,6 +1598,17 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? Default notifications settings will be applied to all agents."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? The agent default notifications settings will be reset to the "
+"system default."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
 msgstr ""
@@ -1601,6 +1623,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -1803,6 +1829,13 @@ msgstr ""
 msgid "Attributes"
 msgstr "Attributs"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Attributes"
+msgid "Attributes to compare"
+msgstr "Attributs"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1913,6 +1946,7 @@ msgstr ""
 "Charge automatiquement le fichier chat.css. Si vous souhaitez utiliser votre "
 "propre css, définissez-le simplement sur \"false\"."
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr ""
@@ -2765,6 +2799,8 @@ msgstr "Clône"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Fermer"
 
@@ -2906,6 +2942,12 @@ msgstr ""
 msgid "Configure Basic Settings"
 msgstr "Configurer la base"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid "Config"
+msgid "Confirm"
+msgstr "Config"
+
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 #, fuzzy
 #| msgid "Confirm/submit dialog"
@@ -2943,6 +2985,7 @@ msgstr "Boîte de dialogue confirmer/soumettre"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
@@ -3629,9 +3672,21 @@ msgstr "Défaut"
 msgid "Default Behavior"
 msgstr ""
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+#, fuzzy
+#| msgid "Disable Notifications"
+msgid "Default Notifications"
+msgstr "Désactiver les notifications"
+
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Default Ticket Agent Notifications"
+msgstr "Bloquer les notifications"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3702,6 +3757,12 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Default visibility for new note."
+msgid "Define the default agent notifications for new users."
+msgstr "Visibilité par défaut pour une nouvelle note."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4278,6 +4339,14 @@ msgstr ""
 "et la barre de titre du navigateur Web."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the permission level used for lookups."
+msgstr ""
+"Définit l'application dorsale pour les recherches d'images d'utilisateurs et "
+"d'organisations."
+
+#: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
 msgstr ""
 
@@ -4345,6 +4414,14 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr ""
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the ticket states used for lookups."
+msgstr ""
+"Définit l'application dorsale pour les recherches d'images d'utilisateurs et "
+"d'organisations."
+
+#: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 
@@ -4390,7 +4467,32 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the warning message that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the warning title that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines transaction backend."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines whether the matching tickets are shown in case of already existing "
+"tickets."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines which ticket attributes are checked before creating a ticket."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
@@ -4591,6 +4693,13 @@ msgstr "ID de l'appelant de destination"
 #| msgid "Destination caller id"
 msgid "Destination caller ID or queue"
 msgstr "ID de l'appelant de destination"
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable Ticket creation"
+msgid "Detect Duplicate Ticket Creation"
+msgstr "Activer la création de billets"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4831,6 +4940,10 @@ msgstr ""
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
+msgid "Duplicate Detection"
 msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
@@ -5171,6 +5284,13 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables a sidebar to show an overview of all attachments."
+msgstr ""
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+msgid ""
+"Enables a warning to users during ticket creation if there is an existing "
+"ticket with the same attributes."
 msgstr ""
 
 #: db/seeds/settings.rb
@@ -7871,6 +7991,13 @@ msgstr ""
 msgid "Match none (NOT)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Match all of the following"
+msgid "Match tickets in following states"
+msgstr "Correspond à tous les éléments suivants"
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
 msgstr ""
@@ -8254,8 +8381,8 @@ msgstr "Mes statistiques"
 msgid "My Subscribed Tickets"
 msgstr "Billets qui me sont affectés"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
 msgstr "Mes demandes"
@@ -8473,6 +8600,7 @@ msgstr "Modèles"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -8777,6 +8905,7 @@ msgstr ""
 msgid "Normal"
 msgstr "Normal"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Not Assigned"
@@ -8915,6 +9044,7 @@ msgstr "Son de notification"
 msgid "Notification read"
 msgstr "Expéditeur de notification"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -8963,6 +9093,7 @@ msgid "OAuth2 token is expired!"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr ""
 
@@ -9117,6 +9248,12 @@ msgstr "Ouvrir la boîte des remarques"
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open tickets"
+msgstr "Billets ouverts"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -9486,6 +9623,11 @@ msgstr "Escalade du billet"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr "Supprimer définitivement la base de connaissances"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+msgid "Permission level for looking up tickets"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -10199,6 +10341,7 @@ msgstr "Renvoyer le courriel de vérification"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
@@ -10223,6 +10366,24 @@ msgstr "Réinitialiser les modifications"
 #| msgid "Reset Password"
 msgid "Reset overview order"
 msgstr "Réinitialiser le mot de passe"
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "Registration successful!"
+msgid "Reset successful."
+msgstr "Inscription réussie !"
+
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Reset to default"
+msgstr "Restaurer les défauts"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Reset to default settings"
+msgstr "Restaurer les défauts"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10507,6 +10668,8 @@ msgstr "Samedi"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
@@ -10659,15 +10822,18 @@ msgstr "Sécurité"
 msgid "Security Error"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Voir moins"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
@@ -10726,7 +10892,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
 #| msgid "Selector"
-msgid "Selective"
+msgid "Selective (default)"
 msgstr "Sélecteur"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
@@ -11084,6 +11250,14 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+msgid "Show matching ticket(s) in the warning"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Show matching tickets in the warning"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 #, fuzzy
 #| msgid "Show Search Details"
@@ -11126,6 +11300,12 @@ msgstr "Vue d'ensemble"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Afficher le titre sur le formulaire."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "How to use it"
+msgid "Show to user roles"
+msgstr "Comment l'utiliser"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -11219,6 +11399,12 @@ msgstr ""
 #| msgid "Signature"
 msgid "Signup Screen"
 msgstr "Signature"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Similar tickets found"
+msgstr "attribuer des billets"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -11554,7 +11740,7 @@ msgstr "Abonnez-vous au flux iCalendar"
 msgid "Subscribe to public holidays in"
 msgstr "Abonnez-vous aux jours fériés en"
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Subscribed Tickets"
 msgstr ""
 
@@ -11598,6 +11784,7 @@ msgid "Sync with computer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "System"
@@ -12149,7 +12336,6 @@ msgstr "%s Objet(s) mis à jour."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-#: app/assets/javascripts/app/models/setting.coffee
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The object could not be updated."
@@ -12260,6 +12446,14 @@ msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
+msgstr ""
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is missing."
+msgstr ""
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is unknown or missing."
 msgstr ""
 
 #: lib/idoit.rb
@@ -12429,6 +12623,18 @@ msgstr ""
 #: app/models/ticket/number.rb
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The setting could not be reset."
+msgstr "%s Objet(s) mis à jour."
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The setting could not be updated."
+msgstr "%s Objet(s) mis à jour."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -12755,7 +12961,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "This is an example payload for your installation, including any custom "
-"objects. It is possible to further customize payload of each Webhook."
+"objects. It is possible to further customize payload of each webhook."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -13011,6 +13217,7 @@ msgid "Ticket customer updated successfully."
 msgstr "Le test a réussi."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket escalation"
 msgstr "Escalade du billet"
 
@@ -13046,6 +13253,7 @@ msgid "Ticket information"
 msgstr "Bloquer les notifications"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket reminder reached"
 msgstr "Temps de rappel du billet atteint"
 
@@ -13100,6 +13308,7 @@ msgid "Ticket title"
 msgstr "Mise à jour du ticket"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket update"
 msgstr "Mise à jour du ticket"
 
@@ -13218,6 +13427,10 @@ msgstr "Billets d'utilisateur"
 #| msgid "Tickets of User"
 msgid "Tickets with \"%s\""
 msgstr "Billets d'utilisateur"
+
+#: db/seeds/settings.rb
+msgid "Tickets with the same attributes were found."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13360,6 +13573,12 @@ msgid ""
 msgstr ""
 "Pour faciliter les traductions, vous pouvez activer et désactiver la "
 "fonction de traduction en ligne en appuyant sur \"%s\"."
+
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid ""
+"To revert back to the default payload, simply turn off the \"Custom Payload"
+"\" switch above."
+msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -13945,6 +14164,7 @@ msgid "Used when viewing a Ticket"
 msgstr "Utilisé lors de la visualisation d'un billet"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
@@ -14240,6 +14460,20 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Warning"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Warning message"
+msgstr "Ajouter un tag"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Pending till"
+msgid "Warning title"
+msgstr "En attente jusqu'à"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
 msgid ""
@@ -14646,6 +14880,7 @@ msgid "Yellow"
 msgstr "Jaune"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee

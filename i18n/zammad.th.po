@@ -826,12 +826,6 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr "URL คล้ายแบบนี้: https://zammad.example.com"
 
-#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-msgid ""
-"A Webhook can be fired by Triggers and Schedulers, don't forget to define "
-"them!"
-msgstr ""
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "รายการแบ็กเอนด์นำเข้าที่ใช้งานอยู่ซึ่งได้รับการกำหนดเวลาโดยอัตโนมัติ"
@@ -879,6 +873,12 @@ msgstr "ticket อีกใบถูกรวมเข้าเป็น ticket 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "ต้องการ User!"
+
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+msgid ""
+"A webhook can be fired by triggers and schedulers, don't forget to define "
+"them!"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1358,6 +1358,7 @@ msgstr "เจ้าหน้าที่"
 msgid "Alarm"
 msgstr "การเตือน"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
 msgstr "Tickets ทั้งหมด"
@@ -1373,6 +1374,12 @@ msgstr "เพื่อนร่วมงานทุกคนไม่ว่า
 #: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr "คอมพิวเตอร์และเบราว์เซอร์ทั้งหมดที่เข้าถึง Zammad ของคุณจะปรากฏที่นี่"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "All Tickets"
+msgid "All tickets"
+msgstr "Tickets ทั้งหมด"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1402,7 +1409,7 @@ msgstr "อนุญาตให้ใช้ที่อยู่อีเมล
 msgid "Allow websites (separated by ;)"
 msgstr "อนุญาตเว็บไซต์ (คั่นด้วย ;)"
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Also notify via email"
 msgstr "แจ้งเตือนทางอีเมล์ด้วย"
 
@@ -1565,6 +1572,10 @@ msgstr "นำแบบร่างไปใช้"
 msgid "Apply Shared Draft"
 msgstr "ยืนยัน แบบร่างที่ใช้ร่วมกัน"
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+msgid "Apply current defaults to all agents"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1629,6 +1640,17 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 msgid "Are you sure?"
 msgstr "แน่ใจหรือ?"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? Default notifications settings will be applied to all agents."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? The agent default notifications settings will be reset to the "
+"system default."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #, fuzzy
 #| msgid ""
@@ -1655,6 +1677,14 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #| "Are you sure you want to reload? You have unsaved changes that will get "
 #| "lost"
 msgid "Are you sure? You have unsaved changes that will get lost."
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
+
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to reload? You have unsaved changes that will get "
+#| "lost"
+msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
@@ -1836,6 +1866,13 @@ msgstr ""
 msgid "Attributes"
 msgstr "แอตทริบิวต์"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Attributes"
+msgid "Attributes to compare"
+msgstr "แอตทริบิวต์"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1947,6 +1984,7 @@ msgid ""
 "set it to false."
 msgstr "โหลดไฟล์ chat.css โดยอัตโนมัติ หากคุณต้องการใช้ css ของคุณเอง ให้ตั้งค่าเป็น false."
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr "ใช้ได้สำหรับบทบาทต่อไปนี้"
@@ -2754,6 +2792,8 @@ msgstr "ลอกแบบ"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "ปิด"
 
@@ -2891,6 +2931,12 @@ msgstr "กำหนดค่าแอพ"
 msgid "Configure Basic Settings"
 msgstr "ตั้งค่าเบื้องต้น"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+#, fuzzy
+#| msgid "Config"
+msgid "Confirm"
+msgstr "การกำหนดค่า"
+
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 #, fuzzy
 #| msgid "Confirm/submit dialog"
@@ -2928,6 +2974,7 @@ msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
@@ -3611,9 +3658,21 @@ msgstr "ค่าปริยาย"
 msgid "Default Behavior"
 msgstr "พฤติกรรมปกติ"
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+#, fuzzy
+#| msgid "Disable Notifications"
+msgid "Default Notifications"
+msgstr "ปิดการแจ้งเตือน"
+
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr "หน้าจอเริ่มต้น"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Default Ticket Agent Notifications"
+msgstr "ปิดกั้นการแจ้งเตือน"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3684,6 +3743,12 @@ msgid ""
 msgstr ""
 "กำหนดคิวหรือปลายทางการโทร (สิ่งที่เหมาะกับ PBX ของคุณ) และจับคู่ตัวแทนของคุณกับมัน ด้วยเหตุนี้ "
 "Zammad สามารถสนับสนุนตัวแทนของคุณโดยแสดงเฉพาะรายการการโทรและการแจ้งเตือนที่เกี่ยวข้อง"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the default visibility for new notes."
+msgid "Define the default agent notifications for new users."
+msgstr "กำหนดการมองเห็นเริ่มต้นสำหรับบันทึกย่อใหม่"
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4238,6 +4303,12 @@ msgid ""
 msgstr "กำหนดชื่อแอปพลิเคชันที่แสดงในเว็บอินเตอร์เฟส แท็บ และแถบชื่อเรื่องของเว็บเบราว์เซอร์."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the permission level used for lookups."
+msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
+
+#: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
 msgstr "กำหนดพอร์ตของเซิร์ฟเวอร์ websocket"
 
@@ -4297,6 +4368,12 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr "กำหนดลักษณะการทำงานของแท็บหลังการดำเนินการกับ ticket"
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the ticket states used for lookups."
+msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
+
+#: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "กำหนดกรอบเวลาระหว่างที่บันทึกย่อที่สร้างขึ้นเองสามารถลบได้"
 
@@ -4345,8 +4422,33 @@ msgstr ""
 "clearbit.com)"
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the warning message that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the warning title that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines transaction backend."
 msgstr "กำหนดแบ็กเอนด์ transaction"
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines whether the matching tickets are shown in case of already existing "
+"tickets."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines which ticket attributes are checked before creating a ticket."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines which user roles will receive a warning in case of matching tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4542,6 +4644,13 @@ msgstr "D ผู้โทรปลายทาง"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Destination caller ID or queue"
 msgstr "ID ผู้โทรหรือคิวปลายทาง"
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable Ticket creation"
+msgid "Detect Duplicate Ticket Creation"
+msgstr "เปิดใช้งานการสร้าง Ticket"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4766,6 +4875,12 @@ msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
 msgstr "เนื่องจากไม่มีการใช้งาน คุณจะออกจากระบบโดยอัตโนมัติภายใน 30 วินาทีถัดไป"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
+#, fuzzy
+#| msgid "Application"
+msgid "Duplicate Detection"
+msgstr "โปรแกรม"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -5094,6 +5209,13 @@ msgstr "เปิดใช้งาน"
 #: db/seeds/settings.rb
 msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "เปิดใช้งานแถบด้านข้างเพื่อแสดงภาพรวมของไฟล์แนบทั้งหมด"
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+msgid ""
+"Enables a warning to users during ticket creation if there is an existing "
+"ticket with the same attributes."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -7650,6 +7772,11 @@ msgstr ""
 msgid "Match none (NOT)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+msgid "Match tickets in following states"
+msgstr ""
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
 msgstr "วัสดุ"
@@ -8011,8 +8138,8 @@ msgstr "กิจกรรมรวม"
 msgid "My Subscribed Tickets"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
 msgstr "Tickets ของฉัน"
@@ -8224,6 +8351,7 @@ msgstr "แม่แบบ"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -8520,6 +8648,7 @@ msgstr "ไม่มี"
 msgid "Normal"
 msgstr "ปกติ"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Not Assigned"
@@ -8657,6 +8786,7 @@ msgstr "เสียงแจ้งเตือน"
 msgid "Notification read"
 msgstr "ส่งการแจ้งเตือน"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -8705,6 +8835,7 @@ msgid "OAuth2 token is expired!"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr ""
 
@@ -8852,6 +8983,12 @@ msgstr "เปิดกล่องโน้ต"
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open tickets"
+msgstr "เปิด Ticket"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 #, fuzzy
@@ -9201,6 +9338,11 @@ msgstr "ข้อมูลข่าวสาร"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr "ลบศูนย์การเรียนรู้อย่างถาวร"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+msgid "Permission level for looking up tickets"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9881,6 +10023,7 @@ msgstr "ส่งอีเมลยืนยันอีกครั้ง"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
@@ -9903,6 +10046,24 @@ msgstr "รีเซ็ตการเปลี่ยนแปลง"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Reset overview order"
 msgstr "รีเซ็ตลําดับภาพรวม"
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "Update successful."
+msgid "Reset successful."
+msgstr "อัปเดตสำเร็จแล้ว"
+
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Reset to default"
+msgstr "เรียกคืนค่าเริ่มต้น"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Reset to default settings"
+msgstr "เรียกคืนค่าเริ่มต้น"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10189,6 +10350,8 @@ msgstr "วันเสาร์"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
@@ -10339,15 +10502,18 @@ msgstr "ระบบความปลอดภัย"
 msgid "Security Error"
 msgstr "ข้อผิดพลาดด้านความปลอดภัย"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
@@ -10402,7 +10568,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/trigger.coffee
 #, fuzzy
 #| msgid "Selector"
-msgid "Selective"
+msgid "Selective (default)"
 msgstr "ตัวเลือก"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
@@ -10724,6 +10890,14 @@ msgstr "แสดงแชทอัตโนมัติ"
 msgid "Show less"
 msgstr "แสดงน้อยลง"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+msgid "Show matching ticket(s) in the warning"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Show matching tickets in the warning"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
 msgstr "แสดง meta data"
@@ -10760,6 +10934,12 @@ msgstr "ภาพรวม Ticket ทั้งหมด"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "แสดงชื่อเรื่องในแบบฟอร์ม"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "How to use it"
+msgid "Show to user roles"
+msgstr "วิธีใช้งาน"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10849,6 +11029,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr "หน้าจอลงทะเบียน"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s tickets"
+msgid "Similar tickets found"
+msgstr "%s tickets"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -11182,7 +11368,7 @@ msgstr ""
 msgid "Subscribe to public holidays in"
 msgstr ""
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Subscribed Tickets"
 msgstr ""
 
@@ -11226,6 +11412,7 @@ msgid "Sync with computer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "System"
@@ -11750,7 +11937,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-#: app/assets/javascripts/app/models/setting.coffee
 msgid "The object could not be updated."
 msgstr ""
 
@@ -11859,6 +12045,18 @@ msgstr "ไม่มีค่าการจับคู่ที่จำเป
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required event field 'execution' is missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+#, fuzzy
+#| msgid "The required parameter 'payload->class_name' is missing."
+msgid "The required event field 'execution' is unknown or missing."
+msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -12035,6 +12233,18 @@ msgstr ""
 #: app/models/ticket/number.rb
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The setting could not be reset."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "The setting could not be updated."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -12335,7 +12545,7 @@ msgstr "ขอความเริ่มต้นบำรุงรักษา
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid ""
 "This is an example payload for your installation, including any custom "
-"objects. It is possible to further customize payload of each Webhook."
+"objects. It is possible to further customize payload of each webhook."
 msgstr ""
 
 #: app/models/channel/email_parser.rb
@@ -12588,6 +12798,7 @@ msgid "Ticket customer updated successfully."
 msgstr "การทดสอบดำเนินการสำเร็จ"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket escalation"
 msgstr "Ticket ขยาย"
 
@@ -12621,6 +12832,7 @@ msgid "Ticket information"
 msgstr "แจ้งเตือน Ticket."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket reminder reached"
 msgstr "Ticket เตือนความจำแล้ว"
 
@@ -12675,6 +12887,7 @@ msgid "Ticket title"
 msgstr "Ticket อัปเดต"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket update"
 msgstr "Ticket อัปเดต"
 
@@ -12786,6 +12999,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 msgid "Tickets with \"%s\""
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Tickets with the same attributes were found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
@@ -12920,6 +13137,12 @@ msgstr ""
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\"."
+msgstr ""
+
+#: app/assets/javascripts/app/models/webhook.coffee
+msgid ""
+"To revert back to the default payload, simply turn off the \"Custom Payload"
+"\" switch above."
 msgstr ""
 
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -13492,6 +13715,7 @@ msgid "Used when viewing a Ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
@@ -13782,6 +14006,20 @@ msgstr "กำลังรออยู่ใน %s"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Warning"
+msgstr "คำเตือน"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add image"
+msgid "Warning message"
+msgstr "เพิ่มรูป"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Warning"
+msgid "Warning title"
 msgstr "คำเตือน"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
@@ -14151,6 +14389,7 @@ msgid "Yellow"
 msgstr "เหลือง"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee

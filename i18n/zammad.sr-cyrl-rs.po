@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-04-21 03:05+0000\n"
+"PO-Revision-Date: 2023-05-03 11:24+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -818,14 +818,6 @@ msgstr ""
 msgid "A URL looks like this: https://zammad.example.com"
 msgstr "URL изгледа овако: https://zammad.example.com"
 
-#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
-msgid ""
-"A Webhook can be fired by Triggers and Schedulers, don't forget to define "
-"them!"
-msgstr ""
-"Повратни позив се може извршити окидачима или планерима, не заборавите да их "
-"дефинишете!"
-
 #: db/seeds/settings.rb
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "Листа активних позадинских модула увоза који се аутоматски планирају."
@@ -874,6 +866,18 @@ msgstr "Није могуће спојити тикет са самим собо
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee
 msgid "A user is required!"
 msgstr "Корисник је обавезан!"
+
+#: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco
+#, fuzzy
+#| msgid ""
+#| "A Webhook can be fired by Triggers and Schedulers, don't forget to define "
+#| "them!"
+msgid ""
+"A webhook can be fired by triggers and schedulers, don't forget to define "
+"them!"
+msgstr ""
+"Повратни позив се може извршити окидачима или планерима, не заборавите да их "
+"дефинишете!"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 #: app/assets/javascripts/app/views/api.jst.eco db/seeds/permissions.rb
@@ -1366,6 +1370,7 @@ msgstr "Оператери"
 msgid "Alarm"
 msgstr "Аларм"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "All Tickets"
 msgstr "Сви тикети"
@@ -1383,6 +1388,12 @@ msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Сви рачунари и претраживачи којима се приступа Zammad-у ће бити излистани "
 "овде."
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "All Tickets"
+msgid "All tickets"
+msgstr "Сви тикети"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Allow future"
@@ -1412,7 +1423,7 @@ msgstr "Дозволи коришћење једне имејл адресе о�
 msgid "Allow websites (separated by ;)"
 msgstr "Дозволи веб странице (одвојено са ;)"
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Also notify via email"
 msgstr "Такође обавести имејлом"
 
@@ -1590,6 +1601,10 @@ msgstr "Примени нацрт"
 msgid "Apply Shared Draft"
 msgstr "Примени заједнички нацрт"
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+msgid "Apply current defaults to all agents"
+msgstr "Примени подешавања свим оператерима"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1650,6 +1665,21 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Да ли сте сигурни?"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? Default notifications settings will be applied to all agents."
+msgstr ""
+"Да ли сте сигурни? Подразумевана подешавања обавештења ће бити примењена на "
+"све оператере."
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid ""
+"Are you sure? The agent default notifications settings will be reset to the "
+"system default."
+msgstr ""
+"Да ли сте сигурни? Подразумевана подешавања обавештења оператера ће бити "
+"поништена и враћена на системску вредност."
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 msgid "Are you sure? The prepared article will be removed."
 msgstr "Да ли сте сигурни? Ваше незапамћени чланак ће бити изгубљен."
@@ -1665,6 +1695,10 @@ msgstr "Да ли сте сигурни? Имате измене које ће �
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Да ли сте сигурни? Имате незапамћене измене које ће бити изгубљене."
+
+#: app/assets/javascripts/app/controllers/_profile/notification.coffee
+msgid "Are you sure? Your notifications settings will be reset to default."
+msgstr "Да ли сте сигурни? Ваша подешавања обавештења ће бити поништена."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -1852,6 +1886,13 @@ msgstr ""
 msgid "Attributes"
 msgstr "Атрибути"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Attributes"
+msgid "Attributes to compare"
+msgstr "Атрибути"
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
 #: app/assets/javascripts/app/controllers/time_accounting.coffee
@@ -1953,6 +1994,7 @@ msgstr ""
 "Аутоматски учитава chat.css датотеку. Уколико желите да користите своје "
 "стилове, подесите на false."
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/models/overview.coffee
 msgid "Available for the following roles"
 msgstr "Доступно следећим улогама"
@@ -2745,6 +2787,8 @@ msgstr "Клонирај"
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "Close"
 msgstr "Затвори"
 
@@ -2880,6 +2924,10 @@ msgstr "Подеси апликацију"
 msgid "Configure Basic Settings"
 msgstr "Подеси основна подешавања"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
+msgid "Confirm"
+msgstr "Потврди"
+
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
 msgid "Confirm dialog"
 msgstr "Дијалог потврде"
@@ -2926,6 +2974,7 @@ msgstr "Потврди/пошаљи дијалог"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
@@ -3587,9 +3636,17 @@ msgstr "Подразумевано"
 msgid "Default Behavior"
 msgstr "Подразумевано понашање"
 
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+msgid "Default Notifications"
+msgstr "Подразумевана обавештења"
+
 #: db/seeds/settings.rb
 msgid "Default Screen"
 msgstr "Подразумевана страна"
+
+#: db/seeds/settings.rb
+msgid "Default Ticket Agent Notifications"
+msgstr "Подразумевана подешавања обавештења оператера"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
@@ -3663,6 +3720,10 @@ msgstr ""
 "Одређује редове или одредишта позива (шта год одговара вашем PBX) и мапира "
 "ваше оператере. На овај начин, Zammad може приказати само релевантне позиве "
 "и обавештења."
+
+#: db/seeds/settings.rb
+msgid "Define the default agent notifications for new users."
+msgstr "Одређује подразумевана обавештења оператера за нове кориснике."
 
 #: db/seeds/settings.rb
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4279,6 +4340,12 @@ msgstr ""
 "наслову веб претраживача."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the permission level used for lookups."
+msgstr "Одређује позадински модул за тражење сличица корисника и организација."
+
+#: db/seeds/settings.rb
 msgid "Defines the port of the websocket server."
 msgstr "Одређује број порта websocket сервера."
 
@@ -4345,6 +4412,12 @@ msgid "Defines the tab behaviour after a ticket action."
 msgstr "Одређује понашање прозора након радње тикета."
 
 #: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Defines the backend for user and organization image lookups."
+msgid "Defines the ticket states used for lookups."
+msgstr "Одређује позадински модул за тражење сличица корисника и организација."
+
+#: db/seeds/settings.rb
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Одређује временски интервал током ког је могуће обрисати управо додату "
@@ -4397,8 +4470,33 @@ msgstr ""
 "организацијама путем Clearbit (http://www.clearbit.com)."
 
 #: db/seeds/settings.rb
+msgid ""
+"Defines the warning message that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines the warning title that is shown when a matching ticket is present."
+msgstr ""
+
+#: db/seeds/settings.rb
 msgid "Defines transaction backend."
 msgstr "Одређује позадински модул."
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines whether the matching tickets are shown in case of already existing "
+"tickets."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Defines which ticket attributes are checked before creating a ticket."
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid ""
+"Defines which user roles will receive a warning in case of matching tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
@@ -4584,6 +4682,13 @@ msgstr "Одредишни ID позиваоца"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Destination caller ID or queue"
 msgstr "Одредишни ID позиваоца или ред"
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Enable Ticket creation"
+msgid "Detect Duplicate Ticket Creation"
+msgstr "Укључи отварање тикета"
 
 #: db/seeds/settings.rb
 msgid "Developer System"
@@ -4805,6 +4910,12 @@ msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
 msgstr "Услед неактивности, бићете аутоматски одјављени у наредних 30 секунди."
+
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
+#, fuzzy
+#| msgid "Application"
+msgid "Duplicate Detection"
+msgstr "Апликација"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco
 msgid "Duration"
@@ -5144,6 +5255,13 @@ msgstr "Укључено"
 #: db/seeds/settings.rb
 msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "Укључује траку са стране за приказ свих прилога."
+
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: db/seeds/settings.rb
+msgid ""
+"Enables a warning to users during ticket creation if there is an existing "
+"ticket with the same attributes."
+msgstr ""
 
 #: db/seeds/settings.rb
 msgid ""
@@ -7728,6 +7846,13 @@ msgstr "Дисјункција (OR)"
 msgid "Match none (NOT)"
 msgstr "Негација (NOT)"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Match all of the following"
+msgid "Match tickets in following states"
+msgstr "Уколико се следеће подудара"
+
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Material"
 msgstr "Material"
@@ -7891,10 +8016,8 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Регистрациони портал Microsoft 365 апликације"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb
-#, fuzzy
-#| msgid "Mattermost Notifications"
 msgid "Microsoft Teams Notifications"
-msgstr "Mattermost обавештења"
+msgstr "Microsoft Teams обавештења"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
@@ -8071,8 +8194,8 @@ msgstr "Моје статистике"
 msgid "My Subscribed Tickets"
 msgstr "Тикети на које сам претплаћен(a)"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: db/seeds/overviews.rb
 msgid "My Tickets"
 msgstr "Моји тикети"
@@ -8284,6 +8407,7 @@ msgstr "Нови шаблон"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee
@@ -8604,6 +8728,7 @@ msgstr "Празно"
 msgid "Normal"
 msgstr "Нормално"
 
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 msgid "Not Assigned"
@@ -8735,6 +8860,7 @@ msgstr "Звук обавештења"
 msgid "Notification read"
 msgstr "Прочитано обавештење"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
@@ -8781,6 +8907,7 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2 кључ је истекао!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue
+#: app/frontend/apps/mobile/components/Ticket/TicketDuplicateDetectionDialog.vue
 msgid "OK"
 msgstr "У реду"
 
@@ -8927,6 +9054,12 @@ msgstr "Отвори поље напомене"
 #: db/seeds/settings.rb
 msgid "Open ticket indicator"
 msgstr "Отвори индикатор тикета"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open tickets"
+msgstr "Отворени тикети"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue
 msgid "Opened in tabs"
@@ -9267,6 +9400,11 @@ msgstr "Изврши акције"
 #: app/assets/javascripts/app/views/knowledge_base/delete.coffee
 msgid "Permanently Delete Knowledge Base"
 msgstr "Трајно обриши базу знања"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+msgid "Permission level for looking up tickets"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
@@ -9934,6 +10072,7 @@ msgstr "Пошаљи поново имејл поруку за потврду"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/translation/list.jst.eco
 msgid "Reset"
@@ -9956,6 +10095,18 @@ msgstr "Поништи промене"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Reset overview order"
 msgstr "Поништи редослед прегледа"
+
+#: app/assets/javascripts/app/models/setting.coffee
+msgid "Reset successful."
+msgstr "Успешно поништено."
+
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
+msgid "Reset to default"
+msgstr "Поништи вредности"
+
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid "Reset to default settings"
+msgstr "Поништи на подразумеване вредности"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10279,6 +10430,8 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco
+#: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue
@@ -10423,15 +10576,18 @@ msgstr "Безбедност"
 msgid "Security Error"
 msgstr "Безбедносна грешка"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See less"
 msgstr "Прикажи мање"
 
+#: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_view.coffee
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco
+#: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue
 msgid "See more"
@@ -10486,8 +10642,8 @@ msgid "Selected conditions"
 msgstr "Одабрани услови"
 
 #: app/assets/javascripts/app/models/trigger.coffee
-msgid "Selective"
-msgstr "Селективно"
+msgid "Selective (default)"
+msgstr "Селективно (подразумевано)"
 
 #: app/assets/javascripts/app/views/time_accounting/index.jst.eco
 msgid "Selector"
@@ -10810,6 +10966,14 @@ msgstr "Прикажи ћаскање аутоматски"
 msgid "Show less"
 msgstr "Прикажи мање"
 
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+msgid "Show matching ticket(s) in the warning"
+msgstr ""
+
+#: db/seeds/settings.rb
+msgid "Show matching tickets in the warning"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts
 msgid "Show meta data"
 msgstr "Прикажи мета податке"
@@ -10847,6 +11011,12 @@ msgstr "Прикажи гледаоце тикета"
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Show title in form."
 msgstr "Прикажи наслов у форми."
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "How to use it"
+msgid "Show to user roles"
+msgstr "Како се користи"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -10933,6 +11103,12 @@ msgstr "Потписано"
 #: app/assets/javascripts/app/models/public_link.coffee
 msgid "Signup Screen"
 msgstr "Страна регистрације"
+
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "%s tickets found"
+msgid "Similar tickets found"
+msgstr "%s тикет(а) пронађен(о)"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Simple Line Icons"
@@ -11256,7 +11432,7 @@ msgstr "Претплати се на iCalendar извор"
 msgid "Subscribe to public holidays in"
 msgstr "Претплати се на државне празнике у"
 
-#: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
 msgid "Subscribed Tickets"
 msgstr "Претплаћени тикети"
 
@@ -11298,6 +11474,7 @@ msgid "Sync with computer"
 msgstr "Синхронизуј са рачунаром"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/manage.coffee db/seeds/permissions.rb
 #: db/seeds/ticket_article_senders.rb
 msgid "System"
@@ -11821,7 +11998,6 @@ msgstr "Није пронађен објекат."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee
 #: app/assets/javascripts/app/controllers/object_manager.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee
-#: app/assets/javascripts/app/models/setting.coffee
 msgid "The object could not be updated."
 msgstr "Није било могуће освежити објекат."
 
@@ -11924,6 +12100,14 @@ msgstr "Недостаје обавезна вредност ’%{attribute}’ 
 #: app/controllers/channels_twitter_controller.rb
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr "Није пронађен обавезни ’ExternalCredential’ ’twitter’."
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is missing."
+msgstr "Није пронађен обавезни параметар ’execution’."
+
+#: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb
+msgid "The required event field 'execution' is unknown or missing."
+msgstr "Недостаје обавезно поље догађаја ’execution’."
 
 #: lib/idoit.rb
 msgid "The required field 'api_token' is missing from the config."
@@ -12097,6 +12281,16 @@ msgstr "Подешавање ’storage_provider’ није постављен�
 #: app/models/ticket/number.rb
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Подешавање ’ticket_number’ није постављено."
+
+#: app/assets/javascripts/app/models/setting.coffee
+#, fuzzy
+#| msgid "The setting could not be reseted."
+msgid "The setting could not be reset."
+msgstr "Није било могуће поништити подешавање."
+
+#: app/assets/javascripts/app/models/setting.coffee
+msgid "The setting could not be updated."
+msgstr "Није било могуће освежити подешавање."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee
 msgid "The sign-in failed. Please contact the Support team."
@@ -12395,9 +12589,13 @@ msgid "This is a default maintenance message. Click here to change."
 msgstr "Ово је подразумевана порука одржавања. Кликните овде да је промените."
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
+#, fuzzy
+#| msgid ""
+#| "This is an example payload for your installation, including any custom "
+#| "objects. It is possible to further customize payload of each Webhook."
 msgid ""
 "This is an example payload for your installation, including any custom "
-"objects. It is possible to further customize payload of each Webhook."
+"objects. It is possible to further customize payload of each webhook."
 msgstr ""
 "Ово је пример података за вашу инсталацију, укључујући прилагођене објекте. "
 "Могуће је додатно прилагодити податке сваког повратног позива."
@@ -12656,6 +12854,7 @@ msgid "Ticket customer updated successfully."
 msgstr "Клијент тикета је успешно освежен."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket escalation"
 msgstr "Ескалација тикета"
 
@@ -12681,6 +12880,7 @@ msgid "Ticket information"
 msgstr "Информације тикета"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket reminder reached"
 msgstr "Достигнуто време чекања тикета"
 
@@ -12751,6 +12951,7 @@ msgid "Ticket title"
 msgstr "Наслов тикета"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 msgid "Ticket update"
 msgstr "Освежавање тикета"
 
@@ -12879,6 +13080,10 @@ msgstr "Тикети корисника"
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 msgid "Tickets with \"%s\""
 msgstr "Тикети са „%s”"
+
+#: db/seeds/settings.rb
+msgid "Tickets with the same attributes were found."
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco
@@ -13019,6 +13224,18 @@ msgid ""
 msgstr ""
 "Да бисте олакшали превођење можете укључити или искључити функцију "
 "непосредног превода притиском на „%s”."
+
+#: app/assets/javascripts/app/models/webhook.coffee
+#, fuzzy
+#| msgid ""
+#| "To revert back to default payload, simply turn off Custom Payload switch "
+#| "above."
+msgid ""
+"To revert back to the default payload, simply turn off the \"Custom Payload"
+"\" switch above."
+msgstr ""
+"За повратак на подразумеване податке, једноставно искључите дугме "
+"„Прилагођени подаци” изнад."
 
 #: app/assets/javascripts/app/models/text_module.coffee
 msgid "To select placeholders from a list, just enter \"::\"."
@@ -13610,6 +13827,7 @@ msgid "Used when viewing a Ticket"
 msgstr "Користи се приликом гледања тикета"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee
@@ -13901,6 +14119,20 @@ msgstr "На чекању у %s"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid "Warning"
+msgstr "Упозорење"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Add a message"
+msgid "Warning message"
+msgstr "Напиши поруку"
+
+#: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: db/seeds/settings.rb
+#, fuzzy
+#| msgid "Warning"
+msgid "Warning title"
 msgstr "Упозорење"
 
 #: public/assets/chat/views/waiting_list_timeout.eco
@@ -14284,6 +14516,7 @@ msgid "Yellow"
 msgstr "Жута"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee
+#: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 #: app/assets/javascripts/app/controllers/tag.coffee
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.coffee
