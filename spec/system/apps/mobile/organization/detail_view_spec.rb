@@ -10,7 +10,8 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
 
   def open_organization
     visit "/organizations/#{organization.id}"
-    wait_for_gql('apps/mobile/entities/organization/graphql/queries/organization.graphql')
+    wait_for_query('organization')
+    wait_for_subscription_start('organizationUpdates')
   end
 
   context 'when visiting as agent', authenticated_as: :agent do
@@ -28,7 +29,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
 
       organization.update!(name: 'Some New Name')
 
-      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql')
+      wait_for_subscription_update('organizationUpdates')
 
       expect(page).to have_text('Some New Name')
     end
@@ -52,7 +53,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
       organization[attribute.name] = 'Updated Text'
       organization.save!
 
-      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql')
+      wait_for_subscription_update('organizationUpdates')
 
       expect(domain).to have_text('Updated Text')
     end
@@ -76,7 +77,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
 
       # Check updated member list.
       members << create(:customer, organization: organization)
-      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql')
+      wait_for_subscription_update('organizationUpdates')
 
       expect(page).to have_button('Show 3 more')
       click_button('Show 3 more')
@@ -85,7 +86,7 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
         .and have_text(members.last.fullname)
 
       members << create(:customer, organization: organization)
-      wait_for_gql('apps/mobile/entities/organization/graphql/subscriptions/organizationUpdates.graphql', number: 2)
+      wait_for_subscription_update('organizationUpdates', number: 2)
       expect(page).to have_text(members.last.fullname)
     end
   end
