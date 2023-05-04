@@ -41,6 +41,11 @@ RSpec.describe 'Twitter > Account Activity API', integration: true, required_env
   end
 
   before :all do # rubocop:disable RSpec/BeforeAfterAll
+    # TODO: Remove this once we have working apps for the Twitter API again.
+    if VCR.configuration.allow_http_connections_when_no_cassette?
+      skip 'This test is currently not working in the live mode due to having suspended apps for the Twitter API.'
+    end
+
     if %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
       RSpecTwitter::Helper.new(auth_data_search_app).delete_old_tweets
       RSpecTwitter::Helper.new(auth_data_channel_app).delete_old_tweets
