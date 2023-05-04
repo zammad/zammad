@@ -20,6 +20,10 @@ class CoreWorkflow::Custom::Backend
     @condition_object.attributes.instance_of?(object)
   end
 
+  def screen?(screen)
+    @result_object.payload['screen'] == screen
+  end
+
   def selected
     @condition_object.attribute_object.selected
   end
@@ -40,7 +44,7 @@ class CoreWorkflow::Custom::Backend
     @condition_object.payload['params']
   end
 
-  def result(backend, field, value = nil)
-    @result_object.run_backend_value(backend, field, value)
+  def result(backend, field, value = nil, skip_rerun: false)
+    @result_object.run_backend_value(backend, field, value, skip_rerun: skip_rerun)
   end
 end

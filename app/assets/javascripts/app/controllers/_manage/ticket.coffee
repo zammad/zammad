@@ -6,10 +6,11 @@ class Ticket extends App.ControllerTabs
 
     @title('Ticket', true)
     @tabs = [
-      { name: __('Base'),            'target': 'base',            controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
-      { name: __('Number'),          'target': 'number',          controller: App.SettingsArea, params: { area: 'Ticket::Number' } }
-      { name: __('Auto Assignment'), 'target': 'auto_assignment', controller: App.SettingTicketAutoAssignment }
-      { name: __('Notifications'), 'target': 'notification', controller: App.SettingTicketNotifications }
+      { name: __('Base'),                target: 'base',                controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
+      { name: __('Number'),              target: 'number',              controller: App.SettingsArea, params: { area: 'Ticket::Number' } }
+      { name: __('Auto Assignment'),     target: 'auto_assignment',     controller: App.SettingTicketAutoAssignment }
+      { name: __('Notifications'),       target: 'notification',        controller: App.SettingTicketNotifications }
+      { name: __('Duplicate Detection'), target: 'duplicate_detection', controller: App.SettingTicketDuplicateDetection }
     ]
     @render()
 

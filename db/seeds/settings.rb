@@ -2455,6 +2455,151 @@ Setting.create_or_update(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Detect Duplicate Ticket Creation'),
+  name:        'ticket_duplicate_detection',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Enables a warning to users during ticket creation if there is an existing ticket with the same attributes.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'ticket_duplicate_detection',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       false,
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Attributes to compare'),
+  name:        'ticket_duplicate_detection_attributes',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines which ticket attributes are checked before creating a ticket.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       [],
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Warning title'),
+  name:        'ticket_duplicate_detection_title',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines the warning title that is shown when a matching ticket is present.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       __('Similar tickets found'),
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Warning message'),
+  name:        'ticket_duplicate_detection_body',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines the warning message that is shown when a matching ticket is present.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       __('Tickets with the same attributes were found.'),
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Show to user roles'),
+  name:        'ticket_duplicate_detection_role_ids',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines which user roles will receive a warning in case of matching tickets.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       [2],
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Show matching tickets in the warning'),
+  name:        'ticket_duplicate_detection_show_tickets',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines whether the matching tickets are shown in case of already existing tickets.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       true,
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Permission level for looking up tickets'),
+  name:        'ticket_duplicate_detection_permission_level',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines the permission level used for lookups.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection'],
+  },
+  state:       'user',
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('Match tickets in following states'),
+  name:        'ticket_duplicate_detection_search',
+  area:        'Web::TicketDuplicateDetection',
+  description: __('Defines the ticket states used for lookups.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  state:       'all',
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ticket_duplicate_detection']
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
   title:       __('Ticket Number ignore system_id'),
   name:        'ticket_number_ignore_system_id',
   area:        'Ticket::Core',

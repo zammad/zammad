@@ -477,6 +477,7 @@ class App.TicketCreate extends App.Controller
 
     handlers = @Config.get('TicketCreateFormHandler')
 
+    pre_top     = { ticket_duplicate_detection: { name: 'ticket_duplicate_detection', display: 'ticket_duplicate_detection', tag: 'ticket_duplicate_detection', label_class: 'hidden', renderTarget: '.ticket-form-top', null: true } }
     top         = App.Ticket.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-top')
     article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.article-form-top')
     middle      = App.Ticket.attributesGet('create_middle', attributes = false, noDefaultAttributes = false, className = undefined, renderTarget = '.ticket-form-middle')
@@ -487,7 +488,7 @@ class App.TicketCreate extends App.Controller
       form_id:                  @formId
       model:                    App.Ticket
       screen:                   'create_middle'
-      mixedAttributes:          Object.assign({}, top, article_top, middle, bottom)
+      mixedAttributes:          Object.assign({}, pre_top, top, article_top, middle, bottom)
       handlersConfig:           handlers
       formMeta:                 @formMeta
       params:                   params

@@ -92,3 +92,23 @@ CoreWorkflow.create_if_not_exists(
   created_by_id:      1,
   updated_by_id:      1,
 )
+CoreWorkflow.create_if_not_exists(
+  name:            'base - ticket duplicate detection with same attributes',
+  object:          'Ticket',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::TicketDuplicateDetection',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::TicketDuplicateDetection']
+    },
+  },
+  changeable:      false,
+  created_by_id:   1,
+  updated_by_id:   1,
+)

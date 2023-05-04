@@ -6,26 +6,32 @@ RSpec.describe 'Manage > Settings > Ticket', type: :system do
 
   before { visit 'settings/ticket' }
 
-  describe 'owner auto-assignment' do
-
-    it 'enables/disables Setting ticket_auto_assignment' do
-
+  shared_examples 'switching setting on and off' do |section_name, setting_name|
+    it "switches #{setting_name} setting on and off" do
       within(:active_content) do
-        click(:href, '#auto_assignment')
-        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: :hidden)
-        find('.js-ticketAutoAssignment').click
-        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: :hidden)
+        click(:href, "##{section_name}")
+        expect(page).to have_field(setting_name, checked: false, visible: :hidden)
+        click "label[for=\"#{setting_name}\"]"
+        expect(page).to have_field(setting_name, checked: true, visible: :hidden)
       end
 
       refresh
 
       within(:active_content) do
-        click(:href, '#auto_assignment')
-        expect(page).to have_field('ticket_auto_assignment', checked: true, visible: :hidden)
-        find('.js-ticketAutoAssignment').click
-        expect(page).to have_field('ticket_auto_assignment', checked: false, visible: :hidden)
+        click(:href, "##{section_name}")
+        expect(page).to have_field(setting_name, checked: true, visible: :hidden)
+        click "label[for=\"#{setting_name}\"]"
+        expect(page).to have_field(setting_name, checked: false, visible: :hidden)
       end
     end
+  end
+
+  describe 'Auto Assignment' do
+    it_behaves_like 'switching setting on and off', 'auto_assignment', 'ticket_auto_assignment'
+  end
+
+  describe 'Duplicate Detection' do
+    it_behaves_like 'switching setting on and off', 'duplicate_detection', 'ticket_duplicate_detection'
   end
 
   describe 'default agent notifications' do

@@ -31,12 +31,18 @@ import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEdit
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
+import TicketDuplicateDetectionDialog from '#mobile/components/Ticket/TicketDuplicateDetectionDialog.vue'
 // No usage of "type" because of: https://github.com/typescript-eslint/typescript-eslint/issues/5468
 import { errorOptions } from '#mobile/router/error.ts'
 import useConfirmation from '#mobile/components/CommonConfirmation/composable.ts'
+import {
+  useTicketDuplicateDetectionHandler,
+  type TicketDuplicateDetectionPayload,
+} from '#mobile/pages/ticket/composable/useTicketDuplicateDetectionHandler.ts'
 import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
+import { useDialog } from '#shared/composables/useDialog.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
 
@@ -166,6 +172,10 @@ const ticketMetaInformationSection = getFormSchemaGroupSection(
       isLayout: true,
       component: 'FormGroup',
       children: [
+        {
+          name: 'ticket_duplicate_detection',
+          type: 'hidden',
+        },
         {
           screen: 'create_top',
           object: EnumObjectManagerObjects.Ticket,
@@ -427,6 +437,20 @@ onBeforeRouteLeave(async () => {
 })
 
 const { signatureHandling } = useTicketSignature()
+
+const ticketDuplicateDetectionDialog = useDialog({
+  name: 'duplicate-ticket-detection',
+  component: async () => TicketDuplicateDetectionDialog,
+})
+
+const showTicketDuplicateDetectionDialog = (
+  data: TicketDuplicateDetectionPayload,
+) => {
+  ticketDuplicateDetectionDialog.open({
+    name: 'duplicate-ticket-detection',
+    tickets: data.items,
+  })
+}
 </script>
 
 <script lang="ts">
@@ -497,7 +521,11 @@ export default {
       ref="form"
       class="pb-32 text-left"
       :schema="formSchema"
-      :handlers="[useTicketFormOganizationHandler(), signatureHandling('body')]"
+      :handlers="[
+        useTicketFormOganizationHandler(),
+        signatureHandling('body'),
+        useTicketDuplicateDetectionHandler(showTicketDuplicateDetectionDialog),
+      ]"
       :flatten-form-groups="Object.keys(allSteps)"
       :schema-data="schemaData"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"

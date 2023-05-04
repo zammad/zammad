@@ -55,7 +55,7 @@ class CoreWorkflow::Condition
   end
 
   def condition_value_match?(key, condition, value)
-    "CoreWorkflow::Condition::#{condition['operator'].tr(' ', '_').camelize}".constantize&.new(condition_object: self, key: key, condition: condition, value: value)&.match
+    "CoreWorkflow::Condition::#{condition['operator'].tr(' ', '_').camelize}".constantize&.new(condition_object: self, result_object: result_object, key: key, condition: condition, value: value)&.match
   end
 
   def condition_match?(key, condition)

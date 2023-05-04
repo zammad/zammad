@@ -1,9 +1,10 @@
 # Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 class CoreWorkflow::Condition::Backend
-  def initialize(condition_object:, key:, condition:, value:)
+  def initialize(condition_object:, result_object:, key:, condition:, value:)
     @key              = key
     @condition_object = condition_object
+    @result_object    = result_object
     @condition        = condition
     @value            = value
   end

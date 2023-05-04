@@ -517,8 +517,8 @@ get count of tickets and tickets which match on selector
     ActiveRecord::Base.transaction(requires_new: true) do
 
       if !current_user || access == 'ignore'
-        ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
-        tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
+        ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).reorder(options[:order_by]).count
+        tickets = Ticket.distinct.where(query, *bind_params).joins(tables).reorder(options[:order_by]).limit(limit)
         next [ticket_count, tickets]
       end
 
@@ -527,6 +527,7 @@ get count of tickets and tickets which match on selector
                                                        .distinct
                                                        .where(query, *bind_params)
                                                        .joins(tables)
+                                                       .reorder(options[:order_by])
 
       next [tickets.count, tickets.limit(limit)]
     rescue ActiveRecord::StatementInvalid => e

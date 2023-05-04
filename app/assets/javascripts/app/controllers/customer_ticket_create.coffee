@@ -32,6 +32,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
       form_id: @form_id
     )
 
+    pre_top     = { ticket_duplicate_detection: { name: 'ticket_duplicate_detection', display: 'ticket_duplicate_detection', tag: 'ticket_duplicate_detection', label_class: 'hidden', renderTarget: '.ticket-form-top', null: true } }
     top         = App.Ticket.attributesGet('create_top', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.ticket-form-top')
     article_top = App.TicketArticle.attributesGet('create_top', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.article-form-top')
     middle      = App.Ticket.attributesGet('create_middle', attributes = false, noDefaultAttributes = true, className = undefined, renderTarget = '.ticket-form-middle')
@@ -42,7 +43,7 @@ class CustomerTicketCreate extends App.ControllerAppContent
       form_id:                 @form_id
       model:                   App.Ticket
       screen:                  'create_middle'
-      mixedAttributes:         Object.assign({}, top, article_top, middle, bottom)
+      mixedAttributes:         Object.assign({}, pre_top, top, article_top, middle, bottom)
       params:                  defaults
       noFieldset:              true
       handlersConfig:          handlers

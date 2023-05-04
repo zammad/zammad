@@ -194,6 +194,8 @@ class App.FormHandlerCoreWorkflow
       fieldElement = form.find('[name="' + field + '"], div[data-name="' + field + '"]')
       if fieldElement.hasClass('richtext-content')
         fieldElement.html(data[field])
+      else if fieldElement.data('handleValue')
+        fieldElement.data('handleValue')(data[field])
       else
         fieldElement.val(data[field])
 

@@ -14253,3 +14253,47 @@ span.is-disabled {
     padding-right: 4px;
   }
 }
+
+.duplicate-ticket-detection {
+  position: relative;
+  margin-bottom: 0;
+
+  .close {
+    position: absolute;
+    top: 2px;
+    opacity: 0.39;
+
+    @include bidi-style(right, 0, left, 0);
+
+    &:hover {
+      opacity: 1;
+    }
+
+    svg {
+      width: 9px;
+      height: 9px;
+    }
+  }
+
+  h4 {
+    text-transform: none;
+    font-size: 16px;
+  }
+
+  p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  p,
+  ul {
+    margin-bottom: 6px;
+  }
+
+  .btn {
+    font-size: 10px;
+    color: var(--text-link);
+    background: none;
+  }
+}

@@ -1,0 +1,1 @@
+<div class="alert alert--warning duplicate-ticket-detection hide" role="alert" data-name="<%= @attribute.name %>"></div>

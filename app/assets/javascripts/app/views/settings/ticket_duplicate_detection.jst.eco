@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div class="page-header-title">
+      <div class="zammad-switch zammad-switch--small js-ticketDuplicateDetection">
+         <input name="ticket_duplicate_detection" type="checkbox" id="ticket_duplicate_detection" <% if @C('ticket_duplicate_detection'): %>checked<% end %>>
+         <label for="ticket_duplicate_detection"></label>
+      </div>
+    <h1><%- @T('Detect Duplicate Ticket Creation') %><small></small></h1>
+  </div>
+</div>
+<div class="page-content">
+  <form class="settings-entry">
+    <p><%- @T('Enables a warning to users during ticket creation if there is an existing ticket with the same attributes.') %></p>
+    <div class="js-attributes"></div>
+    <button type="submit" class="btn btn--primary js-ticketDuplicateDetectionFilter"><%- @T('Save') %></button>
+    <button type="submit" class="btn btn--danger js-ticketDuplicateDetectionFilterReset"><%- @T('Reset') %></button>
+  </form>
+</div>
