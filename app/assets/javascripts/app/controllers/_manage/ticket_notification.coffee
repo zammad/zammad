@@ -40,7 +40,7 @@ class App.SettingTicketNotifications extends App.ControllerSubContent
     e.preventDefault()
 
     @applyDefaultNotificationsToAllModal = new App.ControllerConfirmDelete(
-      fieldDisplay:      __('Are you sure? Default notifications settings will be applied to all agents.')
+      fieldDisplay:      __('Are you sure? Default notifications settings will be applied to all active agents. This operation may take some time.')
       safeWord:          __('Confirm')
       head:              __('Confirmation')
       buttonSubmit:      __('Yes')

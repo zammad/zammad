@@ -16,18 +16,6 @@ RSpec.describe ResetNotificationsPreferencesJob do
       expect(User).to have_received(:reset_notifications_preferences!).with(agent)
     end
 
-    it 'does not trigger ES index update' do
-      log = []
-
-      allow_any_instance_of(User).to receive(:search_index_update) do
-        log << :search_index_update
-      end
-
-      described_class.perform_now
-
-      expect(log).to be_empty
-    end
-
     it 'broadcasts message when operation is done' do
       allow(Sessions).to receive(:send_to)
 

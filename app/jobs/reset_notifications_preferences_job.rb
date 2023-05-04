@@ -5,10 +5,8 @@ class ResetNotificationsPreferencesJob < ApplicationJob
 
   # @param send_to_when_done [Integer] ID of user to notify after job is done
   def perform(send_to_when_done: nil)
-    User.without_callback :commit, :after, :search_index_update do
-      users_scope.find_each do |user|
-        User.reset_notifications_preferences! user
-      end
+    users_scope.find_each do |user|
+      User.reset_notifications_preferences! user
     end
 
     return if !send_to_when_done

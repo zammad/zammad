@@ -1243,7 +1243,7 @@ msgid "Are you sure?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
-msgid "Are you sure? Default notifications settings will be applied to all agents."
+msgid "Are you sure? Default notifications settings will be applied to all active agents. This operation may take some time."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
