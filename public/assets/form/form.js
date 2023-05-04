@@ -202,7 +202,7 @@ $(function() {
         'Message': 'Сообщение',
         'Name': 'Имя',
         'Your Email': 'Ваша почта',
-        'Your Message…': '',
+        'Your Message…': 'Ваше сообщение…',
         'Your Name': 'Ваше имя',
       },
       'sr': {
