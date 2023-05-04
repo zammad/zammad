@@ -28,10 +28,8 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
     end
 
     def wait_for_avatar
-      wait.until do
-        expect(page).to have_css('[data-test-id="common-avatar"]')
-        expect(page).to have_button('Library')
-      end
+      expect(page).to have_css('[data-test-id="common-avatar"]')
+      expect(page).to have_button('Library')
     end
 
     context 'when initial state is checked' do
@@ -58,16 +56,12 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
 
         find('input[data-test-id="fileGalleryInput"]', visible: :all).set(Rails.root.join('test/data/image/1000x1000.png'))
 
-        wait.until do
-          expect(page).to have_button('Save')
-        end
+        expect(page).to have_button('Save')
 
         find_button('Save').click
 
-        wait.until do
-          expect(page).to have_no_button('Save')
-          expect(page).to have_button('Delete', disabled: false)
-        end
+        expect(page).to have_no_button('Save')
+        expect(page).to have_button('Delete', disabled: false)
 
         store   = Store.find(Avatar.last.store_resize_id)
         img_url = "data:#{store.preferences['Mime-Type']};base64,#{Base64.strict_encode64(store.content)}"
@@ -112,8 +106,6 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
       end
 
       it 'displays the avatar' do
-        sleep 3.seconds
-
         avatar_element_style = find('[data-test-id="common-avatar"]').style('background-image')
         expect(avatar_element_style['background-image']).to eq("url(\"#{background_image}\")")
       end
@@ -130,18 +122,12 @@ RSpec.describe 'Mobile > Account > Avatar', app: :mobile, type: :system do
       end
 
       it 'can delete an existing avatar' do
-        visit '/account/avatar'
-
-        wait.until do
-          expect(page).to have_css('[data-test-id="common-avatar"]')
-          expect(page).to have_button('Delete', disabled: false)
-        end
+        expect(page).to have_css('[data-test-id="common-avatar"]')
+        expect(page).to have_button('Delete', disabled: false)
 
         find_button('Delete').click
 
-        wait.until do
-          expect(page).to have_button('Delete avatar')
-        end
+        expect(page).to have_button('Delete avatar')
 
         find_button('Delete avatar').click
 
