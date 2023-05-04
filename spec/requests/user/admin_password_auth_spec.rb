@@ -110,7 +110,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
 
       it "'failed' if invalid token" do
         post api_v1_users_admin_password_auth_verify_path, params: { token: 4711 }
-        expect(JSON.parse(response.body)).to include('message' => 'failed')
+        expect(response.parsed_body).to include('message' => 'failed')
       end
 
       it "'ok' and user login if valid token" do
@@ -118,7 +118,7 @@ RSpec.describe 'User endpoint', authenticated_as: false, type: :request do
         token = Token.create(action: 'AdminAuth', user_id: user.id, persistent: false)
 
         post api_v1_users_admin_password_auth_verify_path, params: { token: token.token }
-        expect(JSON.parse(response.body)).to include('message' => 'ok', 'user_login' => user.login)
+        expect(response.parsed_body).to include('message' => 'ok', 'user_login' => user.login)
       end
     end
   end

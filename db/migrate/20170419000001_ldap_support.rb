@@ -10,7 +10,7 @@ class LdapSupport < ActiveRecord::Migration[4.2]
       create_table :import_jobs do |t|
         t.string :name, limit: 250, null: false
 
-        t.boolean :dry_run, default: false
+        t.boolean :dry_run, default: false # rubocop:disable Rails/ThreeStateBooleanColumn
 
         t.text :payload, limit: 80_000
         t.text :result, limit: 80_000
