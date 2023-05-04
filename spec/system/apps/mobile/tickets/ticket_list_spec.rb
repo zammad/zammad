@@ -22,88 +22,76 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
     overview_tickets
 
     agent.group_names_access_map = Group.all.to_h { |g| [g.name, ['full']] }
+
+    visit route
   end
 
   def wait_for_tickets(count:)
-    wait.until do
-      expect(page).to have_css('a[href^="/mobile/tickets/"]:not([href$="/create"])', count: count)
-    end
+    expect(page).to have_css('a[href^="/mobile/tickets/"]:not([href$="/create"])', count: count)
   end
 
   context 'when on "Open Tickets" view' do
-    before do
-      visit '/tickets/view/all_open'
-    end
+    let(:route) { '/tickets/view/all_open' }
 
-    context 'when going between list and ticket' do
-      it 'going back keeps the scroll position' do
-        wait_for_tickets(count: 10)
+    it 'keeps the scroll position when going back' do
+      wait_for_tickets(count: 10)
 
-        page.scroll_to :bottom
+      page.scroll_to :bottom
 
-        wait_for_tickets(count: 20)
+      wait_for_tickets(count: 20)
 
-        link = find_link(href: "/mobile/tickets/#{open_tickets[6].id}")
-        position_old = link.evaluate_script('this.getBoundingClientRect().top')
+      link = find_link(href: "/mobile/tickets/#{open_tickets[6].id}")
+      position_old = link.evaluate_script('this.getBoundingClientRect().top')
 
-        link.find('span', text: 'Test Ticket').click
+      link.find('span', text: 'Test Ticket').click
 
-        find_button('Go back').click
+      find_button('Go back').click
 
-        expect_current_route '/tickets/view/all_open'
+      expect_current_route '/tickets/view/all_open'
 
-        wait.until do
-          position_new = find_link(href: "/mobile/tickets/#{open_tickets[6].id}").evaluate_script('this.getBoundingClientRect().top')
-          expect(position_old).to eq(position_new)
-        end
+      wait.until do
+        position_new = find_link(href: "/mobile/tickets/#{open_tickets[6].id}").evaluate_script('this.getBoundingClientRect().top')
+        position_new == position_old
       end
     end
 
-    context 'when changing sort by and order by' do
-      it 'opens the dialog and reorders the list' do
-        find('[data-test-id="column"]').click
+    it 'opens the sort dialog and reorders the list' do
+      find('[data-test-id="column"]').click
 
-        expect(page.find('[role="dialog"]')).to have_text('Number')
-        expect(page.find('[role="dialog"]')).to have_text('descending')
+      expect(page.find('[role="dialog"]')).to have_text('Number')
+      expect(page.find('[role="dialog"]')).to have_text('descending')
 
-        find('span', text: 'Number').click
-        find('button', text: 'descending').click
+      find('span', text: 'Number').click
+      find('button', text: 'descending').click
 
-        send_keys(:escape)
+      send_keys(:escape)
 
-        wait.until do
-          expect(page).to have_no_css('[role="dialog"]')
-        end
+      expect(page).to have_no_css('[role="dialog"]')
 
-        within('section') do
-          expect(find('a[href^="/mobile/tickets/"]:first-of-type')).to have_text(open_tickets.last.number)
-        end
+      within('section') do
+        expect(find('a[href^="/mobile/tickets/"]:first-of-type')).to have_text(open_tickets.last.number)
       end
     end
+  end
 
-    context 'when changing the selected ticket overview' do
-      before do
-        visit '/'
+  context 'when on "Home" screen' do
+    let(:route) { '/' }
+
+    it 'can change the selected ticket overview' do
+      find_link('Open Tickets', href: '/mobile/tickets/view/all_open').click
+
+      wait.until do
+        expect(page).to have_text("Open Tickets\n(21)")
       end
 
-      it 'could change the overview' do
-        find_link('Open Tickets', href: '/mobile/tickets/view/all_open').click
+      find('button', text: "Open Tickets\n(21)").click
 
-        wait.until do
-          expect(page).to have_text("Open Tickets\n(21)")
-        end
+      expect(page.find('[role="dialog"]')).to have_text('Escalated Tickets')
 
-        find('button', text: "Open Tickets\n(21)").click
+      find('span', text: 'Escalated Tickets').click
 
-        expect(page.find('[role="dialog"]')).to have_text('Escalated Tickets')
-
-        find('span', text: 'Escalated Tickets').click
-
-        wait.until do
-          expect(page).to have_no_css('[role="dialog"]')
-          expect(page).to have_text("Escalated Tickets\n(0)")
-        end
-      end
+      expect(page).to have_no_css('[role="dialog"]')
+        .and have_text("Escalated Tickets\n(0)")
     end
   end
 end
