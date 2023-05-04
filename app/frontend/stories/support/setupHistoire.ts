@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
+import './setupGlobals.ts'
 import initializeApp from '#mobile/initialize.ts'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import { defineSetupVue3 } from '@histoire/plugin-vue'
@@ -54,7 +55,7 @@ const renderDynamics = () => {
 if (root) {
   const getSandbox = () =>
     typeof document !== 'undefined' &&
-    document.querySelector('#app > .__histoire-sandbox')
+    document.querySelector('#app > .__histoire-render-story')
   const interval = setInterval(() => {
     const sandbox = getSandbox()
     if (sandbox) {
@@ -62,6 +63,8 @@ if (root) {
       sandbox.classList.add('text-white')
       sandbox.classList.add('p-2')
       sandbox.classList.add('h-full')
+      sandbox.classList.add('font-sans')
+      sandbox.classList.add('text-sm')
       const dynamics = document.createElement('div')
       dynamics.setAttribute('id', 'dynamic')
       sandbox.appendChild(dynamics)

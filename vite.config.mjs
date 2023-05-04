@@ -15,6 +15,7 @@ const dir = dirname(fileURLToPath(import.meta.url))
 
 const SSL_PATH = resolve(dir, 'config', 'ssl')
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default defineConfig(({ mode, command }) => {
   const isStory = Boolean(process.env.HISTOIRE)
   const isTesting = ['test', 'cypress'].includes(mode) || isStory
@@ -96,8 +97,16 @@ export default defineConfig(({ mode, command }) => {
     }
   }
 
+  let publicDir
+
+  if (!isBuild) {
+    publicDir = resolve(dir, 'public')
+  } else if (isStory) {
+    publicDir = resolve(dir, 'app/frontend/public-build')
+  }
+
   return {
-    publicDir: isBuild ? undefined : resolve(dir, 'public'),
+    publicDir,
     esbuild: {
       target: isTesting ? 'esnext' : tsconfig.compilerOptions.target,
     },
