@@ -82,6 +82,9 @@ class ExternalCredential::Microsoft365
     if params[:channel_id]
       existing_channel = Channel.where(area: 'Microsoft365::Account').find(params[:channel_id])
 
+      channel_options[:inbound][:options][:folder]         = existing_channel.options[:inbound][:options][:folder]
+      channel_options[:inbound][:options][:keep_on_server] = existing_channel.options[:inbound][:options][:keep_on_server]
+
       existing_channel.update!(
         options: channel_options,
       )

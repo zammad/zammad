@@ -111,8 +111,7 @@ RSpec.describe ExternalCredential::Google do
         create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       end
 
-      it 'creates a Channel instance' do
-
+      it 'creates a Channel instance', :aggregate_failures do
         channel = described_class.link_account(request_token, authorization_payload)
 
         expect(channel.options).to include(
@@ -146,6 +145,12 @@ RSpec.describe ExternalCredential::Google do
             'client_secret' => client_secret,
           ),
         )
+
+        channel.options[:inbound][:options][:keep_on_server] = true
+        channel.save
+
+        channel = described_class.link_account(request_token, authorization_payload.merge(channel_id: channel.id))
+        expect(channel.reload.options[:inbound][:options][:keep_on_server]).to be(true)
       end
     end
 
