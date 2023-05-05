@@ -1,6 +1,7 @@
 # Cache gems in between jobs and pipelines
 .cache_ruby: &cache_ruby
   key:
+    prefix: ruby
     files:
       - Gemfile.lock
   paths:
@@ -10,10 +11,20 @@
 # Cache node_modules likewise
 .cache_nodejs: &cache_nodejs
   key:
+    prefix: nodejs
     files:
       - yarn.lock
   paths:
     - .yarn/cache
+
+.cache_eslint: &cache_eslint
+  key:
+    prefix: eslint
+    files:
+      - yarn.lock
+      - .eslintrc.js
+  paths:
+    - tmp/eslintcache.js
 
 .cache:
   read_only_full:
@@ -33,4 +44,7 @@
       policy: pull-push
   read_write_nodejs:
     - <<: *cache_nodejs
+      policy: pull-push
+  read_write_eslint:
+    - <<: *cache_eslint
       policy: pull-push

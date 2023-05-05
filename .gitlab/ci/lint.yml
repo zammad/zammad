@@ -89,7 +89,9 @@
 'lint: js':
   extends:
     - .template_lint
-  cache: !reference [.cache, read_only_nodejs]
+  cache:
+    - !reference [.cache, read_only_nodejs]
+    - !reference [.cache, read_write_eslint]
   before_script:
     - !reference [.scripts, yarn_install]
   script:
