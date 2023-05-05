@@ -304,4 +304,27 @@ RSpec.shared_examples 'Object custom fields' do |klass:|
 
     include_examples 'import valid custom field', 'custom_multichoice'
   end
+
+  context "when custom field is type 'TEXTAREA'" do
+    let(:resource) do
+      {
+        'id'                        => 7,
+        'fielduuid'                 => 'c06852f7-0c82-45af-9ce0-f5ac6e19db93',
+        'title'                     => 'Textarea',
+        'type'                      => 'TEXTAREA',
+        'key'                       => 'custom_textarea',
+        'is_visible_to_customers'   => false,
+        'is_customer_editable'      => false,
+        'is_required_for_customers' => false,
+        'regular_expression'        => nil,
+        'sort_order'                => 7,
+        'is_enabled'                => true,
+        'options'                   => [],
+        'created_at'                => '2021-08-16T19:59:07+00:00',
+        'updated_at'                => '2021-08-16T19:59:07+00:00',
+      }
+    end
+
+    include_examples 'import valid custom field', 'custom_textarea'
+  end
 end
