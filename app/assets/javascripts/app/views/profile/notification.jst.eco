@@ -2,35 +2,48 @@
   <div class="page-header-title"><h1><%- @T('Notifications') %></h1></div>
 </div>
 
-<form class="page-content form--flexibleWidth">
+<form class="page-content form--flexibleWidth profile-settings-notifications-content">
 
   <div class="settings-entry">
     <%- @matrixTableHTML %>
   </div>
 
   <% if @groups: %>
-  <h2>* <%- @T('Limit Groups') %></h2>
-  <div class="settings-entry">
-    <table class="settings-list">
-      <thead>
-        <tr>
-          <th><%- @T('Group') %>
-          <th><%- @T('Not Assigned') %> & <%- @T('All Tickets') %>
-      </thead>
-      <tbody>
-      <% for group in @groups: %>
-        <tr>
-          <td><%= group.displayName() %>
-          <td class="u-positionOrigin">
-            <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(@config.group_ids, group.id.toString()): %>checked<% end %>/>
-              <%- @Icon('checkbox', 'icon-unchecked') %>
-              <%- @Icon('checkbox-checked', 'icon-checked') %>
-            </label>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+    <div class="zammad-switch zammad-switch--small" data-name="profile-groups-limit">
+       <input type="checkbox" id="profile-groups-limit" <% if @user_group_config: %> checked <% end %>>
+       <label for="profile-groups-limit"></label>
+    </div>
+    <h2>
+      <%- @T('Limit Groups') %>
+    </h2>
+
+    <div class="settings-entry profile-groups-limit-settings">
+      <div class="profile-groups-limit-settings-inner collapse <% if @user_group_config: %>in<% end %>">
+        <div class="alert alert--warning profile-groups-all-unchecked hide" role="alert">
+          <%- @T('Disabling the notifications from all groups will turn off the limit. Instead, to disable the notifications use the settings above.') %>
+        </div>
+
+        <table class="settings-list">
+          <thead>
+            <tr>
+              <th><%- @T('Group') %>
+              <th><%- @T('Not Assigned') %> & <%- @T('All Tickets') %>
+          </thead>
+          <tbody>
+          <% for group in @groups: %>
+            <tr>
+              <td><%= group.displayName() %>
+              <td class="u-positionOrigin">
+                <label class="checkbox-replacement checkbox-replacement--fullscreen">
+                  <input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(@config.group_ids, group.id.toString()): %>checked<% end %>/>
+                  <%- @Icon('checkbox', 'icon-unchecked') %>
+                  <%- @Icon('checkbox-checked', 'icon-checked') %>
+                </label>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   <% end %>
 
   <h2><%- @T('Sounds') %></h2>

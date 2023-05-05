@@ -7,6 +7,13 @@ class ProfileNotification extends App.ControllerSubContent
     'submit form':                  'update'
     'click .js-reset' :             'reset'
     'change .js-notificationSound': 'previewSound'
+    'change #profile-groups-limit': 'didSwitchGroupsLimit'
+    'change input[name=group_ids]': 'didChangeGroupIds'
+
+  elements:
+    '#profile-groups-limit':                'profileGroupsLimitInput'
+    '.profile-groups-limit-settings-inner': 'groupsLimitSettings'
+    '.profile-groups-all-unchecked':        'groupsAllUncheckedWarning'
 
   sounds: [
     {
@@ -98,6 +105,7 @@ class ProfileNotification extends App.ControllerSubContent
       config: config
       sounds: @sounds
       notificationSoundEnabled: App.OnlineNotification.soundEnabled()
+      user_group_config:        user_group_config
 
   update: (e) =>
 
@@ -110,12 +118,13 @@ class ProfileNotification extends App.ControllerSubContent
 
     params.notification_config.matrix = @updatedNotificationMatrixValues(formParams)
 
-    params.notification_config.group_ids = formParams['group_ids']
-    if typeof params.notification_config.group_ids isnt 'object'
-      params.notification_config.group_ids = [params.notification_config.group_ids]
+    if @profileGroupsLimitInput.is(':checked')
+      params.notification_config.group_ids = formParams['group_ids']
+      if typeof params.notification_config.group_ids isnt 'object'
+        params.notification_config.group_ids = [params.notification_config.group_ids]
 
-    if !params.notification_config.group_ids || _.isEmpty(params.notification_config.group_ids)
-      params.notification_config.group_ids = ['-']
+      if _.isEmpty(params.notification_config.group_ids)
+        delete params.notification_config.group_ids
 
     @formDisable(e)
 
@@ -177,5 +186,11 @@ class ProfileNotification extends App.ControllerSubContent
     return if !params.notification_sound
     return if !params.notification_sound.file
     App.OnlineNotification.play(params.notification_sound.file)
+
+  didSwitchGroupsLimit: (e) =>
+    @groupsLimitSettings.collapse('toggle')
+
+  didChangeGroupIds: (e) =>
+    @groupsAllUncheckedWarning.toggleClass 'hide', @el.find('input[name=group_ids]:checked').length != 0
 
 App.Config.set('Notifications', { prio: 2600, name: __('Notifications'), parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: ProfileNotification }, 'NavBarProfile')

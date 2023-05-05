@@ -14297,3 +14297,22 @@ span.is-disabled {
     background: none;
   }
 }
+
+.profile-settings-notifications-content {
+  .zammad-switch {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .profile-groups-limit-settings {
+    min-height: 1px;
+  }
+
+  .settings-list {
+    margin-bottom: 0;
+  }
+
+  .profile-groups-all-unchecked {
+    margin-bottom: 10px;
+  }
+}

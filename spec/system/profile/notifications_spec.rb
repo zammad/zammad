@@ -57,4 +57,77 @@ RSpec.describe 'Profile > Notifications', authenticated_as: :user, type: :system
       )
     end
   end
+
+  describe 'limiting notifications by groups' do
+    let(:group_a) { create(:group) }
+    let(:group_b) { create(:group) }
+
+    context 'when limit is not enabled' do
+      before do
+        user.update! groups: [group_a, group_b]
+
+        visit 'profile/notifications'
+      end
+
+      it 'allows to limit notifications in specific groups' do
+        expect(find('#profile-groups-limit', visible: :all)).not_to be_checked
+
+        click '.zammad-switch'
+
+        find('#content_permanent_Profile form .btn--primary').click
+
+        await_empty_ajax_queue
+
+        expect(user.reload.preferences).to include(
+          notification_config: include(
+            group_ids: [group_a.id.to_s, group_b.id.to_s]
+          )
+        )
+
+        expect(find('#profile-groups-limit', visible: :all)).to be_checked
+      end
+    end
+
+    context 'when limit is enabled' do
+      before do
+        user.groups = [group_a, group_b]
+        user.preferences[:notification_config][:group_ids] = [group_a.id.to_s]
+        user.save!
+
+        visit 'profile/notifications'
+      end
+
+      it 'clears groups limit' do
+        expect(find('#profile-groups-limit', visible: :all)).to be_checked
+
+        click '.zammad-switch'
+
+        find('#content_permanent_Profile form .btn--primary').click
+
+        await_empty_ajax_queue
+
+        expect(user.reload.preferences[:notification_config]).not_to have_key(:group_ids)
+
+        expect(find('#profile-groups-limit', visible: :all)).not_to be_checked
+      end
+
+      it 'clears limit when all groups are unchecked' do
+        expect(find('#profile-groups-limit', visible: :all)).to be_checked
+
+        expect(page).to have_no_text('Disabling the notifications from all groups will turn off the limit.')
+
+        find("input[name='group_ids'][value='#{group_a.id}']", visible: :all).click
+
+        expect(page).to have_text('Disabling the notifications from all groups will turn off the limit.')
+
+        find('#content_permanent_Profile form .btn--primary').click
+
+        await_empty_ajax_queue
+
+        expect(user.reload.preferences[:notification_config]).not_to have_key(:group_ids)
+
+        expect(find('#profile-groups-limit', visible: :all)).not_to be_checked
+      end
+    end
+  end
 end

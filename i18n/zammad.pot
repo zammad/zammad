@@ -3954,6 +3954,10 @@ msgstr ""
 msgid "Disable Notifications"
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/notification.jst.eco
+msgid "Disabling the notifications from all groups will turn off the limit. Instead, to disable the notifications use the settings above."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 msgid "Discard"
 msgstr ""
