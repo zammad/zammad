@@ -53,6 +53,46 @@ RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
             .and include(count: 0)
         end
       end
+
+      context 'when param value is empty', db_strategy: :reset do
+        let(:action_user) { agent1 }
+        let(:field_name) { SecureRandom.uuid }
+
+        let(:payload) do
+          {
+            'event'                  => 'core_workflow',
+            'request_id'             => 'default',
+            'class_name'             => 'Ticket',
+            'screen'                 => 'create_middle',
+            'params'                 => { field_name => '' },
+            'last_changed_attribute' => field_name,
+          }
+        end
+
+        let(:screens) do
+          {
+            create_middle: {
+              'ticket.agent' => {
+                shown: true,
+              },
+            },
+          }
+        end
+
+        before do
+          Setting.set('ticket_duplicate_detection_attributes', [field_name])
+          create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name, display: field_name, screens: screens)
+          ObjectManager::Attribute.migration_execute
+          create(:ticket, field_name => '')
+        end
+
+        it 'does return count of 0 and will clear the current state' do
+          expect(result[:fill_in]['ticket_duplicate_detection'])
+            .to be_a(Hash)
+            .and include(items: [])
+            .and include(count: 0)
+        end
+      end
     end
 
     context 'when permission level system' do

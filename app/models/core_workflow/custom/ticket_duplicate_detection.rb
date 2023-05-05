@@ -2,11 +2,11 @@
 
 class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Backend
   def saved_attribute_match?
-    ticket_create? && enabled? && run_once? && any_attribute_match? && params_set?
+    ticket_create? && enabled? && run_once? && any_attribute_match?
   end
 
   def selected_attribute_match?
-    ticket_create? && enabled? && run_once? && any_attribute_match? && params_set?
+    ticket_create? && enabled? && run_once? && any_attribute_match?
   end
 
   def ticket_create?
@@ -38,7 +38,7 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
   end
 
   def params_set?
-    detect_attributes.all? { |key| !params[key].nil? }
+    detect_attributes.all? { |key| params[key].present? }
   end
 
   def search_selector
@@ -85,6 +85,13 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
   end
 
   def show_value
+    if !params_set?
+      return {
+        count: 0,
+        items: [],
+      }
+    end
+
     count, tickets = search_tickets
 
     items = []
