@@ -6,7 +6,7 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::Textarea 
   def data_type_specific_options
     {
       type:      'textarea',
-      maxlength: 255,
+      maxlength: ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' ? 2_000 : 65_535,
     }
   end
 end
