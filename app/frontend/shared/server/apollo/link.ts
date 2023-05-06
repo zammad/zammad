@@ -3,7 +3,7 @@
 import type { Operation } from '@apollo/client/core'
 import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
 import type { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql'
-import consumer from '#shared/server/action_cable/consumer.ts'
+import { consumer } from '#shared/server/action_cable/consumer.ts'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
 import { getMainDefinition } from '@apollo/client/utilities'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'

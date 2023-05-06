@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
-import consumer from '#shared/server/action_cable/consumer.ts'
+import { triggerWebSocketReconnect } from '#shared/server/connection.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -18,7 +18,7 @@ export default function initializeStoreSubscriptions(): void {
         () => session.id,
         () => {
           // Reopen WS connection to reflect authentication state.
-          consumer.connection.reopen()
+          triggerWebSocketReconnect()
         },
       )
 

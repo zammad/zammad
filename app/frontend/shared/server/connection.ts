@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref, watch } from 'vue'
-import consumer from '#shared/server/action_cable/consumer.ts'
+import {
+  consumer,
+  reopenWebSocketConnection,
+} from '#shared/server/action_cable/consumer.ts'
 import log from '#shared/utils/log.ts'
 import {
   NotificationTypes,
@@ -10,6 +13,7 @@ import {
 import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
 
 const wsConnectionState = ref(true)
+const wsReopening = ref(false)
 const { loaded } = useApplicationLoaded()
 
 window.setInterval(() => {
@@ -19,7 +23,10 @@ window.setInterval(() => {
 let connectionNotificationId: string
 const networkConnectionState = ref(true)
 const connected = computed(() => {
-  return wsConnectionState.value && networkConnectionState.value
+  return (
+    (wsReopening.value || wsConnectionState.value) &&
+    networkConnectionState.value
+  )
 })
 
 const notifications = useNotifications()
@@ -48,4 +55,17 @@ export const recordCommunicationSuccess = (): void => {
 
 export const recordCommunicationFailure = (): void => {
   networkConnectionState.value = false
+}
+
+export const triggerWebSocketReconnect = (): void => {
+  wsReopening.value = true
+  reopenWebSocketConnection()
+    .then(() => {
+      // Set this before setting wsReopening, otherwise it would be set later by the interval,
+      //  causing false positives.
+      wsConnectionState.value = true
+    })
+    .finally(() => {
+      wsReopening.value = false
+    })
 }
