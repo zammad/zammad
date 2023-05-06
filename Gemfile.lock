@@ -501,7 +501,7 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
-    rubocop-rspec (2.20.0)
+    rubocop-rspec (2.21.0)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
