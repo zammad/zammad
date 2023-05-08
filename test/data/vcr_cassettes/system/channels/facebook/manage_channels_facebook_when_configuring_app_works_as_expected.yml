@@ -5,10 +5,10 @@ http_interactions:
     uri: https://graph.facebook.com/oauth/access_token
     body:
       encoding: UTF-8
-      string: client_id=433768244546254&client_secret=62a69249edb426a894333291734ec81d&grant_type=client_credentials
+      string: client_id=<FACEBOOK_APPLICATION_ID>&client_secret=<FACEBOOK_APPLICATION_SECRET>&grant_type=client_credentials
     headers:
       User-Agent:
-      - Faraday v1.4.2
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Facebook-Api-Version:
-      - v3.3
+      - v10.0
       Access-Control-Allow-Origin:
       - "*"
       Strict-Transport-Security:
@@ -35,25 +35,23 @@ http_interactions:
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Request-Id:
-      - ASmYPCbXilhHNqurVNMh4wI
+      - At-giy-FiYKho2gst4jhihk
       X-Fb-Trace-Id:
-      - EBj3VTsTnHD
+      - Bn3uTRbo4ju
       X-Fb-Rev:
-      - '1004059876'
+      - '1007441695'
       X-Fb-Debug:
-      - w6pKyUZnS0wh8JJY4anWdO8NCHoUBGHvsV0r4Dm1tIhEK5buHQL7161b8+sHD6zt0/pEXQlyeB3lNc12ltaNtQ==
+      - 2EnLba/CNPSNYowbHPrmgO9kvYEIETJ59xIVSQNgFMGvPwpFu1lHZnLlRVMqBYTSgwEBrdWnQI1r+X4/RacH6A==
       Date:
-      - Wed, 30 Jun 2021 09:10:09 GMT
-      Priority:
-      - u=3,i
+      - Fri, 05 May 2023 13:38:45 GMT
       Alt-Svc:
-      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      - h3=":443"; ma=86400
       Connection:
       - keep-alive
       Content-Length:
       - '84'
     body:
       encoding: UTF-8
-      string: '{"access_token":"433768244546254|pxTtOQrkmJDMWzJROLEVXuOZqWI","token_type":"bearer"}'
-  recorded_at: Wed, 30 Jun 2021 09:10:09 GMT
-recorded_with: VCR 6.0.0
+      string: '{"access_token":"<FACEBOOK_APPLICATION_ID>|AGsZnwRDpZsM0QV3mbNnsNP97xo","token_type":"bearer"}'
+  recorded_at: Fri, 05 May 2023 13:38:45 GMT
+recorded_with: VCR 6.1.0

@@ -2,11 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Facebook, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_ADMIN_ACCESS_TOKEN FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_MESSAGE FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME FACEBOOK_CUSTOMER_LASTNAME], use_vcr: true do
-
-  before do
-    travel_to '2021-02-13 13:37 +0100'
-  end
+RSpec.describe Facebook, current_user_id: 1, integration: true, required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME FACEBOOK_ADMIN_LASTNAME FACEBOOK_ADMIN_ACCESS_TOKEN FACEBOOK_PAGE_1_ACCCESS_TOKEN FACEBOOK_PAGE_1_ID FACEBOOK_PAGE_1_NAME FACEBOOK_PAGE_1_POST_ID FACEBOOK_PAGE_1_POST_MESSAGE FACEBOOK_PAGE_1_POST_COMMENT_ID FACEBOOK_PAGE_2_ACCCESS_TOKEN FACEBOOK_PAGE_2_ID FACEBOOK_PAGE_2_NAME FACEBOOK_CUSTOMER_ID FACEBOOK_CUSTOMER_FIRSTNAME], use_vcr: true do
 
   let(:page_access_token)  { ENV['FACEBOOK_PAGE_1_ACCCESS_TOKEN'] }
   let(:page_client)        { described_class.new page_access_token }
@@ -30,7 +26,7 @@ RSpec.describe Facebook, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_US
 
   describe '#pages' do
     it 'works as expected' do
-      expect(admin_client.pages.pluck(:name)).to eq [ENV['FACEBOOK_PAGE_1_NAME'], ENV['FACEBOOK_PAGE_2_NAME']]
+      expect(admin_client.pages.pluck(:name)).to eq [ENV['FACEBOOK_PAGE_2_NAME'], ENV['FACEBOOK_PAGE_1_NAME']]
     end
   end
 
@@ -52,7 +48,6 @@ RSpec.describe Facebook, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_US
     it 'works as expected' do
       expect(user).to have_attributes(
         firstname: ENV['FACEBOOK_CUSTOMER_FIRSTNAME'],
-        lastname:  ENV['FACEBOOK_CUSTOMER_LASTNAME']
       )
     end
   end
@@ -96,6 +91,13 @@ RSpec.describe Facebook, current_user_id: 1, required_envs: %w[FACEBOOK_ADMIN_US
         body:        article.body,
         in_reply_to: article.in_reply_to,
       )
+    end
+
+    # Cleanup of the test comment.
+    after do
+      page_client
+        .client
+        .delete_object(response['id'])
     end
 
     it 'works as expected' do

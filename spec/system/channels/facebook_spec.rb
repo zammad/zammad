@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Channels > Facebook', type: :system do
+RSpec.describe 'Manage > Channels > Facebook', integration: true, required_envs: %w[FACEBOOK_APPLICATION_ID FACEBOOK_APPLICATION_SECRET], type: :system do
   context 'when configuring app' do
     before { visit '/#channels/facebook' }
 

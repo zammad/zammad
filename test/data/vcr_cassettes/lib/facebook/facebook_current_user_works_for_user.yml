@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.3
+      - Faraday v2.7.4
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -19,44 +19,47 @@ http_interactions:
       message: OK
     headers:
       Etag:
-      - '"c74d1549500251fdcbe3e87746dbb3f2c9c91e51"'
-      Expires:
-      - Sat, 01 Jan 2000 00:00:00 GMT
+      - '"54792326a6e15374d264b1adce56bcde4e23b76c"'
       Content-Type:
       - application/json; charset=UTF-8
-      Facebook-Api-Version:
-      - v9.0
-      X-Fb-Request-Id:
-      - AHTVf5Vd5vfBscmBmmRJgiZ
-      Strict-Transport-Security:
-      - max-age=15552000; preload
-      X-Fb-Trace-Id:
-      - FfBYxbvUhWi
-      X-Fb-Rev:
-      - '1003324181'
-      Cache-Control:
-      - private, no-cache, no-store, must-revalidate
-      Pragma:
-      - no-cache
+      Vary:
+      - Origin
+      Cross-Origin-Resource-Policy:
+      - cross-origin
       X-App-Usage:
-      - '{"call_count":2,"total_cputime":0,"total_time":0}'
+      - '{"call_count":1,"total_cputime":0,"total_time":0}'
       X-Fb-Rlafr:
       - '0'
       Access-Control-Allow-Origin:
       - "*"
+      Facebook-Api-Version:
+      - v16.0
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Request-Id:
+      - A9HrAtHp-CGFSaAurq8cR_-
+      X-Fb-Trace-Id:
+      - HAseIbpChhf
+      X-Fb-Rev:
+      - '1007441393'
       X-Fb-Debug:
-      - Rn16Aztp9wCXYU8VEo7YMZVamHhWg8RaX+fNwAt3VipJ6iZcOawjFooQdgQLRSwa2FmmYZkGRlrkieMe1PNWAg==
+      - aq/azJtWO9iqps1GgZh51cPaRY4NH7j7+uP7qDjoRlHRjNnhARZMn0E7MigiKtcfACcY8+KlygdUSH3JgGkobw==
       Date:
-      - Thu, 18 Feb 2021 10:51:21 GMT
+      - Fri, 05 May 2023 12:07:50 GMT
       Alt-Svc:
-      - h3-29=":443"; ma=3600,h3-27=":443"; ma=3600
+      - h3=":443"; ma=86400
       Connection:
       - keep-alive
       Content-Length:
-      - '45'
+      - '46'
     body:
       encoding: UTF-8
       string: '{"name":"<FACEBOOK_ADMIN_FIRSTNAME> <FACEBOOK_ADMIN_LASTNAME>","id":"<FACEBOOK_ADMIN_USER_ID>"}'
-    http_version:
-  recorded_at: Thu, 18 Feb 2021 10:51:21 GMT
-recorded_with: VCR 4.0.0
+  recorded_at: Fri, 05 May 2023 12:07:50 GMT
+recorded_with: VCR 6.1.0
