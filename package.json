@@ -86,7 +86,7 @@
     "ts-node": "^10.9.1",
     "type-fest": "^3.10.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.4",
+    "vite": "^4.3.5",
     "vite-plugin-pwa": "^0.14.7",
     "vite-plugin-ruby": "^3.2.2",
     "vite-plugin-svg-icons": "^2.0.1",
