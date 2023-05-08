@@ -89,7 +89,7 @@ const { stickyStyles, headerElement } = useStickyHeader()
   </header>
   <div class="flex p-4" :style="stickyStyles.body">
     <h1
-      class="flex flex-1 items-center break-words text-xl font-bold leading-7 line-clamp-3"
+      class="line-clamp-3 flex flex-1 items-center break-words text-xl font-bold leading-7"
     >
       <CommonLoader position="left" :loading="loadingTicket">
         {{ ticket?.title }}

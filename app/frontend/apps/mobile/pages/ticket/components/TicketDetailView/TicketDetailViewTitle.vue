@@ -60,7 +60,7 @@ const customer = computed(() => {
             </div>
           </template>
         </div>
-        <h1 class="break-words text-xl font-bold leading-7 line-clamp-3">
+        <h1 class="line-clamp-3 break-words text-xl font-bold leading-7">
           {{ ticket.title }}
         </h1>
         <div class="mt-2 flex flex-wrap gap-2">

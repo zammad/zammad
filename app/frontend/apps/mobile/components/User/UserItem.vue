@@ -36,7 +36,7 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
         </template>
       </span>
       <span
-        class="mb-1 whitespace-normal text-lg font-bold leading-5 line-clamp-3"
+        class="mb-1 line-clamp-3 whitespace-normal text-lg font-bold leading-5"
       >
         <slot> {{ entity.firstname }} {{ entity.lastname }} </slot>
       </span>

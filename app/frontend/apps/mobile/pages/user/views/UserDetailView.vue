@@ -102,7 +102,7 @@ const secondaryOrganizations = computed(() =>
       <div>
         <CommonUserAvatar :entity="user" size="xl" />
       </div>
-      <div class="mt-2 text-center text-xl font-bold line-clamp-3">
+      <div class="mt-2 line-clamp-3 text-center text-xl font-bold">
         {{ user.fullname }}
       </div>
       <CommonLink

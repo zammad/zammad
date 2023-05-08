@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2023 Zammad Foundation, https://zammad-foundation.org/
 
 const colors = require('tailwindcss/colors')
-const lineClampPlugin = require('@tailwindcss/line-clamp')
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const plugin = require('tailwindcss/plugin')
 const path = require('path')
@@ -69,7 +68,6 @@ module.exports = {
     },
   },
   plugins: [
-    lineClampPlugin,
     formKitTailwind,
     plugin(({ addVariant, matchUtilities, theme }) => {
       matchUtilities(

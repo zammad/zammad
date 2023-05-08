@@ -52,7 +52,7 @@ const application = useApplicationStore()
             <div class="flex-1 truncate">
               <span>#{{ ticket[1] }}</span>
               <span
-                class="mb-1 whitespace-normal text-lg font-bold leading-5 line-clamp-3"
+                class="mb-1 line-clamp-3 whitespace-normal text-lg font-bold leading-5"
               >
                 {{ ticket[2] }}
               </span>
