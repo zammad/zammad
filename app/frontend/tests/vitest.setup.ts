@@ -10,14 +10,6 @@ import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 import * as assertions from './support/assertions/index.ts'
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
-  }
-}
-
 global.__ = (source) => {
   return source
 }
@@ -197,6 +189,9 @@ declare module 'vitest' {
   interface TestContext {
     skipConsole: boolean
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
 }
 
 declare global {
