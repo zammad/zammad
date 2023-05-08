@@ -1667,7 +1667,7 @@ Setting.create_if_not_exists(
         null:        true,
         name:        'site',
         tag:         'input',
-        placeholder: 'https://gitlab.YOURDOMAIN.com/api/v4/',
+        placeholder: 'https://gitlab.YOURDOMAIN.com/',
       },
       {
         display:  __('Your callback URL'),
