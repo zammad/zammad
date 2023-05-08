@@ -9,8 +9,7 @@ export const setPopulatedOnWebkitAutofill = (node: FormKitNode) => {
       !e ||
       (e.animationName !== 'onAutoFillStart' &&
         e.animationName !== 'onAutoFillEnd') ||
-      (e.animationName === 'onAutoFillEnd' &&
-      !autofillField)
+      (e.animationName === 'onAutoFillEnd' && !autofillField)
     )
       return
 

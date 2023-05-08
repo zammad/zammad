@@ -244,9 +244,7 @@ onMounted(() => {
           class="flex items-center text-xs font-bold"
           data-test-id="article-username"
         >
-          <span
-            class="overflow-hidden text-ellipsis whitespace-nowrap break-words"
-          >
+          <span class="truncate break-words">
             {{ username }}
           </span>
         </div>

@@ -188,9 +188,7 @@ const showRefetch = ref(false)
           no-options-label-translation
           @update:model-value="selectOverview($event as string)"
         >
-          <span
-            class="max-w-[55vw] overflow-hidden text-ellipsis whitespace-nowrap"
-          >
+          <span class="max-w-[55vw] truncate">
             {{ $t(selectedOverview?.name) }}
           </span>
           <span class="px-1"> ({{ selectedOverview?.ticketCount }}) </span>

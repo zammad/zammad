@@ -43,9 +43,7 @@ const { fingerprint } = useFingerprint()
             decorative
             class="shrink-0 ltr:mr-2.5 rtl:ml-2.5"
           />
-          <span
-            class="overflow-hidden text-ellipsis whitespace-nowrap text-xl leading-7"
-          >
+          <span class="truncate text-xl leading-7">
             {{ $t(provider.name) }}
           </span>
         </button>

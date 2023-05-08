@@ -19,7 +19,7 @@ defineProps<Props>()
     class="flex h-14 items-center"
   >
     <CommonUserAvatar decorative :entity="user" class="ltr:mr-3 rtl:ml-3" />
-    <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+    <span class="truncate">
       {{ user.fullname }}
     </span>
   </CommonLink>

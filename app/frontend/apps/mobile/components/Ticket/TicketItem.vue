@@ -35,7 +35,7 @@ const customer = computed(() => {
     <div
       class="flex flex-1 items-center gap-1 overflow-hidden border-b border-white/10 py-3 text-gray-100 ltr:pr-2 rtl:pl-2"
     >
-      <div class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+      <div class="flex-1 truncate">
         <span>
           #{{ entity.number }}
           <template v-if="customer">
@@ -53,7 +53,7 @@ const customer = computed(() => {
         <div
           v-if="stringUpdated"
           data-test-id="stringUpdated"
-          class="overflow-hidden text-ellipsis text-gray"
+          class="truncate text-gray"
         >
           {{ stringUpdated }}
         </div>

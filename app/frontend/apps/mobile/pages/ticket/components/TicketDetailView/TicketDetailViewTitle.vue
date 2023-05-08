@@ -45,7 +45,7 @@ const customer = computed(() => {
       <div class="overflow-hidden ltr:mr-1 rtl:ml-1">
         <div class="flex text-sm leading-4 text-gray-100">
           <div
-            class="overflow-hidden text-ellipsis whitespace-nowrap"
+            class="truncate"
             :class="{
               'max-w-[80vw]': !ticket.organization,
               'max-w-[40vw]': ticket.organization,
@@ -55,9 +55,7 @@ const customer = computed(() => {
           </div>
           <template v-if="ticket.organization">
             <div class="px-1">·</div>
-            <div
-              class="max-w-[40vw] overflow-hidden text-ellipsis whitespace-nowrap"
-            >
+            <div class="max-w-[40vw] truncate">
               {{ ticket.organization.name }}
             </div>
           </template>

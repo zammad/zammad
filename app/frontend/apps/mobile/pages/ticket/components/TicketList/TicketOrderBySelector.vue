@@ -125,7 +125,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
             size="tiny"
           />
         </div>
-        <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+        <span class="truncate">
           {{ $t(label) }}
         </span>
       </button>

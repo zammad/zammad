@@ -38,11 +38,8 @@ const { TicketArticleUpdatesDocument } = await import(
 const { TicketUpdatesDocument } = await import(
   '../graphql/subscriptions/ticketUpdates.api.ts'
 )
-const {
-  defaultArticles,
-  defaultTicket,
-  mockTicketDetailViewGql,
-} = await import('./mocks/detail-view.ts')
+const { defaultArticles, defaultTicket, mockTicketDetailViewGql } =
+  await import('./mocks/detail-view.ts')
 const { mockArticleQuery } = await import('./mocks/articles.ts')
 const { clearTicketArticlesLoadedState } = await import(
   '../composable/useTicketArticlesVariables.ts'

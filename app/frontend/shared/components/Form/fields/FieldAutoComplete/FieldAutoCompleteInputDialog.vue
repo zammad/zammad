@@ -342,7 +342,7 @@ useTraverseOptions(autocompleteList)
             :class="{
               'opacity-30': option.disabled,
             }"
-            class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-100"
+            class="flex-1 truncate text-sm text-gray-100"
           >
             <span>{{ (option as AutoCompleteOption).heading }}</span>
           </span>
@@ -352,7 +352,7 @@ useTraverseOptions(autocompleteList)
             :class="{
               'opacity-30': option.disabled,
             }"
-            class="grow overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold leading-[22px]"
+            class="grow truncate text-lg font-semibold leading-[22px]"
           >
             {{ option.label || option.value }}
           </span>
@@ -363,7 +363,7 @@ useTraverseOptions(autocompleteList)
             'font-semibold !text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          class="grow overflow-hidden text-ellipsis whitespace-nowrap text-white/80"
+          class="grow truncate text-white/80"
         >
           {{ option.label || option.value }}
         </span>

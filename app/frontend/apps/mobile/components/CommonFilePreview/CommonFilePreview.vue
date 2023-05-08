@@ -107,7 +107,7 @@ const onFileClick = (event: Event) => {
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
       <div class="flex flex-1 flex-col overflow-hidden leading-4">
-        <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+        <span class="truncate">
           {{ file.name }}
         </span>
         <span v-if="file.size" class="whitespace-nowrap" :class="sizeClass">

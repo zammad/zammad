@@ -23,7 +23,7 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
     <div
       class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"
     >
-      <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <span class="truncate">
         <!-- TODO: Should we show open or closed or nothing at all? -->
         {{
           entity.ticketsCount?.open === 1
@@ -40,11 +40,7 @@ const { stringUpdated } = useEditedBy(toRef(props, 'entity'))
       >
         <slot> {{ entity.firstname }} {{ entity.lastname }} </slot>
       </span>
-      <div
-        v-if="stringUpdated"
-        class="overflow-hidden text-ellipsis text-gray"
-        data-test-id="stringUpdated"
-      >
+      <div v-if="stringUpdated" class="truncate" data-test-id="stringUpdated">
         {{ stringUpdated }}
       </div>
     </div>

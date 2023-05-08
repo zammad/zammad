@@ -47,7 +47,7 @@ const users = computed(() => {
     <div
       class="flex flex-1 flex-col overflow-hidden border-b border-white/10 py-3 text-gray-100"
     >
-      <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <span class="truncate">
         <!-- TODO: Should we show open or closed or nothing at all? -->
         {{
           entity.ticketsCount?.open === 1
@@ -67,7 +67,7 @@ const users = computed(() => {
       <div
         v-if="stringUpdated"
         data-test-id="stringUpdated"
-        class="overflow-hidden text-ellipsis text-gray"
+        class="truncate text-gray"
       >
         {{ stringUpdated }}
       </div>

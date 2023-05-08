@@ -34,7 +34,7 @@ const emit = defineEmits<{
         :entity="organization"
         class="ltr:mr-3 rtl:ml-3"
       />
-      <span class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <span class="truncate">
         {{ organization.name }}
       </span>
     </CommonLink>

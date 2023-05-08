@@ -49,7 +49,7 @@ const application = useApplicationStore()
           <div
             class="flex flex-1 items-center gap-1 overflow-hidden border-b border-white/10 py-3 text-gray-100 ltr:pr-2 rtl:pl-2"
           >
-            <div class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+            <div class="flex-1 truncate">
               <span>#{{ ticket[1] }}</span>
               <span
                 class="mb-1 whitespace-normal text-lg font-bold leading-5 line-clamp-3"
