@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Etag:
-      - '"e71f40fc2d6715f55e4aa03f7f6145a565991ccd"'
+      - '"712c33445a284f5577da84ea19c5daf964ffa763"'
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -28,7 +28,7 @@ http_interactions:
       Cross-Origin-Resource-Policy:
       - cross-origin
       X-App-Usage:
-      - '{"call_count":1,"total_cputime":0,"total_time":0}'
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
       X-Fb-Rlafr:
       - '0'
       Access-Control-Allow-Origin:
@@ -44,27 +44,26 @@ http_interactions:
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Request-Id:
-      - Acpq38lu7_Yr9YANo95cimN
+      - A2qe_IV5h1S5GYT2KKz0HmR
       X-Fb-Trace-Id:
-      - AgjV6Mm0Kvk
+      - BnTdlg7C8Gl
       X-Fb-Rev:
-      - '1007441393'
+      - '1007457464'
       X-Fb-Debug:
-      - k55CTaenMQRGavhhU+sEhmAv9GdiK4JADOG+8O9ZDTC+eHGZdIBasgxjBu7DwHS52OUN2Fdb5a4Da7fbqJFnuw==
+      - ITOWqqHRyXBqRsNlL8D7C2PZeyQ/7nxsD2+ikjK8HoOU++mgssYxDNcLs5iiPeSQI7dSFOAv70hlaeoEqH0nYg==
       Date:
-      - Fri, 05 May 2023 12:07:50 GMT
+      - Tue, 09 May 2023 10:59:01 GMT
       Alt-Svc:
       - h3=":443"; ma=86400
       Connection:
       - keep-alive
       Content-Length:
-      - '1281'
+      - '1270'
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[{"access_token":"EAAKEdyZCyh20BACZBi6gWFqWMZC24VENS48rSRRBxZBJMLrZC3w6QIeTgeMiBmAdwKRuQCcdZCcawnZCeMZB9oJuhlL6VP8ZCHp9q0Qp213b4TWUocQL6NNBSOxoZB7CKN3k00G7POgzfb6lfGUmtDxPozjdZCaF5JXdZANcQyiVTsI058c3585tghn5vtTO4GXkdZA8WnivIHFJH3EVxVHt5YvsG","category":"Information
-        Technology Company","category_list":[{"id":"1130035050388269","name":"Information
-        Technology Company"}],"name":"<FACEBOOK_PAGE_2_NAME>","id":"<FACEBOOK_PAGE_2_ID>","tasks":["ADVERTISE","ANALYZE","CREATE_CONTENT","MESSAGING","MODERATE","MANAGE"]},{"access_token":"EAAKEdyZCyh20BACuRZBjtESkZAWvi30RZAGWimmjRVZA54gPPkSFTxhFw0wZCIibX7W0J9TYzLu69SjL5mTKXCZBkdkX3yMANa1GkNwWqQLybZAkV3JjmOlpVsh3E3RTxhlqcdZB5HrO3vqfHXnZC5HIs86ZAvjhZB8tjG9cCZAny8BBg7x1pvSOSt9BPQ6Om0gZA67t1Tdk1hlPgJ1ZCeVZAUIdxgLx","category":"Information
+      string: '{"data":[{"access_token":"***","category":"Information Technology Company","category_list":[{"id":"1130035050388269","name":"Information
+        Technology Company"}],"name":"<FACEBOOK_PAGE_2_NAME>","id":"<FACEBOOK_PAGE_2_ID>","tasks":["ADVERTISE","ANALYZE","CREATE_CONTENT","MESSAGING","MODERATE","MANAGE"]},{"access_token":"***","category":"Information
         Technology Company","category_list":[{"id":"1130035050388269","name":"Information
         Technology Company"}],"name":"<FACEBOOK_PAGE_1_NAME>","id":"<FACEBOOK_PAGE_1_ID>","tasks":["ADVERTISE","ANALYZE","CREATE_CONTENT","MESSAGING","MODERATE","MANAGE"]}],"paging":{"cursors":{"before":"QVFIUlJ0cHRCY3ZAvSHZAuLVNfUWl5WmlsanZAfTEgwdnNxaEZAZASDFLbWZAPSjRjdHN4MG5KUDV6eDBVOE5XTVRlZAzFGTG9vRDA0bTdrNDdvaUdjVms5QkVnM2dn","after":"QVFIUnpVZAGkxc0NsQ0dEOGlFakpuc2puYzNYT1FFQzlwNjJIWmdzMWpIUEVWNmJqQnFsNHNqQWNRWDhSTmMweTV0bWpLcVc0Y1lkUHVUUlRPWkdyRmlvbkdB"}}}'
-  recorded_at: Fri, 05 May 2023 12:07:50 GMT
+  recorded_at: Tue, 09 May 2023 10:59:01 GMT
 recorded_with: VCR 6.1.0

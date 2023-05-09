@@ -35,15 +35,15 @@ http_interactions:
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Request-Id:
-      - At-giy-FiYKho2gst4jhihk
+      - A1A4I6rVt6gKlhfbtwMQyEg
       X-Fb-Trace-Id:
-      - Bn3uTRbo4ju
+      - FaIbRUQedID
       X-Fb-Rev:
-      - '1007441695'
+      - '1007457464'
       X-Fb-Debug:
-      - 2EnLba/CNPSNYowbHPrmgO9kvYEIETJ59xIVSQNgFMGvPwpFu1lHZnLlRVMqBYTSgwEBrdWnQI1r+X4/RacH6A==
+      - ZPAsRSMMmSHyKX+eWJ1DQ9uStK9nr+r3xdEOkuD16R6VuvjLLpCcgaJBPz6/F3TU8MJOodONB+ZPzudADoayOQ==
       Date:
-      - Fri, 05 May 2023 13:38:45 GMT
+      - Tue, 09 May 2023 11:00:03 GMT
       Alt-Svc:
       - h3=":443"; ma=86400
       Connection:
@@ -52,6 +52,6 @@ http_interactions:
       - '84'
     body:
       encoding: UTF-8
-      string: '{"access_token":"<FACEBOOK_APPLICATION_ID>|AGsZnwRDpZsM0QV3mbNnsNP97xo","token_type":"bearer"}'
-  recorded_at: Fri, 05 May 2023 13:38:45 GMT
+      string: '{"access_token":"***","token_type":"bearer"}'
+  recorded_at: Tue, 09 May 2023 11:00:03 GMT
 recorded_with: VCR 6.1.0
