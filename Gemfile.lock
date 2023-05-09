@@ -256,7 +256,6 @@ GEM
     interception (0.5)
     json (2.6.3)
     jwt (2.3.0)
-    kgio (2.11.4)
     koala (3.4.0)
       addressable
       faraday
@@ -442,7 +441,6 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
     rainbow (3.1.1)
-    raindrops (0.20.1)
     rake (13.0.6)
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
@@ -590,9 +588,6 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     uri (0.12.1)
     vcr (6.1.0)
     version_gem (1.1.2)
@@ -742,7 +737,6 @@ DEPENDENCIES
   twilio-ruby
   twitter
   tzinfo-data
-  unicorn
   uri (>= 0.12.1)
   vcr
   viewpoint

@@ -21,7 +21,6 @@ gem 'json'
 
 # core - application servers
 gem 'puma', group: :puma
-gem 'unicorn', group: :unicorn
 
 # core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
