@@ -27,7 +27,7 @@ http_interactions:
       Cross-Origin-Resource-Policy:
       - cross-origin
       X-App-Usage:
-      - '{"call_count":1,"total_cputime":0,"total_time":0}'
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
       X-Fb-Rlafr:
       - '0'
       Access-Control-Allow-Origin:
@@ -43,15 +43,15 @@ http_interactions:
       Expires:
       - Sat, 01 Jan 2000 00:00:00 GMT
       X-Fb-Request-Id:
-      - A9HrAtHp-CGFSaAurq8cR_-
+      - AmRE5Za6oRIzgk448rprxIG
       X-Fb-Trace-Id:
-      - HAseIbpChhf
+      - B96QeAjYXVc
       X-Fb-Rev:
-      - '1007441393'
+      - '1007457467'
       X-Fb-Debug:
-      - aq/azJtWO9iqps1GgZh51cPaRY4NH7j7+uP7qDjoRlHRjNnhARZMn0E7MigiKtcfACcY8+KlygdUSH3JgGkobw==
+      - eaeh4jChcZP6ELWPaeuYW2235mWZBx7UH1eSs1sM71/VyDDDeTBvWuTjntaOXbEiDD525JYCcWz1cbO+0Da7wQ==
       Date:
-      - Fri, 05 May 2023 12:07:50 GMT
+      - Tue, 09 May 2023 10:59:01 GMT
       Alt-Svc:
       - h3=":443"; ma=86400
       Connection:
@@ -61,5 +61,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"name":"<FACEBOOK_ADMIN_FIRSTNAME> <FACEBOOK_ADMIN_LASTNAME>","id":"<FACEBOOK_ADMIN_USER_ID>"}'
-  recorded_at: Fri, 05 May 2023 12:07:50 GMT
+  recorded_at: Tue, 09 May 2023 10:59:01 GMT
 recorded_with: VCR 6.1.0
