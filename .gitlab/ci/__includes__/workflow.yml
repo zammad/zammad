@@ -5,7 +5,10 @@ workflow:
     #   (see https://docs.gitlab.com/ee/user/project/push_options.html)
     - if: $JOB_FILTER || $BROWSER_TEST_FILTER
       when: always
-    # Avoid duplicate branch and MR pipelines for push events.
+    # Avoid duplicate branch and MR pipelines for push events to branches with an open MR.
     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    # Don't create branch pipelines for pushes to private branches (as there will also be a MR for them).
+    - if: $CI_COMMIT_BRANCH =~ /^(private|cherry-pick-|renovate|dependabot)/ && $CI_PIPELINE_SOURCE == "push"
       when: never
     - when: always
