@@ -4,7 +4,7 @@ import stopEvent from '#shared/utils/events.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 import type { FocusableOptions } from '#shared/utils/getFocusableElements.ts'
 import { onKeyStroke, unrefElement } from '@vueuse/core'
-import type { MaybeComputedRef } from '@vueuse/shared'
+import type { MaybeRefOrGetter } from '@vueuse/shared'
 
 type TraverseDirection = 'horizontal' | 'vertical' | 'mixed'
 
@@ -82,7 +82,7 @@ const getNextElement = (
 }
 
 export const useTraverseOptions = (
-  container: MaybeComputedRef<HTMLElement | undefined | null>,
+  container: MaybeRefOrGetter<HTMLElement | undefined | null>,
   options: TraverseOptions = {},
 ) => {
   options.scrollIntoView ??= true
@@ -120,6 +120,6 @@ export const useTraverseOptions = (
         nextElement.scrollIntoView({ block: 'nearest' })
       }
     },
-    { target: container as MaybeComputedRef<EventTarget> },
+    { target: container as MaybeRefOrGetter<EventTarget> },
   )
 }

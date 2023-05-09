@@ -3,13 +3,13 @@
 import stopEvent from '#shared/utils/events.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 import { onKeyStroke, unrefElement } from '@vueuse/core'
-import type { MaybeComputedRef } from '@vueuse/core'
+import type { MaybeRefOrGetter } from '@vueuse/core'
 import type { Ref } from 'vue'
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
 // - Type-ahead is recommended for all listboxes, especially those with more than seven options
 export const useFocusWhenTyping = (
-  container: MaybeComputedRef<HTMLElement | undefined | null>,
+  container: MaybeRefOrGetter<HTMLElement | undefined | null>,
 ) => {
   let filter = ''
   let timeout = 0

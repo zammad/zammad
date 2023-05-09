@@ -98,7 +98,7 @@ const loadMore = async () => {
 }
 
 useInfiniteScroll(
-  window,
+  window.document,
   async () => {
     if (canLoadMore.value) {
       await pagination.fetchNextPage()
