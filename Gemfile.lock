@@ -555,7 +555,7 @@ GEM
       faraday-multipart (~> 1.0)
       zeitwerk (~> 2.6)
     telephone_number (1.4.20)
-    terser (1.1.14)
+    terser (1.1.15)
       execjs (>= 0.3.0, < 3)
     test-unit (3.5.7)
       power_assert
