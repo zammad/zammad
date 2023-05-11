@@ -523,22 +523,22 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
         end
       end
 
-      context 'when ftp' do
+      context 'when ftp', integration: true, required_envs: ['FTP_URL'] do
         subject(:response) do
           described_class.request(request_url)
         end
 
         context 'with code 200' do
           let(:code)          { '200' }
-          let(:request_url)   { 'ftp://ftp.gwdg.de/pub/rfc/rfc-index.txt' }
-          let(:expected_body) { %r{instructions}i }
+          let(:request_url)   { "#{ENV['FTP_URL']}/zammad.txt" }
+          let(:expected_body) { %r{zammad}i }
 
           include_examples 'ftp requests'
         end
 
         context 'with code 550' do
           let(:code)          { '550' }
-          let(:request_url)   { 'ftp://ftp.gwdg.de/pub/rfc/not_existing.txt' }
+          let(:request_url)   { "#{ENV['FTP_URL']}/nonexisting.txt" }
 
           include_examples 'unsuccessful request without body'
         end
