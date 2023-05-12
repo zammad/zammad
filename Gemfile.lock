@@ -559,7 +559,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     test-unit (3.5.7)
       power_assert
-    thor (1.2.1)
+    thor (1.2.2)
     thread_safe (0.3.6)
     tilt (2.1.0)
     time (0.2.2)
