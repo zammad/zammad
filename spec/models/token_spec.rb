@@ -327,16 +327,4 @@ RSpec.describe Token, type: :model do
       end
     end
   end
-
-  describe 'Attributes:' do
-    describe '#persistent' do
-      context 'when not set on creation' do
-        subject(:token) { described_class.create(action: 'foo', user_id: User.first.id) }
-
-        it 'defaults to nil' do
-          expect(token.persistent).to be_nil
-        end
-      end
-    end
-  end
 end

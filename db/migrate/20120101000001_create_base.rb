@@ -6,6 +6,8 @@ class CreateBase < ActiveRecord::Migration[4.2]
     # clear old caches to start from scratch
     Rails.cache.clear
 
+    # This table is used by activerecord-session_store gem
+    # Thus it's better to disable Rubocop rules rather than touch the code
     create_table :sessions do |t|
       t.string :session_id,  null: false
       t.boolean :persistent, null: true # rubocop:disable Rails/ThreeStateBooleanColumn
@@ -35,7 +37,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :city,                 limit: 100, null: true, default: ''
       t.string :country,              limit: 100, null: true, default: ''
       t.string :address,              limit: 500, null: true, default: ''
-      t.boolean :vip,                                         default: false # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.boolean :vip,                             null: false, default: false
       t.boolean :verified,                        null: false, default: false
       t.boolean :active,                          null: false, default: true
       t.string :note,                 limit: 5000, null: true, default: ''
@@ -134,7 +136,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :roles do |t|
       t.string :name,                   limit: 100, null: false
       t.text   :preferences,            limit: 500.kilobytes + 1, null: true
-      t.boolean :default_at_signup,                 null: true, default: false # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.boolean :default_at_signup,                 null: false, default: false
       t.boolean :active,                            null: false, default: true
       t.string :note,                   limit: 250, null: true
       t.integer :updated_by_id,                     null: false
@@ -273,7 +275,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
     create_table :tokens do |t|
       t.references :user,                         null: false
-      t.boolean :persistent # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.boolean :persistent,                      null: false, default: false
       t.string  :name,                limit: 255, null: true
       t.string  :token,               limit: 100, null: false
       t.string  :action,              limit: 40,  null: false
@@ -446,7 +448,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text :options, null: true
       t.text :state_current,            limit: 200.kilobytes + 1, null: true
       t.string :state_initial,          limit: 2000, null: true
-      t.boolean :frontend,                           null: false # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.boolean :frontend,                           null: false, default: false
       t.text :preferences,              limit: 200.kilobytes + 1, null: true
       t.timestamps limit: 3, null: false
     end
@@ -651,7 +653,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :import_jobs do |t|
       t.string :name, limit: 250, null: false
 
-      t.boolean :dry_run, default: false # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.boolean :dry_run, null: false, default: false
 
       t.text :payload, limit: 80_000
       t.text :result, limit: 80_000

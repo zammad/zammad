@@ -152,7 +152,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     create_table :ticket_article_types do |t|
       t.column :name,                 :string, limit: 250, null: false
       t.column :note,                 :string, limit: 250, null: true
-      t.column :communication,        :boolean,            null: false # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.column :communication,        :boolean,            null: false, default: false
       t.column :active,               :boolean,            null: false, default: true
       t.column :updated_by_id,        :integer,            null: false
       t.column :created_by_id,        :integer,            null: false
