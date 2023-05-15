@@ -2,13 +2,14 @@
 # https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 require:
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-faker
   - rubocop-graphql
   - rubocop-inflector
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-capybara
   - ../config/initializers/inflections.rb
   - ./rubocop_zammad.rb
 
