@@ -37,7 +37,7 @@
     "@graphql-codegen/typescript-operations": "^3.0.4",
     "@graphql-codegen/typescript-vue-apollo": "^3.3.7",
     "@histoire/plugin-vue": "^0.16.1",
-    "@pinia/testing": "^0.0.16",
+    "@pinia/testing": "^0.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
     "@testing-library/vue": "^7.0.0",

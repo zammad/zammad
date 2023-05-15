@@ -2317,10 +2317,10 @@
     tslib "^2.4.0"
     webcrypto-core "^1.7.4"
 
-"@pinia/testing@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.16.tgz#c58e3e18800a6a496680fb3f477f7318b9b513c8"
-  integrity sha512-oa5kO82hzWekqMq1HTnS/b+ZM+ZKEcEApuuCTelvKK79jTxg7P026Qw8/2RbVn5eUGAvRWQu4ubObrshVqCRjQ==
+"@pinia/testing@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.1.0.tgz#35a76c573aae9f2c43ea2aa0b567de4a8877fb6a"
+  integrity sha512-6lcP6QvQNrFtjslppFjfnpiyRnEKrwgro/TjujLlHI8HwWbdfHfMU4BpciuLLLuuSIENIH9zrevl+eAvmUgh7A==
   dependencies:
     vue-demi "*"
 
