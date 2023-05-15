@@ -14,7 +14,7 @@ class CoreWorkflow::Custom::TicketDuplicateDetection < CoreWorkflow::Custom::Bac
   end
 
   def enabled?
-    Setting.get('ticket_duplicate_detection') && available_for_user?
+    Setting.get('ticket_duplicate_detection') && available_for_user? && detect_attributes.present?
   end
 
   def available_for_user?

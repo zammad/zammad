@@ -30,6 +30,27 @@ RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
     Setting.set('ticket_duplicate_detection_attributes', ['title'])
   end
 
+  context 'when no attributes' do
+    let(:action_user) { agent1 }
+    let(:payload) do
+      {
+        'event'      => 'core_workflow',
+        'request_id' => 'default',
+        'class_name' => 'Ticket',
+        'screen'     => 'create_middle',
+        'params'     => { 'title' => '123' },
+      }
+    end
+
+    before do
+      Setting.set('ticket_duplicate_detection_attributes', [])
+    end
+
+    it 'does not return anything' do
+      expect(result[:fill_in]['ticket_duplicate_detection']).to be_nil
+    end
+  end
+
   context 'when matching on title' do
     context 'when permission level user' do
       context 'with agent 1 which has access' do
@@ -56,7 +77,7 @@ RSpec.describe CoreWorkflow::Custom::TicketDuplicateDetection, type: :model do
 
       context 'when param value is empty', db_strategy: :reset do
         let(:action_user) { agent1 }
-        let(:field_name) { SecureRandom.uuid }
+        let(:field_name)  { SecureRandom.uuid }
 
         let(:payload) do
           {

@@ -29,7 +29,7 @@ class App.SettingTicketDuplicateDetection extends App.ControllerSubContent
           options[attribute.name] = App.i18n.translateInline(attribute.display)
 
     configure_attributes = [
-      { name: 'attributes', display: __('Attributes to compare'), tag: 'column_select', multiple: true, null: true, options: options, sortBy: 'firstname' },
+      { name: 'attributes', display: __('Attributes to compare'), tag: 'column_select', multiple: true, null: false, options: options, sortBy: 'firstname' },
       { name: 'title', display: __('Warning title'), tag: 'input', null: false },
       { name: 'body', display: __('Warning message'), tag: 'textarea', null: false },
       { name: 'role_ids', display: __('Available for the following roles'), tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
@@ -60,6 +60,11 @@ class App.SettingTicketDuplicateDetection extends App.ControllerSubContent
 
     # get form data
     params = @formParam(@filter.form)
+
+    errors = @filter.validate(params)
+    if !_.isEmpty(errors)
+      @formValidate( form: e.target, errors: errors )
+      return false
 
     # save settings
     App.Setting.set('ticket_duplicate_detection_attributes', params.attributes, notify: false)
