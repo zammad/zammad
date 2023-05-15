@@ -25,7 +25,7 @@ const props = defineProps<{
   context: FormFieldContext<AutoCompleteProps>
   name: string
   options: AutoCompleteOption[]
-  optionIconComponent: ConcreteComponent
+  optionIconComponent?: ConcreteComponent | null
   noCloseOnSelect?: boolean
 }>()
 
