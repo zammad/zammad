@@ -45,7 +45,7 @@ function delete_old_backups () {
   # Use -mmin to clean up files as -mtime (days) is too unprecise.
   #   However, add +60 minutes to allow for the backup script run time, so that
   #   backups created a few minutes more than a day ago are not already purged.
-  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)) -delete
+  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.zst -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)) -delete
 }
 
 function get_db_credentials () {
@@ -112,11 +112,11 @@ backup_file_read_test () {
 
   if [ "${DEBUG}" == "yes" ]; then
     echo "I've been looking for these backup files: "
-    echo "- ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz"
-    echo "- ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz"
+    echo "- ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.zst"
+    echo "- ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst"
   fi
 
-  if [[ (! -r "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz") || (! -r "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz") ]]; then
+  if [[ (! -r "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.zst") || (! -r "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst") ]]; then
     echo -e "\n\n # ERROR - Cannot read on or more of my backup files. Double check permissions."
     echo -e " #-> RESTORE WAS NOT SUCCESSFUL"
     exit 3
@@ -137,7 +137,7 @@ function backup_files () {
 
   if [ "${FULL_FS_DUMP}" == 'yes' ]; then
     echo " ... as full dump"
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
+    tar -C / -caf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.zst \
       --exclude='tmp' --exclude 'node_modules' --exclude '.git' --exclude '.yarn/cache' --exclude='config/database.yml' ${ZAMMAD_DIR#/}
 
     state=$?
@@ -155,7 +155,7 @@ function backup_files () {
       chown -R zammad:zammad ${ZAMMAD_DIR}/storage/
     fi
 
-      tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR#/}/storage/ ${ZAMMAD_DIR#/}/var/
+      tar -C / -caf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.zst ${ZAMMAD_DIR#/}/storage/ ${ZAMMAD_DIR#/}/var/
 
       state=$?
   fi
@@ -172,7 +172,7 @@ function backup_files () {
     echo "- This indicates your Zammad instance is running and thus may be normal."
   fi
 
-  ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${BACKUP_DIR}/latest_zammad_files.tar.gz
+  ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.zst ${BACKUP_DIR}/latest_zammad_files.tar.zst
 }
 
 function create_pgpassfile() {
@@ -188,8 +188,8 @@ EOT
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "creating mysql backup..."
-    mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
-    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
+    mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | zstd > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.zst
+    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.zst ${BACKUP_DIR}/latest_zammad_db.mysql.zst
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
 
@@ -200,7 +200,7 @@ function backup_db () {
         ${DB_HOST:+--host $DB_HOST} \
         ${DB_PORT:+--port $DB_PORT} \
         --no-privileges --no-owner \
-        --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
+        | zstd > "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.zst"
 
     state=$?
 
@@ -212,7 +212,7 @@ function backup_db () {
       exit 2
     fi
 
-    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
+    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.zst ${BACKUP_DIR}/latest_zammad_db.psql.zst
   else
     echo -e "\n\n # ERROR - Database type or database.yml incorrect. Unsupported database type found."
     echo -e " #-> BACKUP WAS NOT SUCCESSFUL"
@@ -222,7 +222,7 @@ function backup_db () {
 
 function backup_chmod_dump_data () {
   echo "Ensuring dump permissions ..."
-  chmod 600 ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz
+  chmod 600 ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.zst ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.zst
 }
 
 function check_database_config_exists () {
@@ -267,7 +267,7 @@ function db_helper_warning () {
 }
 
 function get_restore_dates () {
-  RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.gz' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.gz##g" | sort)"
+  RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.zst' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.zst##g" | sort)"
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     DB_FILE_EXT="psql"
@@ -275,7 +275,7 @@ function get_restore_dates () {
     DB_FILE_EXT="mysql"
   fi
 
-  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.gz##g" | sort)"
+  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.zst" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.zst##g" | sort)"
 }
 
 function choose_restore_date () {
@@ -286,8 +286,8 @@ function choose_restore_date () {
     read -p 'File date: ' RESTORE_FILE_DATE
   fi
 
-  if [ ! -f "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz" ];then
-    echo -e "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz does not exist! \nRestore aborted!"
+  if [ ! -f "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.zst" ];then
+    echo -e "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.zst does not exist! \nRestore aborted!"
     exit 1
   fi
 
@@ -298,8 +298,8 @@ function choose_restore_date () {
     read -p 'DB date: ' RESTORE_DB_DATE
   fi
 
-  if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz" ];then
-    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz does not exist! \nRestore aborted!"
+  if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst" ];then
+    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst does not exist! \nRestore aborted!"
     exit 1
   fi
 }
@@ -382,7 +382,7 @@ function restore_zammad () {
 
     # We're removing uncritical dump information that caused "ugly" error
     # messages on older script versions. These could safely be ignored.
-    zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | \
+    zstdcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst | \
     sed '/^CREATE EXTENSION IF NOT EXISTS plpgsql/d'| \
     sed '/^COMMENT ON EXTENSION plpgsql/d'| \
     psql -q -b -o /dev/null \
@@ -400,7 +400,7 @@ function restore_zammad () {
 
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "# Restoring MySQL DB"
-    zcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+    zstdcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.zst | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
 
     state=$?
 
@@ -431,7 +431,7 @@ function restore_zammad () {
 
 function restore_files () {
   echo "# Restoring Files"
-  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  tar -C / --overwrite -xaf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.zst
 
   state=$?
 
