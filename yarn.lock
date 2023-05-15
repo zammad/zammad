@@ -5411,10 +5411,10 @@ eslint-plugin-sonarjs@^0.19.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.19.0.tgz#6654bc1c6d24c2183891b8bfe1175004dbba1e3c"
   integrity sha512-6+s5oNk5TFtVlbRxqZN7FIGmjdPCYQKaTzFPmqieCmsU1kBYDzndTeQav0xtQNwZJWu5awWfTGe8Srq9xFOGnw==
 
-eslint-plugin-vue@^9.11.1:
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.11.1.tgz#71e37cc74ac0a9bca07d2e8c471a047b8ac254fb"
-  integrity sha512-SNtBGDrRkPUFsREswPceqdvZ7YVdWY+iCYiDC+RoxwVieeQ7GJU1FLDlkcaYTOD2os/YuVgI1Fdu8YGM7fmoow==
+eslint-plugin-vue@^9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-9.12.0.tgz#3174eaaedc143bf7b392b3defa3f18889606bb73"
+  integrity sha512-xH8PgpDW2WwmFSmRfs/3iWogef1CJzQqX264I65zz77jDuxF2yLy7+GA2diUM8ZNATuSl1+UehMQkb5YEyau5w==
   dependencies:
     "@eslint-community/eslint-utils" "^4.3.0"
     natural-compare "^1.4.0"
