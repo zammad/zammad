@@ -6170,10 +6170,10 @@ graphql-request@^5.0.0:
     extract-files "^9.0.0"
     form-data "^3.0.0"
 
-graphql-ruby-client@^1.11.7:
-  version "1.11.7"
-  resolved "https://registry.yarnpkg.com/graphql-ruby-client/-/graphql-ruby-client-1.11.7.tgz#40a9f5dc2f0b0d4a299f4f1bdcc9efefe36b23eb"
-  integrity sha512-HO2+KttaxJsEg3xzKA/lyDixqq3TbuuKJkOouNZrYkuVdqqCK0S7TfD37dfi1fQQIbcjVwnX+eKqHR9v8+yY/A==
+graphql-ruby-client@^1.11.8:
+  version "1.11.8"
+  resolved "https://registry.yarnpkg.com/graphql-ruby-client/-/graphql-ruby-client-1.11.8.tgz#c0c0a51113f4eb1c507e0d2f11dbc8a50281f1b5"
+  integrity sha512-kMqcZiIg7Rt+GRI9ZhrdcxRWdBdgi3UBN74z/VO3IfppkIuJPT53tX9Nu99GQIUEj8gqwTc+sr8Ff+cuT8aTcw==
   dependencies:
     glob "^7.1.4"
     minimist "^1.2.0"
