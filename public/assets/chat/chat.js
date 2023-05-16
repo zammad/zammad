@@ -1128,7 +1128,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Start new conversation': 'Nieuw gesprek starten',
         'Today': 'Vandaag',
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Het spijt ons, het duurt langer dan verwacht om een chat te starten. Probeer het later nog eens of stuur ons een e-mail. Bedankt!',
-        'You are on waiting list position <strong>%s</strong>.': 'U bevindt zich op wachtlijstpositie <strong>%s</strong>.'
+        'You are on waiting list position <strong>%s</strong>.': 'Je bevindt zich op wachtlijstpositie <strong>%s</strong>.'
       },
       'pl': {
         '<strong>Chat</strong> with us!': '<strong>Czatuj</strong> z nami!',

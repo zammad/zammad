@@ -5343,6 +5343,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: db/seeds/settings.rb
 #: lib/excel_sheet/ticket.rb
@@ -8061,6 +8062,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "Owner"
@@ -9970,6 +9972,7 @@ msgstr ""
 #: app/views/messaging/ticket_create/pt-br.md.erb
 #: app/views/messaging/ticket_create/zh-cn.md.erb
 #: app/views/messaging/ticket_create/zh-tw.md.erb
+#: app/views/messaging/ticket_info/pt-br.md.erb
 #: db/seeds/object_manager_attributes.rb
 #: lib/excel_sheet/ticket.rb
 msgid "State"
