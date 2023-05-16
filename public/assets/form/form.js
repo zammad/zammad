@@ -174,9 +174,9 @@ $(function() {
         'Email': 'E-mail',
         'Message': 'Bericht',
         'Name': 'Naam',
-        'Your Email': 'Uw Email adres',
-        'Your Message…': 'Uw bericht…',
-        'Your Name': 'Uw naam',
+        'Your Email': 'Je e-mailadres',
+        'Your Message…': 'Je bericht…',
+        'Your Name': 'Je naam',
       },
       'pl': {
         'Attachments': 'Załączniki',
