@@ -858,7 +858,7 @@ perform active triggers on ticket
 
         next if ticket_count.blank?
         next if ticket_count.zero?
-        next if tickets.first.id != ticket.id
+        next if tickets.take.id != ticket.id
 
         if recursive == false && local_options[:loop_count] > 1
           message = "Do not execute recursive triggers per default until Zammad 3.0. With Zammad 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
